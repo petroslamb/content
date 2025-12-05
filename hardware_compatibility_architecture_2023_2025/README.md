@@ -58,6 +58,9 @@ This folder contains all research materials, datasets, planning documents, and t
 - **`audience_profile.md`** - Target audience analysis (senior technical practitioners)
 - **`refs/research_references.md`** - Centralized bibliography (papers, model cards, and docs backing all datasets)
 
+### Critiques & Reviews
+- **`long_article_model_critiques/`** - Brutal critiques and feedback from various AI models (Gemini, GPT, Claude) on the article drafts.
+
 ### Article Sections (Publication-Ready)
 - **`article_sections/Act_I_The_Hardware_Compatibility_Filter.md`** - Act I (Hardware Compatibility Filter)
 - **`article_sections/Act_II_The_Conditional_Execution_Revolution.md`** - Act II (Conditional Execution)
@@ -142,8 +145,8 @@ This folder contains all research materials, datasets, planning documents, and t
 - `/Users/petros/Projects/content/Neural Architecture Design as a Compositional Language.md`
 
 **Hardware Friction Maps (v2.5):**
-- **Public:** [`scorecard_worked_examples_public.md`](./scorecard_worked_examples_public.md) (Adoption Risk Heuristic)
-- **Internal:** [`scorecard_calibration_v1.md`](./scorecard_calibration_v1.md) (Detailed Calibration & Roadmap)
+- **Public:** [`hardware_friction_scorecard/public_worked_examples.md`](./hardware_friction_scorecard/public_worked_examples.md) (Adoption Risk Heuristic)
+- **Internal:** [`hardware_friction_scorecard/internal_calibration_roadmap.md`](./hardware_friction_scorecard/internal_calibration_roadmap.md) (Detailed Calibration & Roadmap)
 
 ---
 
