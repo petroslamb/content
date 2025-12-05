@@ -85,6 +85,37 @@ This map estimates **adoption risk** for non-Google labs:
 
 ---
 
+## Future Work: Towards a Calibrated Model
+
+*This section outlines the research plan to upgrade this map from an "Intuition Pump" to a "Calibrated Filter."*
+
+### 1. Target Variable
+**"Adoption Velocity"** defined as: Months from *seminal paper* to *first production deployment at >10B parameter scale* (or equivalent commercial usage).
+*   **Fast:** <12 months (e.g., FlashAttention, GQA).
+*   **Slow/Stalled:** >36 months or never (e.g., Neural ODEs, Capsule Nets).
+
+### 2. Dataset Scope
+**N=50+ Primitives (2018–2025).**
+*   **Inclusion Criteria:** Distinct architectural or training primitives (not just hyperparameters).
+*   **Examples:** MoE (Sparse), SSMs (Mamba), Linear Attention, RWKV, KANs, LoRA, Quantization (A8W8 vs FP4), Sparse Attention patterns.
+
+### 3. Operational Features (Binary/Categorical)
+To replace qualitative judgments with reproducible scores:
+*   **GA:** `Is_GEMM_Aligned` (0/1). *Definition: >90% FLOPs in dense matmuls?*
+*   **MAL:** `Memory_Access_Pattern` (Categorical). *Classes: Tiled, Streamed, Random.*
+*   **PAR:** `Sequential_Dependency` (0/1). *Definition: O(N) dependency on sequence length?*
+*   **STI:** `Topology_Change` (Categorical). *Classes: None, Local, Global.*
+*   **IM:** `Kernel_Availability` (0/1). *Definition: Exists in Triton/CUDA upstream?*
+
+### 4. Modeling Plan
+Fit a simple **Logistic Regression** or **Decision Tree** to predict `Fast_Adoption` (Y/N) from the operational features.
+*   **Goal:** Identify which features have statistically significant predictive power.
+*   **Hypothesis:** `Sequential_Dependency` (PAR) and `Topology_Change` (STI) are the dominant negative predictors.
+
+*Open Challenge: We invite the community to build this dataset and test the hypothesis.*
+
+---
+
 ## Glossary
 
 | Abbrev | Full Name | Type | Measures |
