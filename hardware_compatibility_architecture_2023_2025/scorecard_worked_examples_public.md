@@ -1,7 +1,7 @@
 # Hardware Friction Map v2.3 — Worked Examples
 
 **The "Cost Function" Filter.**
-*Measures infrastructure friction (Cost), not physical impossibility. High friction = High cost.*
+*A pedagogical map of infrastructure friction. Use to build intuition, not to make go/no-go decisions.*
 
 ---
 
