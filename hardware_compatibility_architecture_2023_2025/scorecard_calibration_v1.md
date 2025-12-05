@@ -235,7 +235,19 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 
 ---
 
-## Version History
+## Version History & Decision Log
 
-- **v1.0:** Initial 5-axis rubric (GA, MAL, KM, STI, FSM)
-- **v1.1:** Merged KM+FSM into IM (4 axes). Refined STI for MoE (expert count + routing complexity).
+### v1.1 (December 2025) — The "Simplification & Granularity" Update
+**Changes:**
+1.  **Merged KM + FSM → IM (Infra Maturity):**
+    *   *Reasoning:* In v1.0, these axes had >90% correlation. It was rare to find a technique with upstream kernels (KM=2) but no framework support (FSM=0), or vice versa. Keeping them separate created false precision and "axis leakage" in justifications.
+    *   *Decision:* Merge into a single "Infra Maturity" axis. If a technique has kernels, it generally has a library.
+2.  **Refined STI for MoE:**
+    *   *Reasoning:* v1.0 gave Mixtral (8 experts) and DeepSeek V3 (256 experts) the same STI score (1). This failed to capture the massive serving complexity difference (all-to-all comms, memory bandwidth) of high-expert-count models.
+    *   *Decision:* Split STI for MoE based on expert count (≤16 vs >64) and routing type. This successfully differentiates the scores (Mixtral=6, DeepSeek=5).
+
+### v1.0 (December 2025) — Initial Draft
+**Scope:** 5 Axes (GA, MAL, KM, STI, FSM)
+*   *Hypothesis:* Hardware compatibility is the primary filter for adoption.
+*   *Design:* Created 5 axes based on first-principles analysis of GPU execution (compute, memory, kernels, topology, software).
+*   *Outcome:* successfully predicted "Green Zone" techniques (Flash, GQA) but failed to explain "Yellow Zone" nuances (Mamba ceiling, MoE variance).
