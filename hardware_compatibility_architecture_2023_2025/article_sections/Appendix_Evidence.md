@@ -3,7 +3,7 @@
 
 ## Appendix: The Evidence
 
-For the skeptical practitioner, we present the raw data underlying the claims in this post.
+For the skeptical practitioner, we present the aggregated evidence underlying the claims in this post. For terminology and hardware background, see the **Glossary and Key Concepts** and **Hardware and Kernel Primer** sections.
 
 ### Table 1: Major Lab Frontier Model Releases (2023–2025)
 *Explicit model releases by major labs, ordered roughly chronologically. Architectures are summarized from public documentation as of Dec 4, 2025.*
@@ -40,7 +40,7 @@ For the skeptical practitioner, we present the raw data underlying the claims in
 **Insight:** From 2023 to late 2025, frontier lines clearly cluster into two patterns: (1) **Dense / sparse transformers** with ever‑better kernels (Flash Attention, GQA, long context, sparse patterns), and (2) **MoE transformers** (Llama 4, Mixtral) that trade implementation complexity for large capacity at similar active compute. Pure SSM models still do not appear as standalone frontier flagships; SSM/Mamba‑like blocks show up only as components inside hybrids or efficiency‑oriented models outside this list.
 
 ### Table 2: The MoE Reality Check
-*Marketing claims vs. production-style measurements at long context (64K–128K tokens). Aggregated from Switch, Mixtral, DeepSeek-V3, deployment-inefficiency work, and Aurora-style system papers.*
+*Marketing claims vs. production-style measurements from short to long context (up to 64K–128K tokens). Summarizes Extended Dataset 1 (MoE Speedup Meta-Analysis), aggregated from Switch, Mixtral, DeepSeek-V3, deployment-inefficiency work, and Aurora-style system papers.*
 
 | Metric | Marketing Claim | Reality in Large-Scale Deployments | The "Context Trap" |
 | :--- | :--- | :--- | :--- |
@@ -62,9 +62,9 @@ For the skeptical practitioner, we present the raw data underlying the claims in
 | **1.4B–2.8B** | Original Mamba 1.4B / 2.8B | ✓ Proven (perplexity, downstream tasks) | Matches or beats similar-size transformers; approaches 2× larger baselines | Research and limited usage |
 | **7B** | Falcon Mamba 7B | ✓ Proven; best pure SSM | Beats Llama 3.1 8B / Mistral 7B on many benchmarks; up to 5× throughput on long texts | Limited production use (efficiency-focused) |
 | **13B** | None found | ✗ No pure SSM | Only transformer and hybrid models at this scale | No known production pure SSM |
-| **70B+** | None found | ✗ No pure SSM | Frontier is exclusively transformer (dense, sparse, MoE, hybrids) | No known production pure SSM |
+| **70B+** | None found | ✗ No pure SSM | Frontier deployments we could confirm are transformer-based (dense, sparse, MoE, hybrids) | No known production pure SSM |
 
-**Insight:** Pure SSMs are clearly viable up to 7B and can be very efficient, but there is **no evidence** of pure SSMs at 13B or frontier scales; above 7B, SSM-style blocks only appear inside **hybrid** architectures (Jamba, Falcon-H1, Qwen3-Next), not as end-to-end replacements for attention.
+**Insight:** Pure SSMs are clearly viable up to 7B and can be very efficient, but in the public releases we examined there is **no evidence** of pure SSMs at 13B or frontier scales; above 7B, SSM-style blocks only appear inside **hybrid** architectures (Jamba, Falcon-H1, Qwen3-Next), not as end-to-end replacements for attention.
 
 ---
 
@@ -94,4 +94,18 @@ For the skeptical practitioner, we present the raw data underlying the claims in
 | **Anthropic – Claude 3 / 4.x** | Sparse / conditional attention | Public docs emphasize sparse transformers and conditional attention, not MoE. |
 | **xAI – Grok-1 / 4.x** | Efficient attention + MoE | Uses RoPE and GQA-like KV sharing with MoE experts. |
 
-**Insight:** By late 2025, **GQA-style efficient attention** (plus MLA and sparse variants) has effectively replaced vanilla MHA in new large models. This is the weight-only, hardware-aligned optimization that diffuses fastest and forms the "background assumption" for 2024–2025 architectures.
+**Insight:** By late 2025, **GQA-style efficient attention** (plus MLA and sparse variants) dominates over vanilla MHA in the large models we audited. This is the weight-only, hardware-aligned optimization that diffuses fastest and forms the "background assumption" for 2024–2025 architectures.
+
+---
+
+### Table 6: Training Innovation Evidence
+*Selected examples where training methods, rather than new primitives, drove major capability or efficiency gains. Summarizes Extended Dataset 1 and EXHAUSTIVE_FINAL_COMPILATION.*
+
+| Technique / Case | What Changes | Evidence & Effect | Production Status (2023–2025) |
+| :--- | :--- | :--- | :--- |
+| **DeepSeek-R1 vs DeepSeek-V3** | Adds large-scale RL (GRPO) and reasoning curriculum on top of MoE + MLA backbone | R1 achieves state-of-the-art reasoning (79.8% AIME, 97.3% MATH-500) using broadly similar architectural primitives to V3; the main step-change comes from training and data rather than a new layer type. | Open-weight MIT-licensed reasoning model; actively used as a reference point for RL-style training. |
+| **SAM (Sharpness-Aware Minimization)** | Modifies the optimization objective to favor flatter minima | Multiple studies report improved robustness and composition with minimal changes to architecture; EXHAUSTIVE_FINAL_COMPILATION notes SAM as a recurring ingredient in competitive 2024–2025 training stacks. | Increasingly common in research and some production training runs; integrates as an optimizer swap. |
+| **Progressive Depth / Curriculum Training** | Starts with shallow networks and gradually increases depth during training | Across surveyed work, reported **≈10–20% faster convergence** vs naive deep training, with comparable final quality, especially in large LLM pretraining. | Used in several large-model training pipelines as a convergence/efficiency optimization. |
+| **Routing-Aware Optimization for MoE** | Adds auxiliary losses and router objectives to balance expert load | System and algorithmic papers (e.g., ST-MoE-style work) show improved expert utilization and stability at scale, reducing the incidence of collapsed experts and improving effective throughput. | Incorporated into modern MoE stacks (DeepSeek, Mixtral-style systems) as part of training recipes. |
+
+**Insight:** The most dramatic recent gains in reasoning and efficiency often come from **training recipes and optimization choices** layered on top of relatively stable architectural primitives (MoE, efficient attention), reinforcing the view that, on today’s hardware, training innovation is where much of the near-term leverage lies.
