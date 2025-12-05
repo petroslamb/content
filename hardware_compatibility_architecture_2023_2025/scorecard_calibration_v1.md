@@ -277,6 +277,11 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 
 ## Version History & Decision Log
 
+### v2.5 (December 2025) — The "Research Proposal" Update
+**Changes:**
+1.  **Added "Future Work" Section:** Formalized the path to calibration as a public research proposal.
+2.  **Defined Target & Features:** Specified "Time-to-Production" and binary feature definitions.
+
 ### v2.4 (December 2025) — The "Adoption Risk" Polish
 **Changes:**
 1.  **Reframed Prediction:** Changed "Hardware predicts adoption velocity" to "Adoption Risk Heuristic for non-Google labs."
@@ -340,12 +345,11 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 
 ## Path to Rigorous Calibration (Future Work)
 
-To upgrade this from an "Intuition Pump" to a "Calibrated Filter," the following work is required:
+**Status:** Formal Research Proposal added to Public Scorecard (v2.5).
 
-1.  **Define Target:** Operationalize "Adoption Velocity" (e.g., months from paper to production deployment >X scale).
-2.  **Build Dataset:** Collect 50+ techniques (Flash, GQA, MoE, SSMs, Conv-LMs, KANs, etc.) with ground-truth outcomes.
-3.  **Operationalize Features:** Convert GA/MAL/PAR/STI/IM from qualitative judgments to measurable binary/categorical features.
-4.  **Fit Model:** Train a logistic regression or decision tree to predict adoption from features.
-5.  **Extract Rules:** Derive heuristics from the fitted model rather than hand-tuning.
+The public document now contains a specific call to action for the community to:
+1.  **Build the Dataset:** N=50+ primitives (2018-2025).
+2.  **Operationalize Features:** Binary/Categorical definitions for GA/MAL/PAR/STI/IM.
+3.  **Test the Model:** Logistic Regression for "Fast Adoption" (<12 months).
 
-*Until this is done, the scorecard remains a structured opinion, not a scientific instrument.*
+*See `scorecard_worked_examples_public.md` for the full proposal.*
