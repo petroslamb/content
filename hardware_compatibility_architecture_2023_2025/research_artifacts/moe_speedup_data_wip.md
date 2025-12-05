@@ -139,7 +139,7 @@ The 2025 literature search (consolidated in `EXHAUSTIVE_FINAL_COMPILATION.md`, p
   - Early MoE literature (Switch, Expert Choice, deployment‑inefficiency work).
   - 2024–2025 frontier models (Mixtral‑8×7B, DeepSeek‑V3) and serving libraries (FlashInfer).
 - Used directly in:
-  - `article_sections/Act_II_The_Conditional_Execution_Revolution.md`
-  - `article_sections/Appendix_Evidence.md` (Table 2: “MoE Reality Check”).
+  - `long_article_sections/Act_II_The_Conditional_Execution_Revolution.md`
+  - `long_article_sections/Appendix_Evidence.md` (Table 2: “MoE Reality Check”).
 
 Further additions should focus on **new large‑scale deployment case studies**, not small‑scale toy benchmarks.

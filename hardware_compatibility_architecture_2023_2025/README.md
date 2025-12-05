@@ -29,12 +29,12 @@ This folder contains all research materials, datasets, planning documents, and t
 ## Files in This Folder
 
 ### Planning & Blueprint (Article Components)
-- **`article_sections/A+++_blueprint.md`** ⭐ - Refined A+++ blueprint with narrative anchors (Meta Pivot, Context Trap, DeepSeek-R1)
+- **`long_article_sections/A+++_blueprint.md`** ⭐ - Refined A+++ blueprint with narrative anchors (Meta Pivot, Context Trap, DeepSeek-R1)
 - **`research_artifacts/data_collection_plan.md`** - Detailed plan for collecting all datasets
 - **`research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md`** - Final research summary with all findings (READ THIS FIRST)
   
 > **Edit Policy Reminder:**  
-> Do **not** modify `What_Actually_Works_2023_2025.md` unless explicitly requested by the author. This file is treated as the canonical draft and should remain stable by default.
+> Do **not** modify `long_article_sections/What_Actually_Works_2023_2025.md` unless explicitly requested by the author. This file is treated as the canonical draft and should remain stable by default.
 
 ### Research Datasets (4 Complete)
 
@@ -59,19 +59,21 @@ This folder contains all research materials, datasets, planning documents, and t
 - **`refs/research_references.md`** - Centralized bibliography (papers, model cards, and docs backing all datasets)
 
 ### Critiques & Reviews
-- **`long_article_model_critiques/`** - Brutal critiques and feedback from various AI models (Gemini, GPT, Claude) on the article drafts.
+- **`long_article_sections/model_critiques/`** - Brutal critiques and feedback from various AI models (Gemini, GPT, Claude) on the article drafts.
+- **`essay_critiques/`** - Critiques and feedback on the "Hardware Compatibility Filter" essay.
+- **`arxiv_critiques/`** - Critiques and feedback on the arXiv technical report drafts.
 
 ### Article Sections (Publication-Ready)
-- **`article_sections/Act_I_The_Hardware_Compatibility_Filter.md`** - Act I (Hardware Compatibility Filter)
-- **`article_sections/Act_II_The_Conditional_Execution_Revolution.md`** - Act II (Conditional Execution)
-- **`article_sections/Act_III_The_Infrastructure_Lag_Pattern.md`** - Act III (Infrastructure Lag)
-- **`article_sections/Appendix_Evidence.md`** - Appendix (tables and raw evidence)
-- **`article_sections/Glossary_and_Key_Concepts.md`** - Glossary and key concepts referenced throughout the article
-- **`article_sections/Hardware_and_Kernel_Primer.md`** - Hardware and kernel primer (how kernels map to GPU primitives)
-- **`article_sections/Bibliography_and_References.md`** - Bibliography with one-sentence explainers for each citation
+- **`long_article_sections/Act_I_The_Hardware_Compatibility_Filter.md`** - Act I (Hardware Compatibility Filter)
+- **`long_article_sections/Act_II_The_Conditional_Execution_Revolution.md`** - Act II (Conditional Execution)
+- **`long_article_sections/Act_III_The_Infrastructure_Lag_Pattern.md`** - Act III (Infrastructure Lag)
+- **`long_article_sections/Appendix_Evidence.md`** - Appendix (tables and raw evidence)
+- **`long_article_sections/Glossary_and_Key_Concepts.md`** - Glossary and key concepts referenced throughout the article
+- **`long_article_sections/Hardware_and_Kernel_Primer.md`** - Hardware and kernel primer (how kernels map to GPU primitives)
+- **`long_article_sections/Bibliography_and_References.md`** - Bibliography with one-sentence explainers for each citation
 
 ### Master Article
-- **`What_Actually_Works_2023_2025.md`** - Concatenated, polished draft assembled from all article sections; ready for publication (e.g., Substack)
+- **`long_article_sections/What_Actually_Works_2023_2025.md`** - Concatenated, polished draft assembled from all article sections; ready for publication (e.g., Substack)
 
 ---
 
@@ -112,14 +114,14 @@ This folder contains all research materials, datasets, planning documents, and t
 ## How to Use This Folder
 
 ### For Reading / Publishing
-1. **Start with:** `What_Actually_Works_2023_2025.md` (master article, Substack-ready).
-2. **Check evidence:** `article_sections/Appendix_Evidence.md` plus individual files under `research_artifacts/` for underlying tables and timelines.
-3. **Clarify terms:** `article_sections/Glossary_and_Key_Concepts.md` and `article_sections/Hardware_and_Kernel_Primer.md` for definitions and background.
-4. **Citations:** `article_sections/Bibliography_and_References.md` for grouped references with one-sentence explainers.
+1. **Start with:** `long_article_sections/What_Actually_Works_2023_2025.md` (master article, Substack-ready).
+2. **Check evidence:** `long_article_sections/Appendix_Evidence.md` plus individual files under `research_artifacts/` for underlying tables and timelines.
+3. **Clarify terms:** `long_article_sections/Glossary_and_Key_Concepts.md` and `long_article_sections/Hardware_and_Kernel_Primer.md` for definitions and background.
+4. **Citations:** `long_article_sections/Bibliography_and_References.md` for grouped references with one-sentence explainers.
 
 ### For Future Revisions
 - Use `research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md` as the canonical research summary.
-- Use `article_sections/*.md` as the source-of-truth components if you want to reassemble or substantially rewrite the master article.
+- Use `long_article_sections/*.md` as the source-of-truth components if you want to reassemble or substantially rewrite the master article.
 
 ---
 
@@ -178,9 +180,9 @@ This folder contains all research materials, datasets, planning documents, and t
 ## Next Steps
 
 1. ✅ Research complete (0.98/1.0 confidence)
-2. ✅ All acts + appendix written in `article_sections/`
+2. ✅ All acts + appendix written in `long_article_sections/`
 3. ✅ Glossary, hardware primer, and bibliography sections completed
-4. ✅ Master article assembled in `What_Actually_Works_2023_2025.md` (publication-ready)
+4. ✅ Master article assembled in `long_article_sections/What_Actually_Works_2023_2025.md` (publication-ready)
 5. ⏭️ Optional: user review, insider additions, and diagram/figure passes before publishing
 
 ---
