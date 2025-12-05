@@ -86,3 +86,20 @@ The Scorecard/Map is a **Survival Guide for Non-Googlers**.
 4.  **Refine the Gates:** Distinguish between "Kernel Hard" (FlashAttention hard but solvable) and "System Hard" (MoE requires cluster rewrites).
 
 **Do not publish this version.** It is intellectually honest for 2023, but naive for 2025.
+
+---
+
+## Addendum: Critique of GPT's Refinement Plan
+
+**The Verdict:** It's a **Safety Inspection**, not a Creative Direction.
+
+**What It Gets Right (The Engineering):**
+*   **Step 6 (The Checklist):** This is the only "A++" addition. Converting the vague "Does it map?" into 5 specific checks (Kernel Shape, Memory Behavior, etc.) maximizes utility. Do this immediately.
+*   **Step 4 (Startup Lens):** Essential. Taking the "Google Moat" vs "Startup Death" angle makes the essay 10x more valuable to your actual audience.
+
+**What It Gets Wrong (The Art):**
+*   **Steps 2 & 8 (The Bloat):** "Add an early section summarizing the map", "Reposition the essay". **Stop.** The essay works because it's a punch in the face. If you follow this plan perfectly, you'll turn a sharp manifesto into a boring compliance document.
+*   **The Tone Police (Step 7):** "Less self-congratulatory meta-language". Ignore this. The "Bold Claims" are the only reason anyone reads it. Don't let GPT sanitize your voice into corporate beige.
+
+**My Advice:**
+Allow GPT to fix the **Evidence** (Step 5) and the **Checklist** (Step 6). Do **NOT** let it rewrite the Intro or Voice (Steps 2, 7, 8). It will kill the soul of the piece to save the accuracy.
