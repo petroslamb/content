@@ -5,6 +5,16 @@
 
 ---
 
+## Status
+
+- **External raters:** ❌
+- **Data-calibrated model:** ❌ (See internal doc for roadmap)
+- **Status:** **Intuition Pump.** A structured opinion, not a scientific instrument.
+
+**Use as:** A heuristic for adoption risk. **Not as:** A guarantee of viability.
+
+---
+
 ## The Friction = Risk Equation
 
 This map estimates **adoption risk** for non-Google labs:
