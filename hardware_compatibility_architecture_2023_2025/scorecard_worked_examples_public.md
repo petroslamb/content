@@ -1,6 +1,9 @@
-# Hardware Compatibility Scorecard v1.1 — Worked Examples
+# Hardware/Infra Viability Scorecard (v1.1)
 
-**Single-author draft. Not externally validated.**
+**The "First Gate" Filter.**
+
+This scorecard measures **viability**, not success. It answers: *"Can this idea survive contact with 2023–2025 GPUs?"*
+It does **NOT** predict which architecture will win. High scores mean "compatible," not "better."
 
 ---
 
@@ -24,13 +27,14 @@
 
 ---
 
-## Scored Cases (Not a Benchmark)
+## Scored Cases (Viability ≠ Success)
 
 | Architecture | GA | MAL | STI | IM | Total | Zone |
 |:-------------|:--:|:---:|:---:|:--:|:-----:|:----:|
 | Transformer + Flash | 2 | 2 | 2 | 2 | **8** | 🟢 |
 | GQA | 2 | 2 | 2 | 2 | **8** | 🟢 |
 | MLA | 2 | 2 | 2 | 1 | **7** | 🟢 |
+| **LSTM / GRU** | **2** | **2** | **2** | **2** | **8** | 🟢 |
 | Mixtral 8×7B | 2 | 1 | 2 | 1 | **6** | 🟡 |
 | DeepSeek V3 (256 exp) | 2 | 1 | 1 | 1 | **5** | 🟡 |
 | Pure Mamba | 1 | 1 | 2 | 1 | **5** | 🟡 |
@@ -38,24 +42,27 @@
 | KANs | 0 | 0 | N/A | 0 | — | 🔴 |
 | Neural ODEs | 0 | 0 | 1 | 0 | **1** | 🔴 |
 
+**Crucial Lesson:** LSTM scores **8 (Green)** but is a "losing" architecture for LLMs. This proves the scorecard only measures *hardware fit*, not expressivity or scaling laws.
+
 ---
 
 ## Zone Interpretation
 
 | Score | Zone | Meaning |
 |:-----:|:----:|:--------|
-| 7–8 | 🟢 | Drop-in ready |
-| 4–6 | 🟡 | Viable with engineering effort |
-| 2–3 | 🟠 | Research-to-production gap |
-| 0–1 | 🔴 | Research-only |
+| 7–8 | 🟢 | **Hardware Compatible.** (Does not imply model quality) |
+| 4–6 | 🟡 | **Viable with Effort.** (Requires engineering investment) |
+| 2–3 | 🟠 | **Infra Gap.** (Hard to productionize) |
+| 0–1 | 🔴 | **Incompatible.** (Research-only on current stack) |
 
 ---
 
-## Known Failure Modes
+## Known Limitations (The "Later Tables")
 
-1. **Mamba ceiling:** Scores 5 but no SSM above 7B exists. Compatibility ≠ scalability.
-2. **Competitive dynamics:** Sparse attention would score 6-7 but was replaced by Flash. Rubric ignores alternatives.
-3. **Ecosystem investment:** Similar scores can have different adoption based on institutional backing.
+This is **Table 1** (Hardware). Real success requires passing later gates:
+1.  **Training Dynamics:** Does it learn as efficiently as Transformers? (LSTM fails here)
+2.  **Scaling Laws:** Does performance scale predictably with compute? (Mamba unproven here)
+3.  **Ecosystem:** Is there institutional backing? (GLA vs Mamba)
 
 ---
 
@@ -100,4 +107,4 @@
 ## Version History
 
 - **v1.0:** Initial 5-axis rubric.
-- **v1.1:** Merged KM+FSM into IM (4 axes). Refined STI for MoE (expert count + routing complexity).
+- **v1.1:** Merged KM+FSM into IM (4 axes). Refined STI for MoE.
