@@ -135,3 +135,5 @@ Fit a simple **Logistic Regression** or **Decision Tree** to predict `Fast_Adopt
 - **v2.1:** Renamed "Physics" to "Efficiency".
 - **v2.2:** Multi-Gate Risk Profile.
 - **v2.3:** Reframed as "Friction Map". Friction = Economic Cost.
+- **v2.4:** "Adoption Risk Heuristic" (Startup vs Google).
+- **v2.5:** Added formal Research Plan (Target, Dataset, Features).
