@@ -1,4 +1,9 @@
-# Hardware Compatibility Scorecard v1.1 — Worked Examples & Stress Tests (Single-Author Draft)
+# Hardware/Infra Viability Scorecard v1.1 — Worked Examples & Stress Tests (Single-Author Draft)
+
+**The "First Gate" Filter.**
+
+This scorecard measures **viability**, not success. It answers: *"Can this idea survive contact with 2023–2025 GPUs?"*
+It does **NOT** predict which architecture will win. High scores mean "compatible," not "better."
 
 **Scope:** 2023–2025 NVIDIA GPU stacks (A100/H100, CUDA 12.x, PyTorch 2.x / JAX+XLA)  
 **Scoring date:** December 2025  
@@ -85,7 +90,21 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 
 ---
 
-### 4. Mixtral 8×7B MoE
+### 4. LSTM / GRU (The "Green but Dead" Counter-Example)
+
+| Axis | Score | Property-Based Justification |
+|:-----|:-----:|:-------------|
+| GA | **2** | Standard LSTM cell is just 4 dense matmuls (gates) + elementwise ops. Fully GEMM-aligned. |
+| MAL | **2** | State size is small (`d_model`). No O(n²) matrix. Trivial to fuse elementwise ops. |
+| STI | **2** | Standard dense topology. No routing. |
+| IM | **2** | `torch.nn.LSTM` is ancient, stable, and heavily optimized (cuDNN backend). |
+| **Total** | **8** | |
+
+**Crucial Lesson:** LSTM scores **8 (Green)** but is a "losing" architecture for LLMs. This proves the scorecard only measures *hardware fit*. LSTM fails at later gates (Training Dynamics: vanishing gradients; Scaling Laws: poor context scaling).
+
+---
+
+### 5. Mixtral 8×7B MoE
 
 | Axis | Score | Property-Based Justification |
 |:-----|:-----:|:-------------|
@@ -166,6 +185,7 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 | Transformer + Flash | 2 | 2 | 2 | 2 | **8** | 🟢 |
 | GQA | 2 | 2 | 2 | 2 | **8** | 🟢 |
 | MLA | 2 | 2 | 2 | 1 | **7** | 🟢 |
+| **LSTM / GRU** | **2** | **2** | **2** | **2** | **8** | 🟢 |
 | Mixtral 8×7B | 2 | 1 | 2 | 1 | **6** | 🟡 |
 | DeepSeek V3 (256 exp) | 2 | 1 | 1 | 1 | **5** | 🟡 |
 | Pure Mamba | 1 | 1 | 2 | 1 | **5** | 🟡 |
@@ -186,11 +206,12 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 
 ---
 
-## Known Failure Modes
+## Known Limitations (The "Later Tables")
 
-1. **Mamba ceiling:** Scores 5 but no SSM above 7B. Compatibility ≠ scalability.
-2. **Competitive dynamics:** Sparse attention would score 6-7 but was replaced by Flash. Rubric ignores alternatives.
-3. **Ecosystem investment:** Similar scores can have different adoption based on institutional backing (GLA vs Mamba).
+This is **Table 1** (Hardware). Real success requires passing later gates:
+1.  **Training Dynamics:** Does it learn as efficiently as Transformers? (LSTM fails here)
+2.  **Scaling Laws:** Does performance scale predictably with compute? (Mamba unproven here)
+3.  **Ecosystem:** Is there institutional backing? (GLA vs Mamba)
 
 ---
 
@@ -236,6 +257,13 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 ---
 
 ## Version History & Decision Log
+
+### v1.1 (December 2025) — The "First Gate" Reframe
+**Changes:**
+1.  **Reframed as "Viability Scorecard":** Explicitly stated that high scores mean "compatible," not "better."
+2.  **Added LSTM Counter-Example:** Added LSTM (Score 8) to prove that hardware compatibility does not guarantee success. This forces the rubric to admit it ignores training dynamics and scaling laws.
+3.  **Merged KM + FSM → IM:** (See below)
+4.  **Refined STI for MoE:** (See below)
 
 ### v1.1 (December 2025) — The "Simplification & Granularity" Update
 **Changes:**
