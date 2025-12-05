@@ -1,4 +1,4 @@
-# Hardware/Infra Viability Scorecard v1.1 — Worked Examples & Stress Tests (Single-Author Draft)
+# Hardware/Infra Viability Scorecard v2.0 — Worked Examples & Stress Tests (Single-Author Draft)
 
 **The "First Gate" Filter.**
 
@@ -28,21 +28,22 @@ The scores below show how to apply the rubric to known architectures. They demon
 
 ---
 
-## 4-Axis Rubric (v1.1)
+## 5-Axis Rubric (v2.0)
 
-*KM and FSM merged into IM — they rarely scored differently in practice.*
-
+### Hardware Fit (Max 6) — The "Physics" Gate
 | Axis | Measures | 2 | 1 | 0 |
 |:-----|:---------|:--|:--|:--|
 | **GA** | GEMM-Alignment | ≥90% FLOPs in batched matmuls | 50-90% | <50% or non-GEMM core ops |
 | **MAL** | Memory Locality | Tiled/fused, no O(n²) | Partial tiling | Materializes large intermediates |
+| **PAR** | Parallelism | O(1) parallel (no seq dependency) | O(log N) scan / tree | O(N) sequential dependency |
+
+### Ecosystem Readiness (Max 4) — The "Software" Gate
+| Axis | Measures | 2 | 1 | 0 |
+|:-----|:---------|:--|:--|:--|
 | **STI** | Serving Topology | Drop-in | Localized changes | New topology class |
 | **IM** | Infra Maturity | Upstream kernels + stable API | Maintained external libs | Research code only |
 
-**STI for MoE (v1.1 refinement):** For MoE architectures, STI accounts for expert count and routing complexity:
-- ≤16 experts with static routing → STI=2
-- 17-64 experts or load-balanced routing → STI=1  
-- 65+ experts or dynamic routing → STI=0
+*STI v1.1 Refinement for MoE:* ≤16 experts = 2; 17-64 = 1; 65+ = 0.
 
 *This refinement evolved from stress-testing v1.0, which couldn't distinguish 8-expert from 256-expert designs.*
 
@@ -90,21 +91,33 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 
 ---
 
-### 4. LSTM / GRU (The "Green but Dead" Counter-Example)
+### 4. LSTM / GRU (The "Physics Fail" Counter-Example)
 
 | Axis | Score | Property-Based Justification |
 |:-----|:-----:|:-------------|
-| GA | **2** | Standard LSTM cell is just 4 dense matmuls (gates) + elementwise ops. Fully GEMM-aligned. |
-| MAL | **2** | State size is small (`d_model`). No O(n²) matrix. Trivial to fuse elementwise ops. |
-| STI | **2** | Standard dense topology. No routing. |
-| IM | **2** | `torch.nn.LSTM` is ancient, stable, and heavily optimized (cuDNN backend). |
-| **Total** | **8** | |
-
-**Crucial Lesson:** LSTM scores **8 (Green)** but is a "losing" architecture for LLMs. This proves the scorecard only measures *hardware fit*. LSTM fails at later gates (Training Dynamics: vanishing gradients; Scaling Laws: poor context scaling).
+| GA | **2** | Standard LSTM cell is GEMM-aligned. |
+| MAL | **2** | State size is small. |
+| PAR | **0** | **Sequential dependency:** `h_t` depends on `h_{t-1}`. Cannot parallelize over sequence length. |
+| STI | **2** | Standard topology. |
+| IM | **2** | Ancient, stable support. |
+| **H/E** | **4 / 4** | **Red (Physics Fail).** PAR=0 kills the Hardware score. |
 
 ---
 
-### 5. Mixtral 8×7B MoE
+### 5. ByteNet / Conv-LM (The "Gate 2 Fail" Counter-Example)
+
+| Axis | Score | Property-Based Justification |
+|:-----|:-----:|:-------------|
+| GA | **2** | Convolutions are GEMMs. |
+| MAL | **1** | Sliding window requires careful buffering/caching. |
+| PAR | **2** | Fully parallel (O(1) depth). |
+| STI | **2** | Standard topology. |
+| IM | **2** | Supported by all frameworks. |
+| **H/E** | **5 / 4** | **Yellow/Green.** Passes Gate 1 (Hardware) but fails Gate 2 (Optimization/Scaling). |
+
+---
+
+### 6. Mixtral 8×7B MoE
 
 | Axis | Score | Property-Based Justification |
 |:-----|:-----:|:-------------|
@@ -180,18 +193,19 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 
 ## Summary Table (Not a Benchmark)
 
-| Architecture | GA | MAL | STI | IM | Total | Zone |
-|:-------------|:--:|:---:|:---:|:--:|:-----:|:----:|
-| Transformer + Flash | 2 | 2 | 2 | 2 | **8** | 🟢 |
-| GQA | 2 | 2 | 2 | 2 | **8** | 🟢 |
-| MLA | 2 | 2 | 2 | 1 | **7** | 🟢 |
-| **LSTM / GRU** | **2** | **2** | **2** | **2** | **8** | 🟢 |
-| Mixtral 8×7B | 2 | 1 | 2 | 1 | **6** | 🟡 |
-| DeepSeek V3 (256 exp) | 2 | 1 | 1 | 1 | **5** | 🟡 |
-| Pure Mamba | 1 | 1 | 2 | 1 | **5** | 🟡 |
-| GLA/DeltaNet | 2 | 1 | 2 | 1 | **6** | 🟡 |
-| KANs | 0 | 0 | N/A | 0 | — | 🔴 |
-| Neural ODEs | 0 | 0 | 1 | 0 | **1** | 🔴 |
+| Architecture | GA | MAL | PAR | **H-Score** | STI | IM | **E-Score** | Zone |
+|:-------------|:--:|:---:|:---:|:-----------:|:---:|:--:|:-----------:|:----:|
+| Transformer + Flash | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
+| GQA | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
+| MLA | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟢 |
+| **LSTM / GRU** | 2 | 2 | 0 | **4** | 2 | 2 | **4** | 🔴 |
+| **ByteNet (Conv)** | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟡 |
+| Pure Mamba | 1 | 1 | 1 | **3** | 2 | 1 | **3** | 🟠 |
+| Mixtral 8×7B | 2 | 1 | 2 | **5** | 2 | 1 | **3** | 🟡 |
+| DeepSeek V3 | 2 | 1 | 2 | **5** | 1 | 1 | **2** | 🟡 |
+| GLA/DeltaNet | 2 | 1 | 1 | **4** | 2 | 1 | **3** | 🟠 |
+| Titans (Hypothetical) | 2 | 2 | 2 | **6** | 0 | 0 | **0** | 🟡 |
+| KANs | 0 | 0 | 2 | **2** | N/A | 0 | **—** | 🔴 |
 
 ---
 
@@ -243,20 +257,28 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 
 ## Glossary
 
-| Abbrev | Full Name | Measures |
-|:-------|:----------|:---------|
-| **GA** | GEMM-Alignment | % of FLOPs in dense matrix multiplications |
-| **MAL** | Memory Access Locality | Efficiency of GPU memory hierarchy usage |
-| **STI** | Serving Topology Impact | Infrastructure change vs standard Transformers |
-| **IM** | Infra Maturity | **Merged KM + FSM.** Combined because they rarely diverge. |
-| *(KM)* | *Kernel Maturity* | *Existence of upstream/vendor kernels (merged into IM)* |
-| *(FSM)* | *Framework Support* | *API stability & CI support (merged into IM)* |
-
-**Note on IM Merge:** KM and FSM diverge only in rare cases (e.g., "abandoned research code" has kernels but no framework support). For production scoring, they move together.
+| Abbrev | Full Name | Type | Measures |
+|:-------|:----------|:-----|:---------|
+| **GA** | GEMM-Alignment | H | % of FLOPs in dense matmuls |
+| **MAL** | Memory Locality | H | Efficiency of memory hierarchy |
+| **PAR** | Parallelism | H | Sequential vs Parallel execution |
+| **STI** | Serving Topology | E | Infra change vs Transformers |
+| **IM** | Infra Maturity | E | Kernel/Framework availability |
 
 ---
 
 ## Version History & Decision Log
+
+### v2.0 (December 2025) — The "Physics vs. Software" Split
+**Changes:**
+1.  **Added PAR (Parallelism) Axis:**
+    *   *Reasoning:* LSTMs scored Green (8) in v1.1 despite being hardware-incompatible due to sequential dependencies.
+    *   *Decision:* Added PAR axis. LSTMs now score H=4 (Red).
+2.  **Split Score (H / E):**
+    *   *Reasoning:* A single score conflated physics (hard) with ecosystem (soft).
+    *   *Decision:* Split into Hardware Fit (Max 6) and Ecosystem Readiness (Max 4).
+3.  **Institutional Will Rule:**
+    *   *Decision:* Defined rule: "Will can fix low E, but not low H."
 
 ### v1.1 (December 2025) — The "First Gate" Reframe
 **Changes:**
