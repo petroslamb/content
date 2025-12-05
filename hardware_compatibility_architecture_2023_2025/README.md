@@ -141,6 +141,23 @@ This folder contains all research materials, datasets, planning documents, and t
 **Previous Post (Predecessor):**
 - `/Users/petros/Projects/content/Neural Architecture Design as a Compositional Language.md`
 
+**Hardware Friction Maps (v2.5):**
+- **Public:** [`scorecard_worked_examples_public.md`](./scorecard_worked_examples_public.md) (Adoption Risk Heuristic)
+- **Internal:** [`scorecard_calibration_v1.md`](./scorecard_calibration_v1.md) (Detailed Calibration & Roadmap)
+
+---
+
+## TODO: Essay Refinement (`The_Hardware_Compatibility_Filter_Essay.md`)
+
+**Thesis Critiques to Address:**
+1.  **"Physics" vs "Economics":** Soften "computations silicon can efficiently express" to "computations that are economically viable." Hardware doesn't make things impossible, just expensive (100x cost).
+2.  **"Viability" vs "Adoption Risk":** Reframe the "Filter" from a binary survival gate to a "Friction Map" that predicts adoption velocity and risk.
+3.  **"Institutional Will":** Explicitly mention that high friction (Red Zone) can be overcome by massive resources (Google/Meta), but is fatal for startups ("The Startup Heuristic").
+4.  **Multi-Gate Nuance:** Ensure examples (ByteNet, LSTM, Titans) reflect the v2.5 "Multi-Gate" view:
+    *   **ByteNet:** Passes Gate 1 (Hardware) -> Fails Gate 2 (Optimization).
+    *   **LSTM:** Fails Gate 1 (Efficiency) -> Fails Gate 2 (Training).
+    *   **Titans:** Passes Gate 1 (Hardware) -> High Risk Gate 2 (Software Friction).
+
 ---
 
 ## Next Steps
