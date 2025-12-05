@@ -1,9 +1,7 @@
-# Hardware/Infra Viability Scorecard v2.0 — Worked Examples & Stress Tests (Single-Author Draft)
+# Hardware/Infra Viability Scorecard v2.1 — Worked Examples & Stress Tests (Single-Author Draft)
 
 **The "First Gate" Filter.**
-
-This scorecard measures **viability**, not success. It answers: *"Can this idea survive contact with 2023–2025 GPUs?"*
-It does **NOT** predict which architecture will win. High scores mean "compatible," not "better."
+*An explanatory model for hardware viability. High scores mean "compatible," not "better."*
 
 **Scope:** 2023–2025 NVIDIA GPU stacks (A100/H100, CUDA 12.x, PyTorch 2.x / JAX+XLA)  
 **Scoring date:** December 2025  
@@ -28,9 +26,9 @@ The scores below show how to apply the rubric to known architectures. They demon
 
 ---
 
-## 5-Axis Rubric (v2.0)
+## 5-Axis Rubric (v2.1)
 
-### Hardware Fit (Max 6) — The "Physics" Gate
+### Hardware Efficiency (Max 6) — The "Throughput" Gate
 | Axis | Measures | 2 | 1 | 0 |
 |:-----|:---------|:--|:--|:--|
 | **GA** | GEMM-Alignment | ≥90% FLOPs in batched matmuls | 50-90% | <50% or non-GEMM core ops |
@@ -91,7 +89,7 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 
 ---
 
-### 4. LSTM / GRU (The "Physics Fail" Counter-Example)
+### 4. LSTM / GRU (The "Efficiency Fail" Counter-Example)
 
 | Axis | Score | Property-Based Justification |
 |:-----|:-----:|:-------------|
@@ -100,7 +98,7 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 | PAR | **0** | **Sequential dependency:** `h_t` depends on `h_{t-1}`. Cannot parallelize over sequence length. |
 | STI | **2** | Standard topology. |
 | IM | **2** | Ancient, stable support. |
-| **H/E** | **4 / 4** | **Red (Physics Fail).** PAR=0 kills the Hardware score. |
+| **H/E** | **4 / 4** | **Red (Efficiency Fail).** PAR=0 kills the Hardware score. |
 
 ---
 
@@ -268,6 +266,13 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 ---
 
 ## Version History & Decision Log
+
+### v2.1 (December 2025) — The "Efficiency" Reframe
+**Changes:**
+1.  **Renamed "Physics" to "Efficiency":**
+    *   *Reasoning:* Calling H<5 a "Physics Constraint" was overconfident. LSTMs (H=4) are inefficient, not physically impossible.
+    *   *Decision:* Renamed to "Hardware Efficiency" and "Efficiency Bottleneck."
+2.  **Softened Claims:** Explicitly labeled as an "explanatory model" rather than a decision rule.
 
 ### v2.0 (December 2025) — The "Physics vs. Software" Split
 **Changes:**
