@@ -1,0 +1,4 @@
+# Critique: Scope of the Hardware Compatibility Scorecard
+
+Your hardware scorecard is not wrong; it’s just only the first gate. It tells you “can this idea even survive contact with 2023–2025 GPUs and infra?”—nothing more. LSTMs/GRUs prove that: they would score green by your axes yet are obviously losing bets for modern LLMs, because once multiple architectures are all hardware‑compatible, the real selection happens on different dimensions (expressivity, optimization behavior, scaling). So the honest framing is: this table is a necessary but strictly incomplete filter; any attempt to treat it as “which architecture will win?” is bullshit. If you present it explicitly as “Table 1: Hardware/Infra Viability,” with the clear admission that there must be later tables for training dynamics and scaling, the thesis still stands and the scorecard becomes a useful tool instead of an overclaimed oracle.
+
