@@ -1,16 +1,17 @@
-# Hardware Compatibility & Risk Profile v2.2 — Worked Examples
+# Hardware Friction Map v2.3 — Worked Examples
 
-**The "First Gate" Filter.**
-*An explanatory model for hardware viability. High scores mean "compatible," not "better."*
+**The "Cost Function" Filter.**
+*Measures infrastructure friction (Cost), not physical impossibility. High friction = High cost.*
 
 ---
 
-## The Multi-Gate Reality
+## The Friction = Cost Equation
 
-Hardware compatibility (Gate 1) is necessary but not sufficient. Real success requires passing three gates:
-1.  **Gate 1 (Hardware):** Can the chip do this efficiently? (This Scorecard)
-2.  **Gate 2 (Training):** Does it learn efficiently? (Optimization, Stability)
-3.  **Gate 3 (Scaling):** Does performance scale predictably? (Laws)
+This map predicts the **cost** of making an architecture work:
+1.  **Hardware Friction (H):** Low score = High **Compute Cost** (low MFU, wasted cycles).
+2.  **Ecosystem Friction (E):** Low score = High **Engineering Cost** (rewriting kernels).
+
+*Viability = Value - (Compute Cost + Engineering Cost).*
 
 ---
 
@@ -55,9 +56,11 @@ Hardware compatibility (Gate 1) is necessary but not sufficient. Real success re
 
 | H-Score | E-Score | Zone | Meaning |
 |:-------:|:-------:|:----:|:--------|
-| **6** | **4** | 🟢 | **Drop-in.** Hardware compatible. |
-| **5-6** | **<4** | 🟡 | **Viable with Will.** Hardware works, software/risk remains. |
-| **<5** | **Any** | 🔴/🟠 | **Efficiency Bottleneck.** Hardware fights you. |
+| **6** | **4** | 🟢 | **Low Friction.** Drop-in ready. |
+| **5-6** | **<4** | 🟡 | **Software Friction.** High Engineering Cost. (e.g., Titans) |
+| **<5** | **Any** | 🔴/🟠 | **Hardware Friction.** High Compute Cost. (e.g., LSTM, Mamba) |
+
+**The "Institutional Will" Rule:** A motivated lab (Google/Meta) can pay the **Engineering Cost** (fix low E). But **Hardware Friction** (low H) is a permanent tax on training efficiency.
 
 ---
 
@@ -89,4 +92,5 @@ Hardware compatibility (Gate 1) is necessary but not sufficient. Real success re
 - **v1.0:** 5 axes. Single score.
 - **v2.0:** Split score (H/E). Added PAR axis.
 - **v2.1:** Renamed "Physics" to "Efficiency".
-- **v2.2:** Added "Downstream Risks" column (Multi-Gate View).
+- **v2.2:** Multi-Gate Risk Profile.
+- **v2.3:** Reframed as "Friction Map". Friction = Economic Cost.

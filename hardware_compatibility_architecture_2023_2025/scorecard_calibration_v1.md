@@ -1,16 +1,17 @@
-# Hardware Compatibility & Risk Profile v2.2 — Worked Examples & Stress Tests (Single-Author Draft)
+# Hardware Friction Map v2.3 — Worked Examples & Stress Tests (Single-Author Draft)
 
-**The "First Gate" Filter.**
-*An explanatory model for hardware viability. High scores mean "compatible," not "better."*
+**The "Cost Function" Filter.**
+*Measures infrastructure friction (Cost), not physical impossibility. High friction = High cost.*
 
 ---
 
-## The Multi-Gate Reality
+## The Friction = Cost Equation
 
-Hardware compatibility (Gate 1) is necessary but not sufficient. Real success requires passing three gates:
-1.  **Gate 1 (Hardware):** Can the chip do this efficiently? (This Scorecard)
-2.  **Gate 2 (Training):** Does it learn efficiently? (Optimization, Stability)
-3.  **Gate 3 (Scaling):** Does performance scale predictably? (Laws)
+This map predicts the **cost** of making an architecture work:
+1.  **Hardware Friction (H):** Low score = High **Compute Cost** (low MFU, wasted cycles).
+2.  **Ecosystem Friction (E):** Low score = High **Engineering Cost** (rewriting kernels).
+
+*Viability = Value - (Compute Cost + Engineering Cost).*
 
 **Scope:** 2023–2025 NVIDIA GPU stacks (A100/H100, CUDA 12.x, PyTorch 2.x / JAX+XLA)  
 **Scoring date:** December 2025  
@@ -275,6 +276,13 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 ---
 
 ## Version History & Decision Log
+
+### v2.3 (December 2025) — The "Friction Map" Reframe
+**Changes:**
+1.  **Reframed as "Cost Function":**
+    *   *Reasoning:* "Viability" implied binary outcomes. "Friction" implies cost.
+    *   *Decision:* Defined Friction = Economic Cost (Compute + Engineering).
+2.  **Renamed Title:** "Hardware Friction Map".
 
 ### v2.2 (December 2025) — The "Multi-Gate" Update
 **Changes:**
