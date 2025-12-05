@@ -1,21 +1,21 @@
-# Hardware/Infra Viability Scorecard v2.0 — Worked Examples
+# Hardware/Infra Viability Scorecard v2.1 — Worked Examples
 
 **The "First Gate" Filter.**
-*Measures viability, not success. High scores mean "compatible," not "better."*
+*An explanatory model for hardware viability. High scores mean "compatible," not "better."*
 
 ---
 
-## The v2.0 Split: Physics vs. Software
+## The v2.1 Split: Efficiency vs. Software
 
-A single score hides the problem. v2.0 splits the score into two dimensions:
-1.  **Hardware Fit (H):** Can the chip do this efficiently? (Physics). *Hard constraint.*
+A single score hides the problem. v2.1 splits the score into two dimensions:
+1.  **Hardware Efficiency (H):** Can the chip do this efficiently? (Throughput/Scaling). *Hard constraint.*
 2.  **Ecosystem Readiness (E):** Does the software exist? (Infra). *Fixable with "Institutional Will".*
 
 ---
 
 ## 5-Axis Rubric
 
-### Hardware Fit (Max 6) — The "Physics" Gate
+### Hardware Efficiency (Max 6) — The "Throughput" Gate
 | Axis | Measures | 2 | 1 | 0 |
 |:-----|:---------|:--|:--|:--|
 | **GA** | GEMM-Alignment | ≥90% FLOPs in batched matmuls | 50-90% | <50% or non-GEMM core ops |
@@ -54,15 +54,15 @@ A single score hides the problem. v2.0 splits the score into two dimensions:
 
 | H-Score | E-Score | Zone | Meaning |
 |:-------:|:-------:|:----:|:--------|
-| **6** | **4** | 🟢 | **Drop-in.** Physics works, software exists. |
-| **5-6** | **<4** | 🟡 | **Viable with Will.** Physics works, but you must build the software. (e.g., Titans) |
-| **<5** | **Any** | 🔴/🟠 | **Physics Constraint.** Hardware fights you. Will cannot fix this easily. (e.g., LSTM, Mamba) |
+| **6** | **4** | 🟢 | **Drop-in.** Efficient, software exists. |
+| **5-6** | **<4** | 🟡 | **Viable with Will.** Efficient, but you must build the software. (e.g., Titans) |
+| **<5** | **Any** | 🔴/🟠 | **Efficiency Bottleneck.** Hardware fights you. Will cannot fix this easily. (e.g., LSTM, Mamba) |
 
 **The "Institutional Will" Rule:** A motivated lab (Google/Meta) can ignore a low **E-Score** if the **H-Score** is high (5-6). No amount of will fixes a low **H-Score** without new hardware.
 
 **Counter-Examples:**
-1.  **LSTM (H=4):** Fails Physics (PAR=0). Dead.
-2.  **ByteNet (H=5):** Passes Physics, but fails **Gate 2** (Optimization/Scaling). Dead.
+1.  **LSTM (H=4):** Fails Efficiency (PAR=0). Dead.
+2.  **ByteNet (H=5):** Passes Efficiency, but fails **Gate 2** (Optimization/Scaling). Dead.
 
 ---
 
@@ -93,4 +93,5 @@ A single score hides the problem. v2.0 splits the score into two dimensions:
 
 - **v1.0:** 5 axes (GA, MAL, KM, STI, FSM). Single score.
 - **v1.1:** Merged KM+FSM. Refined STI.
-- **v2.0:** Split score (Hardware vs Ecosystem). Added PAR axis to catch LSTMs.
+- **v2.0:** Split score. Added PAR axis.
+- **v2.1:** Renamed "Physics" to "Efficiency" to avoid overclaiming.
