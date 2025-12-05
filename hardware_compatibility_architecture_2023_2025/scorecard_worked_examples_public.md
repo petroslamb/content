@@ -1,43 +1,34 @@
-# Hardware Compatibility Scorecard v1.0 — Worked Examples (Single-Author Draft)
+# Hardware Compatibility Scorecard v1.0 — Worked Examples
 
-**Scope:** 2023–2025 NVIDIA GPU stacks (A100/H100, CUDA 12.x, PyTorch 2.x)  
-**Status:** Single-author worked examples. Not externally validated. Not evidence the scorecard predicts adoption.
-
----
-
-## What This Is
-
-Worked examples showing how to apply a 5-axis rubric to known architectures. All cases have known outcomes — this demonstrates the rubric's mechanics, not its predictive power.
-
-**Limitations:** Confirmation bias likely. KM/FSM axes overlap in practice. Composite bands (8-10 green, etc.) are arbitrary. Speculative scores marked N/A.
+**Single-author draft. Not externally validated.**
 
 ---
 
-## Axes (0–2 scale, higher = easier to productionize)
+## 4-Axis Rubric (Revised)
 
-| Axis | Measures |
-|:-----|:---------|
-| **GA** | GEMM-Alignment: % FLOPs in big matmuls |
-| **MAL** | Memory Access Locality: HBM↔SRAM efficiency |
-| **KM** | Kernel Maturity: upstream vs novel kernels |
-| **STI** | Serving Topology Impact: change vs dense Transformers |
-| **FSM** | Framework Support Maturity: API stability, docs, CI |
+KM and FSM merged into **Infra Maturity** — they rarely scored differently in practice.
+
+| Axis | Measures | 2 | 1 | 0 |
+|:-----|:---------|:--|:--|:--|
+| **GA** | GEMM-Alignment | ≥90% FLOPs in batched matmuls | 50-90% | <50% or non-GEMM core ops |
+| **MAL** | Memory Locality | Tiled/fused, no O(n²) | Partial tiling | Materializes large intermediates |
+| **STI** | Serving Topology | Drop-in | Localized changes (e.g., MoE routing) | New topology class |
+| **IM** | Infra Maturity | Upstream kernels + stable API | Maintained external libs | Research code only |
 
 ---
 
-## Scored Cases
+## Scored Cases (Single-Author Examples — Not a Benchmark)
 
-| Architecture | GA | MAL | KM | STI | FSM | Total | Zone |
-|:-------------|:--:|:---:|:--:|:---:|:---:|:-----:|:----:|
-| Transformer + Flash | 2 | 2 | 2 | 2 | 2 | **10** | 🟢 |
-| GQA | 2 | 2 | 2 | 2 | 2 | **10** | 🟢 |
-| MLA | 2 | 2 | 2 | 2 | 1 | **9** | 🟢 |
-| Mixtral MoE | 2 | 1 | 1 | 1 | 1 | **6** | 🟡 |
-| Pure Mamba | 1 | 1 | 1 | 2 | 1 | **6** | 🟡 |
-| KANs | 0 | 0 | 0 | N/A | 0 | **~2** | 🔴 |
-| Neural ODEs | 0 | 0 | 0 | 1 | 0 | **1** | 🔴 |
-
-**Note:** KAN's STI is marked N/A — no production deployments exist to verify serving topology assumptions.
+| Architecture | GA | MAL | STI | IM | Total | Zone | Note |
+|:-------------|:--:|:---:|:---:|:--:|:-----:|:----:|:-----|
+| Transformer + Flash | 2 | 2 | 2 | 2 | **8** | 🟢 | Reference case |
+| GQA | 2 | 2 | 2 | 2 | **8** | 🟢 | Weight-only change |
+| MLA | 2 | 2 | 2 | 1 | **7** | 🟢 | DeepSeek-only impl |
+| Mixtral MoE | 2 | 1 | 1 | 1 | **5** | 🟡 | See STI revision below |
+| Pure Mamba | 1 | 1 | 2 | 1 | **5** | 🟡 | Ceiling at 7B not captured |
+| GLA/DeltaNet | 2 | 1 | 2 | 1 | **6** | 🟡 | Qwen uses this |
+| KANs | 0 | 0 | N/A | 0 | **~0** | 🔴 | No deployments to verify STI |
+| Neural ODEs | 0 | 0 | 1 | 0 | **1** | 🔴 | Never crossed for LLMs |
 
 ---
 
@@ -45,54 +36,67 @@ Worked examples showing how to apply a 5-axis rubric to known architectures. All
 
 | Score | Zone | Meaning |
 |:-----:|:----:|:--------|
-| 8–10 | 🟢 Green | Drop-in. ~12–24 month adoption. |
-| 5–7 | 🟡 Yellow | Viable with effort. ~12–36 months. |
-| 3–4 | 🟠 Orange | Research-to-production gap. 24–36+ months. |
-| 0–2 | 🔴 Red | Research-only on current hardware. |
+| 7–8 | 🟢 | Drop-in. 12–24 months. |
+| 4–6 | 🟡 | Viable with effort. 12–36 months. |
+| 2–3 | 🟠 | Research gap. 24–36+ months. |
+| 0–1 | 🔴 | Research-only. |
 
 ---
 
-## Stress Tests
+## Rubric Revision: STI for MoE (v1.1 proposal)
 
-Cases exposing rubric limitations:
+**Problem:** Mixtral (8 experts) and DeepSeek V3 (256 experts) both score STI=1, but their serving complexity differs significantly.
 
-1. **Mamba ceiling:** Scores 6 ("viable with engineering") but no pure SSM above 7B exists. Compatibility ≠ scalability.
-2. **Sparse attention obsolescence:** Would score 7-8, but was replaced by Flash (10). High score ≠ adoption when better alternatives exist.
-3. **MoE variance:** Mixtral (8 experts) and DeepSeek V3 (256 experts) both score 6. Rubric too coarse.
+**Proposed fix:** Split STI into sub-dimensions for conditional computation:
+
+| STI-a (Expert Count) | Score |
+|:---------------------|:-----:|
+| ≤16 experts | 2 |
+| 17–64 experts | 1 |
+| 65+ experts | 0 |
+
+| STI-b (Routing) | Score |
+|:----------------|:-----:|
+| Static top-k | 2 |
+| Load-balanced | 1 |
+| Dynamic/elastic | 0 |
+
+**Re-scored with revised STI:**
+- Mixtral 8×7B: STI-a=2, STI-b=2 → STI=2. New total: **6** (was 5).
+- DeepSeek V3: STI-a=0, STI-b=1 → STI=0.5 → round to 1. Total unchanged: **5**.
+
+**Conclusion:** This revision creates meaningful separation. Consider adopting in v1.1.
 
 ---
 
-## Prospective Predictions (Dec 2025)
+## Stress Tests (Known Failure Modes of v1.0)
 
-Techniques with uncertain outcomes. Check back Dec 2027.
+1. **Mamba ceiling:** Scores 5 ("viable with effort") but no pure SSM above 7B. Compatibility ≠ scalability. *Status: Known limitation, not fixable with current axes.*
 
-| Technique | Score | Prediction |
-|:----------|:-----:|:-----------|
-| Differential Transformer | 7 | Should spread if someone invests in kernels |
-| Titans (Google) | 2 | Research-only; memory architecture too novel |
-| xLSTM | 6 | May hit Mamba-like ceiling |
-| Mixture of Depths | 6 | Serving complexity limits adoption |
-| GLA/DeltaNet | 7 | More mature than Mamba; Qwen already uses it |
+2. **Sparse attention obsolescence:** Would score 6-7, but was replaced by Flash (8). *Status: Rubric doesn't capture competitive dynamics.*
 
-**One finding:** GLA scores +1 vs Mamba but has much higher adoption (Qwen). Suggests ecosystem investment matters more than compatibility for borderline cases.
+3. **GLA vs Mamba adoption gap:** GLA scores +1 higher but has much more traction due to Alibaba investment. *Status: Ecosystem investment not captured.*
 
 ---
 
-## Known Weaknesses
+## Prospective Predictions (Dec 2025 → Dec 2027)
 
-1. **KM/FSM overlap.** Rarely score differently.
-2. **Competitive dynamics ignored.** High score ≠ adoption if alternatives exist.
-3. **Scaling not predicted.** Mamba is compatible but doesn't scale.
-4. **Ecosystem investment not captured.** GLA's adoption advantage is Alibaba's investment, not hardware fit.
+| Technique | Score | Prediction | Pushes my prior? |
+|:----------|:-----:|:-----------|:----------------:|
+| Differential Transformer | 6 | Should spread with kernel work | No |
+| Titans | 2 | Research-only | Slightly — worse than I expected |
+| xLSTM | 5 | May hit Mamba ceiling | No |
+| Mixture of Depths | 5 | Serving complexity limits adoption | No |
+| GLA/DeltaNet | 6 | Continued adoption | No |
+
+**Honest note:** Only Titans pushes against my prior. The rest confirm what I already believed.
 
 ---
 
 ## Status
 
-| Criterion | Status |
-|:----------|:------:|
-| External raters | ❌ |
-| Prospective predictions | ✅ 5 cases, check Dec 2027 |
-| Genuine finding | ✅ Ecosystem investment may dominate compatibility |
+- **External raters:** ❌
+- **Prospective predictions:** ✅ (check Dec 2027)
+- **Rubric revision from stress test:** ✅ (STI split proposed)
 
-**Conclusion:** Worked examples, not validation. Use to understand rubric mechanics. Does not prove scorecard predicts adoption.
+**Use this as:** Illustration of rubric mechanics. **Not as:** Evidence the scorecard predicts adoption.
