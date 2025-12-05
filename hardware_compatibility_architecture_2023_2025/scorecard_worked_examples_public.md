@@ -1,19 +1,20 @@
-# Hardware/Infra Viability Scorecard v2.1 — Worked Examples
+# Hardware Compatibility & Risk Profile v2.2 — Worked Examples
 
 **The "First Gate" Filter.**
 *An explanatory model for hardware viability. High scores mean "compatible," not "better."*
 
 ---
 
-## The v2.1 Split: Efficiency vs. Software
+## The Multi-Gate Reality
 
-A single score hides the problem. v2.1 splits the score into two dimensions:
-1.  **Hardware Efficiency (H):** Can the chip do this efficiently? (Throughput/Scaling). *Hard constraint.*
-2.  **Ecosystem Readiness (E):** Does the software exist? (Infra). *Fixable with "Institutional Will".*
+Hardware compatibility (Gate 1) is necessary but not sufficient. Real success requires passing three gates:
+1.  **Gate 1 (Hardware):** Can the chip do this efficiently? (This Scorecard)
+2.  **Gate 2 (Training):** Does it learn efficiently? (Optimization, Stability)
+3.  **Gate 3 (Scaling):** Does performance scale predictably? (Laws)
 
 ---
 
-## 5-Axis Rubric
+## 5-Axis Rubric (Gate 1 Only)
 
 ### Hardware Efficiency (Max 6) — The "Throughput" Gate
 | Axis | Measures | 2 | 1 | 0 |
@@ -32,21 +33,21 @@ A single score hides the problem. v2.1 splits the score into two dimensions:
 
 ---
 
-## Scored Cases (H / E)
+## Scored Cases & Risk Profile
 
-| Architecture | GA | MAL | PAR | **H-Score** | STI | IM | **E-Score** | Zone |
-|:-------------|:--:|:---:|:---:|:-----------:|:---:|:--:|:-----------:|:----:|
-| Transformer + Flash | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
-| GQA | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
-| MLA | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟢 |
-| **LSTM / GRU** | 2 | 2 | 0 | **4** | 2 | 2 | **4** | 🔴 |
-| **ByteNet (Conv)** | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟡 |
-| Pure Mamba | 1 | 1 | 1 | **3** | 2 | 1 | **3** | 🟠 |
-| Mixtral 8×7B | 2 | 1 | 2 | **5** | 2 | 1 | **3** | 🟡 |
-| DeepSeek V3 | 2 | 1 | 2 | **5** | 1 | 1 | **2** | 🟡 |
-| GLA/DeltaNet | 2 | 1 | 1 | **4** | 2 | 1 | **3** | 🟠 |
-| Titans (Hypothetical) | 2 | 2 | 2 | **6** | 0 | 0 | **0** | 🟡 |
-| KANs | 0 | 0 | 2 | **2** | N/A | 0 | **—** | 🔴 |
+| Architecture | H-Score | E-Score | Zone | Downstream Risks (Gates 2-3) |
+|:-------------|:-------:|:-------:|:----:|:-----------------------------|
+| Transformer + Flash | **6** | **4** | 🟢 | **None.** (Reference Architecture) |
+| GQA | **6** | **4** | 🟢 | **None.** (Weight-only change) |
+| MLA | **6** | **3** | 🟢 | **Low.** (DeepSeek-specific impl) |
+| **ByteNet (Conv)** | **5** | **4** | 🟡 | **Gate 2 Fail:** Optimization difficulty, context scaling limits. |
+| **LSTM / GRU** | **4** | **4** | 🔴 | **Gate 2 Fail:** Vanishing gradients, non-parallelizable. |
+| Mixtral 8×7B | **5** | **3** | 🟡 | **Gate 3 Risk:** Expert utilization at scale. |
+| DeepSeek V3 | **5** | **2** | 🟡 | **Gate 3 Risk:** Massive routing complexity. |
+| Pure Mamba | **3** | **3** | 🟠 | **Gate 3 Risk:** Scaling laws unproven >7B. |
+| GLA/DeltaNet | **4** | **3** | 🟠 | **Gate 2 Risk:** Recall/Associative memory limits. |
+| Titans (Hypothetical) | **6** | **0** | 🟡 | **Gate 2 Risk:** Memory module optimization. |
+| KANs | **2** | **—** | 🔴 | **Gate 1 Fail:** Fundamental hardware mismatch. |
 
 ---
 
@@ -54,26 +55,20 @@ A single score hides the problem. v2.1 splits the score into two dimensions:
 
 | H-Score | E-Score | Zone | Meaning |
 |:-------:|:-------:|:----:|:--------|
-| **6** | **4** | 🟢 | **Drop-in.** Efficient, software exists. |
-| **5-6** | **<4** | 🟡 | **Viable with Will.** Efficient, but you must build the software. (e.g., Titans) |
-| **<5** | **Any** | 🔴/🟠 | **Efficiency Bottleneck.** Hardware fights you. Will cannot fix this easily. (e.g., LSTM, Mamba) |
-
-**The "Institutional Will" Rule:** A motivated lab (Google/Meta) can ignore a low **E-Score** if the **H-Score** is high (5-6). No amount of will fixes a low **H-Score** without new hardware.
-
-**Counter-Examples:**
-1.  **LSTM (H=4):** Fails Efficiency (PAR=0). Dead.
-2.  **ByteNet (H=5):** Passes Efficiency, but fails **Gate 2** (Optimization/Scaling). Dead.
+| **6** | **4** | 🟢 | **Drop-in.** Hardware compatible. |
+| **5-6** | **<4** | 🟡 | **Viable with Will.** Hardware works, software/risk remains. |
+| **<5** | **Any** | 🔴/🟠 | **Efficiency Bottleneck.** Hardware fights you. |
 
 ---
 
 ## Prospective Predictions (Dec 2025 → Dec 2027)
 
-| Technique | H / E | Prediction | Pushes prior? |
-|:----------|:-----:|:-----------|:-------------:|
-| Differential Transformer | 6 / 2 | Should spread (H=6) | No |
-| Titans | 6 / 0 | Viable for Google (H=6) | Yes |
-| xLSTM | 4 / 2 | Limited by PAR=1 (scan) | No |
-| Mixture of Depths | 6 / 1 | Viable if serving solved | No |
+| Technique | H / E | Prediction | Primary Risk |
+|:----------|:-----:|:-----------|:-------------|
+| Differential Transformer | 6 / 2 | Should spread | Kernel complexity |
+| Titans | 6 / 0 | Viable for Google | Software maturity |
+| xLSTM | 4 / 2 | Niche only | Gate 1 (PAR=1) & Gate 3 (Scaling) |
+| Mixture of Depths | 6 / 1 | Viable | Serving complexity |
 
 ---
 
@@ -91,7 +86,7 @@ A single score hides the problem. v2.1 splits the score into two dimensions:
 
 ## Version History
 
-- **v1.0:** 5 axes (GA, MAL, KM, STI, FSM). Single score.
-- **v1.1:** Merged KM+FSM. Refined STI.
-- **v2.0:** Split score. Added PAR axis.
-- **v2.1:** Renamed "Physics" to "Efficiency" to avoid overclaiming.
+- **v1.0:** 5 axes. Single score.
+- **v2.0:** Split score (H/E). Added PAR axis.
+- **v2.1:** Renamed "Physics" to "Efficiency".
+- **v2.2:** Added "Downstream Risks" column (Multi-Gate View).
