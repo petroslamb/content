@@ -335,3 +335,17 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 *   *Hypothesis:* Hardware compatibility is the primary filter for adoption.
 *   *Design:* Created 5 axes based on first-principles analysis of GPU execution (compute, memory, kernels, topology, software).
 *   *Outcome:* successfully predicted "Green Zone" techniques (Flash, GQA) but failed to explain "Yellow Zone" nuances (Mamba ceiling, MoE variance).
+
+---
+
+## Path to Rigorous Calibration (Future Work)
+
+To upgrade this from an "Intuition Pump" to a "Calibrated Filter," the following work is required:
+
+1.  **Define Target:** Operationalize "Adoption Velocity" (e.g., months from paper to production deployment >X scale).
+2.  **Build Dataset:** Collect 50+ techniques (Flash, GQA, MoE, SSMs, Conv-LMs, KANs, etc.) with ground-truth outcomes.
+3.  **Operationalize Features:** Convert GA/MAL/PAR/STI/IM from qualitative judgments to measurable binary/categorical features.
+4.  **Fit Model:** Train a logistic regression or decision tree to predict adoption from features.
+5.  **Extract Rules:** Derive heuristics from the fitted model rather than hand-tuning.
+
+*Until this is done, the scorecard remains a structured opinion, not a scientific instrument.*
