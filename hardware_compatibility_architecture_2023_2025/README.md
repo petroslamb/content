@@ -160,6 +160,18 @@ This folder contains all research materials, datasets, planning documents, and t
 
 ---
 
+## TODO: arXiv Technical Report
+
+**Goal:** Formalize the "Hardware Friction Map" as a citable preprint.
+*   **Title:** *The Hardware Friction Map: An Economic Heuristic for Neural Architecture Adoption*
+*   **Content:**
+    *   Formalize the v2.5 Research Proposal (Target, Dataset, Features).
+    *   Present the "Friction = Cost" economic model.
+    *   Include the "Startup Heuristic" as the primary application.
+    *   Invite the community to build the calibration dataset.
+
+---
+
 ## Next Steps
 
 1. ✅ Research complete (0.98/1.0 confidence)
