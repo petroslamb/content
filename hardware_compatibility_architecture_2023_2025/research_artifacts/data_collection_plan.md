@@ -366,7 +366,7 @@ Actual artifacts produced from this plan (all in `research_artifacts/`):
 5. **`EXHAUSTIVE_FINAL_COMPILATION.md`** - Synthesized data collection summary and final research compilation
 6. **`EXHAUSTIVE_FINAL_COMPILATION.md` (2025 updates section)** - Additional 2025 literature updates (DeepSeek-V3/R1, Llama 4, FlashAttention-3, long-context standards, MML, etc.)
 
-Then Days 3-6 (completed): **Complete draft of the post** in `What_Actually_Works_2023_2025.md` and the Act/Appendix drafts in `article_sections/`.
+Then Days 3-6 (completed): **Complete draft of the post** in `long_article_sections/What_Actually_Works_2023_2025.md` and the Act/Appendix drafts in `long_article_sections/`.
 
 Then Day 7 (ongoing): **Your review + iteration**
 
