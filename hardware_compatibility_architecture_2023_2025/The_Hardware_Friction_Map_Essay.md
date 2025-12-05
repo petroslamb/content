@@ -20,6 +20,8 @@ Modern AI hardware heavily subsidizes specific behaviors: dense matrix multiplic
 
 The further you deviate from these primitives, the higher your **Hardware Friction**—the engineering and compute cost required to make the architecture viable.
 
+This essay is about **Gate 1: hardware and infrastructure viability**. Once an idea clears this gate, later gates—optimization behavior, scaling laws, and data quality—decide which low-friction architectures actually win.
+
 ### Zone 1: Low Friction (Green)
 *Techniques that map perfectly to existing kernels and infrastructure.*
 *   **Cost:** Retraining only.
@@ -84,9 +86,9 @@ What happens when you fight the hardware's nature? You don't get "rejected"—yo
 
 **2. Pure SSMs (State Space Models):**
 *   **Concept:** Linear-time sequence modeling (Mamba).
-*   **Friction:** **Parallelism.** Transformers train all tokens in parallel. SSMs have a sequential dependency trace. You cannot parallelize time.
-*   **Result:** Great for inference, brutal for training efficiency at massive scale.
-*   **Status:** Pure SSMs stall at ~7B parameters. Frontier models (Jamba, Qwen3-Next) use **Hybrids** (Attention + SSM) to balance the friction.
+*   **Friction:** **Parallelism.** Transformers train all tokens in parallel. SSMs have a sequential dependency trace. Parallel-scan tricks mitigate this, but they don't fully erase the gap in training efficiency at very large scale.
+*   **Result:** Great for inference, fragile for training efficiency once you push to frontier scales.
+*   **Status (Dec 2025):** Pure SSMs stall at ~7B parameters. We see no public 13B+ pure SSM models; every large deployment (Jamba, Qwen3-Next, RWKV variants) uses **Hybrids** (Attention + SSM) to balance the friction. (For the underlying evidence, see `research_artifacts/ssm_benchmark_findings.md`.)
 
 ---
 
@@ -130,4 +132,4 @@ The "Hardware Compatibility Filter" was a nice metaphor, but the **Friction Map*
 
 Innovation hasn't stopped. It has just moved to where the friction is lower: **Training** (Post-training, Data Curation) and **Hybrids** (MoE, Attention+SSM).
 
-Don't fight the friction. Map it, price it, and decide if you can afford the toll.
+Don't fight the friction. Map it, price it, and decide if you can afford the toll. For the underlying tables and timelines behind this essay, see `research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md` and `research_artifacts/ssm_benchmark_findings.md`.
