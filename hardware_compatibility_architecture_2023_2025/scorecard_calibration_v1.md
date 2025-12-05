@@ -5,13 +5,13 @@
 
 ---
 
-## The Friction = Cost Equation
+## The Friction = Risk Equation
 
-This map predicts the **cost** of making an architecture work:
-1.  **Hardware Friction (H):** Low score = High **Compute Cost** (low MFU, wasted cycles).
+This map estimates **adoption risk** for non-Google labs:
+1.  **Hardware Friction (H):** Low score = High **Compute Cost** (low MFU).
 2.  **Ecosystem Friction (E):** Low score = High **Engineering Cost** (rewriting kernels).
 
-*Viability = Value - (Compute Cost + Engineering Cost).*
+*Heuristic: If you don't have 50 kernel engineers, High Friction = Non-Starter.*
 
 **Scope:** 2023–2025 NVIDIA GPU stacks (A100/H100, CUDA 12.x, PyTorch 2.x / JAX+XLA)  
 **Scoring date:** December 2025  
@@ -276,6 +276,11 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 ---
 
 ## Version History & Decision Log
+
+### v2.4 (December 2025) — The "Adoption Risk" Polish
+**Changes:**
+1.  **Reframed Prediction:** Changed "Hardware predicts adoption velocity" to "Adoption Risk Heuristic for non-Google labs."
+2.  **Institutional Will:** Explicitly defined the "Startup Heuristic" (Software Friction is risky, Hardware Friction is fatal).
 
 ### v2.3 (December 2025) — The "Friction Map" Reframe
 **Changes:**

@@ -5,13 +5,13 @@
 
 ---
 
-## The Friction = Cost Equation
+## The Friction = Risk Equation
 
-This map predicts the **cost** of making an architecture work:
-1.  **Hardware Friction (H):** Low score = High **Compute Cost** (low MFU, wasted cycles).
+This map estimates **adoption risk** for non-Google labs:
+1.  **Hardware Friction (H):** Low score = High **Compute Cost** (low MFU).
 2.  **Ecosystem Friction (E):** Low score = High **Engineering Cost** (rewriting kernels).
 
-*Viability = Value - (Compute Cost + Engineering Cost).*
+*Heuristic: If you don't have 50 kernel engineers, High Friction = Non-Starter.*
 
 ---
 
@@ -60,18 +60,18 @@ This map predicts the **cost** of making an architecture work:
 | **5-6** | **<4** | 🟡 | **Software Friction.** High Engineering Cost. (e.g., Titans) |
 | **<5** | **Any** | 🔴/🟠 | **Hardware Friction.** High Compute Cost. (e.g., LSTM, Mamba) |
 
-**The "Institutional Will" Rule:** A motivated lab (Google/Meta) can pay the **Engineering Cost** (fix low E). But **Hardware Friction** (low H) is a permanent tax on training efficiency.
+**The "Startup Heuristic":** A motivated lab (Google/Meta) can pay the **Engineering Cost** to fix low E. But for a startup or research group, **Software Friction** (Yellow) is a major risk, and **Hardware Friction** (Red) is likely fatal.
 
 ---
 
-## Prospective Predictions (Dec 2025 → Dec 2027)
+## Prospective Risk Analysis (Dec 2025 → Dec 2027)
 
-| Technique | H / E | Prediction | Primary Risk |
-|:----------|:-----:|:-----------|:-------------|
-| Differential Transformer | 6 / 2 | Should spread | Kernel complexity |
-| Titans | 6 / 0 | Viable for Google | Software maturity |
-| xLSTM | 4 / 2 | Niche only | Gate 1 (PAR=1) & Gate 3 (Scaling) |
-| Mixture of Depths | 6 / 1 | Viable | Serving complexity |
+| Technique | H / E | Adoption Risk | Primary Risk Factor |
+|:----------|:-----:|:--------------|:--------------------|
+| Differential Transformer | 6 / 2 | **Medium** | Kernel complexity (E) |
+| Titans | 6 / 0 | **High (Non-Google)** | Software maturity (E) |
+| xLSTM | 4 / 2 | **Very High** | Efficiency (H) & Scaling (Gate 3) |
+| Mixture of Depths | 6 / 1 | **High** | Serving complexity (E) |
 
 ---
 
