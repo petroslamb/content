@@ -1,110 +1,96 @@
-# Hardware/Infra Viability Scorecard (v1.1)
+# Hardware/Infra Viability Scorecard v2.0 — Worked Examples
 
 **The "First Gate" Filter.**
-
-This scorecard measures **viability**, not success. It answers: *"Can this idea survive contact with 2023–2025 GPUs?"*
-It does **NOT** predict which architecture will win. High scores mean "compatible," not "better."
+*Measures viability, not success. High scores mean "compatible," not "better."*
 
 ---
 
-## 4-Axis Rubric
+## The v2.0 Split: Physics vs. Software
 
+A single score hides the problem. v2.0 splits the score into two dimensions:
+1.  **Hardware Fit (H):** Can the chip do this efficiently? (Physics). *Hard constraint.*
+2.  **Ecosystem Readiness (E):** Does the software exist? (Infra). *Fixable with "Institutional Will".*
+
+---
+
+## 5-Axis Rubric
+
+### Hardware Fit (Max 6) — The "Physics" Gate
 | Axis | Measures | 2 | 1 | 0 |
 |:-----|:---------|:--|:--|:--|
 | **GA** | GEMM-Alignment | ≥90% FLOPs in batched matmuls | 50-90% | <50% or non-GEMM core ops |
 | **MAL** | Memory Locality | Tiled/fused, no O(n²) | Partial tiling | Materializes large intermediates |
+| **PAR** | Parallelism | O(1) parallel (no seq dependency) | O(log N) scan / tree | O(N) sequential dependency |
+
+### Ecosystem Readiness (Max 4) — The "Software" Gate
+| Axis | Measures | 2 | 1 | 0 |
+|:-----|:---------|:--|:--|:--|
 | **STI** | Serving Topology | Drop-in | Localized changes | New topology class |
-| **IM** | Infra Maturity | Upstream kernels + stable API | Maintained external libs | Research code only |
+| **IM** | Infra Maturity | Upstream kernels + stable API | External libs | Research code only |
 
-*KM and FSM merged into IM — they rarely scored differently.*
-
-**STI for MoE (v1.1 refinement):** For MoE architectures, STI accounts for expert count and routing complexity:
-- ≤16 experts with static routing → STI=2
-- 17-64 experts or load-balanced routing → STI=1  
-- 65+ experts or dynamic routing → STI=0
-
-*This refinement evolved from stress-testing v1.0, which couldn't distinguish 8-expert from 256-expert designs. Expect future revisions as more edge cases are scored.*
+*STI v1.1 Refinement for MoE:* ≤16 experts = 2; 17-64 = 1; 65+ = 0.
 
 ---
 
-## Scored Cases (Viability ≠ Success)
+## Scored Cases (H / E)
 
-| Architecture | GA | MAL | STI | IM | Total | Zone |
-|:-------------|:--:|:---:|:---:|:--:|:-----:|:----:|
-| Transformer + Flash | 2 | 2 | 2 | 2 | **8** | 🟢 |
-| GQA | 2 | 2 | 2 | 2 | **8** | 🟢 |
-| MLA | 2 | 2 | 2 | 1 | **7** | 🟢 |
-| **LSTM / GRU** | **2** | **2** | **2** | **2** | **8** | 🟢 |
-| Mixtral 8×7B | 2 | 1 | 2 | 1 | **6** | 🟡 |
-| DeepSeek V3 (256 exp) | 2 | 1 | 1 | 1 | **5** | 🟡 |
-| Pure Mamba | 1 | 1 | 2 | 1 | **5** | 🟡 |
-| GLA/DeltaNet | 2 | 1 | 2 | 1 | **6** | 🟡 |
-| KANs | 0 | 0 | N/A | 0 | — | 🔴 |
-| Neural ODEs | 0 | 0 | 1 | 0 | **1** | 🔴 |
-
-**Crucial Lesson:** LSTM scores **8 (Green)** but is a "losing" architecture for LLMs. This proves the scorecard only measures *hardware fit*, not expressivity or scaling laws.
+| Architecture | GA | MAL | PAR | **H-Score** | STI | IM | **E-Score** | Zone |
+|:-------------|:--:|:---:|:---:|:-----------:|:---:|:--:|:-----------:|:----:|
+| Transformer + Flash | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
+| GQA | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
+| MLA | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟢 |
+| **LSTM / GRU** | 2 | 2 | 0 | **4** | 2 | 2 | **4** | 🔴 |
+| **ByteNet (Conv)** | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟡 |
+| Pure Mamba | 1 | 1 | 1 | **3** | 2 | 1 | **3** | 🟠 |
+| Mixtral 8×7B | 2 | 1 | 2 | **5** | 2 | 1 | **3** | 🟡 |
+| DeepSeek V3 | 2 | 1 | 2 | **5** | 1 | 1 | **2** | 🟡 |
+| GLA/DeltaNet | 2 | 1 | 1 | **4** | 2 | 1 | **3** | 🟠 |
+| Titans (Hypothetical) | 2 | 2 | 2 | **6** | 0 | 0 | **0** | 🟡 |
+| KANs | 0 | 0 | 2 | **2** | N/A | 0 | **—** | 🔴 |
 
 ---
 
 ## Zone Interpretation
 
-| Score | Zone | Meaning |
-|:-----:|:----:|:--------|
-| 7–8 | 🟢 | **Hardware Compatible.** (Does not imply model quality) |
-| 4–6 | 🟡 | **Viable with Effort.** (Requires engineering investment) |
-| 2–3 | 🟠 | **Infra Gap.** (Hard to productionize) |
-| 0–1 | 🔴 | **Incompatible.** (Research-only on current stack) |
+| H-Score | E-Score | Zone | Meaning |
+|:-------:|:-------:|:----:|:--------|
+| **6** | **4** | 🟢 | **Drop-in.** Physics works, software exists. |
+| **5-6** | **<4** | 🟡 | **Viable with Will.** Physics works, but you must build the software. (e.g., Titans) |
+| **<5** | **Any** | 🔴/🟠 | **Physics Constraint.** Hardware fights you. Will cannot fix this easily. (e.g., LSTM, Mamba) |
 
----
+**The "Institutional Will" Rule:** A motivated lab (Google/Meta) can ignore a low **E-Score** if the **H-Score** is high (5-6). No amount of will fixes a low **H-Score** without new hardware.
 
-## Known Limitations (The "Later Tables")
-
-This is **Table 1** (Hardware). Real success requires passing later gates:
-1.  **Training Dynamics:** Does it learn as efficiently as Transformers? (LSTM fails here)
-2.  **Scaling Laws:** Does performance scale predictably with compute? (Mamba unproven here)
-3.  **Ecosystem:** Is there institutional backing? (GLA vs Mamba)
+**Counter-Examples:**
+1.  **LSTM (H=4):** Fails Physics (PAR=0). Dead.
+2.  **ByteNet (H=5):** Passes Physics, but fails **Gate 2** (Optimization/Scaling). Dead.
 
 ---
 
 ## Prospective Predictions (Dec 2025 → Dec 2027)
 
-| Technique | Score | Prediction | Pushes prior? |
+| Technique | H / E | Prediction | Pushes prior? |
 |:----------|:-----:|:-----------|:-------------:|
-| Differential Transformer | 6 | Should spread with kernel work | No |
-| Titans | 2 | Research-only | Slightly |
-| xLSTM | 5 | May hit Mamba ceiling | No |
-| Mixture of Depths | 5 | Serving complexity limits adoption | No |
-| GLA/DeltaNet | 6 | Continued adoption | No |
-
-**Honest note:** Only Titans pushes against my prior.
-
----
-
-## Status
-
-- **External raters:** ❌
-- **Prospective predictions:** ✅ (check Dec 2027)
-
-**Use as:** Illustration of rubric mechanics. **Not as:** Evidence of predictive power.
+| Differential Transformer | 6 / 2 | Should spread (H=6) | No |
+| Titans | 6 / 0 | Viable for Google (H=6) | Yes |
+| xLSTM | 4 / 2 | Limited by PAR=1 (scan) | No |
+| Mixture of Depths | 6 / 1 | Viable if serving solved | No |
 
 ---
 
 ## Glossary
 
-| Abbrev | Full Name | Measures |
-|:-------|:----------|:---------|
-| **GA** | GEMM-Alignment | % of FLOPs in dense matrix multiplications |
-| **MAL** | Memory Access Locality | Efficiency of GPU memory hierarchy usage |
-| **STI** | Serving Topology Impact | Infrastructure change vs standard Transformers |
-| **IM** | Infra Maturity | **Merged KM + FSM.** Combined because they rarely diverge. |
-| *(KM)* | *Kernel Maturity* | *Existence of upstream/vendor kernels (merged into IM)* |
-| *(FSM)* | *Framework Support* | *API stability & CI support (merged into IM)* |
-
-**Note on IM Merge:** KM and FSM diverge only in rare cases (e.g., "abandoned research code" has kernels but no framework support). For production scoring, they move together.
+| Abbrev | Full Name | Type | Measures |
+|:-------|:----------|:-----|:---------|
+| **GA** | GEMM-Alignment | H | % of FLOPs in dense matmuls |
+| **MAL** | Memory Locality | H | Efficiency of memory hierarchy |
+| **PAR** | Parallelism | H | Sequential vs Parallel execution |
+| **STI** | Serving Topology | E | Infra change vs Transformers |
+| **IM** | Infra Maturity | E | Kernel/Framework availability |
 
 ---
 
 ## Version History
 
-- **v1.0:** Initial 5-axis rubric.
-- **v1.1:** Merged KM+FSM into IM (4 axes). Refined STI for MoE.
+- **v1.0:** 5 axes (GA, MAL, KM, STI, FSM). Single score.
+- **v1.1:** Merged KM+FSM. Refined STI.
+- **v2.0:** Split score (Hardware vs Ecosystem). Added PAR axis to catch LSTMs.
