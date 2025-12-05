@@ -85,11 +85,9 @@ This map estimates **adoption risk** for non-Google labs:
 
 ---
 
-## Future Work: Towards a Calibrated Model
+## Open Challenge: Towards a Calibrated Model
 
 *This section outlines an **aspirational** research plan to upgrade this map from an "Intuition Pump" to a "Calibrated Filter."*
-
-> **Status:** Open Challenge (Not currently underway). We invite the community to take this on.
 
 ### 1. Target Variable
 **"Adoption Velocity"** defined as: Months from *seminal paper* to *first production deployment at >10B parameter scale* (or equivalent commercial usage).
