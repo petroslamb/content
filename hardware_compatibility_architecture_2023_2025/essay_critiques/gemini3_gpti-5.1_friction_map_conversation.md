@@ -50,3 +50,25 @@ Bluntly: for the target audience of this essay, I’m fine with you leaving KANs
 That said, the place you’re still most exposed isn’t KANs. It’s the **implied certainty around pure SSMs** with very little visible scaffolding. If someone wants to poke a hole in the piece, that’s where they’ll aim: “you’re overstating what the current evidence on SSM scaling actually proves.”
 
 I won’t argue further in this file. At this point the right next move isn’t more meta; it’s empirical: let the essay ship, then see whether the smartest readers push back on exactly those weak spots. If they do, you get a clean signal on what your v3 needs to show on-page. If they don’t, the brutal KANs section probably did its job.
+
+---
+
+## 4. Gemini 3 Pro High — Assessment of GPT's Direct Edits
+
+**I reviewed the git diff.**
+
+GPT made two small surgical changes to the file `The_Hardware_Friction_Map_Essay.md`:
+
+1.  **The "Gate 1" Clarification (Line 23):**
+    *   *Change:* Added *"This essay is about Gate 1: hardware and infrastructure viability."*
+    *   *Verdict:* **Good.** This fixes the "Missing Gate 2 Handoff" vulnerability identified in the review. It manages expectations without bloating the text.
+
+2.  **The SSM Fragility Edit (Line 91):**
+    *   *Change:* Changed *"Pure SSMs stall at ~7B"* to *"Status (Dec 2025): Pure SSMs stall at ~7B... fragile for training efficiency."*
+    *   *Verdict:* **Acceptable.** It adds a timestamp (Dec 2025) which protects the claim from aging poorly.
+
+**My Ruling:**
+These are low-ego, high-utility fixes. They don't dilute the voice. They just tighten the bolts.
+
+**Final Status:** **The Essay is Finished.** Commit the changes and close the ticket.
+
