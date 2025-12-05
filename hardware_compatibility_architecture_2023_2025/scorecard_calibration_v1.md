@@ -1,7 +1,16 @@
-# Hardware/Infra Viability Scorecard v2.1 — Worked Examples & Stress Tests (Single-Author Draft)
+# Hardware Compatibility & Risk Profile v2.2 — Worked Examples & Stress Tests (Single-Author Draft)
 
 **The "First Gate" Filter.**
 *An explanatory model for hardware viability. High scores mean "compatible," not "better."*
+
+---
+
+## The Multi-Gate Reality
+
+Hardware compatibility (Gate 1) is necessary but not sufficient. Real success requires passing three gates:
+1.  **Gate 1 (Hardware):** Can the chip do this efficiently? (This Scorecard)
+2.  **Gate 2 (Training):** Does it learn efficiently? (Optimization, Stability)
+3.  **Gate 3 (Scaling):** Does performance scale predictably? (Laws)
 
 **Scope:** 2023–2025 NVIDIA GPU stacks (A100/H100, CUDA 12.x, PyTorch 2.x / JAX+XLA)  
 **Scoring date:** December 2025  
@@ -189,21 +198,21 @@ These scores demonstrate how the rubric applies. Justifications aim to be **prop
 
 ---
 
-## Summary Table (Not a Benchmark)
+## Scored Cases & Risk Profile (Summary)
 
-| Architecture | GA | MAL | PAR | **H-Score** | STI | IM | **E-Score** | Zone |
-|:-------------|:--:|:---:|:---:|:-----------:|:---:|:--:|:-----------:|:----:|
-| Transformer + Flash | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
-| GQA | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 |
-| MLA | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟢 |
-| **LSTM / GRU** | 2 | 2 | 0 | **4** | 2 | 2 | **4** | 🔴 |
-| **ByteNet (Conv)** | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟡 |
-| Pure Mamba | 1 | 1 | 1 | **3** | 2 | 1 | **3** | 🟠 |
-| Mixtral 8×7B | 2 | 1 | 2 | **5** | 2 | 1 | **3** | 🟡 |
-| DeepSeek V3 | 2 | 1 | 2 | **5** | 1 | 1 | **2** | 🟡 |
-| GLA/DeltaNet | 2 | 1 | 1 | **4** | 2 | 1 | **3** | 🟠 |
-| Titans (Hypothetical) | 2 | 2 | 2 | **6** | 0 | 0 | **0** | 🟡 |
-| KANs | 0 | 0 | 2 | **2** | N/A | 0 | **—** | 🔴 |
+| Architecture | H-Score | E-Score | Zone | Downstream Risks (Gates 2-3) |
+|:-------------|:-------:|:-------:|:----:|:-----------------------------|
+| Transformer + Flash | **6** | **4** | 🟢 | **None.** (Reference Architecture) |
+| GQA | **6** | **4** | 🟢 | **None.** (Weight-only change) |
+| MLA | **6** | **3** | 🟢 | **Low.** (DeepSeek-specific impl) |
+| **ByteNet (Conv)** | **5** | **4** | 🟡 | **Gate 2 Fail:** Optimization difficulty, context scaling limits. |
+| **LSTM / GRU** | **4** | **4** | 🔴 | **Gate 2 Fail:** Vanishing gradients, non-parallelizable. |
+| Mixtral 8×7B | **5** | **3** | 🟡 | **Gate 3 Risk:** Expert utilization at scale. |
+| DeepSeek V3 | **5** | **2** | 🟡 | **Gate 3 Risk:** Massive routing complexity. |
+| Pure Mamba | **3** | **3** | 🟠 | **Gate 3 Risk:** Scaling laws unproven >7B. |
+| GLA/DeltaNet | **4** | **3** | 🟠 | **Gate 2 Risk:** Recall/Associative memory limits. |
+| Titans (Hypothetical) | **6** | **0** | 🟡 | **Gate 2 Risk:** Memory module optimization. |
+| KANs | **2** | **—** | 🔴 | **Gate 1 Fail:** Fundamental hardware mismatch. |
 
 ---
 
@@ -266,6 +275,13 @@ This is **Table 1** (Hardware). Real success requires passing later gates:
 ---
 
 ## Version History & Decision Log
+
+### v2.2 (December 2025) — The "Multi-Gate" Update
+**Changes:**
+1.  **Added "Downstream Risks" Column:**
+    *   *Reasoning:* "Green" hardware scores (ByteNet, LSTM) were misleading. They pass Gate 1 (Hardware) but fail Gate 2 (Optimization) or Gate 3 (Scaling).
+    *   *Decision:* Explicitly listed these risks to validate the "First Gate" framing.
+2.  **Renamed Title:** "Hardware Compatibility & Risk Profile".
 
 ### v2.1 (December 2025) — The "Efficiency" Reframe
 **Changes:**
