@@ -29,14 +29,14 @@ This folder contains all research materials, datasets, planning documents, and t
 ## Files in This Folder
 
 ### Planning & Blueprint (Article Components)
-- **`long_article_sections/A+++_blueprint.md`** ⭐ - Refined A+++ blueprint with narrative anchors (Meta Pivot, Context Trap, DeepSeek-R1)
-- **`research_artifacts/data_collection_plan.md`** - Detailed plan for collecting all datasets
-- **`research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md`** - Final research summary with all findings (READ THIS FIRST)
+- **`long_article_sections/A+++_blueprint.md`** ⭐ – Refined A+++ blueprint with narrative anchors (Meta Pivot, Context Trap, DeepSeek‑R1)
+- **`research_artifacts/data_collection_plan.md`** – Detailed plan for collecting all datasets
+- **`research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md`** – Final research summary with all findings (READ THIS FIRST)
   
-> **Edit Policy Reminder:**  
-> Do **not** modify `long_article_sections/What_Actually_Works_2023_2025.md` unless explicitly requested by the author. This file is treated as the canonical draft and should remain stable by default.
+> **Edit Policy Reminder (Canonical Drafts):**  
+> Do **not** modify `long_article_sections/What_Actually_Works_2023_2025.md` unless explicitly requested by the author. This file is treated as the canonical long‑form draft and should remain stable by default. Substack‑ready copies live under `substack_drafts/`.
 
-### Research Datasets (4 Complete)
+### Research Datasets (4+ Complete)
 
 **Dataset 1: MoE Speedup Meta-Analysis**
 - **`research_artifacts/moe_speedup_data_wip.md`** - 18+ sources, honest ≈2–3× throughput vs marketing 5–7×, with ~2.1–2.5× median at 128K context
@@ -58,22 +58,37 @@ This folder contains all research materials, datasets, planning documents, and t
 - **`audience_profile.md`** - Target audience analysis (senior technical practitioners)
 - **`refs/research_references.md`** - Centralized bibliography (papers, model cards, and docs backing all datasets)
 
-### Critiques & Reviews
-- **`long_article_sections/model_critiques/`** - Brutal critiques and feedback from various AI models (Gemini, GPT, Claude) on the article drafts.
-- **`essay_critiques/`** - Critiques and feedback on the "Hardware Compatibility Filter" essay.
-- **`arxiv_critiques/`** - Critiques and feedback on the arXiv technical report drafts.
+### Critiques & Reviews (By Component)
+- **Article critiques:** `long_article_sections/critiques/`
+  - `what_actually_works_current_critique.md` – Current, 10‑axis brutal critique of the main article.
+  - `previous/` – Older model critiques (Gemini, GPT‑4/5, Claude, etc.).
+- **Essay critiques:** `essay_sections/critiques/`
+  - `hardware_friction_map_current_critique.md` – Current, 10‑axis critique of the Friction Map essay.
+  - `previous/` – Earlier conversational / model critiques of the essay drafts.
+- **Scorecard & meta‑post critiques:** `hardware_friction_scorecard/critiques/`
+  - `hardware_friction_scorecard_current_critique.md` – Current, 10‑axis critique of the scorecard.
+  - `hardware_friction_map_critiques_stress_tests_current_critique.md` – Current brutal critique of the “How We Tried to Break the Map” meta‑post (kept close to scorecard tooling).
+  - `previous/` – Original scope critique and related notes.
 
-### Article Sections (Publication-Ready)
-- **`long_article_sections/Act_I_The_Hardware_Compatibility_Filter.md`** - Act I (Hardware Compatibility Filter)
-- **`long_article_sections/Act_II_The_Conditional_Execution_Revolution.md`** - Act II (Conditional Execution)
-- **`long_article_sections/Act_III_The_Infrastructure_Lag_Pattern.md`** - Act III (Infrastructure Lag)
-- **`long_article_sections/Appendix_Evidence.md`** - Appendix (tables and raw evidence)
-- **`long_article_sections/Glossary_and_Key_Concepts.md`** - Glossary and key concepts referenced throughout the article
-- **`long_article_sections/Hardware_and_Kernel_Primer.md`** - Hardware and kernel primer (how kernels map to GPU primitives)
-- **`long_article_sections/Bibliography_and_References.md`** - Bibliography with one-sentence explainers for each citation
+### Article Sections (Canonical Components)
+- **`long_article_sections/Act_I_The_Hardware_Compatibility_Filter.md`** – Act I (Hardware Compatibility Filter)
+- **`long_article_sections/Act_II_The_Conditional_Execution_Revolution.md`** – Act II (Conditional Execution)
+- **`long_article_sections/Act_III_The_Infrastructure_Lag_Pattern.md`** – Act III (Infrastructure Lag)
+- **`long_article_sections/Appendix_Evidence.md`** – Appendix (tables and raw evidence)
+- **`long_article_sections/Glossary_and_Key_Concepts.md`** – Glossary and key concepts referenced throughout the article
+- **`long_article_sections/Hardware_and_Kernel_Primer.md`** – Hardware and kernel primer (how kernels map to GPU primitives)
+- **`long_article_sections/Bibliography_and_References.md`** – Bibliography with one‑sentence explainers for each citation
 
 ### Master Article
-- **`long_article_sections/What_Actually_Works_2023_2025.md`** - Concatenated, polished draft assembled from all article sections; ready for publication (e.g., Substack)
+- **`long_article_sections/What_Actually_Works_2023_2025.md`** – Concatenated, polished canonical draft assembled from all article sections.
+
+### Friction Map Essay (Gate‑1 Field Manual)
+- **`essay_sections/The_Hardware_Friction_Map_Essay_substack.md`** – Canonical markdown for the “Hardware Friction Map” essay.
+- **`essay_sections/Appendix_Friction_Map_Evidence.md`** – On‑page appendix for the essay (MoE context trap, SSM scale, mini zones table, references).
+
+### Hardware Friction Scorecard (Tooling)
+- **`hardware_friction_scorecard/public_worked_examples.md`** – Public “Hardware Friction Map v2.3 — Worked Examples” (adoption risk heuristic).
+- **`hardware_friction_scorecard/internal_calibration_roadmap.md`** – Internal “Worked Examples & Stress Tests” and calibration roadmap.
 
 ---
 
@@ -152,18 +167,46 @@ This folder contains all research materials, datasets, planning documents, and t
 
 ---
 
-## TODO: Essay Refinement (`The_Hardware_Compatibility_Filter_Essay.md`)
+## Publication‑Ready Substack Drafts
 
-**Thesis Critiques to Address:**
-1.  **"Physics" vs "Economics":** Soften "computations silicon can efficiently express" to "computations that are economically viable." Hardware doesn't make things impossible, just expensive (100x cost).
-2.  **"Viability" vs "Adoption Risk":** Reframe the "Filter" from a binary survival gate to a "Friction Map" that predicts adoption velocity and risk.
-3.  **"Institutional Will":** Explicitly mention that high friction (Red Zone) can be overcome by massive resources (Google/Meta), but is fatal for startups ("The Startup Heuristic").
-4.  **Multi-Gate Nuance:** Ensure examples (ByteNet, LSTM, Titans) reflect the v2.5 "Multi-Gate" view:
-    *   **ByteNet:** Passes Gate 1 (Hardware) -> Fails Gate 2 (Optimization).
-    *   **LSTM:** Fails Gate 1 (Efficiency) -> Fails Gate 2 (Training).
-    *   **Titans:** Passes Gate 1 (Hardware) -> High Risk Gate 2 (Software Friction).
+All Substack‑ready markdown lives under `substack_drafts/` and mirrors the canonical research artifacts:
+
+1. **Main Article (Narrative Backbone)**  
+   - `substack_drafts/Substack_What_Actually_Works_2023_2025_Update.md`  
+   - Adds a short Dec 2025 update box linking to the Friction Map essay and scorecard, but otherwise mirrors the canonical `long_article_sections/What_Actually_Works_2023_2025.md`.
+
+2. **Friction Map Essay (Gate‑1 Field Manual)**  
+   - `substack_drafts/Substack_Hardware_Friction_Map_Essay_v2.md`  
+   - 2025 field‑manual derivative of the main article, focused on Gate‑1 hardware/infra friction, zones, and the Startup Heuristic, with Appendix A–D and references in‑line.
+
+3. **Hardware Friction Scorecard (Technical Companion)**  
+   - `substack_drafts/Substack_Hardware_Friction_Scorecard_v2.md`  
+   - Standalone explanation of the GA/MAL/PAR/STI/IM rubric, H/E scores, worked examples, zone interpretation, and the “Open Challenge” calibration plan.
+
+4. **Critiques & Stress Tests Meta‑Post**  
+   - `substack_drafts/Substack_Hardware_Friction_Map_Critiques_and_Stress_Tests.md`  
+   - Public narrative of how the Friction Map + Scorecard were stress‑tested and refined in response to critiques.
+
+These files are the ones to copy into Substack for publication; the canonical research remains in `long_article_sections/`, `essay_sections/`, `hardware_friction_scorecard/`, and `research_artifacts/`.
 
 ---
+
+## TODO: Remaining Refinements
+
+- **Diagrams & Figures (All Pieces):**  
+  - Add at least 1–2 diagrams to the main article and Friction Map essay (e.g., 12/24/36‑month infra lag pipeline; H/E zones with example techniques plotted).
+
+- **Scorecard Calibration:**  
+  - Execute a first small prospective calibration of the scorecard (3–5 techniques) and consider publishing the results as a follow‑up.
+
+- **arXiv Technical Report:**  
+  - Formalize the "Hardware Friction Map" as a citable preprint:
+    *   Title: *The Hardware Friction Map: An Economic Heuristic for Neural Architecture Adoption*  
+    *   Content:
+        - Formalize the v2.5 research proposal (target, dataset, features).  
+        - Present the "Friction = Cost" economic model.  
+        - Include the "Startup Heuristic" as the primary application.  
+        - Invite the community to build and critique the calibration dataset.
 
 ## TODO: arXiv Technical Report
 
