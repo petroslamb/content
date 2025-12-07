@@ -412,6 +412,52 @@ When a technique has already been scored in the Gate‑1 dataset, it is marked w
 
 ---
 
+## 44. Open‑Source Foundation Transformers (OPT, BLOOM, Falcon, Mistral, OLMo, Yi, Baichuan 2, InternLM, ChatGLM, 2022–2024)
+
+- **Representative papers:**  
+  - *OPT: Open Pre‑trained Transformer Language Models* (Meta, 2022, arXiv:2205.01068).  
+  - *BLOOM: A 176B Parameter Open‑Access Multilingual Language Model* (BigScience, 2022, arXiv:2211.05100).  
+  - *Falcon 180B* (TII, 2023, arXiv:2311.16867).  
+  - *Mistral 7B* (Mistral AI, 2023, arXiv:2310.06825).  
+  - *OLMo: Accelerated Language Model Development through Open Foundation Models* (AI2, 2024, arXiv:2402.00838).  
+  - *Yi: Open Foundation Models by 01.AI* (01.AI, 2024, arXiv:2403.04652).  
+  - *Baichuan 2: Open Large‑scale Language Models* (Baichuan Inc., 2023, arXiv:2309.10305).  
+  - *InternLM: A Multilingual Multimodal Foundation Model* (Shanghai AI Lab, 2023, arXiv:2309.15112).  
+- **Summary:** A wave of open foundation models from many labs (Meta, BigScience, Mistral, TII, AI2, 01.AI, Baichuan, Shanghai AI Lab) that all adopt dense decoder‑only Transformers with H≈5–6 and E=4. Gate‑1 relevance: despite differing data, sizes, and licenses, they share the same highly GEMM‑aligned, infra‑friendly architecture as GPT/T5/PaLM, reinforcing that successful production stacks converge to H=5–6, E=4 designs.  
+- **Status:** Scored in `scorecard_dataset/scored_architectures.md` (B35–B43).
+
+---
+
+## 45. Scaling‑Law Foundation Models (Gopher, Chinchilla, 2021–2022)
+
+- **Canonical papers:**  
+  - *Scaling Language Models: Methods, Analysis & Insights from Training Gopher* (Rae et al., 2021, arXiv:2112.11446).  
+  - *Training Compute‑Optimal Large Language Models* (Hoffmann et al., 2022, arXiv:2203.15556).  
+- **Summary:** Dense Transformer models that anchor modern scaling‑law results: Gopher (280B) and Chinchilla (70B) show that compute‑optimal training, not new architectures, is the main driver of performance. Gate‑1 relevance: they confirm that H=5, E=4 dense Transformers remain optimal even when you change the compute/parameter/data balance, with no need for sub‑quadratic or exotic kernels.  
+- **Status:** Scored in `scorecard_dataset/scored_architectures.md` (B44–B45).
+
+---
+
+## 46. Code‑Specialized Transformers (StarCoder / StarCoder2, Code Llama, 2023–2024)
+
+- **Canonical papers:**  
+  - *StarCoder 2 and The Stack v2: The Next Generation of Code LLMs* (BigCode, 2024, arXiv:2402.19173).  
+  - *Code Llama: Open Foundation Models for Code* (Rozière et al., 2023, arXiv:2308.12950).  
+- **Summary:** High‑quality open models specialized for code that are built by adapting dense decoder‑only Transformers (GPT/Llama‑style) to large code corpora. Gate‑1 relevance: they keep GA/MAL/PAR at 2/2/2 and E=4, showing that even in domains with strong structural priors (source code), the winning pattern is still “Transformer++ with better data and training,” not fundamentally new architectures.  
+- **Status:** Scored in `scorecard_dataset/scored_architectures.md` (B46–B47).
+
+---
+
+## 47. Pre‑2023 Long‑Context Transformers (Transformer‑XL, Perceiver IO, 2019–2021)
+
+- **Canonical papers:**  
+  - *Transformer‑XL: Attentive Language Models Beyond a Fixed‑Length Context* (Dai et al., 2019, arXiv:1901.02860).  
+  - *Perceiver IO: A General Architecture for Structured Inputs & Outputs* (Jaegle et al., 2021, arXiv:2107.14795).  
+- **Summary:** Early attempts to extend context and modality flexibility using segment‑level recurrence (Transformer‑XL) and latent‑array cross‑attention (Perceiver IO). Gate‑1 relevance: both introduce non‑trivial PAR penalties or infra complexity relative to plain dense attention (H≈4, E≤3), which helps explain their limited production adoption compared to later, simpler long‑context tricks like RoPE, sliding windows, and FlashAttention‑based stacks.  
+- **Status:** Scored in `scorecard_dataset/scored_architectures.md` (B48–B49, plus related aggregate score C13).
+
+---
+
 ## 33. HGRN2 (Gated Recurrent Networks with Parallel Scan, 2024)
 
 - **Canonical paper:** *HGRN2: Hierarchical Gated Recurrent Networks* (HGRN2 authors, 2024).  
