@@ -120,6 +120,32 @@ These scores start from the “brutally revised” table and incorporate our cor
 | ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes |
 |----|-------------|------|-----|----|-----|-----|------:|-----|----|------:|------|----------------|-------|
 | B34 | Switch Transformer | 2021 | 2018–2022 | 2 | 1 | 2 | **5** | 1 | 1 | **2** | 🟡 Yellow | Fedus et al. 2021 | Large‑scale MoE with token‑level routing; expert FFNs are GEMM‑aligned but routing and expert parallelism introduce new topology and limited infra. |
+
+### 2.10 Additional Foundation & Code Models (2019–2024)
+
+| ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes |
+|----|-------------|------|-----|----|-----|-----|------:|-----|----|------:|------|----------------|-------|
+| B35 | Mistral 7B | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Mistral AI 2023 | Sliding‑window decoder‑only Transformer; efficient windowed attention that outperforms Llama 2‑13B while preserving standard kernels. |
+| B36 | Falcon 180B | 2023 | 2023+ | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | TII 2023 | 7B/40B/180B dense Transformer family; standard quadratic attention and MLP blocks trained on web‑scale data. |
+| B37 | OPT | 2022 | 2018–2022 | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | Meta 2022 | 125M–175B GPT‑3‑style decoder‑only Transformers; open replication of GPT‑3 with standard quadratic attention and kernels. |
+| B38 | BLOOM | 2022 | 2018–2022 | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | BigScience 2022 | 176B multilingual dense Transformer; standard decoder‑only architecture from a large collaborative effort. |
+| B39 | OLMo | 2024 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | AI2 2024 | Fully open stack (data, code, weights) with 7B/65B dense Transformers; strong engineering but no Gate‑1 architectural changes. |
+| B40 | Yi 34B | 2024 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | 01.AI 2024 | 6B/34B multilingual Transformer with GQA and modern training; standard dense attention stack. |
+| B41 | Baichuan 2 | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Baichuan Inc. 2023 | 7B/13B Chinese‑focused dense Transformers; standard decoder‑only architecture with strong pretraining. |
+| B42 | InternLM | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Shanghai AI Lab 2023 | 7B/20B dense Transformers with multimodal variants; standard attention stack with strong optimization. |
+| B43 | ChatGLM | 2023 | 2023+ | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | Tsinghua GLM team 2023 | Bilingual (Chinese/English) GLM‑style Transformer; architecture remains dense attention with moderate MAL and strong infra support. |
+| B44 | Chinchilla | 2022 | 2018–2022 | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | Hoffmann et al. 2022 | 70B dense Transformer used to derive compute‑optimal scaling laws; no architectural change vs earlier Gopher‑style models. |
+| B45 | Gopher | 2021 | 2018–2022 | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | Rae et al. 2021 | 280B dense Transformer from DeepMind; standard decoder‑only architecture that preceded Chinchilla. |
+| B46 | StarCoder / StarCoder2 | 2024 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | BigCode 2024 | 3B/7B/15B open code models built on standard decoder‑only Transformers; specialization comes from code data, not new kernels. |
+| B47 | Code Llama | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Meta 2023 | 7B/13B/34B code‑specialized Llama 2 variants; dense Transformer with code‑focused training and tooling. |
+
+### 2.11 Pre‑2023 Long‑Context Transformers
+
+| ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes |
+|----|-------------|------|-----|----|-----|-----|------:|-----|----|------:|------|----------------|-------|
+| B48 | Transformer‑XL | 2019 | 2018–2022 | 2 | 1 | 1 | **4** | 2 | 1 | **3** | 🟡 Yellow | Dai et al. 2019 | Segment‑level recurrence on top of attention; improves context length but introduces PAR=1 cross‑segment dependencies and extra infra friction. |
+| B49 | Perceiver IO | 2021 | 2018–2022 | 1 | 1 | 2 | **4** | 2 | 0 | **2** | 🟡 Yellow | Jaegle et al. 2021 | Perceiver‑style latent‑array cross‑attention applied to arbitrary modalities; flexible but with lower GA/IM and limited production adoption (closely related to C13). |
+
 ---
 
 ## 3. Additional Techniques from the Techniques List
@@ -159,3 +185,15 @@ These entries score frequently referenced primitives and training/infra techniqu
 - These scores deliberately **err on the conservative side** for GA/MAL/PAR when kernels are non‑GEMM or infra is vendor‑specific; they should be revisited as real FLOP breakdowns or kernel traces become available.  
 - For modeling, you can treat each row as one data point `(GA, MAL, PAR, STI, IM) → (H, E, Zone)` and add adoption labels (e.g., “frontier‑scale production” vs “research‑only”) on top.  
 - Additional architectures from `techniques_for_scoring.md` (e.g., LoRA/QLoRA, quantization, RevNets, RAG, Capsules, HyperNetworks, ACT/Universal Transformers, SAM, test‑time training) can be added here as we pin down their GA/MAL/PAR/STI/IM scores.
+
+### 4.1 Parameter Extraction Workflow (Param_Billions / Analyzed)
+
+- **Source of truth:** `scored_architectures.csv` holds all parameter counts in `Param_Billions` (list of sizes in billions) plus an `Analyzed` flag. The markdown tables intentionally do **not** duplicate the sizes.
+- **Ingestion order for new IDs:**
+  1. Add a new row with `Param_Billions = []`, `Analyzed = ""`, and fill `Model_Locations` with any known Hugging Face or arXiv links.  
+  2. If a Hugging Face model card exists, read the “Parameters” section and populate `Param_Billions` manually; set `Analyzed = "analyzed"`.
+  3. For rows with arXiv `abs` URLs but no HF card, parse the **HTML landing page only** (no PDFs) for phrases like “7B parameters”, “125M to 175B parameters”, etc., normalize to billions, update `Param_Billions`, and set `Analyzed = "analyzed"`.
+  4. For technique‑style IDs or papers without clean HTML parameter mentions, use the tooling in `scorecard_dataset/papers/`:
+     - `fetch_and_convert_papers.py` — downloads canonical/representative PDFs (from arXiv and references in `techniques_for_scoring.md`) and dumps plain‑text Markdown into `papers/<ID>/markdown/`.
+     - `parse_markdown_params.py` — searches those markdowns for “X B/M parameters” phrases, normalizes to billions, and updates `Param_Billions` (also merging arXiv `abs` URLs into `Model_Locations` and marking `Analyzed = "analyzed"`).
+- **Finalization:** Once all reasonable sources (HF cards, arXiv HTML, markdown from PDFs) have been checked for an ID, set `Analyzed = "analyzed"` even if `Param_Billions` remains `[]` (explicitly recorded “no reliable parameter info found”).

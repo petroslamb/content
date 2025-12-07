@@ -145,6 +145,8 @@ def main() -> None:
         existing_urls = parse_list_field(row.get("Model_Locations", ""))
         merged = sorted(set(existing_urls + sources))
         row["Model_Locations"] = json.dumps(merged)
+        # Mark as analyzed once we have parameter counts from papers.
+        row["Analyzed"] = "analyzed"
         updated += 1
 
     if not updated:
@@ -161,4 +163,3 @@ def main() -> None:
 
 if __name__ == "__main__":  # pragma: no cover
     main()
-
