@@ -4,6 +4,16 @@
 
 ---
 
+## TL;DR
+
+- On 2023–2025 GPU stacks, **hardware and infrastructure economics (Gate 1)** are a better early predictor of which architectures ship than small‑scale benchmarks.  
+- Techniques that stay close to **GEMMs + SRAM‑friendly memory access** and require no new serving topology (RoPE, RMSNorm, GQA, FlashAttention) diffuse quickly; ideas that fight this (pure SSMs at frontier scale, KANs, naive MoE at long context) become research curiosities or require massive capital.  
+- The **Hardware Friction Map** gives a practitioner checklist (kernel shape, memory, parallelism, serving topology, infra maturity) to score new papers and predict adoption risk—especially for startups that don’t control their hardware stack.  
+- Above Gate 1, **optimization behavior and scaling laws** still decide which low‑friction ideas win (e.g., Transformers vs LSTMs); the map is a viability filter, not an oracle.  
+- The essay ends with explicit, falsifiable bets about Mixture‑of‑Depths, Titans‑style external memory, and pure SSM frontier models, so the framework can be tested—not just admired.
+
+## Introduction
+
 The last two years of neural architecture on GPU‑based LLM stacks can be summarized in one sentence: **Economics determines what survives.**
 
 We often frame hardware compatibility as a binary physics test: "Does silicon reject this?" That is wrong. Hardware rejects nothing. It just charges a tax. You can run KANs. You can run pure Neural ODEs. They just cost 100x more per token than a dense matrix multiplication.
@@ -67,7 +77,7 @@ Example:
 
 Examples:
 *   **KANs (Kolmogorov‑Arnold Networks).**
-*   **Pure SSMs at frontier scale (so far).**
+*   **Pure SSMs at frontier scale (so far).** (See Appendix B for current SSM scale and hybrid evidence.)
 
 ## MoE and the "Capital Hammer"
 
@@ -102,7 +112,7 @@ What happens when you fight the hardware's nature? You don't get "rejected"—yo
 *   **Concept:** Linear-time sequence modeling (Mamba).
 *   **Friction:** **Parallelism.** Transformers train all tokens in parallel. SSMs have a sequential dependency trace. Parallel-scan tricks mitigate this, but they don't fully erase the gap in training efficiency at very large scale.
 *   **Result:** Great for inference, fragile for training efficiency once you push to frontier scales.
-*   **Status (Dec 2025):** Pure SSMs stall at ~7B parameters. We see no public 13B+ pure SSM models; every large deployment (Jamba, Falcon‑H1, Qwen3‑Next, RWKV variants) uses **Hybrids** (Attention + SSM) to balance the friction. (For the underlying evidence, see `research_artifacts/ssm_benchmark_findings.md`.)
+*   **Status (Dec 2025):** Pure SSMs stall at ~7B parameters. We see no public 13B+ pure SSM models; every large deployment (Jamba, Falcon‑H1, Qwen3‑Next, RWKV variants) uses **Hybrids** (Attention + SSM) to balance the friction. (For the underlying evidence, see **Appendix B — SSM Scale and Hybrid Dominance**.)
 
 ---
 
@@ -153,4 +163,4 @@ Looking ahead, the Friction Map makes concrete bets:
 
 If any of these are wrong—if, say, a 40B pure SSM or a Titans‑style memory model becomes a flagship frontier LLM—this map needs to be redrawn. That’s the point. A useful friction heuristic is one you can test in public.
 
-Don't fight the friction. Map it, price it, and decide if you can afford the toll. For the underlying tables and timelines behind this essay, see `research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md`, `research_artifacts/ssm_benchmark_findings.md`, and `research_artifacts/HARDWARE_FRICTION_MAP_A+++_SUPPLEMENT.md`.
+Don't fight the friction. Map it, price it, and decide if you can afford the toll. For the underlying tables, timelines, and citations behind this essay, see **Appendix A–D**.
