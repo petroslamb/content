@@ -1,5 +1,7 @@
 # Techniques Available for Gate‑1 Hardware Friction Scoring
 
+> **Param weights tracking:** When adding or revising techniques, do not embed weight counts here. All parameter analysis is tracked in `scored_architectures.csv` via `Param_Billions` and the `Analyzed` flag per ID.
+
 **Goal:** Canonical list of techniques/primitives we can score along the Gate‑1 hardware/infra axes (GA/MAL/PAR/STI/IM).  
 **Scope:** 2017–2025 LLM‑relevant techniques that already appear in the research artifacts, essay, or scorecard.
 

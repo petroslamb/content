@@ -1,5 +1,7 @@
 # Scored Architectures — Gate‑1 Hardware Friction Scorecard
 
+> **Param weights tracking:** For ingestion and deduping, treat the CSV (`scored_architectures.csv`) as canonical. Per‑row weight analysis is marked via the `Param_Billions` and `Analyzed` columns; this markdown file is descriptive only.
+
 **Goal:** Concrete, per‑architecture scores on the Gate‑1 rubric (GA/MAL/PAR/STI/IM → H/E/Zone) that we can use for calibration and simple models.  
 **Scope:** Architectures and techniques that (a) appear in our research artifacts / scorecard, and (b) in the Fichtl et al. 2025 “End of Transformers?” survey or the `techniques_for_scoring.md` list.
 
