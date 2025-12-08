@@ -54,6 +54,12 @@ def main() -> None:
     csv_path = root / "scored_architectures.csv"
     df = pd.read_csv(csv_path)
 
+    def existing_is_nonempty(val: object) -> bool:
+        if val is None:
+            return False
+        s = str(val).strip()
+        return s not in {"", "[]", "nan"}
+
     def param_array_for_name(name: str) -> str:
         name = str(name)
         if name in PARAMS_BILLIONS:
@@ -64,11 +70,24 @@ def main() -> None:
                 return json.dumps(arr)
         return json.dumps([])
 
-    df["Param_Billions"] = df.get("Architecture", "").apply(param_array_for_name)
+    # Ensure the column exists
+    if "Param_Billions" not in df.columns:
+        df["Param_Billions"] = ""
+
+    # Only fill Param_Billions where it is currently empty; never overwrite
+    # non‑empty values or manual annotations.
+    updated = []
+    for _, row in df.iterrows():
+        current = row.get("Param_Billions", "")
+        if existing_is_nonempty(current):
+            updated.append(current)
+        else:
+            updated.append(param_array_for_name(row.get("Architecture", "")))
+    df["Param_Billions"] = updated
+
     df.to_csv(csv_path, index=False)
-    print(f"Updated {csv_path} with Param_Billions column")
+    print(f"Updated {csv_path} with Param_Billions column (non‑destructive)")
 
 
 if __name__ == "__main__":
     main()
-

@@ -131,11 +131,29 @@ def main() -> None:
     csv_path = root / "scored_architectures.csv"
     df = pd.read_csv(csv_path)
 
-    df["Model_Locations"] = df["Architecture"].apply(locations_for_arch)
+    def existing_is_nonempty(val: object) -> bool:
+        if val is None:
+            return False
+        s = str(val).strip()
+        return s not in {"", "[]", "nan"}
+
+    # Ensure the column exists
+    if "Model_Locations" not in df.columns:
+        df["Model_Locations"] = ""
+
+    # Only fill Model_Locations where currently empty; keep any existing URLs.
+    updated = []
+    for _, row in df.iterrows():
+        current = row.get("Model_Locations", "")
+        if existing_is_nonempty(current):
+            updated.append(current)
+        else:
+            updated.append(locations_for_arch(row.get("Architecture", "")))
+    df["Model_Locations"] = updated
+
     df.to_csv(csv_path, index=False)
-    print(f"Updated {csv_path} with Model_Locations column")
+    print(f"Updated {csv_path} with Model_Locations column (non‑destructive)")
 
 
 if __name__ == "__main__":
     main()
-
