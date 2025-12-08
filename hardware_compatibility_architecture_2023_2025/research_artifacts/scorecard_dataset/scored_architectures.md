@@ -237,13 +237,57 @@ These entries score frequently referenced primitives and training/infra techniqu
 ### 4.1 Parameter Extraction Workflow (Param_Billions / Analyzed)
 
 - **Source of truth:** `scored_architectures.csv` holds all parameter counts in `Param_Billions` (list of sizes in billions) plus an `Analyzed` flag. The markdown tables intentionally do **not** duplicate the sizes.
-- **Scope of each pass:** When enriching parameters or locations, only touch rows with `Analyzed = ""`. Rows with `Analyzed = "analyzed"` are treated as frozen (even when `Param_Billions = []`).
-- **Ingestion order for new IDs:**
-  1. Add a new row with `Param_Billions = []`, `Analyzed = ""`, and fill `Model_Locations` with any known Hugging Face or arXiv links.  
-  2. If a Hugging Face model card exists, read the “Parameters” section and populate `Param_Billions` manually; set `Analyzed = "analyzed"`.  
-     - *Example:* For DistilBERT‑style rows, set something like `Param_Billions = [0.066, 0.134]` based on representative HF checkpoints and include those repos in `Model_Locations`.  
-  3. For rows with arXiv `abs` URLs but no HF card, parse the **HTML landing page only** (no PDFs) for phrases like “7B parameters”, “125M to 175B parameters”, etc., normalize to billions, update `Param_Billions`, and set `Analyzed = "analyzed"`.
-  4. For technique‑style IDs or papers without clean HTML parameter mentions, use the tooling in `scorecard_dataset/papers/`:
-     - `fetch_and_convert_papers.py` — downloads canonical/representative PDFs (from arXiv and references in `techniques_for_scoring.md`) and dumps plain‑text Markdown into `papers/<ID>/markdown/`.
-     - `parse_markdown_params.py` — searches those markdowns for “X B/M parameters” phrases, normalizes to billions, and updates `Param_Billions` (also merging arXiv `abs` URLs into `Model_Locations` and marking `Analyzed = "analyzed"`).
-- **Finalization semantics:** Once all reasonable sources (HF cards, arXiv HTML, markdown from PDFs) have been checked for an ID, set `Analyzed = "analyzed"` even if `Param_Billions` remains `[]`. In that case, `Param_Billions = []` is an explicit “no reliable parameter info found after a full pass,” not “we haven’t looked yet.”
+- **Scope:** When enriching parameters or locations, only touch rows with `Analyzed = ""`. Rows with `Analyzed = "analyzed"` are treated as frozen, even when `Param_Billions = []`.
+- **Full playbook:** The detailed, step‑by‑step plan for filling `Model_Locations`, `Param_Billions`, and `Analyzed` (including the Hugging Face → arXiv HTML → PDF→markdown pipeline) lives in  
+  `research_artifacts/scorecard_dataset/param_location_ingestion_playbook.md`. That document is the canonical reference for parameter/location ingestion.
+
+### 4.2 Predictive Modeling and Validation Plan
+
+- **Primary prediction target:**  
+  - `Zone` as an ordinal variable (Red=0, Orange=1, Yellow=2, Green=3).  
+  - Optional derived binary label: “production‑viable” vs “research‑only” (e.g., `prod = 1` for high‑H / high‑E Green rows, `0` otherwise).
+- **Feature set (explainable only):**  
+  - Core gate scores: `GA`, `MAL`, `PAR`, `STI`, `IM`.  
+  - Aggregates: numeric `H = GA + MAL + PAR`, `E = STI + IM` (strip markdown bold first).  
+  - Size / era: `log10(max_param)` where `max_param = max(Param_Billions)` per row (or `NaN`/0 when `Param_Billions=[]`), plus `Era` as a small categorical (pre‑2018, 2018–2022, 2023+).  
+  - Optional flags: architecture family bucket (`Transformer`, `MoE`, `SSM`, `RNN`, `Hybrid`, etc.) from `Architecture` / `Section`, and a `has_weights` flag (1 if `Param_Billions` is non‑empty, else 0).
+- **Models (kept deliberately simple and transparent):**  
+  - Ordinal / multinomial logistic regression on `Zone`, with standardized numeric features and one‑hot for `Era` / family. Coefficients give a global, interpretable story of how GA/MAL/PAR/STI/IM and parameter scale shift the odds of landing in each friction zone.  
+  - A very shallow decision tree (e.g., `max_depth ≤ 3`, `min_samples_leaf` reasonably large) on the same features to recover human‑readable rules such as “if H ≥ 5 and E ≥ 4 → mostly Green; if PAR=0 and Era ≤ 2018–2022 → mostly Red/Orange.” This tree is for explanation, not raw accuracy.
+- **Core validation protocol:**  
+  - Use stratified k‑fold cross‑validation (e.g., `k=5`) on the current ~100 rows, stratified by `Zone`, so each fold has a similar Green/Yellow/Orange/Red mix.  
+  - For each fold, fit the models **from scratch** on 4/5 of the data and evaluate on the held‑out 1/5.  
+  - Report accuracy, macro‑F1, and mean absolute error on the `Zone` index, plus confusion matrices to show that most errors are near‑misses (e.g., Green vs Yellow) rather than wild misclassifications (Green vs Red).
+- **Generalization and robustness checks:**  
+  - Era split: train on `Era ∈ {pre‑2018, 2018–2022}`, test on `2023+` only, to see whether the gate‑based rules learned on older models extrapolate to modern LLMs.  
+  - Family split (optional): train without one family (e.g., SSMs or MoEs), test on that family alone, to check whether GA/MAL/PAR‑based rules carry over to “novel” architectures.  
+  - Label shuffle sanity check: randomly permute `Zone` labels and re‑run CV once; accuracy should drop to near‑chance, confirming the model is learning real structure rather than leakage.  
+  - Feature ablations: re‑run CV without `Param_Billions`, and then without `H/E`, to quantify how much predictive power comes purely from gate scores versus parameter scale and era.  
+  - Stability: check sign and relative magnitude of logistic coefficients across folds, and whether top decision‑tree splits (e.g., thresholds on `H`/`E` or `PAR`) remain stable.
+- **Implementation note:**  
+  - Keep any modeling scripts in this directory (e.g., `predict_zones.py`) and treat them as consumers of the canonical CSV only. Markdown remains descriptive; all training, evaluation, and rule extraction are driven off `scored_architectures.csv` and its `Param_Billions` / `Analyzed` state.
+
+### 4.3 Zone Decision Rule (v1)
+
+- **Motivation:**  
+  - The initial scorecard assigned Zones by human judgment from the gates and H/E. The experiments in `experiments/predict_zones.py` showed that a very small model (depth‑3 decision tree) can reconstruct the Zones with high accuracy, which lets us crystallize a simple, explicit heuristic.
+- **Hand‑written rule (derived from the tree):**  
+  - Let `H = GA + MAL + PAR` and `E = STI + IM`.  
+  - Then:
+    - If `E <= 3`:  
+      - If `H <= 3`:  
+        - If `STI <= 1` → `Zone = 🔴 Red`  
+        - Else (`STI >= 2`) → `Zone = 🟠 Orange`  
+      - Else (`H >= 4`) → `Zone = 🟡 Yellow`  
+    - Else (`E >= 4`):  
+      - If `PAR <= 1`:  
+        - If `MAL <= 1` → `Zone = 🟠 Orange`  
+        - Else (`MAL >= 2`) → `Zone = 🔴 Red`  
+      - Else (`PAR = 2`) → `Zone = 🟢 Green`
+- **Empirical fit to current labels:**  
+  - The helper in `experiments/zone_rules.py` (`zone_from_gates`) applies this rule to every row in `scored_architectures.csv`.  
+  - On the current dataset (100 rows), it matches the existing `Zone` labels on **83/100** rows (~0.83 accuracy). Most mismatches are deliberate narrative special‑cases (e.g., vendor‑biased Green, research‑only Reds, and medium‑friction notes).  
+  - We treat this as a **default Gate‑only heuristic** for new IDs; for specific architectures, we may still override the Zone when narrative context (e.g., vendor lock‑in, ecosystem politics) justifies it.
+- **Usage guidance:**  
+  - For new architectures where only GA/MAL/PAR/STI/IM are known, start with this rule to propose a Zone, then adjust only when there is strong qualitative evidence.  
+  - Modeling scripts (e.g., for calibration or ablations) should continue to read the Zone from the CSV; the rule exists both as documentation and as a way to sanity‑check or seed Zones for future rows.

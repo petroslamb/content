@@ -57,7 +57,7 @@ This folder contains all research materials, datasets, planning documents, and t
 - **`voice_consistency_guide.md`** - A+++ voice guide (bold claims, defended)
 - **`audience_profile.md`** - Target audience analysis (senior technical practitioners)
 - **`refs/research_references.md`** - Centralized bibliography (papers, model cards, and docs backing all datasets)
- - **`research_artifacts/scorecard_dataset/`** - Gate‑1 Hardware Friction Scorecard dataset (markdown + CSV)
+ - **`research_artifacts/scorecard_dataset/`** - Gate‑1 Hardware Friction Scorecard dataset (markdown + CSV, parameter/location ingestion playbook, and `experiments/` for explainable Zone prediction models)
 
 ### Critiques & Reviews (By Component)
 - **Article critiques:** `long_article_sections/critiques/`
