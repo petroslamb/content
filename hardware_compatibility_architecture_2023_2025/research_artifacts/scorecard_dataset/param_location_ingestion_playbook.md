@@ -1,11 +1,17 @@
 # Parameter & Location Ingestion Playbook
 
-This file documents the **canonical workflow** for filling `Model_Locations`, `Param_Billions`, and `Analyzed` in `scored_architectures.md`. It replaces older hard‑coded helper scripts and is intended to be **source‑of‑truth for future passes**.
+## 0. Prerequisites
 
-## 0. Source of Truth
-
+### 0.0 Source of Truth
 - The canonical dataset is `scored_architectures.md`.  
 - `scored_architectures.csv` is a **derived artifact**: `parse_scored_architectures.py` regenerates the CSV from the markdown tables and **overwrites all rows/columns**. Any edits must be made in the markdown; the CSV is read‑only from a human perspective.
+
+### 0.1 Protocol: The Journal
+**CRITICAL:** You must log your run.
+1.  Open `research_artifacts/scorecard_dataset/ingestion_journal.md`.
+2.  Paste the content of `JOURNAL_TEMPLATE.md` at the top.
+3.  Fill in the Date and IDs.
+4.  **As you proceed:** Check off the boxes. Do not skip this.
 
 ## 1. Adding New Architectures (Manual Entry Only)
 
@@ -14,6 +20,7 @@ When ingesting a new batch (e.g., from `techniques_for_scoring.md` or manual res
 ### 1.1 Pre‑check: validate scores
 - Before adding *any* rows to markdown or CSV, go through the new batch and verify that all proposed scores exist and make sense (GA, MAL, PAR, STI, IM, H, E, Zone).  
 - If any score looks inconsistent with the Gate‑1 rubric or prior rows, **stop the process here**.
+- ✅ **Journal Check:** Mark *Step 1.1* as complete.
 
 ### 1.2 Add rows to `scored_architectures.md`
 - Assign a new `ID` (A*/B*/C*/D*/E* series).  
@@ -25,6 +32,7 @@ When ingesting a new batch (e.g., from `techniques_for_scoring.md` or manual res
   - `Param_Billions`: `[]`.
   - `Model_Locations`: `[]`.
 - **Do not** try to find URLs or parameters manually at this stage unless you already have them handy. The automated pipeline (Step 2) is designed to find them for you.
+- ✅ **Journal Check:** Mark *Step 1.2* as complete.
 
 ### 1.3 Regenerate the CSV (derived only)
 - **Ensure you are in the environment:**
@@ -34,6 +42,7 @@ When ingesting a new batch (e.g., from `techniques_for_scoring.md` or manual res
   ```
 - Run: `python parse_scored_architectures.py`
 - This ensures the new rows exist in the derived CSV for the Python tools to read.
+- ✅ **Journal Check:** Mark *Step 1.3* as complete.
 
 ---
 
@@ -53,6 +62,7 @@ When ingesting a new batch (e.g., from `techniques_for_scoring.md` or manual res
       ```
   2.  The script will print candidate URLs to your terminal.
   3.  **Collect** these URLs. You will use them to update the markdown in Step 2.2, but for now just pass them to Step 2.1.
+  4.  ✅ **Journal Check:** Mark *Step 2.0* as complete in your journal. Note any missing architectures.
 
 ### 2.1 Step 1 — Gather Intelligence (The 3 Prongs)
 Run these three prongs to harvest data. Findings are accumulative.
@@ -66,6 +76,7 @@ Run these three prongs to harvest data. Findings are accumulative.
        ```
     -  The script fetches the README, looks for `7B parameters` style text, and prints suggestions.
     -  **Add to pool:** Resulting param counts.
+    -  ✅ **Journal Check:** Mark *Step 2.1 (Prong A)* as complete.
 
 #### Prong B: ArXiv HTML (Pivot & Validate)
 - **Input:** `arxiv.org/abs/...` URLs from `Source / Paper` or `Notes`.
@@ -75,16 +86,26 @@ Run these three prongs to harvest data. Findings are accumulative.
     - If new HF links found -> **Run Prong A logic on them immediately.**
     - **Hunt for Params:** Regex search the HTML text for parameter counts.
     - **Add to pool:** `Model_Locations` (newly found HF links) and `Param_Billions`.
+    - ✅ **Journal Check:** Mark *Step 2.1 (Prong B)* as complete.
 
 #### Prong C: PDF → Markdown (Deep Dive)
-- **Input:** ArXiv IDs where parameters are still missing or for robustness.
+- **Prerequisite:** `source papers/.venv/bin/activate` (Required for `markitdown`).
+- **Input:** ArXiv IDs (from `Source / Paper` or `Notes`).
+- **Source:** Defaults to `https://arxiv.org/pdf/<ARXIV_ID>.pdf`.
 - **Tools:** `markitdown[pdf]` in `papers/.venv`.
 - **Action:**
-    - Download PDF.
-    - Convert to Markdown (`papers/<ID>/markdown/`).
-    - Context-aware search: Extract "X parameters" sentences.
-    - **Agent Verification:** Check if the count refers to *this* model or a baseline.
-    - **Add to pool:** `Param_Billions`.
+    1.  **Download/Locate:** Ensure `papers/<ID>/pdf/<ARXIV_ID>.pdf` exists.
+        -   **Tool:** `python fetch_and_convert_papers.py --ids <ID>`
+        -   *Note:* This script handles downloading AND converting to markdown automatically.
+    2.  **Verify Content:** Read the top of the Markdown to confirm title match.
+    3.  **Extract:** Context-aware search for "X parameters".
+        -   **Tool:** `python inspect_markdown_params.py --ids <ID> --report candidates.md`
+        -   **Action:** 
+            -   Review the console output OR the `candidates.md` file.
+            -   Look for explicit parameter counts (e.g., "7B") in the context of the *proposed* model, not a baseline.
+            -   **Troubleshooting:** If you suspect a match was rejected (e.g. "7B tokens"), check `logs/pipeline.log`.
+    -   **Add to pool:** `Param_Billions`.
+    -   ✅ **Journal Check:** Mark *Step 2.1 (Prong C)* as complete. Note any findings in the journal.
 
 ### 2.2 Step 2 — Aggregation & Update (Finalize)
 Once all prongs have run for a row, we perform a strict aggregation to ensure no duplicates.
@@ -93,6 +114,7 @@ Once all prongs have run for a row, we perform a strict aggregation to ensure no
     - Collect all URLs from {Manual Links} + {Step 2.0 Search Results} + {Step 2.1B ArXiv Findings}.
     - **Deduplication Rule:** Convert to a Set. Normalize strings (strip trailing slashes, lowercase hosts) to ensure `huggingface.co/A` and `huggingface.co/A/` are treated as identical.
     - **Outcome:** A sorted list of unique URLs.
+    - ✅ **Journal Check:** Mark *Step 2.2 (Locations)* as complete.
 
 2.  **Aggregate Parameters (Unique Sets Only):**
     - Collect all counts from {Prong A} + {Prong B} + {Prong C}.
@@ -101,14 +123,17 @@ Once all prongs have run for a row, we perform a strict aggregation to ensure no
         - Filter out duplicates (e.g., if HF says 7.0 and PDF says 7.0, keep one).
         - **Conflict Resolution:** If values are close but not identical (e.g., 6.9B vs 7.0B), keep both for human review unless one source is clearly authoritative (HF metadata > PDF text).
     - **Outcome:** A sorted list of unique parameter counts (e.g., `[7.0, 13.0]`).
+    - ✅ **Journal Check:** Mark *Step 2.2 (Params)* as complete.
 
 3.  **Write to Markdown:**
     - Update `Model_Locations` with the **unique** list.
     - Update `Param_Billions` with the **unique** list.
     - **Set `Analyzed = "analyzed"`**.
+    - ✅ **Journal Check:** Mark *Step 2.2 (Write)* as complete.
 
 4.  **Final Polish:**
     - Run `python parse_scored_architectures.py` one last time to sync the CSV.
+    - ✅ **Journal Check:** Mark *Step 2.2 (Sync)* as complete. Verify `git diff` looks correct.
 
 ---
 
