@@ -72,6 +72,13 @@ def parse_markdown_tables(text: str) -> pd.DataFrame:
 
 
 def main() -> None:
+    # Lazy import to avoid circular dependency at top level if utils imports this file?
+    # utils.py does NOT import parse_scored_architectures.
+    # But parse_scored_architectures is imported by fetch_and_convert which imports utils.
+    # Safe.
+    from utils import setup_logger
+    logger = setup_logger("parse_scored")
+
     root = Path(__file__).resolve().parent
     md_path = root / "scored_architectures.md"
     csv_path = root / "scored_architectures.csv"
@@ -82,7 +89,7 @@ def main() -> None:
 
     # Overwrite the CSV completely with the parsed markdown.
     df_md.to_csv(csv_path, index=False)
-    print(f"Wrote {csv_path}")
+    logger.info(f"Wrote {csv_path}")
 
 
 if __name__ == "__main__":
