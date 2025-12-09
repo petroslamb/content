@@ -64,41 +64,50 @@ When ingesting a new batch (e.g., from `techniques_for_scoring.md` or manual res
   3.  **Collect** these URLs. You will use them to update the markdown in Step 2.2, but for now just pass them to Step 2.1.
   4.  ✅ **Journal Check:** Mark *Step 2.0* as complete in your journal. Note any missing architectures.
 
-### 2.1 Step 1 — Gather Intelligence (The 3 Prongs)
-Run these three prongs to harvest data. Findings are accumulative.
+### 2.1 Step 1 — Gather Intelligence (The 4 Prongs)
+Run these prongs to harvest data. Findings are accumulative.
 
-#### Prong A: Hugging Face Model Cards (High Confidence)
+#### Prong A: Hugging Face Paper Page (Discovery)
+- **Input:** ArXiv ID (from `Source / Paper`).
+- **URL:** `https://huggingface.co/papers/<ARXIV_ID>`
+- **Action:**
+    - Visit the page.
+    - **Check "Mentions" / "Citing Models":** This is often more reliable than search for finding derived architectures (e.g., searching for "Transformer" fails, but checking models citing 1706.03762 finds *everything*).
+    - **Add to pool:** Any relevant citing model URLs.
+    - ✅ **Journal Check:** Mark *Step 2.1 (Prong A)* as complete.
+
+#### Prong B: Hugging Face Model Cards (Inspection)
 - **Tool:** `hf_search_model_cards.py` in `inspect` mode.
 - **Action:**
-    -  Run inspection on IDs that already have locations or were found in Step 2.0:
+    -  Run inspection on IDs found in Step 2.0 or Prong A:
        ```bash
        python hf_search_model_cards.py inspect --ids A5
        ```
     -  The script fetches the README, looks for `7B parameters` style text, and prints suggestions.
     -  **Add to pool:** Resulting param counts.
-    -  ✅ **Journal Check:** Mark *Step 2.1 (Prong A)* as complete.
+    -  ✅ **Journal Check:** Mark *Step 2.1 (Prong B)* as complete.
 
-#### Prong B: ArXiv HTML (Pivot & Validate)
-- **Input:** `arxiv.org/abs/...` URLs from `Source / Paper` or `Notes`.
+#### Prong C: ArXiv HTML (Validation)
+- **Input:** `arxiv.org/abs/...` URLs.
 - **Action:**
     - Fetch the ArXiv HTML page.
-    - **Hunt for Code:** Look for "Model Cards" section or links to Hugging Face.
-    - If new HF links found -> **Run Prong A logic on them immediately.**
-    - **Hunt for Params:** Regex search the HTML text for parameter counts.
-    - **Add to pool:** `Model_Locations` (newly found HF links) and `Param_Billions`.
-    - ✅ **Journal Check:** Mark *Step 2.1 (Prong B)* as complete.
+    - **Validation:** Confirm title and authors match our entry.
+    - **Hunt for Params:** Regex search the HTML abstract for parameter counts.
+    - **Add to pool:** `Param_Billions`.
+    - ✅ **Journal Check:** Mark *Step 2.1 (Prong C)* as complete.
 
-#### Prong C: PDF → Markdown (Deep Dive)
+#### Prong D: PDF → Markdown (Deep Dive)
 - **Prerequisite:** `source papers/.venv/bin/activate` (Required for `markitdown`).
 - **Input:** ArXiv IDs (from `Source / Paper` or `Notes`).
 - **Source:** Defaults to `https://arxiv.org/pdf/<ARXIV_ID>.pdf`.
 - **Tools:** `markitdown[pdf]` in `papers/.venv`.
 - **Action:**
-    1.  **Download/Locate:** Ensure `papers/<ID>/pdf/<ARXIV_ID>.pdf` exists.
+    -  **Download/Locate:** Ensure `papers/<ID>/pdf/<ARXIV_ID>.pdf` exists.
         -   **Tool:** `python fetch_and_convert_papers.py --ids <ID>`
         -   *Note:* This script handles downloading AND converting to markdown automatically.
-    2.  **Verify Content:** Read the top of the Markdown to confirm title match.
-    3.  **Extract:** Context-aware search for "X parameters".
+        -   ✅ **Optimization:** The script **skips** downloads/conversions if files already exist. It is safe and fast to re-run.
+    -  **Verify Content:** Read the top of the Markdown to confirm title match.
+    -  **Extract:** Context-aware search for "X parameters".
         -   **Tool:** `python inspect_markdown_params.py --ids <ID> --report candidates.md`
         -   **Action:** 
             -   Review the console output OR the `candidates.md` file.
