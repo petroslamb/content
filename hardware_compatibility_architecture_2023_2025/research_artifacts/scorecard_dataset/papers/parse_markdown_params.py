@@ -4,12 +4,7 @@ import re
 from pathlib import Path
 from typing import Dict, List
 
-from fetch_and_convert_papers import (
-    PAPERS_ROOT,
-    CSV_PATH,
-    ensure_papers_for_ids,
-    load_missing_ids,
-)
+from fetch_and_convert_papers import PAPERS_ROOT, ensure_papers_for_ids, load_missing_ids
 
 
 def extract_param_counts_from_text(text: str) -> List[float]:
@@ -20,7 +15,7 @@ def extract_param_counts_from_text(text: str) -> List[float]:
     '340 million parameters', etc. Ignores numbers not tied to 'parameter'.
     """
     pattern = re.compile(
-        r"(\d+(?:\.\d+)?)\s*(?:"
+        r"([0-9][0-9,]*(?:\.\d+)?)\s*(?:"
         r"(?:B|billion)"
         r"|\s*[-–]?\s*B"
         r"|\s*[-–]?\s*billion"
@@ -28,7 +23,7 @@ def extract_param_counts_from_text(text: str) -> List[float]:
         r"|\s*[-–]?\s*M"
         r"|\s*[-–]?\s*million"
         r")"
-        r"[^\\n]{0,40}?"
+        r"[^\n]{0,40}?"
         r"parameters?",
         re.IGNORECASE,
     )
@@ -36,7 +31,7 @@ def extract_param_counts_from_text(text: str) -> List[float]:
     results: List[float] = []
     for m in pattern.finditer(text):
         full = m.group(0)
-        num_str = m.group(1)
+        num_str = m.group(1).replace(",", "")
         unit_match = re.search(r"(B|billion|M|million)", full, re.IGNORECASE)
         if not unit_match:
             continue
@@ -60,44 +55,46 @@ def safe_stem_from_title(title: str, idx: int) -> str:
     return stem or f"paper_{idx}"
 
 
-def parse_markdowns_for_ids() -> Dict[str, Dict[str, List]]:
+def collect_param_snippets_for_ids() -> Dict[str, List[Dict[str, List]]]:
     """
-    Returns mapping:
-      ID -> {"params": [floats_in_billions], "sources": [arxiv_abs_urls]}
-    for IDs that currently have no Param_Billions and for which we can
-    find at least one parameter count in the markdown.
+    Return a mapping:
+      ID -> list of {
+         "file": markdown filename,
+         "line": 1-based line number of the match,
+         "params": [floats_in_billions],
+         "snippet": small window of surrounding lines
+      }
+
+    This does NOT modify the CSV; it is a discovery/debug tool that surfaces
+    candidate parameter mentions so the agent can manually verify which belong
+    to the target architecture (vs. baselines) before any dataset updates.
     """
     missing_ids = load_missing_ids()
     id_to_papers = ensure_papers_for_ids(missing_ids)
 
-    results: Dict[str, Dict[str, List]] = {}
+    results: Dict[str, List[Dict[str, List]]] = {}
 
     for id_, papers in id_to_papers.items():
-        all_params: List[float] = []
-        all_sources: List[str] = []
-
         for idx, p in enumerate(papers, start=1):
             stem = safe_stem_from_title(p.title, idx)
             md_path = PAPERS_ROOT / id_ / "markdown" / f"{stem}.md"
             if not md_path.exists():
                 continue
             text = md_path.read_text(encoding="utf-8", errors="ignore")
-            params = extract_param_counts_from_text(text)
-            if params:
-                all_params.extend(params)
-                if p.arxiv_id:
-                    all_sources.append(f"https://arxiv.org/abs/{p.arxiv_id}")
-
-        if not all_params:
-            continue
-
-        params_unique = sorted({round(v, 3) for v in all_params})
-        sources_unique = sorted(set(all_sources))
-
-        results[id_] = {
-            "params": params_unique,
-            "sources": sources_unique,
-        }
+            lines = text.splitlines()
+            for i, line in enumerate(lines):
+                # Look for any parameter-like phrase on this line.
+                window = "\n".join(lines[max(0, i - 2) : min(len(lines), i + 3)])
+                params = extract_param_counts_from_text(window)
+                if not params:
+                    continue
+                snippet = {
+                    "file": md_path.name,
+                    "line": i + 1,
+                    "params": sorted({round(v, 3) for v in params}),
+                    "snippet": window,
+                }
+                results.setdefault(id_, []).append(snippet)
 
     return results
 
@@ -116,49 +113,35 @@ def parse_list_field(raw: str) -> List[str]:
 
 
 def main() -> None:
-    id_to_info = parse_markdowns_for_ids()
-    if not id_to_info:
-        print("No parameter counts found in markdowns.")
+    """
+    Discovery-mode CLI:
+
+    - Finds IDs with missing weights (via load_missing_ids()).
+    - Scans their markdown files for parameter-like phrases.
+    - Prints, for each match:
+        * ID
+        * markdown filename
+        * line number
+        * candidate parameter values (in billions)
+        * a small snippet of surrounding lines
+
+    This script NO LONGER writes back to scored_architectures.csv. The agent
+    is expected to read these snippets, decide which counts truly correspond
+    to the target model, and then update the CSV via a separate, explicit step.
+    """
+    id_to_snippets = collect_param_snippets_for_ids()
+    if not id_to_snippets:
+        print("No parameter-like snippets found in markdowns.")
         return
 
-    print(f"Found parameter counts for {len(id_to_info)} IDs:", sorted(id_to_info.keys()))
-
-    with CSV_PATH.open(newline="") as f:
-        reader = csv.DictReader(f)
-        rows = list(reader)
-        fieldnames = reader.fieldnames
-
-    updated = 0
-    for row in rows:
-        id_ = row["ID"]
-        info = id_to_info.get(id_)
-        if not info:
-            continue
-        if row["Param_Billions"].strip() != "[]":
-            continue  # do not override existing weights
-
-        params = info["params"]
-        sources = info["sources"]
-
-        row["Param_Billions"] = json.dumps(params)
-
-        existing_urls = parse_list_field(row.get("Model_Locations", ""))
-        merged = sorted(set(existing_urls + sources))
-        row["Model_Locations"] = json.dumps(merged)
-        # Mark as analyzed once we have parameter counts from papers.
-        row["Analyzed"] = "analyzed"
-        updated += 1
-
-    if not updated:
-        print("No CSV rows updated (no matching IDs with empty Param_Billions).")
-        return
-
-    with CSV_PATH.open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-
-    print(f"Updated {updated} rows in {CSV_PATH}.")
+    print(f"Found parameter-like snippets for {len(id_to_snippets)} IDs:", sorted(id_to_snippets.keys()))
+    for id_ in sorted(id_to_snippets.keys()):
+        print(f"\n=== ID {id_} ===")
+        for entry in id_to_snippets[id_]:
+            params_str = ", ".join(str(v) for v in entry["params"]) or "[]"
+            print(f"-- {entry['file']} @ line {entry['line']}  params≈[{params_str}]")
+            print(entry["snippet"])
+            print()
 
 
 if __name__ == "__main__":  # pragma: no cover

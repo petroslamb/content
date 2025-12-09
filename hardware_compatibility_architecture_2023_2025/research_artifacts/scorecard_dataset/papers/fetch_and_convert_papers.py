@@ -3,15 +3,21 @@ import sys
 import urllib.parse
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Sequence
 
 import requests
-from pypdf import PdfReader
+
+try:
+    # Prefer MarkItDown for PDF → Markdown conversion; it has a simple
+    # Python API and does not require explicit LLM configuration for PDFs.
+    from markitdown import MarkItDown
+except Exception:  # pragma: no cover - environment / optional dependency
+    MarkItDown = None  # type: ignore[assignment]
 
 
 BASE_DIR = Path(__file__).resolve().parent
 CSV_PATH = BASE_DIR.parent / "scored_architectures.csv"
-TECHNIQUES_PATH = BASE_DIR.parent / "techniques_for_scoring.md"
+MD_PATH = BASE_DIR.parent / "scored_architectures.md"
 PAPERS_ROOT = BASE_DIR
 
 ARXIV_API = "https://export.arxiv.org/api/query"
@@ -31,75 +37,70 @@ class PaperSpec:
         return None
 
 
-def load_missing_ids() -> List[str]:
-    with CSV_PATH.open(newline="") as f:
-        rows = list(__import__("csv").DictReader(f))
-    missing = [r["ID"] for r in rows if r["Param_Billions"].strip() == "[]"]
+def load_missing_ids(
+    include_analyzed: bool = False,
+    only_ids: Optional[Sequence[str]] = None,
+    section: Optional[str] = None,
+) -> List[str]:
+    """
+    Determine which IDs should be considered for the PDF→Markdown pipeline,
+    based on the canonical markdown scorecard.
+
+    Args:
+        include_analyzed: If False (default), only include rows where the
+            `Analyzed` column in scored_architectures.md is empty. If True,
+            rows are eligible regardless of Analyzed.
+        only_ids: Optional whitelist of IDs to consider. If provided, only
+            IDs in this list will be returned.
+        section: Optional section filter; when set, only include rows whose
+            `Section` column matches this value exactly.
+    """
+    # Import markdown parser from the parent scorecard module.
+    if str(BASE_DIR.parent) not in sys.path:
+        sys.path.append(str(BASE_DIR.parent))
+    from parse_scored_architectures import parse_markdown_tables  # type: ignore
+
+    text = MD_PATH.read_text(encoding="utf-8")
+    df = parse_markdown_tables(text)
+
+    id_whitelist = {str(i) for i in only_ids} if only_ids is not None else None
+
+    def is_empty_params(val: Optional[str]) -> bool:
+        s = (str(val) if val is not None else "").strip()
+        return s in {"", "[]"}
+
+    missing: List[str] = []
+    for _, row in df.iterrows():
+        id_ = str(row.get("ID", "")).strip()
+        if not id_:
+            continue
+        if id_whitelist is not None and id_ not in id_whitelist:
+            continue
+
+        row_section = str(row.get("Section", "")).strip()
+        if section is not None and row_section != section:
+            continue
+
+        analyzed = str(row.get("Analyzed", "")).strip()
+        if not include_analyzed and analyzed:
+            # Skip rows explicitly marked as analyzed when include_analyzed=False.
+            continue
+
+        if not is_empty_params(row.get("Param_Billions", "")):
+            continue
+
+        missing.append(id_)
     return missing
 
 
 def parse_techniques_sections() -> Dict[str, List[str]]:
     """
-    Map scorecard IDs (A*/B*/C*) -> raw section text from techniques_for_scoring.md.
+    Legacy helper that used to map scorecard IDs to sections from
+    techniques_for_scoring.md. That file has been removed from the
+    pipeline; this function now returns an empty mapping so that the
+    downstream logic relies solely on scored_architectures.* data.
     """
-    text = TECHNIQUES_PATH.read_text(encoding="utf-8")
-    lines = text.splitlines(keepends=True)
-
-    sections = []
-    current_title = None
-    current_lines: List[str] = []
-
-    for line in lines:
-        if line.startswith("## "):
-            if current_title is not None:
-                sections.append((current_title, "".join(current_lines)))
-            current_title = line.strip()
-            current_lines = []
-        elif current_title is not None:
-            current_lines.append(line)
-    if current_title is not None:
-        sections.append((current_title, "".join(current_lines)))
-
-    id_to_sections: Dict[str, List[str]] = {}
-
-    id_pattern = re.compile(
-        r"Status:.*?Scored in `scorecard_dataset/scored_architectures\.md` \(([^)]+)\)"
-    )
-
-    def expand_token(tok: str) -> List[str]:
-        tok = tok.strip()
-        if not tok:
-            return []
-        # Handle ranges like B14–B16 or A2–A3 (note: en dash)
-        if "–" in tok or "-" in tok:
-            dash = "–" if "–" in tok else "-"
-            left, right = [p.strip() for p in tok.split(dash, 1)]
-            prefix_left = left[0]
-            m_left = re.match(r"([A-Z])(\d+)", left)
-            if not m_left:
-                return []
-            prefix = m_left.group(1)
-            start = int(m_left.group(2))
-            m_right = re.match(r"([A-Z])?(\d+)", right)
-            if not m_right:
-                return []
-            end_prefix = m_right.group(1) or prefix
-            end = int(m_right.group(2))
-            if end_prefix != prefix:
-                # Unexpected, ignore mixed-prefix ranges.
-                return []
-            return [f"{prefix}{i}" for i in range(start, end + 1)]
-        return [tok]
-
-    for title, body in sections:
-        for m in id_pattern.finditer(body):
-            ids_str = m.group(1)
-            tokens = [t.strip() for t in ids_str.split(",")]
-            for tok in tokens:
-                for id_ in expand_token(tok):
-                    id_to_sections.setdefault(id_, []).append(body)
-
-    return id_to_sections
+    return {}
 
 
 def extract_papers_from_section(section_text: str) -> List[PaperSpec]:
@@ -197,21 +198,81 @@ def search_arxiv_for_title(title: str) -> Optional[str]:
 def ensure_papers_for_ids(missing_ids: List[str]) -> Dict[str, List[PaperSpec]]:
     """
     For each missing ID, infer the canonical/representative papers from
-    techniques_for_scoring.md and resolve arXiv IDs when we can.
+    scored_architectures.md and resolve arXiv IDs when we can.
+
     Returns a mapping ID -> list of PaperSpec.
     """
+    # Import markdown parser from the parent scorecard module.
+    if str(BASE_DIR.parent) not in sys.path:
+        sys.path.append(str(BASE_DIR.parent))
+    from parse_scored_architectures import parse_markdown_tables  # type: ignore
+
     id_to_sections = parse_techniques_sections()
+
+    # Preload markdown rows for arXiv extraction.
+    text = MD_PATH.read_text(encoding="utf-8")
+    df = parse_markdown_tables(text)
+    id_to_row = {str(r["ID"]).strip(): r for _, r in df.iterrows() if str(r.get("ID", "")).strip()}
+
     result: Dict[str, List[PaperSpec]] = {}
 
     for id_ in missing_ids:
         sections = id_to_sections.get(id_)
-        if not sections:
-            # Some IDs (e.g., vendor-specific docs) may not have canonical papers.
-            print(f"[INFO] No techniques section found for ID={id_}, skipping.", file=sys.stderr)
-            continue
         papers: List[PaperSpec] = []
-        for section in sections:
-            papers.extend(extract_papers_from_section(section))
+
+        # Primary path: infer arXiv IDs directly from the markdown scorecard.
+        if not sections:
+            row = id_to_row.get(id_)
+            if row is None:
+                print(
+                    f"[INFO] No markdown row found for ID={id_}, skipping.",
+                    file=sys.stderr,
+                )
+                continue
+
+            # Prefer explicit arXiv links from Model_Locations when present.
+            arxiv_ids: List[str] = []
+
+            raw_locs = str(row.get("Model_Locations", "") or "").strip()
+            if raw_locs:
+                try:
+                    locs = __import__("json").loads(raw_locs)
+                    if isinstance(locs, list):
+                        for url in locs:
+                            m = re.search(r"arxiv\.org/abs/([0-9.]+)", str(url))
+                            if m:
+                                arxiv_ids.append(m.group(1))
+                except Exception:
+                    pass
+
+            # Also scan Notes / Source / Paper for arXiv IDs as a backup.
+            for field in ("Notes", "Source / Paper"):
+                raw = str(row.get(field, "") or "").strip()
+                for m in re.finditer(r"arXiv:([0-9.]+)", raw):
+                    arxiv_ids.append(m.group(1))
+                for m in re.finditer(
+                    r"https?://arxiv\.org/abs/([0-9.]+)", raw, flags=re.IGNORECASE
+                ):
+                    arxiv_ids.append(m.group(1))
+
+            # Normalize IDs by dropping version suffixes and trailing dots.
+            arxiv_ids = sorted({aid.split("v")[0].rstrip(".") for aid in arxiv_ids})
+
+            if not arxiv_ids:
+                print(
+                    f"[INFO] No arXiv links in markdown for ID={id_}, skipping.",
+                    file=sys.stderr,
+                )
+                continue
+
+            # Use the scorecard's Source / Paper field as a human-readable title
+            # fallback; it is only used for logging and directory naming.
+            title = str(
+                row.get("Source / Paper") or row.get("Architecture") or id_
+            ).strip()
+            for aid in arxiv_ids:
+                papers.append(PaperSpec(title=title, arxiv_id=aid))
+
         if not papers:
             print(f"[INFO] No papers extracted for ID={id_}, skipping.", file=sys.stderr)
             continue
@@ -256,18 +317,24 @@ def download_pdf(url: str, dest: Path) -> bool:
 
 def convert_pdf_to_markdown(pdf_path: Path, md_path: Path) -> None:
     md_path.parent.mkdir(parents=True, exist_ok=True)
-    # Simple text extraction per page; formatted as plain Markdown.
-    reader = PdfReader(str(pdf_path))
-    chunks: List[str] = []
-    for page in reader.pages:
-        try:
-            text = page.extract_text() or ""
-        except Exception as e:  # pragma: no cover - best-effort extraction
-            print(f"[WARN] Text extraction failed for {pdf_path}: {e}", file=sys.stderr)
-            text = ""
-        chunks.append(text)
-    md_text = "\n\n".join(chunks)
-    md_path.write_text(md_text, encoding="utf-8")
+    if MarkItDown is None:
+        raise RuntimeError(
+            "markitdown is not available. Install it in the papers venv with:\n"
+            "  cd scorecard_dataset/papers && .venv/bin/pip install markitdown"
+        )
+    # Use MarkItDown to convert the PDF into Markdown. For our use case we only
+    # need structured text for parameter searches, so the default configuration
+    # (no external LLMs) is sufficient.
+    try:
+        md = MarkItDown()
+        result = md.convert(str(pdf_path))
+        md_text = result.markdown or result.text_content or ""
+        md_path.write_text(md_text, encoding="utf-8")
+    except Exception as e:  # pragma: no cover - best-effort conversion
+        print(f"[WARN] markitdown conversion failed for {pdf_path}: {e}", file=sys.stderr)
+        # Fallback: write an empty stub to avoid breaking downstream scripts.
+        if not md_path.exists():
+            md_path.write_text("", encoding="utf-8")
 
 
 def main() -> None:
