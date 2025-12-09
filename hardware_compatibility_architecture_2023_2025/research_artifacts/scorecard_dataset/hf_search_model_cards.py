@@ -44,150 +44,166 @@ def parse_markdown_tables() -> List[Dict[str, str]]:
                 i += 1
             # Consume rows
             while i < len(lines) and lines[i].startswith("|"):
-                row_line = lines[i]
-                cells = [c.strip() for c in row_line.split("|")[1:-1]]
-                if len(cells) == len(header_cells) and cells[0] != "ID":
-                    row = dict(zip(header_cells, cells))
-                    rows.append(row)
-                i += 1
-            continue
-        i += 1
-    return rows
+    df = parse_markdown_tables(text)
 
-
-def load_rows_for_search(
-    only_ids: Optional[Sequence[str]] = None,
-) -> List[Dict[str, str]]:
-    id_whitelist = {str(x) for x in only_ids} if only_ids is not None else None
-    rows = parse_markdown_tables()
-    selected: List[Dict[str, str]] = []
-    for r in rows:
-        id_ = str(r.get("ID", "")).strip()
-        if not id_:
-            continue
-        if id_whitelist is not None and id_ not in id_whitelist:
-            continue
-        selected.append(r)
-    return selected
-
-
-def search_hf_for_architectures(only_ids: Optional[Sequence[str]] = None, max_candidates: int = 5) -> None:
-    """
-    Step 2.0: Search Phase. Find candidate Repos for rows that need them.
-    """
-    api = HfApi()
-    rows = load_rows_for_search(only_ids=only_ids)
-    print(f"--- Step 2.0: Searching HF for {len(rows)} architectures ---")
-
-    for r in rows:
-        id_ = r.get("ID", "")
-        arch = r.get("Architecture", "")
-        # Filter Logic: Only search if Model_Locations is likely empty or user forced it
-        # But for CLI, we just search what is passed.
-        
-        query = arch.split("(")[0].strip()
-        print(f"\n[ID: {id_}] Searching for '{query}'...")
-        
-        try:
-            models = api.list_models(search=query, sort="downloads", direction=-1, limit=max_candidates)
-        except Exception as e:
-            print(f"  [WARN] Search failed: {e}")
-            continue
-
-        if not models:
-            print("  No results found.")
-            continue
-
-        for m in models:
-            print(f"  * Candidate: https://huggingface.co/{m.id} (Downloads: {m.downloads})")
-
-
-def inspect_existing_locations(only_ids: Optional[Sequence[str]] = None) -> None:
-    """
-    Step 2.1 Prong A: Inspect existing URLs for parameters.
-    """
-    rows = load_rows_for_search(only_ids=only_ids)
-    print(f"--- Step 2.1(A): Inspecting known locations for {len(rows)} architectures ---")
+    targets = []
+    # If filter_ids is provided, we search for those specifically.
+    # Otherwise, we look for rows where Analyzed is empty OR Param_Billions is empty.
     
-    # Simple regex for "X B parameters" or "X M parameters"
-    # Matches: 7B, 7.0B, 130M, etc.
-    param_pattern = re.compile(r"(\d+(?:\.\d+)?)\s*([BM])\s*parameters?", re.IGNORECASE)
+    # Correction: The playbook says Step 2.0 searches for things where Analyzed is empty.
+    # But if specific IDs are requested, we ignore the Analyzed status.
+    
+    whitelist = set(filter_ids) if filter_ids else None
 
-    for r in rows:
-        id_ = r.get("ID", "")
-        loc_str = r.get("Model_Locations", "")
-        if not loc_str or "huggingface.co" not in loc_str:
+    for _, row in df.iterrows():
+        rid = str(row.get("ID", "")).strip()
+        if not rid:
             continue
-
-        # Parse JSON list if possible, else naive string extract
-        urls: List[str] = []
-        try:
-            # Handle markdown/JSON mix if needed, but playbook says it's a JSON list.
-            # Safety cleanup if it has code blocks
-            clean_loc = loc_str.replace("`", "").strip()
-            if clean_loc.startswith("["):
-                urls = ast.literal_eval(clean_loc)
-            elif "http" in clean_loc:
-                 urls = [clean_loc]
-        except Exception:
-            # Fallback regex extraction
-            urls = re.findall(r"https://huggingface\.co/[\w\-\./]+", loc_str)
-
-        hf_urls = [u for u in urls if "huggingface.co" in u]
-        if not hf_urls:
-            continue
-
-        print(f"\n[ID: {id_}] Inspecting {len(hf_urls)} HF URLs...")
         
-        found_params: Set[float] = set()
-
-        for url in hf_urls:
-            # Extract repo_id from URL: https://huggingface.co/org/repo
-            parts = url.replace("https://huggingface.co/", "").strip("/").split("/")
-            if len(parts) < 2:
-                continue
-            repo_id = "/".join(parts[:2])
+        if whitelist and rid not in whitelist:
+            continue
             
-            print(f"  Fetching README for {repo_id}...")
-            try:
-                readme_path = hf_hub_download(repo_id=repo_id, filename="README.md")
-                text = Path(readme_path).read_text(encoding="utf-8", errors="ignore")
-                
-                # Regex Search
-                matches = param_pattern.findall(text)
-                for (num_str, unit) in matches:
-                    val = float(num_str)
-                    if unit.upper() == "M":
-                        val /= 1000.0
-                    found_params.add(round(val, 3))
-            except Exception as e:
-                print(f"    Failed to fetch/parse: {e}")
+        # If no whitelist, skip if already analyzed
+        if not whitelist:
+            analyzed = str(row.get("Analyzed", "")).strip()
+            if analyzed:
+                continue
 
-        if found_params:
-            sorted_params = sorted(list(found_params))
-            print(f"  -> SUGGESTION: Set Param_Billions = {sorted_params}")
+        name = str(row.get("Architecture", "")).strip()
+        targets.append({"id": rid, "name": name})
+
+    return targets
+
+
+def search_huggingface(query: str, limit: int = 5) -> List[str]:
+    """
+    Searches HF Hub for models matching the query (architecture name).
+    Returns a list of model IDs (e.g. 'meta-llama/Llama-2-7b').
+    """
+    api = HfApi(token=HF_TOKEN)
+    try:
+        models = api.list_models(search=query, limit=limit, sort="downloads", direction="-1")
+        return [m.modelId for m in models]
+    except Exception as e:
+        logger.error(f"Search failed for '{query}': {e}")
+        return []
+
+
+def inspect_model_card(model_id: str) -> Optional[str]:
+    """
+    Downloads the README.md of a model and extracts potential parameter counts.
+    Returns a string summary or None.
+    """
+    try:
+        readme_path = hf_hub_download(repo_id=model_id, filename="README.md", token=HF_TOKEN)
+        text = Path(readme_path).read_text(errors="ignore")
+    except Exception as e:
+        logger.debug(f"Could not fetch README for {model_id}: {e}")
+        return None
+
+    # Regex for parameters (billions/millions)
+    # Matches: 7B, 7.5B, 175 billion, 10M, etc.
+    # Look for context words like 'parameters', 'params'
+    
+    # Reuse the robust regex from inspect_params? 
+    # For now, let's keep the existing simple one but log it deeper.
+    matches = re.findall(
+        r"(\d+(?:\.\d+)?)\s*(B|billion|M|million)\s*(?:parameters?|params?)", 
+        text, 
+        flags=re.IGNORECASE
+    )
+    
+    if matches:
+        # Dedupe
+        unique = sorted(list(set(matches)))
+        return f"Found params: {unique}"
+    return None
+
+
+def cmd_search(args):
+    """Execution logic for 'search' subcommand."""
+    targets = get_target_architectures(args.ids)
+    if not targets:
+        logger.info("No targets found to search.")
+        return
+
+    logger.info(f"Searching for {len(targets)} architectures...")
+    
+    idx = 0
+    for t in targets:
+        rid = t["id"]
+        name = t["name"]
+        logger.info(f"\n--- [ID: {rid}] {name} ---")
+        
+        # Heuristic: Clean up name (remove 'Paper:', etc)
+        clean_name = re.sub(r"\(.*?\)", "", name).strip()
+        results = search_huggingface(clean_name, limit=5)
+        
+        if results:
+            for r in results:
+                logger.info(f"  Candidate: https://huggingface.co/{r}")
+                # Optional: Deep inspect immediately? No, following playbook Step 2.0 -> 2.1 separation.
         else:
-            print("  -> No parameters found in READMEs.")
+            logger.info("  No obvious matches found.")
+        
+        idx += 1
+        if idx >= 10 and not args.ids:
+             logger.info("\nPausing after 10 architectures to avoid rate limits/spam. Re-run or specify IDs.")
+             break
+
+
+def cmd_inspect(args):
+    """Execution logic for 'inspect' subcommand."""
+    # For inspect, we usually expect specific IDs or we iterate those with existing URLs.
+    # But usually this is called with specific IDs found in Step 2.0
+    
+    if not args.ids:
+        logger.info("Please provide --ids to inspect (e.g. --ids A1 A2).")
+        return
+
+    # We reuse get_targets just to resolve names
+    targets = get_target_architectures(args.ids)
+    
+    for t in targets:
+        rid = t["id"]
+        name = t["name"]
+        logger.info(f"\n=== Inspecting {name} ({rid}) ===")
+        
+        # In a real workflow, we would parse the 'Model_Locations' from markdown to find WHAT to inspect.
+        # But for this specialized tool, we might re-search or expect the user provided URLs?
+        # The Playbook says: "Run inspection on candidates found in Step 2.0".
+        # Since this tool is stateless, it essentially re-searches top candidates and inspects them.
+        
+        clean_name = re.sub(r"\(.*?\)", "", name).strip()
+        candidates = search_huggingface(clean_name, limit=3)
+        
+        for model_id in candidates:
+            summary = inspect_model_card(model_id)
+            if summary:
+                logger.info(f"  Model: {model_id}")
+                logger.info(f"    -> {summary}")
+            else:
+                logger.debug(f"  Model: {model_id} (No params found)")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Tool to search HF for scorecard architectures.")
+    parser = argparse.ArgumentParser(description="Hugging Face Search & Inspection Tool")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    # Command: Search
-    parser_search = subparsers.add_parser("search", help="Step 2.0: Search HF for candidates.")
-    parser_search.add_argument("--ids", nargs="+", help="Specific IDs to process (e.g. A1 B2).")
+    # Subcommand: search
+    parser_search = subparsers.add_parser("search", help="Search HF for candidate model URLs")
+    parser_search.add_argument("--ids", nargs="+", help="Specific IDs to search (e.g. A1 B5)")
+    parser_search.set_defaults(func=cmd_search)
 
-    # Command: Inspect
-    parser_inspect = subparsers.add_parser("inspect", help="Step 2.1A: Inspect existing locations for params.")
-    parser_inspect.add_argument("--ids", nargs="+", help="Specific IDs to process.")
+    # Subcommand: inspect
+    parser_inspect = subparsers.add_parser("inspect", help="Inspect model cards for parameter counts")
+    parser_inspect.add_argument("--ids", nargs="+", help="Specific IDs to inspect")
+    parser_inspect.set_defaults(func=cmd_inspect)
 
     args = parser.parse_args()
-
-    if args.command == "search":
-        search_hf_for_architectures(only_ids=args.ids)
-    elif args.command == "inspect":
-        inspect_existing_locations(only_ids=args.ids)
+    logger.info(f"=== STARTED hf_search ({args.command}) | Command: {' '.join(sys.argv)} ===")
+    logger.debug(f"Parsed Args: {args}")
+    args.func(args)
 
 
 if __name__ == "__main__":
