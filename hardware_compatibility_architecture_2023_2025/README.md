@@ -21,7 +21,7 @@ Before diving into the methodology, the reader should be acquainted with two cor
 
 1.  **The Framework (Essay):** [The Hardware Friction Map](./substack_drafts/Substack_Hardware_Friction_Map_Essay_v2.md)  
     *Read this to understand the economic theory of "Hardware Friction" and why it kills startups.*
-2.  **The Methodology (Scorecard):** [The Rubric](./substack_drafts/Substack_Hardware_Friction_Scorecard_v2.md)  
+2.  **The Methodology (Scorecard):** [The Rubric](./hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md)  
     *Read this to understand the 5-axis Gate-1 scoring system (GA, MAL, PAR, STI, IM).*
 3.  **The Evidence (Dataset):** [The Scored Dataset](./research_artifacts/scorecard_dataset/scored_architectures.md)  
     *Reference this to see the raw scores (Green/Yellow/Red) for 100+ architectures.*
