@@ -1,7 +1,12 @@
+```python
+import argparse
+import ast
 import json
+import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence
+from typing import Dict, List, Optional, Sequence, Set
 
 from huggingface_hub import HfApi, hf_hub_download
 
@@ -22,9 +27,7 @@ class HFMatch:
 
 def parse_markdown_tables() -> List[Dict[str, str]]:
     """
-    Lightweight markdown table parser that mirrors the core logic of
-    parse_scored_architectures.parse_markdown_tables but returns a list
-    of dict rows (stringly typed) for convenience.
+    Lightweight markdown table parser.
     """
     text = MD_PATH.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -54,7 +57,6 @@ def parse_markdown_tables() -> List[Dict[str, str]]:
 
 def load_rows_for_search(
     only_ids: Optional[Sequence[str]] = None,
-    section: Optional[str] = None,
 ) -> List[Dict[str, str]]:
     id_whitelist = {str(x) for x in only_ids} if only_ids is not None else None
     rows = parse_markdown_tables()
@@ -65,124 +67,129 @@ def load_rows_for_search(
             continue
         if id_whitelist is not None and id_ not in id_whitelist:
             continue
-        if section is not None and str(r.get("Section", "")).strip() != section:
-            continue
         selected.append(r)
     return selected
 
 
-def search_hf_for_architectures(
-    only_ids: Optional[Sequence[str]] = None,
-    section: Optional[str] = None,
-    max_candidates: int = 10,
-) -> Dict[str, List[HFMatch]]:
+def search_hf_for_architectures(only_ids: Optional[Sequence[str]] = None, max_candidates: int = 5) -> None:
     """
-    For each selected architecture in scored_architectures.md, query the
-    Hugging Face Hub using its *architecture name* and return a list of
-    plausible matches per ID. This script does not modify any files; it
-    is a helper for the manual HF step described in the playbook.
+    Step 2.0: Search Phase. Find candidate Repos for rows that need them.
     """
     api = HfApi()
-    rows = load_rows_for_search(only_ids=only_ids, section=section)
-
-    results: Dict[str, List[HFMatch]] = {}
+    rows = load_rows_for_search(only_ids=only_ids)
+    print(f"--- Step 2.0: Searching HF for {len(rows)} architectures ---")
 
     for r in rows:
-        id_ = str(r.get("ID", "")).strip()
-        arch = str(r.get("Architecture", "")).strip()
-        if not arch:
-            continue
-
-        notes = str(r.get("Notes", "")).strip()
-        source = str(r.get("Source / Paper", "")).strip()
-        paper_hint = ""
-        # Crude heuristic: look for an arXiv ID in Notes/Source.
-        for text in (notes, source):
-            for token in text.split():
-                if token.startswith("arXiv:") or "arxiv.org/abs/" in token:
-                    paper_hint = token
-                    break
-            if paper_hint:
-                break
-
+        id_ = r.get("ID", "")
+        arch = r.get("Architecture", "")
+        # Filter Logic: Only search if Model_Locations is likely empty or user forced it
+        # But for CLI, we just search what is passed.
+        
         query = arch.split("(")[0].strip()
-        print(f\"\\n=== ID {id_}: {arch} (query={query!r})\")
+        print(f"\n[ID: {id_}] Searching for '{query}'...")
+        
         try:
-            models = api.list_models(search=query, sort=\"downloads\", direction=-1, limit=max_candidates)
+            models = api.list_models(search=query, sort="downloads", direction=-1, limit=max_candidates)
         except Exception as e:
-            print(f\"  [WARN] HF search failed: {e}\")
+            print(f"  [WARN] Search failed: {e}")
             continue
 
-        matches: List[HFMatch] = []
-        arch_tokens = {t.lower() for t in query.replace(\"/\", \" \").split() if t}
+        if not models:
+            print("  No results found.")
+            continue
 
         for m in models:
-            repo = m.id
-            repo_l = repo.lower()
-            # Simple relevance: require at least one arch token in the repo id.
-            if arch_tokens and not any(tok in repo_l for tok in arch_tokens):
-                continue
-
-            has_paper = False
-            snippet = \"\"
-            try:
-                readme_path = hf_hub_download(repo_id=repo, filename=\"README.md\")
-                text = Path(readme_path).read_text(encoding=\"utf-8\", errors=\"ignore\")
-                low = text.lower()
-                if paper_hint and paper_hint.lower().split(\"/\")[-1].split(\".\")[0] in low:
-                    has_paper = True
-                # Grab a short snippet from the top of the card for inspection.
-                snippet = \"\\n\".join(text.splitlines()[:15])
-            except Exception:
-                snippet = \"(could not load README.md)\"
-
-            # Simple score: downloads + bonus if paper is mentioned.
-            dl = m.downloads or 0
-            score = float(dl) + (1e6 if has_paper else 0.0)
-            match = HFMatch(
-                id=id_,
-                architecture=arch,
-                repo_id=repo,
-                score=score,
-                has_paper_hint=has_paper,
-                model_card_snippet=snippet,
-            )
-            matches.append(match)
-
-        # Sort best-first by score.
-        matches.sort(key=lambda x: x.score, reverse=True)
-        if not matches:
-            print(\"  No plausible HF repos found.\")
-        else:
-            for m in matches:
-                flag = \"*\" if m.has_paper_hint else \" \"
-                print(f\"  {flag} {m.repo_id} (score={m.score:.0f}, has_paper={m.has_paper_hint})\")
-        results[id_] = matches
-
-    return results
+            print(f"  * Candidate: https://huggingface.co/{m.id} (Downloads: {m.downloads})")
 
 
-def main() -> None:
-    # Default CLI behavior: search for all IDs with empty Model_Locations
-    # (or without any huggingface.co URLs) and any Analyzed state.
-    rows = parse_markdown_tables()
-    ids_needing_hf: List[str] = []
+def inspect_existing_locations(only_ids: Optional[Sequence[str]] = None) -> None:
+    """
+    Step 2.1 Prong A: Inspect existing URLs for parameters.
+    """
+    rows = load_rows_for_search(only_ids=only_ids)
+    print(f"--- Step 2.1(A): Inspecting known locations for {len(rows)} architectures ---")
+    
+    # Simple regex for "X B parameters" or "X M parameters"
+    # Matches: 7B, 7.0B, 130M, etc.
+    param_pattern = re.compile(r"(\d+(?:\.\d+)?)\s*([BM])\s*parameters?", re.IGNORECASE)
+
     for r in rows:
-        id_ = str(r.get(\"ID\", \"\")).strip()
-        if not id_:
+        id_ = r.get("ID", "")
+        loc_str = r.get("Model_Locations", "")
+        if not loc_str or "huggingface.co" not in loc_str:
             continue
-        loc_raw = str(r.get(\"Model_Locations\", \"\") or \"\").strip()
-        if not loc_raw or \"huggingface.co\" not in loc_raw:
-            ids_needing_hf.append(id_)
 
-    if not ids_needing_hf:
-        print(\"All rows already have HF locations or no locations needed.\")
-        return
+        # Parse JSON list if possible, else naive string extract
+        urls: List[str] = []
+        try:
+            # Handle markdown/JSON mix if needed, but playbook says it's a JSON list.
+            # Safety cleanup if it has code blocks
+            clean_loc = loc_str.replace("`", "").strip()
+            if clean_loc.startswith("["):
+                urls = ast.literal_eval(clean_loc)
+            elif "http" in clean_loc:
+                 urls = [clean_loc]
+        except Exception:
+            # Fallback regex extraction
+            urls = re.findall(r"https://huggingface\.co/[\w\-\./]+", loc_str)
 
-    print(f\"Will search HF for {len(ids_needing_hf)} IDs.\")
-    search_hf_for_architectures(only_ids=ids_needing_hf)
+        hf_urls = [u for u in urls if "huggingface.co" in u]
+        if not hf_urls:
+            continue
+
+        print(f"\n[ID: {id_}] Inspecting {len(hf_urls)} HF URLs...")
+        
+        found_params: Set[float] = set()
+
+        for url in hf_urls:
+            # Extract repo_id from URL: https://huggingface.co/org/repo
+            parts = url.replace("https://huggingface.co/", "").strip("/").split("/")
+            if len(parts) < 2:
+                continue
+            repo_id = "/".join(parts[:2])
+            
+            print(f"  Fetching README for {repo_id}...")
+            try:
+                readme_path = hf_hub_download(repo_id=repo_id, filename="README.md")
+                text = Path(readme_path).read_text(encoding="utf-8", errors="ignore")
+                
+                # Regex Search
+                matches = param_pattern.findall(text)
+                for (num_str, unit) in matches:
+                    val = float(num_str)
+                    if unit.upper() == "M":
+                        val /= 1000.0
+                    found_params.add(round(val, 3))
+            except Exception as e:
+                print(f"    Failed to fetch/parse: {e}")
+
+        if found_params:
+            sorted_params = sorted(list(found_params))
+            print(f"  -> SUGGESTION: Set Param_Billions = {sorted_params}")
+        else:
+            print("  -> No parameters found in READMEs.")
 
 
-if __name__ == \"__main__\":  # pragma: no cover
+def main():
+    parser = argparse.ArgumentParser(description="Tool to search HF for scorecard architectures.")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # Command: Search
+    parser_search = subparsers.add_parser("search", help="Step 2.0: Search HF for candidates.")
+    parser_search.add_argument("--ids", nargs="+", help="Specific IDs to process (e.g. A1 B2).")
+
+    # Command: Inspect
+    parser_inspect = subparsers.add_parser("inspect", help="Step 2.1A: Inspect existing locations for params.")
+    parser_inspect.add_argument("--ids", nargs="+", help="Specific IDs to process.")
+
+    args = parser.parse_args()
+
+    if args.command == "search":
+        search_hf_for_architectures(only_ids=args.ids)
+    elif args.command == "inspect":
+        inspect_existing_locations(only_ids=args.ids)
+
+
+if __name__ == "__main__":
     main()
-
+```
