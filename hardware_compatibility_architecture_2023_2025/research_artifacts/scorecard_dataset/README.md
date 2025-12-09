@@ -40,8 +40,9 @@ This directory contains the quantitative engine of the Hardware Friction project
 
 ## How to Contribute
 
-1.  **Read the Playbook:** `param_location_ingestion_playbook.md`.
-2.  **Open the Journal:** Initialize your batch in `ingestion_journal.md`.
-3.  **Execute & Log:** Follow the journal checklist strictly.
-4.  **Edit Markdown:** Add your new architecture to `scored_architectures.md`.
-5.  **Sync:** Run `python parse_scored_architectures.py`.
+1.  **Master the Method:** Read the [Scorecard Rubric](../../hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md) and [Calibration Roadmap](../../hardware_friction_scorecard/internal_calibration_roadmap.md).
+2.  **Read the Playbook:** `param_location_ingestion_playbook.md`.
+3.  **Open the Journal:** Initialize your batch in `ingestion_journal.md`.
+4.  **Execute & Log:** Follow the journal checklist strictly.
+5.  **Edit Markdown:** Add your new architecture to `scored_architectures.md`.
+6.  **Sync:** Run `python parse_scored_architectures.py`.
