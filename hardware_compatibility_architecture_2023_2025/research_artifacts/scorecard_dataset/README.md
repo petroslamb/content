@@ -21,23 +21,27 @@ This directory contains the quantitative engine of the Hardware Friction project
 
 ### 2. Ingestion & Tools
 *   **`param_location_ingestion_playbook.md`**:
-    *   The rigorous protocol for adding new architectures, finding parameter counts, and verifying model existence via Hugging Face / ArXiv.
-*   **`parse_scored_architectures.py`**:
-    *   Script to convert the canonical Markdown tables into the CSV format.
-*   **`hf_search_model_cards.py`**:
-    *   Utility to help verify model existence on Hugging Face during ingestion.
+    *   The rigorous protocol for adding new architectures. **Requires adherence to `ingestion_journal.md`.**
+*   **`ingestion_journal.md`**:
+    *   **The Ledger.** A persistent record of data ingestion batches. You must initialize new entries using `JOURNAL_TEMPLATE.md`.
+*   **Pipeline Scripts:**
+    *   `hf_search_model_cards.py`: Searching & inspecting Hugging Face.
+    *   `fetch_and_convert_papers.py`: Downloading PDFs & converting to Markdown.
+    *   `inspect_markdown_params.py`: Analyzing Markdowns for parameter counts (supports `--report`).
+    *   `parse_scored_architectures.py`: Syncing Markdown → CSV.
+*   **`utils.py`**:
+    *   Centralized logging configuration.
 
-### 3. Experiments & calibration
+### 3. Logs & Artifacts
+*   **`logs/pipeline.log`**:
+    *   Automated audit trail. Captures full arguments (DEBUG) and clean run history (INFO).
 *   **`experiments/`**:
-    *   Contains Python scripts (`predict_zones.py`) that train simple explainable models (Logistic Regression, Decision Trees) to predict the "Zone" (Green/Yellow/Red) from the component scores (GA/MAL/PAR/STI/IM).
-*   **`papers/`**:
-    *   Storage for raw PDF papers and their markdown conversions, used for deep-dive parameter verification when model cards are missing.
-
----
+    *   Contains Python scripts (`predict_zones.py`) that train simple explainable models.
 
 ## How to Contribute
 
-1.  **Read the Playbook:** `param_location_ingestion_playbook.md` is mandatory reading.
-2.  **Edit Markdown First:** Add your new architecture to `scored_architectures.md`.
-3.  **Regenerate CSV:** Run `python parse_scored_architectures.py` to update the dataset.
-4.  **Verify:** Check if your new row appears correctly in the CSV and doesn't break the predictive models in `experiments/`.
+1.  **Read the Playbook:** `param_location_ingestion_playbook.md`.
+2.  **Open the Journal:** Initialize your batch in `ingestion_journal.md`.
+3.  **Execute & Log:** Follow the journal checklist strictly.
+4.  **Edit Markdown:** Add your new architecture to `scored_architectures.md`.
+5.  **Sync:** Run `python parse_scored_architectures.py`.
