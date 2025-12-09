@@ -16,6 +16,14 @@ This project investigates why certain neural architectures (Transformers, MoEs) 
 
 We measure this friction using the **Hardware Friction Scorecard**, a quantitative methodology located in `research_artifacts/scorecard_dataset/`.
 
+### 1.1 Start Here: Required Reading
+Before diving into the methodology, the reader should be acquainted with two core documents:
+
+1.  **The Framework (Essay):** [The Hardware Friction Map](./substack_drafts/Substack_Hardware_Friction_Map_Essay_v2.md)  
+    *Read this to understand the economic theory of "Hardware Friction" and why it kills startups.*
+2.  **The Evidence (dataset):** [The Scorecard](./research_artifacts/scorecard_dataset/scored_architectures.md)  
+    *Reference this to see the raw scores (Green/Yellow/Red) for 100+ architectures.*
+
 ---
 
 ## 2. Methodology: The Hardware Friction Scorecard
