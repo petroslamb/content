@@ -59,7 +59,7 @@ Validated against 50+ sources and the [`EXHAUSTIVE_FINAL_COMPILATION.md`](./rese
 ### 📊 Research & Methodology
 *   `research_artifacts/scorecard_dataset/`: **(CRITICAL)** The quantitative dataset and scoring methodology.
     *   `scored_architectures.md`: The canonical detailed scoring tables.
-    *   `param_location_ingestion_playbook.md`: Methodology for data ingestion.
+    *   `param_location_ingestion_playbook.md`: Methodology for data ingestion (requires `ingestion_journal.md`).
 *   `research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md`: Master summary of all 50+ research sources.
 
 ### 🧪 Supporting Evidence
