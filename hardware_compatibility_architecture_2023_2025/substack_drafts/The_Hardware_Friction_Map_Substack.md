@@ -9,9 +9,7 @@ In December 2024, DeepSeek shipped V3—a 671B-parameter model with 256 experts.
 
 Three months earlier, Meta trained Llama 3.1 405B using essentially the same stack as Llama 2. Same PyTorch primitives. Same GPU topology. Same serving infrastructure. The only novel engineering was for long-context FlashAttention kernels that already had upstream support.
 
-Both models pushed to 400B+ parameters. One required rebuilding the infrastructure from scratch. The other didn't.
-
-**This is the friction map.** Not "does it work?"—*everything* works if you're willing to pay. The question is: **how much does it hurt?**
+Both models pushed to 400B+ parameters. One required rebuilding the infrastructure from scratch. The other didn't. **This is the friction map.**
 
 ---
 
@@ -19,9 +17,7 @@ Both models pushed to 400B+ parameters. One required rebuilding the infrastructu
 
 The last two years of neural architecture on GPU-based LLM stacks can be summarized in one sentence: **Economics determines what survives.**
 
-We often frame hardware compatibility as a binary physics test: "Does silicon reject this?" That framing is wrong. Hardware rejects nothing. It just charges a tax. You can run KANs. You can run pure Neural ODEs. They just cost 100× more per token than a dense matrix multiplication.
-
-The mechanism isn't a "Compatibility Filter." It's a **Friction Map**—a gradient of integration cost from weight-only changes that ship in weeks, to kernel rewrites that take years, to cluster-level overhauls that kill startups.
+Hardware rejects nothing—it just charges a tax. You can run KANs. You can run pure Neural ODEs. They just cost 100× more per token than a dense matrix multiplication. The mechanism isn't a binary "Compatibility Filter." It's a **Friction Map**—a gradient of integration cost from weight-only changes that ship in weeks, to kernel rewrites that take years, to cluster-level overhauls that kill startups.
 
 This essay is about **Gate 1: hardware and infrastructure viability**. Once an idea clears this gate, later gates—optimization behavior, scaling laws, data quality—decide which low-friction architectures actually win. LSTMs, for example, were hardware-viable but lost to Transformers at Gates 2–3 because they scaled worse and trained less reliably at frontier sizes.
 
@@ -53,22 +49,6 @@ Modern AI hardware heavily subsidizes specific behaviors: dense matrix multiplic
 | **FlashAttention** | Tiled attention to minimize HBM traffic (same math, different memory pattern) | May 2022 → PyTorch 2.2 (Jan 2024) → Universal mid-2024 |
 | **Quantization (INT8/4)** | Specialized low-bit matmul kernels | Fast in open-source; slower in hyperscaler stacks due to eval friction |
 
-**FlashAttention Timeline Breakdown:**
-FlashAttention is the canonical example of kernel friction—technically beneficial from Day 1, but taking 20+ months to reach universal adoption:
-
-- **May 2022:** Paper published (arXiv:2205.14135). Demonstrated 2-4× speedup and memory savings.
-- **Dec 2022:** Beta `flash-attn` package released (v0.2). Requires manual installation, Ampere+ GPUs only.
-- **Jul 2023:** FlashAttention-2 released with improved parallelism. Early adopters (Meta, Mistral) integrate into training pipelines.
-- **Jan 2024:** PyTorch 2.2 integrates FlashAttention-v2 into `scaled_dot_product_attention`. No longer requires external dependency.
-- **Mid-2024:** Universal adoption. vLLM, TensorRT-LLM, and all major inference stacks default to FlashAttention.
-
-**Why 20 months?** Not because FlashAttention was hard to write—the core kernel existed in 2022. The delay was:
-1. **Framework integration** (~8 months): Getting upstream into PyTorch required API standardization and extensive testing
-2. **Production validation** (~6 months): Hyperscalers needed to verify identical numerical behavior at scale
-3. **Ecosystem tooling** (~6 months): Inference stacks (vLLM, TGI) needed to adopt the new API
-
-This is the tax for kernel-level innovation: even when the algorithm works, **the ecosystem takes 2 years to catch up**.
-
 ### Zone 3: System Friction (🟠 Orange)
 *Techniques that break the serving topology.*
 
@@ -88,9 +68,58 @@ This is the tax for kernel-level innovation: even when the algorithm works, **th
 
 | Technique | Friction Source | Dec 2025 Status |
 |-----------|-----------------|-----------------|
-| **KANs** | Per-edge spline evaluation can't batch into GEMMs; fractures arithmetic density, thrashes caches | Zero production deployments at LLM scale |
+| **KANs** | Each edge evaluates a learned spline—hundreds of tiny ops that can't fuse into GEMMs, dropping tensor core utilization to ~10% | Zero production deployments at LLM scale |
 | **Pure SSMs (frontier scale, ≥13B)** | Training parallelism gap compounds at scale; memory bandwidth for state propagation becomes bottleneck | Every 13B+ deployment is a hybrid (Jamba, Falcon-H1, Qwen3-Next) |
 | **Neural ODEs** | Iterative solvers with irregular step sizes; poor memory locality; 5-15% Tensor Core utilization | Theoretically elegant; economically unshippable |
+
+---
+
+## FlashAttention: The Yellow Zone Template
+
+FlashAttention is the canonical example of kernel friction—technically beneficial from Day 1, but taking 20+ months to reach universal adoption:
+
+- **May 2022:** Paper published (arXiv:2205.14135). Demonstrated 2-4× speedup and memory savings.
+- **Dec 2022:** Beta `flash-attn` package released (v0.2). Requires manual installation, Ampere+ GPUs only.
+- **Jul 2023:** FlashAttention-2 released with improved parallelism. Early adopters (Meta, Mistral) integrate into training pipelines.
+- **Jan 2024:** PyTorch 2.2 integrates FlashAttention-v2 into `scaled_dot_product_attention`. No longer requires external dependency.
+- **Mid-2024:** Universal adoption. vLLM, TensorRT-LLM, and all major inference stacks default to FlashAttention.
+
+**Why 20 months?** Not because FlashAttention was hard to write—the core kernel existed in 2022. The delay was:
+1. **Framework integration** (~8 months): Getting upstream into PyTorch required API standardization and extensive testing
+2. **Production validation** (~6 months): Hyperscalers needed to verify identical numerical behavior at scale
+3. **Ecosystem tooling** (~6 months): Inference stacks (vLLM, TGI) needed to adopt the new API
+
+This is the tax for kernel-level innovation: even when the algorithm works, **the ecosystem takes 2 years to catch up**.
+
+---
+
+## MoE: The Orange Zone Template
+
+Mixture-of-Experts tells a different story—36+ months from "research curiosity" to "production standard," because the friction was *systemic*, not just kernel-level:
+
+- **Jan 2021:** Switch Transformer published (Google, arXiv:2101.03961). Demonstrated MoE at 1.6T parameters. Industry reaction: "Interesting, but we don't have the infra."
+- **2021–2023:** MoE languishes in "Google Research limbo." No open-source MoE stack. Custom routing, load balancing, and expert parallelism required. Training runs needed full-time infra teams.
+- **Dec 2023:** Mixtral 8×7B released (Mistral). First open-source MoE that *mattered*—competitive with Llama 2 70B at fraction of inference cost. Proved MoE could be packaged.
+- **May 2024:** DeepSeek-V2 (236B total, 21B active). Demonstrated MoE + MLA at scale with optimized routing.
+- **Dec 2024:** DeepSeek-V3 (671B total, 37B active, 256 experts). Full cluster rewrite. Three pages of the paper devoted to expert placement. Set new throughput benchmarks.
+
+**Why 36+ months?** MoE didn't just need kernels—it needed:
+1. **Routing logic:** Top-k selection, load balancing, auxiliary losses
+2. **Expert parallelism:** Distributing 256 experts across nodes
+3. **MoE-aware serving:** vLLM and TensorRT-LLM only added robust MoE support in late 2024
+4. **Capital commitment:** No one would pay the engineering tax until dense models hit scaling ceilings
+
+MoE is the perfect example of **overcoming friction with capital**. It didn't "pass" a filter—it sat in the High Friction zone until the economic pressure to scale beyond dense models became unbearable. Labs like DeepSeek and Meta paid the massive engineering tax to make it work.
+
+**The MoE Reality Check (2025 Data):**
+
+| Metric | Marketing Claim | Reality |
+|--------|-----------------|---------|
+| **Inference Speedup** | "5–7× faster" | **≈2.0–2.5×** vs dense at short context |
+| **The Context Trap** | Sustained speedup | Drops to **~1.3–1.5×** at 32K+ as routing + KV traffic dominate |
+| **Memory Savings** | "Same as small model" | No VRAM savings at peak—all experts still resident |
+
+MoE is a **throughput and capacity optimizer**, not a magic bullet. It's a Capital Hammer that frontier labs used to smash through a throughput ceiling.
 
 ---
 
@@ -124,22 +153,6 @@ The friction becomes **prohibitive**. Every 13B+ deployment is a hybrid—state-
 
 ---
 
-## MoE and the "Capital Hammer"
-
-MoE is the perfect example of **overcoming friction with capital**. It didn't "pass" a filter—it sat in the High Friction zone until the economic pressure to scale beyond dense models became unbearable. Labs like DeepSeek and Meta paid the massive engineering tax to make it work.
-
-**The MoE Reality Check (2025 Data):**
-
-| Metric | Marketing Claim | Reality |
-|--------|-----------------|---------|
-| **Inference Speedup** | "5–7× faster" | **≈2.0–2.5×** vs dense at short context |
-| **The Context Trap** | Sustained speedup | Drops to **~1.3–1.5×** at 32K+ as routing + KV traffic dominate |
-| **Memory Savings** | "Same as small model" | No VRAM savings at peak—all experts still resident |
-
-MoE is a **throughput and capacity optimizer**, not a magic bullet. It's a Capital Hammer that frontier labs used to smash through a throughput ceiling.
-
----
-
 ## The Startup Heuristic: Moat vs. Death
 
 This Friction Map is not symmetric. It depends on your bank account.
@@ -153,41 +166,74 @@ This Friction Map is not symmetric. It depends on your bank account.
 - High Friction is **DEATH**
 - Betting on a Red Zone architecture means burning runway debugging CUDA kernels before verifying your product
 
+**The Cautionary Tale:**
+
+A Series A startup in 2022 bet their inference stack on a custom Mamba implementation. They believed pure SSMs would dominate long-context workloads. Eighteen months and $8M of engineering burn later, they pivoted to Llama 2 with vLLM—shipping in three weeks what took them over a year to half-finish. The SSM kernels worked; the ecosystem around them didn't exist.
+
+The architecture was viable. The *friction* killed them.
+
 > **The Rule (for product teams):** If it's not in PyTorch upstream, don't build your company on it. Wait for the giants to pave the road.
 > 
 > **The Exception:** If you are an infra startup, you're breaking this rule on purpose—because *your product is the friction*.
 
 ---
 
-## The Practitioner's Checklist
+## The Hardware Friction Scorecard
 
-Stop asking "Is this architecture smart?" Start asking "What is the Friction Score?"
+Turn intuition into a repeatable rubric. This scorecard decomposes Gate-1 friction into five measurable axes.
 
-| Question | Axis | Red Flag |
-|----------|------|----------|
-| Can 90% of FLOPs be big batched GEMMs? | **GA** | KANs fail this |
-| Does it tile into SRAM, or thrash HBM with large intermediates? | **MAL** | Standard attention fails this (needs Flash) |
-| Is training O(1) parallel or O(N) sequential? | **PAR** | RNNs/Pure SSMs fail this |
-| Does inference require complex routing or state across nodes? | **STI** | MoE fails this |
-| Is the kernel available today in upstream vLLM/PyTorch? | **IM** | If no, you are the research team |
+### The 5-Axis Rubric
 
----
+**Hardware Efficiency (H, max 6)**
 
-## What We Deliberately Keep Spiky
+| Axis | Full Name | Measures | Score = 2 means... |
+|------|-----------|----------|-------------------|
+| **GA** | GEMM-Alignment | % of FLOPs in dense matmuls | ≥90% in big batched matmuls |
+| **MAL** | Memory Locality | Memory access patterns | Tiled/fused; no giant N×N materializations |
+| **PAR** | Parallelism | Sequential vs parallel | Training is O(1) parallel over sequence |
 
-Not every critique led to a change in this framework. Some tensions are deliberate:
+**Ecosystem Readiness (E, max 4)**
 
-**1. KANs and Neural ODEs as "Do Not Touch"**
-- *Critique:* The treatment is a bit straw-manny—it doesn't dwell on their theoretical appeal.
-- *Author stance:* Nuance is expensive; "Do not touch this" is cheap and useful for the intended reader. Specialists who truly care will read the detailed references.
+| Axis | Full Name | Measures | Score = 2 means... |
+|------|-----------|----------|-------------------|
+| **STI** | Serving Topology | How much topology must change | Drop-in—standard tensor/pipeline parallel |
+| **IM** | Infra Maturity | How upstream the kernels are | In upstream PyTorch/JAX or major inference stacks |
 
-**2. The Startup Heuristic's Over-Generality**
-- *Critique:* "If it's not in PyTorch upstream, don't build on it" is obviously false for infra startups.
-- *Author stance:* That's fine—the rule is not aimed at infra startups. The exception is explicit.
+**Composite Scores:**
+- **H-Score = GA + MAL + PAR** (0–6)
+- **E-Score = STI + IM** (0–4)
 
-**3. Overclaimy Opening Lines**
-- *Critique:* "Economics determines what survives" overstates Gate-1's role while later sections admit it's only one gate.
-- *Author stance:* It's a blog post, not a legal contract. The hook can be punchier than the caveats.
+### Zone Interpretation
+
+| H-Score | E-Score | Zone | Interpretation |
+|---------|---------|------|----------------|
+| 6 | 4 | 🟢 Green | Drop-in ready. Safe bet. |
+| 5–6 | <4 | 🟡 Yellow | High engineering cost, hardware is fine. |
+| <5 | Any | 🔴/🟠 Red/Orange | Hardware friction. Only for labs with deep pockets. |
+
+### Worked Examples
+
+**Vanilla Transformer + FlashAttention**
+- **H = 6, E = 4 → 🟢 Green**
+- All heavy lifting is dense matmuls. FlashAttention turns attention into a tiled, SRAM-resident kernel. Serving topology unchanged. Kernels upstream in PyTorch.
+
+**Mixtral-8×7B (MoE)**
+- **H ≈ 5, E = 3 → 🟡 Yellow**
+- Experts are standard FFNs (great GA); routing is small matmuls + top-k. Serving topology changes: router logic, expert parallelism, MoE-aware inference stacks.
+
+**Pure Mamba (Falcon Mamba 7B)**
+- **H ≈ 4, E = 3 → 🟠 Orange**
+- Input/output projections are dense matmuls. Core SSM operation is a parallel scan—less tensor-core friendly. Viable at 7B scale; friction increases dramatically beyond 13B.
+
+**KANs**
+- **H ≈ 2, E ≈ 0 → 🔴 Red**
+- Per-edge spline evaluation cannot batch into GEMMs. Many tiny, irregular ops that thrash caches and starve tensor cores. Research code only—no robust LLM-scale implementation.
+
+**How to use this on a new technique:**
+1. Score each axis (0/1/2) based on the rubric
+2. Compute H-Score and E-Score
+3. Map to zone
+4. Ask: "Can I afford this friction given my resources?"
 
 ---
 
@@ -210,20 +256,27 @@ These predictions are designed to be **falsifiable**—if any are wrong, the fri
 
 We are not designing neural networks on a whiteboard. We are leasing time on silicon heaters.
 
-The industry has converged on a narrow set of primitives—GEMMs, FlashAttention, SwiGLU—not because we lack imagination, but because **economic friction kills everything else** on today's NVIDIA-dominated GPU stacks.
-
-Innovation hasn't stopped. It has moved to where the friction is lower: **Training** (post-training, data curation) and **Hybrids** (MoE, Attention+SSM).
+The industry has converged on a narrow set of primitives—GEMMs, FlashAttention, SwiGLU—not because we lack imagination, but because **economic friction kills everything else** on today's NVIDIA-dominated GPU stacks. Innovation hasn't stopped. It has moved to where the friction is lower: **Training** (post-training, data curation) and **Hybrids** (MoE, Attention+SSM).
 
 **The friction map is calcifying, not softening.** NVIDIA's Rubin roadmap (2026) promises "3× faster Transformer layer performance" and HBM4 optimized for million-token context. Every silicon generation optimizes harder for GEMMs. The window for alternative architectures to prove viability is narrowing—not because alternatives can't work, but because the cost of making them work rises with every hardware generation.
-
-**The practical reality:**
-- If you're a **startup**, bet Green. Your survival depends on shipping product, not debugging kernels.
-- If you're a **frontier lab**, Orange friction is your moat. The engineering tax you pay is the same tax your competitors can't afford.
-- If you're in **research**, Red is where breakthroughs live—but they won't ship until someone else pays the toll, or until hardware vendors decide to build different silicon.
 
 Don't fight the friction. Map it, price it, and decide if you can afford the toll.
 
 The Transformer doesn't need to be optimal. It just needs to be **good enough—and too expensive to escape**.
+
+---
+
+## Author's Note: What Stays Spiky
+
+Not every simplification in this essay is accidental:
+
+**KANs and Neural ODEs get dismissed quickly.** The theoretical appeal is real; the production path is not. Specialists who disagree know where to find the papers.
+
+**The Startup Heuristic is a generalization.** Of course infra startups break the rule—that's their business model. The exception is noted.
+
+**"Economics determines what survives" overstates Gate-1's role.** It's a hook, not a legal contract. Gates 2 and 3 (scaling laws, training dynamics) kill plenty of hardware-viable architectures.
+
+These are author choices, not oversights. Disagree with them publicly—that's how good ideas improve.
 
 ---
 
@@ -269,75 +322,7 @@ The Transformer doesn't need to be optimal. It just needs to be **good enough—
 
 ---
 
-# Appendix D — The Hardware Friction Scorecard
-
-> **Purpose:** Turn intuition into a repeatable rubric. This scorecard decomposes Gate-1 friction into five measurable axes.
-
-## The 5-Axis Rubric
-
-### Hardware Efficiency (H, max 6)
-
-| Axis | Full Name | Measures | Score = 2 means... |
-|------|-----------|----------|-------------------|
-| **GA** | GEMM-Alignment | % of FLOPs in dense matmuls | ≥90% in big batched matmuls |
-| **MAL** | Memory Locality | Memory access patterns | Tiled/fused; no giant N×N materializations |
-| **PAR** | Parallelism | Sequential vs parallel | Training is O(1) parallel over sequence |
-
-### Ecosystem Readiness (E, max 4)
-
-| Axis | Full Name | Measures | Score = 2 means... |
-|------|-----------|----------|-------------------|
-| **STI** | Serving Topology | How much topology must change | Drop-in—standard tensor/pipeline parallel |
-| **IM** | Infra Maturity | How upstream the kernels are | In upstream PyTorch/JAX or major inference stacks |
-
-**Composite Scores:**
-- **H-Score = GA + MAL + PAR** (0–6)
-- **E-Score = STI + IM** (0–4)
-
-## Zone Interpretation
-
-| H-Score | E-Score | Zone | Interpretation |
-|---------|---------|------|----------------|
-| 6 | 4 | 🟢 Green | Drop-in ready. Safe bet. |
-| 5–6 | <4 | 🟡 Yellow | High engineering cost, hardware is fine. |
-| <5 | Any | 🔴/🟠 Red/Orange | Hardware friction. Only for labs with deep pockets. |
-
-## Worked Examples
-
-### Vanilla Transformer + FlashAttention
-- **H = 6, E = 4 → 🟢 Green**
-- All heavy lifting is dense matmuls. FlashAttention turns attention into a tiled, SRAM-resident kernel. Serving topology unchanged. Kernels upstream in PyTorch.
-
-### Mixtral-8×7B (MoE)
-- **H ≈ 5, E = 3 → 🟡 Yellow**
-- Experts are standard FFNs (great GA); routing is small matmuls + top-k. Serving topology changes: router logic, expert parallelism, MoE-aware inference stacks.
-
-### Pure Mamba (Falcon Mamba 7B)
-- **H ≈ 4, E = 3 → 🟠 Orange**
-- Input/output projections are dense matmuls. Core SSM operation is a parallel scan—less tensor-core friendly. Viable at 7B scale; friction increases dramatically beyond 13B.
-
-### KANs
-- **H ≈ 2, E ≈ 0 → 🔴 Red**
-- Per-edge spline evaluation cannot batch into GEMMs. Many tiny, irregular ops that thrash caches and starve tensor cores. Research code only—no robust LLM-scale implementation.
-
-### Hypothetical: Hyena (Long-Range Convolution)
-- **GA = 1** (FFT-based convolution is GPU-friendly but not batched GEMMs)
-- **MAL = 2** (FFT has good memory locality with proper tiling)
-- **PAR = 2** (Parallel training—FFTs parallelize over sequence)
-- **STI = 2** (Drop-in serving—same topology as Transformer)
-- **IM = 1** (Custom FFT kernels exist but not upstream in major stacks)
-- **H = 5, E = 3 → 🟡 Yellow**
-- **Interpretation:** Hardware-viable, but ecosystem friction (kernel maturity) blocks adoption until upstreamed. Competitive path exists if someone invests in upstream integration.
-
-**How to use this on a new technique you're evaluating:**
-1. Score each axis (0/1/2) based on the rubric
-2. Compute H-Score and E-Score
-3. Map to zone
-4. Ask: "Can I afford this friction given my resources?"
-
----
-
-# Appendix E — References (Selected)
+# Appendix D — References (Selected)
 
 **Mixture-of-Experts**
 - Fedus et al., 2021 — *"Switch Transformers"* (arXiv:2101.03961)
