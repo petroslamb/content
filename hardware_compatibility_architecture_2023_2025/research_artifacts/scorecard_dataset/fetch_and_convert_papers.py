@@ -231,8 +231,8 @@ def convert_pdf_to_markdown(pdf_path: Path, md_path: Path) -> None:
             "markitdown is not available. Install it in the papers venv with:\n"
             "  cd scorecard_dataset/papers && .venv/bin/pip install markitdown"
         )
-    if md_path.exists():
-        # Do not overwrite existing markdown
+    if md_path.exists() and md_path.stat().st_size > 0:
+        # Do not overwrite existing non-empty markdown
         logger.debug(f"Skipping conversion (exists): {md_path.name}")
         return
 
@@ -241,11 +241,13 @@ def convert_pdf_to_markdown(pdf_path: Path, md_path: Path) -> None:
         md = MarkItDown()
         result = md.convert(str(pdf_path))
         md_text = result.markdown or result.text_content or ""
+        if not md_text:
+             logger.warning(f"Conversion produced empty text for {pdf_path.name}")
+             return
         md_path.write_text(md_text, encoding="utf-8")
     except Exception as e:
         logger.error(f"markitdown conversion failed for {pdf_path}: {e}")
-        if not md_path.exists():
-            md_path.write_text("", encoding="utf-8")
+        # Do not create empty files on failure
 
 
 def main() -> None:

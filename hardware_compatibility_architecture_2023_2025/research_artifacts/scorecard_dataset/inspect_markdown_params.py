@@ -22,13 +22,13 @@ def extract_param_counts_from_text(text: str) -> List[float]:
     # 2025-12-09: Updated regex to include negative lookahead for token/data units
     # and broadened suffix acceptance for 'model', 'dense', 'MoE'.
     pattern = re.compile(
-        r"([0-9][0-9,]*(?:\.\d+)?)\s*(?:"
-        r"(?:B|billion|b)"
-        r"|\s*[-–]?\s*(?:B|billion|b)"
-        r"|\s*(?:M|million|m)"
-        r"|\s*[-–]?\s*(?:M|million|m)"
+        r"([0-9][0-9,]*(?:\.\d+)?)\s*(?:"  # Match number (int/float/comma)
+        r"(?:B|billion|b)\b"               # CASE 1: 'B' unit (e.g. 7B) at word boundary
+        r"|\s*[-–]?\s*(?:B|billion|b)\b"   # CASE 2: 'B' with separator (e.g. 7-B)
+        r"|\s*(?:M|million|m)\b"           # CASE 3: 'M' unit at word boundary
+        r"|\s*[-–]?\s*(?:M|million|m)\b"   # CASE 4: 'M' with separator
         r")"
-        r"(?![\s-]*?(?:tokens|examples|samples|rows|bytes|words))",  # Negative Lookahead: Exclude if followed by data units
+        r"(?![\s-]*?(?:tokens|examples|samples|rows|bytes|words))",  # NEGATIVE LOOKAHEAD: Exclude if followed by data units (e.g. 7B tokens)
         re.IGNORECASE,
     )
 
@@ -56,6 +56,9 @@ def extract_param_counts_from_text(text: str) -> List[float]:
             continue
             
         if unit in ("b", "billion"):
+            # Filter out obvious years (e.g. 2023B from citation keys like Smith2023b)
+            if 1900 <= val <= 2030 and val.is_integer():
+                 continue
             results.append(val)
         elif unit in ("m", "million"):
             results.append(val / 1000.0)
@@ -108,13 +111,13 @@ def extract_param_counts_for_file(text: str, filename: str) -> List[Dict]:
     # We need to reuse the pattern from extract_param_counts_from_text or keep them in sync.
     # Duplicating here for the "search entire line" logic.
     pattern = re.compile(
-        r"([0-9][0-9,]*(?:\.\d+)?)\s*(?:"
-        r"(?:B|billion|b)"
-        r"|\s*[-–]?\s*(?:B|billion|b)"
-        r"|\s*(?:M|million|m)"
-        r"|\s*[-–]?\s*(?:M|million|m)"
+        r"([0-9][0-9,]*(?:\.\d+)?)\s*(?:"  # Match number (int/float/comma)
+        r"(?:B|billion|b)\b"               # CASE 1: 'B' unit (e.g. 7B)
+        r"|\s*[-–]?\s*(?:B|billion|b)\b"   # CASE 2: 'B' with separator (e.g. 7-B)
+        r"|\s*(?:M|million|m)\b"           # CASE 3: 'M' unit
+        r"|\s*[-–]?\s*(?:M|million|m)\b"   # CASE 4: 'M' with separator
         r")"
-        r"(?![\s-]*?(?:tokens|examples|samples|rows|bytes|words))", 
+        r"(?![\s-]*?(?:tokens|examples|samples|rows|bytes|words))",  # NEGATIVE LOOKAHEAD: Exclude if followed by data units (e.g. 7B tokens) 
         re.IGNORECASE,
     )
     
