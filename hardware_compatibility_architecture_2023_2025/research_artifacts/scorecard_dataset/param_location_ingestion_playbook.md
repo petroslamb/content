@@ -1,162 +1,220 @@
 # Parameter & Location Ingestion Playbook
 
-## 0. Prerequisites
+## Quick Start (TL;DR)
 
-### 0.0 Source of Truth
-- The canonical dataset is `scored_architectures.md`.  
-- `scored_architectures.csv` is a **derived artifact**: `parse_scored_architectures.py` regenerates the CSV from the markdown tables and **overwrites all rows/columns**. Any edits must be made in the markdown; the CSV is read‑only from a human perspective.
+```bash
+cd research_artifacts/scorecard_dataset/
+source papers/.venv/bin/activate
+```
 
-### 0.1 Protocol: The Journal
-**CRITICAL:** You must log your run.
-1.  Open `research_artifacts/scorecard_dataset/ingestion_journal.md`.
-2.  Paste the content of `JOURNAL_TEMPLATE.md` at the top.
-3.  Fill in the Date and IDs.
-4.  **As you proceed:** Check off the boxes. Do not skip this.
+**Checklist for adding a new architecture:**
 
-## 1. Adding New Architectures (Manual Entry Only)
-
-When ingesting a new batch (e.g., from `techniques_for_scoring.md` or manual research):
-
-### 1.1 Pre‑check: validate scores
-- Before adding *any* rows to markdown or CSV, go through the new batch and verify that all proposed scores exist and make sense (GA, MAL, PAR, STI, IM, H, E, Zone).  
-- If any score looks inconsistent with the Gate‑1 rubric or prior rows, **stop the process here**.
-- ✅ **Journal Check:** Mark *Step 1.1* as complete.
-
-### 1.2 Add rows to `scored_architectures.md`
-- Assign a new `ID` (A*/B*/C*/D*/E* series).  
-- In the relevant scorecard table, add a row with columns including at least:  
-  - `ID`, `Architecture`, `Year`, `Era`, `GA`, `MAL`, `PAR`, `STI`, `IM`, `H`, `E`, `Zone`, `Source / Paper`, `Notes`, `Section`, `Analyzed`, `Param_Billions`, `Model_Locations`.  
-- **Crucial Initial State:**
-  - `Section`: Set to the appropriate section label.
-  - `Analyzed`: **Leave Empty** (`""`).
-  - `Param_Billions`: `[]`.
-  - `Model_Locations`: `[]`.
-- **Do not** try to find URLs or parameters manually at this stage unless you already have them handy. The automated pipeline (Step 2) is designed to find them for you.
-- ✅ **Journal Check:** Mark *Step 1.2* as complete.
-
-### 1.3 Regenerate the CSV (derived only)
-- **Ensure you are in the environment:**
-  ```bash
-  # From research_artifacts/scorecard_dataset/
-  source papers/.venv/bin/activate
-  ```
-- Run: `python parse_scored_architectures.py`
-- This ensures the new rows exist in the derived CSV for the Python tools to read.
-- ✅ **Journal Check:** Mark *Step 1.3* as complete.
+1. [ ] Open `ingestion_journal.md`, paste `JOURNAL_TEMPLATE.md` at top
+2. [ ] Validate scores (GA/MAL/PAR/STI/IM) before adding
+3. [ ] Add row to `scored_architectures.md` with `Analyzed = ""`
+4. [ ] Run `python parse_scored_architectures.py` to sync CSV
+5. [ ] Run `python hf_search_model_cards.py search --ids <ID>` for discovery
+6. [ ] Check HF papers page, model cards, ArXiv HTML for params
+7. [ ] Run `python fetch_and_convert_papers.py --ids <ID>` for PDFs
+8. [ ] Run `python inspect_markdown_params.py --ids <ID>` for extraction
+9. [ ] Aggregate findings → update `Param_Billions`, `Model_Locations`
+10. [ ] Set `Analyzed = "analyzed"` and sync CSV again
+11. [ ] (Optional) Fill `First_10B_Date` and `Adoption_Months` if applicable
 
 ---
 
-## 2. Parameter & Location Discovery (The Ensemble)
+## Prerequisites
 
-**Goal:** Run an "Ensemble" of discovery methods on all rows where `Analyzed = ""`.
-**Logic:** Unlike previous "waterfall" approaches, we run **ALL** applicable prongs (Search, HF, ArXiv, PDF) and then **aggregate** the findings.
+**Before you start any ingestion work:**
 
-### 2.0 Step 0 — Automated Discovery (Search)
-- **Tool:** `hf_search_model_cards.py` in `search` mode.
-- **Action:**
-  1.  Run the search helper:
-      ```bash
-      python hf_search_model_cards.py search
-      # Or for specific IDs:
-      python hf_search_model_cards.py search --ids A5 B12
-      ```
-  2.  The script will print candidate URLs to your terminal.
-  3.  **Collect** these URLs. You will use them to update the markdown in Step 2.2, but for now just pass them to Step 2.1.
-  4.  ✅ **Journal Check:** Mark *Step 2.0* as complete in your journal. Note any missing architectures.
+```bash
+cd research_artifacts/scorecard_dataset/
+source papers/.venv/bin/activate
+```
 
-### 2.1 Step 1 — Gather Intelligence (The 4 Prongs)
-Run these prongs to harvest data. Findings are accumulative.
+**Source of Truth:**
+- `scored_architectures.md` is canonical. All edits happen here.
+- `scored_architectures.csv` is derived. Never edit directly.
 
-#### Prong A: Hugging Face Paper Page (Discovery)
-- **Input:** ArXiv ID (from `Source / Paper`).
-- **URL:** `https://huggingface.co/papers/<ARXIV_ID>`
-- **Action:**
-    - Visit the page.
-    - **Check "Mentions" / "Citing Models":** This is often more reliable than search for finding derived architectures (e.g., searching for "Transformer" fails, but checking models citing 1706.03762 finds *everything*).
-    - **Add to pool:** Any relevant citing model URLs.
-    - ✅ **Journal Check:** Mark *Step 2.1 (Prong A)* as complete.
+**Journal Requirement:**
+Every ingestion batch MUST be logged in `ingestion_journal.md`. See template:
 
-#### Prong B: Hugging Face Model Cards (Inspection)
-- **Tool:** `hf_search_model_cards.py` in `inspect` mode.
-- **Action:**
-    -  Run inspection on IDs found in Step 2.0 or Prong A:
-       ```bash
-       python hf_search_model_cards.py inspect --ids A5
-       ```
-    -  The script fetches the README, looks for `7B parameters` style text, and prints suggestions.
-    -  **Add to pool:** Resulting param counts.
-    -  ✅ **Journal Check:** Mark *Step 2.1 (Prong B)* as complete.
-
-#### Prong C: ArXiv HTML (Validation)
-- **Input:** `arxiv.org/abs/...` URLs.
-- **Action:**
-    - Fetch the ArXiv HTML page.
-    - **Validation:** Confirm title and authors match our entry.
-    - **Hunt for Params:** Regex search the HTML abstract for parameter counts.
-    - **Add to pool:** `Param_Billions`.
-    - ✅ **Journal Check:** Mark *Step 2.1 (Prong C)* as complete.
-
-#### Prong D: PDF → Markdown (Deep Dive)
-- **Prerequisite:** `source papers/.venv/bin/activate` (Required for `markitdown`).
-- **Input:** ArXiv IDs (from `Source / Paper` or `Notes`).
-- **Source:** Defaults to `https://arxiv.org/pdf/<ARXIV_ID>.pdf`.
-- **Tools:** `markitdown[pdf]` in `papers/.venv`.
-- **Action:**
-    -  **Download/Locate:** Ensure `papers/<ID>/pdf/<ARXIV_ID>.pdf` exists.
-        -   **Tool:** `python fetch_and_convert_papers.py --ids <ID>`
-        -   *Note:* This script handles downloading AND converting to markdown automatically.
-        -   ✅ **Optimization:** The script **skips** downloads/conversions if files already exist. It is safe and fast to re-run.
-    -  **Verify Content:** Read the top of the Markdown to confirm title match.
-    -  **Extract:** Context-aware search for "X parameters".
-        -   **Tool:** `python inspect_markdown_params.py --ids <ID> --report candidates.md`
-        -   **Action:** 
-            -   Review the console output OR the `candidates.md` file.
-            -   Look for explicit parameter counts (e.g., "7B") in the context of the *proposed* model, not a baseline.
-            -   **Troubleshooting:** If you suspect a match was rejected (e.g. "7B tokens"), check `logs/pipeline.log`.
-    -   **Add to pool:** `Param_Billions`.
-    -   ✅ **Journal Check:** Mark *Step 2.1 (Prong C)* as complete. Note any findings in the journal.
-
-### 2.2 Step 2 — Aggregation & Update (Finalize)
-Once all prongs have run for a row, we perform a strict aggregation to ensure no duplicates.
-
-1.  **Aggregate Locations (Unique Sets Only):**
-    - Collect all URLs from {Manual Links} + {Step 2.0 Search Results} + {Step 2.1B ArXiv Findings}.
-    - **Deduplication Rule:** Convert to a Set. Normalize strings (strip trailing slashes, lowercase hosts) to ensure `huggingface.co/A` and `huggingface.co/A/` are treated as identical.
-    - **Outcome:** A sorted list of unique URLs.
-    - ✅ **Journal Check:** Mark *Step 2.2 (Locations)* as complete.
-
-2.  **Aggregate Parameters (Unique Sets Only):**
-    - Collect all counts from {Prong A} + {Prong B} + {Prong C}.
-    - **Deduplication Rule:** 
-        - Convert all findings to float (billions).
-        - Filter out duplicates (e.g., if HF says 7.0 and PDF says 7.0, keep one).
-        - **Conflict Resolution:** If values are close but not identical (e.g., 6.9B vs 7.0B), keep both for human review unless one source is clearly authoritative (HF metadata > PDF text).
-    - **Outcome:** A sorted list of unique parameter counts (e.g., `[7.0, 13.0]`).
-    - ✅ **Journal Check:** Mark *Step 2.2 (Params)* as complete.
-
-3.  **Write to Markdown:**
-    - Update `Model_Locations` with the **unique** list.
-    - Update `Param_Billions` with the **unique** list.
-    - **Set `Analyzed = "analyzed"`**.
-    - ✅ **Journal Check:** Mark *Step 2.2 (Write)* as complete.
-
-4.  **Final Polish:**
-    - Run `python parse_scored_architectures.py` one last time to sync the CSV.
-    - ✅ **Journal Check:** Mark *Step 2.2 (Sync)* as complete. Verify `git diff` looks correct.
+```markdown
+## Batch: [DATE] — IDs: [A1, A2, ...]
+- [ ] Step 1: Scores validated
+- [ ] Step 2: Rows added to markdown
+- [ ] Step 3: CSV synced
+- [ ] Step 4: Discovery (HF search)
+- [ ] Step 5: Inspection (HF/ArXiv/PDF)
+- [ ] Step 6: Aggregation complete
+- [ ] Step 7: Analyzed flag set
+- [ ] Step 8: Timeline filled (optional)
+**Notes:** [Any issues or findings]
+```
 
 ---
 
-## 3. Finalization Semantics
+## Step 1: Add New Architectures
 
-- **Analyzed = "analyzed"**: We have thrown the kitchen sink (Search, HF, ArXiv, PDF) at this entry.
-    - If `Param_Billions` is empty, it genuinely means we couldn't find a reliable number (or it's close weights).
-    - If `Param_Billions` has values, they are the best available truth.
+### 1.1 Validate Scores
+Before adding rows, verify all proposed scores (GA, MAL, PAR, STI, IM, H, E, Zone) are consistent with the Gate-1 rubric.
+- ✅ **Journal:** Mark Step 1 complete.
 
-- **Analyzed = ""**: This row is pending processing. Do not use for `experiments/` modeling yet.
+### 1.2 Add Rows to Markdown
+- Assign a new `ID` (A*/B*/C*/D*/E* series)
+- Add row with all columns. Initial state:
+  - `Analyzed`: Leave empty (`""`)
+  - `Param_Billions`: `[]`
+  - `Model_Locations`: `[]`
+  - `First_10B_Date`: empty
+  - `Adoption_Months`: empty
+- ✅ **Journal:** Mark Step 2 complete.
+
+### 1.3 Sync CSV
+```bash
+python parse_scored_architectures.py
+```
+- ✅ **Journal:** Mark Step 3 complete.
 
 ---
 
-## 4. What No Longer Exists
+## Step 2: Discovery (Automated Search)
 
-- **Manual "Seed Locations"**: We moved HF search automation into Step 2.0 so humans don't have to copy-paste URLs.
-- **Waterfall Logic**: We no longer stop at the first finding. We aggregate sources to handle cases where the paper lists the count but HF doesn't (or vice versa).
+### 2.1 HuggingFace Search
+```bash
+python hf_search_model_cards.py search --ids A5 B12
+```
+Collects candidate model URLs from HuggingFace.
+
+### 2.2 HuggingFace Papers Page
+For each ArXiv ID in `Source / Paper`:
+- Visit `https://huggingface.co/papers/<ARXIV_ID>`
+- Check "Mentions" / "Citing Models" for derived architectures
+- Add relevant URLs to your pool
+
+- ✅ **Journal:** Mark Step 4 complete.
+
+---
+
+## Step 3: Inspection (Parameter Extraction)
+
+### 3.1 HuggingFace Model Cards
+```bash
+python hf_search_model_cards.py inspect --ids A5
+```
+Fetches README, extracts "7B parameters" style text.
+
+### 3.2 ArXiv HTML
+- Fetch ArXiv abstract page
+- Regex search for parameter counts
+- Validate title/authors match
+
+### 3.3 PDF Deep Dive
+```bash
+python fetch_and_convert_papers.py --ids A5
+python inspect_markdown_params.py --ids A5 --report candidates.md
+```
+- Downloads PDF, converts to markdown
+- Extracts parameter counts with context
+- Review `candidates.md` or console output
+
+- ✅ **Journal:** Mark Step 5 complete.
+
+---
+
+## Step 4: Aggregation
+
+### 4.1 Deduplicate Locations
+- Collect all URLs from search + HF papers + manual
+- Normalize (strip trailing slashes, lowercase hosts)
+- Keep unique set
+
+### 4.2 Deduplicate Parameters
+- Convert all to float (billions)
+- Remove exact duplicates
+- If close but not identical (6.9B vs 7.0B), keep both for review
+
+### 4.3 Write to Markdown
+- Update `Model_Locations` with unique list
+- Update `Param_Billions` with unique list
+- Set `Analyzed = "analyzed"`
+
+### 4.4 Final Sync
+```bash
+python parse_scored_architectures.py
+```
+
+- ✅ **Journal:** Mark Steps 6 and 7 complete.
+
+---
+
+## Step 5: Adoption Timeline (Optional)
+
+If you find a model ≥10B parameters:
+
+### 5.1 Find Deployment Date
+- Check model card, blog post, or GitHub release
+- Use first public release date (not paper date)
+
+### 5.2 Fill Columns
+- `First_10B_Date`: Format `YYYY-MM` (e.g., `2024-04`)
+- `Adoption_Months`: Months from paper year to deployment
+
+### 5.3 Document Evidence
+Add source URL to journal notes.
+
+- ✅ **Journal:** Mark Step 8 complete if applicable.
+
+---
+
+## Definition of Done
+
+A row is complete when:
+- [ ] `Analyzed = "analyzed"`
+- [ ] `Param_Billions` is populated OR confirmed empty after all sources checked
+- [ ] `Model_Locations` is populated OR confirmed empty
+- [ ] Journal entry is complete with all checkboxes marked
+
+Optional (for ≥10B models):
+- [ ] `First_10B_Date` is filled
+- [ ] `Adoption_Months` is calculated
+
+---
+
+## Troubleshooting
+
+### ArXiv ID Not Found
+- Check for typos in the ID (e.g., `2312.00752` not `2312.0752`)
+- Some papers use different IDs (e.g., conference versions)
+- Try searching by title on arxiv.org directly
+
+### PDF Download Fails
+- Check if the paper is on arXiv (some are conference-only)
+- Try manual download and place in `papers/<ID>/pdf/`
+- The script skips existing files, so you can retry safely
+
+### Conflicting Parameter Counts
+- Prefer HuggingFace metadata over PDF text
+- If HF says "7B" and paper says "6.7B", use 7.0 (HF is usually rounded)
+- If truly conflicting, keep both for human review
+
+### Architecture is a "Technique" (No Model)
+- Examples: FlashAttention, RoPE, LoRA
+- These may have `Param_Billions = []` legitimately
+- Set `Analyzed = "analyzed"` anyway after confirming no model exists
+
+### Virtual Environment Issues
+```bash
+# If markitdown fails:
+pip install markitdown[pdf]
+
+# If tools can't find modules:
+source papers/.venv/bin/activate
+```
+
+---
+
+## What No Longer Exists
+
+- **Manual "Seed Locations"**: HF search automation handles this
+- **Waterfall Logic**: We aggregate all sources, don't stop at first hit
