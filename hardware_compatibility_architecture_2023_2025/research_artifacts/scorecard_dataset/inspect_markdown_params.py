@@ -28,7 +28,7 @@ def extract_param_counts_from_text(text: str) -> List[float]:
         r"|\s*(?:M|million|m)\b"           # CASE 3: 'M' unit at word boundary
         r"|\s*[-–]?\s*(?:M|million|m)\b"   # CASE 4: 'M' with separator
         r")"
-        r"(?![\s-]*?(?:tokens|examples|samples|rows|bytes|words))",  # NEGATIVE LOOKAHEAD: Exclude if followed by data units (e.g. 7B tokens)
+        r"(?![\s-]*?(?:tokens?|examples?|samples?|rows?|bytes?|words?))",  # NEGATIVE LOOKAHEAD: Exclude if followed by data units (e.g. 7B tokens)
         re.IGNORECASE,
     )
 
@@ -117,7 +117,7 @@ def extract_param_counts_for_file(text: str, filename: str) -> List[Dict]:
         r"|\s*(?:M|million|m)\b"           # CASE 3: 'M' unit
         r"|\s*[-–]?\s*(?:M|million|m)\b"   # CASE 4: 'M' with separator
         r")"
-        r"(?![\s-]*?(?:tokens|examples|samples|rows|bytes|words))",  # NEGATIVE LOOKAHEAD: Exclude if followed by data units (e.g. 7B tokens) 
+        r"(?![\s-]*?(?:tokens?|examples?|samples?|rows?|bytes?|words?))",  # NEGATIVE LOOKAHEAD: Exclude if followed by data units (e.g. 7B tokens) 
         re.IGNORECASE,
     )
     
