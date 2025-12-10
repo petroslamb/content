@@ -1,0 +1,28 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Internal artifacts (not for public dataset)
+papers/
+logs/
+*.log
+
+# Work-in-progress files
+ingestion_journal.md
+candidates.md
+candidates_batch.md
+journal_partial.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
