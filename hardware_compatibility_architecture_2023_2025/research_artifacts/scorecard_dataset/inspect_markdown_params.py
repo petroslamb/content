@@ -63,6 +63,22 @@ def extract_param_counts_from_text(text: str) -> List[float]:
         elif unit in ("m", "million"):
             results.append(val / 1000.0)
 
+    # Context Keyword Check (The "Anchor") - implemented inside extraction helper?
+    # No, extraction helper gets only specific regex match groups.
+    # We must refine this function signature or wrap it. 
+    # Actually, this function processes snippets. The regex is loose, logic is tight.
+    # Let's verify context *before* appending to results? 
+    # The regex scan finds numbers. Checking for "param" in the *entire text passed* is risky if text is huge.
+    # But this function is usually called on a LINE.
+    
+    # 2025-12-10: Strict Keyword Filter ("The Math Killer")
+    # If the text (line) does NOT contain 'param', 'weight', 'size', or 'scale', reject it.
+    # This prevents '8m + m' variables from matching.
+    text_lower = text.lower()
+    ANCHOR_KEYWORDS = ["param", "weight", "size", "scale", "model"]
+    if not any(k in text_lower for k in ANCHOR_KEYWORDS):
+        return []
+
     # Deduplicate and sort, rounded to 3 decimals for stability.
     unique = sorted({round(v, 3) for v in results})
     return unique
