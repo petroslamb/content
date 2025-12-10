@@ -16,6 +16,25 @@ This project investigates why certain neural architectures (Transformers, MoEs) 
 
 We measure this friction using the **Hardware Friction Scorecard**, a quantitative methodology located in `research_artifacts/scorecard_dataset/`.
 
+### 🎯 Public Dataset
+
+**The Hardware Friction Scorecard Dataset is now available as a standalone open-source repository:**
+
+📊 **[Hardware Friction Scorecard Dataset](https://github.com/petroslamb/hardware-friction-scorecard-dataset)**
+
+This public dataset contains:
+- **119 architectures** scored on hardware compatibility (2017-2025)
+- Full scoring methodology and CSV/markdown data
+- 3 accompanying research essays
+- Usage examples and visualization code
+- **License:** CC BY 4.0 (open for academic and commercial use)
+
+Use this dataset to:
+- Analyze architecture adoption patterns
+- Predict production viability of new architectures
+- Study the "Transformer Attractor" phenomenon across domains (text, image, video, audio)
+- Cite in academic research
+
 ### 1.1 Start Here: Required Reading
 Before diving into the methodology, the reader should be acquainted with two core documents:
 
@@ -30,7 +49,9 @@ Before diving into the methodology, the reader should be acquainted with two cor
 
 ## 2. Methodology: The Hardware Friction Scorecard
 
-Located in: [`research_artifacts/scorecard_dataset/`](./research_artifacts/scorecard_dataset/)
+**Public Dataset:** The complete scored dataset is available at **[github.com/petroslamb/hardware-friction-scorecard-dataset](https://github.com/petroslamb/hardware-friction-scorecard-dataset)**
+
+Local copy: [`research_artifacts/scorecard_dataset/`](./research_artifacts/scorecard_dataset/)
 
 Our primary methodological contribution is a rigorously defined "Gate-1" adoption filter. Architectures are scored on five axes to predict their production viability.
 
@@ -44,7 +65,7 @@ Our primary methodological contribution is a rigorously defined "Gate-1" adoptio
 *   🟠 **Orange Zone (Friction-Dominant):** Niche use cases (e.g., pure SSMs at scale).
 *   🔴 **Red Zone (Hardware-Hostile):** Research only (e.g., Spiking NN, Capsules).
 
-**Key Artifact:** [`scored_architectures.md`](./research_artifacts/scorecard_dataset/scored_architectures.md) contains the full scored dataset of 100+ architectures.
+**Key Artifact:** The full scored dataset is available in the [public repository](https://github.com/petroslamb/hardware-friction-scorecard-dataset) with 119 architectures scored from 2017-2025.
 
 ---
 
