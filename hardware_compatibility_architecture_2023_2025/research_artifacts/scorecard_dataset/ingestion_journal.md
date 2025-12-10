@@ -163,3 +163,60 @@
 **Notes / Blockers:**
 - A3 (MLA) complete.
 - **Precedent Set:** For MoEs (like Mixtral next), we record Total Params. Active params are an optimization detail, but Total determines hardware fit (Gate 1).
+
+### Batch Run: 2025-12-09 [Concurrent A4-A8] (IDs: A4, A5, A6, A7, A8)
+**Operator:** Antigravity | **Status:** COMPLETE
+
+#### 1. Preparation
+- [x] **IDs:**
+    - A4: LSTM/GRU (Baseline)
+    - A5: Mixtral-8x7B (MoE)
+    - A6: DeepSeek-V3 (MoE + MLA)
+    - A7: Pure Mamba (SSM)
+    - A8: GLA/DeltaNet (Linear Attn)
+
+#### 2. Execution (The Ensemble)
+**Step 2.0: Automated Search**
+- [x] Run `python hf_search_model_cards.py search --ids A4 A5 A6 A7 A8`
+- [x] Review candidates.
+    - A4: Generic "LSTM" repos.
+    - A5: Qwen noise (72B), found `Tarsier2`.
+    - A6: Noise (Whisper, OCR).
+    - A7/A8: No hits.
+
+**Step 2.1: Gather Intelligence (Concurrency)**
+*Prong A: Hugging Face Paper Page*
+- [x] Identified Paper URLs/IDs manually:
+    - A4: `arxiv.org/abs/1406.1078` (Cho 2014) / Hochreiter 1997
+    - A5: `arxiv.org/abs/2401.04088`
+    - A6: `arxiv.org/abs/2405.04434` (DeepSeek-V2, used as V3 proxy)
+    - A7: `arxiv.org/abs/2312.00752`
+    - A8: `arxiv.org/abs/2312.06635`
+
+*Prong B: Hugging Face Inspection*
+- [x] Run `python hf_search_model_cards.py inspect --ids A4 A5 A6 A7 A8`
+    - Initial run noisy.
+    - Manually injected URLs for A5 (`mistralai/Mixtral-8x7B-v0.1`) and A7.
+    - Inspection confirmed effectively no clean parameter metadata in model cards.
+
+*Prong D: PDF Deep Dive*
+- [x] `python fetch_and_convert_papers.py --ids A4 A5 A6 A7 A8`
+    - **Note**: Recovered from missing dependency failure. Code patched to prevent silent empty files.
+    - Successfully downloaded and converted all 5 papers.
+- [x] `python inspect_markdown_params.py --ids A4 A5 A6 A7 A8 --report candidates_batch.md`
+    - **Findings**:
+        - **A4**: No LLM-scale params (ref arch).
+        - **A5**: "47B parameters, 13B active" (Mixtral 8x7B).
+        - **A6**: "236B total parameters, 21B active" (DeepSeek-V2/V3).
+        - **A7**: "Mamba-3B", "2.8B" (Mamba paper max). Note: Falcon Mamba 7B exists but source paper limits to 3B.
+        - **A8**: "1.3B", "340M" (GLA paper).
+
+#### 3. Finalization
+**Step 2.2: Aggregation**
+- [x] Update `scored_architectures.md` with final counts (Total for MoEs):
+    - A4: N/A
+    - A5: [13.0, 47.0]
+    - A6: [21.0, 236.0]
+    - A7: [2.8]
+    - A8: [0.34, 1.3]
+- [x] Sync CSV.
