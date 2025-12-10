@@ -274,6 +274,63 @@ These architectures were initially skipped from the main scorecard but are impor
 
 
 
+## 5. Multimodal & Generative Media Architectures (2016–2025)
+
+**Context:** The "Architectural Wild West." While LLMs converged on Transformer++, multimodal domains (image, video, audio) were battlefields of competing paradigms. This section shows the Transformer victory extending beyond text into pixels, waves, and cross‑modal fusion.
+
+---
+
+### 5.1 Image Generation: The Backbone Wars (UNet vs DiT vs MaskGIT)
+
+| ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes | Analyzed | Section | Param_Billions | Model_Locations |
+| ---- | ------------- | ------ | ----- | ---- | ----- | ----- | ------: | ----- | ---- | ------: | ------ | ---------------- | ------- | ---------- | --------- | ------------- | ------------- |
+| F1 | UNet (CNN for Diffusion) | 2015 | pre‑2018 | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Ronneberger et al. 2015; Rombach et al. 2022 (Stable Diffusion) | The legacy standard for image diffusion. Convolutional U‑shaped architecture with skip connections; excellent hardware profile and mature infra. Used in Stable Diffusion 1.5/XL; https://arxiv.org/abs/1505.04597. |  | 5.1 Image Generation: The Backbone Wars (UNet vs DiT vs MaskGIT) |  |  |
+| F2 | DiT (Diffusion Transformer) | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Peebles \u0026 Xie 2023 | **The New King.** Image patches as tokens, uses FlashAttention, scales better than UNets. Powers Sora, Stable Diffusion 3, Meta Emu. Proves "patchification" lets Transformers dominate vision generation too; https://arxiv.org/abs/2212.09748. |  | 5.1 Image Generation: The Backbone Wars (UNet vs DiT vs MaskGIT) |  |  |
+| F3 | MaskGIT (Transformer) | 2022 | 2018–2022 | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟡 Yellow | Chang et al. 2022 | Non‑autoregressive masked token generation with iterative decoding (8–16 steps). Faster than diffusion but infra less mature than DiT/UNet. Used in Google Muse; https://arxiv.org/abs/2202.04200. |  | 5.1 Image Generation: The Backbone Wars (UNet vs DiT vs MaskGIT) |  |  |
+| F4 | StyleGAN3 | 2021 | 2018–2022 | 1 | 2 | 2 | **5** | 2 | 1 | **3** | 🟡 Yellow | Karras et al. 2021 | Alias‑free CNN‑based GAN. Best‑in‑class for faces and controlled generation, but lacks flexibility for wild text‑to‑image tasks. Not GEMM‑centric (GA=1) due to custom alias‑free ops; https://arxiv.org/abs/2106.12423. |  | 5.1 Image Generation: The Backbone Wars (UNet vs DiT vs MaskGIT) |  |  |
+| F5 | Consistency Models | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟡 Yellow | Song et al. 2023 | 1‑step or 2‑step distillation of diffusion models. Architecture‑agnostic (can wrap UNet or DiT). Excellent H but infra still maturing (IM=1); https://arxiv.org/abs/2303.01469. |  | 5.1 Image Generation: The Backbone Wars (UNet vs DiT vs MaskGIT) |  |  |
+
+
+### 5.2 Video Generation: The "World Simulator" Battle (AR vs Diffusion)
+
+| ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes | Analyzed | Section | Param_Billions | Model_Locations |
+| ---- | ------------- | ------ | ----- | ---- | ----- | ----- | ------: | ----- | ---- | ------: | ------ | ---------------- | ------- | ---------- | --------- | ------------- | ------------- |
+| F6 | Video DiT (Diffusion Transformer) | 2024 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | OpenAI Sora 2024; Pku Open‑Sora | **The World Simulator.** Spacetime patches with global attention for object permanence. DiT architecture extended to video. Currently SOTA for long‑form, coherent generation; Sora technical report. |  | 5.2 Video Generation: The "World Simulator" Battle (AR vs Diffusion) |  |  |
+| F7 | VideoPoet (Autoregressive) | 2023 | 2023+ | 2 | 2 | 1 | **5** | 2 | 1 | **3** | 🟡 Yellow | Kondratyuk et al. 2023 | **"LLM for Video."** Uses MAGVIT‑v2 tokenizer to treat video as discrete token stream. Standard Transformer decoder but PAR=1 due to autoregressive constraint; infra proprietary (IM=1); https://arxiv.org/abs/2312.14125. |  | 5.2 Video Generation: The "World Simulator" Battle (AR vs Diffusion) |  |  |
+| F8 | UNet 3D (Temporal Convolutions) | 2023 | 2023+ | 1 | 1 | 2 | **4** | 2 | 2 | **4** | 🟡 Yellow | Runway Gen‑2; Blattmann et al. 2023 | 3D convolutional UNet for video. Temporal convolutions yield weaker GA/MAL than DiT; harder to scale to minutes‑long videos. Mature infra (E=4) but losing to DiT on quality/scale. |  | 5.2 Video Generation: The "World Simulator" Battle (AR vs Diffusion) |  |  |
+
+
+### 5.3 Audio Generation: The "Codec" Revolution (Waveform vs Discrete Codes)
+
+| ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes | Analyzed | Section | Param_Billions | Model_Locations |
+| ---- | ------------- | ------ | ----- | ---- | ----- | ----- | ------: | ----- | ---- | ------: | ------ | ---------------- | ------- | ---------- | --------- | ------------- | ------------- |
+| F9 | AudioLM (Codec Autoregressive) | 2022 | 2018–2022 | 2 | 2 | 1 | **5** | 2 | 2 | **4** | 🟢 Green | Borsos et al. 2022 (AudioLM); Agostinelli et al. 2023 (MusicLM) | **"Audio is Just Text."** Tokenizes audio via SoundStream codec, then applies standard decoder‑only Transformer. Dominant paradigm. PAR=1 from autoregressive generation; https://arxiv.org/abs/2209.03143. |  | 5.3 Audio Generation: The "Codec" Revolution (Waveform vs Discrete Codes) |  |  |
+| F10 | WaveNet (CNN Dilated Convolutions) | 2016 | pre‑2018 | 1 | 2 | 2 | **5** | 2 | 1 | **3** | 🟡 Yellow | van den Oord et al. 2016 | Pioneering dilated causal convolutions for waveform synthesis. Strong for TTS but sample‑by‑sample inference is slow. Obsolete for music generation. GA=1 due to non‑GEMM convolutions; https://arxiv.org/abs/1609.03499. |  | 5.3 Audio Generation: The "Codec" Revolution (Waveform vs Discrete Codes) |  |  |
+| F11 | Jukebox (Sparse Transformer) | 2020 | 2018–2022 | 1 | 1 | 2 | **4** | 2 | 0 | **2** | 🟠 Orange | Dhariwal et al. 2020 | Hierarchical VQ‑VAE + sparse Transformer for raw audio. Massive context (8192 codes), but too slow/expensive for production. Infra research‑only (IM=0); https://arxiv.org/abs/2005.00341. |  | 5.3 Audio Generation: The "Codec" Revolution (Waveform vs Discrete Codes) |  |  |
+| F12 | Voicebox (Flow Matching) | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟢 Green | Le et al. 2023 | Non‑autoregressive audio generation via flow matching (continuous normalizing flows, like diffusion). Can infill missing audio segments. Excellent H but infra still maturing (IM=1); https://arxiv.org/abs/2306.15687. |  | 5.3 Audio Generation: The "Codec" Revolution (Waveform vs Discrete Codes) |  |  |
+
+
+### 5.4 Multimodal Fusion: The "Connector" Wars (Late Fusion vs Early Fusion)
+
+| ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes | Analyzed | Section | Param_Billions | Model_Locations |
+| ---- | ------------- | ------ | ----- | ---- | ----- | ----- | ------: | ----- | ---- | ------: | ------ | ---------------- | ------- | ---------- | --------- | ------------- | ------------- |
+| F13 | Dual Encoder (CLIP‑style) | 2021 | 2018–2022 | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Radford et al. 2021 (CLIP) | Separate image/text towers trained with contrastive loss. Dot product for retrieval. Clean separation, fast, universally adopted. Already scored as D16 but worth highlighting in multimodal context. |  | 5.4 Multimodal Fusion: The "Connector" Wars (Late Fusion vs Early Fusion) |  |  |
+| F14 | Projection Connector (LLaVA‑style) | 2023 | 2023+ | 2 | 2 | 2 | **6** | 2 | 2 | **4** | 🟢 Green | Liu et al. 2023 (LLaVA); OpenAI GPT‑4V | **The "Good Enough" Winner.** Freeze pre‑trained LLM and ViT, train lightweight projector (MLP) to map vision embeddings → text token space. Dominant paradigm for vision‑language models; https://arxiv.org/abs/2304.08485. |  | 5.4 Multimodal Fusion: The "Connector" Wars (Late Fusion vs Early Fusion) |  |  |
+| F15 | Early Fusion (Native Multimodal) | 2024 | 2023+ | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟡 Yellow | Meta Chameleon 2024; Google Gemini | Tokenize image and text together from start; single unified Transformer. **Theoretically superior** but training stability nightmare (balancing cross‑modal losses). IM=1 due to proprietary stacks; Chameleon paper https://arxiv.org/abs/2405.09818. |  | 5.4 Multimodal Fusion: The "Connector" Wars (Late Fusion vs Early Fusion) |  |  |
+| F16 | Flamingo (Interleaved Cross‑Attention) | 2022 | 2018–2022 | 2 | 2 | 2 | **6** | 2 | 1 | **3** | 🟡 Yellow | Alayrac et al. 2022 | Inserts cross‑attention layers into frozen LLM to condition on interleaved image/text. Strong few‑shot learning. Infra less mature than projection‑based (IM=1); https://arxiv.org/abs/2204.14198. |  | 5.4 Multimodal Fusion: The "Connector" Wars (Late Fusion vs Early Fusion) |  |  |
+
+
+### 5.5 Vision State‑Space Models (SSMs for Images)
+
+| ID | Architecture | Year | Era | GA | MAL | PAR | **H** | STI | IM | **E** | Zone | Source / Paper | Notes | Analyzed | Section | Param_Billions | Model_Locations |
+| ---- | ------------- | ------ | ----- | ---- | ----- | ----- | ------: | ----- | ---- | ------: | ------ | ---------------- | ------- | ---------- | --------- | ------------- | ------------- |
+| F17 | Vision Mamba (Vim) | 2024 | 2023+ | 1 | 1 | 1 | **3** | 2 | 1 | **3** | 🟠 Orange | Zhu et al. 2024 | Applies Mamba (SSM) to vision without patchification into standard attention. Faster than ViT at high resolution but ViT/DiT have better scaling laws. Niche use case; https://arxiv.org/abs/2401.09417. |  | 5.5 Vision State‑Space Models (SSMs for Images) |  |  |
+| F18 | ViT (Vision Transformer) | 2020 | 2018–2022 | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | Dosovitskiy et al. 2020 | **The Vision Breakthrough.** Image patches as tokens with standard Transformer encoder. Proved Transformers work for vision at scale. Quadratic attention (MAL=1 pre‑Flash) but full ecosystem support; https://arxiv.org/abs/2010.11929. |  | 5.5 Vision State‑Space Models (SSMs for Images) |  |  |
+| F19 | DeiT (Data‑efficient ViT) | 2021 | 2018–2022 | 2 | 1 | 2 | **5** | 2 | 2 | **4** | 🟢 Green | Touvron et al. 2021 | ViT with distillation and better training recipes. Same architecture as ViT, proves data efficiency matters. No Gate‑1 changes; https://arxiv.org/abs/2012.12877. |  | 5.5 Vision State‑Space Models (SSMs for Images) |  |  |
+
+
+---
+
 ## 4. Notes and Next Steps
 
 - These scores deliberately **err on the conservative side** for GA/MAL/PAR when kernels are non‑GEMM or infra is vendor‑specific; they should be revisited as real FLOP breakdowns or kernel traces become available.  
