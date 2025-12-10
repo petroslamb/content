@@ -46,3 +46,21 @@ This directory contains the quantitative engine of the Hardware Friction project
 4.  **Execute & Log:** Follow the journal checklist strictly.
 5.  **Edit Markdown:** Add your new architecture to `scored_architectures.md`.
 6.  **Sync:** Run `python parse_scored_architectures.py`.
+
+---
+
+## Adoption Timeline Columns (Work in Progress)
+
+The dataset includes two columns to track real-world adoption velocity:
+
+- **`First_10B_Date`:** The date (YYYY-MM format) when the first model >10B parameters using this architecture/technique was deployed to production or publicly released.
+- **`Adoption_Months`:** Calculated time from the original paper publication to `First_10B_Date`.
+
+**Status:** These columns are partially filled. **Contributions welcome!**
+
+If you know the deployment date for any architecture, please submit a PR with:
+1. The date in YYYY-MM format
+2. A link to the model card, blog post, or announcement
+3. Confirmation that the model is >10B parameters
+
+This data helps validate the friction → adoption velocity hypothesis.
