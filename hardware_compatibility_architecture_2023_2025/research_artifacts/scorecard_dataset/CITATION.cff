@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+type: dataset
+title: "Hardware Friction Scorecard Dataset: Quantitative Analysis of Neural Architecture Adoption (2017-2025)"
+version: 1.0.0
+date-released: 2025-12-10
+authors:
+  - family-names: Lambropoulos
+    given-names: Petros
+    orcid: ""
+repository-code: "https://github.com/petroslamb/hardware-friction-scorecard-dataset"
+url: "https://github.com/petroslamb/hardware-friction-scorecard-dataset"
+abstract: >
+  A quantitative dataset scoring 119+ neural network architectures (2017-2025)
+  against the Hardware Friction Scorecard rubric. Each architecture is evaluated
+  on five axes: Global Access (GA), Memory Access Locality (MAL), Parallelism (PAR),
+  Specialized Tooling Investment (STI), and Infrastructure Maturity (IM). These
+  scores predict production adoption by measuring hardware compatibility and
+  ecosystem friction. The dataset includes Transformers, State-Space Models, MoE,
+  Multimodal architectures (image/video/audio), and historical baselines.
+keywords:
+  - neural architecture
+  - hardware compatibility
+  - transformer
+  - adoption prediction
+  - GPU optimization
+  - machine learning infrastructure
+  - production ML
+license: CC-BY-4.0
+references:
+  - type: article
+    title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023-2025)"
+    authors:
+      - family-names: Lambropoulos
+        given-names: Petros
+    year: 2024
+  - type: article
+    title: "The Hardware Friction Map"
+    authors:
+      - family-names: Lambropoulos
+        given-names: Petros
+    year: 2025
+  - type: article
+    title: "The Transformer Attractor"
+    authors:
+      - family-names: Lambropoulos
+        given-names: Petros
+    year: 2025
