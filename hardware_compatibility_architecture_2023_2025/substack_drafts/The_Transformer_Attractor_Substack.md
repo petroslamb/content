@@ -1,6 +1,6 @@
-# The Transformer Lock-In
+# The Transformer Trap
 
-*How co-evolution of hardware and architecture created a stable equilibrium that alternatives cannot escape.*
+*Why every alternative architecture converges toward the same computational pattern—or dies trying.*
 
 ---
 
@@ -10,33 +10,35 @@ In 2023, Mamba promised to replace attention with elegant state-space math that 
 
 The architecture changed to fit the hardware. The hardware did not budge.
 
-This is **The Transformer Lock-In**: a stable equilibrium in which GPU silicon, software ecosystems, and institutional incentives align to ensure that every viable architecture either adopts the Transformer's computational pattern—or dies. Not because Transformers are mathematically optimal, but because a decade of co-evolution has locked in a single primitive as the substrate of modern deep learning: **the batched matrix multiplication**.
+This is not a story about hardware determinism. It is a story about **convergent evolution under economic pressure**. Over the past decade, Transformers and GPU silicon co-evolved into a stable equilibrium—a trap from which no alternative can escape without simultaneously clearing two reinforcing gates. The alternatives that survive do so by **wearing the Transformer as a disguise**: adopting its matrix-multiplication backbone even when their mathematical insight points elsewhere.
 
-**A caveat up front:** I am not claiming hardware *caused* Transformers to dominate. Transformers emerged in 2017 on GPUs that already favored matrix multiplications. As Transformers scaled, NVIDIA optimized for them. As NVIDIA optimized, Transformers became even more efficient relative to alternatives. The feedback loop locked in. Whether hardware or architecture came first is now academically interesting but practically irrelevant. The reality in 2025 is structural: the lock-in is real, and every alternative architecture must navigate it or die.
+**The thesis:** The next architectural breakthrough will not replace the Transformer. It will optimize within the Transformer's computational constraints. Because those constraints are no longer just technical—they are economic, institutional, and structural.
 
 ---
 
-## The Lock-In Mechanism: Two Reinforcing Gates
+## The Two-Gate Trap
 
-Alternatives face a two-gate filter:
+Every alternative architecture must pass through two reinforcing gates:
 
 **Gate 1: Hardware Compatibility**  
-Can your architecture efficiently use NVIDIA's Tensor Cores—the specialized matrix-multiply units that deliver 1,000 TFLOPS on an H100? If not, you pay a 10–100× compute tax. At frontier scale ($50–100M training runs), that tax is fatal.
+Can your architecture efficiently use NVIDIA's Tensor Cores—the specialized matrix-multiply units that deliver 1,000 TFLOPS on an H100? If not, you pay a 10–100× compute tax. At frontier scale ($50–100M training runs), that tax is extinction.
 
 **Gate 2: Institutional Backing**  
-Even if you clear Gate 1, you need a major lab to make it their strategic bet. Without that, your architecture lacks: large-scale validation, production tooling, ecosystem support, and the confidence needed for others to adopt it.
+Even if you clear Gate 1, you need a major lab to make it their strategic bet. Without that commitment, your architecture lacks large-scale validation, production tooling, ecosystem support, and the confidence signal needed for broader adoption.
 
-**The lock-in strength:** These gates reinforce each other. Poor hardware compatibility makes institutional bets unattractive (too risky, too expensive). Lack of institutional backing means no investment in custom kernels or hardware optimization (keeping friction high). Breaking out requires changing both simultaneously—a coordination problem no single actor can solve.
+**Why the trap is stable:** These gates reinforce each other. Poor hardware compatibility makes institutional bets unattractive (too risky, too expensive). Lack of institutional backing means no investment in custom kernels or hardware optimization, keeping Gate 1 friction permanently high. Breaking out requires changing both simultaneously—a coordination problem no single actor can solve.
+
+The alternatives that survive do so by **optimizing within the Transformer's constraints** rather than fighting them.
 
 ---
 
-## Gate 1: The Hardware Primitive
+## Gate 1: The GEMM Moat
 
 A Transformer is not an abstract architecture. It is a specific compute pattern that happens to be precisely what NVIDIA's hardware executes fastest.
 
 On an H100, approximately 1,000 Tensor Cores operate in parallel. Each Tensor Core instruction performs a 4×4 matrix multiply-accumulate in a single cycle. When these cores are saturated with large, batched matrix multiplications (GEMMs), the chip delivers roughly 1,000 TFLOPS in FP16. When the workload cannot be expressed as batched GEMMs, throughput drops by 10× to 100×.
 
-The Transformer architecture is ~90% GEMMs by FLOP count: the Q/K/V projections, the attention matmul, the feedforward layers. Everything else—softmax, layer norms, residual adds—is negligible compute. FlashAttention made even the attention mechanism itself SRAM-resident and tiled, eliminating the only remaining memory bottleneck.
+The Transformer architecture is ~90% GEMMs by FLOP count: the Q/K/V projections, the attention matmul, the feedforward layers. Everything else—softmax, layer norms, residual adds—is negligible compute. FlashAttention (the technique that keeps attention computations in fast SRAM rather than slow HBM memory, enabling efficient long-context training) made even the attention mechanism itself GEMM-friendly and tiled, eliminating the only remaining memory bottleneck.
 
 | **Architecture** | **Core Operation** | **Tensor Core Utilization** | **Relative Throughput** |
 |------------------|-------------------|---------------------------|------------------------|
@@ -51,31 +53,31 @@ The Transformer architecture is ~90% GEMMs by FLOP count: the Q/K/V projections,
 
 ---
 
-## The Lock-In Is Directional
+## The Trap Is Directional
 
 NVIDIA is not building "AI chips." They are building **Transformer-optimized chips.**
 
-The Blackwell architecture (B200, shipping 2024) includes a "Second-Generation Transformer Engine" and adds native FP4/FP6 Tensor Cores—lower-precision GEMMs, approximately 2× faster than H100's FP8. The Rubin architecture (R100, roadmapped for 2026–2027) headlines "3× Faster Attention" and disaggregated memory for million-token context windows.
+The Blackwell architecture (B200, announced March 2024) includes a "Second-Generation Transformer Engine" with native FP4 precision support—delivering roughly 2× the throughput of H100's FP8 Tensor Cores for the same power envelope. The Rubin architecture (R100, announced at GTC 2024, shipping 2026) promises "3× faster Transformer layer performance" and HBM4 memory controllers optimized for million-token context windows.
 
-What is absent from both roadmaps: any silicon support for the primitives that alternative architectures require—parallel scans (essential to SSMs), recurrence acceleration (essential to RNNs), or irregular memory access patterns (essential to mixture-of-experts routing and certain spline-based networks).
+What is conspicuously absent from NVIDIA's 2024–2027 roadmap: **any silicon support for non-GEMM primitives**. No parallel scan accelerators (essential to state-space models like Mamba). No recurrence units (essential to RNNs/LSTMs). No hardware for irregular memory access patterns (essential to certain mixture-of-experts architectures or Kolmogorov-Arnold Networks).
 
-NVIDIA's roadmap from 2024 through 2027 is an implicit bet that Transformers will remain dominant through at least 2028. This is not neutral infrastructure; it is directional investment that narrows the competitive landscape for alternatives.
+NVIDIA's three-year roadmap is an implicit $30B bet that Transformers will remain dominant through at least 2028. This is not neutral infrastructure. It is **directional investment** that compounds the competitive advantage of GEMM-aligned architectures every silicon generation.
 
 ---
 
 ## Why Alternatives Fail: The Scan Bottleneck
 
-A parallel scan is an O(N) sequential algorithm that propagates state from one token to the next. Even when chunked into blocks—as Mamba-1 and state-space models do—it cannot fully saturate Tensor Cores the way a batched matmul can. The fundamental issue is **data dependency**: each chunk's output depends on the previous chunk's final state, creating a bottleneck that cannot be parallelized away.
+A parallel scan is an O(N) sequential algorithm that propagates hidden state from one token to the next. Even when chunked into blocks—as Mamba-1 and other state-space models do—it cannot fully saturate Tensor Cores the way a batched matrix multiplication can. The fundamental issue is **data dependency**: each chunk's output depends on the previous chunk's final state, creating a serialization bottleneck that cannot be parallelized away.
 
-This is not a software limitation. It is a consequence of hardware architecture. Tensor Cores are designed for **data-parallel** operations on independent matrix tiles. Scans are **data-dependent**: they serialize across the sequence dimension. Clever kernel engineering can mitigate the penalty—Mamba-2 achieved a 2–3× speedup over Mamba-1 by restructuring its math—but cannot eliminate it.
+This is not a software limitation. It is a consequence of GPU architecture. Tensor Cores are designed for **data-parallel** operations on independent matrix tiles—the kind you get from batched matrix multiplications. Scans are **data-dependent**: they serialize across the sequence dimension, creating pipeline stalls. Clever kernel engineering can mitigate the penalty—Mamba-2 achieved a 2–3× speedup over Mamba-1 by restructuring its recurrence as block-diagonal GEMMs—but cannot eliminate the fundamental mismatch.
 
-The same analysis applies to:
+The same analysis applies to every non-GEMM architecture:
 
-- **LSTMs/GRUs**: High GEMM alignment for weight matrices, but O(N) sequential dependency over time steps. Training cannot parallelize across sequence length, making them uncompetitive at frontier scale.
-- **Neural ODEs**: Fundamentally iterative solvers with many small matmuls and poor memory locality. Beautiful mathematics; catastrophic GPU economics.
-- **Spline-based networks (e.g., KANs)**: Per-edge function evaluations cannot be batched. Hundreds of tiny, irregular operations starve Tensor Cores.
+- **LSTMs/GRUs**: High GEMM alignment for weight matrices, but O(N) sequential dependency over time steps. Training cannot parallelize across sequence length, making them uncompetitive at frontier scale (100B+ parameters, trillion-token datasets).
+- **Neural Ordinary Differential Equations (ODEs)**: Fundamentally iterative solvers with many small matrix operations and poor memory locality. Elegant mathematics; catastrophic GPU economics.
+- **Kolmogorov-Arnold Networks (KANs)**: Per-edge spline function evaluations cannot be batched into large matrix operations. Hundreds of tiny, irregular computations starve Tensor Cores.
 
-The hardware gate is not a subjective preference. It is the mechanical consequence of optimizing for FLOPS/dollar on NVIDIA GPUs.
+The hardware gate is not a subjective aesthetic preference. It is the **mechanical consequence of optimizing for FLOPS-per-dollar on NVIDIA GPUs**—the 85% market-share platform that every researcher and company must target.
 
 ---
 
@@ -100,62 +102,75 @@ Bamba's existence proves two things:
 
 Mamba-2 cleared the hardware gate but died at the institutional gate. No major lab made it their strategic bet.
 
-### 2. RetNet (2023): The Ambiguous Failure
+### 2. RetNet (2023): The Diagnostic Test
 
-RetNet is the most revealing case study—because we don't actually know *why* it failed.
+RetNet is the most revealing case study—not because it succeeded, but because **we cannot determine which gate killed it**.
 
-Microsoft Research published RetNet in July 2023. On paper: parallel training (GEMM-aligned), 8.4× faster inference, 70% memory savings, Transformer-matching perplexity up to 6.7B parameters. By the Gate 1 analysis, RetNet should have passed.
+Microsoft Research published RetNet in July 2023. On paper, it looked viable: parallel training (GEMM-aligned), 8.4× faster inference than standard Transformers, 70% memory savings, and Transformer-matching perplexity up to 6.7B parameters. According to the two-gate framework, RetNet should have at least warranted further scaling experiments.
 
-**Then Microsoft abandoned it.** Five months later: Phi-2 (dense Transformer). Then Phi-3 (MoE Transformer). Then Phi-4 (long-context Transformer). The co-authors didn't bet on their own architecture.
+**Then Microsoft Research abandoned it.** Five months later, the same organization shipped Phi-2 (dense Transformer), then Phi-3 (MoE Transformer), then Phi-4 (long-context Transformer, December 2024). The co-authors didn't bet on their own architecture.
 
-**Why? Three plausible explanations:**
+**Why? Three competing hypotheses:**
 
-**Explanation A: Hidden Technical Failure**  
-Microsoft tried scaling to 13B/30B internally and hit quality degradation, training instability, or capability gaps. The research literature hints at a potential bottleneck: *"RetNet's hidden-state bottleneck might limit its ability to capture very long-range or arbitrary associations... in Transformers, any token can attend to any prior token directly, but in RetNet, information must flow through a fixed-size state."*
+**Hypothesis A: Hidden Hardware Friction (Gate 1 Failure)**  
+Microsoft scaled RetNet to 13B-30B internally and discovered a GPU bottleneck that only manifests at frontier depth. RetNet's recurrent hidden state might create memory bandwidth constraints at 60-80 layers that don't appear in shallow 6.7B models. The apparent GEMM-alignment could degrade severely at scale due to state propagation overhead.
 
-If this bottleneck manifests as poor performance on reasoning tasks or factual recall at scale, RetNet's abandonment is **hardware-rational**, not social. The low GEMM utilization might only emerge at 40-80 layers (frontier scale) where the recurrent state becomes a memory/bandwidth bottleneck.
+**Hypothesis B: Quality Degradation (Hybrid Failure)**  
+RetNet works efficiently but performs worse than Transformers on capability benchmarks that matter to Microsoft—reasoning, factual recall, instruction-following. The fixed-size hidden state bottleneck might limit the model's ability to handle complex multi-hop reasoning compared to full attention's any-to-any token access.
 
-**Explanation B: Institutional Risk Aversion**  
-RetNet works fine, but Microsoft chose not to gamble on an unproven architecture when Transformers have a track record to 100B+ parameters. Research notes: *"Organizations are understandably cautious about abandoning a known-good architecture... without a clear demonstration of superiority."*
+**Hypothesis C: Institutional Risk Aversion (Gate 2 Failure)**  
+RetNet performs comparably but lacks ecosystem maturity (optimized kernels, inference server support, framework integration). Microsoft chose not to pay the engineering tax to validate an unproven architecture when Transformers have a known scaling track record to 100B+ parameters.
 
-**Explanation C: Ecosystem Immaturity**  
-RetNet lacks the tooling, kernels, and infrastructure that Transformers enjoy. *"Frameworks like Hugging Face Transformers only recently got unofficial RetNet implementations... inference servers needed modifications to handle state-space models."* The engineering tax was too high.
+**Why this matters:** RetNet exposes a **critical limitation of the two-gate framework**. Without publicly trained frontier-scale models (30B+), we cannot distinguish hidden hardware friction (Gate 1 failures that emerge only at scale) from quality ceilings (architectural capacity limits) from pure risk aversion (Gate 2 failures despite technical viability).
 
 **What we know for certain:**  
-2.5 years after publication, the largest RetNet model is 3B parameters (community-built). No 7B. No 13B. No frontier deployment. No major lab investing in it.
+2.5 years after publication, the largest RetNet model is 3B parameters (community-built). No 7B. No 13B. No frontier deployment. **No major lab investing in it.**
 
-RetNet proves that **absence of published failure is not evidence of success.** The lock-in may have crushed it via hidden hardware friction that only emerges at scale (Gate 1)—or via institutional risk-aversion and ecosystem gaps (Gate 2)—or both. Without a 30B+ publicly trained model, we'll never know which gate killed it.
+RetNet is not evidence that the two-gate framework fails. It is evidence that **the trap is opaque**. Architectures can fail silently behind closed doors, and without access to internal scaling experiments, we cannot perform the autopsy. The two-gate framework is predictive at the boundaries (pure scan-based models fail Gate 1; architectures without institutional backing fail Gate 2) but struggles in the middle where hardware and institutional factors entangle.
 
-### 3. RWKV (2021–2024): Community Persistence Without Institutional Backing
+This opacity is itself a feature of the trap, not a bug. The lack of public failure evidence means researchers cannot learn what doesn't work, making it even harder for the next alternative to succeed.
 
-RWKV is a pure RNN architecture (Receptance Weighted Key-Value) that achieves parallel training and O(N) inference. Unlike RetNet, it has been scaled to **14B parameters** by an open-source community—larger than any RetNet or Mamba-1 model.
+### 3. RWKV (2021–2024): Persistence Without Frontier Lab Backing
+
+RWKV (Receptance Weighted Key-Value) is a pure RNN architecture that achieves parallel training and O(N) inference complexity. Unlike RetNet, it has been scaled to **14B parameters** by an open-source community—larger than any RetNet or Mamba-1 model.
 
 **Why did RWKV scale further?**  
-Not hardware optimization (it's fully recurrent, similar Tensor Core utilization to RetNet). The difference is **sustained community backing**. Developer BlinkDL and contributors spent years optimizing, training, and validating RWKV models. The 14B model roughly matches GPT-NeoX-20B (a Transformer) on perplexity benchmarks.
+Not hardware optimization. RWKV is fully recurrent with similar Tensor Core utilization to RetNet (~40-60%). The difference is **sustained institutional backing from a distributed community**. Developer BlinkDL and contributors spent three years optimizing training recipes, custom kernels, and validation benchmarks. The 14B RWKV-5 model roughly matches GPT-NeoX-20B (a Transformer) on perplexity.
 
-**But even RWKV hit the institutional gate:**  
-No major lab adopted it. No frontier-scale deployment (30B+). Training the 14B model took longer than an equivalent Transformer, and community reports note struggles with certain reasoning tasks.
+**But even RWKV hit the institutional ceiling:**  
+- No major lab adopted it
+- No frontier-scale deployment (30B+)
+- Training the 14B model reportedly took longer than an equivalent Transformer would have
+- Community reports note persistent struggles with multi-step reasoning tasks
 
-RWKV proves that **Gate 2 is independent of Gate 1**. You can have mediocre hardware compatibility and still scale to 14B—if you have persistent institutional backing (even from a distributed community). But without a major lab's resources, you won't reach 70B or 400B.
+RWKV proves that **Gate 2 can partially substitute for Gate 1**. You can have mediocre hardware compatibility and still scale to 14B—if you have persistent, well-coordinated institutional backing (even from a distributed community rather than a major lab). But **frontier scale requires frontier resources**. Without a major lab's capital ($50M+ training budgets) and infrastructure (100K+ GPU clusters), you won't reach 70B parameters or 400B.
 
 ---
 
-## The Rebels and the Coordination Problem
+## The Alternative Hardware Trap: Why 2025 Is Not 2016
 
-Alternative hardware exists. Cerebras's Wafer-Scale Engine-3 has 21 PB/s memory bandwidth—enough to make fine-grained recurrence economical. Groq's LPU is SRAM-only and efficient at sequential processing. SambaNova's dataflow architecture could plausibly accelerate scan-based models.
+Alternative hardware exists. Cerebras's Wafer-Scale Engine-3 (WSE-3) delivers 21 PB/s memory bandwidth—enough to make fine-grained recurrence economical. Groq's Language Processing Unit (LPU) is SRAM-only and efficient at sequential token generation. SambaNova's dataflow architecture could plausibly accelerate scan-based state-space models.
 
-But these vendors collectively hold less than 5% of the AI accelerator market (by revenue), and they face a brutal chicken-and-egg problem:
+But these vendors collectively hold less than 5% of the AI accelerator market (by revenue, as of Q3 2024), and they face a brutal chicken-and-egg problem:
 
-1. **Researchers won't target niche hardware** until it has enough install base to matter.
-2. **The install base won't grow** until there's a compelling software stack and frontier models.
-3. **The software stack won't mature** until researchers and companies invest in it.
+1. **Researchers won't target niche hardware** until it has install base and proven scaling characteristics
+2. **The install base won't grow** until there's a compelling software stack and frontier models exclusive to the platform
+3. **The software stack won't mature** until researchers and companies invest development cycles in it
 
-Breaking this loop requires a major frontier lab to make a **strategic bet**—the way Google did with TPUs in 2016. Google's TPU bet succeeded because:
-- They mandated JAX/XLA as the software stack (ecosystem control)
-- They deployed TPUs internally at massive scale (install base)
-- They trained frontier models (PaLM, Gemini) exclusively on TPUs (validation)
+Breaking this loop requires a major frontier lab to make a **strategic commitment**—the way Google did with TPUs in 2016. Google's TPU bet succeeded because they executed on all three components simultaneously:
+- **Mandated software stack:** JAX/XLA became the standard interface (ecosystem control)
+- **Captive deployment at scale:** TPU v2/v3 deployed internally across Search, YouTube, Gmail (install base validation)
+- **Exclusive flagship models:** PaLM-540B (2022) and Gemini-1.0 (2023) trained exclusively on TPUs (capability demonstration)
 
-Without all three, alternative hardware remains niche. As of 2025, no alternative vendor has secured that level of commitment from a frontier lab.
+**Why can't Cerebras or Groq replicate this in 2025?**
+
+**Scale barrier:** In 2016, Google trained 1B-parameter models. In 2025, frontier models are 100B-400B parameters trained on trillion-token datasets. The capital required has increased 100×. Cerebras and Groq lack the $1B+ budgets needed to train a credible frontier model.
+
+**Captive demand hole:** Google subsidized TPU development with Search and YouTube inference demand—massive, predictable workloads that amortized R&D costs. Alternative hardware vendors have no analogous revenue stream. They must sell to external customers who already have NVIDIA-optimized codebases.
+
+**Ecosystem inertia:** In 2016, PyTorch was 0.1 and JAX didn't exist yet. Google could shape the software ecosystem. In 2025, PyTorch is entrenched with 10M+ developers and every major model uses NVIDIA-tuned kernels. The switching cost is orders of magnitude higher.
+
+**The coordination problem is unsolvable without a frontier lab partnership.** As of December 2025, no major lab (OpenAI, Anthropic, Meta, DeepSeek, Google, xAI) has committed to training a 30B+ flagship model exclusively on Cerebras, Groq, or SambaNova hardware. Without that signal, these platforms remain niche.
 
 ---
 
@@ -198,23 +213,35 @@ The TAM for "alternative AI chips" is constrained by the coordination problem, n
 
 ---
 
-## Conclusion: The Local Optimum
+## Conclusion: The Trap Springs Forward
 
-We are in a stable equilibrium.
+We are in a stable equilibrium—but not a static one.
 
-Transformers and GPU hardware co-evolved over the past decade. They shaped each other. Now they are locked together by:
-- **Hardware specialization** (Tensor Cores optimized for GEMMs)
-- **Software ecosystems** (PyTorch, JAX, vLLM all Transformer-native)
-- **Economic incentives** (training a 100B Transformer is well-understood; training a 100B alternative is a costly experiment)
+Transformers and GPU hardware co-evolved over the past decade into a self-reinforcing lock. Now they are bound together by:
+- **Hardware specialization** (Tensor Cores optimized for GEMMs, 3-year roadmaps doubling down)
+- **Software ecosystems** (PyTorch, JAX, vLLM—all Transformer-native)
+- **Economic incentives** (training a 100B Transformer is well-understood; training a 100B alternative is a $50M+ experiment with unknown ROI)
 - **Institutional momentum** (every major lab has Transformer expertise, tooling, and validated scaling laws)
 
-Breaking out requires simultaneously changing hardware, architecture, ecosystem, and economic incentives. No one currently has the capital, coordination, or incentive to do all four at once.
+Breaking out requires simultaneously changing hardware, architecture, ecosystem, and economic incentives. No single actor has the capital, coordination, or incentive to do all four at once.
 
-The alternatives that survive—Mamba-2, Bamba, RetNet (if it returns)—do so by **wearing the Transformer as a disguise**. They adopt GEMM-aligned compute patterns (Gate 1) and hybrid architectures that keep one foot in the proven Transformer world (Gate 2).
+The alternatives that survive—Mamba-2, Bamba, RetNet (if it returns)—do so by **wearing the Transformer as a disguise**. They adopt GEMM-aligned compute patterns (Gate 1) and hybrid architectures that keep one foot in the proven Transformer world (Gate 2). The trap is structural, not accidental.
 
-The Transformer monopoly is not accidental. It is structural. And it will not break until the structural constraints break first.
+**But here's the twist:** The next major breakthrough will not be architectural at all.
 
-**The next architectural breakthrough will not replace the Transformer. It will optimize within its constraints.**
+The Transformer's dominance has shifted the frontier of innovation. When everyone uses the same architecture and the same hardware, **differentiators move up the stack**:
+
+- **Training paradigms:** Synthetic data generation, curriculum design, mixture-of-experts scaling laws
+- **Compression techniques:** Ternary weights, structured pruning, quantization-aware training that preserves capability at FP4
+- **Inference economics:** Speculative decoding, KV-cache compression, efficient long-context mechanisms
+
+These innovations work **within** the Transformer frame. They don't fight the hardware moat—they exploit its ubiquity. FlashAttention didn't replace attention; it made attention economically viable at million-token context. MoE didn't replace dense models; it changed the cost curve of scaling.
+
+The trap is real. But the trap also **disciplines innovation toward economic efficiency** rather than mathematical elegance. The architectures that win in 2027 won't be the most theoretically beautiful. They'll be the ones that deliver the best capability-per-dollar on NVIDIA GPUs running PyTorch.
+
+That's not a failure of imagination. It's convergent evolution under economic selection pressure. And it will continue until the selection pressure changes—which means either (1) a drastically different compute paradigm emerges, or (2) Transformers become so efficient that further optimization yields diminishing returns.
+
+Neither is imminent. The trap holds.
 
 ---
 
@@ -230,4 +257,4 @@ The Transformer monopoly is not accidental. It is structural. And it will not br
 
 ---
 
-*For questions, corrections, or case studies of architectures that escaped the lock-in, contact [author info]. This essay is part of a series on neural architecture economics. For the practitioner-focused Gate-1 checklist, see the companion "Hardware Friction Map" essay.*
+*For questions, corrections, or case studies of architectures that escaped the Transformer Trap, contact [author info]. This essay is part of a series on neural architecture economics. For the practitioner-focused Gate-1 checklist, see the companion "Hardware Friction Map" essay.*
