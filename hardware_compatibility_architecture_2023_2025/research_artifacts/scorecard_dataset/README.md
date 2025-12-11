@@ -28,6 +28,21 @@ From these, we derive:
 
 ---
 
+## 📊 Dataset Files
+
+**Direct links to the scored data:**
+
+| File | Description | Size |
+|------|-------------|------|
+| **[`scored_architectures.md`](scored_architectures.md)** | **Primary dataset** — Human-readable markdown tables with all 119 architectures, scores, citations, and notes | 68 KB |
+| **[`scored_architectures.csv`](scored_architectures.csv)** | **Machine-readable CSV** — Same data in CSV format for analysis and modeling | 37 KB |
+| [`parse_scored_architectures.py`](parse_scored_architectures.py) | Sync tool to regenerate CSV from markdown | Python |
+
+**Methodology:**
+- **[Scoring Rubric](methodology/Hardware_Friction_Scorecard_v2.md)** — Complete methodology for the 5-axis scoring system
+
+---
+
 ## Key Findings
 
 The dataset validates the **"Transformer Attractor"** thesis:
@@ -116,7 +131,7 @@ The dataset includes:
 
 ## Methodology
 
-Scores are based on the **[Hardware Friction Scorecard v2.3](../../hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md)** rubric. Each architecture is evaluated by:
+Scores are based on the **[Hardware Friction Scorecard v2.3](methodology/Hardware_Friction_Scorecard_v2.md)** rubric. Each architecture is evaluated by:
 
 1. **Analyzing the core compute primitives** (GEMM, scan, convolution, FFT)
 2. **Measuring memory access patterns** (sequential, strided, random)
@@ -164,7 +179,7 @@ Or use the structured [`CITATION.cff`](CITATION.cff) file.
 
 We welcome contributions! To add a new architecture:
 
-1. **Understand the rubric**: Read the [Scorecard v2.3](../../hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md)
+1. **Understand the rubric**: Read the [Scorecard v2.3](methodology/Hardware_Friction_Scorecard_v2.md)
 2. **Score the architecture**: Use the 5-axis system (GA/MAL/PAR/STI/IM)
 3. **Add to `scored_architectures.md`**: Follow the existing table format
 4. **Regenerate CSV**: Run `python parse_scored_architectures.py`
