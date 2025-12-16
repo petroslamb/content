@@ -172,7 +172,7 @@ The clearest public signal of MoE's arrival came in April 2025. Until then, Meta
 
 Meta's pivot does not mean dense models are obsolete—dense Llama variants and many closed models still exist—but it is a strong signal that at frontier scale, MoE is now considered a first-class option rather than a risky experiment (Appendix, Table 1). The Dense Era has not ended, but it now shares the stage with sparse, conditionally-executed capacity.
 
-### 3. The Context-Length Trap
+### 3. Context-Length Trade-offs
 
 However, A+++ analysis requires nuance. MoE is not a magic bullet. While it addresses the compute bottleneck, it introduces a new, often overlooked vulnerability: **The Context-Length Trap**.
 
@@ -339,12 +339,12 @@ For the skeptical practitioner, we present the aggregated evidence underlying th
 ### Table 2: The MoE Reality Check
 *Marketing claims vs. production-style measurements from short to long context (up to 64K–128K tokens). Summarizes Extended Dataset 1 (MoE Speedup Meta-Analysis), aggregated from Switch, Mixtral, DeepSeek-V3, deployment-inefficiency work, and Aurora-style system papers.*
 
-| Metric | Marketing Claim | Reality in Large-Scale Deployments | The "Context Trap" |
+| Metric | Marketing Claim | Reality in Large-Scale Deployments |
 | :--- | :--- | :--- | :--- |
-| **Inference Speedup** | "5–7× faster" | **≈2–3× faster** vs. dense models of similar quality at moderate context | Falls toward **≈1.3–1.5×** as context grows (KV/cache + routing overhead dominate) |
+| **Inference Speedup** | "5–7× faster" | **≈2–3× faster** vs. dense models of similar quality at moderate context |
 | **Active Parameters** | "10% active" | **≈5–20% active** depending on depth and load balancing | Higher active % are often required for stability and quality |
 | **Memory Savings** | "Same as small model" | **No VRAM savings** at peak: all experts still resident | Memory budget is set by total parameters, not active ones |
-| **Throughput** | "Linear scaling" | **Better tokens/sec/$** than dense at similar quality | Throughput gains erode at very long context as memory bandwidth becomes the bottleneck |
+| **Throughput** | "Linear scaling" | **Better tokens/sec/$** than dense at similar quality |
 
 **Insight:** MoE is primarily a **throughput and capacity optimizer**, not a magic fix for latency or memory. It buys "more model for the same serving budget," especially at moderate context, but still runs into bandwidth and KV-cache limits at frontier context lengths.
 

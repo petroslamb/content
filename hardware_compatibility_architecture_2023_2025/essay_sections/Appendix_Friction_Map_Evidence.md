@@ -9,7 +9,7 @@ It is not exhaustive; the full research notebooks and datasets live in the proje
 
 ---
 
-## Appendix A — MoE Throughput and the Context Trap
+## Appendix A — MoE Throughput
 
 **Honest MoE Speedups (2017–2025, synthesized from 18 sources)**
 
@@ -20,7 +20,7 @@ It is not exhaustive; the full research notebooks and datasets live in the proje
 | 1024 tokens    | ~0.8×                             | ≈20% lower throughput vs 128 tokens. |
 | 2048 tokens    | ~0.7×                             | ≈30% lower throughput vs 128 tokens. |
 | 4096 tokens    | ~0.5–0.6×                         | Quadratic scaling dominates without specialized tricks. |
-| 16K–32K tokens | ~0.3–0.4×                         | “Context trap” regime — routing + KV traffic dominate. |
+
 | >32K (Qwen3‑Next, specialized) | up to ~10× vs naive MoE | Architectures co‑designed for long context (256K) claw back throughput. |
 
 **Summary:**

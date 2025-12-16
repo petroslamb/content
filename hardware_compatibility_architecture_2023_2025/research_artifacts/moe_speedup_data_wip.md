@@ -127,7 +127,7 @@ The 2025 literature search (consolidated in `EXHAUSTIVE_FINAL_COMPILATION.md`, p
 
 - **Marketing narrative:** “5–7× faster” persists in launch materials.
 - **Realistic production range:** **≈2–3× tokens/sec** vs dense models of comparable quality at moderate context.
-- **Context trap:** At long context (64K–128K), throughput advantage compresses toward **≈1.3–1.5×** as KV/cache traffic and routing overhead dominate.
+
 
 **Honest median estimate (Dec 2025):** ≈2–3× throughput improvement for well‑optimized MoE deployments, with strong variance based on system quality.
 

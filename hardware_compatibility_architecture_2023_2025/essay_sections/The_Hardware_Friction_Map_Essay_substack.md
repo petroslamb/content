@@ -89,9 +89,7 @@ But let's look at the receipts. The marketing claims "5-7x speedups." The realit
 
 **The MoE Reality Check (2025 Data):**
 *   **Real Throughput Gain:** ≈2.0-2.5x vs dense models of equal quality.
-*   **The Context Trap:** MoE speedup erodes as context length grows.
-    *   *Short Context (128 tokens):* Full speedup.
-    *   *Long Context (32k+):* Advantage drops to **~1.3-1.5x** as routing overhead and KV traffic dominate.
+
 
 MoE isn't magic physics. It's a "Capital Hammer" that frontier labs used to smash through a throughput ceiling.
 
