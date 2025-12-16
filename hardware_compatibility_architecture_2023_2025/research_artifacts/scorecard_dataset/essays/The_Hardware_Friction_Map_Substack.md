@@ -88,6 +88,8 @@ FlashAttention is the canonical example of kernel friction—technically benefic
 1. **Framework integration** (~8 months): Getting upstream into PyTorch required API standardization and extensive testing
 2. **Production validation** (~6 months): Hyperscalers needed to verify identical numerical behavior at scale
 3. **Ecosystem tooling** (~6 months): Inference stacks (vLLM, TGI) needed to adopt the new API
+ 
+ **Note the spectrum:** basic support often lands in weeks (e.g., DeepSeek V3 in llama.cpp took ~1 month), but full "production-grade" optimization for advanced features typically takes 18–24 months.
 
 This is the tax for kernel-level innovation: even when the algorithm works, **the ecosystem takes 2 years to catch up**.
 
@@ -116,7 +118,7 @@ MoE is the perfect example of **overcoming friction with capital**. It didn't "p
 | Metric | Marketing Claim | Reality |
 |--------|-----------------|---------|
 | **Inference Speedup** | "5–7× faster" | **≈2.0–2.5×** vs dense at short context |
-| **The Context Trap** | Sustained speedup | Drops to **~1.3–1.5×** at 32K+ as routing + KV traffic dominate |
+
 | **Memory Savings** | "Same as small model" | No VRAM savings at peak—all experts still resident |
 
 MoE is a **throughput and capacity optimizer**, not a magic bullet. It's a Capital Hammer that frontier labs used to smash through a throughput ceiling.
@@ -280,7 +282,7 @@ These are author choices, not oversights. Disagree with them publicly—that's h
 
 ---
 
-# Appendix A — MoE Throughput and the Context Trap
+# Appendix A — MoE Throughput and Context Scaling
 
 **Throughput vs Context Length (synthesized from 18 sources, 2017–2025)**
 
@@ -289,7 +291,7 @@ These are author choices, not oversights. Disagree with them publicly—that's h
 | 128 tokens | 1.0× (baseline) | "Marketing regime"—vendors quote 5–7× here |
 | 1024 tokens | ~0.8× | ≈20% lower throughput |
 | 2048 tokens | ~0.7× | ≈30% lower throughput |
-| 16K–32K tokens | ~0.3–0.4× | "Context trap"—routing + KV traffic dominate |
+
 | >32K (specialized) | up to ~10× vs naive | Architectures co-designed for long context (Qwen3-Next, DeepSeek-V3) claw back throughput |
 
 ---

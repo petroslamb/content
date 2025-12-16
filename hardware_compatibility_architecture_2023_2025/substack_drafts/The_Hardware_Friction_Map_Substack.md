@@ -61,7 +61,7 @@ Kolmogorov-Arnold Networks (KANs) exemplify architectural incompatibility. Each 
 
 FlashAttention is the canonical example of kernel friction—technically beneficial from Day 1, but taking 20+ months to reach universal adoption. The paper appeared in May 2022 (arXiv:2205.14135), demonstrating 2-4× speedup and memory savings. Six months later, a beta `flash-attn` package shipped (v0.2), but it required manual installation and worked only on Ampere-generation GPUs. FlashAttention-2 arrived in July 2023 with improved parallelism, and early adopters like Meta and Mistral began integrating it into training pipelines. The breakthrough came in January 2024 when PyTorch 2.2 integrated FlashAttention-v2 directly into `scaled_dot_product_attention`, eliminating the external dependency. By mid-2024, universal adoption was complete—vLLM, TensorRT-LLM, and every major inference stack defaulted to FlashAttention.
 
-**Why 20 months?** Not because FlashAttention was hard to write—the core kernel existed in 2022. The delay was framework integration (roughly eight months to standardize the API and get upstream into PyTorch), production validation (six months for hyperscalers to verify identical numerical behavior at scale), and ecosystem tooling (another six months for inference stacks like vLLM and TGI to adopt the new API).
+**Why 20 months?** Not because FlashAttention was hard to write—the core kernel existed in 2022. The delay was framework integration (roughly eight months to standardize the API and get upstream into PyTorch), production validation (six months for hyperscalers to verify identical numerical behavior at scale), and ecosystem tooling (another six months for inference stacks like vLLM and TGI to adopt the new API). **Note the spectrum:** basic support often lands in weeks (e.g., DeepSeek V3 in llama.cpp took ~1 month), but full "production-grade" optimization for advanced features typically takes 18–24 months.
 
 This is the tax for kernel-level innovation: even when the algorithm works, **the ecosystem takes 2 years to catch up**.
 
@@ -80,7 +80,7 @@ MoE is the perfect example of **overcoming friction with capital**. It didn't "p
 | Metric | Marketing Claim | Reality |
 |--------|-----------------|---------|
 | **Inference Speedup** | "5–7× faster" | **≈2.0–2.5×** vs dense at short context |
-| **The Context Trap** | Sustained speedup | Drops to **~1.3–1.5×** at 32K+ as routing + KV traffic dominate |
+
 | **Memory Savings** | "Same as small model" | No VRAM savings at peak—all experts still resident |
 
 MoE is a **throughput and capacity optimizer**, not a magic bullet. It's a Capital Hammer that frontier labs used to smash through a throughput ceiling.
@@ -204,7 +204,7 @@ The Transformer doesn't need to be optimal. It just needs to be **good enough—
 
 ---
 
-# Appendix A — MoE Throughput and the Context Trap
+# Appendix A — MoE Throughput
 
 **Throughput vs Context Length (synthesized from 18 sources, 2017–2025)**
 
@@ -213,7 +213,7 @@ The Transformer doesn't need to be optimal. It just needs to be **good enough—
 | 128 tokens | 1.0× (baseline) | "Marketing regime"—vendors quote 5–7× here |
 | 1024 tokens | ~0.8× | ≈20% lower throughput |
 | 2048 tokens | ~0.7× | ≈30% lower throughput |
-| 16K–32K tokens | ~0.3–0.4× | "Context trap"—routing + KV traffic dominate |
+
 | >32K (specialized) | up to ~10× vs naive | Architectures co-designed for long context (Qwen3-Next, DeepSeek-V3) claw back throughput |
 
 ---
