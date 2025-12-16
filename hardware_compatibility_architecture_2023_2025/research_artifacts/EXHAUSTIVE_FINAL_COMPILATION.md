@@ -63,7 +63,7 @@
 | 1024 tokens | -20% | General trend | Significant drop |
 | 2048 tokens | -30% (vs 128) | Context study | Large degradation |
 | 4096 tokens | -40-50% | Calculated (quadratic) | Severe penalty |
-| 16K-32K tokens | -60-70% | Traditional MoE | Very slow |
+
 | >32K tokens (Qwen3-Next) | +10× vs traditional | Qwen3-Next | Specialized optimization |
 | 128K-256K tokens | Viable | Qwen3-Next, DeepSeek-V3 | New capability |
 
@@ -80,7 +80,7 @@
 
 ### Flash Attention Timeline (Confirmed)
 - May 2022: Paper published
-- January 2024: PyTorch 2.2 integration (20 months)
+- January 2024: PyTorch 2.2 integration (20 months) - *Note: Basic unofficial support appeared earlier; this is for full upstream integration.*
 - May 2024: Stanford Award, standard practice (24 months)
 - **Universal adoption:** All major 2024-2025 models
 

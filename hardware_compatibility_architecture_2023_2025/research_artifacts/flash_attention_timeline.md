@@ -88,9 +88,10 @@ This timeline validates the 24-month infrastructure lag for techniques requiring
 3. **Validation at scale:** Major labs test in production before wide adoption
 
 **Comparison to hypothesis:**
-- **Predicted:** 24 months for kernel-level changes
-- **Actual:** 24 months (May 2022 → May 2024)
-- **Validation:** ✓ Matches prediction
+- **Predicted:** 24 months for kernel-level changes (full production readiness)
+- **Actual:** 24 months (May 2022 → May 2024 for standard practice)
+- **Nuance:** Basic support often happens earlier (weeks/months), but ecosystem-wide default status takes ~2 years.
+- **Validation:** ✓ Matches prediction for full maturity
 
 ### Adoption Curve Estimate
 
