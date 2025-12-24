@@ -1,4 +1,5 @@
-# ToolOrchestra: When Small Models Conduct Symphonies of Intelligence
+# The Orchestration Paradigm Series: Overview
+*What is ToolOrchestra and why does it matter?*
 
 ## Introduction: The Orchestra Metaphor in AI
 

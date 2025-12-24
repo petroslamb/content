@@ -1,4 +1,5 @@
-# Dive 4: Data Synthesis and the ToolScale Dataset
+# The Orchestration Paradigm Series: Dive 4
+*How do you generate verifiable training data?*
 ## Introduction
 
 This part focuses on data: how to create rich, verifiable training environments when real multi-tool datasets are scarce. It introduces the ToolScale synthesis pipeline and shows how carefully-constructed synthetic tasks can still teach robust orchestration behavior.

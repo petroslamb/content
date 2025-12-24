@@ -1,4 +1,5 @@
-# Dive 10: Comparison to Prior Work and Future Directions
+# The Orchestration Paradigm Series: Dive 10
+*Where does this fit in the research landscape?*
 ## Introduction
 
 This part situates ToolOrchestra in the broader research landscape on tools, agents, and compound AI systems. It compares design choices to prior work and uses that comparison to highlight what is genuinely new, as well as where the open problems remain.

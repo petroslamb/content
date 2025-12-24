@@ -1,4 +1,5 @@
-# Dive 2: Reinforcement Learning Fundamentals
+# The Orchestration Paradigm Series: Dive 2
+*What is GRPO and why does it work for tool use?*
 ## Introduction
 
 This part gives the reinforcement learning foundations you need to understand how ToolOrchestra is actually trained. It connects familiar ideas like states, actions, rewards, and policies to the concrete setting of an orchestrator that interacts with tools over many turns.

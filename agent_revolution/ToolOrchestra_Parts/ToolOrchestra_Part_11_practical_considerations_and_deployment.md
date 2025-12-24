@@ -1,4 +1,5 @@
-# Dive 11: Practical Considerations and Deployment
+# The Orchestration Paradigm Series: Dive 11
+*How do you put this into production?*
 ## Introduction
 
 This part translates the research ideas into practical guidance for deploying orchestration in real systems. It surfaces the engineering, latency, cost, reliability, and safety considerations you need to think through when moving from benchmark experiments to production.
