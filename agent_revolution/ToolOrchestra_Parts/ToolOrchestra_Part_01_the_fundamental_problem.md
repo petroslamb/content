@@ -1,4 +1,5 @@
-# Dive 1: The Fundamental Problem
+# The Orchestration Paradigm Series: Dive 1
+*Why can't we just prompt models to orchestrate?*
 ## Introduction
 
 This part introduces the core coordination problem that ToolOrchestra is designed to solve and explains why simply prompting large models to act as orchestrators leads to systematic biases. It sets up the conceptual lens for the rest of the series by contrasting raw model capability with the separate skill of making good tool-usage decisions.

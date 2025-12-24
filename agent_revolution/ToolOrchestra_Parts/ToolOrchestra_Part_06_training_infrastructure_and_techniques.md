@@ -1,4 +1,5 @@
-# Dive 6: Training Infrastructure and Techniques
+# The Orchestration Paradigm Series: Dive 6
+*What does it take to train an orchestrator?*
 ## Introduction
 
 This part dives into the nuts and bolts of training an orchestrator in practice—from warm-starting with supervised data to stabilizing long-horizon RL on large models. It connects the conceptual RL picture to the real infrastructure, filtering, and optimization tricks that make the system trainable.

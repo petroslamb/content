@@ -1,4 +1,5 @@
-# Dive 3: Multi-Objective Reward Design
+# The Orchestration Paradigm Series: Dive 3
+*How do you optimize for multiple objectives at once?*
 ## Introduction
 
 This part explains how ToolOrchestra turns several conflicting goals—accuracy, cost, latency, and user preferences—into a single learning signal. It walks through the reward design in increasing depth so you can see both the intuition and the precise math behind preference-aware orchestration.

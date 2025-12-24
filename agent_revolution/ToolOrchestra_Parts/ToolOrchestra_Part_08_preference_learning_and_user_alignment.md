@@ -1,4 +1,5 @@
-# Dive 8: Preference Learning and User Alignment
+# The Orchestration Paradigm Series: Dive 8
+*How do you align with what users actually want?*
 ## Introduction
 
 This part is about preferences and alignment: how different users can want different trade-offs, and how an orchestrator can adapt without retraining from scratch. It walks through the mechanism that lets ToolOrchestra condition its behavior on explicit or implicit user priorities.

@@ -1,4 +1,5 @@
-# Dive 9: Generalization and Robustness
+# The Orchestration Paradigm Series: Dive 9
+*Does it work on tools it's never seen?*
 ## Introduction
 
 This part asks whether the orchestrator’s skills hold up when you change the tools, prices, or task distributions. It examines different types of generalization and robustness, and what they tell us about what the model has really learned.
