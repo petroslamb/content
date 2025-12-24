@@ -1,4 +1,5 @@
-# Dive 7: Tool Use and Model Coordination
+# The Orchestration Paradigm Series: Dive 7
+*How does the model-as-tool paradigm work?*
 ## Introduction
 
 This part zooms in on the actual tool-usage behaviors that emerge once the orchestrator is trained. It analyzes patterns like when to self-solve, when to delegate, and how to combine multiple tools or models into effective problem-solving strategies.

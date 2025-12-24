@@ -1,4 +1,5 @@
-# Dive 5: Benchmarks and Evaluation
+# The Orchestration Paradigm Series: Dive 5
+*What does "better performance" actually mean?*
 ## Introduction
 
 This part looks at how we actually test whether ToolOrchestra works, and what "better" means in practice. It unpacks the benchmarks, metrics, and evaluation choices used to compare the orchestrator against strong baselines on hard, realistic tasks.
