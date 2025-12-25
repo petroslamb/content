@@ -79,16 +79,18 @@ The **Tool Synthesis Paradox**: To verify a tool, you need test cases. To write 
 
 The path forward likely involves **verified skeletons** with **parametric synthesis**. Instead of generating arbitrary code, the orchestrator selects from a library of verified templates (e.g., "stream-processing-pattern" with bounded memory) and fills in parameters (e.g., which columns to process). This constrains the synthesis space to programs we can verify. Research in Sketch-style program synthesis and liquid types points this direction, but no production-ready system exists for LLM orchestration.
 
-## 3. Continual Learning (The Update Problem)
+## 3. Continual Learning (The Optimization Drift Problem)
 
-To add a new tool to ToolOrchestra, you must re-run the RL training logic (or at least fine-tune).
-You cannot just "drop in" a new tool description and expect optimality. The weights are baked.
+To add a new tool to ToolOrchestra, you **can** add its description and the orchestrator will route to it based on semantic similarity to tools it was trained on. However, you cannot expect **optimal** routing without retraining.
 
-**Concrete Failure Scenario:** OpenAI releases GPT-5.5 with a new API endpoint. You add the tool description to the orchestrator's prompt. The orchestrator has never seen this tool during training. It treats GPT-5.5 the same as GPT-5 (based on embedding similarity), ignoring a 20% accuracy improvement on math. Worse, if GPT-5.5 has different pricing, the orchestrator's cost model is now wrong. The system drifts into suboptimality within weeks of a vendor update.
+**Concrete Failure Scenario:** OpenAI releases GPT-5.5 with a new API endpoint. You add the tool description to the orchestrator's prompt. The orchestrator routes to it because it looks like a "high capability model" (based on embedding similarity). But it has no data on the fact that GPT-5.5 is 20% more accurate on math and 50% cheaper. It treats it effectively as a generic "good model," potentially missing the massive arbitrage opportunity. The system works, but it drifts into suboptimality.
 
-**Why Embedding Space Drift Kills Routing:**
+**The Two Types of Generalization:**
 
-When a new tool is added, its description gets embedded into the same vector space the orchestrator was trained on. But that space has **distributional assumptions** baked in. During training, "expensive tool" correlates with "high accuracy." If a new cheap tool with high accuracy appears (e.g., Llama-4-405B at $0.001/query), it violates the learned heuristic.
+1.  **Semantic Generalization (Robust):** The orchestrator successfully learns abstract principles like "Physics questions need calculation tools." If you add a new calculator, it *will* successfully route to it based on description similarity. This is the "robust generalization" claimed in the paper.
+2.  **Economic Generalization (Fragile):** The orchestrator also learns market principles like "High-fidelity calculation is expensive." If the market shifts (e.g., Llama-4-405B offers high fidelity at $0.001/query), this learned heuristic fails. The model generalizes the *old* market logic to the *new* tool, resulting in missed arbitrage.
+
+When the paper claims generalization, they refer to Type 1. When we discuss optimization drift, we refer to Type 2. The system functions, but it leaves money on the table.
 
 ```python
 # The Embedding Drift Problem
@@ -107,7 +109,7 @@ class OrchestratorEmbeddingSpace:
             # Model has learned: high difficulty → pay more
             # It will PREFER the old $0.05 tool over the new $0.001 tool
             # because its routing policy encodes cost as a proxy for quality
-            return old_expensive_tool  # Inverse generalization failure
+            return old_expensive_tool  # Functionally works, economically fails
 ```
 
 **Why Elastic Weight Consolidation (EWC) Doesn't Solve This:**
