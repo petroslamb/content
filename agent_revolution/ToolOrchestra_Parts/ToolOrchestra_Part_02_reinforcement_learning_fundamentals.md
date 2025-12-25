@@ -2,7 +2,7 @@
 # Policy Gradients in Discrete Spaces
 
 > [!NOTE]
-> **System Auditor's Log:** Reinforcement Learning (RL) in language models is often misunderstood. It is not "teaching the model to think." It is **re-weighting the probability distribution** of token sequences based on a scalar reward. In the context of orchestration, this is complicated by the "API Boundary"—the fact that tool execution happens outside the model's computational graph.
+> **System Auditor's Log:** Reinforcement Learning (RL) in language models is often misunderstood. It is not "teaching the model to think." It is **re-weighting the probability distribution** of token sequences based on a scalar reward. In the context of orchestration, this is complicated by the "API Boundary", the fact that tool execution happens outside the model's computational graph.
 
 To understand why ToolOrchestra uses **Group Relative Policy Optimization (GRPO)**, we must first look at the physics of backpropagation.
 
@@ -84,3 +84,31 @@ In ToolOrchestra, this mechanism is what allows the 8B model to learn *strategie
 1.  **Schulman et al. (2017)** - *Proximal Policy Optimization Algorithms*: The baseline PPO paper. Defined the clipping objective that prevents destructive policy updates.
 2.  **Shao et al. (2024)** - *DeepSeekMath: Pushing the Limits of Mathematical Reasoning*: Introduced GRPO (Group Relative Policy Optimization) to eliminate the Critic model, saving ~50% VRAM during training.
 3.  **Ouyang et al. (2022)** - *Training Language Models to Follow Instructions with Human Feedback*: The canonical RLHF paper. Established the KL-divergence penalty pattern for preventing mode collapse in language models.
+
+---
+
+## Appendix: MDP Foundations (Optional)
+
+> This appendix is for readers who want a primer on the Markov Decision Process formalism. Skip if you are already familiar with RL fundamentals.
+
+### The Building Blocks
+
+**States** describe where the agent is. For ToolOrchestra, a state is the entire conversation history: the original task, every tool call the orchestrator has made, and every response those tools have returned.
+
+**Actions** describe what the agent can do. For ToolOrchestra, an action is any tool call the orchestrator might make: search the web, call GPT-5 with a subproblem, execute code, or output a final answer. The action space is vast.
+
+**Transitions** describe how the environment responds to actions. In ToolOrchestra, transitions are mostly deterministic: if you call a calculator, you get the calculation result.
+
+**Rewards** describe how good the outcome was. ToolOrchestra combines multiple objectives: accuracy, cost, latency, and preference alignment.
+
+### The Markov Property
+
+The "Markov" in Markov Decision Process means: the future depends only on the present state, not on how we got there.
+
+In ToolOrchestra, this property is satisfied by design. The state *is* the entire conversation history, so it contains all relevant information. The arrival path is encoded in the history itself.
+
+### Policies
+
+A **policy** is a strategy for choosing actions in states. Formally, it is a function that takes a state and produces a distribution over possible actions.
+
+In ToolOrchestra, the policy is the orchestrator model itself. Given the conversation history (state), the model produces tokens specifying which tool to call (action). Training the orchestrator means adjusting the policy parameters (the billions of weights) so that high-reward actions become more likely.

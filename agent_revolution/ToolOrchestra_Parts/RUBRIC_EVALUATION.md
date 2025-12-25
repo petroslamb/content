@@ -55,34 +55,10 @@ We will evaluate every paragraph against these four signals.
 
 The series structure remains, but the *intent* of each section shifts aggressively.
 
-### The New Tier Definitions
+### Navigation Structure
 
-#### 🌊 Tier 1: The Thesis (formerly Surface)
-**Goal:** State the architectural claim and the economic thesis.
-**Style:** Executive Summary for a CTO.
-**Snippet:**
-```python
-# The Economic Thesis
-def is_viable(task):
-    monolith_cost = gpt5.predict(task).cost
-    orchestra_cost = router.predict(task).cost + tool.execute(task).cost
-    return orchestra_cost < monolith_cost
-```
-
-#### 🏊 Tier 2: The Logic (formerly Shallow)
-**Goal:** Explain the logical flow and data structures.
-**Style:** Senior Engineer explaining the repo map.
-**Focus:** Inputs, Outputs, Transformations.
-
-#### 🤿 Tier 3: The Implementation (formerly Deep)
-**Goal:** The Math and the Code.
-**Style:** Research Engineer defending a PR.
-**Focus:** Loss functions, Gradient estimation, Context window management.
-
-#### 🔬 Tier 4: The Audit (formerly Research)
-**Goal:** Failure modes and external validity.
-**Style:** The "Red Team" report.
-**Focus:** What happens when we change the distribution? Where is the paper lying?
+> [!NOTE]
+> The original 4-tier structure (🌊/🏊/🤿/🔬) has been dropped. Parts are now read linearly. Each part maintains the auditor voice throughout, with optional appendices for pedagogical or research depth.
 
 ---
 
@@ -201,3 +177,99 @@ To maximize impact on Substack without overwhelming the reader, the 13 parts sho
 *   **Parts:** 10, 11, 12
 *   **Goal:** Connect the lineage (past) to production risks (present) and unsolved frontiers (future).
 *   **Target:** CTOs & Senior Leaders.
+
+---
+
+## 7. Final Structural Fix Plan (Post-Rewrite)
+
+> [!IMPORTANT]
+> This section documents the final pass needed before Substack publication.
+
+The core rewrite (System Auditor voice) is complete. The following structural issues remain:
+
+### 7.1 Closing Strength (Parts 11 & 12)
+
+**Problem:** Parts 11 and 12 are ~50 lines each. They are skeleton outlines, not flagship pieces. Issue 4 (the final bundle) is thin compared to Issues 1-3.
+
+**Fix:**
+1.  **Part 11 (Unsolved Frontiers):** Expand each of the 4 problems (Recursive Orchestration, Tool Synthesis, Continual Learning, Formal Verification) with:
+    -   A concrete failure scenario (1 paragraph).
+    -   Why current approaches fail (1 paragraph).
+    -   Target: ~80-100 lines total.
+2.  **Part 12 (Production Engineering):** Expand each of the 4 problems (Latency, Cost Attack, Debuggability, Versioning) with:
+    -   A code snippet or pseudo-code mitigation.
+    -   A "What happens if you ignore this" consequence.
+    -   Target: ~80-100 lines total.
+
+### 7.2 Appendices for Pedagogical & Research Depth
+
+**Problem:** The rewrite cut valuable content for learners and researchers.
+
+**Fix:** Add optional appendices to 3 parts:
+
+| Part | Appendix Title | Content Source | Purpose |
+|------|----------------|----------------|---------|
+| 02 | Appendix: MDP Foundations | Old git (c895c3d) | For readers who don't know RL. Covers Markov Property, State/Action spaces, Policy definition. |
+| 10 | Appendix: Research Connections | Old git (c895c3d) | Agency vs. Capability, Weak-to-Strong Generalization. Links ToolOrchestra to broader research. |
+| 11 | Appendix: Reflective Cognition | Old git (c895c3d) | The philosophical frame. Why training on outcomes improves meta-cognition. |
+
+Appendices go *after* the Annotated Bibliography, marked as optional.
+
+### 7.3 Bundle Cohesion (Preambles)
+
+**Problem:** Parts don't indicate which Issue they belong to or reference their siblings.
+
+**Fix:** Add a 3-line "Bundle Preamble" to the first part of each Issue:
+
+**Part 00 (start of Issue 1):**
+```markdown
+> **Issue 1: The Algorithm** | Parts 00, 01, 02, 03
+> This bundle covers the economic thesis, the calibration paradox, the RL formulation, and the reward scalarization problem.
+```
+
+**Part 04 (start of Issue 2):**
+```markdown
+> **Issue 2: The Factory** | Parts 04, 05, 06
+> This bundle covers the synthetic data pipeline, benchmark physics, and training infrastructure.
+```
+
+**Part 07 (start of Issue 3):**
+```markdown
+> **Issue 3: The Behavior** | Parts 07, 08, 09
+> This bundle covers emergent state machines, preference conditioning, and generalization failure modes.
+```
+
+**Part 10 (start of Issue 4):**
+```markdown
+> **Issue 4: The Reality** | Parts 10, 11, 12
+> This bundle covers the lineage of agentic AI, unsolved frontiers, and production deployment risks.
+```
+
+### 7.4 Style Pass: Em-Dash Removal
+
+**Problem:** 23 em-dashes (—) exist across the series. These are inconsistent with the terse auditor voice.
+
+**Fix:** Replace all em-dashes with:
+-   Commas (if parenthetical).
+-   Periods (if introducing a new clause).
+-   Colons (if introducing a list or definition).
+
+### 7.5 Tier Structure (DROPPED)
+
+The 4-tier structure (🌊/🏊/🤿/🔬) has been **removed** from the series:
+-   `series_introduction.md` no longer promises tiered navigation.
+-   Parts are read linearly, not by depth level.
+-   No further action needed.
+
+---
+
+## 8. Verification Checklist (Pre-Publish)
+
+Before publishing each Issue to Substack:
+
+- [ ] All parts in the Issue have consistent length (within ±20%).
+- [ ] Bundle preamble is present on the first part of the Issue.
+- [ ] No em-dashes remain.
+- [ ] Annotated Bibliography has 3 curated references.
+- [ ] Appendices (if applicable) are marked as optional.
+- [ ] No conclusion paragraphs (content ends when data ends).

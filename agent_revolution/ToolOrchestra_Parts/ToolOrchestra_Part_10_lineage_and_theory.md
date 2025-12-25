@@ -1,6 +1,9 @@
 # The Orchestration Paradigm Series: Dive 10
 # The Evolution of Action (History & Theory)
 
+> **Issue 4: The Reality** | Parts 10, 11, 12
+> This bundle covers the lineage of agentic AI, unsolved frontiers, and production deployment risks.
+
 > [!NOTE]
 > **System Auditor's Log:** To understand the future, we trace the lineage. ToolOrchestra is not a random mutation; it is the logical endpoint of a 5-year trend moving AI from "Passive Generation" to "Active Orchestration." This Dive merges the historical context with the theoretical "Compound AI" thesis to explain *why* the industry is shifting this way.
 
@@ -57,3 +60,23 @@ ToolOrchestra is the current best-practice blueprint for wiring these modules to
 1.  **Wei et al. (2022)** - *Chain-of-Thought Prompting Elicits Reasoning in Large Language Models*: The "Phase 1" breakthrough that proved intermediate tokens could represent "thinking."
 2.  **Yao et al. (2023)** - *ReAct: Synergizing Reasoning and Acting in Language Models*: The "Phase 2" breakthrough that combined CoT with external tool actions in a single prompt loop.
 3.  **Zaharia et al. (2024)** - *The Shift from Models to Compound AI Systems*: The "Phase 3" manifesto (Berkeley AI Research) arguing for the modular, compound architecture that ToolOrchestra exemplifies.
+
+---
+
+## Appendix: Research Connections (Optional)
+
+> This appendix connects ToolOrchestra to broader research themes for readers interested in the theoretical implications.
+
+### Agency vs. Capability
+
+There is a difference between "can do X" and "knows when to do X." A model might have the capability to refuse harmful requests but not always recognize which requests are harmful. It might have the capability to admit uncertainty but not always know when uncertainty is appropriate.
+
+ToolOrchestra addresses one instance of this gap: the capability to solve problems versus knowing which problems to solve oneself versus delegate. The broader research program is developing models with genuine agency: models that can evaluate their own capabilities, recognize their limitations, and make wise decisions about how to act.
+
+### Weak-to-Strong Generalization
+
+ToolOrchestra inverts OpenAI's "Weak-to-Strong" research program. Their question: can a weak supervisor train a strong model? ToolOrchestra's question: can a weak model supervise the deployment of strong models?
+
+The answer to both appears to be yes, under the right conditions. A weak teacher can elicit strong capability if the capability already exists and just needs activation. A weak orchestrator can deploy strong capability if it learns when each capability is worth using. In both cases, meta-cognitive skills (what to teach, when to call) are partially orthogonal to object-level skills (solving problems).
+
+This suggests a research agenda: systematically mapping which skills are orthogonal. Can a 1B model orchestrate 100B models? Can a specialized orchestrator for coding learn to orchestrate orchestrators for other domains? The limits of weak-to-strong coordination are not yet known.

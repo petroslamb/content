@@ -1,8 +1,11 @@
 # The Orchestration Paradigm Series: Dive 7
 # Implicit State Machines
 
+> **Issue 3: The Behavior** | Parts 07, 08, 09
+> This bundle covers emergent state machines, preference conditioning, and generalization failure modes.
+
 > [!NOTE]
-> **System Auditor's Log:** We often anthropomorphize agents, saying they "decided to verify" or "chose to escalate." In reality, the orchestrator is simply traversing a probabilistic state graph. The "strategies" observed in the paper—like the "Escalation Ladder"—are emergent properties of the reward landscape, not conscious decisions. They are the path of least resistance on the loss surface.
+> **System Auditor's Log:** We often anthropomorphize agents, saying they "decided to verify" or "chose to escalate." In reality, the orchestrator is simply traversing a probabilistic state graph. The "strategies" observed in the paper, like the "Escalation Ladder", are emergent properties of the reward landscape, not conscious decisions. They are the path of least resistance on the loss surface.
 
 The paper identifies three primary coordination patterns. As engineers, we can map these to standard software design patterns.
 
@@ -50,4 +53,4 @@ The RL training must specifically penalize *long* trajectories to prevent this. 
 
 1.  **Lewis et al. (2020)** - *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*: The progenitor of the "Escalation" pattern (retrieving only when needed).
 2.  **Shinn et al. (2023)** - *Reflexion: Language Agents with Verbal Reinforcement Learning*: Formalizes the "Do-While" loop of self-correction. ToolOrchestra effectively learns a "Reflexion" policy via RL rather than prompting.
-3.  **Liu et al. (2023)** - *Lost in the Middle: How Language Models Use Long Contexts*: Demonstrates the "Death Spiral Risk"—as context grows, reasoning capability degrades disproportionately.
+3.  **Liu et al. (2023)** - *Lost in the Middle: How Language Models Use Long Contexts*: Demonstrates the "Death Spiral Risk", as context grows, reasoning capability degrades disproportionately.
