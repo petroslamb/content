@@ -9,7 +9,7 @@
 
 In December 2025, NVIDIA researchers quietly published a paper that challenges the central dogma of modern AI development.
 
-Their claim: **A model with 8 billion parameters can outperform GPT-5 on PhD-level reasoning tasks, while costing 60% less to run.**
+Their claim: **As of December 2025, an 8-billion parameter model outperforms GPT-5 on Humanity's Last Exam (a PhD-level reasoning benchmark spanning mathematics, sciences, and humanities), while costing 60% less per query.**
 
 Not through some architectural breakthrough. Not through better training data. Through a deceptively simple idea: *teach a small model to coordinate big ones*.
 
@@ -83,6 +83,22 @@ Every part ends with an **Annotated Bibliography**, curated references to the pr
 **Technical leaders** evaluating whether orchestration architectures make sense for their AI strategy, with concrete cost/performance trade-offs.
 
 **Curious minds** who want to understand where AI is heading without needing a PhD to follow along.
+
+---
+
+## Prerequisites
+
+This series assumes familiarity with:
+- **Machine Learning basics**: loss functions, gradient descent, overfitting concepts
+- **Neural networks**: attention mechanisms, transformer architecture fundamentals  
+- **Python programming**: ability to read pseudocode and understand async patterns
+
+**If you're newer to these topics:**
+- Parts 02 and 10 include optional appendices covering RL and agency fundamentals
+- Start with Issue 1 (Parts 00-03) for the core thesis, then jump to Issue 4 (Parts 10-12) for strategic implications
+
+**If you're purely interested in business implications:**
+- Jump directly to Part 12 for the CTO decision tree and unit economics
 
 ---
 
