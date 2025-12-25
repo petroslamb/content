@@ -102,6 +102,25 @@ This series assumes familiarity with:
 
 ---
 
+## What This Series Is (And Isn't)
+
+**This series provides:**
+- Deep technical explanation of ToolOrchestra's architecture and trade-offs
+- Engineering analysis through the "System Auditor" lens
+- Decision frameworks for whether to adopt orchestration
+- Comprehensive literature review via annotated bibliographies
+- Production deployment considerations and risk assessment
+
+**This series does NOT provide:**
+- Replication code or training recipes (those require access to the paper's experimental setup and compute resources)
+- Security threat modeling (requires dedicated security expertise beyond the scope of this analysis)
+- Comparative benchmarks against alternative architectures (requires original empirical research)
+- Real-time implementation support (this is educational content, not a tutorial)
+
+If you need implementation guidance, the annotated bibliographies point to the source papers and related work. If you need production deployment support, Part 12's decision tree will tell you if you have the team capacity and infrastructure.
+
+---
+
 ## The Series Roadmap
 
 We have organized the 13 parts into 4 thematic issues.
@@ -135,6 +154,19 @@ ToolOrchestra is one of the clearest signals of this shift. It's not a toy demo 
 The question isn't whether this paradigm will matter. It's whether you'll understand it when it becomes the dominant architecture.
 
 That's what this series is for.
+
+---
+
+## Community Contributions Welcome
+
+This series focuses on explanation and critical analysis of the ToolOrchestra paper. If you have expertise in areas not fully covered here, I welcome contributions:
+
+- **Implementation**: Share minimal working examples or training recipes in the comments
+- **Security**: Contribute threat model analysis for orchestration systems
+- **Empirical Comparisons**: Share benchmark results comparing orchestration to alternative approaches
+- **Production Experience**: Report real-world deployment lessons learned
+
+The goal is to build collective knowledge around this paradigm. Your insights help everyone.
 
 ---
 

@@ -66,6 +66,28 @@ In production, there is no harness. A model that enters a loop creates a \$10,00
 
 ---
 
+## Orchestration in Context: Comparing Approaches
+
+To understand where ToolOrchestra sits in the solution space, consider the alternatives:
+
+| Approach | Implementation Complexity | Cost Profile | Reliability | Best For |
+|:---|:---|:---|:---|:---|
+| **Monolith (GPT-5 only)** | Low (single API call) | High (fixed $0.80/query) | High (99%+ uptime) | Low volume, high stakes, simple deployment |
+| **RL-Trained Orchestrator** | Very High (ToolOrchestra) | Low ($0.30/query) | Medium (compound system fragility) | High volume (\u003e75K/month), cost-sensitive, mature ML teams |
+| **RAG + Prompted Routing** | Medium (vector DB + prompts) | Medium ($0.40/query) | Medium (calibration drift) | Factual retrieval, known tool sets, rapid iteration |
+| **Rule-Based Router Tree** | Medium (decision tree code) | Low ($0.25/query) | High (deterministic) | Stable task distribution, interpretability required |
+| **Human-in-Loop** | Low (UI + approval flow) | Variable | Highest | Safety-critical, low volume, regulatory compliance |
+
+**Key Insights:**
+- ToolOrchestra's learned routing trades **operational complexity** for **cost efficiency**
+- Rule-based routers achieve similar cost savings without RL training, but lack adaptability
+- RAG+Prompting is the "middle ground" for teams without ML infrastructure
+- Monoliths remain optimal when reliability matters more than cost
+
+The benchmarks prove ToolOrchestra *can* work. This table shows when it *should* work.
+
+---
+
 ## Annotated Bibliography
 
 1.  **Hendrycks et al. (2021)** - *Measuring Massive Multitask Language Understanding (MMLU)*: The gold standard for knowledge. HLE (Humanity's Last Exam) is designed as a direct response to MMLU saturation.

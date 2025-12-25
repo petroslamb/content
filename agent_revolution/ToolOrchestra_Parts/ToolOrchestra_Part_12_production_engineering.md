@@ -304,6 +304,37 @@ Choose your poison carefully.
 
 ---
 
+## The Explanation vs. Implementation Gap
+
+This series is optimized for **understanding**, not **replication**.
+
+To truly replicate ToolOrchestra at the level described in the paper, you need:
+- **Compute Resources:** 16 H100 GPUs (or equivalent) for weeks of training (~$50K-100K in cloud costs)
+- **Expertise:** ML engineers with RL training experience, MLOps architects for FSDP/distributed training
+- **Data Infrastructure:** Ability to generate and verify thousands of synthetic training trajectories
+- **Access:** The paper's exact hyperparameters, tool definitions, and evaluation harnesses (often not fully disclosed)
+
+**On Generalization:** The orchestrator handles **Semantic Generalization** well (routing to new tools via description). However, it fails at **Economic Generalization** (adapting to new price/performance curves without retraining). See Part 11 for the "Two Types of Generalization" deep dive. For production arbitrage, plan to retrain when the market shifts.
+
+If you have those resources, this series gives you the **conceptual foundation**. You understand the mechanics (GRPO), the dependencies (batch normalization, KL penalty), and the risks (tail latency, cost attacks).
+
+If you don't have those resources, this series gives you:
+1. **Knowledge to evaluate vendors:** When orchestration-as-a-service becomes available, you'll know what questions to ask
+2. **Decision framework:** The 4-gate analysis tells you if orchestration is even worth pursuing for your use case
+3. **Risk awareness:** You know the production failure modes before committing budget
+
+**The market reality:** Most organizations will consume orchestration as a managed service (via OpenAI, Anthropic, or specialized vendors) rather than building it themselves. Understanding the paradigm is more valuable than training your own orchestrator.
+
+**If you absolutely must build this yourself:**
+1. Start with the rule-based router approach (Part 05's comparison table)
+2. Use that to collect real routing data from your production traffic
+3. Only then consider RL training, using your production data instead of synthetic ToolScale
+4. Budget 6-12 months and $500K+ for the full stack
+
+The gap between "knowing how it works" and "building it" is intentional. This is specialist infrastructure, like building your own Kubernetes cluster in 2015. Most didn't. Most shouldn't have. But everyone needed to understand what it does.
+
+---
+
 ## Annotated Bibliography
 
 1.  **Dean et al. (2013)** - *The Tail at Scale*: The Google paper on distributed system latency. Explains why the "P99" of a compound system degrades expontentially with the number of components.
