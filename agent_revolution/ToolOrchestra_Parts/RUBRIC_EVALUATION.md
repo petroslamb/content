@@ -267,9 +267,9 @@ The 4-tier structure (🌊/🏊/🤿/🔬) has been **removed** from the series:
 
 Before publishing each Issue to Substack:
 
-- [ ] All parts in the Issue have consistent length (within ±20%).
-- [ ] Bundle preamble is present on the first part of the Issue.
-- [ ] No em-dashes remain.
-- [ ] Annotated Bibliography has 3 curated references.
-- [ ] Appendices (if applicable) are marked as optional.
-- [ ] No conclusion paragraphs (content ends when data ends).
+- [x] All parts in the Issue have consistent length (within ±20%).
+- [x] Bundle preamble is present on the first part of the Issue.
+- [x] No em-dashes remain.
+- [x] Annotated Bibliography has 3 curated references.
+- [x] Appendices (if applicable) are marked as optional.
+- [x] No conclusion paragraphs (content ends when data ends).
