@@ -1,505 +1,250 @@
 # The Orchestration Paradigm Series: Dive 7
 *How does the model-as-tool paradigm work?*
+
 ## Introduction
 
-This part zooms in on the actual tool-usage behaviors that emerge once the orchestrator is trained. It analyzes patterns like when to self-solve, when to delegate, and how to combine multiple tools or models into effective problem-solving strategies.
+The previous dives established the framework: reinforcement learning, multi-objective rewards, synthetic training data. This dive examines what actually happens when the orchestrator runs. What patterns emerge from training? How does the orchestrator decide when to act versus delegate? What strategies does it develop for balancing cost against accuracy?
 
+Understanding these emergent behaviors demystifies orchestration. The orchestrator isn't a black box applying inexplicable magic—it's a system that has learned specific, interpretable patterns for coordination. Recognizing those patterns helps you predict behavior, debug failures, and extend the approach to new domains.
 
-## 🌊 Surface Level: The Art of Knowing When to Delegate
+---
 
-**The core skill**: Knowing which tool to use when.
+## 🌊 Surface Level: The Art of Delegation
 
-**Three categories of decisions**:
-1. **Self-solve vs. delegate**: Can I answer this myself or do I need help?
-2. **Which tool**: If delegating, which tool is best for this subtask?
-3. **When to stop**: Have I gathered enough information, or do I need more?
+At its core, orchestration involves three decisions, made repeatedly across a trajectory:
 
-**Example decision tree**:
-```
-Question: "What is the capital of France?"
-├─ Can answer directly? YES → "Paris"
-└─ Need tool? NO
+**Self-solve or delegate?** Should the orchestrator attempt to answer directly, or call an external resource? This is the foundational decision, distinguishing orchestration from simple prompting.
 
-Question: "What is the capital of the newest country in the world?"
-├─ Can answer directly? NO (might not know newest country)
-├─ Need tool? YES
-├─ Which tool? Web search (time-sensitive info)
-└─ After search: Can answer? YES → "Juba (South Sudan)"
+**Which tool?** If delegating, which of the available tools is most appropriate? A math problem might go to a specialized math model, a factual question to search, a coding task to a code interpreter.
 
-Question: "Calculate integral of e^(-x^2) from 0 to infinity"
-├─ Can answer directly? MAYBE (might make error)
-├─ Need tool? YES (complex math)
-├─ Which tool? Math model OR Code interpreter
-└─ Cost consideration: Code interpreter cheaper → Use that first
-```
+**When to stop?** Has enough information been gathered, or should the orchestrator continue? Knowing when you're done is as important as knowing where to start.
 
-## 🏊 Shallow Dive: Tool Selection Patterns
+Consider a concrete example. The orchestrator receives: "What is the capital of the newest country in the world?"
 
-### Pattern 1: Hierarchical Delegation
+A naive approach might attempt to answer directly. But the orchestrator has learned that "newest country" is time-sensitive information—its training data might be outdated. It calls web search to find "newest country added to UN." The search returns: South Sudan (2011). Now it can answer confidently: Juba.
 
-**Strategy**: Start with cheap tools, escalate if needed.
+A different question: "What is 15 factorial?" The orchestrator recognizes this as trivial computation. Calling an expensive model would be wasteful. It delegates to the code interpreter: `math.factorial(15)`. The answer (1,307,674,368,000) returns instantly at near-zero cost.
 
-**Example from Orchestrator-8B**:
-```
-Turn 1: Call local_search("concept definition")
-    ↓ Result: Found basic definition
-    ↓ Assess: Is this enough?
-    
-Turn 2: Reason with definition
-    ↓ Result: Stuck on application to specific case
-    ↓ Assess: Need expert help
-    
-Turn 3: Call Qwen2.5-Math-7B("Apply to K_{1000,1000}")
-    ↓ Result: Gets formula but makes computational error
-    ↓ Assess: Need verification
-    
-Turn 4: Call code_interpreter("Verify calculation")
-    ↓ Result: Finds error
-    ↓ Assess: Need correction
-    
-Turn 5: Call GPT-5("Review and correct")
-    ↓ Result: Correct answer
-    ↓ Assess: Done!
-```
+A harder question: "Prove that there are infinitely many primes." The orchestrator knows this requires sophisticated mathematical reasoning. A code interpreter can't prove theorems. A web search might find a proof, but synthesizing it requires understanding. The orchestrator calls the specialized math model, which produces a proof outline. Then it calls the general reasoning model to verify the proof is sound. Then it formulates the final answer.
 
-**Cost breakdown**:
-- Turn 1: $0.0001 (local search)
-- Turn 2: $0 (self-reasoning)
-- Turn 3: $0.003 (small math model)
-- Turn 4: $0.0001 (code interpreter)
-- Turn 5: $0.05 (GPT-5)
-- **Total: $0.0532**
+Each decision reflects learned patterns about tool capabilities, costs, and reliability. The orchestrator doesn't follow hard-coded rules—it follows a policy shaped by thousands of training examples and reward signals.
 
-**Compare to calling GPT-5 directly**:
-- Single turn: $0.08 (higher cost)
-- Might work, but less reliable (no verification)
+---
 
-**The principle**: Escalation ladder
-1. Free tools (local search, code)
-2. Cheap models (7B specialists)
-3. Medium models (32B generalists)
-4. Expensive models (GPT-5, Claude)
+## 🏊 Shallow Dive: Three Orchestration Patterns
+
+Training reveals several recurring patterns that the orchestrator applies across diverse tasks.
+
+### Pattern 1: The Escalation Ladder
+
+The most prominent pattern is hierarchical escalation. Start with cheap resources, escalate to expensive ones only if needed.
+
+A typical escalation sequence on a moderately difficult question:
+
+**Turn 1**: Try self-reasoning. The orchestrator attempts to answer directly using its own knowledge.
+
+**Turn 2**: If uncertain, call local search. Check internal databases or retrieval systems for relevant information.
+
+**Turn 3**: If still uncertain, call a small specialized model. A 7B math model or 32B general model costs pennies and might suffice.
+
+**Turn 4**: If the small model fails or produces low-confidence output, call the large model. GPT-5 costs 10-100x more but handles edge cases better.
+
+**Turn 5**: If even the large model's answer seems uncertain, verify with an alternative method. Code execution for numerical claims, web search for factual claims.
+
+This ladder optimizes cost-efficiency. Easy questions terminate at early rungs (cheap). Hard questions climb to later rungs (expensive but necessary). The orchestrator learns where questions typically terminate and routes accordingly.
+
+**Evidence from the paper**: Table 15 shows that the orchestrator's tool usage varies by task type. Easy tasks use primarily local tools. Hard tasks show a mix with more expensive model calls. This distribution emerges from training, not from explicit rules.
 
 ### Pattern 2: Parallel Consultation
 
-**Strategy**: Call multiple tools, synthesize results.
+For high-stakes queries where uncertainty is unacceptable, the orchestrator sometimes calls multiple tools and synthesizes their results.
 
-**Example**:
-```
-Question: "Is this medical claim accurate?"
+This pattern is less common than escalation (it's more expensive) but appears for tasks where:
+- Multiple sources might have different information (fact-checking across databases)
+- Verification is critical (medical or legal queries)
+- The cost of being wrong exceeds the cost of redundant calls
 
-Fork into parallel tracks:
-├─ Track 1: web_search("medical claim verification")
-├─ Track 2: local_search(medical_database)
-└─ Track 3: Call Qwen3-32B("Analyze claim")
+A parallel consultation might look like:
 
-Gather results:
-- Web: "Source A says yes, Source B says no"
-- Local: "Our database has conflicting studies"
-- Qwen: "Claim is partially true, with caveats"
+**Turn 1**: Fork into multiple tracks—web search for one perspective, local database for another, specialized model for a third.
 
-Synthesize:
-- Call GPT-5("Reconcile conflicting evidence, provide nuanced answer")
-```
+**Turn 2**: Receive results from all three.
 
-**When to use**:
-- Uncertain which tool will have best information
-- Need to verify information from multiple sources
-- Different tools provide different perspectives
+**Turn 3**: Synthesize, identifying agreement and disagreement.
 
-**Cost consideration**: 
-- More expensive (multiple calls)
-- But higher confidence in result
+**Turn 4**: If sources disagree, call the most capable model to reconcile with explicit reasoning about which sources to trust.
+
+**Turn 5**: Produce final answer with appropriate confidence caveats.
+
+This pattern trades cost for confidence. The orchestrator learns when the trade-off is worthwhile based on task characteristics and preference vectors.
 
 ### Pattern 3: Iterative Refinement
 
-**Strategy**: Use cheap tool, refine with expensive tool only if needed.
+For tasks involving creation (code generation, writing, problem-solving), the orchestrator often follows an iterative refinement pattern:
 
-**Example**:
-```
-Draft: Qwen2.5-Coder-32B("Write function to solve problem")
-    ↓ Test: code_interpreter(execute draft)
-    ↓ Result: Fails test case 3
+**Turn 1**: Generate initial attempt with a moderately capable model.
 
-Refine: Qwen2.5-Coder-32B("Fix to handle edge case")
-    ↓ Test: code_interpreter(execute refined version)
-    ↓ Result: Still fails test case 3
+**Turn 2**: Test the attempt (execute code, verify facts, check consistency).
 
-Escalate: GPT-5("Review code, identify issue, fix")
-    ↓ Test: code_interpreter(execute GPT-5 version)
-    ↓ Result: All tests pass!
-```
+**Turn 3**: If the test fails, refine the attempt using error feedback.
 
-**Benefit**: 
-- Qwen attempts cost $0.006 total
-- GPT-5 final fix costs $0.05
-- Total: $0.056
+**Turn 4**: Repeat testing and refinement until success or resource exhaustion.
 
-**Compare to GPT-5 directly**: 
-- Might work in one call ($0.05)
-- But Orchestrator approach is more reliable (iterative testing)
-- Total cost similar, higher success rate
+**Turn 5**: If iteration isn't converging, escalate to a more capable model.
 
-## 🤿 Deep Dive: How the Model Learns These Patterns
+This pattern leverages the insight that iteration with feedback often outperforms single-shot generation. A 32B model that can iterate and correct based on test results might outperform a 72B model in single-shot mode—at lower total cost if few iterations are needed.
 
-### Learning Through Reward Shaping
+**The key learning**: The orchestrator doesn't just learn which tools to call—it learns how to structure multi-turn strategies that compose tool calls effectively.
 
-**The key insight**: Reward structure determines learned behavior.
+---
 
-**Scenario 1: Accuracy-only reward**
-```python
-R(τ) = 1 if correct else 0
-```
+## 🤿 Deep Dive: How Strategies Emerge
 
-**Learned behavior**:
-- Always call most capable model (GPT-5)
-- Ignore cost
-- Result: High accuracy, high cost
+The orchestrator doesn't have explicit strategy representations. There's no `if task_type == "math": use_ladder` code. Instead, strategies emerge from the interaction of the policy network with the reward signal.
 
-**Scenario 2: Accuracy minus cost**
-```python
-R(τ) = 1 if correct else 0
-R(τ) -= 0.1 * cost  # Penalty for cost
-```
+### Learning Tool-Task Matching
 
-**Learned behavior**:
-- Balance accuracy and cost
-- But: Fixed trade-off (0.1 weight)
-- Can't adapt to user preferences
+During training, the orchestrator sees thousands of task-tool-outcome triplets. Over time, patterns become statistically clear:
 
-**Scenario 3: ToolOrchestra's preference-aware reward**
-```python
-R(τ) = M_normalized · P if correct else 0
-# P includes user's cost sensitivity
-```
+**Math tasks** correlate with math model success. The token "calculate," "prove," "derive" become associated with calling math-specialized tools.
 
-**Learned behavior**:
-- Adapts to user preferences
-- If P[cost] = 1.0 (user cares about cost):
-  - Learn to use cheap tools first
-- If P[cost] = 0.1 (user doesn't care about cost):
-  - Use expensive tools more freely
+**Current events** correlate with search success. The tokens "recent," "current," "latest" trigger search preferences.
 
-### Emergence of Tool-Specific Knowledge
+**Code tasks** correlate with code interpreter success. The tokens "implement," "function," "debug" activate coding tool routes.
 
-**Fascinating observation**: Model learns which tools are good at what.
+This isn't symbolic rule-learning—it's gradient-based adjustment of attention and generation probabilities. But the effect is similar: the model learns to route appropriately based on task characteristics.
 
-**Example from training**:
-```
-Early training (step 100):
-Task: "Solve differential equation"
-Attempt: Call GPT-5 → Correct (reward: +1)
+### Implicit Knowledge of Tool Capabilities
 
-Later training (step 5000):
-Task: "Solve differential equation"
-Attempt: Call Qwen2.5-Math-72B → Correct (reward: +1.2, higher due to lower cost)
+A fascinating emergent property: the orchestrator develops implicit knowledge of what each tool can and cannot do.
 
-Final training (step 10000):
-Task: "Prove mathematical theorem"
-Learned: Qwen2.5-Math-72B good for solving, but GPT-5 better for proving
-```
+Consider a task that requires visual reasoning: "Which of these images shows a cat?" With image tools in the tool set, the orchestrator routes appropriately. Without image tools, the orchestrator doesn't futilely attempt—it recognizes the impossibility and either seeks alternative approaches or acknowledges limitation.
 
-**How does model learn this?**
-1. Tries different tools on different tasks
-2. Some combinations work better (higher reward)
-3. Gradient updates increase probability of successful combinations
-4. Over time, learns correlation between task type and best tool
+How does this happen? During training, tasks requiring capabilities not in the tool set produce low rewards (wrong answers or inability to answer). The orchestrator learns to map task characteristics to tool requirements, and when requirements aren't met, to not waste effort.
 
-**Implicit knowledge representation**:
-The model doesn't have explicit rules like:
-```
-if task_type == "mathematical_proof":
-    use_tool = "GPT-5"
-```
+### Learning When Escalation Helps
 
-Instead, knowledge is distributed across attention patterns:
-```
-Attention layer sees tokens: "prove", "theorem", "mathematical"
-Attention activates neurons associated with "formal reasoning"
-These neurons correlate with "call GPT-5" in training data
-Output distribution shifts toward calling GPT-5
-```
+A key learned behavior is knowing when to escalate. The orchestrator doesn't escalate on every failure—that would be wasteful. It learns patterns that distinguish:
 
-**Evidence from the paper**:
-Table 15 shows tool usage patterns differ by task:
-- Math-heavy tasks → More calls to Math-72B
-- Coding tasks → More calls to Coder-32B
-- Ambiguous tasks → More calls to GPT-5
+**Failures worth retrying with more power**: The small model attempted complex reasoning and made an error that a larger model likely wouldn't. Escalate.
 
-The model learned task-tool matching without explicit supervision!
+**Failures not worth retrying**: The task is fundamentally ambiguous or requires information not available to any model. Escalating would just burn money producing a similarly wrong answer. Stop or acknowledge uncertainty.
+
+This discrimination is learned through reward shaping. Trajectories that escalate productively (leading to correct answers after escalation) are reinforced. Trajectories that escalate unproductively (wasting cost on still-wrong answers) are penalized.
 
 ### Generalization to Unseen Tools
 
-**The surprising result** (Section 6.3): Model works with tools not seen in training.
+A remarkable capability is adapting to tools never seen during training. As explored in Dive 9, the orchestrator generalizes reasonably well to new tools based on their descriptions.
 
-**How is this possible?**
+The mechanism appears to be semantic matching. The orchestrator has learned meta-patterns like "strong at mathematics" → appropriate for math tasks. When a new tool's description contains similar semantic content ("specialized for algebraic manipulation"), the orchestrator applies the same routing, even though the specific tool name is unfamiliar.
 
-**Hypothesis 1: Learning from descriptions**
-```python
-# During training, model sees:
-tool_description_Qwen2.5-Math-72B = """
-Advanced mathematical reasoning model.
-Strong at: calculus, linear algebra, number theory
-Weak at: applied statistics, data analysis
-"""
-
-# At test time, model sees new tool:
-tool_description_DeepSeek-Math-7B = """
-Specialized mathematical model for problem solving.
-Strong at: algebra, geometry, basic calculus
-Weak at: advanced topics, formal proofs
-"""
-
-# Model learns to match tasks to description patterns
-task = "Solve basic algebra problem"
-# Attention matches "basic" + "algebra" to DeepSeek description
-# Calls DeepSeek-Math-7B
-```
-
-**Hypothesis 2: Learning abstract orchestration skills**
-- Not just learning "call Qwen for math"
-- But learning "call specialized model for specialized task"
-- This generalizes to new specialized models
-
-**Hypothesis 3: In-context learning**
-- Model has seen diverse tool sets during training
-- Learns to adapt to available tools from context
-- At test time, uses same adaptation mechanism
-
-**Evidence**:
-- Performance drop is small (~5% on HLE) with unseen tools
-- Suggests robust generalization, not memorization
-
-## 🔬 Research Depth: Meta-Learning and Tool Orchestration
-
-### Connection to Meta-Learning
-
-**Meta-learning**: "Learning to learn"
-- Train on many tasks
-- Learn how to quickly adapt to new tasks
-
-**Tool orchestration as meta-learning**:
-- Train on many tool configurations
-- Learn how to quickly adapt to new tool sets
-
-**Formal framework (MAML - Model-Agnostic Meta-Learning)**:
-```
-θ* = argmax_θ E_task [
-    R(task, θ - α∇L(task, θ))
-]
-```
-
-**In English**: Find parameters θ that, after a small update on a new task, perform well.
-
-**ToolOrchestra implicitly does this**:
-- Diverse tool configurations = diverse tasks
-- Model learns general orchestration strategy
-- Can adapt to new tool configurations
-
-**Explicit meta-learning extension** (future work):
-```python
-# Meta-training
-for episode in meta_training:
-    tool_config = sample_tool_configuration()
-    
-    # Inner loop: Adapt to this configuration
-    adapted_model = fine_tune_on_config(tool_config, steps=5)
-    
-    # Outer loop: Evaluate adaptation
-    reward = evaluate(adapted_model, tool_config)
-    
-    # Update base model to be better at adapting
-    update_meta_parameters(reward)
-```
-
-**Potential benefits**:
-- Even faster adaptation to new tools
-- Explicit optimization for generalization
-- Could work with single example of new tool
-
-### Tool Discovery and Dynamic Tool Sets
-
-**Current limitation**: Tools must be pre-specified.
-
-**Future direction**: Discover and integrate new tools on-the-fly.
-
-**How this could work**:
-
-**Tool discovery**:
-```python
-# Agent encounters unfamiliar problem
-task = "Analyze protein folding structure"
-
-# Search for relevant tools
-tool_search = web_search("protein folding analysis tools")
-found_tools = ["AlphaFold API", "Rosetta software", "PyMOL"]
-
-# Generate descriptions for new tools
-for tool in found_tools:
-    description = describe_tool(tool)
-    integrate_tool(tool, description)
-
-# Now use newly discovered tools
-result = call_tool("AlphaFold API", task_parameters)
-```
-
-**Challenges**:
-1. **Safety**: How to verify new tool is safe to call?
-2. **Schema inference**: How to determine parameters without documentation?
-3. **Reliability**: How to trust results from unknown tool?
-4. **Cost**: Unknown tools might be expensive
-
-**Research directions**:
-
-**1. Tool retrieval**:
-- Embed task and tool descriptions
-- Retrieve most relevant tools from large library
-- Related to: RAG (Retrieval-Augmented Generation)
-
-**2. Few-shot tool learning**:
-- Given 1-3 examples of tool usage
-- Learn to use tool correctly
-- Related to: In-context learning, few-shot learning
-
-**3. Tool composition**:
-- Combine multiple simple tools to create complex capability
-- Example: Combine web_search + extract_structured_data + visualize
-- Related to: Program synthesis, compositional generalization
-
-### Hierarchical Tool Orchestration
-
-**Current**: Flat orchestration (orchestrator → tools)
-
-**Future**: Hierarchical orchestration (orchestrator → sub-orchestrators → tools)
-
-**Architecture**:
-```
-Level 3: Meta-orchestrator (8B model)
-         Decides: Science task vs. Code task vs. General reasoning
-           ↓
-Level 2: Specialized orchestrators (3B models each)
-         Science-orchestrator: Chooses between bio/chem/physics tools
-         Code-orchestrator: Chooses between languages/frameworks
-         General-orchestrator: Handles broad reasoning
-           ↓
-Level 1: Actual tools
-         Bio tools, Chem tools, Physics tools
-         Python tools, JavaScript tools
-         Search, calculators, databases
-```
-
-**Benefits**:
-1. **Modularity**: Replace one sub-orchestrator without retraining everything
-2. **Specialization**: Each level focuses on narrower domain
-3. **Efficiency**: Only activate relevant sub-orchestrators
-4. **Interpretability**: Clearer decision hierarchy
-
-**Challenges**:
-1. **Credit assignment**: Which level gets credit for success?
-2. **Communication**: How do levels share information?
-3. **Training**: How to train hierarchy end-to-end?
-
-**Connection to**:
-- Hierarchical RL (Options framework, HAM)
-- Mixture of Experts (sparse activation)
-- Feudal Networks (manager-worker hierarchy)
+This suggests the orchestrator has learned orchestration concepts rather than just memorizing tool-name to task-type mappings.
 
 ---
 
+## 🔬 Research Depth: Meta-Learning and Tool Discovery
+
+### The Meta-Learning Perspective
+
+ToolOrchestra's generalization to new tools can be understood through the lens of meta-learning: learning to learn.
+
+Standard learning: See 1000 examples of tool A, learn to use tool A well.
+
+Meta-learning: See 100 examples each of tools A, B, C, D, ..., learn how to quickly adapt to tool Z that you've never seen.
+
+ToolOrchestra's training is implicitly meta-learning. The diverse tool configurations during training (different tool subsets, different prices) are like different "tasks" in meta-learning terminology. The orchestrator learns a general orchestration strategy that transfers across configurations.
+
+**MAML (Model-Agnostic Meta-Learning) connection**: MAML explicitly optimizes for fast adaptation—finding parameter initializations that, after a few gradient steps on a new task, perform well. ToolOrchestra achieves similar effects through diverse training, though without MAML's explicit meta-gradient computation.
+
+Future work might combine ToolOrchestra with explicit meta-learning to achieve even faster adaptation—learning to use a new tool from just a few examples of its usage.
+
+### Tool Discovery: A Future Direction
+
+Current orchestration assumes tools are provided. But what if the orchestrator could discover new tools when existing ones are insufficient?
+
+Consider a scenario: the orchestrator encounters a task requiring specialized knowledge (protein structure analysis). None of its current tools address this. An advanced orchestrator might:
+
+1. Recognize the capability gap ("I need protein analysis but don't have it").
+2. Search for relevant tools ("What APIs exist for protein structure?").
+3. Evaluate discovered options (read documentation, try sample calls).
+4. Integrate useful ones into its working tool set.
+5. Solve the original task with newly discovered tools.
+
+This is tool discovery—extending orchestration from coordination of known tools to autonomous expansion of capabilities. It's not implemented in ToolOrchestra but represents a natural extension of the paradigm.
+
+**Challenges include**:
+- **Safety**: How to verify that a discovered tool is safe to call?
+- **Schema inference**: How to understand tool parameters without human-written documentation?
+- **Reliability**: How to estimate a new tool's accuracy without extensive testing?
+
+These are open research problems that connect to program synthesis, automated API discovery, and safe exploration in RL.
+
+### Hierarchical Orchestration
+
+Another future direction: orchestrators that coordinate other orchestrators.
+
+**Level 0**: Individual tools (GPT-5, search, code interpreter).
+**Level 1**: Orchestrators that coordinate Level 0 tools.
+**Level 2**: Meta-orchestrators that coordinate Level 1 orchestrators.
+
+Why might this help? Different domains might benefit from different orchestration strategies. A science-domain orchestrator might specialize in coordinating physics simulations, chemistry databases, and biology tools. A business-domain orchestrator might specialize in coordinating financial tools, CRM systems, and analytics.
+
+A meta-orchestrator could route incoming tasks to the appropriate domain orchestrator, which then coordinates its specialized tools.
+
+**The credit assignment challenge intensifies**: If the meta-orchestrator routes to science-orchestrator, which routes to a chemistry tool, which produces a correct answer, who gets credit? Hierarchical credit assignment—propagating reward signals through multiple coordination layers—is an active research area in hierarchical RL.
+
+---
 
 ## Conclusion
 
-The analysis in this part is meant to make the orchestrator’s behavior feel less mysterious: the escalation ladders, parallel calls, and iterative refinement loops are all emergent patterns grounded in the reward design and training setup you’ve already seen. Recognizing those patterns gives you an intuitive vocabulary for debugging, extending, or critiquing orchestration behaviors in your own systems.
+The orchestrator's behavior, while emerging from gradient-based training, follows interpretable patterns: escalation ladders that start cheap and trade up only when needed, parallel consultations when confidence matters more than cost, and iterative refinement with feedback loops. These patterns are learned, not programmed, but once learned, they're consistent and exploitable.
 
-## Academic Papers
+Understanding these patterns helps predict orchestrator behavior, debug failures, and extend the approach. If a trajectory is unexpectedly expensive, check whether the escalation pattern is misfiring. If accuracy is low, check whether the tool-task matching is appropriate. If generalization to new tools is poor, check whether descriptions are semantically informative.
 
-127. **ReAct (Reasoning + Acting)**
-     - Yao, S., et al. (2023). "ReAct: Synergizing Reasoning and Acting in Language Models." *ICLR 2023*
-     - https://arxiv.org/abs/2210.03629
-
-128. **Toolformer**
-     - Schick, T., et al. (2023). "Toolformer: Language Models Can Teach Themselves to Use Tools." *NeurIPS 2023*
-     - https://arxiv.org/abs/2302.04761
-
-129. **Chain-of-Thought Prompting**
-     - Wei, J., et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *NeurIPS 2022*
-     - https://arxiv.org/abs/2201.11903
-
-130. **Tree of Thoughts**
-     - Yao, S., et al. (2024). "Tree of Thoughts: Deliberate Problem Solving with Large Language Models." *NeurIPS 2024*
-     - https://arxiv.org/abs/2305.10601
-
-131. **Graph of Thoughts**
-     - Besta, M., et al. (2024). "Graph of Thoughts: Solving Elaborate Problems with Large Language Models." *AAAI 2024*
-     - https://arxiv.org/abs/2308.09687
-
-132. **HuggingGPT (Multi-Model Coordination)**
-     - Shen, Y., et al. (2023). "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face." *NeurIPS 2023*
-     - https://arxiv.org/abs/2303.17580
-
-133. **Gorilla (API Learning)**
-     - Patil, S.G., et al. (2023). "Gorilla: Large Language Model Connected with Massive APIs." *arXiv:2305.15334*
-     - https://arxiv.org/abs/2305.15334
-
-134. **ToRA (Tool-Integrated Reasoning)**
-     - Gou, Z., et al. (2024). "ToRA: A Tool-Integrated Reasoning Agent for Mathematical Problem Solving." *ICLR 2024*
-     - https://arxiv.org/abs/2309.17452
-
-135. **Code-as-Tool**
-     - Gao, L., et al. (2023). "PAL: Program-aided Language Models." *ICML 2023*
-     - https://arxiv.org/abs/2211.10435
-
-136. **Chameleon (Multi-Tool Composition)**
-     - Lu, P., et al. (2024). "Chameleon: Plug-and-Play Compositional Reasoning with Large Language Models." *NeurIPS 2024*
-     - https://arxiv.org/abs/2304.09842
-
-## Blog Posts and Tutorials
-
-137. **ReAct Tutorial**
-     - "Building ReAct Agents from Scratch"
-     - https://blog.langchain.dev/react-agents/
-
-138. **Tool Use Best Practices**
-     - "A Guide to Tool Use in LLMs"
-     - https://www.anthropic.com/news/tool-use-ga
-
-139. **Model Coordination Patterns**
-     - "Orchestrating Multiple AI Models"
-     - https://martinfowler.com/articles/model-orchestration.html
-
-140. **Chain-of-Thought Deep Dive**
-     - "Understanding Chain-of-Thought Reasoning"
-     - https://www.promptingguide.ai/techniques/cot
-
-## GitHub Repositories
-
-141. **ReAct Implementation**
-     - https://github.com/ysymyth/ReAct
-
-142. **Toolformer Code**
-     - https://github.com/lucidrains/toolformer-pytorch
-
-143. **HuggingGPT (JARVIS)**
-     - https://github.com/microsoft/JARVIS
-
-144. **Gorilla API Store**
-     - https://github.com/ShishirPatil/gorilla
-
-145. **ToRA Code**
-     - https://github.com/microsoft/ToRA
-
-146. **PAL Code**
-     - https://github.com/reasoning-machines/pal
-
-147. **Chameleon Implementation**
-     - https://github.com/lupantech/chameleon-llm
-
-148. **LangChain Agents**
-     - Comprehensive agent framework
-     - https://github.com/langchain-ai/langchain/tree/master/libs/langchain/langchain/agents
-
-149. **AutoGen (Multi-Agent Framework)**
-     - https://github.com/microsoft/autogen
+The next dive examines how user preferences integrate into these patterns—how the same underlying capability can be tuned to different user priorities without retraining.
 
 ---
 
+## References
+
+### Reasoning and Acting
+
+1. **ReAct**
+   - Yao, S., et al. (2023). "ReAct: Synergizing Reasoning and Acting in Language Models." *ICLR 2023*
+   - https://arxiv.org/abs/2210.03629
+
+2. **Chain-of-Thought Prompting**
+   - Wei, J., et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *NeurIPS 2022*
+   - https://arxiv.org/abs/2201.11903
+
+### Tool Use
+
+3. **Toolformer**
+   - Schick, T., et al. (2023). "Toolformer: Language Models Can Teach Themselves to Use Tools." *NeurIPS 2023*
+   - https://arxiv.org/abs/2302.04761
+
+4. **HuggingGPT**
+   - Shen, Y., et al. (2023). "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends." *NeurIPS 2023*
+   - https://arxiv.org/abs/2303.17580
+
+### Meta-Learning
+
+5. **MAML**
+   - Finn, C., et al. (2017). "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." *ICML 2017*
+   - https://arxiv.org/abs/1703.03400
+
+6. **Meta-RL Survey**
+   - Beck, J., et al. (2023). "A Survey of Meta-Reinforcement Learning." *arXiv:2301.08028*
+   - https://arxiv.org/abs/2301.08028
+
+### Agent Coordination
+
+7. **AutoGen**
+   - Microsoft. "Multi-Agent Conversational AI."
+   - https://github.com/microsoft/autogen
+
+8. **LangChain Agents**
+   - LangChain Documentation
+   - https://python.langchain.com/docs/modules/agents/
+
+---
