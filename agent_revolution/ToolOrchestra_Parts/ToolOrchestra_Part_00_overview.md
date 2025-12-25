@@ -68,6 +68,6 @@ We begin in Dive 1 by defining the problem: why can't we just prompt GPT-4 to do
 
 ## Annotated Bibliography
 
-1.  **Gou et al. (2024)** - *ToolOrchestra: Connecting High-Capabilities with Low-Cost via Tool Orchestration*: The primary paper analyzed in this series. Introduces the 8B orchestrator concept.
+1.  **Su et al. (2025)** - *ToolOrchestra: Elevating Intelligence via Efficient Model and Tool Orchestration*: The primary paper analyzed in this series. Introduces the 8B orchestrator concept.
 2.  **Zaharia et al. (2024)** - *The Shift from Models to Compound AI Systems*: The theoretical foundation for why monolithic scaling is hitting diminishing returns, favoring modular architectures.
 3.  **Schick et al. (2023)** - *Toolformer: Language Models Can Teach Themselves to Use Tools*: The precursor to ToolOrchestra, demonstrating self-supervised tool injection. ToolOrchestra expands this to multi-tool and multi-objective settings.
