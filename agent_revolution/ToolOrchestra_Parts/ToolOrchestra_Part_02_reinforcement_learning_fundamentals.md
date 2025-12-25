@@ -1,303 +1,253 @@
 # The Orchestration Paradigm Series: Dive 2
 *What is GRPO and why does it work for tool use?*
+
 ## Introduction
 
-This part gives the reinforcement learning foundations you need to understand how ToolOrchestra is actually trained. It connects familiar ideas like states, actions, rewards, and policies to the concrete setting of an orchestrator that interacts with tools over many turns.
+The previous dive established the problem: language models, even very capable ones, make poor choices when asked to orchestrate tools. They exhibit systematic biases—favoring models similar to themselves, deferring excessively to expensive options, or failing to balance cost against accuracy. Prompting alone cannot fix these behaviors because the decision-making patterns required for good orchestration were never part of the models' training.
 
+This dive explains how ToolOrchestra learns those patterns. The technique is called reinforcement learning, and the specific algorithm is GRPO—Group Relative Policy Optimization. By the end, you will understand why reinforcement learning is necessary for orchestration, how GRPO works at every level of detail, and how it connects to the broader landscape of algorithms for training intelligent behavior.
 
-## 🌊 Surface Level: What is Reinforcement Learning?
+---
 
-**Simple analogy**: Training a dog.
-- Dog does something (action)
-- You say "good dog!" or "bad dog!" (reward)
-- Dog learns which actions lead to treats
+## 🌊 Surface Level: Learning From Trial and Error
 
-**In ToolOrchestra**:
-- Orchestrator tries different tool combinations (actions)
-- Gets reward based on: Did it solve the problem? How much did it cost? Did it match user preferences?
-- Learns which tool combinations work for which problems
+Consider how you might teach a dog to fetch. You throw the ball. The dog does something—maybe it runs after the ball, maybe it ignores you entirely, maybe it brings back a shoe. You respond according to the result: treats and praise for fetching the ball, nothing for ignoring you, gentle redirection for the shoe. The dog learns that certain behaviors lead to rewards and adjusts accordingly.
 
-## 🏊 Shallow Dive: The RL Framework (MDPs)
+This process describes the essence of reinforcement learning. An agent (the dog) takes actions (running toward things) in an environment (the park). After each action, the agent receives feedback (treats or not). Through many repetitions, the agent learns which actions lead to rewards in which situations. No one writes down the rules for the dog to follow; the dog discovers the rules through experience.
 
-### Markov Decision Processes: The Math of Decisions
+ToolOrchestra learns the same way. The orchestrator (agent) starts with a task—say, a difficult math problem. It takes actions: maybe it first searches the web for relevant formulas, then calls a math model to compute an answer, then calls a verifier to check the result. After the trajectory is complete, we evaluate: Did the orchestrator solve the problem? How much did it cost? How long did it take? Did it respect the user's preferences for cheap versus accurate solutions?
 
-An MDP is a framework for sequential decision-making with five components:
+The answers to these questions become the feedback. Good trajectories—those that solve the problem efficiently and respect preferences—get reinforced. Poor trajectories get discouraged. Through thousands of such trials across diverse tasks, the orchestrator learns when to call expensive models versus cheap ones, when to verify versus trust direct answers, when to search versus compute.
 
-**1. States (S)**: Where you are
-- In ToolOrchestra: The conversation history so far
-- Example: "User asked a math question. I called local search. It returned a definition of 'Alon-Tarsi number'."
+This is fundamentally different from how most language models are trained. Standard training shows a model millions of examples of good text and asks the model to imitate them. That works for generating fluent sentences, but orchestration requires something more: the ability to try different strategies, observe which work, and adjust accordingly. Imitation alone cannot teach a strategy the model has never seen. Reinforcement learning can.
 
-**2. Actions (A)**: What you can do
-- In ToolOrchestra: Call web search, call GPT-5, call math model, respond directly
-- Example: "Call Qwen2.5-Math-7B with parameter: 'Calculate the Alon-Tarsi number of K_{1000,1000}'"
+The specific algorithm ToolOrchestra uses is called GRPO. The details matter for those who want to understand or replicate the work, and we will explore them in the deeper sections. But the core idea is simple: try many different approaches to each task, compare them to each other, and learn from the comparison.
 
-**3. Transitions (T)**: How states change based on actions
-- In ToolOrchestra: Deterministic—if you call a tool, you get its response
-- Example: Call code interpreter → Get code execution result
+---
 
-**4. Observations (O)**: What you see about the state
-- In ToolOrchestra: Partially observable—you see tool responses but not the user's full intent
-- Example: User says "solve this quickly"—are they okay with expensive tools?
+## 🏊 Shallow Dive: The Framework of Sequential Decisions
 
-**5. Rewards (R)**: How good was the outcome
-- In ToolOrchestra: Multi-dimensional (accuracy, cost, latency, preferences)
-- Example: Correct answer (+1), but expensive (-0.5), but user said "be thorough" (+0.3)
+### From Dog Training to Formal Structure
 
-### The Markov Property: Why It's Called "Markov"
+To turn dog training intuition into a precise algorithm, we need a formal framework. The standard framework for sequential decision-making is called a Markov Decision Process, or MDP. Despite the intimidating name, the concept is straightforward—it simply formalizes the idea that an agent perceives situations, takes actions, and receives rewards.
 
-**Markov property**: The future depends only on the present, not the past.
+An MDP has five components, each of which maps directly to the orchestration setting.
 
-Formally: P(s_{t+1} | s_t, a_t) = P(s_{t+1} | s_t, a_t, s_{t-1}, a_{t-1}, ...)
+**States** describe where the agent is. For ToolOrchestra, a state is the entire conversation history so far: the original task, every tool call the orchestrator has made, and every response those tools have returned. The state captures everything the orchestrator knows at each moment.
 
-**In plain English**: If you know the current state, knowing the history doesn't give you more information.
+**Actions** describe what the agent can do. For ToolOrchestra, an action is any tool call the orchestrator might make: search the web for information, call GPT-5 with a subproblem, execute code to verify a calculation, or output a final answer. The action space is vast—essentially any valid tool invocation with any parameters.
 
-**In ToolOrchestra**: The conversation history IS the state, so this is satisfied. The orchestrator doesn't need to remember how it got to the current conversation—the conversation itself contains all relevant information.
+**Transitions** describe how the environment responds to actions. In ToolOrchestra, transitions are mostly deterministic: if you call a calculator, you get the calculation result; if you call a search engine, you get search results. Some stochasticity exists—language model responses vary slightly—but the environment is largely predictable.
 
-**Why this matters**: Markov property allows us to use dynamic programming and many RL algorithms that wouldn't work otherwise.
+**Observations** describe what the agent can see. ToolOrchestra operates in a partially observable setting: the orchestrator sees tool responses but doesn't have direct access to the "true" answer or the user's complete intent. It must infer whether its strategy is working from the information each tool returns.
 
-## 🤿 Deep Dive: Policy Gradient Methods and GRPO
+**Rewards** describe how good the outcome was. This is where ToolOrchestra's innovation lies. The reward combines multiple objectives: accuracy (did we solve the task?), cost (how much did we spend on API calls?), latency (how long did it take?), and preference alignment (did we respect the user's stated priorities?). We will explore this multi-objective reward design in the next dive.
 
-### What is a Policy?
+### The Markov Property
 
-A policy π is a mapping from states to actions: π(a|s)
+The "Markov" in Markov Decision Process refers to a specific property: the future depends only on the present state, not on how we got there. If you know the current state completely, knowing the prior history adds nothing.
 
-**Deterministic policy**: π(s) = a (always choose the same action in a given state)
-**Stochastic policy**: π(a|s) = probability of choosing action a in state s
+In ToolOrchestra, this property is satisfied by design. The state is the entire conversation history—every prior action and observation. So by construction, the state contains all relevant information. The orchestrator doesn't need to remember "how it arrived" at the current state separately from the state itself; the arrival path is encoded in the history.
 
-In language models, the policy IS the model:
-```
-π_θ(a|s) = P(next_token | context)
-```
+This property matters because many efficient algorithms exist for MDPs that wouldn't work if the future depended on hidden history. It's a technical condition that ToolOrchestra's design ensures is met.
 
-Where θ represents all the model's parameters (billions of numbers).
+### Policies: The Strategy of Action
 
-### Policy Gradient Methods: Optimizing Directly
+A **policy** is a strategy for choosing actions in states. Formally, it's a function that takes a state and produces a distribution over possible actions: given this situation, how likely am I to take each possible action?
 
-**Key idea**: Instead of learning value functions (how good is each state), directly optimize the policy to maximize expected reward.
+In ToolOrchestra, the policy is the orchestrator model itself. Given the conversation history (state), the model produces tokens that specify which tool to call with what parameters (action). The probability of producing those specific tokens is the policy's probability of that action.
 
-The **policy gradient theorem** (Sutton et al., 2000):
-```
-∇_θ J(θ) = E[∇_θ log π_θ(a|s) × A(s,a)]
-```
+Training the orchestrator means adjusting this policy—the billions of parameters that determine how likely each possible action is in each possible state—so that high-reward actions become more likely.
 
-**In English**: To improve the policy, increase the probability of actions that have positive advantage (better than average) and decrease probability of actions with negative advantage.
+### The Goal: Maximize Expected Reward
 
-**Why this works for LLMs**: Language models already output probability distributions. We just need to adjust these probabilities based on which completions got high rewards.
+The objective of reinforcement learning is to find a policy that maximizes expected total reward over trajectories. A trajectory is a sequence: state, action, reward, next state, next action, next reward, and so on until the task ends.
+
+For ToolOrchestra, a trajectory might be:
+1. Receive task (state 1)
+2. Call local search (action 1) → get definition (state 2)
+3. Call math model (action 2) → get tentative answer (state 3)
+4. Call code verifier (action 3) → verification fails (state 4)
+5. Call GPT-5 (action 4) → get corrected answer (state 5)
+6. Output answer (final action) → receive reward based on correctness, cost, preferences
+
+The algorithm's job is to make the sequence of actions that lead to high rewards more likely and those that lead to low rewards less likely.
+
+---
+
+## 🤿 Deep Dive: Policy Gradients and GRPO
+
+### Direct Policy Optimization
+
+One family of approaches to reinforcement learning learns a value function—an estimate of how good each state is—and uses that to derive which actions to take. Another family, **policy gradient methods**, skips the value function and directly optimizes the policy.
+
+The key insight of policy gradient methods is mathematically elegant. We want to adjust the policy parameters (the model's weights) to increase expected reward. The gradient of expected reward with respect to the parameters can be estimated from samples:
+
+∇J(θ) ≈ E[ ∇log π_θ(action|state) × Advantage(state, action) ]
+
+In words: to improve the policy, increase the probability of actions that have positive advantage (better than average) and decrease the probability of actions with negative advantage. The gradient ∇log π_θ(action|state) tells us how to adjust the weights to change action probabilities. The advantage tells us in which direction to push.
+
+This is called the **policy gradient theorem**, and it underlies nearly all modern reinforcement learning for language models.
+
+### The Advantage: Better or Worse Than Average?
+
+The advantage of an action measures how much better it is compared to the average behavior from that state. An action with a large positive advantage is unusually good. An action with a large negative advantage is unusually bad.
+
+Computing advantages requires knowing what "average" means. One approach is to learn a value function that estimates expected future reward from each state, then compare actual returns to this estimate. Another approach, which GRPO uses, is simpler: generate multiple rollouts from the same starting point and compare them directly.
 
 ### GRPO: Group Relative Policy Optimization
 
-**Standard policy gradient problem**: Individual reward values vary wildly.
-- Task 1: Reward = 0.5 (easy task, solved okay)
-- Task 2: Reward = 0.5 (hard task, solved brilliantly)
+GRPO, introduced in the DeepSeekMath paper, takes the comparison approach to its logical conclusion. For each task, GRPO generates multiple rollouts—multiple attempts at solving the same problem. It computes the reward for each rollout, then normalizes:
 
-These shouldn't be treated the same!
+Advantage(rollout) = (Reward(rollout) - mean of batch) / std of batch
 
-**GRPO solution**: For each task, generate multiple rollouts. Compare rollouts to each other, not to absolute scale.
+This has several appealing properties.
 
-```python
-# Pseudocode for GRPO advantage calculation
-def compute_advantage(rollouts_for_same_task):
-    rewards = [R(rollout) for rollout in rollouts_for_same_task]
-    mean_reward = mean(rewards)
-    std_reward = std(rewards)
-    
-    advantages = []
-    for reward in rewards:
-        advantage = (reward - mean_reward) / std_reward
-        advantages.append(advantage)
-    
-    return advantages
-```
+**Automatic scaling**: An easy task might have rewards clustered around 0.9; a hard task might have rewards clustered around 0.3. With absolute rewards, the easy task would dominate gradient updates. With normalization, both tasks contribute equally based on their relative performance variance.
 
-**Why this helps**:
-1. **Automatic scaling**: Easy and hard tasks have advantages in the same range
-2. **Relative comparison**: "Better than other attempts" is more meaningful than "good in absolute terms"
-3. **Stability**: Normalization prevents reward scale from causing training instability
+**Relative comparison**: What matters isn't whether a rollout is "good" in some absolute sense, but whether it's better than the alternatives. A rollout that scores 0.5 is excellent if the alternatives scored 0.2, but poor if they scored 0.8. GRPO captures this directly.
 
-### The Full GRPO Update
+**No value function needed**: Some algorithms require training a separate model to estimate state values. GRPO gets advantages from group statistics, eliminating this complexity.
 
-Here's what actually happens during training:
+### The Full GRPO Training Loop
 
-**Step 1: Generate batch of tasks** (e.g., 32 math problems)
+Here is what ToolOrchestra training looks like in practice:
 
-**Step 2: For each task, generate K rollouts** (e.g., 4 attempts per task)
-```
-Task 1: [Rollout 1.1, Rollout 1.2, Rollout 1.3, Rollout 1.4]
-Task 2: [Rollout 2.1, Rollout 2.2, Rollout 2.3, Rollout 2.4]
-...
-```
+For each training iteration:
 
-**Step 3: Compute rewards for each rollout**
-```python
-R(rollout) = (
-    r_outcome(rollout) × M_normalized · P
-    if solved else 0
-)
-```
+1. **Sample a batch of tasks** from ToolScale or other training data.
 
-**Step 4: Compute advantages within each group**
-```python
-A(rollout 1.2) = (R(1.2) - mean(R(1.1), R(1.2), R(1.3), R(1.4))) / std(...)
-```
+2. **For each task, generate K rollouts** (K=8 in ToolOrchestra). Each rollout is the orchestrator attempting the task with temperature-based sampling—some randomness to explore different strategies.
 
-**Step 5: Update policy using clipped objective**
-```python
-ratio = π_new(rollout) / π_old(rollout)  # How much did policy change?
-clipped_ratio = clip(ratio, 1-ε, 1+ε)    # Don't change too much!
+3. **Compute rewards for each rollout**. This includes checking whether the answer is correct, tallying the cost of all tool calls, measuring latency, and computing preference alignment based on the user preference vector.
 
-loss = -min(
-    ratio × advantage,
-    clipped_ratio × advantage
-)
-```
+4. **Compute advantages within each group** (all rollouts for the same task). Subtract the group mean, divide by the group standard deviation. This yields normalized advantages that are comparable across tasks.
 
-**The clipping is crucial**: Prevents the policy from changing too drastically in one update, which would cause instability.
+5. **Apply filters for stability**:
+   - If all rollouts in a group have very similar rewards (std < 0.1), skip the group—the gradient signal is too weak to be useful.
+   - If a rollout contains malformed tool calls, exclude it—training on malformed outputs would reinforce bad formatting.
+   - If a rollout doesn't produce an extractable answer, exclude it.
 
-## 🔬 Research Depth: Why GRPO over PPO, REINFORCE, or A3C?
+6. **Update the policy using clipped gradients**. For each rollout, compute the policy gradient weighted by its advantage. But clip the update: if the policy is about to change too much from its previous version, cap the change. This prevents destabilizing large jumps.
 
-### GRPO vs. PPO (Proximal Policy Optimization)
+The clipping is described by the formula:
 
-**PPO** (Schulman et al., 2017):
-- Uses value function V(s) to estimate advantages
-- Requires training both policy network and value network
-- Advantage: A(s,a) = R(s,a) + γV(s') - V(s)
+Loss = -min(ratio × advantage, clip(ratio, 1-ε, 1+ε) × advantage)
 
-**GRPO**:
-- No value function needed
-- Advantages computed from group statistics
-- Simpler: Only one network to train (the policy)
+where ratio = π_new / π_old is how much the probability of the rollout changed. This is the same clipping used in PPO (Proximal Policy Optimization), a widely used algorithm that GRPO builds upon.
 
-**Why GRPO for ToolOrchestra**:
-1. **Efficiency**: Training value functions for long trajectories (50 turns) is hard
-2. **Simplicity**: Fewer hyperparameters, easier to tune
-3. **Natural fit**: When you have multiple rollouts per task anyway (for exploration), group comparison is natural
+### Why GRPO for ToolOrchestra?
 
-### GRPO vs. REINFORCE with Baseline
+ToolOrchestra could have used other algorithms. PPO is popular and well-understood. REINFORCE is simpler. Actor-critic methods are sample-efficient. Why GRPO?
 
-**REINFORCE** (Williams, 1992):
-- Vanilla policy gradient: ∇J = E[∇log π(a|s) × R]
-- High variance (some trajectories much better than others)
-- Baseline improvement: ∇J = E[∝log π(a|s) × (R - b)]
+The answer lies in the specific challenges of orchestration learning:
 
-**GRPO** can be seen as REINFORCE where baseline b is the group mean:
-- b = mean reward across rollouts for same task
-- Plus normalization by std for scale-invariance
+**Long trajectories**: Orchestration rollouts can have 50+ turns. Learning value functions for such long sequences is difficult—the credit assignment problem (which early action caused eventual success or failure?) becomes severe. GRPO sidesteps this by comparing complete trajectories rather than trying to assign value to intermediate states.
 
-**Advantage of GRPO**: The baseline is adaptive per task, automatically adjusting to task difficulty.
+**Multiple rollouts are natural**: To explore the orchestration space, you want to try different strategies on the same problem. GRPO leverages these multiple rollouts for advantage estimation, turning a necessity into an advantage.
 
-### Connection to Relative Reward Methods
+**Simplicity**: GRPO requires only the policy network, not a separate value network. This simplifies implementation and hyperparameter tuning.
 
-**Key insight**: Absolute reward values are often meaningless. What matters is relative performance.
-
-This connects to:
-1. **DPO (Direct Preference Optimization)**: Learns from pairwise preferences, not absolute rewards
-2. **RLHF (Reinforcement Learning from Human Feedback)**: Often uses relative rankings
-3. **Self-Play in games**: Agent improves by beating previous versions, not by absolute score
-
-**GRPO formalizes this** for multi-rollout settings where you have multiple attempts at the same task.
-
-### Open Question: Sample Efficiency
-
-**Current limitation**: GRPO requires multiple rollouts per task for good advantage estimates.
-- ToolOrchestra uses 4 rollouts per task
-- For 50-turn trajectories with expensive API calls, this gets pricey
-
-**Research direction**: Could we use a small value network as a critic to get advantages from single rollouts? This would be a hybrid:
-- GRPO's group normalization for stability
-- PPO's value function for sample efficiency
-
-**Challenge**: Value functions for 50-turn trajectories are hard to train (credit assignment problem—which early action led to eventual success?).
+The trade-off is sample efficiency. GRPO needs multiple rollouts per task to estimate advantages well. For orchestration, where rollouts involve expensive API calls, this cost is real. But the stability gains appear to outweigh the sample cost.
 
 ---
 
+## 🔬 Research Depth: Connections and Open Questions
+
+### Connection to Other RL Algorithms
+
+GRPO can be understood as a particular point in a space of policy gradient methods.
+
+**REINFORCE** (Williams, 1992) is the simplest policy gradient: use raw returns as the learning signal. High variance makes training unstable.
+
+**REINFORCE with baseline** subtracts a baseline from returns to reduce variance. The baseline is typically the average return. GRPO uses the batch mean as this baseline, applied per-task.
+
+**Actor-critic methods** learn a value function (the critic) to provide lower-variance baseline estimates at each step. This improves sample efficiency but adds complexity.
+
+**PPO** (Schulman et al., 2017) adds clipping to prevent destabilizing updates. GRPO inherits PPO's clipping.
+
+GRPO's novelty is combining per-task normalization (comparing rollouts within a task rather than globally) with PPO-style clipping. This combination suits settings where task difficulty varies widely and multiple rollouts per task are available.
+
+### Connection to Weak-to-Strong Learning
+
+An intriguing connection exists to the "weak-to-strong generalization" research agenda. In weak-to-strong, the question is whether weak supervision can elicit strong capabilities from capable models. ToolOrchestra inverts this: a weak model (8B orchestrator) learns to elicit strong capabilities by supervising when and how to invoke strong models.
+
+The orchestrator doesn't have GPT-5's knowledge. But it learns a complementary skill: knowing when GPT-5's knowledge is worth its cost. This meta-cognitive capability is orthogonal to raw problem-solving capability, and the orchestrator's weakness in one doesn't prevent excellence in the other.
+
+This suggests a research direction: systematically mapping which capabilities are orthogonal. Can a 1B model learn to orchestrate 100B models? What's the limit?
+
+### Open Questions
+
+Several questions remain open for future research:
+
+**Sample efficiency**: Can we reduce the number of rollouts needed per task? GRPO uses 8. Could a hybrid approach—using a cheap value function for some signal plus GRPO's relative comparison—improve efficiency?
+
+**Credit assignment**: Within a 50-turn trajectory, which decisions mattered? Currently, all decisions in a successful trajectory get reinforced, including any mistakes that happened to be corrected later. More refined credit assignment could accelerate learning.
+
+**Exploration**: How do we ensure the orchestrator explores enough different strategies? Current training uses temperature sampling for stochasticity, but this is random exploration. Directed exploration—systematically trying tools the orchestrator avoids—might discover better strategies.
+
+**Curriculum**: Should training start with easy tasks and progress to harder ones? Should it start with cheap tool configurations and progress to expensive ones? Curriculum learning has helped in other RL settings but isn't explored in the ToolOrchestra paper.
+
+---
 
 ## Conclusion
 
-Taken together, the material in this part should make it natural to view ToolOrchestra as an RL agent acting in a partially observable environment with long trajectories and structured rewards. With that foundation, the choice of GRPO and the specific training setup in later parts becomes a design decision you can actually reason about, rather than a black box.
+Reinforcement learning provides the machinery for ToolOrchestra to learn orchestration strategies that could never be distilled from static examples. By trying different approaches, observing which produce high rewards, and updating its policy accordingly, the orchestrator acquires decision-making patterns that prompt engineering cannot instill.
 
-## Academic Papers
+GRPO—the specific algorithm used—is well-suited to the orchestration setting: long trajectories, multiple rollouts per task, and widely varying task difficulties. Its relative comparison approach provides stable training signals without the complexity of learned value functions.
 
-15. **Markov Decision Processes**
-    - Sutton, R.S., & Barto, A.G. (2018). "Reinforcement Learning: An Introduction" (2nd ed.). *MIT Press*
-    - http://incompleteideas.net/book/the-book-2nd.html
-
-16. **Policy Gradient Theorem**
-    - Sutton, R.S., McAllester, D., Singh, S., & Mansour, Y. (2000). "Policy Gradient Methods for Reinforcement Learning with Function Approximation." *NIPS 2000*
-    - https://proceedings.neurips.cc/paper/2000/file/4b86abe48d358ecf194c56c69108433e-Paper.pdf
-
-17. **GRPO (Group Relative Policy Optimization)**
-    - Shao, Z., Wang, P., Zhu, Q., et al. (2024). "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models." *arXiv:2402.03300*
-    - https://arxiv.org/abs/2402.03300
-
-18. **PPO (Proximal Policy Optimization)**
-    - Schulman, J., Wolski, F., Dhariwal, P., et al. (2017). "Proximal Policy Optimization Algorithms." *arXiv:1707.06347*
-    - https://arxiv.org/abs/1707.06347
-
-19. **REINFORCE Algorithm**
-    - Williams, R.J. (1992). "Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning." *Machine Learning*, 8(3-4), 229-256
-    - https://link.springer.com/article/10.1007/BF00992696
-
-20. **Actor-Critic Methods**
-    - Mnih, V., Badia, A.P., Mirza, M., et al. (2016). "Asynchronous Methods for Deep Reinforcement Learning." *ICML 2016*
-    - https://arxiv.org/abs/1602.01783
-
-21. **Trust Region Policy Optimization (TRPO)**
-    - Schulman, J., Levine, S., Abbeel, P., et al. (2015). "Trust Region Policy Optimization." *ICML 2015*
-    - https://arxiv.org/abs/1502.05477
-
-22. **Advantage Function Estimation**
-    - Schulman, J., Moritz, P., Levine, S., et al. (2016). "High-Dimensional Continuous Control Using Generalized Advantage Estimation." *ICLR 2016*
-    - https://arxiv.org/abs/1506.02438
-
-## Blog Posts and Tutorials
-
-23. **RL Fundamentals Tutorial**
-    - OpenAI Spinning Up in Deep RL
-    - https://spinningup.openai.com/en/latest/
-
-24. **Policy Gradient Methods Explained**
-    - Lilian Weng's Blog. "Policy Gradient Algorithms"
-    - https://lilianweng.github.io/posts/2018-04-08-policy-gradient/
-
-25. **PPO Explained**
-    - Hugging Face Deep RL Course. "Proximal Policy Optimization"
-    - https://huggingface.co/learn/deep-rl-course/unit8/introduction
-
-26. **Advantage Functions Visual Guide**
-    - "The Advantage Function in Reinforcement Learning Explained"
-    - https://towardsdatascience.com/understanding-advantage-functions-in-reinforcement-learning-8f7c8de94cf8
-
-27. **RL for LLMs**
-    - Nathan Lambert. "RLHF: Reinforcement Learning from Human Feedback"
-    - https://huyenchip.com/2023/05/02/rlhf.html
-
-## GitHub Repositories
-
-28. **CleanRL: Clean RL Implementations**
-    - https://github.com/vwxyzjn/cleanrl
-
-29. **Stable Baselines3 (PPO Implementation)**
-    - https://github.com/DLR-RM/stable-baselines3
-
-30. **TRL: Transformer Reinforcement Learning**
-    - Hugging Face TRL library
-    - https://github.com/huggingface/trl
-
-31. **DeepSeek-Math Code**
-    - https://github.com/deepseek-ai/DeepSeek-Math
-
-32. **OpenAI Baselines**
-    - https://github.com/openai/baselines
-
-## Courses and Video Lectures
-
-33. **David Silver's RL Course**
-    - UCL Course on RL
-    - https://www.davidsilver.uk/teaching/
-
-34. **Berkeley Deep RL Course**
-    - CS 285 by Sergey Levine
-    - http://rail.eecs.berkeley.edu/deeprlcourse/
+With the algorithmic foundation established, the next dive examines what exactly the orchestrator is trying to optimize. The reward design in ToolOrchestra is not a single number but a carefully constructed combination of accuracy, cost, latency, and preference alignment—a multi-objective optimization problem that requires its own careful treatment.
 
 ---
 
+## References
+
+### Foundational RL
+
+1. **Reinforcement Learning: An Introduction**
+   - Sutton, R.S., & Barto, A.G. (2018). 2nd Edition. MIT Press
+   - http://incompleteideas.net/book/the-book-2nd.html
+
+2. **Policy Gradient Theorem**
+   - Sutton, R.S., McAllester, D., Singh, S., & Mansour, Y. (2000). "Policy Gradient Methods for Reinforcement Learning with Function Approximation." *NeurIPS 2000*
+   - https://proceedings.neurips.cc/paper/2000/file/4b86abe48d358ecf194c56c69108433e-Paper.pdf
+
+### GRPO and Related Algorithms
+
+3. **GRPO (DeepSeekMath)**
+   - Shao, Z., Wang, P., Zhu, Q., et al. (2024). "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models." *arXiv:2402.03300*
+   - https://arxiv.org/abs/2402.03300
+
+4. **PPO (Proximal Policy Optimization)**
+   - Schulman, J., Wolski, F., Dhariwal, P., et al. (2017). "Proximal Policy Optimization Algorithms." *arXiv:1707.06347*
+   - https://arxiv.org/abs/1707.06347
+
+5. **REINFORCE**
+   - Williams, R.J. (1992). "Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning." *Machine Learning*, 8(3-4), 229-256
+   - https://link.springer.com/article/10.1007/BF00992696
+
+6. **TRPO**
+   - Schulman, J., Levine, S., Abbeel, P., et al. (2015). "Trust Region Policy Optimization." *ICML 2015*
+   - https://arxiv.org/abs/1502.05477
+
+### Advantage Estimation
+
+7. **GAE (Generalized Advantage Estimation)**
+   - Schulman, J., Moritz, P., Levine, S., et al. (2016). "High-Dimensional Continuous Control Using Generalized Advantage Estimation." *ICLR 2016*
+   - https://arxiv.org/abs/1506.02438
+
+### RL for Language Models
+
+8. **RLHF Tutorial**
+   - Chip Huyen. "RLHF"
+   - https://huyenchip.com/2023/05/02/rlhf.html
+
+9. **OpenAI Spinning Up**
+   - OpenAI. "Spinning Up in Deep RL"
+   - https://spinningup.openai.com/en/latest/
+
+10. **TRL Library**
+    - HuggingFace. Transformer Reinforcement Learning
+    - https://github.com/huggingface/trl
+
+---
