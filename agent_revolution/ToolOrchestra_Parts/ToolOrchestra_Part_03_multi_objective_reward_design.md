@@ -6,7 +6,7 @@
 
 When we train an orchestrator, we ultimately need a single scalar value ($R$) to update the gradients. But the business goal is multi-dimensional. We want the answer to be correct ($O$), cheap ($C$), and fast ($L$).
 
-This is a **Pareto Optimization** problem. There is no single "best" orchestrator. There is an orchestrator that is fast but expensive, and one that is cheap but slow. To train a model using RL, we must perform **Scalarization**—collapsing these vectors into a single number.
+This is a **Pareto Optimization** problem. There is no single "best" orchestrator. There is an orchestrator that is fast but expensive, and one that is cheap but slow. To train a model using RL, we must perform **Scalarization**, collapsing these vectors into a single number.
 
 ## The Objective Functions
 

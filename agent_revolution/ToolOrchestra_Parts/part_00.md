@@ -1,6 +1,9 @@
 # The Orchestration Paradigm Series: Dive 0
 # The Router-Worker Architecture
 
+> **Issue 1: The Algorithm** | Parts 00, 01, 02, 03
+> This bundle covers the economic thesis, the calibration paradox, the RL formulation, and the reward scalarization problem.
+
 > [!NOTE]
 > **System Auditor's Log:** The "ToolOrchestra" system is effectively a specialized distributed system design. It separates the **control plane** (routing logic) from the **data plane** (task execution). This series reverse-engineers the paper to understand how this separation is trained, optimized, and deployed.
 
@@ -8,7 +11,7 @@ The fundamental economic premise of modern AI is arbitrage. If a difficult task 
 
 That is the engineering definition of "Orchestration." It is not about "agents" or "reasoning" in the anthropomorphic sense. It is about training a localized policy to optimize a global cost-reward function across a heterogeneous network of compute providers.
 
-This series dissects **ToolOrchestra**, a system that demonstrates this principle. Unlike monolithic approaches that try to bake every capability into a single checkpoint, ToolOrchestra uses an 8-billion parameter "Router" to dispatch tasks to specialized "Workers"—including code interpreters, search engines, and massive generic models like GPT-4.
+This series dissects **ToolOrchestra**, a system that demonstrates this principle. Unlike monolithic approaches that try to bake every capability into a single checkpoint, ToolOrchestra uses an 8-billion parameter "Router" to dispatch tasks to specialized "Workers", including code interpreters, search engines, and massive generic models like GPT-4.
 
 ## The Architectural Thesis
 
@@ -53,7 +56,7 @@ The system must optimize for three conflicting variables: Accuracy, Latency, and
 Where do you get the training data? You cannot scrape "reasoning traces" from the web because they don't exist. We scrutinize the **ToolScale** pipeline, a synthetic data factory that generates verifiable state-transitions to bootstrap the learner.
 
 **4. The Production Reality**
-Finally, we audit the deployment. Routing logic that works in a controlled benchmark often fails under the distributional shift of production. We analyze the **generalization mechanics**—how the model handles tool descriptions it has never seen before—and the fragility of relying on prompt-based tool definitions.
+Finally, we audit the deployment. Routing logic that works in a controlled benchmark often fails under the distributional shift of production. We analyze the **generalization mechanics**, how the model handles tool descriptions it has never seen before, and the fragility of relying on prompt-based tool definitions.
 
 ## The Road Ahead
 
