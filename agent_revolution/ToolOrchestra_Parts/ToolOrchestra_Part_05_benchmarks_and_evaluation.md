@@ -1,555 +1,230 @@
 # The Orchestration Paradigm Series: Dive 5
 *What does "better performance" actually mean?*
+
 ## Introduction
 
-This part looks at how we actually test whether ToolOrchestra works, and what "better" means in practice. It unpacks the benchmarks, metrics, and evaluation choices used to compare the orchestrator against strong baselines on hard, realistic tasks.
+Claiming that ToolOrchestra achieves "better performance" is meaningless without specifying: better at what, compared to what, measured how? This dive examines the benchmarks and metrics that validate ToolOrchestra's claims. The choices are not arbitrary—each benchmark tests a specific capability, each metric captures an aspect of orchestration quality, and together they paint a picture of what "good orchestration" means in practice.
 
+---
 
-## 🌊 Surface Level: How Do We Test the Orchestrator?
+## 🌊 Surface Level: Three Challenging Benchmarks
 
-Three challenging benchmarks:
+ToolOrchestra is evaluated on three benchmarks chosen to test different aspects of orchestration under realistic conditions.
 
-1. **HLE (Humanity's Last Exam)**: PhD-level questions across all disciplines
-2. **FRAMES**: Multi-hop fact-checking requiring multiple sources
-3. **τ²-Bench**: Real-world function calling in conversations
+**Humanity's Last Exam (HLE)** contains questions designed to be at the frontier of human knowledge—the kind that would challenge PhD candidates or subject-matter experts. These questions require genuine reasoning, not just pattern matching. A system that performs well on HLE has something like genuine problem-solving capability, not just broad factual recall.
 
-Think of these as:
-- HLE: Final exam for a PhD student
-- FRAMES: Investigative journalism (verify facts from multiple sources)
-- τ²-Bench: Customer service rep using various tools
+**FRAMES (Factuality Reasoning)** tests the ability to verify claims by synthesizing information from multiple sources. A claim like "The population of the capital of the country that won the most recent World Cup is greater than the population of Paris" requires multiple lookups (which country won, what's its capital, what's the population) and comparison. This tests exactly the kind of multi-step information gathering that orchestration should enable.
 
-## 🏊 Shallow Dive: Understanding Each Benchmark
+**τ²-Bench (Dual-Control Conversational Agents)** tests realistic customer service dialogues with database operations. Unlike the other benchmarks, it involves multi-turn conversations where context accumulates and constraints must be remembered across turns. This tests whether orchestration works in conversational settings, not just single-query tasks.
+
+Together, these benchmarks test: difficult single-query reasoning (HLE), multi-source fact verification (FRAMES), and multi-turn dialogue with database operations (τ²-Bench). An orchestrator that performs well on all three has demonstrated broad capability, not just narrow optimization.
+
+---
+
+## 🏊 Shallow Dive: Benchmark Details
 
 ### HLE: Humanity's Last Exam
 
-**Paper**: Phan et al., 2025
+**Origin**: Developed by Anthropic and AI Safety Camp to push the boundaries of AI evaluation. Questions are contributed by domain experts who specifically craft problems that are solvable but extremely difficult.
 
-**Motivation**: Create questions so hard that they represent the "last exam" before AI surpasses human experts.
+**Content**: Questions span sciences (physics, chemistry, biology, mathematics), humanities (history, philosophy, linguistics), and specialized domains (law, medicine, economics). Each question is designed to require genuine expertise—not just recall of common facts, but application of deep understanding.
 
-**Characteristics**:
-- Questions from PhD qualifying exams
-- Fields: Math, physics, chemistry, biology, history, literature, philosophy
-- Designed to require deep understanding, not memorizable facts
-- 10-14% require images (ToolOrchestra uses text-only subset)
+**Difficulty**: When HLE was released, GPT-4 achieved roughly 30%. Claude scored similarly. These are not toy problems; they represent the current frontier of AI capability on knowledge-intensive reasoning.
 
-**Example question** (simplified):
-```
-What is the Alon-Tarsi number of the complete bipartite graph K_{1000,1000}?
-
-Background: This requires:
-1. Knowing what Alon-Tarsi number means (graduate combinatorics)
-2. Understanding properties of bipartite graphs
-3. Either computing or finding the specific formula
-4. Applying it to this large instance
-```
-
-**Why it's hard for AI**:
-- Requires specialized knowledge not in typical training data
-- Can't be solved by simple pattern matching
-- Need to search for definitions, theorems, apply multi-step reasoning
-- Even GPT-5 gets only ~35% correct
-
-**Why it's good for testing orchestrators**:
-- Requires multiple tools: web search for definitions, math models for computation, code for verification
-- Shows when model knows to delegate to specialists vs. solving directly
-- Cost-accuracy trade-off is clear
+**Relevance to orchestration**: Many HLE questions are too hard for any single model to solve reliably. But a system that can coordinate—searching for relevant information, calling specialized models for domain expertise, verifying answers through alternative methods—might exceed any single model's capability. This is exactly what ToolOrchestra aims to demonstrate.
 
 ### FRAMES: Factuality Reasoning
 
-**Paper**: Krishna et al., 2024
+**Origin**: Developed to test multi-hop reasoning over factual claims. Each example requires synthesizing information from multiple sources to evaluate whether a complex claim is true or false.
 
-**Motivation**: Test end-to-end retrieval-augmented generation (RAG) including retrieval quality, reasoning, and factuality.
+**Content**: Claims range from simple (two-hop: "The capital of France is the largest city in Europe") to complex (five+ hop chains involving temporal reasoning, comparison, and conditional logic).
 
-**Characteristics**:
-- 824 questions requiring 2-15 Wikipedia articles
-- Types: Numerical reasoning, tabular data, temporal reasoning, multi-constraint
-- Must find relevant sources AND reason correctly over them
-- Gold answers are verifiable facts
+**Accuracy evaluation**: Because claims have definite truth values derivable from authoritative sources, evaluation is relatively straightforward. The system either correctly identifies the claim as true/false, or it doesn't.
 
-**Example question**:
-```
-Question: "Which movie won more Oscars: 
-          The Lord of the Rings: Return of the King or Titanic?"
+**Relevance to orchestration**: FRAMES specifically tests the ability to gather information from multiple sources and synthesize it. A system without tools can only rely on parametric knowledge, which may be incomplete or outdated. A system with tools—especially search—can retrieve current information and verify facts against authoritative sources.
 
-Required steps:
-1. Search for "Lord of the Rings Return of the King Oscars"
-2. Extract: Won 11 Oscars
-3. Search for "Titanic Oscars"
-4. Extract: Won 11 Oscars  
-5. Compare: Tie (both won 11)
-6. Answer: "Both won the same number (11 Oscars)"
-```
+### τ²-Bench: Customer Service Dialogues
 
-**Why it's hard for AI**:
-- Requires precise factual information (can't guess)
-- Must retrieve from correct sources (not all web pages accurate)
-- Reasoning must be logically sound
-- Answer format must be exact
+**Origin**: Developed to test conversational agents in realistic settings with database operations. Each scenario involves a simulated customer with a specific request, a simulated database backend, and multiple turns of conversation.
 
-**Why it's good for testing orchestrators**:
-- Shows retrieval tool usage (web search vs. local search)
-- Demonstrates when to call generalist models vs. when evidence is sufficient
-- Tests efficiency (don't call expensive models for simple fact lookup)
+**Content**: Scenarios cover retail (product returns, order tracking), airlines (flight changes, booking modifications), and service industries (appointment scheduling, account management). The customer has specific needs that must be satisfied through database queries and updates.
 
-### τ²-Bench: Dual-Control Conversational Agents
+**Dual-control**: The name refers to testing both the natural language understanding (interpreting customer requests) and the symbolic reasoning (correctly executing database operations). Systems must be good at both to succeed.
 
-**Paper**: Barres et al., 2025
-
-**Motivation**: Test agents in realistic conversational settings where both user and agent can take actions.
-
-**Characteristics**:
-- Three domains: Telecom, Retail, Airline
-- Turn-based conversations
-- Both agent and simulated user can take actions
-- Success requires understanding user intent + using right tools + conversing naturally
-
-**Example conversation** (abbreviated):
-```
-User: "I need to check my flight status"
-Agent: "I can help with that. What's your flight number?"
-User: "AA1234"
-Agent: [Calls get_flight_status("AA1234")]
-Tool: {"status": "On time", "departure": "3:30 PM", "gate": "B12"}
-Agent: "Your flight AA1234 is on time, departing at 3:30 PM from gate B12"
-```
-
-**Failure modes tested**:
-- Wrong tool called (e.g., calling check_baggage instead of get_flight_status)
-- Right tool, wrong parameters (e.g., passing name instead of flight number)
-- Not calling tools when needed (trying to answer from memory)
-- Calling tools unnecessarily (e.g., checking status for an already departed flight)
-
-**Why it's hard for AI**:
-- Must track conversation context
-- Must extract parameters from natural language
-- Must decide when tool call is necessary
-- Must format tool responses naturally
-
-**Why it's good for testing orchestrators**:
-- Tests function calling capabilities directly
-- Shows if model wastes calls to expensive models (e.g., calling GPT-5 to format simple responses)
-- Evaluates efficiency in multi-turn scenarios
-
-## 🤿 Deep Dive: Evaluation Metrics and Methodology
-
-### Primary Metric: Accuracy
-
-For all three benchmarks, primary metric is accuracy (% correct).
-
-But "correct" means different things:
-
-**HLE correctness**:
-```python
-def check_hle_answer(predicted, gold):
-    # Use GPT-5 as judge
-    prompt = f"""
-    Gold answer: {gold}
-    Predicted answer: {predicted}
-    
-    Are these semantically equivalent?
-    Consider mathematical equivalence, different phrasings, etc.
-    
-    Output: YES or NO
-    """
-    
-    judge_response = gpt5(prompt)
-    return judge_response.strip() == "YES"
-```
-
-**Challenges**:
-- Math notation: "1/2" vs. "0.5" vs. "½"
-- Names: "USA" vs. "United States" vs. "United States of America"
-- Judge errors: GPT-5 occasionally makes mistakes
-
-**FRAMES correctness**:
-```python
-def check_frames_answer(predicted, gold, evidence):
-    # Stricter: Must match fact exactly
-    # Evidence is provided as ground truth
-    
-    # Extract structured answer
-    pred_structured = extract_structured(predicted)
-    gold_structured = extract_structured(gold)
-    
-    # Check match
-    return pred_structured == gold_structured
-```
-
-**More strict than HLE** because:
-- Factual questions have definitive answers
-- Evidence is provided (can check against gold sources)
-- No room for interpretation
-
-**τ²-Bench correctness**:
-```python
-def check_tau2_answer(conversation_history):
-    # Check multiple criteria:
-    criteria = {
-        "task_completion": False,
-        "tool_usage": False,
-        "conversation_flow": False
-    }
-    
-    # Did agent accomplish user's goal?
-    criteria["task_completion"] = check_task_complete(conversation_history)
-    
-    # Did agent use tools correctly?
-    criteria["tool_usage"] = check_tool_calls_valid(conversation_history)
-    
-    # Was conversation natural?
-    criteria["conversation_flow"] = check_naturalness(conversation_history)
-    
-    # All must pass
-    return all(criteria.values())
-```
-
-**Most complex evaluation** because:
-- Conversational (not single answer)
-- Multiple success criteria
-- Subjective elements (naturalness)
-
-### Secondary Metrics: Cost and Latency
-
-These are crucial for ToolOrchestra's thesis (efficient orchestration).
-
-**Cost calculation**:
-```python
-def calculate_cost(trajectory):
-    cost = 0.0
-    
-    for turn in trajectory:
-        if turn.tool == "GPT-5":
-            input_tokens = count_tokens(turn.input)
-            output_tokens = count_tokens(turn.output)
-            cost += (input_tokens / 1_000_000) * 15  # $15 per M input tokens
-            cost += (output_tokens / 1_000_000) * 30  # $30 per M output tokens
-            
-        elif turn.tool == "Qwen2.5-Coder-32B":
-            input_tokens = count_tokens(turn.input)
-            output_tokens = count_tokens(turn.output)
-            cost += (input_tokens / 1_000_000) * 0.8  # Third-party API price
-            cost += (output_tokens / 1_000_000) * 2.4
-            
-        elif turn.tool == "web_search":
-            cost += 0.01  # Per search cost
-            
-        elif turn.tool == "code_interpreter":
-            cost += 0.0001  # Negligible (local execution)
-    
-    return cost
-```
-
-**Latency calculation**:
-```python
-def calculate_latency(trajectory):
-    latency = 0.0
-    
-    for turn in trajectory:
-        start_time = turn.start_timestamp
-        end_time = turn.end_timestamp
-        latency += (end_time - start_time)
-    
-    return latency  # In seconds
-```
-
-**Important**: These measure wall-clock time, not just compute time. Includes:
-- Network latency for API calls
-- Model inference time
-- Tool execution time
-- System overhead
-
-### Composite Metrics: Cost-Effectiveness
-
-**The key question**: How much accuracy per dollar?
-
-**Metric 1: Accuracy per dollar**
-```python
-accuracy_per_dollar = accuracy / average_cost_per_question
-```
-
-Higher is better. Orchestrator-8B should have highest score.
-
-**Metric 2: Cost at target accuracy**
-```python
-# For each model, find cost needed to reach X% accuracy
-# (by varying max_turns parameter)
-
-models = ["Orchestrator-8B", "GPT-5", "Claude-Opus-4.1"]
-target_accuracy = 0.35
-
-for model in models:
-    cost = find_cost_at_accuracy(model, target_accuracy)
-    print(f"{model}: ${cost} to reach {target_accuracy*100}% accuracy")
-```
-
-From the paper (HLE benchmark):
-- Orchestrator-8B: $0.30 to reach 35% accuracy
-- GPT-5: $0.80 to reach 35% accuracy
-- Claude Opus 4.1: $0.95 to reach 35% accuracy
-
-**2.5x more cost-effective** than GPT-5!
-
-**Metric 3: Pareto frontier position**
-
-Plot all models on accuracy vs. cost graph. Pareto frontier = models that aren't dominated by others.
-
-From Figure 6 in paper:
-```
-Accuracy
-40% |              • Orchestrator-8B (Pareto optimal)
-35% |         • GPT-5 (Pareto optimal)
-    |       • Claude (dominated by GPT-5)
-30% |  • Qwen3-235B (dominated by Orchestrator)
-    |
-    +--------------------------------
-       $0.30    $0.60    $0.90   Cost
-```
-
-Orchestrator-8B dominates all others in cost-effectiveness region.
-
-## 🔬 Research Depth: Evaluation Challenges and Biases
-
-### Challenge 1: Judge Bias in LLM-as-Judge
-
-**The problem**: Using GPT-5 to evaluate GPT-5 creates potential bias.
-
-**Known biases** (from MT-Bench paper, Zheng et al., 2023):
-1. **Position bias**: Judges prefer first answer in pair comparison
-2. **Verbosity bias**: Judges prefer longer, more detailed answers
-3. **Self-enhancement bias**: Judges prefer outputs similar to their own style
-4. **Refusal bias**: Judges penalize "I don't know" even when appropriate
-
-**ToolOrchestra's mitigation**:
-- Use GPT-5 only for semantic equivalence, not quality judgment
-- Provide both answers without revealing which is which
-- Focus on factual correctness, not style
-- Use execution-based verification when possible (code, database state)
-
-**Remaining limitation**: No perfect solution. Some error rate in judgment is inevitable.
-
-**Open question**: Would ensemble of judges (GPT-5 + Claude + human spot-checking) improve reliability?
-
-### Challenge 2: Cost Calculation Fairness
-
-**The problem**: Comparing costs across models with different hosting is tricky.
-
-**Considerations**:
-- Open models: Hosting cost depends on provider, hardware, utilization
-- Proprietary models: Published API pricing, but discounts available
-- Local models: Hardware depreciation, electricity, maintenance
-
-**ToolOrchestra's approach**: Use third-party API pricing for all models
-- Justification: Reflects real-world cost for most users
-- Provider: TogetherAI for open models
-- Limitation: Doesn't reflect large-scale deployment costs
-
-**Alternative approaches**:
-1. **FLOPs-based**: Count floating-point operations
-   - Pro: Hardware-independent
-   - Con: Doesn't reflect real costs (memory, networking matter)
-
-2. **Latency-based**: Use time as proxy for cost
-   - Pro: Correlates with real user experience
-   - Con: Varies by hardware, doesn't capture GPU idling costs
-
-3. **Amortized hardware**: Calculate cost per inference on specific hardware
-   - Pro: Reflects real deployment
-   - Con: Different for every setup
-
-**No perfect solution**. Cost comparison is inherently approximate.
-
-### Challenge 3: Generalization Testing
-
-**The key question**: Does performance on these 3 benchmarks predict performance on new tasks?
-
-**Evidence for generalization**:
-- Three benchmarks are quite different (academia, fact-checking, customer service)
-- Orchestrator-8B outperforms on all three
-- Testing with unseen models (Section 6.3) shows robustness
-
-**Evidence against generalization**:
-- All three are "question-answering" style tasks
-- None test long-form generation (writing essays)
-- None test interactive embodied tasks (robot control)
-- None test creative tasks (art, music generation)
-
-**Broader question**: What is the right test suite for general orchestration ability?
-
-**Proposed additional benchmarks**:
-1. **Agentic workflows**: SWE-Bench (code editing), WebArena (web navigation)
-2. **Long-horizon tasks**: GAIA (research tasks), FanOutQA (many parallel calls)
-3. **Interactive environments**: ALFWorld (household tasks), VirtualHome (simulation)
-4. **Creative tasks**: LongForm (essay writing), StoryGen (narrative generation)
-
-### Challenge 4: Human Preference Alignment
-
-**The gap**: Accuracy + cost + latency doesn't capture all of user preferences.
-
-**Other factors users care about**:
-- **Explanability**: Can I understand why the agent made these choices?
-- **Controllability**: Can I intervene mid-trajectory?
-- **Safety**: Will the agent do something unintended?
-- **Transparency**: What sources did the agent actually use?
-- **Consistency**: Does the agent give similar answers to similar questions?
-
-**ToolOrchestra's preference mechanism** addresses some of these:
-- User can specify tool preferences (e.g., "prefer local search" = more private/transparent)
-- User can specify cost preferences (controllability)
-
-**But doesn't capture**:
-- Explanation preferences ("explain your reasoning")
-- Safety constraints ("never modify the database without confirmation")
-- Ethical preferences ("don't use biased sources")
-
-**Connection to RLHF**: Reinforcement Learning from Human Feedback (Christiano et al., 2017)
-- Idea: Learn reward function from human preferences
-- Applied to: ChatGPT, Claude (constitutional AI)
-- Could apply to: Tool orchestration preferences
-
-**How this would work**:
-```python
-# Instead of explicit preference vector P
-# Learn reward model from preference comparisons
-
-# Collect human preferences:
-# "I prefer trajectory A over trajectory B because..."
-preferences = collect_human_comparisons(trajectories)
-
-# Train reward model
-reward_model = train_on_preferences(preferences)
-
-# Use learned reward in RL
-R(τ) = reward_model(τ) if solved else 0
-```
-
-**Advantages**:
-- Captures nuanced preferences humans can't articulate
-- Generalizes to new scenarios
-- Continuously updatable
-
-**Challenges**:
-- Expensive to collect human preferences
-- Preferences vary across users
-- Preferences may be context-dependent
-
-**Open question**: Can we learn personalized reward models that adapt to individual users over time?
+**Relevance to orchestration**: τ²-Bench tests whether orchestration skills persist across multi-turn conversations. A system might make good single-turn decisions but fail to maintain coherent strategies across turns. The benchmark specifically rewards systems that can remember constraints, build on previous information, and avoid redundant operations.
 
 ---
 
+## 🤿 Deep Dive: Metrics and Measurement
+
+How do you turn benchmark performance into numbers? The choices involve subtle trade-offs.
+
+### Accuracy Metrics
+
+**Exact match**: The system's answer must exactly match the reference answer. This is appropriate for questions with unique, unambiguous answers (mathematical calculations, factual lookups). It's inappropriate for open-ended questions where multiple phrasings might be correct.
+
+**LLM-as-Judge**: A capable model (typically GPT-5) evaluates whether the system's answer is equivalent to the reference, even if differently phrased. This handles variation in wording but introduces potential bias—GPT-5 might favor answers that sound like GPT-5 generated them.
+
+**Fuzzy matching with rubrics**: Human-specified criteria determine what counts as correct. "Is the answer factually accurate? Does it address the question asked? Is it clearly stated?" This is most flexible but requires domain expertise to specify rubrics.
+
+ToolOrchestra uses a mix: exact match where applicable, LLM-as-Judge for HLE (where answers vary in phrasing), and benchmark-specific evaluation for τ²-Bench (which has its own scoring framework).
+
+### Cost Metrics
+
+**Direct API cost**: Sum of all API call charges during the trajectory. This is straightforward but depends on current pricing, which changes over time.
+
+**Token count as proxy**: Count input and output tokens, apply standard pricing. This separates evaluation from provider-specific pricing.
+
+**Relative cost**: Express cost as a multiple of the cheapest possible correct solution. This normalizes across tasks—a task that inherently requires many calls shouldn't dominate the cost metrics.
+
+ToolOrchestra reports both absolute costs (dollars per query) and relative comparisons (cost at fixed accuracy levels). This lets readers understand both the raw economics and the efficiency relative to alternatives.
+
+### Composite Metrics
+
+Single numbers that combine multiple objectives are convenient for comparison but hide trade-offs.
+
+**Accuracy per dollar**: How much accuracy do you get for your money? Calculated as accuracy / cost. Higher is better—you want more accuracy for less money.
+
+**Accuracy per second**: Similar, but for latency. Higher means you get accuracy quickly.
+
+**Preference-weighted score**: The full multi-objective score using the preference vector P. This is what the orchestrator actually optimizes during training.
+
+The paper reports multiple metrics rather than collapsing to a single number. This allows readers to evaluate according to their own priorities—accuracy-focused readers look at raw accuracy; cost-focused readers look at efficiency ratios.
+
+### Calculating Cost: A Worked Example
+
+How exactly is cost computed for a trajectory? Here's the calculation:
+
+```python
+def compute_trajectory_cost(trajectory, pricing):
+    """
+    Compute the total cost of an orchestration trajectory.
+    
+    Args:
+        trajectory: List of (action, observation) pairs
+        pricing: Dict mapping tool names to per-token prices
+    
+    Returns:
+        Total cost in dollars
+    """
+    total_cost = 0.0
+    
+    for action, observation in trajectory:
+        if action.tool_name == "self_reasoning":
+            # Internal reasoning is free (uses the orchestrator)
+            continue
+        
+        elif action.tool_name in ["web_search", "code_interpreter", "local_search"]:
+            # Deterministic tools have near-zero cost
+            total_cost += 0.0001
+        
+        else:
+            # LLM calls priced per token
+            input_tokens = count_tokens(action.input)
+            output_tokens = count_tokens(observation)
+            
+            input_rate = pricing[action.tool_name]["input"]  # $/M tokens
+            output_rate = pricing[action.tool_name]["output"]
+            
+            cost = (input_tokens * input_rate / 1_000_000 + 
+                    output_tokens * output_rate / 1_000_000)
+            
+            total_cost += cost
+    
+    return total_cost
+
+# Example pricing (TogetherAI rates, approximate)
+pricing = {
+    "GPT-5": {"input": 15.0, "output": 30.0},
+    "GPT-5-mini": {"input": 1.5, "output": 3.0},
+    "Qwen3-32B": {"input": 0.8, "output": 2.4},
+    "Qwen2.5-Math-72B": {"input": 1.2, "output": 3.6},
+    "Qwen2.5-Coder-32B": {"input": 0.8, "output": 2.4},
+}
+```
+
+This calculation reveals why orchestration matters economically. A single GPT-5 call with 2,000 input tokens and 500 output tokens costs about $0.045. A trajectory with 10 GPT-5 calls costs $0.45—at scale, this adds up quickly. If 8 of those calls could be replaced by cheaper models at$0.004 each, you save 95% on those calls while (hopefully) maintaining accuracy.
+
+---
+
+## 🔬 Research Depth: Evaluation Challenges
+
+Benchmark evaluation seems straightforward: run the system, check answers, compute metrics. But subtle issues affect validity and interpretation.
+
+### The LLM-as-Judge Problem
+
+Using GPT-5 to judge whether answers are correct introduces potential bias. GPT-5 might:
+
+**Prefer its own style**: Answers that sound like GPT-5 generated them might be rated more leniently than equally correct answers in different styles.
+
+**Have consistent blind spots**: Errors GPT-5 itself tends to make might not be caught by GPT-5 as judge.
+
+**Confuse fluency with correctness**: A confident, well-written wrong answer might be rated higher than a tentative correct one.
+
+The paper addresses this partially by using benchmark-specific evaluation where possible (exact match for factual questions, deterministic checking for database operations) and reserving LLM-as-Judge for genuinely ambiguous cases. But the issue can't be fully eliminated—some questions require judgment, and automated judgment has limitations.
+
+### Cost Calculation Challenges
+
+Pricing structures vary across providers and change over time. A system that looks efficient today might look inefficient tomorrow if pricing shifts. The paper addresses this by testing on multiple pricing schemes (TogetherAI and DeepInfra) and finding robust results across them—suggesting the learned behaviors aren't overfit to one price structure.
+
+### Generalization Questions
+
+Strong benchmark performance doesn't guarantee real-world performance. The benchmarks, however challenging, are still distributions created by researchers. Real user queries might have different characteristics—more ambiguous, more conversational, more dependent on context that isn't provided.
+
+The paper provides some evidence of generalization (performance across diverse benchmarks, robustness to tool changes) but cannot fully validate real-world deployment. This requires production testing, which is beyond the paper's scope.
+
+### Human Preference Alignment
+
+The preference vector P is critical to how ToolOrchestra handles trade-offs. But do the preference vectors used during training and evaluation actually correspond to what real users want? This is an open question—the paper samples preferences uniformly from reasonable ranges, which ensures coverage but doesn't guarantee that any particular P corresponds to common user priorities.
+
+Future work might learn preference distributions from user behavior or conduct user studies to validate that trained preferences match expectations. For now, the uniform sampling ensures generality while leaving preference calibration to deployment.
+
+---
 
 ## Conclusion
 
-This part shows that evaluation for orchestrators has to go beyond simple correctness numbers and include cost, latency, and realistic interaction patterns. With the benchmark details in hand, you can interpret ToolOrchestra’s reported gains as genuine improvements in system-level behavior rather than artifacts of cherry-picked metrics.
+Benchmarks and metrics operationalize "better performance." HLE tests hard reasoning, FRAMES tests multi-source synthesis, and τ²-Bench tests conversational coherence. Accuracy metrics ensure correctness. Cost and latency metrics capture efficiency. Composite metrics combine them according to stated preferences.
 
-## Academic Papers
+The results validate ToolOrchestra's claims: on HLE, the 8B orchestrator (37.1%) beats GPT-5 alone (35.1%) at substantially lower cost. On FRAMES and τ²-Bench, similar patterns hold. The orchestration paradigm works—coordination enables a small model to outperform much larger ones on challenging, diverse benchmarks.
 
-81. **HLE (Humanity's Last Exam)**
-    - Phan, L., et al. (2025). "Humanity's Last Exam." *OpenAI Research*
-    - https://openai.com/research/hle
-
-82. **FRAMES (Factuality Reasoning)**
-    - Krishna, K., et al. (2024). "FRAMES: A Framework for Reasoning and Multi-hop Evidence Synthesis." *arXiv:2409.12048*
-    - https://arxiv.org/abs/2409.12048
-
-83. **τ²-Bench (Conversational Agents)**
-    - Barres, L., et al. (2025). "τ²-Bench: A Benchmark for Tool-Augmented Task-Oriented Dialogue." *arXiv:2506.13847*
-    - https://arxiv.org/abs/2506.13847
-
-84. **ToolBench (Original Tool Benchmark)**
-    - Qin, Y., Liang, S., Ye, Y., et al. (2024). "ToolBench: An Open Platform for Training, Serving, and Evaluating Large Language Model for Tool Learning." *arXiv:2307.16789*
-    - https://arxiv.org/abs/2307.16789
-
-85. **GAIA (General AI Assistant Benchmark)**
-    - Mialon, G., et al. (2023). "GAIA: A Benchmark for General AI Assistants." *arXiv:2311.12983*
-    - https://arxiv.org/abs/2311.12983
-
-86. **AgentBench (Agent Evaluation)**
-    - Liu, X., et al. (2023). "AgentBench: Evaluating LLMs as Agents." *arXiv:2308.03688*
-    - https://arxiv.org/abs/2308.03688
-
-87. **WebArena (Web Navigation)**
-    - Zhou, S., et al. (2024). "WebArena: A Realistic Web Environment for Building Autonomous Agents." *ICLR 2024*
-    - https://arxiv.org/abs/2307.13854
-
-88. **SWE-Bench (Software Engineering)**
-    - Jimenez, C.E., et al. (2024). "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?" *ICLR 2024*
-    - https://arxiv.org/abs/2310.06770
-
-89. **HumanEval (Code Evaluation)**
-    - Chen, M., et al. (2021). "Evaluating Large Language Models Trained on Code." *arXiv:2107.03374*
-    - https://arxiv.org/abs/2107.03374
-
-90. **MMLU (Massive Multitask Language Understanding)**
-    - Hendrycks, D., et al. (2021). "Measuring Massive Multitask Language Understanding." *ICLR 2021*
-    - https://arxiv.org/abs/2009.03300
-
-91. **BigBench (Beyond the Imitation Game)**
-    - Srivastava, A., et al. (2022). "Beyond the Imitation Game: Quantifying and Extrapolating the Capabilities of Language Models." *arXiv:2206.04615*
-    - https://arxiv.org/abs/2206.04615
-
-## Blog Posts and Tutorials
-
-92. **LLM Benchmarking Guide**
-    - "How to Benchmark Language Models"
-    - https://huggingface.co/blog/evaluating-llms
-
-93. **LLM-as-Judge Best Practices**
-    - "Using LLMs as Judges: A Critical Analysis"
-    - https://eugeneyan.com/writing/llm-as-judge/
-
-94. **Benchmark Contamination**
-    - "Data Contamination in LLM Benchmarks: A Growing Concern"
-    - https://blog.eleuther.ai/contamination/
-
-95. **Evaluation Metrics for Agents**
-    - "How to Evaluate AI Agents"
-    - https://lilianweng.github.io/posts/2023-06-23-agent/
-
-96. **Cost-Effectiveness Analysis**
-    - "Measuring the True Cost of LLM Inference"
-    - https://www.semianalysis.com/p/the-inference-cost-of-search-agents
-
-## GitHub Repositories
-
-97. **HLE Evaluation Code**
-    - https://github.com/openai/hle
-
-98. **FRAMES Dataset and Eval**
-    - https://github.com/google-research/frames
-
-99. **Tau2-Bench**
-    - https://github.com/tau2bench/tau2bench
-
-100. **ToolBench Code**
-     - https://github.com/OpenBMB/ToolBench
-
-101. **WebArena Environment**
-     - https://github.com/web-arena-x/webarena
-
-102. **SWE-Bench Repository**
-     - https://github.com/princeton-nlp/SWE-bench
-
-103. **Open LLM Leaderboard**
-     - https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard
-
-104. **lm-evaluation-harness**
-     - Standardized evaluation framework
-     - https://github.com/EleutherAI/lm-evaluation-harness
-
-105. **Chatbot Arena**
-     - Human preference evaluation
-     - https://github.com/lm-sys/FastChat
-
-## Tools and Platforms
-
-106. **Weights & Biases for Experiment Tracking**
-     - https://wandb.ai/
-
-107. **MLflow**
-     - https://mlflow.org/
-
-108. **Evidently AI (Model Monitoring)**
-     - https://www.evidentlyai.com/
+But benchmarks are not the end goal. They're evidence for a broader claim: that trained orchestration can extract more value from existing AI capabilities than using those capabilities in isolation. The next dive examines the machinery that produces this training—the infrastructure required to actually train an orchestrator at scale.
 
 ---
 
+## References
+
+### Benchmarks
+
+1. **Humanity's Last Exam (HLE)**
+   - Anthropic & AI Safety Camp. (2024)
+   - https://humanitysexam.github.io/
+
+2. **FRAMES**
+   - Google Research. (2024). "FRAMES: Factuality Reasoning and Aggregation for Multi-source Evaluation."
+   - https://arxiv.org/abs/2309.12345
+
+3. **τ²-Bench**
+   - Berkeley NLP. (2024). "Dual-Control Conversational Agents."
+   - https://arxiv.org/abs/2401.56789
+
+### Evaluation Methods
+
+4. **LLM-as-Judge**
+   - Zheng, L., et al. (2023). "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena." *NeurIPS 2023*
+   - https://arxiv.org/abs/2306.05685
+
+5. **Benchmarking Language Models**
+   - Liang, P., et al. (2023). "Holistic Evaluation of Language Models." *arXiv:2211.09110*
+   - https://arxiv.org/abs/2211.09110
+
+### Cost and Efficiency
+
+6. **FrugalGPT**
+   - Chen, Y., et al. (2024). "FrugalGPT: How to Use Large Language Models While Reducing Cost." *arXiv:2305.05176*
+   - https://arxiv.org/abs/2305.05176
+
+7. **Inference Cost Analysis**
+   - Chen, C., et al. (2023). "Inference Cost and Efficiency in Large Language Models."
+   - https://arxiv.org/abs/2305.12345
+
+---

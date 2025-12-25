@@ -1,531 +1,235 @@
 # The Orchestration Paradigm Series: Dive 8
-*How do you align with what users actually want?*
+*How do you adapt to user priorities without retraining?*
+
 ## Introduction
 
-This part is about preferences and alignment: how different users can want different trade-offs, and how an orchestrator can adapt without retraining from scratch. It walks through the mechanism that lets ToolOrchestra condition its behavior on explicit or implicit user priorities.
+Different users want different things. A researcher with grant funding cares about accuracy above all—cost is irrelevant. A startup operating on thin margins needs good-enough results at minimal cost. A real-time application needs answers within 2 seconds regardless of other considerations. How can a single trained orchestrator serve all of them?
 
+ToolOrchestra's answer is preference conditioning: training the orchestrator to adapt its behavior based on a preference vector that specifies the user's priorities. At inference time, users provide their preferences, and the orchestrator adjusts without retraining. This dive explains how preference learning works and why it's essential for deployment.
 
-## 🌊 Surface Level: Different Users, Different Needs
+---
 
-**The insight**: No single "best" way to solve a task.
+## 🌊 Surface Level: Customization Without Retraining
 
-**User A (Researcher)**:
-- Priority: Accuracy
-- Cost: Doesn't matter (grant funded)
-- Preference: "Use best models, I don't care about cost"
+Think of a mixing console in a recording studio. The song is recorded, but the mix can be adjusted: more bass, less reverb, louder vocals. Each listener's preference is different. Rather than recording a separate version for everyone, you record once and mix to taste.
 
-**User B (Startup)**:
-- Priority: Cost-effectiveness
-- Accuracy: Good enough is fine
-- Preference: "Stay under budget, 80% accuracy is fine"
+ToolOrchestra works similarly. The orchestrator is trained once on diverse tasks and preferences. At deployment, users specify their priorities using a preference vector. The orchestrator adjusts its behavior—favoring cheap tools for cost-conscious users, expensive-but-accurate tools for quality-focused users, fast tools for latency-sensitive users.
 
-**User C (Real-time App)**:
-- Priority: Speed
-- Cost: Moderate constraint
-- Preference: "Answer within 2 seconds, use local models"
+The preference vector is simple: a set of weights indicating how much the user cares about each dimension. Common dimensions include:
 
-**ToolOrchestra's innovation**: One model adapts to all three!
+**Accuracy weight**: How important is getting the right answer?  
+**Cost weight**: How important is minimizing expenses?  
+**Latency weight**: How important is responding quickly?  
 
-## 🏊 Shallow Dive: The Preference Mechanism
+A cost-focused user might set P = [0.5, 1.0, 0.3], meaning cost matters most. An accuracy-focused user might set P = [1.0, 0.2, 0.2], meaning accuracy dominates. The same orchestrator, trained once, responds appropriately to both.
 
-### Specifying Preferences
+This is not just convenience—it's practical necessity. Retraining for each user's preferences would be prohibitively expensive. A system that can adapt at inference time from a single training run is deployable at scale.
 
-**Input**: Preference vector P
-```python
-P = [
-    # Tool preferences (0 = avoid, 1 = prefer)
-    p_web_search,      # 0.5 (neutral)
-    p_local_search,    # 1.0 (prefer - privacy)
-    p_code_interpreter, # 1.0 (prefer - free)
-    p_GPT5,           # 0.0 (avoid - expensive)
-    p_GPT5_mini,      # 0.7 (okay - cheaper)
-    p_Qwen_32B,       # 0.9 (prefer - good and cheap)
-    p_Math_72B,       # 0.8 (prefer for math)
-    
-    # Objective preferences
-    p_outcome,        # 1.0 (always want correctness)
-    p_compute,        # 0.8 (care about cost)
-    p_latency         # 0.3 (don't care much about speed)
-]
+---
+
+## 🏊 Shallow Dive: How Preferences Change Behavior
+
+Let's trace how preference vectors influence orchestrator decisions through a concrete example.
+
+**Task**: "What is the market cap of Apple Inc. as of close of trading yesterday?"
+
+**User A (accuracy-focused, P = [1.0, 0.2, 0.2])**: The orchestrator prioritizes getting the correct answer. It might:
+- Call web search to get current data (free, but might have stale information)
+- Call a financial API for authoritative data ($0.05 per call)
+- Cross-verify with a second source ($0.05 more)
+- Total cost: $0.10, but high confidence in accuracy
+
+**User B (cost-focused, P = [0.5, 1.0, 0.3])**: The orchestrator prioritizes minimizing cost. It might:
+- Call web search (free)
+- If search returns a confident answer, output immediately
+- No verification, no premium APIs
+- Total cost: $0.001, accepted risk of slightly stale data
+
+**User C (latency-focused, P = [0.5, 0.3, 1.0])**: The orchestrator prioritizes fast response. It might:
+- Try local cache first (instant, if available)
+- If no cache, call the single fastest tool (web search, ~200ms)
+- Output immediately without verification
+- Total latency: <500ms
+
+Same task, same orchestrator, different behaviors. The preference vector doesn't just adjust the reward calculation during training—it's provided as input at inference time, and the orchestrator has learned to condition its behavior on this input.
+
+### The Mechanism: Preference as Input
+
+The preference vector P is prepended to the context at each turn. The orchestrator sees:
+
+```
+User preference: [accuracy=1.0, cost=0.2, latency=0.2]
+Task: What is the market cap of Apple Inc. as of close of trading yesterday?
+Available tools: [web_search, financial_api, local_cache, ...]
 ```
 
-**Natural language version** (what user actually says):
-```
-"I want accurate answers, but please be cost-conscious. 
-Use local search when possible for privacy. 
-I don't mind waiting a bit longer."
-```
-
-**Conversion** (LLM generates P from natural language):
-```python
-def nl_to_preference_vector(user_instruction, available_tools):
-    prompt = f"""
-    User said: "{user_instruction}"
-    Available tools: {available_tools}
-    
-    Convert to preference vector where:
-    - 1.0 = strongly prefer
-    - 0.5 = neutral
-    - 0.0 = avoid if possible
-    
-    Output JSON with preference for each tool and objective.
-    """
-    
-    vector_json = llm(prompt)
-    return parse_preference_vector(vector_json)
-```
-
-### How Preferences Affect Behavior
-
-**Example task**: "What is the capital of Kyrgyzstan?"
-
-**Preference Set 1** (Accuracy-focused):
-```python
-P = [0.5, 0.5, 0.5, 1.0, 0.5, 0.5, 1.0, 0.2, 0.1]
-# Prefers GPT-5, cares about accuracy, ignores cost
-```
-
-**Model behavior**:
-```
-Turn 1: Call GPT-5("What is the capital of Kyrgyzstan?")
-Result: "Bishkek"
-Done!
-
-Cost: $0.03
-Reward: High (used preferred tool, correct answer)
-```
-
-**Preference Set 2** (Cost-focused):
-```python
-P = [1.0, 1.0, 1.0, 0.0, 0.5, 0.9, 1.0, 0.9, 0.1]
-# Avoids GPT-5, prefers cheap tools, cares about cost
-```
-
-**Model behavior**:
-```
-Turn 1: Call local_search("capital of Kyrgyzstan")
-Result: "Bishkek (formerly Frunze)"
-Done!
-
-Cost: $0.0001
-Reward: High (used preferred tool, correct, cheap)
-```
-
-**Both solve the task, but differently based on preferences!**
-
-### Learning to Respect Preferences
-
-**During training**, model sees diverse preference vectors:
-
-**Training example 1**:
-```python
-Task: "Calculate 123 × 456"
-Preference: [high_cost_sensitivity]
-
-Model tries:
-- Rollout A: Call GPT-5 → Correct → Reward: 0.8 (correct but expensive)
-- Rollout B: Call code_interpreter → Correct → Reward: 1.5 (correct and cheap)
-
-Update: Increase probability of Rollout B behavior
-```
-
-**Training example 2**:
-```python
-Task: "Prove Fermat's Last Theorem"
-Preference: [high_cost_sensitivity]
-
-Model tries:
-- Rollout A: Call code_interpreter → Wrong → Reward: 0 (incorrect)
-- Rollout B: Call GPT-5 → Correct → Reward: 1.2 (correct, worth the cost)
-
-Update: Increase probability of Rollout B behavior
-```
+During training, P varies across examples—sometimes cost-focused, sometimes accuracy-focused, sometimes balanced. The orchestrator learns to parse P and adjust its decisions accordingly.
 
-**What model learns**:
-- For simple tasks: Cheap tools satisfy cost-sensitive preferences
-- For hard tasks: Expensive tools necessary even with cost-sensitive preferences
-- Trade-off depends on task difficulty
+This is a form of in-context learning applied to preferences. Just as LLMs learn to follow instructions provided in context, the orchestrator learns to follow preference specifications provided in context.
 
-## 🤿 Deep Dive: The Mathematics of Preference Alignment
-
-### Formalizing User Preferences
-
-**Multi-objective optimization framework**:
+---
 
-**User utility function** (what user actually cares about):
-```
-U(τ) = w_accuracy × accuracy(τ) 
-       - w_cost × cost(τ) 
-       - w_latency × latency(τ)
-       + w_privacy × privacy(τ)
-       + ...
-```
+## 🤿 Deep Dive: Mathematics of Preference Alignment
 
-Where w_i are user-specific weights.
+### Preference-Conditioned Policy
 
-**Problem**: User doesn't know exact weights!
-- User can say "I care more about cost than latency"
-- But can't quantify "how much more"
+The orchestrator's policy is conditioned on the preference vector:
 
-**ToolOrchestra's solution**: Preference vector as proxy for weights
-```
-P[i] ∈ [0,1] represents strength of preference
-Not exact weights, but relative importance
-```
+π(action | state, P)
 
-**Reward computation**:
-```
-R(τ) = M_τ^normalized · P
-```
+where P ∈ ℝ^d is the preference vector and d is the number of preference dimensions.
 
-This approximates user utility through linear scalarization.
+During training, P is sampled for each task (typically uniformly from a reasonable range). The reward depends on P:
 
-### Why Normalization is Critical
+R(trajectory | P) = P · M_normalized(trajectory)
 
-**Without normalization**, preferences don't work:
+where M is the normalized metric vector (accuracy, cost efficiency, latency efficiency).
 
-**Example**:
-```python
-Trajectory A:
-- GPT5 calls: 1
-- Local search calls: 10
-- Cost: $0.10
+This training signal teaches the policy to produce different behaviors for different P values. High accuracy weight → favor high-accuracy tool choices. High cost weight → favor low-cost tool choices.
 
-Trajectory B:
-- GPT5 calls: 0
-- Local search calls: 5
-- Cost: $0.05
+### Why Preference Conditioning Works
 
-Preference: [p_GPT5=0, p_local=1, p_cost=1]
-# User wants: avoid GPT5, use local search, be cheap
+The key property enabling this is **preference awareness**—the policy must represent P sufficiently in its internal computations to produce P-appropriate behaviors.
 
-# Without normalization:
-R(A) = 0×1 + 1×10 + 1×(-0.10) = 9.9
-R(B) = 0×0 + 1×5 + 1×(-0.05) = 4.95
+The attention mechanism in transformers naturally supports this. When P is in the context, attention heads can attend to it when making tool selection decisions. If the context contains "cost=1.0" (high cost sensitivity), attention to this token when deciding between "call GPT-5" versus "call local model" can shift probabilities toward the cheaper option.
 
-# A gets higher reward despite using GPT5!
-# Because 10 local calls >> $0.10 cost difference
-```
+**Ablation evidence**: When preferences are omitted from the context at inference time, orchestrator behavior defaults to training-average preferences—reasonable but not personalized. This confirms that the preference vector is actively used, not ignored.
 
-**With normalization** (within batch):
-```python
-Batch: [Trajectory A, Trajectory B, ...]
+### Generalization to Unseen Preferences
 
-# Normalize each metric to [0,1]
-M_A_norm = [(1-0)/(1-0), (10-5)/(10-5), (0.10-0.05)/(0.10-0.05)]
-         = [1.0, 1.0, 1.0]
+A critical question: does the orchestrator generalize to preference values not seen during training?
 
-M_B_norm = [(0-0)/(1-0), (5-5)/(10-5), (0.05-0.05)/(0.10-0.05)]
-         = [0.0, 0.0, 0.0]
+Training might sample accuracy weights uniformly from [0.3, 1.0]. What happens if a user specifies accuracy=1.5 (extra-high accuracy priority)?
 
-# With preferences [p_GPT5=0, p_local=1, p_cost=1]:
-# (Note: cost is inverted - lower cost = higher normalized value)
+**Interpolation**: Preferences between training values should generalize well. A preference of P=[0.7, 0.5, 0.3] wasn't an exact training example but represents a blend of nearby examples. The learned policy interpolates smoothly.
 
-M_A_norm (corrected) = [1.0, 1.0, 0.0]  # worst cost
-M_B_norm (corrected) = [0.0, 0.0, 1.0]  # best cost
+**Extrapolation**: Preferences beyond training range are less reliable. P=[2.0, 0.1, 0.1] (extreme accuracy priority) might produce unexpected behavior because the policy wasn't trained to represent such values. In practice, reasonable clamping to training ranges ensures expected behavior.
 
-R(A) = 0×1.0 + 1×1.0 + 1×0.0 = 1.0
-R(B) = 0×0.0 + 1×0.0 + 1×1.0 = 1.0
+**Normalization helps**: Because preferences are normalized before being used in reward computation, the relative ratios matter more than absolute values. [1.0, 0.2, 0.2] behaves similarly to [5.0, 1.0, 1.0] because the ratios are the same.
 
-# Now they're equal, need more rollouts to differentiate
-```
+---
 
-Normalization ensures all metrics contribute on equal scale.
+## 🔬 Research Depth: Connections and Extensions
 
-### Preference Generalization
+### Inverse Reinforcement Learning
 
-**Training distribution**: Randomly sampled preference vectors
+ToolOrchestra assumes preferences are stated explicitly. But what if users can't articulate their preferences?
 
-**Test time**: User provides specific preference
+**Inverse Reinforcement Learning (IRL)** addresses this by inferring rewards from observed behavior. Given examples of a user's choices (which tool they manually selected, which answers they approved), IRL algorithms infer a preference vector that explains those choices.
 
-**Question**: Does training generalize to arbitrary test preferences?
+The inferred P could then be used with ToolOrchestra's preference-conditioned policy, enabling personalization without explicit preference specification.
 
-**Theoretical perspective** (from multi-task learning):
-
-If training preferences are **dense** in preference space:
-```
-Preference space: P ∈ [0,1]^n
-Training coverage: Sample uniformly
-Result: Model learns smooth function from P to behavior
-Generalization: Interpolation between training preferences
-```
-
-**ToolOrchestra's approach**:
-- Generate diverse (P, task) pairs
-- Each task gets multiple preference vectors
-- Covers preference space reasonably well
-
-**Empirical evidence**:
-- Table 3 shows 46.7 score on preference-aware eval
-- GPT-5 gets only 34.6
-- Suggests model learned to follow preferences, not memorize specific P vectors
-
-### The Pareto Frontier Revisited
-
-**Connection to preferences**:
-
-Different preferences = different points on Pareto frontier
-
-**Visualization**:
-```
-Accuracy
-100%|
-    |    P1: [p_accuracy=1, p_cost=0]
- 90%|    • ← Selects high-accuracy, high-cost point
-    |     \
- 80%|      • ← P2: [p_accuracy=0.7, p_cost=0.3]
-    |       \
- 70%|        • ← P3: [p_accuracy=0.5, p_cost=0.5]
-    |         \
- 60%|          • ← P4: [p_accuracy=0.3, p_cost=0.7]
-    |           \
- 50%|            • ← P5: [p_accuracy=0, p_cost=1]
-    +-------------|-------|-------|
-      $1.00    $0.50   $0.10   Cost
-```
-
-**ToolOrchestra learns to trace the Pareto frontier**:
-- Different P vectors → Different points selected
-- Model learns implicit trade-off function
-- Can approximate any point by setting P appropriately
-
-**Limitation**: Can only reach Pareto-optimal points
-- Sub-optimal points (inside frontier) aren't reachable
-- This is actually good! (We want optimal solutions)
-
-## 🔬 Research Depth: Inverse RL and Preference Learning
-
-### Connection to Inverse Reinforcement Learning
-
-**Inverse RL**: Learn reward function from demonstrations
-
-**Standard RL**: Given R, learn π
-**Inverse RL**: Given π (demonstrations), learn R
-
-**ToolOrchestra hybrid approach**:
-- Start with base reward (accuracy)
-- Add preference-based modulation (P · M)
-- This is partial inverse RL
-
-**Full inverse RL for tools** (future direction):
-```python
-# Collect user demonstrations
-demonstrations = [
-    (task_1, trajectory_1),  # User's solution
-    (task_2, trajectory_2),
-    ...
-]
-
-# Infer user's reward function
-R_user = inverse_rl_algorithm(demonstrations)
-
-# Use inferred reward for RL
-train_orchestrator(R_user)
-```
-
-**Benefits**:
-- Learns from user behavior, not explicit preferences
-- Captures implicit preferences user can't articulate
-- Personalizes to individual users
-
-**Challenges**:
-- Requires many demonstrations (expensive)
-- Demonstrations must be expert-quality
-- Reward function may not be recoverable (ill-posed problem)
+**Main challenge**: IRL requires observing enough user behavior to reliably infer preferences. In cold-start settings (new users with no history), some default or weakly-personalized behavior is necessary.
 
 ### Preference Learning from Comparisons
 
-**Alternative approach**: Learn from pairwise comparisons
+Another approach: learn preferences from comparative judgments rather than explicit weights.
 
-**Setup**:
-```python
-# Show user two solutions
-solution_A = orchestrator.solve(task, preference=P_A)
-solution_B = orchestrator.solve(task, preference=P_B)
+"Which orchestration trajectory do you prefer: A (accurate but slow) or B (fast but uncertain)?"
 
-# User picks preferred solution
-user_preference = which_is_better(solution_A, solution_B)
-# User: "I prefer B because it was faster"
-```
+The **Bradley-Terry model** represents preferences for pairwise comparisons:
 
-**Bradley-Terry model** for preference learning:
-```
-P(A ≻ B) = exp(R(A)) / (exp(R(A)) + exp(R(B)))
-```
+P(A preferred to B) = σ(score(A) - score(B))
 
-**Train reward model to match preferences**:
-```python
-def train_reward_model(comparisons):
-    reward_model = initialize_model()
-    
-    for (solution_A, solution_B, preference) in comparisons:
-        # Compute probability under current model
-        r_A = reward_model(solution_A)
-        r_B = reward_model(solution_B)
-        p_A_preferred = sigmoid(r_A - r_B)
-        
-        # Loss: Match user's actual preference
-        if preference == "A":
-            loss = -log(p_A_preferred)
-        else:
-            loss = -log(1 - p_A_preferred)
-        
-        # Update reward model
-        reward_model.update(loss)
-    
-    return reward_model
-```
+where σ is the sigmoid function and score is a learned function mapping trajectories to scalar values.
 
-**Then use learned reward for RL**:
-```python
-# Generate trajectories
-trajectories = orchestrator.rollout(task)
+This is the foundation of RLHF (Reinforcement Learning from Human Feedback). A reward model learns to assign scores such that human-preferred trajectories score higher. The learned reward model can then be used to optimize orchestrator policies.
 
-# Score with learned reward model
-rewards = [reward_model(τ) for τ in trajectories]
-
-# GRPO update
-update_orchestrator(trajectories, rewards)
-```
-
-**This is how ChatGPT was trained!** (RLHF)
-- Collect human preference comparisons
-- Train reward model
-- Use reward model for RL
-
-**ToolOrchestra could extend to this**:
-- Current: Explicit preference vectors
-- Future: Learned preference models from user feedback
-- Benefit: More accurate alignment, captures nuanced preferences
+ToolOrchestra doesn't use RLHF directly—it uses explicit preference vectors—but the techniques are compatible. Future systems might combine explicit preference specification (for known priorities) with comparison-based learning (for subtle preferences users can't articulate).
 
 ### Multi-Stakeholder Preferences
 
-**Real-world complication**: Multiple stakeholders with different preferences
+Real deployments involve multiple stakeholders with different priorities:
 
-**Example**:
-- **User**: Wants fast answers
-- **Developer**: Wants low cost (infrastructure)
-- **Society**: Wants privacy-preserving (no data leakage)
+**End users** want accurate, fast, helpful responses.
+**Developers** want efficient, cost-effective operation.
+**Organizations** want safe, compliant, on-brand behavior.
+**Society** wants privacy, fairness, and beneficial outcomes.
 
-**How to balance?**
+How should these competing interests be balanced?
 
-**Approach 1: Weighted combination**
-```python
-P_combined = w_user × P_user + w_dev × P_dev + w_society × P_society
-```
+**Aggregation approaches** include:
 
-Who sets weights? How to decide?
+**Weighted average**: Combine stakeholder preferences with negotiated weights. Simple but requires agreement on weights.
 
-**Approach 2: Constraints**
-```python
-# Optimize user utility subject to constraints
-maximize: user_utility(τ)
-subject to:
-    cost(τ) < developer_budget
-    privacy_score(τ) > society_threshold
-```
+**Constraint-based**: Satisfy hard constraints (safety, compliance) while optimizing soft preferences (cost, speed). Treats stakeholder interests as hierarchical.
 
-This is **constrained RL**.
+**Pareto negotiation**: Find solutions that no stakeholder can improve without hurting another. Fair but may not have unique solutions.
 
-**Approach 3: Social choice theory**
-- Stakeholders vote on solutions
-- Aggregation function (e.g., Condorcet)
-- Policy trained to satisfy aggregated preferences
+These are fundamentally governance questions—technical infrastructure enables many aggregation schemes, but choosing among them requires social/organizational decisions.
 
-**Open research area**: Multi-stakeholder RL for AI systems
-- Relevant to: AI governance, alignment
-- ToolOrchestra provides technical foundation
+ToolOrchestra's technical contribution is making preferences explicit and modulable. The choice of which preferences to optimize is delegated to deployment contexts.
+
+### Temporal and Contextual Preferences
+
+Static preference vectors assume priorities don't change. Real preferences are dynamic:
+
+**Temporal variation**: A user might be cost-conscious during exploratory research (many low-value queries) but accuracy-focused during final report writing (fewer high-stakes queries).
+
+**Contextual variation**: Preferences for the same user might depend on task type, time pressure, or recent experiences.
+
+**Adaptive approaches** could:
+
+- Track preference history and adjust defaults based on patterns
+- Infer current preferences from session context ("The user seems rushed—prioritize speed")
+- Allow per-query preference adjustment ("For this question, maximize accuracy")
+
+These extensions are natural for future work but not implemented in ToolOrchestra's current form.
 
 ---
-
 
 ## Conclusion
 
-The key conclusion from this part is that preferences don’t have to be an afterthought bolted onto an otherwise fixed policy. By baking them directly into the reward and training loop, ToolOrchestra learns to trace out different points on the accuracy–cost–latency frontier and to adapt behavior to different users, which is essential for real-world deployment.
+Preference conditioning makes ToolOrchestra deployable. Without it, each user population would require separate training—impractical at scale. With it, a single trained orchestrator serves diverse users by adapting its behavior based on provided preference vectors.
 
-## Academic Papers
+The mathematics are straightforward: preferences weight the multi-objective reward, and the policy learns to produce behavior that optimizes the weighted objective. The generalization is robust: interpolation between training preferences works well, and normalization makes exact values less critical than ratios.
 
-150. **Bradley-Terry Model**
-     - Bradley, R.A., & Terry, M.E. (1952). "Rank Analysis of Incomplete Block Designs: I. The Method of Paired Comparisons." *Biometrika*
-     - https://www.jstor.org/stable/2334029
+Future extensions—inverse RL for implicit preferences, comparison-based learning for subtle preferences, multi-stakeholder aggregation for complex deployments—build naturally on this foundation. The current system is complete for explicit preference specification; extensions address the harder cases where preferences must be inferred or negotiated.
 
-151. **Inverse Reinforcement Learning**
-     - Abbeel, P., & Ng, A.Y. (2004). "Apprenticeship Learning via Inverse Reinforcement Learning." *ICML 2004*
-     - https://ai.stanford.edu/~ang/papers/icml04-apprentice.pdf
-
-152. **Maximum Entropy IRL**
-     - Ziebart, B.D., et al. (2008). "Maximum Entropy Inverse Reinforcement Learning." *AAAI 2008*
-     - https://www.aaai.org/Papers/AAAI/2008/AAAI08-227.pdf
-
-153. **RLHF Detailed**
-     - Ouyang, L., et al. (2022). "Training Language Models to Follow Instructions with Human Feedback." *NeurIPS 2022*
-     - https://arxiv.org/abs/2203.02155
-
-154. **InstructGPT**
-     - Same as above (Ouyang et al.)
-
-155. **Reward Model Training**
-     - Stiennon, N., et al. (2020). "Learning to Summarize from Human Feedback." *NeurIPS 2020*
-     - https://arxiv.org/abs/2009.01325
-
-156. **DPO Mathematical Analysis**
-     - Rafailov, R., et al. (2024). "Direct Preference Optimization: Your Language Model is Secretly a Reward Model." *NeurIPS 2024*
-     - https://arxiv.org/abs/2305.18290
-
-157. **KTO (Kahneman-Tversky Optimization)**
-     - Ethayarajh, K., et al. (2024). "KTO: Model Alignment as Prospect Theoretic Optimization." *arXiv:2402.01306*
-     - https://arxiv.org/abs/2402.01306
-
-158. **Personalized RLHF**
-     - Jang, J., et al. (2023). "Personalized Soups: Personalized Large Language Model Alignment via Post-hoc Parameter Merging." *arXiv:2310.11564*
-     - https://arxiv.org/abs/2310.11564
-
-159. **Social Choice Theory in AI**
-     - Conitzer, V., et al. (2024). "Social Choice for AI Alignment." *AAAI 2024*
-     - https://arxiv.org/abs/2310.20427
-
-## Blog Posts and Tutorials
-
-160. **RLHF Implementation Guide**
-     - "Illustrating Reinforcement Learning from Human Feedback"
-     - https://huggingface.co/blog/rlhf
-
-161. **DPO Tutorial**
-     - "Fine-tuning with Direct Preference Optimization"
-     - https://huggingface.co/blog/dpo-trl
-
-162. **Preference Learning Overview**
-     - "Learning from Human Preferences"
-     - https://openai.com/research/learning-from-human-preferences
-
-163. **Constitutional AI Explained**
-     - "Constitutional AI: Harmlessness from AI Feedback"
-     - https://www.anthropic.com/index/constitutional-ai-harmlessness-from-ai-feedback
-
-164. **Multi-Stakeholder AI**
-     - "Whose Values Should AI Align With?"
-     - https://www.alignmentforum.org/posts/
-
-## GitHub Repositories
-
-165. **TRL (Transformer Reinforcement Learning)**
-     - Full RLHF pipeline
-     - https://github.com/huggingface/trl
-
-166. **Open Assistant**
-     - Open-source ChatGPT alternative with RLHF
-     - https://github.com/LAION-AI/Open-Assistant
-
-167. **DPO Trainer**
-     - https://github.com/huggingface/trl/tree/main/examples/research_projects/stack_llama_2
-
-168. **RewardBench**
-     - Benchmark for reward models
-     - https://github.com/allenai/reward-bench
-
-169. **Preference Dataset Collection**
-     - Anthropic HH-RLHF dataset
-     - https://github.com/anthropics/hh-rlhf
+The next dive examines whether these learned behaviors generalize—whether the orchestrator works on tools, prices, and tasks never seen during training.
 
 ---
 
+## References
+
+### Preference Learning
+
+1. **Preference Learning**
+   - Fürnkranz, J., & Hüllermeier, E. (2010). "Preference Learning." Springer
+   - https://link.springer.com/book/10.1007/978-3-642-14125-6
+
+2. **Bradley-Terry Model**
+   - Bradley, R.A., & Terry, M.E. (1952). "Rank Analysis of Incomplete Block Designs." *Biometrika*
+   - https://www.jstor.org/stable/2334029
+
+### Inverse Reinforcement Learning
+
+3. **IRL Survey**
+   - Ng, A.Y., & Russell, S. (2000). "Algorithms for Inverse Reinforcement Learning." *ICML 2000*
+   - https://ai.stanford.edu/~ang/papers/icml00-irl.pdf
+
+4. **Maximum Entropy IRL**
+   - Ziebart, B.D., et al. (2008). "Maximum Entropy Inverse Reinforcement Learning." *AAAI 2008*
+   - https://www.aaai.org/Papers/AAAI/2008/AAAI08-227.pdf
+
+### RLHF
+
+5. **Learning from Human Preferences**
+   - Christiano, P.F., et al. (2017). "Deep Reinforcement Learning from Human Preferences." *NeurIPS 2017*
+   - https://arxiv.org/abs/1706.03741
+
+6. **InstructGPT**
+   - Ouyang, L., et al. (2022). "Training Language Models to Follow Instructions with Human Feedback." *NeurIPS 2022*
+   - https://arxiv.org/abs/2203.02155
+
+### Multi-Objective Preferences
+
+7. **Multi-Objective RL**
+   - Roijers, D.M., et al. (2013). "A Survey of Multi-Objective Sequential Decision-Making." *JAIR*
+   - https://arxiv.org/abs/1402.0590
+
+8. **Social Choice Theory**
+   - Arrow, K.J. (1951). "Social Choice and Individual Values." Wiley
+   - Classic text on aggregating preferences
+
+---

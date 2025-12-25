@@ -1,5 +1,5 @@
 # The Orchestration Paradigm Series
-*A 12-Part Deep Dive into ToolOrchestra and the Future of Compound AI*
+*A 14-Part Deep Dive into ToolOrchestra and the Future of Compound AI*
 
 *How an 8-billion parameter model learned to conduct a symphony of giants—and what it means for everything we thought we knew about scaling AI*
 
@@ -13,7 +13,7 @@ Their claim: **A model with 8 billion parameters can outperform GPT-5 on PhD-lev
 
 Not through some architectural breakthrough. Not through better training data. Through a deceptively simple idea: *teach a small model to coordinate big ones*.
 
-The paper is called **ToolOrchestra**, and over the next 12 weeks, I'm going to take you inside every detail of it—the mathematics, the engineering, the broader research landscape, and the implications for how we build AI systems going forward.
+The paper is called **ToolOrchestra**, and over the next 14 installments, I'm going to take you inside every detail of it—the mathematics, the engineering, the broader research landscape, and the implications for how we build AI systems going forward.
 
 ---
 
@@ -41,7 +41,7 @@ A smaller model, coordinating larger ones, outperforms the largest model working
 
 ## What You'll Learn
 
-This isn't just a paper summary. Over 12 parts, you'll build a complete mental model of:
+This isn't just a paper summary. Over 14 parts, you'll build a complete mental model of:
 
 ### The Problem Space (Parts 1-2)
 - Why "just prompt GPT-5 to use tools" doesn't work (the bias problem)
@@ -58,8 +58,9 @@ This isn't just a paper summary. Over 12 parts, you'll build a complete mental m
 - How the orchestrator learns to align with user preferences
 - Generalization: what happens with tools and pricing the model never saw during training
 
-### The Future (Parts 10-11)
+### The Future (Parts 10a-11)
 - How ToolOrchestra relates to the broader evolution from Toolformer to compound AI systems
+- The Compound AI thesis: why composition beats scale
 - Open research problems: recursive orchestration, multi-agent coordination, tool synthesis
 - Production deployment: latency, reliability, safety, and scaling patterns
 
@@ -76,7 +77,7 @@ I've designed each part with **four depth levels**:
 | Deep | 🤿 | Technical details + mathematics |
 | Research | 🔬 | Connections to broader literature |
 
-**You can read horizontally**: skim all the 🌊 sections across all 12 parts for a complete overview in under an hour.
+**You can read horizontally**: skim all the 🌊 sections across all 14 parts for a complete overview in about an hour.
 
 **Or you can read vertically**: pick one topic (say, reward design or benchmarking) and go all the way to 🔬 depth.
 
@@ -108,9 +109,11 @@ Each part is self-contained with its own references—academic papers, blog post
 | 05 | Benchmarks | What does "better performance" actually mean? |
 | 06 | Training Infrastructure | What does it take to train an orchestrator? |
 | 07 | Tool Coordination | How does the model-as-tool paradigm work? |
-| 08 | Preference Learning | How do you align with what users actually want? |
+| 08 | Preference Learning | How do you adapt to user priorities without retraining? |
 | 09 | Generalization | Does it work on tools it's never seen? |
-| 10 | Prior Work & Future | Where does this fit in the research landscape? |
+| 10a | The Tool Learning Lineage | How did we get from Toolformer to ToolOrchestra? |
+| 10b | The Compound AI Hypothesis | Why does composition beat scale? |
+| 10c | Open Frontiers | What problems remain unsolved? |
 | 11 | Deployment | How do you put this into production? |
 
 ---

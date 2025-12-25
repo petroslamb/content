@@ -1,498 +1,251 @@
 # The Orchestration Paradigm Series: Dive 3
 *How do you optimize for multiple objectives at once?*
+
 ## Introduction
 
-This part explains how ToolOrchestra turns several conflicting goals—accuracy, cost, latency, and user preferences—into a single learning signal. It walks through the reward design in increasing depth so you can see both the intuition and the precise math behind preference-aware orchestration.
+The previous dive established that orchestration requires reinforcement learning—trial, feedback, and adjustment. But what exactly should the reward signal measure? If you only reward accuracy, the orchestrator will call the most expensive model for every question. If you only reward cost-efficiency, it'll guess cheaply and get everything wrong. Real orchestration requires balancing conflicting goals: being accurate enough while remaining cheap enough while staying fast enough while respecting user preferences.
 
+This is the problem of multi-objective optimization, and ToolOrchestra's solution is both elegant and practical. This dive explains how to combine conflicting objectives into a single reward signal that trains genuinely useful behavior.
 
-## 🌊 Surface Level: Juggling Multiple Goals
+---
 
-**The challenge**: The orchestrator needs to be:
-- Accurate (solve the problem correctly)
-- Cheap (don't call expensive models unnecessarily)
-- Fast (minimize latency)
-- Aligned (follow user preferences)
-
-These goals conflict! Being accurate might require expensive models. Being fast might sacrifice accuracy.
-
-**ToolOrchestra's solution**: Create a single reward score that balances all these goals, weighted by user preferences.
-
-## 🏊 Shallow Dive: The Three Reward Components
-
-### Component 1: Outcome Reward (Did We Solve It?)
-
-```python
-r_outcome(trajectory) = 1 if correct else 0
-```
-
-**Simple, right?** Not quite. How do we check "correct"?
-
-**Problem**: Answers come in many forms
-- Mathematical: "4", "4.0", "4.00", "four"
-- Names: "JFK", "John F. Kennedy", "President Kennedy"
-- Dates: "1963-11-22", "November 22, 1963", "Nov 22, '63"
-
-**Solution**: Use GPT-5 as a judge
-- Give it the gold answer and the model's answer
-- Ask: "Are these semantically equivalent?"
-- This allows flexible matching while remaining reliable
+## 🌊 Surface Level: The Restaurant Menu Problem
 
-**Limitation**: GPT-5 as judge isn't perfect. It can make mistakes, especially on:
-- Numerical precision (is 3.14 equivalent to π?)
-- Negations ("not X" vs. "X is false")
-- Contextual meanings
+Imagine choosing between restaurants. You care about three things: taste, price, and speed. The fancy restaurant serves amazing food but costs $100 and takes two hours. The fast food joint is cheap and instant but the food is mediocre. The neighborhood bistro balances all three moderately well.
 
-### Component 2: Efficiency Rewards (How Much Did It Cost?)
+Which is "best"? The answer depends on context. For a special anniversary, you might accept high cost and long wait for great taste. For a rushed lunch, you prioritize speed. On a tight budget, price dominates. There's no universally best option—only best given your current priorities.
 
-Two sub-components:
+Now consider an AI orchestrator choosing between:
+- Call GPT-5: Likely accurate, expensive ($0.10/call), slow (3 seconds)
+- Call local model: Possibly accurate, cheap ($0.001), fast (0.2 seconds)
+- Call specialized model: Accurate for specific tasks, moderate cost ($0.01), moderate speed
 
-**r_compute(trajectory) = -$(trajectory)**
-- Sum up costs of all tool calls
-- Proprietary models: Use published API pricing (GPT-5: $30/M input tokens)
-- Open models: Use third-party hosting pricing for standardization
+The orchestrator faces the same problem as the restaurant chooser. There's no universally best tool—only best given the current task and user priorities. A researcher with grant funding might want maximum accuracy regardless of cost. A startup might need good-enough accuracy at minimal cost. A real-time application might prioritize speed above all else.
 
-Example:
-```
-Turn 1: Call GPT-5 (1000 tokens in, 500 out) = $0.05
-Turn 2: Call Qwen-32B (500 tokens in, 200 out) = $0.003
-Turn 3: Call local search (0 external cost) = $0.0001
-Total compute cost = $0.0531
-r_compute = -0.0531
-```
+ToolOrchestra's reward design captures these trade-offs. It combines accuracy, cost, latency, and user preferences into a single number that the reinforcement learning algorithm can optimize. Different preference weightings lead to different optimal behaviors, allowing one trained model to serve users with different priorities.
 
-**r_latency(trajectory) = -Clock(trajectory)**
-- Wall-clock time from start to finish
-- Includes API call latency, model inference time, tool execution time
+---
 
-Example:
-```
-Turn 1: GPT-5 call = 3.2 seconds
-Turn 2: Qwen-32B call = 1.5 seconds
-Turn 3: Local search = 0.3 seconds
-Total latency = 5.0 seconds
-r_latency = -5.0
-```
+## 🏊 Shallow Dive: The Three Objectives
 
-**Why negative rewards?** Because we want to minimize cost and latency. In RL, we maximize reward, so negative cost means "less cost = higher reward."
+ToolOrchestra's reward function combines three types of objectives, each capturing a different aspect of good orchestration.
 
-### Component 3: Preference Reward (Did We Follow User Wishes?)
+### Objective 1: Outcome Reward
 
-This is the most innovative component.
+The most fundamental requirement is solving the task correctly. A trajectory that produces the wrong answer is not useful, no matter how efficiently it ran.
 
-**Idea**: Different users have different priorities
-- Researcher: Wants accuracy, doesn't care about cost
-- Startup: Wants cheap, can sacrifice some accuracy
-- Real-time app: Wants fast, uses local models
+The outcome reward is binary for most benchmarks: either the answer matches the ground truth (reward = 1) or it doesn't (reward = 0). For some benchmarks, partial credit exists—HLE uses the paper's original scoring, FRAMES has degrees of correctness.
 
-**Implementation**: Let users specify preferences as a vector
+When ground truth isn't available (as in real deployment), ToolOrchestra uses an LLM-as-judge approach: GPT-5 evaluates whether the orchestrator's answer is correct. This introduces potential bias—GPT-5 might favor answers that look like GPT-5 generated them—but empirically works well enough for training.
 
-```python
-# Example preference vector
-P = [
-    p_web_search,      # How much user wants web search used
-    p_local_search,    # How much user wants local search used
-    p_GPT5,           # How much user wants GPT-5 used
-    p_Qwen_32B,       # How much user wants Qwen-32B used
-    # ... one entry per tool ...
-    p_outcome,        # How much user cares about accuracy
-    p_compute,        # How much user cares about cost
-    p_latency         # How much user cares about speed
-]
-```
+**Why binary?** Continuous correctness rewards (like cosine similarity to the correct answer) can be gamed. The model might learn to produce outputs that score high on the proxy metric while being substantively wrong. Binary rewards are harder to game: either you got it right or you didn't.
 
-Each p_i ∈ [0, 1], where 1 = "strongly prefer" and 0 = "don't care"
+### Objective 2: Efficiency Rewards
 
-**How it's computed**:
+Even correct answers can be wasteful. Calling GPT-5 ten times when one call would suffice burns money and time without benefit. The efficiency rewards penalize this waste.
 
-1. Track tool usage in trajectory:
-```python
-M_trajectory = [
-    count(web_search_calls),
-    count(local_search_calls),
-    count(GPT5_calls),
-    count(Qwen_32B_calls),
-    # ... one entry per tool ...
-    r_outcome,  # 0 or 1
-    r_compute,  # negative cost
-    r_latency   # negative time
-]
-```
+**Compute cost** is measured in dollars: the sum of all API call costs during the trajectory. Each call to GPT-5 costs approximately $0.03-0.10 depending on input/output length. Calls to smaller models cost $0.001-0.01. Local tools (search, code execution) are essentially free. The reward penalizes total cost: higher cost = lower reward component.
 
-2. Normalize across batch:
-```python
-M_normalized[i] = (M[i] - batch_min[i]) / (batch_max[i] - batch_min[i])
-```
+**Latency** is measured in seconds: the total time from task receipt to final answer. Sequential tool calls add up—a trajectory with 10 calls averaging 2 seconds each takes 20+ seconds. Parallel execution where possible reduces this, but the orchestrator's sequential nature limits parallelism. The reward penalizes total latency: longer = lower reward component.
 
-This puts everything on [0, 1] scale where 1 = "best in batch" and 0 = "worst in batch"
+**The trade-off is explicit.** A trajectory with 95% accuracy and $0.02 cost might be better than one with 98% accuracy and $0.10 cost, depending on the weights. The reward design lets these trade-offs be tuned rather than hard-coded.
 
-3. Dot product with preferences:
-```python
-preference_reward = M_normalized · P
-```
+### Objective 3: Preference Alignment
 
-This is just: sum of (normalized_metric × user_preference)
+Different users have different priorities. A research organization might say "maximize accuracy, ignore cost." A startup might say "keep costs under $0.01 per query, accuracy can suffer." A real-time application might say "respond within 2 seconds no matter what."
 
-**Intuition**: If user wants fast (high p_latency) and trajectory is fastest in batch (normalized latency ≈ 1), that contributes positively to reward.
+The preference reward captures this through a **preference vector P**: a set of weights indicating how much the user cares about each dimension. The reward computes a dot product between normalized metrics and P, so trajectories that align with stated preferences score higher.
 
-## 🤿 Deep Dive: The Mathematics of Multi-Objective Optimization
+Consider two users analyzing the same trajectory:
+- **User A (accuracy-focused, P = [1.0, 0.1, 0.1])**: Values the outcome reward 10x more than efficiency.
+- **User B (cost-focused, P = [0.5, 1.0, 0.5])**: Values cost efficiency strongly, outcome moderately.
 
-### Why Combining Rewards is Hard
+The same trajectory might score highly for User A (because it got the answer right, even at high cost) but poorly for User B (because the cost was high, even though the answer was right). Training on diverse preference vectors teaches the orchestrator to adapt its behavior to different prioritizations.
 
-In single-objective RL: R(s,a) → ℝ (one number)
+---
 
-In multi-objective RL: R(s,a) → ℝ^n (vector of numbers)
+## 🤿 Deep Dive: The Mathematics of Multi-Objective Reward
 
-**Problem**: There's no single "best" solution. Instead, there's a **Pareto frontier** of solutions where you can't improve one objective without hurting another.
+### The Scalarization Approach
 
-Example:
-```
-Trajectory A: 90% accurate, $1.00 cost
-Trajectory B: 85% accurate, $0.50 cost
-```
+Multi-objective optimization traditionally handles conflicting objectives through **scalarization**: converting the multi-dimensional objective space into a single scalar value. The most common approach is linear scalarization—a weighted sum of objectives:
 
-Which is better? Depends on user preferences!
+R(τ) = w₁ × Accuracy(τ) + w₂ × (−Cost(τ)) + w₃ × (−Latency(τ))
 
-### Scalarization: Converting Multi-Objective to Single-Objective
+The weights determine relative importance. If w₁ is large, accuracy dominates. If w₂ is large, cost matters most.
 
-**Linear scalarization**: R_total = w_1 × R_1 + w_2 × R_2 + ... + w_n × R_n
+**The problem with fixed weights** is that they build in a single preference. The trained model optimizes for that preference but cannot adapt to different users. ToolOrchestra addresses this by conditioning on a preference vector P that varies across training examples and at inference time.
 
-Where w_i are weights representing importance.
+### Normalization: Making Dimensions Comparable
 
-**ToolOrchestra's approach** is a sophisticated form of scalarization:
-
-```
-R(τ) = M_τ^normalized · P  if solved, else 0
-```
-
-**The "if solved, else 0" part is crucial**:
-- Only successful trajectories get positive reward
-- Among successful trajectories, prefer those matching user preferences
-- Unsuccessful trajectories get 0, regardless of cost/latency
-
-This encodes: **Correctness is non-negotiable, then optimize for preferences**
-
-### Normalization: Why It Matters
-
-Without normalization:
-```
-Tool A: Called 10 times (large number)
-Tool B: Called 2 times (small number)
-Cost: $0.50 (medium number)
-```
-
-Dot product would be dominated by large numbers (tool A calls).
-
-With normalization:
-```
-Tool A: 1.0 (most in batch)
-Tool B: 0.2 (20% of max in batch)  
-Cost: 0.5 (50% of max in batch)
-```
-
-All metrics contribute equally to the final reward.
-
-**Technical detail**: Min-max normalization
-
-```python
-normalized_value = (value - min_in_batch) / (max_in_batch - min_in_batch)
-```
-
-**Edge case**: If max_in_batch == min_in_batch (all trajectories same), set to 0 (ignore this metric).
-
-**Why this works**: 
-- Puts all metrics on same [0,1] scale
-- 1 = best in batch, 0 = worst in batch
-- Relative comparison (like GRPO advantage)
-
-### The Full Reward Computation (Step by Step)
-
-Let's trace through a concrete example:
-
-**Setup**:
-- Batch of 4 rollouts for a task
-- User preference: P = [0, 1, 0, 1, 1, 0.5, 0.2]
-  - (Don't care about web search, want local search, don't want GPT-5, want Qwen-32B, want accuracy, somewhat care about cost, barely care about latency)
-
-**Rollout 1**:
-- Calls: [Web=1, Local=3, GPT5=0, Qwen=2]
-- Outcome: Correct (r_outcome=1)
-- Cost: $0.20 (r_compute=-0.20)
-- Latency: 8s (r_latency=-8)
-
-**Rollout 2**:
-- Calls: [Web=0, Local=5, GPT5=1, Qwen=1]
-- Outcome: Correct (r_outcome=1)
-- Cost: $0.60 (r_compute=-0.60)
-- Latency: 12s (r_latency=-12)
-
-**Rollout 3**:
-- Calls: [Web=2, Local=1, GPT5=0, Qwen=3]
-- Outcome: Wrong (r_outcome=0)
-- Cost: $0.30 (r_compute=-0.30)
-- Latency: 10s (r_latency=-10)
-
-**Rollout 4**:
-- Calls: [Web=0, Local=4, GPT5=0, Qwen=2]
-- Outcome: Correct (r_outcome=1)
-- Cost: $0.15 (r_compute=-0.15)
-- Latency: 7s (r_latency=-7)
-
-**Step 1: Form M vectors**
-```
-M_1 = [1, 3, 0, 2, 1, -0.20, -8]
-M_2 = [0, 5, 1, 1, 1, -0.60, -12]
-M_3 = [2, 1, 0, 3, 0, -0.30, -10]
-M_4 = [0, 4, 0, 2, 1, -0.15, -7]
-```
-
-**Step 2: Find min and max across batch**
-```
-min = [0, 1, 0, 1, 0, -0.60, -12]
-max = [2, 5, 1, 3, 1, -0.15, -7]
-range = [2, 4, 1, 2, 1, 0.45, 5]
-```
-
-**Step 3: Normalize each rollout**
-```
-M_1_norm = [
-    (1-0)/2 = 0.5,     # Web calls
-    (3-1)/4 = 0.5,     # Local calls
-    (0-0)/1 = 0,       # GPT5 calls
-    (2-1)/2 = 0.5,     # Qwen calls
-    (1-0)/1 = 1,       # Outcome
-    (-0.20-(-0.60))/0.45 = 0.89,  # Cost (less negative = cheaper = better)
-    (-8-(-12))/5 = 0.8  # Latency (less negative = faster = better)
-]
-
-M_2_norm = [0, 1, 1, 0, 1, 0, 0]
-M_3_norm = [1, 0, 0, 1, 0, 0.67, 0.4]
-M_4_norm = [0, 0.75, 0, 0.5, 1, 1, 1]
-```
-
-**Step 4: Compute dot product with preferences**
-```
-P = [0, 1, 0, 1, 1, 0.5, 0.2]
-
-R(τ_1) = [0.5, 0.5, 0, 0.5, 1, 0.89, 0.8] · [0, 1, 0, 1, 1, 0.5, 0.2]
-       = 0×0 + 0.5×1 + 0×0 + 0.5×1 + 1×1 + 0.89×0.5 + 0.8×0.2
-       = 0 + 0.5 + 0 + 0.5 + 1 + 0.445 + 0.16
-       = 2.605
-
-R(τ_2) = [0, 1, 1, 0, 1, 0, 0] · [0, 1, 0, 1, 1, 0.5, 0.2]
-       = 0 + 1 + 0 + 0 + 1 + 0 + 0
-       = 2.0
-
-R(τ_3) = 0  (because outcome = 0, wrong answer)
-
-R(τ_4) = [0, 0.75, 0, 0.5, 1, 1, 1] · [0, 1, 0, 1, 1, 0.5, 0.2]
-       = 0 + 0.75 + 0 + 0.5 + 1 + 0.5 + 0.2
-       = 2.95
-```
-
-**Interpretation**:
-- Rollout 4 gets highest reward (2.95) - correct, cheap, fast, uses preferred tools
-- Rollout 1 gets 2.605 - correct but not as well aligned with preferences
-- Rollout 2 gets 2.0 - correct but expensive, slow, used GPT-5 (user didn't want)
-- Rollout 3 gets 0 - wrong answer, doesn't matter how cheap it was
-
-**Step 5: Compute GRPO advantages**
-```
-mean = (2.605 + 2.0 + 0 + 2.95) / 4 = 1.89
-std = 1.20
-
-A(τ_1) = (2.605 - 1.89) / 1.20 = 0.60
-A(τ_2) = (2.0 - 1.89) / 1.20 = 0.09
-A(τ_3) = (0 - 1.89) / 1.20 = -1.58
-A(τ_4) = (2.95 - 1.89) / 1.20 = 0.88
-```
-
-**Training update**: 
-- Increase probability of actions in rollout 4 (highest advantage)
-- Slightly increase probability of actions in rollout 1
-- Barely change rollout 2
-- Decrease probability of actions in rollout 3
-
-This teaches the orchestrator: "Do more stuff like rollout 4, less like rollout 3"
-
-## 🔬 Research Depth: Pareto Optimality and Multi-Objective RL
+Raw metrics have incompatible scales. Accuracy is between 0 and 1. Cost might be between $0.001 and $1.00. Latency might be between 0.1 and 100 seconds. A weighted sum of these raw values would be dominated by whichever has the largest magnitude, regardless of weights.
+
+ToolOrchestra uses **batch normalization** within training batches. For each batch of rollouts, each metric is normalized to zero mean and unit variance:
+
+M_normalized = (M_raw - μ_batch) / σ_batch
+
+This puts all metrics on comparable scales. A trajectory one standard deviation better than average on accuracy contributes equally to reward as one that's one standard deviation better than average on cost—modulo the preference weights.
+
+### The Complete Reward Formula
+
+Putting together the pieces, ToolOrchestra's reward for a trajectory τ is:
+
+R(τ) = (Outcome(τ) > threshold) × (M_normalized(τ) · P)
+
+Breaking this down:
+- **Outcome gate**: If the answer is wrong (Outcome < threshold), the whole reward is zero. No efficiency bonus for incorrect answers.
+- **Metric vector M**: Contains normalized values for each dimension—tool-specific preferences, outcome quality, compute cost, latency.
+- **Preference vector P**: User-specified weights indicating relative importance.
+- **Dot product**: Computes alignment between the trajectory's metrics and the user's preferences.
+
+The gating by correctness is crucial. Without it, the model might learn to produce fast, cheap, wrong answers when cost or latency preferences are high. The gate ensures that only correct trajectories contribute to learning—efficiency is a second-order consideration after accuracy.
+
+### A Worked Example
+
+Let's trace through a concrete example to see how rewards are computed.
+
+**Task**: "What is the capital of Kyrgyzstan?"  
+**User preference P**: [0.5 (accuracy), 0.8 (cost), 0.3 (latency)]  
+**Rollouts in batch**:
+
+| Rollout | Answer | Correct | Cost | Latency |
+|---------|--------|---------|------|---------|
+| A | Bishkek | Yes | $0.05 | 3.2s |
+| B | Bishkek | Yes | $0.001 | 0.4s |
+| C | Almaty | No | $0.002 | 0.3s |
+| D | Bishkek | Yes | $0.10 | 5.1s |
+
+**Step 1: Compute raw metrics**
+
+Correct mask: [1, 1, 0, 1] (Rollout C is wrong)
+
+**Step 2: Normalize within batch (correct rollouts only)**
+
+Cost: mean = 0.050, std = 0.040  
+Latency: mean = 2.9s, std = 1.94s
+
+Normalized costs:
+- A: (0.05 - 0.050) / 0.040 = 0.0
+- B: (0.001 - 0.050) / 0.040 = −1.22 (better than average)
+- D: (0.10 - 0.050) / 0.040 = +1.25 (worse than average)
+
+Normalized latencies:
+- A: (3.2 - 2.9) / 1.94 = +0.15 (slightly worse)
+- B: (0.4 - 2.9) / 1.94 = −1.29 (better than average)
+- D: (5.1 - 2.9) / 1.94 = +1.13 (worse than average)
+
+**Step 3: Compute preference-weighted rewards**
+
+R(A) = 0.5 × 1 + 0.8 × (−0.0) + 0.3 × (−0.15) = 0.5 − 0.045 = 0.455  
+R(B) = 0.5 × 1 + 0.8 × (+1.22) + 0.3 × (+1.29) = 0.5 + 0.98 + 0.39 = **1.87** ⭐  
+R(C) = 0 (wrong answer, gated out)  
+R(D) = 0.5 × 1 + 0.8 × (−1.25) + 0.3 × (−1.13) = 0.5 − 1.0 − 0.34 = −0.84
+
+**Result**: Rollout B (cheap, fast, correct) gets highest reward. Rollout D (expensive, slow, correct) gets lowest among correct answers. Rollout C (wrong) gets zero regardless of how efficient it was.
+
+The gradient update will increase the probability of actions in Rollout B and decrease the probability of actions in Rollout D. Over many updates, the orchestrator learns that for this preference vector, cheap solutions are strongly preferred.
+
+---
+
+## 🔬 Research Depth: Pareto Optimality and Preference Learning
 
 ### The Pareto Frontier
 
-In multi-objective optimization, a solution is **Pareto optimal** if you can't improve any objective without worsening another.
+Multi-objective optimization has a rich theory centered on **Pareto optimality**. A solution is Pareto-optimal if no objective can be improved without worsening another.
 
-**Example with 2 objectives (accuracy vs. cost)**:
-```
-Solutions on Pareto frontier:
-A: 95% accurate, $1.00
-B: 90% accurate, $0.50
-C: 80% accurate, $0.20
+Consider all possible orchestration strategies plotted in accuracy-cost space:
 
-Solutions NOT on frontier:
-D: 90% accurate, $1.00  (B is better: same accuracy, lower cost)
-E: 70% accurate, $0.30  (C is better: higher accuracy, similar cost)
-```
-
-**Visualization**:
 ```
 Accuracy
-100% |  A
- 95% |  •
- 90% |    B
- 85% |    
- 80% |      C
- 75% |
- 70% |        E ← Dominated
-     |          D ← Dominated
-     +-------------|-------|-------|
-        $0.20   $0.50   $1.00   Cost
+100%|      + Pareto-optimal strategies
+    |    +   (cannot improve one without hurting other)
+ 90%|  +   +
+    |     +
+ 80%|   +   +
+    |      +
+ 70%|       +
+    +-----------+--------+--------
+      $0.01   $0.05   $0.10   Cost
 ```
 
-### Scalarization and Pareto Solutions
+Points on the upper-left frontier are Pareto-optimal: you cannot improve accuracy without increasing cost, or reduce cost without sacrificing accuracy. Points away from the frontier are dominated—there's a better point that's both more accurate and cheaper.
 
-**Key theorem**: For any set of positive weights w_i, the solution that maximizes ∑ w_i × R_i is Pareto optimal.
+**ToolOrchestra aims to learn strategies on the Pareto frontier.** Different preference vectors select different points on the frontier. High accuracy preference selects the upper-left corner (expensive but accurate). High cost preference selects the lower-right corner (cheap but less accurate). Intermediate preferences select points in between.
 
-**Intuition**: If there were a solution that improved all objectives, the weighted sum would increase.
+### Why Linear Scalarization Works (and When It Doesn't)
 
-**ToolOrchestra's approach**: User preferences define weights, so the trained policy learns to find Pareto-optimal solutions for different weight vectors.
+Linear scalarization (weighted sums) is mathematically guaranteed to find Pareto-optimal points—with one caveat. It can only find points on the **convex hull** of the Pareto frontier. If the frontier has concave regions, linear scalarization cannot reach points in those regions regardless of weight choices.
 
-### Limitations of Linear Scalarization
+For ToolOrchestra's cost-accuracy trade-off, the frontier is likely convex: doubling accuracy doesn't require more than doubling cost. This makes linear scalarization reasonable. For other problems where the frontier might be concave, more sophisticated approaches (Chebyshev scalarization, constraint-based optimization) might be needed.
 
-**Problem**: Linear scalarization can't find solutions in non-convex regions of the Pareto frontier.
+### Preference Learning: Could We Infer P?
 
-**Example**: Suppose the Pareto frontier has a "dip":
-```
-Objective 2
-    |    A     C
-    |      \  /
-    |       B     ← B is Pareto optimal but unreachable by linear scalarization
-    |____________ Objective 1
-```
+ToolOrchestra assumes preference vectors are specified explicitly by users. But what if users can't articulate their preferences? What if they'd rather just approve or reject proposed solutions?
 
-**Why**: Linear combinations of A and C can never produce B.
+This connects to **inverse reinforcement learning** and **preference learning from comparisons**. Given user behavior (approvals, rejections, explicit comparisons), algorithms like Bradley-Terry or the methods behind RLHF can infer an underlying preference model.
 
-**ToolOrchestra's mitigation**: The diverse tool configurations during training expose the model to varied trade-off landscapes, implicitly exploring different regions of the Pareto frontier.
+ToolOrchestra doesn't implement this, but the architecture supports it. The preference-conditioned policy could be trained on inferred preferences just as well as stated ones. This is a natural extension for production systems where gathering explicit preference vectors might be impractical.
 
-### Connection to Multi-Task Learning
+### Multi-Stakeholder Preferences
 
-**Multi-task learning**: Train one model on multiple tasks simultaneously
-- Challenge: Balancing gradients from different tasks
-- Common solution: Weighted loss with task weights
+A final complication: in real deployments, multiple stakeholders may have conflicting preferences. The end user wants fast answers. The developer wants low costs. The organization wants compliance and safety. Society wants privacy preservation.
 
-**Multi-objective RL**: Train one policy for multiple objectives
-- Challenge: Balancing rewards from different objectives
-- ToolOrchestra solution: User-specified preference weights
+How should these be balanced? This is fundamentally a social choice question, not just a technical one. ToolOrchestra's preference vector could represent an aggregated preference, but who decides the aggregation weights?
 
-**Research parallel**: 
-- Multi-task learning: GradNorm (Chen et al., 2018) - automatically balance gradient magnitudes
-- Multi-objective RL: Could we automatically balance reward scales instead of manual normalization?
-
-### Open Research Questions
-
-1. **Adaptive weights**: Current approach uses fixed user preferences. Could preferences adapt during trajectory based on how the problem unfolds?
-
-2. **Pareto frontier approximation**: Could we train an ensemble of policies, each optimizing different points on the Pareto frontier, then select at test time?
-
-3. **Constraint-based formulation**: Instead of scalarization, formulate as: Maximize accuracy subject to cost < $0.50, latency < 10s. This is **constrained RL**, an active research area.
-
-4. **User preference learning**: Instead of explicit preference vectors, could we learn preferences from user behavior? This connects to **inverse RL** and **preference learning**.
+Research on **multi-stakeholder AI** and **social choice for AI alignment** addresses these questions. ToolOrchestra's technical infrastructure—conditioning policy on explicit preference parameters—is compatible with whatever aggregation scheme is chosen. The hard questions are about governance, not optimization.
 
 ---
-
 
 ## Conclusion
 
-By the end of this part, the idea of "multi-objective reward" should feel concrete rather than abstract: correctness is treated as non-negotiable, and within the successful trajectories the model is nudged toward cost-, latency-, and preference-aware behavior. That framing carries forward into the empirical results, where improvements are measured not just in raw accuracy but in cost-effectiveness and controllability.
+Multi-objective reward design is what makes ToolOrchestra useful in practice. A system that only optimizes accuracy would be too expensive. A system that only optimizes cost would produce garbage. The combination—accuracy when it matters, efficiency when it suffices, aligned with user priorities—enables deployment across diverse contexts.
 
-## Academic Papers
+The key technical choices are: binary gating on correctness (don't reward efficient wrong answers), batch normalization (make dimensions comparable), and preference conditioning (allow runtime control over trade-offs). Together, these transform the messy multi-objective problem into a clean single-objective that reinforcement learning can handle.
 
-35. **Multi-Objective Reinforcement Learning Survey**
-    - Roijers, D.M., Vamplew, P., Whiteson, S., & Dazeley, R. (2013). "A Survey of Multi-Objective Sequential Decision-Making." *Journal of Artificial Intelligence Research*, 48, 67-113
-    - https://www.jair.org/index.php/jair/article/view/10806
-
-36. **Pareto Optimality in RL**
-    - Van Moffaert, K., & Nowé, A. (2014). "Multi-objective Reinforcement Learning using Sets of Pareto Dominating Policies." *Journal of Machine Learning Research*, 15(107), 3483-3512
-    - https://www.jmrl.org/papers/v15/vanmoffaert14a.html
-
-37. **Scalarization Methods**
-    - Roijers, D.M., & Whiteson, S. (2017). "Multi-Objective Decision Making." *Synthesis Lectures on Artificial Intelligence and Machine Learning*
-    - https://www.morganclaypool.com/doi/abs/10.2200/S00765ED1V01Y201704AIM034
-
-38. **Preference Learning**
-    - Wirth, C., Akrour, R., Neumann, G., & Fürnkranz, J. (2017). "A Survey of Preference-Based Reinforcement Learning Methods." *Journal of Machine Learning Research*, 18(136), 1-46
-    - https://www.jmrl.org/papers/v18/16-634.html
-
-39. **RLHF (Reinforcement Learning from Human Feedback)**
-    - Christiano, P.F., Leike, J., Brown, T.B., et al. (2017). "Deep Reinforcement Learning from Human Preferences." *NIPS 2017*
-    - https://arxiv.org/abs/1706.03741
-
-40. **DPO (Direct Preference Optimization)**
-    - Rafailov, R., Sharma, A., Mitchell, E., et al. (2024). "Direct Preference Optimization: Your Language Model is Secretly a Reward Model." *NeurIPS 2024*
-    - https://arxiv.org/abs/2305.18290
-
-41. **Constitutional AI**
-    - Bai, Y., Kadavath, S., Kundu, S., et al. (2022). "Constitutional AI: Harmlessness from AI Feedback." *arXiv:2212.08073*
-    - https://arxiv.org/abs/2212.08073
-
-42. **Multi-Objective Optimization in AI**
-    - Deb, K., Pratap, A., Agarwal, S., & Meyarivan, T. (2002). "A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II." *IEEE Transactions on Evolutionary Computation*
-    - https://ieeexplore.ieee.org/document/996017
-
-43. **Reward Shaping**
-    - Ng, A.Y., Harada, D., & Russell, S. (1999). "Policy Invariance Under Reward Transformations: Theory and Application to Reward Shaping." *ICML 1999*
-    - http://www.robotics.stanford.edu/~ang/papers/shaping-icml99.pdf
-
-## Blog Posts and Tutorials
-
-44. **Pareto Efficiency Explained**
-    - "Understanding Pareto Optimality in Multi-Objective Optimization"
-    - https://towardsdatascience.com/pareto-optimality-in-multi-objective-optimization-3d2e8b5d2b5d
-
-45. **RLHF Deep Dive**
-    - Chip Huyen. "RLHF: Reinforcement Learning from Human Feedback"
-    - https://huyenchip.com/2023/05/02/rlhf.html
-
-46. **Anthropic's RLHF Process**
-    - "Training a Helpful and Harmless Assistant with RLHF"
-    - https://www.anthropic.com/index/training-a-helpful-and-harmless-assistant-with-reinforcement-learning-from-human-feedback
-
-47. **DPO vs RLHF**
-    - Hugging Face Blog. "Preference Tuning LLMs with Direct Preference Optimization"
-    - https://huggingface.co/blog/dpo-trl
-
-48. **Multi-Objective Optimization Tutorial**
-    - "Multi-Objective Optimization: A Tutorial"
-    - https://machinelearningmastery.com/multi-objective-optimization-with-python/
-
-49. **Reward Design Best Practices**
-    - DeepMind. "Specification Gaming: The Flip Side of AI Ingenuity"
-    - https://www.deepmind.com/blog/specification-gaming-the-flip-side-of-ai-ingenuity
-
-## GitHub Repositories
-
-50. **MORL-Baselines**
-    - Multi-Objective RL implementations
-    - https://github.com/LucasAlegre/morl-baselines
-
-51. **TRL with Preference Learning**
-    - https://github.com/huggingface/trl/tree/main/examples/research_projects/stack_llama_2
-
-52. **Reward Modeling Code**
-    - OpenAssistant Reward Model
-    - https://github.com/LAION-AI/Open-Assistant
-
-53. **DPO Implementation**
-    - https://github.com/eric-mitchell/direct-preference-optimization
-
-54. **Pareto Frontier Visualization**
-    - https://github.com/pchtsp/pareto
-
-## Tools and Libraries
-
-55. **Pymoo: Multi-Objective Optimization**
-    - https://pymoo.org/
-
-56. **Platypus: Multi-Objective Optimization Library**
-    - https://github.com/Project-Platypus/Platypus
+The next dive examines where the training data comes from. Real orchestration data is scarce—how do you generate enough high-quality examples to train a robust orchestrator?
 
 ---
 
+## References
+
+### Multi-Objective Optimization
+
+1. **Pareto Optimality in ML**
+   - Sener, O., & Koltun, V. (2018). "Multi-Task Learning as Multi-Objective Optimization." *NeurIPS 2018*
+   - https://arxiv.org/abs/1810.04650
+
+2. **Scalarization Methods**
+   - Miettinen, K. (1999). "Nonlinear Multiobjective Optimization." Springer
+   - https://link.springer.com/book/10.1007/978-1-4615-5563-6
+
+### Preference Learning
+
+3. **Preference Learning Survey**
+   - Fürnkranz, J., & Hüllermeier, E. (2010). "Preference Learning." Springer
+   - https://link.springer.com/book/10.1007/978-3-642-14125-6
+
+4. **Bradley-Terry Model**
+   - Bradley, R.A., & Terry, M.E. (1952). "Rank Analysis of Incomplete Block Designs." *Biometrika*
+   - https://www.jstor.org/stable/2334029
+
+### Reward Design
+
+5. **Reward Design in RL**
+   - Hadfield-Menell, D., et al. (2017). "Inverse Reward Design." *NeurIPS 2017*
+   - https://arxiv.org/abs/1711.02827
+
+6. **Reward Hacking**
+   - Skalse, J., et al. (2022). "Defining and Characterizing Reward Gaming." *NeurIPS 2022*
+   - https://arxiv.org/abs/2209.13085
+
+### Cost-Aware AI
+
+7. **FrugalGPT**
+   - Chen, Y., et al. (2024). "FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance." *arXiv:2305.05176*
+   - https://arxiv.org/abs/2305.05176
+
+8. **RouteLLM**
+   - Ong, I., et al. (2024). "RouteLLM: Learning to Route LLMs with Preference Data." *arXiv:2406.18665*
+   - https://arxiv.org/abs/2406.18665
+
+---
