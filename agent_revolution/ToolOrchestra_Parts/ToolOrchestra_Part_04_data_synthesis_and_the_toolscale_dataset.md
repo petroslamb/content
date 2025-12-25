@@ -1,10 +1,13 @@
 # The Orchestration Paradigm Series: Dive 4
 # The Ground Truth Bottleneck
 
+> **Issue 2: The Factory** | Parts 04, 05, 06
+> This bundle covers the synthetic data pipeline, benchmark physics, and training infrastructure.
+
 > [!NOTE]
 > **System Auditor's Log:** In GenAI, data is the new code. The biggest bottleneck for training agents is not compute; it's the lack of **verifiable trajectory data**. We have petabytes of text (CommonCrawl), but almost zero logs of "optimal" tool use sequences. Humans don't write down their thought processes when they use Google.
 
-This Dive dissects **ToolScale**, the synthetic data pipeline used to train ToolOrchestra. It attempts to solve the "Ground Truth Bottleneck"—the fact that we don't know the optimal way to solve most problems.
+This Dive dissects **ToolScale**, the synthetic data pipeline used to train ToolOrchestra. It attempts to solve the "Ground Truth Bottleneck", the fact that we don't know the optimal way to solve most problems.
 
 ## The Synthetic Pipeline
 
@@ -28,7 +31,7 @@ This creates a labeled dataset: `(Question, Tool_Call, Correct_Answer)`.
 
 ## The "Pass@K" Proxy
 
-The critical innovation—and the potential flaw—is in how they define "success."
+The critical innovation, and the potential flaw, is in how they define "success."
 
 In standard supervised learning, we measure **Exact Match**: did the model output the exact string we expected?
 In tool use, this is too rigid. There are many ways to query a database (`SELECT *` vs `SELECT name`).
@@ -71,7 +74,7 @@ From an auditing perspective, this pipeline introduces **Synthetic Bias**.
 1.  **Teacher Bias:** The orchestrator can never exceed the *reasoning* capabilities of the teacher model (GPT-4) that generated the trajectories. It can only become more efficient at executing them.
 2.  **Triviality Bias:** It is easier to generate verifiable questions about "lookups" (What is the capital of X?) than about "reasoning" (Why did the Roman Empire fall?). This pushes the dataset towards factual retrieval, potentially under-training the "complex reasoning" circuits.
 
-The "verifiable ground truth" is a gold standard, but it constrains the domain to problems with singular, verifiable answers. Ambiguous, open-ended tasks—which are often the most valuable—are systematically filtered out.
+The "verifiable ground truth" is a gold standard, but it constrains the domain to problems with singular, verifiable answers. Ambiguous, open-ended tasks, which are often the most valuable, are systematically filtered out.
 
 ---
 

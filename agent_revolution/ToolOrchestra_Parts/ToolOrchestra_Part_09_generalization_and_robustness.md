@@ -2,7 +2,7 @@
 # The Embeddings Trap (Generalization)
 
 > [!NOTE]
-> **System Auditor's Log:** The "Generalization" claim—that the orchestrator works on tools it hasn't seen—is the most dangerous claim in the paper. It implies a robustness that contradicts how Transformers work. The model does not "understand" the new tool; it simply matches the **embedding vector** of the new tool's description to the clusters it learned during training.
+> **System Auditor's Log:** The "Generalization" claim, that the orchestrator works on tools it hasn't seen, is the most dangerous claim in the paper. It implies a robustness that contradicts how Transformers work. The model does not "understand" the new tool; it simply matches the **embedding vector** of the new tool's description to the clusters it learned during training.
 
 ToolOrchestra claims it can route to `Claude-3` even if it was only trained on `GPT-4`.
 This works via **Description-Based Matching**.
