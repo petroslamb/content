@@ -13,7 +13,7 @@ Their claim: **A model with 8 billion parameters can outperform GPT-5 on PhD-lev
 
 Not through some architectural breakthrough. Not through better training data. Through a deceptively simple idea: *teach a small model to coordinate big ones*.
 
-The paper is called **ToolOrchestra**, and over the next 14 installments, I'm going to take you inside every detail of it, the mathematics, the engineering, the broader research landscape, and the implications for how we build AI systems going forward.
+The paper is called **ToolOrchestra**, and across 4 thematic issues (comprising 13 parts), I'm going to take you inside every detail of it, the mathematics, the engineering, the broader research landscape, and the implications for how we build AI systems going forward.
 
 ---
 
@@ -41,24 +41,24 @@ A smaller model, coordinating larger ones, outperforms the largest model working
 
 ## What You'll Learn
 
-This isn't just a paper summary. Over 14 parts, you'll build a complete mental model of:
+This isn't just a paper summary. Over 13 parts, you'll build a complete mental model of:
 
-### The Problem Space (Parts 1-2)
+### The Problem Space (Parts 00-03)
 - Why "just prompt GPT-5 to use tools" doesn't work (the bias problem)
 - The reinforcement learning foundations that make learned coordination possible
+- The economic thesis: why arbitrage is the future of AI architecture
 
-### The Method (Parts 3-6)
-- How to design reward functions that optimize for accuracy, cost, AND user preferences simultaneously
+### The Method (Parts 04-06)
 - The ToolScale dataset: how to generate thousands of verifiable training examples
 - What benchmarks actually test (and what they miss)
 - The training infrastructure needed to make this work
 
-### The Paradigm (Parts 7-9)
+### The Paradigm (Parts 07-09)
 - The "model-as-tool" concept: treating GPT-5 as just another callable function
 - How the orchestrator learns to align with user preferences
 - Generalization: what happens with tools and pricing the model never saw during training
 
-### The Future (Parts 10a-11)
+### The Future (Parts 10-12)
 - How ToolOrchestra relates to the broader evolution from Toolformer to compound AI systems
 - The Compound AI thesis: why composition beats scale
 - Open research problems: recursive orchestration, multi-agent coordination, tool synthesis
@@ -88,22 +88,23 @@ Every part ends with an **Annotated Bibliography**, curated references to the pr
 
 ## The Series Roadmap
 
-| Part | Title | Core Question |
-|------|-------|---------------|
-| 00 | Overview | What is ToolOrchestra and why does it matter? |
-| 01 | The Fundamental Problem | Why can't we just prompt models to orchestrate? |
-| 02 | RL Foundations | What is GRPO and why does it work for tool use? |
-| 03 | Reward Design | How do you optimize for multiple objectives at once? |
-| 04 | ToolScale Dataset | How do you generate verifiable training data? |
-| 05 | Benchmarks | What does "better performance" actually mean? |
-| 06 | Training Infrastructure | What does it take to train an orchestrator? |
-| 07 | Tool Coordination | How does the model-as-tool paradigm work? |
-| 08 | Preference Learning | How do you adapt to user priorities without retraining? |
-| 09 | Generalization | Does it work on tools it's never seen? |
-| 10a | The Tool Learning Lineage | How did we get from Toolformer to ToolOrchestra? |
-| 10b | The Compound AI Hypothesis | Why does composition beat scale? |
-| 10c | Open Frontiers | What problems remain unsolved? |
-| 11 | Deployment | How do you put this into production? |
+We have organized the 13 parts into 4 thematic issues.
+
+| Issue | Part | Title | Core Question |
+|:---|:---|:---|:---|
+| **1. The Algorithm** | 00 | Overview | What is ToolOrchestra and why does it matter? |
+| | 01 | The Fundamental Problem | Why can't we just prompt models to orchestrate? |
+| | 02 | RL Foundations | What is GRPO and why does it work for tool use? |
+| | 03 | Reward Design | How do you optimize for multiple objectives at once? |
+| **2. The Factory** | 04 | ToolScale Dataset | How do you generate verifiable training data? |
+| | 05 | Benchmarks | What does "better performance" actually mean? |
+| | 06 | Training Infrastructure | What does it take to train an orchestrator? |
+| **3. The Behavior** | 07 | Tool Coordination | How does the model-as-tool paradigm work? |
+| | 08 | Preference Learning | How do you adapt to user priorities without retraining? |
+| | 09 | Generalization | Does it work on tools it's never seen? |
+| **4. The Reality** | 10 | The Evolution of Action | How did we get from Toolformer to ToolOrchestra? |
+| | 11 | Unsolved Frontiers | What problems remain unsolved? |
+| | 12 | Production Engineering | How do you put this into production? |
 
 ---
 
@@ -123,11 +124,11 @@ That's what this series is for.
 
 ## Let's Begin
 
-**Part 00** is live now, a comprehensive analysis of the ToolOrchestra paper's key contributions.
+**Issue 1: The Algorithm** is live now, featuring Parts 00-03. We start with the economic thesis, the calibration paradox, and the core reinforcement learning mathematics.
 
-**Part 01** drops next week: *The Fundamental Problem*, why prompting fails, what biases emerge, and why this had to be learned rather than instructed.
+**Issue 2: The Factory** drops next week.
 
-Subscribe to get each part as it publishes. And if you have questions after any installment, drop them in the comments, the deeper your questions, the deeper I'll go.
+Subscribe to get each issue as it publishes. And if you have questions after any installment, drop them in the comments, the deeper your questions, the deeper I'll go.
 
 The orchestra is warming up. Let's see how the conductor works.
 
