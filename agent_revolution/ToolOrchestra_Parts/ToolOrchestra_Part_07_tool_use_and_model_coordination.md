@@ -20,6 +20,26 @@ The paper identifies three primary coordination patterns. As engineers, we can m
     ```
     The "intelligence" here is entirely in the `detect_uncertainty` threshold. The RL training pushed the weights to recognize that *ignoring* uncertainty leads to a negative Outcome Reward, while *acting* on it incurs a small Efficiency Penalty that is outweighed by the final success.
 
+```mermaid
+stateDiagram-v2
+    [*] --> Router: Query arrives
+    Router --> CheapTool: Low complexity detected
+    Router --> ExpensiveTool: High complexity detected
+    
+    CheapTool --> CheckResult: Execute
+    CheckResult --> Return: Success (confident)
+    CheckResult --> ExpensiveTool: Failure/Uncertainty
+    
+    ExpensiveTool --> Return: Execute
+    Return --> [*]
+    
+    note right of CheckResult
+        The learned threshold:
+        "ambiguous", "unsure", 
+        low confidence tokens
+    end note
+```
+
 ## 2. Parallel Consultation (Map-Reduce)
 *   **Pattern:** The model calls three different tools (e.g., Search, Python, KB) simultaneously or in quick succession without waiting for deep feedback.
 *   **The Audit:** This mirrors the `Map-Reduce` pattern. It happens when the initial query has high entropy (ambiguous intent). The model learns that "spraying" the query reduces the risk of a zero-reward outcome.

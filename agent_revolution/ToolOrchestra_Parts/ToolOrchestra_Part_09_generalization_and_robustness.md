@@ -13,6 +13,23 @@ The orchestrator inputs the *description* of the tool: "A high-reasoning capabil
 During training, it learned that embedding vectors close to "high-reasoning" correlate with optimal rewards for hard tasks.
 
 If `Claude-3` has a description that maps to the same embedding cluster, the routing works.
+
+```mermaid
+graph TD
+    subgraph "Embedding Space (Learned During Training)"
+        M["Math Cluster<br/>●GPT-4-Math<br/>●WolframAlpha<br/>●Calculator"]
+        S["Search Cluster<br/>●Google<br/>●Bing<br/>●DuckDuckGo"]
+        R["Reasoning Cluster<br/>●GPT-4<br/>●Claude-2"]
+    end
+    
+    N["New Tool: Claude-3<br/>'High-reasoning capability'"] -->|Embedding Similarity| R
+    
+    style N fill:#90EE90
+    style R fill:#FFB6C1
+```
+
+**How It Works:** The new tool's description is embedded into vector space. Cosine similarity finds the nearest cluster. The orchestrator routes based on cluster membership, not verified performance.
+
 **Why this breaks:**
 
 1.  **Semantics vs. Performance:** A tool description says *what it does*, not *how well it does it*.
