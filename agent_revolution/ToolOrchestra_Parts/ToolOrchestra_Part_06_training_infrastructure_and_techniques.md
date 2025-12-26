@@ -68,6 +68,19 @@ ToolOrchestra chooses **FSDP (Fully Sharded Data Parallel)** to shard *both* mod
 
 ---
 
+## Infrastructure Glossary
+
+| Term | What It Means | Why It Matters for ToolOrchestra |
+|:---|:---|:---|
+| **FSDP** | Fully Sharded Data Parallel. Splits model weights across GPUs, each GPU holds 1/N of the model. | Enables training 8B orchestrator without needing 80GB on a single GPU. |
+| **NVLink** | High-speed GPU interconnect (600 GB/s vs 64 GB/s PCIe). | Gradient synchronization bottleneck. If NVLink saturates, GPUs idle waiting for sync. |
+| **Gradient Accumulation** | Run multiple forward passes, accumulate gradients, then do one weight update. | Virtually increases batch size without proportional VRAM cost. Critical for GRPO variance reduction. |
+| **Sequence Packing** | Concatenate multiple short sequences into one long context with block-diagonal attention mask. | Avoids wasting compute on padding tokens. Trajectories vary from 500 to 12K tokens. |
+| **KL Penalty** | Regularization term that penalizes divergence from the original pretrained model. | Prevents "reward hacking" where model forgets language to maximize reward. |
+| **Reference Model** | Frozen copy of the model before RL training. Used to compute KL penalty. | Consumes VRAM but ensures the orchestrator stays coherent. |
+
+---
+
 ## Annotated Bibliography
 
 1.  **Zhao et al. (2023)** - *PyTorch FSDP: Experiences on Scaling Llama 2 Training*: Technical deep dive into Sharded Data Parallelism. Essential for understanding why the 16-GPU cluster is a hard requirement, not just a speedup.

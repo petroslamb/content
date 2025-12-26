@@ -20,6 +20,25 @@ This is **Soft Control**. We are not mathematically forcing the constraint (like
 This implies that **Preference Adherence is Probabilistic.**
 A user might set `Cost = 0` (Infinite Budget), but the model might *still* choose a cheap tool because the stochastic sampling just happened to pick it.
 
+### What the Prompt Actually Looks Like
+
+```
+System: You are an orchestrator. User preferences:
+- ACCURACY_PRIORITY: 0.3
+- COST_PRIORITY: 0.6  
+- LATENCY_PRIORITY: 0.1
+Select tools to minimize cost while maintaining acceptable accuracy.
+
+User: What is the derivative of x^3 + 2x?
+```
+
+The preference tokens (`COST_PRIORITY: 0.6`) are just text. During training, the model learned attention patterns that:
+1. Detect these tokens in the system prompt
+2. Correlate high `COST_PRIORITY` values with selecting cheaper tools
+3. Adjust the output probability distribution for tool tokens accordingly
+
+**There is no special mechanism.** It's pure in-context learning, which is why it's fragile.
+
 ## The Linearity Assumption
 
 The assumption in the paper is that preferences interpolate linearly.

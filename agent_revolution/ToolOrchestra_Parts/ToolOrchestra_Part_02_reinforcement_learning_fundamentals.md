@@ -112,3 +112,39 @@ In ToolOrchestra, this property is satisfied by design. The state *is* the entir
 A **policy** is a strategy for choosing actions in states. Formally, it is a function that takes a state and produces a distribution over possible actions.
 
 In ToolOrchestra, the policy is the orchestrator model itself. Given the conversation history (state), the model produces tokens specifying which tool to call (action). Training the orchestrator means adjusting the policy parameters (the billions of weights) so that high-reward actions become more likely.
+
+---
+
+## Appendix: RL Methods Evolution (Optional)
+
+> This appendix traces the lineage of policy optimization methods leading to GRPO. It is for readers familiar with RL basics who want context on why specific algorithmic choices were made.
+
+### The Problem: Training LLMs with RL
+
+Standard supervised learning requires ground-truth labels. But for orchestration, there is no single "correct" tool sequence. Multiple paths can solve the same problem. We need a method that:
+1. Works with sparse, delayed rewards (only know if we succeeded at the end)
+2. Doesn't require a separate value network (VRAM is precious)
+3. Stays close to the pretrained distribution (don't forget language)
+
+### The Evolution
+
+| Method | Year | Key Innovation | Variance | Memory | Best For |
+|:---|:---|:---|:---|:---|:---|
+| **REINFORCE** | 1992 | Policy gradients via log-prob weighting | Very High | 1x | Toy problems, proofs-of-concept |
+| **PPO** | 2017 | Clipped objective + learned Critic baseline | Low | **2x** | Standard RL (robotics, games) |
+| **RLHF** | 2022 | PPO applied to LLM alignment | Low | **2x** | Instruction-following, safety |
+| **GRPO** | 2024 | Group-average baseline, no Critic | Medium | **1x** | **LLMs with limited VRAM** |
+
+### Why GRPO for ToolOrchestra
+
+**The memory constraint:** An 8B orchestrator requires ~16GB in bf16. PPO's Critic is another 8B model. On 16 H100s (80GB each), fitting Policy + Critic leaves minimal room for batch size. Small batches = high gradient variance = unstable training.
+
+**GRPO's trade-off:** Replace the learned Critic with the empirical group average. For each prompt, generate G=4-8 trajectories, compute mean reward, subtract from each trajectory's reward. This is noisier than a trained Critic but requires **zero additional parameters**.
+
+**The variance tax:** GRPO needs ~2-4x larger batch sizes than PPO to achieve similar gradient signal-to-noise. This is why ToolOrchestra requires 16 H100s (not 4): the extra GPUs buy batch size to compensate for the noisier baseline.
+
+### The Practical Implication
+
+If you have unlimited VRAM (e.g., 8x H100s for a 1B model), PPO with a Critic is cleaner. If you're VRAM-constrained (8B+ models), GRPO is the only viable path without model parallelism for the Critic.
+
+ToolOrchestra chose GRPO because the alternative was either (a) a smaller orchestrator or (b) 2x the GPU budget. Neither was acceptable.
