@@ -29,6 +29,26 @@ Then, they generate the "problems."
 
 This creates a labeled dataset: `(Question, Tool_Call, Correct_Answer)`.
 
+```mermaid
+flowchart TD
+    subgraph "Phase 1: Environment Synthesis"
+        A[LLM Generates DB Schema] --> B[LLM Populates with Fake Data]
+        B --> C[Generate Python Tool Functions]
+    end
+    
+    subgraph "Phase 2: Task Synthesis"
+        C --> D[LLM Generates Questions]
+        D --> E[Execute Tool Calls]
+        E --> F{Matches Ground Truth?}
+    end
+    
+    F -->|Yes| G[Keep as Training Data]
+    F -->|No| H[Discard]
+    G --> I[Select Most Efficient Path]
+```
+
+**The Closed Loop:** Because the environment is synthetic, the system *knows* the ground truth. This enables automatic verification at scale without human labelers.
+
 ## The "Pass@K" Proxy
 
 The critical innovation, and the potential flaw, is in how they define "success."

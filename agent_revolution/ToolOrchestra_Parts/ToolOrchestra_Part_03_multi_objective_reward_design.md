@@ -66,6 +66,28 @@ def calculate_reward(trajectory, preferences, batch_stats):
 This scalarization forces the model to learn an implicit **exchange rate**.
 If $w_{cost} = 0.5$ and $w_{lat} = 0.5$, the model learns that 1 standard deviation of cost is "equal" to 1 standard deviation of latency.
 
+```mermaid
+graph LR
+    subgraph "The Pareto Frontier"
+        direction TB
+        A["High Accuracy<br/>High Cost<br/>(GPT-5 Always)"] 
+        B["Balanced<br/>(ToolOrchestra Default)"]
+        C["Low Accuracy<br/>Low Cost<br/>(Cheap Tools Only)"]
+    end
+    
+    A -->|"w_cost ↑"| B
+    B -->|"w_cost ↑"| C
+    C -->|"w_acc ↑"| B
+    B -->|"w_acc ↑"| A
+```
+
+**Reading the Frontier:**
+- Moving **right** (increasing $w_{cost}$) slides toward cheaper, lower-accuracy configurations
+- Moving **left** (increasing $w_{acc}$) slides toward expensive, higher-accuracy configurations
+- There is no "up and right" (high accuracy AND low cost) because that would dominate all other points
+
+**The Scalarization Choice:** ToolOrchestra uses **linear scalarization** ($R = w_{acc} \cdot Acc - w_{cost} \cdot Cost$). This draws a line through the Pareto frontier and picks the tangent point. Linear scalarization cannot find points on non-convex regions of the frontier. This is a known limitation traded for computational simplicity.
+
 The danger in this design is **Mode Collapse**. The model might find a local optimum where it simply refuses to use expensive tools at all (driving cost to zero), effectively becoming a standard dumb model.
 
 To prevent this, the training data must force the model into situations where *only* expensive tools can solve the problem. If the tasks are too easy, the "Efficiency Reward" will cannibalize the "Outcome Reward," and the orchestrator will learn to be a miser rather than a manager.
