@@ -1,0 +1,67 @@
+graph TD
+    %% -- STYLING --
+    classDef money fill:#ffcccc,stroke:#cc0000,stroke-width:2px;
+    classDef brain fill:#e6e6fa,stroke:#483d8b,stroke-width:2px;
+    classDef infra fill:#f0f0f0,stroke:#666666,stroke-width:1px,stroke-dasharray: 5 5;
+    classDef logic fill:#d4e6f1,stroke:#2980b9,stroke-width:2px;
+    classDef hazard fill:#fffce0,stroke:#f1c40f,stroke-width:2px;
+
+    subgraph "THE CRITICAL PATH (Revenue vs. Burn)"
+        User((User Request)) -->|Pays Fee| Gateway
+        
+        subgraph "Inference Loop (The Burn)"
+            Router["8B Router Policy"] 
+            Context["Context Window (32k)"]
+            
+            Router -->|Token Gen Cost| Thought["Reasoning Trace"]
+            Thought -->|Tool Call| ToolHub
+            ToolHub -->|Observation| Context
+            Context -->|History Injection| Router
+            
+            %% The Death Spiral
+            Context -.->|Saturation Risk| Entropy["Entropy / Hallucination"]
+            Entropy -.->|Confused Model| Router
+        end
+        
+        Gateway[API Gateway / Rate Limiter] --> Context
+        
+        class Router brain
+        class Context money
+        class Entropy hazard
+    end
+
+    subgraph "THE REALITY GAP (External World)"
+        ToolHub{"Tool Registry"} 
+        
+        API1["Stale API (Google)"]
+        API2["Flaky API (Custom)"]
+        API3["Expensive API (GPT-5)"]
+        
+        ToolHub -->|Network IO Latency| API1
+        ToolHub -->|Network IO Latency| API2
+        ToolHub -->|High Cost| API3
+        
+        %% Drift
+        Drift["Schema Drift"] -.->|Breaks| ToolHub
+        
+        class API3 money
+        class Drift hazard
+    end
+
+    subgraph "THE CONTROL PLANE (Offline)"
+        Logs[Trace Logs] -->|Offline RL| Trainer[GRPO Optimization]
+        Trainer -->|Weight Updates| Router
+        
+        Monitor[Cost Anomaly Detection] -.->|Kill Switch| Gateway
+        
+        class Trainer brain
+        class Monitor logic
+    end
+
+    %% Legend
+    User --> Gateway
+    Router -.->|Log| Logs
+    
+    %% Annotations
+    linkStyle 3 stroke:#cc0000,stroke-width:3px,color:red;
+    linkStyle 10 stroke:#cc0000,stroke-width:3px,color:red;
