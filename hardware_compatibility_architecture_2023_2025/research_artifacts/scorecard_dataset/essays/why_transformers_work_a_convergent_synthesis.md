@@ -1,532 +1,388 @@
 # Why Transformers Work: A Convergent Synthesis
 
-*Working Note v2.2 — February 2026*
+*Working Note v3.0 — February 2026*
 
 ---
 
 ## Abstract
 
-This document synthesizes independent research threads that offer high-level interpretations of why Transformer architectures dominate large-scale language modeling. We identify four convergent themes across the literature: content-addressable memory, implicit optimization, flexible routing, and training-as-selection.
+Transformers dominate large-scale language modeling. Many “explanations” describe different aspects of the same system: attention as associative memory, in-context learning as implicit optimization, attention heads as routing circuits over a shared residual stream, and scaling as a training-time selection process. This note treats those interpretations as **constraints** rather than as a single unified mechanism.
 
-**Thesis:** We *propose* that attention's success arises not from any single property, but from its simultaneous satisfaction of multiple functional requirements within the constraints of current hardware economics and training paradigms. This is a hypothesis, not an established fact.
+**Thesis (regime-conditional):** Under today’s regime—dense autoregressive pretraining, deep residual stacks, large-batch Adam/SGD, and GPU-centric kernels—self-attention is not uniquely optimal on any one axis. It is unusually good at meeting a *bundle* of requirements simultaneously. Alternatives often improve one dimension (e.g., asymptotic efficiency) while leaving at least one requirement partially met or empirically unverified; hybrids that reintroduce attention specifically for retrieval tend to recover performance.
 
-**This synthesis makes three contributions beyond literature review:**
+We propose four operational requirements that recur across methodologically distinct lines of work:
 
-1. We demonstrate that the convergent themes are methodologically independent, not merely products of a self-confirming research community
-2. We derive a novel prediction—testable only via this synthesis—about the conditions under which attention could be displaced
-3. We propose a master falsification test: any architecture satisfying all four themes should match attention; failure indicates incomplete theme identification
+1. **Content-addressable random access** (associative retrieval from arbitrary positions)
+2. **Inference-time learning** (inner-loop adaptation; implicit optimization/inference in the forward pass)
+3. **Input-dependent routing** (conditional information flow; variable dependency graphs)
+4. **Scalable optimization substrate** (stable deep training and compositional refinement at scale)
 
-The synthesis is explicitly interpretive. Its value lies in providing a falsifiable framework for evaluating architectural claims and explaining why alternatives fail under current regimes.
-
-**Position note:** This is a position piece, not a comprehensive survey. Where evidence is thin, claims are framed as hypotheses rather than conclusions. The intent is to be testable, not definitive.
-
----
-
-## 1. The Question
-
-The Transformer architecture, introduced by Vaswani et al. (2017) for machine translation, has become the dominant substrate for large language models. Despite sustained research into alternatives—state-space models, linear attention, recurrent variants—no pure non-attention architecture has matched Transformer capabilities at frontier scale.
-
-**The standard explanation** attributes this to hardware and institutional lock-in: Transformers fit GPUs, and ecosystems have co-evolved around them. This explanation is correct but incomplete. It explains why alternatives *cannot displace* Transformers. It does not explain why the Transformer *works in the first place*.
-
-**This document addresses the second question:** What properties of the Transformer architecture make it an effective substrate for general-purpose language modeling? We answer not through novel mechanism discovery, but through synthesis of existing interpretations—and through this synthesis, we derive claims that no individual interpretation makes.
+This is a position piece. Claims are labeled by evidential status, and we specify falsification experiments and displacement conditions.
 
 ---
 
-## 2. Methodology: Convergent Evidence
+## 1. Two Questions, One Confusion
 
-Rather than propose a new theory, we synthesize interpretations from independent research programs. If multiple lines of investigation—developed with different assumptions and methods—converge on compatible descriptions, their intersection may identify properties that are genuinely important, rather than artifacts of a particular analytical lens.
+When people ask “why Transformers work,” they often conflate two questions:
 
-We draw on primary papers spanning six research areas plus architectural alternatives:
+1. **Capability:** What properties make Transformers effective sequence models at scale?
+2. **Dominance:** What forces make them hard to displace once they are effective?
 
-| Research Area | Key Papers | Years |
-|---------------|------------|-------|
-| Associative Memory | Ramsauer et al., Ba et al. | 2016, 2020 |
-| Implicit Optimization | Von Oswald et al., Garg et al. | 2022, 2023 |
-| Bayesian Inference | Xie et al. | 2022 |
-| Circuits/Interpretability | Elhage et al., Olsson et al. | 2021, 2022 |
-| Compression Theory | Delétang et al. | 2024 |
-| Training Dynamics | Frankle & Carlin, Power et al. | 2019, 2022 |
-| Alternative Architectures | Gu & Dao, Sun et al., Poli et al., De et al., Beck et al., Lieber et al. | 2023–2024 |
+Hardware fit and ecosystem lock-in are powerful answers to (2), but incomplete answers to (1). This note addresses both, explicitly separating **functional requirements** from the **selection regime** that amplifies them.
 
-Full citations appear in the appendix. We extract common themes, not to prove that Transformers *must* work, but to identify candidate properties that could explain *why* they do. Convergence is suggestive, not dispositive; the value is in the testable constraints it implies.
+### 1.1 Scope and Regime Assumptions
 
----
+This synthesis is about the regime in which Transformers actually dominate:
 
-## 3. The Convergence Problem: Are These Themes Independent?
+- autoregressive next-token training on large, heterogeneous corpora
+- deep residual stacks trained with standard optimizers (Adam/AdamW/SGD variants)
+- GPU/TPU accelerators where GEMM-like kernels and high arithmetic intensity matter
+- deployment that values both quality and throughput
 
-Before presenting the themes, we must address the strongest skeptical objection: *Are these interpretations actually independent, or are they products of a self-confirming research community?*
-
-### 3.1 The Skeptic's Case
-
-The independence claim is suspicious:
-
-- **Hopfield/Fast Weights:** Both Ramsauer et al. and Ba et al. studied attention mechanisms directly. Their frameworks describe attention, not neural computation in general.
-- **Implicit Optimization:** Von Oswald et al. and Garg et al. are both in the "ICL as learning" subfield. They share assumptions about what in-context learning *is*.
-- **Circuits:** Elhage et al. and Olsson et al. are from Anthropic—a single institution's research program, not independent confirmation.
-
-If these interpretations are not independent, their "convergence" proves nothing. We have merely documented that researchers studying attention describe attention.
-
-### 3.2 The Case for Methodological Independence
-
-We argue independence holds at the level of *methodology*, not community:
-
-| Interpretation | Core Method | Mathematical Framework |
-|----------------|-------------|------------------------|
-| Hopfield networks | Energy-based analysis | Lyapunov stability, fixed-point dynamics |
-| Implicit GD | Linear regression probing | Closed-form OLS equivalence |
-| Bayesian ICL | Probabilistic inference | Posterior predictive distributions |
-| Circuits | Activation patching, causal intervention | Compositional program analysis |
-| Compression | Information theory | Bits-per-byte, Kolmogorov complexity |
-| LTH/Grokking | Training dynamics | Sparse subnetwork optimization |
-
-These are different *kinds* of analysis. Energy-based methods differ from Bayesian analysis, which differs from information-theoretic compression, which differs from mechanistic circuit discovery. If researchers using orthogonal methods arrive at compatible conclusions, the convergence carries weight.
-
-### 3.3 Proposed Independence Tests
-
-If the themes were redundant, targeted interventions would not differentially affect them. The following tests would distinguish them; several are only partially tested and should be treated as hypotheses.
-
-1. **If content-addressable memory = flexible routing:** Linear attention (which has flexible routing) should provide content-addressable memory. If retrieval benchmarks show a persistent gap, the equivalence fails.
-
-2. **If implicit optimization is epiphenomenal:** Breaking the gradient-descent equivalence (e.g., via architectures that cannot implement GD-like updates) should not hurt ICL. This remains a clear falsification test, not a settled result.
-
-3. **If training dynamics are architecture-independent:** Non-residual architectures should grok with similar dynamics. There is limited evidence; a direct study is needed.
-
-The themes are *distinguishable in principle* because architectural interventions can affect them differentially. Whether they are independent in practice is an empirical question.
+If a future regime changes these constraints (e.g., different objectives, compute substrates, or retrieval-augmented training), some conclusions may stop applying.
 
 ---
 
-## 4. Four Convergent Themes
+## 2. Method: Convergent Constraints, Not a Single Mechanism
 
-### 4.1 Content-Addressable Memory
+We draw on “interpretations” of Transformers that use different methods:
 
-**Evidence base:** Ramsauer et al. (2020) show that softmax attention is mathematically equivalent to a modern Hopfield network update; Ba et al. (2016) propose fast weights as a rapidly updated associative memory for recent context; Olsson et al. (2022) provide mechanistic evidence that induction heads implement pattern completion by copying from earlier context. On the limitation side, Beck et al. (2024) identify nearest‑neighbor retrieval as a failure mode for standard LSTMs, and De et al. (2024) report that recurrent/hybrid models underperform Transformers on copying and exact‑retrieval tasks without fine‑tuning.
+| Lens | Representative work | Core method |
+|------|---------------------|-------------|
+| Associative memory | Ramsauer et al. (2020); Ba et al. (2016) | energy / fast-weights analysis |
+| ICL as optimization | Von Oswald et al. (2023); Garg et al. (2022) | closed-form equivalences; meta-learning |
+| ICL as inference | Xie et al. (2022) | Bayesian framing; synthetic data |
+| Mechanistic circuits | Elhage et al. (2021); Olsson et al. (2022) | causal interventions; activation patching |
+| Compression view | Delétang et al. (2024) | information-theoretic framing |
+| Training dynamics | Frankle & Carbin (2019); Power et al. (2022) | optimization dynamics; implicit sparsity |
 
-**The convergent claim:** Attention provides content-addressable memory retrieval. Unlike recurrent hidden states that compress history into fixed-size buffers, attention allows direct access to any token representation based on content similarity.
+These lenses are not “independent” in a sociological sense—they mostly study Transformers. The claim is weaker: their **methodologies differ**, and their intersection suggests constraints that are difficult to dismiss as a single analytical artifact.
 
-**Why this might matter:** General-purpose language modeling requires accessing information from arbitrary positions based on semantic relevance, not just recency. Content-based addressing enables this without the information bottleneck of compressed state.
+### 2.1 What Would Make “Convergence” Non-Informative?
 
-**Operationalization:** Measure random key-value retrieval accuracy as a function of context length and compare to an attention baseline at matched scale.
-
-**The discriminating test:** Architectures lacking content-addressable access should show larger retrieval gaps on extraction-style tasks (key-value association, needle-in-haystack, phonebook lookup) than attention at matched scale. Reported gaps in recent SSM work are suggestive but vary by implementation.
-
----
-
-### 4.2 Implicit Optimization at Inference Time
-
-**Evidence base:** Von Oswald et al. (2023) construct linear self‑attention weights that implement gradient descent steps and show trained Transformers often match this behavior. Garg et al. (2022) train Transformers to in‑context learn function classes, achieving performance comparable to optimal least‑squares estimators. Xie et al. (2022) frame in‑context learning as implicit Bayesian inference over latent concepts and show that, in synthetic settings, both Transformers and LSTMs can exhibit ICL—suggesting the phenomenon is not unique to attention but may be easier to realize in it.
-
-**The convergent claim:** The forward pass is not merely prediction—it is adaptation. Given context examples, the model extracts a task-relevant representation and applies it to generate outputs. The computation changes based on what the context provides.
-
-**Why this might matter:** LLM-style generality requires adapting behavior at inference time based on instructions or demonstrations. Architectures that lack mechanisms for inference-time adaptation cannot exhibit zero-shot or few-shot generalization across open-ended tasks.
-
-**Operationalization:** Use function-learning setups (e.g., linear regression in-context) and measure whether the forward pass implements OLS-like updates or Bayesian posterior predictions.
-
-**The discriminating test:** Architectures that cannot implement iterative refinement (single-layer models, feedforward-only networks) should show materially weaker ICL, even at high parameter counts. Evidence to date suggests this, but it is not settled.
+Convergence is unhelpful if the lenses are merely re-descriptions of the same property. We therefore treat the requirements below as *separable* hypotheses and propose targeted tests (Section 10) that can differentially break them.
 
 ---
 
-### 4.3 Flexible, Input-Dependent Routing
+## 3. Four Operational Requirements
 
-**Evidence base:** Elhage et al. (2021) provide a circuit-level framework where attention heads act as information movement over a shared residual stream, making routing patterns input‑dependent. Poli et al. (2023) identify data‑controlled operators and unrestricted context as key properties correlated with attention’s performance, motivating Hyena as an attempt to replicate those properties with subquadratic primitives. Delétang et al. (2024) show that large language models act as strong compressors across modalities, reinforcing the view that models exploit input‑dependent structure rather than fixed, uniform processing.
+Each requirement is (i) a functional capability, (ii) tied to at least one operational test, and (iii) potentially satisfiable by non-attention mechanisms. The synthesis is falsified if the bundle is incomplete or misidentified.
 
-**The convergent claim:** Attention enables dynamic information flow. Unlike convolutions or recurrence with fixed receptive fields, attention routes information based on what the input requires. The computation graph changes with the input.
+### R1. Content-Addressable Random Access (Associative Retrieval)
 
-**Why this might matter:** Natural language exhibits long-range dependencies with irregular structure. Efficient compression and prediction require flexible access patterns that can adapt to each sequence, not fixed architectures that process all sequences identically.
+**Definition:** The model can retrieve information from arbitrary positions in context based on content similarity or keying, without compressing the entire past into a fixed-size state.
 
-**Operationalization:** Evaluate variable-dependency cloze tasks with long, irregular gaps and measure performance decay as gap size increases.
+**Why it matters:** Language (and many sequence domains) frequently requires “needle-like” access: retrieving a specific entity, value, or span conditioned on a query. Fixed-state models face an information bottleneck; windowed models face a coverage bottleneck.
 
-**The discriminating test:** Fixed-pattern architectures (convolutions, fixed-stride attention) should underperform on variable-structure tasks. Several studies report this degradation, but the effect size depends on task and implementation.
+**Evidence in Transformers:**
+- Softmax attention is equivalent to a modern Hopfield network update under a particular formulation (Ramsauer et al., 2020).
+- Fast weights frame attention-like mechanisms as a rapidly updated associative memory (Ba et al., 2016).
+- Induction heads provide a mechanistic example of pattern completion via copying from earlier context (Olsson et al., 2022).
+- In recent non-attention SSM work, authors explicitly report a remaining retrieval limitation relative to Transformer baselines and recommend hybrid retrieval mechanisms (Anonymous, 2026). In their retrieval suite, a 1.5B Mamba-3 variant reports **SWDE 28.5** versus **Transformer 48.9** (Anonymous, 2026, Table 2).
 
----
+**Operational tests (examples):**
+- key–value / associative recall tasks as a function of context length
+- semi-structured extraction tasks (e.g., SWDE-like cloze extraction as used in Anonymous, 2026)
+- “phonebook lookup” style retrieval under context lengths that exceed any local window (De et al., 2024)
 
-### 4.4 Training Discovers Structure
+**Working definition (for this note):** A mechanism counts as “random-access retrieval” if it allows a query-dependent read of *arbitrary* stored items whose capacity scales with context length (not just a fixed-size state or fixed window). This includes explicit key–value memory, kNN-style retrieval, or attention-like sparse lookup; it excludes purely fixed-state recurrence without such a read path.
 
-**Evidence base:** Frankle & Carlin (2019) show that dense networks contain sparse subnetworks (“winning tickets”) that can train to full accuracy, suggesting that training can discover efficient structure inside overparameterized models. Power et al. (2022) show grokking: generalization can emerge long after training loss is near‑zero, indicating that extended optimization can restructure representations toward more systematic solutions.
-
-**The convergent claim:** Large-scale training is not just parameter optimization—it is structural discovery. Training finds sparse, generalizing solutions within overparameterized hypothesis spaces. This requires both capacity (room to search) and pressure (forces toward compression).
-
-**Why this might matter:** If training is a process of structural discovery, architectures must support stable optimization at scale while allowing late‑stage reorganization of representations. Residual pathways are a common design choice in large Transformer variants (Vaswani et al., 2017) and are consistent with this requirement, though the necessity of residuals remains an empirical question.
-
-**Operationalization:** Track training stability and generalization emergence (e.g., grokking dynamics) across depth with and without residual-like pathways at matched scale.
-
-**The discriminating test:** Architectures lacking residual‑like pathways should be compared head‑to‑head with residualized baselines at scale on training stability and late‑stage generalization dynamics. A clear counterexample would weaken this claim.
-
----
-
-## 5. The Synthesis: Pareto-Dominance Across Requirements
-
-The Transformer is not special because it does one thing well. It is special because it does **four things adequately within the same architecture**.
-
-### 5.1 Theme Satisfaction Criteria
-
-To avoid ambiguity, we define operational criteria for each mark:
-
-| Mark | Meaning | Threshold |
-|------|---------|----------|
-| ✓ | Full satisfaction | Architecture implements mechanism matching theme definition; demonstrated in cited paper(s) |
-| ~ | Partial satisfaction | Mechanism present but constrained (e.g., fixed window, bounded capacity, no direct equivalence) |
-| ✗ | Does not satisfy | No mechanism mapping to theme; or cited paper explicitly identifies gap |
-| ? | Insufficient evidence | No published study evaluating this dimension at scale |
-
-### 5.2 The Theme Satisfaction Matrix
-
-| Architecture | Content Memory | Implicit Opt | Flexible Routing | Trainability | Evidence Anchor |
-|--------------|----------------|--------------|------------------|--------------|----------------|
-| **Attention** | ✓ (Hopfield/induction) | ✓ (GD/OLS) | ✓ (routing circuits) | ✓ (residual blocks) | Ramsauer; Olsson; Von Oswald; Garg; Elhage; Vaswani |
-| **Mamba/SSM** | ~ (selection, but retrieval gap) | ? | ~ (input‑dependent) | ✓ (scaling) | Gu & Dao; Jamba Table 6 |
-| **Mamba-3** | ~ (SWDE 28.5% vs TF 48.9%) | ? | ~ (complex SSM) | ✓ (Pareto frontier) | Mamba-3 (2026) |
-| **RetNet** | ~ (retention) | ~ (reported ICL) | ~ (decay‑structured) | ✓ (scaling) | Sun et al. |
-| **Hyena** | ~ (long conv + gating) | ? | ~ (data‑controlled) | ✓ (scaling) | Poli et al. |
-| **Griffin (hybrid)** | ~ (local attn fails past 1024) | ? | ~ (local routing) | ✓ (scaling) | De et al. |
-| **xLSTM** | ~ (matrix memory fails NNS) | ? | ✗ (fixed recurrence) | ~ (scaling) | Beck et al. |
-| **Jamba (hybrid)** | ✓ (via attention) | ✓ (ICL: 84.1% vs Mamba 48.8%) | ✓ (via attention) | ✓ (scaling) | Lieber et al. Table 6 |
-
-**Legend:** ✓ = supported in cited paper(s), ~ = partial/indirect support, ✗ = evidence against, ? = not established  
-**Note:** This is an evidence map, not a verdict. Marks are provisional and should be updated as new results appear.
-
-### 5.2 Interpretation
-
-**Attention appears Pareto‑dominant on current evidence:** The alternatives we can evaluate tend to improve one axis (e.g., long‑context efficiency or throughput) while leaving at least one theme only partially supported or untested in the cited results (Gu & Dao, 2024; Sun et al., 2023; Poli et al., 2023; De et al., 2024).
-
-**Hybrids inherit dominance:** By incorporating attention layers for retrieval, hybrids can satisfy all four themes. Reported hybrids interleave attention with SSM layers and show strong benchmark performance and long‑context capability (Lieber et al., 2024).
-
-**The synthesis claim:** Attention's dominance is not due to optimality on any single axis, but to *adequacy across the combination*. Alternatives that excel on one axis while failing another cannot displace attention—they can only supplement it.
+**Falsification target:** A non-attention architecture matches attention within a small margin on these retrieval tests at scale *without introducing an attention-like random-access mechanism*.
 
 ---
 
-## 6. The Selection Regime: Hardware Co-Evolution
+### R2. Inference-Time Learning (Implicit Optimization / Inference)
 
-Even if an alternative architecture could satisfy all four themes, it faces additional constraints that create selection pressure toward attention-like implementations.
+**Definition:** The forward pass performs computation that is well-modeled as an inner-loop update: fitting or inferring a task/hypothesis from context examples and applying it to new inputs.
 
-### 6.1 The Hardware Did Not Stand Still
+**Why it matters:** LLMs are used as instruction followers and few-shot learners. If this behavior is robust, architectures that cannot implement algorithmic adaptation in a single forward pass are at a disadvantage.
 
-The co-evolution of attention and accelerator hardware is not coincidental—it is bidirectional, and it is documented in vendor roadmaps and kernel work (NVIDIA, 2022; NVIDIA, 2024; Dao et al., 2022; Dao et al., 2023):
+**Evidence in Transformers:**
+- Transformers can learn in-context by implementing gradient-descent-like updates in their layers in controlled settings (Von Oswald et al., 2023).
+- In synthetic function-learning, Transformers trained on data from a function family can match optimal estimators (e.g., OLS in linear regression) (Garg et al., 2022).
+- ICL can also appear in LSTMs on specific synthetic datasets, suggesting the phenomenon is not unique to attention, though its realizability and scaling may differ (Xie et al., 2022).
 
-| Year | NVIDIA Generation | Attention-Relevant Feature | Effect on Alternatives |
-|------|-------------------|---------------------------|-------------------------|
-| 2017 | Volta (V100) | Tensor Cores (FP16 GEMM) | Attention benefits from GEMM‑optimized hardware |
-| 2020 | Ampere (A100) | TF32, Structured Sparsity | FlashAttention reports large speedups (Dao et al., 2022; Dao et al., 2023) |
-| 2022 | Hopper (H100) | Transformer Engine, FP8 | Transformer‑optimized mixed‑precision support (NVIDIA, 2022) |
-| 2024 | Blackwell (B200) | Second‑gen Transformer Engine | Continued transformer optimization (NVIDIA, 2024) |
+**Operational tests (examples):**
+- synthetic regression/classification ICL with known Bayes/OLS optima
+- probing whether layer-wise updates match GD/OLS/Bayesian posterior predictions
+- ablations that selectively disrupt the mechanisms hypothesized to implement the update (e.g., disabling certain attention patterns) and measuring ICL degradation
 
-Recent hardware generations include features explicitly targeting transformer workloads. This is not neutral evolution—vendor bets on Transformers compound over time.
+**Falsification target:** An architecture lacking iterative refinement mechanisms (or with deliberate constraints that preclude GD-like updates) matches Transformer ICL performance on the same controlled tasks.
 
-### 6.2 The Compounding Gap (Illustrative)
+---
 
-Algorithmic advances such as FlashAttention reduce attention’s memory footprint and can significantly improve throughput on modern GPUs (Dao et al., 2022; Dao et al., 2023). As a result, alternatives must compete against a rapidly improving baseline rather than a static one. Even modest throughput gaps compound over long training runs, translating into materially higher time or cost for equivalent capability.
+### R3. Input-Dependent Routing (Conditional Information Flow)
 
-### 6.3 The Feedback Loop
+**Definition:** The model can route information based on the input, effectively inducing a variable dependency graph over tokens. The computation is not fixed-pattern (as in pure convolutions with fixed kernels or strict recurrence with fixed-state updates).
 
-The trap is bidirectional:
+**Why it matters:** Natural language dependencies are long-range but irregular. Efficient prediction/compression benefits from being able to “connect” arbitrary spans when needed and ignore them otherwise.
 
-1. **Attention drives hardware investment:** Because Transformers dominate, NVIDIA optimizes for Transformers
-2. **Hardware investment deepens the moat:** Because Tensor Cores optimize GEMMs, attention becomes faster
-3. **Faster attention raises the bar:** Alternatives must now beat an optimized baseline, not a neutral one
+**Evidence in Transformers:**
+- The circuits framework models attention heads as information movement operations over a shared residual stream, enabling compositional, input-dependent behavior (Elhage et al., 2021).
+- Architectures proposed as attention alternatives often explicitly target “data-controlled” or conditional operators, suggesting this property is viewed as central even outside attention (Poli et al., 2023).
+- Language modeling can be viewed as compression; strong compressors must exploit input-dependent structure rather than fixed-pattern processing (Delétang et al., 2024).
 
-These feedback effects are consistent with NVIDIA’s transformer‑focused features (NVIDIA, 2022; NVIDIA, 2024) and algorithmic kernel work such as FlashAttention (Dao et al., 2022; Dao et al., 2023).
+**Operational tests (examples):**
+- tasks with irregular long-range dependencies where the relevant span location varies per example
+- interventions that force fixed routing patterns (e.g., fixed-stride or static attention) and measure degradation relative to full attention
 
-Alternatives are not racing against a fixed target. They are racing against a target that accelerates away from them.
+**Falsification target:** Fixed-pattern architectures (no conditional routing) match attention on these variable-structure tasks at scale.
 
-### 6.4 Gate 1 and Gate 2
+---
 
-**Gate 1 (Training Viability):** Architectures must train stably under end-to-end gradient descent at scale. This requires residual-like pathways, parallelizable computation, and compatibility with established optimization methods.
+### R4. Scalable Optimization Substrate (Deep, Stable, Compositional Training)
 
-**Gate 2 (Hardware Economics):** Architectures must achieve competitive throughput on current accelerators. Under NVIDIA GPU economics, this means GEMM-dominated computation and high arithmetic intensity.
+**Definition:** The architecture supports stable optimization at depth and scale, enabling long training runs to discover and refine internal structure (circuits, sparse subnetworks, algorithmic behavior) without chronic instability.
 
-**The trap:** Alternatives must satisfy *both* gates simultaneously. Architectures that are trainable but inefficient stall at Gate 2; architectures that are efficient but unstable stall at Gate 1. Attention currently threads both needles, and the hardware co‑evolution makes catching up on Gate 2 difficult without substantial investment.
+**Why it matters:** Many “better in principle” sequence models fail because they do not train as reliably at scale, or because the training compute needed to reach parity is economically prohibitive.
+
+**Evidence (regime-level, not Transformer-specific):**
+- Dense networks can contain sparse subnetworks that train effectively, consistent with the view that training can select structure within an overparameterized model (Frankle & Carbin, 2019).
+- Generalization can emerge late in training even after overfitting, consistent with extended optimization reorganizing representations (Power et al., 2022).
+- Transformers empirically scale stably across many settings; this note treats that fact as an input condition rather than as something “explained” by LTH/grokking.
+
+**Operational tests (examples):**
+- head-to-head scaling runs with matched token and parameter budgets measuring stability, convergence speed, and final perplexity
+- ablations on residual/norm pathways measuring gradient pathologies and training collapse rates
+- measuring whether late-stage generalization dynamics (grokking-like behavior) occur comparably across architectures under controlled curricula
+
+**Falsification target:** Architectures without residual-like stabilization train as stably as residualized baselines at scale and match downstream capability.
+
+---
+
+## 4. The Synthesis: Why the Bundle Matters
+
+The core claim is not “attention is the unique mechanism.” It is:
+
+> **Bundle claim:** Under current regimes, competitive architectures must satisfy *all four* requirements well enough. Attention is a compact way to satisfy the bundle simultaneously.
+
+This helps explain two empirical patterns:
+
+1. **Tradeoffs in pure alternatives:** Subquadratic models can improve long-context efficiency, but often retain a gap on random-access retrieval or on some forms of in-context behavior.
+2. **Strength of hybrids:** Hybrids that reintroduce even a small amount of attention specifically for retrieval can recover performance, suggesting retrieval is a particularly discriminating requirement.
+
+The bundle claim can be wrong in two ways: (i) the requirements are incomplete (missing a fifth), or (ii) one of the requirements is not actually necessary (a red herring). Section 10 proposes tests to discriminate.
+
+---
+
+## 5. Evidence Map (February 2026)
+
+This table is deliberately conservative: it distinguishes direct evidence from plausibility.
+
+**Legend**
+- **Strong:** explicitly evaluated on an operational test relevant to the requirement
+- **Partial:** mechanism plausibly supports the requirement but is constrained (window/state) or only shown on limited/synthetic setups
+- **Gap:** paper reports a meaningful deficit relative to attention baselines on a relevant test
+- **Unknown:** no clear evaluation found in the cited sources
+
+| Architecture | R1 Retrieval | R2 ICL / implicit update | R3 Conditional routing | R4 Stable scaling | Evidence anchors |
+|--------------|-------------|--------------------------|------------------------|------------------|------------------|
+| **Transformer (attention)** | Strong | Strong | Strong | Strong | Ramsauer; Olsson; Von Oswald; Garg; Elhage |
+| **Mamba (selective SSM)** | Partial | Gap/Partial | Partial | Strong | Gu & Dao; Lieber (Table 6) |
+| **Mamba-3 (SSM)** | Gap | Unknown | Partial | Strong | Anonymous (Table 2; conclusion) |
+| **RetNet (retention)** | Partial | Partial | Partial | Strong | Sun et al. |
+| **Hyena** | Partial | Unknown | Partial | Strong | Poli et al. |
+| **Griffin / Hawk (hybrid recurrence + local attn)** | Gap (window-limited) | Unknown | Partial | Strong | De et al. |
+| **xLSTM** | Partial | Unknown | Unknown | Partial | Beck et al. |
+| **Jamba (hybrid Transformer–Mamba)** | Strong (via attention) | Strong | Strong | Strong | Lieber et al. |
+
+**Notes**
+- “Strong/Partial/Gap” is about the *specific requirement tests*, not overall model quality.
+- Many results are not strict head-to-head comparisons (different token budgets, context lengths, recipes). Treat the map as an evidence ledger, not as a final ranking.
+
+**Key quantitative anchors (for the evidence map above):**
+- Anonymous (2026, Table 2): SWDE extraction **48.9** (Transformer) vs **28.5** (Mamba-3 SISO), 1.5B models.
+- Lieber et al. (2024, Table 6): IMDB accuracy **84.1** (attention) vs **48.8** (Mamba) vs **90.9** (hybrid), 1.3B models after 250B tokens.
+- De et al. (2024, phonebook lookup): Griffin’s retrieval degrades once the phonebook exceeds its **1024** local-attention window.
+
+---
+
+## 6. The Selection Regime: Why Displacement Is Hard
+
+Even if an alternative can satisfy the bundle, it must pass two practical gates:
+
+**Gate 1 — Training viability:** stable end-to-end optimization at scale with acceptable engineering complexity.
+
+**Gate 2 — Hardware economics:** competitive throughput on current accelerators. In practice, this rewards GEMM-dominant computation and kernels with high arithmetic intensity.
+
+### 6.1 Co-evolution of kernels and hardware
+
+Algorithmic improvements such as FlashAttention reduce attention’s memory/IO costs and improve throughput (Dao et al., 2022; Dao, 2023). The net effect is that alternatives compete against a baseline that keeps improving.
+
+This does not prove attention is “optimal.” It explains why an alternative must beat a moving target: not just the architecture, but the architecture plus the ecosystem of kernels and hardware.
 
 ---
 
 ## 7. Counterexample Analysis: What Alternatives Actually Show
 
-We examine several serious attempts to displace attention, summarizing what their own papers establish and where evidence remains thin.
+This section summarizes what the *papers themselves* establish and what remains open.
 
-### 7.1 Mamba / Selective SSMs (Gu & Dao, 2024)
+### 7.1 Mamba (Gu & Dao, 2024)
 
-**Architecture:** Selective state space models with input‑dependent parameters.
+Mamba explicitly identifies a weakness of prior subquadratic models as inability to do “content-based reasoning,” and introduces **selective** (input-dependent) SSM parameters to address it (Gu & Dao, 2024):
 
-**Evidence:** The paper identifies content‑based reasoning as a key weakness of prior subquadratic models and introduces a selection mechanism to address it. It reports strong language modeling results and fast inference, and shows success on synthetic selective‑copy / induction‑style tasks.
+> “We identify that a key weakness of such models is their inability to perform content-based reasoning, and make several improvements.”
 
-**Open gap:** Selection operates through a compressed state; explicit random‑access retrieval is not demonstrated, and retrieval parity with attention remains an open question.
+On synthetic copying/induction tasks, it performs strongly and extrapolates to long lengths. The open question is whether this closes the gap on **random-access retrieval** in real-world extraction and format-sensitive ICL settings.
 
-### 7.2 Griffin (De et al., 2024)
+### 7.2 Griffin / Hawk (De et al., 2024)
 
-**Architecture:** Hybrid gated linear recurrence with local attention.
-
-**Evidence:** Griffin scales to 14B parameters, shows strong efficiency, and reports competitive performance. The authors also note that pre‑trained Hawk/Griffin models underperform Transformers on copying and exact‑retrieval tasks without fine‑tuning.
-
-**Open gap:** Local attention provides limited content‑addressable access; retrieval remains a weak point without targeted training.
+Griffin mixes gated recurrence with **local attention** (windowed). On a phonebook lookup task, Griffin can solve retrieval up to its local attention window and then degrades once the relevant information falls outside the window (De et al., 2024). This is a concrete example of a *coverage bottleneck* rather than an information bottleneck.
 
 ### 7.3 xLSTM (Beck et al., 2024)
 
-**Architecture:** Exponential gating and matrix memory; residual xLSTM blocks.
+xLSTM is an attempt to fix specific LSTM limitations (nearest-neighbor search, rare token prediction, parallelizability) via exponential gating and matrix memory (Beck et al., 2024). It demonstrates that state-based models can be improved substantially, but it does not (by itself) establish attention-like random access over arbitrary contexts.
 
-**Evidence:** The paper explicitly diagnoses LSTM failure modes on nearest‑neighbor retrieval and rare‑token prediction, and proposes memory modifications that improve these behaviors.
+### 7.4 Mamba-3 (Anonymous, 2026)
 
-**Open gap:** The model remains sequential and state‑compressed; evidence for attention‑like random access or routing is limited.
+Mamba-3 reports improved quality/efficiency and new capabilities (e.g., state tracking), but its authors explicitly flag retrieval as a remaining limitation relative to attention baselines and recommend hybrid retrieval mechanisms (Anonymous, 2026):
 
-### 7.4 RetNet (Sun et al., 2023)
+> “A limitation remains in retrieval, where fixed-state architectures lags attention-based models.”
 
-**Architecture:** Retention mechanism with parallel, recurrent, and chunkwise recurrent forms.
+In their retrieval suite (1.5B models, cloze-formatted tasks truncated to 2K), the Transformer baseline reports **SWDE 48.9** while Mamba-3 (SISO) reports **28.5** (Anonymous, 2026, Table 2).
 
-**Evidence:** RetNet reports competitive scaling, low‑cost inference, and in‑context learning performance on language modeling benchmarks.
+### 7.5 Hybrids as a diagnostic (Lieber et al., 2024)
 
-**Open gap:** Retention’s structured decay is not equivalent to Hopfield‑style associative retrieval, and its ability to implement GD‑like in‑context optimization is not directly tested.
+In Jamba, adding attention layers to an SSM-heavy backbone recovers performance on tasks where pure Mamba underperforms attention, and the paper’s qualitative analysis points to format adherence issues in pure Mamba (Lieber et al., 2024). Quantitatively, in their 1.3B experiment after 250B tokens, IMDB accuracy is **84.1** (attention), **48.8** (Mamba), and **90.9** (hybrid) (Lieber et al., 2024, Table 6).
 
-### 7.5 Hyena (Poli et al., 2023)
+### 7.6 The recurring pattern
 
-**Architecture:** Long convolutions with data‑controlled gating.
-
-**Evidence:** Hyena reports strong performance on recall/induction‑style tasks and favorable efficiency at long context lengths, while narrowing the quality gap to attention at small‑to‑mid scales.
-
-**Open gap:** Computation is still fixed‑structure; explicit random‑access retrieval is not shown.
-
-### 7.6 Mamba-3 (2026)
-
-**Architecture:** Complex-valued SSM with trapezoidal discretization and MIMO formulation.
-
-**Evidence:** Mamba-3 achieves a new Pareto frontier for inference efficiency vs. quality. Complex SSM enables state-tracking (parity, modular arithmetic) that Mamba-2 cannot solve. Strong NIAH retrieval on simple cases.
-
-**Open gap:** The paper concludes: "A limitation remains in retrieval, where fixed-state architectures lag attention-based models." SWDE extraction: 28.5% vs Transformer 48.9% (42% relative gap). The authors explicitly recommend "hybrid Mamba-3 architectures that integrate retrieval mechanisms."
-
-### 7.7 The Retrieval Gap: Quantitative Summary
-
-The common unresolved weakness across alternatives is **content-addressable random access**:
-
-| Model | Task | Score | Transformer | Gap |
-|-------|------|-------|-------------|-----|
-| Pure Mamba | IMDB ICL | 48.8% | 84.1% (Attention) | -35.3pp |
-| Mamba-3 | SWDE extraction | 28.5% | 48.9% | -20.4pp (42%) |
-| Griffin | Phonebook retrieval | Fails >1024 | Perfect to training length | Window-limited |
-| xLSTM | Nearest Neighbor Search | Fails | Solves | Architectural |
-
-**Pattern:** All alternatives struggle on tasks requiring arbitrary content-addressable retrieval—the signature capability of Theme 1 (Content-Addressable Memory). Hybrids that retain attention for retrieval (e.g., Jamba with 1/8 attention layers) recover full performance, confirming that attention specifically provides the missing capability.
+Across these examples, the most consistent unresolved weakness is **content-addressable random access** (R1), especially on semi-structured extraction and tasks where the “right” information is sparse and far away. This is not a proof; it is the current best candidate for the discriminating requirement.
 
 ---
 
-## 8. Epistemic Status: What This Synthesis Claims and Does Not Claim
+## 8. Epistemic Status and Limitations
 
 > [!IMPORTANT]
-> This document is explicitly **not** a mechanistic theory. It is a **constraint-based synthesis** that derives testable predictions.
+> This note is **not** a mechanistic theory of intelligence. It is a **constraint-based synthesis** designed to be falsifiable.
 
-### What we claim:
+### What this note claims (as hypotheses)
 
-1. **Multiple methodologically independent research threads** describe attention using compatible frameworks
-2. **The convergent themes** (memory, optimization, routing, trainability) are empirically distinguishable
-3. **The Selection Regime** plausibly captures hardware co‑evolution as a selection pressure
-4. **Attention's dominance** can be interpreted as Pareto‑dominance across multiple requirements
-5. **Alternatives show identifiable gaps** that align with the themes rather than generic inadequacy
+1. The four requirements are a useful decomposition of “what has to go right” for frontier-scale sequence modeling under current regimes.
+2. Current evidence suggests R1 (random-access retrieval) is a frequent limiting factor for pure non-attention alternatives.
+3. The selection regime (training viability + hardware economics) amplifies the advantage of architectures that already satisfy the bundle.
 
-### What we do not claim:
+### What it does not claim
 
-1. That these themes are *necessary* for all forms of general-purpose AI
-2. That attention is *optimal* rather than *adequate*
-3. That alternatives *cannot* satisfy these requirements in principle
-4. That the convergence proves *causation* rather than *correlation*
-
-### The honest framing:
-
-These interpretations describe *what attention does*. Whether they explain *why attention works* remains open. It is possible that attention works for reasons orthogonal to these descriptions, and the literature has merely documented epiphenomena. The synthesis becomes valuable if its predictions hold and its falsification tests discriminate.
+1. That attention is the only way to satisfy the requirements.
+2. That the requirements are complete or permanently relevant.
+3. That existing evidence cleanly separates architecture effects from training-recipe effects.
 
 ---
 
-## 9. The Mechanism We Decline to Claim
+## 9. The Mechanism We Decline to Claim: “Universality”
 
-The synthesis is consistent with a stronger hypothesis:
+A tempting stronger claim is:
 
-> **The Declined Claim:** Attention implements a *minimal* substrate for differentiable universal computation over sequences—a form of Turing-completeness optimized for gradient-based learning. The four themes are manifestations of this underlying computational universality.
+> Attention is successful because Transformers are (differentiably) universal computers over sequences.
 
-We decline to make this claim for three reasons:
+Transformers with positional encodings can be shown Turing-complete under idealized assumptions (e.g., rational arithmetic and hard attention variants) (Pérez et al., 2019). This is intellectually interesting but weak as an explanation of empirical success: Turing completeness is common and non-discriminating, and the assumptions used in proofs are far from the training regime.
 
-1. **"Minimal" is undefined** without specifying the constraint space. Minimal over what? Under which cost model?
-
-2. **Turing-completeness proofs exist but explain nothing.** Pérez et al. (2019) proved Transformers are Turing-complete. This does not explain why they work—Turing machines are Turing-complete, and we don't train those.
-
-3. **The claim is unfalsifiable as stated.** Any sufficiently large Transformer can approximate anything. This proves nothing discriminating.
-
-We prefer the constraint-based framing because it makes testable predictions. If someone constructs a non-attention architecture satisfying all four themes that still underperforms, the constraint framing is wrong—and we will know it. The universality claim would survive such a result, which is why it is weaker epistemically despite sounding stronger.
+The constraint-based framing is stronger epistemically: it can be falsified by an architecture that satisfies the requirements but still underperforms, or by an architecture that violates one requirement but matches attention anyway.
 
 ---
 
 ## 10. Falsification Experiments
 
-We propose experiments designed to falsify *the synthesis*, not just individual themes.
+The goal is to falsify the **bundle claim**, not to defend attention.
 
-### 10.1 The Master Test
+### 10.1 Master test (bundle test)
 
-**Hypothesis:** Any architecture satisfying all four convergent themes should match attention on LLM benchmarks at equivalent scale.
+**Hypothesis:** Any architecture that satisfies R1–R4 should match a Transformer baseline at matched scale and compute.
 
-**Protocol:**
-1. Construct an architecture explicitly designed to satisfy:
-   - Content-addressable memory (random-access retrieval)
-   - Implicit optimization (layer-wise refinement equivalent to GD)
-   - Flexible routing (input-dependent information flow)
-   - Trainability at scale (residual pathways, stable gradients)
-2. Train at matched parameter count (7B) and compute budget
-3. Evaluate on:
-   - Perplexity (general capability)
-   - SWDE/FDA (retrieval)
-   - Garg et al. function learning (ICL)
-   - Long-range Arena (routing)
+**Protocol sketch:**
+1. Design an architecture with explicit mechanisms intended to satisfy each requirement.
+2. Verify satisfaction with the operational tests in Section 3 (separately for each requirement).
+3. Pretrain with matched parameter count and token budget (e.g., ~7B class, fixed tokens).
+4. Evaluate on a frozen suite that includes:
+   - general LM quality (perplexity / held-out loss)
+   - retrieval/extraction (the same suite used in Anonymous, 2026, if available)
+   - controlled ICL tasks (Garg/Von Oswald-style)
+   - variable-structure long-range tasks (routing stress tests)
 
-**Falsification:** If the architecture satisfies all four themes (verified via the operational tests in Section 4) but underperforms attention by a clear margin on aggregate benchmarks, the synthesis is incomplete. Additional themes are required.
+**Falsification:** If the architecture passes the operational tests for R1–R4 but still underperforms attention by a clear margin, the requirement bundle is incomplete.
 
-**Confirmation:** If the architecture matches attention, the synthesis identifies the correct requirements. Future displacement is possible via unified satisfaction.
+### 10.2 Requirement isolation tests
 
-### 10.2 Theme Isolation Tests
+The isolation tests below are deliberately “surgical”: break one capability while holding others fixed.
 
-| Theme | Test | Expected Result | Falsification Threshold |
-|-------|------|-----------------|-------------------------|
-| Memory | SWDE/FDA extraction | Attention >40% | SSM within 5pp of Transformer |
-| Memory | IMDB ICL (Jamba setup) | Attention >80% | Pure SSM >75% |
-| Optimization | Linear regression ICL (Garg) | Matches OLS within 5% | Alternative matches equally |
-| Routing | Variable-dependency cloze (8K+ gap) | Attention <10% degradation | Fixed-window matches |
-| Trainability | Grokking on mod arithmetic | Residual models grok by 10^5 steps | Non-residual matches |
+| Requirement | Intervention | Expected impact if requirement matters |
+|------------|--------------|-----------------------------------------|
+| R1 Retrieval | remove/limit random-access mechanism | large drop on extraction/lookup; small drop on local tasks |
+| R2 ICL | constrain depth/iterative update capacity | controlled ICL tasks degrade disproportionately |
+| R3 Routing | force static/fixed routing patterns | variable-dependency tasks degrade |
+| R4 Scaling | remove residual-like stabilization | training instability or slower convergence |
 
-These extend reported results with falsification thresholds. Their value is in providing a systematic battery for evaluating new architectures.
-
-### 10.3 The Displacement Test
-
-**Hypothesis:** The first architecture to displace attention will satisfy all four themes via a single unified mechanism (not patching via hybrids).
-
-**Protocol:** Track all non-hybrid architectures claiming frontier performance (2025-2028). For each, evaluate theme satisfaction.
-
-**Falsification:** A hybrid (patched) architecture achieves undisputed frontier status with attention comprising <5% of layers.
-
-**Confirmation:** All frontier models either (a) are >90% attention, or (b) use hybrids with >10% attention for retrieval.
+The key is **differential** effects: if two “requirements” always move together under interventions, they are not separable and the decomposition is wrong.
 
 ---
 
-## 11. Predictions (2025–2028)
+## 11. Predictions (2026–2028)
 
-These predictions follow from the synthesis. Their resolution would test the framework.
+These are conditional predictions intended to be checkable with a frozen evaluation suite.
 
-**Resolution note:** To make these predictions measurable, fix a small evaluation suite (e.g., MMLU, GSM8K, MATH, HellaSwag, LongBench, plus a retrieval benchmark). If the field moves on, update the suite once and then freeze it.
+1. **Retrieval remains the main differentiator:** Pure fixed-state models will continue to lag attention baselines on semi-structured extraction tasks at comparable scale unless they add an attention-like random-access component.
+2. **Hybrids persist:** Competitive long-context models will increasingly use hybrids (SSM/conv for throughput + attention for retrieval) until a unified non-attention mechanism matches attention on R1.
+3. **Kernel pressure continues:** The performance gap on Gate 2 will keep moving as attention kernels improve, raising the bar for pure alternatives.
 
-| # | Prediction | Resolution Criteria |
-|---|------------|---------------------|
-| 1 | **No pure SSM at frontier by 2028** | No pure state-space model (≥30B params, no attention) will rank in top-10 on the fixed evaluation suite |
-| 2 | **Hybrids retain attention for retrieval** | Successful hybrids will use attention specifically for retrieval tasks; attention-free retrieval heads will not match |
-| 3 | **Residuals remain universal** | All competitive ≥7B architectures will use residual-like skip connections |
-| 4 | **Hardware co-evolution continues** | NVIDIA (or equivalent) 2027 GPU will include transformer-optimized features |
-| 5 | **Pure SSM retrieval gap persists** | *Synthesis-derived:* By 2028, no pure SSM will close the retrieval gap (SWDE/NIAH) to within 5% of Transformer at matched scale without architectural modifications approximating attention |
-
-**On Prediction 5 (Revised):** This is the synthesis's novel, falsifiable claim. It differs from Prediction 1 (general frontier ranking) by targeting the *specific* capability—content-addressable retrieval—that the four themes identify as attention's discriminating feature. If a pure SSM closes this gap without attention-like mechanisms, the synthesis is falsified. If they close it *by developing attention-like mechanisms*, the synthesis is confirmed.
+If these predictions fail (e.g., a pure SSM closes the extraction gap cleanly without attention-like mechanisms), the synthesis should be revised accordingly.
 
 ---
 
-## 12. Competing Explanations
+## 12. Competing Explanations (and how to discriminate)
 
-We acknowledge alternative views that this synthesis does not refute.
+### Path dependence / lock-in
 
-### "It just happened" (Historical Accident)
+Lock-in explains persistence, but does not alone explain early competitive advantage. Discriminant: show that at equal compute in the pre-lock-in period, attention offers no advantage over alternatives on the requirements above.
 
-**Claim:** The Transformer was a good-enough idea that happened to arrive when hardware was ready. Once investment locked in, alternatives couldn't compete. There's no deep reason—just path dependence.
+### “It’s just GEMM”
 
-**Response:** This explains persistence but not initial success. The Transformer beat established alternatives (LSTMs, ConvNets for sequence tasks) before lock-in occurred. Something about the architecture enabled this. The synthesis identifies candidate properties; historical accident explains only their entrenchment.
+GEMM alignment is a necessary constraint under GPU economics, but not sufficient. Discriminant: construct GEMM-heavy architectures without random-access retrieval and test whether they close the extraction gap.
 
-### "It's just GEMM alignment" (Hardware Reductionism)
+### “We don’t know”
 
-**Claim:** Attention works because it's a matrix multiply. Any architecture that is GEMM-aligned would work equally well.
-
-**Response:** GEMM alignment is necessary but not sufficient. The specific structure of attention (softmax, K/V/Q factorization) enables associative retrieval and in‑context adaptation documented in the Hopfield and ICL literature (Ramsauer et al., 2020; Von Oswald et al., 2023; Garg et al., 2022). Our synthesis identifies *which* structural properties matter beyond raw efficiency.
-
-### "We don't know" (Epistemic Humility)
-
-**Claim:** The honest answer is that we don't yet understand why Transformers work. All interpretations are post-hoc rationalizations.
-
-**Response:** We agree this is epistemically most accurate. This synthesis does not claim to have solved the question. It organizes existing interpretations into a *falsifiable* frame—one that makes predictions distinguishing it from "we don't know." If the predictions hold and the master test discriminates, we have learned something. If they don't, we have learned the synthesis was wrong. Either outcome advances understanding.
+This is probably the most accurate meta-position. The value of the synthesis is that it makes this ignorance actionable: it proposes tests that can collapse uncertainty into evidence.
 
 ---
 
 ## 13. Conclusion
 
-The Transformer works—but not for a single, elegant reason. Its success arises from adequate satisfaction of four architectural requirements:
+This note argues that attention’s success is best viewed as **bundle satisfaction under a regime**. The strongest current evidence for a discriminating factor is R1: content-addressable random access. The rest of the requirements matter insofar as they determine whether an architecture can scale, adapt, and route information under real training/economic constraints.
 
-1. **Content-addressable memory** enables flexible information access
-2. **Implicit optimization** enables inference-time adaptation
-3. **Flexible routing** enables input-dependent computation
-4. **Residual-supported training** enables structural discovery at scale
-
-And it survives a selection regime shaped by hardware economics (GEMM alignment and accelerator co-evolution).
-
-**What this synthesis explains that individual papers do not:**
-
-The literature documents that attention satisfies each theme. The synthesis explains why *simultaneous* satisfaction matters—why alternatives that excel on one axis while failing another cannot displace attention. This Pareto-dominance claim is not in any individual paper. It emerges from treating the interpretations as constraints rather than descriptions.
-
-**The master test:**
-
-If an architecture satisfies all four themes but underperforms attention, the synthesis is wrong—additional themes are required. If such an architecture matches attention, the synthesis identifies the correct requirements, and displacement becomes architecturally tractable.
-
-**The synthesis-derived prediction:**
-
-The first architecture to displace attention will satisfy all four themes through a unified mechanism, not hybrid patching. Hybrids are not transitional—they are the stable equilibrium until such unification occurs.
-
----
-
-That is how synthesis should work: organizing evidence into falsifiable claims, deriving novel predictions, and specifying conditions for its own refutation. If the predictions hold and the tests discriminate, this synthesis may serve as a useful map. If they do not, the synthesis becomes a documented hypothesis that didn't survive contact with evidence—which is also valuable.
+If a future architecture satisfies R1–R4 without self-attention and matches Transformers at scale, this synthesis will have served its purpose: it will have identified the right constraints even if it misidentified the only mechanism. If it fails, it will have provided a clear record of what to update.
 
 ---
 
 ## Appendix A: Full Citations
 
 1. **Vaswani, A., Shazeer, N., Parmar, N., et al.** (2017). Attention Is All You Need. *NeurIPS*. arXiv:1706.03762
-
 2. **Ramsauer, H., Schäfl, B., Lehner, J., et al.** (2020). Hopfield Networks is All You Need. *NeurIPS*. arXiv:2008.02217
-
 3. **Ba, J., Hinton, G. E., Mnih, V., & Ionescu, C.** (2016). Using Fast Weights to Attend to the Recent Past. *NeurIPS*. arXiv:1610.06258
-
 4. **Von Oswald, J., Niklasson, E., Randazzo, E., et al.** (2023). Transformers learn in-context by gradient descent. *ICML*. arXiv:2212.07677
-
 5. **Garg, S., Tsipras, D., Liang, P., & Valiant, G.** (2022). What Can Transformers Learn In-Context? *NeurIPS*. arXiv:2208.01066
-
 6. **Xie, S. M., Raghunathan, A., Liang, P., & Ma, T.** (2022). An Explanation of In-context Learning as Implicit Bayesian Inference. *ICLR*. arXiv:2111.02080
-
 7. **Elhage, N., Nanda, N., Olsson, C., et al.** (2021). A Mathematical Framework for Transformer Circuits. *Anthropic*. transformer-circuits.pub
-
 8. **Olsson, C., Elhage, N., Nanda, N., et al.** (2022). In-context Learning and Induction Heads. *Anthropic*. arXiv:2209.11895
-
 9. **Delétang, G., Ruoss, A., Grau-Moya, J., et al.** (2024). Language Modeling is Compression. *ICLR*. arXiv:2309.10668
-
-10. **Frankle, J., & Carlin, M.** (2019). The Lottery Ticket Hypothesis. *ICLR (Best Paper)*. arXiv:1803.03635
-
-11. **Power, A., Burda, Y., Edwards, H., Babuschkin, I., & Misra, V.** (2022). Grokking: Generalization Beyond Overfitting. *ICLR*. arXiv:2201.02177
-
+10. **Frankle, J., & Carbin, M.** (2019). The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks. *ICLR*. arXiv:1803.03635
+11. **Power, A., Burda, Y., Edwards, H., Babuschkin, I., & Misra, V.** (2022). Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets. *ICLR*. arXiv:2201.02177
 12. **Gu, A., & Dao, T.** (2024). Mamba: Linear-Time Sequence Modeling with Selective State Spaces. *ICLR*. arXiv:2312.00752
-
 13. **Lieber, O., Sharir, O., Lentz, B., et al.** (2024). Jamba: A Hybrid Transformer-Mamba Language Model. *AI21 Labs*. arXiv:2403.19887
-
 14. **De, S., Smith, S. L., Fernando, A., et al.** (2024). Griffin: Mixing Gated Linear Recurrences with Local Attention for Efficient Language Models. *Google DeepMind*. arXiv:2402.19427
-
 15. **Beck, M., Pöppel, K., Spanring, M., et al.** (2024). xLSTM: Extended Long Short-Term Memory. *arXiv*. arXiv:2405.04517
-
 16. **Sun, Y., Dong, L., Huang, S., et al.** (2023). Retentive Network: A Successor to Transformer for Large Language Models. *Microsoft*. arXiv:2307.08621
-
 17. **Poli, M., Massaroli, S., Nguyen, E., et al.** (2023). Hyena Hierarchy: Towards Larger Convolutional Language Models. *Stanford*. arXiv:2302.10866
-
 18. **Pérez, J., Barceló, P., & Marinkovic, J.** (2019). On the Turing Completeness of Modern Neural Network Architectures. *ICLR*. arXiv:1901.03429
-
 19. **Dao, T., Fu, D. Y., Ermon, S., Rudra, A., & Ré, C.** (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. *NeurIPS*. arXiv:2205.14135
-
 20. **Dao, T.** (2023). FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning. *arXiv*. arXiv:2307.08691
-
-21. **NVIDIA.** (2022). Hopper Architecture — Transformer Engine (FP8 mixed precision). *NVIDIA Architecture Documentation*.
-
-22. **NVIDIA.** (2024). Blackwell Architecture — Second-Generation Transformer Engine. *NVIDIA Architecture Documentation*.
+21. **Anonymous.** (2026). Mamba-3: Improved Sequence Modeling Using State Space Principles. *Under review at ICLR 2026*.
 
 ---
 
 ## Appendix B: Relation to Companion Essays
 
-This synthesis extends and integrates:
+This synthesis relates to:
 
-- **The Transformer Attractor (Substack)**: Empirical evidence for the Two-Gate Trap, hardware economics, case studies
-- **Part II: The Retrieval Bottleneck**: Analysis of hybrid architectures and the SSM retrieval gap, with Mamba-3 data
-- **Literature Map**: Catalog of interpretations synthesized here
-
----
-
-## Appendix C: Additional Citations (v2.2)
-
-23. **Anonymous.** (2026). Mamba-3: Improved Sequence Modeling Using State Space Principles. *Under review at ICLR 2026*.
-
+- The Transformer Attractor (Substack): the two-gate trap and hardware economics
+- Part II: The Retrieval Bottleneck: hybrid architectures and retrieval gaps
+- Literature Map: catalog of interpretation threads
