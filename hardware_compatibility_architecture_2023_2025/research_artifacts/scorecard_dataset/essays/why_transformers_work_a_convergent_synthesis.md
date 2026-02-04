@@ -120,7 +120,7 @@ Each requirement is (i) a functional capability, (ii) tied to at least one opera
 **Evidence in Transformers:**
 - The circuits framework models attention heads as information movement operations over a shared residual stream, enabling compositional, input-dependent behavior (Elhage et al., 2021).
 - Architectures proposed as attention alternatives often explicitly target “data-controlled” or conditional operators, suggesting this property is viewed as central even outside attention (Poli et al., 2023).
-- Language modeling can be viewed as compression; strong compressors must exploit input-dependent structure rather than fixed-pattern processing (Delétang et al., 2024).
+- Language modeling can be viewed as compression; this view emphasizes the value of exploiting input-dependent structure rather than fixed-pattern processing (Delétang et al., 2024).
 
 **Operational tests (examples):**
 - tasks with irregular long-range dependencies where the relevant span location varies per example
