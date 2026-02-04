@@ -1,12 +1,14 @@
 # Why Transformers Work: A Convergent Synthesis
 
-*Working Note v2.1 — February 2026*
+*Working Note v2.2 — February 2026*
 
 ---
 
 ## Abstract
 
-This document synthesizes independent research threads that offer high-level interpretations of why Transformer architectures dominate large-scale language modeling. We identify four convergent themes across the literature: content-addressable memory, implicit optimization, flexible routing, and training-as-selection. We argue that attention's success arises not from any single property, but from its simultaneous satisfaction of multiple functional requirements within the constraints of current hardware economics and training paradigms.
+This document synthesizes independent research threads that offer high-level interpretations of why Transformer architectures dominate large-scale language modeling. We identify four convergent themes across the literature: content-addressable memory, implicit optimization, flexible routing, and training-as-selection.
+
+**Thesis:** We *propose* that attention's success arises not from any single property, but from its simultaneous satisfaction of multiple functional requirements within the constraints of current hardware economics and training paradigms. This is a hypothesis, not an established fact.
 
 **This synthesis makes three contributions beyond literature review:**
 
@@ -155,17 +157,29 @@ The themes are *distinguishable in principle* because architectural intervention
 
 The Transformer is not special because it does one thing well. It is special because it does **four things adequately within the same architecture**.
 
-### 5.1 The Theme Satisfaction Matrix
+### 5.1 Theme Satisfaction Criteria
+
+To avoid ambiguity, we define operational criteria for each mark:
+
+| Mark | Meaning | Threshold |
+|------|---------|----------|
+| ✓ | Full satisfaction | Architecture implements mechanism matching theme definition; demonstrated in cited paper(s) |
+| ~ | Partial satisfaction | Mechanism present but constrained (e.g., fixed window, bounded capacity, no direct equivalence) |
+| ✗ | Does not satisfy | No mechanism mapping to theme; or cited paper explicitly identifies gap |
+| ? | Insufficient evidence | No published study evaluating this dimension at scale |
+
+### 5.2 The Theme Satisfaction Matrix
 
 | Architecture | Content Memory | Implicit Opt | Flexible Routing | Trainability | Evidence Anchor |
 |--------------|----------------|--------------|------------------|--------------|----------------|
 | **Attention** | ✓ (Hopfield/induction) | ✓ (GD/OLS) | ✓ (routing circuits) | ✓ (residual blocks) | Ramsauer; Olsson; Von Oswald; Garg; Elhage; Vaswani |
-| **Mamba/SSM** | ~ (selective state) | ? | ~ (input‑dependent selection) | ✓ (reported scaling) | Gu & Dao |
-| **RetNet** | ~ (retention) | ~ (reported ICL) | ~ (decay‑structured) | ✓ (reported scaling) | Sun et al. |
-| **Hyena** | ~ (long conv + gating) | ? | ~ (data‑controlled operator) | ✓ (reported scaling) | Poli et al. |
-| **Griffin (hybrid)** | ~ (local attention) | ? | ~ (local routing) | ✓ (reported scaling) | De et al. |
-| **xLSTM** | ~ (matrix memory) | ? | ✗ (fixed recurrence) | ~ (reported scaling) | Beck et al. |
-| **Jamba (hybrid)** | ✓ (via attention) | ✓ (via attention) | ✓ (via attention) | ✓ (reported scaling) | Lieber et al. |
+| **Mamba/SSM** | ~ (selection, but retrieval gap) | ? | ~ (input‑dependent) | ✓ (scaling) | Gu & Dao; Jamba Table 6 |
+| **Mamba-3** | ~ (SWDE 28.5% vs TF 48.9%) | ? | ~ (complex SSM) | ✓ (Pareto frontier) | Mamba-3 (2026) |
+| **RetNet** | ~ (retention) | ~ (reported ICL) | ~ (decay‑structured) | ✓ (scaling) | Sun et al. |
+| **Hyena** | ~ (long conv + gating) | ? | ~ (data‑controlled) | ✓ (scaling) | Poli et al. |
+| **Griffin (hybrid)** | ~ (local attn fails past 1024) | ? | ~ (local routing) | ✓ (scaling) | De et al. |
+| **xLSTM** | ~ (matrix memory fails NNS) | ? | ✗ (fixed recurrence) | ~ (scaling) | Beck et al. |
+| **Jamba (hybrid)** | ✓ (via attention) | ✓ (ICL: 84.1% vs Mamba 48.8%) | ✓ (via attention) | ✓ (scaling) | Lieber et al. Table 6 |
 
 **Legend:** ✓ = supported in cited paper(s), ~ = partial/indirect support, ✗ = evidence against, ? = not established  
 **Note:** This is an evidence map, not a verdict. Marks are provisional and should be updated as new results appear.
@@ -267,9 +281,26 @@ We examine several serious attempts to displace attention, summarizing what thei
 
 **Open gap:** Computation is still fixed‑structure; explicit random‑access retrieval is not shown.
 
-### 7.6 The Pattern (So Far)
+### 7.6 Mamba-3 (2026)
 
-Across these alternatives, the common unresolved weakness is **content‑addressable random access**, while efficiency gains are clear. Hybrids that retain a small amount of attention for retrieval (e.g., Jamba) provide a pragmatic compromise and are currently the strongest evidence that mixed strategies can perform well at scale (Lieber et al., 2024).
+**Architecture:** Complex-valued SSM with trapezoidal discretization and MIMO formulation.
+
+**Evidence:** Mamba-3 achieves a new Pareto frontier for inference efficiency vs. quality. Complex SSM enables state-tracking (parity, modular arithmetic) that Mamba-2 cannot solve. Strong NIAH retrieval on simple cases.
+
+**Open gap:** The paper concludes: "A limitation remains in retrieval, where fixed-state architectures lag attention-based models." SWDE extraction: 28.5% vs Transformer 48.9% (42% relative gap). The authors explicitly recommend "hybrid Mamba-3 architectures that integrate retrieval mechanisms."
+
+### 7.7 The Retrieval Gap: Quantitative Summary
+
+The common unresolved weakness across alternatives is **content-addressable random access**:
+
+| Model | Task | Score | Transformer | Gap |
+|-------|------|-------|-------------|-----|
+| Pure Mamba | IMDB ICL | 48.8% | 84.1% (Attention) | -35.3pp |
+| Mamba-3 | SWDE extraction | 28.5% | 48.9% | -20.4pp (42%) |
+| Griffin | Phonebook retrieval | Fails >1024 | Perfect to training length | Window-limited |
+| xLSTM | Nearest Neighbor Search | Fails | Solves | Architectural |
+
+**Pattern:** All alternatives struggle on tasks requiring arbitrary content-addressable retrieval—the signature capability of Theme 1 (Content-Addressable Memory). Hybrids that retain attention for retrieval (e.g., Jamba with 1/8 attention layers) recover full performance, confirming that attention specifically provides the missing capability.
 
 ---
 
@@ -344,14 +375,15 @@ We propose experiments designed to falsify *the synthesis*, not just individual 
 
 ### 10.2 Theme Isolation Tests
 
-| Theme | Test | Expected Result | Falsification |
-|-------|------|-----------------|---------------|
-| Memory | Key-value association (long contexts) | Attention retains higher accuracy | SSM matches attention across length |
-| Optimization | ICL on linear regression (Garg setup) | Attention approximates OLS | Alternative matches OLS equivalently |
-| Routing | Variable-dependency cloze (varying gap) | Attention degrades slowly | Local attention matches on long gaps |
-| Trainability | Grokking on modular arithmetic | Residual networks grok faster | Non-residual matches grokking time |
+| Theme | Test | Expected Result | Falsification Threshold |
+|-------|------|-----------------|-------------------------|
+| Memory | SWDE/FDA extraction | Attention >40% | SSM within 5pp of Transformer |
+| Memory | IMDB ICL (Jamba setup) | Attention >80% | Pure SSM >75% |
+| Optimization | Linear regression ICL (Garg) | Matches OLS within 5% | Alternative matches equally |
+| Routing | Variable-dependency cloze (8K+ gap) | Attention <10% degradation | Fixed-window matches |
+| Trainability | Grokking on mod arithmetic | Residual models grok by 10^5 steps | Non-residual matches |
 
-These mirror reported results. Their value is in providing a systematic battery for evaluating new architectures.
+These extend reported results with falsification thresholds. Their value is in providing a systematic battery for evaluating new architectures.
 
 ### 10.3 The Displacement Test
 
@@ -373,13 +405,13 @@ These predictions follow from the synthesis. Their resolution would test the fra
 
 | # | Prediction | Resolution Criteria |
 |---|------------|---------------------|
-| 1 | **No pure SSM at frontier by 2028** | No pure state-space model (≥30B params, no attention) will rank near the top on the fixed evaluation suite |
-| 2 | **Hybrids retain attention for retrieval** | Successful hybrid architectures will keep attention specifically for tasks requiring content-addressable access |
-| 3 | **Residuals remain universal** | Competitive large‑scale architectures will continue to use residual‑like skip connections |
-| 4 | **Hardware co-evolution continues** | GPU roadmaps will continue to include transformer‑optimized features (e.g., Transformer Engine) |
-| 5 | **Displacement requires unified mechanism** | *Synthesis-derived:* If attention is displaced by 2028, the displacing architecture will satisfy all four themes through a single primitive, not hybrid patching |
+| 1 | **No pure SSM at frontier by 2028** | No pure state-space model (≥30B params, no attention) will rank in top-10 on the fixed evaluation suite |
+| 2 | **Hybrids retain attention for retrieval** | Successful hybrids will use attention specifically for retrieval tasks; attention-free retrieval heads will not match |
+| 3 | **Residuals remain universal** | All competitive ≥7B architectures will use residual-like skip connections |
+| 4 | **Hardware co-evolution continues** | NVIDIA (or equivalent) 2027 GPU will include transformer-optimized features |
+| 5 | **Pure SSM retrieval gap persists** | *Synthesis-derived:* By 2028, no pure SSM will close the retrieval gap (SWDE/NIAH) to within 5% of Transformer at matched scale without architectural modifications approximating attention |
 
-**On Prediction 5:** This prediction is novel to the synthesis. No individual paper predicts it. It follows from our argument that Pareto-dominance explains attention's success—displacement therefore requires dominating on all axes simultaneously, not trading off between them.
+**On Prediction 5 (Revised):** This is the synthesis's novel, falsifiable claim. It differs from Prediction 1 (general frontier ranking) by targeting the *specific* capability—content-addressable retrieval—that the four themes identify as attention's discriminating feature. If a pure SSM closes this gap without attention-like mechanisms, the synthesis is falsified. If they close it *by developing attention-like mechanisms*, the synthesis is confirmed.
 
 ---
 
@@ -494,20 +526,7 @@ This synthesis extends and integrates:
 
 ---
 
-## Appendix C: Changelog
+## Appendix C: Additional Citations (v2.2)
 
-**v2.0 (February 2025):**
-- Added Section 3: The Convergence Problem (methodological independence argument)
-- Added Theme Satisfaction Matrix (Section 5.1) operationalizing Pareto-dominance
-- Added Counterexample Analysis (Section 7) with Griffin, xLSTM, RetNet, Hyena
-- Rewrote Section 6 as "The Selection Regime" with hardware co-evolution data
-- Added Section 9: The Mechanism We Decline to Claim
-- Added Master Falsification Test (Section 10.1)
-- Added Prediction 6: Synthesis-derived displacement claim
-- Expanded citations to include alternative architecture papers
+23. **Anonymous.** (2026). Mamba-3: Improved Sequence Modeling Using State Space Principles. *Under review at ICLR 2026*.
 
-**v2.1 (February 2026):**
-- Evidence-first rewrite: operationalized themes, softened speculative claims, and aligned counterexamples with what their papers actually show
-- Added hardware/kernel citations (FlashAttention; NVIDIA Transformer Engine)
-- Rebuilt the theme satisfaction matrix as a provisional evidence map
-- Updated predictions and falsification criteria for measurability
