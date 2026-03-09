@@ -9,7 +9,7 @@ Transformers exhibit efficient scaling through predictable power-law relationshi
 
 ### 1. Grokking: Generalization Beyond Overfitting
 
-**Source**: [Power_Grokking_2022](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/Power_Grokking_2022.md)
+**Source**: [Power_Grokking_2022](../papers/Power_Grokking_2022.md)
 
 **Key Claims**:
 - **Grokking**: Models achieve perfect generalization *long after* overfitting to training data
@@ -66,7 +66,7 @@ Phase 3: Loss stable, Memorizing circuits decay
 
 ### 3. The Lottery Ticket Hypothesis
 
-**Source**: [Frankle_LotteryTicket_2019](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/Frankle_LotteryTicket_2019.md)
+**Source**: [Frankle_LotteryTicket_2019](../papers/Frankle_LotteryTicket_2019.md)
 
 **Key Claims**:
 - Dense networks contain sparse "winning tickets"—subnetworks that:

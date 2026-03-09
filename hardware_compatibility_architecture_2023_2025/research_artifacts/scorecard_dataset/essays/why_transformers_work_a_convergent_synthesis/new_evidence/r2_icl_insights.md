@@ -9,7 +9,7 @@ Transformers implement implicit optimization algorithms during in-context learni
 
 ### 1. ICL as Implicit Gradient Descent
 
-**Source**: [VonOswald_GradientDescent_2023](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/VonOswald_GradientDescent_2023.md)
+**Source**: [VonOswald_GradientDescent_2023](../papers/VonOswald_GradientDescent_2023.md)
 
 **Key Claims**:
 - Linear self-attention layers can exactly emulate one step of gradient descent on regression loss
@@ -31,7 +31,7 @@ Transformers implement implicit optimization algorithms during in-context learni
 
 ### 2. ICL Emerges from Bayesian Inference Over Latent Concepts
 
-**Source**: [Xie_BayesianInference_2022](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/Xie_BayesianInference_2022.md)
+**Source**: [Xie_BayesianInference_2022](../papers/Xie_BayesianInference_2022.md)
 
 **Key Claims**:
 - ICL emerges when pretraining documents have long-range coherence requiring latent concept inference
@@ -52,7 +52,7 @@ Transformers implement implicit optimization algorithms during in-context learni
 
 ### 3. Transformers Learn Function Classes In-Context
 
-**Source**: [Garg_ImpliticLearning_2022](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/Garg_ImpliticLearning_2022.md)
+**Source**: [Garg_ImpliticLearning_2022](../papers/Garg_ImpliticLearning_2022.md)
 
 **Key Claims**:
 - Transformers can be trained to in-context learn entire function classes
@@ -74,7 +74,7 @@ Transformers implement implicit optimization algorithms during in-context learni
 
 ### 4. Function Vector Heads Drive ICL (Not Induction Heads)
 
-**Source**: [WhichAttentionHeads_ICL_2025](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/WhichAttentionHeads_ICL_2025.md)
+**Source**: [WhichAttentionHeads_ICL_2025](../papers/WhichAttentionHeads_ICL_2025.md)
 
 **Key Claims**:
 - **FV heads** (encoding task representations) are the primary drivers of few-shot ICL
@@ -104,7 +104,7 @@ Transformers implement implicit optimization algorithms during in-context learni
 
 ### 5. Multi-Phase Circuit Emergence in ICL
 
-**Source**: [BeyondInductionHeads_Circuits_2025](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/BeyondInductionHeads_Circuits_2025.md)
+**Source**: [BeyondInductionHeads_Circuits_2025](../papers/BeyondInductionHeads_Circuits_2025.md)
 
 **Key Claims**:
 - ICL emerges through three distinct circuit phases:
@@ -129,7 +129,7 @@ Training → NCC → SCC → FCC
 
 ### 6. Attention = Modern Hopfield Network Update
 
-**Source**: [Ramsauer_Hopfield_2020](file:///Users/petros/Projects/content/hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/papers/Ramsauer_Hopfield_2020.md)
+**Source**: [Ramsauer_Hopfield_2020](../papers/Ramsauer_Hopfield_2020.md)
 
 **Key Claims**:
 - Transformer attention is mathematically equivalent to the update rule of modern Hopfield networks
