@@ -7,3 +7,6 @@
 [submodule "the-moltbook-phenomenon"]
 	path = the-moltbook-phenomenon
 	url = git@github.com:petroslamb/the-moltbook-phenomenon.git
+[submodule "multi_agent_compiler_workaround"]
+	path = multi_agent_compiler_workaround
+	url = /Users/petros/Projects/content/multi_agent_compiler_workaround
