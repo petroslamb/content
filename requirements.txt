@@ -1,0 +1,3 @@
+# Root-level tooling for content workflows
+markitdown[pdf]==0.1.5
+notebooklm-py[browser]==0.3.3
