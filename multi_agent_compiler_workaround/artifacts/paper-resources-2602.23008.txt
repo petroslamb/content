@@ -1,0 +1,14 @@
+                                               Paper Resources                                                
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                                                    ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2602.23008v1                                                                             │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2602.23008v1.pdf                                     │
+│ Source URL      │ https://arxiv.org/abs/2602.23008                                                         │
+│ BibTeX          │ available                                                                                │
+│ Podcast Path    │ 019c9d03-0c26-79e2-bb94-db80df00c710/podcast.mp3                                         │
+│ Podcast URL     │ https://paper-podcasts.alphaxiv.org/019c9d03-0c26-79e2-bb94-db80df00c710/podcast.mp3     │
+│ Transcript URL  │ https://paper-podcasts.alphaxiv.org/019c9d03-0c26-79e2-bb94-db80df00c710/transcript.json │
+│ Mentions        │ 1                                                                                        │
+│ Implementations │ https://github.com/microsoft/agent-lightning                                             │
+└─────────────────┴──────────────────────────────────────────────────────────────────────────────────────────┘

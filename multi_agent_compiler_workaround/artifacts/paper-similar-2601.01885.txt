@@ -1,0 +1,10 @@
+                                                                                       Similar Papers                                                                                        
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                                                      ┃ Upvotes ┃ Visits ┃ Topics                                       ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2508.19828 │ Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning │ 303     │ 6659   │ agentic-frameworks, agents, Computer Science │
+│ 2511.18423 │ General Agentic Memory Via Deep Research                                                                   │ 231     │ 3172   │ agentic-frameworks, agents, Computer Science │
+│ 2509.24704 │ MemGen: Weaving Generative Latent Memory for Self-Evolving Agents                                          │ 186     │ 3717   │ agentic-frameworks, agents, Computer Science │
+│ 2512.10696 │ Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution        │ 148     │ 1796   │ agentic-frameworks, agents, Computer Science │
+│ 2506.15841 │ MEM1: Learning to Synergize Memory and Reasoning for Efficient Long-Horizon Agents                         │ 146     │ 3633   │ agentic-frameworks, agents, Computer Science │
+└────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴────────┴──────────────────────────────────────────────┘

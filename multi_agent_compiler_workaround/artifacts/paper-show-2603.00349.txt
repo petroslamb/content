@@ -1,0 +1,13 @@
+                                   EmCoop: A Framework and Benchmark for Embodied Cooperation Among LLM Agents                                    
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field        ┃ Value                                                                                                                           ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ arXiv ID     │ 2603.00349                                                                                                                      │
+│ Versioned ID │ 2603.00349v1                                                                                                                    │
+│ Version UUID │ 019cb21f-2d3c-7966-bda1-929c080622d7                                                                                            │
+│ Group UUID   │ 019cb21f-2d0c-7704-8659-ad862971d1d7                                                                                            │
+│ Authors      │ Hanqing Yang, Shiyu Chen, Narjes Nourzad, Marie Siew, Jingdi Chen, Carlee Joe-Wong                                              │
+│ Topics       │ agentic-frameworks, agents, Computer Science, cs.AI, cs.MA, ml-systems, multi-agent-learning, reasoning, tool-use, transformers │
+│ PDF URL      │ https://fetcher.alphaxiv.org/v2/pdf/2603.00349v1.pdf                                                                            │
+│ Source URL   │ https://arxiv.org/abs/2603.00349                                                                                                │
+└──────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

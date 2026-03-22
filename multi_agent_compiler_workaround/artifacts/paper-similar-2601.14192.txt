@@ -1,0 +1,10 @@
+                                                                                  Similar Papers                                                                                  
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                                           ┃ Upvotes ┃ Visits ┃ Topics                                       ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2503.16416 │ Survey on Evaluation of LLM-based Agents                                                        │ 883     │ 20931  │ agents, chain-of-thought, Computer Science   │
+│ 2503.24377 │ Harnessing the Reasoning Economy: A Survey of Efficient Reasoning for  Large Language Models    │ 571     │ 10735  │ chain-of-thought, Computer Science, cs.AI    │
+│ 2503.23037 │ Agentic Large Language Models, a survey                                                         │ 555     │ 5913   │ agentic-frameworks, agents, chain-of-thought │
+│ 2503.21614 │ A Survey of Efficient Reasoning for Large Reasoning Models: Language, Multimodality, and Beyond │ 381     │ 7354   │ agents, chain-of-thought, Computer Science   │
+│ 2512.16301 │ Adaptation of Agentic AI: A Survey of Post-Training, Memory, and Skills                         │ 218     │ 2575   │ agentic-frameworks, agents, Computer Science │
+└────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴────────┴──────────────────────────────────────────────┘

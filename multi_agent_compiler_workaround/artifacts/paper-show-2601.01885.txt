@@ -1,0 +1,13 @@
+                                    Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents                                     
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field        ┃ Value                                                                                                                                                             ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ arXiv ID     │ 2601.01885                                                                                                                                                        │
+│ Versioned ID │ 2601.01885v1                                                                                                                                                      │
+│ Version UUID │ 019b9149-78ac-7c57-9ecf-ce4a63fb13a1                                                                                                                              │
+│ Group UUID   │ 019b9149-7883-7a5f-a3e8-24d4466b31f0                                                                                                                              │
+│ Authors      │ Yi Yu, Liuyi Yao, Yuexiang Xie, Qingquan Tan, Jiaqi Feng, Yaliang Li, Libing Wu                                                                                   │
+│ Topics       │ agentic-frameworks, agents, Computer Science, cs.CL, deep-reinforcement-learning, optimization-methods, reasoning, reinforcement-learning, tool-use, transformers │
+│ PDF URL      │ https://fetcher.alphaxiv.org/v2/pdf/2601.01885v1.pdf                                                                                                              │
+│ Source URL   │ https://arxiv.org/abs/2601.01885                                                                                                                                  │
+└──────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

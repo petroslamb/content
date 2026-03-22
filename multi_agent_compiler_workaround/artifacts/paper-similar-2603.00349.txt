@@ -1,0 +1,10 @@
+                                                                                               Similar Papers                                                                                                
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                                                          ┃ Upvotes ┃ Visits ┃ Topics                                                   ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2502.09560 │ EmbodiedBench: Comprehensive Benchmarking Multi-modal Large Language  Models for Vision-Driven Embodied Agents │ 180     │ 7720   │ agents, Computer Science, cs.AI                          │
+│ 2501.06322 │ Multi-Agent Collaboration Mechanisms: A Survey of LLMs                                                         │ 170     │ 12683  │ agent-based-systems, Computer Science, conversational-ai │
+│ 2508.05614 │ OmniEAR: Benchmarking Agent Reasoning in Embodied Tasks                                                        │ 99      │ 539    │ agentic-frameworks, agents, Computer Science             │
+│ 2503.16408 │ RoboFactory: Exploring Embodied Agent Collaboration with Compositional  Constraints                            │ 80      │ 1119   │ agent-based-systems, Computer Science, cs.AI             │
+│ 2503.01935 │ MultiAgentBench: Evaluating the Collaboration and Competition of LLM  agents                                   │ 77      │ 2050   │ Computer Science, cs.AI, cs.CL                           │
+└────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴────────┴──────────────────────────────────────────────────────────┘

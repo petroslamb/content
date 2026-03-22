@@ -1,0 +1,15 @@
+                                          Paper Search Results for: multi-agent systems                                          
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                  ┃ Link                                    ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2602.15382 │ Latent-Space Communication in Heterogeneous Multi-Agent Systems        │ https://www.alphaxiv.org/abs/2602.15382 │
+│ 2601.04748 │ When Single-Agent with Skills Replace Multi-Agent Systems and ...      │ https://www.alphaxiv.org/abs/2601.04748 │
+│ 2505.16997 │ Towards Building Multi-Agent Systems with Heterogeneous LLMs           │ https://www.alphaxiv.org/abs/2505.16997 │
+│ 2511.13288 │ Training Multi-Agent Systems with M-GRPO - arXiv                       │ https://www.alphaxiv.org/abs/2511.13288 │
+│ 2511.21572 │ [2511.21572] BAMAS: Structuring Budget-Aware Multi-Agent Systems       │ https://www.alphaxiv.org/abs/2511.21572 │
+│ 2506.07398 │ G-Memory: Tracing Hierarchical Memory for Multi-Agent Systems          │ https://www.alphaxiv.org/abs/2506.07398 │
+│ 2402.01108 │ [2402.01108] Reasoning Capacity in Multi-Agent Systems - arXiv.org     │ https://www.alphaxiv.org/abs/2402.01108 │
+│ 2511.20639 │ [2511.20639] Latent Collaboration in Multi-Agent Systems - arXiv       │ https://www.alphaxiv.org/abs/2511.20639 │
+│ 2509.24323 │ Self-Generative, Self-Configuring, Self-Rectifying Multi-Agent Systems │ https://www.alphaxiv.org/abs/2509.24323 │
+│ 2505.18943 │ Modeling Human Social Thoughts with Metacognitive Multi-Agent ...      │ https://www.alphaxiv.org/abs/2505.18943 │
+└────────────┴────────────────────────────────────────────────────────────────────────┴─────────────────────────────────────────┘

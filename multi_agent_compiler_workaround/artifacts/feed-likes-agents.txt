@@ -1,0 +1,15 @@
+                                                                                                  alphaXiv Feed                                                                                                   
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                                           ┃ Date       ┃ Upvotes ┃ Visits ┃ GitHub ┃ X Likes ┃ Tags                                         ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2512.24601 │ Recursive Language Models                                                                       │ 2026-01-28 │ 523     │ 15924  │ 165    │ 325     │ agents, Computer Science, cs.AI              │
+│ 2601.20802 │ Reinforcement Learning via Self-Distillation                                                    │ 2026-02-16 │ 501     │ 8903   │ 8      │ 66      │ agents, Computer Science, cs.AI              │
+│ 2601.05242 │ GDPO: Group reward-Decoupled Normalization Policy Optimization for Multi-reward RL Optimization │ 2026-01-08 │ 441     │ 6824   │ 5      │ 82      │ agents, Computer Science, cs.AI              │
+│ 2601.16175 │ Learning to Discover at Test Time                                                               │ 2026-02-05 │ 433     │ 9269   │ 278    │ 302     │ agents, ai-for-health, Computer Science      │
+│ 2601.19897 │ Self-Distillation Enables Continual Learning                                                    │ 2026-01-27 │ 413     │ 8808   │ 51     │ 251     │ agents, Computer Science, continual-learning │
+│ 2602.08234 │ SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning                   │ 2026-02-09 │ 348     │ 7600   │ 0      │ -       │ agentic-frameworks, agents, Computer Science │
+│ 2601.14192 │ Toward Efficient Agents: Memory, Tool learning, and Planning                                    │ 2026-01-20 │ 346     │ 4701   │ 27     │ 1       │ agentic-frameworks, agents, Computer Science │
+│ 2601.23265 │ PaperBanana: Automating Academic Illustration for AI Scientists                                 │ 2026-01-30 │ 337     │ 6907   │ 3      │ 108     │ agentic-frameworks, agents, Computer Science │
+│ 2512.20491 │ Step-DeepResearch Technical Report                                                              │ 2025-12-29 │ 300     │ 3714   │ 112    │ 5       │ agentic-frameworks, agents, Computer Science │
+│ 2601.12538 │ Agentic Reasoning for Large Language Models                                                     │ 2026-01-18 │ 290     │ 4580   │ 333    │ 4       │ agentic-frameworks, agents, Computer Science │
+└────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┴────────────┴─────────┴────────┴────────┴─────────┴──────────────────────────────────────────────┘

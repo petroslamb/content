@@ -1,0 +1,25 @@
+Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents
+
+AgeMem introduces a framework for Large Language Model (LLM) agents that unifies long-term and short-term memory management through a learnable policy, enabling the agent to autonomously control memory operations. This approach improved 
+average task performance across diverse benchmarks by 4.82 to 8.57 percentage points over existing memory-augmented baselines and enhanced memory quality and context efficiency.
+
+Original Problem
+- LLM agents are fundamentally limited by finite context windows, hindering their ability to perform long-horizon reasoning tasks.
+- Existing memory management approaches treat long-term (LTM) and short-term (STM) memories as independent, loosely coupled modules, leading to fragmented and suboptimal performance.
+- Current methods for memory control often rely on handcrafted rules or auxiliary expert models, increasing inference costs and limiting adaptability.
+
+Solution
+- AgeMem formulates memory management as an intrinsic, learnable part of the agent's policy using a unified reinforcement learning (RL) framework.
+- Memory operations (e.g., store, retrieve, summarize, filter) are exposed as tool-based actions that the LLM agent can autonomously invoke.
+- A three-stage progressive RL strategy, combined with step-wise Group Relative Policy Optimization (GRPO), is used to train the agent to learn stable and unified memory behaviors across different timescales, addressing sparse and 
+discontinuous rewards.
+
+Key Insights
+- Unifying LTM and STM management within the agent's policy, rather than treating them as separate, external modules, significantly improves long-horizon reasoning.
+- Treating memory operations as explicit, learnable tools empowers the LLM agent to adapt its memory strategy based on task demands and learned experience.
+- A progressive RL strategy with long-range credit assignment effectively overcomes the challenges of sparse and discontinuous rewards inherent in optimizing memory-related actions.
+
+Results
+- AgeMem achieved the highest average performance on Qwen2.5-7B-Instruct (41.96%) and Qwen3-4B-Instruct (54.31%), outperforming memory-augmented baselines by 4.82 to 8.57 percentage points.
+- RL training yielded substantial improvements of 8.53 and 8.72 percentage points over the non-RL version, validating the progressive RL strategy's effectiveness.
+- AgeMem demonstrated higher Memory Quality (MQ) scores (0.533 for Qwen2.5, 0.605 for Qwen3) on HotpotQA and reduced prompt token usage by 3.1% to 5.1% compared to RAG-based counterparts.

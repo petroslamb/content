@@ -1,0 +1,10 @@
+                                                                   Similar Papers                                                                    
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                              ┃ Upvotes ┃ Visits ┃ Topics                                       ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2512.08296 │ Towards a Science of Scaling Agent Systems                         │ 292     │ 4557   │ agentic-frameworks, agents, Computer Science │
+│ 2602.19672 │ SkillOrchestra: Learning to Route Agents via Skill Transfer        │ 93      │ 718    │ agentic-frameworks, agents, Computer Science │
+│ 2512.17102 │ Reinforcement Learning for Self-Improving Agent with Skill Library │ 91      │ 1255   │ agentic-frameworks, agents, Computer Science │
+│ 2502.04180 │ Multi-agent Architecture Search via Agentic Supernet               │ 79      │ 4977   │ agentic-frameworks, agents, Computer Science │
+│ 2508.02694 │ Efficient Agents: Building Effective Agents While Reducing Cost    │ 65      │ 1024   │ agentic-frameworks, agents, Computer Science │
+└────────────┴────────────────────────────────────────────────────────────────────┴─────────┴────────┴──────────────────────────────────────────────┘

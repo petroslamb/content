@@ -1,0 +1,193 @@
+Assistant
+<alphaxiv-thinking-title title="Reading paper details" />
+Fetch arXiv Abstract
+Fetch arXiv Abstract
+Fetch arXiv Abstract
+Fetch arXiv Abstract
+Fetch arXiv Abstract
+Result: {"title":"ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems","abstract":"Current agentic frameworks underperfor
+Result: {"title":"When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail","abstract":"Multi-agent AI systems have proven effec
+Result: {"title":"The Vision Wormhole: Latent-Space Communication in Heterogeneous Multi-Agent Systems","abstract":"Multi-Agent Systems (MAS) powere
+Result: {"title":"EmCoop: A Framework and Benchmark for Embodied Cooperation Among LLM Agents","abstract":"Real-world scenarios increasingly require
+Result: {"title":"Intelligent AI Delegation","abstract":"AI agents are able to tackle increasingly complex tasks. To achieve more ambitious goals, A
+<alphaxiv-thinking-title title="Reading PDFs for evidence" />
+Answer PDF Queries
+Answer PDF Queries
+Answer PDF Queries
+Answer PDF Queries
+Answer PDF Queries
+Result: The core technical novelty of the paper is the introduction of EmCoop, a benchmark framework for studying cooperation in LLM-based embodied 
+Result: The paper introduces an adaptive framework for intelligent AI delegation, which is a concrete system designed to address limitations in curr
+Result: The paper's core technical novelty lies in viewing skills as internalized agent behaviors, allowing multi-agent systems (MAS) to be compiled
+Result: The core technical novelty of the paper is the
+Result: ROMA is a novel domain-agnostic framework designed for long-horizon multi-agent systems. Its core technical novelty lies in its recursive ta
+## Ranking by likely importance
+
+1. **[ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems](https://arxiv.org/abs/2602.01848)**
+2. **[When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail](https://arxiv.org/abs/2601.04748)**
+3. **[EmCoop: A Framework and Benchmark for Embodied Cooperation Among LLM Agents](https://arxiv.org/abs/2603.00349)**
+4. **[The Vision Wormhole: Latent-Space Communication in Heterogeneous Multi-Agent Systems](https://arxiv.org/abs/2602.15382)**
+5. **[Intelligent AI Delegation](https://arxiv.org/abs/2602.11865)**
+
+---
+
+## Short version
+
+My ranking is mostly driven by a simple question: **which of these is most likely to change how future multi-agent systems are actually built and evaluated?**
+
+- **ROMA** ranks first because it proposes a fairly general systems architecture for long-horizon multi-agent work and backs it with meaningful benchmark gains.
+- **Single-agent-with-skills vs multi-agent** ranks second because it attacks a foundational assumption of the area: that multi-agent structure is inherently necessary. Even if its concrete system is less influential than ROMA, its framing could age very well.
+- **EmCoop** ranks third because benchmarks can have long half-lives, especially when they expose a real gap in evaluation.
+- **Vision Wormhole** is more speculative: very novel, but also more contingent on whether latent-channel communication actually becomes practical and robust.
+- **Intelligent AI Delegation** feels the least likely to be a lasting citation anchor because it appears more conceptual/framework-oriented than technically decisive.
+
+---
+
+## Why ROMA is #1
+
+**Novelty**
+- ROMA’s main idea is not just “use multiple agents,” but to make multi-agent orchestration **recursive, modular, and explicitly structured** around decomposition and aggregation. The paper says it introduces “recursive task decomposition and structured aggregation” and a four-role architecture of Atomizer, Planner, Executor, and Aggregator. <alphaxiv-paper-citation paper="2602.01848" title="ROMA and GEPA+" page="1" first="Recursive task decomposition" last="to ROMA’s modular architecture." />
+- That is a stronger contribution than a narrow tactic because it is an **architectural pattern** others can reuse.
+
+**Practical impact**
+- The strongest reason to put it first is that it claims concrete gains on recognizable long-horizon tasks. The paper evaluates ROMA on SEAL-0, EQ-Bench, FRAMES, SimpleQA, and AbGen. <alphaxiv-paper-citation paper="2602.01848" title="Benchmarks" page="3" first="We evaluate ROMA" last="and AbGen [58 ]." />
+- On SEAL-0, it reports **45.9% accuracy**, described as a **9.9 point improvement over Kimi-Researcher**. <alphaxiv-paper-citation paper="2602.01848" title="SEAL-0" page="8" first="ROMA achieves the" last="open research agent." />
+- On EQ-Bench, it claims ROMA plus GEPA+ lets DeepSeek-V3 reach **79.8%**, matching leading closed models. <alphaxiv-paper-citation paper="2602.01848" title="EQ-Bench" page="9" first="Applying GEPA+ prompt" last="4.5 (see Table 4)." />
+
+**Likely lasting relevance**
+- The lasting part is that ROMA is trying to solve a durable systems problem: **how to scale reasoning depth without collapsing under context growth and orchestration brittleness**.
+- Even if the exact role names do not persist, the decomposition/aggregation pattern probably will.
+- The limitation section actually makes the paper more credible: it explicitly says decomposition and aggregation are not guaranteed optimal, aggregation quality depends on prompting and model behavior, and parallel execution can raise compute cost and coordination issues. <alphaxiv-paper-citation paper="2602.01848" title="Limitations" page="13" first="While ROMA provides" last="intermediate results." /> <alphaxiv-paper-citation paper="2602.01848" title="Limitations" page="13" first="Though parallel execution" last="concurrent branches." />
+
+> “While ROMA provides a” … “may omit critical evidence or over-compress intermediate results.” <alphaxiv-paper-citation paper="2602.01848" title="Limitations" page="13" first="While ROMA provides" last="intermediate results." />
+
+**Why not lower?**
+- Because it is both **broadly reusable** and **empirically grounded**, which is the best combination for importance.
+
+---
+
+## Why the single-agent-with-skills paper is #2
+
+**Novelty**
+- This paper asks a deeper question than “how do we build a better multi-agent system?” It asks whether many such systems should be compiled away into a **single agent with a skill library**.
+- That is a high-value conceptual move because it challenges a lot of current multi-agent enthusiasm at the level of first principles. The paper frames skills as “internalized agent behaviors” and treats multi-agent systems as compilable into single-agent systems through skill selection. <alphaxiv-paper-citation paper="2601.04748v2" title="Method" page="1" first="Multi-agent AI systems" last="skill selection." />
+
+**Practical impact**
+- It reports large efficiency gains: **53.7% average token reduction** and **49.5% average latency reduction** while maintaining similar benchmark accuracy. <alphaxiv-paper-citation paper="2601.04748v2" title="Results" page="7" first="Faithful Compilation." last="MAS performance." />
+- If those results hold broadly, this matters a lot in practice because much of multi-agent engineering is expensive and slow.
+
+**Likely lasting relevance**
+- I think this paper has very strong odds of being remembered because it identifies a likely **scaling law / failure mode** for skill routing: performance stays stable and then degrades sharply beyond a critical library size, with semantic confusability playing a major role. <alphaxiv-paper-citation paper="2601.04748v2" title="Method" page="1" first="Rather than degrading gradually," last="human cognition." />
+- That is the kind of finding that can outlive the exact experiments. It gives the field a vocabulary for when multi-agent decomposition is useful and when internalized skills stop scaling cleanly.
+
+> “Rather than degrading gradually,” … “phase transition reminiscent of capacity limits in human cognition.” <alphaxiv-paper-citation paper="2601.04748v2" title="Method" page="1" first="Rather than degrading gradually," last="human cognition." />
+
+**Why not #1?**
+- Because the paper is more likely to be influential as a **critique and reframing** than as the dominant production architecture.
+- ROMA feels more immediately adoptable as a build pattern; this one feels more like the paper people cite when deciding whether they need multi-agent structure at all.
+
+---
+
+## Why EmCoop is #3
+
+**Novelty**
+- EmCoop is not primarily an orchestration method. Its contribution is a **benchmark and analysis framework** for embodied cooperation among LLM agents.
+- That matters because embodied multi-agent work badly needs better process-level evaluation, not just win rates.
+
+**Practical impact**
+- In the short term, benchmarks usually matter less than a strong system paper unless the benchmark becomes the community standard.
+- But EmCoop’s emphasis on separating high-level cognition from low-level embodied interaction, plus process metrics for diagnosing cooperation quality and failure modes, is exactly the kind of infrastructure the area needs.
+
+**Likely lasting relevance**
+- Benchmarks can become very durable if they define the way a subfield measures progress.
+- I ranked it above Vision Wormhole because evaluation frameworks often outlast clever communication mechanisms.
+- If embodied multi-agent systems become a serious frontier, EmCoop could end up being one of the early reference points for **how to measure cooperation rather than just whether the task was solved**.
+
+**Why not higher?**
+- Because benchmark papers only become truly central if the community adopts them. That is plausible here, but not yet something I would bet on more strongly than the two papers above.
+
+---
+
+## Why Vision Wormhole is #4
+
+**Novelty**
+- This is probably the most **flashily novel** paper in the set. The idea of using a VLM visual interface as a universal latent communication channel for heterogeneous agents is unusual and memorable.
+- The hub-and-spoke alignment idea, reducing pairwise alignment complexity from $O(N^2)$ to $O(N)$, is also structurally appealing.
+
+**Practical impact**
+- The paper claims reduced wall-clock time while preserving reasoning fidelity in controlled comparisons, which is directionally important.
+- But this kind of contribution depends heavily on whether the latent channel is robust across models, tasks, updates, and deployment settings.
+
+**Likely lasting relevance**
+- It could become very important if future multi-agent systems move away from text-only interfaces and toward **high-bandwidth hidden-state exchange**.
+- But it could also end up as a clever branch that does not become mainstream if text-mediated protocols remain easier to debug, safer, and more interoperable.
+- So I see it as **high novelty, medium confidence**.
+
+**Why below EmCoop?**
+- Because benchmark infrastructure usually has a more stable path to lasting influence than a speculative communication mechanism that may be overtaken by other latent-routing or protocol-learning approaches.
+
+---
+
+## Why Intelligent AI Delegation is #5
+
+**Novelty**
+- The paper appears to propose a broad adaptive delegation framework involving authority, accountability, trust, and role boundaries.
+- Those are important ideas, but from the evidence here it looks more like a **conceptual and governance-oriented framework** than a sharp technical breakthrough.
+
+**Practical impact**
+- It may influence design language and safety-oriented protocol thinking, especially in human-AI delegation settings.
+- But papers of this type often matter more as agenda-setting documents than as core technical references that future systems directly build on.
+
+**Likely lasting relevance**
+- It could age well if “agentic web” coordination becomes a major area and this paper gets credited for articulating the delegation problem clearly.
+- Still, compared with the others, it seems least likely to be the paper people repeatedly cite for a concrete mechanism, benchmark, or empirical result.
+
+**Why last?**
+- Because importance in this area tends to come from one of three things:
+  - a reusable architecture,
+  - a strong empirical reframing,
+  - or a benchmark everyone adopts.
+- This paper, at least from the available evidence, seems less decisive on those dimensions.
+
+---
+
+## Overall scoring intuition
+
+If I score them informally on the three criteria you asked for:
+
+| Paper | Novelty | Practical impact | Lasting relevance | Overall |
+|---|---:|---:|---:|---:|
+| [ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems](https://arxiv.org/abs/2602.01848) | 8.5 | 9.0 | 9.0 | **1** |
+| [When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail](https://arxiv.org/abs/2601.04748) | 9.0 | 8.5 | 8.8 | **2** |
+| [EmCoop: A Framework and Benchmark for Embodied Cooperation Among LLM Agents](https://arxiv.org/abs/2603.00349) | 7.8 | 7.5 | 8.3 | **3** |
+| [The Vision Wormhole: Latent-Space Communication in Heterogeneous Multi-Agent Systems](https://arxiv.org/abs/2602.15382) | 9.2 | 6.8 | 7.4 | **4** |
+| [Intelligent AI Delegation](https://arxiv.org/abs/2602.11865) | 7.0 | 6.2 | 6.8 | **5** |
+
+---
+
+## The key tradeoff behind the ranking
+
+A compact way to think about it:
+
+- **ROMA**: best mix of method + evidence + generality.
+- **Single-agent with skills**: most important challenge to the field’s assumptions.
+- **EmCoop**: strongest infrastructure/evaluation contribution.
+- **Vision Wormhole**: most daring mechanism, but higher risk of not becoming standard.
+- **Intelligent AI Delegation**: important theme, weaker evidence of becoming a core technical landmark.
+
+---
+
+## If you want the contrarian ranking
+
+A more novelty-heavy ranking would be:
+
+1. Vision Wormhole  
+2. Single-agent with skills  
+3. ROMA  
+4. EmCoop  
+5. Intelligent AI Delegation
+
+That version rewards “new conceptual direction” over “most likely to shape actual practice.” I did **not** choose it because you asked about **importance**, which to me should weight **practical uptake and staying power** more than cleverness alone.
+
+If you want, I can also turn this into a **venture-style ranking** (“most likely to matter for products in 12 months”) versus an **academic ranking** (“most likely to still be cited in 3 years”).
+Current assistant chat set: 019cf5b4-34f6-7d09-9b0c-854743289570

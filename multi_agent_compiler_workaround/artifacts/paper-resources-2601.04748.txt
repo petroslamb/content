@@ -1,0 +1,14 @@
+                             Paper Resources                              
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2601.04748v2                                         │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2601.04748v2.pdf │
+│ Source URL      │ https://arxiv.org/abs/2601.04748                     │
+│ BibTeX          │ available                                            │
+│ Podcast Path    │ -                                                    │
+│ Podcast URL     │ -                                                    │
+│ Transcript URL  │ -                                                    │
+│ Mentions        │ 1                                                    │
+│ Implementations │ -                                                    │
+└─────────────────┴──────────────────────────────────────────────────────┘

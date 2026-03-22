@@ -1,0 +1,10 @@
+   Feed Filter Topics for: agent   
+           collaboration           
+┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Topic                ┃ Use With ┃
+┡━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ agent-based-systems  │ --topic  │
+│ multi-agent-learning │ --topic  │
+│ human-ai-interaction │ --topic  │
+│ cs.RO                │ --topic  │
+└──────────────────────┴──────────┘

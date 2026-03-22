@@ -1,0 +1,26 @@
+Toward Efficient Agents: Memory, Tool learning, and Planning
+
+A comprehensive survey from Shanghai AI Lab and collaborating institutions systematically categorizes and analyzes efficiency strategies for large language model (LLM)-based agents across their memory, tool learning, and planning 
+components. The work defines efficient agents as those that maximize task success while minimizing resource consumption like token usage and latency, identifying critical bottlenecks and outlining future research directions for practical 
+deployment.
+
+Original Problem
+- LLM-based agents face prohibitive resource consumption (tokens, computation, latency) due to recursive interactions, extensive memory management, and multi-step planning.
+- The research community has primarily focused on enhancing agent *effectiveness*, often overlooking *efficiency*, which hinders real-world, scalable deployment.
+- A unified and comprehensive literature review specifically addressing the unique efficiency challenges of agentic systems, distinct from general LLM optimizations, was missing.
+
+Solution
+- Decomposes agent efficiency into three fundamental, interlinked components: memory, tool learning, and planning.
+- Develops detailed taxonomies within each component to systematically categorize and review existing efficiency-oriented methods.
+- Synthesizes a broad range of approaches, consistently focusing on how they mitigate resource consumption, and proposes a definition of an efficient agent based on Pareto optimization of effectiveness and cost.
+
+Key Insights
+- Efficiency is a critical, often overlooked, bottleneck for LLM agent deployment, necessitating a balanced optimization between task effectiveness and resource consumption.
+- Diverse efficiency methods, despite varied implementations, converge on core principles such as context compression, cost-aware decision-making (e.g., via reinforcement learning), and structured problem-solving.
+- There is a growing trend to shift expensive online computations (like extensive search or repeated token generation) to offline learning or structured retrieval, thereby amortizing costs over time.
+
+Results
+- Identifies strategies for efficient memory, including context compression for working memory, adaptive management techniques, and targeted retrieval, to mitigate token explosion and reduce latency.
+- Outlines methods for efficient tool learning such as optimized tool selection from large pools, parallel or cost-aware tool calling, and strategic tool integration into reasoning paths to minimize redundant interactions.
+- Details planning efficiency improvements through inference-time strategies like adaptive budgeting and structured search, alongside learning-based evolution for policy optimization and skill acquisition.
+- Summarizes common efficiency metrics including token consumption, API monetary cost, inference latency, and interaction steps, while highlighting the current lack of unified evaluation frameworks across studies.
