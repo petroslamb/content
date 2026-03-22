@@ -1,0 +1,135 @@
+[
+  {
+    "title": "The Illusion of the Swarm",
+    "url": "https://lambpetros.substack.com/p/the-illusion-of-the-swarm",
+    "post_date": "2026-03-17T11:12:49.130Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:54.837711"
+  },
+  {
+    "title": "The Moltbook Phenomenon",
+    "url": "https://lambpetros.substack.com/p/the-moltbook-phenomenon",
+    "post_date": "2026-03-12T23:32:53.509Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:55.393970"
+  },
+  {
+    "title": "The Autonomy Tax",
+    "url": "https://lambpetros.substack.com/p/the-autonomy-tax",
+    "post_date": "2026-02-27T10:13:52.173Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:55.680308"
+  },
+  {
+    "title": "Your AI Is Confidently Wrong \u2014 And You Have No Rule for What to Do About It",
+    "url": "https://lambpetros.substack.com/p/your-ai-is-confidently-wrong-and",
+    "post_date": "2026-02-18T17:49:44.630Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:55.924775"
+  },
+  {
+    "title": "The Five-Component Pattern for AI Evidence Governance",
+    "url": "https://lambpetros.substack.com/p/the-five-component-pattern-for-ai",
+    "post_date": "2026-02-18T15:42:37.994Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:56.505217"
+  },
+  {
+    "title": "Measuring Trust: The Gap Between AI Auditing and Correctness",
+    "url": "https://lambpetros.substack.com/p/measuring-trust-the-gap-between-ai",
+    "post_date": "2026-02-18T14:41:22.326Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:56.812235"
+  },
+  {
+    "title": "The Transformer Attractor",
+    "url": "https://lambpetros.substack.com/p/the-transformer-attractor",
+    "post_date": "2026-01-15T23:43:27.052Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:57.348018"
+  },
+  {
+    "title": "When the LLM Programs Its Own Thinking",
+    "url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
+    "post_date": "2026-01-14T19:05:25.945Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:57.899714"
+  },
+  {
+    "title": "The Orchestration Paradigm: Issue 4 - The Reality",
+    "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397",
+    "post_date": "2025-12-29T17:58:18.658Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:58.155532"
+  },
+  {
+    "title": "The Orchestration Paradigm: Issue 3 - The Behavior",
+    "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-cf4",
+    "post_date": "2025-12-29T13:13:49.466Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:58.432034"
+  },
+  {
+    "title": "The Orchestration Paradigm: Issue 2 - The Factory",
+    "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue",
+    "post_date": "2025-12-29T11:28:41.762Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:59.065315"
+  },
+  {
+    "title": "The Orchestration Paradigm Series",
+    "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-series",
+    "post_date": "2025-12-26T21:19:10.767Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:33:59.474194"
+  },
+  {
+    "title": "The Hardware Friction Map",
+    "url": "https://lambpetros.substack.com/p/the-hardware-friction-map",
+    "post_date": "2025-12-10T19:17:46.866Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:34:00.023858"
+  },
+  {
+    "title": "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\u20132025)",
+    "url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware",
+    "post_date": "2025-12-06T10:34:32.179Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:34:00.308968"
+  },
+  {
+    "title": "Autonomous AI Agents: Core Foundations and Recent Breakthroughs",
+    "url": "https://lambpetros.substack.com/p/the-agent-revolution",
+    "post_date": "2025-12-02T00:15:32.387Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:34:00.908033"
+  },
+  {
+    "title": "A Quick Look at AI Hacking Research",
+    "url": "https://lambpetros.substack.com/p/a-quick-overview-ai-hacking-research",
+    "post_date": "2025-12-01T09:44:35.742Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:34:01.176435"
+  },
+  {
+    "title": "A Quick Look at 27 Production\u2011Ready AI Agents ",
+    "url": "https://lambpetros.substack.com/p/a-quick-overview-production-ready",
+    "post_date": "2025-11-29T22:26:59.824Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:34:01.713111"
+  },
+  {
+    "title": "Neural Architecture Design as a Compositional Language",
+    "url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
+    "post_date": "2025-11-27T16:04:27.908Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:34:02.343817"
+  },
+  {
+    "title": "Welcome",
+    "url": "https://lambpetros.substack.com/p/coming-soon",
+    "post_date": "2025-11-27T15:19:30.913Z",
+    "audience": "everyone",
+    "fetched_at": "2026-03-22T16:34:02.951938"
+  }
+]
