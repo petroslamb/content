@@ -1,0 +1,35 @@
+# V4 Self-Review
+
+## Word Count
+- **Body:** 2,652 words (target: 4,200, ceiling: 4,400)
+- **Appendix:** 519 words
+- **Total:** 3,171 words
+- **Verdict:** ~1,500 words under target. Several sections ran lean.
+
+## Sections Under Budget
+
+| Section | Budget | Actual (est.) | Gap |
+|---|---|---|---|
+| §2 Deployment Paradox | 550 | ~350 | Thin — needs METR context expanded |
+| §5 Governance Tax | 500 | ~350 | Missing observability cost detail |
+| §6 Decision Rule | 500 | ~450 | Scorecard + sensitivity table OK |
+| §8 Three Actions | 300 | ~200 | Needs more specific output descriptions |
+
+## Breakout Quality Bar
+
+| Criterion | Pass? | Notes |
+|---|---|---|
+| Reader can repeat thesis in one line | ✅ | Equation + "control, not intelligence" |
+| Genuine "rethink" moment | ✅ | §3 Expert Tax surprise — three triangulated studies |
+| Tool for Monday morning | ✅ | Scorecard + three actions |
+| Opposing case treated fairly | ✅ | Klarna anti-thesis with numeric math |
+| Claims falsifiable | ✅ | 2027 prediction + explicit disproof |
+| Word count in range | ❌ | 1,500 under target |
+| Citation integrity | ✅ | All first-use DOIs, preprints labeled, inferences explicit |
+
+## Issues to Fix
+1. **Expand §2** — METR trend deserves its own paragraph with the "doubling every 7 months" data point
+2. **Expand §5** — Add concrete observability cost math (LangSmith/Braintrust pricing was in V3)
+3. **Expand §8** — The three actions need slightly more detail on deliverable format
+4. **V3 had a Level 2.5 worked cost example** ($222/mo for 500 runs) that V4 references in concept but doesn't show — add a brief token math example to §6
+5. **Missing V3 content:** ShieldAgent emerging mitigation research — worth one sentence in §4
