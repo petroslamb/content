@@ -1,0 +1,14 @@
+                             Paper Resources                              
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2602.01848v2                                         │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2602.01848v2.pdf │
+│ Source URL      │ https://arxiv.org/abs/2602.01848                     │
+│ BibTeX          │ available                                            │
+│ Podcast Path    │ -                                                    │
+│ Podcast URL     │ -                                                    │
+│ Transcript URL  │ -                                                    │
+│ Mentions        │ 2                                                    │
+│ Implementations │ https://github.com/sentient-agi/ROMA                 │
+└─────────────────┴──────────────────────────────────────────────────────┘

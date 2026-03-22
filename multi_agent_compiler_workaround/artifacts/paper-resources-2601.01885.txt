@@ -1,0 +1,14 @@
+                                               Paper Resources                                                
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                                                    ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2601.01885v1                                                                             │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2601.01885v1.pdf                                     │
+│ Source URL      │ https://arxiv.org/abs/2601.01885                                                         │
+│ BibTeX          │ -                                                                                        │
+│ Podcast Path    │ 019b9149-7883-7a5f-a3e8-24d4466b31f0/podcast.mp3                                         │
+│ Podcast URL     │ https://paper-podcasts.alphaxiv.org/019b9149-7883-7a5f-a3e8-24d4466b31f0/podcast.mp3     │
+│ Transcript URL  │ https://paper-podcasts.alphaxiv.org/019b9149-7883-7a5f-a3e8-24d4466b31f0/transcript.json │
+│ Mentions        │ 4                                                                                        │
+│ Implementations │ https://github.com/anomalyco/opencode                                                    │
+└─────────────────┴──────────────────────────────────────────────────────────────────────────────────────────┘

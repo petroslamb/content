@@ -1,0 +1,24 @@
+The Vision Wormhole: Latent-Space Communication in Heterogeneous Multi-Agent Systems
+
+Researchers at Purdue, CMU, and Georgia Tech developed 'The Vision Wormhole,' a framework that leverages Vision-Language Model (VLM) visual encoders as a continuous communication channel for heterogeneous multi-agent systems, reducing 
+communication overhead and improving scalability from O(N^2) to O(N) while enhancing reasoning performance.
+
+Original Problem
+- Text-based communication in Multi-Agent Systems (MAS) creates severe bottlenecks due to high runtime overhead from token decoding/encoding and information quantization loss.
+- Existing latent communication methods are often restricted to homogeneous MAS or suffer from an O(N^2) scalability trap for heterogeneous systems, requiring many pairwise translators.
+- Text-only Large Language Models (LLMs) are brittle to arbitrary continuous vector injections ('Off-Manifold' incompatibility), hindering direct latent-space communication.
+
+Solution
+- Repurposes VLM visual encoders as universal, continuous communication ports, allowing text-free latent-space information transfer by injecting latent data directly into the image soft embedding pathway.
+- Implements a 'Hub-and-Spoke' topology with a Universal Visual Codec, reducing the complexity of integrating new agents to O(N) by training a single lightweight adapter per model.
+- Utilizes a label-free teacher-student distillation objective, where slow text-based communication acts as a teacher to align the high-speed visual communication channel, obviating the need for aligned supervision datasets.
+
+Key Insights
+- Vision-Language Model (VLM) visual interfaces can be repurposed as robust, continuous communication channels for text-free latent-space information transfer, circumventing the 'off-manifold' problem.
+- A 'Hub-and-Spoke' architecture with a shared Universal Latent Space enables O(N) scalable communication across heterogeneous models by learning lightweight affine maps.
+- Effective alignment of heterogeneous latent spaces can be achieved through self-supervised distillation, leveraging text-based communication as a strong teacher signal.
+
+Results
+- Achieved an average accuracy improvement of +6.3 percentage points and a 1.87x speedup in end-to-end wall-clock time compared to TextMAS across various benchmarks.
+- Demonstrated significant gains in code generation tasks (e.g., MBPP-Plus, HumanEval-Plus), showing an average +13.2pp accuracy increase and 1.21x speedup.
+- Maintained robustness and efficacy even with weak supervision (fewer than 100 anchor texts for codec training), delivering an average +6.5pp accuracy gain and 2.67x speedup.

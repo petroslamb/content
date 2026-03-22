@@ -1,0 +1,14 @@
+                                               Paper Resources                                                
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                                                    ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2601.14192v1                                                                             │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2601.14192v1.pdf                                     │
+│ Source URL      │ https://arxiv.org/abs/2601.14192                                                         │
+│ BibTeX          │ available                                                                                │
+│ Podcast Path    │ 019bdea1-045c-7425-88a8-ad2dc1136217/podcast.mp3                                         │
+│ Podcast URL     │ https://paper-podcasts.alphaxiv.org/019bdea1-045c-7425-88a8-ad2dc1136217/podcast.mp3     │
+│ Transcript URL  │ https://paper-podcasts.alphaxiv.org/019bdea1-045c-7425-88a8-ad2dc1136217/transcript.json │
+│ Mentions        │ 1                                                                                        │
+│ Implementations │ https://github.com/yxf203/Awesome-Efficient-Agents                                       │
+└─────────────────┴──────────────────────────────────────────────────────────────────────────────────────────┘

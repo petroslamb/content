@@ -1,0 +1,15 @@
+                                                                                        alphaXiv Feed                                                                                        
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                      ┃ Date       ┃ Upvotes ┃ Visits ┃ GitHub ┃ X Likes ┃ Tags                                         ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2601.23265 │ PaperBanana: Automating Academic Illustration for AI Scientists            │ 2026-01-30 │ 337     │ 6907   │ 3      │ 108     │ agentic-frameworks, agents, Computer Science │
+│ 2601.12538 │ Agentic Reasoning for Large Language Models                                │ 2026-01-18 │ 290     │ 4580   │ 333    │ 4       │ agentic-frameworks, agents, Computer Science │
+│ 2601.07055 │ Dr. Zero: Self-Evolving Search Agents without Training Data                │ 2026-01-11 │ 231     │ 2934   │ 3      │ 441     │ agents, Computer Science, cs.AI              │
+│ 2601.18778 │ Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability │ 2026-02-06 │ 215     │ 2888   │ -      │ 2       │ Computer Science, cs.CL, cs.LG               │
+│ 2601.10825 │ Reasoning Models Generate Societies of Thought                             │ 2026-01-15 │ 208     │ 3153   │ -      │ 2       │ agents, Computer Science, cs.CL              │
+│ 2601.05111 │ Agent-as-a-Judge                                                           │ 2026-01-08 │ 162     │ 1687   │ 23     │ -       │ agentic-frameworks, agents, Computer Science │
+│ 2601.21557 │ Meta Context Engineering via Agentic Skill Evolution                       │ 2026-02-11 │ 98      │ 1071   │ 3      │ -       │ agents, Computer Science, cs.AI              │
+│ 2602.11865 │ Intelligent AI Delegation                                                  │ 2026-02-12 │ 96      │ 1212   │ 47     │ 7       │ agentic-frameworks, agents, Computer Science │
+│ 2602.19672 │ SkillOrchestra: Learning to Route Agents via Skill Transfer                │ 2026-02-23 │ 93      │ 718    │ 0      │ 18      │ agentic-frameworks, agents, Computer Science │
+│ 2601.09113 │ The AI Hippocampus: How Far are We From Human Memory?                      │ 2026-01-14 │ 88      │ 1360   │ 0      │ -       │ agents, Computer Science, continual-learning │
+└────────────┴────────────────────────────────────────────────────────────────────────────┴────────────┴─────────┴────────┴────────┴─────────┴──────────────────────────────────────────────┘

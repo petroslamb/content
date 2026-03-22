@@ -1,0 +1,14 @@
+                                               Paper Resources                                                
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                                                    ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2602.11865v1                                                                             │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2602.11865v1.pdf                                     │
+│ Source URL      │ https://arxiv.org/abs/2602.11865                                                         │
+│ BibTeX          │ available                                                                                │
+│ Podcast Path    │ 019c554c-2a8e-723c-809f-1453a4ed8a3a/podcast.mp3                                         │
+│ Podcast URL     │ https://paper-podcasts.alphaxiv.org/019c554c-2a8e-723c-809f-1453a4ed8a3a/podcast.mp3     │
+│ Transcript URL  │ https://paper-podcasts.alphaxiv.org/019c554c-2a8e-723c-809f-1453a4ed8a3a/transcript.json │
+│ Mentions        │ 13                                                                                       │
+│ Implementations │ https://github.com/Haohao-end/Ctrip-Style-AI-Travel-Assistant                            │
+└─────────────────┴──────────────────────────────────────────────────────────────────────────────────────────┘
