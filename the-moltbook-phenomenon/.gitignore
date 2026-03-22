@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Large media files (keep local only)
+*.m4a
+*.mp4
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+
+# Temp scripts
+fix_refs.py
