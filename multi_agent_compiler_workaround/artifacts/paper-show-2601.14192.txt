@@ -1,0 +1,13 @@
+                                                                    Toward Efficient Agents: Memory, Tool learning, and Planning                                                                     
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field        ┃ Value                                                                                                                                                                              ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ arXiv ID     │ 2601.14192                                                                                                                                                                         │
+│ Versioned ID │ 2601.14192v1                                                                                                                                                                       │
+│ Version UUID │ 019bdea1-048e-7bd8-933e-0415e1222367                                                                                                                                               │
+│ Group UUID   │ 019bdea1-045c-7425-88a8-ad2dc1136217                                                                                                                                               │
+│ Authors      │ Xiaofang Yang, Lijun Li, Heng Zhou, Tong Zhu, Xiaoye Qu, Yuchen Fan, Qianshan Wei, Rui Ye, Li Kang, Yiran Qin, Zhiqiang Kou, Daizong Liu, Qi Li, Ning Ding, Siheng Chen, Jing Shao │
+│ Topics       │ agentic-frameworks, agents, Computer Science, cs.AI, cs.CL, efficient-transformers, inference-optimization, optimization-methods, reinforcement-learning, tool-use                 │
+│ PDF URL      │ https://fetcher.alphaxiv.org/v2/pdf/2601.14192v1.pdf                                                                                                                               │
+│ Source URL   │ https://arxiv.org/abs/2601.14192                                                                                                                                                   │
+└──────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

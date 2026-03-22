@@ -1,0 +1,13 @@
+                                                  ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems                                                  
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field        ┃ Value                                                                                                                                                           ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ arXiv ID     │ 2602.01848                                                                                                                                                      │
+│ Versioned ID │ 2602.01848v2                                                                                                                                                    │
+│ Version UUID │ 019c9284-91a5-78b2-a25b-d79d7b1b21ae                                                                                                                            │
+│ Group UUID   │ 019c21ce-041d-7dae-8dd5-03844a8511b1                                                                                                                            │
+│ Authors      │ Salaheddin Alzu'bi, Baran Nama, Arda Kaz, Anushri Eswaran, Weiyuan Chen, Sarvesh Khetan, Rishab Bala, Tu Vu, Sewoong Oh                                         │
+│ Topics       │ agentic-frameworks, agents, Computer Science, cs.AI, cs.MA, evolutionary-algorithms, explainable-ai, multi-agent-learning, reasoning, text-generation, tool-use │
+│ PDF URL      │ https://fetcher.alphaxiv.org/v2/pdf/2602.01848v2.pdf                                                                                                            │
+│ Source URL   │ https://arxiv.org/abs/2602.01848                                                                                                                                │
+└──────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

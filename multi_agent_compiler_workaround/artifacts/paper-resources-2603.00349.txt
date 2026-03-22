@@ -1,0 +1,14 @@
+                                   Paper Resources                                   
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                           ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2603.00349v1                                                    │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2603.00349v1.pdf            │
+│ Source URL      │ https://arxiv.org/abs/2603.00349                                │
+│ BibTeX          │ available                                                       │
+│ Podcast Path    │ -                                                               │
+│ Podcast URL     │ -                                                               │
+│ Transcript URL  │ -                                                               │
+│ Mentions        │ 0                                                               │
+│ Implementations │ https://github.com/eliahuhorwitz/Academic-project-page-template │
+└─────────────────┴─────────────────────────────────────────────────────────────────┘

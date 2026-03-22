@@ -1,0 +1,25 @@
+When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail
+
+This research from the University of British Columbia introduces a method to compile multi-agent systems into highly efficient single-agent systems with skills, achieving comparable accuracy with up to 53.7% token savings and 49.5% latency 
+reduction. The work also characterizes a non-linear scaling law for LLM skill selection, identifying a cognitive capacity threshold (e.g., ~80-90 skills for tested models) and showing that semantic confusability, not policy complexity, 
+drives performance degradation, which can be mitigated by hierarchical organization.
+
+Original Problem
+- Multi-agent systems (MAS) using LLMs are computationally expensive due to verbose inter-agent communication, redundant context, and multi-round coordination.
+- A lack of understanding exists regarding how LLM performance scales with the size and complexity of its action space (skill library), leading to unpredictable failure modes.
+- Designing efficient LLM agents that retain modularity benefits without high operational costs poses a practical challenge.
+
+Solution
+- A formal compilation process (Φ: M → S) is developed to transform multi-agent systems into equivalent single-agent systems with a library of "skills," aiming to internalize agent behaviors.
+- Skills are defined as schema-bounded operations (semantic descriptor, execution policy, optional backend) distinct from simple tool use, allowing for complex behavioral encapsulation within a single LLM query.
+- A controlled experimental setup, informed by cognitive science principles, is designed to systematically investigate skill selection accuracy as library size, semantic similarity, and policy complexity are varied.
+
+Key Insights
+- Compiling MAS into SAS faithfully preserves task performance while yielding substantial efficiency gains in tokens, latency, and API calls for compilable architectures.
+- LLM skill selection exhibits a non-linear phase transition, with accuracy degrading sharply beyond a critical capacity threshold (e.g., ~80-90 skills), governed by a super-linear decay law.
+- Semantic confusability among skill descriptors is the primary driver of selection errors, not the complexity of the execution policy, and hierarchical organization effectively mitigates this degradation for large skill libraries.
+
+Results
+- Compiled SAS achieved comparable accuracy to MAS (average +0.7% improvement) while reducing total token consumption by an average of 53.7% and end-to-end latency by 49.5%.
+- Skill selection accuracy degraded non-linearly, showing a phase transition with a capacity parameter (κ) of 91.8 for GPT-4o-mini and 83.5 for GPT-4o, where accuracy drops to half.
+- Adding one semantic competitor per skill reduced selection accuracy by 7-30%, and hierarchical routing improved accuracy for large libraries by 9-40% absolute compared to flat selection.

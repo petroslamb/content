@@ -1,0 +1,13 @@
+                                                     When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail                                                     
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field        ┃ Value                                                                                                                                                               ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ arXiv ID     │ 2601.04748                                                                                                                                                          │
+│ Versioned ID │ 2601.04748v2                                                                                                                                                        │
+│ Version UUID │ 019bea07-b4b5-726d-a485-f7184518af2a                                                                                                                                │
+│ Group UUID   │ 019ba09f-2c01-7cf2-89aa-e8bc715535ae                                                                                                                                │
+│ Authors      │ Xiaoxiao Li                                                                                                                                                         │
+│ Topics       │ agents, Computer Science, cs.AI, cs.MA, human-ai-interaction, inference-optimization, model-interpretation, multi-agent-learning, reasoning, tool-use, transformers │
+│ PDF URL      │ https://fetcher.alphaxiv.org/v2/pdf/2601.04748v2.pdf                                                                                                                │
+│ Source URL   │ https://arxiv.org/abs/2601.04748                                                                                                                                    │
+└──────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

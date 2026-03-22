@@ -1,0 +1,10 @@
+                                                                          Similar Papers                                                                          
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                     ┃ Upvotes ┃ Visits ┃ Topics                                             ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2504.05755 │ Unraveling Human-AI Teaming: A Review and Outlook                         │ 284     │ 2788   │ agents, autonomous-vehicles, Computer Science      │
+│ 2507.21206 │ Agentic Web: Weaving the Next Web with AI Agents                          │ 67      │ 1065   │ agentic-frameworks, agents, Computer Science       │
+│ 2507.22358 │ Magentic-UI: Towards Human-in-the-loop Agentic Systems                    │ 43      │ 578    │ adversarial-robustness, agentic-frameworks, agents │
+│ 2306.03314 │ Multi-Agent Collaboration: Harnessing the Power of Intelligent LLM Agents │ 26      │ 695    │ Computer Science, conversational-ai, cs.AI         │
+│ 2412.10999 │ Cocoa: Co-Planning and Co-Execution with AI Agents                        │ 23      │ 1930   │ Computer Science, conversational-ai, cs.AI         │
+└────────────┴───────────────────────────────────────────────────────────────────────────┴─────────┴────────┴────────────────────────────────────────────────────┘

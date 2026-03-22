@@ -1,0 +1,14 @@
+                             Paper Resources                              
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field           ┃ Value                                                ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Versioned ID    │ 2602.15382v1                                         │
+│ PDF URL         │ https://fetcher.alphaxiv.org/v2/pdf/2602.15382v1.pdf │
+│ Source URL      │ https://arxiv.org/abs/2602.15382                     │
+│ BibTeX          │ -                                                    │
+│ Podcast Path    │ -                                                    │
+│ Podcast URL     │ -                                                    │
+│ Transcript URL  │ -                                                    │
+│ Mentions        │ 0                                                    │
+│ Implementations │ https://github.com/xz-liu/heterogeneous-latent-mas   │
+└─────────────────┴──────────────────────────────────────────────────────┘

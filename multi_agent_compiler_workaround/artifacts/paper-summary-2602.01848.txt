@@ -1,0 +1,54 @@
+Traceback (most recent call last):
+  File "/Users/petros/Projects/alphaxiv-py/.venv/bin/alphaxiv", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/alphaxiv_cli.py", line 28, in main
+    cli()
+  File "/Users/petros/Projects/alphaxiv-py/.venv/lib/python3.12/site-packages/click/core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/.venv/lib/python3.12/site-packages/click/core.py", line 1406, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/.venv/lib/python3.12/site-packages/click/core.py", line 1873, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/.venv/lib/python3.12/site-packages/click/core.py", line 1873, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/.venv/lib/python3.12/site-packages/click/core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/.venv/lib/python3.12/site-packages/click/core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/cli/paper.py", line 398, in show_summary
+    overview_obj = fetch_overview(identifier, language=language)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/cli/paper.py", line 80, in fetch_overview
+    return run_async(_get())
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/cli/helpers.py", line 25, in run_async
+    return asyncio.run(awaitable)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/.pyenv/versions/3.12.8/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/petros/.pyenv/versions/3.12.8/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/.pyenv/versions/3.12.8/lib/python3.12/asyncio/base_events.py", line 686, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/cli/paper.py", line 78, in _get
+    return await client.papers.overview(identifier, language=language)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/_papers.py", line 91, in overview
+    payload = await self._core.get_json(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/_core.py", line 166, in get_json
+    response = await self.request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/petros/Projects/alphaxiv-py/src/alphaxiv/_core.py", line 127, in request
+    raise self._build_api_error(method=method, response=response, text=response.text)
+alphaxiv.exceptions.APIError: Overviews not found

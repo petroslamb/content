@@ -1,0 +1,13 @@
+                                                        Intelligent AI Delegation                                                        
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field        ┃ Value                                                                                                                  ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ arXiv ID     │ 2602.11865                                                                                                             │
+│ Versioned ID │ 2602.11865v1                                                                                                           │
+│ Version UUID │ 019c554c-2a9d-7872-8119-7a104a29f2b4                                                                                   │
+│ Group UUID   │ 019c554c-2a8e-723c-809f-1453a4ed8a3a                                                                                   │
+│ Authors      │ Nenad Tomašev, Matija Franklin, Simon Osindero                                                                         │
+│ Topics       │ agentic-frameworks, agents, Computer Science, cs.AI, human-ai-interaction, ml-systems, multi-agent-learning, reasoning │
+│ PDF URL      │ https://fetcher.alphaxiv.org/v2/pdf/2602.11865v1.pdf                                                                   │
+│ Source URL   │ https://arxiv.org/abs/2602.11865                                                                                       │
+└──────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

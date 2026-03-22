@@ -1,0 +1,10 @@
+                                                                                     Similar Papers                                                                                      
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Paper ID   ┃ Title                                                                                                  ┃ Upvotes ┃ Visits ┃ Topics                                       ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 2503.09501 │ ReMA: Learning to Meta-think for LLMs with Multi-Agent Reinforcement  Learning                         │ 236     │ 5162   │ chain-of-thought, Computer Science, cs.AI    │
+│ 2510.05592 │ In-the-Flow Agentic System Optimization for Effective Planning and Tool Use                            │ 189     │ 2757   │ agentic-frameworks, agents, chain-of-thought │
+│ 2503.08275 │ Beyond Outlining: Heterogeneous Recursive Planning for Adaptive Long-form Writing with Language Models │ 113     │ 3246   │ Computer Science, cs.AI, cs.CL               │
+│ 2507.11988 │ Aime: Towards Fully-Autonomous Multi-Agent Framework                                                   │ 104     │ 1447   │ agentic-frameworks, agents, Computer Science │
+│ 2504.16563 │ Enhancing LLM-Based Agents via Global Planning and Hierarchical  Execution                             │ 73      │ 878    │ Computer Science, cs.IR                      │
+└────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴────────┴──────────────────────────────────────────────┘

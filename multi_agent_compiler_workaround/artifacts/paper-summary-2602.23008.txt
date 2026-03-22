@@ -1,0 +1,25 @@
+Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization
+
+Researchers from Microsoft Research and KAIST developed EMPO², a hybrid reinforcement learning framework for LLM agents that integrates parametric policy optimization with non-parametric memory updates to enhance exploration and 
+generalization. This approach achieved a 128.6% improvement in average return over the GRPO baseline in ScienceWorld and demonstrated 136% better adaptability to out-of-distribution tasks with limited trials.
+
+Original Problem
+- Large Language Model (LLM) agents primarily exploit pre-trained knowledge, leading to an "exploration bottleneck" and difficulty discovering novel states or strategies in complex, unfamiliar environments.
+- Existing memory-augmented LLM agents suffer from performance saturation because their static parameters limit long-term generalization, offering only short-term adaptation.
+- Online reinforcement learning for LLMs, without intrinsic exploration capabilities, struggles to adapt autonomously and efficiently in novel environments.
+
+Solution
+- EMPO² integrates an external memory buffer that stores self-generated reflective "tips" from past interaction trajectories, guiding future exploration.
+- A hybrid policy optimization scheme utilizes two rollout modes (with and without memory) and two update modes: on-policy updates consistent with memory, and off-policy updates that distill memory-guided actions into the base policy to 
+promote generalization.
+- The framework includes a state-novelty based intrinsic reward to encourage broader exploration and a masking mechanism to stabilize off-policy training, addressing issues with large likelihood ratios.
+
+Key Insights
+- Combining parametric LLM policy updates with non-parametric memory reflection effectively balances exploration and exploitation, enabling agents to discover novel states and strategies beyond their initial knowledge.
+- Off-policy distillation of knowledge from memory-guided actions into the base policy allows for the internalization of learned strategies, improving generalization and reducing dependence on external memory during inference.
+- A hybrid approach to both experience generation and policy updates, complemented by intrinsic motivation, is crucial for stable, efficient, and robust learning in complex, multi-step interactive environments.
+
+Results
+- EMPO² achieved superior in-distribution performance, with a 128.6% higher average return than GRPO on ScienceWorld and an 11.3% higher mean score on WebShop, demonstrating enhanced problem-solving capabilities.
+- The framework exhibited strong out-of-distribution (OOD) adaptability, yielding an average 136% improvement across novel tasks within just 10 trials by leveraging accumulated memory.
+- Ablation studies confirmed that all hybrid learning components, including memory-augmented rollouts, off-policy updates, and intrinsic rewards, are critical for stable learning, faster convergence, and robust final performance.

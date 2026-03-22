@@ -1,0 +1,13 @@
+                                              Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization                                               
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Field        ┃ Value                                                                                                                                                       ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ arXiv ID     │ 2602.23008                                                                                                                                                  │
+│ Versioned ID │ 2602.23008v1                                                                                                                                                │
+│ Version UUID │ 019c9d03-0c6c-7404-a65e-6df53dcad550                                                                                                                        │
+│ Group UUID   │ 019c9d03-0c26-79e2-bb94-db80df00c710                                                                                                                        │
+│ Authors      │ Zeyuan Liu, Jeonghye Kim, Xufang Luo, Dongsheng Li, Yuqing Yang                                                                                             │
+│ Topics       │ agentic-frameworks, agents, Computer Science, cs.AI, cs.LG, deep-reinforcement-learning, reasoning, reinforcement-learning, transfer-learning, transformers │
+│ PDF URL      │ https://fetcher.alphaxiv.org/v2/pdf/2602.23008v1.pdf                                                                                                        │
+│ Source URL   │ https://arxiv.org/abs/2602.23008                                                                                                                            │
+└──────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

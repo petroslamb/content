@@ -1,0 +1,17 @@
+Feed Filter Topics for: multi-agent
+┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Topic                ┃ Use With ┃
+┡━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ multi-agent-learning │ --topic  │
+│ agent-based-systems  │ --topic  │
+│ agents               │ --topic  │
+│ cs.RO                │ --topic  │
+└──────────────────────┴──────────┘
+     Feed Filter Organizations for: multi-agent     
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃ Name                            ┃ Use With       ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ Multi-Agent Intelligent Systems │ --organization │
+│ Multi-Agent Security Initative  │ --organization │
+│ Multi-Agent Security Initiative │ --organization │
+└─────────────────────────────────┴────────────────┘
