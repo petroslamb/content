@@ -1,8 +1,34 @@
 # Content Repository
 
-## Description
+## Repository Organization
 
-This repository contains research and publication packages on enterprise agents, agent architectures, and neural architecture adoption. The current root-level structure is anchored around three documented packages with their own maintained `README.md` files.
+This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `ai_agents_enterprise_state`, `hardware_compatibility_architecture_2023_2025`).
+
+### Substack Metadata Tracking
+A top-level `substack_metadata/` directory stores automated metadata dumps from the Substack API to maintain a canonical record of what has been published externally.
+
+### Publication to Folder Mapping
+
+The following table maps published Substack articles to their corresponding source folders in this repository:
+
+| Substack Publication | Repository Folder |
+| :--- | :--- |
+| **The Illusion of the Swarm** | `multi_agent_compiler_workaround/` |
+| **The Moltbook Phenomenon** | `the-moltbook-phenomenon/` |
+| **The Autonomy Tax** | `ai_agents_enterprise_state/` |
+| **Your AI Is Confidently Wrong...** | `ethereum_llm_governance/` |
+| **The Five-Component Pattern for AI Evidence Governance** | `ethereum_llm_governance/` |
+| **Measuring Trust: The Gap Between AI Auditing and Correctness** | `ethereum_llm_governance/` |
+| **The Transformer Attractor** | `neural_architectures/` |
+| **When the LLM Programs Its Own Thinking** | `rlm_jupyter/` |
+| **The Orchestration Paradigm (Series)** | `agent_revolution/` |
+| **The Hardware Friction Map** | `hardware_compatibility_architecture_2023_2025/` |
+| **What Actually Works: The Hardware Compatibility Filter...** | `hardware_compatibility_architecture_2023_2025/` |
+| **Autonomous AI Agents: Core Foundations...** | `autonomous-agent-blueprint/` |
+| **A Quick Look at AI Hacking Research** | `security_research/` |
+| **A Quick Look at 27 Production‑Ready AI Agents** | `agent_revolution/` |
+| **Neural Architecture Design as a Compositional Language** | `neural_architectures/` |
+| *Welcome (Initial Post)* | *(N/A / Root)* |
 
 ## Current Packages
 
@@ -36,6 +62,13 @@ Published research project: **What Actually Works: The Hardware Compatibility Fi
 - Links to the public hardware friction scorecard dataset repository
 
 Start with: `hardware_compatibility_architecture_2023_2025/README.md`
+
+## Tooling
+
+This repository uses local tools for content workflows, tracked in `requirements.txt` and documented in `AGENTS.md`. Key tools include:
+- `markitdown` for PDF conversion
+- `notebooklm-py` for NotebookLM integration
+- `substack_api` for retrieving Substack posts via the unofficial API
 
 ## Other Top-Level Directories
 

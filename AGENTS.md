@@ -70,6 +70,15 @@ Notes:
 - If auth storage is ever redirected into the repo, keep it under a gitignored path such as `./.notebooklm/`.
 - Treat NotebookLM auth files as credentials.
 
+### Substack API
+
+Use `substack_api` from the repo-local environment to fetch Substack posts:
+
+```bash
+.venv/bin/python fetch_substack_posts.py
+```
+
+
 ## Dependency Source
 
 The direct root-level tooling dependencies are tracked in [requirements.txt](./requirements.txt).
