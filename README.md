@@ -4,8 +4,8 @@
 
 This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `ai_agents_enterprise_state`, `hardware_compatibility_architecture_2023_2025`).
 
-### Substack Metadata Tracking
-A top-level `substack_metadata/` directory stores automated metadata dumps from the Substack API to maintain a canonical record of what has been published externally.
+### Substack Metadata & Archiving
+The `substack-downloader/` directory acts as a tool and repository for automated markdown archives and metadata dumps of live posts, serving as the canonical record of anything published externally.
 
 ### Publication to Folder Mapping
 
@@ -68,7 +68,11 @@ Start with: `hardware_compatibility_architecture_2023_2025/README.md`
 This repository uses local tools for content workflows, tracked in `requirements.txt` and documented in `AGENTS.md`. Key tools include:
 - `markitdown` for PDF conversion
 - `notebooklm-py` for NotebookLM integration
-- `substack_api` for retrieving Substack posts via the unofficial API
+- `substack-downloader` submodule for scraping and archiving Substack posts to markdown
+
+Additionally, the repository incorporates two programmatic APIs for Substack publishing and posting workflows:
+- **Python Substack Interface**: `python-substack` (Origin: [ma2za/python-substack](https://github.com/ma2za/python-substack))
+- **TypeScript Substack Interface**: `substack-api` (Origin: [jakub-k-slys/substack-api](https://github.com/jakub-k-slys/substack-api))
 
 ## Other Top-Level Directories
 
