@@ -70,14 +70,35 @@ Notes:
 - If auth storage is ever redirected into the repo, keep it under a gitignored path such as `./.notebooklm/`.
 - Treat NotebookLM auth files as credentials.
 
-### Substack API
+### Substack Downloader
 
-Use `substack_api` from the repo-local environment to fetch Substack posts:
+Use the `substack-downloader` submodule to fetch and archive Substack posts:
 
 ```bash
-.venv/bin/python fetch_substack_posts.py
+cd substack-downloader
+.venv/bin/python scraper.py --url https://lambpetros.substack.com/
+```
+The downloaded markdown archives and JSON metadata will be saved directly into `substack-downloader/archive/lambpetros.substack.com/`.
+
+### Substack Publishing (Python Interface)
+
+Use the `python-substack` module from the root virtual environment to programmatically authenticate and publish posts. 
+
+```bash
+# To find help or usage examples:
+.venv/bin/python -c "import substack; help(substack)"
+# Origin documentation: https://github.com/ma2za/python-substack
 ```
 
+### Substack APIs (TypeScript Interface)
+
+Use the `substack-api` npm package installed in the root directory for TypeScript/JavaScript node scripting.
+
+```bash
+# To find help on classes and usage:
+cat node_modules/substack-api/README.md
+# Origin documentation: https://github.com/jakub-k-slys/substack-api
+```
 
 ## Dependency Source
 

@@ -1,0 +1,15 @@
+{
+  "name": "content",
+  "version": "1.0.0",
+  "description": "This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `ai_agents_enterprise_state`, `hardware_compatibility_architecture_2023_2025`).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "substack-api": "^4.0.0"
+  }
+}
