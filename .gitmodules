@@ -1,6 +1,3 @@
 [submodule "ai_agents_enterprise_state"]
 	path = ai_agents_enterprise_state
 	url = git@github.com:petroslamb/autonomy-tax-enterprise-agents.git
-[submodule "the-moltbook-phenomenon"]
-	path = the-moltbook-phenomenon
-	url = git@github.com:petroslamb/the-moltbook-phenomenon.git
