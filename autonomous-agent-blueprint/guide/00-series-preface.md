@@ -1,67 +1,81 @@
-# A Practical Guide to Foundation Agents
+# Operating Agents: Series Preface
 
-## Before You Start
+## Most Agent Writing Starts in the Wrong Place
 
-This is a six-part guide on building agent systems that work in production. It is grounded in the *Advances and Challenges in Foundation Agents* survey (2025) , a comprehensive technical survey of the field by researchers at Google DeepMind , and in the practical blueprints developed in the `practical-chapter-blueprints/` folder of this repository.
+Most writing about agents begins with the model. It asks how much the model can reason, how many tools it can call, how long a context window it can hold, or how close it feels to human problem solving. That framing is understandable. It is also the reason so much agent discourse is less useful to builders than it sounds.
 
-The guide is not a tutorial. It does not explain how to install frameworks or write your first LLM call. It is written for engineers and architects who have already built something and are trying to understand what makes the difference between a prototype and a production system.
+Production failures do not usually begin where the model looked weak. They begin where the system had no clear action boundary, no reasoning scaffold, no memory policy, no trust separation, or no measurement layer. A prototype can survive those absences because a human is quietly compensating for them. A deployed system cannot. The gap between prototype and production is not mainly model capability. It is whether the system has a control plane.
 
-The series is also explicitly provisional. Foundation agents is a field that is evolving quickly, and some of what is written here will be superseded. The principles are more durable than any specific paper. The papers give the principles their evidence base. Where a paper's implications have changed since publication, the text says so.
+That is the argument of this series. Useful agents are not assembled by stacking capabilities until the demo looks impressive. They are assembled by making a sequence of architectural choices that determine what the system is allowed to do, how it decides, what it remembers, where it is allowed to split, how it is contained, and how it improves. If those layers are vague, the system may still work for a while. When it fails, it fails as theater. Something went wrong, but no one can point to the layer that owns the mistake.
 
----
-
-## What This Guide Argues
-
-The six essays share a common underlying argument: building reliable agents is a sequence of concrete architectural decisions, each with specific implications for reliability, debuggability, and safety. The worst outcome in agent development is not that a system fails , it is that a system fails in ways that cannot be diagnosed, localized, or systematically improved.
-
-Each essay describes what happens when a specific layer of the architecture is absent or badly designed. Each closes with what the correct design looks like and why it matters. Together, they describe the layers of a complete agent system in the order that reveals why each one is necessary.
+The standard of a real system is harsher than that. A real system can fail, but it should fail in a way that can be localized, explained, and corrected. That is the standard this guide is written against.
 
 ---
 
-## Reading Order
+## What This Series Tries To Correct
 
-The essays are ordered as a building sequence, not as a literature map.
+The flattering story about agents is that progress is mostly a story about better minds. Smarter models, longer reasoning traces, more autonomous behavior, more elaborate coordination. The harder story is that many of the important gains come from stricter boundaries and more boring discipline. Typed interfaces beat expressive intentions. Decomposition beats clever prompting. Memory hygiene beats transcript accumulation. Permission scope beats prompt sincerity. Measurement beats intuition.
 
-**Part 1 , Action and Tool Use** opens by drawing the clearest line between what an agent is and what a chat model is. This is where the guide begins because action is what defines the territory.
+That harder story is less glamorous, but it is what builders keep rediscovering. A team ships a system that can describe the right workflow in perfect prose and then learns that nothing happened because the system had no controlled action surface. A team upgrades to a stronger model and then finds that the real failure was a scaffold that asked one generation to do the work of three. A team adds long-term memory and quietly creates a stale knowledge base with no retirement policy. A team adds more agents and discovers it has multiplied coordination debt, not intelligence. A team writes a careful safety prompt and still exposes itself because the real attack surface lives in tool scope, retrieval hygiene, and approval gates. A team spends six weeks tuning prompts and realizes it never built a stable evaluation set.
 
-**Part 2 , Reasoning and Planning** follows because action requires structure. How the agent decides what to do next, in what order, and with what verification, determines whether its actions are reliably well-directed.
-
-**Part 3 , Memory** follows because agents that act and reason across time need persistence. Memory is the layer that makes agent behavior depend on history rather than starting from scratch on every session.
-
-**Part 4 , Multi-Agent Design** follows as the natural escalation question: when one agent is genuinely insufficient, how do you add another one without creating more problems than you solve?
-
-**Part 5 , Safety as Architecture** places the safety discussion after the capability discussion deliberately. The threat model for an agent is only intelligible once you understand what actions it can take, what it remembers, and how it communicates with other agents. Safety here is interface architecture, not alignment philosophy.
-
-**Part 6 , Optimization and Self-Improvement** is last because optimization is only tractable for a system that exists, is running, and has generated operational evidence. It closes the guide because it is the continuous improvement process for the system the other five essays built.
+Each essay in this guide is built around one of those corrections. Each tries to replace a flattering mistake with a stricter default.
 
 ---
 
-## Target Reader
+## Why The Parts Are In This Order
 
-This guide is written for the engineer or architect who has prototyped at least one LLM-powered system and is trying to move from prototype to deployment. It assumes familiarity with how large language models work at a high level. It does not assume familiarity with the research literature , papers are explained by mechanism, not cited as credentialing devices.
+The order here is a build order, not a literature order.
 
-If you are early in thinking about agents, the `START_HERE.md` file in the root of this repository is a better entry point. If you want the full research layer behind any specific topic, the `practical-chapter-blueprints/` files contain detailed paper-by-paper treatment.
+Action comes first because it draws the line between a capable assistant and a system that can actually change the world outside the prompt. Reasoning follows because action without a scaffold turns errors into side effects. Memory follows because a system that acts across time needs a policy for what information deserves to persist. Multi-agent design comes later because splitting a system only makes sense once the single-agent baseline is clear enough to diagnose. Safety belongs after the capability chapters because attack surfaces only become legible once you know what the system can read, do, remember, and pass along. Optimization comes last because improvement is only real once the system exists, is instrumented, and has accumulated operational evidence.
 
----
-
-## Source Materials
-
-Each essay closes with the full list of papers and blueprint documents it drew from. The anchor papers for the guide as a whole:
-
-*Advances and Challenges in Foundation Agents* (2025) , the survey that this guide synthesizes from a builder's perspective.
-
-*ReAct: Synergizing Reasoning and Acting in Language Models* (Yao et al., 2022) , the reasoning architecture that underlies most practical agent control loops.
-
-*MemGPT: Towards LLMs as Operating Systems* (Packer et al., 2023) , the memory tiering framework that makes memory design tractable.
-
-*Toolformer: Language Models Can Teach Themselves to Use Tools* (Schick et al., 2023) , the conceptual foundation for structured tool use.
-
-*MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework* (Hong et al., 2023) , the artifact handoff principle for multi-agent pipelines.
-
-*Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection* (Greshake et al., 2023) , the core paper behind safety as interface architecture.
-
-*Large Language Models as Optimizers* (OPRO, Yang et al., 2023) , the formalization of prompt optimization as a measurable, iterative process.
+The sequence is the argument. Do not start with optimization. Do not start with swarms. Do not start with sweeping claims about autonomy. Start by making the layers legible enough that each later decision has something solid to rest on.
 
 ---
 
-*Written March 2026. Based on the `autonomous-agent-blueprint` materials and the Google DeepMind Foundation Agents survey (2025).*
+## Who This Is For
+
+This guide is for the engineer, technical founder, or architect who has already built at least one LLM-powered prototype and no longer finds model-centric advice sufficient. It assumes you know what a large language model is. It assumes you have seen at least one system work well enough to be tempting and fail badly enough to become expensive. It does not assume you have read the research literature closely.
+
+The papers behind this series matter, but not because they provide prestige. They matter because they clarify mechanisms. They explain why a given architecture worked, what failure it corrected, what new failure it introduced, and where its limits are. That is how they are used throughout this guide.
+
+This series is also deliberately provisional. Foundation-agent research is moving quickly. Some specific methods here will age. The goal is not to pretend otherwise. The goal is to extract the more durable architectural lessons from the current research wave and tie them to what builders keep learning the hard way in production.
+
+---
+
+## The Working Rule
+
+If you want a single sentence to carry through the next six essays, make it this one: the real gap between a convincing demo and a deployable agent system is not that one is less intelligent. It is that one has architecture and the other has hope.
+
+Part 1 begins at the boundary where hope usually runs out: the moment language stops being advice and becomes accountable state change.
+
+---
+
+## Resources And References
+
+### [Builder Blueprint: Practical Chapter Blueprints](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/practical-chapter-blueprints/README.md)
+
+If you want the operator layer behind this series, this public blueprint folder is the right companion entry point. The essays in *Operating Agents* are written to install strong defaults and a coherent build order. The blueprint layer is where those arguments turn into decision aids, comparison matrices, anti-patterns, and build-order notes that are easier to use in design review than in feed-native prose.
+
+### [Advances and Challenges in Foundation Agents](https://arxiv.org/abs/2504.01990) (2025)
+
+This survey is the broad source map for the whole series. Its value here is not that it proves one grand thesis about agents. Its value is that it gathers the practical chapters that matter most for builders into one coherent literature view: reasoning, memory, action, optimization, multi-agent design, and safety. The essays in this guide use the survey as a map, then lean on individual papers for the mechanism-level claims.
+
+### [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (2022)
+
+*ReAct* belongs in the preface because it captures one of the central moves of this series: reasoning is not enough if it floats free of the world. Its lasting contribution is the reason-act-observe loop, which turns a language model from a system that narrates into a system that can proceed from evidence returned by tools and environments. Later essays keep returning to it because it is one of the clearest examples of architecture mattering more than raw eloquence.
+
+### [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) (2023)
+
+*MemGPT* matters because it changed the memory conversation from "how much can I cram into context?" to "what belongs in active context and what belongs in managed storage?" That shift is larger than the paper's specific implementation. It supplies a durable way to think about memory as tiering and control rather than as prompt expansion, which is exactly the direction this guide takes.
+
+### [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) (2023)
+
+*Toolformer* is one of the clearest bridges between language modeling and structured action. It matters less as a product recipe than as a conceptual turning point. Once tool use becomes native to the way we think about model behavior, the important design question changes from "what can the model say?" to "what actions can it perform and under what interface constraints?"
+
+### [MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework](https://arxiv.org/abs/2308.00352) (2024)
+
+*MetaGPT* matters in this series because it demonstrates that multi-agent structure is valuable when it introduces typed handoffs and real workflow boundaries, not when it merely multiplies personas. That is why the paper appears early in the series framing even though multi-agent design comes later. It helps establish that coordination quality lives in contracts and artifact flow, not in the theatrical fact that several agents exist.
+
+### [Large Language Models as Optimizers](https://arxiv.org/abs/2309.03409) (2024)
+
+*OPRO* belongs in the preface because it gives the final essay a clean framing long before that essay arrives. Its contribution is not that prompt optimization exists. Builders already knew that. Its contribution is that optimization becomes a measured search over an evaluation set rather than a chain of edits justified by anecdote. That is a good example of the whole series logic: once a workflow is treated architecturally, it becomes diagnosable and improvable.

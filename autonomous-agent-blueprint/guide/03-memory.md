@@ -1,121 +1,150 @@
-# Part 3: The Agent That Forgets
+# Operating Agents III: The Agent That Forgets
 
-## Memory as Architecture, Not Prompt Size
+## Memory as Governance Over Time
 
-*Part 3 of 6: A Practical Guide to Foundation Agents*
+*Operating Agents III of VI*
 
----
-
-An enterprise knowledge agent started performing strangely in its sixth month of operation. The team had built it to answer employee questions about internal policies, benefits, and compliance requirements. It worked well at first. Then it started producing answers that were technically accurate but subtly wrong , applying a benefits policy that had been updated three months earlier, citing a compliance requirement that no longer applied to the organization's current structure, referring to a vendor relationship that had ended.
-
-The team's initial diagnosis was retrieval quality. They improved the similarity scoring. They restructured the knowledge base. The problem persisted. On closer investigation, they found that the vector store had been ingesting new documents but not removing or superseding old ones. Every policy update had added to the corpus without retiring the previous version. The retrieval model was returning whichever version was most semantically similar to the query , and for many queries, that was the older version, which had more text on the topic and had been in the index longer.
-
-This was not a retrieval failure in the sense of poor embeddings or bad similarity metrics. It was a memory policy failure. The organization had built a storage system and called it memory, without designing a lifecycle for what got stored, how long it stayed relevant, how updates propagated, and what happened when information became stale. Nothing was ever forgiven. Everything accumulated. And the agent, asked to answer from that corpus, answered as best it could from the noise.
-
-Memory in agent systems is not a storage problem. It is a governance problem.
+*The opening case in this essay is a composite of common production failures, not a report of one named company.*
 
 ---
 
-## The Context Window Is Not Memory
+A policy assistant worked well in its first months. It answered benefits questions, surfaced internal rules, and pulled together quick compliance summaries. Then the wrong kind of drift appeared. The answers were not obviously fabricated. They were outdated in subtle, operationally dangerous ways. A policy revision from three months ago failed to outrank the older version. A retired vendor relationship still appeared as active. A restructuring note from last quarter leaked into a question about the current organization. The system was not forgetting facts. It was remembering them without governance.
 
-The first conceptual correction that makes memory design tractable is separating the context window from memory as a system.
+The team first blamed retrieval. They tuned the embeddings. They adjusted the chunking. They re-ranked results. The problem persisted because the core failure was earlier in the chain. Every update had simply been added to the store. Nothing had been retired, consolidated, or downgraded. Old and new versions now competed in the same memory space, and retrieval was doing exactly what the system had asked it to do: return semantically close text from an unmanaged pile.
 
-The context window , the text currently active in the model's effective attention range , is a working desk. It holds what the model is currently thinking about: the current task, recent tool outputs, the immediate conversation, in-progress plans. It is scarce, it is fast, and it is volatile. Everything in it disappears when the session ends. When a new session begins, nothing carries over from the context window of the prior session.
+This is the flattering mistake memory discussions encourage. Builders talk about long context, larger stores, and better recall as if memory were mainly a question of quantity. In production the real question is usually policy. What deserves to be written? In what form? For how long? At what trust level? Under what retrieval rule? When should it be compressed, promoted, or forgotten?
 
-Memory, in the sense that matters for production agents, is everything outside that window: what the agent can retrieve, what it should remember from earlier in its operational history, and what it has learned that should influence future behavior.
-
-*MemGPT: Towards LLMs as Operating Systems* (Packer et al., 2023) is the paper that made this separation explicit and actionable. MemGPT reframes the context window as scarce fast memory , analogous to RAM , and external storage as slower, larger, durable tiers , analogous to disk. The agent actively manages movement between these tiers: loading what is needed for the current step into context, offloading what is no longer immediately relevant, and leaving most durable knowledge in addressable external storage.
-
-This reframe changes the design question entirely. Instead of "how large a context window do I need?" the question becomes "what should be in active context right now, and what should be retrievable on demand?" That is a harder question with more specific answers, and the specificity is where the value is.
-
-Most production agents that fail because of "context limitations" are not limited by context window size. They are limited by the absence of a memory architecture that manages what enters and exits the working context. The solution is not a bigger window. It is a designed lifecycle for the information the agent works with.
+Memory is not storage. It is governance over information across time.
 
 ---
 
-## The Four Memory Layers
+## The Context Window Is A Desk, Not A Filing Cabinet
 
-The Chapter 3 literature in the *Foundation Agents* survey describes memory through a type decomposition that is the single most useful practical framing in the chapter: four distinct memory layers, each of which holds a different kind of information and serves a different function in the agent's operation.
+One reason teams get memory wrong is that they use the same word for two different things. The context window feels like memory because it contains what the model is currently using. Yet it behaves nothing like durable memory. It is fast, scarce, and volatile. It is a working desk.
 
-**Working memory** is the context window in the moment: the current task specification, the current plan, recent tool outputs, and in-progress scratch state. It answers the question: what is the agent actively working with right now? It should be small, current, and legible. When the working memory becomes a dump of everything the agent has ever processed, reasoning quality drops because the signal-to-noise ratio drops.
+That distinction becomes clearer through *MemGPT*, which reframed the problem in a way the field needed. The model's active context is closer to a scarce working tier. Durable knowledge, past episodes, and reusable routines live elsewhere and have to be brought back into the working tier deliberately. Once that separation becomes explicit, the design problem changes. The question stops being "how large a context window do I need?" and becomes "what belongs in active context now, and what should be retrieved only when needed?"
 
-**Semantic memory** is durable factual knowledge , the documents, policies, product specifications, structured records, and reference information that the agent needs to retrieve and reason from. This is the RAG layer in most practical implementations: external storage indexed for semantic retrieval. It answers the question: what does the agent know about the world? The failure mode in the policy knowledge agent above was a semantic memory failure: the layer existed but had no lifecycle rules, which made it an undifferentiated accumulation instead of a curated Knowledge base.
+This sounds obvious after the fact. In practice it cuts against a common instinct. When systems appear to forget, teams often try to stuff more information into the prompt. When that stops working, they pour more into a vector store. Neither move answers the real question of what information deserves durable status and what form that status should take.
 
-**Episodic memory** is the record of what happened: prior conversations, prior task runs, prior decisions, prior failures, and corrections made after review. It answers the question: what has the agent done before, and what can it learn from that history? Episodic memory is what makes an agent system a learning system rather than a series of independent conversations. Without it, the same mistakes recur without connection to any record of their previous occurrence.
-
-**Procedural memory** is the set of reusable behaviors: skills, templates, playbooks, code snippets, or prompt patterns that the agent has established as effective for a recurring class of task. It answers the question: what does the agent know how to do? *Voyager: An Open-Ended Embodied Agent with Large Language Models* (Wang et al., 2023) is the cleanest demonstration of this in the literature , an agent that builds a skill library from successful code behaviors, allowing it to reuse solutions rather than rediscovering them from scratch every time the same task class appears. The skill library idea generalizes beyond embodied agents: any agent system that handles recurring task types should, over time, accumulate reusable routines rather than starting from scratch on each instance.
-
-These four layers are not an academic taxonomy. They are four different failure modes waiting to happen if the design treats them as one thing.
-
-A system with semantic memory but no episodic memory can retrieve facts but cannot learn from its own operational history. It will make the same mistakes across sessions with no cross-session learning. A system with semantic and episodic memory but no procedural memory keeps rediscovering routines that it has already proven effective. An agent that successfully handled a particular type of vendor dispute twenty times has, implicitly, a best-practice playbook for that task class , but if there is no procedural memory layer to capture it, the twenty-first instance starts from scratch. A system with all three knowledge layers but no lifecycle rules becomes the policy agent: everything accumulates, retrieval degrades, and the agent answers from noise.
+The model is not helped by being seated at a desk buried under every note it has ever seen. The right memory system improves reasoning by deciding what deserves to persist and what deserves to stay out.
 
 ---
 
-## The Memory Lifecycle
+## Four Memory Layers, Four Different Jobs
 
-The most important thing the Chapter 3 literature contributes that is routinely absent from production implementations is the concept of memory as a lifecycle, not as storage.
+The most useful practical framing in the literature is not a particular storage mechanism. It is the separation of memory into different layers with different jobs.
 
-*Generative Agents: Interactive Simulacra of Human Behavior* (Park et al., 2023) is the best illustration of this. The paper builds agents that store observations continuously, score them by recency, relevance, and importance, and periodically synthesize higher-level reflections from accumulated experience. The agents do not just log events , they derive meaning from those events and store that meaning as a higher-order representation that shapes future behavior. Raw experience becomes knowledge through active consolidation.
+Working memory is the current task state: the question at hand, the active plan, the most recent tool outputs, and whatever scratch state the current step requires. Its failure mode is overload. If it becomes a dump, reasoning quality degrades because the relevant items can no longer dominate attention.
 
-The lifecycle that the chapter maps out has six stages, and designing an agent's memory system means making explicit decisions at each stage:
+Semantic memory is durable factual knowledge: policies, product documents, specifications, structured records, and other reference material. Its failure mode is staleness and contamination. If it accumulates without provenance, freshness rules, or retirement paths, it becomes an elegant way to retrieve outdated answers.
 
-**Acquire** , what information is worth writing to memory? Not everything the agent processes should become a durable memory entry. The most common memory failure mode is indiscriminate acquisition: the agent stores every tool output, every intermediate reasoning step, every user message, until the memory is indistinguishable noise. Write policies should be explicit about salience: what kind of information is worth the cost of storage and the later cost of retrieval?
+Episodic memory is the record of what happened in prior runs: earlier decisions, mistakes, corrections, human feedback, and sequences that recur. Its failure mode is amnesia of experience. A system without episodic memory keeps making familiar mistakes as though each one were novel.
 
-**Encode** , in what form should the acquired information be stored? The choice between raw text, summarized text, structured facts, and embeddings has real consequences for retrieval quality. *Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory* (2024) makes this point concretely: instead of storing every message, Mem0 extracts and consolidates salient facts from conversations. That consolidation is an encoding decision. The stored representation is not the conversation , it is the compressed, structured information the conversation revealed. Encoding decisions determine the ratio of signal to noise that retrieval must work through.
+Procedural memory is the layer of reusable routines: templates, playbooks, prompts, code fragments, or operational patterns that have proved themselves often enough to deserve reuse. This is where work like *Voyager* matters. The lesson is larger than the embodied setting of the paper. A mature system should not rediscover the same successful pattern every week.
 
-**Derive** , does the accumulated information support any higher-order inferences that should themselves be stored? Reflexion (*Reflexion: Language Agents with Verbal Reinforcement Learning*, Shinn et al., 2023) demonstrates this with failure memory: the agent stores not just what happened but the verbal self-critique it drew from what happened , a derived representation more useful for future tries than the raw event record. This derivation step is what separates an event log from operational experience.
+The gain from separating the layers is not taxonomic elegance. The gain is that each layer now admits its own policy. You do not manage policy documents the way you manage correction logs. You do not manage correction logs the way you manage reusable procedures. A system that throws all of them into one general store has not created memory. It has created ambiguity.
 
-**Retrieve** , how does the agent surface the right memory at the right moment? This is where most retrieval system design concentrates, but retrieval quality depends on everything that happened in the encode and derive stages. If the stored representation is a good one, retrieval is a tractable problem. If the stored representation is noisy, retrieval is fighting an uphill battle.
+## Memory Layer Map
 
-*HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models* (Gutiérrez et al., 2024) addresses one of retrieval's real limitations: when knowledge is relational and multi-hop , when the answer to a question requires linking several facts that are individually similar to many other facts , plain vector similarity retrieval fails. HippoRAG builds a graph structure over the knowledge base and uses Personalized PageRank to traverse relationships. This is a more expensive retrieval mechanism, but a necessary one when the knowledge has structural dependencies that flat retrieval loses.
+| Layer | What belongs there | Failure if it is neglected | Control rule |
+|---|---|---|---|
+| Working | Current task state, recent tool output, active plan | Reasoning noise and lost focus | Keep it small and current |
+| Semantic | Durable facts, documents, approved reference data | Stale or poisoned knowledge retrieval | Track provenance, freshness, and versioning |
+| Episodic | Prior runs, corrections, failures, reviewed decisions | Repeated mistakes with no historical learning | Store events with outcome and review context |
+| Procedural | Reusable skills, playbooks, templates, proven routines | Endless rediscovery of solved patterns | Promote only after repeated validated success |
 
-**Use** , how does the retrieved memory enter the reasoning process? Retrieval that surfaces a document does not automatically produce useful reasoning. The agent must integrate what it retrieved into its current working context in a way that the reasoning loop can actually use. This is where retrieval quality and working-memory design interact: if the working memory is already full, a retrieved document may crowd out other information. The integration step requires managing context budget as an active decision, not as a side effect.
-
-**Forget** , what should be actively removed or compressed? This stage is the one most implementations skip entirely, and it is why memory systems degrade over time. *MemoryBank: Enhancing Large Language Models with Long-Term Memory* (Zhong et al., 2023) imports the Ebbinghaus forgetting curve into memory management: memories decay over time unless reinforced by reuse, and the decay rate depends on importance and recency. The practical implementation of forgetting is simpler than the neuroscience metaphor: memory entries have freshness scores, and entries that fall below a threshold are either removed or summarized into a more compressed representation.
-
-Forgetting is not a failure of memory. It is hygiene. A memory system that never forgets is not a smarter system , it is a system that inevitably becomes too noisy to reason from reliably.
-
----
-
-## The Enterprise Memory Stack
-
-For an enterprise agent handling policy-heavy, multi-session, recurring workloads, the memory architecture that emerges from these four layers and six lifecycle stages is concrete:
-
-Working memory holds the current task state, the current plan, evidence retrieved for the current step, and in-progress artifact state. It should stay small , enough for the model to reason coherently, not so large that the relevant information is buried in an ocean of context.
-
-Semantic memory , the retrieval layer , stores documents, policies, structured facts, product knowledge, and approved reference data. It is organized by domain so that different corpus types (policy text, product documentation, user records, compliance materials) do not collapse into one undifferentiated retrieval space. Source provenance is tracked , every retrieved fact carries a pointer to the document it came from and the version of that document. Update events in the source trigger review of the corresponding memory entries.
-
-Episodic memory stores prior task runs, decisions made, corrections applied after human review, and failure records. It is queryable by task type, by date range, and by outcome. When a new task of a recurring type begins, recent episodes of similar tasks are surfaced. When a correction is applied, the correction event is stored alongside the task that triggered it.
-
-Procedural memory stores reusable task patterns: the structured prompt sequences that worked for a particular class of request, the code templates that produced reliable outputs, the multi-step playbooks for recurring workflows. Entries in procedural memory are promoted from episodic memory when a pattern of success is visible: when the same task class has been handled successfully by the same approach five or more times, that approach earns a procedural memory entry.
-
-The lifecycle policy applies across all four layers: salience thresholds for writes, consolidation pipelines for compression, decay timers for semantic freshness, version controls for policy updates, and explicit retirement paths when information becomes stale.
+This map is the first default to install. Not all stored information is the same kind of memory, so it should not live under one policy.
 
 ---
 
-## What Goes Wrong
+## Memory Gets Better Through A Lifecycle, Not Through Accumulation
 
-The enterprise policy agent's failure was **semantic memory without lifecycle governance**: facts accumulated without expiring, and stale representations competed with current ones during retrieval.
+The next correction is just as important. Memory should be designed as a lifecycle, not as a write-once archive.
 
-A second common failure is **wrong memory layer**: task logs stored in the semantic memory layer, where they interfere with factual retrieval, or policy documents stored in episodic records, where they are not indexed for the right retrieval pattern. The type separation that makes the four-layer model useful is only active if the write policies enforce it.
+*Generative Agents* made this vivid by treating memory as continuous experience that can later be reflected into more useful abstractions. *Mem0* pushed the same insight toward production systems by emphasizing extraction and consolidation rather than raw transcript retention. *Reflexion* showed how failure can become a reusable lesson rather than a dead event record. *MemoryBank* argued, correctly, that forgetting is not a defect but a necessary condition for retaining signal over time.
 
-**Memory sprawl** , indiscriminate acquisition without salience filtering , produces systems where retrieval quality degrades linearly as documents are added. The fix is not better retrieval models. It is explicit write policies that ask, before every memory write: is this worth the storage cost and the retrieval noise it will introduce?
+The lifecycle is not hard to state, which is one reason teams underestimate it. Information is acquired, encoded, possibly transformed into a more useful form, retrieved when relevant, used inside a live task, and eventually forgotten, compressed, or retired. Every one of those verbs hides a policy choice.
 
-**Treating retrieval scores as trust scores** is a failure mode that crosses into safety concerns. A high similarity score means the retrieved chunk matched the query well. It does not mean the chunk is accurate, current, or reliable. Retrieval scores govern relevance, not truth. Conflating the two is the mechanism through which a poisoned or stale knowledge base misleads an agent with perfect retrieval mechanics.
+Acquisition is a gate. Not everything the system sees deserves durable storage. Encoding is a gate. Raw text, summaries, extracted facts, and structured representations create different retrieval quality later. Derivation is a gate. Sometimes what matters is not the full event but the lesson extracted from it. Retrieval is a gate. Similarity alone is not enough when provenance or freshness matters. Use is a gate. Retrieved memory has to fit back into the working context without crowding out the task. Forgetting is a gate. If nothing decays, nothing stays trustworthy.
 
----
-
-## The Practical Lesson
-
-Memory is the layer that determines whether an agent system gets better over time or merely gets bigger. A system with no memory management accumulates noise. A system with well-designed memory , typed layers, explicit lifecycle rules, appropriate retrieval mechanisms, active forgetting , becomes more reliable as it operates, because its knowledge stays current, its experience becomes reusable, and its failures become learnable events rather than repeated surprises.
-
-The sixth-month failure of the policy agent was not caused by a model that forgot things. The model forgot nothing , it faithfully retrieved and reasoned from what was in the corpus. The problem was that no one had taught the system to forget. No policy update retired its predecessor. No refresh cycle checked for stale entries. No lifecycle rule distinguished what was worth keeping from what had outlived its utility.
-
-Memory is not storage. It is a governance policy applied to information over time. Without that policy, what gets called a memory system is really a slow accumulation of technical debt, readable by a model but no longer trustworthy as knowledge.
+This is where a great deal of memory rhetoric goes wrong. Builders sometimes describe forgetting as a regrettable concession. In live systems it is hygiene. A memory that never forgets does not become wiser. It becomes noisier, staler, and easier to mislead.
 
 ---
 
-*Part 4 addresses multi-agent design: when one agent should become several, what three fundamentally different problems multi-agent systems actually solve, and how confusing those problems produces three different failure architectures.*
+## The Default Memory Architecture
+
+Most teams do not need an exotic memory stack. They need a governed one.
+
+Keep working memory small and task-bound. Every retrieval should compete for scarce attention, not enter by habit.
+
+Treat semantic memory as a curated knowledge layer. That means source provenance, document versioning, freshness checks, and retirement rules for superseded material. If a source changes, the old answer path should not remain equally eligible forever.
+
+Treat episodic memory as an operational record. Store prior runs with outcomes, human corrections, and the context needed to know why the correction mattered. The point is not to preserve everything. The point is to preserve learnable experience.
+
+Treat procedural memory as promoted competence. Do not let it fill with unreviewed improvisations. Promote patterns only when they have succeeded often enough, under review or hard feedback, to deserve reuse.
+
+When vector retrieval is insufficient because the knowledge is relational, techniques like *HippoRAG* become relevant. That is an escalation rule, not a starting point. The point is to solve the actual retrieval shape rather than assume that every memory problem is an embeddings problem.
+
+The installed default is clear: typed memory layers, explicit write policy, explicit retrieval policy, and deliberate forgetting.
 
 ---
 
-**Source basis for this essay:** Chapter 3 of *Advances and Challenges in Foundation Agents* (2025); *MemGPT: Towards LLMs as Operating Systems* (Packer et al., 2023) [arXiv:2310.08560](https://arxiv.org/abs/2310.08560); *Generative Agents: Interactive Simulacra of Human Behavior* (Park et al., 2023) [arXiv:2304.03442](https://arxiv.org/abs/2304.03442); *MemoryBank: Enhancing Large Language Models with Long-Term Memory* (Zhong et al., 2023) [arXiv:2305.10250](https://arxiv.org/abs/2305.10250); *Reflexion: Language Agents with Verbal Reinforcement Learning* (Shinn et al., 2023) [arXiv:2303.11366](https://arxiv.org/abs/2303.11366); *Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory* (2024) [arXiv:2504.19413](https://arxiv.org/abs/2504.19413); *HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models* (Gutiérrez et al., 2024) [arXiv:2405.14831](https://arxiv.org/abs/2405.14831); *Voyager: An Open-Ended Embodied Agent with Large Language Models* (Wang et al., 2023) [arXiv:2305.16291](https://arxiv.org/abs/2305.16291); `practical-chapter-blueprints/01-memory-blueprint.md`.
+## Where Memory Systems Usually Go Wrong
+
+The first failure is memory sprawl. The system writes too much because no one wants to lose information, then later cannot separate useful recall from historical clutter.
+
+The second failure is stale semantic memory. This is the policy-assistant problem from the opening case. The store becomes a museum of prior truth states with no retirement protocol.
+
+The third failure is wrong-layer storage. Teams dump transcripts into semantic memory, policies into episodic records, or tentative lessons directly into procedural memory. The retrieval layer then faithfully returns the wrong kind of object.
+
+The fourth failure is treating retrieval score as trust score. A chunk can be highly relevant and still be outdated, adversarial, or simply wrong. Similarity answers "does this match the query?" It does not answer "should this guide the system?"
+
+The fifth failure is never promoting routines. Some systems learn nothing durable from repeated success because everything stays trapped in event logs. That is wasteful in a quieter way. The system keeps paying to rediscover what it already knows how to do.
+
+These are governance failures long before they are model failures.
+
+---
+
+## The Harder Default
+
+The memory question most teams ask is "how much can this system remember?" The better question is "what is worth keeping, in what form, under which policy, and until when?"
+
+That is the direction this part is trying to install. Stop treating bigger context and bigger stores as the natural path to better memory. Treat memory as a set of controlled promises about durable information over time.
+
+A system that never forgets is not more intelligent. It is less trustworthy.
+
+---
+
+## Resources And References
+
+### [Builder Blueprint: Memory](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/practical-chapter-blueprints/01-memory-blueprint.md)
+
+For the companion operator layer, use this public blueprint. It keeps the layer map, decision rules, anti-patterns, and evaluation notes in a more checklist-friendly form than the essay. That makes it useful when a team is moving from conceptual agreement to actual memory design.
+
+### [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) (2023)
+
+*MemGPT* is the key frame-setting paper for this part because it cleanly separates active context from managed external memory. The essay uses it to argue that memory is not solved by a larger prompt window. Its real value is architectural. It gives builders a durable way to think about working memory, storage tiers, and movement between them.
+
+### [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) (2023)
+
+*Generative Agents* matters because it turns memory into a lifecycle rather than a pile. The paper's memorable contribution is that observations can be stored, scored, and later reflected into higher-order summaries that shape future behavior. In this essay it supports the claim that useful memory systems do more than retain text. They derive more durable forms of knowledge from experience.
+
+### [MemoryBank: Enhancing Large Language Models with Long-Term Memory](https://arxiv.org/abs/2305.10250) (2023)
+
+*MemoryBank* is one of the clearest arguments for forgetting as hygiene. The paper matters less for the exact curve it uses than for the design principle it enforces: not all memories should retain equal weight forever. In the essay it helps turn forgetting from a concession into a requirement for trustworthiness.
+
+### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (2023)
+
+*Reflexion* matters because it shows how failure can become reusable memory rather than an isolated event. The paper's contribution is not only self-critique. It is the idea that a system can preserve a distilled lesson from a bad run and use that lesson later. That fits the essay's larger argument that episodic memory should become governed experience, not just logs.
+
+### [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) (2023)
+
+*Voyager* belongs here because it gives a concrete example of procedural memory through a skill library. The embodied setting is less important than the structural move. Once a system has solved a recurring class of problems, it should not keep improvising from zero. In the essay, that is the clearest support for treating reusable routines as their own memory layer.
+
+### [Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory](https://arxiv.org/abs/2504.19413) (2025)
+
+*Mem0* is useful because it pushes the memory discussion toward production-shaped extraction and consolidation. Instead of preserving whole conversations, it focuses on storing the salient facts a system may later need. In this essay it supports the claim that encoding policy matters as much as retrieval policy.
+
+### [HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models](https://arxiv.org/abs/2405.14831) (2025)
+
+*HippoRAG* matters as an escalation reference. Its contribution is showing when flat similarity retrieval stops being enough because the knowledge itself has meaningful relational structure. In the essay it serves as the reminder that some retrieval problems are not solved by more of the same vector machinery. They need a different memory access pattern.
