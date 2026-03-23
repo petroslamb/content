@@ -1,32 +1,32 @@
-# Guide: A Practical Guide to Foundation Agents
+# Guide: Operating Agents
 
-This folder contains the six-part Substack essay series on building practical agent systems, grounded in the *Advances and Challenges in Foundation Agents* survey (2025) and the blueprints in this repository.
+This folder contains the current near-public package for *Operating Agents*: one preface and six essays aimed at skeptical builders moving from prototype systems to deployable agent architecture.
 
 ## Reading Order
 
 | File | Title | Topic |
 |------|-------|-------|
-| [00-series-preface.md](./00-series-preface.md) | Series Preface | What the guide is, who it's for, the reading order rationale |
-| [01-action-tool-use.md](./01-action-tool-use.md) | When the Model Starts Doing Things | Action representation, the five tool-use subproblems, action surface hierarchy |
-| [02-reasoning-planning.md](./02-reasoning-planning.md) | The Lightest Correct Scaffold | Four reasoning failures and their scaffolds, the default reasoning stack |
-| [03-memory.md](./03-memory.md) | The Agent That Forgets | Four memory layers, the six-stage memory lifecycle, lifecycle governance |
-| [04-multi-agent.md](./04-multi-agent.md) | One Agent Is Not Enough | Three reasons to use multi-agent, the artifact handoff principle, failure modes |
-| [05-safety.md](./05-safety.md) | The Attack Surface You Built | Six attack surfaces, safety as interface architecture, the six-control safety blueprint |
-| [06-optimization.md](./06-optimization.md) | The Workflow Is the Object | Correct optimization sequence, measurement as architecture, bounded self-improvement |
+| [00-series-preface.md](./00-series-preface.md) | Operating Agents: Series Preface | Why most agent writing starts in the wrong place and why this series is organized around control layers |
+| [01-action-tool-use.md](./01-action-tool-use.md) | Operating Agents I: When the Model Starts Doing Things | Agency as controlled state change, action surfaces, tool-use seams, and observation contracts |
+| [02-reasoning-planning.md](./02-reasoning-planning.md) | Operating Agents II: The Lightest Correct Scaffold | Why most reasoning failures are scaffold failures and what the conservative default stack should be |
+| [03-memory.md](./03-memory.md) | Operating Agents III: The Agent That Forgets | Memory as governance over time, typed memory layers, and forgetting as hygiene |
+| [04-multi-agent.md](./04-multi-agent.md) | Operating Agents IV: One Agent Is Not Enough | Multi-agent as workflow decomposition, not intelligence multiplication |
+| [05-safety.md](./05-safety.md) | Operating Agents V: The Attack Surface You Built | Safety as interface architecture across trust boundaries, tools, memory, retrieval, and handoffs |
+| [06-optimization.md](./06-optimization.md) | Operating Agents VI: The Workflow Is the Object | Measurement-led improvement, the correct optimization order, and bounded self-improvement |
 
 ## Relationship to Other Materials
 
-The essays build on the blueprints in `practical-chapter-blueprints/` and the analysis in `agentic-architectures-blueprint.md`. Each essay closes with its specific source documents. The blueprints remain the detailed reference layer; the essays are the reader-facing narrative.
+The essays are the reader-facing narrative layer. The broader `autonomous-agent-blueprint` package remains the reference layer for source notes, blueprints, case studies, and evaluation materials. Internal drafting support for this series also lives in this folder as `analysis_and_brainstorm.md` and `implementation_plan.md`.
 
 ## Word Counts (approximate)
 
 | Part | Words |
 |------|-------|
-| Preface | ~600 |
-| Part 1: Action | ~4,200 |
-| Part 2: Reasoning | ~3,900 |
-| Part 3: Memory | ~4,400 |
-| Part 4: Multi-Agent | ~4,000 |
-| Part 5: Safety | ~4,200 |
-| Part 6: Optimization | ~3,800 |
-| **Total** | **~25,100** |
+| Preface | ~1,000 |
+| Part 1: Action | ~2,100 |
+| Part 2: Reasoning | ~2,000 |
+| Part 3: Memory | ~1,800 |
+| Part 4: Multi-Agent | ~1,400 |
+| Part 5: Safety | ~1,600 |
+| Part 6: Optimization | ~1,500 |
+| **Total** | **~11,700** |

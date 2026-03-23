@@ -1,121 +1,122 @@
-# Part 4: One Agent Is Not Enough
+# Operating Agents IV: One Agent Is Not Enough
 
-## When to Split, How to Coordinate, and What Can Go Wrong
+## When To Split, How To Coordinate, What To Keep Single
 
-*Part 4 of 6: A Practical Guide to Foundation Agents*
+*Operating Agents IV of VI*
 
----
-
-A product team building an internal research assistant decided, midway through development, that the system needed multiple agents. The reasoning was intuitive: the agent was doing several different things , searching the web, summarizing papers, synthesizing across sources, drafting reports , and surely those should be separate agents, each specialized for its role.
-
-They built five. A search agent, a summarizer, a synthesizer, a critic, and a report writer. They connected them through an orchestration layer with a shared conversation history. The system took four times as long per task. Errors in the summarizer's output were amplified by the synthesizer and then amplified again by the report writer. When the output was wrong, no one could tell which agent had introduced the error. And the overall output quality was measurably lower than the single-agent baseline they built the week before, because the shared conversation history became too long for any single agent to reason from coherently, and the handing-off of context between agents degraded the information at every step.
-
-They had added agents to solve a scaling problem that did not exist and created a coordination problem that did not need to exist. The original system had one bottleneck: the summarizer was slow on long documents. The fix was caching and better chunking. Instead, they built a distributed system with five points of failure and chose coordination overhead as the price.
-
-Multi-agent systems are not a capability upgrade. They are a decomposition strategy. The question is not "how many agents should I have?" It is "what specific problem does adding another agent solve , and is that problem actually present in my system?"
+*The opening case in this essay is a composite of common production failures, not a report of one named company.*
 
 ---
 
-## Three Different Problems, Three Different Architectures
+A research team built a solid single-agent pipeline that could search, read, synthesize, and draft internal reports. The system had one obvious weakness: it slowed down on long inputs and occasionally muddied the boundary between extraction and synthesis. The team diagnosed this as a sign that the system needed multiple agents.
 
-The most useful practical insight in Chapter 14 of the *Foundation Agents* survey is one that most multi-agent frameworks obscure: there are three completely different reasons to use multiple agents, and each reason implies a completely different system architecture, communication style, failure mode, and evaluation approach.
+They split it into five. Searcher, summarizer, synthesizer, critic, and writer. Each role had a thoughtful description. Each felt specialized. The pipeline soon became slower, harder to observe, and more difficult to correct. The summarizer's errors flowed into the synthesizer. The critic often complained about defects created two steps earlier, without making it obvious where they had entered. When outputs degraded, the team had to inspect a chain of agent conversations just to understand which handoff had gone soft.
 
-Confusing these three reasons , building a system that blends them without distinguishing them , is the source of most multi-agent failures in practice.
+The original bottleneck had not been intelligence. It had been decomposition and state management. The new architecture added coordination cost to a system that had not yet earned it.
 
-**Reason 1: Role separation.** Different parts of the workflow require genuinely different tools, permissions, or output formats, to the point where giving one agent all of them would be unsafe, operationally impractical, or just obviously worse. A system that runs security scans cannot safely be the same agent that deploys code , the permissions differ in ways that matter. A system that interacts with financial records needs different access rights than the system that drafts executive summaries. Role separation through multiple agents is the correct response to a real constraint: one agent cannot hold all the tools or all the trust levels without creating an unacceptable blast radius.
+This is the flattering mistake that keeps multi-agent design fashionable: more agents look like more intelligence. In many production systems they are not more intelligence. They are workflow decomposition, sometimes justified and often not.
 
-**Reason 2: Reliability through critique.** Independent review, disagreement, and debate can improve output quality when the task is difficult enough that a single reasoning pass is consistently unreliable. *Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate* (Liang et al., 2023) formalizes this idea: having multiple agents argue competing answers and reconcile their positions produces better outcomes on tasks where the first answer is frequently flawed. *RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs* (Chen et al., 2023) extends this into confidence-weighted consensus.
-
-The key word in the previous sentence is "when." Debate improves reliability on tasks where disagreement between reasoning agents is informative , where different approaches to the task produce meaningfully different answers, and where reconciling those differences selects the better one. On easy tasks, debate is coordination overhead for a problem that does not exist. On tasks where the failure mode is not reasoning quality but grounding or information access, debate between agents that share the same knowledge limitations produces confident noise from multiple sources, which is worse than confident noise from one.
-
-**Reason 3: Task decomposition through artifact handoffs.** Some workflows naturally divide into sequential stages where each stage produces a typed artifact that the next stage consumes. A software engineering pipeline where a planner produces a specification, a coder implements against the specification, and a reviewer checks the implementation against the specification is not using multiple agents for sophistication , it is using them because the task has three genuinely distinct phases with clear boundaries and typed outputs between them.
-
-*MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework* (Hong et al., 2023) is the clearest implementation of this pattern in the literature. MetaGPT's important contribution is not that it uses multiple agents , it is that agents exchange artifacts (written documents, specifications, code outputs) rather than unstructured conversation. That exchange is what makes the pipeline coherent: each agent receives a typed input, produces a typed output, and the handoff between agents is a contract, not a chat message.
-
-These three reasons lead to completely different systems. A role-separation architecture is about permissions and tool boundaries. A reliability architecture is about sampling and consensus. A pipeline architecture is about artifacts and handoffs. Building all three into one system without distinguishing which problem you are solving produces a system that is incoherent along all three dimensions.
+The stricter default is simple. Stay single-agent until a split solves a named problem of trust, routing, or handoff.
 
 ---
 
-## The Default Is One Agent
+## Multi-Agent Is Not A Higher Form Of Mind
 
-Given this analysis, the correct default starting point for any agent system is one agent with a well-designed control loop, a clear tool set, and explicit approval boundaries for high-impact actions.
+This point matters because the language around multi-agent systems is often more romantic than the engineering warrants. Teams talk about societies of minds, specialized roles, collaboration, critique, and internal debate. Some of those descriptions are accurate. Many are prettier versions of a more ordinary fact: the system needed clearer boundaries than one overloaded context window could provide.
 
-This is not a conservative stance born of caution about AI systems. It is the most common finding in both the research literature and practical field experience: multi-agent complexity introduces coordination overhead, failure localization difficulty, and integration cost. These costs are worth paying when the problems they solve are real. They are not worth paying when they are added speculatively.
+That does not make multi-agent design fake. It makes it conditional.
 
-The professional instinct to reach for multi-agent architectures is understandable. They feel more sophisticated. They seem to indicate that the system has been thought through more carefully. The frameworks (AutoGen, LangGraph, CrewAI) make it easy to spin up agent roles and connect them. But architectural decisions that feel sophisticated and are easy to implement deserve scrutiny for exactly that reason , the ease of construction disguises the cost of operation.
+The useful question is not "how many agents should this task have?" The useful question is "what exact problem does the second agent solve that the first one should not solve itself?" If the answer is vague, the split is probably cosmetic. If the answer is precise, the split may be load-bearing.
 
-*AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation* (Wu et al., 2023) is worth citing here precisely because it demonstrates the risk as well as the capability. AutoGen made multi-agent conversation programmable and flexible. That flexibility is real, and it has enabled real systems. But it also made it easy to build webs of agents where the coordination logic is opaque, the shared conversation history becomes unmanageable, and failure modes compound across agents without clear attribution. The flexibility creates the capability and the footgun at the same time.
-
-The practical workflow before adding any agent beyond the first is: articulate what problem the second agent specifically solves. If the answer is "it handles X while the first agent handles Y," ask whether X and Y require different tools or different trust levels. If not, the split is probably cosmetic. If the answer is "it reviews the first agent's output," ask whether the review signal is meaningful enough to justify the cost. If review is catching errors that a lightweight self-check would catch, the review agent is overhead. The bar for adding a second agent should be higher than the bar for extending the first one.
+This is why *MetaGPT* remains a useful paper. Its real contribution is not that it named several roles. It is that the roles exchange typed artifacts instead of improvising around a shared chat. That is workflow engineering, not theatrical emergence. It is also why *AutoGen* is both influential and dangerous. It made multi-agent conversation programmable, which is real progress, and it lowered the cost of building coordination webs that teams cannot later reason about.
 
 ---
 
-## When Multi-Agent Is the Right Answer
+## There Are Only A Few Good Reasons To Split
 
-With the conservative default established, the patterns where multi-agent architecture is genuinely justified are worth specifying precisely.
+Once the glamour is stripped away, the durable reasons to use multiple agents become surprisingly few.
 
-**Orchestrator plus specialists** is the most widely useful multi-agent pattern and the one most closely aligned with the role-separation rationale. A coordinator agent manages the task, breaks it into subtasks, and delegates each subtask to a specialist that has the appropriate tools and permissions for that subtask. The key constraint is that specialists should be genuinely specialized: different tools, different permission scope, and different output formats. If the specialist does what the orchestrator could have done directly, the delegation is overhead without benefit.
+The first is trust or permission separation. One part of the system should not hold the same tools, authority, or blast radius as another. A reviewer should not automatically share the same write permissions as an executor. A safety or compliance step may need genuine structural separation. In this case the split protects the system by narrowing what each participant can do.
 
-*ChatDev: Communicative Agents for Software Development* (Qian et al., 2023) is a good reference for this pattern with an additional property that matters: agents in ChatDev exchange structured role-based outputs, not open-ended conversation. A CEO agent produces a product specification; an architect agent produces a system design from that specification; a developer agent produces code from that design. Each handoff is typed. The structure makes the pipeline auditable , you can look at what the architect received, what it produced, and evaluate whether the transformation was correct.
+The second is typed task decomposition. Some workflows really do have stages that deserve different local contexts and different outputs. A planner can emit a specification, an executor can act against it, and a reviewer can test the result against the specification. The value is not multiple personalities. The value is an auditable boundary between stages.
 
-**Role-based pipeline** is the correct architecture for workflows that naturally decompose into distinct sequential phases with clear deliverable boundaries between them. Software development has this property. Document review has this property. Research-and-synthesis workflows have this property when the phases (search, extract, synthesize, draft) have different enough requirements that optimizing each separately produces better results than optimizing one general-purpose agent.
+The third is independent critique. Sometimes a second judgment reduces error because the first pass is consistently biased or incomplete. This is where debate and consensus papers matter. The word sometimes matters even more. If the same result could have been achieved with a structured self-check, a full critic layer is overhead pretending to be sophistication.
 
-**Critic or reviewer overlay** is appropriate for high-value outputs where a second independent judgment reduces the error rate meaningfully. The key is "meaningfully" , if the critic catches errors that a structured self-check would catch, use the self-check. A critic overlay is worth its cost when it catches errors that would not be caught by the primary agent's own verification step, because the error pattern requires a different perspective rather than a better prompt.
+Those reasons point to different architectures. Permission separation asks for narrow tool scopes and strong boundaries. Task decomposition asks for typed artifacts. Independent critique asks for a review signal strong enough to justify the cost of a second pass. When teams mix these motives without naming them, they often build systems that are confused about why they are multi-agent in the first place.
 
-**Debate or consensus** is the most expensive and most narrowly applicable pattern. It should be reserved for tasks where the answer genuinely benefits from multiple independent reasoning paths , where the nature of the task means a single reasoning chain is systematically unreliable in ways that sampled reasoning is not. Hard normative judgments, complex ethical trade-offs, and difficult planning problems with many hidden interactions are the domains where debate is productive. Most practical agent tasks do not meet this bar.
+## Multi-Agent Topology Chooser
 
----
+| Problem you actually have | Good multi-agent pattern | Why the split is justified | Bad substitute |
+|---|---|---|---|
+| One role should not hold another role's tools or permissions | Orchestrator plus specialists with narrow scopes | The split enforces blast-radius boundaries | Several agents with identical permissions |
+| The work has real staged artifacts with clear boundaries | Typed pipeline | Each stage receives and emits a contract | Free-form handoffs dressed up as roles |
+| The first pass needs an independent check | Critic or reviewer overlay | A second view catches errors the first pass misses | Debate for tasks that only need verification |
+| The task has parallel subproblems with real separation | Coordinated specialists | The subtasks are separable and observable | Committees created because the task "feels hard" |
 
-## The Artifact Handoff Principle
-
-Across all multi-agent patterns, the single most important design decision is how agents exchange work.
-
-Free-form conversation between agents , where an agent sends a message and the next agent reads it and responds , looks natural and is easy to implement. It is also the most fragile coordination mechanism available. The receiving agent must parse the meaning of the message, infer the intent behind it, and construct a response that makes sense not just to the sending agent but to the task as a whole. Errors in one agent's output become ambiguous inputs to the next agent. Ambiguous inputs produce ambiguous outputs. Ambiguous outputs compound.
-
-Typed artifact handoffs are the alternative. Instead of sending a conversational message, the completing agent produces a structured output: a document with defined sections, a JSON object with named fields, a code artifact with a defined interface, a specification against which the next agent evaluates. The receiving agent does not need to interpret intent , it receives a contract. Errors are visible as contract violations, not as subtle degradation in reasoning quality.
-
-MetaGPT's contribution is ultimately this principle, not the specific set of roles it uses. The roles are an example. The artifact exchange is the architecture. Any multi-agent system that uses role-based coordination should enforce typed handoffs at every boundary between agents. If agents are exchanging free-form text, the coordination is relying on interpretation rather than structure, and interpretation errors will compound.
+This table is deliberately narrow. It is meant to make addition harder, not easier.
 
 ---
 
-## The Human in the System
+## Handoffs Are The Architecture
 
-Chapter 14's subsection on human-agent collaboration is often treated as secondary to the more dramatic multi-agent coordination patterns. It should not be.
+The most important design choice in a multi-agent system is not the names of the roles. It is the form of the handoff.
 
-The most important "multi-agent" design decision for most enterprise systems is not whether to use an orchestrator with specialists, or whether to add a critic. It is where human judgment sits in the workflow. Human review, human approval, and human escalation are coordination mechanisms as real as any agent-to-agent handoff , and they are better suited to certain classes of decision than any agent combination.
+Free-form conversation between agents is seductive because it feels natural and easy to prototype. It is also the fastest route to ambiguity. One agent produces a message with mixed state, assumptions, and conclusions. The next agent has to infer what matters, what is binding, and what is merely context. Small ambiguities accumulate until the system can no longer be diagnosed without replaying the entire conversation history.
 
-For irreversible actions, financially significant operations, legally sensitive outputs, and compliance-critical decisions, human approval is not a limitation of the current state of the technology. It is the correct architecture for the accountability requirements of the task. The goal of the human-agent collaboration design is to place human review at the points in the workflow where human judgment is genuinely necessary and to minimize the human overhead everywhere else , not to eliminate human judgment from the system as a mark of sophistication.
+Typed artifact handoffs are the stricter alternative. A planner emits a spec. A retriever emits an evidence packet. A reviewer emits a pass-fail record against explicit criteria. The receiving agent does not have to reconstruct intent from prose. It receives a contract. When something goes wrong, the system can point to the artifact boundary where it went wrong.
 
-A two-agent system with a well-placed human approval gate is often more reliable, more auditable, and more clearly improvable than a seven-agent system without one.
+This is the heart of the case for papers like *ChatDev* and *MetaGPT*. The insight is not that multiple roles are inherently powerful. The insight is that typed handoffs let decomposition survive contact with real work.
 
----
-
-## What Goes Wrong
-
-**Agent theater** is the most common multi-agent failure mode and the hardest to detect because it looks like architectural sophistication. The system has multiple agents with distinct names and descriptions. The agents do not do substantially different things. Adding or removing one of them would not noticeably change the output. The pattern usually emerges when multi-agent architecture is chosen before the single-agent baseline has been understood well enough to know which roles are genuinely distinct.
-
-**Unstructured handoff drift** is what happens when agents exchange free-form messages without typed contracts. The first few task runs produce coherent outputs because the errors happen to be small. Over time, edge cases produce messages that carry ambiguous state, and the receiving agent reasons from that ambiguity. By task twenty, the system is producing outputs that cannot be diagnosed without reconstructing the full conversation history of every agent.
-
-**Giving all agents the same permissions** defeats the main practical benefit of role separation, which is that different agents acting on different trust levels limits blast radius. An orchestrator and a specialist with identical tool access and identical permissions are not a multi-agent system in any practically meaningful sense , they are one system spread across two context windows.
-
-**Using debate where simple verification would be cheaper** produces systems with high coordination cost and marginal quality improvement. The question to ask before adding a debate or consensus layer is: what specific failure mode does this address that a self-check or human review step would not?
+If agents are only passing free-form text, the system is much closer to one sprawling conversation than to a cleanly decomposed workflow.
 
 ---
 
-## The Governing Principle
+## The Human Boundary Still Matters Most
 
-The chapter's most important practical principle, stated plainly: multi-agent architecture is workflow decomposition, not magic emergence. The capability of a multi-agent system is determined by whether the decomposition matches a real structure in the task, whether the handoffs are typed and auditable, and whether the coordination overhead is justified by the gains in quality, specialization, or reliability.
+Many of the most important multi-agent decisions are really human-placement decisions.
 
-A multi-agent system that fails because two agents are doing redundant work is not a multi-agent design problem. It is a task analysis problem that produced a fictional decomposition. The fix is not a better framework. It is understanding the task well enough to know where the real boundaries are.
+Where does approval sit? Where does escalation sit? Which outputs are allowed to move forward without human review, and which ones are not? Those questions often matter more than whether the system has two model roles or five.
 
-The research team that built five agents to replace a single-agent pipeline had not analyzed why the single-agent system was failing. If they had, they would have found a caching and chunking problem , not a coordination problem. The multi-agent system they built was the wrong solution to the wrong diagnosis, and its complexity made that diagnosis harder to find.
+For irreversible actions, legal exposure, financial consequences, or external commitments, the correct boundary is often a human gate. That is not a confession of weakness. It is an admission that accountability requirements are part of architecture. A system that cleanly prepares a decision for human approval is often more mature than a system that theatrically removes the human and quietly expands risk.
 
-Build the single-agent system until you understand it well enough to know which of its failures are genuinely role-separable. Then, and only then, add the second agent.
-
----
-
-*Part 5 addresses safety: why agent safety is an interface architecture problem rather than an alignment problem, what the actual attack surfaces of a deployed agent system are, and why every capability chapter in this guide has a corresponding safety chapter.*
+That is also why a planner-reviewer pair with a human approval step can be a stronger multi-agent design than a seven-agent committee. It has a reason to exist.
 
 ---
 
-**Source basis for this essay:** Chapter 14 of *Advances and Challenges in Foundation Agents* (2025); *MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework* (Hong et al., 2023) [arXiv:2308.00352](https://arxiv.org/abs/2308.00352); *ChatDev: Communicative Agents for Software Development* (Qian et al., 2023) [arXiv:2307.07924](https://arxiv.org/abs/2307.07924); *AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation* (Wu et al., 2023) [arXiv:2308.08155](https://arxiv.org/abs/2308.08155); *Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate* (Liang et al., 2023) [arXiv:2305.19118](https://arxiv.org/abs/2305.19118); *RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs* (Chen et al., 2023) [arXiv:2309.13007](https://arxiv.org/abs/2309.13007); `practical-chapter-blueprints/05-multi-agent-design-blueprint.md`.
+## The Default And The Escalation Rule
+
+The default should be one agent with a clear control loop, clear tools, and clear approval boundaries.
+
+Add a second agent only when you can name the specific boundary it buys you. Different permissions. A staged artifact contract. An independent review signal that a self-check cannot deliver. If you cannot name the boundary, you are probably adding role theater rather than architecture.
+
+The escalation rule is equally strict. If the single-agent system is failing, do not split it before you know why it is failing. Many teams compensate for weak decomposition, poor retrieval, or unclear artifacts by adding more agents. That move often makes the diagnosis harder. Solve the single-agent ambiguity first. Split only when the remaining bottleneck is genuinely about trust, routing, or handoff.
+
+The second agent should buy you a boundary, not a vibe.
+
+---
+
+## Resources And References
+
+### [Builder Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
+
+For the companion design note, use this public blueprint. It keeps the topology chooser, failure-mode list, build order, and design-pattern summary in a format better suited to implementation review. The essay is there to install the stricter default. The blueprint is there to help a team decide whether a split is justified at all.
+
+### [MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework](https://arxiv.org/abs/2308.00352) (2024)
+
+*MetaGPT* matters because it demonstrates the most important claim in this essay: the value of multi-agent structure often lives in typed artifacts and staged contracts, not in the mere presence of several model roles. In the essay it is the strongest support for the idea that handoff design is the real architecture.
+
+### [ChatDev: Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) (2023)
+
+*ChatDev* is useful because it shows a role-based pipeline with outputs that are at least more structured than free-form conversational drift. The paper helps make staged decomposition legible in a workflow that builders immediately recognize. In the essay it supports the narrower case for splitting systems when the stages are genuinely distinct and auditable.
+
+### [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155) (2023)
+
+*AutoGen* belongs here because it changed practice by making multi-agent conversation easy to program. That is both its contribution and its warning. In the essay it appears as the paper that lowered the barrier to building coordination webs, which is exactly why it supports the argument that ease of construction can hide serious operating cost.
+
+### [Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate](https://arxiv.org/abs/2305.19118) (2024)
+
+Multi-agent debate matters because it is the clearest example of critique as a specific reliability pattern rather than a default architecture. In the essay it helps separate the case where a second pass adds signal from the much more common case where debate simply adds latency and complexity to a task that needed a better verification step.
+
+### [RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs](https://arxiv.org/abs/2309.13007) (2023)
+
+*RECONCILE* matters as a refinement of the same critique theme. Its contribution is showing how structured consensus can improve some reasoning tasks, which makes it useful as an escalation reference. In the essay it helps draw the line between genuine disagreement worth paying for and faux collaboration that exists mostly because the system wants to look sophisticated.

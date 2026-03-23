@@ -1,105 +1,134 @@
-# Part 6: The Workflow Is the Object
+# Operating Agents VI: The Workflow Is the Object
 
-## How to Improve an Agent System That Already Works
+## How To Improve An Agent System That Already Works
 
-*Part 6 of 6: A Practical Guide to Foundation Agents*
+*Operating Agents VI of VI*
 
----
-
-A team running a document classification agent had been in production for three months. The system was functional , it correctly categorized about 82% of incoming documents on the first pass and required human correction on the rest. That was acceptable. Then the team started trying to improve it.
-
-Over six weeks, they edited the system prompt eleven times. They tried different framing, different instruction sequences, different levels of detail. Some changes improved accuracy on the cases they were watching. A week later, accuracy on other cases had regressed. They had no evaluation set , they were watching specific failure examples and tuning toward them. They had no baseline metrics , latency and cost were tracked in a dashboard they had not looked at in a month.
-
-After six weeks of edits, the system's overall accuracy was approximately the same as it had been before they started. The prompt had grown by 40%. The team did not know which changes had helped and which had hurt, because they had never instrumented the system well enough to find out.
-
-This is the most common form of agent optimization, and it is not optimization. It is prompt drift. The signal is weak, the feedback loop is slow, and the changes accumulate without any systematic understanding of whether the system is improving.
-
-Optimization that works looks different. It starts with measurement. Then it identifies which component is failing. Then it improves that component by the smallest intervention that addresses the failure. Then it measures again. That sequence , which sounds obvious and is systematically ignored , is what separates agent systems that improve from agent systems that change.
+*The opening case in this essay is a composite of common production failures, not a report of one named company.*
 
 ---
 
-## The Whole Workflow Is the Object
+A document-classification agent had been in production for three months. It was not perfect, but it was useful. A human corrected the tail of the work, and the overall economics still made sense. Then the team decided to improve it.
 
-The most important conceptual shift in Chapter 9 and 11 of the *Foundation Agents* survey is positional: the unit of optimization is the workflow, not the prompt.
+Over the next six weeks they edited the system prompt repeatedly. Some edits seemed to help the recent failures they were staring at. Later edits quietly regressed other cases. The prompt grew longer. Tool descriptions changed. Nothing about the underlying evidence improved because there was no stable evaluation set, no clean record of which failure types mattered most, and no agreement about whether latency and correction rate were part of the objective or merely unfortunate side effects.
 
-This matters because most optimization instinct is local. When an agent produces a bad output, the intuitive response is to look at what the agent was told to do , the system prompt, the user message, the retrieval instruction , and change something. This is prompt tuning, and it is sometimes the right intervention. But it is rarely the right first intervention, because the prompt is only one component in a system with multiple components, and the failure may not be in the prompt.
+This is the flattering mistake that makes optimization feel productive when it is not. Teams call prompt churn optimization because the prompt is the surface they can see and edit quickly.
 
-An agent workflow has at least four improvable surfaces: the prompt and schema (how the agent is instructed), the tool set and tool descriptions (what the agent has access to and how it understands those tools), the retrieval configuration (what gets pulled into context and how it is weighted), and the workflow topology itself (the sequence in which tasks are decomposed and executed). A failure in the output can originate at any of these layers. Tuning the prompt when the failure is in retrieval quality produces marginal gains at best and prompt sprawl at worst.
-
-*Large Language Models as Optimizers* (OPRO, Yang et al., 2023) is the conceptual anchor for prompt optimization treated as a formal problem: given examples of successes and failures, generate candidate prompt improvements, evaluate them against those examples, and iterate. The key word is "examples": OPRO works because there is a fixed evaluation set against which candidate prompts can be measured. Without that evaluation set, the optimization loop has no signal. The prompt changes. The developer watches an anecdote or two. The prompt changes again. Nothing improves systematically because nothing is measured systematically.
-
-*TextGrad: Automatic "Differentiation" via Text* (Yuksekgonul et al., 2024) generalizes this from single prompts to multi-component textual systems. TextGrad propagates feedback signals backward through the system graph from a loss signal , an error, a quality failure, a constraint violation , identifying which textual components (prompts, schemas, instructions) contributed to the outcome and how. This is the formal version of the observation that optimization targets the workflow rather than the node: the loss signal can be attributed to any component, and the gradient analogue is the natural-language feedback about what that component should have said or done differently.
-
-*AFLOW: Automating Agentic Workflow Generation* (Liu et al., 2024) and *GPTSwarm: Language Agents as Optimizable Graphs* (Zhugue et al., 2024) push the optimization target to the next level: not individual prompts or schemas but the workflow graph itself. AFLOW uses code-based workflow representation and Monte Carlo Tree Search to evaluate candidate workflow modifications. GPTSwarm treats an agent system as a computational graph whose edge weights and node configurations can both be optimized. These are powerful methods and genuinely research-frontier contributions. They are also not where most teams should start, because they presuppose that the local component failures have been resolved and the workflow structure is the actual bottleneck.
+The stricter default is more disciplined. Optimization begins with measurement, not edits. The unit of improvement is the workflow, not the prompt. The first question is not "what wording should we try next?" It is "which layer is failing often enough to deserve intervention?"
 
 ---
 
-## The Correct Optimization Sequence
+## Prompt Tuning Is Usually A Late Move, Not The First Move
 
-The practical lesson from this literature is a specific ordering that most teams invert. From most to least impactful as a starting point, and from least to most risk of creating new problems:
+Once a system exists, the instinct to optimize locally becomes very strong. A bad output appears, and the fastest action is to change the prompt. Sometimes that works. Just as often it misdiagnoses the layer.
 
-**Evaluate first.** Before changing anything, build an evaluation set: a fixed collection of representative inputs with known good outputs, annotated by domain experts or reconstructed from human corrections. Run the current system against this set. Record the accuracy, latency, and cost. This is not optional preparation for optimization , it is optimization's first output. Without a fixed set, there is no baseline, no regression protection, and no signal that improvement has occurred.
+An agent workflow usually has several improvement surfaces: output schemas, tool descriptions, retrieval configuration, workflow decomposition, prompts, and feedback loops. Any one of them can be the true source of visible failure. A malformed output can look like a reasoning issue when it is actually a schema issue. A weak answer can look like a prompt issue when retrieval brought in the wrong evidence. A brittle workflow can look like a model issue when the steps are in the wrong order.
 
-**Fix the output schema.** The most impactful low-risk change in almost every agent system is schema clarity: ensuring that the model's output is structured in a way that downstream components can reliably use. Schema failures are the most common source of integration errors between agent components, and they are the cheapest to fix. A well-specified JSON schema with required fields, typed values, and explicit formatting constraints eliminates an entire class of downstream failures without affecting the model's reasoning.
+This is why *OPRO* matters conceptually. It treats prompt optimization as a measured search problem over examples rather than as artisanal tinkering. The important word there is examples. Without a fixed evaluation set, there is no stable signal against which a candidate change can be judged. *TextGrad* pushes the point further by treating the whole textual workflow as an object that can receive feedback, not just the final prompt.
 
-**Fix the retrieval configuration.** When the evaluation results show that the agent is working with incomplete or irrelevant context, retrieval quality is the bottleneck. The interventions at this layer are concrete: chunk size, overlap, similarity threshold, re-ranking, metadata filtering, and query reformulation. Each of these can be evaluated against the fixed evaluation set. Each of these is cheaper to improve than the prompt.
-
-**Improve the prompt and tool descriptions.** After schema and retrieval are clean, prompt improvements are more tractable because the input-output relationship is less noisy. At this stage, OPRO-style systematic optimization , generate candidates, evaluate against the fixed set, iterate , is appropriate. What is not appropriate is prompt editing without evaluation, because the signal is too weak.
-
-**Improve the workflow topology.** If the evaluation results show that the failures are distributed across multiple components in a pattern that suggests the task decomposition is wrong , that some steps need to be added, reordered, or parallelized , this is when workflow structure changes are warranted. Not before. Changing the workflow structure when local component failures are still present adds complexity to an already-failing system.
-
-**Consider self-improvement loops.** Once the system is stable and measurable, feedback loops from human corrections, evaluation failures, and runtime signals can be used to improve the system automatically. *Reflexion: Language Agents with Verbal Reinforcement Learning* (Shinn et al., 2023) demonstrates the lightest form of this: storing verbal self-critique from failure events and using that critique to improve subsequent reasoning on similar tasks. *Voyager: An Open-Ended Embodied Agent with Large Language Models* (Wang et al., 2023) demonstrates a more ambitious form: building a skill library from successful runs, continuously adding proven behaviors, and using past experience to avoid repeating solved problems. Both approaches share a property that should be non-negotiable: the feedback loop is bounded by human-reviewed success signals. Reflexion stores reviewed corrections. Voyager promotes skills that have been validated by environment feedback. Neither allows the system to modify itself based on unvalidated self-assessment.
+Those papers are valuable because they point away from the comforting fantasy that good optimization is mainly a matter of clever phrasing. The workflow is the object.
 
 ---
 
-## Measurement Is the Architecture
+## The Right Optimization Order Is More Conservative Than People Want
 
-The most important structural claim of this essay is that the evaluation layer is a component of the agent system, not a phase of its development.
+The field tends to discuss optimization at the exciting end: automatic prompt search, topology search, self-improving graphs, systems that rewrite themselves. Production teams usually need a much stricter order.
 
-A component of the system has a specification, inputs, outputs, and owners. Evaluation has all four. Its specification is the set of quality dimensions that matter for the task: accuracy, latency, cost, retry rate, approval gate hit rate, and correction rate. Its inputs are the agent's outputs on a representative set of tasks. Its outputs are structured measurements of those quality dimensions over time. Its owners are whoever is responsible for system quality.
+First, lock an evaluation set. If you do not have a fixed set of representative cases with known good outcomes, you do not yet have optimization. You have taste and anecdotes.
 
-When evaluation is treated as a phase , a thing done at the beginning (testing) and at the end (review) , the signal it provides is coarse. The system either works or it does not, and the feedback loop is too slow to support iterative improvement. When evaluation is a continuous component, the signal is fine-grained. Failures are surfaced before they accumulate. Regressions are caught before they become user-facing. Optimization has a responsive objective function rather than an occasional report.
+Second, fix schemas and contracts. A surprising amount of system pain comes from outputs that are hard for downstream components to consume reliably. Clean schemas are often the cheapest high-impact improvement.
 
-*Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena* (Zheng et al., 2023) matters here as practical calibration: using a language model as an evaluator for complex outputs , quality, coherence, correctness , scales the evaluation process beyond what human annotation can cover. LLM-as-judge has real limitations: it can share the biases of the model it evaluates, it can be fooled by confident but incorrect outputs, and it requires calibration against human judgments on a subset of cases to remain trustworthy. Used with those constraints acknowledged, it is a practical way to maintain evaluation coverage as systems grow.
+Third, fix retrieval. If the workflow keeps reasoning over weak or partial evidence, prompt edits are often compensating for missing context rather than correcting the real problem.
 
-The calibration requirement is not a footnote. An uncalibrated LLM judge is a measurement instrument with unknown accuracy , which is to say, not a measurement instrument at all. Calibration against human labels on a random sample of evaluated outputs, with explicit checks for the failure modes LLM judges are known to exhibit (length bias, instruction-following bias over correctness), is part of what makes the evaluation layer worth building.
+Fourth, improve prompts and tool descriptions against the fixed evaluation set. At this point the signal is stronger because the upstream layers are less noisy.
 
----
+Fifth, revisit workflow topology. Only once the local surfaces are reasonably clean does it make sense to ask whether the steps themselves are in the wrong order or whether the decomposition is wrong.
 
-## The Limits of Self-Improvement
+Last, and only last, consider self-improvement loops or topology search. Those methods may be real contributions, but they are the most expensive place to hide a bad diagnosis.
 
-The self-improvement methods in the literature span an enormous range, from *Reflexion*'s simple failure-critique loop to *GPTSwarm*'s full topology optimization. The temptation to reach for the ambitious end of this range before the simpler end is validated is one of the most reliable paths to systems that are harder to understand and no more reliable.
+## Optimization Sequence Map
 
-The safety argument for bounded self-improvement is simple. A self-improvement system that can modify its own reasoning prompts can, in principle, modify prompts that govern safety-relevant behavior. A self-improvement system that can restructure its own workflow can, in principle, remove or bypass approval gates. These are not hypothetical risks , they are predictable failure modes of systems whose self-modification actions are not explicitly bounded.
+| Signal you see | First intervention | Why it comes first | Do not jump to |
+|---|---|---|---|
+| Results feel inconsistent but no one can prove regression | Build evaluation set and baseline metrics | Without a stable objective, every change is guesswork | Prompt rewrites driven by recent anecdotes |
+| Downstream failures on otherwise decent answers | Tighten output schema and contracts | Schema fixes are cheap and remove whole classes of failure | Model upgrades |
+| The system reasons over weak or irrelevant evidence | Improve retrieval configuration and source weighting | Better evidence beats better wording | Complex prompt layering |
+| The answers are close but consistently misframed | Tune prompts and tool descriptions against the eval set | Now the prompt layer has a clean signal | Workflow topology search |
+| The workflow still fails in patterned ways across layers | Rework task decomposition or topology | Structural failure finally justifies structural change | Blind self-improvement loops |
+| The system is stable and well measured | Add bounded feedback loops | Now there is a trustworthy objective | Unbounded autonomous mutation |
 
-The practical constraint is that every self-improvement loop should have explicit scope boundaries: which components can be modified, through what mechanism, subject to what validation before the change becomes active. Prompt improvement that passes evaluation set validation before deployment is self-improvement with appropriate validation. Workflow topology search that rewrites the graph without human review is self-improvement on trust that has not been earned.
-
-*Voyager*'s skill library is instructive here precisely because its scope is bounded in a specific way: the agent can add to the skill library when the environment validates the skill (the behavior succeeded), and it can use skills from the library on future tasks, but it cannot remove or modify previously validated skills without external intervention. That asymmetry , build up, do not tear down without review , is a design principle for safe self-improvement that generalizes beyond embodied agents.
-
----
-
-## What the Three-Month Production System Knows
-
-An agent deployed for three months has accumulated something that a prototype does not have: operational evidence. It has latency curves, not just latency estimates. It has failure distributions, not just synthetic test cases. It has correction logs, not just anecdotal error examples. It has approval gate hit rates under real workloads, not just design-time assumptions about how often human review would be needed.
-
-That operational evidence is the most valuable input to optimization. It reveals which failure modes are common versus rare, which task types are reliably handled versus consistently problematic, which tools are used frequently and which are never invoked, which retrieval queries are returning high-quality results and which are returning noise.
-
-The document classification team had three months of this evidence. They were not using it. They were watching a selected set of recent failures and editing the prompt in response to whichever failure was most visible. If they had built the evaluation set from their correction log, run baseline metrics, and identified which task type had the highest error rate, they would have found that most corrections were concentrated in one category of document , the kind that had ambiguous metadata , and that the schema for that category was underspecified. A schema fix would have addressed two-thirds of the corrections without touching the prompt.
-
-Optimization begins not when you want the system to be better but when you understand what "better" means for the specific failure modes the system is actually exhibiting. That understanding requires measurement. Measurement requires a fixed evaluation set. The evaluation set is built from the operational evidence the system has been generating since its first day in production.
-
-That is why optimization is the final part of this guide and not the second. It requires the system to exist, to be running, and to have generated the operational evidence that gives optimization its signal. Before that, you are editing in the dark.
+This map is intentionally conservative because most systems fail from premature complexity, not from insufficient ambition.
 
 ---
 
-## The Guide as a Whole
+## Measurement Is Not Overhead
 
-The six essays in this guide follow the building order deliberately: action first because it defines what an agent is, reasoning because it determines how the agent structures its work, memory because it gives the agent persistence and learning, multi-agent design because it is the escalation path when one agent is genuinely insufficient, safety because it is the architectural consequence of everything the first four essays built, and optimization because it is the continuous improvement process for a system that now exists and is measurable.
+The easiest way to see optimization clearly is to stop treating evaluation as a phase and start treating it as part of the system.
 
-The guide's underlying argument is also one: building useful agents is a sequence of concrete architectural decisions, each of which has specific implications for reliability, debuggability, and safety. The worst outcome in agent development is not that the system fails , it is that the system fails in ways that cannot be localized, understood, or systematically improved. Every recommendation in this guide is a recommendation for clarity about what the system is doing and why, so that when it fails, the failure is diagnosable and the fix is tractable.
+A real evaluation layer has defined inputs, defined outputs, and owners. It records accuracy, latency, cost, retries, approval rates, and human correction rates against a representative set of tasks. It catches regression before a change is mistaken for progress. It tells the team whether the system is improving in the dimensions that matter rather than in the dimensions that happen to be visible on a given afternoon.
 
-That is the difference between an agent system and a capable-seeming prototype. The prototype works until it doesn't, and no one is sure why. The system has action contracts, reasoning scaffolds, memory lifecycle rules, multi-agent coordination architecture, safety boundaries, and measurement infrastructure , and when it fails, someone can point to the layer.
+This is where LLM-as-judge work becomes useful, though only with discipline. *MT-Bench* and related work show why model-based evaluation can scale coverage for complex outputs. They also show why calibration is not optional. A judge that has not been compared against human labels on a relevant sample is not a measurement instrument yet. It is a guess generator in evaluation clothing.
+
+The important point is not that every team must adopt LLM judges. The important point is that optimization without measurement architecture is just editing with better branding.
 
 ---
 
-**Source basis for this essay:** Chapters 9 and 11 of *Advances and Challenges in Foundation Agents* (2025); *Large Language Models as Optimizers* (OPRO, Yang et al., 2023) [arXiv:2309.03409](https://arxiv.org/abs/2309.03409); *TextGrad: Automatic "Differentiation" via Text* (Yuksekgonul et al., 2024) [arXiv:2406.07496](https://arxiv.org/abs/2406.07496); *AFLOW: Automating Agentic Workflow Generation* (Liu et al., 2024) [arXiv:2410.10762](https://arxiv.org/abs/2410.10762); *GPTSwarm: Language Agents as Optimizable Graphs* (Zhugue et al., 2024) [arXiv:2402.16823](https://arxiv.org/abs/2402.16823); *Reflexion: Language Agents with Verbal Reinforcement Learning* (Shinn et al., 2023) [arXiv:2303.11366](https://arxiv.org/abs/2303.11366); *Voyager: An Open-Ended Embodied Agent with Large Language Models* (Wang et al., 2023) [arXiv:2305.16291](https://arxiv.org/abs/2305.16291); *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena* (Zheng et al., 2023) [arXiv:2306.05685](https://arxiv.org/abs/2306.05685); *SELF-REFINE: Iterative Refinement with Self-Feedback* (Madaan et al., 2023) [arXiv:2303.17651](https://arxiv.org/abs/2303.17651); `practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md`.
+## Self-Improvement Is Late And Bounded
+
+This part would be incomplete if it ignored the more ambitious optimization literature. *AFLOW* and *GPTSwarm* matter because they treat workflow structure itself as searchable. *Reflexion* and *Voyager* matter because they show lighter ways systems can improve from failure and success traces over time.
+
+What builders should take from that literature is not excitement first. It is sequence and scope.
+
+Feedback loops are useful when the system is already stable enough to trust the signal that feeds them. A reviewed correction can become a better prompt, a reusable skill, or a tighter procedure. A system that is still unstable at the schema, retrieval, or topology level should not be given permission to rewrite itself in broad ways. It will optimize around noise, bypass guardrails, or entrench the wrong local behavior because the objective itself is still muddy.
+
+That is the real lesson of bounded self-improvement. Improve only the surfaces you can validate. Promote only the routines that have earned promotion. Search topology only after the simpler explanations for failure have been ruled out.
+
+In a mature system, self-improvement should feel less like science fiction and more like controlled maintenance.
+
+---
+
+## What The Live System Already Knows
+
+A system that has been in production for months has something a prototype does not have: operational evidence. It has real latency distributions, not guesses. It has correction logs, not memories of the worst recent incident. It has evidence about which task classes break most often, which tools are rarely useful, which approval gates fire constantly, and which retrieval patterns return noise.
+
+That evidence is where the optimization signal lives. The prompt-churn team from the opening example already had it. They simply were not using it. If they had built an evaluation set from human corrections, separated the failures by type, and inspected the distribution before editing, they likely would have discovered that one document class with underspecified metadata accounted for most of the pain. A schema and retrieval fix would have helped far more than a week of prompt rewrites.
+
+That is why optimization belongs at the end of this series. It depends on the earlier layers being real enough to observe. Before that point, "optimization" is often just a smarter word for experimentation.
+
+Optimization starts when the system can tell you where it hurts.
+
+---
+
+## Resources And References
+
+### [Builder Blueprint: Optimization and Self-Improvement](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
+
+For the companion technical note, use this public blueprint. It keeps the optimization order, comparison matrix, anti-patterns, and evaluation checklist in a more operational format than the essay. That makes it useful once a system is live enough that the question is no longer what to build, but where to push for improvement first.
+
+### [Large Language Models as Optimizers](https://arxiv.org/abs/2309.03409) (2024)
+
+*OPRO* matters because it takes prompt improvement out of the realm of artisanal tweaking and turns it into a measured search problem over a fixed evaluation set. That is why it is one of the core papers behind this essay. Its deepest contribution is not that prompts can improve. It is that improvement is meaningless without a stable objective.
+
+### [TextGrad: Automatic "Differentiation" via Text](https://arxiv.org/abs/2406.07496) (2024)
+
+*TextGrad* extends the same logic beyond one prompt. Its contribution is a way to think about multi-component textual workflows as things that can receive structured feedback across the system, not just at the final answer. In the essay it supports the claim that the workflow, not the node, is the true object of optimization.
+
+### [AFLOW: Automating Agentic Workflow Generation](https://arxiv.org/abs/2410.10762) (2025)
+
+*AFLOW* matters because it makes workflow structure itself a search space. That is a real advance, but it appears in this essay with a warning attached. Its value is clearest once simpler layers such as schemas, retrieval, and prompts have already stabilized. That makes it an escalation reference rather than a starting recommendation.
+
+### [GPTSwarm: Language Agents as Optimizable Graphs](https://arxiv.org/abs/2402.16823) (2024)
+
+*GPTSwarm* pushes the workflow-optimization story into graph form. It matters in this essay because it makes explicit how ambitious the search-for-structure move can become. That is helpful precisely because it sharpens the conservative rule: do not jump to graph optimization while still misdiagnosing local component failures.
+
+### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (2023)
+
+*Reflexion* is one of the most useful lighter-weight references here because it shows how reviewed failure can become a reusable signal for future improvement. In the essay it stands for bounded self-improvement done correctly: narrow scope, concrete lessons, and feedback grounded in actual outcomes rather than self-congratulating drift.
+
+### [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) (2023)
+
+*Voyager* matters in this part because it frames self-improvement through skill accumulation rather than unrestricted self-mutation. The paper's skill library is a strong example of how a system can build up reusable competence while preserving the asymmetry the essay cares about: adding validated routines is safer than letting the system freely tear down its own architecture.
+
+### [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) (2023)
+
+This paper is useful because it makes evaluation scale practical while also clarifying the calibration burden that comes with it. In the essay it supports the point that model-based judges can be part of a serious evaluation layer, but only if they are checked against human labels and treated as instruments that require validation rather than as automatic truth machines.
