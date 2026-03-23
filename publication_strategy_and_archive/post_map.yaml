@@ -1,0 +1,152 @@
+posts:
+  the-illusion-of-the-swarm:
+    title: The Illusion of the Swarm
+    research_folder: multi_agent_compiler_workaround
+    summary: A research-backed argument that many multi-agent systems are temporary routing workarounds rather than the final architecture.
+    tags:
+      - agents
+      - orchestration
+      - systems
+    featured: true
+    status: published
+  the-moltbook-phenomenon:
+    title: The Moltbook Phenomenon
+    research_folder: the-moltbook-phenomenon
+    summary: An analysis of Meta's Moltbook acquisition and what it signals about product strategy, distribution, and AI-native social software.
+    tags:
+      - platforms
+      - product-strategy
+      - social
+    featured: false
+    status: published
+  the-autonomy-tax:
+    title: The Autonomy Tax
+    research_folder: ai_agents_enterprise_state
+    summary: A thesis on why enterprise agents fail on control surfaces, auditability, and operations long before they fail on raw intelligence.
+    tags:
+      - enterprise
+      - governance
+      - agents
+    featured: true
+    status: published
+  the-transformer-attractor:
+    title: The Transformer Attractor
+    research_folder: neural_architectures
+    summary: A study of why modern model design keeps converging back toward transformer-like structures across domains and workloads.
+    tags:
+      - neural-architectures
+      - transformers
+      - systems
+    featured: false
+    status: published
+  when-the-llm-programs-its-own-thinking:
+    title: When the LLM Programs Its Own Thinking
+    research_folder: rlm_jupyter
+    summary: An exploration of shared-state Jupyter workflows where an LLM acts less like a chat agent and more like a programmable REPL collaborator.
+    tags:
+      - jupyter
+      - reasoning
+      - tools
+    featured: false
+    status: published
+  the-orchestration-paradigm-issue-397:
+    title: "The Orchestration Paradigm: Issue 4 - The Reality"
+    research_folder: agent_revolution
+    summary: The closing issue in the Orchestration Paradigm series, focused on what survives contact with production constraints and evaluation.
+    tags:
+      - orchestration
+      - agents
+      - series
+    featured: false
+    status: published
+    series_key: orchestration-paradigm
+    series_title: The Orchestration Paradigm
+    series_order: 4
+  the-orchestration-paradigm-issue-cf4:
+    title: "The Orchestration Paradigm: Issue 3 - The Behavior"
+    research_folder: agent_revolution
+    summary: The third issue in the Orchestration Paradigm series, centered on behavior, coordination patterns, and failure modes inside agent stacks.
+    tags:
+      - orchestration
+      - agents
+      - series
+    featured: false
+    status: published
+    series_key: orchestration-paradigm
+    series_title: The Orchestration Paradigm
+    series_order: 3
+  the-orchestration-paradigm-issue:
+    title: "The Orchestration Paradigm: Issue 2 - The Factory"
+    research_folder: agent_revolution
+    summary: The second issue in the Orchestration Paradigm series, tracing how agent systems become factories of routing, tooling, and coordination.
+    tags:
+      - orchestration
+      - agents
+      - series
+    featured: false
+    status: published
+    series_key: orchestration-paradigm
+    series_title: The Orchestration Paradigm
+    series_order: 2
+  the-orchestration-paradigm-series:
+    title: The Orchestration Paradigm Series
+    research_folder: agent_revolution
+    summary: The series introduction and framing piece for a four-part investigation into AI orchestration patterns and their production reality.
+    tags:
+      - orchestration
+      - agents
+      - series
+    featured: false
+    status: published
+    series_key: orchestration-paradigm
+    series_title: The Orchestration Paradigm
+    series_order: 1
+  the-hardware-friction-map:
+    title: The Hardware Friction Map
+    research_folder: hardware_compatibility_architecture_2023_2025
+    summary: A practical map of how hardware economics shapes model design, deployment choices, and the viability of ambitious architecture ideas.
+    tags:
+      - hardware
+      - economics
+      - architectures
+    featured: true
+    status: published
+  what-actually-works-the-hardware:
+    title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)"
+    research_folder: hardware_compatibility_architecture_2023_2025
+    summary: The longer quantitative essay and dataset-backed argument for why hardware compatibility predicts which architectures reach production.
+    tags:
+      - hardware
+      - scorecards
+      - architectures
+    featured: true
+    status: published
+  the-agent-revolution:
+    title: "Autonomous AI Agents: Core Foundations and Recent Breakthroughs"
+    research_folder: autonomous-agent-blueprint
+    summary: A builder-first survey of foundation agent architectures, what changed in the literature, and how to choose practical defaults.
+    tags:
+      - agents
+      - foundations
+      - architecture
+    featured: false
+    status: published
+  neural-architecture-design-as-a-compositional-32e:
+    title: Neural Architecture Design as a Compositional Language
+    research_folder: neural_architectures
+    summary: The inaugural Rooted Layers essay on architecture design as a compositional system rather than a loose collection of model families.
+    tags:
+      - neural-architectures
+      - composition
+      - research
+    featured: false
+    status: published
+  coming-soon:
+    title: Welcome
+    research_folder: .
+    summary: The opening note for Rooted Layers and the public research archive that sits behind the publication.
+    tags:
+      - welcome
+      - publication
+    featured: false
+    status: published

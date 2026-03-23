@@ -15,7 +15,7 @@ In benchmark settings, a team at the University of British Columbia showed that 
 
 It does not mean multi-agent systems are fake. It does not mean one agent always wins. It means something narrower and more useful: for many same-model, tool-using production stacks, explicit multi-agent structure is often the operational price of unresolved routing, state, and coordination problems.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19f7a889-9007-48b5-87fe-92ae07a14281_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!364-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19f7a889-9007-48b5-87fe-92ae07a14281_3823x2134.png)
+![](assets/asset-e3e5b6bf392a6a8c.png)
 
 That reframes the design question. The question is not “how many agents should I build?” It is “which bottleneck am I compensating for?” Recent papers on agent systems, routing, memory, delegation, embodied cooperation, and latent communication point to the same practical conclusion: the important frontier is not adding more personas. It is organizing decomposition, memory, communication, and coordination under tight cost and error budgets ([Li, 2026](https://arxiv.org/abs/2601.04748); [X. Yang et al., 2026](https://arxiv.org/abs/2601.14192); [Kim et al., 2025](https://arxiv.org/abs/2512.08296)).
 
@@ -27,7 +27,7 @@ The usual story about multi-agent systems is flattering. We say a Planner, Resea
 
 The UBC paper is important because it directly tests that suspicion ([Li, 2026](https://arxiv.org/abs/2601.04748)). Instead of assuming the multi-agent graph is load-bearing, the authors apply a formal compilation function from multi-agent systems to a single agent with a skill library. On their benchmarks, the compiled system uses far fewer tokens and lower latency while matching the original system closely ([Li, 2026](https://arxiv.org/abs/2601.04748)). That is not a philosophical objection to multi-agent design. It is an engineering result. In some settings, a large share of the extra computation is coordination overhead rather than indispensable reasoning.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a71311f-c8ef-4232-be01-aa0d54774103_830x779.png)](https://substackcdn.com/image/fetch/$s_!JWGH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a71311f-c8ef-4232-be01-aa0d54774103_830x779.png)
+![](assets/asset-2df5a35d7d8cc145.png)
 
 Picture taken from ([Li, 2026](https://arxiv.org/abs/2601.04748)).
 
@@ -35,7 +35,7 @@ Two adjacent papers sharpen the point. The efficiency survey *Toward Efficient A
 
 Put differently: multi-agent often appears when a single agent has become brittle, but brittleness can come from multiple sources. Sometimes the answer is decomposition. Sometimes it is memory. Sometimes it is better routing. Sometimes it is simply not asking one model to narrate every internal handoff in English.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fadf56e28-6519-4bd9-a05a-b9b4d096e802_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!a1RH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fadf56e28-6519-4bd9-a05a-b9b4d096e802_3823x2134.png)
+![](assets/asset-b70f478593a18bb2.png)
 
 That is why the right default for skeptical builders is not “start with a swarm.” It is “start with the smallest system that can express the task, then identify the specific failure mode before you split it.”
 
@@ -45,19 +45,19 @@ The most useful result in the UBC paper is not just that some multi-agent system
 
 This is the point where “agent” stops meaning persona and starts meaning namespace.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F77719423-b39a-44f2-bc4d-23c91435907e_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!C0BP!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F77719423-b39a-44f2-bc4d-23c91435907e_3823x2134.png)
+![](assets/asset-7930c037635c21d3.png)
 
 That line is an interpretation, not a sentence from the paper. But it fits the evidence better than the folk story does. In many production systems, we do not create a database agent because querying a database requires a mystical new cognitive faculty. We create it because mixing `resolve_ticket`, `query_user_db`, `fetch_marketing_campaigns`, `refund_order`, and `check_entitlement` in one flat tool universe increases routing confusion. The boundary is there to keep similar actions from interfering with each other.
 
 That interpretation also explains why hierarchical routing works. In the UBC experiments, flat selection at large library sizes collapses badly, while hierarchical routing recovers much of the lost accuracy by replacing one overloaded decision with several smaller ones ([Li, 2026](https://arxiv.org/abs/2601.04748)). The model did not become more intelligent. The choice became more separable.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c529605-3006-4f5b-bc47-a2f7d5c7d741_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!GGnO!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c529605-3006-4f5b-bc47-a2f7d5c7d741_3823x2134.png)
+![](assets/asset-6e7437b22920d280.png)
 
 *ROMA* is the best direct architecture answer to that problem in the current set ([Alzu’bi et al., 2026](https://arxiv.org/abs/2602.01848)). Its recursive Atomizer-Planner-Executor-Aggregator structure keeps local decisions manageable and compresses intermediate outputs before passing them onward ([Alzu’bi et al., 2026](https://arxiv.org/abs/2602.01848)). On the paper’s benchmarks, that design produces measurable gains, including a 9.9% improvement on SEAL-0 and strong performance on EQ-Bench ([Alzu’bi et al., 2026](https://arxiv.org/abs/2602.01848)). The key point is not that recursion is always best. It is that once your action space crosses a disambiguation threshold, better decomposition is often more valuable than louder prompting.
 
 *SkillOrchestra* reaches a similar conclusion from a different direction ([Wang et al., 2026](https://arxiv.org/abs/2602.19672)). Instead of learning an opaque routing policy end to end, it builds a reusable skill handbook of agent competence and cost, then routes based on explicit performance-cost tradeoffs ([Wang et al., 2026](https://arxiv.org/abs/2602.19672)). That is not the same method as UBC or ROMA, but it supports the same broader idea: orchestration gets more defensible when it is tied to explicit skills and competence profiles rather than vague personas.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F52fa6671-7a86-4c0c-9c4d-c2e264261c8f_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!kjol!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F52fa6671-7a86-4c0c-9c4d-c2e264261c8f_3823x2134.png)
+![](assets/asset-1c0db2df5976e4c1.png)
 
 This is where many practical agent stacks should change course. If your multi-agent design exists mainly to prevent tool confusion, say so. That is not a weakness. It is a clearer problem statement. Once you name the problem correctly, you can ask better questions: Do I need a real multi-agent system? A hierarchical router? A smaller skill library per stage? Better tool descriptions? A cost-aware handbook like SkillOrchestra? The bad version of this conversation is “we needed more agents because the task was hard.” The useful version is “we needed less ambiguity per decision.”
 
@@ -65,19 +65,19 @@ This is where many practical agent stacks should change course. If your multi-ag
 
 A good argument needs to make the objections early, not as an appendix. Multi-agent systems are not just ceremony, they are genuinely load-bearing in at least four situations.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fff12fdb1-d9ff-4a95-8436-c1e956975527_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!XPU3!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fff12fdb1-d9ff-4a95-8436-c1e956975527_3823x2134.png)
+![](assets/asset-201f45bef71173f6.png)
 
 **First**, heterogeneity, if your system genuinely needs different substrates, multiple agents are not a workaround for confusion. They are the system. A vision model, a code model, a planner, and a verifier may each exist because the underlying capabilities differ materially. *The Vision Wormhole* matters partly because it takes this case seriously rather than pretending a single homogeneous model will absorb everything ([X. Liu et al., 2026](https://arxiv.org/abs/2602.15382)).
 
 **Second**, trust and authority boundaries, *Intelligent AI Delegation* is mostly a conceptual paper, not the kind of empirical proof you should lean on for performance claims ([Tomašev et al., 2026](https://arxiv.org/abs/2602.11865)). But it is still useful because it names a real requirement: sometimes the reason to separate agents is not capability but governance. You may want a verifier that can challenge a proposal, a safety critic that is structurally isolated from the system it monitors, or a delegate that behaves differently depending on task criticality ([Tomašev et al., 2026](https://arxiv.org/abs/2602.11865)). Those boundaries are hard to fold away without also erasing the trust boundary that made them valuable.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcc062bb2-6a0b-4dd5-b6ad-fb54dd12d405_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!zikQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcc062bb2-6a0b-4dd5-b6ad-fb54dd12d405_3823x2134.png)
+![](assets/asset-5e7cee934e5c8f59.png)
 
 **Third**, embodied or distributed coordination, *EmCoop* does not prove a universal law of cooperation, but it does show why process-level measurement matters ([H. Yang et al., 2026](https://arxiv.org/abs/2603.00349)). In embodied tasks, agents can interrupt, replan, block each other, and communicate at the wrong times. That is not the same problem as routing tools in a text-only workflow. *MultiAgentBench* points in the same direction by treating coordination protocols and milestone-based metrics as first-class evaluation objects rather than side effects of task completion ([Zhu et al., 2025](https://arxiv.org/abs/2503.01935)). Once multiple actors must coordinate in space, time, or shared environment state, the system-level interaction can be genuinely irreducible.
 
 **Fourth**, exploration, here *EMPO2* is useful by analogy rather than as a pure multi-agent result ([Z. Liu et al., 2026](https://arxiv.org/abs/2602.23008)). It shows that external scaffolding, reflective tips, and exploration support can create better trajectories that are only later internalized. Search itself has value. If the point of your system is to widen coverage over possible solutions, not just minimize latency, multiple actors or multiple trajectories can be rational even when you later distill what they discovered.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc6fb4153-b029-4a0a-a05c-c29bee39e65a_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!BJqO!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc6fb4153-b029-4a0a-a05c-c29bee39e65a_3823x2134.png)
+![](assets/asset-dd7bae1ee0894fca.png)
 
 The scaling paper is valuable because it keeps all of this from turning into metaphysics ([Kim et al., 2025](https://arxiv.org/abs/2512.08296)). Centralized coordination helps some parallelizable tasks dramatically. Decentralized coordination can help web navigation. Sequential reasoning tasks can degrade badly under multi-agent variants ([Kim et al., 2025](https://arxiv.org/abs/2512.08296)). That is the sane conclusion: multi-agent is not fake, and it is not fate. It is a conditional tool.
 
@@ -87,15 +87,15 @@ The papers do not justify “the death of English.” They do justify something 
 
 *The Vision Wormhole* makes the strongest current case ([X. Liu et al., 2026](https://arxiv.org/abs/2602.15382)). Its argument is structural. When one model converts a rich internal state into text and another model reconstructs meaning from that text, the handoff is slow, bandwidth-limited, and lossy. Their workaround is to repurpose the visual pathway of vision-language models as a higher-bandwidth coordination channel. On the tested heterogeneous setups, that produces an average accuracy gain of 6.3 percentage points and roughly 1.87x faster execution ([X. Liu et al., 2026](https://arxiv.org/abs/2602.15382)). That is a real result, but it is still a result on selected systems, not a universal substrate theorem.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbab3ea97-54b1-4803-bc34-bccb05d633e1_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!uj_x!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbab3ea97-54b1-4803-bc34-bccb05d633e1_3823x2134.png)
+![](assets/asset-6acf2af4b9382bef.png)
 
 *Latent Collaboration in Multi-Agent Systems* makes the cluster story stronger ([Zou et al., 2025](https://arxiv.org/abs/2511.20639)). Its LatentMAS setup is training-free, moves hidden-state information directly, and reports large gains in speed and token efficiency relative to text-based collaboration on its benchmarks ([Zou et al., 2025](https://arxiv.org/abs/2511.20639)). Whether those methods survive contact with production constraints is unresolved. But together they establish something more modest and more credible than a grand manifesto: researchers are no longer treating text relay as the unquestioned default for inter-agent communication.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2417521-f890-481a-8adc-8ac63e97ec8c_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!Ym63!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2417521-f890-481a-8adc-8ac63e97ec8c_3823x2134.png)
+![](assets/asset-ea09a34ed8d79530.png)
 
 *EmCoop* adds a different kind of evidence ([H. Yang et al., 2026](https://arxiv.org/abs/2603.00349)). In its experiments, more communication is not automatically better. Unstructured, high-volume communication can destroy plan coherence and increase decision overhead. Structured coordination outperforms noisy debate. That does not prove latent channels are the answer. It does show that communication design is not a cosmetic implementation detail. It is a central systems variable.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fca75727e-b278-4dc6-ac50-50e5743eddb9_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!DzHi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fca75727e-b278-4dc6-ac50-50e5743eddb9_3823x2134.png)
+![](assets/asset-77303e850e49d880.png)
 
 For builders, the near-term implication is not “install a latent bus.” It is much simpler: stop treating verbose natural-language handoffs as a free abstraction. If agents must talk, make them exchange the smallest useful state. Prefer typed fields over paragraphs. Prefer compact plans over autobiographies. Prefer bounded schemas over self-important debates. The frontier may be latent. The immediate win is almost always less chatter.
 
@@ -105,7 +105,7 @@ The most interesting long-run pattern in this literature is not that multi-agent
 
 *EMPO2* gives the cleanest mechanism ([Z. Liu et al., 2026](https://arxiv.org/abs/2602.23008)). During training, the agent gets external memory tips that improve exploration. During off-policy updates, the system recomputes probabilities without those tips so the base policy can absorb the useful behavior ([Z. Liu et al., 2026](https://arxiv.org/abs/2602.23008)). On ScienceWorld and WebShop, that hybrid approach materially outperforms the reported GRPO baselines, and it also helps on the paper’s out-of-distribution evaluations ([Z. Liu et al., 2026](https://arxiv.org/abs/2602.23008)). The lesson is not “memory is solved.” It is that external scaffolding can be useful precisely because it produces trajectories worth internalizing.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5cc222ef-8136-4e92-a74b-fe3a2d878fbd_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!n0Tp!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5cc222ef-8136-4e92-a74b-fe3a2d878fbd_3823x2134.png)
+![](assets/asset-0b05dea596fe7622.png)
 
 *Agentic Memory* makes a related point for state management ([Yu et al., 2026](https://arxiv.org/abs/2601.01885)). Instead of treating long-term and short-term memory as separate controllers, it exposes memory operations as tool-like actions inside the policy itself and trains the agent to decide when to store, retrieve, update, summarize, filter, or delete ([Yu et al., 2026](https://arxiv.org/abs/2601.01885)). On the evaluated benchmarks, that unified memory policy improves performance and context efficiency over strong baselines ([Yu et al., 2026](https://arxiv.org/abs/2601.01885)). If your current architecture requires a separate memory agent mainly because the base agent cannot govern memory well, this is exactly the kind of result that should make you rethink the boundary.
 
@@ -113,7 +113,7 @@ Now that *AgentArk* is verified, it belongs here too, but with narrower wording 
 
 The pattern is this: a swarm can be a training rig.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4cb1168-00b9-443c-b3f1-9f8e810be00d_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!mgpJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4cb1168-00b9-443c-b3f1-9f8e810be00d_3823x2134.png)
+![](assets/asset-8c0a9a98637d92d4.png)
 
 That frame is worth keeping because it is operationally useful. Prototype with scaffolds. Log good debates, routing decisions, memory operations, and corrections. Ask which parts are valuable because they generate diverse or corrective trajectories, and which parts are just expensive inference-time ceremony. Internalize what you can. Keep the scaffolding when it is genuinely load-bearing because of trust, heterogeneity, or real distributed coordination.
 
@@ -130,7 +130,7 @@ If you ship agent systems, the practical playbook from this literature is straig
 5. Measure process, not just outcomes. If you cannot see interruptions, communication load, plan coherence, or routing collapse, you do not really know why your system works ([Kim et al., 2025](https://arxiv.org/abs/2512.08296); [H. Yang et al., 2026](https://arxiv.org/abs/2603.00349); [Zhu et al., 2025](https://arxiv.org/abs/2503.01935)).
 6. Treat scaffolds as candidates for internalization. External memory, review passes, multi-agent debates, and exploratory helpers may belong in training, adaptation, or fallback paths rather than the hot path of every production request ([Z. Liu et al., 2026](https://arxiv.org/abs/2602.23008); [Yu et al., 2026](https://arxiv.org/abs/2601.01885); [Luo et al., 2026](https://arxiv.org/abs/2602.03955)).
 
-   [![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd8f7f767-fec0-43dd-948a-a38a08f21004_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!5qv6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd8f7f767-fec0-43dd-948a-a38a08f21004_3823x2134.png)
+   ![](assets/asset-aecc04d986d43e2d.png)
 
 A skeptical engineer should be able to summarize the whole thesis in one sentence: multi-agent systems are often useful, but their value usually comes from specific coordination mechanisms, and many of those mechanisms can be simplified, compressed, or internalized once you know what problem they were solving.
 
@@ -142,7 +142,7 @@ I would make only two predictions from this set, and both are falsifiable.
 
 **Prediction 2:** By March 31, 2027, at least two publicly described production compound-AI systems from major vendors or labs will use non-text intermediate handoffs for selected internal coordination paths, whether via typed state transfer, model-native state transfer, or latent channels. This is falsified if public production descriptions still rely exclusively on natural-language or JSON relay for internal multi-model coordination.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd1f3a503-5088-4f4d-b55b-9a1e03dd0553_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!IIZ_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd1f3a503-5088-4f4d-b55b-9a1e03dd0553_3823x2134.png)
+![](assets/asset-4a25748bee99c0f4.png)
 
 Those are narrower predictions than the earlier draft made. That is intentional. The research here is good enough to change how builders think, it is not yet good enough to support prophecy.
 
@@ -202,6 +202,6 @@ Agentic Memory contributes a unified policy view of memory operations. Rather th
 
 AgentArk contributes direct evidence for distilling multi-agent traces into a single model. Its value is not that it proves all useful swarms can be collapsed away, but that it shows process-aware distillation can improve single-agent performance in a measurable way. That makes it a useful piece of support for the article’s narrower claim that some multi-agent value lies in the trajectories and traces the system produces, not necessarily in the permanent runtime graph.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6d8b2bf4-7b33-40f4-8db7-b770a4023b36_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!TQe1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6d8b2bf4-7b33-40f4-8db7-b770a4023b36_3823x2134.png)
+![](assets/asset-51903d13783563f8.png)
 
 Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.
