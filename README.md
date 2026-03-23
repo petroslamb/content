@@ -21,7 +21,19 @@ Organized by topic. Each top-level folder corresponds to a research area or mult
 ### Substack Metadata & Archiving
 The `substack-downloader/` directory acts as a local tool for fetching posts. The canonical record of published articles, along with comprehensive publication analysis and future strategy drafts, is now maintained in the `publication_strategy_and_archive/` directory.
 
-For the public mirror pipeline, use `npm run sync:substack` to refresh the tracked archive and `npm run build:mirror` to generate the GitHub Pages mirror from the local markdown snapshots.
+For the public mirror pipeline, use:
+
+- `npm run sync:substack` to refresh the tracked archive
+- `npm run build:mirror` to generate the GitHub Pages mirror
+- `npm run dev:mirror` to work on the mirror locally
+- `npm run check:mirror` to verify the archive, generated mapping table, and built site
+
+The public mirror is published at [https://petroslamb.github.io/content/](https://petroslamb.github.io/content/).
+
+Implementation docs live in:
+
+- [`publication_strategy_and_archive/README.md`](./publication_strategy_and_archive/README.md)
+- [`publication_strategy_and_archive/mirror/README.md`](./publication_strategy_and_archive/mirror/README.md)
 
 ### Publication to Folder Mapping
 
@@ -86,8 +98,10 @@ Centralized corpus for the Substack publication, containing the complete downloa
 - Publication qualitative analysis and review matrix
 - Future strategic blueprints and options
 - Canonical downloaded article markdown and metadata
+- Curated post-to-folder mapping for published essays
+- 11ty GitHub Pages mirror and deployment workflow
 
-Start with: `publication_strategy_and_archive/future_publication_strategy.md`
+Start with: `publication_strategy_and_archive/README.md`
 
 ## Tooling
 
