@@ -1,0 +1,3175 @@
+<html><head><title>Neural Architecture Design as a Compositional Language</title>
+            <style>
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                    margin: 20px auto;
+                    border-radius: 8px;
+                }
+                h1 {
+                    font-size: 2.2em;
+                    margin-bottom: 0.5em;
+                    color: #1a1a1a;
+                }
+                a {
+                    color: #0066cc;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+                pre {
+                    background: #f4f4f4;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                }
+                blockquote {
+                    border-left: 4px solid #ddd;
+                    margin: 0;
+                    padding-left: 15px;
+                    color: #666;
+                }
+            </style>
+            </head><body><h1>Neural Architecture Design as a Compositional Language</h1><div class="native-audio-embed" data-attrs='{"label":null,"mediaUploadId":"795227e5-4f26-43e0-b5c8-2032fb4b296f","duration":1020.5257,"downloadable":true,"isEditorNode":true}' data-component-name="AudioPlaceholder">
+</div>
+<h3>
+ Introduction: The Architect’s Secret
+</h3>
+<p>
+ It’s a common misconception to think of designing a neural network like writing a piece of traditional software. We imagine architects meticulously programming every logical step, crafting a perfect, intricate machine from the ground up. But the reality of modern AI is far more counter-intuitive and fascinating.
+</p>
+<p>
+ The most successful AI architectures aren’t rigid blueprints; they are flexible scaffolds. An architect’s job is not to design a flawless machine, but to create a rich environment—a framework of possibilities—where an algorithm can learn and discover solutions on its own. This post explores five of the most surprising and impactful ideas that have shaped this new philosophy, revealing how the field shifted from building models to writing the very language of computation.
+</p>
+<p>
+ --------------------------------------------------------------------------------
+</p>
+<h3>
+ 1. Architectures Aren’t Blueprints; They’re Scaffolds
+</h3>
+<p>
+ The “Scaffold Hypothesis” is a simple but profound idea: an architect’s primary role is to create a
+ <em>
+  space of possible computations
+ </em>
+ where an optimization process like gradient descent can easily find effective solutions.
+</p>
+<p>
+ This stands in stark contrast to traditional programming, where a developer specifies exact instructions like
+ <code>
+  if x &gt; 5, then do y
+ </code>
+ . In AI architecture, the goal is different. Take the Transformer model’s famous Query-Key-Value (QKV) attention mechanism. The designers didn’t explicitly program the network to “use Q for asking what information is needed, K for signaling what information is available, and V for providing that information.” Instead, they created a mathematical structure where that function was
+ <em>
+  easy to learn
+ </em>
+ . The network discovered this communication protocol on its own through training.
+</p>
+<p>
+ This principle reframes the entire design process. The architecture is no longer the final product but the starting point for discovery.
+</p>
+<p>
+ The architecture is the hypothesis; training is the proof.
+</p>
+<p>
+ This shift explains why simple, repeated structures are so effective. Instead of pre-ordaining a complex function, they provide a flexible, high-dimensional canvas and a simple set of rules, allowing the training process itself to paint the masterpiece.
+</p>
+<p>
+ --------------------------------------------------------------------------------
+</p>
+<h3>
+ 2. Simpler and Deeper Beats Clever and Custom
+</h3>
+<p>
+ Early in deep learning’s history, models like AlexNet were built with custom-designed layers, each with a specific, hand-tuned purpose. The field has since learned a powerful lesson: uniformity and simplicity almost always win. The shift began with models like VGGNet and ResNet, which abandoned complex, varied layers in favor of stacking simple, identical blocks over and over again.
+</p>
+<p>
+ This wasn’t just a competition between models; it was a clash of design philosophies. The complex Inception model represented a “clever, parallel committee” approach, where designers offered the model multiple hand-tuned computational paths at once. In contrast, ResNet championed a “brute-force sequential” approach with a single, deep compositional rule. ResNet’s victory proved that a simple, repeatable formula was far more scalable and powerful.
+</p>
+<p>
+ ...simpler, more uniform building blocks win over complex, hand-tuned modules.
+</p>
+<p>
+ The power of this principle is staggering. A massive model like GPT-3 is built by repeating the exact same architectural block 96 times. This principle of uniform, repeatable blocks became the bedrock of modern AI. But to truly scale it, researchers had to solve a fundamental problem: how do you make a network hundreds of layers deep without the signal getting lost? The answer came in a single, elegant formula.
+</p>
+<p>
+ --------------------------------------------------------------------------------
+</p>
+<h3>
+ 3. A Single, Simple Formula Unlocked Extreme Depth
+</h3>
+<p>
+ A breakthrough paper from 2015 revealed a disarmingly simple formula that would shatter the perceived limits of network depth: the “residual connection.” The formula is just
+ <code>
+  x_out = x_in + F(x_in)
+ </code>
+ .
+</p>
+<p>
+ This small addition caused a massive paradigm shift. Before ResNet, architects asked, “What should each layer compute?” After ResNet, the question became, “What
+ <em>
+  refinement
+ </em>
+ should each layer add?” By making each layer learn a modification to the input (
+ <code>
+  F(x_in)
+ </code>
+ ) rather than an entirely new representation, the model’s task became dramatically easier.
+</p>
+<p>
+ This changed the network’s job from replacing information at each layer to
+ <em>
+  accumulating refinements
+ </em>
+ . The final output is no longer the result of a complex transformation, but the sum of the original input plus a series of small, learned adjustments:
+ <code>
+  Output = Input + Block₁(Input) + Block₂(...) + ...
+ </code>
+ . This is the foundational compositional operator of modern deep learning. This simple change created “gradient highways” that allowed networks to be built with 100+ layers, enabling the extreme depth that powers today’s most capable models.
+</p>
+<p>
+ --------------------------------------------------------------------------------
+</p>
+<h3>
+ 4. Sophisticated Specialization Emerges From Identical Blocks
+</h3>
+<p>
+ One of the most stunning validations of the “scaffold hypothesis” came from analyzing models like BERT. BERT is constructed from a stack of identical Transformer blocks; architecturally, layer 2 is the same as layer 10. Yet, after training, these identical layers learn to perform distinct and specialized roles.
+</p>
+<p>
+ Analysis revealed a clear functional hierarchy that emerged on its own:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Early layers:
+   </strong>
+   Focus on syntax and surface-level features (e.g., making determiners attend to their nouns).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Middle layers:
+   </strong>
+   Learn more abstract semantic relationships and entity recognition.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Late layers:
+   </strong>
+   Handle complex, long-range tasks like coreference resolution (e.g., linking the pronoun “it” back to its subject paragraphs earlier).
+  </p>
+ </li>
+</ul>
+<p>
+ This specialization was not designed by an architect; it was discovered by the training process as an efficient way to solve the problem. The uniform stack of blocks provided the capacity, and optimization found the structure.
+</p>
+<p>
+ The architecture didn’t specify this hierarchy—training discovered it!
+</p>
+<p>
+ This demonstrates that a well-designed architectural scaffold doesn’t need to encode complex behaviors itself. It only needs to create a space where those behaviors are easy for the model to learn.
+</p>
+<p>
+ --------------------------------------------------------------------------------
+</p>
+<h3>
+ 5. Today’s AI Is Built With Standardized “Lego” Blocks
+</h3>
+<p>
+ The modern process of designing a new state-of-the-art AI model has evolved significantly. Instead of inventing novel architectures from scratch, designers now select high-performing components from a shared, validated library—much like building with a set of standardized Lego blocks.
+</p>
+<p>
+ This library includes proven solutions for every part of a model’s core block:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Position Encodings:
+   </strong>
+   RoPE (Rotary Position Embeddings)
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Normalizations:
+   </strong>
+   RMSNorm
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    MLP Variants:
+   </strong>
+   SwiGLU (Swish-Gated Linear Unit)
+  </p>
+ </li>
+</ul>
+<p>
+ A model like Llama 3 is a perfect example of this philosophy. It is a stack of 80 identical blocks, where each block is a carefully chosen composition of these best-in-class, off-the-shelf components. This design can be elegantly captured in just a few lines of code:
+</p>
+<pre><code><code>class LlamaBlock:
+    attention = GroupedQueryAttention(
+        position_encoding=RoPE
+    )
+    norm1 = RMSNorm()
+    mlp = SwiGLU()
+    norm2 = RMSNorm()
+
+# Stack 80 identical blocks
+model = Stack([LlamaBlock() for _ in range(80)])
+</code></code></pre>
+<p>
+ This modularity allows the entire field to advance more rapidly. Researchers can innovate on a single component and instantly plug it into a wide range of existing models. This shifts the focus from bespoke architecture design to engineering better training methods and scaling up proven formulas with confidence.
+</p>
+<p>
+ --------------------------------------------------------------------------------
+</p>
+<h3>
+ Conclusion: From Building Models to Writing Grammars
+</h3>
+<p>
+ The journey from AlexNet to modern LLMs validates a powerful set of principles. We learned that architectures are scaffolds, not blueprints (1); that simple, deep repetition beats clever customization (2); that a single formula could unlock this depth by reframing computation as refinement (3); that specialization emerges from this uniformity rather than needing to be designed (4); and that this entire process has culminated in a modular, ‘Lego-like’ design philosophy that accelerates the entire field (5).
+</p>
+<p>
+ The story of neural architecture design is a journey away from crafting specific models and toward designing compositional languages. The most impactful breakthroughs have consistently been those that provided simpler, more general, and more scalable building blocks. This evolution has validated the core theme: the goal is not to build a machine, but to create a rich scaffold that allows intelligence to emerge.
+</p>
+<p>
+ We’re not building neural networks anymore. We’re building grammars of computation, and training is the process of writing programs in those grammars.
+</p>
+<p>
+</p>
+<p>
+ <em>
+  Read the next post on this series:
+ </em>
+</p>
+<div class="digest-post-embed" data-attrs="{&quot;nodeId&quot;:&quot;a6a1d704-9f30-4c5b-8239-5bd8fbcfb7b6&quot;,&quot;caption&quot;:&quot;This post continues the work of my first post, where a new “grammar” emerged in the last 13 years of deep learning research progress. The post outlines several of the seminal papers and their incremental contributions to the field of AI.&quot;,&quot;cta&quot;:&quot;Read full story&quot;,&quot;showBylines&quot;:true,&quot;size&quot;:&quot;sm&quot;,&quot;isEditorNode&quot;:true,&quot;title&quot;:&quot;The Next Frontier in AI&quot;,&quot;publishedBylines&quot;:[{&quot;id&quot;:419548019,&quot;name&quot;:&quot;Petros Lamb&quot;,&quot;bio&quot;:&quot;AI, Python dev &amp; data engineer / NLP enthusiast &quot;,&quot;photo_url&quot;:&quot;https://substack-post-media.s3.amazonaws.com/public/images/780074c6-a430-4529-8d42-bafd26e38ecc_832x832.png&quot;,&quot;is_guest&quot;:false,&quot;bestseller_tier&quot;:null}],&quot;post_date&quot;:&quot;2025-11-28T14:33:46.123Z&quot;,&quot;cover_image&quot;:&quot;https://substack-video.s3.amazonaws.com/video_upload/post/180179253/b0a3e3fa-3f65-4731-9f9e-8724591731d9/transcoded-00001.png&quot;,&quot;cover_image_alt&quot;:null,&quot;canonical_url&quot;:&quot;https://lambpetros.substack.com/p/the-next-frontier-in-ai-part-1&quot;,&quot;section_name&quot;:null,&quot;video_upload_id&quot;:&quot;b0a3e3fa-3f65-4731-9f9e-8724591731d9&quot;,&quot;id&quot;:180179253,&quot;type&quot;:&quot;podcast&quot;,&quot;reaction_count&quot;:0,&quot;comment_count&quot;:0,&quot;publication_id&quot;:7088450,&quot;publication_name&quot;:&quot;Petros's Substack&quot;,&quot;publication_logo_url&quot;:&quot;https://substackcdn.com/image/fetch/$s_!AGVK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdf714457-ed38-467c-8ccd-74f78fcdc63b_144x144.png&quot;,&quot;belowTheFold&quot;:true,&quot;youtube_url&quot;:null,&quot;show_links&quot;:null,&quot;feed_url&quot;:null}">
+</div>
+<h1>
+ Deep Dive
+</h1>
+<p>
+ A good way to read this  long post, is to play the podacast audio, while following the text under it. It outlines a new “grammar” emerged in the last 13 years of deep learning research progress. The post outlines several of the seminal papers and their incremental contributions to the field of AI. So you get a historical flashback as a treat :)
+</p>
+<div class="native-audio-embed" data-attrs='{"label":null,"mediaUploadId":"6a923145-e624-49ee-aff0-65f05d7c4342","duration":1020.5257,"downloadable":false,"isEditorNode":true}' data-component-name="AudioPlaceholder">
+</div>
+<p>
+ <em>
+  How the deep learning field evolved from designing specific models to designing languages of reusable components
+ </em>
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Introduction: The Scaffold Hypothesis
+</h2>
+<p>
+ A profound shift is occurring in how we think about neural network architecture. Rather than viewing architecture design as “building the perfect model,” researchers increasingly recognize it as
+ <strong>
+  creating computational scaffolds that training discovers how to exploit
+ </strong>
+ .
+</p>
+<p>
+ This is a departure from traditional software engineering. When you write a program, you specify exactly what happens:
+ <code>
+  if x &gt; 5, then do y
+ </code>
+ . But when you design a neural architecture, you’re doing something different: you’re creating a
+ <em>
+  space of possible computations
+ </em>
+ and letting gradient descent search through that space.
+</p>
+<p>
+ Consider the standard Transformer layer with its Query-Key-Value attention mechanism. The designers didn’t program the network to “use Q for asking what information is needed and K for signaling what information is available.” Instead, they created a mathematical structure where this pattern is
+ <em>
+  easy to learn
+ </em>
+ , and gradient descent discovered it. The architecture is the hypothesis; training is the proof.
+</p>
+<p>
+ This blog post traces how this understanding emerged, from early hand-crafted networks to today’s modular, compositional design philosophy. We’ll see how “designing architectures” evolved into “designing languages of components,” and why this shift matters for the future of AI.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Era 1: The Hand-Crafted Hierarchy (2012-2015)
+</h2>
+<h3>
+ AlexNet (2012): The Custom Stack
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “ImageNet Classification with Deep Convolutional Neural Networks” (Krizhevsky, Sutskever, Hinton, 2012)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">
+  https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks
+ </a>
+</p>
+<p>
+ <strong>
+  The Architecture:
+ </strong>
+</p>
+<pre><code><code>Conv(11×11) → MaxPool → Conv(5×5) → MaxPool →
+Conv(3×3) → Conv(3×3) → Conv(3×3) → MaxPool →
+FC(4096) → FC(4096) → FC(1000)
+</code></code></pre>
+<p>
+ <strong>
+  The Mindset:
+ </strong>
+ Each layer was individually designed. The choice of 11×11 convolutions first, then 5×5, then 3×3 wasn’t based on a general principle—it was a specific hypothesis about how visual processing should work. The architecture encoded the designers’ beliefs about hierarchical feature extraction: large receptive fields first (for global structure), then smaller ones (for details).
+</p>
+<p>
+ <strong>
+  Key Contribution:
+ </strong>
+ Proved that deep networks could work at scale. But the architecture itself was a monolithic, task-specific design.
+</p>
+<p>
+ <strong>
+  The Problem:
+ </strong>
+ Every new domain required a new custom architecture. Transfer learning was limited because the architectural choices were entangled with the specific task.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ VGGNet (2014): The First Hint of Repetition
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Very Deep Convolutional Networks for Large-Scale Image Recognition” (Simonyan &amp; Zisserman, 2014)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1409.1556">
+  https://arxiv.org/abs/1409.1556
+ </a>
+</p>
+<p>
+ <strong>
+  The Insight:
+ </strong>
+ What if we stopped varying everything and just used simple, repeated patterns?
+</p>
+<p>
+ <strong>
+  The Architecture:
+ </strong>
+</p>
+<pre><code><code>[Conv(3×3) → Conv(3×3) → MaxPool] × multiple times
+</code></code></pre>
+<p>
+ <strong>
+  Key Contribution:
+ </strong>
+ Introduced the idea of
+ <em>
+  architectural uniformity
+ </em>
+ . Instead of carefully varying kernel sizes (11×11, then 5×5, then 3×3), use the same simple 3×3 convolution throughout. Depth comes from repetition, not from custom hierarchies.
+</p>
+<p>
+ <strong>
+  Why It Mattered:
+ </strong>
+ This was the first move toward
+ <em>
+  compositional design
+ </em>
+ . The basic block (two conv layers + pooling) became a reusable module. VGG-16 and VGG-19 differed only in how many times this block was repeated—the first example of “architecture as a parameterized family” rather than “a single design.”
+</p>
+<p>
+ <strong>
+  The Limitation:
+ </strong>
+ Still no theoretical justification for why repetition works, and training very deep VGG networks was difficult (gradient flow issues).
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Era 2: The Modular Revolution (2015-2017)
+</h2>
+<h3>
+ ResNet (2015): The Block as the Fundamental Unit
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Deep Residual Learning for Image Recognition” (He et al., 2015)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1512.03385">
+  https://arxiv.org/abs/1512.03385
+ </a>
+</p>
+<p>
+ <strong>
+  The Breakthrough:
+ </strong>
+ This paper fundamentally changed how we think about architecture design.
+</p>
+<p>
+ <strong>
+  The Residual Block:
+ </strong>
+</p>
+<pre><code><code>x_out = x_in + F(x_in)
+</code></code></pre>
+<p>
+ Where F is typically:
+</p>
+<pre><code><code>Conv(1×1) → BatchNorm → ReLU →
+Conv(3×3) → BatchNorm → ReLU →
+Conv(1×1) → BatchNorm
+</code></code></pre>
+<p>
+ <strong>
+  The Paradigm Shift:
+ </strong>
+</p>
+<p>
+ Before ResNet, the question was: “What should each layer compute?”
+</p>
+<p>
+ After ResNet, the question became: “What
+ <em>
+  refinement
+ </em>
+ should each layer add?”
+</p>
+<p>
+ <strong>
+  Key Contributions:
+ </strong>
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Residual connections enable training of 100+ layer networks
+   </strong>
+   by providing gradient highways
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Proved uniformity works:
+   </strong>
+   ResNet-50, ResNet-101, ResNet-152 differ only in how many times the same block repeats
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    The block becomes the design unit:
+   </strong>
+   Instead of designing networks layer-by-layer, design one good block and stack it
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  The Compositional Insight:
+ </strong>
+</p>
+<p>
+ ResNet showed that you could view a deep network as:
+</p>
+<pre><code><code>Output = Input + Block₁(Input) + Block₂(...) + ... + Blockₙ(...)
+</code></code></pre>
+<p>
+ Each block makes a “suggestion” for how to modify the representation. The network doesn’t
+ <em>
+  replace
+ </em>
+ information at each layer—it
+ <em>
+  accumulates refinements
+ </em>
+ . This is fundamentally compositional: the final result is a sum of contributions from independent modules.
+</p>
+<p>
+ <strong>
+  Evidence of Emergent Specialization:
+ </strong>
+</p>
+<p>
+ Later analysis (Veit et al., 2016, “Residual Networks Behave Like Ensembles of Relatively Shallow Networks”) showed that ResNet blocks naturally specialize:
+</p>
+<ul>
+ <li>
+  <p>
+   Early blocks: low-level features (edges, textures)
+  </p>
+ </li>
+ <li>
+  <p>
+   Middle blocks: mid-level features (object parts)
+  </p>
+ </li>
+ <li>
+  <p>
+   Late blocks: high-level features (complete objects)
+  </p>
+ </li>
+</ul>
+<p>
+ This happened without any explicit supervision or architectural variation—the blocks were all identical, but training caused them to specialize!
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Inception/GoogLeNet (2014-2016): Exploring Parallel Composition
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Going Deeper with Convolutions” (Szegedy et al., 2014)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1409.4842">
+  https://arxiv.org/abs/1409.4842
+ </a>
+</p>
+<p>
+ <strong>
+  The Alternative Composition:
+ </strong>
+ While ResNet did sequential composition (stack blocks), Inception explored
+ <em>
+  parallel composition
+ </em>
+ .
+</p>
+<p>
+ <strong>
+  The Inception Module:
+ </strong>
+</p>
+<pre><code><code>Input → ├─ Conv(1×1) ──────────┐
+        ├─ Conv(1×1) → Conv(3×3) ─┤
+        ├─ Conv(1×1) → Conv(5×5) ─┤
+        └─ MaxPool → Conv(1×1) ───┘
+                                   ↓
+                            [Concatenate]
+</code></code></pre>
+<p>
+ <strong>
+  The Idea:
+ </strong>
+ Instead of choosing one operation (3×3 or 5×5 conv), do
+ <em>
+  all
+ </em>
+ of them and let the network learn to weight them appropriately during training.
+</p>
+<p>
+ <strong>
+  Key Contribution:
+ </strong>
+ Demonstrated that architectural choice could be
+ <em>
+  deferred to training time
+ </em>
+ . The architecture provides multiple computational paths, and gradient descent learns which to emphasize.
+</p>
+<p>
+ <strong>
+  The Limitation:
+ </strong>
+ Inception modules were complex and had many hyperparameters. Unlike ResNet’s simple, uniform blocks, Inception was harder to reason about and modify.
+</p>
+<p>
+ <strong>
+  Historical Note:
+ </strong>
+ While influential, the field largely converged on ResNet’s simpler compositional pattern. This suggests a principle:
+ <em>
+  simpler, more uniform building blocks win over complex, hand-tuned modules
+ </em>
+ .
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Era 3: The Compositional Explosion (2017-2019)
+</h2>
+<h3>
+ Transformers (2017): A New Universal Block
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Attention Is All You Need” (Vaswani et al., 2017)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1706.03762">
+  https://arxiv.org/abs/1706.03762
+ </a>
+</p>
+<p>
+ <strong>
+  The Revolutionary Building Block:
+ </strong>
+</p>
+<pre><code><code>TransformerLayer(x):
+  # Sub-block 1: Attention
+  x = x + MultiHeadAttention(LayerNorm(x))
+
+  # Sub-block 2: Feed-Forward
+  x = x + MLP(LayerNorm(x))
+
+  return x
+</code></code></pre>
+<p>
+ <strong>
+  Why This Mattered:
+ </strong>
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Modular sub-components:
+   </strong>
+   The attention mechanism itself is compositional:
+  </p>
+ </li>
+</ol>
+<pre><code><code>Q = W_Q × x  (what to search for)
+K = W_K × x  (how to be found)
+V = W_V × x  (what information to provide)
+</code></code></pre>
+<ol>
+ <li>
+  <p>
+   Each component (Q, K, V) is a learned projection, and their interaction is a fixed mathematical operation (scaled dot-product attention).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Universal applicability:
+   </strong>
+   Unlike CNNs (spatial bias) or RNNs (sequential bias), the Transformer block worked for:
+  </p>
+  <ul>
+   <li>
+    <p>
+     Language (BERT, GPT)
+    </p>
+   </li>
+   <li>
+    <p>
+     Vision (ViT)
+    </p>
+   </li>
+   <li>
+    <p>
+     Audio (Whisper)
+    </p>
+   </li>
+   <li>
+    <p>
+     Multi-modal tasks (CLIP, Flamingo)
+    </p>
+   </li>
+  </ul>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Extreme uniformity:
+   </strong>
+   GPT-2 (1.5B parameters) used the
+   <em>
+    exact same block
+   </em>
+   48 times. GPT-3 (175B) used it 96 times. The only scaling dimension was repetition count and hidden size.
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  The Compositional Language Emerges:
+ </strong>
+</p>
+<p>
+ The Transformer defined a
+ <strong>
+  vocabulary of components
+ </strong>
+ :
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Mixing operations:
+   </strong>
+   Attention, MLP
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Connections:
+   </strong>
+   Residual (+)
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Normalizations:
+   </strong>
+   LayerNorm
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Position information:
+   </strong>
+   Sinusoidal embeddings
+  </p>
+ </li>
+</ul>
+<p>
+ These could be mixed and matched. Within a few years, researchers were systematically exploring this design space.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ BERT (2018): Emergent Specialization at Scale
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding” (Devlin et al., 2018)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1810.04805">
+  https://arxiv.org/abs/1810.04805
+ </a>
+</p>
+<p>
+ <strong>
+  The Architecture:
+ </strong>
+ Literally just 12-24 stacked Transformer blocks (identical to the original paper).
+</p>
+<p>
+ <strong>
+  The Surprise:
+ </strong>
+ Analysis of what BERT learned (Clark et al., 2019, “What Does BERT Look At?”) revealed that despite identical architecture across all layers, the network developed a clear hierarchy:
+</p>
+<p>
+ <strong>
+  Layer 1-4 (Early):
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Attention heads focus on syntactic relationships (e.g., determiners attending to their nouns)
+  </p>
+ </li>
+ <li>
+  <p>
+   Learn part-of-speech patterns
+  </p>
+ </li>
+ <li>
+  <p>
+   Capture local, surface-level features
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Layer 5-8 (Middle):
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Semantic role labeling emerges
+  </p>
+ </li>
+ <li>
+  <p>
+   Entity recognition patterns
+  </p>
+ </li>
+ <li>
+  <p>
+   More abstract semantic relationships
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Layer 9-12 (Late):
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Coreference resolution (pronouns to antecedents)
+  </p>
+ </li>
+ <li>
+  <p>
+   Pragmatic inference
+  </p>
+ </li>
+ <li>
+  <p>
+   Task-specific behaviors
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Profound Implication:
+ </strong>
+</p>
+<p>
+ The architecture didn’t specify this hierarchy—training discovered it! The uniform stack of transformer blocks provided a
+ <em>
+  scaffold
+ </em>
+ , and the optimization process found that specialization by depth was an effective strategy.
+</p>
+<p>
+ This validated the “scaffold hypothesis”: good architectural design isn’t about encoding specific behaviors, but about creating a space where useful behaviors are easy to learn.
+</p>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “What Does BERT Look At? An Analysis of BERT’s Attention” (Clark et al., 2019)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1906.04341">
+  https://arxiv.org/abs/1906.04341
+ </a>
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ GPT-2 (2019): Scaling the Block
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Language Models are Unsupervised Multitask Learners” (Radford et al., 2019)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">
+  https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
+ </a>
+</p>
+<p>
+ <strong>
+  The Experiment:
+ </strong>
+ What happens if you take the Transformer block and just… scale it?
+</p>
+<p>
+ <strong>
+  The Results:
+ </strong>
+</p>
+<pre><code><code>GPT-2 Small:   12 layers  × identical blocks = 117M params
+GPT-2 Medium:  24 layers  × identical blocks = 345M params
+GPT-2 Large:   36 layers  × identical blocks = 762M params
+GPT-2 XL:      48 layers  × identical blocks = 1.5B params
+</code></code></pre>
+<p>
+ <strong>
+  Key Finding:
+ </strong>
+ Smooth scaling laws. Performance improved predictably with depth and width, following power laws (later formalized by Kaplan et al., 2020).
+</p>
+<p>
+ <strong>
+  The Implication:
+ </strong>
+ The Transformer block had become a
+ <strong>
+  universal scaling unit
+ </strong>
+ . The field moved from “designing architectures” to “scaling a fixed architecture.”
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Era 4: The Search Era (2017-2021)
+</h2>
+<h3>
+ Neural Architecture Search (2017-2019): Automating Component Discovery
+</h3>
+<p>
+ <strong>
+  Foundational Paper:
+ </strong>
+ “Neural Architecture Search with Reinforcement Learning” (Zoph &amp; Le, 2017)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1611.01578">
+  https://arxiv.org/abs/1611.01578
+ </a>
+</p>
+<p>
+ <strong>
+  The Motivation:
+ </strong>
+ If architectures are compositions of building blocks, can we automate the search over combinations?
+</p>
+<p>
+ <strong>
+  The NAS Approach:
+ </strong>
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Define a search space:
+   </strong>
+  </p>
+ </li>
+</ol>
+<pre><code><code>Operations = {conv3x3, conv5x5, maxpool, avgpool, skip, ...}
+Connections = {sequential, parallel, skip-connection, ...}
+</code></code></pre>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Use RL/evolution/gradient methods to search for combinations
+   </strong>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Evaluate thousands of candidate architectures
+   </strong>
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  Key Contribution:
+ </strong>
+ Made explicit that architecture design is about choosing from a
+ <strong>
+  compositional language
+ </strong>
+ . The search space IS the language—a grammar of components and composition rules.
+</p>
+<p>
+ <strong>
+  Example Search Space (from paper):
+ </strong>
+</p>
+<pre><code><code>Cell = Composition of:
+  - 5-7 operations (chosen from operation set)
+  - Connection patterns between operations
+  - Reduction cells vs. normal cells
+</code></code></pre>
+<p>
+ The final architecture is a repetition of discovered cells—again, the pattern of uniform blocks!
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ DARTS (2019): Differentiable Architecture Search
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “DARTS: Differentiable Architecture Search” (Liu et al., 2019)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1806.09055">
+  https://arxiv.org/abs/1806.09055
+ </a>
+</p>
+<p>
+ <strong>
+  The Innovation:
+ </strong>
+ Instead of discrete search, treat architecture as a
+ <em>
+  continuous mixture
+ </em>
+ of operations.
+</p>
+<p>
+ <strong>
+  The Formulation:
+ </strong>
+</p>
+<pre><code><code>Output = Σᵢ (αᵢ · Operation_i(input))
+
+where α are learned weights (architecture parameters)
+</code></code></pre>
+<p>
+ <strong>
+  The Insight:
+ </strong>
+ Architecture search becomes
+ <em>
+  gradient descent on architecture parameters
+ </em>
+ alongside weight parameters. The network literally learns which components to use!
+</p>
+<p>
+ <strong>
+  Why This Matters:
+ </strong>
+ Blurs the line between architecture design and training. The “language of components” becomes a differentiable space that can be optimized directly.
+</p>
+<p>
+ <strong>
+  The Discovered Pattern:
+ </strong>
+ DARTS consistently discovered skip connections and 3×3 separable convolutions—the same patterns humans had manually designed (ResNet, Xception). This validated that certain compositional patterns are fundamentally effective.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Designing Network Design Spaces (2020): Principles Over Architectures
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Designing Network Design Spaces” (Radosavovic et al., 2020)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/2003.13678">
+  https://arxiv.org/abs/2003.13678
+ </a>
+</p>
+<p>
+ <strong>
+  The Paradigm Shift:
+ </strong>
+</p>
+<p>
+ Instead of searching for
+ <em>
+  one best architecture
+ </em>
+ , this paper asked:
+ <strong>
+  What principles make a
+ </strong>
+ <em>
+  <strong>
+   family
+  </strong>
+ </em>
+ <strong>
+  of architectures work?
+ </strong>
+</p>
+<p>
+ <strong>
+  The Methodology:
+ </strong>
+</p>
+<ol>
+ <li>
+  <p>
+   Define design dimensions:
+  </p>
+  <ul>
+   <li>
+    <p>
+     Depth (number of blocks)
+    </p>
+   </li>
+   <li>
+    <p>
+     Width (channels per layer)
+    </p>
+   </li>
+   <li>
+    <p>
+     Group width (grouped convolutions)
+    </p>
+   </li>
+   <li>
+    <p>
+     Bottleneck ratio (expansion in blocks)
+    </p>
+   </li>
+  </ul>
+ </li>
+ <li>
+  <p>
+   Sample thousands of random architectures from this space
+  </p>
+ </li>
+ <li>
+  <p>
+   Identify empirical principles:
+  </p>
+ </li>
+</ol>
+<pre><code><code>Good design space:
+- Width increases gradually across stages (not drastically)
+- Depth is similar across stages
+- Bottleneck ratio around 1.0 performs best
+- Group width of 8-16 is optimal
+</code></code></pre>
+<ol>
+ <li>
+  <p>
+   Create RegNet family following these principles
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  The Revolutionary Idea:
+ </strong>
+</p>
+<blockquote>
+ <p>
+  “Rather than focusing on designing individual network instances, we design network design spaces that parametrize populations of networks.”
+ </p>
+</blockquote>
+<p>
+ This is exactly the “compositional language” perspective! They defined:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Primitives:
+   </strong>
+   Block structure (X block with group convolution)
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Composition rules:
+   </strong>
+   How blocks stack (stage structure)
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Constraints:
+   </strong>
+   Principles that make compositions effective
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Result:
+ </strong>
+ RegNet architectures, generated by simple rules, matched or beat hand-designed networks and NAS-discovered architectures.
+</p>
+<p>
+ <strong>
+  The Implication:
+ </strong>
+ Good architecture design is about
+ <strong>
+  defining the right constraints on the compositional space
+ </strong>
+ , not finding one perfect instantiation.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Era 5: The Understanding Era (2019-2023)
+</h2>
+<h3>
+ Scaling Laws (2020): Why Depth Matters
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Scaling Laws for Neural Language Models” (Kaplan et al., 2020)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/2001.08361">
+  https://arxiv.org/abs/2001.08361
+ </a>
+</p>
+<p>
+ <strong>
+  The Empirical Discovery:
+ </strong>
+</p>
+<p>
+ Model performance follows predictable power laws:
+</p>
+<pre><code><code>Loss ∝ (1/N^α) × (1/D^β) × (1/C^γ)
+
+where:
+N = number of parameters
+D = dataset size
+C = compute budget
+</code></code></pre>
+<p>
+ <strong>
+  The Architectural Implication:
+ </strong>
+</p>
+<p>
+ For fixed compute budget, optimal allocation is:
+</p>
+<ul>
+ <li>
+  <p>
+   Depth: ~40-80 layers for 7B-70B models
+  </p>
+ </li>
+ <li>
+  <p>
+   Width: 4K-8K hidden dimensions
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why This Matters:
+ </strong>
+ Explains why ~32 layers emerged as the “standard” for 7B models—not because 32 is magic, but because it’s the optimal depth for that parameter budget given current optimization methods.
+</p>
+<p>
+ <strong>
+  The Deeper Insight:
+ </strong>
+</p>
+<p>
+ The paper showed that architecture scaling (depth, width) should be done
+ <em>
+  proportionally
+ </em>
+ . You can’t just make one dimension huge—there’s an optimal balance. This suggests that the “compositional structure” (how blocks combine) has mathematical constraints.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Lottery Ticket Hypothesis (2019): Architectures as Search Spaces
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks” (Frankle &amp; Carbin, 2019)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1803.03635">
+  https://arxiv.org/abs/1803.03635
+ </a>
+</p>
+<p>
+ <strong>
+  The Finding:
+ </strong>
+</p>
+<blockquote>
+ <p>
+  “Dense, randomly-initialized networks contain sparse subnetworks that—when trained in isolation—reach test accuracy comparable to the original network”
+ </p>
+</blockquote>
+<p>
+ <strong>
+  The Interpretation:
+ </strong>
+ A large architecture isn’t just a single computational graph—it’s a
+ <em>
+  space of possible subnetworks
+ </em>
+ . Training searches through this space.
+</p>
+<p>
+ <strong>
+  Why Repetition Works:
+ </strong>
+</p>
+<p>
+ Having 32 identical transformer layers provides many possible “paths” through the network. Some paths might be more important than others, but having redundancy:
+</p>
+<ol>
+ <li>
+  <p>
+   Makes optimization easier (more chances to find good solutions)
+  </p>
+ </li>
+ <li>
+  <p>
+   Provides fallback routes if some paths fail
+  </p>
+ </li>
+ <li>
+  <p>
+   Allows different paths to specialize
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  The Compositional View:
+ </strong>
+ The architecture is less like a designed circuit and more like a
+ <strong>
+  fabric of possibilities
+ </strong>
+ that training selectively activates.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Visualizing Loss Landscapes (2018): Why Blocks Enable Training
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Visualizing the Loss Landscape of Neural Nets” (Li et al., 2018)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/1712.09913">
+  https://arxiv.org/abs/1712.09913
+ </a>
+</p>
+<p>
+ <strong>
+  The Discovery:
+ </strong>
+ Networks with residual connections have dramatically smoother loss landscapes than networks without them.
+</p>
+<p>
+ <strong>
+  Visual Result:
+ </strong>
+</p>
+<pre><code><code>Without residuals: Chaotic, many local minima, sharp peaks
+With residuals:    Smooth convex-like regions, gentle slopes
+</code></code></pre>
+<p>
+ <strong>
+  The Implication:
+ </strong>
+ The residual block structure doesn’t just make gradients flow—it fundamentally changes the
+ <em>
+  optimization geometry
+ </em>
+ . The compositional structure (x + F(x)) creates a more trainable space than a monolithic design.
+</p>
+<p>
+ <strong>
+  Why This Validates Compositionality:
+ </strong>
+ Good architectural building blocks aren’t just about expressiveness—they’re about creating loss landscapes that optimization algorithms can navigate.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Mechanistic Interpretability: Circuits Emerge from Blocks
+</h3>
+<p>
+ <strong>
+  Paper/Project:
+ </strong>
+ “A Mathematical Framework for Transformer Circuits” (Elhage et al., 2021)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://transformer-circuits.pub/2021/framework/index.html">
+  https://transformer-circuits.pub/2021/framework/index.html
+ </a>
+</p>
+<p>
+ <strong>
+  The Discovery:
+ </strong>
+ Within transformer blocks, specific
+ <strong>
+  circuits
+ </strong>
+ emerge—reusable patterns of computation that implement recognizable algorithms.
+</p>
+<p>
+ <strong>
+  Examples Found:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Induction heads:
+   </strong>
+   Blocks that detect “A…B…A” patterns and predict “B”
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Previous token heads:
+   </strong>
+   Heads that always attend to the previous token
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Duplicate token heads:
+   </strong>
+   Heads that find copies of the current token
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Profound Insight:
+ </strong>
+</p>
+<p>
+ These circuits are
+ <strong>
+  compositions of the primitive operations
+ </strong>
+ (Q, K, V projections, attention, MLPs). They’re not explicitly programmed—they emerge during training because the block structure makes them easy to implement.
+</p>
+<p>
+ <strong>
+  The Analogy:
+ </strong>
+</p>
+<pre><code><code>Assembly language provides: MOV, ADD, JMP
+Programmers discover:      Loops, function calls, recursion
+
+Transformer blocks provide: Q, K, V, MLP
+Training discovers:         Induction heads, copying, matching
+</code></code></pre>
+<p>
+ The architecture defines a
+ <strong>
+  computational primitive set
+ </strong>
+ , and training discovers
+ <strong>
+  algorithms
+ </strong>
+ built from those primitives.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Era 6: The Hybrid Era (2023-Present)
+</h2>
+<h3>
+ Moving Beyond Pure Uniformity
+</h3>
+<p>
+ By 2023, researchers had thoroughly validated uniform repetition. But they also began asking:
+ <strong>
+  When should we break uniformity?
+ </strong>
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Mixture of Experts (2022-2024): Conditional Composition
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Mixture-of-Experts Meets Instruction Tuning” (Shen et al., 2023) and “Mixtral of Experts” (Jiang et al., 2024)
+</p>
+<p>
+ <strong>
+  Citations:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   <a href="https://arxiv.org/abs/2305.14705">
+    https://arxiv.org/abs/2305.14705
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <a href="https://arxiv.org/abs/2401.04088">
+    https://arxiv.org/abs/2401.04088
+   </a>
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Idea:
+ </strong>
+ Replace uniform MLP blocks with
+ <em>
+  conditional selection
+ </em>
+ from multiple expert MLPs.
+</p>
+<p>
+ <strong>
+  The Architecture:
+ </strong>
+</p>
+<pre><code><code>Standard Transformer:
+  All tokens → Same MLP → Output
+
+MoE Transformer:
+  Each token → Router → Select 2 of 8 expert MLPs → Output
+</code></code></pre>
+<p>
+ <strong>
+  Why It Works:
+ </strong>
+</p>
+<p>
+ Different experts naturally specialize:
+</p>
+<ul>
+ <li>
+  <p>
+   Expert 1: Math/code
+  </p>
+ </li>
+ <li>
+  <p>
+   Expert 2: Creative writing
+  </p>
+ </li>
+ <li>
+  <p>
+   Expert 3: Factual knowledge
+  </p>
+ </li>
+ <li>
+  <p>
+   Expert 4: Translation
+  </p>
+ </li>
+ <li>
+  <p>
+   etc.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Compositional Insight:
+ </strong>
+ This is
+ <strong>
+  learned non-uniformity
+ </strong>
+ . The architecture still uses identical blocks, but adds a routing mechanism that lets tokens take different computational paths. The specialization isn’t hand-coded—it emerges during training.
+</p>
+<p>
+ <strong>
+  Mixtral-8×7B Results:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   8 experts, each 7B parameters
+  </p>
+ </li>
+ <li>
+  <p>
+   Total: 47B parameters, but only 13B active per token
+  </p>
+ </li>
+ <li>
+  <p>
+   Matches 70B dense models at 5× lower inference cost
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Pattern:
+ </strong>
+ When breaking uniformity helps, let the
+ <em>
+  model
+ </em>
+ learn when to break it (via routers), rather than hard-coding architectural variation.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Mamba (2023): Alternative Primitives
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “Mamba: Linear-Time Sequence Modeling with Selective State Spaces” (Gu &amp; Dao, 2023)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/2312.00752">
+  https://arxiv.org/abs/2312.00752
+ </a>
+</p>
+<p>
+ <strong>
+  The Question:
+ </strong>
+ Does
+ <em>
+  attention
+ </em>
+ have to be the core primitive, or can we use different building blocks?
+</p>
+<p>
+ <strong>
+  The Mamba Block:
+ </strong>
+</p>
+<pre><code><code>Instead of: Attention + MLP
+Use:        Selective State Space Layer + MLP
+</code></code></pre>
+<p>
+ State space models (SSMs) are an alternative to attention for sequence mixing:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Attention:
+   </strong>
+   O(n²) complexity, global context
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    SSM:
+   </strong>
+   O(n) complexity, selective memory
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why This Matters:
+ </strong>
+ Shows that the Transformer block structure (mixing layer + pointwise layer + residuals) is more fundamental than any specific mixing mechanism. You can swap attention for SSMs and keep everything else.
+</p>
+<p>
+ <strong>
+  The Compositional Lesson:
+ </strong>
+ A good architectural “language” should have
+ <strong>
+  swappable components
+ </strong>
+ . The residual + norm + mixing + MLP structure is the syntax; attention vs SSM is vocabulary choice.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Hybrid Architectures: Compositional Mixing
+</h3>
+<p>
+ <strong>
+  Recent Trend (2023-2024):
+ </strong>
+ Combine different primitive types in one model.
+</p>
+<p>
+ <strong>
+  Example: Jamba (AI21 Labs, 2024)
+ </strong>
+</p>
+<pre><code><code>Layers 1-8:   Mamba blocks (efficient, local context)
+Layers 9-16:  Attention blocks (global reasoning)
+Layers 17-24: Mamba blocks (local refinement)
+Layers 25-32: Attention blocks (output generation)
+</code></code></pre>
+<p>
+ <strong>
+  Why It Works:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Mamba handles repetitive patterns efficiently
+  </p>
+ </li>
+ <li>
+  <p>
+   Attention handles long-range dependencies
+  </p>
+ </li>
+ <li>
+  <p>
+   Different layers need different capabilities
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Design Philosophy:
+ </strong>
+ Don’t force uniformity where non-uniformity helps, but make the non-uniformity
+ <strong>
+  principled
+ </strong>
+ (alternating pattern) rather than ad-hoc.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Era 7: Modern Compositional Thinking (2024-Present)
+</h2>
+<h3>
+ Current State: Component Libraries
+</h3>
+<p>
+ Today, architecture design has evolved into
+ <strong>
+  selecting from a library of validated components
+ </strong>
+ :
+</p>
+<p>
+ <strong>
+  Attention Variants:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Multi-head attention (original)
+  </p>
+ </li>
+ <li>
+  <p>
+   Multi-query attention (faster inference)
+  </p>
+ </li>
+ <li>
+  <p>
+   Grouped-query attention (balance speed/quality)
+  </p>
+ </li>
+ <li>
+  <p>
+   Flash Attention (optimized implementation)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Position Encodings:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Sinusoidal (original)
+  </p>
+ </li>
+ <li>
+  <p>
+   Learned absolute
+  </p>
+ </li>
+ <li>
+  <p>
+   Rotary (RoPE) - current best for long context
+  </p>
+ </li>
+ <li>
+  <p>
+   ALiBi - best for length generalization
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Normalizations:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   LayerNorm (original)
+  </p>
+ </li>
+ <li>
+  <p>
+   RMSNorm (simpler, just as good)
+  </p>
+ </li>
+ <li>
+  <p>
+   Pre-norm vs post-norm (pre-norm won)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Activations:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   ReLU (original)
+  </p>
+ </li>
+ <li>
+  <p>
+   GELU (better for transformers)
+  </p>
+ </li>
+ <li>
+  <p>
+   SiLU/Swish (used in modern LLMs)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  MLP Variants:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Standard (Linear → Act → Linear)
+  </p>
+ </li>
+ <li>
+  <p>
+   GLU (Gated Linear Unit)
+  </p>
+ </li>
+ <li>
+  <p>
+   SwiGLU (current best) - Llama, Qwen, Mistral all use this
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Design Process Today:
+ </strong>
+</p>
+<ol>
+ <li>
+  <p>
+   Start with base Transformer block structure (proven)
+  </p>
+ </li>
+ <li>
+  <p>
+   Select components from validated options:
+  </p>
+ </li>
+</ol>
+<pre><code><code>Attention: GQA
+Position: RoPE
+Norm: RMSNorm
+MLP: SwiGLU
+</code></code></pre>
+<ol>
+ <li>
+  <p>
+   Determine scaling (depth, width) using scaling laws
+  </p>
+ </li>
+ <li>
+  <p>
+   Add specialized components if needed (MoE, hybrid layers)
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  Example: Llama 3 (2024)
+ </strong>
+</p>
+<pre><code><code>class LlamaBlock:
+    attention = GroupedQueryAttention(
+        position_encoding=RoPE
+    )
+    norm1 = RMSNorm()
+    mlp = SwiGLU()
+    norm2 = RMSNorm()
+# Stack 80 identical blocksmodel = Stack([LlamaBlock() for _ in range(80)])
+</code></code></pre>
+<p>
+ Every component is a
+ <em>
+  choice from the library
+ </em>
+ , not a custom design.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ DR Tulu (2025): RL with Evolving Rubrics
+</h3>
+<p>
+ <strong>
+  Paper:
+ </strong>
+ “DR Tulu: Reinforcement Learning with Evolving Rubrics for Deep Research” (Shao, Asai, et al., 2025)
+</p>
+<p>
+ <strong>
+  Citation:
+ </strong>
+ <a href="https://arxiv.org/abs/2511.19399">
+  https://arxiv.org/abs/2511.19399
+ </a>
+</p>
+<p>
+ <strong>
+  Relevance to Compositional Design:
+ </strong>
+</p>
+<p>
+ DR Tulu demonstrates a new dimension of the “scaffold hypothesis”: not just architectural scaffolds, but
+ <strong>
+  training scaffolds
+ </strong>
+ that evolve with the model.
+</p>
+<p>
+ <strong>
+  The Method:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Base architecture: Standard Qwen3-8B (proven Transformer blocks)
+  </p>
+ </li>
+ <li>
+  <p>
+   Innovation: Not in architecture, but in training methodology
+  </p>
+ </li>
+ <li>
+  <p>
+   Evolving rubrics provide dynamic learning objectives
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Insight:
+ </strong>
+ Once we have good architectural building blocks (Transformer layers), the frontier shifts to
+ <strong>
+  how we train
+ </strong>
+ those blocks. The compositional language extends beyond static structure to dynamic training procedures.
+</p>
+<p>
+ <strong>
+  Why This Fits the Narrative:
+ </strong>
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Uses standard components:
+   </strong>
+   Proves you don’t need novel architecture
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Focuses on training:
+   </strong>
+   The next dimension of compositionality
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Achieves SOTA:
+   </strong>
+   8B model matches 175B+ proprietary systems
+  </p>
+ </li>
+</ol>
+<p>
+ The field is moving from “what blocks should we use?” to “how should we train the blocks we have?”
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ The Emerging Principles
+</h2>
+<p>
+ From this 13-year journey, several principles have crystallized:
+</p>
+<h3>
+ Principle 1: Uniformity Enables Scale
+</h3>
+<p>
+ <strong>
+  Evidence:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   ResNet: 50-152 layers of identical blocks
+  </p>
+ </li>
+ <li>
+  <p>
+   GPT-3: 96 identical transformer layers
+  </p>
+ </li>
+ <li>
+  <p>
+   Llama 70B: 80 identical blocks
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why:
+ </strong>
+ Uniform blocks are easier to:
+</p>
+<ul>
+ <li>
+  <p>
+   Optimize (one set of hyperparameters)
+  </p>
+ </li>
+ <li>
+  <p>
+   Scale (just add more)
+  </p>
+ </li>
+ <li>
+  <p>
+   Analyze (compare across depths)
+  </p>
+ </li>
+ <li>
+  <p>
+   Parallelize (same computation)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Exception:
+ </strong>
+ When introducing non-uniformity, make it
+ <em>
+  learned
+ </em>
+ (MoE routing) or
+ <em>
+  principled
+ </em>
+ (alternating patterns).
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Principle 2: Residual Structure is Fundamental
+</h3>
+<p>
+ <strong>
+  Evidence:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Every modern architecture uses residuals (ResNet, Transformer, Mamba)
+  </p>
+ </li>
+ <li>
+  <p>
+   Loss landscape analysis shows they enable training
+  </p>
+ </li>
+ <li>
+  <p>
+   Theory: Residuals create implicit ensembles
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why:
+ </strong>
+ <code>
+  x + F(x)
+ </code>
+ is more than a training trick—it’s a
+ <strong>
+  compositional operator
+ </strong>
+ that allows additive construction of representations.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Principle 3: Specialization Emerges, Don’t Force It
+</h3>
+<p>
+ <strong>
+  Evidence:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   BERT layers specialize despite identical architecture
+  </p>
+ </li>
+ <li>
+  <p>
+   MoE experts specialize without explicit supervision
+  </p>
+ </li>
+ <li>
+  <p>
+   Early/mid/late layers learn different abstractions naturally
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why:
+ </strong>
+ The optimization landscape naturally encourages specialization when it’s useful. Pre-specifying it (e.g., “layer 1-10 for syntax, 11-20 for semantics”) often hurts because you might be wrong about what’s needed.
+</p>
+<p>
+ <strong>
+  Design Implication:
+ </strong>
+ Provide uniform capacity and let training discover the specialization pattern.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Principle 4: Components Should Be Swappable
+</h3>
+<p>
+ <strong>
+  Evidence:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Can swap attention → SSM (Mamba)
+  </p>
+ </li>
+ <li>
+  <p>
+   Can swap GELU → SiLU (minimal impact)
+  </p>
+ </li>
+ <li>
+  <p>
+   Can swap LayerNorm → RMSNorm (often better)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why:
+ </strong>
+ Good “compositional languages” have
+ <strong>
+  interfaces
+ </strong>
+ that allow substitution. The Transformer block structure:
+</p>
+<pre><code><code>x = x + Mixing(Norm(x))
+x = x + Pointwise(Norm(x))
+</code></code></pre>
+<p>
+ doesn’t care whether Mixing is attention, convolution, or SSM—the interface is the same.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Principle 5: Depth Is Iterative Refinement
+</h3>
+<p>
+ <strong>
+  Evidence:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Lottery ticket hypothesis: Many paths through the network
+  </p>
+ </li>
+ <li>
+  <p>
+   Scaling laws: Depth and width must scale proportionally
+  </p>
+ </li>
+ <li>
+  <p>
+   Interpretability: Later layers refine earlier representations
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why:
+ </strong>
+ Deep networks don’t work by hierarchical stages (layer 1 → 2 → 3 → …) but by
+ <strong>
+  iterative refinement
+ </strong>
+ where each layer adds a small update. The residual structure makes this explicit.
+</p>
+<p>
+ <strong>
+  Math:
+ </strong>
+</p>
+<pre><code><code>x_out = x_0 + Δx_1 + Δx_2 + ... + Δx_n
+
+Each layer contributes a refinement Δx_i
+</code></code></pre>
+<div>
+ <hr/>
+</div>
+<h3>
+ Principle 6: Optimization Geometry Determines Viability
+</h3>
+<p>
+ <strong>
+  Evidence:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Loss landscape visualizations (Li et al., 2018)
+  </p>
+ </li>
+ <li>
+  <p>
+   Why some architectures train better than others
+  </p>
+ </li>
+ <li>
+  <p>
+   Batch normalization, layer normalization effects
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why:
+ </strong>
+ An architecture isn’t good because it’s “more expressive”—it’s good because gradient descent can find good solutions. The compositional structure creates a trainable loss surface.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ The Future: From Blocks to Ecosystems
+</h2>
+<p>
+ Where is this heading?
+</p>
+<h3>
+ Trend 1: Learned Architecture Components
+</h3>
+<p>
+ <strong>
+  Current:
+ </strong>
+ Hand-design the component library
+</p>
+<p>
+ <strong>
+  Future:
+ </strong>
+ Meta-learning to discover new primitives
+</p>
+<p>
+ <strong>
+  Example Research:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   AutoML-Zero (Google): Evolve mathematical operations from scratch
+  </p>
+ </li>
+ <li>
+  <p>
+   Neural Tangent Kernel theory: Understand what functions different architectures can learn
+  </p>
+ </li>
+ <li>
+  <p>
+   Mechanistic design: Design blocks to implement specific circuits
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h3>
+ Trend 2: Dynamic Architectures
+</h3>
+<p>
+ <strong>
+  Current:
+ </strong>
+ Fixed depth/width at train time
+</p>
+<p>
+ <strong>
+  Future:
+ </strong>
+ Adapt architecture during inference
+</p>
+<p>
+ <strong>
+  Examples:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Early exit (stop when confident)
+  </p>
+ </li>
+ <li>
+  <p>
+   Adaptive depth (harder inputs get more layers)
+  </p>
+ </li>
+ <li>
+  <p>
+   Conditional computation (activate only needed blocks)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Vision:
+ </strong>
+ Architecture becomes a
+ <strong>
+  menu of computational options
+ </strong>
+ , and the model learns a policy for which options to use per input.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Trend 3: Compositional Training Methods
+</h3>
+<p>
+ DR Tulu represents this: keeping architecture simple while making training more sophisticated.
+</p>
+<p>
+ <strong>
+  Other Examples:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Curriculum learning (order training data compositionally)
+  </p>
+ </li>
+ <li>
+  <p>
+   Multi-task learning (compose objectives)
+  </p>
+ </li>
+ <li>
+  <p>
+   Evolving loss functions (like evolving rubrics)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Shift:
+ </strong>
+ From “design better blocks” to “design better training procedures that teach existing blocks new tricks.”
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Trend 4: Cross-Modal Composability
+</h3>
+<p>
+ <strong>
+  Current:
+ </strong>
+ Different architectures for vision (CNNs/ViT), language (Transformers), audio (Conformers)
+</p>
+<p>
+ <strong>
+  Future:
+ </strong>
+ Universal blocks that work across modalities
+</p>
+<p>
+ <strong>
+  Progress:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   Vision Transformers (apply language blocks to vision)
+  </p>
+ </li>
+ <li>
+  <p>
+   Perceiver architecture (unified for all inputs)
+  </p>
+ </li>
+ <li>
+  <p>
+   Flamingo (mix image and text blocks)
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Goal:
+ </strong>
+ A single compositional language that works for any data type, with modality-specific adaptations happening via learned components (like MoE), not architectural redesign.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ Trend 5: Efficiency Through Compositionality
+</h3>
+<p>
+ <strong>
+  The Realization:
+ </strong>
+ The same compositional structure that makes architectures trainable also makes them compressible.
+</p>
+<p>
+ <strong>
+  Examples:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   LoRA: Only a subset of weights need adaptation
+  </p>
+ </li>
+ <li>
+  <p>
+   Quantization: Different blocks can use different precisions
+  </p>
+ </li>
+ <li>
+  <p>
+   Pruning: Remove entire blocks with minimal impact
+  </p>
+ </li>
+ <li>
+  <p>
+   Distillation: Compress 100-layer → 12-layer models
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Why Compositionality Helps:
+ </strong>
+ If blocks are modular and somewhat redundant, you can remove/compress/approximate individual blocks without breaking the whole system.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Conclusion: The Scaffold Hypothesis Validated
+</h2>
+<p>
+ We’ve traced a 13-year journey from AlexNet’s hand-crafted hierarchy to today’s compositional design philosophy. The field discovered that:
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Uniformity scales better than specificity
+   </strong>
+  </p>
+  <p>
+   ResNet’s repeated blocks beat carefully designed hierarchies
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Emergent specialization beats forced specialization
+   </strong>
+  </p>
+  <p>
+   BERT’s layers learned syntax→semantics→pragmatics without being told to
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Simple primitives enable complex behaviors
+   </strong>
+  </p>
+  <p>
+   Q, K, V attention supports everything from grammar to reasoning
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Composition rules matter as much as components
+   </strong>
+  </p>
+  <p>
+   Residual connections fundamentally changed what’s learnable
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Architecture is a hypothesis space for training to explore
+   </strong>
+  </p>
+  <p>
+   Lottery tickets, loss landscapes, and scaling laws all point to this
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  The Modern Paradigm:
+ </strong>
+</p>
+<p>
+ Architecture design is no longer “build the perfect network.” It’s “design a compositional language of:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Primitives
+   </strong>
+   (attention, MLPs, convolutions, SSMs)
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Composition operators
+   </strong>
+   (residuals, concatenation, gating)
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Structural patterns
+   </strong>
+   (repeated blocks, skip connections)
+  </p>
+ </li>
+</ul>
+<p>
+ that create a space where gradient descent can discover useful algorithms.”
+</p>
+<p>
+ <strong>
+  Why This Matters:
+ </strong>
+</p>
+<p>
+ This shift has practical consequences:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Faster iteration:
+   </strong>
+   Test new components without redesigning everything
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Better transfer:
+   </strong>
+   Components learned in one context work in another
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Clearer debugging:
+   </strong>
+   Understand what each block does
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Principled scaling:
+   </strong>
+   Apply scaling laws confidently
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Open science:
+   </strong>
+   Share component libraries, not monolithic models
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Open Questions:
+ </strong>
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    What are the fundamental primitives?
+   </strong>
+   We have attention, convolution, SSMs—what else?
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    What composition operators haven’t we discovered?
+   </strong>
+   Residuals were a breakthrough—what’s the next one?
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    How do we design for interpretability?
+   </strong>
+   Can we build blocks that are compositionally interpretable (circuits)?
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    What’s the optimal balance between uniformity and specialization?
+   </strong>
+   MoE shows some heterogeneity helps—what’s the right amount?
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Can we automate principled design?
+   </strong>
+   Not NAS (search), but discovering the principles (like RegNet did)?
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  The Through-Line:
+ </strong>
+</p>
+<p>
+ From AlexNet to DR Tulu, the most successful architectures weren’t the most clever—they were the most
+ <strong>
+  compositional
+ </strong>
+ . They gave training a rich space to explore, with clear building blocks and combination rules.
+</p>
+<p>
+ As we move into the era of ever-larger models trained on ever-more compute, this compositional perspective becomes even more critical. We can’t manually design networks at trillion-parameter scale. We need to design
+ <strong>
+  languages
+ </strong>
+ that scale.
+</p>
+<p>
+ The scaffold hypothesis—that architecture creates a space for training to discover algorithms—has been thoroughly validated. The future isn’t designing better specific models; it’s designing better languages for describing computational structures, and better training methods for teaching those structures to do useful work.
+</p>
+<p>
+ <strong>
+  We’re not building neural networks anymore. We’re building grammars of computation, and training is the process of writing programs in those grammars.
+ </strong>
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ References &amp; Further Reading
+</h2>
+<h3>
+ Foundational Papers (Chronological)
+</h3>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Krizhevsky et al. (2012)
+   </strong>
+   - AlexNet: ImageNet Classification with Deep CNNs
+  </p>
+  <p>
+   <a href="https://papers.nips.cc/paper/4824">
+    https://papers.nips.cc/paper/4824
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Simonyan &amp; Zisserman (2014)
+   </strong>
+   - VGGNet: Very Deep Convolutional Networks
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1409.1556">
+    https://arxiv.org/abs/1409.1556
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    He et al. (2015)
+   </strong>
+   - ResNet: Deep Residual Learning for Image Recognition
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1512.03385">
+    https://arxiv.org/abs/1512.03385
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Vaswani et al. (2017)
+   </strong>
+   - Attention Is All You Need
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1706.03762">
+    https://arxiv.org/abs/1706.03762
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Devlin et al. (2018)
+   </strong>
+   - BERT: Pre-training of Deep Bidirectional Transformers
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1810.04805">
+    https://arxiv.org/abs/1810.04805
+   </a>
+  </p>
+ </li>
+</ol>
+<h3>
+ Understanding Architectures
+</h3>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Veit et al. (2016)
+   </strong>
+   - Residual Networks Behave Like Ensembles
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1605.06431">
+    https://arxiv.org/abs/1605.06431
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Li et al. (2018)
+   </strong>
+   - Visualizing the Loss Landscape of Neural Nets
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1712.09913">
+    https://arxiv.org/abs/1712.09913
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Clark et al. (2019)
+   </strong>
+   - What Does BERT Look At?
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1906.04341">
+    https://arxiv.org/abs/1906.04341
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Frankle &amp; Carbin (2019)
+   </strong>
+   - The Lottery Ticket Hypothesis
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1803.03635">
+    https://arxiv.org/abs/1803.03635
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Kaplan et al. (2020)
+   </strong>
+   - Scaling Laws for Neural Language Models
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/2001.08361">
+    https://arxiv.org/abs/2001.08361
+   </a>
+  </p>
+ </li>
+</ol>
+<h3>
+ Architecture Search &amp; Design
+</h3>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Zoph &amp; Le (2017)
+   </strong>
+   - Neural Architecture Search with Reinforcement Learning
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1611.01578">
+    https://arxiv.org/abs/1611.01578
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Liu et al. (2019)
+   </strong>
+   - DARTS: Differentiable Architecture Search
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/1806.09055">
+    https://arxiv.org/abs/1806.09055
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Radosavovic et al. (2020)
+   </strong>
+   - Designing Network Design Spaces
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/2003.13678">
+    https://arxiv.org/abs/2003.13678
+   </a>
+  </p>
+ </li>
+</ol>
+<h3>
+ Modern Architectures &amp; Surveys
+</h3>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Lin et al. (2022)
+   </strong>
+   - A Survey of Transformers
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/2106.04554">
+    https://arxiv.org/abs/2106.04554
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Gu &amp; Dao (2023)
+   </strong>
+   - Mamba: Linear-Time Sequence Modeling with SSMs
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/2312.00752">
+    https://arxiv.org/abs/2312.00752
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Jiang et al. (2024)
+   </strong>
+   - Mixtral of Experts
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/2401.04088">
+    https://arxiv.org/abs/2401.04088
+   </a>
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Shao, Asai et al. (2025)
+   </strong>
+   - DR Tulu: RL with Evolving Rubrics for Deep Research
+  </p>
+  <p>
+   <a href="https://arxiv.org/abs/2511.19399">
+    https://arxiv.org/abs/2511.19399
+   </a>
+  </p>
+ </li>
+</ol>
+<h3>
+ Books
+</h3>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Goodfellow, Bengio, Courville (2016)
+   </strong>
+   - Deep Learning
+  </p>
+ </li>
+</ol>
+<p>
+ https://www.deeplearningbook.org/
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Prince (2023)
+   </strong>
+   - Understanding Deep Learning
+  </p>
+  <p>
+   <a href="https://udlbook.github.io/udlbook/">
+    https://udlbook.github.io/udlbook/
+   </a>
+  </p>
+ </li>
+</ol>
+<h3>
+ Online Resources
+</h3>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Transformer Circuits (Anthropic)
+   </strong>
+   - Mechanistic Interpretability
+  </p>
+ </li>
+</ol>
+<p>
+ https://transformer-circuits.pub/
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Distill.pub
+   </strong>
+   - Visual Explanations of ML Concepts
+  </p>
+ </li>
+</ol>
+<p>
+ https://distill.pub/
+</p>
+<div>
+ <hr/>
+</div>
+<p>
+ <em>
+  This blog post synthesizes insights from 13 years of research into neural architecture design. The field continues to evolve rapidly—the best way to stay current is to follow major ML conferences (NeurIPS, ICML, ICLR) and research blogs from leading labs.
+ </em>
+</p>
+</body></html>
