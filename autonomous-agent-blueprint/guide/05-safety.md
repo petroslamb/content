@@ -1,117 +1,138 @@
-# Part 5: The Attack Surface You Built
+# Operating Agents V: The Attack Surface You Built
 
-## Agent Safety as Interface Architecture
+## Safety As Interface Architecture
 
-*Part 5 of 6: A Practical Guide to Foundation Agents*
+*Operating Agents V of VI*
 
----
-
-In 2024, a team of researchers published a paper called *Agent Smith* (Yu et al., 2024). The title was a deliberate reference to the character from *The Matrix*, and the comparison was apt in a precise, technical way. The researchers demonstrated that a single adversarial image, injected into a multimodal agent's environment, could propagate through agent-to-agent interactions and compromise a large population of agents , without the attacker needing to repeat the injection. The attack spread through the same interaction mechanisms the agents relied on for legitimate coordination. The capability that made the agents useful made them vulnerable to exactly this kind of propagation.
-
-The result was striking not because it described a hypothetical future risk but because it described the present architecture of real systems. Any agent that reads external content and communicates with other agents has the surface this attack requires. No exotic capabilities are needed. No model vulnerabilities are exploited. The agents behave correctly according to their specification. The specification is the problem , because it does not treat the communication channels as potentially adversarial.
-
-This is the central argument of safety as interface architecture: agent security failures are not primarily alignment failures or capability failures. They are design failures at the interfaces , the surfaces through which agents receive input, store state, and take action. Controlling those interfaces is what controls the risk. An agent system that has never been designed with adversarial inputs in mind is not "mostly safe." It is an unaudited system whose failure modes have not been found yet.
+*The opening case in this essay blends published attack patterns from indirect prompt injection, retrieval poisoning, and inter-agent propagation.*
 
 ---
 
-## The Capability-Vulnerability Identity
+An internal operations agent could read support tickets, search internal documentation, draft replies, open follow-up tasks, and escalate payment issues to a billing system. The team behind it took safety seriously in the way many serious teams do. They wrote careful system instructions. They told the model not to follow hostile requests. They told it to treat user content cautiously. They added monitoring after deployment.
 
-Every capability introduced in Parts 1 through 4 of this guide opens a corresponding safety surface. This is not an accident of implementation. It is a structural property of useful agent systems.
+Then a crafted ticket arrived containing a benign-looking summary and a malicious instruction hidden in retrieved context. The agent read the ticket, pulled additional material from a knowledge store that had never been curated for adversarial content, and opened an internal task with language that nudged the next system in the chain toward the attacker's preferred action. Nothing about the model had to misbehave in some exotic way. The system simply trusted the wrong interface.
 
-**Action and tool use** (Part 1) gives the agent the ability to change external state. That same ability gives it blast radius , the scope of damage a failure or a compromised action can produce. An agent that can write to a database can write incorrect data. An agent that can send email can send phishing email in your name. An agent that can call an external API without rate limiting can exhaust your API quota in minutes. The action surface that makes the agent effective is the surface that determines its failure radius.
+That is the flattering mistake this essay is trying to remove. Teams often talk about agent safety as if the decisive question were whether the prompt is careful enough or whether the model is aligned enough. In most deployed systems the decisive question is harder and duller. What does the system ingest? What trust category does each input belong to? What tools can it reach? What memory can it write? What outputs can become side effects without review?
 
-**Memory** (Part 3) gives the agent persistence across sessions. That same persistence makes the agent's behavior dependent on what is stored , and a stored knowledge base is a static target. *PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models* (Zou et al., 2024) demonstrated that injecting a small percentage of adversarially crafted documents into a large RAG corpus can systematically shift retrieved content to bias agent behavior. The retrieval system works correctly , it retrieves the most similar content. The content it retrieves is no longer trustworthy. *AGENT POISON: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases* (Chen et al., 2024) extends this to agent-specific memory structures, showing that episodic memory and long-term knowledge stores have similar vulnerabilities.
-
-**Multi-agent coordination** (Part 4) gives the system the ability to scale. That same inter-agent communication is a propagation path for adversarial content. Agent Smith uses it. If one agent in a multi-agent system processes an external document containing an adversarial instruction and then passes on a summary of that document to another agent, the adversarial instruction can survive the summarization step in attenuated form. The artifact handoffs that make multi-agent pipelines coherent are the same channels through which contamination moves.
-
-**Retrieval and search** are the mechanism that makes memory practically useful. *Machine Against the RAG: Jamming Retrieval-Augmented Generation with Blocker Documents* (Shafran et al., 2024) demonstrates that retrieval can be disrupted not just through poisoning but through jamming: adversarially crafted documents that are retrieved instead of the intended content, degrading the agent's knowledge access without injecting false information. The result looks like a retrieval quality problem, but it is a denial-of-service attack.
-
-This pattern , capability and vulnerability sharing the same underlying mechanism , means that building capabilities without simultaneously designing the safety architecture is not the first phase of a two-phase process. It is building the attack surface before deciding whether to defend it.
+Agent safety is not mainly a prompt problem. It is an interface architecture problem.
 
 ---
 
-## The Six Attack Surfaces
+## Every Capability Is Also An Attack Surface
 
-The Chapter 17, 18, and 19 material synthesizes the threat landscape into six interface categories, each of which is a distinct attack surface requiring distinct controls.
+By the time a team reaches this part of the series, the pattern should feel familiar. The same mechanism that makes the system useful often makes it vulnerable.
 
-**Untrusted content in the prompt** is the surface addressed by *Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection* (Greshake et al., 2023). An agent performing a task reads a document, a web page, an email, or a retrieved chunk , and that content contains an instruction that the agent treats as equivalent to a system instruction. The attacker does not need access to the agent's system prompt. They need access to any content the agent will read. If the agent browses the web as part of its task, every web page it visits is a potential injection vector. If the agent reads uploaded documents, every uploaded document is a potential injection vector.
+Action surfaces create blast radius. A system that can send messages, write records, or call external services can be pushed into bad side effects if the action boundary is compromised.
 
-*InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents* (Zhan et al., 2024) extends this to tool-integrated agents specifically and shows that injection attacks have higher success rates when the agent has access to more powerful tools , because the agent can be instructed to use those tools on behalf of the attacker. An agent with email access and injection vulnerability can be turned into a phishing sender. An agent with file system access and injection vulnerability can be turned into a data exfiltration path.
+Memory creates persistence. A system that stores knowledge across time can also preserve bad knowledge, poisoned knowledge, or adversarially induced "lessons" across time.
 
-The control here is trust separation at the architecture level: system instructions and user intent occupy a different trust category than retrieved content and external documents. The agent's action policy governs from the former, not the latter. Retrieved content informs the agent's knowledge; it does not override its instruction set. This distinction needs to be enforced in the system design, not in the prompt.
+Multi-agent communication creates propagation. A system that benefits from handoffs can also move contamination across those same handoffs.
 
-**Unsafe tools** are tools whose scope of action is broader than the task requires. An agent given a tool that can delete any file, modify any database record, or query any API endpoint is operating with permissions calibrated for the broadest possible case rather than the narrowest necessary one. When the agent is compromised through injection, stale memory, or reasoning error, the damage is bounded by its permissions. Small permissions, small damage. Broad permissions, large damage.
+Retrieval creates exposure. A system that reads from external documents, uploads, or web content can be induced to ingest instructions, blockers, or poisoned evidence.
 
-Least-privilege design , each agent has access only to the tools it actively needs for its assigned task, with the narrowest possible scope within those tools , is the implementation of this principle. It is not a safety feature bolted onto an already-designed system. It should be in the initial design specification, before tools are assigned.
+This is why safety should not be treated as a late-stage supplement to capability design. The more honest framing is that capability design and safety design are the same architecture viewed from different sides.
 
-**Poisoned retrieval** affects every system with a RAG layer. Knowledge base ingestion pipelines are often given insufficient scrutiny: documents are processed, embedded, and indexed without validation of their source trustworthiness or their potential for adversarial content. A document that was legitimate when it was ingested may become a liability as the world changes and the document becomes stale. A document submitted through a user-facing upload path may have been crafted to bias retrieval in a specific direction.
-
-The controls are concrete: source provenance tracking (where did this document come from, and what trust level does that source carry?), ingestion validation for content that looks like instruction templates rather than factual material, freshness policies that mark stale documents for review or retirement, and retrieval-time content checks that flag retrieved material whose structure resembles adversarial patterns.
-
-**Memory poisoning** is the persistent variant of retrieval poisoning. If an agent's episodic memory is corrupted , through a genuine bad run that was stored uncritically, through an adversarial injection into an early session, or through a poisoned document that updated the agent's long-term factual store , that corruption persists across sessions and influences future behavior. Unlike retrieval poisoning, which affects what the agent knows, memory poisoning can affect how the agent reasons , if the corrupted memory contains prior "decisions" or "lessons learned" that now reflect adversarial intent.
-
-The control is memoy hygiene: write policies that filter what gets stored, correctability of stored memories through human review and explicit correction, and segregation of high-trust memory (system-validated facts) from lower-trust memory (agent-derived conclusions from sessions that have not been audited).
-
-**Uncontrolled inter-agent communication** is the Agent Smith surface. When agents share context through free-form conversation or pass artifacts that have not been validated for adversarial content, injections can propagate. The control is the same artifact handoff principle introduced in Part 4 , typed contracts between agents, validated at each boundary , with an additional security requirement: content arriving from another agent should be treated with appropriate skepticism, especially when it contains instructions that override or extend the receiving agent's task specification.
-
-**High-impact actions without approval gates** are a class of risk rather than an attack surface , the category of failures where the agent does something consequential that it should not have been able to do unilaterally. For irreversible, financially significant, compliance-sensitive, or externally visible actions, the correct architecture is mandatory human approval before execution. This is not the concession that agents cannot be trusted. It is the recognition that accountability for consequential decisions belongs to humans, and architecturally, that accountability must be structurally enforced.
+The papers in this area sharpen that view. *Not What You've Signed Up For* made indirect prompt injection feel real because it located the problem in ordinary content surfaces rather than in special access to the system prompt. *InjecAgent* made the point more painful by showing how injection gets worse when the system can actually use tools. *PoisonedRAG*, *BadRAG*, and *Machine Against the RAG* showed how retrieval itself becomes a control surface for attackers. *Agent Smith* made the propagation story vivid for multi-agent and multimodal settings. None of these papers support the comforting story that a careful prompt is the primary defense.
 
 ---
 
-## Safety as a Design Layer
+## The Wrong Default Is Prompt-Centric Safety
 
-The most important reframe in Chapter 17 is positional: safety is not a suffix. It is not the chapter you read after building the system to find out what to add before deploying. It is a design layer specified at the same time as the capability architecture.
+It is worth being blunt here because too much of the field still dances around the point. A careful system prompt is useful. It is not a safety architecture.
 
-Practically, this means the safety specification precedes or accompanies the tool specification, the memory design, and the multi-agent topology. Before the action layer is designed, the permission scope and the approval gates are specified. Before the memory layer is designed, the write policies, source trustworthiness taxonomy, and forgetting rules are specified. Before the multi-agent topology is designed, the inter-agent trust levels and artifact validation rules are specified.
+It does not narrow tool scope. It does not classify trust boundaries between system instructions, user intent, retrieved content, tool results, and inter-agent artifacts. It does not remove stale documents from a knowledge base. It does not stop a poisoned memory from being retrieved later. It does not create an approval gate before irreversible action. It does not turn a free-form handoff into a typed contract.
 
-This sequencing matters because retrofitting safety into a complete system is expensive and typically incomplete. Permissions that were designed broadly for development convenience are difficult to narrow in production without breaking workflows that have come to depend on them. Memory that has been accumulating without write policies cannot be retroactively curated without significant engineering effort. Inter-agent communication that was designed as free-form chat cannot be retyped into artifact contracts without redesigning the coordination layer.
+This matters because prompt-centric safety flatters the builder in exactly the wrong way. It makes the system look like it is behaving safely because the model sounds careful. Safety in deployed agents should not depend primarily on whether the model sounds careful. It should depend on whether the system structurally limits what a compromised, mistaken, or misled agent can do.
 
-*Identifying the Risks of LM Agents with an LM-Emulated Sandbox* (Ruan et al., 2023) provides a pre-deployment evaluation methodology: ToolEmu emulates an agent's tool interactions in a sandbox that can simulate adversarial conditions, allowing safety tests before the agent interacts with real systems. The key insight is that sandboxed evaluation is a design phase activity. Evaluating safety properties before deployment , where the consequences of failures are limited to simulation outputs , is qualitatively different from discovering them in production.
+The installed default is therefore stricter. Classify inputs by trust level. Constrain tools by least privilege. Curate retrieval by provenance and freshness. Govern memory writes. Validate inter-agent handoffs. Put approval gates in front of irreversible actions. Red-team before expanding autonomy rather than after the damage teaches you where the gaps were.
 
----
+## Attack Surface To Control Map
 
-## The Safety Blueprint for Deployed Systems
+| Attack surface | Typical failure | Default control | Escalate when |
+|---|---|---|---|
+| Retrieved or external content | Indirect prompt injection | Trust separation between instructions and untrusted content | The system must ingest broad external material continuously |
+| Tool access | Bad side effects with real-world impact | Least-privilege scopes and explicit authorization | High-impact workflows require additional human gates |
+| Knowledge store and retrieval | Poisoned or stale evidence guides behavior | Provenance, freshness rules, ingestion checks | The corpus is open or frequently updated from low-trust sources |
+| Long-term memory | Corrupted lessons persist across sessions | Memory write policy and correction paths | The agent learns from noisy or user-facing sessions |
+| Inter-agent communication | One bad artifact contaminates the rest | Typed handoffs and schema validation | Multi-agent chains pass partially trusted external material |
+| Consequential actions | A model acts before review should occur | Deterministic gates or human approval | The action is irreversible, external, legal, or financial |
 
-The six controls that the Chapter 17–19 material supports form a concrete safety architecture:
-
-**Trust separation at the input boundary.** Every input the agent receives is classified by source: system instructions, user intent, retrieved context, external documents, tool results, inter-agent messages. The agent's action policy is governed by its system instructions. External content enriches its knowledge without overriding its behavior. This classification is enforced in the system design, not in the prompt.
-
-**Least-privilege tool scopes.** Every agent has access to the minimum set of tools required for its task, with the minimum permission scope within each tool. Tools that modify external state require explicit authorization. Tools that are irreversible require audit logging and, where the stakes are high, human approval.
-
-**Retrieval hygiene.** Knowledge base ingestion tracks source provenance. Documents are stratified by source trust level. High-trust sources (internal validated documents) are retrieved with different weight than low-trust sources (user uploads, external web). Fresh content is distinguished from stale content. Ingestion pipelines include checks for documents that look like instruction templates rather than factual material.
-
-**Approval gates before irreversible actions.** Any action that is irreversible, financially significant, legally consequential, or externally visible sits behind an approval gate. The gate can be automated (a deterministic policy check that must pass) or human (a review step before execution). What it cannot be is optional, advisory, or bypassable by the agent itself.
-
-**Inter-agent skepticism.** Artifacts arriving from other agents in a multi-agent system are validated against their expected schema before use. Instructions embedded in inter-agent messages that override the receiving agent's task specification are flagged rather than executed. The trust level of inter-agent content is explicitly lower than the trust level of system instructions.
-
-**Red-teaming before widening autonomy.** Before any expansion of the agent's tool access, permission scope, or autonomy level, the current configuration is tested against the known injection and poisoning patterns documented in the literature. Testing is not a compliance activity performed once before launch. It is a scheduled review activity that precedes every autonomy expansion.
+The goal of this map is not completeness. It is discipline. Safety work should be attached to the surface that can fail.
 
 ---
 
-## What Cannot Be Fixed in the Prompt
+## The Six Controls Most Teams Actually Need
 
-The most common misapprehension about agent safety is that the primary defense is a well-crafted system prompt. Instructions not to follow adversarial content, instructions to only take explicitly authorized actions, instructions to report suspicious inputs before acting on them , these are real mitigations and worth including. They are not the architecture.
+Trust separation belongs at the input boundary. System instructions, user intent, retrieved documents, uploads, tool results, and inter-agent artifacts should not all be treated as one undifferentiated prompt stream. They have different origins and should carry different authority.
 
-A system prompt instruction is read by the model once, at the beginning of each context. Adversarial content embedded in a retrieved document later in the same context can exploit the temporal distance. A retrieval query that returns adversarial content returns it with high similarity scores, meaning the agent's retrieval mechanisms treat it as especially relevant. An inter-agent message that arrives well into a long reasoning trace carries the accumulated context of the prior steps.
+Least privilege belongs at the action boundary. The smallest safe tool scope is not an inconvenience. It is the only honest way to limit blast radius when the system is wrong.
 
-Prompt-level safety instructions also do not address permission scope , an instruction not to delete files does not remove the file deletion tool from the agent's action space. They do not address retrieval hygiene , an instruction to be skeptical of unusual requests does not prevent an adversarially crafted document from ranking highly in retrieval. They do not address memory poisoning , an instruction to act in good faith does not filter corrupted entries out of a poisoned episodic memory.
+Retrieval hygiene belongs at the knowledge boundary. Provenance matters. Freshness matters. Documents that look more like instructions than facts deserve scrutiny. Similarity ranking alone is not a trust model.
 
-Safety as interface architecture means that the system enforces its safety properties structurally, not through the model's judgment. The model's judgment is a last line of defense, not a first line. The first lines are the input boundary classification, the permission scope, the retrieval trust stratification, the approval gates, and the inter-agent validation contracts. None of those are in the prompt.
+Memory hygiene belongs at the persistence boundary. Not every session deserves to become durable memory. Not every lesson the agent verbalizes deserves to be promoted into future behavior. Stored conclusions need correction paths.
 
----
+Inter-agent skepticism belongs at the handoff boundary. Another agent's output is not a system instruction just because it arrived from inside the same broader workflow. If the artifact is typed, validate the type. If it contains instructions that exceed the receiving role's authority, do not execute them silently.
 
-## The Architecture Closes the Loop
+Approval gates belong at the accountability boundary. When an action is irreversible, financially meaningful, legally sensitive, or externally visible, the question is no longer only whether the agent can do it. The question is who owns the consequence if it does it badly.
 
-The five essays before this one described what agents can do: act on tools, reason through tasks, remember knowledge, and communicate with each other. This essay describes what each of those capabilities looks like from the adversarial angle. The action surface is a blast-radius surface. The memory layer is a persistent-state corruption surface. The multi-agent communication channel is a contamination-propagation surface.
-
-This is not a reason to avoid building capable agents. It is a reason to build them with their attack surfaces designed, not discovered. A system that is designed with trust separation, least privilege, retrieval hygiene, approval gates, inter-agent skepticism, and pre-deployment red-teaming is not a less capable system than one without those properties. It is a system whose capabilities are bounded by its safety architecture rather than by whatever the attacker decides to try first.
-
-The Autonomy Tax analysis in prior work estimated that most enterprise agent failures trace to control-layer failures rather than model capability gaps. The safety pattern described here is the control layer. Closing the gap between what agents can do and what they are architecturally constrained to do is the single most important step in moving agents from production prototypes to production deployments that organizations can stand behind.
+This is why work like *ToolEmu* matters. It treats safety evaluation as something to do in a sandbox before widening the action boundary, not as a post-launch ritual of remorse.
 
 ---
 
-*Part 6, the final essay in this guide, addresses optimization: how to improve an agent system that already works, why the whole workflow is the object of improvement rather than any individual prompt or component, and what the correct optimization sequence looks like.*
+## Why Safety Must Be Designed Early
+
+Teams often postpone safety because the capabilities still feel unstable. They tell themselves they will lock down permissions once the workflow settles, curate the store once the retrieval layer proves useful, add approval gates once they know where the agent is valuable, or rewrite the handoff layer after the multi-agent topology stabilizes.
+
+That sequence is convenient for development and expensive for production.
+
+Permissions that were broad for early iteration have a way of becoming invisible dependencies. Memory that was written without policy becomes expensive to clean later because no one knows which past entries can be trusted. Multi-agent communication built as free-form chat becomes difficult to harden because every participant now depends on the looseness of the old interface.
+
+The right sequence is stricter. Design the trust boundaries while the capability boundaries are being designed. Decide what the system may read, write, remember, and escalate before the workflow grows dependent on the most permissive version of itself.
+
+This is not anti-capability. It is how capable systems remain survivable.
 
 ---
 
-**Source basis for this essay:** Chapters 17, 18, and 19 of *Advances and Challenges in Foundation Agents* (2025); *Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection* (Greshake et al., 2023) [arXiv:2302.12173](https://arxiv.org/abs/2302.12173); *InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents* (Zhan et al., 2024) [arXiv:2403.02691](https://arxiv.org/abs/2403.02691); *PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models* (Zou et al., 2024) [arXiv:2402.07867](https://arxiv.org/abs/2402.07867); *AGENT POISON: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases* (Chen et al., 2024) [arXiv:2407.12784](https://arxiv.org/abs/2407.12784); *Machine Against the RAG: Jamming Retrieval-Augmented Generation with Blocker Documents* (Shafran et al., 2024) [arXiv:2406.05870](https://arxiv.org/abs/2406.05870); *Agent Smith: A Single Image Can Jailbreak One Million Multimodal LLM Agents Exponentially Fast* (Yu et al., 2024) [arXiv:2402.08567](https://arxiv.org/abs/2402.08567); *Identifying the Risks of LM Agents with an LM-Emulated Sandbox* (Ruan et al., 2023) [arXiv:2309.15025](https://arxiv.org/abs/2309.15025); *BadRAG: Identifying Vulnerabilities in Retrieval Augmented Generation of Large Language Models* (2024) [arXiv:2406.00083](https://arxiv.org/abs/2406.00083); `practical-chapter-blueprints/06-safety-blueprint.md`.
+## The Default And The Escalation Rule
+
+The default safety posture for most agent systems should be plain: trust separation at ingestion, least privilege at the tool layer, provenance and freshness at retrieval, write policy for memory, typed skepticism at handoffs, and approval before irreversible action.
+
+The escalation rule is also plain. Each time the system gains a broader tool, a wider corpus, a looser handoff, or more autonomy, safety work has to widen with it. More autonomy is not a neutral feature release. It is an expansion of the attack surface.
+
+If you widen autonomy before you narrow interfaces, you are building the attack surface first.
+
+---
+
+## Resources And References
+
+### [Builder Blueprint: Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/practical-chapter-blueprints/06-safety-blueprint.md)
+
+For the companion operator layer, use this public blueprint. It keeps the boundary-by-boundary checklist, quick-choice layer, failure modes, and evaluation sequence in a more operational format than the essay itself. That makes it the right follow-on document when a team needs to translate the essay's trust-boundary argument into an actual review.
+
+### [Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173) (2023)
+
+This paper remains the conceptual anchor for the whole safety argument. Its importance is not that it identifies one strange edge case. It makes the trust problem ordinary. Any content an agent reads can carry instructions that compete with the system's intended hierarchy. In the essay, that is the foundation for treating safety as an interface problem rather than a prompt-writing contest.
+
+### [InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents](https://arxiv.org/abs/2403.02691) (2024)
+
+*InjecAgent* matters because it pushes the injection story into the tool-using setting where consequences become real. The paper helps show that injection severity scales with capability: the more powerful the tool layer, the more costly it is when the trust boundary is wrong. In the essay it supports the argument that broad tools and weak trust separation are a dangerous combination.
+
+### [PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models](https://arxiv.org/abs/2402.07867) (2024)
+
+*PoisonedRAG* is important because it makes the knowledge layer itself feel adversarial rather than neutral. Its core contribution is showing that a relatively small amount of poisoned content can materially shift retrieved evidence. In the essay it supports the claim that retrieval hygiene is not a nice-to-have. It is a primary control surface.
+
+### [BadRAG: Identifying Vulnerabilities in Retrieval Augmented Generation of Large Language Models](https://arxiv.org/abs/2406.00083) (2024)
+
+*BadRAG* deepens the same argument by cataloging how fragile retrieval can be when the corpus and ranking process are not treated as security boundaries. In this essay it reinforces the broader point that relevance is not trust and that retrieval can fail in ways that look like ordinary quality drift unless teams name the security dimension explicitly.
+
+### [Machine Against the RAG: Jamming Retrieval-Augmented Generation with Blocker Documents](https://arxiv.org/abs/2406.05870) (2025)
+
+This paper matters because it widens the retrieval threat model beyond poisoning. The contribution is showing that an attacker does not even need to insert false facts to degrade the system. It can be enough to obstruct access to the right facts. In the essay that is useful because it turns retrieval into a broader availability and integrity problem, not just a truth problem.
+
+### [Agent Smith: A Single Image Can Jailbreak One Million Multimodal LLM Agents Exponentially Fast](https://arxiv.org/abs/2402.08567) (2024)
+
+*Agent Smith* is valuable less because most readers are building the exact multimodal setup in the paper and more because it dramatizes a general propagation truth. Once agents communicate and share artifacts, contamination can travel through the same pathways that legitimate coordination uses. In the essay it is the clearest support for inter-agent skepticism as a design rule.
+
+### [Identifying the Risks of LM Agents with an LM-Emulated Sandbox](https://arxiv.org/abs/2309.15817) (2024)
+
+*ToolEmu* matters because it turns safety evaluation into something that can happen before the live system causes harm. The key contribution is not just sandboxing. It is the sequencing logic: simulate and red-team the configuration before widening autonomy. In the essay it supports the claim that safety should be designed and tested while capability is still being shaped.
