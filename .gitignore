@@ -19,6 +19,8 @@ __pycache__/
 node_modules/
 publication_strategy_and_archive/mirror/_site/
 .cache/
+!publication_strategy_and_archive/mirror/lib/
+!publication_strategy_and_archive/mirror/lib/*.js
 
 # Private internal documents (build in public, but these stay private)
 publication_strategy_and_archive/future_publication_strategy.md
