@@ -1,8 +1,22 @@
-# Content Repository
+# Rooted Layers — Research Repository
+
+This is the source material, research corpus, and companion reference for [Rooted Layers](https://lambpetros.substack.com), a publication on AI engineering, architecture economics, and production systems.
+
+Each article on Substack links to the corresponding folder here for readers who want to go deeper: primary sources, evidence tables, scorecard datasets, architecture audits, and working drafts that did not make it into the final piece.
+
+**What you will find here:**
+- Research packages for published articles, each with their own README
+- Evidence layers: source manifests, annotated bibliographies, and scoring rubrics
+- A downloaded archive of all published articles in markdown
+- Working notes and in-progress research that may become future articles
+
+This is a living repository. Folders without a README are either legacy material or works in progress.
+
+---
 
 ## Repository Organization
 
-This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `ai_agents_enterprise_state`, `hardware_compatibility_architecture_2023_2025`).
+Organized by topic. Each top-level folder corresponds to a research area or multi-part publication.
 
 ### Substack Metadata & Archiving
 The `substack-downloader/` directory acts as a local tool for fetching posts. The canonical record of published articles, along with comprehensive publication analysis and future strategy drafts, is now maintained in the `publication_strategy_and_archive/` directory.
