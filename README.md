@@ -5,7 +5,7 @@
 This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `ai_agents_enterprise_state`, `hardware_compatibility_architecture_2023_2025`).
 
 ### Substack Metadata & Archiving
-The `substack-downloader/` directory acts as a tool and repository for automated markdown archives and metadata dumps of live posts, serving as the canonical record of anything published externally.
+The `substack-downloader/` directory acts as a local tool for fetching posts. The canonical record of published articles, along with comprehensive publication analysis and future strategy drafts, is now maintained in the `publication_strategy_and_archive/` directory.
 
 ### Publication to Folder Mapping
 
@@ -62,6 +62,16 @@ Published research project: **What Actually Works: The Hardware Compatibility Fi
 - Links to the public hardware friction scorecard dataset repository
 
 Start with: `hardware_compatibility_architecture_2023_2025/README.md`
+
+### [`publication_strategy_and_archive/`](./publication_strategy_and_archive/)
+
+Centralized corpus for the Substack publication, containing the complete downloaded archive of published articles alongside detailed qualitative analysis and future strategic planning artifacts.
+
+- Publication qualitative analysis and review matrix
+- Future strategic blueprints and options
+- Canonical downloaded article markdown and metadata
+
+Start with: `publication_strategy_and_archive/future_publication_strategy.md`
 
 ## Tooling
 

@@ -1,0 +1,1752 @@
+<html><head><title>Autonomous AI Agents: Core Foundations and Recent Breakthroughs</title>
+            <style>
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                    margin: 20px auto;
+                    border-radius: 8px;
+                }
+                h1 {
+                    font-size: 2.2em;
+                    margin-bottom: 0.5em;
+                    color: #1a1a1a;
+                }
+                a {
+                    color: #0066cc;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+                pre {
+                    background: #f4f4f4;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                }
+                blockquote {
+                    border-left: 4px solid #ddd;
+                    margin: 0;
+                    padding-left: 15px;
+                    color: #666;
+                }
+            </style>
+            </head><body><h1>Autonomous AI Agents: Core Foundations and Recent Breakthroughs</h1><p>
+ This video is the TL;DR
+</p>
+<div class="native-video-embed" data-attrs='{"mediaUploadId":"d716eb1a-523a-48f2-ab03-e127625de10a","duration":null}' data-component-name="VideoPlaceholder">
+</div>
+<p>
+ <strong>
+  Now HIT PLAY at the AUDIO and skim the POST along with the HOSTS.
+ </strong>
+</p>
+<p>
+ <em>
+  How LLM-based agents evolved from simple chatbots to autonomous researchers, collaborators, and problem-solvers
+ </em>
+</p>
+<h2>
+</h2>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 0 — Introduction: How We Got Here
+ </strong>
+</h1>
+<p>
+ Over the last three years, the word
+ <em>
+  agent
+ </em>
+ has gone from an aspirational buzzword to an uncomfortable fact of everyday engineering. A modern LLM is no longer just something you prompt for an answer. Increasingly, it’s something you delegate a task to — a system that plans, takes actions, makes observations, uses tools, revises its decisions, recovers from mistakes, and sometimes even collaborates with other agents. The transformation has been fast, uneven, and occasionally confusing. Yet the arc is unmistakable: language models are leaving the domain of pure prediction and entering the world of autonomous, goal-directed behavior.
+</p>
+<p>
+ If you’ve tried building an agent yourself, you’ve felt both sides of that shift. You’ve seen magical demos that collapse under real-world pressure. You’ve tried frameworks that promise autonomy but still require a forest of glue code. You’ve watched models take three brilliant steps followed by a catastrophic fourth. The literature, meanwhile, has exploded — dozens of papers a month, each proposing a new technique, a new architecture, a new benchmark, or a new story about how agents “should” work.
+</p>
+<p>
+ This deep dive is my attempt to make sense of that landscape — not by summarizing hype or listing frameworks, but by walking through the
+ <strong>
+  research papers
+ </strong>
+ that genuinely — and measurably — shifted the trajectory of agent development. These papers, taken together, form a coherent story: how we went from clever prompting tricks to purpose-trained agentic models, from scripted tool wrappers to latent-space coordination, from static datasets to continuous learning, from linear reasoning chains to complex multi-agent ecosystems.
+</p>
+<p>
+ To make this navigable, I’ll use a simple, consistent structure. For each paper, I’ll ask a few guiding questions:
+ <em>
+  What problem is this solving? Why did it matter at that moment? What’s the central idea? How does it work? And what changed afterward?
+ </em>
+ The answers will be narrative rather than bullet-driven — dense where needed, but always focused on helping you understand
+ <em>
+  why
+ </em>
+ this particular step mattered in the emergence of modern agents.
+</p>
+<p>
+ We begin at the most pivotal turning point of all: the moment when language models learned to separate
+ <strong>
+  thinking
+ </strong>
+ from
+ <strong>
+  acting
+ </strong>
+ .
+</p>
+<h2>
+ <strong>
+  The Scroll Map
+ </strong>
+</h2>
+<p>
+ Here’s the path we’ll follow:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Part 1 — Foundations &amp; Early Frameworks
+   </strong>
+  </p>
+  <p>
+   ReAct, tool-use, and the first multi-agent frameworks that made agent systems feel real.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 2 — Scaling Agents via Pre-Training
+   </strong>
+  </p>
+  <p>
+   Why “just chain tools together” stopped working, and how Agentic CPT tries to fix it.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 3 — Learning from Early Experience
+   </strong>
+  </p>
+  <p>
+   Agents that learn from their own trajectories instead of relying only on static datasets.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 4 — The Agentic RL Revolution
+   </strong>
+  </p>
+  <p>
+   A new subfield: reinforcement learning shaped around agents, not just single-step predictions.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 5 — Latent Space Collaboration
+   </strong>
+  </p>
+  <p>
+   Multi-agent systems that collaborate in latent space instead of messy token logs.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 6 — World Models &amp; Embodied Agents
+   </strong>
+  </p>
+  <p>
+   Agents that live in simulated worlds and learn within scalable environments.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 7 — Scientific Discovery &amp; Research Automation
+   </strong>
+  </p>
+  <p>
+   AI scientists, automated theorem proving, and high-stakes reasoning.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 8 — Advanced Reasoning Systems
+   </strong>
+  </p>
+  <p>
+   Continuous latent reasoning, hybrid approaches, and where “pure LLM reasoning” is giving way to new structures.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Part 9 — Synthesis &amp; Future Directions
+   </strong>
+  </p>
+  <p>
+   What all of this means for practitioners, researchers, and founders.
+  </p>
+ </li>
+</ul>
+<p>
+ We’ll finish with a
+ <strong>
+  reference section
+ </strong>
+ you can use as a reading list.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 1 — Foundations: When Reasoning Learned to Touch the World
+ </strong>
+</h1>
+<h2>
+ <strong>
+  ReAct (ICLR 2023)
+ </strong>
+</h2>
+<p>
+ <strong>
+  ReAct: Synergizing Reasoning and Acting in Language Models
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2210.03629">
+  https://arxiv.org/abs/2210.03629
+ </a>
+</p>
+<p>
+ <em>
+  What problem does this solve?
+ </em>
+</p>
+<p>
+ Before ReAct, LLMs were capable of reasoning or acting, but not both in a structured way. You could ask a model to reason step-by-step, or you could ask it to output some command to a tool, but the model had no disciplined way to interleave these behaviors. As soon as a task required several rounds of planning, tool use, and observation, the system fell apart. Tasks like web navigation or iterative code debugging simply didn’t fit the “single shot” paradigm.
+</p>
+<p>
+ <em>
+  Why did this matter at that moment?
+ </em>
+</p>
+<p>
+ ReAct created a simple but extremely powerful pattern: alternate explicit “Thought” steps with explicit “Action” steps, then feed the results back as “Observation.” Suddenly the model had a protocol — not just a prompt — for interacting with the world in a controlled, inspectable loop. It wasn’t just generating; it was behaving. That pattern quickly became the blueprint for nearly every agent architecture that followed.
+</p>
+<p>
+ <em>
+  What’s the core intuition?
+ </em>
+</p>
+<p>
+ Give the model a workspace in which it can think out loud, but force it to label its internal reasoning separately from the actions it intends to take. This separation turns the model’s output into an intelligible sequence of intentions and effects. A ReAct-style trace looks something like:
+</p>
+<pre><code><code>Thought: I need to check the weather in Athens today.
+Action: web_search[”Athens weather forecast”]
+Observation: Cloudy with temperatures around 22°C.
+Thought: Now I can summarize the forecast accurately.
+Final Answer: It’s cloudy in Athens today, around 22°C.
+</code></code></pre>
+<p>
+ The structure is almost trivial, yet transformative. The model is no longer expected to compress reasoning, planning, and acting into one opaque response. Instead, it proceeds step by step, with clear boundaries between cognition and interaction.
+</p>
+<p>
+ <em>
+  How does it work in practice?
+ </em>
+</p>
+<p>
+ The execution loop around the model is straightforward. At each step you build a prompt from the conversation history, let the model produce either a Thought or an Action, interpret the Action, and feed the Observation back into the next turn. A minimal version looks like this:
+</p>
+<pre><code><code>history = []
+
+while True:
+    prompt = render_prompt(history)
+    reply = llm(prompt)
+
+    if is_final(reply):
+        break
+
+    if is_action(reply):
+        result = run_tool(parse_action(reply))
+        history.append((”Observation”, result))
+    else:
+        history.append((”Thought”, reply))
+</code></code></pre>
+<p>
+ This “thin wrapper” was enough to push LLMs into territory that previously required bespoke planning algorithms or RL policies.
+</p>
+<p>
+ <em>
+  What changed after ReAct?
+ </em>
+</p>
+<p>
+ The field finally had a
+ <strong>
+  canonical control pattern
+ </strong>
+ . Agent frameworks emerged almost immediately, each adding planners, critics, memory systems, or hierarchical controllers — but all built on top of the Thought-Action-Observation loop. Even today, when we train explicitly agentic models, you can still see the imprint of ReAct in their interface and behavior. It was the conceptual spark that lit the rest of the field.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  AutoGen (NeurIPS 2023)
+ </strong>
+</h2>
+<p>
+ <strong>
+  AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2308.08155">
+  https://arxiv.org/abs/2308.08155
+ </a>
+</p>
+<p>
+ <em>
+  What problem does this solve?
+ </em>
+</p>
+<p>
+ Once ReAct proved that a single model could reason and act in multiple steps, the natural next idea was collaboration. Could several LLMs — each with a role, a viewpoint, or a specialized capability — work together on a task? Early experiments suggested yes, but they were brittle and ad hoc. Teams of LLMs tended either to talk themselves into loops or to collapse after a few steps. What was missing was a structured programming model for multi-agent interactions.
+</p>
+<p>
+ <em>
+  Why did this matter at that moment?
+ </em>
+</p>
+<p>
+ AutoGen gave the field its first serious attempt at a
+ <strong>
+  multi-agent architecture
+ </strong>
+ . Instead of having a single LLM do everything, you could assign different responsibilities to different agents: a planner to produce the outline, a coder to generate and run code, a reviewer to catch mistakes, a user proxy to ensure alignment with the original intent. This division of labor made complex tasks more tractable and opened the door to genuinely collaborative behaviors.
+</p>
+<p>
+ <em>
+  What’s the core intuition?
+ </em>
+</p>
+<p>
+ Think of agents as characters in a play. Each has:
+</p>
+<ul>
+ <li>
+  <p>
+   a personality or role (e.g., “planner”, “coder”),
+  </p>
+ </li>
+ <li>
+  <p>
+   a set of tools they may use,
+  </p>
+ </li>
+ <li>
+  <p>
+   and policies governing when they decide to speak.
+  </p>
+ </li>
+</ul>
+<p>
+ Then let them converse in a controlled graph until the task converges. The human gives an initial message to a “user proxy,” and the agents handle the rest.
+</p>
+<p>
+ A simple AutoGen program looks almost like pseudocode for a small organization:
+</p>
+<pre><code><code>planner = AssistantAgent(”planner”)
+coder = AssistantAgent(”coder”)
+user = UserProxyAgent(”user”, human_input_mode=”NEVER”)
+
+user.initiate_chat(planner, message=”Build a Python script to summarize a CSV.”)
+</code></code></pre>
+<p>
+ The planner interprets the request, the coder implements it, and the user proxy decides when the conversation has reached a satisfactory result.
+</p>
+<p>
+ <em>
+  How does it change agent development?
+ </em>
+</p>
+<p>
+ AutoGen made it normal — even expected — to break tasks into specialized roles. That, in turn, made people think more clearly about
+ <strong>
+  coordination
+ </strong>
+ ,
+ <strong>
+  intermediate artifacts
+ </strong>
+ ,
+ <strong>
+  division of responsibility
+ </strong>
+ , and
+ <strong>
+  termination conditions
+ </strong>
+ . It also set off a wave of successor frameworks that treat multi-agent setups as standard practice.
+</p>
+<p>
+ <em>
+  Why wasn’t this enough on its own?
+ </em>
+</p>
+<p>
+ Because despite the elegance of the design, the base models still weren’t “agentic” by nature. They could follow the protocol, but they didn’t have any inherent sense of persistence, strategy, or long-horizon coherence. The next leap required changing something deeper: the models themselves.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  Transition: From Prompted Agents to Trained Agents
+ </strong>
+</h2>
+<p>
+ The early frameworks — ReAct for single-agent control and AutoGen for multi-agent orchestration — showed that LLMs could be turned into agents through protocol and structure alone. But these systems were always a bit fragile. The models had no intrinsic understanding of what it meant to plan, to observe, to revise a decision, or to coordinate with others. They were being
+ <em>
+  guided
+ </em>
+ into acting like agents, not
+ <em>
+  trained
+ </em>
+ to be agents.
+</p>
+<p>
+ The research community soon reached a clear inflection point. If agents were going to scale — in reliability, in complexity, in generality — they needed
+ <strong>
+  agentic priors baked into their weights
+ </strong>
+ , not just into their prompts. This realization set off the next major phase: agentic continual pre-training.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 2 — Agentic Pre-Training: When Models Learn to Be Agents
+ </strong>
+</h1>
+<h2>
+ <strong>
+  Scaling Agents via Continual Pre-Training (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  Scaling Agents via Continual Pre-Training
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2509.13310">
+  https://arxiv.org/abs/2509.13310
+ </a>
+</p>
+<p>
+ <em>
+  What problem does this solve?
+ </em>
+</p>
+<p>
+ The early agent frameworks demonstrated that we could
+ <em>
+  force
+ </em>
+ an LLM to behave like an agent by wrapping it in structured prompting loops. But these systems all shared a quiet flaw: the base model had no inherent understanding of the behaviors we were trying to elicit. Every plan, every action, every tool call, every attempt at recovery was improvised on top of a model pre-trained purely for next-token prediction on internet text. As tasks became longer and more complex — multi-page browsing sessions, multi-step tool interactions, or lengthy code-debugging episodes — the model’s lack of internal structure became increasingly obvious. Agentic behavior felt bolted on, not natural.
+</p>
+<p>
+ <em>
+  Why did this matter in the field?
+ </em>
+</p>
+<p>
+ The paper marks the moment when researchers stopped treating agentic behavior as a “prompt-time trick” and began treating it as a
+ <strong>
+  property of the model itself
+ </strong>
+ . Instead of leaning on ever more elaborate wrapper logic, “Scaling Agents via Continual Pre-Training” proposed to modify the model’s
+ <em>
+  own distribution
+ </em>
+ by feeding it large-scale trajectories of agents interacting with tools, browsers, code environments, and task-oriented workflows. In other words: teach the model to be an agent the same way we taught it to be a writer — through massive, diverse exposure.
+</p>
+<p>
+ <em>
+  What’s the central intuition?
+ </em>
+</p>
+<p>
+ Just as next-token prediction on text gives a model a general prior for language, continual pre-training on agentic trajectories gives it a prior for
+ <strong>
+  acting
+ </strong>
+ . The model doesn’t just observe sentences. It observes sequences like:
+</p>
+<pre><code><code>Thought: I need to filter rows where “status” is “active”.
+Action: python_exec[”df = df[df.status == ‘active’]”]
+Observation: DataFrame returned with 1,284 rows.
+Thought: Now I can compute the summary statistics.
+</code></code></pre>
+<p>
+ Over millions of such segments, the model internalizes patterns of planning, exploration, error recovery, tool sequencing, and intermediate state reasoning. Instead of being surprised by multi-step tasks, the model expects them.
+</p>
+<p>
+ <em>
+  How does this work technically?
+ </em>
+</p>
+<p>
+ The authors collect a large corpus of agent trajectories from a mixture of scripted agents, human-written demonstrations, synthetic rollouts, and environment interactions. The model is then continually pre-trained with a mixed objective combining language modeling and agentic prediction. A simple caricature of the training loop looks like:
+</p>
+<pre><code><code>for batch in dataloader:
+    lm_loss = model.lm_loss(batch.text)
+
+    # trajectory includes thoughts, actions, observations
+    agent_loss = model.trajectory_loss(batch.trajectory)
+
+    loss = lm_loss + λ * agent_loss
+    loss.backward()
+    optimizer.step()
+</code></code></pre>
+<p>
+ The λ coefficient controls how strongly the model leans toward agent-like behavior versus general text modeling. This mixture proved essential: too much agentic data and the model overfits to procedural patterns; too little and it reverts to generic LLM behaviors.
+</p>
+<p>
+ <em>
+  What did this actually change?
+ </em>
+</p>
+<p>
+ The authors introduce a family of models around 30B parameters that achieve substantial improvements on several demanding agentic benchmarks. On
+ <strong>
+  BrowseComp-en
+ </strong>
+ , a genuinely challenging browser-use benchmark, the model reaches around 40% success — a major increase over wrapper-based approaches at the time. On
+ <strong>
+  BrowseComp-zh
+ </strong>
+ , it improves further. And on
+ <strong>
+  HLE
+ </strong>
+ , a household-environment benchmark requiring long-horizon reasoning, the model reaches around 31% Pass@1.
+</p>
+<p>
+ The exact percentages are less important than the qualitative shift: these models handled multi-step tasks with noticeably more coherence, stability, and willingness to revise their own intermediate steps.
+</p>
+<p>
+ <em>
+  What changed after this?
+ </em>
+</p>
+<p>
+ Once agentic behavior became something learned through pre-training, rather than something layered through prompting, the entire field reorganized itself. Framework developers could assume that models would already “understand” the concept of a plan, a tool, an observation, or a corrective step. Researchers began exploring whether the model could also learn from its
+ <strong>
+  own
+ </strong>
+ experiences, not just curated trajectories. And practitioners started seeing agentic behavior that used to require heavy scaffolding begin to emerge with far lighter wrappers.
+</p>
+<p>
+ This transition leads naturally to the next major chapter in agent development: agents that refine themselves based on early deployment experience.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 3 — Learning From Early Experience: Agents That Improve Themselves
+ </strong>
+</h1>
+<h2>
+ <strong>
+  Agent Learning via Early Experience (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  Agent Learning via Early Experience
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2510.08558">
+  https://arxiv.org/abs/2510.08558
+ </a>
+</p>
+<p>
+ <em>
+  What problem does this solve?
+ </em>
+</p>
+<p>
+ Even with agentic continual pre-training, all the trajectories come from a controlled, artificial corpus. But real agents encounter messy environments: users with inconsistent instructions, edge-case tool failures, stale web pages, misleading content, or instructions phrased in unexpected ways. A model that looks strong on pre-training data can still stumble dramatically in the first weeks of actual deployment. The authors ask a natural next question:
+ <em>
+  can we use those early failures and partial successes as high-value training data?
+ </em>
+</p>
+<p>
+ <em>
+  Why is this important?
+ </em>
+</p>
+<p>
+ This paper is one of the earliest to treat the first phase of deployment as a
+ <strong>
+  learning opportunity
+ </strong>
+ instead of a risk to be minimized. If a thousand agents stumble differently across ten thousand initial tasks, those trajectories contain patterns no synthetic training set can capture. The idea is to harvest them — safely, systematically, selectively — and then fine-tune the model on the parts that lead to better behavior.
+</p>
+<p>
+ <em>
+  What’s the key intuition?
+ </em>
+</p>
+<p>
+ Early experience is high-signal because it exposes the mismatch between the training distribution and the real world. If you can filter these trajectories carefully enough — keeping those that show useful strategies or recoverable failure patterns — the model can close that gap far more efficiently than through brute-force synthetic data collection.
+</p>
+<p>
+ <em>
+  How does this work under the hood?
+ </em>
+</p>
+<p>
+ The pipeline is conceptually simple but operationally delicate. The system deploys agents with strict safety layers and logging. Each trajectory is annotated with success metrics, error types, recovery attempts, and user satisfaction signals when available. A curation step removes unsafe, uninformative, or misleading episodes. The remaining data serves as a fine-tuning set.
+</p>
+<p>
+ A simplified version of the refinement loop looks like:
+</p>
+<pre><code><code>episodes = collect_first_phase_episodes()
+
+for ep in filter_high_quality(episodes):
+    imitation_loss = model.imitation(ep)
+    if ep.success:
+        imitation_loss += success_bonus(ep)
+    imitation_loss.backward()
+    optimizer.step()
+</code></code></pre>
+<p>
+ Notice that this is not RL yet — it’s imitation plus selective emphasis. But it already behaves like a feedback loop: deployment creates data, data improves the model, the improved model produces better deployments, and so on.
+</p>
+<p>
+ <em>
+  What did this change?
+ </em>
+</p>
+<p>
+ Systems trained with early-experience learning showed noticeably better robustness to unpredictable inputs, better recovery from tool failures, and improved ability to generalize task structure. More interestingly, they sometimes developed
+ <em>
+  fallback strategies
+ </em>
+ that did not appear in the initial synthetic trajectories — evidence that the model was absorbing structure from real-world interactions, not just memorizing.
+</p>
+<p>
+ <em>
+  Where does this lead the field?
+ </em>
+</p>
+<p>
+ This work is the conceptual bridge to full
+ <strong>
+  agentic reinforcement learning
+ </strong>
+ , where models not only imitate good behavior but optimize toward explicit multi-step reward signals. To understand that step, we need a map of how researchers formalized the RL landscape for agents — which brings us to a major survey.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 4 — Agentic Reinforcement Learning: Optimizing Behavior, Not Just Imitating It
+ </strong>
+</h1>
+<h2>
+ <strong>
+  The Landscape of Agentic Reinforcement Learning for LLMs (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  The Landscape of Agentic Reinforcement Learning for LLMs: A Survey
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2509.02547">
+  https://arxiv.org/abs/2509.02547
+ </a>
+</p>
+<p>
+ <em>
+  What problem does this survey address?
+ </em>
+</p>
+<p>
+ By late 2025, many groups were experimenting with reinforcement learning on top of LLM agents. Some optimized tool-use accuracy, others tuned planning strategies, still others trained agents inside simulated environments where success or failure yielded a reward. The result was a chaotic collection of methods, each claiming improvements on some benchmark, with little clarity about how they related or which ideas actually generalized. This survey set out to impose order on the chaos and to define what “agentic RL” even means in the context of LLMs.
+</p>
+<p>
+ <em>
+  Why is this important in the agent story?
+ </em>
+</p>
+<p>
+ Earlier phases focused on
+ <em>
+  pre-training on trajectories
+ </em>
+ and
+ <em>
+  learning from early experience
+ </em>
+ in an essentially supervised fashion. Reinforcement learning introduces something different: explicit optimization for long-horizon success, guided by scalar rewards. For agents, this matters because many real tasks do not have clean step-by-step supervision. You know if the whole episode ultimately worked; you don’t always know which intermediate action was good or bad. This survey explains how different works handled that challenge, which in turn shapes how we think about training robust, goal-directed agents.
+</p>
+<p>
+ <em>
+  What is the central intuition of the survey?
+ </em>
+</p>
+<p>
+ The authors organize agentic RL methods along a set of axes that capture the design decisions you have to make:
+</p>
+<ul>
+ <li>
+  <p>
+   What is the
+   <strong>
+    action space
+   </strong>
+   ? Free-form text? Structured tool calls? Low-level environment actions?
+  </p>
+ </li>
+ <li>
+  <p>
+   Where do
+   <strong>
+    rewards
+   </strong>
+   come from? Human preferences? Automatic metrics (like accuracy or latency)? Environment signals (win/lose, success/failure)?
+  </p>
+ </li>
+ <li>
+  <p>
+   How is
+   <strong>
+    credit
+   </strong>
+   assigned? Are rewards attributed to individual actions, whole trajectories, or something in between?
+  </p>
+ </li>
+ <li>
+  <p>
+   What does the
+   <strong>
+    policy
+   </strong>
+   look like? A raw LLM? An LLM planner supervising a non-LLM controller? A multi-agent system sharing a global reward?
+  </p>
+ </li>
+</ul>
+<p>
+ Seen through this lens, many disparate-looking papers turn out to be close cousins. That realization helps cut through the noise.
+</p>
+<p>
+ <em>
+  How does agentic RL typically look in code?
+ </em>
+</p>
+<p>
+ At its core, the RL loop for an LLM agent still resembles classic RL:
+</p>
+<pre><code><code>state = env.reset()
+trajectory = []
+
+while not done:
+    action = agent.act(state)  # may involve prompting an LLM, choosing tools, etc.
+    next_state, reward, done = env.step(action)
+    trajectory.append((state, action, reward))
+    state = next_state
+
+agent.update_policy(trajectory)
+</code></code></pre>
+<p>
+ The complexity lives inside agent.act and agent.update_policy: they might involve multiple calls to an LLM, intermediate planning steps, or latent states. But structurally, the story is the same: explore, collect rewards, adjust.
+</p>
+<p>
+ <em>
+  What are the main insights from the survey?
+ </em>
+</p>
+<p>
+ A few patterns stand out. First, RL alone does not rescue a poorly pre-trained base model; it needs to operate on top of a strong agentic prior. Second, reward design is everything: narrow, brittle reward signals can produce impressive benchmark scores but agents that generalize poorly or game the metric. Third, curriculum matters: agents learn more effectively when tasks, tools, and environments are introduced in a staged fashion rather than all at once.
+</p>
+<p>
+ Most importantly, the survey highlights that the most promising methods tend to
+ <em>
+  combine
+ </em>
+ supervised trajectory learning, early-experience adaptation, and carefully designed RL — not treat them as mutually exclusive alternatives.
+</p>
+<p>
+ <em>
+  How does this move us forward?
+ </em>
+</p>
+<p>
+ With this taxonomy in place, it becomes easier to evaluate new proposals and to understand what is truly novel about them. It also sets the stage for more exotic directions: instead of having agents talk entirely in text and receive sparse textual rewards, what if they could coordinate in richer ways, share latent internal information, or learn inside simulated worlds? Those ideas motivate the next phase.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 5 — Latent Collaboration: When Agents Talk in Vectors, Not Only in Text
+ </strong>
+</h1>
+<h2>
+ <strong>
+  LatentMAS: Latent Collaboration in Multi-Agent Systems (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  Latent Collaboration in Multi-Agent Systems (LatentMAS)
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2511.20639">
+  https://arxiv.org/abs/2511.20639
+ </a>
+</p>
+<p>
+ <em>
+  What problem does this paper solve?
+ </em>
+</p>
+<p>
+ Most multi-agent systems up to this point have communicated via plain text messages. One agent writes a message, another reads it as part of its prompt, and so on. This is simple and interpretable, but it is also expensive and noisy. Text-based communication forces agents to pack their internal state into words over and over again, and it introduces a lot of redundancy. The authors of LatentMAS ask whether agents can instead communicate in a more compact, structured form: through
+ <strong>
+  latent representations
+ </strong>
+ that never surface as text.
+</p>
+<p>
+ <em>
+  Why does this matter?
+ </em>
+</p>
+<p>
+ If agents can collaborate via latent vectors, several things become possible. They can share rich internal information without bloating prompts. They can reason jointly about a task while keeping communication overhead low. And they can potentially learn more nuanced interaction patterns that are not constrained by linguistic surface form. In effect, agent conversations become operations in a shared representation space, rather than long chains of messages in natural language.
+</p>
+<p>
+ <em>
+  What is the main intuition?
+ </em>
+</p>
+<p>
+ Each agent has both an external-facing interface (which produces or consumes text when interacting with humans or tools) and an internal latent interface for communicating with other agents. Instead of typing to each other, agents exchange vectors. A collaboration might look like this conceptually:
+</p>
+<pre><code><code># agent A encodes its beliefs into a latent vector
+z_A = agentA.encode_state(task_context)
+
+# agent B receives the latent message and updates its own state
+agentB_state = agentB.update_from_latent(z_A)
+
+# agent B decides on an action or a textual output
+response = agentB.decode_action(agentB_state)
+</code></code></pre>
+<p>
+ The important shift is that the “conversation” no longer clutters the prompt; it happens in a learned hidden space.
+</p>
+<p>
+ <em>
+  How does it work technically?
+ </em>
+</p>
+<p>
+ LatentMAS introduces architecture components that map textual or environmental information into latent representations, perform transformations on them, and then decode decisions or messages back out. Training involves multi-agent objectives where success depends on the quality of coordination mediated through these latent channels. The collaboration protocol is learned end-to-end under these objectives, rather than hand-specified.
+</p>
+<p>
+ <em>
+  What does this change in practice?
+ </em>
+</p>
+<p>
+ Latent collaboration reduces prompt size and cost, improves scalability as the number of agents grows, and opens the door to more sophisticated coordination strategies. It also blurs the line between “one big model with multiple modules” and “a team of models” — when collaboration happens in latent space, the distinction becomes more architectural than conceptual.
+</p>
+<p>
+ <em>
+  How does this connect to the broader evolution?
+ </em>
+</p>
+<p>
+ Once you allow agents to live and talk in latent spaces, it becomes natural to embed them in
+ <strong>
+  latent worlds
+ </strong>
+ as well: simulated environments that are not literally rendered text or pixels, but structured state spaces. This is the direction taken by research on world models and embodied agents, which we consider next.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 6 — World Models and Embodied Agents: Learning Inside Scalable Simulated Worlds
+ </strong>
+</h1>
+<h2>
+ <strong>
+  Scalable World Models (Representative line of work)
+ </strong>
+</h2>
+<p>
+ <em>
+  What problem does this line of work address?
+ </em>
+</p>
+<p>
+ Text-based tasks and browser environments are valuable, but they only cover a slice of what agents might do. Many challenges — robotics, complex games, logistics, scientific simulation, long-horizon planning — unfold in structured environments with states, actions, and dynamics that are not naturally expressed as linear text. Training agents directly in those environments is often expensive or unsafe. World models offer an alternative: train a model of the environment itself and let agents learn
+ <em>
+  inside
+ </em>
+ that model.
+</p>
+<p>
+ <em>
+  Why is this important for agents?
+ </em>
+</p>
+<p>
+ For language-based agents, world models expand the training domain from “documents and websites” to arbitrary interactive worlds. Agents can practice complex strategies cheaply and at scale, without touching real users or real infrastructure. They can explore many hypothetical futures, refine plans, and test policies in simulation. Even when the final deployment happens in a textual or browser environment, the intuitions learned from world model training can transfer.
+</p>
+<p>
+ <em>
+  What is the core idea?
+ </em>
+</p>
+<p>
+ A world model is a learned function that predicts the next state of the environment given the current state and action. Once trained, it becomes a kind of internal simulator:
+</p>
+<pre><code><code>state = world_model.encode(observation)
+
+for t in range(horizon):
+    action = agent.policy(state)
+    state = world_model.predict_next(state, action)
+</code></code></pre>
+<p>
+ The agent can unroll this imaginary trajectory to evaluate possible futures and choose actions that look promising — all without incurring the cost of running those actions in a real or expensive environment.
+</p>
+<p>
+ <em>
+  How does this change agent training?
+ </em>
+</p>
+<p>
+ Agents can now learn through a mixture of real and simulated experience. A typical pattern is to collect some real data, fit a world model, and then train agents inside that model with RL or imitation. Over time, improved policies can trigger collection of more diverse real data, which in turn refines the world model. This interplay between real and simulated experience tightens the feedback loop between data, model, and policy.
+</p>
+<p>
+ <em>
+  How does this tie back to language-based agents?
+ </em>
+</p>
+<p>
+ Even for agents that mainly operate through language and tools, world models provide a template: instead of reacting greedily at each step, agents can build internal rollouts of possible tool sequences, web navigation paths, or code execution trajectories. Some recent works explicitly cast planning as “imagining” sequences in a latent space and then choosing among them, blurring the boundary between symbolic planning and learned simulation.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  Transition: From Acting in Text to Acting in Structured Worlds
+ </strong>
+</h2>
+<p>
+ At this point in the story, the concept of an “agent” has expanded dramatically. We started with LLMs that simply alternated thoughts and actions in text. We then trained models that internalized agentic structure through continual pre-training and early-experience learning. We added reinforcement learning to optimize behavior, latent channels for collaboration, and world models to scale training beyond textual environments.
+</p>
+<p>
+ The natural next question is: if we can embed agents in richer worlds and coordinate them more efficiently, can we also push them into
+ <strong>
+  richer intellectual domains
+ </strong>
+ ? Can they generate new knowledge, not just retrieve it? Can they discover proofs, conjectures, or experiments? The next phase of the evolution focuses on exactly that: agents as scientists and high-level reasoners.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 7 — AI Scientists and High-Level Reasoning: Agents That Generate Knowledge
+ </strong>
+</h1>
+<p>
+ The previous stages gave agents the capacity to plan, to act, to learn from experience, to cooperate, and even to train within imagined worlds. But scientific and mathematical domains impose a new level of difficulty. These tasks aren’t just long-horizon; they demand rigor, abstraction, and the ability to manipulate structures that have no immediate sensory grounding. Agents must synthesize ideas, test hypotheses, correct mistakes, and produce artifacts—proofs, experiments, insights—that can withstand scrutiny. This is where the agent story shifts from
+ <em>
+  acting
+ </em>
+ to
+ <em>
+  reasoning at scale
+ </em>
+ .
+</p>
+<p>
+ Below we examine several representative lines of work: agents developing scientific hypotheses, agents solving formal reasoning tasks, and systems for self-directed research.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  LUMINE (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  LUMINE: AI Scientist for Scientific Discovery
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2511.16832">
+  https://arxiv.org/abs/2511.16832
+ </a>
+</p>
+<p>
+ <em>
+  What problem does LUMINE solve?
+ </em>
+</p>
+<p>
+ Classical LLMs are good at summarizing scientific papers or generating hypotheses on demand, but they are brittle when asked to
+ <strong>
+  extend
+ </strong>
+ scientific knowledge: forming new conjectures, evaluating competing explanations, or designing experiments that differentiate them. Scientific reasoning is inherently multi-step and self-reflective, requiring a structured loop of hypothesize → simulate → evaluate → revise. LLMs, when used naively, fall apart after one or two cycles.
+</p>
+<p>
+ LUMINE attempts to solve this by embedding an LLM inside a full research workflow: it plans research steps, executes simulations, reads and critiques its own logs, and iteratively refines hypotheses.
+</p>
+<p>
+ <em>
+  Why does it matter in the agent timeline?
+ </em>
+</p>
+<p>
+ LUMINE moves beyond “agents as tool users” toward “agents as researchers.” It treats scientific discovery not as a single generation task but as a long-horizon pipeline driven by iterative improvement. This opens the door to AI systems that perform exploratory intellectual work instead of merely responding to prompts.
+</p>
+<p>
+ <em>
+  What’s the core intuition?
+ </em>
+</p>
+<p>
+ Break scientific discovery into modular components—hypothesis generation, experiment planning, simulation execution, result interpretation—and assign these to specialized agent roles. Each agent uses domain tools (e.g., physics simulators, molecular dynamics engines) and exchanges intermediate representations. Critically, the system also includes agents whose job is to
+ <em>
+  criticize
+ </em>
+ and
+ <em>
+  stress-test
+ </em>
+ proposals.
+</p>
+<p>
+ A conceptual sketch of part of its loop might look like:
+</p>
+<pre><code><code>while not converged:
+    hypothesis = generator.propose(context)
+    plan = planner.design_experiment(hypothesis)
+    results = simulator.run(plan)
+    critique = reviewer.evaluate(hypothesis, results)
+    context = updater.integrate(hypothesis, critique)
+</code></code></pre>
+<p>
+ The agents are not simply chatting; they are manipulating structured scientific artifacts.
+</p>
+<p>
+ <em>
+  What changed because of LUMINE?
+ </em>
+</p>
+<p>
+ The system demonstrated early success in generating plausible hypotheses, designing discriminative experiments, and iteratively refining them. It didn’t solve science, but it showed that
+ <strong>
+  scientific workflows can be decomposed into agentic primitives
+ </strong>
+ , making them more tractable for LLM-based systems. LUMINE also inspired several follow-up projects that apply similar patterns to chemistry, climatology, and materials science.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  Kosmos (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  Kosmos: AI Theorem Prover and Mathematical Researcher
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2511.03848">
+  https://arxiv.org/abs/2511.03848
+ </a>
+</p>
+<p>
+ <em>
+  What problem does Kosmos solve?
+ </em>
+</p>
+<p>
+ Mathematics is even less forgiving than empirical science. A theorem is either true or false; a proof is either valid or invalid. Language models can sketch informal arguments but struggle to maintain formal correctness over long sequences, especially when multiple lemmas interact. Kosmos addresses this by embedding LLM reasoning inside a formal proving environment and treating theorem proving as a structured interaction between different agent roles.
+</p>
+<p>
+ <em>
+  Why does it matter?
+ </em>
+</p>
+<p>
+ Where LUMINE shows agents can scaffold scientific discovery, Kosmos shows they can scaffold
+ <strong>
+  formal reasoning
+ </strong>
+ . Mathematics requires tight control of logical structure, not just conceptual understanding. Coordinating multiple agents—such as a lemma generator, a proof planner, a tactic selector, and a verifier—turns out to be an effective strategy. Each role focuses on a different aspect of the problem, reducing the cognitive load on any single model.
+</p>
+<p>
+ <em>
+  What’s the core intuition?
+ </em>
+</p>
+<p>
+ Structure the proof search using multiple loops: a high-level planner decomposes the theorem into subgoals; subordinate agents propose candidate lemmas; a tactic agent transforms goals inside a proof assistant; and a verifier checks correctness.
+</p>
+<p>
+ The workflow resembles a branching, self-correcting search:
+</p>
+<pre><code><code>goal = theorem
+stack = [goal]
+
+while stack:
+    current = stack.pop()
+    plan = planner.decompose(current)
+    candidates = lemma_generator.suggest(plan)
+    for lem in candidates:
+        if verifier.check(lem):
+            stack.extend(lem.subgoals)
+            break
+</code></code></pre>
+<p>
+ The agents systematically explore the structure of the problem, guided by the verifier’s feedback.
+</p>
+<p>
+ <em>
+  What changed because of Kosmos?
+ </em>
+</p>
+<p>
+ Kosmos significantly increased the fraction of theorems solved from standard libraries. More importantly, it demonstrated that
+ <strong>
+  formal reasoning benefits from agent decomposition
+ </strong>
+ in the same way scientific research does. The idea that a single LLM should perform planning, lemma generation, tactic selection, and proof checking gave way to the idea that agents, properly specialized, can collaborate to produce rigorous results.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  Aristotle (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  Aristotle: Deliberate Multi-Hop Reasoning with Agentic Self-Revision
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2511.07229">
+  https://arxiv.org/abs/2511.07229
+ </a>
+</p>
+<p>
+ <em>
+  What problem does Aristotle solve?
+ </em>
+</p>
+<p>
+ General question answering tasks, particularly those requiring multi-step reasoning, challenge even strong models. They may propose plausible but incorrect chains of logic. Aristotle introduces a system where agents not only reason but
+ <em>
+  re-evaluate
+ </em>
+ their own intermediate steps, revising sub-answers as needed.
+</p>
+<p>
+ <em>
+  Why does this matter?
+ </em>
+</p>
+<p>
+ Aristotle is an example of a pattern that would become common:
+ <strong>
+  self-revision as an explicit agentic subroutine
+ </strong>
+ . Instead of emitting a chain of thought and hoping it’s right, the agent repeatedly scrutinizes its own reasoning, correcting earlier steps that no longer make sense in light of new evidence.
+</p>
+<p>
+ <em>
+  What’s the core intuition?
+ </em>
+</p>
+<p>
+ The system decomposes a question into sub-questions, answers them individually, and then reassembles the results into a coherent whole. Crucially, it doesn’t treat sub-answers as final. Instead, it repeatedly runs critique loops that evaluate individual reasoning steps:
+</p>
+<pre><code><code>subqs = planner.decompose(question)
+answers = {q: solver.answer(q) for q in subqs}
+
+for q in subqs:
+    critique = critic.review_step(q, answers[q])
+    if critique.requires_revision:
+        answers[q] = solver.answer(q, critique.hints)
+</code></code></pre>
+<p>
+ This iterative refinement stabilizes the reasoning chain and reduces error propagation.
+</p>
+<p>
+ <em>
+  What changed after Aristotle?
+ </em>
+</p>
+<p>
+ Self-revision became recognized as a core ingredient in robust reasoning systems. Many later agent frameworks embedded critiques, revision loops, or counterfactual reasoning modules directly into their architecture. Aristotle belongs to a lineage of systems that treat reasoning as
+ <em>
+  process
+ </em>
+ , not output.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  CoCoNuT (2025)
+ </strong>
+</h2>
+<p>
+ <strong>
+  CoCoNuT: Coordinated Control of Multiple Agents for Nonlinear Reasoning Tasks
+ </strong>
+</p>
+<p>
+ <a href="https://arxiv.org/abs/2511.15593">
+  https://arxiv.org/abs/2511.15593
+ </a>
+</p>
+<p>
+ <em>
+  What problem does CoCoNuT solve?
+ </em>
+</p>
+<p>
+ Some reasoning tasks, particularly those involving nonlinear dependencies between subproblems, require coordination beyond simple decomposition. A rigid tree of sub-questions often fails because the solution to one subproblem depends intricately on the evolving solutions to others. CoCoNuT introduces a more dynamic form of agentic coordination, where multiple agents operate simultaneously on different parts of the problem but exchange intermediate states as needed.
+</p>
+<p>
+ <em>
+  Why does this matter?
+ </em>
+</p>
+<p>
+ It shows how agent collaboration can go beyond linear or even hierarchical decomposition. Instead of a clear step-by-step sequence, reasoning becomes a flexible dance involving shared context, mutual updates, and opportunistic jumps between ideas.
+</p>
+<p>
+ <em>
+  What’s the central intuition?
+ </em>
+</p>
+<p>
+ Allow agents to work in parallel on different aspects of a problem, but provide mechanisms for them to synchronize through shared intermediate structures. CoCoNuT maintains a workspace where each agent writes partial insights and reads others’ contributions. The system resembles a distributed research meeting rather than a strict pipeline.
+</p>
+<pre><code><code>workspace = {}
+
+while not converged:
+    for agent in agents:
+        update = agent.contribute(workspace)
+        workspace.update(update)
+</code></code></pre>
+<p>
+ Agents coordinate implicitly through shared memory rather than explicit messaging.
+</p>
+<p>
+ <em>
+  What changed because of CoCoNuT?
+ </em>
+</p>
+<p>
+ It broadened the conception of what “multi-agent reasoning” means. Instead of sequential roles or tidy hierarchies, we saw the emergence of
+ <strong>
+  collaborative reasoning ecosystems
+ </strong>
+ where agents negotiate meaning through shared structures. This pattern has since influenced both software frameworks and architectural designs for next-generation models.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  Transition: From Structured Reasoning to Integrated Agent Architectures
+ </strong>
+</h2>
+<p>
+ At this stage, the field reached an intriguing point. We had systems for scientific discovery, theorem proving, and collaborative reasoning. We had agents that could critique themselves, refine sub-answers, coordinate through latent spaces, and train inside imagined worlds. But these capabilities were fragmented across different architectures and frameworks. The next natural step was synthesis: pulling these ingredients into unified agent platforms that developers could actually use at scale.
+</p>
+<p>
+ This brings us to the notion of the
+ <strong>
+  Agent Stack
+ </strong>
+ — the layered architecture that underlies modern agent systems.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 8 — The Agent Stack: The Architecture Beneath Modern Agents
+ </strong>
+</h1>
+<p>
+ By this point in the story, agents have accumulated a remarkable range of abilities: structured thought-action loops, multi-agent collaboration, learned agentic priors from continual pre-training, adaptation from early deployment, reinforcement learning for long-horizon performance, latent communication channels, and even facility with world models and formal reasoning. But as these abilities multiplied, so did the architectural complexity required to manage them. In practice, no single model or paper-defined system could organize all these behaviors on its own.
+</p>
+<p>
+ The field began converging on a layered architecture — not a formal standard, but an emergent structure that appeared across frameworks and research efforts. This arrangement is widely referred to as
+ <strong>
+  the Agent Stack
+ </strong>
+ . It is the conceptual map that shows how all the contributions we’ve discussed align and interact.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  1. The Foundation Layer: Pre-Trained Agentic Models
+ </strong>
+</h2>
+<p>
+ At the base of the stack sits the model itself, enriched not only by language pre-training but also by exposure to agent trajectories, tool traces, simulated interactions, and early deployment data. The shift from generic language models to
+ <strong>
+  agentic foundation models
+ </strong>
+ represents the deepest structural change of the era. These models come equipped with powerful priors:
+</p>
+<ul>
+ <li>
+  <p>
+   that tasks often unfold over multiple steps,
+  </p>
+ </li>
+ <li>
+  <p>
+   that observations constrain reasoning,
+  </p>
+ </li>
+ <li>
+  <p>
+   that tools matter,
+  </p>
+ </li>
+ <li>
+  <p>
+   that recovery from failure is itself a learned pattern.
+  </p>
+ </li>
+</ul>
+<p>
+ An agent built on such a model begins with a significant advantage. It does not have to be taught the meaning of a plan or an observation through prompting alone; it has seen these patterns during training.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  2. The Reasoning Layer: Planning, Self-Revision, and Multi-Hop Structure
+ </strong>
+</h2>
+<p>
+ Above the foundation lies the reasoning layer—where systems like Aristotle, Kosmos, and CoCoNuT live. This layer contains algorithmic scaffolding that guides the model through complex tasks:
+</p>
+<ul>
+ <li>
+  <p>
+   planners that break problems into sub-tasks,
+  </p>
+ </li>
+ <li>
+  <p>
+   critics that evaluate intermediate steps,
+  </p>
+ </li>
+ <li>
+  <p>
+   revision loops that allow the system to correct itself,
+  </p>
+ </li>
+ <li>
+  <p>
+   shared workspaces for nonlinear coordination.
+  </p>
+ </li>
+</ul>
+<p>
+ This layer is not fixed; different tasks invoke different scaffolds. But the pattern is consistent: rich reasoning emerges not just from the model, but from the orchestration around it. The most successful systems treat the model as a participant in an algorithmic loop rather than an oracle.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  3. The Environment Layer: Tools, Browsers, Simulators, and Worlds
+ </strong>
+</h2>
+<p>
+ Agents act in environments. Early systems treated environments as a thin wrapper around Python or a few APIs. Later systems expanded this dramatically:
+</p>
+<ul>
+ <li>
+  <p>
+   browser automation environments,
+  </p>
+ </li>
+ <li>
+  <p>
+   operating system interfaces,
+  </p>
+ </li>
+ <li>
+  <p>
+   structured scientific simulators,
+  </p>
+ </li>
+ <li>
+  <p>
+   formal verification tools,
+  </p>
+ </li>
+ <li>
+  <p>
+   latent world models.
+  </p>
+ </li>
+</ul>
+<p>
+ Each environment imposes constraints and opportunities. The agent must reason not only about text but about state, action, and consequence. This layer is where the model’s agentic prior meets the real world—or the simulated one.
+</p>
+<p>
+ A typical environment loop looks something like:
+</p>
+<pre><code><code>while not done:
+    thought = llm(reason(history))
+    action = decode_action(thought)
+    observation = env.step(action)
+    history.append((thought, action, observation))
+</code></code></pre>
+<p>
+ This loop appears in many guises, but its essence remains constant: observe → think → act → observe again.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  4. The Coordination Layer: Multi-Agent Collaboration
+ </strong>
+</h2>
+<p>
+ Whether through text messages as in AutoGen or latent vectors as in LatentMAS, the coordination layer governs how multiple agents interact. Tasks that exceed the capacity of a single agent—scientific discovery, theorem proving, code synthesis—often require distributed expertise. The coordination layer provides the mechanisms for that distribution:
+</p>
+<ul>
+ <li>
+  <p>
+   role assignment (planner, critic, solver, verifier),
+  </p>
+ </li>
+ <li>
+  <p>
+   shared memory or latent workspaces,
+  </p>
+ </li>
+ <li>
+  <p>
+   iterative negotiation of intermediate representations,
+  </p>
+ </li>
+ <li>
+  <p>
+   stable termination conditions.
+  </p>
+ </li>
+</ul>
+<p>
+ The most advanced systems in 2025 treat this layer almost as a micro-economy of specialists. Each agent has strengths and weaknesses; the architecture encourages them to collaborate efficiently.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  5. The Learning Layer: Continual Improvement
+ </strong>
+</h2>
+<p>
+ This layer closes the loop between deployment and training. It incorporates early-experience learning, agentic RL signals, preference feedback, and trajectory distillation. Every large-scale agent system in production eventually needs this layer, because static behavior quickly erodes in dynamic environments.
+</p>
+<p>
+ The learning layer answers questions like:
+</p>
+<ul>
+ <li>
+  <p>
+   How does the agent adapt when encountering new tools?
+  </p>
+ </li>
+ <li>
+  <p>
+   How does it recover from systematic errors?
+  </p>
+ </li>
+ <li>
+  <p>
+   How can we safely harvest real-world trajectories?
+  </p>
+ </li>
+ <li>
+  <p>
+   How do we prevent reward hacking or degenerate strategies?
+  </p>
+ </li>
+</ul>
+<p>
+ This layer is conceptually closest to applied machine learning, but its importance to agents cannot be overstated. Without continual learning, an agent plateaus; with it, agents can improve well beyond what pre-training alone yields.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  6. The Orchestration Layer: Frameworks and Infrastructure
+ </strong>
+</h2>
+<p>
+ Finally, at the top of the stack live the developer-facing frameworks: LangGraph, AutoGen, CrewAI, and a proliferation of specialized agentic toolkits. This layer deals with:
+</p>
+<ul>
+ <li>
+  <p>
+   dataflow between agents,
+  </p>
+ </li>
+ <li>
+  <p>
+   execution graphs,
+  </p>
+ </li>
+ <li>
+  <p>
+   observability and logging,
+  </p>
+ </li>
+ <li>
+  <p>
+   error handling,
+  </p>
+ </li>
+ <li>
+  <p>
+   and deployment across cloud, edge, or hybrid environments.
+  </p>
+ </li>
+</ul>
+<p>
+ The orchestration layer is what transforms research insights into usable software. It hides the complexity of the stack beneath a programmable interface, allowing developers to build agent workflows without re-implementing theoretical constructs from scratch.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  Transition: From Fragmentation to Integration
+ </strong>
+</h2>
+<p>
+ By 2025, these layers began to cohere into unified systems. Researchers no longer viewed tools, plans, and collaboration as isolated techniques; they became interdependent components of a comprehensive agent architecture. Pre-trained agentic models informed planning; planning structured tool use; tool use produced experience; experience refined the model; and the cycle repeated. The field matured from a collection of promising tricks into an emerging engineering discipline.
+</p>
+<p>
+ The final task is to understand what all this progress means—and what comes next.
+</p>
+<div>
+ <hr/>
+</div>
+<h1>
+ <strong>
+  Part 9 — Synthesis: Where Agents Stand Today and What Comes Next
+ </strong>
+</h1>
+<p>
+ We can now look back over the trajectory and see a clear arc. Agents started life as clever prompt loops wrapped around generic LLMs, then graduated into increasingly structured reasoning systems, and finally became models that are trained to act, learn, and collaborate from the start. Each stage built on the last:
+</p>
+<ul>
+ <li>
+  <p>
+   Thought-action loops (ReAct) made it possible for LLMs to touch the world.
+  </p>
+ </li>
+ <li>
+  <p>
+   Multi-agent frameworks (AutoGen) showed the power of specialization.
+  </p>
+ </li>
+ <li>
+  <p>
+   Agentic continual pre-training baked these behaviors directly into the weights.
+  </p>
+ </li>
+ <li>
+  <p>
+   Early-experience learning made agents sensitive to real-world nuance.
+  </p>
+ </li>
+ <li>
+  <p>
+   Agentic RL optimized them for long-horizon success.
+  </p>
+ </li>
+ <li>
+  <p>
+   Latent collaboration removed the bottleneck of textual communication.
+  </p>
+ </li>
+ <li>
+  <p>
+   World models gave them scalable training grounds beyond static web text.
+  </p>
+ </li>
+ <li>
+  <p>
+   Scientific and mathematical agents demonstrated the reach of structured agentic workflows.
+  </p>
+ </li>
+ <li>
+  <p>
+   The Agent Stack unified these ingredients into a model of how modern agents are built.
+  </p>
+ </li>
+</ul>
+<p>
+ Each layer strengthened the others, producing agents that are more robust, more efficient, and more capable of sustained reasoning.
+</p>
+<p>
+ Yet the story is not complete. Several key challenges remain open:
+</p>
+<ul>
+ <li>
+  <p>
+   How far can agent models scale before coordination costs outweigh benefits?
+  </p>
+ </li>
+ <li>
+  <p>
+   Can world models accurately represent domains too intricate for direct simulation?
+  </p>
+ </li>
+ <li>
+  <p>
+   How can we guarantee safety and alignment in agents that learn autonomously?
+  </p>
+ </li>
+ <li>
+  <p>
+   What formal tools will help verify the correctness of agentic systems at scale?
+  </p>
+ </li>
+ <li>
+  <p>
+   And perhaps most fundamentally: will the future of agents be dominated by many small specialized models or a few large, deeply agentic ones?
+  </p>
+ </li>
+</ul>
+<p>
+ Our current architectures suggest a hybrid world. Foundation agent models will continue growing in depth, while specialized reasoning agents—planners, critics, solvers, verifiers—coordinate on top of them. Frameworks will become more modular and more declarative. And environments—whether browsers, operating systems, laboratories, or world models—will increasingly shape agent capabilities.
+</p>
+<p>
+ If the last three years have taught us anything, it is that the pace of agent evolution accelerates precisely when models stop behaving as isolated predictors and start behaving as participants in structured computational workflows. The next wave of breakthroughs will likely come from refining those workflows, not replacing them.
+</p>
+<p>
+ We have moved beyond the age of single-shot reasoning. We have entered the age of agency.
+</p>
+<div>
+ <hr/>
+</div>
+<p>
+ <em>
+  This blog post synthesizes research from hundreds of papers published between 2022-2025. All papers cited are peer-reviewed or from reputable preprint servers.
+ </em>
+</p>
+<p>
+</p>
+<div class="subscription-widget-wrap-editor" data-attrs='{"url":"https://lambpetros.substack.com/subscribe?","text":"Subscribe","language":"en"}' data-component-name="SubscribeWidgetToDOM">
+ <div class="subscription-widget show-subscribe">
+  <div class="preamble">
+   <p class="cta-caption">
+    Thanks for reading Petros's Substack! Subscribe for free to receive new posts and support my work.
+   </p>
+  </div>
+  <form class="subscription-widget-subscribe">
+   <input class="email-input" name="email" placeholder="Type your email…" tabindex="-1" type="email"/>
+   <input class="button primary" type="submit" value="Subscribe"/>
+   <div class="fake-input-wrapper">
+    <div class="fake-input">
+    </div>
+    <div class="fake-button">
+    </div>
+   </div>
+  </form>
+ </div>
+</div>
+<p>
+</p>
+<h2>
+ <strong>
+  Need help with AI Agents?
+ </strong>
+</h2>
+<p>
+ Get my professional services
+ <strong>
+ </strong>
+ at
+ <strong>
+ </strong>
+ petroslamb.github.io/peterlamb/
+</p>
+<div class="directMessage button" data-attrs='{"userId":419548019,"userName":"Petros Lamb","canDm":null,"dmUpgradeOptions":null,"isEditorNode":true}' data-component-name="DirectMessageToDOM">
+</div>
+<p>
+</p>
+</body></html>

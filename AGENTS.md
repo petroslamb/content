@@ -78,7 +78,7 @@ Use the `substack-downloader` submodule to fetch and archive Substack posts:
 cd substack-downloader
 .venv/bin/python scraper.py --url https://lambpetros.substack.com/
 ```
-The downloaded markdown archives and JSON metadata will be saved directly into `substack-downloader/archive/lambpetros.substack.com/`.
+The downloaded markdown archives and JSON metadata are saved into `substack-downloader/archive/lambpetros.substack.com/`. For this repository, the canonical archive for the publication has been moved to the root `publication_strategy_and_archive/` folder.
 
 ### Substack Publishing (Python Interface)
 
