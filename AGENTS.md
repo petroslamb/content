@@ -8,18 +8,16 @@ Use the root [README.md](./README.md) for the current package map. For package-s
 - [autonomous-agent-blueprint/README.md](./autonomous-agent-blueprint/README.md)
 - [hardware_compatibility_architecture_2023_2025/README.md](./hardware_compatibility_architecture_2023_2025/README.md)
 
-## Writing New Articles: Voice Policy
+## Writing Voice Policy
 
-**Before writing any new article, you MUST read [`voice_consistency_guide.md`](./voice_consistency_guide.md) in full.**
+When writing or assisting with articles for this publication, read [`voice_consistency_guide.md`](./voice_consistency_guide.md) before generating content.
 
-This guide is not optional. It is the operational specification for writing in this publication's voice. It contains:
-- The mandatory paragraph pattern (frame → deepen → turn)
-- The paper-as-artifact unpacking cadence
-- The falsifiable prediction format (required in every thesis article)
-- A mechanical ban list of prohibited words, phrases, and structural habits
-- The pre-publish checklist
+Pay particular attention to:
+- The ban list at the bottom of the guide (unconditionally enforced, no exceptions)
+- The paragraph rhythm and auditor tone sections
+- The characteristic moves section for thesis-driven pieces
 
-Any article that does not pass the checklist in Section 11 of the guide should not be published. If generating article content, apply the guide's rules line by line. Do not rely on general impressions of the author's style—use the guide directly.
+The guide defines voice, not format. Structure varies by article type.
 
 ## Python Environment Policy
 
