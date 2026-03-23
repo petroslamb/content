@@ -1,0 +1,3801 @@
+<html><head><title>What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)</title>
+            <style>
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                    margin: 20px auto;
+                    border-radius: 8px;
+                }
+                h1 {
+                    font-size: 2.2em;
+                    margin-bottom: 0.5em;
+                    color: #1a1a1a;
+                }
+                a {
+                    color: #0066cc;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+                pre {
+                    background: #f4f4f4;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                }
+                blockquote {
+                    border-left: 4px solid #ddd;
+                    margin: 0;
+                    padding-left: 15px;
+                    color: #666;
+                }
+            </style>
+            </head><body><h1>What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)</h1><h2>
+ TL;DR
+</h2>
+<ul>
+ <li>
+  <p>
+   Hardware compatibility—not just benchmarks—explains which architectures actually make it into 2023–2025 production LLMs.
+  </p>
+ </li>
+ <li>
+  <p>
+   FlashAttention, GQA/MLA, and MoE win because they map cleanly onto GPU primitives and memory hierarchies; KANs and pure SSMs don’t.
+  </p>
+ </li>
+ <li>
+  <p>
+   There is a predictable 12/24/36‑month “infrastructure lag” from paper to standard practice, driven by integration cost (weights → kernels → serving).
+  </p>
+ </li>
+ <li>
+  <p>
+   Architecture has become a relatively stable container; the biggest gains now come from training innovation (RL-style post-training, optimization, data curation) on top of that container.
+  </p>
+ </li>
+</ul>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!OX-8!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!OX-8!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!OX-8!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!OX-8!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!OX-8!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/e19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":2975753,"alt":"","title":"","type":"image/png","href":null,"belowTheFold":false,"topImage":true,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png","isProcessing":false,"align":null,"offset":false}' fetchpriority="high" height="813" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png" title="" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<h2>
+ The Scroll Map
+</h2>
+<p>
+ Here’s the path this article takes:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Act I — The Compatibility Filter
+   </strong>
+   – Why hardware‑compatible primitives (FlashAttention, GQA/MLA, MoE) cross the infra chasm while KANs and pure SSMs stall.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Act II — The Conditional Execution Revolution
+   </strong>
+   – How learned routing (attention, MoE, sparse patterns, LoRA-style adapters) became the dominant composition operator.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Act III — The Infrastructure Lag Pattern
+   </strong>
+   – A 12/24/36‑month heuristic for when new primitives and systems actually reach production.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Appendix — Evidence Tables
+   </strong>
+   – Model audits, MoE speedups, SSM ceiling, adoption timelines, and training‑innovation case studies.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Glossary &amp; Key Concepts
+   </strong>
+   – Short, detailed explanations of the main acronyms and primitives used throughout.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Hardware &amp; Kernel Primer
+   </strong>
+   – How GPU primitives, kernels, and frameworks create the Hardware Compatibility Filter and Infrastructure Lag Pattern.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Bibliography &amp; References
+   </strong>
+   – Grouped primary/secondary sources with one‑sentence explainers for each citation.
+  </p>
+ </li>
+</ul>
+<div class="native-audio-embed" data-attrs='{"label":null,"mediaUploadId":"c785ed44-1647-4d71-9415-24c72fb7819b","duration":841.50854,"downloadable":false,"isEditorNode":true}' data-component-name="AudioPlaceholder">
+</div>
+<p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share","text":"Share","action":null,"class":null}' data-component-name="ButtonCreateButton">
+ <a class="button primary" href="https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share">
+  <span>
+   Share
+  </span>
+ </a>
+</p>
+<h2>
+ Introduction
+</h2>
+<p>
+ In “Neural Architecture Design as a Compositional Language,” we established that architecture evolved from hand-crafted hierarchies to modular component libraries. The Transformer validated this: uniform blocks, structured composition rules, and emergent specialization through training.
+</p>
+<div class="digest-post-embed" data-attrs='{"nodeId":"47078d64-04b5-4a69-97a5-dcee00e4011b","caption":"","cta":"Read full story","showBylines":true,"size":"sm","isEditorNode":true,"title":"Neural Architecture Design as a Compositional Language","publishedBylines":[{"id":419548019,"name":"Petros Lamb","bio":"Hi, I’m Petros — I write about AI research, agents, future of deep learning, and cybersecurity","photo_url":"https://substack-post-media.s3.amazonaws.com/public/images/780074c6-a430-4529-8d42-bafd26e38ecc_832x832.png","is_guest":false,"bestseller_tier":null}],"post_date":"2025-11-27T16:04:27.908Z","cover_image":"https://substack-video.s3.amazonaws.com/video_upload/post/180114871/6455449b-8478-49aa-97ec-61bcf9c09113/transcoded-00001.png","cover_image_alt":null,"canonical_url":"https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e","section_name":null,"video_upload_id":"6455449b-8478-49aa-97ec-61bcf9c09113","id":180114871,"type":"podcast","reaction_count":0,"comment_count":0,"publication_id":7088450,"publication_name":"Petros Rooted Layers","publication_logo_url":"https://substackcdn.com/image/fetch/$s_!5JJH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F46a436ca-1dde-4ad1-89b3-1efd36a58123_832x832.png","belowTheFold":true,"youtube_url":null,"show_links":null,"feed_url":null}'>
+</div>
+<p>
+ We ended with three open questions. What primitives belong in the toolkit beyond attention and MLPs? What composition operators enable scaling? How do we train compositional systems effectively?
+</p>
+<p>
+ Two years of production deployments provide answers, but not through the lens most researchers expected. The organizing principle of the last 24 months isn’t expressiveness or theoretical elegance. It is
+ <strong>
+  hardware compatibility
+ </strong>
+ .
+</p>
+<p>
+ By “hardware compatibility,” we mean a concrete set of properties: operations that can be expressed as dense matrix multiplications on tensor cores, memory access patterns that respect the SRAM/HBM hierarchy, and enough regular parallelism to saturate modern GPUs. GPU architectures—optimized for these dense, parallel primitives—create a filter. Techniques that map naturally to them tend to win; techniques that fight them rarely survive contact with production, regardless of benchmark results on small models.
+</p>
+<p>
+ Hardware is not the only determinant of adoption—data availability, optimization effort, and product fit all matter—but when we compare architectures across labs in 2023–2025, hardware alignment is the strongest common constraint that shows up repeatedly in both open-weight releases and closed-model behavior.
+</p>
+<p>
+ This post examines the 2023–2025 era through three perspectives:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Act I: The Compatibility Filter
+   </strong>
+   — How Flash Attention, MoE, and attention variants succeeded by exploiting GPU architecture, while KANs and pure SSMs failed by fighting it.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Act II: The Conditional Execution Revolution
+   </strong>
+   — How learned routing (attention, MoE, sparse patterns) became the defining composition operator, replacing designed computation graphs.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Act III: The Infrastructure Lag Pattern
+   </strong>
+   — Why Flash Attention took 24 months to become standard, why MoE took 36, and how to predict adoption timelines.
+  </p>
+ </li>
+</ul>
+<p>
+ We argue for three claims, using production-style evidence and public model documentation:
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Hardware compatibility is a better early predictor of adoption
+   </strong>
+   than small-scale benchmarks.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Architecture innovation is slowing relative to training innovation
+   </strong>
+   ; for the foreseeable future on today’s GPU-centric stacks, the leverage is likely in optimization and data, not entirely new primitives.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Pure SSMs have not yet scaled to frontier models
+   </strong>
+   ; in practice, hybrids appear to be the effective ceiling today (see Appendix, Table 3).
+  </p>
+ </li>
+</ol>
+<p>
+ All three are falsifiable. For example, a technique that is clearly misaligned with GPU primitives but still becomes standard at frontier scale would directly challenge the hardware compatibility thesis; a pure SSM frontier model would falsify our current ceiling claim. As of December 2025, we have not seen such counterexamples in the public record.
+</p>
+<p>
+ What doesn’t work: Speculation without production validation, marketing claims without aggregate data, and techniques that ignore deployment constraints.
+</p>
+<p>
+ What does work: Hardware-compatible primitives, permissive compositional operators, and training methods that exploit—not fight—modular structure.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!dxhl!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!dxhl!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!dxhl!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!dxhl!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!dxhl!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":3849420,"alt":"","title":"","type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png" title="" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<div>
+ <hr/>
+</div>
+<h2>
+ Act I: The Compatibility Filter
+</h2>
+<p>
+ <em>
+  How hardware constraints shaped what survived
+ </em>
+</p>
+<p>
+ <strong>
+  Scope &amp; Limitations
+ </strong>
+</p>
+<p>
+ This act (and the broader analysis) focuses on large language models trained and deployed between 2023–2025 on GPU-centric infrastructure, using public papers, model cards, and system documentation as primary evidence. Closed-source models are included only to the extent that their internals can be inferred from public disclosures and third-party analyses; we do not claim completeness over proprietary experiments. All heuristics here (e.g., hardware compatibility as a filter, 12/24/36-month adoption lags) are empirical patterns observed in this window, not guarantees, and may not generalize to future hardware or domains outside production-scale LLMs. For definitions of key terms, see the
+ <strong>
+  Glossary and Key Concepts
+ </strong>
+ section; for a deeper look at how hardware and kernels interact with these ideas, see the
+ <strong>
+  Hardware and Kernel Primer
+ </strong>
+ section.
+</p>
+<h3>
+ 1. The Attention Bottleneck
+</h3>
+<p>
+ By early 2023, the Transformer architecture faced a crisis, but it wasn’t about intelligence. It was about memory. The quadratic cost of attention (
+ <em>
+  O
+ </em>
+ (
+ <em>
+  n
+ </em>
+ 2)) is often cited as a computational problem, but in practice, it is a memory movement problem.
+</p>
+<p>
+ At 128K context length, the Key-Value (KV) cache for a 70B model grows to hundreds of gigabytes, exceeding the HBM (High Bandwidth Memory) capacity of even an H100 GPU. The bottleneck wasn’t doing the math; it was moving the matrices from HBM to the compute units (SRAM) and back.
+</p>
+<p>
+ Naive solutions failed because they tried to approximate the math (sparse attention patterns, low-rank approximations) rather than solve the memory movement. They broke the one thing researchers wouldn’t compromise: the exactness of the attention mechanism. The solution that won didn’t change the math at all. It changed the memory access pattern.
+</p>
+<h3>
+ 2. Flash Attention: Hardware as Design Constraint
+</h3>
+<p>
+ Flash Attention (Dao et al., 2022; 2023) is one of the cleanest case studies for the Hardware Compatibility Thesis. Published in May 2022, it did not propose a new neural primitive. Instead, it proposed a
+ <strong>
+  tiling algorithm
+ </strong>
+ that respects the GPU’s memory hierarchy.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!6kzW!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!6kzW!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!6kzW!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!6kzW!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!6kzW!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":3566960,"alt":"","title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png" title="" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ Standard attention materializes the massive
+ <em>
+  N
+ </em>
+ ×
+ <em>
+  N
+ </em>
+ attention matrix in HBM, reading and writing gigabytes of data for every token generation. Flash Attention tiles the computation so that blocks of the matrix are loaded into SRAM (fast, on-chip memory), computed, and discarded without ever writing the full matrix to HBM.
+</p>
+<p>
+ <strong>
+  The Mechanism:
+ </strong>
+ By keeping the computation in SRAM, Flash Attention reduces memory reads/writes by roughly an order of magnitude and delivers 2–4× speedups on attention while cutting memory usage by ~10–20× at long sequences (see Appendix, Table 4). It turns a memory-bound operation into a compute-bound one, which is exactly what GPUs are designed to handle.
+</p>
+<p>
+ <strong>
+  The Adoption Timeline (The ≈24-Month Lag):
+ </strong>
+ The adoption of Flash Attention reveals a predictable infrastructure lag pattern that governs the entire field:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    May 2022:
+   </strong>
+   Paper published. Benchmarks show 2–4× speedup and near-linear memory scaling.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    2022–2023 (Stage 2):
+   </strong>
+   Early adopters and startups integrate it manually. Custom CUDA kernels are required.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    January 2024 (Stage 3):
+   </strong>
+   PyTorch 2.2 officially integrates FlashAttention-2. It becomes a standard library call.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    May 2024 (Stage 4):
+   </strong>
+   Standard practice. Major 2024 releases (Llama 3, Gemma 2, Phi-3 and peers) rely on FlashAttention-style kernels by default (Appendix, Table 4).
+  </p>
+ </li>
+</ul>
+<p>
+ It took roughly 24 months for a technique that required kernel-level changes to move from “proven research” to “standard practice.” This lag is not accidental; it is the cost of infrastructure integration. We will see this pattern repeat with MoE.
+</p>
+<h3>
+ 3. The Compatibility Winners
+</h3>
+<p>
+ The winners of 2023–2025 all share one trait: they reduce memory bandwidth pressure without requiring new, exotic compute kernels.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!o76S!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!o76S!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!o76S!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!o76S!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!o76S!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/c32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":3043437,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  Grouped Query Attention (GQA):
+ </strong>
+ GQA is the dominant attention variant of 2024 in our audit, appearing in a large majority of open-weight and documented models, including Llama 3, Mistral 7B, and Qwen2.5 (see Appendix, Table 5). Its mechanism is simple: share Key and Value heads across multiple Query heads.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Why it won:
+   </strong>
+   It reduces the size of the KV cache by 8× (for 8 groups), directly lowering memory bandwidth requirements. It uses standard matrix multiplication. It requires no new hardware support.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    The result:
+   </strong>
+   For 2024–2025 releases, it is effectively the default in most large model families we examined.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Multi-Head Latent Attention (MLA):
+ </strong>
+ Pioneered by DeepSeek (V2/V3), MLA takes compression further. It projects the KV cache into a low-rank latent vector.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Why it won:
+   </strong>
+   It compresses the KV cache significantly (crucial for DeepSeek’s 128K context) while maintaining the expressiveness of full attention (Appendix, Table 5). Like GQA, it relies on dense matrix projections—the GPU’s native language.
+  </p>
+ </li>
+</ul>
+<p>
+ MoE sits in the same compatibility bucket: when well-engineered, large MoE deployments deliver approximately
+ <strong>
+  2–3×
+ </strong>
+ higher throughput than dense models of similar quality, not the
+ <strong>
+  5–7×
+ </strong>
+ often claimed in marketing, and their advantage shrinks toward
+ <strong>
+  ≈1.3–1.5×
+ </strong>
+ at very long contexts as routing and KV/cache bandwidth dominate (Appendix, Table 2). The techniques that stick are those that respect the hardware, even when their real-world gains are less dramatic than the launch slides.
+</p>
+<p>
+ <strong>
+  Contrast: The Failure of KANs
+ </strong>
+ Kolmogorov-Arnold Networks (KANs) generated immense hype in early 2024 by proposing learnable activation functions on edges (splines) rather than fixed weights.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Why they struggle:
+   </strong>
+   Spline evaluation does not map cleanly to dense matrix multiplication. It requires disparate memory access patterns and custom kernels that are harder to implement in a way that saturates GPU tensor cores.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    The verdict (as of 2025):
+   </strong>
+   Despite theoretical elegance and promising small-scale results, we find no public evidence of large-scale production deployments. In practice, KANs remain a research curiosity for frontier-scale workloads, primarily because their current implementations are poorly aligned with GPU primitives.
+  </p>
+ </li>
+</ul>
+<h3>
+ 4. SSMs: The Compatibility Boundary
+</h3>
+<p>
+ State Space Models (SSMs) like Mamba (Gu et al., 2021; Gu &amp; Dao et al., 2023) represent the most significant architectural challenge to the Transformer. They promise linear scaling (
+ <em>
+  O
+ </em>
+ (
+ <em>
+  n
+ </em>
+ )) by replacing the attention mechanism with a recurrent state update.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!KM2C!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!KM2C!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!KM2C!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!KM2C!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!KM2C!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":2766246,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+</p>
+<p>
+ <strong>
+  The Mechanism:
+ </strong>
+ Mamba compresses context into a fixed-size state, updating it sequentially as it processes tokens. This eliminates the KV cache entirely, theoretically solving the memory bottleneck for infinite contexts.
+</p>
+<p>
+ <strong>
+  The Friction:
+ </strong>
+ Pure SSMs push against the GPU’s greatest strength:
+ <strong>
+  parallelism
+ </strong>
+ . Transformers process all tokens in a sequence simultaneously during training (parallel prefix scan). SSMs, by definition, have a sequential dependency: state
+ <em>
+  t
+ </em>
+ depends on state
+ <em>
+  t
+ </em>
+ − 1. While Mamba introduces a “parallel scan” algorithm to mitigate this, the fundamental operation is still less straightforward to parallelize than the brute-force matmuls of a Transformer.
+</p>
+<p>
+ <strong>
+  The Evidence (The Ceiling):
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Proven Scale:
+   </strong>
+   Pure Mamba models exist and work at 130M, 1.4B, 2.8B, and 7B (Falcon Mamba; Appendix, Table 3).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    The Gap:
+   </strong>
+   We find no public evidence of a pure SSM scaling to 13B, 70B, or frontier levels (100B+); all large SSM-style deployments above 7B are hybrids (Appendix, Table 3).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Major Lab Adoption:
+   </strong>
+   As of late 2025, OpenAI, Google, Meta, and Anthropic have not publicly documented pure SSMs in their frontier models. Adoption is 0/5 in our audit.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Nuance:
+ </strong>
+ Hybrids exist. Jamba (AI21) and Qwen3-Next use SSM layers mixed with Attention layers.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Why hybrids work:
+   </strong>
+   They route local, sequential dependencies to the SSM (efficient) and global, complex dependencies to Attention (expressive).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    The Prediction:
+   </strong>
+   Absent new evidence or hardware, pure SSMs look unlikely to become the dominant frontier architecture. The main bottleneck appears architectural (parallelism and in-context learning), not just a missing training trick. Hybrids are where we see real adoption today, and even they remain niche due to implementation complexity.
+  </p>
+ </li>
+</ul>
+<h3>
+ 5. External Memory (RAG): The Compatibility Shortcut
+</h3>
+<p>
+ While researchers fought over
+ <em>
+  O
+ </em>
+ (
+ <em>
+  n
+ </em>
+ 2) vs
+ <em>
+  O
+ </em>
+ (
+ <em>
+  n
+ </em>
+ ) architectures, the industry solved the context problem with a database. Retrieval-Augmented Generation (RAG) is the ultimate compatibility hack.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Mechanism:
+   </strong>
+   Offload memory to a vector database (highly optimized for search). Retrieve only relevant chunks. Feed them to the GPU context window.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Why it won:
+   </strong>
+   It requires
+   <strong>
+    zero changes
+   </strong>
+   to the neural architecture. It treats the GPU as a reasoning engine, not a storage engine.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Adoption:
+   </strong>
+   Effectively universal among major commercial assistants as of 2025. ChatGPT, Claude, Gemini and similar products all expose some form of retrieval or tool-based long-context access.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Act I Synthesis:
+ </strong>
+ Across 2023–2025, the pattern is consistent. Flash Attention (maps to the memory hierarchy) took about 24 months to become standard (Appendix, Table 4). GQA (maps to bandwidth constraints) diffused in roughly 12 months as a weight-only change (Appendix, Tables 4 and 5). Pure SSMs (which push against parallelism) currently top out at 7B with no public frontier-scale models (Appendix, Table 3). KANs (incompatible compute paths) have no documented large-scale production deployments.
+</p>
+<p>
+ We are not designing neural networks in a vacuum. We are discovering which computations GPUs can efficiently express. Hardware acts as a ruthless filter on which ideas survive into production today.
+</p>
+<p>
+ In Act II, we will see how this filter shaped the most important composition operator of the decade: the shift from static graphs to learned, conditional execution.
+</p>
+<p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/subscribe?","text":"Subscribe now","action":null,"class":null}' data-component-name="ButtonCreateButton">
+ <a class="button primary" href="https://lambpetros.substack.com/subscribe?">
+  <span>
+   Subscribe now
+  </span>
+ </a>
+</p>
+<h1>
+ Act II: The Conditional Execution Revolution
+</h1>
+<p>
+ <em>
+  How learned routing became a first-class primitive
+ </em>
+</p>
+<p>
+ The defining shift of 2023–2025 was not a new layer type. It was a change in the fundamental contract of computation. In the previous era, neural networks were static graphs: every input token triggered the exact same sequence of floating-point operations. In the current era, computation is
+ <strong>
+  conditional
+ </strong>
+ —the model learns
+ <em>
+  where
+ </em>
+ to spend compute, not just
+ <em>
+  what
+ </em>
+ layers exist.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!vGFC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!vGFC!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!vGFC!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!vGFC!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!vGFC!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":3042338,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ This isn’t just about Mixture-of-Experts (MoE). It is a convergence across attention, routing, and adaptation. The architecture increasingly specifies
+ <em>
+  how to choose
+ </em>
+ what to compute for a given token, task, or context.
+</p>
+<h3>
+ 1. The Conditional Execution Convergence
+</h3>
+<p>
+ If we look closely at the successful techniques of the last two years, a unifying pattern emerges: they all introduce some form of
+ <em>
+  learned selectivity
+ </em>
+ over compute or parameters:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    MoE:
+   </strong>
+   “Which expert processes this token?” (hard routing of tokens to expert FFNs).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Attention:
+   </strong>
+   “Which previous tokens influence this output?” (soft routing of influence over a dense attention kernel).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Sparse Patterns:
+   </strong>
+   “Which positions matter?” (structured masking that skips compute for parts of the sequence).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    LoRA / adapters:
+   </strong>
+   “Which low-rank subspace adapts for this task?” (task-conditional parameter additions, not token-time routing).
+  </p>
+ </li>
+</ul>
+<p>
+ These are not identical mechanisms, but they share a common composition operator:
+ <strong>
+  conditional execution
+ </strong>
+ . Some (like MoE and sparse attention) route tokens or positions to different compute paths at runtime; others (like LoRA) condition
+ <em>
+  which parameters
+ </em>
+ are active for a given task or domain.
+</p>
+<p>
+ Why did this happen now? Because GPU infrastructure finally matured to support it at scale. For years, “sparsity” was a dirty word in high-performance computing because it meant irregular memory access and thread divergence—two things GPUs hate. But with the arrival of specialized kernels and serving stacks for block-sparse operations (e.g., Triton/MegaBlocks-style MoE kernels, FasterMoE, Aurora, FlashInfer, and MoE-aware DeepSpeed/Megatron/FasterTransformer), the penalty for conditional execution dropped below the capacity and throughput gains it unlocks (Appendix, Table 2).
+</p>
+<p>
+ The thesis of Act II is simple:
+ <strong>
+  Conditional execution is to the 2020s what residual connections were to the 2010s—the composition operator that enables the next order of magnitude in scaling.
+ </strong>
+</p>
+<h3>
+ 2. MoE: The Production Validation
+</h3>
+<p>
+ For years, Mixture-of-Experts was the “technology of the future”—from Shazeer et al.’s sparsely-gated MoE (2017) through Switch Transformers (Fedus et al., 2021) and GLaM (Du et al., 2021)—always promising, but difficult to train and painful to serve. In 2024–2025, that future finally arrived. MoE is no longer an exotic research trick; it has become one of the primary strategies for scaling frontier models, especially when total parameter counts exceed what dense training and serving can economically support (Appendix, Table 1).
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!Jx_s!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!Jx_s!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!Jx_s!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!Jx_s!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!Jx_s!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":3018202,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  The Honest Numbers:
+ </strong>
+ Let’s strip away the marketing claims. Vendors often promise “5–7× speedups” with MoE. The reality, based on a meta-analysis of production-style deployments and system papers, is more grounded but still transformative (Appendix, Table 2):
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Realistic Inference Speedup:
+   </strong>
+   <strong>
+    ≈2–3×
+   </strong>
+   throughput compared to dense models of similar quality at moderate context, with a median around
+   <strong>
+    2.1–2.5×
+   </strong>
+   in our aggregated studies.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    The Mechanism:
+   </strong>
+   A model like DeepSeek-V3 (671B parameters) activates only 37B parameters per token. It delivers the intelligence of a massive model with the latency of a small one.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Evidence:
+ </strong>
+ The list of successes is now long and growing. A few representative examples:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    DeepSeek-V3 (Dec 2024):
+   </strong>
+   671B total, 37B active (DeepSeek-AI, 2024). A masterclass in load balancing and MoE + MLA design.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    DeepSeek-R1 (Jan 2025):
+   </strong>
+   671B/37B MoE + MLA reasoning model with state-of-the-art math scores (DeepSeek-AI, 2025).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Mixtral-8×7B:
+   </strong>
+   The model from Mistral AI (2023) that proved open-weights MoE could match or beat GPT-3.5-class systems on many benchmarks.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Grok-1:
+   </strong>
+   314B parameters, confirming MoE works at massive scale without fine-tuning, in an open checkpoint (xAI, 2023–2024).
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Narrative Climax: The Meta Pivot
+ </strong>
+ The clearest public signal of MoE’s arrival came in April 2025. Until then, Meta had pushed dense scaling hard—Llama 3.1’s 405B dense model was a monument to that strategy. With
+ <strong>
+  Llama 4
+ </strong>
+ , Meta introduced its first MoE family:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Llama 4 Scout:
+   </strong>
+   109B total, 17B active (16 experts).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Llama 4 Maverick:
+   </strong>
+   400B total, 17B active (128 experts).
+  </p>
+ </li>
+</ul>
+<p>
+ Meta’s pivot does not mean dense models are obsolete—dense Llama variants and many closed models still exist—but it is a strong signal that at frontier scale, MoE is now considered a first-class option rather than a risky experiment (Appendix, Table 1). The Dense Era has not ended, but it now shares the stage with sparse, conditionally-executed capacity.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!Wxpk!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!Wxpk!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!Wxpk!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!Wxpk!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!Wxpk!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":2768669,"alt":"","title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png" title="" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<h3>
+ 4. Hybrid Architectures: Principled Heterogeneity
+</h3>
+<p>
+ To solve the Context-Length Trap, we are seeing the emergence of
+ <strong>
+  Hybrid Architectures
+ </strong>
+ .
+</p>
+<p>
+ <strong>
+  Qwen3-Next
+ </strong>
+ is the prime example. It doesn’t use just one primitive. It uses a three-dimensional hybrid approach:
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Linear Attention
+   </strong>
+   for the infinite context backbone.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Gated Attention
+   </strong>
+   for high-fidelity retrieval.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    MoE
+   </strong>
+   for feed-forward capacity.
+  </p>
+ </li>
+</ol>
+<p>
+ <strong>
+  The Principle:
+ </strong>
+ Route computation to the primitive that handles it best.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    SSM/Linear:
+   </strong>
+   Handles local, sequential dependencies (efficient).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Attention:
+   </strong>
+   Handles global, arbitrary dependencies (expressive).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    MoE:
+   </strong>
+   Handles knowledge storage and reasoning (capacity).
+  </p>
+ </li>
+</ul>
+<p>
+ While elegant, hybrids remain niche. The complexity cost of maintaining three different inference kernels usually outweighs the benefits for general-purpose models. Today, they are the solution for extreme requirements (256K+ contexts and ultra-long workflows), not yet the default for general reasoning.
+</p>
+<h3>
+ 5. What Didn’t Work: The Failure Mechanism
+</h3>
+<p>
+ To understand why conditional execution won, we must look at what failed.
+</p>
+<p>
+ <strong>
+  Neural ODEs (2018):
+ </strong>
+ Promised continuous depth and infinite adaptability.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Why they struggled:
+   </strong>
+   ODE solvers are iterative and sequential. They fight the GPU’s need for massive, predictable parallelism. They won Best Paper at NeurIPS, influenced theory, and saw use in niche domains—but in our survey we find no evidence of large-scale production adoption for LLM-style workloads.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  Capsule Networks:
+ </strong>
+ Proposed “routing-by-agreement” to solve spatial hierarchies.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Why they struggled:
+   </strong>
+   The routing logic was
+   <strong>
+    prescriptive
+   </strong>
+   . It tried to enforce a specific structure (capsules) rather than creating a permissive space for the model to learn its own structure. Despite a burst of research interest, we again find no evidence that capsule-style routing became a pattern in large-scale production models.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  The Lesson:
+ </strong>
+ Compositionality that survives is
+ <strong>
+  permissive
+ </strong>
+ , not
+ <strong>
+  prescriptive
+ </strong>
+ . MoE provides a pool of experts and a router, but it doesn’t tell the model
+ <em>
+  what
+ </em>
+ the experts should be. It lets gradient descent discover the structure. Capsule Networks and Neural ODEs tried to design the structure explicitly, and they did not cross the production chasm.
+</p>
+<p>
+ <strong>
+  Act II Synthesis:
+ </strong>
+ Conditional execution won because it is the most general way to scale capacity without worsening the compute constraint. It maps to the GPU’s ability to handle block-sparse operations and conditional parameter usage. Llama 4’s pivot confirms MoE as a standard frontier tool, not just a research prototype.
+</p>
+<p>
+ In Act III, we will explore the final piece of the puzzle: why these transitions take so long, and where the field goes next.
+</p>
+<p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share","text":"Share Petros Rooted Layers","action":null,"class":null}' data-component-name="ButtonCreateButton">
+ <a class="button primary" href="https://lambpetros.substack.com/?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share">
+  <span>
+   Share Petros Rooted Layers
+  </span>
+ </a>
+</p>
+<h1>
+ Act III: The Infrastructure Lag Pattern
+</h1>
+<p>
+ <em>
+  Why timing matters: From research to production
+ </em>
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!rwle!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!rwle!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!rwle!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!rwle!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!rwle!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":2622157,"alt":"","title":"","type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png" title="" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ Flash Attention (Dao et al., 2022; 2023) was published in May 2022. It became standard practice in May 2024. Roughly two years. Switch Transformers (Fedus et al., 2021; Lepikhin et al., 2020; Du et al., 2021, for closely related MoE work) were published around 2020–2021. They reached mainstream production usage only around 2024. Roughly three years for MoE-style serving infrastructure.
+</p>
+<p>
+ Why the lag? In a field that moves at the speed of light, why does it take 24–36 months for a proven, hardware-compatible technique to reach production?
+</p>
+<p>
+ The answer is what we call the
+ <strong>
+  Infrastructure Lag Pattern
+ </strong>
+ . Techniques do not succeed when they are published. They succeed when the infrastructure makes them cheaper to adopt than to ignore.
+</p>
+<h3>
+ 1. The Adoption Dynamics Model
+</h3>
+<p>
+ Looking across GQA, Flash Attention, and MoE, we see a recurring pattern: adoption timelines track
+ <strong>
+  integration cost
+ </strong>
+ (Appendix, Table 4). This is not a law of nature, but a useful heuristic for techniques similar to those we analyzed.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!lFfs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!lFfs!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!lFfs!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!lFfs!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!lFfs!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/dde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":3767367,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Level 1: Weight-Only Changes (12–18 months)
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     <em>
+      Example:
+     </em>
+     Grouped Query Attention (GQA).
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Requirement:
+     </em>
+     Change the model definition code. No new kernels, no new serving infrastructure.
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Lag:
+     </em>
+     Minimal. Adoption is driven by retraining cycles.
+    </p>
+   </li>
+  </ul>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Level 2: Kernel-Level Changes (24–30 months)
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     <em>
+      Example:
+     </em>
+     Flash Attention.
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Requirement:
+     </em>
+     Custom CUDA kernels. Integration into PyTorch/JAX.
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Lag:
+     </em>
+     24 months. This is the time it takes for a kernel to move from a research repo -&gt; a library -&gt; a framework stable release -&gt; a production stack.
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Evidence:
+     </em>
+     Flash Attention (May 2022) -&gt; PyTorch 2.2 (Jan 2024) -&gt; Standard (May 2024).
+    </p>
+   </li>
+  </ul>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Level 3: Serving Infrastructure Changes (36–48 months)
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     <em>
+      Example:
+     </em>
+     Mixture-of-Experts.
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Requirement:
+     </em>
+     Not just kernels, but distributed system changes. How do you shard experts across nodes? How do you handle load balancing in inference?
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Lag:
+     </em>
+     36 months.
+    </p>
+   </li>
+   <li>
+    <p>
+     <em>
+      Evidence:
+     </em>
+     Switch (Jan 2021) -&gt; Mixtral/DeepSeek/Llama 4 (2024–2025).
+    </p>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p>
+ Integration cost is not the only factor—vendor priorities, open-source implementations, and hype all matter—but it is the most consistent constraint we see across 2023–2025 production case studies.
+</p>
+<p>
+ <strong>
+  The Prediction (Heuristic, Not Law):
+ </strong>
+ If a new technique requires kernel changes (like KANs would), do not expect broad production usage for roughly two years. If it requires serving changes, expect closer to three. If it fundamentally fights GPU primitives, treat it as research-only for current production GPU stacks.
+</p>
+<p>
+ This model would be falsified by, for example, a kernel-level change that becomes standard in under a year, or a serving-level change that diffuses in a single retraining cycle. As of late 2025, our three highlighted case studies (GQA, Flash, MoE) line up cleanly with the 12 / ~24 / ~36-month buckets in Appendix, Table 4.
+</p>
+<h3>
+ 2. Training Innovation: The Next Frontier
+</h3>
+<p>
+ This brings us to our final and most controversial claim:
+ <strong>
+  Architecture innovation is slowing relative to training and optimization.
+ </strong>
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!6Bm9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!6Bm9!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!6Bm9!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!6Bm9!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!6Bm9!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/d6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":2883026,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ The last widely adopted fundamental primitive (Attention) was introduced in 2017. Since then, we have seen refinements (Flash, GQA, MLA), composition operators (MoE), and hybrids (attention + SSM), but no clearly dominant replacement at frontier scale. The hardware constraints have narrowed the space of acceptable operations tightly around dense matrix multiplication, making truly novel primitives harder to push through the Hardware Compatibility Filter (Appendix, Tables 2, 3, and 5).
+</p>
+<p>
+ That does not mean architectural work has stopped—SSM-style blocks, hybrids, and long-context variants are very active research areas—but the center of gravity has shifted. For the foreseeable future on today’s GPU-centric stacks, the leverage is likely to come from
+ <strong>
+  Training Innovation
+ </strong>
+ on top of this relatively stable container.
+</p>
+<p>
+ <strong>
+  A Case Study: DeepSeek-R1 (January 2025)
+ </strong>
+ One of the strongest recent examples comes from DeepSeek-R1 (DeepSeek-AI, 2025). It achieved state-of-the-art reasoning performance (79.8% on AIME, 97.3% on MATH-500), rivaling OpenAI’s o1-class models.
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    The Architecture:
+   </strong>
+   MoE + MLA built on the same frontier-style primitives described in Acts I and II.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    The Innovation:
+   </strong>
+   <strong>
+    Reinforcement Learning at scale.
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     DeepSeek-R1 was trained using Group Relative Policy Optimization (GRPO) and a carefully engineered reasoning curriculum to discover multi-step chains of thought.
+    </p>
+   </li>
+   <li>
+    <p>
+     It did not introduce a new neural primitive to learn to reason. It pushed a familiar container (MoE + efficient attention) much further via training.
+    </p>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p>
+ This is not singular “proof,” but it strongly reinforces the thesis: The architecture is the
+ <em>
+  container
+ </em>
+ ; training is the
+ <em>
+  contents
+ </em>
+ . We have spent 8 years optimizing the container. It is efficient, scalable, and hardware-compatible. Now we are finally learning how to fill it.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!-ue_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!-ue_!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!-ue_!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!-ue_!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!-ue_!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":2924405,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  Where Innovation Moves:
+ </strong>
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    SAM (Sharpness-Aware Minimization):
+   </strong>
+   Optimizing for flatter, more robust minima (Foret et al., 2020), which improves generalization and compositional behavior in many settings.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Progressive Training:
+   </strong>
+   Using depth as a curriculum; several studies report
+   <strong>
+    ≈10–20% faster convergence
+   </strong>
+   versus naive deep training.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Routing-Aware Optimization:
+   </strong>
+   Training the router to balance load without collapsing, improving MoE utilization and stability at scale.
+  </p>
+ </li>
+</ul>
+<p>
+ Training innovations have their own lag pattern—new optimizers and RL schemes still need to be implemented, debugged, and validated—but they typically integrate faster than core architectural overhauls. We are shifting from “what to compute” to “how to train what we already compute.”
+</p>
+<p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/p/what-actually-works-the-hardware/comments","text":"Leave a comment","action":null,"class":null}' data-component-name="ButtonCreateButton">
+ <a class="button primary" href="https://lambpetros.substack.com/p/what-actually-works-the-hardware/comments">
+  <span>
+   Leave a comment
+  </span>
+ </a>
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Conclusion
+</h2>
+<p>
+ The story of 2023–2025 is not one of unbridled invention, but of ruthless selection.
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!LGoU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!LGoU!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png 424w, https://substackcdn.com/image/fetch/$s_!LGoU!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png 848w, https://substackcdn.com/image/fetch/$s_!LGoU!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png 1272w, https://substackcdn.com/image/fetch/$s_!LGoU!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":3632361,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ The
+ <strong>
+  Hardware Compatibility Thesis
+ </strong>
+ explains much of the difference between techniques that survive and those that do not. Flash Attention
+</p>
+<p>
+ won because it respected the memory hierarchy. MoE won because it mapped to conditional execution. Pure SSMs have, so far, hit a ceiling around 7B because they fight parallelism (Appendix, Table 3). KANs remain research curiosities because their spline-heavy compute paths do not align with tensor core strengths.
+</p>
+<p>
+ For the senior practitioner, this offers a clear heuristic:
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Predictive:
+   </strong>
+   When evaluating a new paper, ask: “Does this map to GPU primitives?” If no, treat it as a research bet rather than a near-term production candidate.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Strategic:
+   </strong>
+   Architecture progress is real but slower; invest a growing share of your R&amp;D budget in training innovation (data curation, RL, optimization) instead of searching for a wholesale “next Transformer.”
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Tactical:
+   </strong>
+   Adopt Flash Attention and GQA wherever possible. Use MoE for scaling beyond ~10B parameters if your infrastructure budget can support it. Treat pure SSMs as research-only for frontier models until we see public evidence above 7B (Appendix, Table 3).
+  </p>
+ </li>
+</ol>
+<p>
+ We are not designing neural networks in a vacuum. We are discovering which computations silicon can express efficiently. The ones that map naturally to the hardware survive at scale. The ones that don’t risk becoming historical footnotes on today’s GPU-centric stacks, regardless of their theoretical elegance.
+</p>
+<p>
+ The architecture wars are not literally “over,” but for production LLMs on 2023–2025 hardware, they have entered a slower phase. The next competitive frontier is how we
+ <strong>
+  train
+ </strong>
+ and
+ <strong>
+  use
+ </strong>
+ the architectures we already have.
+</p>
+<p>
+ <strong>
+  Critique:
+ </strong>
+</p>
+<div class="native-audio-embed" data-attrs='{"label":null,"mediaUploadId":"b7d7a369-3673-4cfd-afa6-75e38154f17d","duration":802.142,"downloadable":false,"isEditorNode":true}' data-component-name="AudioPlaceholder">
+</div>
+<div class="captioned-button-wrap" data-attrs='{"url":"https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share","text":"Share"}' data-component-name="CaptionedButtonToDOM">
+ <div class="preamble">
+  <p class="cta-caption">
+   Thanks for reading Petros Rooted Layers! This post is public so feel free to share it.
+  </p>
+ </div>
+ <p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share","text":"Share"}' data-component-name="ButtonCreateButton">
+  <a class="button primary" href="https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share">
+   <span>
+    Share
+   </span>
+  </a>
+ </p>
+</div>
+<div>
+ <hr/>
+</div>
+<h2>
+ <strong>
+  Appendix: The Evidence
+ </strong>
+</h2>
+<p>
+ For the skeptical practitioner, we present the aggregated evidence underlying the claims in this post. For terminology and hardware background, see the
+ <strong>
+  Glossary and Key Concepts
+ </strong>
+ and
+ <strong>
+  Hardware and Kernel Primer
+ </strong>
+ sections.
+</p>
+<h3>
+ <strong>
+  Table 1: Major Lab Frontier Model Releases (2023–2025)
+ </strong>
+</h3>
+<p>
+ <em>
+  Explicit model releases by major labs, ordered roughly chronologically. Architectures are summarized from public documentation as of Dec 4, 2025.
+ </em>
+</p>
+<div class="datawrapper-wrap outer" data-attrs='{"url":"https://datawrapper.dwcdn.net/wAsVL/1/","thumbnail_url":"https://img.datawrapper.de/wAsVL/plain.png","thumbnail_url_full":"https://img.datawrapper.de/wAsVL/full.png","height":1629,"title":"| Created with Datawrapper","description":"Create interactive, responsive &amp; beautiful charts — no code required."}' data-component-name="DatawrapperToDOM" id="datawrapper-iframe">
+ <iframe class="datawrapper-iframe" frameborder="0" height="1629" id="iframe-datawrapper" scrolling="no" src="https://datawrapper.dwcdn.net/wAsVL/1/" width="730">
+ </iframe>
+ <script type="text/javascript">
+  !function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+ </script>
+</div>
+<p>
+ <strong>
+  Insight:
+ </strong>
+ From 2023 to late 2025, frontier lines clearly cluster into two patterns: (1)
+ <strong>
+  Dense / sparse transformers
+ </strong>
+ with ever‑better kernels (Flash Attention, GQA, long context, sparse patterns), and (2)
+ <strong>
+  MoE transformers
+ </strong>
+ (Llama 4, Mixtral) that trade implementation complexity for large capacity at similar active compute. Pure SSM models still do not appear as standalone frontier flagships; SSM/Mamba‑like blocks show up only as components inside hybrids or efficiency‑oriented models outside this list.
+</p>
+<h3>
+ <strong>
+  Table 2: The MoE Reality Check
+ </strong>
+</h3>
+<p>
+ <em>
+  Marketing claims vs. production-style measurements from short to long context (up to 64K–128K tokens). Summarizes Extended Dataset 1 (MoE Speedup Meta-Analysis), aggregated from Switch, Mixtral, DeepSeek-V3, deployment-inefficiency work, and Aurora-style system papers.
+ </em>
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!zIzq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!zIzq!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png 424w, https://substackcdn.com/image/fetch/$s_!zIzq!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png 848w, https://substackcdn.com/image/fetch/$s_!zIzq!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png 1272w, https://substackcdn.com/image/fetch/$s_!zIzq!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/c31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":458,"width":1456,"resizeWidth":null,"bytes":312475,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png","isProcessing":false,"align":null,"offset":false}' height="458" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  Insight:
+ </strong>
+ MoE is primarily a
+ <strong>
+  throughput and capacity optimizer
+ </strong>
+ , not a magic fix for latency or memory. It buys “more model for the same serving budget,” especially at moderate context, but still runs into bandwidth and KV-cache limits at frontier context lengths.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ <strong>
+  Table 3: Pure SSM / Mamba Evidence Gap
+ </strong>
+</h3>
+<p>
+ <em>
+  Where pure Mamba/SSM models have been demonstrated vs. where evidence stops (as of Dec 2025). Summarizes
+ </em>
+ <code>
+  ssm_benchmark_findings.md
+ </code>
+ <em>
+  .
+ </em>
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!IgOU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!IgOU!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png 424w, https://substackcdn.com/image/fetch/$s_!IgOU!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png 848w, https://substackcdn.com/image/fetch/$s_!IgOU!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png 1272w, https://substackcdn.com/image/fetch/$s_!IgOU!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":571,"width":1456,"resizeWidth":null,"bytes":392682,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png","isProcessing":false,"align":null,"offset":false}' height="571" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  Insight:
+ </strong>
+ Pure SSMs are clearly viable up to 7B and can be very efficient, but in the public releases we examined there is
+ <strong>
+  no evidence
+ </strong>
+ of pure SSMs at 13B or frontier scales; above 7B, SSM-style blocks only appear inside
+ <strong>
+  hybrid
+ </strong>
+ architectures (Jamba, Falcon-H1, Qwen3-Next), not as end-to-end replacements for attention.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ <strong>
+  Table 4: Infrastructure Lag Timeline
+ </strong>
+</h3>
+<p>
+ <em>
+  Time from publication to standard production practice, grouped by integration complexity. Derived from
+ </em>
+ <code>
+  flash_attention_timeline.md
+ </code>
+ <em>
+  , MoE deployment studies, and GQA adoption data.
+ </em>
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!Tvgq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!Tvgq!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png 424w, https://substackcdn.com/image/fetch/$s_!Tvgq!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png 848w, https://substackcdn.com/image/fetch/$s_!Tvgq!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png 1272w, https://substackcdn.com/image/fetch/$s_!Tvgq!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":434,"width":1456,"resizeWidth":null,"bytes":291661,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png","isProcessing":false,"align":null,"offset":false}' height="434" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  Insight:
+ </strong>
+ Integration cost determines adoption speed. Weight-only changes land within a retraining cycle; kernel changes take ~2 years to become ubiquitous; distributed system changes (e.g., MoE routing and large-scale sparse attention) take closer to 3 years.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ <strong>
+  Table 5: GQA / MLA / Efficient Attention Adoption
+ </strong>
+</h3>
+<p>
+ <em>
+  Snapshot of efficient attention mechanisms across major 2024–2025 model families, distilled from
+ </em>
+ <code>
+  major_lab_architecture_audit.md
+ </code>
+ <em>
+  .
+ </em>
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!blxB!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!blxB!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png 424w, https://substackcdn.com/image/fetch/$s_!blxB!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png 848w, https://substackcdn.com/image/fetch/$s_!blxB!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png 1272w, https://substackcdn.com/image/fetch/$s_!blxB!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":607,"width":1456,"resizeWidth":null,"bytes":371244,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png","isProcessing":false,"align":null,"offset":false}' height="607" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  Insight:
+ </strong>
+ By late 2025,
+ <strong>
+  GQA-style efficient attention
+ </strong>
+ (plus MLA and sparse variants) dominates over vanilla MHA in the large models we audited. This is the weight-only, hardware-aligned optimization that diffuses fastest and forms the “background assumption” for 2024–2025 architectures.
+</p>
+<div>
+ <hr/>
+</div>
+<h3>
+ <strong>
+  Table 6: Training Innovation Evidence
+ </strong>
+</h3>
+<p>
+ <em>
+  Selected examples where training methods, rather than new primitives, drove major capability or efficiency gains.
+ </em>
+</p>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!qOVZ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!qOVZ!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png 424w, https://substackcdn.com/image/fetch/$s_!qOVZ!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png 848w, https://substackcdn.com/image/fetch/$s_!qOVZ!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png 1272w, https://substackcdn.com/image/fetch/$s_!qOVZ!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":853,"width":1456,"resizeWidth":null,"bytes":524243,"alt":null,"title":null,"type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png","isProcessing":false,"align":null,"offset":false}' height="853" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<p>
+ <strong>
+  Insight:
+ </strong>
+ The most dramatic recent gains in reasoning and efficiency often come from
+ <strong>
+  training recipes and optimization choices
+ </strong>
+ layered on top of relatively stable architectural primitives (MoE, efficient attention), reinforcing the view that, on today’s hardware, training innovation is where much of the near-term leverage lies.
+</p>
+<p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/p/what-actually-works-the-hardware/comments","text":"Leave a comment","action":null,"class":null}' data-component-name="ButtonCreateButton">
+ <a class="button primary" href="https://lambpetros.substack.com/p/what-actually-works-the-hardware/comments">
+  <span>
+   Leave a comment
+  </span>
+ </a>
+</p>
+<h1>
+ Glossary and Key Concepts
+</h1>
+<p>
+ This glossary collects the main acronyms and concepts used across the three Acts and the Appendix, with short but detailed explanations aimed at readers who know modern deep learning but may not live inside LLM infra day-to-day.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Attention and Memory
+</h2>
+<p>
+ <strong>
+  Attention (Self-Attention)
+ </strong>
+</p>
+<p>
+ Mechanism that lets each token in a sequence attend to every other token, computing a weighted sum of their representations. In standard Transformer self-attention, each position produces Query (Q), Key (K), and Value (V) vectors; attention weights are computed as a softmax over Q·Kᵀ and used to mix the V vectors. This gives models flexible, content-based access to the entire context, at the cost of O(n²) memory and compute in the sequence length.
+</p>
+<p>
+ <strong>
+  Multi-Head Attention (MHA)
+ </strong>
+</p>
+<p>
+ Original Transformer attention variant in which several independent attention “heads” run in parallel, each with its own Q/K/V projections and slightly different focus. Outputs from all heads are concatenated and linearly projected. MHA improves expressiveness but scales memory and compute linearly in the number of heads and quadratically in sequence length.
+</p>
+<p>
+ <strong>
+  Grouped-Query Attention (GQA)
+ </strong>
+</p>
+<p>
+ An efficient attention variant where many Query heads share a smaller number of Key/Value heads. For example, 8 Query heads might share 1 Key and 1 Value head. This reduces the size of the KV cache (and memory bandwidth) without significantly degrading quality, especially for large models. GQA is a “weight-only” change—no new kernels are required—so it spreads quickly once integrated into a model family.
+</p>
+<p>
+ <strong>
+  Multi-Query Attention (MQA)
+ </strong>
+</p>
+<p>
+ An earlier efficiency variant in which all Query heads share a single Key and Value head. This maximizes KV sharing but can be less flexible than GQA. Some early Gemini versions used MQA, with later models and other families converging more on GQA-like patterns that balance efficiency and expressiveness.
+</p>
+<p>
+ <strong>
+  Multi-Head Latent Attention (MLA)
+ </strong>
+</p>
+<p>
+ An attention mechanism introduced by DeepSeek in which the KV cache is projected into a low-rank latent space before being stored. Instead of keeping full-resolution K/V vectors for every token, MLA maintains a compressed latent representation and attends over that; this significantly reduces memory footprint and bandwidth. MLA still uses dense matrix multiplications and fits well on GPUs, but changes the storage and retrieval pattern to support long contexts (e.g., 128K) and large MoE models.
+</p>
+<p>
+ <strong>
+  KV Cache (Key-Value Cache)
+ </strong>
+</p>
+<p>
+ During autoregressive generation, models cache the Key and Value tensors from previous tokens so they don’t have to recompute them at each step. For long contexts and large models, this cache dominates memory usage—often hundreds of GB at 128K context for 70B+ models if stored naïvely. Techniques like GQA, MLA, and FlashAttention-style kernels largely exist to make the KV cache more manageable.
+</p>
+<p>
+ <strong>
+  FlashAttention
+ </strong>
+</p>
+<p>
+ An IO-aware attention algorithm that reorders computation to respect GPU memory hierarchies. Instead of materializing the full n×n attention matrix in HBM (off-chip memory), FlashAttention tiles the computation into blocks that fit in SRAM (on-chip cache), computes attention over those blocks, and discards them without ever writing the full matrix to HBM. The result is 2–4× speedups and 10–20× memory savings at long sequences, turning attention from a memory-bound to a compute-bound operation and enabling much longer contexts.
+</p>
+<p>
+ <strong>
+  Sliding-Window Attention (SWA)
+ </strong>
+</p>
+<p>
+ An attention pattern where each token attends only to a local window of nearby tokens, rather than the entire sequence. This reduces the effective complexity from O(n²) to roughly O(n·w), where w is the window size, and is useful for long contexts where many long-range interactions are unnecessary. Mistral 7B is a canonical example of GQA + SWA in production.
+</p>
+<p>
+ <strong>
+  Sparse Attention / DeepSeek Sparse Attention (DSA)
+ </strong>
+</p>
+<p>
+ Sparse attention restricts which positions can attend to which others, either via fixed patterns (e.g., blocks, dilations) or learned structures, to reduce computation and memory. DeepSeek’s DSA is a specific form of sparse attention that reduces complexity from O(L²) to O(L·k) by attending only to selected key positions, enabling long contexts (e.g., 128K) in V3.2 with more predictable memory use.
+</p>
+<p>
+ <strong>
+  RoPE (Rotary Position Embeddings)
+ </strong>
+</p>
+<p>
+ A positional encoding method that rotates query/key vectors in a way that encodes relative positions while preserving certain algebraic properties of the dot product. RoPE supports extrapolation to longer contexts and has become a de facto standard in modern LLMs (Llama, Mistral, Qwen, etc.).
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Mixture-of-Experts and Conditional Execution
+</h2>
+<p>
+ <strong>
+  Mixture-of-Experts (MoE)
+ </strong>
+</p>
+<p>
+ An architectural pattern in which certain layers (usually the feed-forward / MLP blocks) contain multiple “experts,” and a small router network selects a subset of experts (e.g., top-1 or top-2) for each token. This makes the layer’s parameters “sparse”: the total parameter count can be very large, but only a small fraction is active per token. MoE is a form of conditional execution—different tokens route to different compute paths—enabling large capacity at lower per-token compute cost, at the price of more complex training and serving.
+</p>
+<p>
+ <strong>
+  Experts and Router
+ </strong>
+</p>
+<p>
+ In MoE, each expert is usually a feed-forward network (FFN) or similar module. A router (often a small linear layer per token) produces a distribution over experts, and a sparse selection (top-k or expert-choice) determines which experts process each token. Good routing is crucial for performance and load-balancing; poor routing leads to “collapsed experts” and low utilization.
+</p>
+<p>
+ <strong>
+  Conditional Execution
+ </strong>
+</p>
+<p>
+ An umbrella term for mechanisms that allow the model to dynamically select which computations or parameters to use, conditioned on the input or context. This includes:
+</p>
+<ul>
+ <li>
+  <p>
+   Hard routing (MoE): token → expert selection.
+  </p>
+ </li>
+ <li>
+  <p>
+   Soft routing (attention): token → weighted combination of other tokens.
+  </p>
+ </li>
+ <li>
+  <p>
+   Structured sparsity (sparse attention, SWA): token → subset of positions computed.
+  </p>
+ </li>
+ <li>
+  <p>
+   Task-conditional parameters (LoRA/adapters): task → which low-rank parameter additions are active. Conditional execution is central to scaling capacity without uniformly increasing compute for every token.
+  </p>
+ </li>
+</ul>
+<p>
+ <strong>
+  FasterMoE / Aurora / MoE System Stacks
+ </strong>
+</p>
+<p>
+ System-level implementations and optimizations for serving MoE models efficiently. These frameworks design block-sparse kernels, expert sharding strategies, and communication patterns to keep GPUs well utilized. They are a key part of why MoE became practical in production: without efficient system support, MoE can be 3–15× slower than dense models despite fewer active parameters.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ State Space Models (SSMs) and Mamba
+</h2>
+<p>
+ <strong>
+  State Space Models (SSMs)
+ </strong>
+</p>
+<p>
+ Models that represent sequences via latent “state” variables evolving over time according to linear or nonlinear state-space equations. Instead of attending over the full sequence, SSMs update a recurrent hidden state as tokens come in, offering nominal O(n) complexity and fixed memory in sequence length. In practice, they can be very efficient for certain long-sequence tasks but have historically struggled with in-context learning and arbitrary long-range interactions compared to attention.
+</p>
+<p>
+ <strong>
+  Mamba
+ </strong>
+</p>
+<p>
+ A specific SSM variant that introduces “selective state spaces”—mechanisms that allow the model to dynamically control which parts of the state get updated. Mamba and its variants have shown strong efficiency and competitive performance at small-to-medium scales (up to 7B), including Falcon Mamba 7B. However, as of late 2025, no pure Mamba model has been publicly demonstrated at 13B+ or frontier scale; above 7B, SSM-style blocks mainly appear inside hybrids with attention.
+</p>
+<p>
+ <strong>
+  Hybrid SSM+Attention Architectures (Jamba, Falcon-H1, Qwen3-Next)
+ </strong>
+</p>
+<p>
+ Architectures that mix SSM-like blocks with attention layers to get the best of both worlds: SSMs for efficient local/sequential processing and attention for flexible global dependencies and in-context learning. Examples include:
+</p>
+<ul>
+ <li>
+  <p>
+   Jamba: Alternating Mamba and attention layers.
+  </p>
+ </li>
+ <li>
+  <p>
+   Falcon-H1: Parallel mixtures of Mamba2-like and attention components.
+  </p>
+ </li>
+ <li>
+  <p>
+   Qwen3-Next: Linear attention (e.g., Gated DeltaNet) + gated attention + MoE.
+  </p>
+ </li>
+</ul>
+<p>
+ These hybrids show how SSMs can be powerful components without replacing attention outright.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Optimization, Training, and RL
+</h2>
+<p>
+ <strong>
+  SAM (Sharpness-Aware Minimization)
+ </strong>
+</p>
+<p>
+ An optimization technique that modifies the gradient update to favor flatter regions of the loss landscape. Instead of minimizing the loss at the current parameters, SAM approximately minimizes the worst-case loss within a small neighborhood in parameter space. This tends to produce models that generalize better and are more robust, at modest additional compute cost. In the LLM context, SAM has been used as a drop-in optimizer improvement in some large training runs.
+</p>
+<p>
+ <strong>
+  Progressive Depth / Curriculum Training
+ </strong>
+</p>
+<p>
+ A training strategy in which models start training with shallower networks (fewer layers) and progressively increase depth as training progresses, or gradually “unfreeze” deeper layers. This can lead to faster convergence—often ≈10–20% wall-clock savings compared to training a full-deep network from scratch—while reaching similar or better final performance. It is a training-level innovation that leverages the same architecture more efficiently.
+</p>
+<p>
+ <strong>
+  Routing-Aware Optimization (for MoE)
+ </strong>
+</p>
+<p>
+ Training methods that explicitly optimize the MoE router and expert usage: auxiliary losses to balance load, penalties for collapsed experts, and specialized temperature schedules or regularizers. These methods improve expert utilization and stability, which in turn improves effective throughput and quality. ST-MoE-style work and DeepSeek’s MoE stacks are examples of routing-aware optimization in action.
+</p>
+<p>
+ <strong>
+  GRPO (Group Relative Policy Optimization)
+ </strong>
+</p>
+<p>
+ A reinforcement learning algorithm used in DeepSeek-R1, among others, to train reasoning behavior. GRPO is a variant of policy gradient methods that compares performance across groups of trajectories, focusing updates on relatively better reasoning chains. It allows the model to discover multi-step reasoning strategies by rewarding useful trajectories, even when supervised labels are sparse or noisy.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Retrieval and Memory-Augmented Methods
+</h2>
+<p>
+ <strong>
+  RAG (Retrieval-Augmented Generation)
+ </strong>
+</p>
+<p>
+ A design pattern in which a language model is paired with an external retrieval system (often a vector database or search index). At query time, relevant documents or snippets are retrieved based on the input, and those retrieved chunks are fed into the model’s context. This effectively gives the model access to a much larger “memory” than its fixed context window, without changing its architecture: the GPU still runs the same Transformer-style computations, but over retrieved text instead of a monolithic long prompt.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Infrastructure and Hardware
+</h2>
+<p>
+ <strong>
+  GPU Primitives / Tensor Cores
+ </strong>
+</p>
+<p>
+ Modern GPUs (e.g., NVIDIA A100/H100) are optimized around dense matrix multiplications (GEMMs) and tensor-core operations. A “hardware-compatible” neural primitive is one that can be implemented as regular, batched GEMMs that keep tensor cores busy. Operations that require irregular scatter/gather, small non-vectorized ops, or sequential dependencies tend to underutilize the hardware and are harder to scale.
+</p>
+<p>
+ <strong>
+  HBM and SRAM (Memory Hierarchy)
+ </strong>
+</p>
+<p>
+ HBM (High Bandwidth Memory) is large but slower off-chip memory on GPUs, while SRAM (on-chip cache/registers) is small but extremely fast. Efficient kernels minimize data movement between HBM and SRAM by reusing data in SRAM as much as possible. Both FlashAttention and MLA are designed explicitly around this hierarchy.
+</p>
+<p>
+ <strong>
+  Block-Sparse Operations
+ </strong>
+</p>
+<p>
+ Sparse computations where nonzero elements cluster in blocks rather than arbitrary positions, making them amenable to efficient GPU implementations. MoE and many sparse attention variants are implemented as block-sparse matmuls to preserve parallelism and compatibility with GPU primitives.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ Other Architectures and Research Directions
+</h2>
+<p>
+ <strong>
+  KANs (Kolmogorov-Arnold Networks)
+ </strong>
+</p>
+<p>
+ Architectures that replace standard linear layers and fixed activations with spline-based, learnable functions on edges, motivated by Kolmogorov-Arnold representation theorems. They offer a more flexible function class in principle but involve spline evaluations that do not map cleanly to dense GEMMs, making them less hardware-friendly. As of 2023–2025, KANs have generated research interest and hype but have not been demonstrated at frontier LLM scale.
+</p>
+<p>
+ <strong>
+  Neural ODEs (Neural Ordinary Differential Equations)
+ </strong>
+</p>
+<p>
+ Models that interpret layer depth as a continuous variable and use ODE solvers to evolve hidden states. This offers theoretical elegance and continuous-depth flexibility, but ODE solvers are iterative and sequential, conflicting with GPUs’ need for large, regular batches of parallel work. Neural ODEs have influenced theory and some niche applications but have not become a mainstream architecture for large-scale LLMs.
+</p>
+<p>
+ <strong>
+  Capsule Networks
+ </strong>
+</p>
+<p>
+ Architectures that group neurons into “capsules” and use routing-by-agreement mechanisms to decide how lower-level capsules contribute to higher-level ones. They aim to capture part-whole relationships and invariant representations. However, the routing logic is prescriptive and computationally heavy, and despite early excitement, capsule networks have not been adopted in large-scale production LLMs; they mostly remain a historical example of a compositional idea that did not cross the infra chasm.
+</p>
+<p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share","text":"Share","action":null,"class":null}' data-component-name="ButtonCreateButton">
+ <a class="button primary" href="https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&amp;utm_medium=email&amp;utm_content=share&amp;action=share">
+  <span>
+   Share
+  </span>
+ </a>
+</p>
+<h1>
+ Hardware and Kernel Primer
+</h1>
+<p>
+ <em>
+  A mental model for how hardware, kernels, and frameworks shape what “actually works.”
+ </em>
+</p>
+<p>
+ This primer gives a quick, practical view of how GPU hardware, kernels, and frameworks fit together, and why they create the Hardware Compatibility Filter and Infrastructure Lag Pattern described in the main article. For definitions of specific acronyms and components (HBM, SRAM, GEMM, tensor cores, etc.), see the
+ <strong>
+  Glossary and Key Concepts
+ </strong>
+ section.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ 1. The Three-Layer Stack
+</h2>
+<p>
+ At a high level, modern LLM infrastructure looks like a three-layer stack:
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Hardware
+   </strong>
+   – GPUs, tensor cores, HBM/SRAM, interconnects (PCIe, NVLink).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Kernels and Libraries
+   </strong>
+   – CUDA/Triton kernels, cuBLAS/cuDNN, FlashAttention, block-sparse matmuls.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Frameworks and Models
+   </strong>
+   – PyTorch/JAX operators, Transformer/MoE/SSM blocks, full model architectures.
+  </p>
+ </li>
+</ol>
+<p>
+ The key idea:
+ <strong>
+  models only run fast if their operations can be expressed as a small number of highly optimized kernels that fit the hardware well.
+ </strong>
+ Every time you invent a new primitive that needs a new kernel, you pay an integration and validation tax across this stack.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ 2. What a Kernel Actually Is
+</h2>
+<p>
+ In this context, a
+ <strong>
+  kernel
+ </strong>
+ is not just an algorithm on paper; it is the concrete, low-level implementation of that algorithm on GPUs:
+</p>
+<ul>
+ <li>
+  <p>
+   It specifies how work is divided over
+   <strong>
+    threads, warps, and thread blocks
+   </strong>
+   .
+  </p>
+ </li>
+ <li>
+  <p>
+   It defines how data is laid out in
+   <strong>
+    memory
+   </strong>
+   (HBM vs on-chip SRAM/shared memory vs registers).
+  </p>
+ </li>
+ <li>
+  <p>
+   It chooses
+   <strong>
+    tiling strategies
+   </strong>
+   (how matrices are sliced) to keep tensor cores fed and minimize memory traffic.
+  </p>
+ </li>
+ <li>
+  <p>
+   It must be
+   <strong>
+    numerically stable
+   </strong>
+   , performant across different GPU generations, and integrated into libraries (e.g., PyTorch, JAX).
+  </p>
+ </li>
+</ul>
+<p>
+ Writing a good kernel is hard. Making it production-grade is harder: you need tests, fallbacks, debugging hooks, and framework integration. This is why “kernel-level changes” show a ~24-month lag from paper → library → framework → production (see Appendix, Table 4).
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ 3. How Hardware Shapes Compatibility
+</h2>
+<p>
+ Modern GPUs (A100, H100, etc.) are built around three key properties:
+</p>
+<ol>
+ <li>
+  <p>
+   <strong>
+    Dense matrix multiplications (GEMMs)
+   </strong>
+   on tensor cores.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Hierarchical memory
+   </strong>
+   – small, fast SRAM on-chip + large, slower HBM off-chip.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Massive parallelism
+   </strong>
+   – thousands of threads executing similar instructions in lockstep.
+  </p>
+ </li>
+</ol>
+<p>
+ A technique is
+ <strong>
+  hardware-compatible
+ </strong>
+ if:
+</p>
+<ul>
+ <li>
+  <p>
+   It can be expressed as regular, batched GEMMs or other well-optimized primitives.
+  </p>
+ </li>
+ <li>
+  <p>
+   It keeps parallel threads doing similar work with minimal branching.
+  </p>
+ </li>
+ <li>
+  <p>
+   It minimizes expensive HBM↔︎SRAM transfers by reusing data in on-chip memory.
+  </p>
+ </li>
+</ul>
+<p>
+ Techniques that require irregular scatter/gather, heavy branching, or inherently sequential computation (e.g., iterative solvers) tend to underutilize the hardware and are much harder to push to frontier scale.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ 4. Concrete Examples
+</h2>
+<h3>
+ 4.1 FlashAttention: Same Math, Better Kernel
+</h3>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Problem:
+   </strong>
+   Standard attention materializes an n×n attention matrix in HBM and repeatedly reads/writes large Q/K/V tensors, making it
+   <strong>
+    memory-bound
+   </strong>
+   and limiting context length.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Kernel innovation:
+   </strong>
+   FlashAttention reorganizes the computation into
+   <strong>
+    tiles
+   </strong>
+   that fit into SRAM. It loads small blocks of Q/K/V, computes attention for those blocks, and discards intermediate results without writing the full matrix to HBM.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Hardware match:
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     Uses dense GEMMs on tensor cores.
+    </p>
+   </li>
+   <li>
+    <p>
+     Minimizes HBM traffic; reuses data in SRAM.
+    </p>
+   </li>
+   <li>
+    <p>
+     Preserves exact attention math (no approximation).
+    </p>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p>
+ This is why FlashAttention could become a near-universal drop-in: it is a
+ <strong>
+  kernel-level improvement
+ </strong>
+ that respects GPU primitives while keeping the higher-level abstraction identical. The price was ~24 months of integration work across libraries and frameworks (Appendix, Table 4).
+</p>
+<h3>
+ 4.2 GQA and MLA: Weight-Only vs Compressed KV
+</h3>
+<ul>
+ <li>
+  <p>
+   <strong>
+    GQA (Grouped-Query Attention):
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     Changes the
+     <strong>
+      weight shapes
+     </strong>
+     so many Query heads share fewer Key/Value heads.
+    </p>
+   </li>
+   <li>
+    <p>
+     Uses the same underlying GEMM kernels as standard MHA.
+    </p>
+   </li>
+   <li>
+    <p>
+     Effect: smaller KV cache, less memory traffic; no new kernels required.
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      Integration cost:
+     </strong>
+     Weight-only change → adoption driven by retraining cycles (~12 months; Appendix, Table 4).
+    </p>
+   </li>
+  </ul>
+ </li>
+ <li>
+  <p>
+   <strong>
+    MLA (Multi-Head Latent Attention):
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     Projects KV vectors into a low-rank latent space before caching.
+    </p>
+   </li>
+   <li>
+    <p>
+     Still uses dense GEMMs, but changes how KV is stored and retrieved.
+    </p>
+   </li>
+   <li>
+    <p>
+     Effect: much smaller KV cache and bandwidth at long contexts (DeepSeek V2/V3).
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      Integration cost:
+     </strong>
+     Mostly handled via existing linear-algebra kernels; complexity lives in model code and training, not low-level kernels.
+    </p>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p>
+ In both cases, the operations remain “tensor-core friendly,” which is why they spread quickly once shown to work.
+</p>
+<h3>
+ 4.3 MoE: Conditional Compute Needs Kernel + System Help
+</h3>
+<p>
+ Mixture-of-Experts introduces
+ <strong>
+  block-sparse compute
+ </strong>
+ and
+ <strong>
+  conditional routing
+ </strong>
+ :
+</p>
+<ul>
+ <li>
+  <p>
+   Multiple experts (FFNs) per layer, with a router choosing a subset per token.
+  </p>
+ </li>
+ <li>
+  <p>
+   On paper, this saves compute: only a fraction of the experts are active per token.
+  </p>
+ </li>
+ <li>
+  <p>
+   On hardware, naïve implementations can be
+   <strong>
+    3–15× slower
+   </strong>
+   than dense models because:
+  </p>
+  <ul>
+   <li>
+    <p>
+     Tokens for a given expert may be scattered across batches.
+    </p>
+   </li>
+   <li>
+    <p>
+     Expert weights must be moved in and out of SRAM frequently.
+    </p>
+   </li>
+   <li>
+    <p>
+     Communication overhead across GPUs can dominate.
+    </p>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p>
+ Efficient MoE requires:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Block-sparse kernels
+   </strong>
+   that can pack token assignments into regular blocks and run them as GEMMs.
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Expert sharding and load balancing
+   </strong>
+   across GPUs (e.g., MegaBlocks, FasterMoE, Aurora).
+  </p>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Serving stacks
+   </strong>
+   that know how to route tokens to experts, keep experts resident in memory, and handle dynamic loads.
+  </p>
+ </li>
+</ul>
+<p>
+ This is why MoE falls into the
+ <strong>
+  Level 3 (serving + distributed system) category
+ </strong>
+ and shows a ~36-month lag from Switch → Mixtral/DeepSeek/Llama 4 (Appendix, Table 4).
+</p>
+<h3>
+ 4.4 SSMs vs Attention: Parallelism Gap
+</h3>
+<p>
+ State Space Models (SSMs) like Mamba use
+ <strong>
+  sequential state updates
+ </strong>
+ :
+</p>
+<ul>
+ <li>
+  <p>
+   Each token updates a latent state based on the previous state and current input.
+  </p>
+ </li>
+ <li>
+  <p>
+   Even with clever “parallel scan” algorithms, the structure is less naturally parallel than attention’s big batched matmuls.
+  </p>
+ </li>
+</ul>
+<p>
+ On GPUs:
+</p>
+<ul>
+ <li>
+  <p>
+   Attention can compute many Q·Kᵀ matmuls in parallel across tokens, heads, and layers.
+  </p>
+ </li>
+ <li>
+  <p>
+   SSMs must simulate a recurrence, which is more sequential and often requires custom kernels that are harder to optimize.
+  </p>
+ </li>
+</ul>
+<p>
+ The result in 2023–2025:
+</p>
+<ul>
+ <li>
+  <p>
+   Pure Mamba/SSM models are very efficient up to 7B (Falcon Mamba 7B).
+  </p>
+ </li>
+ <li>
+  <p>
+   Beyond that, all successful large deployments use SSMs as
+   <strong>
+    components in hybrids
+   </strong>
+   with attention, not as full replacements (Appendix, Table 3).
+  </p>
+ </li>
+</ul>
+<p>
+ This illustrates how
+ <strong>
+  parallelism and kernel complexity
+ </strong>
+ can limit which architectures make it to frontier scale on today’s GPU stacks.
+</p>
+<div>
+ <hr/>
+</div>
+<h2>
+ 5. How This Creates Infrastructure Lag
+</h2>
+<p>
+ Putting it together, the
+ <strong>
+  Infrastructure Lag Pattern
+ </strong>
+ emerges naturally from these layers:
+</p>
+<ul>
+ <li>
+  <p>
+   <strong>
+    Weight-only changes (e.g., GQA):
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     Only model definition and training code change.
+    </p>
+   </li>
+   <li>
+    <p>
+     No new kernels or serving infra.
+    </p>
+   </li>
+   <li>
+    <p>
+     Adoption timeline: ≈12 months (one or two retraining cycles).
+    </p>
+   </li>
+  </ul>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Kernel-level changes (e.g., FlashAttention):
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     Require new CUDA/Triton kernels, library support, and framework integration.
+    </p>
+   </li>
+   <li>
+    <p>
+     Need extensive testing and validation across models and hardware.
+    </p>
+   </li>
+   <li>
+    <p>
+     Adoption timeline: ≈24 months from paper to “standard practice.”
+    </p>
+   </li>
+  </ul>
+ </li>
+ <li>
+  <p>
+   <strong>
+    Serving + distributed-system changes (e.g., MoE):
+   </strong>
+  </p>
+  <ul>
+   <li>
+    <p>
+     Need kernels, framework ops,
+     <strong>
+      and
+     </strong>
+     new serving stacks (expert sharding, routing, load balancing).
+    </p>
+   </li>
+   <li>
+    <p>
+     Often require rewriting major parts of infra and monitoring.
+    </p>
+   </li>
+   <li>
+    <p>
+     Adoption timeline: ≈36 months from initial paper to widespread production use.
+    </p>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p>
+ Architectural ideas that
+ <strong>
+  align with existing kernels and hardware
+ </strong>
+ (GQA, RoPE, RMSNorm) diffuse quickly. Those that require entirely new kernels or system designs (Flash, MoE, SSMs at scale) move more slowly. Those that
+ <strong>
+  fight GPU primitives
+ </strong>
+ (e.g., heavy spline evaluations in KANs, iterative solvers in Neural ODEs) face the steepest uphill battle and, so far, have not crossed into frontier-scale production.
+</p>
+<p>
+ This is the practical substrate of the Hardware Compatibility Filter: it is not just about mathematical elegance, but about how gracefully a technique flows through hardware, kernels, frameworks, and serving systems.
+</p>
+<p class="button-wrapper" data-attrs='{"url":"https://lambpetros.substack.com/subscribe?","text":"Subscribe now","action":null,"class":null}' data-component-name="ButtonCreateButton">
+ <a class="button primary" href="https://lambpetros.substack.com/subscribe?">
+  <span>
+   Subscribe now
+  </span>
+ </a>
+</p>
+<h1>
+ Bibliography and References
+</h1>
+<p>
+ This bibliography collects the main external sources cited in the article
+ <em>
+  “What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)”
+ </em>
+ .
+</p>
+<div>
+ <hr/>
+</div>
+<p>
+ Primary sources (papers, technical reports, official model cards/docs) back quantitative and architectural claims. Secondary sources (e.g., Wikipedia, third-party analyses) are used only for high-level summaries and inferred details of closed models and are explicitly labeled as such.
+</p>
+<h2>
+ 1. Mixture-of-Experts and Conditional Computation
+</h2>
+<ul>
+ <li>
+  <p>
+   Fedus, W. et al. (2021).
+   <em>
+    Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity
+   </em>
+   . arXiv:2101.03961. Original large-scale sparse MoE for language models, establishing Switch as a practical scaling path.
+  </p>
+ </li>
+ <li>
+  <p>
+   Lepikhin, D. et al. (2020).
+   <em>
+    GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding
+   </em>
+   . arXiv:2006.16668. Introduces GShard and conditional computation techniques for scaling models across many devices.
+  </p>
+ </li>
+ <li>
+  <p>
+   Du, N. et al. (2021).
+   <em>
+    GLaM: Efficient Scaling of Language Models with Mixture-of-Experts
+   </em>
+   . arXiv:2112.06905. Demonstrates Google’s GLaM MoE architecture and its efficiency–quality trade-offs.
+  </p>
+ </li>
+ <li>
+  <p>
+   Zhou, Y. et al. (2022).
+   <em>
+    Mixture-of-Experts with Expert Choice Routing
+   </em>
+   . NeurIPS 2022. arXiv:2202.09368. Proposes expert-choice routing to improve MoE load balancing and training stability.
+  </p>
+ </li>
+ <li>
+  <p>
+   Shazeer, N. et al. (2017).
+   <em>
+    Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer
+   </em>
+   . arXiv:1701.06538. Early MoE paper showing sparsely-gated experts can scale to very large parameter counts.
+  </p>
+ </li>
+ <li>
+  <p>
+   Puigcerver, J. et al. (2023).
+   <em>
+    Soft Mixture of Experts
+   </em>
+   . arXiv:2308.00951. Representative “Soft MoE” work from Google scaling MoE with weighted expert combinations.
+  </p>
+ </li>
+ <li>
+  <p>
+   ST-MoE (Google Research, 2022). Large-scale sparse MoE (~269B parameters) with stabilized routing (e.g., z-loss) used as a modern reference point for training and inference cost vs dense baselines.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    Mixture of Experts in the Era of Large Language Models
+   </em>
+   (2024). Survey of MoE architectures and deployment patterns in LLMs, covering Mixtral-8×7B, Grok-1, DBRX, Arctic, DeepSeek-V2/V3 and related systems.
+  </p>
+ </li>
+ <li>
+  <p>
+   FasterMoE context-length study (2023–2024). System benchmarking paper analyzing MoE throughput vs sequence length and batch size; used to derive context-length degradation curves in the MoE dataset.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    Towards MoE Deployment: Mitigating Inefficiencies in Mixture-of-Experts Inference
+   </em>
+   . arXiv:2303.06182. Analyzes practical deployment inefficiencies of MoE and proposes mitigation strategies.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    Optimizing MoE Inference Time
+   </em>
+   (Aurora system, 2024). arXiv preprint focused on MoE inference optimization, providing ≈2.4–3.5× speedup numbers over dense baselines.
+  </p>
+ </li>
+ <li>
+  <p>
+   Mistral AI (2023–2024).
+   <em>
+    Mixtral 8×7B
+   </em>
+   technical report and Hugging Face model cards for
+   <code>
+    Mixtral-8x7B
+   </code>
+   and
+   <code>
+    Mixtral-8x7B-Instruct
+   </code>
+   . Documents the Mixtral sparse MoE architecture and its benchmark results.
+  </p>
+ </li>
+ <li>
+  <p>
+   DeepSeek-AI (2024).
+   <em>
+    DeepSeek-V3 Technical Report
+   </em>
+   . arXiv:2412.19437 and associated Hugging Face model cards (e.g.,
+   <code>
+    deepseek-ai/DeepSeek-V3
+   </code>
+   ,
+   <code>
+    deepseek-ai/DeepSeek-V3.2-Exp
+   </code>
+   ). Describes DeepSeek’s MoE + MLA architecture and long-context performance.
+  </p>
+ </li>
+ <li>
+  <p>
+   Riquelme, C. et al. (2021–2022).
+   <em>
+    Scaling Vision with Sparse Mixture of Experts
+   </em>
+   (Vision MoE / V-MoE). Extends MoE ideas to vision models, demonstrating benefits beyond NLP.
+  </p>
+ </li>
+ <li>
+  <p>
+   NVIDIA GB200 NVL72 and related vendor documentation describing hardware optimized for large-context MoE workloads. Vendor materials illustrating hardware co-designed for large MoE and long-context serving.
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h2>
+ 2. Flash Attention and Infrastructure Lag
+</h2>
+<ul>
+ <li>
+  <p>
+   Dao, T. et al. (2022).
+   <em>
+    FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness
+   </em>
+   . arXiv:2205.14135. Introduces the original IO-aware tiling algorithm that makes exact attention memory-efficient and fast on GPUs.
+  </p>
+ </li>
+ <li>
+  <p>
+   Dao, T. et al. (2023).
+   <em>
+    FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning
+   </em>
+   . arXiv:2307.08691. Improves FlashAttention with better parallelism and work partitioning, increasing utilization.
+  </p>
+ </li>
+ <li>
+  <p>
+   PyTorch 2.0 / 2.2 release notes and documentation for
+   <code>
+    scaled_dot_product_attention
+   </code>
+   and the FlashAttention2 backend (Jan 2024). Framework integration evidence for FlashAttention-style kernels becoming standard.
+  </p>
+ </li>
+ <li>
+  <p>
+   IBM Granite 13B model card (first openly confirmed major model using FlashAttention). Early production confirmation of FlashAttention usage in a large open-weight model.
+  </p>
+ </li>
+ <li>
+  <p>
+   Microsoft Phi-3 documentation (2024) referencing FlashAttention usage. Confirms FlashAttention in Microsoft’s Phi-3 models.
+  </p>
+ </li>
+ <li>
+  <p>
+   Google Gemma 2 model card (2024) referencing FlashAttention2. Confirms FlashAttention2 adoption in Google’s Gemma 2 family.
+  </p>
+ </li>
+ <li>
+  <p>
+   FlashAttention-3 Hopper (H100) technical reports and documentation (2024). Describes Hopper-optimized FA3 kernels and their performance characteristics.
+  </p>
+ </li>
+ <li>
+  <p>
+   FlashInfer serving library documentation (2025) reporting ≈29–69% latency reductions in inference. Serving-level library built on FlashAttention kernels, showing end-to-end latency gains.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    Efficient Large Language Models
+   </em>
+   (TMLR 2024). Survey of efficient attention mechanisms and LLM optimizations, covering hardware-efficient attention (FlashAttention family), compact attention (KV compression), sparse and linear attention methods.
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h2>
+ 3. State Space Models and Hybrid Architectures
+</h2>
+<ul>
+ <li>
+  <p>
+   Gu, A. et al. (2021).
+   <em>
+    Efficiently Modeling Long Sequences with Structured State Spaces
+   </em>
+   (S4). arXiv:2111.00396. Introduces structured state-space models as efficient sequence models for long contexts.
+  </p>
+ </li>
+ <li>
+  <p>
+   Gu, A. and Dao, T. et al. (2023).
+   <em>
+    Mamba: Linear-Time Sequence Modeling with Selective State Spaces
+   </em>
+   . arXiv:2312.00752. Presents Mamba, a selective SSM with linear-time sequence modeling capabilities.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    From S4 to Mamba: A Comprehensive Survey
+   </em>
+   (2025). arXiv:2503.18970. Survey of structured state-space models, tracing the evolution from S4 to Mamba and summarizing empirical findings on scalability and limitations.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    A Survey of Mamba
+   </em>
+   (2025). arXiv:2408.01129 (June 2025 update). Consolidates empirical results and design variants of Mamba-style models, emphasizing their strengths up to ≈7B parameters and challenges at larger scales.
+  </p>
+ </li>
+ <li>
+  <p>
+   Falcon Mamba 7B model card and technical brief describing a 7B pure Mamba model trained on 5.5T tokens and benchmarks vs Llama 3.1 8B, Mistral 7B, Gemma 7B. Documents the strongest pure Mamba model and its comparative performance.
+  </p>
+ </li>
+ <li>
+  <p>
+   AI21 Labs (2024).
+   <em>
+    Jamba
+   </em>
+   hybrid Mamba+Attention model (official blog and Hugging Face cards). Describes a production hybrid architecture that alternates Mamba and attention layers.
+  </p>
+ </li>
+ <li>
+  <p>
+   TII (2024).
+   <em>
+    Falcon-H1
+   </em>
+   hybrid model combining attention and Mamba2-style blocks. Presents a parallel hybrid SSM+attention design over a range of scales.
+  </p>
+ </li>
+ <li>
+  <p>
+   Qwen3-Next technical reports and model cards describing linear attention (e.g., Gated DeltaNet) plus gated attention and MoE for capacity. Detail a frontier hybrid architecture combining linear attention, gated attention, and MoE for long context and capacity.
+  </p>
+ </li>
+ <li>
+  <p>
+   NVIDIA Nemotron technical reports describing hybrid architectures incorporating Mamba-style SSM blocks for efficiency. Provide examples of efficiency-focused hybrids using SSM-like blocks.
+  </p>
+ </li>
+ <li>
+  <p>
+   Falcon 2 (TII) documentation for hybrid architectures that incorporate SSM-style blocks. Confirms SSM-style components inside modern Falcon architectures.
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h2>
+ 4. Training and Optimization Techniques
+</h2>
+<ul>
+ <li>
+  <p>
+   Foret, P. et al. (2020).
+   <em>
+    Sharpness-Aware Minimization for Efficiently Improving Generalization
+   </em>
+   . arXiv:2010.01412. Introduces SAM, an optimizer modification favoring flat minima for better generalization.
+  </p>
+ </li>
+ <li>
+  <p>
+   Progressive depth / curriculum training work demonstrating faster convergence via increasing depth over training (representative 2020–2023 literature). Represents modern progressive training schemes that improve convergence speed.
+  </p>
+ </li>
+ <li>
+  <p>
+   Routing-aware optimization and load-balancing methods for MoE models (e.g., z-loss and auxiliary losses in ST-MoE-style work). Captures router-focused training techniques that stabilize and balance MoE experts.
+  </p>
+ </li>
+ <li>
+  <p>
+   Liu, K. et al. (2025).
+   <em>
+    Reinforcement Learning Meets Large Language Models: A Survey of Advancements and Applications Across the LLM Lifecycle
+   </em>
+   . arXiv:2509.16679. Survey of RL methods applied across pre-training, alignment fine-tuning, and reinforced reasoning for LLMs, with a focus on RLVR, datasets, benchmarks, and tooling.
+  </p>
+ </li>
+ <li>
+  <p>
+   Sun, H. and van der Schaar, M. (2025).
+   <em>
+    Inverse Reinforcement Learning Meets Large Language Model Post-Training: Basics, Advances, and Opportunities
+   </em>
+   . arXiv:2507.13158. Survey framing LLM alignment through inverse RL, emphasizing reward modeling from human data, evaluation metrics, and open challenges.
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h2>
+ 5. Frontier Model Documentation and Model Cards
+</h2>
+<ul>
+ <li>
+  <p>
+   Meta AI.
+   <em>
+    Llama 2
+   </em>
+   (7B/13B/70B) model card and technical report (2023). Documents the dense Llama 2 family and its core architectural choices.
+  </p>
+ </li>
+ <li>
+  <p>
+   Meta AI.
+   <em>
+    Llama 3
+   </em>
+   and
+   <em>
+    Llama 3.1
+   </em>
+   model cards (e.g.,
+   <code>
+    Meta-Llama-3-8B
+   </code>
+   ,
+   <code>
+    Meta-Llama-3-70B
+   </code>
+   ,
+   <code>
+    Meta-Llama-3.1-405B
+   </code>
+   ) confirming GQA, RoPE, RMSNorm, and FlashAttention usage. Provide official confirmation of efficient attention and normalization patterns in Llama 3.
+  </p>
+ </li>
+ <li>
+  <p>
+   Meta AI.
+   <em>
+    Llama 4
+   </em>
+   (Scout / Maverick) launch materials (2025) describing the MoE pivot from dense Llama 3. Establish Meta’s first public MoE architecture and its expert configuration.
+  </p>
+ </li>
+ <li>
+  <p>
+   OpenAI.
+   <em>
+    GPT-4
+   </em>
+   system card and associated blog posts (2023). High-level description of GPT-4’s capabilities, training data, and safety considerations.
+  </p>
+ </li>
+ <li>
+  <p>
+   OpenAI.
+   <em>
+    GPT-4 Turbo
+   </em>
+   launch materials (2023). Documentation describing cost, latency, and context improvements for GPT-4 Turbo.
+  </p>
+ </li>
+ <li>
+  <p>
+   OpenAI.
+   <em>
+    GPT-4o
+   </em>
+   release blog and system card (May 2024). Introduces GPT-4o as a natively multimodal model with improved latency and cost.
+  </p>
+ </li>
+ <li>
+  <p>
+   OpenAI.
+   <em>
+    GPT-5
+   </em>
+   system card and launch posts (Aug 2025). Official materials describing GPT-5’s capabilities and deployment properties.
+  </p>
+ </li>
+ <li>
+  <p>
+   SemiAnalysis and similar third-party technical analyses (secondary / inference sources) used for inferred architectural details of closed models. Independent analyses used to hypothesize MoE/architecture internals for closed models.
+  </p>
+ </li>
+ <li>
+  <p>
+   Google DeepMind.
+   <em>
+    Gemini
+   </em>
+   technical reports and the “Gemini (language model)” Wikipedia entry (secondary summary) describing MQA/GQA and multimodal transformer architecture. Official and secondary sources summarizing Gemini’s architecture and attention variants.
+  </p>
+ </li>
+ <li>
+  <p>
+   Mistral AI.
+   <em>
+    Mistral 7B
+   </em>
+   paper (arXiv:2310.06825). Technical report on the Mistral 7B dense transformer and its performance.
+  </p>
+ </li>
+ <li>
+  <p>
+   Mistral AI.
+   <em>
+    Mixtral 8×7B
+   </em>
+   technical report and model cards confirming sparse MoE architecture (8 experts, 2 active per token). Describes the Mixtral MoE architecture and benchmark results.
+  </p>
+ </li>
+ <li>
+  <p>
+   DeepSeek-AI.
+   <em>
+    DeepSeek-V2
+   </em>
+   technical report and GitHub configs. Documents DeepSeek V2’s architecture and training setup.
+  </p>
+ </li>
+ <li>
+  <p>
+   DeepSeek-AI.
+   <em>
+    DeepSeek-V3
+   </em>
+   technical report (arXiv:2412.19437). Presents DeepSeek V3’s MoE + MLA architecture and performance.
+  </p>
+ </li>
+ <li>
+  <p>
+   DeepSeek-AI.
+   <em>
+    DeepSeek-R1
+   </em>
+   launch blog and model documentation (Jan 2025). Provides details on DeepSeek R1’s reasoning training and performance metrics.
+  </p>
+ </li>
+ <li>
+  <p>
+   Anthropic. Claude model cards and system cards for Claude 2, Claude 3, and Claude 4.x. Summarize Claude family capabilities, context windows, and safety considerations.
+  </p>
+ </li>
+ <li>
+  <p>
+   xAI. Grok-1 release repository (
+   <code>
+    xai-org/grok-1
+   </code>
+   ) and
+   <a href="http://x.ai">
+    x.ai
+   </a>
+   blog posts for Grok 4.x (e.g., “Grok 4.1”). Provide open weights and architectural notes for Grok models.
+  </p>
+ </li>
+ <li>
+  <p>
+   Gemma 2 model cards (Google, 2B/9B/27B) confirming GQA and key architectural details. Document Gemma 2’s architecture, GQA usage, and training setup.
+  </p>
+ </li>
+ <li>
+  <p>
+   Llama 3.2 / 3.3 model cards confirming GQA and long context windows (e.g., 128K). Confirm GQA and extended context support in later Llama 3 releases.
+  </p>
+ </li>
+ <li>
+  <p>
+   Qwen2.5 72B model card documenting GQA configuration, context length, and training setup. Official Qwen 2.5 documentation for attention configuration and context length.
+  </p>
+ </li>
+ <li>
+  <p>
+   Falcon 2 11B documentation describing GQA usage and training corpus. Describes Falcon 2’s architecture and training data, including GQA.
+  </p>
+ </li>
+ <li>
+  <p>
+   Wikipedia entries:
+   <em>
+    “Llama (language model)”
+   </em>
+   ,
+   <em>
+    “Claude (language model)”
+   </em>
+   ,
+   <em>
+    “Gemini (language model)”
+   </em>
+   (secondary summaries, as of late 2025) for consolidated public overviews of architecture families. Secondary sources summarizing architecture families for quick reference.
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h2>
+ 6. Production Deployment, RAG, and Serving Systems
+</h2>
+<ul>
+ <li>
+  <p>
+   Product and developer documentation from OpenAI (ChatGPT, GPTs), Anthropic (Claude), and Google (Gemini) describing retrieval-augmented workflows and tool/RAG patterns. Provide concrete examples of how major providers productize RAG and tool integration.
+  </p>
+ </li>
+ <li>
+  <p>
+   DeepSpeed, Megatron-LM, FasterTransformer, AITemplate, Unsloth, and related open-source frameworks documenting FlashAttention and MoE support in production-grade stacks. Framework and serving documentation showing kernel and MoE support in real systems.
+  </p>
+ </li>
+ <li>
+  <p>
+   Command R / Command R+ (Cohere) product documentation highlighting long-context (128K+) capabilities and RAG-centric workflows. Vendor docs demonstrating long-context and retrieval-centric deployments.
+  </p>
+ </li>
+ <li>
+  <p>
+   Llama 3.2 documentation describing extended context windows around 128K tokens. Confirms extended context support and associated techniques in Llama 3.2.
+  </p>
+ </li>
+ <li>
+  <p>
+   xAI Grok 1.5 and related documentation noting long-context capabilities. Documentation describing Grok 1.5’s long-context features and usage.
+  </p>
+ </li>
+ <li>
+  <p>
+   Qwen 3 and Qwen3-Next technical reports and model cards documenting 128K–256K context windows with sparse attention and memory strategies. Official sources describing Qwen’s long-context and sparse-attention strategies.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    Beyond the Limits: Context Length Extension
+   </em>
+   (May 2024). Survey of long-context techniques, including memory-retrieval augmentation, modified positional encodings, SSM approaches, and sparse attention patterns.
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h2>
+ 7. Modular and Compositional Learning
+</h2>
+<ul>
+ <li>
+  <p>
+   2025 “Modular Machine Learning” framework papers on modular representations, modular models, and modular reasoning, used to validate the “compositional language” thesis. Introduce a formal framework for modular models and reasoning that aligns with the compositional architecture view.
+  </p>
+ </li>
+ <li>
+  <p>
+   Petros, P. (2024).
+   <em>
+    Neural Architecture Design as a Compositional Language
+   </em>
+   (previous post that the current work extends). Earlier article establishing the compositional architecture framing this work builds on.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    Modularity in Deep Learning: A Survey
+   </em>
+   (2023). Survey of modularity across data, task, and model axes, and its impact on compositional generalization and training.
+  </p>
+ </li>
+</ul>
+<div>
+ <hr/>
+</div>
+<h2>
+ 8. Additional 2025 Research Directions (Speculative / Emerging)
+</h2>
+<p>
+ These references inform forward-looking observations and are not treated as production-standard techniques.
+</p>
+<ul>
+ <li>
+  <p>
+   2025 “Neural Attention” paper replacing dot products in attention with small feed-forward networks to capture richer nonlinear interactions in research settings.
+  </p>
+ </li>
+ <li>
+  <p>
+   <em>
+    Nested Learning
+   </em>
+   (Google Research, NeurIPS 2025), introducing a multi-level learning paradigm with attention as associative memory for continual learning.
+  </p>
+ </li>
+ <li>
+  <p>
+   Hybrid transformer with quantum self-attention applied to molecular generation (SMILES) demonstrating experimental quantum-enhanced NLP architectures (2025).
+  </p>
+ </li>
+ <li>
+  <p>
+   Transformer-based neural architecture search (2025) using auxiliary perplexity-based metrics to explore alternative attention computation strategies.
+  </p>
+ </li>
+</ul>
+<div class="captioned-image-container">
+ <figure>
+  <a class="image-link image2 is-viewable-img" data-component-name="Image2ToDOM" href="https://substackcdn.com/image/fetch/$s_!7aQy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png" target="_blank">
+   <div class="image2-inset">
+    <picture>
+     <source sizes="100vw" srcset="https://substackcdn.com/image/fetch/$s_!7aQy!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png 424w, https://substackcdn.com/image/fetch/$s_!7aQy!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png 848w, https://substackcdn.com/image/fetch/$s_!7aQy!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png 1272w, https://substackcdn.com/image/fetch/$s_!7aQy!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png 1456w" type="image/webp"/>
+     <img alt="" class="sizing-normal" data-attrs='{"src":"https://substack-post-media.s3.amazonaws.com/public/images/23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png","srcNoWatermark":null,"fullscreen":null,"imageSize":null,"height":813,"width":1456,"resizeWidth":null,"bytes":6442065,"alt":"","title":"","type":"image/png","href":null,"belowTheFold":true,"topImage":false,"internalRedirect":"https://lambpetros.substack.com/i/180752890?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png","isProcessing":false,"align":null,"offset":false}' height="813" loading="lazy" sizes="100vw" src="assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png" title="" width="1456"/>
+    </picture>
+    <div class="image-link-expand">
+     <div class="pencraft pc-display-flex pc-gap-8 pc-reset">
+      <button class="pencraft pc-reset pencraft icon-container restack-image" tabindex="0" type="button">
+       <svg fill="none" height="20" role="img" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="height:20px;width:20px" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+        <g>
+         <title>
+         </title>
+         <path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882">
+         </path>
+        </g>
+       </svg>
+      </button>
+      <button class="pencraft pc-reset pencraft icon-container view-image" tabindex="0" type="button">
+       <svg class="lucide lucide-maximize2 lucide-maximize-2" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="15 3 21 3 21 9">
+        </polyline>
+        <polyline points="9 21 3 21 3 15">
+        </polyline>
+        <line x1="21" x2="14" y1="3" y2="10">
+        </line>
+        <line x1="3" x2="10" y1="21" y2="14">
+        </line>
+       </svg>
+      </button>
+     </div>
+    </div>
+   </div>
+  </a>
+ </figure>
+</div>
+<div class="community-chat" data-attrs='{"url":"https://open.substack.com/pub/lambpetros/chat?utm_source=chat_embed","subdomain":"lambpetros","pub":{"id":7088450,"name":"Petros Rooted Layers","author_name":"Petros Lamb","author_photo_url":"https://substackcdn.com/image/fetch/$s_!zvVr!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F780074c6-a430-4529-8d42-bafd26e38ecc_832x832.png"}}' data-component-name="CommunityChatRenderPlaceholder">
+</div>
+<div class="subscription-widget-wrap-editor" data-attrs='{"url":"https://lambpetros.substack.com/subscribe?","text":"Subscribe","language":"en"}' data-component-name="SubscribeWidgetToDOM">
+ <div class="subscription-widget show-subscribe">
+  <div class="preamble">
+   <p class="cta-caption">
+    Thanks for reading Petros Rooted Layers! Subscribe for free to receive new posts and support my work.
+   </p>
+  </div>
+  <form class="subscription-widget-subscribe">
+   <input class="email-input" name="email" placeholder="Type your email…" tabindex="-1" type="email"/>
+   <input class="button primary" type="submit" value="Subscribe"/>
+   <div class="fake-input-wrapper">
+    <div class="fake-input">
+    </div>
+    <div class="fake-button">
+    </div>
+   </div>
+  </form>
+ </div>
+</div>
+</body></html>
