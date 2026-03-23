@@ -1,0 +1,3 @@
+[submodule "ai_agents_enterprise_state"]
+	path = ai_agents_enterprise_state
+	url = git@github.com:petroslamb/autonomy-tax-enterprise-agents.git

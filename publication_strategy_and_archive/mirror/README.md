@@ -60,6 +60,7 @@ Use `check:mirror` before pushing. It validates:
 - localized markdown asset references
 - generated root README mapping content
 - internal links in the built mirror
+- representative HTTP smoke routes for the built mirror
 
 ## Environment Variables
 
