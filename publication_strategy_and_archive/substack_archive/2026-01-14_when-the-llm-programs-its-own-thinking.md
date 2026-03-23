@@ -9,35 +9,35 @@ URL: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
 
 Long prompts should not be fed into the neural network directly. They should be treated as part of the environment that the LLM can symbolically interact with. This is the central insight of Recursive Language Models (Zhang, Kraska, and Khattab, 2025), and it changes what scaffolding can do.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F33e80b10-9d84-44d3-b14d-55c64d2d317b_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!k9n4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F33e80b10-9d84-44d3-b14d-55c64d2d317b_5734x3200.png)
+![](assets/asset-3bf1d6167082fa21.png)
 
 The idea of using code to augment language model reasoning dates to PAL (Gao et al., 2022), which offloaded arithmetic to a Python interpreter while the model focused on problem decomposition. CodeAct (Wang et al., 2024) generalized this into an agentic framework: models generate Python as actions, observe execution feedback, and iterate. THREAD (Schroeder et al., 2024) and ReDel (Zhu et al., 2024) added recursive decomposition, letting models spawn sub-agents for sub-problems.
 
 Scaffold-driven memory systems manage context on the model’s behalf. MemWalker (Chen et al., 2023) builds a tree of summaries and lets the model navigate interactively, but the tree structure is fixed by the scaffold. MemGPT (Packer et al., 2024) implements an OS-like memory hierarchy with explicit paging functions, but the architecture is engineered, not emergent. Context Folding (Sun et al., 2025) compresses completed sub-trajectories into cached summaries, but folding boundaries are scaffold-determined.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb88fe6e7-37e6-443d-95aa-6f821f0850d3_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!2H6r!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb88fe6e7-37e6-443d-95aa-6f821f0850d3_5734x3200.png)
+![](assets/asset-94ecd1bf9a6af121.png)
 
 RLMs synthesize these ideas with a novel twist. The prompt is stored as a variable in the REPL environment, not passed to the model’s context window. The model writes code to examine, filter, and chunk this variable, constructing sub-queries and invoking itself recursively. This out-of-core design, inspired by algorithms that process datasets too large for RAM, enables inputs to scale far beyond context limits. In the paper’s BrowseComp+ experiments (Table 1), RLMs process 6-11 million tokens with 128K-context models. Section 3.1 documents emergent patterns: models filter contexts with regex based on priors (Figure 4a), chunk documents and dispatch transformations across chunks (Figure 4b), verify answers through sub-calls before committing, and stitch outputs from hundreds of invocations.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9cb54dec-c375-4b37-9ba7-dbc44cc9c667_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!C1zi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9cb54dec-c375-4b37-9ba7-dbc44cc9c667_5734x3200.png)
+![](assets/asset-c88d69c615b9fe88.png)
 
 This flexibility introduces new failure modes. When the model chooses how to decompose a problem, it can choose wrong: a regex misses critical documents, a chunking boundary splits a semantic unit, a sub-call hallucinates. The RLM paradigm gives the model power. What follows documents the extensions we built to make that power visible and controllable.
 
 We built on RLM for three reasons. First, input scaling is the harder problem; recursive depth can always be increased, but fitting massive inputs into bounded context requires architectural innovation. Second, RLM’s depth-1 limit (sub-calls invoke base LMs, not RLMs) keeps implementation tractable. Third, the reference codebase is minimal enough to extend without fighting abstraction layers.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fef76c452-1ef9-4657-aad9-acc824375dd0_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!fZaI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fef76c452-1ef9-4657-aad9-acc824375dd0_5734x3200.png)
+![](assets/asset-b306db4302406d18.png)
 
 ## The Human in the Loop
 
 The reference RLM implementation executes in Docker containers or cloud sandboxes. The model has a REPL; the user does not share it. The model’s environment is isolated by design.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F477115a3-6522-48e6-8f6e-e33d013ed476_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!6kbQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F477115a3-6522-48e6-8f6e-e33d013ed476_5734x3200.png)
+![](assets/asset-acb773f046dcb824.png)
 
 Claude Code changed this for filesystems. The model reads files, writes files, executes commands. The filesystem became the workspace where human and model collaborate. RLMs propose the same architecture with a REPL instead of a filesystem, but the original implementation kept the REPL isolated.
 
 Our first contribution: bringing the human into the model’s REPL. The model operates as a JupyterREPL on the same kernel as the user’s notebook. User and model share a namespace. The user writes code; the model writes code; both access the same objects. This is not turn-based prompting. It is pair programming on a shared heap.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18fc6227-7f9c-41a7-b2c1-0a73fedae20f_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!jkiJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18fc6227-7f9c-41a7-b2c1-0a73fedae20f_5734x3200.png)
+![](assets/asset-c86d8f27d9526f12.png)
 
 The friction of isolation is concrete. Passing large dataframes to a containerized RLM requires serialization, network transfer, and deserialization. For exploratory work where you run dozens of queries in an hour, that overhead accumulates. The notebook eliminates this boundary. Variables transfer without serialization. The model accesses data the user has defined; the user inspects artifacts the model has produced.
 
@@ -45,7 +45,7 @@ The friction of isolation is concrete. Passing large dataframes to a containeriz
 
 RLM trajectories are rich: model responses, code blocks, execution outputs, sub-LM calls. The paper documents patterns in these trajectories. Models filter input using regex based on priors. Models chunk contexts and dispatch recursive calls. Models verify answers through sub-calls before committing. These patterns are the substance of the paradigm.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faedc2bb9-07e9-4b00-a0cd-defe1c063ff1_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!7XuY!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faedc2bb9-07e9-4b00-a0cd-defe1c063ff1_5734x3200.png)
+![](assets/asset-d7449952f67c823f.png)
 
 ReDel provides event-driven logging and interactive replay for recursive multi-agent systems. Users step through delegation graphs and analyze events post-hoc. But ReDel’s visualization is designed for agent delegation, not RLM-style context decomposition. The granularity is at the agent level: which child handled which sub-task. RLM trajectories have a different structure: how the model examined the prompt variable, what code it wrote to filter, what each sub-call returned.
 
@@ -80,13 +80,13 @@ The prompt is straightforward. I will respond directly. FINAL(“Blue”)
 
 A second artifact is a runnable notebook generated from the JSONL log. A resume cell at the top rehydrates context variables and provides a replay map for sub-calls. Each iteration appears as markdown with the model's response, followed by executable code cells with captured outputs. You can step through the trajectory, modify intermediate cells, and resume from a corrected state.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1954de8-c5e6-40ee-8aab-15cac1bd7600_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!xaEm!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1954de8-c5e6-40ee-8aab-15cac1bd7600_5734x3200.png)
+![](assets/asset-e0f3df11937bae97.png)
 
 ## Sharing State Across the Boundary
 
 The model and user operate in the same namespace. Three configurations define the collaboration boundary.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F665cd59d-0ea2-433a-8d42-1d6df102c063_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!ME91!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F665cd59d-0ea2-433a-8d42-1d6df102c063_5734x3200.png)
+![](assets/asset-356e4d6a73f35f9c.png)
 
 **RLM-to-user sync** lets the model compute and leave results for you:
 
@@ -144,7 +144,7 @@ The model accessed `df` from your namespace, modified it in place. No serializat
 
 Completions are stateless: each call is independent. Sessions maintain history: each call sees accumulated context from prior turns.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcf284f81-5113-413d-9216-f49f0f1add44_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!DWs0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcf284f81-5113-413d-9216-f49f0f1add44_5734x3200.png)
+![](assets/asset-aa4f4ddfbff028fc.png)
 
 The session maintains history at both the prompt level and the REPL level. The model can programmatically access `session_context_0`, `session_context_1`, and so on.
 
@@ -173,7 +173,7 @@ The second call knows about `x` because the REPL persisted, even though there is
 
 These are inference-time scaffolds. They do not change the underlying model. The paper notes that training models to reason as RLMs could provide additional improvements (Section 5), viewing RLM trajectories as a form of reasoning that can be bootstrapped. The extensions here operate purely at the scaffolding level.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F55a59164-104a-4de5-906a-6655c9a74b5b_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!yDCj!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F55a59164-104a-4de5-906a-6655c9a74b5b_5734x3200.png)
+![](assets/asset-7900c55ed1edb621.png)
 
 Sub-calls within a trajectory are sequential. The model waits for each recursive call to complete. However, `llm_query_batched(prompts)` provides concurrent sub-calls when the model has independent queries.
 
@@ -191,7 +191,7 @@ Orchestration is not always correct. A regex filter may miss documents. A chunki
 
 Self-orchestration makes the model responsible for decomposition. That responsibility creates failure modes that static scaffolds never had. A model that chooses its own chunking strategy can choose wrong. A model that decides which sub-queries to dispatch can dispatch the wrong ones.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe4868b01-9284-4695-a41c-3249f28e2107_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!GzXz!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe4868b01-9284-4695-a41c-3249f28e2107_5734x3200.png)
+![](assets/asset-760b09f2b5a93f9c.png)
 
 The trace artifacts make these decisions legible. But legibility alone does not close the loop. What happens when you see that the regex missed the critical document on iteration 3?
 
@@ -201,7 +201,7 @@ This is different from retry-and-hope. It is different from prompt engineering. 
 
 Whether this collaboration pattern scales to production workloads remains to be seen. Whether users will invest the effort to debug trajectories is an empirical question. What we can say is that the tooling now exists. Self-orchestrating models need visibility and control. The extensions here provide both.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd62e38a9-026b-45d1-a00f-a68dd499b673_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!KoxN!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd62e38a9-026b-45d1-a00f-a68dd499b673_5734x3200.png)
+![](assets/asset-c6c32a6042a54f07.png)
 
 ## Try It
 
@@ -217,7 +217,7 @@ The demo walks through completions, sessions, persistence, and all three sync co
 
 ---
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9b7098af-0d7c-49dc-ae95-f89f4db9dd8e_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!lB5n!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9b7098af-0d7c-49dc-ae95-f89f4db9dd8e_5734x3200.png)
+![](assets/asset-94361662c6e55389.png)
 
 ## References
 
@@ -291,4 +291,4 @@ Zhang, A., Kraska, T., & Khattab, O. (2025). *MIT CSAIL, arXiv:2512.06464*.
 
 The foundational paper. RLM treats the prompt as a variable in the REPL rather than passing it to the context window. The model writes code to examine, filter, and chunk this variable. In BrowseComp+ experiments, RLMs process 6-11M tokens with 128K models (Table 1). Section 3.1 documents emergent patterns: regex filtering (Figure 4a), recursive chunking (Figure 4b), answer verification through sub-calls, output stitching. On OOLONG-Pairs, RLMs achieve 58% F1 where base GPT-5 achieves <0.1%. Our extensions address the isolation of the reference implementation: trace artifacts for visibility, Jupyter integration for shared execution.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff4f30f0e-150c-46d8-b3b3-ac2c76026df6_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!5Nqt!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff4f30f0e-150c-46d8-b3b3-ac2c76026df6_5734x3200.png)
+![](assets/asset-735a08a4602ea46b.png)

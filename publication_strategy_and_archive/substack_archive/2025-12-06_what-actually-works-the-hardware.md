@@ -5,24 +5,24 @@ URL: https://lambpetros.substack.com/p/what-actually-works-the-hardware
 
 ## TL;DR
 
-* Hardware compatibility—not just benchmarks—explains which architectures actually make it into 2023–2025 production LLMs.
-* FlashAttention, GQA/MLA, and MoE win because they map cleanly onto GPU primitives and memory hierarchies; KANs and pure SSMs don’t.
-* There is a predictable 12/24/36‑month “infrastructure lag” from paper to standard practice, driven by integration cost (weights → kernels → serving).
-* Architecture has become a relatively stable container; the biggest gains now come from training innovation (RL-style post-training, optimization, data curation) on top of that container.
+- Hardware compatibility—not just benchmarks—explains which architectures actually make it into 2023–2025 production LLMs.
+- FlashAttention, GQA/MLA, and MoE win because they map cleanly onto GPU primitives and memory hierarchies; KANs and pure SSMs don’t.
+- There is a predictable 12/24/36‑month “infrastructure lag” from paper to standard practice, driven by integration cost (weights → kernels → serving).
+- Architecture has become a relatively stable container; the biggest gains now come from training innovation (RL-style post-training, optimization, data curation) on top of that container.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!OX-8!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe19905ea-ebfa-4677-988f-c156b3ecd7e2_3823x2134.png)
+![](assets/asset-50fadad0915cab27.png)
 
 ## The Scroll Map
 
 Here’s the path this article takes:
 
-* **Act I — The Compatibility Filter** – Why hardware‑compatible primitives (FlashAttention, GQA/MLA, MoE) cross the infra chasm while KANs and pure SSMs stall.
-* **Act II — The Conditional Execution Revolution** – How learned routing (attention, MoE, sparse patterns, LoRA-style adapters) became the dominant composition operator.
-* **Act III — The Infrastructure Lag Pattern** – A 12/24/36‑month heuristic for when new primitives and systems actually reach production.
-* **Appendix — Evidence Tables** – Model audits, MoE speedups, SSM ceiling, adoption timelines, and training‑innovation case studies.
-* **Glossary & Key Concepts** – Short, detailed explanations of the main acronyms and primitives used throughout.
-* **Hardware & Kernel Primer** – How GPU primitives, kernels, and frameworks create the Hardware Compatibility Filter and Infrastructure Lag Pattern.
-* **Bibliography & References** – Grouped primary/secondary sources with one‑sentence explainers for each citation.
+- **Act I — The Compatibility Filter** – Why hardware‑compatible primitives (FlashAttention, GQA/MLA, MoE) cross the infra chasm while KANs and pure SSMs stall.
+- **Act II — The Conditional Execution Revolution** – How learned routing (attention, MoE, sparse patterns, LoRA-style adapters) became the dominant composition operator.
+- **Act III — The Infrastructure Lag Pattern** – A 12/24/36‑month heuristic for when new primitives and systems actually reach production.
+- **Appendix — Evidence Tables** – Model audits, MoE speedups, SSM ceiling, adoption timelines, and training‑innovation case studies.
+- **Glossary & Key Concepts** – Short, detailed explanations of the main acronyms and primitives used throughout.
+- **Hardware & Kernel Primer** – How GPU primitives, kernels, and frameworks create the Hardware Compatibility Filter and Infrastructure Lag Pattern.
+- **Bibliography & References** – Grouped primary/secondary sources with one‑sentence explainers for each citation.
 
 [Share](https://lambpetros.substack.com/p/what-actually-works-the-hardware?utm_source=substack&utm_medium=email&utm_content=share&action=share)
 
@@ -40,9 +40,9 @@ Hardware is not the only determinant of adoption—data availability, optimizati
 
 This post examines the 2023–2025 era through three perspectives:
 
-* **Act I: The Compatibility Filter** — How Flash Attention, MoE, and attention variants succeeded by exploiting GPU architecture, while KANs and pure SSMs failed by fighting it.
-* **Act II: The Conditional Execution Revolution** — How learned routing (attention, MoE, sparse patterns) became the defining composition operator, replacing designed computation graphs.
-* **Act III: The Infrastructure Lag Pattern** — Why Flash Attention took 24 months to become standard, why MoE took 36, and how to predict adoption timelines.
+- **Act I: The Compatibility Filter** — How Flash Attention, MoE, and attention variants succeeded by exploiting GPU architecture, while KANs and pure SSMs failed by fighting it.
+- **Act II: The Conditional Execution Revolution** — How learned routing (attention, MoE, sparse patterns) became the defining composition operator, replacing designed computation graphs.
+- **Act III: The Infrastructure Lag Pattern** — Why Flash Attention took 24 months to become standard, why MoE took 36, and how to predict adoption timelines.
 
 We argue for three claims, using production-style evidence and public model documentation:
 
@@ -56,7 +56,7 @@ What doesn’t work: Speculation without production validation, marketing claims
 
 What does work: Hardware-compatible primitives, permissive compositional operators, and training methods that exploit—not fight—modular structure.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!dxhl!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F61cf66f9-ab65-42c7-8b06-30e40d855e7f_3823x2134.png)
+![](assets/asset-9909a93b0749ea08.png)
 
 ---
 
@@ -80,7 +80,7 @@ Naive solutions failed because they tried to approximate the math (sparse attent
 
 Flash Attention (Dao et al., 2022; 2023) is one of the cleanest case studies for the Hardware Compatibility Thesis. Published in May 2022, it did not propose a new neural primitive. Instead, it proposed a **tiling algorithm** that respects the GPU’s memory hierarchy.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!6kzW!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17131231-e8dd-4193-b46a-bddaeba778bd_3823x2134.png)
+![](assets/asset-e4ea8e1e08862335.png)
 
 Standard attention materializes the massive *N* × *N* attention matrix in HBM, reading and writing gigabytes of data for every token generation. Flash Attention tiles the computation so that blocks of the matrix are loaded into SRAM (fast, on-chip memory), computed, and discarded without ever writing the full matrix to HBM.
 
@@ -88,10 +88,10 @@ Standard attention materializes the massive *N* × *N* attention matrix in H
 
 **The Adoption Timeline (The ≈24-Month Lag):** The adoption of Flash Attention reveals a predictable infrastructure lag pattern that governs the entire field:
 
-* **May 2022:** Paper published. Benchmarks show 2–4× speedup and near-linear memory scaling.
-* **2022–2023 (Stage 2):** Early adopters and startups integrate it manually. Custom CUDA kernels are required.
-* **January 2024 (Stage 3):** PyTorch 2.2 officially integrates FlashAttention-2. It becomes a standard library call.
-* **May 2024 (Stage 4):** Standard practice. Major 2024 releases (Llama 3, Gemma 2, Phi-3 and peers) rely on FlashAttention-style kernels by default (Appendix, Table 4).
+- **May 2022:** Paper published. Benchmarks show 2–4× speedup and near-linear memory scaling.
+- **2022–2023 (Stage 2):** Early adopters and startups integrate it manually. Custom CUDA kernels are required.
+- **January 2024 (Stage 3):** PyTorch 2.2 officially integrates FlashAttention-2. It becomes a standard library call.
+- **May 2024 (Stage 4):** Standard practice. Major 2024 releases (Llama 3, Gemma 2, Phi-3 and peers) rely on FlashAttention-style kernels by default (Appendix, Table 4).
 
 It took roughly 24 months for a technique that required kernel-level changes to move from “proven research” to “standard practice.” This lag is not accidental; it is the cost of infrastructure integration. We will see this pattern repeat with MoE.
 
@@ -99,29 +99,29 @@ It took roughly 24 months for a technique that required kernel-level changes to 
 
 The winners of 2023–2025 all share one trait: they reduce memory bandwidth pressure without requiring new, exotic compute kernels.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!o76S!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc32daf60-aa5f-42e4-8ca3-b299adc36b90_3823x2134.png)
+![](assets/asset-7b431ea77b0c14c3.png)
 
 **Grouped Query Attention (GQA):** GQA is the dominant attention variant of 2024 in our audit, appearing in a large majority of open-weight and documented models, including Llama 3, Mistral 7B, and Qwen2.5 (see Appendix, Table 5). Its mechanism is simple: share Key and Value heads across multiple Query heads.
 
-* **Why it won:** It reduces the size of the KV cache by 8× (for 8 groups), directly lowering memory bandwidth requirements. It uses standard matrix multiplication. It requires no new hardware support.
-* **The result:** For 2024–2025 releases, it is effectively the default in most large model families we examined.
+- **Why it won:** It reduces the size of the KV cache by 8× (for 8 groups), directly lowering memory bandwidth requirements. It uses standard matrix multiplication. It requires no new hardware support.
+- **The result:** For 2024–2025 releases, it is effectively the default in most large model families we examined.
 
 **Multi-Head Latent Attention (MLA):** Pioneered by DeepSeek (V2/V3), MLA takes compression further. It projects the KV cache into a low-rank latent vector.
 
-* **Why it won:** It compresses the KV cache significantly (crucial for DeepSeek’s 128K context) while maintaining the expressiveness of full attention (Appendix, Table 5). Like GQA, it relies on dense matrix projections—the GPU’s native language.
+- **Why it won:** It compresses the KV cache significantly (crucial for DeepSeek’s 128K context) while maintaining the expressiveness of full attention (Appendix, Table 5). Like GQA, it relies on dense matrix projections—the GPU’s native language.
 
 MoE sits in the same compatibility bucket: when well-engineered, large MoE deployments deliver approximately **2–3×** higher throughput than dense models of similar quality, not the **5–7×** often claimed in marketing, and their advantage shrinks toward **≈1.3–1.5×** at very long contexts as routing and KV/cache bandwidth dominate (Appendix, Table 2). The techniques that stick are those that respect the hardware, even when their real-world gains are less dramatic than the launch slides.
 
 **Contrast: The Failure of KANs** Kolmogorov-Arnold Networks (KANs) generated immense hype in early 2024 by proposing learnable activation functions on edges (splines) rather than fixed weights.
 
-* **Why they struggle:** Spline evaluation does not map cleanly to dense matrix multiplication. It requires disparate memory access patterns and custom kernels that are harder to implement in a way that saturates GPU tensor cores.
-* **The verdict (as of 2025):** Despite theoretical elegance and promising small-scale results, we find no public evidence of large-scale production deployments. In practice, KANs remain a research curiosity for frontier-scale workloads, primarily because their current implementations are poorly aligned with GPU primitives.
+- **Why they struggle:** Spline evaluation does not map cleanly to dense matrix multiplication. It requires disparate memory access patterns and custom kernels that are harder to implement in a way that saturates GPU tensor cores.
+- **The verdict (as of 2025):** Despite theoretical elegance and promising small-scale results, we find no public evidence of large-scale production deployments. In practice, KANs remain a research curiosity for frontier-scale workloads, primarily because their current implementations are poorly aligned with GPU primitives.
 
 ### 4. SSMs: The Compatibility Boundary
 
 State Space Models (SSMs) like Mamba (Gu et al., 2021; Gu & Dao et al., 2023) represent the most significant architectural challenge to the Transformer. They promise linear scaling (*O*(*n*)) by replacing the attention mechanism with a recurrent state update.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!KM2C!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F983fde69-2cba-4954-98dd-62836e7ac889_3823x2134.png)
+![](assets/asset-aa56a84af3da44ed.png)
 
 **The Mechanism:** Mamba compresses context into a fixed-size state, updating it sequentially as it processes tokens. This eliminates the KV cache entirely, theoretically solving the memory bottleneck for infinite contexts.
 
@@ -129,22 +129,22 @@ State Space Models (SSMs) like Mamba (Gu et al., 2021; Gu & Dao et al., 2023) re
 
 **The Evidence (The Ceiling):**
 
-* **Proven Scale:** Pure Mamba models exist and work at 130M, 1.4B, 2.8B, and 7B (Falcon Mamba; Appendix, Table 3).
-* **The Gap:** We find no public evidence of a pure SSM scaling to 13B, 70B, or frontier levels (100B+); all large SSM-style deployments above 7B are hybrids (Appendix, Table 3).
-* **Major Lab Adoption:** As of late 2025, OpenAI, Google, Meta, and Anthropic have not publicly documented pure SSMs in their frontier models. Adoption is 0/5 in our audit.
+- **Proven Scale:** Pure Mamba models exist and work at 130M, 1.4B, 2.8B, and 7B (Falcon Mamba; Appendix, Table 3).
+- **The Gap:** We find no public evidence of a pure SSM scaling to 13B, 70B, or frontier levels (100B+); all large SSM-style deployments above 7B are hybrids (Appendix, Table 3).
+- **Major Lab Adoption:** As of late 2025, OpenAI, Google, Meta, and Anthropic have not publicly documented pure SSMs in their frontier models. Adoption is 0/5 in our audit.
 
 **The Nuance:** Hybrids exist. Jamba (AI21) and Qwen3-Next use SSM layers mixed with Attention layers.
 
-* **Why hybrids work:** They route local, sequential dependencies to the SSM (efficient) and global, complex dependencies to Attention (expressive).
-* **The Prediction:** Absent new evidence or hardware, pure SSMs look unlikely to become the dominant frontier architecture. The main bottleneck appears architectural (parallelism and in-context learning), not just a missing training trick. Hybrids are where we see real adoption today, and even they remain niche due to implementation complexity.
+- **Why hybrids work:** They route local, sequential dependencies to the SSM (efficient) and global, complex dependencies to Attention (expressive).
+- **The Prediction:** Absent new evidence or hardware, pure SSMs look unlikely to become the dominant frontier architecture. The main bottleneck appears architectural (parallelism and in-context learning), not just a missing training trick. Hybrids are where we see real adoption today, and even they remain niche due to implementation complexity.
 
 ### 5. External Memory (RAG): The Compatibility Shortcut
 
 While researchers fought over *O*(*n*2) vs *O*(*n*) architectures, the industry solved the context problem with a database. Retrieval-Augmented Generation (RAG) is the ultimate compatibility hack.
 
-* **Mechanism:** Offload memory to a vector database (highly optimized for search). Retrieve only relevant chunks. Feed them to the GPU context window.
-* **Why it won:** It requires **zero changes** to the neural architecture. It treats the GPU as a reasoning engine, not a storage engine.
-* **Adoption:** Effectively universal among major commercial assistants as of 2025. ChatGPT, Claude, Gemini and similar products all expose some form of retrieval or tool-based long-context access.
+- **Mechanism:** Offload memory to a vector database (highly optimized for search). Retrieve only relevant chunks. Feed them to the GPU context window.
+- **Why it won:** It requires **zero changes** to the neural architecture. It treats the GPU as a reasoning engine, not a storage engine.
+- **Adoption:** Effectively universal among major commercial assistants as of 2025. ChatGPT, Claude, Gemini and similar products all expose some form of retrieval or tool-based long-context access.
 
 **Act I Synthesis:** Across 2023–2025, the pattern is consistent. Flash Attention (maps to the memory hierarchy) took about 24 months to become standard (Appendix, Table 4). GQA (maps to bandwidth constraints) diffused in roughly 12 months as a weight-only change (Appendix, Tables 4 and 5). Pure SSMs (which push against parallelism) currently top out at 7B with no public frontier-scale models (Appendix, Table 3). KANs (incompatible compute paths) have no documented large-scale production deployments.
 
@@ -160,7 +160,7 @@ In Act II, we will see how this filter shaped the most important composition ope
 
 The defining shift of 2023–2025 was not a new layer type. It was a change in the fundamental contract of computation. In the previous era, neural networks were static graphs: every input token triggered the exact same sequence of floating-point operations. In the current era, computation is **conditional**—the model learns *where* to spend compute, not just *what* layers exist.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!vGFC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2682d7e8-1e05-4e66-9c36-6689992f080a_3823x2134.png)
+![](assets/asset-554d4208ddc98439.png)
 
 This isn’t just about Mixture-of-Experts (MoE). It is a convergence across attention, routing, and adaptation. The architecture increasingly specifies *how to choose* what to compute for a given token, task, or context.
 
@@ -168,10 +168,10 @@ This isn’t just about Mixture-of-Experts (MoE). It is a convergence across att
 
 If we look closely at the successful techniques of the last two years, a unifying pattern emerges: they all introduce some form of *learned selectivity* over compute or parameters:
 
-* **MoE:** “Which expert processes this token?” (hard routing of tokens to expert FFNs).
-* **Attention:** “Which previous tokens influence this output?” (soft routing of influence over a dense attention kernel).
-* **Sparse Patterns:** “Which positions matter?” (structured masking that skips compute for parts of the sequence).
-* **LoRA / adapters:** “Which low-rank subspace adapts for this task?” (task-conditional parameter additions, not token-time routing).
+- **MoE:** “Which expert processes this token?” (hard routing of tokens to expert FFNs).
+- **Attention:** “Which previous tokens influence this output?” (soft routing of influence over a dense attention kernel).
+- **Sparse Patterns:** “Which positions matter?” (structured masking that skips compute for parts of the sequence).
+- **LoRA / adapters:** “Which low-rank subspace adapts for this task?” (task-conditional parameter additions, not token-time routing).
 
 These are not identical mechanisms, but they share a common composition operator: **conditional execution**. Some (like MoE and sparse attention) route tokens or positions to different compute paths at runtime; others (like LoRA) condition *which parameters* are active for a given task or domain.
 
@@ -183,28 +183,28 @@ The thesis of Act II is simple: **Conditional execution is to the 2020s what res
 
 For years, Mixture-of-Experts was the “technology of the future”—from Shazeer et al.’s sparsely-gated MoE (2017) through Switch Transformers (Fedus et al., 2021) and GLaM (Du et al., 2021)—always promising, but difficult to train and painful to serve. In 2024–2025, that future finally arrived. MoE is no longer an exotic research trick; it has become one of the primary strategies for scaling frontier models, especially when total parameter counts exceed what dense training and serving can economically support (Appendix, Table 1).
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!Jx_s!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F874b1948-88f8-414d-8f16-6b1a9baa7767_3823x2134.png)
+![](assets/asset-508329f021951dda.png)
 
 **The Honest Numbers:** Let’s strip away the marketing claims. Vendors often promise “5–7× speedups” with MoE. The reality, based on a meta-analysis of production-style deployments and system papers, is more grounded but still transformative (Appendix, Table 2):
 
-* **Realistic Inference Speedup:** **≈2–3×** throughput compared to dense models of similar quality at moderate context, with a median around **2.1–2.5×** in our aggregated studies.
-* **The Mechanism:** A model like DeepSeek-V3 (671B parameters) activates only 37B parameters per token. It delivers the intelligence of a massive model with the latency of a small one.
+- **Realistic Inference Speedup:** **≈2–3×** throughput compared to dense models of similar quality at moderate context, with a median around **2.1–2.5×** in our aggregated studies.
+- **The Mechanism:** A model like DeepSeek-V3 (671B parameters) activates only 37B parameters per token. It delivers the intelligence of a massive model with the latency of a small one.
 
 **The Evidence:** The list of successes is now long and growing. A few representative examples:
 
-* **DeepSeek-V3 (Dec 2024):** 671B total, 37B active (DeepSeek-AI, 2024). A masterclass in load balancing and MoE + MLA design.
-* **DeepSeek-R1 (Jan 2025):** 671B/37B MoE + MLA reasoning model with state-of-the-art math scores (DeepSeek-AI, 2025).
-* **Mixtral-8×7B:** The model from Mistral AI (2023) that proved open-weights MoE could match or beat GPT-3.5-class systems on many benchmarks.
-* **Grok-1:** 314B parameters, confirming MoE works at massive scale without fine-tuning, in an open checkpoint (xAI, 2023–2024).
+- **DeepSeek-V3 (Dec 2024):** 671B total, 37B active (DeepSeek-AI, 2024). A masterclass in load balancing and MoE + MLA design.
+- **DeepSeek-R1 (Jan 2025):** 671B/37B MoE + MLA reasoning model with state-of-the-art math scores (DeepSeek-AI, 2025).
+- **Mixtral-8×7B:** The model from Mistral AI (2023) that proved open-weights MoE could match or beat GPT-3.5-class systems on many benchmarks.
+- **Grok-1:** 314B parameters, confirming MoE works at massive scale without fine-tuning, in an open checkpoint (xAI, 2023–2024).
 
 **The Narrative Climax: The Meta Pivot** The clearest public signal of MoE’s arrival came in April 2025. Until then, Meta had pushed dense scaling hard—Llama 3.1’s 405B dense model was a monument to that strategy. With **Llama 4**, Meta introduced its first MoE family:
 
-* **Llama 4 Scout:** 109B total, 17B active (16 experts).
-* **Llama 4 Maverick:** 400B total, 17B active (128 experts).
+- **Llama 4 Scout:** 109B total, 17B active (16 experts).
+- **Llama 4 Maverick:** 400B total, 17B active (128 experts).
 
 Meta’s pivot does not mean dense models are obsolete—dense Llama variants and many closed models still exist—but it is a strong signal that at frontier scale, MoE is now considered a first-class option rather than a risky experiment (Appendix, Table 1). The Dense Era has not ended, but it now shares the stage with sparse, conditionally-executed capacity.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!Wxpk!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5de3b131-93a8-455d-b28f-2dbf4fa59d63_3823x2134.png)
+![](assets/asset-1769bde9dacd74c1.png)
 
 ### 4. Hybrid Architectures: Principled Heterogeneity
 
@@ -218,9 +218,9 @@ To solve the Context-Length Trap, we are seeing the emergence of **Hybrid Archit
 
 **The Principle:** Route computation to the primitive that handles it best.
 
-* **SSM/Linear:** Handles local, sequential dependencies (efficient).
-* **Attention:** Handles global, arbitrary dependencies (expressive).
-* **MoE:** Handles knowledge storage and reasoning (capacity).
+- **SSM/Linear:** Handles local, sequential dependencies (efficient).
+- **Attention:** Handles global, arbitrary dependencies (expressive).
+- **MoE:** Handles knowledge storage and reasoning (capacity).
 
 While elegant, hybrids remain niche. The complexity cost of maintaining three different inference kernels usually outweighs the benefits for general-purpose models. Today, they are the solution for extreme requirements (256K+ contexts and ultra-long workflows), not yet the default for general reasoning.
 
@@ -230,11 +230,11 @@ To understand why conditional execution won, we must look at what failed.
 
 **Neural ODEs (2018):** Promised continuous depth and infinite adaptability.
 
-* **Why they struggled:** ODE solvers are iterative and sequential. They fight the GPU’s need for massive, predictable parallelism. They won Best Paper at NeurIPS, influenced theory, and saw use in niche domains—but in our survey we find no evidence of large-scale production adoption for LLM-style workloads.
+- **Why they struggled:** ODE solvers are iterative and sequential. They fight the GPU’s need for massive, predictable parallelism. They won Best Paper at NeurIPS, influenced theory, and saw use in niche domains—but in our survey we find no evidence of large-scale production adoption for LLM-style workloads.
 
 **Capsule Networks:** Proposed “routing-by-agreement” to solve spatial hierarchies.
 
-* **Why they struggled:** The routing logic was **prescriptive**. It tried to enforce a specific structure (capsules) rather than creating a permissive space for the model to learn its own structure. Despite a burst of research interest, we again find no evidence that capsule-style routing became a pattern in large-scale production models.
+- **Why they struggled:** The routing logic was **prescriptive**. It tried to enforce a specific structure (capsules) rather than creating a permissive space for the model to learn its own structure. Despite a burst of research interest, we again find no evidence that capsule-style routing became a pattern in large-scale production models.
 
 **The Lesson:** Compositionality that survives is **permissive**, not **prescriptive**. MoE provides a pool of experts and a router, but it doesn’t tell the model *what* the experts should be. It lets gradient descent discover the structure. Capsule Networks and Neural ODEs tried to design the structure explicitly, and they did not cross the production chasm.
 
@@ -248,7 +248,7 @@ In Act III, we will explore the final piece of the puzzle: why these transitions
 
 *Why timing matters: From research to production*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!rwle!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75663c33-0574-4c50-b411-d4b0f3281311_3823x2134.png)
+![](assets/asset-04e5b4d550fc6df2.png)
 
 Flash Attention (Dao et al., 2022; 2023) was published in May 2022. It became standard practice in May 2024. Roughly two years. Switch Transformers (Fedus et al., 2021; Lepikhin et al., 2020; Du et al., 2021, for closely related MoE work) were published around 2020–2021. They reached mainstream production usage only around 2024. Roughly three years for MoE-style serving infrastructure.
 
@@ -260,25 +260,25 @@ The answer is what we call the **Infrastructure Lag Pattern**. Techniques do not
 
 Looking across GQA, Flash Attention, and MoE, we see a recurring pattern: adoption timelines track **integration cost** (Appendix, Table 4). This is not a law of nature, but a useful heuristic for techniques similar to those we analyzed.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!lFfs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdde00621-7cb6-486a-b228-c20b8dadd26f_3823x2134.png)
+![](assets/asset-509c6185058c75ef.png)
 
-* **Level 1: Weight-Only Changes (12–18 months)**
+- **Level 1: Weight-Only Changes (12–18 months)**
 
-  + *Example:* Grouped Query Attention (GQA).
-  + *Requirement:* Change the model definition code. No new kernels, no new serving infrastructure.
-  + *Lag:* Minimal. Adoption is driven by retraining cycles.
-* **Level 2: Kernel-Level Changes (24–30 months)**
+  - *Example:* Grouped Query Attention (GQA).
+  - *Requirement:* Change the model definition code. No new kernels, no new serving infrastructure.
+  - *Lag:* Minimal. Adoption is driven by retraining cycles.
+- **Level 2: Kernel-Level Changes (24–30 months)**
 
-  + *Example:* Flash Attention.
-  + *Requirement:* Custom CUDA kernels. Integration into PyTorch/JAX.
-  + *Lag:* 24 months. This is the time it takes for a kernel to move from a research repo -> a library -> a framework stable release -> a production stack.
-  + *Evidence:* Flash Attention (May 2022) -> PyTorch 2.2 (Jan 2024) -> Standard (May 2024).
-* **Level 3: Serving Infrastructure Changes (36–48 months)**
+  - *Example:* Flash Attention.
+  - *Requirement:* Custom CUDA kernels. Integration into PyTorch/JAX.
+  - *Lag:* 24 months. This is the time it takes for a kernel to move from a research repo -> a library -> a framework stable release -> a production stack.
+  - *Evidence:* Flash Attention (May 2022) -> PyTorch 2.2 (Jan 2024) -> Standard (May 2024).
+- **Level 3: Serving Infrastructure Changes (36–48 months)**
 
-  + *Example:* Mixture-of-Experts.
-  + *Requirement:* Not just kernels, but distributed system changes. How do you shard experts across nodes? How do you handle load balancing in inference?
-  + *Lag:* 36 months.
-  + *Evidence:* Switch (Jan 2021) -> Mixtral/DeepSeek/Llama 4 (2024–2025).
+  - *Example:* Mixture-of-Experts.
+  - *Requirement:* Not just kernels, but distributed system changes. How do you shard experts across nodes? How do you handle load balancing in inference?
+  - *Lag:* 36 months.
+  - *Evidence:* Switch (Jan 2021) -> Mixtral/DeepSeek/Llama 4 (2024–2025).
 
 Integration cost is not the only factor—vendor priorities, open-source implementations, and hype all matter—but it is the most consistent constraint we see across 2023–2025 production case studies.
 
@@ -290,7 +290,7 @@ This model would be falsified by, for example, a kernel-level change that become
 
 This brings us to our final and most controversial claim: **Architecture innovation is slowing relative to training and optimization.**
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!6Bm9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6c86a3d-8755-4235-8661-e3bf68ac8d9b_3823x2134.png)
+![](assets/asset-442e380d1ca2fdfc.png)
 
 The last widely adopted fundamental primitive (Attention) was introduced in 2017. Since then, we have seen refinements (Flash, GQA, MLA), composition operators (MoE), and hybrids (attention + SSM), but no clearly dominant replacement at frontier scale. The hardware constraints have narrowed the space of acceptable operations tightly around dense matrix multiplication, making truly novel primitives harder to push through the Hardware Compatibility Filter (Appendix, Tables 2, 3, and 5).
 
@@ -298,21 +298,21 @@ That does not mean architectural work has stopped—SSM-style blocks, hybrids, a
 
 **A Case Study: DeepSeek-R1 (January 2025)** One of the strongest recent examples comes from DeepSeek-R1 (DeepSeek-AI, 2025). It achieved state-of-the-art reasoning performance (79.8% on AIME, 97.3% on MATH-500), rivaling OpenAI’s o1-class models.
 
-* **The Architecture:** MoE + MLA built on the same frontier-style primitives described in Acts I and II.
-* **The Innovation:** **Reinforcement Learning at scale.**
+- **The Architecture:** MoE + MLA built on the same frontier-style primitives described in Acts I and II.
+- **The Innovation:** **Reinforcement Learning at scale.**
 
-  + DeepSeek-R1 was trained using Group Relative Policy Optimization (GRPO) and a carefully engineered reasoning curriculum to discover multi-step chains of thought.
-  + It did not introduce a new neural primitive to learn to reason. It pushed a familiar container (MoE + efficient attention) much further via training.
+  - DeepSeek-R1 was trained using Group Relative Policy Optimization (GRPO) and a carefully engineered reasoning curriculum to discover multi-step chains of thought.
+  - It did not introduce a new neural primitive to learn to reason. It pushed a familiar container (MoE + efficient attention) much further via training.
 
 This is not singular “proof,” but it strongly reinforces the thesis: The architecture is the *container*; training is the *contents*. We have spent 8 years optimizing the container. It is efficient, scalable, and hardware-compatible. Now we are finally learning how to fill it.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!-ue_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fd8fc2b-c615-4c15-acce-6b7ede82a98b_3823x2134.png)
+![](assets/asset-3d1469a91388e377.png)
 
 **Where Innovation Moves:**
 
-* **SAM (Sharpness-Aware Minimization):** Optimizing for flatter, more robust minima (Foret et al., 2020), which improves generalization and compositional behavior in many settings.
-* **Progressive Training:** Using depth as a curriculum; several studies report **≈10–20% faster convergence** versus naive deep training.
-* **Routing-Aware Optimization:** Training the router to balance load without collapsing, improving MoE utilization and stability at scale.
+- **SAM (Sharpness-Aware Minimization):** Optimizing for flatter, more robust minima (Foret et al., 2020), which improves generalization and compositional behavior in many settings.
+- **Progressive Training:** Using depth as a curriculum; several studies report **≈10–20% faster convergence** versus naive deep training.
+- **Routing-Aware Optimization:** Training the router to balance load without collapsing, improving MoE utilization and stability at scale.
 
 Training innovations have their own lag pattern—new optimizers and RL schemes still need to be implemented, debugged, and validated—but they typically integrate faster than core architectural overhauls. We are shifting from “what to compute” to “how to train what we already compute.”
 
@@ -324,7 +324,7 @@ Training innovations have their own lag pattern—new optimizers and RL schemes 
 
 The story of 2023–2025 is not one of unbridled invention, but of ruthless selection.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png)](https://substackcdn.com/image/fetch/$s_!LGoU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F02691962-f8e4-4a3c-8585-ca42f70f688d_3823x2134.png)
+![](assets/asset-5fa50932618cde29.png)
 
 The **Hardware Compatibility Thesis** explains much of the difference between techniques that survive and those that do not. Flash Attention
 
@@ -362,7 +362,7 @@ For the skeptical practitioner, we present the aggregated evidence underlying th
 
 *Marketing claims vs. production-style measurements from short to long context (up to 64K–128K tokens). Summarizes Extended Dataset 1 (MoE Speedup Meta-Analysis), aggregated from Switch, Mixtral, DeepSeek-V3, deployment-inefficiency work, and Aurora-style system papers.*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png)](https://substackcdn.com/image/fetch/$s_!zIzq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc31bf4a7-3a17-4639-80ee-546a09ecdb59_2574x810.png)
+![](assets/asset-3551e18623aac2f2.png)
 
 **Insight:** MoE is primarily a **throughput and capacity optimizer**, not a magic fix for latency or memory. It buys “more model for the same serving budget,” especially at moderate context, but still runs into bandwidth and KV-cache limits at frontier context lengths.
 
@@ -372,7 +372,7 @@ For the skeptical practitioner, we present the aggregated evidence underlying th
 
 *Where pure Mamba/SSM models have been demonstrated vs. where evidence stops (as of Dec 2025). Summarizes* `ssm_benchmark_findings.md`*.*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png)](https://substackcdn.com/image/fetch/$s_!IgOU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F76fa8ead-3bac-4f09-8066-d64fa6c85fb1_2604x1022.png)
+![](assets/asset-99f3e3e4951ad1e5.png)
 
 **Insight:** Pure SSMs are clearly viable up to 7B and can be very efficient, but in the public releases we examined there is **no evidence** of pure SSMs at 13B or frontier scales; above 7B, SSM-style blocks only appear inside **hybrid** architectures (Jamba, Falcon-H1, Qwen3-Next), not as end-to-end replacements for attention.
 
@@ -382,7 +382,7 @@ For the skeptical practitioner, we present the aggregated evidence underlying th
 
 *Time from publication to standard production practice, grouped by integration complexity. Derived from* `flash_attention_timeline.md`*, MoE deployment studies, and GQA adoption data.*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png)](https://substackcdn.com/image/fetch/$s_!Tvgq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2a5cc613-5441-49c5-bcdc-26839a3dd0b2_2596x774.png)
+![](assets/asset-6ad78e04040af1bb.png)
 
 **Insight:** Integration cost determines adoption speed. Weight-only changes land within a retraining cycle; kernel changes take ~2 years to become ubiquitous; distributed system changes (e.g., MoE routing and large-scale sparse attention) take closer to 3 years.
 
@@ -392,7 +392,7 @@ For the skeptical practitioner, we present the aggregated evidence underlying th
 
 *Snapshot of efficient attention mechanisms across major 2024–2025 model families, distilled from* `major_lab_architecture_audit.md`*.*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png)](https://substackcdn.com/image/fetch/$s_!blxB!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F39fab53e-b2c1-4a69-8cdc-31f8f0235a54_2572x1072.png)
+![](assets/asset-1ae0ecec1a98a731.png)
 
 **Insight:** By late 2025, **GQA-style efficient attention** (plus MLA and sparse variants) dominates over vanilla MHA in the large models we audited. This is the weight-only, hardware-aligned optimization that diffuses fastest and forms the “background assumption” for 2024–2025 architectures.
 
@@ -402,7 +402,7 @@ For the skeptical practitioner, we present the aggregated evidence underlying th
 
 *Selected examples where training methods, rather than new primitives, drove major capability or efficiency gains.*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png)](https://substackcdn.com/image/fetch/$s_!qOVZ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F991c2fb1-ed3c-4c21-b584-a2ef84a189a8_2086x1222.png)
+![](assets/asset-a398d94b3c7ce69f.png)
 
 **Insight:** The most dramatic recent gains in reasoning and efficiency often come from **training recipes and optimization choices** layered on top of relatively stable architectural primitives (MoE, efficient attention), reinforcing the view that, on today’s hardware, training innovation is where much of the near-term leverage lies.
 
@@ -472,10 +472,10 @@ In MoE, each expert is usually a feed-forward network (FFN) or similar module. A
 
 An umbrella term for mechanisms that allow the model to dynamically select which computations or parameters to use, conditioned on the input or context. This includes:
 
-* Hard routing (MoE): token → expert selection.
-* Soft routing (attention): token → weighted combination of other tokens.
-* Structured sparsity (sparse attention, SWA): token → subset of positions computed.
-* Task-conditional parameters (LoRA/adapters): task → which low-rank parameter additions are active. Conditional execution is central to scaling capacity without uniformly increasing compute for every token.
+- Hard routing (MoE): token → expert selection.
+- Soft routing (attention): token → weighted combination of other tokens.
+- Structured sparsity (sparse attention, SWA): token → subset of positions computed.
+- Task-conditional parameters (LoRA/adapters): task → which low-rank parameter additions are active. Conditional execution is central to scaling capacity without uniformly increasing compute for every token.
 
 **FasterMoE / Aurora / MoE System Stacks**
 
@@ -497,9 +497,9 @@ A specific SSM variant that introduces “selective state spaces”—mechanisms
 
 Architectures that mix SSM-like blocks with attention layers to get the best of both worlds: SSMs for efficient local/sequential processing and attention for flexible global dependencies and in-context learning. Examples include:
 
-* Jamba: Alternating Mamba and attention layers.
-* Falcon-H1: Parallel mixtures of Mamba2-like and attention components.
-* Qwen3-Next: Linear attention (e.g., Gated DeltaNet) + gated attention + MoE.
+- Jamba: Alternating Mamba and attention layers.
+- Falcon-H1: Parallel mixtures of Mamba2-like and attention components.
+- Qwen3-Next: Linear attention (e.g., Gated DeltaNet) + gated attention + MoE.
 
 These hybrids show how SSMs can be powerful components without replacing attention outright.
 
@@ -589,10 +589,10 @@ The key idea: **models only run fast if their operations can be expressed as a s
 
 In this context, a **kernel** is not just an algorithm on paper; it is the concrete, low-level implementation of that algorithm on GPUs:
 
-* It specifies how work is divided over **threads, warps, and thread blocks**.
-* It defines how data is laid out in **memory** (HBM vs on-chip SRAM/shared memory vs registers).
-* It chooses **tiling strategies** (how matrices are sliced) to keep tensor cores fed and minimize memory traffic.
-* It must be **numerically stable**, performant across different GPU generations, and integrated into libraries (e.g., PyTorch, JAX).
+- It specifies how work is divided over **threads, warps, and thread blocks**.
+- It defines how data is laid out in **memory** (HBM vs on-chip SRAM/shared memory vs registers).
+- It chooses **tiling strategies** (how matrices are sliced) to keep tensor cores fed and minimize memory traffic.
+- It must be **numerically stable**, performant across different GPU generations, and integrated into libraries (e.g., PyTorch, JAX).
 
 Writing a good kernel is hard. Making it production-grade is harder: you need tests, fallbacks, debugging hooks, and framework integration. This is why “kernel-level changes” show a ~24-month lag from paper → library → framework → production (see Appendix, Table 4).
 
@@ -608,9 +608,9 @@ Modern GPUs (A100, H100, etc.) are built around three key properties:
 
 A technique is **hardware-compatible** if:
 
-* It can be expressed as regular, batched GEMMs or other well-optimized primitives.
-* It keeps parallel threads doing similar work with minimal branching.
-* It minimizes expensive HBM↔︎SRAM transfers by reusing data in on-chip memory.
+- It can be expressed as regular, batched GEMMs or other well-optimized primitives.
+- It keeps parallel threads doing similar work with minimal branching.
+- It minimizes expensive HBM↔︎SRAM transfers by reusing data in on-chip memory.
 
 Techniques that require irregular scatter/gather, heavy branching, or inherently sequential computation (e.g., iterative solvers) tend to underutilize the hardware and are much harder to push to frontier scale.
 
@@ -620,30 +620,30 @@ Techniques that require irregular scatter/gather, heavy branching, or inherently
 
 ### 4.1 FlashAttention: Same Math, Better Kernel
 
-* **Problem:** Standard attention materializes an n×n attention matrix in HBM and repeatedly reads/writes large Q/K/V tensors, making it **memory-bound** and limiting context length.
-* **Kernel innovation:** FlashAttention reorganizes the computation into **tiles** that fit into SRAM. It loads small blocks of Q/K/V, computes attention for those blocks, and discards intermediate results without writing the full matrix to HBM.
-* **Hardware match:**
+- **Problem:** Standard attention materializes an n×n attention matrix in HBM and repeatedly reads/writes large Q/K/V tensors, making it **memory-bound** and limiting context length.
+- **Kernel innovation:** FlashAttention reorganizes the computation into **tiles** that fit into SRAM. It loads small blocks of Q/K/V, computes attention for those blocks, and discards intermediate results without writing the full matrix to HBM.
+- **Hardware match:**
 
-  + Uses dense GEMMs on tensor cores.
-  + Minimizes HBM traffic; reuses data in SRAM.
-  + Preserves exact attention math (no approximation).
+  - Uses dense GEMMs on tensor cores.
+  - Minimizes HBM traffic; reuses data in SRAM.
+  - Preserves exact attention math (no approximation).
 
 This is why FlashAttention could become a near-universal drop-in: it is a **kernel-level improvement** that respects GPU primitives while keeping the higher-level abstraction identical. The price was ~24 months of integration work across libraries and frameworks (Appendix, Table 4).
 
 ### 4.2 GQA and MLA: Weight-Only vs Compressed KV
 
-* **GQA (Grouped-Query Attention):**
+- **GQA (Grouped-Query Attention):**
 
-  + Changes the **weight shapes** so many Query heads share fewer Key/Value heads.
-  + Uses the same underlying GEMM kernels as standard MHA.
-  + Effect: smaller KV cache, less memory traffic; no new kernels required.
-  + **Integration cost:** Weight-only change → adoption driven by retraining cycles (~12 months; Appendix, Table 4).
-* **MLA (Multi-Head Latent Attention):**
+  - Changes the **weight shapes** so many Query heads share fewer Key/Value heads.
+  - Uses the same underlying GEMM kernels as standard MHA.
+  - Effect: smaller KV cache, less memory traffic; no new kernels required.
+  - **Integration cost:** Weight-only change → adoption driven by retraining cycles (~12 months; Appendix, Table 4).
+- **MLA (Multi-Head Latent Attention):**
 
-  + Projects KV vectors into a low-rank latent space before caching.
-  + Still uses dense GEMMs, but changes how KV is stored and retrieved.
-  + Effect: much smaller KV cache and bandwidth at long contexts (DeepSeek V2/V3).
-  + **Integration cost:** Mostly handled via existing linear-algebra kernels; complexity lives in model code and training, not low-level kernels.
+  - Projects KV vectors into a low-rank latent space before caching.
+  - Still uses dense GEMMs, but changes how KV is stored and retrieved.
+  - Effect: much smaller KV cache and bandwidth at long contexts (DeepSeek V2/V3).
+  - **Integration cost:** Mostly handled via existing linear-algebra kernels; complexity lives in model code and training, not low-level kernels.
 
 In both cases, the operations remain “tensor-core friendly,” which is why they spread quickly once shown to work.
 
@@ -651,19 +651,19 @@ In both cases, the operations remain “tensor-core friendly,” which is why th
 
 Mixture-of-Experts introduces **block-sparse compute** and **conditional routing**:
 
-* Multiple experts (FFNs) per layer, with a router choosing a subset per token.
-* On paper, this saves compute: only a fraction of the experts are active per token.
-* On hardware, naïve implementations can be **3–15× slower** than dense models because:
+- Multiple experts (FFNs) per layer, with a router choosing a subset per token.
+- On paper, this saves compute: only a fraction of the experts are active per token.
+- On hardware, naïve implementations can be **3–15× slower** than dense models because:
 
-  + Tokens for a given expert may be scattered across batches.
-  + Expert weights must be moved in and out of SRAM frequently.
-  + Communication overhead across GPUs can dominate.
+  - Tokens for a given expert may be scattered across batches.
+  - Expert weights must be moved in and out of SRAM frequently.
+  - Communication overhead across GPUs can dominate.
 
 Efficient MoE requires:
 
-* **Block-sparse kernels** that can pack token assignments into regular blocks and run them as GEMMs.
-* **Expert sharding and load balancing** across GPUs (e.g., MegaBlocks, FasterMoE, Aurora).
-* **Serving stacks** that know how to route tokens to experts, keep experts resident in memory, and handle dynamic loads.
+- **Block-sparse kernels** that can pack token assignments into regular blocks and run them as GEMMs.
+- **Expert sharding and load balancing** across GPUs (e.g., MegaBlocks, FasterMoE, Aurora).
+- **Serving stacks** that know how to route tokens to experts, keep experts resident in memory, and handle dynamic loads.
 
 This is why MoE falls into the **Level 3 (serving + distributed system) category** and shows a ~36-month lag from Switch → Mixtral/DeepSeek/Llama 4 (Appendix, Table 4).
 
@@ -671,18 +671,18 @@ This is why MoE falls into the **Level 3 (serving + distributed system) category
 
 State Space Models (SSMs) like Mamba use **sequential state updates**:
 
-* Each token updates a latent state based on the previous state and current input.
-* Even with clever “parallel scan” algorithms, the structure is less naturally parallel than attention’s big batched matmuls.
+- Each token updates a latent state based on the previous state and current input.
+- Even with clever “parallel scan” algorithms, the structure is less naturally parallel than attention’s big batched matmuls.
 
 On GPUs:
 
-* Attention can compute many Q·Kᵀ matmuls in parallel across tokens, heads, and layers.
-* SSMs must simulate a recurrence, which is more sequential and often requires custom kernels that are harder to optimize.
+- Attention can compute many Q·Kᵀ matmuls in parallel across tokens, heads, and layers.
+- SSMs must simulate a recurrence, which is more sequential and often requires custom kernels that are harder to optimize.
 
 The result in 2023–2025:
 
-* Pure Mamba/SSM models are very efficient up to 7B (Falcon Mamba 7B).
-* Beyond that, all successful large deployments use SSMs as **components in hybrids** with attention, not as full replacements (Appendix, Table 3).
+- Pure Mamba/SSM models are very efficient up to 7B (Falcon Mamba 7B).
+- Beyond that, all successful large deployments use SSMs as **components in hybrids** with attention, not as full replacements (Appendix, Table 3).
 
 This illustrates how **parallelism and kernel complexity** can limit which architectures make it to frontier scale on today’s GPU stacks.
 
@@ -692,21 +692,21 @@ This illustrates how **parallelism and kernel complexity** can limit which archi
 
 Putting it together, the **Infrastructure Lag Pattern** emerges naturally from these layers:
 
-* **Weight-only changes (e.g., GQA):**
+- **Weight-only changes (e.g., GQA):**
 
-  + Only model definition and training code change.
-  + No new kernels or serving infra.
-  + Adoption timeline: ≈12 months (one or two retraining cycles).
-* **Kernel-level changes (e.g., FlashAttention):**
+  - Only model definition and training code change.
+  - No new kernels or serving infra.
+  - Adoption timeline: ≈12 months (one or two retraining cycles).
+- **Kernel-level changes (e.g., FlashAttention):**
 
-  + Require new CUDA/Triton kernels, library support, and framework integration.
-  + Need extensive testing and validation across models and hardware.
-  + Adoption timeline: ≈24 months from paper to “standard practice.”
-* **Serving + distributed-system changes (e.g., MoE):**
+  - Require new CUDA/Triton kernels, library support, and framework integration.
+  - Need extensive testing and validation across models and hardware.
+  - Adoption timeline: ≈24 months from paper to “standard practice.”
+- **Serving + distributed-system changes (e.g., MoE):**
 
-  + Need kernels, framework ops, **and** new serving stacks (expert sharding, routing, load balancing).
-  + Often require rewriting major parts of infra and monitoring.
-  + Adoption timeline: ≈36 months from initial paper to widespread production use.
+  - Need kernels, framework ops, **and** new serving stacks (expert sharding, routing, load balancing).
+  - Often require rewriting major parts of infra and monitoring.
+  - Adoption timeline: ≈36 months from initial paper to widespread production use.
 
 Architectural ideas that **align with existing kernels and hardware** (GQA, RoPE, RMSNorm) diffuse quickly. Those that require entirely new kernels or system designs (Flash, MoE, SSMs at scale) move more slowly. Those that **fight GPU primitives** (e.g., heavy spline evaluations in KANs, iterative solvers in Neural ODEs) face the steepest uphill battle and, so far, have not crossed into frontier-scale production.
 
@@ -724,106 +724,106 @@ Primary sources (papers, technical reports, official model cards/docs) back quan
 
 ## 1. Mixture-of-Experts and Conditional Computation
 
-* Fedus, W. et al. (2021). *Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity*. arXiv:2101.03961. Original large-scale sparse MoE for language models, establishing Switch as a practical scaling path.
-* Lepikhin, D. et al. (2020). *GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding*. arXiv:2006.16668. Introduces GShard and conditional computation techniques for scaling models across many devices.
-* Du, N. et al. (2021). *GLaM: Efficient Scaling of Language Models with Mixture-of-Experts*. arXiv:2112.06905. Demonstrates Google’s GLaM MoE architecture and its efficiency–quality trade-offs.
-* Zhou, Y. et al. (2022). *Mixture-of-Experts with Expert Choice Routing*. NeurIPS 2022. arXiv:2202.09368. Proposes expert-choice routing to improve MoE load balancing and training stability.
-* Shazeer, N. et al. (2017). *Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer*. arXiv:1701.06538. Early MoE paper showing sparsely-gated experts can scale to very large parameter counts.
-* Puigcerver, J. et al. (2023). *Soft Mixture of Experts*. arXiv:2308.00951. Representative “Soft MoE” work from Google scaling MoE with weighted expert combinations.
-* ST-MoE (Google Research, 2022). Large-scale sparse MoE (~269B parameters) with stabilized routing (e.g., z-loss) used as a modern reference point for training and inference cost vs dense baselines.
-* *Mixture of Experts in the Era of Large Language Models* (2024). Survey of MoE architectures and deployment patterns in LLMs, covering Mixtral-8×7B, Grok-1, DBRX, Arctic, DeepSeek-V2/V3 and related systems.
-* FasterMoE context-length study (2023–2024). System benchmarking paper analyzing MoE throughput vs sequence length and batch size; used to derive context-length degradation curves in the MoE dataset.
-* *Towards MoE Deployment: Mitigating Inefficiencies in Mixture-of-Experts Inference*. arXiv:2303.06182. Analyzes practical deployment inefficiencies of MoE and proposes mitigation strategies.
-* *Optimizing MoE Inference Time* (Aurora system, 2024). arXiv preprint focused on MoE inference optimization, providing ≈2.4–3.5× speedup numbers over dense baselines.
-* Mistral AI (2023–2024). *Mixtral 8×7B* technical report and Hugging Face model cards for `Mixtral-8x7B` and `Mixtral-8x7B-Instruct`. Documents the Mixtral sparse MoE architecture and its benchmark results.
-* DeepSeek-AI (2024). *DeepSeek-V3 Technical Report*. arXiv:2412.19437 and associated Hugging Face model cards (e.g., `deepseek-ai/DeepSeek-V3`, `deepseek-ai/DeepSeek-V3.2-Exp`). Describes DeepSeek’s MoE + MLA architecture and long-context performance.
-* Riquelme, C. et al. (2021–2022). *Scaling Vision with Sparse Mixture of Experts* (Vision MoE / V-MoE). Extends MoE ideas to vision models, demonstrating benefits beyond NLP.
-* NVIDIA GB200 NVL72 and related vendor documentation describing hardware optimized for large-context MoE workloads. Vendor materials illustrating hardware co-designed for large MoE and long-context serving.
+- Fedus, W. et al. (2021). *Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity*. arXiv:2101.03961. Original large-scale sparse MoE for language models, establishing Switch as a practical scaling path.
+- Lepikhin, D. et al. (2020). *GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding*. arXiv:2006.16668. Introduces GShard and conditional computation techniques for scaling models across many devices.
+- Du, N. et al. (2021). *GLaM: Efficient Scaling of Language Models with Mixture-of-Experts*. arXiv:2112.06905. Demonstrates Google’s GLaM MoE architecture and its efficiency–quality trade-offs.
+- Zhou, Y. et al. (2022). *Mixture-of-Experts with Expert Choice Routing*. NeurIPS 2022. arXiv:2202.09368. Proposes expert-choice routing to improve MoE load balancing and training stability.
+- Shazeer, N. et al. (2017). *Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer*. arXiv:1701.06538. Early MoE paper showing sparsely-gated experts can scale to very large parameter counts.
+- Puigcerver, J. et al. (2023). *Soft Mixture of Experts*. arXiv:2308.00951. Representative “Soft MoE” work from Google scaling MoE with weighted expert combinations.
+- ST-MoE (Google Research, 2022). Large-scale sparse MoE (~269B parameters) with stabilized routing (e.g., z-loss) used as a modern reference point for training and inference cost vs dense baselines.
+- *Mixture of Experts in the Era of Large Language Models* (2024). Survey of MoE architectures and deployment patterns in LLMs, covering Mixtral-8×7B, Grok-1, DBRX, Arctic, DeepSeek-V2/V3 and related systems.
+- FasterMoE context-length study (2023–2024). System benchmarking paper analyzing MoE throughput vs sequence length and batch size; used to derive context-length degradation curves in the MoE dataset.
+- *Towards MoE Deployment: Mitigating Inefficiencies in Mixture-of-Experts Inference*. arXiv:2303.06182. Analyzes practical deployment inefficiencies of MoE and proposes mitigation strategies.
+- *Optimizing MoE Inference Time* (Aurora system, 2024). arXiv preprint focused on MoE inference optimization, providing ≈2.4–3.5× speedup numbers over dense baselines.
+- Mistral AI (2023–2024). *Mixtral 8×7B* technical report and Hugging Face model cards for `Mixtral-8x7B` and `Mixtral-8x7B-Instruct`. Documents the Mixtral sparse MoE architecture and its benchmark results.
+- DeepSeek-AI (2024). *DeepSeek-V3 Technical Report*. arXiv:2412.19437 and associated Hugging Face model cards (e.g., `deepseek-ai/DeepSeek-V3`, `deepseek-ai/DeepSeek-V3.2-Exp`). Describes DeepSeek’s MoE + MLA architecture and long-context performance.
+- Riquelme, C. et al. (2021–2022). *Scaling Vision with Sparse Mixture of Experts* (Vision MoE / V-MoE). Extends MoE ideas to vision models, demonstrating benefits beyond NLP.
+- NVIDIA GB200 NVL72 and related vendor documentation describing hardware optimized for large-context MoE workloads. Vendor materials illustrating hardware co-designed for large MoE and long-context serving.
 
 ---
 
 ## 2. Flash Attention and Infrastructure Lag
 
-* Dao, T. et al. (2022). *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*. arXiv:2205.14135. Introduces the original IO-aware tiling algorithm that makes exact attention memory-efficient and fast on GPUs.
-* Dao, T. et al. (2023). *FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning*. arXiv:2307.08691. Improves FlashAttention with better parallelism and work partitioning, increasing utilization.
-* PyTorch 2.0 / 2.2 release notes and documentation for `scaled_dot_product_attention` and the FlashAttention2 backend (Jan 2024). Framework integration evidence for FlashAttention-style kernels becoming standard.
-* IBM Granite 13B model card (first openly confirmed major model using FlashAttention). Early production confirmation of FlashAttention usage in a large open-weight model.
-* Microsoft Phi-3 documentation (2024) referencing FlashAttention usage. Confirms FlashAttention in Microsoft’s Phi-3 models.
-* Google Gemma 2 model card (2024) referencing FlashAttention2. Confirms FlashAttention2 adoption in Google’s Gemma 2 family.
-* FlashAttention-3 Hopper (H100) technical reports and documentation (2024). Describes Hopper-optimized FA3 kernels and their performance characteristics.
-* FlashInfer serving library documentation (2025) reporting ≈29–69% latency reductions in inference. Serving-level library built on FlashAttention kernels, showing end-to-end latency gains.
-* *Efficient Large Language Models* (TMLR 2024). Survey of efficient attention mechanisms and LLM optimizations, covering hardware-efficient attention (FlashAttention family), compact attention (KV compression), sparse and linear attention methods.
+- Dao, T. et al. (2022). *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*. arXiv:2205.14135. Introduces the original IO-aware tiling algorithm that makes exact attention memory-efficient and fast on GPUs.
+- Dao, T. et al. (2023). *FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning*. arXiv:2307.08691. Improves FlashAttention with better parallelism and work partitioning, increasing utilization.
+- PyTorch 2.0 / 2.2 release notes and documentation for `scaled_dot_product_attention` and the FlashAttention2 backend (Jan 2024). Framework integration evidence for FlashAttention-style kernels becoming standard.
+- IBM Granite 13B model card (first openly confirmed major model using FlashAttention). Early production confirmation of FlashAttention usage in a large open-weight model.
+- Microsoft Phi-3 documentation (2024) referencing FlashAttention usage. Confirms FlashAttention in Microsoft’s Phi-3 models.
+- Google Gemma 2 model card (2024) referencing FlashAttention2. Confirms FlashAttention2 adoption in Google’s Gemma 2 family.
+- FlashAttention-3 Hopper (H100) technical reports and documentation (2024). Describes Hopper-optimized FA3 kernels and their performance characteristics.
+- FlashInfer serving library documentation (2025) reporting ≈29–69% latency reductions in inference. Serving-level library built on FlashAttention kernels, showing end-to-end latency gains.
+- *Efficient Large Language Models* (TMLR 2024). Survey of efficient attention mechanisms and LLM optimizations, covering hardware-efficient attention (FlashAttention family), compact attention (KV compression), sparse and linear attention methods.
 
 ---
 
 ## 3. State Space Models and Hybrid Architectures
 
-* Gu, A. et al. (2021). *Efficiently Modeling Long Sequences with Structured State Spaces* (S4). arXiv:2111.00396. Introduces structured state-space models as efficient sequence models for long contexts.
-* Gu, A. and Dao, T. et al. (2023). *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*. arXiv:2312.00752. Presents Mamba, a selective SSM with linear-time sequence modeling capabilities.
-* *From S4 to Mamba: A Comprehensive Survey* (2025). arXiv:2503.18970. Survey of structured state-space models, tracing the evolution from S4 to Mamba and summarizing empirical findings on scalability and limitations.
-* *A Survey of Mamba* (2025). arXiv:2408.01129 (June 2025 update). Consolidates empirical results and design variants of Mamba-style models, emphasizing their strengths up to ≈7B parameters and challenges at larger scales.
-* Falcon Mamba 7B model card and technical brief describing a 7B pure Mamba model trained on 5.5T tokens and benchmarks vs Llama 3.1 8B, Mistral 7B, Gemma 7B. Documents the strongest pure Mamba model and its comparative performance.
-* AI21 Labs (2024). *Jamba* hybrid Mamba+Attention model (official blog and Hugging Face cards). Describes a production hybrid architecture that alternates Mamba and attention layers.
-* TII (2024). *Falcon-H1* hybrid model combining attention and Mamba2-style blocks. Presents a parallel hybrid SSM+attention design over a range of scales.
-* Qwen3-Next technical reports and model cards describing linear attention (e.g., Gated DeltaNet) plus gated attention and MoE for capacity. Detail a frontier hybrid architecture combining linear attention, gated attention, and MoE for long context and capacity.
-* NVIDIA Nemotron technical reports describing hybrid architectures incorporating Mamba-style SSM blocks for efficiency. Provide examples of efficiency-focused hybrids using SSM-like blocks.
-* Falcon 2 (TII) documentation for hybrid architectures that incorporate SSM-style blocks. Confirms SSM-style components inside modern Falcon architectures.
+- Gu, A. et al. (2021). *Efficiently Modeling Long Sequences with Structured State Spaces* (S4). arXiv:2111.00396. Introduces structured state-space models as efficient sequence models for long contexts.
+- Gu, A. and Dao, T. et al. (2023). *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*. arXiv:2312.00752. Presents Mamba, a selective SSM with linear-time sequence modeling capabilities.
+- *From S4 to Mamba: A Comprehensive Survey* (2025). arXiv:2503.18970. Survey of structured state-space models, tracing the evolution from S4 to Mamba and summarizing empirical findings on scalability and limitations.
+- *A Survey of Mamba* (2025). arXiv:2408.01129 (June 2025 update). Consolidates empirical results and design variants of Mamba-style models, emphasizing their strengths up to ≈7B parameters and challenges at larger scales.
+- Falcon Mamba 7B model card and technical brief describing a 7B pure Mamba model trained on 5.5T tokens and benchmarks vs Llama 3.1 8B, Mistral 7B, Gemma 7B. Documents the strongest pure Mamba model and its comparative performance.
+- AI21 Labs (2024). *Jamba* hybrid Mamba+Attention model (official blog and Hugging Face cards). Describes a production hybrid architecture that alternates Mamba and attention layers.
+- TII (2024). *Falcon-H1* hybrid model combining attention and Mamba2-style blocks. Presents a parallel hybrid SSM+attention design over a range of scales.
+- Qwen3-Next technical reports and model cards describing linear attention (e.g., Gated DeltaNet) plus gated attention and MoE for capacity. Detail a frontier hybrid architecture combining linear attention, gated attention, and MoE for long context and capacity.
+- NVIDIA Nemotron technical reports describing hybrid architectures incorporating Mamba-style SSM blocks for efficiency. Provide examples of efficiency-focused hybrids using SSM-like blocks.
+- Falcon 2 (TII) documentation for hybrid architectures that incorporate SSM-style blocks. Confirms SSM-style components inside modern Falcon architectures.
 
 ---
 
 ## 4. Training and Optimization Techniques
 
-* Foret, P. et al. (2020). *Sharpness-Aware Minimization for Efficiently Improving Generalization*. arXiv:2010.01412. Introduces SAM, an optimizer modification favoring flat minima for better generalization.
-* Progressive depth / curriculum training work demonstrating faster convergence via increasing depth over training (representative 2020–2023 literature). Represents modern progressive training schemes that improve convergence speed.
-* Routing-aware optimization and load-balancing methods for MoE models (e.g., z-loss and auxiliary losses in ST-MoE-style work). Captures router-focused training techniques that stabilize and balance MoE experts.
-* Liu, K. et al. (2025). *Reinforcement Learning Meets Large Language Models: A Survey of Advancements and Applications Across the LLM Lifecycle*. arXiv:2509.16679. Survey of RL methods applied across pre-training, alignment fine-tuning, and reinforced reasoning for LLMs, with a focus on RLVR, datasets, benchmarks, and tooling.
-* Sun, H. and van der Schaar, M. (2025). *Inverse Reinforcement Learning Meets Large Language Model Post-Training: Basics, Advances, and Opportunities*. arXiv:2507.13158. Survey framing LLM alignment through inverse RL, emphasizing reward modeling from human data, evaluation metrics, and open challenges.
+- Foret, P. et al. (2020). *Sharpness-Aware Minimization for Efficiently Improving Generalization*. arXiv:2010.01412. Introduces SAM, an optimizer modification favoring flat minima for better generalization.
+- Progressive depth / curriculum training work demonstrating faster convergence via increasing depth over training (representative 2020–2023 literature). Represents modern progressive training schemes that improve convergence speed.
+- Routing-aware optimization and load-balancing methods for MoE models (e.g., z-loss and auxiliary losses in ST-MoE-style work). Captures router-focused training techniques that stabilize and balance MoE experts.
+- Liu, K. et al. (2025). *Reinforcement Learning Meets Large Language Models: A Survey of Advancements and Applications Across the LLM Lifecycle*. arXiv:2509.16679. Survey of RL methods applied across pre-training, alignment fine-tuning, and reinforced reasoning for LLMs, with a focus on RLVR, datasets, benchmarks, and tooling.
+- Sun, H. and van der Schaar, M. (2025). *Inverse Reinforcement Learning Meets Large Language Model Post-Training: Basics, Advances, and Opportunities*. arXiv:2507.13158. Survey framing LLM alignment through inverse RL, emphasizing reward modeling from human data, evaluation metrics, and open challenges.
 
 ---
 
 ## 5. Frontier Model Documentation and Model Cards
 
-* Meta AI. *Llama 2* (7B/13B/70B) model card and technical report (2023). Documents the dense Llama 2 family and its core architectural choices.
-* Meta AI. *Llama 3* and *Llama 3.1* model cards (e.g., `Meta-Llama-3-8B`, `Meta-Llama-3-70B`, `Meta-Llama-3.1-405B`) confirming GQA, RoPE, RMSNorm, and FlashAttention usage. Provide official confirmation of efficient attention and normalization patterns in Llama 3.
-* Meta AI. *Llama 4* (Scout / Maverick) launch materials (2025) describing the MoE pivot from dense Llama 3. Establish Meta’s first public MoE architecture and its expert configuration.
-* OpenAI. *GPT-4* system card and associated blog posts (2023). High-level description of GPT-4’s capabilities, training data, and safety considerations.
-* OpenAI. *GPT-4 Turbo* launch materials (2023). Documentation describing cost, latency, and context improvements for GPT-4 Turbo.
-* OpenAI. *GPT-4o* release blog and system card (May 2024). Introduces GPT-4o as a natively multimodal model with improved latency and cost.
-* OpenAI. *GPT-5* system card and launch posts (Aug 2025). Official materials describing GPT-5’s capabilities and deployment properties.
-* SemiAnalysis and similar third-party technical analyses (secondary / inference sources) used for inferred architectural details of closed models. Independent analyses used to hypothesize MoE/architecture internals for closed models.
-* Google DeepMind. *Gemini* technical reports and the “Gemini (language model)” Wikipedia entry (secondary summary) describing MQA/GQA and multimodal transformer architecture. Official and secondary sources summarizing Gemini’s architecture and attention variants.
-* Mistral AI. *Mistral 7B* paper (arXiv:2310.06825). Technical report on the Mistral 7B dense transformer and its performance.
-* Mistral AI. *Mixtral 8×7B* technical report and model cards confirming sparse MoE architecture (8 experts, 2 active per token). Describes the Mixtral MoE architecture and benchmark results.
-* DeepSeek-AI. *DeepSeek-V2* technical report and GitHub configs. Documents DeepSeek V2’s architecture and training setup.
-* DeepSeek-AI. *DeepSeek-V3* technical report (arXiv:2412.19437). Presents DeepSeek V3’s MoE + MLA architecture and performance.
-* DeepSeek-AI. *DeepSeek-R1* launch blog and model documentation (Jan 2025). Provides details on DeepSeek R1’s reasoning training and performance metrics.
-* Anthropic. Claude model cards and system cards for Claude 2, Claude 3, and Claude 4.x. Summarize Claude family capabilities, context windows, and safety considerations.
-* xAI. Grok-1 release repository (`xai-org/grok-1`) and [x.ai](http://x.ai) blog posts for Grok 4.x (e.g., “Grok 4.1”). Provide open weights and architectural notes for Grok models.
-* Gemma 2 model cards (Google, 2B/9B/27B) confirming GQA and key architectural details. Document Gemma 2’s architecture, GQA usage, and training setup.
-* Llama 3.2 / 3.3 model cards confirming GQA and long context windows (e.g., 128K). Confirm GQA and extended context support in later Llama 3 releases.
-* Qwen2.5 72B model card documenting GQA configuration, context length, and training setup. Official Qwen 2.5 documentation for attention configuration and context length.
-* Falcon 2 11B documentation describing GQA usage and training corpus. Describes Falcon 2’s architecture and training data, including GQA.
-* Wikipedia entries: *“Llama (language model)”*, *“Claude (language model)”*, *“Gemini (language model)”* (secondary summaries, as of late 2025) for consolidated public overviews of architecture families. Secondary sources summarizing architecture families for quick reference.
+- Meta AI. *Llama 2* (7B/13B/70B) model card and technical report (2023). Documents the dense Llama 2 family and its core architectural choices.
+- Meta AI. *Llama 3* and *Llama 3.1* model cards (e.g., `Meta-Llama-3-8B`, `Meta-Llama-3-70B`, `Meta-Llama-3.1-405B`) confirming GQA, RoPE, RMSNorm, and FlashAttention usage. Provide official confirmation of efficient attention and normalization patterns in Llama 3.
+- Meta AI. *Llama 4* (Scout / Maverick) launch materials (2025) describing the MoE pivot from dense Llama 3. Establish Meta’s first public MoE architecture and its expert configuration.
+- OpenAI. *GPT-4* system card and associated blog posts (2023). High-level description of GPT-4’s capabilities, training data, and safety considerations.
+- OpenAI. *GPT-4 Turbo* launch materials (2023). Documentation describing cost, latency, and context improvements for GPT-4 Turbo.
+- OpenAI. *GPT-4o* release blog and system card (May 2024). Introduces GPT-4o as a natively multimodal model with improved latency and cost.
+- OpenAI. *GPT-5* system card and launch posts (Aug 2025). Official materials describing GPT-5’s capabilities and deployment properties.
+- SemiAnalysis and similar third-party technical analyses (secondary / inference sources) used for inferred architectural details of closed models. Independent analyses used to hypothesize MoE/architecture internals for closed models.
+- Google DeepMind. *Gemini* technical reports and the “Gemini (language model)” Wikipedia entry (secondary summary) describing MQA/GQA and multimodal transformer architecture. Official and secondary sources summarizing Gemini’s architecture and attention variants.
+- Mistral AI. *Mistral 7B* paper (arXiv:2310.06825). Technical report on the Mistral 7B dense transformer and its performance.
+- Mistral AI. *Mixtral 8×7B* technical report and model cards confirming sparse MoE architecture (8 experts, 2 active per token). Describes the Mixtral MoE architecture and benchmark results.
+- DeepSeek-AI. *DeepSeek-V2* technical report and GitHub configs. Documents DeepSeek V2’s architecture and training setup.
+- DeepSeek-AI. *DeepSeek-V3* technical report (arXiv:2412.19437). Presents DeepSeek V3’s MoE + MLA architecture and performance.
+- DeepSeek-AI. *DeepSeek-R1* launch blog and model documentation (Jan 2025). Provides details on DeepSeek R1’s reasoning training and performance metrics.
+- Anthropic. Claude model cards and system cards for Claude 2, Claude 3, and Claude 4.x. Summarize Claude family capabilities, context windows, and safety considerations.
+- xAI. Grok-1 release repository (`xai-org/grok-1`) and [x.ai](http://x.ai) blog posts for Grok 4.x (e.g., “Grok 4.1”). Provide open weights and architectural notes for Grok models.
+- Gemma 2 model cards (Google, 2B/9B/27B) confirming GQA and key architectural details. Document Gemma 2’s architecture, GQA usage, and training setup.
+- Llama 3.2 / 3.3 model cards confirming GQA and long context windows (e.g., 128K). Confirm GQA and extended context support in later Llama 3 releases.
+- Qwen2.5 72B model card documenting GQA configuration, context length, and training setup. Official Qwen 2.5 documentation for attention configuration and context length.
+- Falcon 2 11B documentation describing GQA usage and training corpus. Describes Falcon 2’s architecture and training data, including GQA.
+- Wikipedia entries: *“Llama (language model)”*, *“Claude (language model)”*, *“Gemini (language model)”* (secondary summaries, as of late 2025) for consolidated public overviews of architecture families. Secondary sources summarizing architecture families for quick reference.
 
 ---
 
 ## 6. Production Deployment, RAG, and Serving Systems
 
-* Product and developer documentation from OpenAI (ChatGPT, GPTs), Anthropic (Claude), and Google (Gemini) describing retrieval-augmented workflows and tool/RAG patterns. Provide concrete examples of how major providers productize RAG and tool integration.
-* DeepSpeed, Megatron-LM, FasterTransformer, AITemplate, Unsloth, and related open-source frameworks documenting FlashAttention and MoE support in production-grade stacks. Framework and serving documentation showing kernel and MoE support in real systems.
-* Command R / Command R+ (Cohere) product documentation highlighting long-context (128K+) capabilities and RAG-centric workflows. Vendor docs demonstrating long-context and retrieval-centric deployments.
-* Llama 3.2 documentation describing extended context windows around 128K tokens. Confirms extended context support and associated techniques in Llama 3.2.
-* xAI Grok 1.5 and related documentation noting long-context capabilities. Documentation describing Grok 1.5’s long-context features and usage.
-* Qwen 3 and Qwen3-Next technical reports and model cards documenting 128K–256K context windows with sparse attention and memory strategies. Official sources describing Qwen’s long-context and sparse-attention strategies.
-* *Beyond the Limits: Context Length Extension* (May 2024). Survey of long-context techniques, including memory-retrieval augmentation, modified positional encodings, SSM approaches, and sparse attention patterns.
+- Product and developer documentation from OpenAI (ChatGPT, GPTs), Anthropic (Claude), and Google (Gemini) describing retrieval-augmented workflows and tool/RAG patterns. Provide concrete examples of how major providers productize RAG and tool integration.
+- DeepSpeed, Megatron-LM, FasterTransformer, AITemplate, Unsloth, and related open-source frameworks documenting FlashAttention and MoE support in production-grade stacks. Framework and serving documentation showing kernel and MoE support in real systems.
+- Command R / Command R+ (Cohere) product documentation highlighting long-context (128K+) capabilities and RAG-centric workflows. Vendor docs demonstrating long-context and retrieval-centric deployments.
+- Llama 3.2 documentation describing extended context windows around 128K tokens. Confirms extended context support and associated techniques in Llama 3.2.
+- xAI Grok 1.5 and related documentation noting long-context capabilities. Documentation describing Grok 1.5’s long-context features and usage.
+- Qwen 3 and Qwen3-Next technical reports and model cards documenting 128K–256K context windows with sparse attention and memory strategies. Official sources describing Qwen’s long-context and sparse-attention strategies.
+- *Beyond the Limits: Context Length Extension* (May 2024). Survey of long-context techniques, including memory-retrieval augmentation, modified positional encodings, SSM approaches, and sparse attention patterns.
 
 ---
 
 ## 7. Modular and Compositional Learning
 
-* 2025 “Modular Machine Learning” framework papers on modular representations, modular models, and modular reasoning, used to validate the “compositional language” thesis. Introduce a formal framework for modular models and reasoning that aligns with the compositional architecture view.
-* Petros, P. (2024). *Neural Architecture Design as a Compositional Language* (previous post that the current work extends). Earlier article establishing the compositional architecture framing this work builds on.
-* *Modularity in Deep Learning: A Survey* (2023). Survey of modularity across data, task, and model axes, and its impact on compositional generalization and training.
+- 2025 “Modular Machine Learning” framework papers on modular representations, modular models, and modular reasoning, used to validate the “compositional language” thesis. Introduce a formal framework for modular models and reasoning that aligns with the compositional architecture view.
+- Petros, P. (2024). *Neural Architecture Design as a Compositional Language* (previous post that the current work extends). Earlier article establishing the compositional architecture framing this work builds on.
+- *Modularity in Deep Learning: A Survey* (2023). Survey of modularity across data, task, and model axes, and its impact on compositional generalization and training.
 
 ---
 
@@ -831,11 +831,11 @@ Primary sources (papers, technical reports, official model cards/docs) back quan
 
 These references inform forward-looking observations and are not treated as production-standard techniques.
 
-* 2025 “Neural Attention” paper replacing dot products in attention with small feed-forward networks to capture richer nonlinear interactions in research settings.
-* *Nested Learning* (Google Research, NeurIPS 2025), introducing a multi-level learning paradigm with attention as associative memory for continual learning.
-* Hybrid transformer with quantum self-attention applied to molecular generation (SMILES) demonstrating experimental quantum-enhanced NLP architectures (2025).
-* Transformer-based neural architecture search (2025) using auxiliary perplexity-based metrics to explore alternative attention computation strategies.
+- 2025 “Neural Attention” paper replacing dot products in attention with small feed-forward networks to capture richer nonlinear interactions in research settings.
+- *Nested Learning* (Google Research, NeurIPS 2025), introducing a multi-level learning paradigm with attention as associative memory for continual learning.
+- Hybrid transformer with quantum self-attention applied to molecular generation (SMILES) demonstrating experimental quantum-enhanced NLP architectures (2025).
+- Transformer-based neural architecture search (2025) using auxiliary perplexity-based metrics to explore alternative attention computation strategies.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!7aQy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F23a605c2-f2ff-4402-a602-5cea6d0c72f3_2752x1536.png)
+![](assets/asset-6be04ca4eafa30c8.png)
 
 Thanks for reading Petros Rooted Layers! Subscribe for free to receive new posts and support my work.

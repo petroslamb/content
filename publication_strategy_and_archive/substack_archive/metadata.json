@@ -1,135 +1,184 @@
 [
   {
+    "slug": "the-illusion-of-the-swarm",
     "title": "The Illusion of the Swarm",
     "url": "https://lambpetros.substack.com/p/the-illusion-of-the-swarm",
     "post_date": "2026-03-17T11:12:49.130Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:54.837711"
+    "fetched_at": "2026-03-23T19:12:00.741231+00:00",
+    "content_hash": "7495ad005053100eb2b96de93d55ca979b398044eda6237eba0655e0e728c6c9",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-03-17_the-illusion-of-the-swarm.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-03-17_the-illusion-of-the-swarm.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-e3e5b6bf392a6a8c.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-moltbook-phenomenon",
     "title": "The Moltbook Phenomenon",
     "url": "https://lambpetros.substack.com/p/the-moltbook-phenomenon",
     "post_date": "2026-03-12T23:32:53.509Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:55.393970"
+    "fetched_at": "2026-03-23T19:12:01.462136+00:00",
+    "content_hash": "da08aaf2831feeeaca962cbb0e3510bfd48ebb85e7e27d2b8fe9e72970e5b042",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-03-12_the-moltbook-phenomenon.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-03-12_the-moltbook-phenomenon.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-04662518f7e76ad6.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-autonomy-tax",
     "title": "The Autonomy Tax",
     "url": "https://lambpetros.substack.com/p/the-autonomy-tax",
     "post_date": "2026-02-27T10:13:52.173Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:55.680308"
+    "fetched_at": "2026-03-23T19:12:02.204827+00:00",
+    "content_hash": "97049ec194bcd6f787365af2a74fa35f87a18002b7968461f23f7c02af5572b8",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-02-27_the-autonomy-tax.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-02-27_the-autonomy-tax.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-267139985c45fd7c.png",
+    "mirror_enabled": true
   },
   {
-    "title": "Your AI Is Confidently Wrong \u2014 And You Have No Rule for What to Do About It",
-    "url": "https://lambpetros.substack.com/p/your-ai-is-confidently-wrong-and",
-    "post_date": "2026-02-18T17:49:44.630Z",
-    "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:55.924775"
-  },
-  {
-    "title": "The Five-Component Pattern for AI Evidence Governance",
-    "url": "https://lambpetros.substack.com/p/the-five-component-pattern-for-ai",
-    "post_date": "2026-02-18T15:42:37.994Z",
-    "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:56.505217"
-  },
-  {
-    "title": "Measuring Trust: The Gap Between AI Auditing and Correctness",
-    "url": "https://lambpetros.substack.com/p/measuring-trust-the-gap-between-ai",
-    "post_date": "2026-02-18T14:41:22.326Z",
-    "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:56.812235"
-  },
-  {
+    "slug": "the-transformer-attractor",
     "title": "The Transformer Attractor",
     "url": "https://lambpetros.substack.com/p/the-transformer-attractor",
     "post_date": "2026-01-15T23:43:27.052Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:57.348018"
+    "fetched_at": "2026-03-23T19:12:02.702490+00:00",
+    "content_hash": "3e53ce4f3e58683078955beb23845a58c83394e763826aece5c7c54b2d354e21",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-01-15_the-transformer-attractor.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-01-15_the-transformer-attractor.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-dd041b4795050b39.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "when-the-llm-programs-its-own-thinking",
     "title": "When the LLM Programs Its Own Thinking",
     "url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
     "post_date": "2026-01-14T19:05:25.945Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:57.899714"
+    "fetched_at": "2026-03-23T19:12:03.538590+00:00",
+    "content_hash": "a22da0fd80dbab655e22536e288c2d48fae4e5a914673e7e2361a8caf892867c",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-01-14_when-the-llm-programs-its-own-thinking.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-01-14_when-the-llm-programs-its-own-thinking.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-3bf1d6167082fa21.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-orchestration-paradigm-issue-397",
     "title": "The Orchestration Paradigm: Issue 4 - The Reality",
     "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397",
     "post_date": "2025-12-29T17:58:18.658Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:58.155532"
+    "fetched_at": "2026-03-23T19:12:03.955863+00:00",
+    "content_hash": "5afe88e18477edc95fe124fb9b20814ee52eb42d1eb625e0fac1d38491f9b90b",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue-397.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue-397.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-71e16fc24997c1d6.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-orchestration-paradigm-issue-cf4",
     "title": "The Orchestration Paradigm: Issue 3 - The Behavior",
     "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-cf4",
     "post_date": "2025-12-29T13:13:49.466Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:58.432034"
+    "fetched_at": "2026-03-23T19:12:04.452480+00:00",
+    "content_hash": "b7e630fd4bd49ed0342e89ca3c52cf5c4cb3205ce112a9af37f3d70ad4aa2c7f",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue-cf4.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue-cf4.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-8695430467b58e76.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-orchestration-paradigm-issue",
     "title": "The Orchestration Paradigm: Issue 2 - The Factory",
     "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue",
     "post_date": "2025-12-29T11:28:41.762Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:59.065315"
+    "fetched_at": "2026-03-23T19:12:05.259338+00:00",
+    "content_hash": "a29715bcd9fcfa1ea00a9e33ac8f82d015bcee71e3d570befe607c0a171e9a12",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-7f1bef3bc0464692.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-orchestration-paradigm-series",
     "title": "The Orchestration Paradigm Series",
     "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-series",
     "post_date": "2025-12-26T21:19:10.767Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:33:59.474194"
+    "fetched_at": "2026-03-23T19:12:05.837891+00:00",
+    "content_hash": "55842a2404e65a49e513e5d3eaa0db5dabc82f4e304dccbf780315be07aad2ad",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-12-26_the-orchestration-paradigm-series.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-12-26_the-orchestration-paradigm-series.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-5067bdc87e4b572f.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-hardware-friction-map",
     "title": "The Hardware Friction Map",
     "url": "https://lambpetros.substack.com/p/the-hardware-friction-map",
     "post_date": "2025-12-10T19:17:46.866Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:34:00.023858"
+    "fetched_at": "2026-03-23T19:12:06.514121+00:00",
+    "content_hash": "95183e0d520eaf8fba7df5d7521688fff93004e77e712f58a08d1af87c706f55",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-12-10_the-hardware-friction-map.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-12-10_the-hardware-friction-map.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-aaf04083ff49efdb.jpeg",
+    "mirror_enabled": true
   },
   {
-    "title": "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\u20132025)",
+    "slug": "what-actually-works-the-hardware",
+    "title": "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)",
     "url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware",
     "post_date": "2025-12-06T10:34:32.179Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:34:00.308968"
+    "fetched_at": "2026-03-23T19:12:07.429417+00:00",
+    "content_hash": "88e95e98f8008f7edcaf7713709a92a508de8ad56c998410937dd7d0a266b829",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-12-06_what-actually-works-the-hardware.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-12-06_what-actually-works-the-hardware.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-50fadad0915cab27.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "the-agent-revolution",
     "title": "Autonomous AI Agents: Core Foundations and Recent Breakthroughs",
     "url": "https://lambpetros.substack.com/p/the-agent-revolution",
     "post_date": "2025-12-02T00:15:32.387Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:34:00.908033"
+    "fetched_at": "2026-03-23T19:06:39.123606+00:00",
+    "content_hash": "b53fea568114b2a5535a643927895693903b0fdb1f41a44be574b7f6d22652fd",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-12-02_the-agent-revolution.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-12-02_the-agent-revolution.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-04448ffe5bc7a341.png",
+    "mirror_enabled": true
   },
   {
-    "title": "A Quick Look at AI Hacking Research",
-    "url": "https://lambpetros.substack.com/p/a-quick-overview-ai-hacking-research",
-    "post_date": "2025-12-01T09:44:35.742Z",
-    "audience": "everyone",
-    "fetched_at": "2026-03-22T16:34:01.176435"
-  },
-  {
-    "title": "A Quick Look at 27 Production\u2011Ready AI Agents ",
-    "url": "https://lambpetros.substack.com/p/a-quick-overview-production-ready",
-    "post_date": "2025-11-29T22:26:59.824Z",
-    "audience": "everyone",
-    "fetched_at": "2026-03-22T16:34:01.713111"
-  },
-  {
+    "slug": "neural-architecture-design-as-a-compositional-32e",
     "title": "Neural Architecture Design as a Compositional Language",
     "url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
     "post_date": "2025-11-27T16:04:27.908Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:34:02.343817"
+    "fetched_at": "2026-03-23T19:06:40.823507+00:00",
+    "content_hash": "7a2986631662e1f6730309c427813030991130c9f86869e6854ab35f525c28c9",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-29678f54f2010396.png",
+    "mirror_enabled": true
   },
   {
+    "slug": "coming-soon",
     "title": "Welcome",
     "url": "https://lambpetros.substack.com/p/coming-soon",
     "post_date": "2025-11-27T15:19:30.913Z",
     "audience": "everyone",
-    "fetched_at": "2026-03-22T16:34:02.951938"
+    "fetched_at": "2026-03-23T19:06:41.327789+00:00",
+    "content_hash": "7d9382e3e37a2c74b50235e5250915244b0dc6b42596b78fee082fafbca1d89e",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-11-27_coming-soon.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-11-27_coming-soon.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-04448ffe5bc7a341.png",
+    "mirror_enabled": true
   }
 ]

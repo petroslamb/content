@@ -1,0 +1,23 @@
+---
+pagination:
+  data: archive.series
+  size: 1
+  alias: series
+permalink: "series/{{ series.key }}/index.html"
+layout: layouts/base.njk
+eleventyComputed:
+  title: "{{ series.title }} | Rooted Layers Mirror"
+  description: "{{ series.summary }}"
+---
+<section class="section">
+  <div class="section__head">
+    <p class="eyebrow">Series</p>
+    <h1>{{ series.title }}</h1>
+    <p class="lede">{{ series.summary }}</p>
+  </div>
+  <div class="card-grid">
+    {% for post in series.posts %}
+      {% include "partials/post-card.njk" %}
+    {% endfor %}
+  </div>
+</section>

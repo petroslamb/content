@@ -1,0 +1,16 @@
+<article class="post-card" data-post-card data-title="{{ post.title | lower }}" data-tags="{{ post.tags | join(' ') | lower }}" data-year="{{ post.year }}" data-series="{{ post.seriesTitle or '' | lower }}">
+  <div class="post-card__meta">
+    <span>{{ post.formattedDate }}</span>
+    {% if post.seriesTitle %}
+    <span>{{ post.seriesTitle }}</span>
+    {% else %}
+    <span>{{ post.status | capitalize }}</span>
+    {% endif %}
+  </div>
+  <h3><a href="{{ post.permalink | url }}">{{ post.title }}</a></h3>
+  <p>{{ post.summary }}</p>
+  <div class="post-card__footer">
+    <span>{{ post.researchFolderLabel }}</span>
+    <a href="{{ post.permalink | url }}">Read mirror</a>
+  </div>
+</article>

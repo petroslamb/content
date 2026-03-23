@@ -1,0 +1,44 @@
+---
+layout: layouts/base.njk
+title: Archive | Rooted Layers Mirror
+description: Full mirrored archive of public Rooted Layers essays, filterable by title, tag, year, and series.
+---
+<section class="section">
+  <div class="section__head">
+    <p class="eyebrow">Archive</p>
+    <h1>Public essays mirrored with provenance intact</h1>
+    <p class="lede">This archive is filtered from the public Substack feed and rendered from local markdown snapshots. Each page keeps its source links, research folder, and raw files attached.</p>
+  </div>
+
+  <div class="filters" data-archive-filters>
+    <label>
+      <span>Search</span>
+      <input type="search" placeholder="Title or tag" data-filter-search>
+    </label>
+    <label>
+      <span>Year</span>
+      <select data-filter-year>
+        <option value="">All years</option>
+        {% for year in archive.filters.years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      <span>Series</span>
+      <select data-filter-series>
+        <option value="">All series</option>
+        {% for series in archive.series %}
+        <option value="{{ series.title | lower }}">{{ series.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </div>
+
+  <div class="card-grid" data-archive-results>
+    {% for post in archive.posts %}
+      {% include "partials/post-card.njk" %}
+    {% endfor %}
+  </div>
+  <p class="empty-state" data-archive-empty hidden>No posts match the current filter.</p>
+</section>

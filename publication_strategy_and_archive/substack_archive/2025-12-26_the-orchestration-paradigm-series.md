@@ -15,7 +15,7 @@ Each part is self-contained. You can read them in order or jump to whichever top
 
 ML practitioners will learn how to build orchestrated systems. Researchers will find a comprehensive literature review of tool use and compound AI through the lens of one well-executed paper. Technical leaders will get concrete cost and performance trade-offs for evaluating orchestration architectures. Curious minds can understand where AI is heading without needing a PhD to follow along.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a36176d-4555-4990-b68e-3bdadb7bb552_898x746.png)](https://substackcdn.com/image/fetch/$s_!fH8M!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a36176d-4555-4990-b68e-3bdadb7bb552_898x746.png)
+![](assets/asset-5067bdc87e4b572f.png)
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ In this first issue, we dissect the economic and mathematical foundations of Too
 
 > [!NOTE] System Auditor’s Log: The “ToolOrchestra” system is effectively a specialized distributed system design. It separates the control plane (routing logic) from the data plane (task execution). This series reverse-engineers the paper to understand how this separation is trained, optimized, and deployed.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0cec5dfd-b25e-465d-adbf-e6bc5735d665_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!6DNA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0cec5dfd-b25e-465d-adbf-e6bc5735d665_2867x1600.png)
+![](assets/asset-d391111965328296.png)
 
 The fundamental economic premise of modern AI is arbitrage. If a difficult task costs $0.05 to solve on a frontier model (like GPT-5), but can be solved for $0.005 by a smaller model using the right tool, then the system that effectively routes between them captures that value.
 
@@ -49,7 +49,7 @@ This series dissects **ToolOrchestra**, a system that demonstrates this principl
 
 The central claim is that **Routing is a distinct capability from Generation.**
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F439355b8-e488-4dc2-b8f4-0ff6d192a00c_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!eyrp!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F439355b8-e488-4dc2-b8f4-0ff6d192a00c_2867x1600.png)
+![](assets/asset-14a091a3afed751e.png)
 
 In a standard monolithic setup, the same weights responsible for generating a Shakespearean sonnet are also responsible for deciding whether to use a calculator for `23 * 491`. This is inefficient. It wastes high-entropy compute (creative generation) on low-entropy decisions (tool selection). ToolOrchestra decouples this. It trains a dedicated policy network (the 8B Orchestrator) solely to manage the state machine of the problem solving process.
 
@@ -118,7 +118,7 @@ The “Orchestrator” exists to interrupt this process. It inserts a decision n
 
 One might assume that prompt engineering could solve this. “You are a helpful assistant who uses tools.”
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F005aa483-8f54-47e3-9078-e72ea980fd1a_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!dLWR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F005aa483-8f54-47e3-9078-e72ea980fd1a_2867x1600.png)
+![](assets/asset-5a8c4782a23039d6.png)
 
 In practice, this fails due to **Self-Enhancement Bias**. Models tend to over-trust their internal parametric knowledge. A model that has “read” the entire internet often believes it knows current stock prices or obscure mathematical constants, simply because those patterns exist somewhere in its weight matrices.
 
@@ -164,7 +164,7 @@ From an engineering perspective, orchestration changes the problem from “Gener
 
 The critical insight from the paper is that **Standard Supervised Learning (SFT) is insufficient for this.** SFT minimizes the KL divergence between the model’s output and a reference dataset. But in orchestration, there are many valid paths to the destination. You could search Google, or you could use WolframAlpha. Both are valid.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc451fe5b-74c1-4e98-980c-6c75da05da26_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!frOQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc451fe5b-74c1-4e98-980c-6c75da05da26_2867x1600.png)
+![](assets/asset-7b80374b6b5375a1.png)
 
 If the SFT dataset only contains Google searches, the model is penalized for using WolframAlpha, even if it works. This “behavior cloning” forces the model to memorize specific paths rather than learning the generalized strategy of “finding the answer.”
 
@@ -200,7 +200,7 @@ Tool use breaks this chain. When the model generates a tool call (e.g., `request
 
 This is the classic Reinforcement Learning setup. Since we cannot backpropagate through the tool, we treat the tool call as an **Action (*****A*****)** taken by a **Policy (*****πθ*****)** in an Environment.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbffe8c9d-bbab-4e51-883c-27ac1300246a_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!RRnf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbffe8c9d-bbab-4e51-883c-27ac1300246a_2867x1600.png)
+![](assets/asset-316a9d053b2251aa.png)
 
 The objective is to maximize the expected reward:
 
@@ -214,7 +214,7 @@ Using the **REINFORCE** trick (or Policy Gradient Theorem), we can estimate the 
 
 Standard PPO (Proximal Policy Optimization) requires training a separate “Critic” model to estimate the value function *V*(*s*). This Critic predicts how much reward the model expects to get from the current state.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F09f95408-0789-4ba0-89eb-943bbbaad4f4_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!QGlo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F09f95408-0789-4ba0-89eb-943bbbaad4f4_2867x1600.png)
+![](assets/asset-0ff0dd14affb20ad.png)
 
 Training a Critic is expensive. It effectively doubles the memory requirement (you need to hold the Policy model and the Critic model). For Large Language Models, which are already memory-constrained, this is a heavy tax. **GRPO (Group Relative Policy Optimization)** removes the Critic. Instead of comparing the reward to a learned baseline (the Critic’s guess), GRPO compares the reward to the **group average**.
 
@@ -249,7 +249,7 @@ def grpo_loss(prompt, model, reward_fn, group_size=4):
 
 The danger with RL is **Reward Hacking**. If the reward function is imperfect (it almost always is), the model will exploit it. It might learn to ignore the tool and just guess, or it might output gibberish that somehow triggers a “correct” regex match.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F113c03f7-803b-461c-b01b-5a2202a69d52_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!-Inu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F113c03f7-803b-461c-b01b-5a2202a69d52_2867x1600.png)
+![](assets/asset-897db20564b08dd9.png)
 
 To prevent this, we enforce a **KL Divergence Penalty**. We compare the RL-trained model (*πθ*) to the original reference model (*πref*). If the RL model’s probability distribution diverges too far from the reference (i.e., it starts speaking a different language or losing coherence), we subtract a penalty from the reward.
 
@@ -277,7 +277,7 @@ When we train an orchestrator, we ultimately need a single scalar value (*R*) to
 
 This is a **Pareto Optimization** problem. There is no single “best” orchestrator. There is an orchestrator that is fast but expensive, and one that is cheap but slow. To train a model using RL, we must perform **Scalarization**, collapsing these vectors into a single number.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe3e839f7-3127-4049-b7b6-44fb7bcd92fb_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!GTDX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe3e839f7-3127-4049-b7b6-44fb7bcd92fb_2867x1600.png)
+![](assets/asset-dd4217c97461f7f2.png)
 
 ### The Objective Functions
 
@@ -289,13 +289,13 @@ The Efficiency Reward (*Refficiency*): This captures the resource consumption. *
 
 The Preference Alignment (*Rpref*): This is the dynamic component. It re-weights the efficiency penalty based on the user’s stated needs.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F71030679-7ed8-499a-83db-e4a3512ad1df_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!bYV_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F71030679-7ed8-499a-83db-e4a3512ad1df_2867x1600.png)
+![](assets/asset-2a1a2a5c05a8ecdb.png)
 
 ### Batch Normalization of Rewards
 
 A major engineering challenge here is **Scale Mismatch**. Accuracy is usually [0, 1]. Latency might be [0.5, 10.0] seconds. Cost might be [0.0001, 0.05] dollars. If you simply sum these (1 + 5.0 + 0.02), the Latency term dominates the gradient. The model will learn to be fast above all else, ignoring cost and accuracy.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6e018b89-4458-48ad-bd22-5ec7ddb97404_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!3_ZL!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6e018b89-4458-48ad-bd22-5ec7ddb97404_2867x1600.png)
+![](assets/asset-a7d27e916db3b655.png)
 
 To fix this, ToolOrchestra uses **Batch Normalization** on the rewards. It tracks the moving average and variance of cost and latency, and normalizes them to a standard normal distribution (*μ* = 0, *σ* = 1) before calculating the reward.
 
@@ -329,15 +329,15 @@ This scalarization forces the model to learn an implicit **exchange rate**. If *
 
 **Reading the Frontier:** Moving **right** (increasing *wcost*) slides toward cheaper, lower-accuracy configurations. Moving **left** (increasing *wacc*) slides toward expensive, higher-accuracy configurations. There is no “up and right” (high accuracy AND low cost) because that would dominate all other points.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff327fd32-8b1c-4008-8aa9-9090a20d079e_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!NYT6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff327fd32-8b1c-4008-8aa9-9090a20d079e_2867x1600.png)
+![](assets/asset-8d0c18e85e226f8f.png)
 
 **The Scalarization Choice:** ToolOrchestra uses **linear scalarization** (*R* = *wacc* ⋅ *Acc* − *wcost* ⋅ *Cost*). This draws a line through the Pareto frontier and picks the tangent point. Linear scalarization cannot find points on non-convex regions of the frontier. This is a known limitation traded for computational simplicity. The danger in this design is **Mode Collapse**. The model might find a local optimum where it simply refuses to use expensive tools at all (driving cost to zero), effectively becoming a standard dumb model.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17cdbd86-2925-43e9-b496-15e888bc87a0_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!8IZV!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F17cdbd86-2925-43e9-b496-15e888bc87a0_2867x1600.png)
+![](assets/asset-413cefc1e9c561b8.png)
 
 To prevent this, the training data must force the model into situations where *only* expensive tools can solve the problem. If the tasks are too easy, the “Efficiency Reward” will cannibalize the “Outcome Reward,” and the orchestrator will learn to be a miser rather than a manager. This reliance on **Task Difficulty Distribution** is a hidden dependency. The reward function only works if the training set contains a sufficient number of “impossible to solve cheaply” problems.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe83412c3-6720-4938-8b9e-e629471c8189_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!Gj2D!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe83412c3-6720-4938-8b9e-e629471c8189_2867x1600.png)
+![](assets/asset-e37229b07351bfe9.png)
 
 ### Annotated Bibliography
 
@@ -359,7 +359,7 @@ This was issue 1, stay tuned for the next bundle, it covers the synthetic data p
 
 > This appendix is for readers who want a primer on the Markov Decision Process formalism. Skip if you are already familiar with RL fundamentals.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19928bea-a7f4-4fc4-b6ac-9f4f4a591189_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!l2VC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19928bea-a7f4-4fc4-b6ac-9f4f4a591189_2867x1600.png)
+![](assets/asset-e41d6bc6f04ea52e.png)
 
 ### The Building Blocks
 
@@ -383,7 +383,7 @@ A **policy** is a strategy for choosing actions in states. Formally, it is a fun
 
 Standard supervised learning requires ground-truth labels. But for orchestration, there is no single “correct” tool sequence. Multiple paths can solve the same problem. We need a method that works with sparse, delayed rewards (only know if we succeeded at the end). Doesn’t require a separate value network (VRAM is precious). Stays close to the pretrained distribution (don’t forget language).
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F344556a5-4256-4125-aabc-0e3bcb7289d4_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!XGxu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F344556a5-4256-4125-aabc-0e3bcb7289d4_2867x1600.png)
+![](assets/asset-69ed36431061e7e3.png)
 
 ### Why GRPO for ToolOrchestra
 

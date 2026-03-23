@@ -3,7 +3,7 @@
 Date: 2026-02-27
 URL: https://lambpetros.substack.com/p/the-autonomy-tax
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff5f2af9c-b045-4495-99d7-0ea796ccb8cd_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!ZV8n!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff5f2af9c-b045-4495-99d7-0ea796ccb8cd_5734x3200.png)
+![](assets/asset-267139985c45fd7c.png)
 
 ---
 
@@ -27,7 +27,7 @@ Enterprise AI intent has never been higher. Deloitte’s 2026 survey found that 
 
 Meanwhile, raw capability is accelerating, METR’s task-horizon measurements suggest frontier models can now complete tasks that take humans roughly 50 minutes, with the horizon doubling approximately every seven months.[[6](https://arxiv.org/abs/2503.14499)] Strong results on assistant-style evaluations and coding benchmarks reinforce the point: capability is not the constraint.[[7A](https://arxiv.org/abs/2311.12983),[7B](https://arxiv.org/abs/2310.06770),[7C](https://arxiv.org/abs/2411.15114)]
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa273da18-6f7a-440a-8702-ac835a1799e0_1600x980.png)](https://substackcdn.com/image/fetch/$s_!sGy0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa273da18-6f7a-440a-8702-ac835a1799e0_1600x980.png)
+![](assets/asset-c500dd76d019c9a7.png)
 
 So models are getting more capable, but production agents remain tightly constrained. Why? Because enterprises are not buying raw cognition, they are buying **verified action**. Software engineering scales first because verification is unusually cheap: tests run automatically, outputs are diffable, and rollback is native. In procurement, legal, finance, and compliance workflows, verification is slower, costlier, and often irreversible.
 
@@ -47,7 +47,7 @@ Here is the number that should change your staffing math: after GitHub Copilot�
 
 The mechanism is consistent across domains: AI raises output throughput faster than it raises expert review capacity. When juniors produce more, seniors review more. The same asymmetry shows up in call centers (novice productivity up 34%, experienced performers barely affected)[[9](https://doi.org/10.3386/w31161)] and in GitHub teams (code contributions up 5.9%, but coordination time for integration up 8%).[[10](https://arxiv.org/abs/2410.02091)]
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faa3a113f-b915-4424-8e25-9fdf0a38911e_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!dnRj!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faa3a113f-b915-4424-8e25-9fdf0a38911e_5734x3200.png)
+![](assets/asset-03c6d80fe405bf0c.png)
 
 **Three independent contexts, same structural pattern:** AI amplifies junior output, expert review becomes the bottleneck, and the net effect depends on team composition. If your organization has many novices and few experts, the common shape of most enterprise teams, the Human Bandwidth Tax is highest.[11]
 
@@ -59,7 +59,7 @@ In a controlled lab study, agents with persistent memory and shell access report
 
 **The attack surface gets worse:** CVE-2025-32711 documents command injection risk in a production enterprise AI context with a high-severity score, where the EchoLeak exploit chain demonstrated cross-boundary privilege escalation, five chained bypasses, no user interaction required.[[12](https://nvd.nist.gov/vuln/detail/CVE-2025-32711)][[13](https://arxiv.org/abs/2509.10540)]
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9d97cad2-f875-4340-bd0f-fad2320a708b_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!4Pjq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9d97cad2-f875-4340-bd0f-fad2320a708b_5734x3200.png)
+![](assets/asset-ffc43fd9926cf2dd.png)
 
 In every case, the failures were in the control layer, spending limits, input sanitization, privilege boundaries, state verification, not in the model’s reasoning. The Incident Tax scales with autonomy level, and the relationship isn’t linear. **It’s combinatorial**, because failures compound across tool access, persistent state, and multi-party communication.
 
@@ -67,7 +67,7 @@ In every case, the failures were in the control layer, spending limits, input sa
 
 This is the tax that’s hardest to measure, and that’s part of the finding.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4992390-6291-4b9d-bf27-593d9061df9b_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!Rcvw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4992390-6291-4b9d-bf27-593d9061df9b_5734x3200.png)
+![](assets/asset-264b17ef6a359638.png)
 
 Four in five organizations lack the governance maturity or operational visibility that autonomous agents require. Deloitte found only 21% have a mature AI governance model; a separate security-focused survey found the same 21% with full visibility into agent actions.[[15](https://www.prnewswire.com/news-releases/aktos-2025-state-of-agentic-ai-security-report-finds-only-21-of-enterprises-have-visibility-302635105.html)] Different surveys, different constructs, same number. A separate observability user study reinforces the signal: 79% of respondents agreed that nondeterministic flows are a major challenge for managing agentic systems.[[16](https://arxiv.org/abs/2503.06745)]
 
@@ -81,7 +81,7 @@ Secure-by-design guidance is explicit on this point:safety and security are life
 
 Each tax, alone, looks manageable. Together, they explain why models that can reason for 50 minutes still get leashed to 10-step workflows with human approval at every gate. The bandwidth tax means your experts are already stretched. The incident tax means a single uncontrolled action can erase months of efficiency gains. The governance tax means you may not even know the damage until an auditor asks.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c248f38-bfe4-4fba-87d5-06db28739be6_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!QmSE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c248f38-bfe4-4fba-87d5-06db28739be6_5734x3200.png)
+![](assets/asset-cf6a92ed0faa0aaa.png)
 
 **They don’t add, they compound**. Here’s how: an incident (Tax 2) triggers an investigation, which reveals there’s no audit trail (Tax 3), which pulls your two best engineers off product work for a week (Tax 1). One failure, all three taxes, one event.
 
@@ -103,17 +103,17 @@ The stakes are concrete: choose too much autonomy and you absorb all three taxes
 
 To cross the deployment gap, I propose two practical targets.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffd47107b-34b9-43d0-85b1-d6c81f6c2b2f_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!PuJD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffd47107b-34b9-43d0-85b1-d6c81f6c2b2f_5734x3200.png)
+![](assets/asset-9fd7d1de5ac0ea72.png)
 
 Both Anthropic and OpenAI describe a gap between simple linear pipelines and fully autonomous agents.[[22](https://www.anthropic.com/engineering/building-effective-agents)][[23](https://developers.openai.com/tracks/building-agents/)]
 
 > **We call this middle ground Level 2.5 Autonomy:** *a fixed sequence of multi-turn, tool-using nodes where each node can reason, iterate, and use tools, but the pipeline sequence is fixed, each node’s inputs and outputs are typed contracts (or artifacts), and humans review at predetermined gates.*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc3f45931-38f9-4c56-8a0d-f1814d636d01_1902x1000.png)](https://substackcdn.com/image/fetch/$s_!tZhY!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc3f45931-38f9-4c56-8a0d-f1814d636d01_1902x1000.png)
+![](assets/asset-0314241c09c7b025.png)
 
 Level 2.5 is not a compromise. It is how enterprises buy capability without buying chaos. Production data and engineering guidance converge: most use cases should start with simpler bounded workflows and earn autonomy with evidence.[[24](https://arxiv.org/abs/2512.04123)][[25](https://arxiv.org/abs/2512.08769)]
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd4d9f9bb-9d91-470c-89fe-19d6e4b137c4_1030x636.png)](https://substackcdn.com/image/fetch/$s_!55NV!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd4d9f9bb-9d91-470c-89fe-19d6e4b137c4_1030x636.png)
+![](assets/asset-f3cd09aea9f668c6.png)
 
 After that comes **Bounded Level 3 Autonomy** which adds dynamic routing, but only inside mandatory compliance and escalation constraints that cannot be bypassed.
 
@@ -123,7 +123,7 @@ Bounded Level 3 allows runtime dynamic routing, but external actions are permitt
 
 > **If routing is dynamic but gates are bypassable or advisory, it is not Bounded Level 3.**
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6e76dd9-6264-44ad-955a-e946e93d2db1_1900x1002.png)](https://substackcdn.com/image/fetch/$s_!JBty!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe6e76dd9-6264-44ad-955a-e946e93d2db1_1900x1002.png)
+![](assets/asset-b61899c7299686d0.png)
 
 The decision logic is simple: score each of the three taxes Bounded Level 3 is allowed only when ***Net Benefit >> 0******and*** **all three taxes score low**. Otherwise, default to Level 2.5. If one tax is very high, autonomy is blocked until a control is real, not promised.
 
@@ -139,7 +139,7 @@ Bounded Level 3 autonomy can be economically rational even with immature control
 
 > **When review cost exceeds expected error-plus-response cost, higher autonomy can be rational.**
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc3e88839-731d-4cd3-8490-e891dbea5ca6_1206x632.png)](https://substackcdn.com/image/fetch/$s_!izls!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc3e88839-731d-4cd3-8490-e891dbea5ca6_1206x632.png)
+![](assets/asset-5dd03240d2772a18.png)
 
 The clearest public example is Klarna’s AI assistant, which handled 2.3 million customer service conversations in its first month, two-thirds of all chats, with large self-reported gains.[[26](https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/)] But notice what makes this work: low individual error cost, high reversibility, minimal regulatory exposure.
 
@@ -153,7 +153,7 @@ If you need one line to carry forward, use this:
 
 That doctrine maps to three operating pillars: **Level 2.5 first**, default to fixed-sequence multi-turn pipelines with strict contracts or artifacts. **Observable by design**, every external action has trace and policy lineage. **Cost bounded**, retries, loops, and approvals run inside explicit limits. That doctrine is not anti-innovation. It is pro-ship.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F368d5836-b074-454b-b7ea-3a26fadaeae3_1258x657.png)](https://substackcdn.com/image/fetch/$s_!1vE7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F368d5836-b074-454b-b7ea-3a26fadaeae3_1258x657.png)
+![](assets/asset-fe5831e60fd62479.png)
 
 ---
 
@@ -167,7 +167,7 @@ By December 2027, most failed enterprise agent rollouts will be attributed to co
 
 That procurement agent’s $4,788 wasn’t a lot of money. But it was a precisely documented sample of a cost that most organizations are paying right now, at scale, without measuring it. The question was never whether AI is smart enough. It’s whether your organization is ready to pay the tax.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc27406d5-7bca-4447-ab54-a7bf02295241_1902x1016.png)](https://substackcdn.com/image/fetch/$s_!VKK9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc27406d5-7bca-4447-ab54-a7bf02295241_1902x1016.png)
+![](assets/asset-1b633b9c1bbddea7.png)
 
 ---
 
@@ -229,7 +229,7 @@ Those are measurement gaps, not reasons to suspend control discipline. They are 
 18. Observability platform pricing: [LangSmith](https://www.langchain.com/pricing-langsmith), [Braintrust](https://www.braintrust.dev/pricing). Figures are tooling-only, before integration engineering time.↩︎
 19. NCSC, [Guidelines for Secure AI System Development](https://www.ncsc.gov.uk/files/Guidelines-for-secure-AI-system-development.pdf).↩︎
 20. CISA et al., [Principles and Approaches for Security-by-Design and -Default](https://www.cisa.gov/sites/default/files/2023-06/principles_approaches_for_security-by-design-default_508c.pdf).↩︎
-21. The [Autonomy Tax Casebook](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook.tsv) codes 28 public records spanning incidents, field studies, regulatory milestones, and tooling baselines. Method notes: [autonomy\_tax\_casebook\_method.md](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook_method.md).↩︎
+21. The [Autonomy Tax Casebook](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook.tsv) codes 28 public records spanning incidents, field studies, regulatory milestones, and tooling baselines. Method notes: [autonomy_tax_casebook_method.md](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook_method.md).↩︎
 22. Anthropic Engineering, [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents).↩︎
 23. OpenAI Developers, [Building Agents](https://developers.openai.com/tracks/building-agents/).↩︎
 24. [Pan et al. 2026](https://arxiv.org/abs/2512.04123), preprint, n=306 practitioners and 20 production case studies across 26 domains.↩︎

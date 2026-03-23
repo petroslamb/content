@@ -1,0 +1,73 @@
+name: Sync Substack Archive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      ELEVENTY_PATH_PREFIX: /${{ github.event.repository.name }}/
+      MIRROR_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      MIRROR_REPO_URL: https://github.com/${{ github.repository }}
+      SUMMARY_PATH: ${{ runner.temp }}/substack-sync-summary.json
+      PR_BODY_PATH: ${{ runner.temp }}/substack-sync-body.md
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install sync dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install requests beautifulsoup4 markdownify PyYAML
+          npm ci
+
+      - name: Sync public Substack archive
+        run: .venv/bin/python scripts/sync_substack_archive.py --summary-path "$SUMMARY_PATH"
+
+      - name: Verify mirror build
+        run: npm run check:mirror
+
+      - name: Upload sync summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: substack-sync-summary
+          path: ${{ env.SUMMARY_PATH }}
+
+      - name: Prepare pull request body
+        run: |
+          {
+            echo "## Substack archive sync"
+            echo
+            echo '```json'
+            cat "$SUMMARY_PATH"
+            echo '```'
+          } > "$PR_BODY_PATH"
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: codex/substack-archive-sync
+          branch-suffix: timestamp
+          delete-branch: true
+          commit-message: "Sync Substack archive"
+          title: "Sync Substack archive"
+          body-path: ${{ env.PR_BODY_PATH }}

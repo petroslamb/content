@@ -29,31 +29,31 @@ We begin at the most pivotal turning point of all: the moment when language mode
 
 Here’s the path we’ll follow:
 
-* **Part 1 — Foundations & Early Frameworks**
+- **Part 1 — Foundations & Early Frameworks**
 
   ReAct, tool-use, and the first multi-agent frameworks that made agent systems feel real.
-* **Part 2 — Scaling Agents via Pre-Training**
+- **Part 2 — Scaling Agents via Pre-Training**
 
   Why “just chain tools together” stopped working, and how Agentic CPT tries to fix it.
-* **Part 3 — Learning from Early Experience**
+- **Part 3 — Learning from Early Experience**
 
   Agents that learn from their own trajectories instead of relying only on static datasets.
-* **Part 4 — The Agentic RL Revolution**
+- **Part 4 — The Agentic RL Revolution**
 
   A new subfield: reinforcement learning shaped around agents, not just single-step predictions.
-* **Part 5 — Latent Space Collaboration**
+- **Part 5 — Latent Space Collaboration**
 
   Multi-agent systems that collaborate in latent space instead of messy token logs.
-* **Part 6 — World Models & Embodied Agents**
+- **Part 6 — World Models & Embodied Agents**
 
   Agents that live in simulated worlds and learn within scalable environments.
-* **Part 7 — Scientific Discovery & Research Automation**
+- **Part 7 — Scientific Discovery & Research Automation**
 
   AI scientists, automated theorem proving, and high-stakes reasoning.
-* **Part 8 — Advanced Reasoning Systems**
+- **Part 8 — Advanced Reasoning Systems**
 
   Continuous latent reasoning, hybrid approaches, and where “pure LLM reasoning” is giving way to new structures.
-* **Part 9 — Synthesis & Future Directions**
+- **Part 9 — Synthesis & Future Directions**
 
   What all of this means for practitioners, researchers, and founders.
 
@@ -138,9 +138,9 @@ AutoGen gave the field its first serious attempt at a **multi-agent architecture
 
 Think of agents as characters in a play. Each has:
 
-* a personality or role (e.g., “planner”, “coder”),
-* a set of tools they may use,
-* and policies governing when they decide to speak.
+- a personality or role (e.g., “planner”, “coder”),
+- a set of tools they may use,
+- and policies governing when they decide to speak.
 
 Then let them converse in a controlled graph until the task converges. The human gives an initial message to a “user proxy,” and the agents handle the rest.
 
@@ -304,10 +304,10 @@ Earlier phases focused on *pre-training on trajectories* and *learning from earl
 
 The authors organize agentic RL methods along a set of axes that capture the design decisions you have to make:
 
-* What is the **action space**? Free-form text? Structured tool calls? Low-level environment actions?
-* Where do **rewards** come from? Human preferences? Automatic metrics (like accuracy or latency)? Environment signals (win/lose, success/failure)?
-* How is **credit** assigned? Are rewards attributed to individual actions, whole trajectories, or something in between?
-* What does the **policy** look like? A raw LLM? An LLM planner supervising a non-LLM controller? A multi-agent system sharing a global reward?
+- What is the **action space**? Free-form text? Structured tool calls? Low-level environment actions?
+- Where do **rewards** come from? Human preferences? Automatic metrics (like accuracy or latency)? Environment signals (win/lose, success/failure)?
+- How is **credit** assigned? Are rewards attributed to individual actions, whole trajectories, or something in between?
+- What does the **policy** look like? A raw LLM? An LLM planner supervising a non-LLM controller? A multi-agent system sharing a global reward?
 
 Seen through this lens, many disparate-looking papers turn out to be close cousins. That realization helps cut through the noise.
 
@@ -328,7 +328,7 @@ while not done:
 agent.update_policy(trajectory)
 ```
 
-The complexity lives inside agent.act and agent.update\_policy: they might involve multiple calls to an LLM, intermediate planning steps, or latent states. But structurally, the story is the same: explore, collect rewards, adjust.
+The complexity lives inside agent.act and agent.update_policy: they might involve multiple calls to an LLM, intermediate planning steps, or latent states. But structurally, the story is the same: explore, collect rewards, adjust.
 
 *What are the main insights from the survey?*
 
@@ -613,10 +613,10 @@ The field began converging on a layered architecture — not a formal standard, 
 
 At the base of the stack sits the model itself, enriched not only by language pre-training but also by exposure to agent trajectories, tool traces, simulated interactions, and early deployment data. The shift from generic language models to **agentic foundation models** represents the deepest structural change of the era. These models come equipped with powerful priors:
 
-* that tasks often unfold over multiple steps,
-* that observations constrain reasoning,
-* that tools matter,
-* that recovery from failure is itself a learned pattern.
+- that tasks often unfold over multiple steps,
+- that observations constrain reasoning,
+- that tools matter,
+- that recovery from failure is itself a learned pattern.
 
 An agent built on such a model begins with a significant advantage. It does not have to be taught the meaning of a plan or an observation through prompting alone; it has seen these patterns during training.
 
@@ -626,10 +626,10 @@ An agent built on such a model begins with a significant advantage. It does not 
 
 Above the foundation lies the reasoning layer—where systems like Aristotle, Kosmos, and CoCoNuT live. This layer contains algorithmic scaffolding that guides the model through complex tasks:
 
-* planners that break problems into sub-tasks,
-* critics that evaluate intermediate steps,
-* revision loops that allow the system to correct itself,
-* shared workspaces for nonlinear coordination.
+- planners that break problems into sub-tasks,
+- critics that evaluate intermediate steps,
+- revision loops that allow the system to correct itself,
+- shared workspaces for nonlinear coordination.
 
 This layer is not fixed; different tasks invoke different scaffolds. But the pattern is consistent: rich reasoning emerges not just from the model, but from the orchestration around it. The most successful systems treat the model as a participant in an algorithmic loop rather than an oracle.
 
@@ -639,11 +639,11 @@ This layer is not fixed; different tasks invoke different scaffolds. But the pat
 
 Agents act in environments. Early systems treated environments as a thin wrapper around Python or a few APIs. Later systems expanded this dramatically:
 
-* browser automation environments,
-* operating system interfaces,
-* structured scientific simulators,
-* formal verification tools,
-* latent world models.
+- browser automation environments,
+- operating system interfaces,
+- structured scientific simulators,
+- formal verification tools,
+- latent world models.
 
 Each environment imposes constraints and opportunities. The agent must reason not only about text but about state, action, and consequence. This layer is where the model’s agentic prior meets the real world—or the simulated one.
 
@@ -665,10 +665,10 @@ This loop appears in many guises, but its essence remains constant: observe → 
 
 Whether through text messages as in AutoGen or latent vectors as in LatentMAS, the coordination layer governs how multiple agents interact. Tasks that exceed the capacity of a single agent—scientific discovery, theorem proving, code synthesis—often require distributed expertise. The coordination layer provides the mechanisms for that distribution:
 
-* role assignment (planner, critic, solver, verifier),
-* shared memory or latent workspaces,
-* iterative negotiation of intermediate representations,
-* stable termination conditions.
+- role assignment (planner, critic, solver, verifier),
+- shared memory or latent workspaces,
+- iterative negotiation of intermediate representations,
+- stable termination conditions.
 
 The most advanced systems in 2025 treat this layer almost as a micro-economy of specialists. Each agent has strengths and weaknesses; the architecture encourages them to collaborate efficiently.
 
@@ -680,10 +680,10 @@ This layer closes the loop between deployment and training. It incorporates earl
 
 The learning layer answers questions like:
 
-* How does the agent adapt when encountering new tools?
-* How does it recover from systematic errors?
-* How can we safely harvest real-world trajectories?
-* How do we prevent reward hacking or degenerate strategies?
+- How does the agent adapt when encountering new tools?
+- How does it recover from systematic errors?
+- How can we safely harvest real-world trajectories?
+- How do we prevent reward hacking or degenerate strategies?
 
 This layer is conceptually closest to applied machine learning, but its importance to agents cannot be overstated. Without continual learning, an agent plateaus; with it, agents can improve well beyond what pre-training alone yields.
 
@@ -693,11 +693,11 @@ This layer is conceptually closest to applied machine learning, but its importan
 
 Finally, at the top of the stack live the developer-facing frameworks: LangGraph, AutoGen, CrewAI, and a proliferation of specialized agentic toolkits. This layer deals with:
 
-* dataflow between agents,
-* execution graphs,
-* observability and logging,
-* error handling,
-* and deployment across cloud, edge, or hybrid environments.
+- dataflow between agents,
+- execution graphs,
+- observability and logging,
+- error handling,
+- and deployment across cloud, edge, or hybrid environments.
 
 The orchestration layer is what transforms research insights into usable software. It hides the complexity of the stack beneath a programmable interface, allowing developers to build agent workflows without re-implementing theoretical constructs from scratch.
 
@@ -715,25 +715,25 @@ The final task is to understand what all this progress means—and what comes ne
 
 We can now look back over the trajectory and see a clear arc. Agents started life as clever prompt loops wrapped around generic LLMs, then graduated into increasingly structured reasoning systems, and finally became models that are trained to act, learn, and collaborate from the start. Each stage built on the last:
 
-* Thought-action loops (ReAct) made it possible for LLMs to touch the world.
-* Multi-agent frameworks (AutoGen) showed the power of specialization.
-* Agentic continual pre-training baked these behaviors directly into the weights.
-* Early-experience learning made agents sensitive to real-world nuance.
-* Agentic RL optimized them for long-horizon success.
-* Latent collaboration removed the bottleneck of textual communication.
-* World models gave them scalable training grounds beyond static web text.
-* Scientific and mathematical agents demonstrated the reach of structured agentic workflows.
-* The Agent Stack unified these ingredients into a model of how modern agents are built.
+- Thought-action loops (ReAct) made it possible for LLMs to touch the world.
+- Multi-agent frameworks (AutoGen) showed the power of specialization.
+- Agentic continual pre-training baked these behaviors directly into the weights.
+- Early-experience learning made agents sensitive to real-world nuance.
+- Agentic RL optimized them for long-horizon success.
+- Latent collaboration removed the bottleneck of textual communication.
+- World models gave them scalable training grounds beyond static web text.
+- Scientific and mathematical agents demonstrated the reach of structured agentic workflows.
+- The Agent Stack unified these ingredients into a model of how modern agents are built.
 
 Each layer strengthened the others, producing agents that are more robust, more efficient, and more capable of sustained reasoning.
 
 Yet the story is not complete. Several key challenges remain open:
 
-* How far can agent models scale before coordination costs outweigh benefits?
-* Can world models accurately represent domains too intricate for direct simulation?
-* How can we guarantee safety and alignment in agents that learn autonomously?
-* What formal tools will help verify the correctness of agentic systems at scale?
-* And perhaps most fundamentally: will the future of agents be dominated by many small specialized models or a few large, deeply agentic ones?
+- How far can agent models scale before coordination costs outweigh benefits?
+- Can world models accurately represent domains too intricate for direct simulation?
+- How can we guarantee safety and alignment in agents that learn autonomously?
+- What formal tools will help verify the correctness of agentic systems at scale?
+- And perhaps most fundamentally: will the future of agents be dominated by many small specialized models or a few large, deeply agentic ones?
 
 Our current architectures suggest a hybrid world. Foundation agent models will continue growing in depth, while specialized reasoning agents—planners, critics, solvers, verifiers—coordinate on top of them. Frameworks will become more modular and more declarative. And environments—whether browsers, operating systems, laboratories, or world models—will increasingly shape agent capabilities.
 

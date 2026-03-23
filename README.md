@@ -21,28 +21,30 @@ Organized by topic. Each top-level folder corresponds to a research area or mult
 ### Substack Metadata & Archiving
 The `substack-downloader/` directory acts as a local tool for fetching posts. The canonical record of published articles, along with comprehensive publication analysis and future strategy drafts, is now maintained in the `publication_strategy_and_archive/` directory.
 
+For the public mirror pipeline, use `npm run sync:substack` to refresh the tracked archive and `npm run build:mirror` to generate the GitHub Pages mirror from the local markdown snapshots.
+
 ### Publication to Folder Mapping
 
 The following table maps published Substack articles to their corresponding source folders in this repository:
 
+<!-- GENERATED_PUBLICATION_MAP:START -->
 | Substack Publication | Repository Folder |
 | :--- | :--- |
 | **The Illusion of the Swarm** | `multi_agent_compiler_workaround/` |
 | **The Moltbook Phenomenon** | `the-moltbook-phenomenon/` |
 | **The Autonomy Tax** | `ai_agents_enterprise_state/` |
-| **Your AI Is Confidently Wrong...** | `ethereum_llm_governance/` |
-| **The Five-Component Pattern for AI Evidence Governance** | `ethereum_llm_governance/` |
-| **Measuring Trust: The Gap Between AI Auditing and Correctness** | `ethereum_llm_governance/` |
 | **The Transformer Attractor** | `neural_architectures/` |
 | **When the LLM Programs Its Own Thinking** | `rlm_jupyter/` |
-| **The Orchestration Paradigm (Series)** | `agent_revolution/` |
+| **The Orchestration Paradigm: Issue 4 - The Reality** | `agent_revolution/` |
+| **The Orchestration Paradigm: Issue 3 - The Behavior** | `agent_revolution/` |
+| **The Orchestration Paradigm: Issue 2 - The Factory** | `agent_revolution/` |
+| **The Orchestration Paradigm Series** | `agent_revolution/` |
 | **The Hardware Friction Map** | `hardware_compatibility_architecture_2023_2025/` |
-| **What Actually Works: The Hardware Compatibility Filter...** | `hardware_compatibility_architecture_2023_2025/` |
-| **Autonomous AI Agents: Core Foundations...** | `autonomous-agent-blueprint/` |
-| **A Quick Look at AI Hacking Research** | `security_research/` |
-| **A Quick Look at 27 Production‑Ready AI Agents** | `agent_revolution/` |
+| **What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)** | `hardware_compatibility_architecture_2023_2025/` |
+| **Autonomous AI Agents: Core Foundations and Recent Breakthroughs** | `autonomous-agent-blueprint/` |
 | **Neural Architecture Design as a Compositional Language** | `neural_architectures/` |
-| *Welcome (Initial Post)* | *(N/A / Root)* |
+| **Welcome** | *(N/A / Root)* |
+<!-- GENERATED_PUBLICATION_MAP:END -->
 
 ## Current Packages
 
