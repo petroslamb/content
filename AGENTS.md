@@ -8,6 +8,19 @@ Use the root [README.md](./README.md) for the current package map. For package-s
 - [autonomous-agent-blueprint/README.md](./autonomous-agent-blueprint/README.md)
 - [hardware_compatibility_architecture_2023_2025/README.md](./hardware_compatibility_architecture_2023_2025/README.md)
 
+## Writing New Articles: Voice Policy
+
+**Before writing any new article, you MUST read [`voice_consistency_guide.md`](./voice_consistency_guide.md) in full.**
+
+This guide is not optional. It is the operational specification for writing in this publication's voice. It contains:
+- The mandatory paragraph pattern (frame → deepen → turn)
+- The paper-as-artifact unpacking cadence
+- The falsifiable prediction format (required in every thesis article)
+- A mechanical ban list of prohibited words, phrases, and structural habits
+- The pre-publish checklist
+
+Any article that does not pass the checklist in Section 11 of the guide should not be published. If generating article content, apply the guide's rules line by line. Do not rely on general impressions of the author's style—use the guide directly.
+
 ## Python Environment Policy
 
 This repository now keeps a root-level virtual environment at `./.venv/` for shared local tooling.
