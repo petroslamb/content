@@ -7,7 +7,7 @@
     "sync:substack": ".venv/bin/python scripts/sync_substack_archive.py",
     "build:mirror": "eleventy",
     "dev:mirror": "eleventy --serve",
-    "check:mirror": "npm run build:mirror && .venv/bin/python scripts/check_mirror.py"
+    "check:mirror": "npm run build:mirror && .venv/bin/python scripts/check_mirror.py && .venv/bin/python scripts/e2e_mirror_smoke.py"
   },
   "keywords": [],
   "author": "",
