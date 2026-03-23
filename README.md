@@ -7,7 +7,7 @@ Each article on Substack links to the corresponding folder here for readers who 
 **What you will find here:**
 - Research packages for published articles, each with their own README
 - Evidence layers: source manifests, annotated bibliographies, and scoring rubrics
-- A downloaded archive of all published articles in markdown
+- A local archive of published articles in markdown and HTML snapshots
 - Working notes and in-progress research that may become future articles
 
 This is a living repository. Folders without a README are either legacy material or works in progress.
@@ -19,7 +19,7 @@ This is a living repository. Folders without a README are either legacy material
 Organized by topic. Each top-level folder corresponds to a research area or multi-part publication.
 
 ### Substack Metadata & Archiving
-The `substack-downloader/` directory acts as a local tool for fetching posts. The canonical record of published articles, along with comprehensive publication analysis and future strategy drafts, is now maintained in the `publication_strategy_and_archive/` directory.
+The canonical record of published articles, along with publication analysis and future strategy drafts, is maintained in the `publication_strategy_and_archive/` directory. Archive refreshes run through `scripts/sync_substack_archive.py`, which pulls the public publication feed, refreshes normalized markdown and HTML snapshots, localizes assets, and updates the tracked manifest in `publication_strategy_and_archive/substack_archive/`.
 
 For the public mirror pipeline, use:
 
@@ -108,7 +108,7 @@ Start with: `publication_strategy_and_archive/README.md`
 This repository uses local tools for content workflows, tracked in `requirements.txt` and documented in `AGENTS.md`. Key tools include:
 - `markitdown` for PDF conversion
 - `notebooklm-py` for NotebookLM integration
-- `substack-downloader` submodule for scraping and archiving Substack posts to markdown
+- `scripts/sync_substack_archive.py` for Substack archive sync and manifest refresh
 
 Additionally, the repository incorporates two programmatic APIs for Substack publishing and posting workflows:
 - **Python Substack Interface**: `python-substack` (Origin: [ma2za/python-substack](https://github.com/ma2za/python-substack))

@@ -29,9 +29,6 @@ publication_strategy_and_archive/publication_analysis_results.md
 # AI agent ops manifest (internal tooling only)
 AGENTS.md
 
-# Local scraping tool — kept on disk but not tracked in the public repo
-substack-downloader/
-
 # Stray root-level generated assets
 Generated Image*.png
 
