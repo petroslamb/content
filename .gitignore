@@ -5,3 +5,34 @@
 # Virtual environments for scorecard dataset tooling
 hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/.venv/
 hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/.papers_venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# Private internal documents (build in public, but these stay private)
+publication_strategy_and_archive/future_publication_strategy.md
+publication_strategy_and_archive/publication_analysis_results.md
+
+# AI agent ops manifest (internal tooling only)
+AGENTS.md
+
+# Local scraping tool — kept on disk but not tracked in the public repo
+substack-downloader/
+
+# Stray root-level generated assets
+Generated Image*.png
+
+# Third-party research PDFs (downloaded papers — copyright risk for public distribution)
+autonomous-agent-blueprint/papers/*.pdf
+hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/papers/
+hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/**/papers/*.pdf
+ethereum_llm_governance/evidence_governance_pattern/papers/
