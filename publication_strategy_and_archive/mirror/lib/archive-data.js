@@ -23,6 +23,18 @@ function normalizePathPrefix(rawPrefix = "/") {
   return trimmed ? `/${trimmed}/` : "/";
 }
 
+function normalizeSiteUrl(rawUrl, pathPrefix) {
+  const trimmed = (rawUrl || "").replace(/\/$/, "");
+  if (!trimmed || pathPrefix === "/") {
+    return trimmed;
+  }
+  const prefixWithoutTrailingSlash = pathPrefix.replace(/\/$/, "");
+  if (trimmed.endsWith(prefixWithoutTrailingSlash)) {
+    return trimmed.slice(0, -prefixWithoutTrailingSlash.length) || trimmed;
+  }
+  return trimmed;
+}
+
 function withPathPrefix(pathPrefix, routePath) {
   const normalized = routePath.startsWith("/") ? routePath : `/${routePath}`;
   if (pathPrefix === "/") {
@@ -59,6 +71,7 @@ function rewriteArchiveAssets(markdown, pathPrefix) {
 }
 
 function buildSiteConfig() {
+  const pathPrefix = normalizePathPrefix(process.env.ELEVENTY_PATH_PREFIX || "/");
   return {
     title: "Rooted Layers Mirror",
     publicationTitle: "Rooted Layers",
@@ -67,8 +80,11 @@ function buildSiteConfig() {
       "A public GitHub Pages mirror of Rooted Layers. Substack remains canonical. The mirror keeps each essay close to its research package, source archive, and provenance trail.",
     substackUrl: "https://lambpetros.substack.com",
     repoUrl: process.env.MIRROR_REPO_URL || "https://github.com/petroslamb/content",
-    siteUrl: (process.env.MIRROR_SITE_URL || "https://petroslamb.github.io/content").replace(/\/$/, ""),
-    pathPrefix: normalizePathPrefix(process.env.ELEVENTY_PATH_PREFIX || "/"),
+    siteUrl: normalizeSiteUrl(
+      process.env.MIRROR_SITE_URL || "https://petroslamb.github.io/content",
+      pathPrefix,
+    ),
+    pathPrefix,
   };
 }
 
@@ -206,5 +222,6 @@ module.exports = {
   buildSiteConfig,
   formatDisplayDate,
   normalizePathPrefix,
+  normalizeSiteUrl,
   withPathPrefix,
 };
