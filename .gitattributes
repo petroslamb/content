@@ -1,0 +1,18 @@
+# Git LFS — Large binary assets
+# Videos and audio (own-produced content)
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.m4a filter=lfs diff=lfs merge=lfs -text
+
+# Own-generated PDFs (decks, scorecards, article exports — not third-party papers)
+ai_agents_enterprise_state/assets/*.pdf filter=lfs diff=lfs merge=lfs -text
+multi_agent_compiler_workaround/assets/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+multi_agent_compiler_workaround/*.pdf filter=lfs diff=lfs merge=lfs -text
+the-moltbook-phenomenon/*.pdf filter=lfs diff=lfs merge=lfs -text
+hardware_compatibility_architecture_2023_2025/essay_sections/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+rlm_jupyter/*.pdf filter=lfs diff=lfs merge=lfs -text
+ethereum_llm_governance/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+autonomous-agent-blueprint/*.pdf filter=lfs diff=lfs merge=lfs -text
+agent_revolution/**/*.pdf filter=lfs diff=lfs merge=lfs -text
