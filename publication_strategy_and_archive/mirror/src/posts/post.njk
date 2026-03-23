@@ -1,0 +1,73 @@
+---
+pagination:
+  data: archive.posts
+  size: 1
+  alias: post
+permalink: "posts/{{ post.slug }}/index.html"
+layout: layouts/base.njk
+eleventyComputed:
+  title: "{{ post.title }} | Rooted Layers Mirror"
+  description: "{{ post.summary }}"
+  canonicalUrl: "{{ post.url }}"
+  socialImage: "{{ post.heroImagePath }}"
+---
+<article class="post-layout">
+  <header class="post-header">
+    <p class="eyebrow">{% if post.seriesTitle %}{{ post.seriesTitle }}{% else %}Mirror archive{% endif %}</p>
+    <h1>{{ post.title }}</h1>
+    <p class="lede">{{ post.summary }}</p>
+    <div class="post-meta">
+      <span>Published {{ post.formattedDate }}</span>
+      <span>Audience: {{ post.audience }}</span>
+      <span>Synced {{ post.fetchedAtDisplay }}</span>
+    </div>
+    <div class="link-row">
+      <a class="button" href="{{ post.url }}">Read on Substack</a>
+      <a class="button button--ghost" href="{{ post.researchFolderUrl }}">Open research folder</a>
+      <a class="button button--ghost" href="{{ post.rawMarkdownPath | url }}">View raw markdown</a>
+      <a class="button button--ghost" href="{{ post.rawHtmlPath | url }}">View raw HTML snapshot</a>
+      <a class="button button--ghost" href="{{ post.githubMarkdownUrl }}">View on GitHub</a>
+    </div>
+  </header>
+
+  {% if post.pendingResearchPackage %}
+  <aside class="callout">
+    The synced post is public and mirrored, but its research folder mapping has not been filled in yet. The archive stays live while the curated layer catches up.
+  </aside>
+  {% endif %}
+
+  {% if post.series %}
+  <nav class="series-nav" aria-label="Series navigation">
+    {% if post.series.previous %}
+    <a href="{{ post.series.previous.permalink | url }}">← {{ post.series.previous.title }}</a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    <a href="{{ ('/series/' + post.series.key + '/') | url }}">{{ post.series.title }}</a>
+    {% if post.series.next %}
+    <a href="{{ post.series.next.permalink | url }}">{{ post.series.next.title }} →</a>
+    {% else %}
+    <span></span>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  <section class="provenance-grid">
+    <div class="provenance-card">
+      <span class="provenance-card__label">Research folder</span>
+      <strong>{{ post.researchFolderLabel }}</strong>
+    </div>
+    <div class="provenance-card">
+      <span class="provenance-card__label">Canonical URL</span>
+      <strong>{{ post.url | replace('https://', '') }}</strong>
+    </div>
+    <div class="provenance-card">
+      <span class="provenance-card__label">Raw sources</span>
+      <strong>Markdown + HTML</strong>
+    </div>
+  </section>
+
+  <section class="essay-body">
+    {{ post.bodyMarkdown | renderPostContent | safe }}
+  </section>
+</article>

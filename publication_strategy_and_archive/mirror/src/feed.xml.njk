@@ -1,0 +1,21 @@
+---
+permalink: feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ '/' | url | absoluteUrl(site.siteUrl) }}</link>
+    <description>{{ site.description }}</description>
+    {% for post in archive.posts %}
+    <item>
+      <title><![CDATA[{{ post.title }}]]></title>
+      <link>{{ post.permalink | url | absoluteUrl(site.siteUrl) }}</link>
+      <guid>{{ post.permalink | url | absoluteUrl(site.siteUrl) }}</guid>
+      <pubDate>{{ post.post_date }}</pubDate>
+      <description><![CDATA[{{ post.summary }}]]></description>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

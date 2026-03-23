@@ -1,0 +1,74 @@
+name: Deploy Mirror
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/deploy-mirror.yml"
+      - "eleventy.config.js"
+      - "package.json"
+      - "package-lock.json"
+      - "publication_strategy_and_archive/**"
+      - "scripts/**"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ELEVENTY_PATH_PREFIX: /${{ github.event.repository.name }}/
+      MIRROR_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      MIRROR_REPO_URL: https://github.com/${{ github.repository }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install build dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install requests beautifulsoup4 markdownify PyYAML
+          npm ci
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build and verify mirror
+        run: npm run check:mirror
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: publication_strategy_and_archive/mirror/_site
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

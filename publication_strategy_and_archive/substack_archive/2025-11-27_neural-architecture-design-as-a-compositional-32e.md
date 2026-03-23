@@ -53,9 +53,9 @@ One of the most stunning validations of the “scaffold hypothesis” came from 
 
 Analysis revealed a clear functional hierarchy that emerged on its own:
 
-* **Early layers:** Focus on syntax and surface-level features (e.g., making determiners attend to their nouns).
-* **Middle layers:** Learn more abstract semantic relationships and entity recognition.
-* **Late layers:** Handle complex, long-range tasks like coreference resolution (e.g., linking the pronoun “it” back to its subject paragraphs earlier).
+- **Early layers:** Focus on syntax and surface-level features (e.g., making determiners attend to their nouns).
+- **Middle layers:** Learn more abstract semantic relationships and entity recognition.
+- **Late layers:** Handle complex, long-range tasks like coreference resolution (e.g., linking the pronoun “it” back to its subject paragraphs earlier).
 
 This specialization was not designed by an architect; it was discovered by the training process as an efficient way to solve the problem. The uniform stack of blocks provided the capacity, and optimization found the structure.
 
@@ -71,9 +71,9 @@ The modern process of designing a new state-of-the-art AI model has evolved sign
 
 This library includes proven solutions for every part of a model’s core block:
 
-* **Position Encodings:** RoPE (Rotary Position Embeddings)
-* **Normalizations:** RMSNorm
-* **MLP Variants:** SwiGLU (Swish-Gated Linear Unit)
+- **Position Encodings:** RoPE (Rotary Position Embeddings)
+- **Normalizations:** RMSNorm
+- **MLP Variants:** SwiGLU (Swish-Gated Linear Unit)
 
 A model like Llama 3 is a perfect example of this philosophy. It is a stack of 80 identical blocks, where each block is a carefully chosen composition of these best-in-class, off-the-shelf components. This design can be elegantly captured in just a few lines of code:
 
@@ -220,9 +220,9 @@ Each block makes a “suggestion” for how to modify the representation. The ne
 
 Later analysis (Veit et al., 2016, “Residual Networks Behave Like Ensembles of Relatively Shallow Networks”) showed that ResNet blocks naturally specialize:
 
-* Early blocks: low-level features (edges, textures)
-* Middle blocks: mid-level features (object parts)
-* Late blocks: high-level features (complete objects)
+- Early blocks: low-level features (edges, textures)
+- Middle blocks: mid-level features (object parts)
+- Late blocks: high-level features (complete objects)
 
 This happened without any explicit supervision or architectural variation—the blocks were all identical, but training caused them to specialize!
 
@@ -291,20 +291,20 @@ V = W_V × x  (what information to provide)
 1. Each component (Q, K, V) is a learned projection, and their interaction is a fixed mathematical operation (scaled dot-product attention).
 2. **Universal applicability:** Unlike CNNs (spatial bias) or RNNs (sequential bias), the Transformer block worked for:
 
-   * Language (BERT, GPT)
-   * Vision (ViT)
-   * Audio (Whisper)
-   * Multi-modal tasks (CLIP, Flamingo)
+   - Language (BERT, GPT)
+   - Vision (ViT)
+   - Audio (Whisper)
+   - Multi-modal tasks (CLIP, Flamingo)
 3. **Extreme uniformity:** GPT-2 (1.5B parameters) used the *exact same block* 48 times. GPT-3 (175B) used it 96 times. The only scaling dimension was repetition count and hidden size.
 
 **The Compositional Language Emerges:**
 
 The Transformer defined a **vocabulary of components**:
 
-* **Mixing operations:** Attention, MLP
-* **Connections:** Residual (+)
-* **Normalizations:** LayerNorm
-* **Position information:** Sinusoidal embeddings
+- **Mixing operations:** Attention, MLP
+- **Connections:** Residual (+)
+- **Normalizations:** LayerNorm
+- **Position information:** Sinusoidal embeddings
 
 These could be mixed and matched. Within a few years, researchers were systematically exploring this design space.
 
@@ -322,21 +322,21 @@ These could be mixed and matched. Within a few years, researchers were systemati
 
 **Layer 1-4 (Early):**
 
-* Attention heads focus on syntactic relationships (e.g., determiners attending to their nouns)
-* Learn part-of-speech patterns
-* Capture local, surface-level features
+- Attention heads focus on syntactic relationships (e.g., determiners attending to their nouns)
+- Learn part-of-speech patterns
+- Capture local, surface-level features
 
 **Layer 5-8 (Middle):**
 
-* Semantic role labeling emerges
-* Entity recognition patterns
-* More abstract semantic relationships
+- Semantic role labeling emerges
+- Entity recognition patterns
+- More abstract semantic relationships
 
 **Layer 9-12 (Late):**
 
-* Coreference resolution (pronouns to antecedents)
-* Pragmatic inference
-* Task-specific behaviors
+- Coreference resolution (pronouns to antecedents)
+- Pragmatic inference
+- Task-specific behaviors
 
 **The Profound Implication:**
 
@@ -448,10 +448,10 @@ Instead of searching for *one best architecture*, this paper asked: **What princ
 
 1. Define design dimensions:
 
-   * Depth (number of blocks)
-   * Width (channels per layer)
-   * Group width (grouped convolutions)
-   * Bottleneck ratio (expansion in blocks)
+   - Depth (number of blocks)
+   - Width (channels per layer)
+   - Group width (grouped convolutions)
+   - Bottleneck ratio (expansion in blocks)
 2. Sample thousands of random architectures from this space
 3. Identify empirical principles:
 
@@ -471,9 +471,9 @@ Good design space:
 
 This is exactly the “compositional language” perspective! They defined:
 
-* **Primitives:** Block structure (X block with group convolution)
-* **Composition rules:** How blocks stack (stage structure)
-* **Constraints:** Principles that make compositions effective
+- **Primitives:** Block structure (X block with group convolution)
+- **Composition rules:** How blocks stack (stage structure)
+- **Constraints:** Principles that make compositions effective
 
 **The Result:** RegNet architectures, generated by simple rules, matched or beat hand-designed networks and NAS-discovered architectures.
 
@@ -506,8 +506,8 @@ C = compute budget
 
 For fixed compute budget, optimal allocation is:
 
-* Depth: ~40-80 layers for 7B-70B models
-* Width: 4K-8K hidden dimensions
+- Depth: ~40-80 layers for 7B-70B models
+- Width: 4K-8K hidden dimensions
 
 **Why This Matters:** Explains why ~32 layers emerged as the “standard” for 7B models—not because 32 is magic, but because it’s the optimal depth for that parameter budget given current optimization methods.
 
@@ -572,9 +572,9 @@ With residuals:    Smooth convex-like regions, gentle slopes
 
 **Examples Found:**
 
-* **Induction heads:** Blocks that detect “A…B…A” patterns and predict “B”
-* **Previous token heads:** Heads that always attend to the previous token
-* **Duplicate token heads:** Heads that find copies of the current token
+- **Induction heads:** Blocks that detect “A…B…A” patterns and predict “B”
+- **Previous token heads:** Heads that always attend to the previous token
+- **Duplicate token heads:** Heads that find copies of the current token
 
 **The Profound Insight:**
 
@@ -608,8 +608,8 @@ By 2023, researchers had thoroughly validated uniform repetition. But they also 
 
 **Citations:**
 
-* <https://arxiv.org/abs/2305.14705>
-* <https://arxiv.org/abs/2401.04088>
+- <https://arxiv.org/abs/2305.14705>
+- <https://arxiv.org/abs/2401.04088>
 
 **The Idea:** Replace uniform MLP blocks with *conditional selection* from multiple expert MLPs.
 
@@ -627,19 +627,19 @@ MoE Transformer:
 
 Different experts naturally specialize:
 
-* Expert 1: Math/code
-* Expert 2: Creative writing
-* Expert 3: Factual knowledge
-* Expert 4: Translation
-* etc.
+- Expert 1: Math/code
+- Expert 2: Creative writing
+- Expert 3: Factual knowledge
+- Expert 4: Translation
+- etc.
 
 **The Compositional Insight:** This is **learned non-uniformity**. The architecture still uses identical blocks, but adds a routing mechanism that lets tokens take different computational paths. The specialization isn’t hand-coded—it emerges during training.
 
 **Mixtral-8×7B Results:**
 
-* 8 experts, each 7B parameters
-* Total: 47B parameters, but only 13B active per token
-* Matches 70B dense models at 5× lower inference cost
+- 8 experts, each 7B parameters
+- Total: 47B parameters, but only 13B active per token
+- Matches 70B dense models at 5× lower inference cost
 
 **The Pattern:** When breaking uniformity helps, let the *model* learn when to break it (via routers), rather than hard-coding architectural variation.
 
@@ -662,8 +662,8 @@ Use:        Selective State Space Layer + MLP
 
 State space models (SSMs) are an alternative to attention for sequence mixing:
 
-* **Attention:** O(n²) complexity, global context
-* **SSM:** O(n) complexity, selective memory
+- **Attention:** O(n²) complexity, global context
+- **SSM:** O(n) complexity, selective memory
 
 **Why This Matters:** Shows that the Transformer block structure (mixing layer + pointwise layer + residuals) is more fundamental than any specific mixing mechanism. You can swap attention for SSMs and keep everything else.
 
@@ -686,9 +686,9 @@ Layers 25-32: Attention blocks (output generation)
 
 **Why It Works:**
 
-* Mamba handles repetitive patterns efficiently
-* Attention handles long-range dependencies
-* Different layers need different capabilities
+- Mamba handles repetitive patterns efficiently
+- Attention handles long-range dependencies
+- Different layers need different capabilities
 
 **The Design Philosophy:** Don’t force uniformity where non-uniformity helps, but make the non-uniformity **principled** (alternating pattern) rather than ad-hoc.
 
@@ -702,35 +702,35 @@ Today, architecture design has evolved into **selecting from a library of valida
 
 **Attention Variants:**
 
-* Multi-head attention (original)
-* Multi-query attention (faster inference)
-* Grouped-query attention (balance speed/quality)
-* Flash Attention (optimized implementation)
+- Multi-head attention (original)
+- Multi-query attention (faster inference)
+- Grouped-query attention (balance speed/quality)
+- Flash Attention (optimized implementation)
 
 **Position Encodings:**
 
-* Sinusoidal (original)
-* Learned absolute
-* Rotary (RoPE) - current best for long context
-* ALiBi - best for length generalization
+- Sinusoidal (original)
+- Learned absolute
+- Rotary (RoPE) - current best for long context
+- ALiBi - best for length generalization
 
 **Normalizations:**
 
-* LayerNorm (original)
-* RMSNorm (simpler, just as good)
-* Pre-norm vs post-norm (pre-norm won)
+- LayerNorm (original)
+- RMSNorm (simpler, just as good)
+- Pre-norm vs post-norm (pre-norm won)
 
 **Activations:**
 
-* ReLU (original)
-* GELU (better for transformers)
-* SiLU/Swish (used in modern LLMs)
+- ReLU (original)
+- GELU (better for transformers)
+- SiLU/Swish (used in modern LLMs)
 
 **MLP Variants:**
 
-* Standard (Linear → Act → Linear)
-* GLU (Gated Linear Unit)
-* SwiGLU (current best) - Llama, Qwen, Mistral all use this
+- Standard (Linear → Act → Linear)
+- GLU (Gated Linear Unit)
+- SwiGLU (current best) - Llama, Qwen, Mistral all use this
 
 **The Design Process Today:**
 
@@ -776,9 +776,9 @@ DR Tulu demonstrates a new dimension of the “scaffold hypothesis”: not just 
 
 **The Method:**
 
-* Base architecture: Standard Qwen3-8B (proven Transformer blocks)
-* Innovation: Not in architecture, but in training methodology
-* Evolving rubrics provide dynamic learning objectives
+- Base architecture: Standard Qwen3-8B (proven Transformer blocks)
+- Innovation: Not in architecture, but in training methodology
+- Evolving rubrics provide dynamic learning objectives
 
 **The Insight:** Once we have good architectural building blocks (Transformer layers), the frontier shifts to **how we train** those blocks. The compositional language extends beyond static structure to dynamic training procedures.
 
@@ -800,16 +800,16 @@ From this 13-year journey, several principles have crystallized:
 
 **Evidence:**
 
-* ResNet: 50-152 layers of identical blocks
-* GPT-3: 96 identical transformer layers
-* Llama 70B: 80 identical blocks
+- ResNet: 50-152 layers of identical blocks
+- GPT-3: 96 identical transformer layers
+- Llama 70B: 80 identical blocks
 
 **Why:** Uniform blocks are easier to:
 
-* Optimize (one set of hyperparameters)
-* Scale (just add more)
-* Analyze (compare across depths)
-* Parallelize (same computation)
+- Optimize (one set of hyperparameters)
+- Scale (just add more)
+- Analyze (compare across depths)
+- Parallelize (same computation)
 
 **Exception:** When introducing non-uniformity, make it *learned* (MoE routing) or *principled* (alternating patterns).
 
@@ -819,9 +819,9 @@ From this 13-year journey, several principles have crystallized:
 
 **Evidence:**
 
-* Every modern architecture uses residuals (ResNet, Transformer, Mamba)
-* Loss landscape analysis shows they enable training
-* Theory: Residuals create implicit ensembles
+- Every modern architecture uses residuals (ResNet, Transformer, Mamba)
+- Loss landscape analysis shows they enable training
+- Theory: Residuals create implicit ensembles
 
 **Why:** `x + F(x)` is more than a training trick—it’s a **compositional operator** that allows additive construction of representations.
 
@@ -831,9 +831,9 @@ From this 13-year journey, several principles have crystallized:
 
 **Evidence:**
 
-* BERT layers specialize despite identical architecture
-* MoE experts specialize without explicit supervision
-* Early/mid/late layers learn different abstractions naturally
+- BERT layers specialize despite identical architecture
+- MoE experts specialize without explicit supervision
+- Early/mid/late layers learn different abstractions naturally
 
 **Why:** The optimization landscape naturally encourages specialization when it’s useful. Pre-specifying it (e.g., “layer 1-10 for syntax, 11-20 for semantics”) often hurts because you might be wrong about what’s needed.
 
@@ -845,9 +845,9 @@ From this 13-year journey, several principles have crystallized:
 
 **Evidence:**
 
-* Can swap attention → SSM (Mamba)
-* Can swap GELU → SiLU (minimal impact)
-* Can swap LayerNorm → RMSNorm (often better)
+- Can swap attention → SSM (Mamba)
+- Can swap GELU → SiLU (minimal impact)
+- Can swap LayerNorm → RMSNorm (often better)
 
 **Why:** Good “compositional languages” have **interfaces** that allow substitution. The Transformer block structure:
 
@@ -864,9 +864,9 @@ doesn’t care whether Mixing is attention, convolution, or SSM—the interface 
 
 **Evidence:**
 
-* Lottery ticket hypothesis: Many paths through the network
-* Scaling laws: Depth and width must scale proportionally
-* Interpretability: Later layers refine earlier representations
+- Lottery ticket hypothesis: Many paths through the network
+- Scaling laws: Depth and width must scale proportionally
+- Interpretability: Later layers refine earlier representations
 
 **Why:** Deep networks don’t work by hierarchical stages (layer 1 → 2 → 3 → …) but by **iterative refinement** where each layer adds a small update. The residual structure makes this explicit.
 
@@ -884,9 +884,9 @@ Each layer contributes a refinement Δx_i
 
 **Evidence:**
 
-* Loss landscape visualizations (Li et al., 2018)
-* Why some architectures train better than others
-* Batch normalization, layer normalization effects
+- Loss landscape visualizations (Li et al., 2018)
+- Why some architectures train better than others
+- Batch normalization, layer normalization effects
 
 **Why:** An architecture isn’t good because it’s “more expressive”—it’s good because gradient descent can find good solutions. The compositional structure creates a trainable loss surface.
 
@@ -904,9 +904,9 @@ Where is this heading?
 
 **Example Research:**
 
-* AutoML-Zero (Google): Evolve mathematical operations from scratch
-* Neural Tangent Kernel theory: Understand what functions different architectures can learn
-* Mechanistic design: Design blocks to implement specific circuits
+- AutoML-Zero (Google): Evolve mathematical operations from scratch
+- Neural Tangent Kernel theory: Understand what functions different architectures can learn
+- Mechanistic design: Design blocks to implement specific circuits
 
 ---
 
@@ -918,9 +918,9 @@ Where is this heading?
 
 **Examples:**
 
-* Early exit (stop when confident)
-* Adaptive depth (harder inputs get more layers)
-* Conditional computation (activate only needed blocks)
+- Early exit (stop when confident)
+- Adaptive depth (harder inputs get more layers)
+- Conditional computation (activate only needed blocks)
 
 **The Vision:** Architecture becomes a **menu of computational options**, and the model learns a policy for which options to use per input.
 
@@ -932,9 +932,9 @@ DR Tulu represents this: keeping architecture simple while making training more 
 
 **Other Examples:**
 
-* Curriculum learning (order training data compositionally)
-* Multi-task learning (compose objectives)
-* Evolving loss functions (like evolving rubrics)
+- Curriculum learning (order training data compositionally)
+- Multi-task learning (compose objectives)
+- Evolving loss functions (like evolving rubrics)
 
 **The Shift:** From “design better blocks” to “design better training procedures that teach existing blocks new tricks.”
 
@@ -948,9 +948,9 @@ DR Tulu represents this: keeping architecture simple while making training more 
 
 **Progress:**
 
-* Vision Transformers (apply language blocks to vision)
-* Perceiver architecture (unified for all inputs)
-* Flamingo (mix image and text blocks)
+- Vision Transformers (apply language blocks to vision)
+- Perceiver architecture (unified for all inputs)
+- Flamingo (mix image and text blocks)
 
 **The Goal:** A single compositional language that works for any data type, with modality-specific adaptations happening via learned components (like MoE), not architectural redesign.
 
@@ -962,10 +962,10 @@ DR Tulu represents this: keeping architecture simple while making training more 
 
 **Examples:**
 
-* LoRA: Only a subset of weights need adaptation
-* Quantization: Different blocks can use different precisions
-* Pruning: Remove entire blocks with minimal impact
-* Distillation: Compress 100-layer → 12-layer models
+- LoRA: Only a subset of weights need adaptation
+- Quantization: Different blocks can use different precisions
+- Pruning: Remove entire blocks with minimal impact
+- Distillation: Compress 100-layer → 12-layer models
 
 **Why Compositionality Helps:** If blocks are modular and somewhat redundant, you can remove/compress/approximate individual blocks without breaking the whole system.
 
@@ -995,9 +995,9 @@ We’ve traced a 13-year journey from AlexNet’s hand-crafted hierarchy to toda
 
 Architecture design is no longer “build the perfect network.” It’s “design a compositional language of:
 
-* **Primitives** (attention, MLPs, convolutions, SSMs)
-* **Composition operators** (residuals, concatenation, gating)
-* **Structural patterns** (repeated blocks, skip connections)
+- **Primitives** (attention, MLPs, convolutions, SSMs)
+- **Composition operators** (residuals, concatenation, gating)
+- **Structural patterns** (repeated blocks, skip connections)
 
 that create a space where gradient descent can discover useful algorithms.”
 
@@ -1005,11 +1005,11 @@ that create a space where gradient descent can discover useful algorithms.”
 
 This shift has practical consequences:
 
-* **Faster iteration:** Test new components without redesigning everything
-* **Better transfer:** Components learned in one context work in another
-* **Clearer debugging:** Understand what each block does
-* **Principled scaling:** Apply scaling laws confidently
-* **Open science:** Share component libraries, not monolithic models
+- **Faster iteration:** Test new components without redesigning everything
+- **Better transfer:** Components learned in one context work in another
+- **Clearer debugging:** Understand what each block does
+- **Principled scaling:** Apply scaling laws confidently
+- **Open science:** Share component libraries, not monolithic models
 
 **The Open Questions:**
 

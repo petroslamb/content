@@ -1,0 +1,78 @@
+---
+layout: layouts/base.njk
+title: Rooted Layers Mirror
+description: Public mirror of Rooted Layers essays, linked to their research folders and archive provenance.
+---
+<section class="hero">
+  <div class="hero__copy">
+    <p class="eyebrow">Public research mirror</p>
+    <h1>Each essay stays attached to its working evidence.</h1>
+    <p class="lede">Substack is still the canonical publication surface. This mirror keeps the public essays close to the repo folders, raw markdown snapshots, and source archive that produced them. The point is not redundancy. The point is legibility.</p>
+    <div class="hero__actions">
+      <a class="button" href="{{ '/archive/' | url }}">Browse the archive</a>
+      <a class="button button--ghost" href="{{ site.substackUrl }}">Read on Substack</a>
+    </div>
+  </div>
+  <aside class="hero__stats">
+    <div class="stat">
+      <span class="stat__label">Public essays</span>
+      <strong>{{ archive.stats.totalPosts }}</strong>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Series tracked</span>
+      <strong>{{ archive.stats.totalSeries }}</strong>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Research folders linked</span>
+      <strong>{{ archive.stats.totalFolders }}</strong>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Last synced</span>
+      <strong>{{ archive.stats.lastFetchedAtDisplay }}</strong>
+    </div>
+  </aside>
+</section>
+
+<section class="section">
+  <div class="section__head">
+    <p class="eyebrow">Featured essays</p>
+    <h2>Current anchors</h2>
+  </div>
+  <div class="card-grid">
+    {% for post in archive.featuredPosts %}
+      {% include "partials/post-card.njk" %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section--split">
+  <div>
+    <div class="section__head">
+      <p class="eyebrow">Series</p>
+      <h2>Grouped where the argument extends across multiple essays</h2>
+    </div>
+    <div class="series-list">
+      {% for series in archive.series %}
+      <article class="series-card">
+        <h3><a href="{{ series.permalink | url }}">{{ series.title }}</a></h3>
+        <p>{{ series.summary }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+  <div>
+    <div class="section__head">
+      <p class="eyebrow">Recent additions</p>
+      <h2>Newest mirrored posts</h2>
+    </div>
+    <div class="stack">
+      {% for post in archive.recentPosts %}
+      <article class="stack-item">
+        <p class="stack-item__meta">{{ post.formattedDate }}</p>
+        <h3><a href="{{ post.permalink | url }}">{{ post.title }}</a></h3>
+        <p>{{ post.summary }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

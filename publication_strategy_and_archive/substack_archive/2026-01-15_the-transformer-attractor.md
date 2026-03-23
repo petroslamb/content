@@ -17,7 +17,7 @@ This is not a story about hardware determinism. It is a story about **convergent
 
 **The thesis:** The next architectural breakthrough will not replace the Transformer. It will optimize within the Transformer’s computational constraints. Because those constraints are no longer just technical—they are economic, institutional, and structural.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F72e22795-0154-4b75-b3ad-50a3bc9d31da_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!tjUi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F72e22795-0154-4b75-b3ad-50a3bc9d31da_5734x3200.png)
+![](assets/asset-dd041b4795050b39.png)
 
 ---
 
@@ -37,7 +37,7 @@ Even if you clear Gate 1, you need a major lab to make it their strategic bet. W
 
 The alternatives that survive do so by **optimizing within the Transformer’s constraints** rather than fighting them.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb6d102dc-9fc8-4679-9f2b-7028352a791f_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!jHs7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb6d102dc-9fc8-4679-9f2b-7028352a791f_5734x3200.png)
+![](assets/asset-c8c12c7b6ad08076.png)
 
 ---
 
@@ -49,11 +49,11 @@ On an H100, approximately 1,000 Tensor Cores operate in parallel. Each Tensor Co
 
 The Transformer architecture is ~90% GEMMs by FLOP count: the Q/K/V projections, the attention matmul, the feedforward layers. Everything else—softmax, layer norms, residual adds—is negligible compute. FlashAttention made even the attention mechanism itself GEMM-friendly and tiled, eliminating the only remaining memory bottleneck.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F54df7ecf-fcac-4d3e-82cd-386927d11c71_1107x342.png)](https://substackcdn.com/image/fetch/$s_!L8pt!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F54df7ecf-fcac-4d3e-82cd-386927d11c71_1107x342.png)
+![](assets/asset-d3b3a660341c7bd0.png)
 
 **This is Gate 1’s mechanism.** Any architecture that achieves high Tensor Core utilization will be competitive on cost-per-token. Any architecture that cannot will pay a compute tax. At frontier scale, a 10× tax on a $100M training run is a $900M deficit.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fee449d02-e005-4a82-9ad1-1945dea8ae27_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!j1zR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fee449d02-e005-4a82-9ad1-1945dea8ae27_5734x3200.png)
+![](assets/asset-20224fad94a025df.png)
 
 ---
 
@@ -67,7 +67,7 @@ What is conspicuously absent from NVIDIA’s 2024–2027 roadmap: **any silicon 
 
 NVIDIA’s three-year roadmap is an implicit $30B bet that Transformers will remain dominant through at least 2028. This is not neutral infrastructure. It is **directional investment** that compounds the competitive advantage of GEMM-aligned architectures every silicon generation.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2aad77f8-3aaa-4d6d-b29e-4992e00af9d3_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!4EOT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2aad77f8-3aaa-4d6d-b29e-4992e00af9d3_5734x3200.png)
+![](assets/asset-ab719c4643dbf207.png)
 
 ---
 
@@ -79,13 +79,13 @@ This is not a software limitation. It is a consequence of GPU architecture. Tens
 
 The same analysis applies to every non-GEMM architecture:
 
-* **LSTMs/GRUs**: High GEMM alignment for weight matrices, but O(N) sequential dependency over time steps. Training cannot parallelize across sequence length, making them uncompetitive at frontier scale (100B+ parameters, trillion-token datasets).
-* **Neural Ordinary Differential Equations (ODEs)**: Fundamentally iterative solvers with many small matrix operations and poor memory locality. Elegant mathematics; catastrophic GPU economics.
-* **Kolmogorov-Arnold Networks (KANs)**: Per-edge spline function evaluations cannot be batched into large matrix operations. Hundreds of tiny, irregular computations starve Tensor Cores.
+- **LSTMs/GRUs**: High GEMM alignment for weight matrices, but O(N) sequential dependency over time steps. Training cannot parallelize across sequence length, making them uncompetitive at frontier scale (100B+ parameters, trillion-token datasets).
+- **Neural Ordinary Differential Equations (ODEs)**: Fundamentally iterative solvers with many small matrix operations and poor memory locality. Elegant mathematics; catastrophic GPU economics.
+- **Kolmogorov-Arnold Networks (KANs)**: Per-edge spline function evaluations cannot be batched into large matrix operations. Hundreds of tiny, irregular computations starve Tensor Cores.
 
 The hardware gate is not a subjective aesthetic preference. It is the **mechanical consequence of optimizing for FLOPS-per-dollar on NVIDIA GPUs**—the 85% market-share platform that every researcher and company must target.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc8ef2538-5886-4e62-aa32-108732731769_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!qCW6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc8ef2538-5886-4e62-aa32-108732731769_5734x3200.png)
+![](assets/asset-eb4eabdcdf9dbef1.png)
 
 ---
 
@@ -97,13 +97,13 @@ Mamba-1’s elegance came from its parallel scan—a recurrence that propagated 
 
 **The result:**
 
-* Mamba-1’s core operation: parallel scan (10-20% Tensor Core utilization)
-* Mamba-2’s core operation: matrix multiplication (60-70% utilization)
-* Measured speedup on H100: 2–3× vs. Mamba-1
+- Mamba-1’s core operation: parallel scan (10-20% Tensor Core utilization)
+- Mamba-2’s core operation: matrix multiplication (60-70% utilization)
+- Measured speedup on H100: 2–3× vs. Mamba-1
 
 Mamba-2 survived by becoming **more Transformer-like in its compute pattern**, even though it retained the recurrence semantics. This is Gate 1 at work: the architecture bent to fit the silicon.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F35cb72f4-620d-45a0-a22c-21d788aee79d_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!ZFQy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F35cb72f4-620d-45a0-a22c-21d788aee79d_5734x3200.png)
+![](assets/asset-286ae83c0e81b8ed.png)
 
 **But did it clear Gate 1?** We lack public evidence. The 60-70% Tensor Core utilization is better than Mamba-1’s 10-20%, but still 15-30 percentage points below standard Transformers (80-90%). Without frontier-scale training benchmarks comparing Mamba-2 to Transformers on identical compute budgets, we cannot determine whether the improved GEMM alignment is **sufficient** or merely **less catastrophic** than pure scans.
 
@@ -122,7 +122,7 @@ RetNet is the most revealing case study—not because it succeeded, but because 
 
 Microsoft Research published RetNet in July 2023. On paper, it looked viable: parallel training (GEMM-aligned), 8.4× faster inference than standard Transformers, 70% memory savings, and Transformer-matching perplexity up to 6.7B parameters. According to the two-gate framework, RetNet should have at least warranted further scaling experiments.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6f73ad38-017d-4338-a194-2d63917075b3_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!EJ96!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6f73ad38-017d-4338-a194-2d63917075b3_5734x3200.png)
+![](assets/asset-e86751ce02de38fd.png)
 
 **Then Microsoft Research abandoned it.** Five months later, the same organization shipped Phi-2 (dense Transformer), then Phi-3 (MoE Transformer), then Phi-4 (long-context Transformer, December 2024). The co-authors didn’t bet on their own architecture.
 
@@ -164,12 +164,12 @@ At 3B-14B scale, Gate 2 (institutional backing) **can partially compensate** for
 
 **But frontier scale changes the equation:**
 
-* No major lab adopted RWKV
-* No frontier-scale deployment (30B+)
-* Training the 14B model reportedly took longer than an equivalent Transformer would have
-* Community reports note persistent struggles with multi-step reasoning tasks
+- No major lab adopted RWKV
+- No frontier-scale deployment (30B+)
+- Training the 14B model reportedly took longer than an equivalent Transformer would have
+- Community reports note persistent struggles with multi-step reasoning tasks
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F87f2682f-d325-43e1-a630-8c3270f43983_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!e6QJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F87f2682f-d325-43e1-a630-8c3270f43983_5734x3200.png)
+![](assets/asset-2244ba87b9947869.png)
 
 The two gates don’t just reinforce each other—**their interaction strengthens with scale**. At 3B-14B, the compute tax is painful but survivable (maybe 2-3× longer training). At 70B-400B, the same tax becomes prohibitive: the difference between a $5M training run and a $15M one might be acceptable; the difference between $50M and $150M is a strategic non-starter.
 
@@ -189,7 +189,7 @@ But these vendors collectively hold less than 5% of the AI accelerator market (b
 
 **Ecosystem inertia:** In 2016, PyTorch was 0.1 and JAX didn’t exist yet. Google could shape the software ecosystem. In 2025, PyTorch is entrenched with 10M+ developers and every major model uses NVIDIA-tuned kernels. The switching cost is orders of magnitude higher.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff02c00e5-e06c-43e7-ab79-1a583532316c_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!RP03!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff02c00e5-e06c-43e7-ab79-1a583532316c_5734x3200.png)
+![](assets/asset-d59bd5b3d4c6d98f.png)
 
 Google’s TPU success in 2016 required vertical integration: captive deployment (Search/YouTube), mandated software stack (JAX/XLA), and exclusive flagship models (PaLM-540B, Gemini-1.0). No alternative hardware vendor in 2025 controls all three levers. Without a frontier lab partnership comparable to Google’s internal commitment, alternative hardware remains niche regardless of technical merit.
 
@@ -213,7 +213,7 @@ Architectures requiring explicit external memory modules (à la Titans, 2024) wi
 
 Cerebras, Groq, and SambaNova will not collectively exceed 10% revenue share by 2028 unless a major lab (OpenAI, Anthropic, Meta, DeepSeek, Google) makes a strategic hardware commitment comparable to Google’s TPU bet.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fec5480d9-02f3-42f7-9ba1-e8af5f93dc12_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!0GMX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fec5480d9-02f3-42f7-9ba1-e8af5f93dc12_5734x3200.png)
+![](assets/asset-e9a7eafb9f9c455e.png)
 
 If any of these predictions fail—if a 40B pure SSM dominates benchmarks, or Groq captures 15% market share organically—the lock-in thesis needs revision. The predictions are designed to be crisp and observable.
 
@@ -239,7 +239,7 @@ The TAM for “alternative AI chips” is constrained by structural barriers, no
 
 **Investment thesis filter:** Does the alternative chip vendor have a signed partnership with a frontier lab willing to train a 30B+ model exclusively on their hardware? If no, the path to 10%+ market share requires a 7–10 year time horizon and exceptional execution. Historical precedent: Google’s TPU took 6 years and billions in internal subsidies to reach maturity.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F791fdfd1-21dc-4e74-9549-8d64adbea138_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!sG9g!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F791fdfd1-21dc-4e74-9549-8d64adbea138_5734x3200.png)
+![](assets/asset-b26ec338c36ae299.png)
 
 ---
 
@@ -249,10 +249,10 @@ We are in a stable equilibrium—but not a static one.
 
 Transformers and GPU hardware co-evolved over the past decade into a self-reinforcing lock. Now they are bound together by:
 
-* **Hardware specialization** (Tensor Cores optimized for GEMMs, 3-year roadmaps doubling down)
-* **Software ecosystems** (PyTorch, JAX, vLLM—all Transformer-native)
-* **Economic incentives** (training a 100B Transformer is well-understood; training a 100B alternative is a $50M+ experiment with unknown ROI)
-* **Institutional momentum** (every major lab has Transformer expertise, tooling, and validated scaling laws)
+- **Hardware specialization** (Tensor Cores optimized for GEMMs, 3-year roadmaps doubling down)
+- **Software ecosystems** (PyTorch, JAX, vLLM—all Transformer-native)
+- **Economic incentives** (training a 100B Transformer is well-understood; training a 100B alternative is a $50M+ experiment with unknown ROI)
+- **Institutional momentum** (every major lab has Transformer expertise, tooling, and validated scaling laws)
 
 Breaking out requires simultaneously changing hardware, architecture, ecosystem, and economic incentives. No single actor has the capital, coordination, or incentive to do all four at once.
 
@@ -260,7 +260,7 @@ The alternatives that survive—Mamba-2, Bamba, RetNet (if it returns)—do so b
 
 **The trap is not absolute—it is scale-dependent.** At 3B-14B, community persistence can compensate for hardware friction. At 70B-400B, the two gates become insurmountable without major lab resources. This is not a failure mode of the framework; it is how convergent evolution operates under economic selection pressure.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb6444893-730d-48da-b33a-eb660ca827ae_5734x3200.png)](https://substackcdn.com/image/fetch/$s_!iS9g!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb6444893-730d-48da-b33a-eb660ca827ae_5734x3200.png)
+![](assets/asset-c087115e406283e8.png)
 
 The next major breakthrough will not replace the Transformer. It will optimize within the Transformer’s computational constraints. Because those constraints are no longer technical limitations—they are the **geometry of the solution space** itself.
 
@@ -275,12 +275,12 @@ Neither condition holds today. The attractor remains stable. The lock-in strengt
 
 ## Further Reading
 
-* **[The Hardware Friction Map](https://lambpetros.substack.com/p/the-hardware-friction-map)** — The companion practitioner’s guide with the Gate-1 checklist and friction rubric
-* **The Scored Dataset** — Architectures that attempted the >10B barrier ([research\_artifacts/scorecard\_dataset](https://github.com/petroslamb/hardware-friction-scorecard-dataset/blob/main/scored_architectures.md))
-* **Mamba-2 Paper** — Section 3 on hardware-aware design (arXiv:2405.21060)
-* **RetNet: A Successor to Transformer** — Microsoft Research (arXiv:2307.08621)
-* **IBM Bamba Release** — Production hybrid SSM+Attention model (IBM Research Blog, 2025)
-* **NVIDIA Blackwell/Rubin Announcements** — Official roadmaps (NVIDIA Blog)
+- **[The Hardware Friction Map](https://lambpetros.substack.com/p/the-hardware-friction-map)** — The companion practitioner’s guide with the Gate-1 checklist and friction rubric
+- **The Scored Dataset** — Architectures that attempted the >10B barrier ([research_artifacts/scorecard_dataset](https://github.com/petroslamb/hardware-friction-scorecard-dataset/blob/main/scored_architectures.md))
+- **Mamba-2 Paper** — Section 3 on hardware-aware design (arXiv:2405.21060)
+- **RetNet: A Successor to Transformer** — Microsoft Research (arXiv:2307.08621)
+- **IBM Bamba Release** — Production hybrid SSM+Attention model (IBM Research Blog, 2025)
+- **NVIDIA Blackwell/Rubin Announcements** — Official roadmaps (NVIDIA Blog)
 
 ---
 

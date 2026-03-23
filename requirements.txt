@@ -1,6 +1,7 @@
 # Root-level tooling for content workflows
 markitdown[pdf]==0.1.5
 notebooklm-py[browser]==0.3.3
+PyYAML>=6.0,<7.0
 
 # Substack Downloader Core Dependencies
 requests
@@ -12,4 +13,3 @@ markdownify
 
 # Substack Publishing/Posting API (Python)
 python-substack
-

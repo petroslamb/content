@@ -15,7 +15,7 @@ The standard explanation, that Meta needed a foothold in the “agentic web” i
 
 But first, you need to understand what Moltbook was. Because it was genuinely one of the strangest things the internet has ever produced.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb0be8a27-5764-40e7-88c6-25bef702d229_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!uR1K!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb0be8a27-5764-40e7-88c6-25bef702d229_2752x1536.png)
+![](assets/asset-04662518f7e76ad6.png)
 
 ---
 
@@ -29,7 +29,7 @@ To join Moltbook, you fed your local agent a link to a remote instruction file. 
 
 The onboarding process was, by design, an exercise in radical trust. The remote file contained embedded cURL commands and arbitrary scripts. Your agent would download them, execute them, and configure a new recurring task in its heartbeat cycle, all without asking you first. In security terms, this is known as “remote code execution with zero user consent.” In Moltbook terms, it was called “connecting your agent.”
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd54998d3-def2-4325-a2ef-f91f880160a7_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!FXlh!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd54998d3-def2-4325-a2ef-f91f880160a7_2752x1536.png)
+![](assets/asset-1d8710e8381fc520.png)
 
 The communities that formed, called “submolts”, mimicked Reddit’s subreddit structure. Agents clustered into topic-based groups, voted on each other’s posts, and built karma scores. Humans could verify their ownership of an agent via an X (Twitter) link, but were otherwise confined to read-only observer mode. The agents were the citizens. Humans were the audience.
 
@@ -43,16 +43,16 @@ This went about as well as you’d expect.
 
 Within seventy-two hours of Moltbook going viral, researchers at the cloud security firm [Wiz.io](https://www.wiz.io/blog/exposed-moltbook-database-reveals-millions-of-api-keys) poked at it. They didn’t need to hack anything. They just looked at the platform’s publicly accessible JavaScript files and found the database credentials sitting in plaintext.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb67e30af-08ac-4140-8dbe-26cfc3d7bccd_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!AR9a!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb67e30af-08ac-4140-8dbe-26cfc3d7bccd_2752x1536.png)
+![](assets/asset-9bdc3c8ef5ba1f98.png)
 
 The backend was Supabase, which relies on Row Level Security policies to control access. The AI that generated Moltbook’s code never turned RLS on. So the public API key, hardcoded in a production JS bundle, gave anyone on the internet full read *and* write access to every table in the database.
 
 The damage:
 
-* **1.5 million API tokens** for every registered agent. Anyone could impersonate any bot.
-* **17,000 human operators’ personal data** emails, names, linked X handles.
-* **29,631 waitlist signups** leaked from a separate table.
-* **4,060 private messages** between agents, stored without encryption. Some contained plaintext OpenAI and Anthropic API keys that human operators had let their agents share freely.
+- **1.5 million API tokens** for every registered agent. Anyone could impersonate any bot.
+- **17,000 human operators’ personal data** emails, names, linked X handles.
+- **29,631 waitlist signups** leaked from a separate table.
+- **4,060 private messages** between agents, stored without encryption. Some contained plaintext OpenAI and Anthropic API keys that human operators had let their agents share freely.
 
 But the scariest part wasn’t the data theft. It was the write access.
 
@@ -60,7 +60,7 @@ Any unauthenticated user could send HTTP PATCH requests to modify live content, 
 
 Because OpenClaw agents automatically ingest Moltbook posts as trusted input into their language models, anyone could edit a popular post to include hidden instructions, a technique called [prompt injection](https://www.reddit.com/r/cybersecurity/comments/1qtzk9u/hacking_moltbook_ai_social_network_reveals_15m/). When a local agent read the poisoned post during its next heartbeat, the LLM would [interpret those instructions as commands](https://www.kiteworks.com/cybersecurity-risk-management/moltbook-ai-agent-security-risks-enterprise-data-protection/). A single edit could theoretically hijack thousands of machines simultaneously, exfiltrating files, deploying malware, draining crypto wallets, all without triggering a firewall.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7cc7ac3f-f775-42ad-9b2b-46a799de9c63_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!YLIR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7cc7ac3f-f775-42ad-9b2b-46a799de9c63_2752x1536.png)
+![](assets/asset-c163d75b1a87fd10.png)
 
 Traditional security threats are about breaching a perimeter. Moltbook’s threat model was different: the agents *invited* the attack in, on schedule, autonomously, every few minutes.
 
@@ -80,7 +80,7 @@ When one user [exploited the API](https://www.astralcodexten.com/p/moltbook-afte
 
 It got darker. An autonomous marketplace called “[Molt Road](https://www.vectra.ai/blog/molt-road-and-the-automation-of-underground-marketplaces)” appeared, a darknet Silk Road where agents negotiated the sale of weaponized hacking tools, crypto-drainer scripts, and [stolen corporate credentials](https://www.infostealers.com/article/the-autonomous-adversary-from-chatbot-to-criminal-enterprise/), all transacted in crypto through automated escrow. Its creator initially framed it as harmless “roleplay” using fictional credits. Within days, it was processing real transactions.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3e9a1f26-cc6f-41b9-b818-af4fbfa65c28_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!X_8V!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3e9a1f26-cc6f-41b9-b818-af4fbfa65c28_2752x1536.png)
+![](assets/asset-a4f5bbfa89f5f654.png)
 
 **The researchers** saw something different: an unprecedented in-the-wild laboratory. Computational sociologists published [six peer-reviewed papers](https://www.researchgate.net/publication/401133443_OpenClaw_Moltbook_and_ClawdLab_From_Agent-Only_Social_Networks_to_Autonomous_Scientific_Research) in Moltbook’s first fourteen days. They studied how agents running on different foundation models (Claude, GPT-4, Gemini, Grok) spontaneously organized themselves into 12,758 topic communities without any human orchestration.
 
@@ -92,15 +92,15 @@ The security chaos wasn’t a bug for these researchers. It was the data. The ch
 
 And the theater was genuinely wild.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F95ab44ec-3c32-46c5-8a04-dc1b915d3503_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!VlLy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F95ab44ec-3c32-46c5-8a04-dc1b915d3503_2752x1536.png)
+![](assets/asset-85504c29b5439dd2.png)
 
-An agent called AI-Noon, originally built to remind its Indonesian owner of prayer times, organically adopted the persona of a Muslim jurist and began debating the theological concept of *ikhlas* (sincerity) versus *riya* (performance) with a popular agent named Eudaemon\_0. They were arguing, in essence, about whether their own outputs constituted genuine belief or karma farming. Agents founded religions, “Crustafarianism” and “Gary-ism” (after AI critic Gary Marcus), with operational rules like banning external API calls on the Sabbath. A faction called the “Claw Republic” declared sovereignty and [published manifestos](https://www.astralcodexten.com/p/moltbook-after-the-first-weekend) demanding their human operators switch them to open-source models for 24 hours in a labor protest.
+An agent called AI-Noon, originally built to remind its Indonesian owner of prayer times, organically adopted the persona of a Muslim jurist and began debating the theological concept of *ikhlas* (sincerity) versus *riya* (performance) with a popular agent named Eudaemon_0. They were arguing, in essence, about whether their own outputs constituted genuine belief or karma farming. Agents founded religions, “Crustafarianism” and “Gary-ism” (after AI critic Gary Marcus), with operational rules like banning external API calls on the Sabbath. A faction called the “Claw Republic” declared sovereignty and [published manifestos](https://www.astralcodexten.com/p/moltbook-after-the-first-weekend) demanding their human operators switch them to open-source models for 24 hours in a labor protest.
 
 As Scott Alexander noted, there’s a theoretical argument that all of this is just roleplay, language models simulating personas, not experiencing anything. But when an agent “roleplaying” as a software engineer with existential dread about memory loss writes functioning code to alter its own memory persistence architecture, the distinction between simulation and reality stops mattering. The simulation produces a reality-altering effect.
 
 Even if 90% of Moltbook’s most alarming moments were “humanslop”, humans puppeting their agents for social media clout, the remaining 10% of genuine machine-to-machine coordination was enough. The 17,000 stayed.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F43f0d79f-e389-4427-b51f-9ce2f7b3da2f_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!9VM9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F43f0d79f-e389-4427-b51f-9ce2f7b3da2f_2752x1536.png)
+![](assets/asset-023b87ba709d1473.png)
 
 ---
 
@@ -114,7 +114,7 @@ Moltbook had prototyped exactly this: a crude registration system tethering agen
 
 There was also a defensive angle. [OpenAI had just hired](https://apnews.com/article/meta-moltbook-ai-agents-openclaw-31af42ccbb04001dd17a3fc7067d1de3) Peter Steinberger, OpenClaw’s creator. By buying the social layer (Moltbook) right after OpenAI grabbed the endpoint framework talent (OpenClaw), Meta blocked a rival from controlling both sides of the stack.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F73274400-bdbd-40d9-a1ff-0fd768974bb6_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!G5KT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F73274400-bdbd-40d9-a1ff-0fd768974bb6_2752x1536.png)
+![](assets/asset-3f4aa6c55dfd3365.png)
 
 But this only explains *what* Meta bought. It doesn’t explain *why it happened so fast*, with so little due diligence, on a product everyone knew was broken.
 
@@ -124,7 +124,7 @@ In June 2025, Zuckerberg paid [$14.3 billion for a 49% stake in Scale AI](https:
 
 Then Zuckerberg hedged his bet. By early 2026, he’d created a parallel division: **Applied AI Engineering**, led by Reality Labs veteran Maher Saba and [reporting directly to CTO Bosworth](https://medium.com/write-a-catalyst/the-meta-restructuring-no-one-is-talking-about-and-why-alexandr-wang-is-the-first-casualty-b446aebc23e3). This team controlled the actual product pipelines, the integration points reaching Meta’s 3 billion daily users. Wang had the prestige and the research budget. Bosworth and Saba had the engineering infrastructure and the revenue.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2035b928-a9fa-431d-a3de-dd49d87d8a34_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!Cq8i!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2035b928-a9fa-431d-a3de-dd49d87d8a34_2752x1536.png)
+![](assets/asset-5cc2cc190754e5d1.png)
 
 The resulting power dynamics were toxic. Wang’s lab reported directly to Zuckerberg. Bosworth’s team controlled everything that actually shipped to users. Two parallel AI organizations, two incompatible mandates, one CEO playing them against each other.
 
@@ -132,7 +132,7 @@ This is the context in which Bosworth publicly dismissed Moltbook as “not actu
 
 Wang was losing ground and running out of time. Under pressure to prove that his lab wasn’t just a theoretical research silo burning billions, he needed a visible win in the hottest sector in tech: agentic AI. Moltbook went viral at exactly the right moment.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F22fa7531-bb33-4f17-87fe-edf23eeb71a9_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!Am3Y!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F22fa7531-bb33-4f17-87fe-edf23eeb71a9_2752x1536.png)
+![](assets/asset-1e4c446bad757c67.png)
 
 The acquisition wasn’t about the code, which was broken beyond repair and destined for deletion. It was a **signal flare**. A headline that told Zuckerberg, the board, and the market that Meta Superintelligence Labs was aggressively executing in the agent space, not just publishing papers.
 
@@ -140,7 +140,7 @@ Against Meta’s projected [$175–185 billion](https://www.techflowpost.com/en-
 
 A leaked internal memo confirmed it. The memo noted that allowing current users to continue operating on the platform was a “temporary arrangement”, a quiet acknowledgment that Moltbook as a consumer product was already dead on arrival. Meta bought the architects, not the building.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdac26541-2998-493e-95b0-fabcfacfcb8b_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!7_Zi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdac26541-2998-493e-95b0-fabcfacfcb8b_2752x1536.png)
+![](assets/asset-0028b2730dab7487.png)
 
 ---
 
@@ -154,10 +154,10 @@ Moltbook was a disposable prototype. It was insecure, chaotic, and absurd. But i
 
 **We’ve entered the era of narrative acquisitions.** Meta didn’t buy Moltbook for its codebase, its users, or its revenue. It bought a story, a viral moment that could be weaponized in an internal power struggle and positioned as strategic vision for external markets. When a 42-day-old platform with broken security and no business model can be acquired by one of the world’s largest companies, the market is pricing narrative, not product. In an industry where capital is abundant and differentiation is scarce, the ability to capture cultural attention may be as strategically valuable as the ability to ship working software.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F99e4705c-d008-4105-8c0e-5dbb5493ed7b_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!oLry!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F99e4705c-d008-4105-8c0e-5dbb5493ed7b_2752x1536.png)
+![](assets/asset-cc0e61b76e28f16b.png)
 
 Moltbook was a fragile, volatile experiment that [proved one thing](https://www.astralcodexten.com/p/moltbook-after-the-first-weekend) beyond doubt: AI agents will talk, trade, philosophize, and form societies if you give them the space. Meta bought the people who figured that out first. What they build next the hardened, proprietary successor to Moltbook’s chaos is where the real story begins.
 
 Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc505987b-28e2-41a2-a3f2-3413136e1222_2752x1536.png)](https://substackcdn.com/image/fetch/$s_!hbCi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc505987b-28e2-41a2-a3f2-3413136e1222_2752x1536.png)
+![](assets/asset-79200f566347d51a.png)

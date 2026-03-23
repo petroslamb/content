@@ -5,7 +5,7 @@ URL: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue
 
 ***NOTE:** The video acts as a TL;DR. click on the audio toggle next to it to get the very detailed PODCAST explainer.*
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2892ea57-733a-4d18-96dd-f8eda1883e5b_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!Uz9o!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2892ea57-733a-4d18-96dd-f8eda1883e5b_2867x1600.png)
+![](assets/asset-7f1bef3bc0464692.png)
 
 While the headlines focus on the 8B model beating GPT-5, the real engineering breakthrough wasn’t the model itself. **It was the factory that built it.** You can download the model weights tomorrow. You cannot download the synthetic data pipeline that generated the training signal. That is the moat.
 
@@ -15,10 +15,10 @@ In this second issue, we leave the theoretical blackboard and enter the factory 
 
 **Each part is self-contained.** You can read them in order or jump to whichever topic interests you most. Every part ends with an **Annotated Bibliography** pointing to the primary papers with notes on why each one matters.
 
-* **ML practitioners** will learn how to build orchestrated systems.
-* **Researchers** will find a comprehensive literature review of tool use and compound AI through the lens of one well-executed paper.
-* **Technical leaders** will get concrete cost and performance trade-offs for evaluating orchestration architectures.
-* **Curious minds** can understand where AI is heading without needing a PhD to follow along.
+- **ML practitioners** will learn how to build orchestrated systems.
+- **Researchers** will find a comprehensive literature review of tool use and compound AI through the lens of one well-executed paper.
+- **Technical leaders** will get concrete cost and performance trade-offs for evaluating orchestration architectures.
+- **Curious minds** can understand where AI is heading without needing a PhD to follow along.
 
 ### Prerequisites
 
@@ -38,7 +38,7 @@ In this second issue, we leave the theoretical blackboard and enter the factory 
 
 This Part dissects **ToolScale**, the synthetic data pipeline used to train ToolOrchestra. It attempts to solve the “**Ground Truth Bottleneck**,” the fact that we don’t know the optimal way to solve most problems. Use of human labeling is too expensive and slow, while wild data is too noisy. The authors must **manufacture data**.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6b63780b-4788-4dd0-9041-9a0af9d25d39_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!FoRq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6b63780b-4788-4dd0-9041-9a0af9d25d39_2867x1600.png)
+![](assets/asset-c8b68562218913ce.png)
 
 ### The Ground Truth Bottleneck
 
@@ -48,25 +48,25 @@ This Part dissects **ToolScale**, the synthetic data pipeline used to train Tool
 
 The pipeline operates in two phases, creating a closed loop of generation and verification.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F63fd4a5b-229c-4167-9f7c-cc5457b94450_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!gcgW!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F63fd4a5b-229c-4167-9f7c-cc5457b94450_2867x1600.png)
+![](assets/asset-846be69c2c7e297c.png)
 
 First, in **Phase 1 (Environment Synthesis)**, they generate the “world.” Instead of letting the agent interact with the live internet which is unpredictable, they generate thousands of virtual APIs and databases. An LLM creates a SQL database schema (e.g., “Library Management System”), fills that database with fake, consistent rows, and generates Python functions to query this database.
 
 Then, in **Phase 2 (Task Synthesis)**, they generate the “problems.” An LLM looks at the database and asks a question like *“Who borrowed ‘The Great Gatsby’?”* Because the database was synthesized, the system **knows** the answer. It can execute the SQL query to get the ground truth. This creates a labeled dataset of `(Question, Tool_Call, Correct_Answer)` pairs. Because the environment is synthetic, the system knows the ground truth, enabling **automatic verification at scale** without human labelers.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd54a3463-01d2-4718-85bd-4cc9d75a678c_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!hBQV!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd54a3463-01d2-4718-85bd-4cc9d75a678c_2867x1600.png)
+![](assets/asset-7dfc1da13a66f33a.png)
 
 ### The “Pass@K” Proxy
 
 The critical innovation, and the potential flaw, is in how they define “success.” In standard supervised learning, we measure **Exact Match** to see if the model output the exact string we expected. In tool use, this is too rigid because there are many ways to query a database.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff48c805c-9dc7-4fa1-8a48-8dce22d2c90b_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!LJl0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff48c805c-9dc7-4fa1-8a48-8dce22d2c90b_2867x1600.png)
+![](assets/asset-615efbc01f7b0e48.png)
 
 ToolOrchestra uses a **Pass@8** filtering criteria during data generation. They generate 8 different solution paths for a single problem using a strong teacher model like GPT-4.
 
-* If 0 paths lead to the correct answer, they discard the problem as unsolvable or broken.
-* If 8 paths lead to the correct answer, they keep the most **efficient** one.
-* If some paths fail, they keep the successful ones as positive reinforcement samples.
+- If 0 paths lead to the correct answer, they discard the problem as unsolvable or broken.
+- If 8 paths lead to the correct answer, they keep the most **efficient** one.
+- If some paths fail, they keep the successful ones as positive reinforcement samples.
 
 ```
 # The Data Filtering Logic
@@ -98,7 +98,7 @@ def filter_training_data(problem, candidate_trajectories):
 
 From an auditing perspective, this pipeline introduces **Synthetic Bias**.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8fa81e43-1089-4f12-8416-c7bda3af76ef_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!BsUC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8fa81e43-1089-4f12-8416-c7bda3af76ef_2867x1600.png)
+![](assets/asset-2a61f5d94611ca75.png)
 
 First, there is **Teacher Bias**, meaning the orchestrator can never exceed the reasoning capabilities of the teacher model (GPT-4) that generated the trajectories; it can only become more efficient at executing them. Second, there is **Triviality Bias**. It is easier to generate verifiable questions about “lookups” (What is the capital of X?) than about “reasoning” (Why did the Roman Empire fall?). This pushes the dataset towards factual retrieval, potentially under-training the “complex reasoning” circuits. The “**verifiable ground truth**” is a gold standard, but it constrains the domain to problems with singular, verifiable answers. Ambiguous, open-ended tasks, which are often the most valuable, are systematically filtered out.
 
@@ -116,7 +116,7 @@ First, there is **Teacher Bias**, meaning the orchestrator can never exceed the 
 
 Evaluating an orchestrator is harder than evaluating a chatbot.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F084e2722-fb06-4980-8bd5-fa0c1b894814_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!aZkz!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F084e2722-fb06-4980-8bd5-fa0c1b894814_2867x1600.png)
+![](assets/asset-7768dff10291bfbd.png)
 
 A chatbot is judged on text quality. An orchestrator is judged on **state transitions**. ToolOrchestra is tested on three primary datasets: **Humanity’s Last Exam (HLE)**, **FRAMES**, and **τ²-Bench**. Each targets a different failure mode.
 
@@ -124,7 +124,7 @@ A chatbot is judged on text quality. An orchestrator is judged on **state transi
 
 > [!NOTE] System Auditor’s Log: Goodhart’s Law states: “When a measure becomes a target, it ceases to be a good measure.” In agentic AI, benchmarks like MMLU or GSM8K are now effectively part of the training set. ToolOrchestra introduces new benchmarks to prove its worth, but we must scrutinize what exactly is being measured. Is it intelligence, or is it just efficient retrieval?
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2647574a-de5e-4cde-b8ab-792f47ad4d5e_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!5ubo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2647574a-de5e-4cde-b8ab-792f47ad4d5e_2867x1600.png)
+![](assets/asset-c2f8f33a829cfc3d.png)
 
 **Humanity’s Last Exam (HLE)** consists of PhD-level questions. Most LLMs fail these not because they can’t write, but because they lack specific domain computations. The benchmark measures **Tool Identification**, meaning the orchestrator doesn’t solve the physics equation but correctly identifies that `WolframAlpha` can solve it. The caveat is that this measures the quality of the *tools* available as much as the orchestrator. If the tool suite lacks a physics engine, the orchestrator fails regardless of its “intelligence.”
 
@@ -136,7 +136,7 @@ A chatbot is judged on text quality. An orchestrator is judged on **state transi
 
 The authors present **Accuracy per Dollar** as a key metric, but this is potentially misleading.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F986f419c-13ac-488c-a572-4936553d4867_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!z3E6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F986f419c-13ac-488c-a572-4936553d4867_2867x1600.png)
+![](assets/asset-c784b43daa4185cc.png)
 
 In many production systems, the value of accuracy is **non-linear**. For example, 99% accuracy on a medical diagnosis task is worth $1M, while 90% accuracy is worth $0 (or negative, due to liability). A linear “Accuracy per Dollar” metric favors systems that are “**cheap and mediocre**” over systems that are “**expensive and perfect**.”
 
@@ -162,7 +162,7 @@ def utility_critical(accuracy, cost):
 
 The benchmarks show that ToolOrchestra beats GPT-4 *on these datasets*.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbb4003ea-b596-4cda-9bb6-6ea60d5889ae_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!Chyp!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbb4003ea-b596-4cda-9bb6-6ea60d5889ae_2867x1600.png)
+![](assets/asset-8ba25296595cc5b4.png)
 
 However, these datasets are static and do not simulate **Tool Drift** (APIs changing their schema), **Adversarial Tools** (search engines returning SEO spam), or **Infinite Loops** (the benchmark harness strictly cuts off execution after *N* turns). In production, there is no harness. A model that enters a loop creates a $10,000 bill. The benchmarks measure “**Peak Capability**,” not “**Production Reliability**.”
 
@@ -170,7 +170,7 @@ However, these datasets are static and do not simulate **Tool Drift** (APIs chan
 
 To understand where ToolOrchestra sits in the solution space, consider the alternatives:
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7bab17ca-ec20-4b14-ad3e-12929f58fa51_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!sHG4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7bab17ca-ec20-4b14-ad3e-12929f58fa51_2867x1600.png)
+![](assets/asset-915acf134c9ef5f7.png)
 
 ToolOrchestra’s learned routing trades **operational complexity** for **cost efficiency**. Rule-based routers achieve similar cost savings without RL training, but lack adaptability. RAG+Prompting is the “middle ground” for teams without ML infrastructure, and monoliths remain optimal when reliability matters more than cost. The benchmarks prove ToolOrchestra *can* work; this table shows when it *should* work.
 
@@ -188,11 +188,11 @@ ToolOrchestra’s learned routing trades **operational complexity** for **cost e
 
 The paper mentions using **16 H100 GPUs**. This is not just a flex; it is a mathematical necessity for **Variance Reduction**.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F51610ac5-560d-4d73-a96d-5592fa17ddbf_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!-GRq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F51610ac5-560d-4d73-a96d-5592fa17ddbf_2867x1600.png)
+![](assets/asset-643e444eb6af2171.png)
 
 In Policy Gradient methods (like GRPO), the gradient estimate is noisy. If the batch size is small, the variance of this estimate is high. One “lucky” random rollout where the model guesses the right answer can trigger a massive weight update, pushing the model into a region of the parameter space that ruins its general capabilities. To stabilize this, you need a massive batch size to average over hundreds of trajectories and find the “true” direction of improvement. The 16 H100s allow for a global batch size that is statistically significant, and **Gradient Accumulation** further virtually increases this batch size.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faa3489ba-479d-4228-bf32-7ef97faf60ff_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!Xbpf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faa3489ba-479d-4228-bf32-7ef97faf60ff_2867x1600.png)
+![](assets/asset-010ab51524f0e418.png)
 
 ### The Stability/Plasticity Dilemma
 
@@ -230,7 +230,7 @@ If this mask implementation has a bug (e.g., off-by-one error), the model effect
 
 Another key hyperparameter is the **Update Ratio** between the Policy Model and the Reference Model.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F41767857-9d10-45d4-b790-f514325e6d73_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!QJNh!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F41767857-9d10-45d4-b790-f514325e6d73_2867x1600.png)
+![](assets/asset-73f03a2f6033933d.png)
 
 The Reference Model (the frozen copy) must be kept in VRAM to compute the KL divergence penalty, effectively halving the available memory for training. This forces a trade-off: offload the Reference Model to save VRAM but kill throughput via the PCIe bottleneck, or keep it in VRAM for fast training but limit batch size (increasing variance). ToolOrchestra chooses **FSDP (Fully Sharded Data Parallel)** to shard *both* models across the 16 GPUs. This implies that the network interconnect (NVLink) is the hard bottleneck of the entire training run. If NVLink is saturated, those H100s sit idle.
 
@@ -242,13 +242,13 @@ The Reference Model (the frozen copy) must be kept in VRAM to compute the KL div
 
 **Ding et al. (2024)** - *The Efficiency of Packing*: Analyzing the “block-diagonal masking” technique for sequence packing, highlighting the implementation risks of mask leakage.
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7a9ad3ee-2786-486b-ab4f-7bdc0e0cf701_2867x1600.png)](https://substackcdn.com/image/fetch/$s_!kMCN!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7a9ad3ee-2786-486b-ab4f-7bdc0e0cf701_2867x1600.png)
+![](assets/asset-ec4c82b52702c385.png)
 
 [Share](https://lambpetros.substack.com/p/the-orchestration-paradigm-issue?utm_source=substack&utm_medium=email&utm_content=share&action=share)
 
 ### Appendices: Infrastructure Glossary
 
-[![](assets/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F907a3081-ed73-4796-856e-3cc1693e952b_838x578.png)](https://substackcdn.com/image/fetch/$s_!zzDi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F907a3081-ed73-4796-856e-3cc1693e952b_838x578.png)
+![](assets/asset-306a062d8333ddc3.png)
 
 ---
 
