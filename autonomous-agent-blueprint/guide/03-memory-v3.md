@@ -45,15 +45,7 @@ Procedural memory holds reusable know-how: templates, routines, playbooks, code 
 
 This is not taxonomy for its own sake. It is what lets each memory type live under a different policy. You do not manage policy documents the way you manage correction logs. You do not manage correction logs the way you manage reusable tactics.
 
-## A Coding Agent Fails Differently, but for the Same Reason
-
-The same architecture problem appears in repository work, just with different symptoms.
-
-A coding agent may not need a long personal history, but it does need to remember which repo conventions mattered, which tests repeatedly exposed the same class of mistake, and which patch patterns kept succeeding. If every failed command, every diff, and every terminal trace is dumped into one undifferentiated store, retrieval becomes cluttered and procedural improvement never arrives. The agent sees too much history and learns too little from it.
-
-That is why the coding-agent architecture in this repo keeps working memory tight, uses episodic memory for prior failures and successful fixes, and keeps procedural memory narrow and earned. Repo conventions and previous mistakes are not the same object, and the system gets worse when it stores them as though they were.
-
-Different domain, same rule: memory quality depends less on how much the system kept than on whether it kept the right thing in the right layer.
+The same split shows up in coding agents, just with different objects. Repo conventions belong in semantic memory. Prior failed fixes and reviewer notes belong in episodic memory. Reusable patch patterns belong in procedural memory. Once terminal traces, diffs, and conventions all collapse into one store, the agent sees too much history and learns too little from it.
 
 ## Memory Improves Through a Lifecycle, Not Through Accumulation
 
@@ -62,6 +54,20 @@ Useful memory is not a write-once archive. It is a lifecycle.
 [*Generative Agents*](https://arxiv.org/abs/2304.03442) made this vivid by showing how observations can later be reflected into higher-order summaries. [*Mem0*](https://arxiv.org/abs/2504.19413) pushed the same idea toward production by emphasizing extraction and consolidation rather than transcript hoarding. [*Reflexion*](https://arxiv.org/abs/2303.11366) showed how a failed attempt can become a reusable lesson. [*MemoryBank*](https://arxiv.org/abs/2305.10250) made the neglected point explicit: forgetting is not a defect. It is hygiene.
 
 The lifecycle is straightforward to name and easy to neglect. Information is acquired, encoded, sometimes transformed into a better representation, retrieved when relevant, used inside the current task, and eventually forgotten, compressed, or retired. Each verb hides a design decision.
+
+```json
+{
+  "memory_type": "semantic",
+  "content": "Vendor reimbursement policy updated: director approval required above 5000 EUR.",
+  "source": "policy_portal:finance/reimbursement:v17",
+  "written_at": "2026-02-14T09:20:00Z",
+  "freshness_window": "90d",
+  "retention_rule": "supersede_on_new_version",
+  "derived_from": "policy_change_notice_2026_02_14"
+}
+```
+
+An entry like that is doing more than storing text. It records what kind of memory this is, where it came from, how long it should stay authoritative, and what should retire it later.
 
 Acquisition is a gate. Not everything the system sees deserves durable storage.
 

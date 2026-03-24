@@ -4,15 +4,9 @@
 
 Multi-agent systems solve three different problems, and most disappointing multi-agent systems are built by confusing them. A second agent might buy you a permission boundary. It might buy you an independent review. It might buy you a typed handoff between two genuinely different stages of work. Those are different architectures with different costs, controls, and failure modes.
 
-If you do not know which one you are building, you are probably building theater.
+That distinction matters because teams talk about multi-agent systems as though they were one upgrade. They are not. A reviewer overlay is not a staged pipeline. A staged pipeline is not a permission split. When those designs get blurred, the system acquires more roles without acquiring a reason.
 
-A research team ran into this the usual way. They had a solid internal reporting workflow. One agent could search, read, extract, synthesize, and draft a memo. It was not perfect, but the bottlenecks were understandable: long inputs slowed it down, and it sometimes blurred the line between evidence extraction and synthesis.
-
-The team decided this meant the system needed multiple agents.
-
-They split it into five. Searcher, summarizer, synthesizer, critic, and writer. Every role had a thoughtful prompt. Every role sounded specialized. The pipeline soon became slower, harder to observe, and harder to fix. The summarizer's drift flowed into the synthesizer. The critic complained about defects that had entered two steps earlier without making it obvious where they had entered. When output quality fell, the team had to replay a chain of conversations just to understand which handoff had gone soft.
-
-The failure was not that multi-agent systems never work. It was that the system had solved the wrong problem.
+If you do not know which boundary the extra agent buys you, you are probably building theater.
 
 ## Problem One: Role Separation
 
@@ -58,6 +52,10 @@ This table is intentionally narrow. It is meant to make addition harder, not eas
 ## Handoffs Are the Architecture
 
 The most important choice in a multi-agent system is not the role names. It is the form of the handoff.
+
+A research team learned this after turning one reporting agent into five roles. Searcher, summarizer, synthesizer, critic, and writer all had thoughtful prompts. Median runtime more than doubled. More damaging, postmortems that used to take minutes began consuming half an afternoon because drift could enter at several conversational handoffs before anyone could localize it. The critic often noticed something real, but too late to show where the error had actually entered.
+
+The split had not bought a meaningful boundary. It had bought more narration.
 
 Free-form conversation is seductive because it is natural to prototype. It is also the fastest route to ambiguity. One role passes along a message with mixed state, assumptions, and conclusions. The next role has to infer what matters, what is binding, and what is mere context. By the time the workflow fails, the team can no longer say which boundary actually failed because no boundary was explicit enough to inspect.
 

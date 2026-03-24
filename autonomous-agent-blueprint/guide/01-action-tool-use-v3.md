@@ -66,7 +66,19 @@ Many teams design the call contract and neglect the observation contract. They d
 
 That omission is costly. If tool results arrive as raw HTML, raw logs, or broad success text, the model has to infer too much. It may infer correctly often enough to look competent, which is exactly why this failure survives. A trustworthy action loop should not depend on whether the model guesses correctly about deferred writes, warning states, or retriable errors.
 
-The fix is architectural. Important actions need observation contracts as explicit as their invocation contracts. What counts as success? What counts as partial success? What counts as a state that requires review? A typed status object with normalized error reasons gives the reasoning layer something usable. A dump of raw environment text gives it noise and false confidence.
+The fix is architectural. Important actions need observation contracts as explicit as their invocation contracts. What counts as success? What counts as partial success? What counts as a state that requires review?
+
+```json
+{
+  "status": "deferred",
+  "write_applied": false,
+  "reason_code": "WAITING_APPROVAL",
+  "requires_review": true,
+  "next_allowed_action": "poll_after_approval"
+}
+```
+
+A status object like that gives the reasoning layer something usable. A dump of raw environment text gives it noise and false confidence.
 
 This is one reason [*Toolformer*](https://arxiv.org/abs/2302.04761) matters conceptually and [*SWE-agent*](https://arxiv.org/abs/2405.15793) matters practically. The first normalizes tool use as part of the operating pattern. The second shows why inspectable environments, executable artifacts, and test feedback are so valuable once the system actually acts. The point is not that every agent should resemble a coding agent. The point is that typed action plus typed observation makes failure local, and local failure is what improvement depends on.
 
