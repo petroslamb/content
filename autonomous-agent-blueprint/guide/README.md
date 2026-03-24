@@ -1,11 +1,31 @@
 # Guide: Operating Agents
 
-This folder now contains three essay layers of the *Operating Agents* package plus a companion breadth layer:
+This folder now contains four essay layers of the *Operating Agents* package plus a companion breadth layer:
 
 - the original near-public draft set
 - the `v2` rewrite package built for clearer series pacing, stronger narrative differentiation, and tighter source tails
 - the `v3` rewrite package built as the publication candidate, with fuller inline citation, longer authority tails, more differentiated openings, and optimization moved to bonus-post status
+- the `v4` rewrite package built to realign the essays with the voice guide, recover blueprint breadth inside the articles themselves, add denser explanatory argument, and use inline author citations without links plus multi-paragraph reference analysis
 - the companion breadth layer that reconnects the public essays to the distilled chapter guide, the original survey, the blueprints, and the paper notes
+
+## V4 Reading Order
+
+### Core Run
+
+| File | Title | Topic |
+|------|-------|-------|
+| [00-launch-note-v4.md](./00-launch-note-v4.md) | Operating Agents: Why Most Agent Writing Starts in the Wrong Place | Series launch note, operating-layer frame, and the relation between the public reading order and the deeper blueprint stack |
+| [01-action-tool-use-v4.md](./01-action-tool-use-v4.md) | Operating Agents I: When the Model Starts Doing Things | Action surfaces, representation ladders, observation contracts, and why agency begins at accountable state change |
+| [02-reasoning-planning-v4.md](./02-reasoning-planning-v4.md) | Operating Agents II: The Lightest Correct Scaffold | Failure-shape diagnosis, the cheapest correct reasoning scaffold, and why verification belongs inside the loop |
+| [03-memory-v4.md](./03-memory-v4.md) | Operating Agents III: The Agent That Forgets | Memory as governed state across working, semantic, episodic, and procedural layers |
+| [04-multi-agent-v4.md](./04-multi-agent-v4.md) | Operating Agents IV: One Agent Is Not Enough | Multi-agent systems as boundary design across role separation, critique, and artifact handoffs |
+| [05-safety-v4.md](./05-safety-v4.md) | Operating Agents V: The Attack Surface You Built | Safety as interface architecture across trust separation, retrieval, tools, handoffs, and approval |
+
+### Bonus Post
+
+| File | Title | Topic |
+|------|-------|-------|
+| [06-optimization-v4.md](./06-optimization-v4.md) | Operating Agents Bonus: The Workflow Is the Object | Workflow-level optimization, measurement discipline, bounded self-improvement, and late-stage topology search |
 
 ## V3 Reading Order
 
