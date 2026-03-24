@@ -15,6 +15,17 @@ This repo is a builder-first architecture manual for modern agent systems. It st
 
 ## Choose Your Path
 
+### If you are following the Operating Agents series
+
+Read in this order:
+
+1. `guide/README.md`
+2. `guide/00-launch-note-v3.md`
+3. `guide/operating-agents-coverage-map.md`
+4. the matching file in `guide/companions/`
+5. the matching file in `practical-chapter-blueprints/`
+6. the matching file in `papers/`
+
 ### If you are building an agent
 
 Read in this order:
@@ -53,6 +64,9 @@ Read in this order:
 
 - `README.md`: front door and role-based routing.
 - `START_HERE.md`: guided onboarding path.
+- `guide/README.md`: public essay package and reading order.
+- `guide/operating-agents-coverage-map.md`: series-to-source map for readers who want breadth behind the essays.
+- `guide/companions/`: essay-specific breadth notes linking public posts back to the chapter guide, survey, blueprints, and paper notes.
 - `reviewable-runs.md`: explanation of what a serious system must surface to make a run reviewable.
 - `source-index.md`: literature map with confidence and practical role.
 - `practical-chapter-blueprints/`: chapter-level decision layer.
@@ -78,6 +92,10 @@ Read in this order:
 
 - `source-index.md`
 - `literature-quality.md`
+- `guide/README.md`
+- `guide/*-v3.md`
+- `guide/operating-agents-coverage-map.md`
+- `guide/companions/*.md`
 - `foundation-agents-practical-chapters-guide.md`
 - `foundation-agents-practical-distillation.md`
 - `papers/*.md`
@@ -90,6 +108,13 @@ Read in this order:
 - `notes/`
 
 Exploratory material is worth keeping, but it should never be the default path for first-time readers.
+
+## Publication Layering
+
+- `guide/*-v3.md`: the public narrative layer.
+- `guide/companions/*.md`: the breadth layer for readers who want the fuller chapter and survey picture.
+- `practical-chapter-blueprints/*.md`: the operator layer for decisions, defaults, evaluation, and anti-patterns.
+- `papers/*.md`: the source-note layer for named methods and individual literature artifacts.
 
 ## What This Repo Optimizes For
 
