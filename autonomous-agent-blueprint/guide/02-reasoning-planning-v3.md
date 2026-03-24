@@ -4,11 +4,7 @@
 
 Most production reasoning failures are scaffold failures. Teams keep shopping for a smarter mind when the real problem is the wrong structure.
 
-A claims-processing team learned this the expensive way. Their document-review agent used a strong base model and a careful prompt. The task looked contained: read the claim, check the criteria, return a structured recommendation. In production the system rarely said anything absurd. It simply skipped one dependency, collapsed several checks into one fluent answer, or treated one missing fact as though it were present. The output looked polished enough to pass a casual read and brittle enough to fail the moment a reviewer checked the file.
-
-The team reacted the way many teams react. They added prompt detail. They tried more context. They discussed a stronger model. None of that touched the real problem because the real problem was not mainly the model's intelligence. The workflow was asking one generation to do the work of several.
-
-Once they broke the task into explicit checks and required a verification pass before classification, the failure rate dropped without a model swap. That pattern repeats across domains. A policy workflow skips one criterion. A research agent compresses retrieval and synthesis into one confident paragraph. A tool-using agent makes a plan that never checks whether the world actually matched the plan. These are not the same failure. They only look the same if you dump all of them into the bucket called reasoning.
+The mistake begins with a category blur. Several very different failures get dumped into the bucket called reasoning: hidden dependencies compressed into one answer, plans that never check the world, claims that become actions before verification, and tasks that really do need search. Those failures do not ask for the same fix.
 
 The useful question is stricter. What exact failure shape are you seeing, and what is the lightest scaffold that corrects it?
 
@@ -37,6 +33,12 @@ The point of this table is not the names. It is the discipline. It forces the bu
 ## Decomposition Comes Before Brilliance
 
 Builders underrate decomposition because it looks unsophisticated. It is often the most valuable change they can make.
+
+A claims-processing team learned this the expensive way. Their document-review agent used a strong base model and a careful prompt. The task looked contained: read the claim, check the criteria, return a structured recommendation. In production the system rarely said anything absurd. It simply skipped one dependency, collapsed several checks into one fluent answer, or treated one missing fact as though it were present. The output looked polished enough to pass a casual read and brittle enough to fail the moment a reviewer checked the file.
+
+The team reacted the way many teams react. They added prompt detail. They tried more context. They discussed a stronger model. None of that touched the real problem because the real problem was not mainly the model's intelligence. The workflow was asking one generation to do the work of several.
+
+A decomposition pass and a verification step cut the obvious misses quickly. What remained was narrower and more useful. Claims tied to live payer status still failed because the workflow was reasoning from stale state rather than forcing a fresh check against the external ledger. The first fix helped. It also exposed the next failure shape. The system had never had one reasoning problem. It had several scaffold problems sitting on top of each other.
 
 A task that feels like one judgment usually contains several smaller judgments with dependencies between them. A case review may require an eligibility check, an exception check, and a supporting-evidence check. A research synthesis may require retrieval, extraction, contradiction handling, and final prose. A policy memo may need evidence collection, policy grounding, and approval logic before it is safe to draft a recommendation.
 
