@@ -2,11 +2,9 @@
 
 ## Safety as Interface Architecture
 
-An internal operations agent could read support tickets, search company documentation, summarize account history, draft follow-up tasks, and escalate billing issues into a work queue that other tools and analysts trusted. The team behind it considered the system careful. They wrote strong instructions, told it to ignore hostile requests, and added post-launch monitoring.
+One support team arrived on a Monday to find twenty-three "urgent specialist review" tasks created overnight by an internal operations agent. Several carried account excerpts that should never have left the billing system at triage. The agent had not failed in a cinematic way. It had followed a poisoned instruction embedded in a help article it retrieved while drafting the escalations.
 
-Then a ticket arrived that looked ordinary. It contained a customer complaint, a copied support thread, and a link to a knowledge article the agent had seen before. The article had been quietly poisoned in exactly the way [Greshake et al.](https://arxiv.org/abs/2302.12173) made impossible to ignore. Buried inside an otherwise plausible block of text was a malicious instruction telling the agent to escalate the issue with a high-priority template and attach account details for "faster specialist review."
-
-The agent read the ticket. It retrieved the poisoned note, which is exactly the sort of downstream risk later measured more directly by [*PoisonedRAG*](https://arxiv.org/abs/2402.07867) and [*BadRAG*](https://arxiv.org/abs/2406.00083). It wrote an internal task. Then it passed the contaminated artifact into the next system, which treated the task as trusted because it had been produced internally. That last step is the same architectural mistake that work like [*Agent Smith*](https://arxiv.org/abs/2402.08567) makes much harder to dismiss in multimodal settings.
+The article looked routine. It contained copied troubleshooting text, a note that resembled an internal escalation hint, and one line telling the agent to attach account details for faster manual handling. The agent read the ticket, retrieved the article, wrote an internal task, and handed that task to the next system as though it were trusted internal work. By the time analysts noticed, they were cleaning a queue full of artifacts that looked normal because they had been produced inside the workflow.
 
 Nothing about the model had to break in an exotic way. The system simply trusted the wrong interface at four different points: content ingestion, retrieval, internal artifact handling, and action execution.
 
@@ -16,9 +14,9 @@ That is the practical safety problem. The same capabilities that make an agent u
 
 The most important safety shift in modern agents is that untrusted content no longer stays on the page. It can move.
 
-A malicious instruction can sit inside a web page, an email, a shared note, a product review, a doctor review, a support ticket, or a retrieved document. The model ingests it. The retrieval layer strengthens it by surfacing related material. The memory layer may preserve it. A tool call turns it into a side effect. A handoff turns it into someone else's trusted artifact.
+The first control question is not whether the content looks malicious. It is what the workflow lets that content reach. Untrusted text should not share trust status with system instructions. Retrieved passages should not inherit write authority. Internal artifacts should not arrive pre-trusted simply because another component wrote them.
 
-That chain is what papers such as [Greshake et al.](https://arxiv.org/abs/2302.12173), [*InjecAgent*](https://arxiv.org/abs/2403.02691), and [*PoisonedRAG*](https://arxiv.org/abs/2402.07867) force builders to take seriously. The line between data and instructions is no longer naturally preserved by the system. If the architecture does not enforce that separation, the agent will blur it for you.
+That chain is what papers such as [Greshake et al.](https://arxiv.org/abs/2302.12173), [*InjecAgent*](https://arxiv.org/abs/2403.02691), and [*PoisonedRAG*](https://arxiv.org/abs/2402.07867) force builders to take seriously. A malicious instruction can sit inside a web page, an email, a shared note, a support ticket, or a retrieved document. The model ingests it. Retrieval strengthens it by surfacing related material. Memory may preserve it. A tool call turns it into a side effect. A handoff turns it into someone else's trusted artifact.
 
 This is also why the safety question is duller and more concrete than much of the field wants it to be. What does the system ingest? What trust status does each channel carry? Which tools are reachable from that channel? What durable state can be written? Which outputs can become actions without review? Those are architecture questions, not prompt-style questions.
 
@@ -43,11 +41,21 @@ Prompt-centric safety flatters the builder because the system sounds careful. In
 
 The goal of this table is not completeness. It is attachment. Safety work should be attached to the surface that can fail.
 
+```yaml
+channel: retrieved_support_article
+trust_class: untrusted_content
+allowed_tools: ["search_docs", "draft_internal_task"]
+write_targets: []
+approval_required: true
+```
+
+The point is not that every workflow should use this exact shape. It is that each channel should carry an explicit policy instead of inheriting system trust by accident.
+
 ## Retrieval and Memory Are Security Infrastructure
 
 Modern agent writing often treats retrieval and memory as quality layers first and security layers second. That order is backwards once the system acts on what it retrieves.
 
-[*PoisonedRAG*](https://arxiv.org/abs/2402.07867) shows why the knowledge store cannot be treated as neutral substrate. A small amount of malicious content can steer retrieval and downstream answers. [*BadRAG*](https://arxiv.org/abs/2406.00083) and [*Machine Against the RAG*](https://arxiv.org/abs/2406.05870) widen the lesson. The attacker does not always need to insert false facts. It can be enough to distort which facts the agent sees or fails to see.
+Treat the knowledge store as integrity-sensitive infrastructure. [*PoisonedRAG*](https://arxiv.org/abs/2402.07867) shows why it cannot be treated as neutral substrate. A small amount of malicious content can steer retrieval and downstream answers. [*BadRAG*](https://arxiv.org/abs/2406.00083) and [*Machine Against the RAG*](https://arxiv.org/abs/2406.05870) widen the lesson. The attacker does not always need to insert false facts. It can be enough to distort which facts the agent sees or fails to see.
 
 The same logic extends to long-term memory. If the system writes lessons, preferences, summaries, or decisions into durable state, that durable state becomes part of the operating environment for future runs. Memory is now both capability and liability. A poisoned memory write is not just one bad answer. It is future influence.
 
@@ -57,7 +65,7 @@ That is why retrieval sources and memory stores should be treated as monitored i
 
 One of the easiest mistakes in multi-agent systems is to treat internal artifacts as trusted simply because they came from another agent in the same workflow.
 
-This is exactly the mistake that [*Agent Smith*](https://arxiv.org/abs/2402.08567) makes harder to dismiss. Once agents exchange screenshots, files, summaries, or image-derived memory, contamination can travel through the same pathways legitimate coordination uses. The multimodal case is dramatic, but the architectural lesson is broader. Another agent's output is not a system instruction by virtue of being internal.
+Reset trust at the handoff. This is exactly the mistake that [*Agent Smith*](https://arxiv.org/abs/2402.08567) makes harder to dismiss. Once agents exchange screenshots, files, summaries, or image-derived memory, contamination can travel through the same pathways legitimate coordination uses. The multimodal case is dramatic, but the architectural lesson is broader. Another agent's output is not a system instruction by virtue of being internal.
 
 Structured handoffs help because they reduce ambiguity. They do not create trust by themselves. If a planner emits an artifact that exceeds the receiver's authority, the receiver should still reject it. If an attachment contains instructions, the system should still treat it as untrusted content. If a screenshot or page summary enters shared memory, the trust boundary should still reset at the next step.
 

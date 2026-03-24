@@ -8,7 +8,7 @@ A team edits the prompt, gets a nicer answer on three recent failures, and calls
 
 A document-classification agent in production illustrated the pattern almost perfectly. It had been live for three months. It was not perfect, but it was useful. Humans still corrected the tail of the work, yet the economics made sense and the workflow was stable enough that the team decided it was time to improve it.
 
-Over the next six weeks they edited the system prompt repeatedly. One revision seemed to help the recent failures everyone still remembered. A later revision quietly regressed another slice of traffic. Tool descriptions changed. Instructions got longer. The team debated phrasing with the urgency people reserve for work that feels productive.
+Over the next six weeks they edited the system prompt repeatedly. One revision seemed to help the recent failures everyone still remembered. Another quietly pushed the approval rate on contract-renewal cases from single digits into the high teens while leaving the output slightly prettier. Tool descriptions changed. Instructions got longer. The team debated phrasing with the urgency people reserve for work that feels productive.
 
 Nothing important improved because the team was tuning the easiest visible surface before it had stabilized the objective. There was no fixed evaluation set, no clean failure taxonomy, no agreement about whether latency and correction rate belonged inside the goal, and no serious view of whether the underlying issue lived in schema design, retrieval quality, or prompt wording at all.
 
@@ -27,6 +27,18 @@ Without a stable task set and known-good outcomes, there is no durable signal ag
 This is why [*OPRO*](https://arxiv.org/abs/2309.03409) matters conceptually even if many teams will never run that exact method. The important lesson is not that prompts can be optimized by search. The important lesson is that optimization presupposes an objective and a repeated evaluation loop. The same discipline sits underneath model-based judging work such as [*MT-Bench and Chatbot Arena*](https://arxiv.org/abs/2306.05685), which is useful only when the scoring layer itself is calibrated instead of treated as magic.
 
 Once that is clear, many supposed optimization debates become easier to settle. The prompt might not be the problem. The workflow might be reasoning over weak evidence. The output schema might be turning a decent answer into downstream failure. The routing might be pushing the wrong cases through a brittle path. The approval boundary might be firing constantly because the system is poorly scoped, not because the reviewer is conservative.
+
+```yaml
+case_id: renewal_041
+task_slice: contract_renewal
+baseline_score: 0.91
+latency_budget_ms: 1200
+approval_rate: 0.08
+owner: ops-platform
+regression_guard: "reject if score < 0.89 or approval_rate > 0.12"
+```
+
+That row is humble on purpose. It fixes the object of argument. Once a case has an owner, a baseline, and a regression guard, a prompt edit stops being a vibes discussion and becomes a testable change.
 
 ## Signal to First Intervention Map
 
