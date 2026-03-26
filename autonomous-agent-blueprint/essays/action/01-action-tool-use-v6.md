@@ -73,3 +73,11 @@ The deepest practical use of action is not simply to finish the workflow. It is 
 Validate the payload before the write. Poll the real status endpoint before trusting a queued job. Query the live record before reasoning from stale memory. Ask the environment what changed instead of narrating what probably changed. The best action loops do not only perform tasks. They force the system back into contact with state.
 
 Action sits at the front of this bundle because it is the place where agent rhetoric stops being cheap. Once a workflow can act, continuity pressure arrives immediately. The next problem is no longer whether the system can do something. It is what parts of its own past it should be allowed to keep and trust when the next task begins.
+
+## Selected Sources
+
+**[*Toolformer*](https://arxiv.org/abs/2302.04761).** Toolformer matters because it made tool invocation legible as a learned boundary rather than a theatrical add-on. For this doctrine, its importance is not that the model can call a tool at all. It is that action begins when language leaves pure commentary and starts choosing interfaces that can change state.
+
+**[*Gorilla*](https://arxiv.org/abs/2305.15334).** Gorilla matters because it narrowed tool use down to interface discrimination and argument construction. That is exactly where many production failures live. The paper helps ground the doctrine in a harsher truth: a workflow can understand the task and still fail because the boundary object was wrong.
+
+**[*SWE-agent*](https://arxiv.org/abs/2405.15793).** SWE-agent matters because it shows what a replayable action surface looks like once the environment returns machine-checkable feedback. The bundle leans on that lesson heavily. Narrow, inspectable action loops beat broader but blurrier ones because improvement depends on localized failure, not on impressive transcripts.

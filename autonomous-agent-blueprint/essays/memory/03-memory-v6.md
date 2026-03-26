@@ -74,3 +74,11 @@ Graph-heavy retrieval, richer memory graphs, and other structural escalations be
 The doctrine sentence is simple enough to be easy to forget. Memory is not the art of keeping more. It is the discipline of keeping the right things in the right form for the right length of time. A trustworthy memory layer returns sanctioned state with provenance and expiry, not merely semantically nearby fragments from a crowded past that still happen to sound relevant. Good memory policy protects the present from the past.
 
 The next chapter begins where this one leaves pressure behind. Once the system's past is governed, the harder question is how it should think through work before remembered context turns into consequential action.
+
+## Selected Sources
+
+**[*MemGPT*](https://arxiv.org/abs/2310.08560).** MemGPT matters because it broke the lazy equation between more context and better memory. Its enduring value for this doctrine is the tiering mindset. Active context, external storage, and movement between them have to be governed explicitly if memory is going to help rather than interfere.
+
+**[*MemoryBank*](https://arxiv.org/abs/2305.10250).** MemoryBank matters because it put decay and refresh back into the center of the conversation. That is essential to the chapter's law. Forgetting is not a weakness in a long-lived system. It is part of how retained state stays current enough to deserve trust.
+
+**[*Mem0*](https://arxiv.org/abs/2504.19413).** Mem0 matters because it pushes the literature toward derived memory objects rather than transcript hoarding. The doctrine depends on that move. Durable memory should usually be an extracted fact, promoted routine, or consolidated lesson, not a raw conversational heap that retrieval later has to reinterpret.

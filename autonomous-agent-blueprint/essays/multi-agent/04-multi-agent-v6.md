@@ -69,3 +69,13 @@ Role count is sticky once teams grow attached to the theater of specialization. 
 The doctrine sentence is plain enough to sound obvious. Extra agents multiply ambiguity unless they create a real boundary. Builders should act as though that sentence is expensive to violate, because it is.
 
 The next chapter closes the loop on that point. Once roles, tools, memory, and handoffs exist, the question is no longer only how to coordinate them. It is how to keep the wrong content from moving through them.
+
+## Selected Sources
+
+**[*MAD*](https://arxiv.org/abs/2305.19118).** MAD matters because it makes critique legible as a specific reliability intervention rather than as a general argument for more voices. That is central to the doctrine here. A second role earns its keep only when it changes what gets challenged.
+
+**[*MetaGPT*](https://arxiv.org/abs/2308.00352).** MetaGPT matters because it pushed multi-agent design back toward documents, artifacts, and staged outputs at a moment when the field was drifting toward role-play. The chapter's emphasis on typed handoffs comes directly out of that correction.
+
+**[*ChatDev*](https://arxiv.org/abs/2307.07924).** ChatDev matters because it makes the artifact-pipeline lesson visible in a more theatrical form. For this doctrine, the value is not the simulated company. It is the demonstration that stages become legible when they exchange inspectable objects instead of conversational blobs.
+
+**[*AutoGen*](https://arxiv.org/abs/2308.08155).** AutoGen matters because it lowered the cost of building role-heavy systems and therefore lowered the cost of making decorative ones too. The chapter's conservatism toward multi-agent topology is partly a response to the failure pattern that followed from that convenience.
