@@ -11,6 +11,18 @@ This folder contains the record shapes that support Reviewable Runs.
 - `approval-decision-template.md`
 - `failure-review-template.md`
 
+These remain the framework's canonical record surface.
+
+## Raw-Artifact Support Templates
+
+- `source-manifest-template.md`
+- `session-excerpt-template.md`
+- `changed-files-summary-template.md`
+- `verification-output-summary-template.md`
+- `boundary-record-template.md`
+
+These support real-trace reconstruction and proof work. They are optional support surfaces, not a new framework layer.
+
 ## Adjacent Support Patterns
 
 - `memory-record-template.md`
@@ -26,6 +38,7 @@ Read `../USE_IT.md` first.
 Then:
 
 - use the six direct templates when a run actually needs an explicit review packet
+- use the raw-artifact support templates when you are reconstructing a run from real traces or assembling proof material
 - use the adjacent patterns only when a system needs extra contracts for memory, tools, or handoffs
 
 If a run is low-risk and reconstructable from ordinary logs, you do not need to force these templates onto it.
