@@ -75,3 +75,5 @@ That is why action belongs at the front of the public run. It is where agent rhe
 **[*Gorilla*](https://arxiv.org/abs/2305.15334).** Gorilla matters because it narrowed tool use down to interface discrimination and argument construction. That is exactly where many production failures live. A workflow can understand the task and still fail because the boundary object was wrong.
 
 **[*SWE-agent*](https://arxiv.org/abs/2405.15793).** SWE-agent matters because it shows what a replayable action surface looks like once the environment returns machine-checkable feedback. The chapter leans on that lesson heavily. Narrow, inspectable action loops beat broader but blurrier ones because improvement depends on localized failure, not on impressive transcripts.
+
+For the broader terrain this essay leaves out on purpose, read the [Action companion](./companion-v7.md). For the operator layer, build order, and anti-patterns, read the [Action blueprint](../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).

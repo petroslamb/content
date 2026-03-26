@@ -64,6 +64,18 @@ One more rule keeps the whole topic honest. Track failure categories, not only a
 
 Stable interfaces deserve the same emphasis. Workflow search is only interpretable when nodes, schemas, and evaluation targets are steady enough that a topology change actually means something. Otherwise the team is comparing moving graphs against moving objectives and calling the confusion exploration.
 
+## Analytical References
+
+**[OPRO note](../../reference/papers/opro.md).** This note is about prompt improvement as an optimization problem. It is the key source when the argument turns on the need for a stable objective before any search or tuning begins.
+
+**[MT-Bench and Chatbot Arena note](../../reference/papers/mt_bench_chatbot_arena.md).** This note is about model-based judging as an operational evaluation pattern. It matters when the workflow needs scalable comparison without pretending judges are magically calibrated.
+
+**[Voyager note](../../reference/papers/voyager.md).** This note is about bounded self-improvement through skill promotion. It is useful when the optimization argument needs a believable example of improvement that does not mutate every surface at once.
+
+**[TextGrad note](../../reference/papers/textgrad.md).** This note is about converting critique into structured optimization signals. It belongs in local-improvement discussions where the target and evaluation loop are already stable.
+
+**[AFLOW note](../../reference/papers/aflow.md).** This note is about workflow topology as an optimization target. It matters when the team is tempted to move from prompt tuning to workflow search before the baseline is actually ready.
+
 ## Sources Behind This Chapter
 
 The core sources behind this chapter are [*OPRO*](https://arxiv.org/abs/2309.03409), [*MT-Bench and Chatbot Arena*](https://arxiv.org/abs/2306.05685), and [*Voyager*](https://arxiv.org/abs/2305.16291). They matter together because they define the chapter's central triangle: a stable objective, an operational evaluation layer, and bounded improvement that earns promotion through repeated success. Those are the sources most directly behind the doctrine that optimization becomes real only once the workflow is already measurable.

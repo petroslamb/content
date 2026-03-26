@@ -68,6 +68,18 @@ They should not be where a team hides from the harder governance question. If fr
 
 That is the second-pass discipline the package cares about most. Governance before sophistication. Typed memory before warehouse thinking. Promotion before hoarding. Retirement before regret.
 
+## Analytical References
+
+**[MemGPT note](../../reference/papers/memgpt.md).** This note explains the tiered-memory framing that turns context pressure into an explicit management problem. It is the best reference when the memory argument starts with movement between active state and external stores.
+
+**[MemoryBank note](../../reference/papers/memorybank.md).** This note is about forgetting, decay, and refresh logic. It matters when the discussion needs a source for why retention policy is part of correctness rather than a secondary cleanup concern.
+
+**[Mem0 note](../../reference/papers/mem0.md).** This note is about derived memory objects and production-style consolidation. It is useful when the workflow should store extracted facts or promoted routines instead of hoarding transcripts.
+
+**[Generative Agents note](../../reference/papers/generative_agents.md).** This note is about turning raw observations into higher-level reflections. It matters when episodic memory needs to become a better object than a chronological log.
+
+**[HippoRAG note](../../reference/papers/hipporag.md).** This note is about graph-aware retrieval for linked knowledge. It is the right reference when simple similarity search fails because the real problem is relational structure rather than topical recall.
+
 ## Sources Behind This Chapter
 
 The core sources behind this chapter are [*MemGPT*](https://arxiv.org/abs/2310.08560), [*MemoryBank*](https://arxiv.org/abs/2305.10250), and [*Mem0*](https://arxiv.org/abs/2504.19413). They matter together because they define the chapter's practical center of gravity: explicit tiering, forgetting as part of correctness, and derived memory objects that deserve durable status. Read together, they move memory away from storage enthusiasm and toward governance over time.

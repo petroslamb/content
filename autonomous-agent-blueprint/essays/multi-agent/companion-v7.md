@@ -66,6 +66,18 @@ Protocol work matters only after topology discipline. MCP, A2A, and related infr
 
 First earn the split. Then harden the wire.
 
+## Analytical References
+
+**[MetaGPT note](../../reference/papers/metagpt.md).** This note is about artifact-driven role collaboration. It is the clearest source for why typed deliverables matter more than conversational theater.
+
+**[ChatDev note](../../reference/papers/chatdev.md).** This note is about staged software-team simulation. It matters less for the theatrical role names than for the artifact-pipeline lesson underneath them.
+
+**[AutoGen note](../../reference/papers/autogen.md).** This note is about programmable multi-agent conversation as a coordination fabric. It is useful as both a capability reference and a warning about transport becoming a substitute for interface design.
+
+**[MAD note](../../reference/papers/mad.md).** This note is about disagreement as a reliability intervention. It belongs in cases where a second role is justified by what gets challenged rather than by broader topology.
+
+**[RECONCILE note](../../reference/papers/reconcile.md).** This note is about structured consensus and confidence-aware reconciliation. It matters when the question is whether disagreement carries real signal or only overhead.
+
 ## Sources Behind This Chapter
 
 The core sources behind this chapter are [*MAD*](https://arxiv.org/abs/2305.19118), [*MetaGPT*](https://arxiv.org/abs/2308.00352), [*ChatDev*](https://arxiv.org/abs/2307.07924), and [*AutoGen*](https://arxiv.org/abs/2308.08155). They matter together because they do not defend one thing called multi-agent design. MAD sharpens the critique-overlay case, MetaGPT and ChatDev make artifact pipelines visible, and AutoGen exposes both the power and danger of flexible role conversation.

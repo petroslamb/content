@@ -70,6 +70,18 @@ This is the field's common misread. Search looks like the advanced answer becaus
 
 Reasoning review should therefore stay hostile to beautiful traces. A long chain, a polished planner output, or an elegant search tree can still be evidence that the workflow is spending more tokens to hide the same diagnosis error. The right question remains whether the chosen scaffold removed the failure mode that justified its cost.
 
+## Analytical References
+
+**[Least-to-Most note](../../reference/papers/least_to_most_prompting.md).** This note is about ordered decomposition for tasks whose real difficulty is hidden dependency structure. It is the right source when the workflow keeps trying to solve several subproblems in one generation.
+
+**[ReAct note](../../reference/papers/react.md).** This note is about the reason-act-observe loop. It matters when the builder needs a concrete reference for grounding reasoning in live tools and environment state.
+
+**[Chain-of-Verification note](../../reference/papers/chain_of_verification.md).** This note is about separating answering from checking. It is useful when the workflow needs a distinct trust-earning stage before consequence.
+
+**[LLM+P note](../../reference/papers/llm_plus_p.md).** This note is about planner handoff when prose can no longer carry hard constraints safely. It belongs in discussions where commitment points and ordering risk dominate.
+
+**[Tree of Thoughts note](../../reference/papers/tree_of_thoughts.md).** This note is about true branching search over candidate paths. It matters when the team needs a source for what search is actually for, and for why it should arrive late.
+
 ## Sources Behind This Chapter
 
 The core sources behind this chapter are [*Least-to-Most Prompting*](https://arxiv.org/abs/2205.10625), [*ReAct*](https://arxiv.org/abs/2210.03629), [*Chain-of-Verification*](https://arxiv.org/abs/2309.11495), and [*LLM+P*](https://arxiv.org/abs/2304.11477). They matter together because they map four different interventions: decomposition for hidden dependencies, control loops for live state, verification for earned trust, and planner handoff for sequence risk under hard constraints. That sequence is the real spine of the chapter.

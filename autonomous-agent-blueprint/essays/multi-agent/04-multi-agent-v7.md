@@ -73,3 +73,5 @@ That is the escalation rule for the chapter. Keep the default single-agent until
 **[*AutoGen*](https://arxiv.org/abs/2308.08155).** AutoGen matters because it made programmable multi-agent conversation practical and, by doing so, made it easier to confuse communication fabric with architecture. The chapter leans on it mostly as a warning. Flexible transport does not rescue a decorative split.
 
 **[*RECONCILE*](https://arxiv.org/abs/2309.13007).** RECONCILE matters because it sharpens the question of when disagreement carries real signal and when it is only extra overhead. That distinction helps keep critique in its lane instead of turning every hard workflow into a committee.
+
+For the broader terrain this essay leaves out on purpose, read the [Multi-agent companion](./companion-v7.md). For the operator layer, topology choices, and collapse discipline, read the [Multi-agent blueprint](../../core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md).
