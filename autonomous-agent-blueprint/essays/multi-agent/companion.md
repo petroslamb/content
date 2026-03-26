@@ -1,103 +1,93 @@
 # Multi-Agent Companion
 
-The public multi-agent essay was written against a very specific failure in the discourse: too many systems are called multi-agent when they are really just expensive conversations. That is why the essay stayed so strict about the three real reasons to add another agent. The broader chapter is still worth more than that reduction. It is not only a warning against agent theater. It is a fuller account of role separation, artifact handoff, critique, coordination, and human participation as workflow design.
+The fastest way to make an agent system look more advanced is to multiply the number of roles. The fastest way to make it harder to govern is often the same move. That is why multi-agent design keeps attracting theater. A second model, a reviewer persona, a planner, a debate loop, a human approver, and suddenly the trace looks serious. What matters is not how many names appear in the workflow. It is whether the split buys a boundary the single-agent baseline could not provide cleanly.
 
-This matters because multi-agent design is one of the easiest places to confuse spectacle with progress. Adding roles feels like adding intelligence. In practice it often adds cost, latency, and ambiguity. The guide is useful precisely because it keeps asking the dull but decisive question: what specific problem is the extra agent solving?
+That boundary can be worth a great deal. It can also cost more than it returns. The useful second-pass reading of multi-agent design is therefore economic before it is architectural. Every extra role adds latency, state transfer, evaluation burden, and another place where ambiguity can accumulate. A split should only survive if it pays for its own coordination debt.
 
-## Most Multi-Agent Confusion Starts With Category Collapse
+## Three Topologies, Three Very Different Bets
 
-The chapter is strongest where it keeps different reasons for multiple agents from collapsing into one bucket.
+It helps to compare three systems that are often discussed as though they were variants of one idea.
 
-Sometimes the split is about role separation. Different tools, permissions, evaluation criteria, or output formats justify different roles.
+First, a single-agent orchestrator with bounded tools. It owns the state, produces one reviewable artifact, and hands off to a human only for high-cost decisions. This system bets that simplicity, good tool boundaries, and a clear control loop will beat specialization.
 
-Sometimes the split is about reliability. A critic, reviewer, or debating peer exists to challenge an answer or catch an error.
+Second, a reviewer overlay. One agent does the work. Another checks the output, challenges claims, or flags risk. This system bets that independent critique will catch enough important error to justify the extra pass.
 
-Sometimes the split is about task decomposition. Work moves through explicit artifacts and stages, and one role naturally hands something structured to the next.
+Third, an artifact pipeline. One role produces a plan or spec, another assembles evidence, another executes against that evidence, another reviews the result. This system bets that typed handoffs and local contexts are worth the coordination cost because the work naturally decomposes.
 
-Those are not the same design choice. A planner-reviewer pair is not the same system as a staged software pipeline, and neither is the same as a debate ensemble. The chapter matters because it makes those differences visible enough to design around.
+Those are not stylistic variations. They are different economic claims about where reliability comes from. The field gets this wrong whenever it treats "multi-agent" as one axis of more capability.
 
-## The Real Multi-Agent Win Is Usually In The Handoff
+## A Worked Contrast: Orchestrator, Reviewer, Pipeline
 
-What makes many practical multi-agent systems useful is not that several agents are thinking in parallel. It is that work is being handed off in a form the next role can actually use.
+Take an internal policy-exception workflow.
 
-This is why the guide puts so much weight on task-oriented interaction and structured deliverables. Plans, specs, patches, test reports, summaries, approvals, and rejections are all stronger than generic free-form chat because they turn coordination into interface design. Once the handoff becomes typed, the system becomes easier to inspect, easier to debug, and easier to govern.
+In the single-agent orchestrator version, one agent gathers policy, checks account state, drafts the recommendation, and produces a structured review packet for a human approver. This is the right baseline when one role can own the state and when the main risk is tool misuse or missing evidence rather than division of labor.
 
-That is also why so many flashy multi-agent demos age badly. Endless dialogue is flexible, but it is a weak coordination substrate. If the system cannot say what artifact changed hands, what status it carried, and what the next role is expected to do with it, then the topology is usually less real than it looks.
+In the reviewer-overlay version, the first agent still does the work, but a second role checks whether the policy basis is current, whether the live account state was actually queried, and whether the recommendation overreaches. This becomes justified when the first pass has predictable blind spots and the review criteria are explicit.
 
-## The Human Is Not Outside The Topology
+In the artifact-pipeline version, the planner writes the decision frame, the retriever assembles the evidence packet, the executor drafts the recommendation against that packet, and the reviewer signs off or rejects with typed reasons. This version earns its keep only when each artifact genuinely narrows ambiguity for the next stage.
 
-The chapter is better than a lot of multi-agent literature because it treats human participation as architectural rather than decorative. In serious workflows the human does not merely appear to rubber-stamp the end. The human sets goals, resolves ambiguity, reviews high-cost decisions, and intervenes when the workflow exits its confidence envelope.
+The wrong escalation is easy to spot once the contrast is explicit. If the baseline system is failing because it never queries live state, adding a reviewer is usually weaker than fixing the control loop. If the baseline system is failing because one stage keeps handing mixed assumptions and evidence to another, an artifact pipeline may help. If the split does not change authority, local context, or artifact quality, it is usually narration with extra cost.
 
-That is why the conservative reading of the chapter is the right one. If the system still depends on judgment, approval, or interpretation at key points, model the human as a real participant in the workflow. Do not pretend the topology is autonomous and then quietly hide the human work off to the side.
+## Handoffs Need Types, Budgets, And Exit Conditions
 
-## Communication Is A Control Surface
+The practical win in multi-agent design is usually the handoff, not the existence of several thinkers.
 
-Once multiple agents exist, message design becomes a design problem in its own right. A handoff is not just content. It carries role, confidence, trust level, expected artifact type, and often an implicit decision about whether escalation is required.
+A good handoff says what artifact is being transferred, what status it carries, what evidence is attached, what the receiver is allowed to do with it, and what counts as done. A weak handoff is just a long message that mixes instructions, assumptions, context, and provisional conclusions. That is where many role-heavy systems quietly become unreviewable.
 
-This is why typed messages matter. A request for research, a patch for review, a risk flag, and a final approval are not the same kind of thing even if they are all written in text. Good multi-agent systems make those differences explicit. Weak ones let everything flow through the same undifferentiated channel and then call the resulting confusion emergence.
+This is why typed handoffs matter more than role names. A spec, evidence packet, patch, exception note, risk flag, or pass-fail record is stronger than a conversational blob because it lets the next stage know what is binding. It also lets a human reconstruct failure later.
 
-The protocol discussion belongs here too. MCP, A2A, and adjacent infrastructure are not yet the main practical story of the chapter, but they point in the same direction: coordination gets better when interfaces harden.
+There is an economic side to this too. Every handoff needs a budget. If a reviewer role never catches anything important, remove it. If a specialist uses the same tools and emits the same artifact as the orchestrator, collapse it. If a debate loop adds two minutes and no meaningful lift on hard cases, stop calling it architecture.
 
-## When To Stay With One Agent
+## The Human Role Usually Determines Whether The Split Is Real
 
-The chapter is at its most valuable when it tells builders not to escalate too fast. One orchestrator is still the right baseline for most bounded workflows. If a single agent can own the state, use the tools, and produce reviewable artifacts, simplicity usually wins.
+One of the best conservative instincts in this terrain is to treat the human as part of the topology when judgment, approval, or accountability still matter.
 
-A second agent becomes justified when one of three things becomes clearly true. A role really does need distinct tools or permissions. Independent review clearly improves outcomes. Or the workflow naturally decomposes into typed handoffs with different evaluation logic. If none of those are true, another agent is usually overhead dressed up as sophistication.
+In serious workflows, the human is not outside the system tidying up after the interesting work is over. The human often defines the confidence envelope, resolves ambiguity, approves irreversible action, and decides when a recommendation is allowed to become a decision. If that is true, model it directly. Do not pretend the topology is autonomous and then hide the governing labor in an inbox.
 
-## How To Judge Whether The Topology Earned Its Keep
+This is another place where the field likes spectacle more than clarity. A five-agent committee that quietly relies on one human to interpret the whole trace is often worse than a simple orchestrator that hands over one clean artifact at the right moment.
 
-The chapter's evaluation posture is stricter than the surrounding hype. The question is not whether the multi-agent system looks more advanced than the baseline. The question is whether it materially beats the best single-agent workflow after coordination cost is counted.
+## The Field Still Overvalues Conversation
 
-That means measuring handoff latency, failure localization, cost per role, and the actual gain created by the split. If a reviewer role catches nothing important, remove it. If a specialist has the same tools and output shape as the orchestrator, collapse it. If debate does not improve hard cases enough to justify the cost, stop calling it necessary.
+Conversation is useful. It is also one of the weakest coordination substrates in the space.
 
-That discipline is what keeps the chapter practical. Multi-agent systems are worth building when the split changes the workflow for the better, not when it merely multiplies the number of voices in the trace.
+AutoGen mattered because it made programmable multi-agent interaction easy to build. That was a real contribution. It also made it easy to confuse communication fabric with architecture. Once every role can pass long, flexible messages, teams stop feeling the pressure to type artifacts, harden interfaces, or specify what a handoff actually means.
+
+That is why protocol talk only matters after topology discipline. MCP, A2A, and related infrastructure are heading in the right direction because coordination improves when interfaces harden. But a bad split with a cleaner protocol is still a bad split. The anti-pattern is overbuilding the transport layer before the workflow has earned the roles it is trying to connect.
 
 ## Resources And References
 
 ### [Multi-Agent Essay: Operating Agents IV: One Agent Is Not Enough](../multi-agent/04-multi-agent-v5.md)
 
-Read the essay first for the clean public claim. It gives the sharpest practical line on why multi-agent systems exist and which three problems they should actually solve.
-
-Use this companion when you want the broader topology, coordination, and evaluation terrain that the essay intentionally compressed.
+Read the essay first for the hard public claim: extra agents only earn their keep when they buy a real boundary.
 
 ### [Builder Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
 
-The blueprint is the operator-facing translation of the chapter. It turns the literature into decisions about when to keep one orchestrator, when to split roles, how to define handoffs, and how to evaluate whether the split is justified.
-
-It is the best file to read if you need an actual topology choice rather than a conceptual overview.
+The blueprint is the build-facing guide for topology choice, handoff design, and evaluation. Use it when you need to decide whether to keep one orchestrator, add a reviewer, or move to an artifact pipeline.
 
 ### [Foundation Agents: Practical Chapters Guide](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/chapters-guide.md)
 
-The guide is the broader booklet interpretation. It keeps the focus on task-oriented interaction, structured artifacts, and human-agent collaboration while remaining skeptical of agent-society excess.
-
-It is also the clearest place to see why communication itself becomes a design layer once multiple agents exist.
+The guide is the quickest route to the larger landscape behind the essay. It keeps the focus on task-oriented interaction, explicit deliverables, and human participation rather than agent-society spectacle.
 
 ### [MetaGPT: Software Engineers as Multi-Agent Society with LLM-based Agents](https://arxiv.org/abs/2308.00352) (2024)
 
-MetaGPT is one of the clearest role-based pipeline papers in the field. Its practical contribution is not just that it uses several roles. It is that those roles exchange staged documents and deliverables rather than only chatting.
+MetaGPT matters because it gives the clearest artifact-pipeline story in this cluster. The paper was trying to solve software work through staged deliverables rather than unstructured chat. Its architectural move is to make documents and outputs, not conversation volume, carry the workflow.
 
-That is why it matters so much in this package. It shows how multi-agent design becomes legible once artifacts, not conversational volume, carry the workflow.
+That should influence builders who are deciding whether a split truly buys decomposition. It should not tempt them to copy visible role names without copying the artifact discipline that made the paper useful.
 
 ### [ChatDev: Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) (2023)
 
-ChatDev sits near MetaGPT in the landscape but emphasizes staged software-team collaboration in a slightly different way. It is useful because it shows how specialization can be organized around a production pipeline instead of a flat pool of peers.
+ChatDev matters because it shows another version of staged multi-role collaboration where deliverables remain visible enough to inspect. The paper was solving coordinated software production, but its broader move is to make specialization legible through outputs.
 
-The transferable lesson is broader than software. Multi-agent systems get more practical when responsibilities and outputs are visible enough to inspect and revise.
+Builders should borrow the emphasis on inspectable deliverables. They should not borrow the topology wholesale when their domain does not naturally produce the same artifacts.
 
 ### [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155) (2023)
 
-AutoGen is the conversation-fabric paper in this cluster. It matters because it made multi-agent orchestration programmable and reusable for many builders.
+AutoGen matters because it made conversation-based orchestration programmable. The paper was solving flexibility and reuse in multi-agent interaction. Its important move is infrastructural rather than doctrinal.
 
-It also matters as a caution. Its flexibility makes it easy to create topologies with many roles and very little architectural discipline. That is why the chapter treats it as both a useful starting point and a warning against overbuilding.
+That is why it is both useful and dangerous. Builders should let it influence coordination tooling. They should not let its flexibility excuse vague handoffs or decorative role proliferation.
 
-### [Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate](https://arxiv.org/abs/2305.19118) (2024)
+### [Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate](https://arxiv.org/abs/2305.19118) (2024) and [RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs](https://arxiv.org/abs/2309.13007) (2023)
 
-MAD belongs in the reliability branch of the chapter, not the general topology branch. Its value comes from productive disagreement, not from division of labor.
+These papers matter because they isolate one narrow reason to add another role: structured disagreement can improve reliability when disagreement itself carries signal. They were not solving general topology design. They were solving critique under uncertainty.
 
-That distinction matters because many teams reach for debate when what they really need is a reviewer or a better evaluation signal. Debate earns its keep when disagreement itself exposes hidden failure modes or alternative paths.
-
-### [RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs](https://arxiv.org/abs/2309.13007) (2023)
-
-RECONCILE matters because it makes disagreement more structured and confidence-aware. It is less about adding more voices than about deciding how different views should be reconciled.
-
-That is why it belongs in the companion. It marks a more disciplined version of multi-agent reliability, one that treats coordination and confidence as real design problems instead of assuming that consensus will emerge by itself.
+That should influence teams considering reviewer overlays or debate loops. It should not be generalized into a claim that more voices are usually better.
