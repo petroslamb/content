@@ -1,20 +1,18 @@
 # Evaluation
 
-This folder contains review instruments, not run records.
+This folder contains the package's review instruments.
 
-Use these files to judge a proposed architecture before implementation, during design review, or after an incident. They are meant to expose missing boundaries, weak verification, and vague autonomy claims.
+Use it for three different judgments:
 
-- `run-review-checklist.md` is the direct six-question run review surface.
-- `architecture-readiness-checklist.md` asks whether a proposed system can support that run review surface in the first place.
-- `failure-mode-catalog.md` names recurring failure classes and the design responses that usually matter.
-- `../FRAMEWORK_EVALUATION.md` explains how to evaluate whether the framework itself is worth using.
+- run review: did this specific run leave behind a credible review surface
+- architecture readiness: can this system support reviewable runs at all
+- framework evaluation: is Reviewable Runs earning its cost in practice
 
-Only `run-review-checklist.md` maps one-to-one to the six review questions.
+## Files
 
-The other files answer adjacent but necessary questions:
-
-- can the architecture support credible review at all
-- what recurring failure classes should shape the failure review
+- `run-review-checklist.md` is the direct six-question instrument for one run.
+- `architecture-readiness-checklist.md` is broader and asks whether a system can support reviewable runs before or after deployment.
+- `failure-mode-catalog.md` names recurring failure classes that should sharpen a failure review or architecture critique.
 
 ## Alignment Matrix
 
@@ -27,4 +25,21 @@ The other files answer adjacent but necessary questions:
 | Who approved impact? | approval decision | `../templates/approval-decision-template.md` | `run-review-checklist.md` |
 | What failed or could fail? | failure review | `../templates/failure-review-template.md` | `run-review-checklist.md` |
 
-Read this folder after `../reviewable-runs.md` and before or alongside `../dossiers/`.
+Only `run-review-checklist.md` maps one-to-one to the six review questions.
+
+## Framework Evaluation
+
+Use Reviewable Runs against two evidence surfaces:
+
+1. a real pilot such as `../examples/proofs/coding-real-run/`
+2. the synthetic harness in `../validation-lab/`
+
+The current framework-level test is:
+
+- does the review packet reduce unanswered questions compared with raw artifacts
+- does it make approval or rejection more defensible
+- does it make failure analysis less dependent on scattered logs
+
+The package's first recorded synthetic results live in `../validation-lab/RUN_RESULTS.md`.
+
+Read this folder after `../README.md` and `../USE_IT.md`.

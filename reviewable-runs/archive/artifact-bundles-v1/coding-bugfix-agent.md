@@ -1,6 +1,6 @@
 # Worked Case Study: Coding Bugfix Agent
 
-> Historical note: This v1 packet-oriented case study was superseded by [`../../reviewable-runs.md`](../../reviewable-runs.md) and [`../../dossiers/coding-bugfix-agent/README.md`](../../dossiers/coding-bugfix-agent/README.md).
+> Historical note: This v1 packet-oriented case study was superseded by [`../../README.md`](../../README.md) and [`../../examples/teaching/coding-bugfix-agent/README.md`](../../examples/teaching/coding-bugfix-agent/README.md).
 
 This case applies the coding reference architecture to a concrete repository task: diagnosing a failing test, patching the implementation, rerunning checks, and presenting a reviewable diff for approval.
 

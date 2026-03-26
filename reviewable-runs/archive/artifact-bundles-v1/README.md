@@ -1,6 +1,6 @@
 # Worked Case Studies
 
-> Historical note: This is the archived v1 packet-oriented worked-example layer. The default path is now [`../../reviewable-runs.md`](../../reviewable-runs.md) and the rebuilt [`../../dossiers/README.md`](../../dossiers/README.md).
+> Historical note: This is the archived v1 packet-oriented worked-example layer. The default path is now [`../../README.md`](../../README.md) and the rebuilt [`../../examples/teaching/README.md`](../../examples/teaching/README.md).
 
 This folder is the repo's applied proof layer. The `use-cases/` docs tell you the abstract default architecture; the files here show what those defaults look like when a real task, a realistic artifact trail, and a concrete failure review are all placed side by side.
 

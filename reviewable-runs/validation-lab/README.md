@@ -1,8 +1,15 @@
 # Validation Lab
 
-This folder contains explicitly synthetic validation artifacts for the reviewable-runs framework.
+This folder contains explicitly synthetic validation artifacts for the Reviewable Runs framework.
 
 **Status:** `synthetic validation artifact`
+
+This is an advanced surface.
+
+- it is not the first thing to read
+- it is not proof
+- it is not the primary teaching surface
+- it is the synthetic harness for pressure-testing the framework
 
 Use this surface to test three things:
 
@@ -38,7 +45,7 @@ The review-surface folder uses the six-record model, but invalidation and stress
 
 Read in this order:
 
-1. `../reviewable-runs.md`
+1. `../README.md`
 2. `VALIDATION_MATRIX.md`
 3. `RUN_RESULTS.md`
 4. `AGENT_CARDS.md`
