@@ -43,6 +43,8 @@ That matrix is not proof. Its job is different:
 
 The lab should be used to pressure the framework before or alongside real pilots, not instead of them.
 
+Use `validation-lab/RUN_RESULTS.md` to see the first recorded framework judgments against that harness.
+
 ## Suggested Review Worksheet
 
 For each reviewer:
