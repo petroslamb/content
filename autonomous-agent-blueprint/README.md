@@ -17,9 +17,9 @@ If you are building, read in this order:
 If you are following the *Operating Agents* essays, read:
 
 1. `essays/README.md`
-2. `essays/launch-note/00-launch-note-v4.md`
+2. `essays/launch-note/00-launch-note-v5.md`
 3. the relevant topic essay
-4. the local `companion.md`
+4. the local `companion.md` as the substantial second-pass companion essay
 5. the matching file in `core/practical-chapter-blueprints/`
 6. the matching file in `reference/papers/`
 
