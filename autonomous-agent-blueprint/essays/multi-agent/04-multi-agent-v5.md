@@ -78,18 +78,18 @@ This blueprint turns the essay's three-way split into concrete guidance for when
 
 The companion restores the broader multi-agent chapter: topology choices, protocol layers, evaluation framing, and the wider research terrain that sits around the essay's three-problems thesis.
 
-### [MetaGPT: Software Engineers as Multi-Agent Society with LLM-based Agents](https://arxiv.org/abs/2308.00352) (2024)
+### [MetaGPT: Software Engineers as Multi-Agent Society with LLM-based Agents](https://arxiv.org/abs/2308.00352)
 
 MetaGPT matters because it gives the strongest practical case for multi-agent systems organized around artifacts rather than conversational improvisation.
 
-### [ChatDev: Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) (2023)
+### [ChatDev: Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924)
 
 ChatDev matters because it shows how role-based collaboration becomes legible when the domain naturally produces staged outputs.
 
-### [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155) (2023)
+### [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155)
 
 AutoGen matters because it normalized programmable multi-agent conversation and thereby made the coordination problem easier to see.
 
-### [Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate](https://arxiv.org/abs/2305.19118) (2024) and [RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs](https://arxiv.org/abs/2309.13007) (2023)
+### [Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate](https://arxiv.org/abs/2305.19118) and [RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs](https://arxiv.org/abs/2309.13007)
 
 These papers matter because they show the narrow but real class of tasks where structured disagreement improves reliability.

@@ -109,22 +109,22 @@ This blueprint translates the essay's workflow-first argument into an explicit o
 
 The companion restores the broader optimization chapter: wider levers, judge systems, workflow-search material, and the surrounding self-improvement terrain that would have made the public essay read like a catalog.
 
-### [Large Language Models as Optimizers](https://arxiv.org/abs/2309.03409) (2024)
+### [Large Language Models as Optimizers](https://arxiv.org/abs/2309.03409)
 
 OPRO matters because it formalizes prompt improvement as search under an objective rather than taste-driven iteration.
 
-### [TextGrad: Automatic "Differentiation" via Text](https://arxiv.org/abs/2406.07496) (2024)
+### [TextGrad: Automatic "Differentiation" via Text](https://arxiv.org/abs/2406.07496)
 
 TextGrad matters because it expands the optimization target from single prompts to larger textual systems.
 
-### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (2023) and [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) (2023)
+### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) and [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291)
 
 These papers matter because they show what bounded self-improvement looks like once experience is turned into reusable lessons or skills.
 
-### [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) (2023)
+### [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685)
 
 This paper matters because it makes comparative evaluation scalable enough to become operational, while also making calibration risk impossible to ignore.
 
-### [AFLOW: Automating Agentic Workflow Generation](https://arxiv.org/abs/2410.10762) (2025) and [GPTSwarm: Language Agents as Optimizable Graphs](https://arxiv.org/abs/2402.16823) (2024)
+### [AFLOW: Automating Agentic Workflow Generation](https://arxiv.org/abs/2410.10762) and [GPTSwarm: Language Agents as Optimizable Graphs](https://arxiv.org/abs/2402.16823)
 
 These papers matter because they treat workflow topology itself as an optimization target, which only becomes safe once the baseline is already measurable and stable.
