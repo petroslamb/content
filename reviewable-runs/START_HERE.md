@@ -45,6 +45,17 @@ Read in this order:
 5. `proofs/coding-real-run/comparison.md`
 6. `proofs/failure-contrast/README.md`
 
+## If You Want To Validate The Framework Limits
+
+Read in this order:
+
+1. `validation-lab/README.md`
+2. `validation-lab/VALIDATION_MATRIX.md`
+3. `validation-lab/AGENT_CARDS.md`
+4. one case under `validation-lab/validate/`
+5. one case under `validation-lab/invalidate/`
+6. one case under `validation-lab/stress-test/`
+
 ## If You Want To Apply The Framework
 
 Read in this order:
@@ -73,6 +84,7 @@ The direct center of this package is the six review questions.
 - `reviewable-runs.md` defines them.
 - `dossiers/` shows them answered.
 - `proofs/` tests whether the framework adds value on real captured evidence.
+- `validation-lab/` stress-tests the framework on explicitly synthetic cases.
 - `evaluation/run-review-checklist.md` reviews a run against them.
 - `templates/` gives you the record formats that answer them.
 
