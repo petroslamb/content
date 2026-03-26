@@ -56,7 +56,7 @@ That is why protocol talk only matters after topology discipline. MCP, A2A, and 
 
 ## Resources And References
 
-### [Multi-Agent Essay: Operating Agents IV: One Agent Is Not Enough](../multi-agent/04-multi-agent-v5.md)
+### [Multi-Agent Essay: Operating Agents IV: When a Second Agent Earns Its Keep](../multi-agent/04-multi-agent-v5.md)
 
 Read the essay first for the hard public claim: extra agents only earn their keep when they buy a real boundary.
 

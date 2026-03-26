@@ -6,13 +6,13 @@ The system was not forgetting facts. It was remembering them without governance.
 
 The team blamed retrieval first. They adjusted embeddings, chunking, and reranking. The problem persisted because the failure had started earlier in the chain. Every update had been added to the store. Nothing had been retired, consolidated, versioned, or downgraded. Old and new states now competed in the same memory space, and retrieval was faithfully returning semantically close text from an unmanaged pile.
 
-That is the practical memory problem. Memory is not storage. It is governance over what the agent is allowed to keep, retrieve, reuse, and forget across time.
+This is the memory problem that matters in production. Memory is not storage. It is governance over what the agent is allowed to keep, retrieve, reuse, and forget across time.
 
 ## The Context Window Is A Desk, Not A Filing Cabinet
 
 Teams get memory wrong in part because they use the same word for two very different things. The context window feels like memory because it contains what the model is using right now. But it behaves nothing like durable memory. It is fast, scarce, and volatile. It is where the agent works, not where it should try to remember its life.
 
-This is where *MemGPT* still provides the cleanest operating metaphor. Its enduring contribution is not "more memory." It is explicit memory movement. Active context behaves like scarce fast memory. Durable facts, past episodes, and reusable routines live elsewhere and must be brought back deliberately when the current task needs them (Packer et al.).
+*MemGPT* still provides the cleanest operating metaphor. Its enduring contribution is not "more memory." It is explicit memory movement. Active context behaves like scarce fast memory. Durable facts, past episodes, and reusable routines live elsewhere and must be brought back deliberately when the current task needs them (Packer et al.).
 
 Once that separation is explicit, the design problem changes. The question stops being how large a context window should be and becomes what belongs in active context now, what should be retrieved on demand, and what should no longer be treated as authoritative at all.
 
@@ -79,7 +79,7 @@ The coding-agent version of this lesson is stark. Repository conventions belong 
 | Episodic | Prior runs, corrections, failures, approvals | Repeated mistakes and no historical learning | Store events with outcome and context |
 | Procedural | Reusable routines, templates, code, playbooks | Endless rediscovery of solved work | Promote only after repeated validated success |
 
-The point is not that every team needs a complicated database schema. The point is that policy documents should not be managed like correction logs, and correction logs should not be managed like reusable skills.
+Policy documents should not be managed like correction logs, and correction logs should not be managed like reusable skills.
 
 ## What A Governed Memory Layer Looks Like
 
@@ -88,6 +88,10 @@ The enduring memory lesson is that retrieval quality is downstream of governance
 That is why the practical center of the chapter is conservative. Start with typed layers, explicit write policy, provenance, freshness, and forgetting. Graph-heavy retrieval and other richer escalations matter when relational structure is the real bottleneck. They should not be the first place a team hides from the harder governance problem.
 
 Memory is not the art of keeping more. It is the discipline of keeping the right things in the right form for the right length of time.
+
+The next essay picks up where this one stops. Once continuity is governed, the harder question is how the system should think through work before it turns remembered context into consequential action.
+
+One more boundary matters later. Memory governance is about useful persistence under normal operation. Safety asks what happens when the wrong content tries to persist, move, or gain authority inside the same layers. That is a different problem, and it belongs to a later chapter.
 
 ## Resources And References
 

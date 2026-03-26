@@ -8,7 +8,7 @@ Over the next month they edited the prompt repeatedly. One revision seemed to he
 
 Nothing important improved because the team was tuning the easiest visible surface before it had stabilized the objective. There was no fixed evaluation set, no clean failure taxonomy, no agreement about whether latency and correction rate belonged inside the goal, and no serious view of whether the underlying issue lived in schema design, retrieval quality, or prompt wording at all.
 
-That is the practical anti-pattern of agent optimization: prompt churn without measurement.
+The anti-pattern is simple: prompt churn without measurement.
 
 The title matters more than it first appears to. The workflow is the object. Not the prompt in isolation. Not the node that happens to be easiest to edit. The workflow.
 
@@ -20,7 +20,7 @@ They need to freeze an evaluation set.
 
 Without a stable task set and known-good outcomes, there is no durable signal against which a change can be judged. There is only recency bias, taste, and anecdote. The last ugly incident gets more influence than the other fifty tasks that quietly improved or degraded.
 
-That is why *OPRO* matters conceptually even if many teams will never run the exact method. The important lesson is not merely that prompts can be optimized by search. It is that optimization presupposes an objective and a repeated evaluation loop (Yang et al.). The same discipline sits underneath judge-based work such as *MT-Bench* and *Chatbot Arena*, which is useful only when the scoring layer itself is calibrated instead of treated as magic (Zheng et al.).
+*OPRO* matters conceptually even if many teams will never run the exact method. The useful lesson is not merely that prompts can be optimized by search. It is that optimization presupposes an objective and a repeated evaluation loop (Yang et al.). The same discipline sits underneath judge-based work such as *MT-Bench* and *Chatbot Arena*, which is useful only when the scoring layer itself is calibrated instead of treated as magic (Zheng et al.).
 
 Once that is clear, many supposed optimization debates become easier to settle. The prompt might not be the problem. The workflow might be reasoning over weak evidence. The output schema might be turning a decent answer into downstream failure. The routing might be pushing the wrong cases through a brittle path. The approval boundary might be firing constantly because the system is poorly scoped, not because the reviewer is conservative.
 
@@ -36,26 +36,15 @@ regression_guard: "reject if score < 0.89 or approval_rate > 0.12"
 
 That row is humble on purpose. It fixes the object of argument. Once a case has an owner, a baseline, and a regression guard, a prompt edit stops being a vibes discussion and becomes a testable change.
 
-## Contracts Before Cleverness
+## The Intervention Ladder
 
-The most common optimization mistake is to polish language before fixing interfaces.
+1. Lock the evaluation set and the regression guard. If you cannot say what counts as better, you are not optimizing yet.
 
-If the output schema is weak, downstream consumers will break no matter how graceful the prose becomes. If the tool description is vague, better prompting may only disguise bad routing. If retrieval quality is poor, the workflow may become more articulate while remaining wrong. If retries are badly configured, the system may look more confident while becoming more expensive.
+2. Fix contracts and evidence before wording. Tighten schemas. Clean up retrieval. Repair tool descriptions and routing. If the workflow is fed weak evidence or emits brittle outputs, nicer prose only disguises the real problem.
 
-This is why the blueprint's conservative order matters so much. Improve the cheapest and safest surfaces first: schema quality, retrieval configuration, tool descriptions, routing, and obvious contract failures. Only then does prompt refinement become a serious optimization move.
+3. Refine prompts only after the surrounding interfaces stop lying to you. Prompt work is real, but it becomes serious only once the signal is clean enough that local improvements can be distinguished from drift.
 
-The cheapest fix is often the one the team skipped because it did not look like optimization.
-
-## Signal To First Intervention Map
-
-| Signal you see | First intervention | Why it comes first |
-|---|---|---|
-| Results feel inconsistent but no one can prove regression | Build an evaluation set and baseline metrics | Without a stable objective, every change is guesswork |
-| Downstream systems reject otherwise decent answers | Tighten schemas and contracts | A cleaner interface removes whole classes of failure cheaply |
-| The system reasons over weak or irrelevant evidence | Improve retrieval and tool configuration | Better evidence beats better wording |
-| The answers are close but consistently misframed | Tune prompts and tool descriptions | The prompt layer finally has a clean signal |
-| The workflow fails in patterned ways across layers | Rework decomposition or topology | Structural change is now justified by evidence |
-| The system is stable and well measured | Add bounded feedback loops | Only now does self-improvement have a trustworthy target |
+4. Add bounded feedback loops and structural search late. *TextGrad*, *Reflexion*, *Voyager*, *AFLOW*, and *GPTSwarm* become meaningful only after the simpler surfaces are already stable enough to deserve improvement.
 
 The order is conservative because most systems do not fail from insufficient ambition. They fail from premature complexity.
 
@@ -87,9 +76,7 @@ The practical guide places optimization earlier in the architecture stack than t
 
 A system that cannot reconstruct its action traces, govern memory, localize reasoning failures, justify role splits, or explain its safety boundaries is not ready for serious optimization. It is still trying to become legible.
 
-Publicly, optimization is one of the easiest subjects to get wrong because it flatters the reader into thinking improvement begins once the workflow exists. In reality, optimization only becomes serious after action boundaries, memory policy, reasoning scaffolds, human approvals, and safety controls are already legible enough to be measured. Otherwise the team is tuning a system it does not yet understand.
-
-That is why this piece works as a bonus rather than a finale of the core run. The real lesson is not "optimize last because optimization is unimportant." The real lesson is "optimize after the architecture is reviewable enough that improvement means something."
+That is why this piece works as a bonus rather than another core chapter. It is a coda for workflows whose action traces are reconstructible, whose memory policy is governed, whose reasoning stack is explicit, whose role boundaries are justified, and whose trust model is already visible. Before that point, optimization mostly accelerates confusion.
 
 ## What Real Improvement Looks Like
 

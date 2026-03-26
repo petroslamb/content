@@ -1,72 +1,62 @@
-# Operating Agents IV: One Agent Is Not Enough
+# Operating Agents IV: When a Second Agent Earns Its Keep
 
-A team built a seven-role committee to handle customer escalation workflow: a planner, a researcher, a writer, a reviewer, an editor, a compliance checker, and a human approver. Each role had an elaborate description. The system produced slow, meandering conversations across roles. Six months in, no one could localize failures. Handoffs were free-form chat. Authority was unclear. Artifacts were not typed. The multi-agent upgrade made the system harder to govern, not more capable.
+Multi-agent systems solve three different problems, and most disappointing multi-agent systems are built by confusing them. A second agent might buy you a permission boundary. It might buy you an independent review. It might buy you a typed handoff between genuinely different stages of work. Those are different architectures with different costs, controls, and failure modes.
 
-That is the multi-agent trap. The public story about multi-agent systems is still badly distorted by the way the term is used. It is often presented as a raw capability upgrade, as though several agents naturally imply more intelligence, more creativity, or more autonomy than one. The practical literature says something stricter. A multi-agent system is not one idea. It is an architectural decision to buy a boundary that a single-agent workflow could not provide cleanly.
+That distinction matters because teams still talk about multi-agent systems as though they were one upgrade. They are not. A reviewer overlay is not a staged pipeline. A staged pipeline is not a permission split. When those designs get blurred, the system acquires more roles without acquiring a reason.
 
-If you do not know which boundary the extra agent buys you, you are probably building theater.
+Once a single-agent workflow has explicit decomposition, grounded reasoning, and verification, the next question is narrower than the field usually admits. What real boundary would a second role buy?
 
-## Exactly Three Reasons To Split
+If you do not know the answer, you are probably building theater.
 
-A second agent does not create free intelligence. It creates another handoff, another state boundary, another evaluation point, and another place where ambiguity can either be reduced or multiplied. That means every extra agent imposes coordination debt. If the handoff is typed and the authority boundary is real, the debt may be worth paying. If the handoff is conversational and the roles are mostly decorative, the system becomes slower, harder to audit, and harder to fix.
+## Architecture One: A Permission Boundary
 
-The three legitimate reasons to add agents are fundamentally different architectures.
+A second agent does not create free intelligence. It creates another handoff, another state boundary, another evaluation point, and another place where ambiguity can either be reduced or multiplied. That means every extra agent imposes coordination debt. The split only earns its keep if it changes authority in a way that matters.
 
-The first is role separation. An executor should not necessarily hold the same permissions as a reviewer. A planner may need broad read access but no write authority. A compliance or approval role may need independence precisely because accountability is the point. In those cases the extra role is not there to sound different. It is there to make the authority structure explicit.
+This is the cleanest reason to separate roles. An executor should not necessarily hold the same permissions as a reviewer. A planner may need broad read access but no write authority. A compliance or approval role may need independence precisely because accountability is the point. In those cases the extra role is not there to sound different. It is there to make the authority structure explicit.
 
-The second is reliability through critique. Debate systems and reviewer overlays can help when the first pass suffers from predictable blind spots, when the cost of a bad output is high enough to justify another view, or when disagreement itself surfaces useful error signals. *MAD* and *RECONCILE* matter here because they show that multiple agents can improve reasoning quality when the task truly benefits from structured disagreement and reconciliation (Liang et al.; Chen et al.).
+This is also where the human role often matters more than the fifth synthetic specialist. Approval, policy judgment, exception handling, and accountability do not disappear because the workflow has become more elaborate. In many serious systems the human is the boundary the rest of the architecture is trying to protect. A human approver is not an embarrassing leftover from a less autonomous era. In many workflows that role is part of the design's purpose.
 
-The third is task decomposition through artifacts. Some workflows really do have stages that deserve different local contexts and different deliverables. A planner writes a spec. A retriever assembles an evidence packet. An executor produces an artifact against that evidence. A reviewer checks the result against explicit criteria. The value is not several personalities talking. The value is several stages exchanging typed objects.
+If the split does not change who is allowed to do what, it probably is not a permission architecture at all.
 
-## Handoffs Are The Architecture
+## Architecture Two: Independent Critique
 
-The most important choice in a multi-agent system is not the role names. It is the form of the handoff.
+Sometimes the first pass is not unsafe because it had the wrong permissions. It is unsafe because it has predictable blind spots.
 
-A research team learned this after turning one reporting agent into five roles. Searcher, summarizer, synthesizer, critic, and writer all had thoughtful prompts. Median runtime more than doubled. More damaging, postmortems that used to take minutes began consuming half an afternoon because drift could enter at several conversational handoffs before anyone could localize it. The critic often noticed something real, but too late to show where the error had actually entered.
+That is where critique earns its keep. Debate systems and reviewer overlays can help when the first pass regularly misses one class of issue, when the cost of a bad output is high enough to justify another view, or when disagreement itself surfaces a useful error signal. *MAD* and *RECONCILE* matter here because they show that multiple agents can improve reasoning quality when the task truly benefits from structured disagreement and reconciliation (Liang et al.; Chen et al.).
 
-The split had not bought a meaningful boundary. It had bought more narration.
+This architecture is narrower than multi-agent marketing suggests. Many teams deploy reviewer agents where a deterministic verification pass would have been cheaper, faster, and easier to govern. Critique is not fake. It is just not the answer to every weak workflow. If the reviewer mostly paraphrases, if latency rises while quality barely moves, or if the disagreement never changes the decision, the system is paying coordination debt for ceremony.
 
-Free-form conversation is seductive because it is natural to prototype. It is also the fastest route to ambiguity. One role passes along a message with mixed state, assumptions, and conclusions. The next role has to infer what matters, what is binding, and what is mere context. By the time the workflow fails, the team can no longer say which boundary actually failed because no boundary was explicit enough to inspect.
+Independent critique is real when the second view changes what evidence gets challenged, what standard gets applied, or what failure becomes visible.
 
-Typed artifact handoffs are the stricter alternative. A planner emits a spec. A retriever emits an evidence packet. A reviewer emits a pass-fail record. The receiving role does not have to reconstruct intent from prose. It receives a contract.
+## Architecture Three: Typed Artifact Handoffs
 
-That is the architecture. The roles are secondary.
+Some workflows really do have stages that deserve different local contexts and different deliverables. A planner writes a spec. A retriever assembles an evidence packet. An executor produces an artifact against that evidence. A reviewer checks the result against explicit criteria.
+
+The value is not that several personalities are talking. The value is that several stages are exchanging typed objects.
+
+That is why handoffs are the architecture. A spec, evidence packet, patch, draft, or pass-fail record can be reviewed, versioned, audited, and rejected. A free-form message that mixes instructions, evidence, assumptions, and tentative conclusions forces the receiving role to reconstruct intent from prose. Once the workflow fails, the team can no longer say where the failure entered because no boundary was explicit enough to inspect.
+
+*MetaGPT* and *ChatDev* matter most where they push multi-agent design toward structured outputs and legible stages rather than toward role-play with better branding (Hong et al.; Qian et al.). The deeper lesson is not about software-team theater. It is about typed artifacts as control surfaces.
 
 ## The AutoGen Warning
 
 *AutoGen* made multi-agent conversation much easier to program, which is a real contribution. It lowered the barrier to experimenting with agent interaction patterns, human-in-the-loop turns, and tool-augmented roles (Wu et al.).
 
-It is also a useful warning. When conversation becomes the primary fabric of coordination, it becomes easy to let free-form exchange substitute for interface design. One role passes a long message that mixes instructions, evidence, assumptions, and tentative conclusions. The next role has to infer what is binding, what is noise, and what counts as task state. By the time the system fails, nobody can localize where the failure entered because the boundary between stages was never explicit enough to inspect.
+It is also a warning. When conversation becomes the primary fabric of coordination, it becomes easy to let free-form exchange substitute for interface design. One role passes a long message that mixes instructions, evidence, assumptions, and tentative conclusions. The next role has to infer what is binding, what is noise, and what counts as task state. By the time the system fails, nobody can localize where the failure entered because the boundary between stages was never explicit enough to inspect.
 
 The teams that succeed with multi-agent systems are usually the ones that treat conversation as a means to an end rather than the architecture itself.
 
-## Multi-Agent Decision Matrix
+## Keep The Default Single
 
-| Which problem are you solving? | Architecture pattern | Signals you chose wrong |
-|---|---|---|
-| Role separation | Distinct agents with bounded authority and auditable execution | Roles share the same permissions and the split changes nothing important |
-| Reliability through critique | Reviewer, debate, or consensus overlay with explicit disagreement | The reviewer paraphrases, latency rises, and quality barely moves |
-| Task decomposition through artifacts | Typed pipeline with specs, evidence packets, drafts, patches, or reports | Handoffs are long free-form messages and failure localization is impossible |
-
-If you cannot map your multi-agent system to one of these patterns, you probably have not bought a boundary. You have bought coordination debt without architectural benefit.
-
-## The Human Role Usually Matters More Than The Fifth Agent
-
-The most important multi-agent design decision is often where the human sits, not how many models are involved.
-
-Approval, policy judgment, exception handling, and accountability do not disappear because the workflow has become more elaborate. In many serious systems the human is the real boundary that keeps critique honest, exceptions reviewable, and irreversible steps accountable. A human approver is not an embarrassing leftover from a less autonomous era. In many workflows that role is part of the architecture's point.
-
-This is one reason typed artifact handoffs matter so much. A human can review a spec, a patch, an evidence packet, or a pass-fail report far more reliably than a drifting conversation between synthetic roles.
-
-## The Boundary Test
-
-The deepest practical contribution of the multi-agent literature is not that many roles can talk to each other. It is that boundaries can be made visible. *MetaGPT* and *ChatDev* matter most where they push multi-agent design toward structured outputs and legible stages rather than toward role-play with better branding (Hong et al.; Qian et al.).
+The deepest practical contribution of the multi-agent literature is not that many roles can talk to each other. It is that boundaries can be made visible.
 
 That is why the default should stay strict. Start with one agent, bounded tools, and a clear control loop. Add a second role only when it buys a permission boundary, an independent check, or a typed handoff that a single-agent workflow cannot provide cleanly.
 
-The escalation rule is just as strict. If the single-agent workflow is failing, diagnose the failure before you split it. Teams often compensate for weak decomposition, poor retrieval, or vague artifacts by adding more agents. That move usually makes the diagnosis harder.
+The escalation rule is strict for the same reason. If the single-agent workflow is failing, diagnose the failure before you split it. Teams often compensate for weak decomposition, poor retrieval, or vague artifacts by adding more agents. That move usually makes the diagnosis harder.
 
 If the split does not buy a real boundary, keep the system single.
+
+The next essay closes the loop on that judgment. Once roles, handoffs, memory, and tools all exist, the question stops being how to coordinate them and becomes how to keep the wrong content from moving through them.
 
 ## Resources And References
 
