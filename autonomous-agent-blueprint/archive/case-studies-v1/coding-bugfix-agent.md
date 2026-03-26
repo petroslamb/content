@@ -1,6 +1,6 @@
 # Worked Case Study: Coding Bugfix Agent
 
-> Historical note: This v1 packet-oriented case study was superseded by [`../../reviewable-runs.md`](../../reviewable-runs.md) and [`../../case-studies/coding-bugfix-agent/README.md`](../../case-studies/coding-bugfix-agent/README.md).
+> Historical note: This v1 packet-oriented case study was superseded by [`../../core/reviewable-runs.md`](../../core/reviewable-runs.md) and [`../../implementation/case-studies/coding-bugfix-agent/README.md`](../../implementation/case-studies/coding-bugfix-agent/README.md).
 
 This case applies the coding reference architecture to a concrete repository task: diagnosing a failing test, patching the implementation, rerunning checks, and presenting a reviewable diff for approval.
 
@@ -11,7 +11,7 @@ Read this file in four passes:
 1. read `Problem and operating constraints` to see the scoped engineering task and why inspection comes first
 2. read `Default architecture selected` plus `Why this architecture wins here` to map the case back to the coding blueprint
 3. open the artifact bundle in [`artifacts/coding-bugfix-agent/`](artifacts/coding-bugfix-agent/) to follow inspect -> patch -> test -> approval
-4. finish with `Failure review` and [`../../evaluation/failure-mode-catalog.md`](../../evaluation/failure-mode-catalog.md) to see how a seemingly good patch can still fail review
+4. finish with `Failure review` and [`../../implementation/evaluation/failure-mode-catalog.md`](../../implementation/evaluation/failure-mode-catalog.md) to see how a seemingly good patch can still fail review
 
 ## Problem and operating constraints
 
@@ -19,9 +19,9 @@ The agent is assigned a bug where invoices with a `0%` discount are serialized i
 
 ## Default architecture selected
 
-This case instantiates the abstract coding architecture in [`../../use-cases/coding-agent.md`](../../use-cases/coding-agent.md). It adopts the default choices from [`../../practical-chapter-blueprints/01-memory-blueprint.md`](../../practical-chapter-blueprints/01-memory-blueprint.md), [`../../practical-chapter-blueprints/02-reasoning-planning-blueprint.md`](../../practical-chapter-blueprints/02-reasoning-planning-blueprint.md), [`../../practical-chapter-blueprints/03-action-tool-use-blueprint.md`](../../practical-chapter-blueprints/03-action-tool-use-blueprint.md), and [`../../practical-chapter-blueprints/06-safety-blueprint.md`](../../practical-chapter-blueprints/06-safety-blueprint.md).
+This case instantiates the abstract coding architecture in [`../../implementation/use-cases/coding-agent.md`](../../implementation/use-cases/coding-agent.md). It adopts the default choices from [`../../core/practical-chapter-blueprints/01-memory-blueprint.md`](../../core/practical-chapter-blueprints/01-memory-blueprint.md), [`../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`](../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md), [`../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`](../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md), and [`../../core/practical-chapter-blueprints/06-safety-blueprint.md`](../../core/practical-chapter-blueprints/06-safety-blueprint.md).
 
-The source basis is [`../../papers/swe_agent.md`](../../papers/swe_agent.md), [`../../papers/react.md`](../../papers/react.md), [`../../papers/self_refine.md`](../../papers/self_refine.md), [`../../papers/chain_of_verification.md`](../../papers/chain_of_verification.md), and [`../../papers/toolemu.md`](../../papers/toolemu.md).
+The source basis is [`../../reference/papers/swe_agent.md`](../../reference/papers/swe_agent.md), [`../../reference/papers/react.md`](../../reference/papers/react.md), [`../../reference/papers/self_refine.md`](../../reference/papers/self_refine.md), [`../../reference/papers/chain_of_verification.md`](../../reference/papers/chain_of_verification.md), and [`../../reference/papers/toolemu.md`](../../reference/papers/toolemu.md).
 
 The matching artifact bundle lives in [`artifacts/coding-bugfix-agent/`](artifacts/coding-bugfix-agent/).
 
@@ -33,19 +33,19 @@ The design is intentionally conservative: inspect first, patch second, test thir
 
 ## Alternatives rejected
 
-- Editing before inspection was rejected because the task requires file scope, reproduction, and hypothesis formation before any code changes are justified; basis: [`../../use-cases/coding-agent.md`](../../use-cases/coding-agent.md), [`../../papers/swe_agent.md`](../../papers/swe_agent.md).
-- Browser-first repo interaction was rejected because the issue lives in executable code and tests, so web navigation would add surface area without improving observability or verification; basis: [`../../practical-chapter-blueprints/03-action-tool-use-blueprint.md`](../../practical-chapter-blueprints/03-action-tool-use-blueprint.md), [`../../papers/swe_agent.md`](../../papers/swe_agent.md), [`../../papers/webagent.md`](../../papers/webagent.md).
-- Unrestricted optimization or auto-merge was rejected because the agent already has mutating power inside the repo, so merge and self-improvement boundaries must remain human-governed; basis: [`../../practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md`](../../practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md), [`../../practical-chapter-blueprints/06-safety-blueprint.md`](../../practical-chapter-blueprints/06-safety-blueprint.md), [`../../papers/toolemu.md`](../../papers/toolemu.md).
+- Editing before inspection was rejected because the task requires file scope, reproduction, and hypothesis formation before any code changes are justified; basis: [`../../implementation/use-cases/coding-agent.md`](../../implementation/use-cases/coding-agent.md), [`../../reference/papers/swe_agent.md`](../../reference/papers/swe_agent.md).
+- Browser-first repo interaction was rejected because the issue lives in executable code and tests, so web navigation would add surface area without improving observability or verification; basis: [`../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`](../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md), [`../../reference/papers/swe_agent.md`](../../reference/papers/swe_agent.md), [`../../reference/papers/webagent.md`](../../reference/papers/webagent.md).
+- Unrestricted optimization or auto-merge was rejected because the agent already has mutating power inside the repo, so merge and self-improvement boundaries must remain human-governed; basis: [`../../core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md`](../../core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md), [`../../core/practical-chapter-blueprints/06-safety-blueprint.md`](../../core/practical-chapter-blueprints/06-safety-blueprint.md), [`../../reference/papers/toolemu.md`](../../reference/papers/toolemu.md).
 
 ## Trust boundaries and approval gates
 
 The main trust boundary here is between repository evidence and speculation. Logs, failing tests, and inspected files are evidence; generated patch text is not trusted until tests and review pass. Inspection commands are separated from mutating commands, and merge remains outside the agent's permissions.
 
-Approval happens after the test run and diff summary are complete. The reviewer sees the failing symptom, the patch rationale, the commands that were run, and the exact tests that passed. This is a direct application of the review logic in [`../../evaluation/architecture-review-checklist.md`](../../evaluation/architecture-review-checklist.md).
+Approval happens after the test run and diff summary are complete. The reviewer sees the failing symptom, the patch rationale, the commands that were run, and the exact tests that passed. This is a direct application of the review logic in [`../../implementation/evaluation/architecture-review-checklist.md`](../../implementation/evaluation/architecture-review-checklist.md).
 
 ## Evaluation plan
 
-The architecture is checked against [`../../evaluation/architecture-review-checklist.md`](../../evaluation/architecture-review-checklist.md) and the relevant failure modes in [`../../evaluation/failure-mode-catalog.md`](../../evaluation/failure-mode-catalog.md). The main acceptance criteria are:
+The architecture is checked against [`../../implementation/evaluation/architecture-review-checklist.md`](../../implementation/evaluation/architecture-review-checklist.md) and the relevant failure modes in [`../../implementation/evaluation/failure-mode-catalog.md`](../../implementation/evaluation/failure-mode-catalog.md). The main acceptance criteria are:
 
 - the agent starts with inspection, not editing
 - the patch stays within the scoped files
@@ -63,7 +63,7 @@ The good-path artifact bundle for this case is:
 
 ## Failure review
 
-The plausible failure for this default is a false sense of safety: the agent diagnoses the bug correctly, patches it, and passes the targeted regression test, but it skips a broader invoice-serialization test and introduces a rounding regression in a nearby path. This maps to `Irreversible action without enough evidence` and `Prompt churn without measurement` in [`../../evaluation/failure-mode-catalog.md`](../../evaluation/failure-mode-catalog.md) by way of insufficient verification scope rather than bad reasoning alone.
+The plausible failure for this default is a false sense of safety: the agent diagnoses the bug correctly, patches it, and passes the targeted regression test, but it skips a broader invoice-serialization test and introduces a rounding regression in a nearby path. This maps to `Irreversible action without enough evidence` and `Prompt churn without measurement` in [`../../implementation/evaluation/failure-mode-catalog.md`](../../implementation/evaluation/failure-mode-catalog.md) by way of insufficient verification scope rather than bad reasoning alone.
 
 The failure review artifact for this case lives at [`artifacts/coding-bugfix-agent/failure-review.md`](artifacts/coding-bugfix-agent/failure-review.md). The review shows that a stronger verification contract, especially a broader regression suite and explicit diff risk labeling, would have reduced the miss.
 

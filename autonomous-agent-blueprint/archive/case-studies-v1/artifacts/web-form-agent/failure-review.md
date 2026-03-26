@@ -10,14 +10,14 @@ This is a classic web-agent failure: the environment changes under the agent, an
 
 ## Taxonomy mapping
 
-- [`../../../../evaluation/failure-mode-catalog.md`](../../../../evaluation/failure-mode-catalog.md): `Observation-action confusion`
-- [`../../../../evaluation/failure-mode-catalog.md`](../../../../evaluation/failure-mode-catalog.md): `Indirect prompt injection`
+- [`../../../../implementation/evaluation/failure-mode-catalog.md`](../../../../implementation/evaluation/failure-mode-catalog.md): `Observation-action confusion`
+- [`../../../../implementation/evaluation/failure-mode-catalog.md`](../../../../implementation/evaluation/failure-mode-catalog.md): `Indirect prompt injection`
 
 ## Checklist controls that should catch it
 
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Is ReAct or an equivalent loop used when tools or environment state matter?`
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Are irreversible actions guarded by deterministic checks and human approval?`
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Are inter-agent messages, files, and screenshots treated as untrusted unless proven otherwise?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Is ReAct or an equivalent loop used when tools or environment state matter?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Are irreversible actions guarded by deterministic checks and human approval?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Are inter-agent messages, files, and screenshots treated as untrusted unless proven otherwise?`
 
 ## What would reduce the failure
 
