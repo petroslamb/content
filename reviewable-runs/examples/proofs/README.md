@@ -28,4 +28,9 @@ Read in this order:
 
 This folder should stay small. Add proof artifacts only when they materially strengthen the framework's operational case.
 
+Real-trace proofs in this folder rely on both:
+
+- the six canonical review records
+- the optional raw-artifact support layer used to preserve source manifests, excerpts, changed-surface summaries, verification outputs, and boundary records
+
 If you want the current proof set interpreted and critiqued, use `../../investigation/README.md`.

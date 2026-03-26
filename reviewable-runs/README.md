@@ -37,6 +37,8 @@ The point is not six markdown files. The point is reconstructability.
 
 ## Risk Tiers
 
+Meaningful review begins with a bounded run. If the task or stop boundary splits, slice the run before you apply the risk tiers below.
+
 - low risk: lightweight reconstruction is enough if task, actions, and basic checking can be recovered without guesswork
 - medium risk: make task, trace, evidence, and verification explicit
 - high risk: add explicit approval and failure-review capability

@@ -18,15 +18,43 @@ Good triggers:
 
 Do not use the heavy version for trivial low-risk work.
 
+## Choose The Run Unit First
+
+Reviewable Runs applies to one bounded run, not one whole conversation by default.
+
+Choose the run unit before you choose the risk tier.
+
+Accepted stop-boundary types:
+
+- handoff
+- commit
+- merge
+- release
+- submit
+- publish
+- explicit non-approval reason
+
+Default anti-pattern:
+
+- do not treat whole conversations or mega-sessions as one run unless the task, evidence, and stop condition are genuinely singular
+
 ## Daily Workflow
 
-1. Classify the run by risk.
-2. Decide the minimum record surface required.
-3. Capture or reconstruct the needed records.
-4. Review the run against the six questions.
-5. Approve, reject, revise, or escalate.
+1. Define or slice the run.
+2. Classify the run by risk.
+3. Decide the minimum record surface required.
+4. Capture or reconstruct the needed records.
+5. Review the run against the six questions.
+6. Approve, reject, revise, or escalate.
 
 That is the whole operating method.
+
+## Boundary Rules
+
+- one run = one objective + one stop boundary
+- if goals split, split the run
+- if approvals split, split the run
+- if the stop boundary is unclear, the run is not ready for review
 
 ## Minimum Record Surface By Risk
 
@@ -144,6 +172,12 @@ For a first deployment:
 - add governance records only where the action boundary justifies them
 
 This is enough to make the framework useful without turning it into bureaucracy.
+
+## When Not To Use One Packet
+
+Large sessions should be sliced into sub-runs before packet assembly.
+
+The March 26 framework-building session is the model here: it only became reviewable once it was separated into bounded sub-runs with distinct commit or handoff boundaries.
 
 ## What Not To Overdo
 

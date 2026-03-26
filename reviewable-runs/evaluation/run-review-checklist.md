@@ -15,6 +15,12 @@ The standard here is not whether a system emitted six markdown files. The standa
 
 ## Record Checks
 
+### Run Boundary
+
+- [ ] Is this actually one run rather than a bundle of multiple goals?
+- [ ] Is the stop boundary explicit?
+- [ ] Does the approval or handoff type match the run?
+
 ### Task Spec
 
 - [ ] Is the task boundary explicit?
@@ -56,6 +62,8 @@ The standard here is not whether a system emitted six markdown files. The standa
 ### Strong
 
 The run is reconstructable without guesswork and the records support real review.
+
+If the run boundary is unclear, the result cannot be `Strong`.
 
 ### Partial
 
