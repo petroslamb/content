@@ -109,7 +109,7 @@ This blueprint matters because it turns the post's workflow-level optimization t
 
 If you want the broader chapter and survey scope behind this essay, use the [companion note](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion.md) and the [series coverage map](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/operating-agents-coverage-map.md).
 
-### [Architecture Review Checklist](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/implementation/evaluation/architecture-review-checklist.md)
+### Architecture Review Checklist
 
 This checklist matters because optimization without reviewability turns into self-deception faster than improvement.
 

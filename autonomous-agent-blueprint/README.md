@@ -1,83 +1,61 @@
 # Autonomous Agent Blueprint
 
-This repo is a builder-first architecture manual for modern agent systems. It keeps the research corpus, the decision layer, the public essay package, and the applied examples in separate surfaces so readers can enter at the right depth.
+This repo is a builder-first architecture manual for modern agent systems. It keeps the public essay layer, the architecture layer, the literature layer, and the reference-architecture layer separate so the package stays usable instead of sprawling.
 
-## Start Here
+The package now stops at architecture and reference design. Worked examples, review frameworks, and other derivative material live elsewhere.
 
-- `START_HERE.md`
-- `REPOSITORY_ANALYSIS.md`
-- `core/agentic-architectures-blueprint.md`
-- `core/practical-chapter-blueprints/README.md`
+## Fastest Useful Path
 
-## Stable Surfaces
+If you are building, read in this order:
 
-- `essays/`: the public *Operating Agents* essay package, organized by topic with companions beside each essay.
-- `core/`: the builder-facing architecture spine, reviewability contract, and chapter blueprints.
-- `reference/`: the literature guide, distillation docs, source index, quality tracking, and paper notes.
-- `implementation/`: use cases, case studies, evaluation assets, and templates.
-- `notes/`: exploratory and working material that should not be the default path.
-- `archive/`: historical material kept for reference, not as the main route.
+1. `core/agentic-architectures-blueprint.md`
+2. `core/practical-chapter-blueprints/README.md`
+3. the chapter blueprint that matches your bottleneck
+4. the closest file in `implementation/use-cases/`
+5. the matching blueprint sections on verification, approval, and failure handling
 
-## Choose Your Path
-
-### If you are following the Operating Agents series
+If you are following the *Operating Agents* essays, read:
 
 1. `essays/README.md`
 2. `essays/launch-note/00-launch-note-v4.md`
-3. `essays/operating-agents-coverage-map.md`
-4. the matching topic `companion.md`
+3. the relevant topic essay
+4. the local `companion.md`
 5. the matching file in `core/practical-chapter-blueprints/`
 6. the matching file in `reference/papers/`
 
-### If you are building an agent
-
-1. `START_HERE.md`
-2. `core/agentic-architectures-blueprint.md`
-3. `core/practical-chapter-blueprints/README.md`
-4. the chapter blueprint that matches your bottleneck
-5. the closest file in `implementation/use-cases/`
-6. `core/reviewable-runs.md`
-7. the closest dossier in `implementation/case-studies/`
-8. `implementation/evaluation/architecture-review-checklist.md`
-9. `implementation/evaluation/failure-mode-catalog.md`
-
-### If you are writing about agent architectures
-
-1. `START_HERE.md`
-2. `core/agentic-architectures-blueprint.md`
-3. `reference/chapters-guide.md`
-4. `reference/practical-distillation.md`
-5. `reference/source-index.md`
-6. `reference/literature-quality.md`
-
-### If you are surveying the literature
-
-1. `START_HERE.md`
-2. `reference/source-index.md`
-3. `reference/literature-quality.md`
-4. `reference/papers/`
-5. `notes/`
-
 ## Repository Map
 
-### Entry Docs
-
 - `README.md`
-- `START_HERE.md`
-- `REPOSITORY_ANALYSIS.md`
 - `CHANGELOG.md`
 - `CONTRIBUTING.md`
 - `MAINTENANCE.md`
 - `BUILD_HISTORY.md`
-
-### Major Folders
-
 - `essays/`
 - `core/`
 - `reference/`
 - `implementation/`
 - `notes/`
-- `archive/`
+
+## Surface Roles
+
+- `essays/` is the public narrative layer.
+- `core/` is the architecture decision layer.
+- `reference/` is the literature and source-audit layer.
+- `implementation/use-cases/` is the reference-architecture layer.
+- `notes/` holds exploratory and working material that should not drive the default reading path.
+
+## What To Update When Research Moves
+
+This package is not meant to absorb every new paper. It should only change when newer research materially updates the guidance published in the original booklet on March 25, 2025.
+
+If a new source changes the package, the usual flow is:
+
+1. add or improve the paper note in `reference/papers/`
+2. update `reference/source-index.md`
+3. update `reference/literature-quality.md` if confidence or status changes
+4. update the relevant chapter blueprint if a decision rule shifts
+5. update the relevant use case if the architecture default shifts
+6. record the change in `CHANGELOG.md`
 
 ## What This Repo Optimizes For
 
@@ -85,9 +63,11 @@ This repo is a builder-first architecture manual for modern agent systems. It ke
 - named methods over vague clusters
 - bounded workflows over theatrical autonomy
 - decision rules over paper accumulation
-- reviewable runs over decorative traces
+- verification and failure analysis over decorative traces
 - evaluation and failure analysis over hype
 
-## Maintenance
+## Working Rules
 
-See `MAINTENANCE.md` for source intake rules, confidence policy, and update requirements for future additions.
+- `MAINTENANCE.md` explains the source-intake and update discipline.
+- `CONTRIBUTING.md` explains how to propose new notes, blueprint changes, and use cases.
+- `BUILD_HISTORY.md` records how the package was originally assembled.

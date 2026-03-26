@@ -1,6 +1,8 @@
 # Maintenance
 
-This repo is allowed to grow only if new material strengthens the decision system rather than just increasing the corpus size.
+This repo should change only when newer research materially updates the guidance published in the original booklet on March 25, 2025.
+
+The maintenance job is not "keep adding papers." The maintenance job is "track whether the last year of research changes the current defaults, alternatives, escalation rules, or confidence levels."
 
 ## Source Intake Rules
 
@@ -12,6 +14,17 @@ A new source qualifies for inclusion only if it does at least one of the followi
 - sharpens evaluation or safety practice for an existing architecture
 
 Do not add a source only because it is popular, recent, or adjacent.
+
+## Post-Publication Update Standard
+
+When reviewing work published after March 25, 2025, ask four questions:
+
+1. Does it change a default recommendation?
+2. Does it upgrade or downgrade an existing alternative?
+3. Does it expose a real gap in one of the six chapter blueprints?
+4. Does it materially change how one of the reference architectures should be composed?
+
+If the answer to all four is no, do not update the package.
 
 ## Named Method Rule
 
@@ -38,11 +51,24 @@ Only `Core` sources should drive default recommendations.
 
 ## Required Update Surfaces
 
-If a new source is added, the update must also modify:
+If a new source is added because it actually changes the package, the update must also modify:
 
 - `reference/source-index.md`
-- one comparison section or equivalent matrix in a chapter blueprint
+- the relevant note in `reference/papers/`
+- `reference/literature-quality.md` if confidence, status, or category changes
+- one comparison section or equivalent matrix in a chapter blueprint when the source affects method comparison
 - one relevant chapter blueprint or use-case document if the source materially changes guidance
+- `CHANGELOG.md`
+
+## Update Workflow
+
+Use this order:
+
+1. screen the source for actual decision impact
+2. add or improve the paper note
+3. update source index and quality tracking
+4. update the blueprint or use case only if the guidance changes
+5. record the package-level change in `CHANGELOG.md`
 
 ## Update Rules For Chapter Blueprints
 
@@ -70,6 +96,6 @@ If a new source is added, the update must also modify:
 Run this review whenever the repo changes materially:
 
 - confirm every `reference/papers/*.md` file appears in `reference/source-index.md`
-- confirm every core doc still routes cleanly from `README.md` and `START_HERE.md`
+- confirm every core doc still routes cleanly from `README.md`
 - confirm new sources updated a comparison asset and not only the corpus
 - confirm exploratory notes remain outside the default reading path

@@ -1,70 +1,35 @@
 # Changelog
 
-All notable changes to the repository will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) where applicable.
+This file records package-level changes that materially affect the architecture guidance, the literature base, or the reference architectures.
 
 ## [Unreleased]
 
-### Added
-- Companion note links to all six v4 essays (guide/action, guide/reasoning, guide/memory, guide/multi-agent, guide/safety, guide/optimization)
-- REPOSITORY_ANALYSIS.md references to practical-chapter-blueprints/README.md
-- Rewrite-ledger files moved to `notes/essay-evolution/` with clearer names
-- Topic-level READMEs planning (not yet created)
+### Changed
+- Consolidated root orientation into `README.md` and removed `START_HERE.md`, `REPOSITORY_ANALYSIS.md`, and the old cleanup plan.
+- Reduced the package back to architecture, literature, essays, use cases, and notes.
+- Removed the old internal worked-example, evaluation, template, and artifact-bundle layers after their extraction into a separate derivative package.
+- Tightened `MAINTENANCE.md` around post-March 25, 2025 research updates that actually change guidance.
+- Tightened `CONTRIBUTING.md` so contributions update the package only when they materially affect defaults, alternatives, or architecture composition.
 
-### Fixed
-- Corrected broken file references in root README.md: Operating Agents series now points to `guide/launch-note/00-launch-note-v4.md`
-- Updated root README.md "Repository Map" and "Publication Layering" sections to reflect topic subfolder organization
-- Fixed all v3→v4 references in guide/README.md (V4, V3, V2, and Draft Set tables now use correct subfolder paths)
-- Updated all six companion notes to link to v4 essays in their correct subfolders
-- Verified that essay subfolder structure is consistently documented
+### Removed
+- `START_HERE.md`
+- `REPOSITORY_ANALYSIS.md`
+- `REPO_CLEANUP_PLAN.md`
+- the former internal `implementation/case-studies/`, `implementation/evaluation/`, `implementation/templates/`, and `archive/case-studies-v1/` surfaces
+
+## [2026-03-26] - Architecture Package Cleanup
 
 ### Changed
-- None yet
+- Reorganized the package around four live surfaces: `essays/`, `core/`, `reference/`, and `implementation/use-cases/`.
+- Moved companions beside essays and cleaned the public essay layer.
+- Removed internal derivative-framework material so the package now stops at architecture and reference design.
 
-### Removed
-- None (empty artifacts folders retained; old essay versions remain in subfolders)
-
-## [2025-03-25] - Initial Public Release (v4 essays)
+## [2025-03-25] - Initial Public Release
 
 ### Added
-- Practical chapter blueprints (6 files in `practical-chapter-blueprints/`)
-- Guide essays v4 (6 topics, organized into subfolders: action, reasoning, memory, multi-agent, safety, optimization, launch-note)
-- Companion notes (6 files in `guide/companions/`)
-- Paper notes (80+ files in `papers/`)
-- Use cases (3 files)
-- Case studies (3 dossiers)
-- Evaluation assets (2 files)
-- Templates (5 files)
-- REPOSITORY_ANALYSIS.md (structural analysis)
-- MAINTENANCE.md (source intake rules)
-- BUILD_HISTORY.md (build notes)
-
-### Fixed
-- None (initial release)
-
-### Changed
-- None (initial release)
-
-### Removed
-- None (initial release)
-
-## [Earlier] - Pre-v4 Drafts (v1–v3)
-
-**Status**: Partially documented. The folder `guide/` retained all draft versions (v1, v2, v3, and original drafts) alongside v4 for archival reference. Conversion between versions is not fully tracked in this changelog; see rewrite-ledger files in `notes/essay-evolution/` for partial evolution notes.
-
-### Added (during draft phases)
-- Original near-public draft set (`*-v1.md` equivalents)
-- v2 rewrite package (`*-v2.md`) - clearer series pacing, stronger narrative differentiation
-- v3 rewrite package (`*-v3.md`) - publication candidate with fuller citations
-- v4 rewrite package (`*-v4.md`) - voice guide realignment, denser argument, inline citations
-
-### Fixed
-- Unknown (see notes/essay-evolution/ for partial change rationale)
-
-### Removed
-- None (all historic drafts retained in topic subfolders)
-
----
-
-**Note**: This changelog is incomplete for early drafts (v1–v3). If you need precise version-to-version change details for a specific essay, consult the rewrite-ledger files in `notes/essay-evolution/` or compare diffs across the draft files kept in each `guide/*/` subfolder.
+- Core architecture blueprint
+- Six practical chapter blueprints
+- Literature and source-index layer
+- Public essay package
+- Three reference use cases
+- Maintenance and build-history docs
