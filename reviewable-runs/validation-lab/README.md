@@ -54,3 +54,5 @@ Read in this order:
 7. one stress-test case
 
 This is not a proof layer and not a teaching dossier layer. It is a synthetic harness for testing the framework itself.
+
+If you want these synthetic results interpreted alongside the real proofs, use `../investigation/README.md`.

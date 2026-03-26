@@ -61,6 +61,7 @@ That path is the package front door.
 - `examples/`: what the framework looks like in practice
 - `evaluation/`: how to judge runs, architectures, and the framework itself
 - `templates/`: direct record templates plus a few supporting patterns
+- `investigation/`: advanced findings and tuning notes for framework builders
 - `validation-lab/`: advanced synthetic pressure-testing
 - `archive/`: background history only
 
@@ -75,6 +76,7 @@ Keep those separate mentally:
 
 - `examples/proofs/` shows that the framework can help on real runs, with the current flagship set indexed in `examples/proofs/real-run-index.md`
 - `examples/teaching/` shows what a clean reviewable run looks like
+- `investigation/` interprets the proof and validation evidence and distills tuning guidance
 - `validation-lab/` tests where the framework works, fails, and gets ambiguous
 - `archive/` is background, not the default path
 
@@ -94,7 +96,7 @@ The framework is strong as an operating idea and increasingly solid as a package
 - package maturity: high enough for public use
 - empirical maturity: still limited
 
-Today it has one real captured proof run, a clear operator model, and a synthetic validation harness. It is publishable as a practical framework. It is not yet a broad research-grade claim.
+Today it has multiple real captured proofs, a clear operator model, and a synthetic validation harness. It is publishable as a practical framework. It is not yet a broad research-grade claim.
 
 ## Non-Goals
 
