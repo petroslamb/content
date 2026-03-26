@@ -202,15 +202,17 @@ A system that has never been stressed at these interfaces is not safe enough to 
 
 ## Reading Sequence For These Chapters
 
-1. `papers/greshake_indirect_prompt_injection.md`
-2. `papers/injecagent.md`
-3. `papers/toolemu.md`
-4. `papers/agentpoison.md`
-5. `papers/poisonedrag.md`
-6. `papers/badrag.md`
-7. `papers/jamming.md`
-8. `papers/agentsmith.md`
-9. `papers/chain_of_verification.md`
+1. `../../essays/safety/05-safety-v5.md`
+2. `../../essays/safety/companion.md`
+3. `papers/greshake_indirect_prompt_injection.md`
+4. `papers/injecagent.md`
+5. `papers/toolemu.md`
+6. `papers/agentpoison.md`
+7. `papers/poisonedrag.md`
+8. `papers/badrag.md`
+9. `papers/jamming.md`
+10. `papers/agentsmith.md`
+11. `papers/chain_of_verification.md`
 
 ## Bottom Line
 

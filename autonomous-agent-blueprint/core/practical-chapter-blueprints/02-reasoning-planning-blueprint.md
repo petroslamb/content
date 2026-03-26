@@ -186,16 +186,18 @@ The right metric is not "how impressive the reasoning trace looks." It is whethe
 
 ## Reading Sequence For This Chapter
 
-1. `papers/react.md`
-2. `papers/least_to_most_prompting.md`
-3. `papers/step_back_prompting.md`
-4. `papers/llm_plus_p.md`
-5. `papers/self_refine.md`
-6. `papers/chain_of_verification.md`
-7. `papers/self_consistency.md`
-8. `papers/reflexion.md`
-9. `papers/tree_of_thoughts.md`
-10. `papers/lats.md`
+1. `../../essays/reasoning/02-reasoning-planning-v5.md`
+2. `../../essays/reasoning/companion.md`
+3. `papers/react.md`
+4. `papers/least_to_most_prompting.md`
+5. `papers/step_back_prompting.md`
+6. `papers/llm_plus_p.md`
+7. `papers/self_refine.md`
+8. `papers/chain_of_verification.md`
+9. `papers/self_consistency.md`
+10. `papers/reflexion.md`
+11. `papers/tree_of_thoughts.md`
+12. `papers/lats.md`
 
 ## Bottom Line
 
