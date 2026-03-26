@@ -102,22 +102,22 @@ This blueprint turns the essay's argument into defaults, escalation rules, and a
 
 The companion restores the wider action chapter: tool discovery and creation, action-learning frontiers, broader surface taxonomy, and the surrounding paper terrain that would have weakened the public essay's center.
 
-### [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) (2023)
+### [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761)
 
 Toolformer matters because it normalized the idea that tool use can be part of a model's operating pattern rather than a purely external wrapper.
 
-### [Gorilla: Large Language Model Connected with Massive APIs](https://arxiv.org/abs/2305.15334) (2023)
+### [Gorilla: Large Language Model Connected with Massive APIs](https://arxiv.org/abs/2305.15334)
 
 Gorilla matters because it makes tool use look like interface selection and argument construction rather than a mystical intelligence benchmark.
 
-### [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](https://arxiv.org/abs/2405.15793) (2024)
+### [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](https://arxiv.org/abs/2405.15793)
 
 SWE-agent matters because it shows how strong interfaces, replayability, and executable feedback change the reliability conversation once the system acts.
 
-### [BIRD: A Big Bench for Large-Scale Database Grounded Text-to-SQL](https://arxiv.org/abs/2305.03111) (2023) and [Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows](https://arxiv.org/abs/2411.07763) (2025)
+### [BIRD: A Big Bench for Large-Scale Database Grounded Text-to-SQL](https://arxiv.org/abs/2305.03111) and [Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows](https://arxiv.org/abs/2411.07763)
 
 These papers matter because they treat structured data work as a first-class action surface with real execution and observability constraints.
 
-### [A Real-World WebAgent with Planning, Long Context Understanding, and Program Synthesis](https://arxiv.org/abs/2307.12856) (2024) and [OmniParser for Pure Vision Based GUI Agent](https://arxiv.org/abs/2408.00203) (2024)
+### [A Real-World WebAgent with Planning, Long Context Understanding, and Program Synthesis](https://arxiv.org/abs/2307.12856) and [OmniParser for Pure Vision Based GUI Agent](https://arxiv.org/abs/2408.00203)
 
 These papers matter because they show the two most common escalation surfaces once typed digital interfaces run out: browser automation and GUI fallback.
