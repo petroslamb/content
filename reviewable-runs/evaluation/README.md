@@ -7,6 +7,7 @@ Use these files to judge a proposed architecture before implementation, during d
 - `run-review-checklist.md` is the direct six-question run review surface.
 - `architecture-readiness-checklist.md` asks whether a proposed system can support that run review surface in the first place.
 - `failure-mode-catalog.md` names recurring failure classes and the design responses that usually matter.
+- `../FRAMEWORK_EVALUATION.md` explains how to evaluate whether the framework itself is worth using.
 
 Only `run-review-checklist.md` maps one-to-one to the six review questions.
 

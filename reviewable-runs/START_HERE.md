@@ -9,8 +9,9 @@ If you only read five things, read these:
 1. `README.md`
 2. `ORIGIN_AND_GAP.md`
 3. `reviewable-runs.md`
-4. `dossiers/README.md`
-5. `evaluation/run-review-checklist.md`
+4. `proofs/coding-real-run/README.md`
+5. `proofs/coding-real-run/comparison.md`
+6. `evaluation/run-review-checklist.md`
 
 ## If You Are Testing The Core Claim
 
@@ -31,15 +32,30 @@ Read `reviewable-runs.md`, then `dossiers/comparison-matrix.md`, then the closes
 - `dossiers/coding-bugfix-agent/README.md`
 - `dossiers/web-form-agent/README.md`
 
+Then read `DOSSIER_STATUS.md` so you do not confuse synthetic examples with proof artifacts.
+
+## If You Want The Strongest Current Evidence
+
+Read in this order:
+
+1. `proofs/README.md`
+2. `proofs/coding-real-run/README.md`
+3. `proofs/coding-real-run/raw-artifacts/terminal-transcript.md`
+4. `proofs/coding-real-run/review-packet/task-spec.md`
+5. `proofs/coding-real-run/comparison.md`
+6. `proofs/failure-contrast/README.md`
+
 ## If You Want To Apply The Framework
 
 Read in this order:
 
 1. `reviewable-runs.md`
-2. `evaluation/run-review-checklist.md`
-3. `evaluation/architecture-readiness-checklist.md`
-4. `templates/README.md`
-5. the closest dossier
+2. `MINIMAL_VIABLE_REVIEWABLE_RUN.md`
+3. `IMPLEMENTATION_GUIDE.md`
+4. `evaluation/run-review-checklist.md`
+5. `evaluation/architecture-readiness-checklist.md`
+6. `templates/README.md`
+7. the closest dossier
 
 ## If You Want The Upstream Architecture First
 
@@ -56,6 +72,7 @@ The direct center of this package is the six review questions.
 
 - `reviewable-runs.md` defines them.
 - `dossiers/` shows them answered.
+- `proofs/` tests whether the framework adds value on real captured evidence.
 - `evaluation/run-review-checklist.md` reviews a run against them.
 - `templates/` gives you the record formats that answer them.
 
