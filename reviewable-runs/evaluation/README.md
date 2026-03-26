@@ -8,6 +8,8 @@ Use it for three different judgments:
 - architecture readiness: can this system support reviewable runs at all
 - framework evaluation: is Reviewable Runs earning its cost in practice
 
+Run review begins with run-boundary clarity. The checklist in this folder assumes one bounded run, not one whole session, project, or conversation thread.
+
 ## Files
 
 - `run-review-checklist.md` is the direct six-question instrument for one run.
