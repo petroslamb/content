@@ -11,11 +11,7 @@ Use this architecture when the agent is expected to:
 - collect evidence across pages
 - operate in partially structured but unstable interfaces
 
-## Worked Example
-
-Read [`../../core/reviewable-runs.md`](../../core/reviewable-runs.md) first, then see [`../case-studies/web-form-agent/README.md`](../case-studies/web-form-agent/README.md) for a concrete browser dossier with runtime records, governance records, and a web-specific failure analysis.
-
-The worked example demonstrates review questions answered for a web run, not merely a set of files produced for show.
+Concrete worked examples are intentionally out of scope here. This file stays at the architecture level.
 
 ## Adopted Chapter Defaults
 

@@ -80,6 +80,17 @@ Local research corpus on foundation agents organized into a practical architectu
 
 Start with: `autonomous-agent-blueprint/README.md`
 
+### [`reviewable-runs/`](./reviewable-runs/)
+
+Standalone framework package for making important agent runs inspectable, reviewable, and governable after execution.
+
+- Canonical model: `reviewable-runs.md`
+- Worked example layer: `dossiers/`
+- Review instruments: `evaluation/`
+- Record templates and support patterns: `templates/`
+
+Start with: `reviewable-runs/README.md`
+
 ### [`hardware_compatibility_architecture_2023_2025/`](./hardware_compatibility_architecture_2023_2025/)
 
 Published research project: **What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023-2025)**. This package studies why GPU-friendly architectures dominate production and includes the associated hardware friction methodology and dataset.

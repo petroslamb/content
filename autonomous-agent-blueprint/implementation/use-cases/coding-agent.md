@@ -12,11 +12,7 @@ Use this architecture when the agent is expected to:
 - propose or apply bounded fixes
 - produce reviewable diffs
 
-## Worked Example
-
-Read [`../../core/reviewable-runs.md`](../../core/reviewable-runs.md) first, then see [`../case-studies/coding-bugfix-agent/README.md`](../case-studies/coding-bugfix-agent/README.md) for a concrete diagnose-patch-test-review dossier with runtime records and governance records.
-
-The worked example demonstrates review questions answered for a coding run, not merely a set of files produced for show.
+Concrete worked examples are intentionally out of scope here. This file stays at the architecture level.
 
 ## Adopted Chapter Defaults
 

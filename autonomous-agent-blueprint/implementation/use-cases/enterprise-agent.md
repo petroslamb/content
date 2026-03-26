@@ -11,11 +11,7 @@ Use this architecture when the agent is expected to:
 - operate under policy constraints
 - require human approval before high-impact actions
 
-## Worked Example
-
-Read [`../../core/reviewable-runs.md`](../../core/reviewable-runs.md) first, then see [`../case-studies/enterprise-policy-memo/README.md`](../case-studies/enterprise-policy-memo/README.md) for a concrete memo-drafting dossier with runtime records and governance records.
-
-The worked example demonstrates review questions answered for an enterprise run, not merely a set of files produced for show.
+Concrete worked examples are intentionally out of scope here. This file stays at the architecture level.
 
 ## Adopted Chapter Defaults
 

@@ -117,6 +117,6 @@ If you want the broader chapter and survey scope behind this essay, use the [com
 
 *RECONCILE* matters because it makes consensus formation explicit and helps distinguish review-oriented multi-agent systems from decorative debate.
 
-### [Architecture Review Checklist](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/implementation/evaluation/architecture-review-checklist.md)
+### Architecture Review Checklist
 
 This checklist matters because it provides the practical test for whether a multi-agent split improved clarity, reconstruction, and failure analysis.
