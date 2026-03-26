@@ -17,8 +17,8 @@ Do not add a source only because it is popular, recent, or adjacent.
 
 If a core or supporting doc names a method or paper explicitly, it must also have:
 
-- a `papers/*.md` note
-- a `source-index.md` entry
+- a `reference/papers/*.md` note
+- a `reference/source-index.md` entry
 
 If both do not exist yet, remove the named method from the core doc until the source map is updated.
 
@@ -40,7 +40,7 @@ Only `Core` sources should drive default recommendations.
 
 If a new source is added, the update must also modify:
 
-- `source-index.md`
+- `reference/source-index.md`
 - one comparison section or equivalent matrix in a chapter blueprint
 - one relevant chapter blueprint or use-case document if the source materially changes guidance
 
@@ -60,7 +60,7 @@ If a new source is added, the update must also modify:
 
 ## Confidence Policy
 
-- Any ambiguous or mismatched local file must be recorded in `literature-quality.md`.
+- Any ambiguous or mismatched local file must be recorded in `reference/literature-quality.md`.
 - If confidence drops below `Medium`, pair the source with stronger neighboring sources or demote it from core guidance.
 - `Questionable` sources must remain visible but clearly quarantined.
 - If a note is only `indexed-only`, do not treat it as the sole support for a central recommendation when a stronger neighboring source exists.
@@ -69,7 +69,7 @@ If a new source is added, the update must also modify:
 
 Run this review whenever the repo changes materially:
 
-- confirm every `papers/*.md` file appears in `source-index.md`
+- confirm every `reference/papers/*.md` file appears in `reference/source-index.md`
 - confirm every core doc still routes cleanly from `README.md` and `START_HERE.md`
 - confirm new sources updated a comparison asset and not only the corpus
 - confirm exploratory notes remain outside the default reading path

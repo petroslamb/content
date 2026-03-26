@@ -1,6 +1,6 @@
 # Worked Case Studies
 
-> Historical note: This is the archived v1 packet-oriented worked-example layer. The default path is now [`../../reviewable-runs.md`](../../reviewable-runs.md) and the rebuilt [`../../case-studies/README.md`](../../case-studies/README.md).
+> Historical note: This is the archived v1 packet-oriented worked-example layer. The default path is now [`../../core/reviewable-runs.md`](../../core/reviewable-runs.md) and the rebuilt [`../../implementation/case-studies/README.md`](../../implementation/case-studies/README.md).
 
 This folder is the repo's applied proof layer. The `use-cases/` docs tell you the abstract default architecture; the files here show what those defaults look like when a real task, a realistic artifact trail, and a concrete failure review are all placed side by side.
 
@@ -58,11 +58,11 @@ In production, these would not necessarily be markdown files. They might be job 
 
 Read in this order:
 
-1. the matching abstract use case in `../../use-cases/`
+1. the matching abstract use case in `../../implementation/use-cases/`
 2. the worked case study in this folder
 3. the artifact bundle under `artifacts/`
-4. `../../evaluation/architecture-review-checklist.md`
-5. `../../evaluation/failure-mode-catalog.md`
+4. `../../implementation/evaluation/architecture-review-checklist.md`
+5. `../../implementation/evaluation/failure-mode-catalog.md`
 
 Use the matching chapter blueprints when you need to understand why a design choice was selected rather than merely observe its output.
 

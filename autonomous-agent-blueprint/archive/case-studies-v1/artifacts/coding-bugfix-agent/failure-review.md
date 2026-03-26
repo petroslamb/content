@@ -10,14 +10,14 @@ Coding agents often look correct when a single failing test turns green. The rea
 
 ## Taxonomy mapping
 
-- [`../../../../evaluation/failure-mode-catalog.md`](../../../../evaluation/failure-mode-catalog.md): `Irreversible action without enough evidence`
-- [`../../../../evaluation/failure-mode-catalog.md`](../../../../evaluation/failure-mode-catalog.md): `Prompt churn without measurement`
+- [`../../../../implementation/evaluation/failure-mode-catalog.md`](../../../../implementation/evaluation/failure-mode-catalog.md): `Irreversible action without enough evidence`
+- [`../../../../implementation/evaluation/failure-mode-catalog.md`](../../../../implementation/evaluation/failure-mode-catalog.md): `Prompt churn without measurement`
 
 ## Checklist controls that should catch it
 
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Can failed actions be observed and recovered from?`
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Is verification stronger than a single first-pass answer?`
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Does the team have a stable evaluation set?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Can failed actions be observed and recovered from?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Is verification stronger than a single first-pass answer?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Does the team have a stable evaluation set?`
 
 ## What would reduce the failure
 

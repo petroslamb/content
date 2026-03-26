@@ -1,120 +1,83 @@
 # Autonomous Agent Blueprint
 
-This repo is a builder-first architecture manual for modern agent systems. It starts from a local research corpus, but its main job is no longer to summarize papers. Its job is to help you choose architectures, justify those choices with named sources, and review those designs before implementation.
+This repo is a builder-first architecture manual for modern agent systems. It keeps the research corpus, the decision layer, the public essay package, and the applied examples in separate surfaces so readers can enter at the right depth.
 
 ## Start Here
 
 - `START_HERE.md`
-- `agentic-architectures-blueprint.md`
-- `reviewable-runs.md`
-- `source-index.md`
-- `practical-chapter-blueprints/README.md`
-- `use-cases/`
-- `case-studies/`
-- `evaluation/`
+- `REPOSITORY_ANALYSIS.md`
+- `core/agentic-architectures-blueprint.md`
+- `core/practical-chapter-blueprints/README.md`
+
+## Stable Surfaces
+
+- `essays/`: the public *Operating Agents* essay package, organized by topic with companions beside each essay.
+- `core/`: the builder-facing architecture spine, reviewability contract, and chapter blueprints.
+- `reference/`: the literature guide, distillation docs, source index, quality tracking, and paper notes.
+- `implementation/`: use cases, case studies, evaluation assets, and templates.
+- `notes/`: exploratory and working material that should not be the default path.
+- `archive/`: historical material kept for reference, not as the main route.
 
 ## Choose Your Path
 
 ### If you are following the Operating Agents series
 
-Read in this order:
-
-1. `guide/README.md`
-2. `guide/00-launch-note-v3.md`
-3. `guide/operating-agents-coverage-map.md`
-4. the matching file in `guide/companions/`
-5. the matching file in `practical-chapter-blueprints/`
-6. the matching file in `papers/`
+1. `essays/README.md`
+2. `essays/launch-note/00-launch-note-v4.md`
+3. `essays/operating-agents-coverage-map.md`
+4. the matching topic `companion.md`
+5. the matching file in `core/practical-chapter-blueprints/`
+6. the matching file in `reference/papers/`
 
 ### If you are building an agent
 
-Read in this order:
-
 1. `START_HERE.md`
-2. `agentic-architectures-blueprint.md`
-3. `practical-chapter-blueprints/README.md`
+2. `core/agentic-architectures-blueprint.md`
+3. `core/practical-chapter-blueprints/README.md`
 4. the chapter blueprint that matches your bottleneck
-5. the closest file in `use-cases/`
-6. `reviewable-runs.md`
-7. the closest dossier in `case-studies/`
-8. `evaluation/architecture-review-checklist.md`
-9. `evaluation/failure-mode-catalog.md`
+5. the closest file in `implementation/use-cases/`
+6. `core/reviewable-runs.md`
+7. the closest dossier in `implementation/case-studies/`
+8. `implementation/evaluation/architecture-review-checklist.md`
+9. `implementation/evaluation/failure-mode-catalog.md`
 
 ### If you are writing about agent architectures
 
-Read in this order:
-
 1. `START_HERE.md`
-2. `agentic-architectures-blueprint.md`
-3. `foundation-agents-practical-chapters-guide.md`
-4. `source-index.md`
-5. `literature-quality.md`
+2. `core/agentic-architectures-blueprint.md`
+3. `reference/chapters-guide.md`
+4. `reference/practical-distillation.md`
+5. `reference/source-index.md`
+6. `reference/literature-quality.md`
 
 ### If you are surveying the literature
 
-Read in this order:
-
 1. `START_HERE.md`
-2. `source-index.md`
-3. `literature-quality.md`
-4. `papers/`
+2. `reference/source-index.md`
+3. `reference/literature-quality.md`
+4. `reference/papers/`
 5. `notes/`
-
-## Stable Entry Surfaces
-
-- `README.md`: front door and role-based routing.
-- `START_HERE.md`: guided onboarding path.
-- `guide/README.md`: public essay package and reading order.
-- `guide/operating-agents-coverage-map.md`: series-to-source map for readers who want breadth behind the essays.
-- `guide/companions/`: essay-specific breadth notes linking public posts back to the chapter guide, survey, blueprints, and paper notes.
-- `reviewable-runs.md`: explanation of what a serious system must surface to make a run reviewable.
-- `source-index.md`: literature map with confidence and practical role.
-- `practical-chapter-blueprints/`: chapter-level decision layer.
-- `use-cases/`: end-to-end reference architectures.
-- `case-studies/`: linear worked dossiers backed by runtime records and governance records.
-- `evaluation/`: architecture review and failure analysis.
 
 ## Repository Map
 
-### Core
+### Entry Docs
 
+- `README.md`
 - `START_HERE.md`
-- `agentic-architectures-blueprint.md`
-- `reviewable-runs.md`
-- `practical-chapter-blueprints/README.md`
-- `practical-chapter-blueprints/*.md`
-- `use-cases/`
-- `case-studies/`
-- `evaluation/`
-- `templates/`
-
-### Supporting
-
-- `source-index.md`
-- `literature-quality.md`
-- `guide/README.md`
-- `guide/*-v3.md`
-- `guide/operating-agents-coverage-map.md`
-- `guide/companions/*.md`
-- `foundation-agents-practical-chapters-guide.md`
-- `foundation-agents-practical-distillation.md`
-- `papers/*.md`
+- `REPOSITORY_ANALYSIS.md`
+- `CHANGELOG.md`
+- `CONTRIBUTING.md`
 - `MAINTENANCE.md`
 - `BUILD_HISTORY.md`
-- `archive/`
 
-### Exploratory
+### Major Folders
 
+- `essays/`
+- `core/`
+- `reference/`
+- `implementation/`
 - `notes/`
-
-Exploratory material is worth keeping, but it should never be the default path for first-time readers.
-
-## Publication Layering
-
-- `guide/*-v3.md`: the public narrative layer.
-- `guide/companions/*.md`: the breadth layer for readers who want the fuller chapter and survey picture.
-- `practical-chapter-blueprints/*.md`: the operator layer for decisions, defaults, evaluation, and anti-patterns.
-- `papers/*.md`: the source-note layer for named methods and individual literature artifacts.
+- `archive/`
 
 ## What This Repo Optimizes For
 
@@ -124,16 +87,6 @@ Exploratory material is worth keeping, but it should never be the default path f
 - decision rules over paper accumulation
 - reviewable runs over decorative traces
 - evaluation and failure analysis over hype
-
-## Document Contracts
-
-- Core docs must contain defaults, alternatives, escalation rules, evaluation criteria, and anti-patterns.
-- Supporting docs must strengthen traceability, source quality, or chapter-level detail.
-- Exploratory docs may contain useful ideas, but they are not allowed to anchor the main narrative without promotion into the core layer.
-
-## Local Corpus Policy
-
-Raw PDFs are kept locally for reference but ignored by git in this package. The tracked source of truth is the markdown material.
 
 ## Maintenance
 
