@@ -75,3 +75,11 @@ The architecture stack puts optimization earlier than this publication order doe
 A system that cannot reconstruct its action traces, govern its memory, localize reasoning failure, justify its role splits, or explain its trust boundaries is not ready for serious optimization. It is still trying to become legible.
 
 For that reason, this piece works as a coda. Once a workflow is already reconstructible, reviewable, and bounded, optimization becomes useful. Before that point it mostly accelerates confusion.
+
+## Selected Sources
+
+**[*OPRO*](https://arxiv.org/abs/2309.03409).** OPRO matters because it makes optimization's preconditions visible. Search is only meaningful once there is a fixed objective and a repeatable evaluation loop. This doctrine treats optimization as disciplined measurement work rather than as prompt tinkering with more ambition.
+
+**[*MT-Bench and Chatbot Arena*](https://arxiv.org/abs/2306.05685).** This paper matters because it helped make evaluation operational at scale. The chapter uses that lesson in a stricter setting. Agent optimization has to judge whole workflows, including schemas, tools, routing, approval burden, and correction cost, not just the prettiness of a single answer.
+
+**[*Voyager*](https://arxiv.org/abs/2305.16291).** Voyager matters because it offers one of the clearest examples of bounded improvement rather than unconstrained self-redesign. That is exactly the version worth keeping. Promote routines that repeatedly survive review and resist the temptation to mistake open-ended mutation for optimization.

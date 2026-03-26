@@ -77,3 +77,11 @@ Every extra capability widens the attack surface. Broader tool access, larger co
 If you widen autonomy before you narrow interfaces, you are building the attack surface first.
 
 The bonus post that follows only becomes useful after these boundaries are legible. Optimization without trust architecture is just a faster way to drift.
+
+## Selected Sources
+
+**[*Not What You've Signed Up For*](https://arxiv.org/abs/2302.12173).** This paper matters because it forced the field to separate instructions from data in environments where outside content can steer agent behavior. The chapter's trust-boundary model starts there. Once that distinction breaks, prompt polish no longer counts as safety architecture.
+
+**[*PoisonedRAG*](https://arxiv.org/abs/2402.07867).** PoisonedRAG matters because it made retrieval integrity impossible to treat as a side issue. The doctrine depends on that insight. Retrieval and memory are part of the attack surface the moment retrieved content can influence planning, state, or action.
+
+**[*ToolEmu*](https://arxiv.org/abs/2309.15817).** ToolEmu matters because it brought adversarial evaluation in front of deployment rather than after consequence. The chapter's insistence on predeployment abuse cases, bounded channels, and approval-aware testing owes a great deal to that shift.

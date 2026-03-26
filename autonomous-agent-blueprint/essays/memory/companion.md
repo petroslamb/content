@@ -72,6 +72,10 @@ Graph-aware and richer relational memory approaches matter once the memory objec
 
 That is the correct escalation rule. Do not reach for graph-heavy memory because retrieval feels vaguely disappointing. Reach for it when failure analysis says the missing thing is relational structure rather than policy, freshness, or derivation quality.
 
-## Next Layer
+## Sources Behind This Chapter
 
-Use the [public essay](../memory/03-memory-v6.md) for the doctrinal center, the [memory blueprint](../../core/practical-chapter-blueprints/01-memory-blueprint.md) for lifecycle policy and retrieval choice, and the paper notes for MemGPT, Generative Agents, MemoryBank, Reflexion, Mem0, Voyager, and HippoRAG when you need source-level detail rather than the broader companion cut.
+The first cluster to read here is [*MemGPT*](https://arxiv.org/abs/2310.08560), [*MemoryBank*](https://arxiv.org/abs/2305.10250), and [*Mem0*](https://arxiv.org/abs/2504.19413). Those three sources anchor the companion's main claim that memory is governance over time. MemGPT reframes the system into explicit tiers, MemoryBank restores decay and refresh to the center of correctness, and Mem0 pushes the field toward derived memory objects instead of raw transcript accumulation. Taken together, they explain why the chapter keeps returning to admission policy, retirement, and derivation rather than fetishizing longer retention.
+
+The second cluster expands the chapter into its wider terrain. [*Generative Agents*](https://arxiv.org/abs/2304.03442) and [*Reflexion*](https://arxiv.org/abs/2303.11366) matter because they show experience being turned into a more useful object rather than merely stored. [*Voyager*](https://arxiv.org/abs/2305.16291) matters because it makes procedural promotion concrete. [*HippoRAG*](https://arxiv.org/abs/2405.14831) matters because it marks the point where the problem becomes relational structure rather than ordinary topical retrieval. They belong in the companion because they widen the chapter from retention policy into promotion, reuse, and representation choice.
+
+The broader picture is that memory only becomes intelligible once facts, episodes, and routines stop being treated as one kind of past. The [public essay](../memory/03-memory-v6.md) states that law in its severest form. The [memory blueprint](../../core/practical-chapter-blueprints/01-memory-blueprint.md) turns it into lifecycle policy. The paper notes give the interested reader the original moves each paper made before they were compressed into doctrine.
