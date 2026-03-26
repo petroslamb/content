@@ -13,18 +13,20 @@ Use this package when your question is not only "how should the agent be built?"
 3. `reviewable-runs.md`
 4. `dossiers/README.md`
 5. `proofs/README.md`
-6. `evaluation/README.md`
-7. `templates/README.md`
-8. `MINIMAL_VIABLE_REVIEWABLE_RUN.md`
-9. `IMPLEMENTATION_GUIDE.md`
-10. `FRAMEWORK_EVALUATION.md`
-11. `MATURITY_AND_VALIDATION.md`
+6. `validation-lab/README.md`
+7. `evaluation/README.md`
+8. `templates/README.md`
+9. `MINIMAL_VIABLE_REVIEWABLE_RUN.md`
+10. `IMPLEMENTATION_GUIDE.md`
+11. `FRAMEWORK_EVALUATION.md`
+12. `MATURITY_AND_VALIDATION.md`
 
 ## Package Map
 
 - `reviewable-runs.md`: canonical model and six review questions
 - `dossiers/`: worked examples that answer those questions for concrete runs
 - `proofs/`: real evidence artifacts and failure contrasts
+- `validation-lab/`: explicitly synthetic validation, invalidation, and stress-test artifacts
 - `evaluation/`: review instruments for architectures and runs
 - `templates/`: direct record templates plus adjacent support patterns
 - `history/`: the older packet-oriented lineage kept for reference
@@ -62,6 +64,10 @@ Read `reviewable-runs.md`, then `dossiers/comparison-matrix.md`, then the closes
 ### If you want proof
 
 Read `proofs/README.md`, then `proofs/coding-real-run/README.md`, then `proofs/coding-real-run/comparison.md`.
+
+### If you want to validate the framework limits
+
+Read `validation-lab/README.md`, then `validation-lab/VALIDATION_MATRIX.md`, then one validate case, one invalidate case, and one stress-test case.
 
 ### If you want to implement it
 
