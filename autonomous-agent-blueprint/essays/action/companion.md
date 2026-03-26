@@ -1,129 +1,85 @@
 # Action Companion
 
-The public action essay narrowed the chapter to one hard claim: an agent begins where language turns into accountable state change. That was the right cut for the main series. It gave the essay a clean line and kept it from collapsing into a tour of tools, benchmarks, and interfaces. But the chapter itself is broader and more useful than that one line. It is a chapter about execution surfaces, not just autonomy language. It asks where work should happen, how actions should be represented, how the environment should answer back, and what kinds of action are actually worth trusting in production.
+Most teams say they want an agent that can "use tools." What they usually need is something narrower and harder: a system that can cross one boundary into the world without becoming opaque the moment it does. That is why action design keeps punishing loose thinking. The instant a workflow can write, submit, execute, or modify state, the quality bar changes. Fluency stops mattering first. Reconstruction, permissions, and environmental feedback start mattering more.
 
-That broader view matters because "tool use" is still one of the most flattening phrases in the agent vocabulary. It makes API calls, SQL queries, browser operations, shell commands, and GUI actions sound like one capability. They are not one capability. They are different action surfaces with different observability, failure modes, and governance costs. The value of the chapter is that it helps you stop speaking about action as if it were a general vibe and start treating it like architecture.
+The useful distinction is not between systems that have tools and systems that do not. It is between systems that act through governable surfaces and systems that act through surfaces so messy that every failure gets blamed on the model. That is what makes action one of the most practical parts of the package. It drags agent talk out of abstractions and forces a choice about where work should actually happen.
 
-## Where Action Really Starts
+## Surface Choice Decides What Counts As Reliability
 
-The chapter's most useful distinction is between describing work and doing work. A plain-text plan can be helpful, but it is still only a statement about intended action. Once the system emits typed calls, executable code, SQL, browser steps, or constrained GUI operations, the action becomes replayable and inspectable. That is why the essay leaned so hard on accountable state change. It is not a stylistic preference. It is the difference between a model that narrates and a system that executes.
+Teams often compare action surfaces as though they were just different delivery channels for the same capability. They are not. A typed API, a browser workflow, and a GUI automation loop create different operating conditions even when they point at the same business task.
 
-This is also why the chapter's representation ladder matters so much. Plain-text actions are flexible, but weak. Code is stronger because it can be executed, tested, and reviewed. Typed tool calls are stronger for the same reason. Browser and GUI actions widen reach when cleaner interfaces do not exist, but they usually do so by paying a tax in fragility and observability. The broader chapter is really a study in choosing the strongest action representation the environment will let you use.
+Take a simple approval workflow. If the system can call a typed API, reliability means argument validation, least privilege, clean status returns, and replayable writes. If it has to work through a browser, reliability now depends on page state, selectors, timing, and whether the site exposes enough structured feedback to distinguish queued work from completed work. If it has to work through a GUI, the system inherits visual ambiguity, layout drift, hidden state, and weaker recoverability. The task may still be "approve the request." The engineering object is no longer the same.
 
-## The Surface Choice Is The Architecture
+That is why the practical escalation rule stays strict. Start with the narrowest surface that still reaches the work. Move from API to browser only when the required operation is not exposed cleanly. Move from browser to GUI only when every cleaner interface is unavailable. Do not call that conservatism. It is how you keep the action layer auditable.
 
-The essay argued for choosing the narrowest valid action surface. The chapter gives the larger reason that rule keeps winning. Every action surface carries an implied operational model.
+## The Tool Pipeline Fails In Specific Places
 
-If a clean API exists, typed tool calls usually dominate because they are easy to log, validate, and gate. If the output needs to be reproducible and testable, code as action often beats prose because the environment can say whether the work actually ran. If the workflow is fundamentally about business data, SQL and database-native action may be the real first-class surface. Browser action earns its place when the system has to operate over websites that do not expose the required APIs. GUI action is the last resort when the environment is visual, closed, or legacy and there is no cleaner integration boundary.
+The field still collapses tool use into one big capability word. Production systems do not fail that way. They fail at seams.
 
-That hierarchy is not aesthetic. It is a risk and reliability ranking. The closer the action surface gets to typed machine interfaces, the easier it is to bound and audit. The farther it moves toward pixels and general computer use, the more likely the system is to fail because of ambiguity, layout drift, or weak feedback from the environment.
+One seam is tool need detection. The system stays in prose too long and answers from plausibility when it should have reached for live state. Another is tool selection. Several interfaces look close enough that the wrong one gets chosen even though the task was understood. Another is argument construction. The right endpoint gets called with the wrong field shape, stale enum, or mismatched units. Then comes execution scope. A tool that can search docs should not quietly sit next to one that can submit changes with the same trust posture. The last seam is result integration. Raw output comes back from the environment, and the workflow treats a warning, queue state, or partial success as permission to proceed.
 
-## The Five Seams Where Tool Use Breaks
+That seam-by-seam view is more useful than almost any benchmark summary because it tells you what to instrument. If the model keeps choosing the wrong tool, enrich the catalog and narrow the retrieval problem. If it chooses correctly but writes malformed arguments, fix schemas and validation. If it keeps moving forward on ambiguous state, strengthen the observation contract. The anti-pattern is to call all of this "agent behavior" and then reach for a bigger model.
 
-One of the best parts of the chapter is that it breaks "tool use" into five separate seams.
+## A Useful Contrast: API, Browser, GUI
 
-The system has to detect whether a tool is needed. It has to choose the right tool. It has to fill the arguments correctly. It has to execute in a safe scope. Then it has to convert the result into a clean observation for later reasoning. Most production failures do not come from some mystical lack of agency. They come from one of those seams being underspecified.
+The cleanest operator comparison in this terrain is not between papers. It is between action surfaces that builders routinely confuse.
 
-This is where the broader chapter becomes more valuable than a lot of benchmark discourse. Builders often ask whether the model can use tools. The better question is where the tool pipeline is weak. Are the schemas too vague? Is the catalog too broad? Are the arguments underconstrained? Are raw outputs getting dumped back into the model? Is a high-risk tool sitting beside a low-risk one with no privilege separation? Once the problem is seen seam by seam, the design work becomes much more concrete.
+Typed API action is the gold standard when it exists. The interface says what can happen, what arguments are valid, and what the environment will return. The workflow can gate writes, replay calls, and reason over structured outcomes.
 
-## The Parts The Essay Left Out
+Browser action is a fallback, not an upgrade. It becomes necessary when the system of record is web-native and the usable API is missing, incomplete, or politically out of reach. Browser agents can still be effective, but they inherit timing issues, brittle selectors, visual clutter, and thinner feedback loops. The system is now acting through a representation designed for people, not for machines.
 
-The main essay kept the chapter close to digital execution and to the assistant-versus-agent boundary. That meant leaving out some parts of the literature that matter more for a reader who wants the wider field map.
+GUI action is the expensive last resort. It matters for legacy software, closed tools, and interface-bound environments, but it should be treated as a tax. More reach, less legibility. More generality, weaker contracts. A team that jumps there too early usually does so because "computer use" sounds like the most advanced version of agency. In practice it is often just the least structured surface available.
 
-One omitted area is action learning. Toolformer matters because it treats tool invocation as something the model can learn as part of its behavior rather than something pasted on by a wrapper. That is conceptually important even when most teams still build tool use through schemas and orchestration code.
+This is where the field still gets the story wrong. It likes to narrate broader action surfaces as signs of maturity. Builders should read them as signs that the environment has stopped cooperating.
 
-Another omitted area is orchestration over specialist capabilities. HuggingGPT belongs here because it treats the LLM as a controller over heterogeneous models rather than as a single worker. That idea becomes more relevant as action systems become multimodal or domain-specific.
+## Frontier Work Is Real, But It Is Not The Default
 
-The essay also compressed the cross-surface tour into a few passing references. The full chapter is stronger than that. It shows that action is not one environment. It is a family of environments, each with different practical defaults: developer environments, structured data systems, websites, mobile devices, and GUI-heavy software.
+There is real value beyond the conservative center. Specialist orchestration matters once one general layer is not enough. Tool creation inside the loop matters once the system repeatedly finds missing affordances. Computer-use work matters because some important software still refuses to expose machine-friendly boundaries. None of that changes the default build order.
 
-## What To Treat As Frontier Rather Than Default
+The right second-pass lesson is restraint informed by range. Know what the frontier is proving. Do not confuse that with what a sane production system should start with. Most teams still get farther by making one action boundary legible than by chasing the most general surface in the literature.
 
-The companion also needs to keep the chapter's restraint. General computer use is improving, but it is still weaker than typed APIs and code for most business workflows. Tool creation inside the loop is promising, but it should not be treated as a baseline production expectation. Physical action matters for the long arc of agent systems, but it is not the center of gravity for most readers of this series.
-
-The right practical takeaway is not to ignore the frontier. It is to place it properly. Know what is emerging. Build on what is governable now.
+One last correction matters here. Structured data work is often treated as a minor branch of tool use when it should be treated as one of the main enterprise action surfaces. A workflow that issues queries, validates rows, and writes through constrained data interfaces is not doing "less agentic" work than one that clicks around a browser. It is often doing more governable work. Builders should stop treating SQL, typed records, and constrained data actions as boring edge cases. They are frequently the best place to put real automation.
 
 ## Resources And References
 
 ### [Action Essay: Operating Agents I: When the Model Starts Doing Things](../action/01-action-tool-use-v5.md)
 
-Read the essay first for the narrow practical claim. It gives the cleanest public line on where agency begins and why action needs to be bounded, observable, and accountable.
-
-Come to the companion when you want the broader map of execution surfaces, tool seams, and literature that the essay intentionally kept in the background.
+Read the essay first for the sharp public claim about when agency begins. It keeps the center of gravity on accountable state change and on the observation contract that makes action reviewable.
 
 ### [Builder Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md)
 
-The blueprint is the operator-facing version of the chapter. It turns the action discussion into concrete choices about surface selection, action representation, execution layers, recovery design, and evaluation.
-
-If you are deciding between APIs, code, SQL, browser automation, and GUI action in an actual workflow, the blueprint is where the chapter becomes a build sequence instead of an argument.
+The blueprint is where this topic becomes a build sequence: surface selection, execution design, observation design, recovery, and evaluation. Use it when you need to choose a surface rather than just understand why the choice matters.
 
 ### [Foundation Agents: Practical Chapters Guide](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/chapters-guide.md)
 
-The guide is the strongest compact interpretation of why action is the chapter where the survey becomes unmistakably agentic. It makes the distinction between language, digital, and physical environments legible and pushes attention toward digital action as the near-term center of gravity.
-
-It is also where the chapter's seam-by-seam view of tool use is stated most cleanly: tool need detection, selection, argument filling, safe execution, and result integration.
+The guide is the quickest route to the wider map behind the essay. It keeps the action topic anchored to digital execution, surface choice, and seam-level failure analysis instead of vague autonomy claims.
 
 ### [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) (2023)
 
-Toolformer is the conceptual bridge from text-only generation to explicit tool use. The important move is behavioral. It suggests that tool invocation can become part of the model's operating pattern rather than remaining an entirely external decision.
+Toolformer matters because it reframed tool invocation as part of model behavior rather than a purely external wrapper trick. The paper was trying to solve a basic problem: language models were good at describing work but weak at deciding when external capability was needed. Its architectural move was to normalize the idea that calling out to a tool is part of competence.
 
-That matters because it helps explain why tool use should not be treated as a thin integration layer. Even when teams do not build Toolformer-style systems directly, the paper sharpens the idea that deciding to call a tool is part of the agent's competence profile.
+That lesson still matters. Builders should inherit the behavioral insight, not the fantasy that every workflow should become self-discovered tool use inside one model loop.
 
 ### [Gorilla: Large Language Model Connected with Massive APIs](https://arxiv.org/abs/2305.15334) (2023)
 
-Gorilla matters because it reframes many tool failures as API understanding failures. In practice, wrong tool choice and wrong argument filling often do more damage than abstract reasoning weakness.
+Gorilla matters because it treats action as an interface-understanding problem. The paper was not really solving "agency" in the abstract. It was solving API discrimination and argument construction at scale. That is why it remains practical. Many real failures that look like bad reasoning are bad interface binding.
 
-This is why Gorilla remains relevant for production builders. It pushes attention toward schemas, API specifications, tool retrieval, and argument structure, which are often the actual bottlenecks in live systems.
-
-### [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face](https://arxiv.org/abs/2303.17580) (2023)
-
-HuggingGPT is less important as a default production recipe than as an orchestration signal. It treats the LLM as a controller that routes work to specialist models with different capabilities.
-
-That matters in the broader action landscape because many workflows are not best handled by one generic tool layer. They are closer to controller-plus-specialist systems, especially once multimodal or narrow expert functions are involved.
-
-### [A Real-World WebAgent with Planning, Long Context Understanding, and Program Synthesis](https://arxiv.org/abs/2307.12856) (2024)
-
-WebAgent matters because it demonstrates live digital action over real websites rather than toy interfaces. It is one of the clearer proofs that web interaction can be a real execution surface rather than just a retrieval convenience.
-
-Its practical importance is that it moves the conversation from answering questions about the web to completing tasks on the web, which is where browser agents actually start becoming useful.
-
-### [Mind2Web: Towards a Generalist Agent for the Web](https://arxiv.org/abs/2306.06070) (2023)
-
-Mind2Web complements WebAgent by treating browser action as a generalist problem and by giving the field a harder benchmark for robustness. That matters because a one-path web demo tells you very little about whether an agent can survive interface variation.
-
-It belongs in this companion because browser action is one of the most common fallback surfaces in production. Knowing the benchmark and robustness story matters if that is where your system is headed.
-
-### [Mobile-Agent: Autonomous Multi-Modal Mobile Device Agent with Visual Perception](https://arxiv.org/abs/2401.16158) (2024)
-
-Mobile-Agent matters because it pushes the action discussion into mobile and multimodal environments where typed APIs are not always the governing interface. That widens the action chapter beyond servers and websites.
-
-Its importance in this package is mainly as a frontier signal. It shows what happens once the system is forced to interpret visual state and act through interaction surfaces that were not designed for machine control.
-
-### [AppAgent: Multimodal Agents as Smartphone Users](https://arxiv.org/abs/2312.13771) (2023)
-
-AppAgent reinforces the same lesson from a smartphone angle: application interfaces can themselves become the action surface when cleaner integration points do not exist.
-
-The practical lesson is not that all agents should move toward phone-like interaction. It is that a lot of real software is still interface-bound, and agents sometimes need to operate at that layer if the product architecture gives them no better option.
-
-### [OmniParser for Pure Vision Based GUI Agent](https://arxiv.org/abs/2408.00203) (2024)
-
-OmniParser matters because GUI action depends on perception quality more than many people admit. If the system cannot turn screenshots and layout into a structured observation surface, the rest of the control loop stays brittle.
-
-That is why OmniParser belongs in the action companion rather than only in a vision bucket. It addresses a practical bottleneck in computer-use systems: the environment has to become machine-usable before the agent can act reliably inside it.
+The paper should influence catalog design, schema discipline, and argument validation. It should not be read as a reason to dump an enormous ungoverned tool universe in front of one model and hope retrieval solves policy.
 
 ### [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](https://arxiv.org/abs/2405.15793) (2024)
 
-SWE-agent is one of the most practical papers in the entire repository because it treats code, shell commands, tests, and environment feedback as the native action surface. It is a strong example of why executable artifacts usually beat prose in software workflows.
+SWE-agent matters because it shows what happens when the action surface itself becomes governable. The paper was trying to solve software work through a constrained interface of code edits, shell actions, tests, and machine-checkable feedback. Its key move was to make action executable, inspectable, and recoverable.
 
-Its broader lesson is that code as action is often the most governable form of autonomy in engineering and data work. It can be tested, replayed, reviewed, and bounded in ways free-form language cannot.
+That is why it is one of the most important papers in this cluster. It proves that a narrower, harsher interface often beats a broader, more theatrical one. Builders should copy the insistence on replayability and environmental confirmation even outside software workflows.
 
-### [BIRD: A Big Bench for Large-Scale Database Grounded Text-to-SQL](https://arxiv.org/abs/2305.03111) (2023)
+### [A Real-World WebAgent with Planning, Long Context Understanding, and Program Synthesis](https://arxiv.org/abs/2307.12856) (2024)
 
-BIRD matters because it keeps the action chapter grounded in enterprise reality. Many valuable workflows do not need browser control or software engineering actions. They need safe and accurate interaction with structured business data.
+WebAgent matters because it treats the browser as a real action surface rather than just a retrieval source. It was solving task completion on live web systems, where the environment answers through page state rather than clean APIs.
 
-That makes database action a first-class surface in its own right, not a side branch of general tool use. It also raises its own evaluation and safety questions around schema understanding and query correctness.
+The paper should influence teams that truly need browser fallback. It should not be read as proof that browser action is preferable whenever it is more general.
 
-### [Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows](https://arxiv.org/abs/2411.07763) (2025)
+### [OmniParser for Pure Vision Based GUI Agent](https://arxiv.org/abs/2408.00203) (2024)
 
-Spider 2.0 matters because it pushes text-to-SQL evaluation toward real workflow complexity instead of narrow benchmark prompts. That makes it a better reality check for what structured-data action will look like in practice.
+OmniParser matters because GUI action fails first at perception. The paper was trying to turn raw visual interfaces into machine-usable objects so the rest of the control loop could function at all. Its architectural move is upstream of action: if the environment cannot be parsed into usable state, the best planner in the world still acts blindly.
 
-It belongs here because it reminds the reader that enterprise action is often less about robotic clicking and more about accurately operating over schemas, queries, and downstream business logic.
+That is why it belongs here. Builders should take it as a reminder that GUI action is a perception tax layered on top of an already weak interface contract.
