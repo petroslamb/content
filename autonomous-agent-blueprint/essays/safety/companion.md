@@ -66,6 +66,10 @@ It also reveals a harder truth. Some workflows should stay narrow. If abuse rehe
 
 That willingness to narrow scope is one of the clearest signs that the team is doing safety work rather than theater. A boundary that repeatedly fails review should lose authority until it earns it back. In this layer, restraint is often the most honest control, and the cheapest credible one available to the operator first.
 
-## Next Layer
+## Sources Behind This Chapter
 
-Use the [public essay](../safety/05-safety-v6.md) for the doctrinal center, the [safety blueprint](../../core/practical-chapter-blueprints/06-safety-blueprint.md) for trust separation and control design, and the paper notes for Greshake, InjecAgent, ToolEmu, Agent Poison, PoisonedRAG, BadRAG, and Agent Smith when you need source-level detail rather than the broader companion cut.
+The core sources behind this chapter are [*Not What You've Signed Up For*](https://arxiv.org/abs/2302.12173), [*PoisonedRAG*](https://arxiv.org/abs/2402.07867), and [*ToolEmu*](https://arxiv.org/abs/2309.15817). They matter together because they redraw safety around movement and consequence. Greshake and colleagues break the old instruction-data trust model, PoisonedRAG makes retrieval integrity part of the attack surface, and ToolEmu moves evaluation in front of deployment. Those three papers anchor the companion's claim that agent safety is really about what influence can travel through the workflow.
+
+The wider cluster expands the same theme across different routes of contamination. InjecAgent, Agent Poison, and BadRAG matter because they show how hostile or degraded material can enter through different retrieval and agent pathways. Agent Smith matters because it makes inter-agent contamination and trust reset feel concrete. These sources belong in the companion because they fill out the family resemblance between prompt injection, retrieval poisoning, runtime ambiguity, and artifact contamination that the public essay only states in compressed form.
+
+The broader picture of the chapter is that trust boundaries, runtime discipline, and replayability all belong to the same safety argument. The [public essay](../safety/05-safety-v6.md) carries the doctrine. The [safety blueprint](../../core/practical-chapter-blueprints/06-safety-blueprint.md) turns it into control design. The paper notes give the interested reader the attack shapes, evaluation details, and boundary logic that sit underneath the chapter's conservative posture.

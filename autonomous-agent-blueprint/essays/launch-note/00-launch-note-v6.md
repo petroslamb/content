@@ -51,3 +51,15 @@ The standard behind this series is severe on purpose. A good agent architecture 
 That is the doctrine this bundle is trying to install. Not maximum autonomy. Not model worship. Not decorative traces. Explicit layers, reviewable control, and narrower defaults than the field usually likes.
 
 Part I starts where the mask usually drops first: the moment language stops being commentary and starts doing work.
+
+## Selected Sources
+
+**[*MemGPT*](https://arxiv.org/abs/2310.08560).** This paper matters to the doctrine because it reframed memory as a control problem rather than a context-window problem. Once memory becomes explicit tiering, movement, and retention policy, the whole agent stack starts to look less like one model with extra features and more like an operating system with distinct layers that have to be governed.
+
+**[*ReAct*](https://arxiv.org/abs/2210.03629).** ReAct is one of the clearest sources behind the bundle's overall posture because it forced reasoning back into contact with tools and observations. That move runs through the entire series. Dependable agents do not come from longer monologues. They come from loops that the world can correct.
+
+**[*AutoGen*](https://arxiv.org/abs/2308.08155).** AutoGen belongs here because it made multi-agent coordination practical enough to expose both its value and its failure mode. It widened the field and also made it easier to confuse conversation with architecture. The bundle's conservative stance on role splits is partly a response to the surface AutoGen helped popularize.
+
+**[*Not What You've Signed Up For*](https://arxiv.org/abs/2302.12173).** Greshake and colleagues matter to the doctrine because they changed the safety question from prompt strength to trust separation. Once external content can influence planning and action, safety stops being a style problem and becomes an architecture problem. That shift is one of the deepest assumptions behind the whole series.
+
+**[*OPRO*](https://arxiv.org/abs/2309.03409).** OPRO matters less here for prompt search itself than for the cold prerequisite it makes visible. Optimization only begins once there is an objective and a repeatable evaluation loop. The bundle therefore treats optimization as late work for already legible systems rather than as an early badge of sophistication.

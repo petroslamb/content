@@ -54,6 +54,10 @@ One last correction matters here. Structured data work is often treated as a min
 
 That point deserves to stay visible because it changes what teams should celebrate. The most mature action layer is often not the one with the broadest apparent reach. It is the one that can prove what changed, why it was allowed to change, and how a reviewer would replay the boundary if something later goes wrong. The durable prestige metric is reconstructibility, not apparent generality, under scrutiny.
 
-## Next Layer
+## Sources Behind This Chapter
 
-Use the [public essay](../action/01-action-tool-use-v6.md) for the doctrinal center, the [action blueprint](../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md) for surface choice and recovery rules, and the paper notes for Toolformer, Gorilla, SWE-agent, WebAgent, and OmniParser when you need source-level detail rather than the broader companion cut.
+The core papers here are [*Toolformer*](https://arxiv.org/abs/2302.04761), [*Gorilla*](https://arxiv.org/abs/2305.15334), and [*SWE-agent*](https://arxiv.org/abs/2405.15793). Together they define the chapter's center of gravity. Toolformer makes tool invocation visible as a boundary decision, Gorilla sharpens the problem into interface choice and argument construction, and SWE-agent shows what happens when the environment answers in a replayable way. Read together, they push action away from the vague category of "tool use" and toward the stricter question of what kind of surface still lets a builder diagnose failure.
+
+The next ring of material widens that argument rather than replacing it. Browser and computer-use work such as WebAgent and OmniParser matter because they expose what is lost when the surface gets broader and more human-shaped. They are useful precisely because they show the cost of leaving typed interfaces behind: weaker contracts, thinner observation, and harder recovery. They belong in the companion because they deepen the surface-comparison argument without changing the doctrine that cleaner interfaces should be the default.
+
+The broader picture of this chapter is therefore not "APIs good, browsers bad." It is that action design lives at the boundary where consequence begins and where state has to stay reconstructible. Use the [public essay](../action/01-action-tool-use-v6.md) for the hard law, the [action blueprint](../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md) for build order and recovery rules, and the paper notes when you want the source-level texture behind those choices.

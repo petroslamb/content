@@ -69,3 +69,15 @@ The escalation rule stays severe: decompose, ground, verify, promote the plan wh
 If the workflow asks one generation to do the work of several, a better model only hides the mistake longer.
 
 The next chapter starts after that discipline is in place. Once one agent can reason, act, and verify through an explicit scaffold, the next question is whether a second role buys a real boundary or just more narration.
+
+## Selected Sources
+
+**[*Least-to-Most Prompting*](https://arxiv.org/abs/2205.10625).** Least-to-Most matters because it shows why decomposition is not the baby version of reasoning. It is the paper behind the doctrine's first move: expose dependent subproblems before asking one generation to improvise the whole structure.
+
+**[*ReAct*](https://arxiv.org/abs/2210.03629).** ReAct matters because it binds reasoning to action and observation. The chapter's control-first view of reasoning owes a great deal to that move. A workflow that depends on live state but still reasons in prose is not mainly underpowered. It is disconnected from reality.
+
+**[*Chain-of-Verification*](https://arxiv.org/abs/2309.11495).** CoVe matters because it gives verification a real place in the workflow instead of leaving it as a vague norm. The doctrine uses that topology directly. Trust should be earned in a distinct stage, not implied by the fluency of the first answer.
+
+**[*LLM+P*](https://arxiv.org/abs/2304.11477).** LLM+P matters because it marks the point where sequence itself becomes the risk. The paper's importance here is not frontier breadth. It is the practical escalation rule it implies: promote the plan into a first-class object only when prose can no longer carry the constraints safely.
+
+**[*Tree of Thoughts*](https://arxiv.org/abs/2305.10601).** Tree of Thoughts matters in this doctrine mostly as a boundary marker. It clarifies what true branching search is for and, by contrast, what it is not for. Search belongs late, after decomposition, grounding, and verification are already doing their jobs.
