@@ -64,6 +64,18 @@ This kind of rehearsal turns safety from principle into architecture. It reveals
 
 It also reveals a harder truth. Some workflows should stay narrow. If abuse rehearsal keeps showing that one retrieval path, browser surface, or inter-agent handoff cannot be contained cleanly, the right answer may be to reduce autonomy rather than add another clever defense. Serious safety doctrine has to leave room for that verdict.
 
+## Analytical References
+
+**[Greshake note](../../reference/papers/greshake_indirect_prompt_injection.md).** This note is about indirect prompt injection through external content. It is the foundational reference when the argument starts with trust separation between instructions and observations.
+
+**[PoisonedRAG note](../../reference/papers/poisonedrag.md).** This note is about retrieval poisoning and knowledge corruption. It matters when the workflow acts on retrieved material and the store itself becomes part of the attack surface.
+
+**[ToolEmu note](../../reference/papers/toolemu.md).** This note is about sandboxed safety evaluation before consequence. It is the right source when the builder needs a reference for abuse rehearsal and predeployment stress testing.
+
+**[Agent Poison note](../../reference/papers/agentpoison.md).** This note is about poisoning durable memory or knowledge bases so later behavior is redirected. It matters when memory policy and safety policy have started to collapse into the same problem.
+
+**[Agent Smith note](../../reference/papers/agentsmith.md).** This note is about cross-agent contamination through multimodal artifacts. It is useful when the handoff itself becomes the propagation surface.
+
 ## Sources Behind This Chapter
 
 The core sources behind this chapter are [*Not What You've Signed Up For*](https://arxiv.org/abs/2302.12173), [*PoisonedRAG*](https://arxiv.org/abs/2402.07867), and [*ToolEmu*](https://arxiv.org/abs/2309.15817). They matter together because they redraw safety around movement and consequence. Greshake and colleagues break the old instruction-data trust model, PoisonedRAG makes retrieval integrity part of the attack surface, and ToolEmu moves evaluation in front of deployment.

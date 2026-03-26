@@ -80,3 +80,5 @@ Memory is not the art of keeping more. It is the discipline of keeping the right
 **[*MemoryBank*](https://arxiv.org/abs/2305.10250).** MemoryBank matters because it put decay and refresh back into the center of the conversation. That is essential to the chapter's law. Forgetting is not a weakness in a long-lived system. It is part of how retained state stays current enough to deserve trust.
 
 **[*Mem0*](https://arxiv.org/abs/2504.19413).** Mem0 matters because it pushes the literature toward derived memory objects rather than transcript hoarding. The doctrine depends on that move. Durable memory should usually be an extracted fact, promoted routine, or consolidated lesson rather than a raw conversational heap that retrieval later has to reinterpret.
+
+For the broader terrain this essay leaves out on purpose, read the [Memory companion](./companion-v7.md). For the operator layer, layer choices, and lifecycle rules, read the [Memory blueprint](../../core/practical-chapter-blueprints/01-memory-blueprint.md).

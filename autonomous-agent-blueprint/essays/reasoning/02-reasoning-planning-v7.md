@@ -79,3 +79,5 @@ If one generation is doing the work of several, a better model only buys a more 
 **[*LLM+P*](https://arxiv.org/abs/2304.11477).** LLM+P matters because it marks the point where sequence itself becomes the risk. The paper's importance here is not frontier breadth. It is the escalation rule it implies: promote the plan into a first-class object only when prose can no longer carry the constraints safely.
 
 **[*Tree of Thoughts*](https://arxiv.org/abs/2305.10601).** Tree of Thoughts matters in this doctrine mostly as a boundary marker. It clarifies what true branching search is for and, by contrast, what it is not for. Search belongs late, after decomposition, grounding, and verification are already doing their jobs.
+
+For the broader terrain this essay leaves out on purpose, read the [Reasoning companion](./companion-v7.md). For the operator layer, chooser logic, and escalation defaults, read the [Reasoning blueprint](../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md).
