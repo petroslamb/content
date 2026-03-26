@@ -1,6 +1,6 @@
 # Essays: Operating Agents
 
-This folder contains the public *Operating Agents* essay package. Each topic folder keeps the live essay, its companion, its local README, and any presentation artifacts together.
+This folder contains the public *Operating Agents* essay package. Each topic folder keeps the current `v7` essay, the archived `v6` baseline, the current companion, its local README, and any presentation artifacts together.
 
 ## Doctrine Goal
 
@@ -20,6 +20,8 @@ For this package, `A+++` means doctrine-level public writing:
 
 If a serious builder cannot lift a sentence from a chapter and use it to clarify an architecture argument next week, the essay is not finished.
 
+`v7` is the live publication candidate. `v6` remains the archived comparison baseline.
+
 ## Folder Map
 
 - `launch-note/` - series framing
@@ -29,11 +31,11 @@ If a serious builder cannot lift a sentence from a chapter and use it to clarify
 - `multi-agent/` - multi-agent design
 - `safety/` - safety and attack surfaces
 - `optimization/` - optimization bonus post
-- `operating-agents-coverage-map.md` - bridge from essays to blueprints, source notes, and the wider survey
+- `operating-agents-coverage-map-v7.md` - bridge from the live essays to companions, blueprints, source notes, and the wider survey
 
 ## What Lives In A Topic Folder
 
-Each topic folder contains the current `v6` essay, earlier drafts kept for reference, the local `companion.md`, the local `README.md`, and `artifacts/` when presentation material exists.
+Each topic folder contains the current `v7` essay, the archived `v6` essay baseline, the current `companion-v7.md`, the earlier companion baseline, the local `README.md`, and `artifacts/` when presentation material exists.
 
 The companion is intentionally local now. It is not a short appendix or a bare reference list. It is a substantial second-pass essay for the interested reader: broader chapter terrain, booklet context, omitted method surface, and fuller source interpretation that would have overcomplicated the public post.
 
@@ -41,13 +43,13 @@ The companion is intentionally local now. It is not a short appendix or a bare r
 
 ### Current narrative order
 
-1. `launch-note/00-launch-note-v6.md`
-2. `action/01-action-tool-use-v6.md`
-3. `memory/03-memory-v6.md`
-4. `reasoning/02-reasoning-planning-v6.md`
-5. `multi-agent/04-multi-agent-v6.md`
-6. `safety/05-safety-v6.md`
-7. `optimization/06-optimization-v6.md`
+1. `launch-note/00-launch-note-v7.md`
+2. `action/01-action-tool-use-v7.md`
+3. `memory/03-memory-v7.md`
+4. `reasoning/02-reasoning-planning-v7.md`
+5. `multi-agent/04-multi-agent-v7.md`
+6. `safety/05-safety-v7.md`
+7. `optimization/06-optimization-v7.md`
 
 ### Topic-to-blueprint mapping
 
@@ -70,5 +72,5 @@ Rewrite ledgers and planning notes live under `../notes/essay-evolution/`.
 
 Current active rewrite target:
 
-- `../notes/essay-evolution/essay-evolution-v5-to-v6.md` defines the doctrine-first `v6` standard and rewrite plan.
-- `../notes/essay-evolution/essay-v6-doctrine-packs.md` locks the chapter-level doctrine packs behind the live `v6` drafts.
+- `../notes/essay-evolution/essay-evolution-v6-to-v7.md` defines the doctrine-first `v7` rewrite plan.
+- `../notes/essay-evolution/essay-v7-doctrine-packs.md` locks the chapter-level doctrine packs behind the live `v7` drafts.
