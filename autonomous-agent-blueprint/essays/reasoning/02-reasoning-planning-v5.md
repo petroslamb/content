@@ -86,22 +86,22 @@ This blueprint turns the essay's diagnosis-first argument into concrete rules fo
 
 The companion restores the wider reasoning and planning chapter: self-refinement, abstraction-reset methods, formal planner handoff, and the broader taxonomy that sits around the essay's conservative default stack.
 
-### [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (2022)
+### [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
 
 ReAct matters because it remains the cleanest practical control loop for tasks where the world can contradict the model.
 
-### [Least-to-Most Prompting Enables Complex Reasoning in Large Language Models](https://arxiv.org/abs/2205.10625) (2022)
+### [Least-to-Most Prompting Enables Complex Reasoning in Large Language Models](https://arxiv.org/abs/2205.10625)
 
 Least-to-Most matters because it turns decomposition from vague advice into an explicit method for exposing hidden dependencies.
 
-### [Chain-of-Verification Reduces Hallucination in Large Language Models](https://arxiv.org/abs/2309.11495) (2023)
+### [Chain-of-Verification Reduces Hallucination in Large Language Models](https://arxiv.org/abs/2309.11495)
 
 Chain-of-Verification matters because it gives verification its own stage instead of leaving trust inside the first draft.
 
-### [Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171) (2022)
+### [Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171)
 
 Self-Consistency matters because it gives teams a disciplined response to unstable answers when variance itself is the problem.
 
-### [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601) (2023) and [Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models](https://arxiv.org/abs/2310.04406) (2023)
+### [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601) and [Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models](https://arxiv.org/abs/2310.04406)
 
 These papers matter because they show when reasoning should be treated as genuine search rather than as a single-path generation problem.

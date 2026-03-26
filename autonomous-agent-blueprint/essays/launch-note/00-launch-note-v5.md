@@ -32,13 +32,11 @@ This is not a literature order. It is a publication order for readers who want t
 
 ## What This Series Is Trying To Do
 
-Each essay makes one hard claim and defends it in public-facing prose. The goal is not to flatten the research into slogans. The goal is to give serious builders a defensible way to think about the parts of agent engineering that still matter after the demo stops helping.
+Each essay makes one hard claim and defends it in public-facing prose. The goal is not to flatten the research into slogans. The goal is to give serious builders a sharper way to diagnose why promising systems fail once human compensation disappears.
 
-The essays are intentionally narrower than the surrounding repo. They argue for a sharp thesis in public. The local companion beside each topic restores the omitted terrain: adjacent methods, wider chapter coverage, and the parts of the literature that matter once the central claim is clear. The blueprint layer is narrower in a different way. It translates the claim into defaults, escalation rules, anti-patterns, and review questions.
+Some pieces argue for narrower defaults than the field likes. Others argue against escalations that sound sophisticated and usually make systems harder to govern. Taken together, the series is not really about autonomy. It is about control surfaces: where failure enters, where trust gets earned, where authority should stop, and what evidence a serious builder should demand before widening the system.
 
-Read the essay first if you want the argument. Read the companion second if you want the surrounding terrain. Read the blueprint third if you need to make a design choice.
-
-What ties the bundle together is not a promise of autonomy. It is a stricter ambition. Each piece is trying to make one operating layer visible enough that a builder can stop talking about agents in the abstract and start asking which boundary is actually weak.
+That is what ties the bundle together. Each piece is trying to make one operating layer visible enough that a builder can stop talking about agents in the abstract and start asking which boundary is actually weak.
 
 ## The Standard
 
@@ -48,7 +46,7 @@ If one sentence should carry through the whole package, it is this:
 
 That is the standard behind this series. It is not trying to celebrate autonomy. It is not trying to forecast the field. It is trying to make the control layer visible before the marketing layer swallows the subject again.
 
-If your prototype already works well enough to be tempting and fails badly enough to be expensive, this series is for you.
+If your prototype already works well enough to be tempting and fails badly enough to be expensive, this series is for you. That is usually the exact moment when model talk starts sounding hollow and operating design starts mattering.
 
 ## Resources And References
 

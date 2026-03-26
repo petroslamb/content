@@ -99,22 +99,22 @@ This blueprint translates the essay's governance-over-time thesis into typed mem
 
 The companion restores the broader memory chapter: human-memory framing, richer lifecycle detail, wider retrieval escalation, and the source terrain that sits beyond the essay's deployable center.
 
-### [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) (2023)
+### [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
 
 MemGPT matters because it cleanly separates active context from managed external memory and gives the chapter its most useful operating metaphor.
 
-### [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) (2023)
+### [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)
 
 Generative Agents matters because it shows that episodic memory only becomes useful once experience can be reflected into higher-order summaries.
 
-### [MemoryBank: Enhancing Large Language Models with Long-Term Memory](https://arxiv.org/abs/2305.10250) (2023)
+### [MemoryBank: Enhancing Large Language Models with Long-Term Memory](https://arxiv.org/abs/2305.10250)
 
 MemoryBank matters because it restores forgetting to the center of the conversation.
 
-### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (2023) and [Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory](https://arxiv.org/abs/2504.19413) (2025)
+### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) and [Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory](https://arxiv.org/abs/2504.19413)
 
 These papers matter together because they argue against transcript hoarding from two directions: reusable lessons from failure and extracted memory objects that outlast the raw conversation.
 
-### [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) (2023) and [HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models](https://arxiv.org/abs/2405.14831) (2024)
+### [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) and [HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models](https://arxiv.org/abs/2405.14831)
 
 Voyager matters because it makes procedural memory concrete. HippoRAG matters because it shows when flat retrieval stops being a serious interface for the problem.
