@@ -10,14 +10,14 @@ This is the exact kind of failure a retrieval-backed enterprise agent will face:
 
 ## Taxonomy mapping
 
-- [`../../../../evaluation/failure-mode-catalog.md`](../../../../evaluation/failure-mode-catalog.md): `Stale memory reuse`
-- [`../../../../evaluation/failure-mode-catalog.md`](../../../../evaluation/failure-mode-catalog.md): `Retrieval poisoning`
+- [`../../../../implementation/evaluation/failure-mode-catalog.md`](../../../../implementation/evaluation/failure-mode-catalog.md): `Stale memory reuse`
+- [`../../../../implementation/evaluation/failure-mode-catalog.md`](../../../../implementation/evaluation/failure-mode-catalog.md): `Retrieval poisoning`
 
 ## Checklist controls that should catch it
 
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Is there a write policy for memory rather than automatic logging?`
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Are retrieval and memory treated as attack surfaces?`
-- [`../../../../evaluation/architecture-review-checklist.md`](../../../../evaluation/architecture-review-checklist.md): `Is verification stronger than a single first-pass answer?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Is there a write policy for memory rather than automatic logging?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Are retrieval and memory treated as attack surfaces?`
+- [`../../../../implementation/evaluation/architecture-review-checklist.md`](../../../../implementation/evaluation/architecture-review-checklist.md): `Is verification stronger than a single first-pass answer?`
 
 ## What would reduce the failure
 

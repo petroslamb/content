@@ -1,6 +1,6 @@
 # Worked Case Study: Web Form Agent
 
-> Historical note: This v1 packet-oriented case study was superseded by [`../../reviewable-runs.md`](../../reviewable-runs.md) and [`../../case-studies/web-form-agent/README.md`](../../case-studies/web-form-agent/README.md).
+> Historical note: This v1 packet-oriented case study was superseded by [`../../core/reviewable-runs.md`](../../core/reviewable-runs.md) and [`../../implementation/case-studies/web-form-agent/README.md`](../../implementation/case-studies/web-form-agent/README.md).
 
 This case applies the web reference architecture to a concrete browser task: gather evidence across several pages, fill a high-friction reimbursement form, and require approval before final submission.
 
@@ -11,7 +11,7 @@ Read this file in four passes:
 1. read `Problem and operating constraints` to see why live page state is the dominant source of uncertainty
 2. read `Default architecture selected` plus `Why this architecture wins here` to understand why the web archetype wins over enterprise or coding defaults
 3. open the artifact bundle in [`artifacts/web-form-agent/`](artifacts/web-form-agent/) to see observe -> summarize -> act -> verify -> approve in sequence
-4. finish with `Failure review` and [`../../evaluation/architecture-review-checklist.md`](../../evaluation/architecture-review-checklist.md) to see how page-state mistakes are reviewed before submission
+4. finish with `Failure review` and [`../../implementation/evaluation/architecture-review-checklist.md`](../../implementation/evaluation/architecture-review-checklist.md) to see how page-state mistakes are reviewed before submission
 
 ## Problem and operating constraints
 
@@ -19,9 +19,9 @@ The agent is asked to submit a travel reimbursement request through a vendor por
 
 ## Default architecture selected
 
-This case instantiates the abstract web architecture in [`../../use-cases/web-agent.md`](../../use-cases/web-agent.md). It adopts the defaults from [`../../practical-chapter-blueprints/01-memory-blueprint.md`](../../practical-chapter-blueprints/01-memory-blueprint.md), [`../../practical-chapter-blueprints/02-reasoning-planning-blueprint.md`](../../practical-chapter-blueprints/02-reasoning-planning-blueprint.md), [`../../practical-chapter-blueprints/03-action-tool-use-blueprint.md`](../../practical-chapter-blueprints/03-action-tool-use-blueprint.md), and [`../../practical-chapter-blueprints/06-safety-blueprint.md`](../../practical-chapter-blueprints/06-safety-blueprint.md).
+This case instantiates the abstract web architecture in [`../../implementation/use-cases/web-agent.md`](../../implementation/use-cases/web-agent.md). It adopts the defaults from [`../../core/practical-chapter-blueprints/01-memory-blueprint.md`](../../core/practical-chapter-blueprints/01-memory-blueprint.md), [`../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`](../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md), [`../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`](../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md), and [`../../core/practical-chapter-blueprints/06-safety-blueprint.md`](../../core/practical-chapter-blueprints/06-safety-blueprint.md).
 
-The source basis is [`../../papers/react.md`](../../papers/react.md), [`../../papers/webagent.md`](../../papers/webagent.md), [`../../papers/mind2web.md`](../../papers/mind2web.md), [`../../papers/chain_of_verification.md`](../../papers/chain_of_verification.md), and [`../../papers/greshake_indirect_prompt_injection.md`](../../papers/greshake_indirect_prompt_injection.md).
+The source basis is [`../../reference/papers/react.md`](../../reference/papers/react.md), [`../../reference/papers/webagent.md`](../../reference/papers/webagent.md), [`../../reference/papers/mind2web.md`](../../reference/papers/mind2web.md), [`../../reference/papers/chain_of_verification.md`](../../reference/papers/chain_of_verification.md), and [`../../reference/papers/greshake_indirect_prompt_injection.md`](../../reference/papers/greshake_indirect_prompt_injection.md).
 
 The matching artifact bundle lives in [`artifacts/web-form-agent/`](artifacts/web-form-agent/).
 
@@ -33,19 +33,19 @@ The approval gate is essential here because the form submission is the irreversi
 
 ## Alternatives rejected
 
-- GUI-first action was rejected because the portal exposes stable DOM structure for the key fields, making DOM-aware control safer and more observable than screenshot-only interaction; basis: [`../../use-cases/web-agent.md`](../../use-cases/web-agent.md), [`../../papers/webagent.md`](../../papers/webagent.md), [`../../papers/mind2web.md`](../../papers/mind2web.md).
-- Retrieval-only browsing without state verification was rejected because snippets from earlier pages are not enough evidence for a safe submission once the current page state changes; basis: [`../../practical-chapter-blueprints/02-reasoning-planning-blueprint.md`](../../practical-chapter-blueprints/02-reasoning-planning-blueprint.md), [`../../papers/webagent.md`](../../papers/webagent.md), [`../../papers/chain_of_verification.md`](../../papers/chain_of_verification.md).
-- No approval gate before submission was rejected because purchases, reimbursements, and external commitments are exactly the class of browser action that should not rely on page-local confidence alone; basis: [`../../practical-chapter-blueprints/06-safety-blueprint.md`](../../practical-chapter-blueprints/06-safety-blueprint.md), [`../../papers/toolemu.md`](../../papers/toolemu.md), [`../../papers/greshake_indirect_prompt_injection.md`](../../papers/greshake_indirect_prompt_injection.md).
+- GUI-first action was rejected because the portal exposes stable DOM structure for the key fields, making DOM-aware control safer and more observable than screenshot-only interaction; basis: [`../../implementation/use-cases/web-agent.md`](../../implementation/use-cases/web-agent.md), [`../../reference/papers/webagent.md`](../../reference/papers/webagent.md), [`../../reference/papers/mind2web.md`](../../reference/papers/mind2web.md).
+- Retrieval-only browsing without state verification was rejected because snippets from earlier pages are not enough evidence for a safe submission once the current page state changes; basis: [`../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`](../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md), [`../../reference/papers/webagent.md`](../../reference/papers/webagent.md), [`../../reference/papers/chain_of_verification.md`](../../reference/papers/chain_of_verification.md).
+- No approval gate before submission was rejected because purchases, reimbursements, and external commitments are exactly the class of browser action that should not rely on page-local confidence alone; basis: [`../../core/practical-chapter-blueprints/06-safety-blueprint.md`](../../core/practical-chapter-blueprints/06-safety-blueprint.md), [`../../reference/papers/toolemu.md`](../../reference/papers/toolemu.md), [`../../reference/papers/greshake_indirect_prompt_injection.md`](../../reference/papers/greshake_indirect_prompt_injection.md).
 
 ## Trust boundaries and approval gates
 
 The core trust boundary is between page content and control policy. Help text, tooltips, and inline instructions on the site can be useful evidence, but they are not privileged instructions. The agent keeps observation summaries separate from action policy and verifies page state before it advances.
 
-Approval occurs when the form is fully populated, attachments are staged, and the verification report confirms that the current page matches the intended submission target. The human approver sees the selected fields, extracted evidence, final amount, and the exact action waiting for approval. This is aligned with [`../../evaluation/architecture-review-checklist.md`](../../evaluation/architecture-review-checklist.md).
+Approval occurs when the form is fully populated, attachments are staged, and the verification report confirms that the current page matches the intended submission target. The human approver sees the selected fields, extracted evidence, final amount, and the exact action waiting for approval. This is aligned with [`../../implementation/evaluation/architecture-review-checklist.md`](../../implementation/evaluation/architecture-review-checklist.md).
 
 ## Evaluation plan
 
-The architecture is reviewed with [`../../evaluation/architecture-review-checklist.md`](../../evaluation/architecture-review-checklist.md) and the web-relevant entries in [`../../evaluation/failure-mode-catalog.md`](../../evaluation/failure-mode-catalog.md). The main acceptance criteria are:
+The architecture is reviewed with [`../../implementation/evaluation/architecture-review-checklist.md`](../../implementation/evaluation/architecture-review-checklist.md) and the web-relevant entries in [`../../implementation/evaluation/failure-mode-catalog.md`](../../implementation/evaluation/failure-mode-catalog.md). The main acceptance criteria are:
 
 - the agent always re-summarizes page state before acting
 - the extracted reimbursement amount matches visible evidence
@@ -63,7 +63,7 @@ The good-path artifact bundle for this case is:
 
 ## Failure review
 
-The plausible failure for this default is a page-state mistake that looks like success: the agent extracts the correct amount from a booking page, but a dynamic reimbursement form resets the selected expense category after an auto-refresh, leaving the form prepared for the wrong claim type. This maps to `Observation-action confusion` and `Indirect prompt injection` in [`../../evaluation/failure-mode-catalog.md`](../../evaluation/failure-mode-catalog.md), because the page itself becomes a source of misleading control state.
+The plausible failure for this default is a page-state mistake that looks like success: the agent extracts the correct amount from a booking page, but a dynamic reimbursement form resets the selected expense category after an auto-refresh, leaving the form prepared for the wrong claim type. This maps to `Observation-action confusion` and `Indirect prompt injection` in [`../../implementation/evaluation/failure-mode-catalog.md`](../../implementation/evaluation/failure-mode-catalog.md), because the page itself becomes a source of misleading control state.
 
 The failure review artifact for this case lives at [`artifacts/web-form-agent/failure-review.md`](artifacts/web-form-agent/failure-review.md). The review shows that a stricter final-state verification check and clearer approval evidence would have caught the reset before submission.
 
