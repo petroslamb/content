@@ -6,7 +6,7 @@ Nothing happened until a human translated that prose into clicks and API calls.
 
 So the team gave the system write access to the procurement service. The first failure was boring. The model filled `currency_code` with `USD dollars` instead of `USD`, and the schema rejected the request. The second failure was worse. A downstream service had changed how it reported deferred writes. The agent treated a partial acknowledgment as completion, moved on, and the order never landed. The supplier discovered the gap before the team did.
 
-That is where the real agent problem starts. The step from assistant to agent is not the moment the model sounds more capable. It is the moment language becomes accountable state change.
+The real agent problem starts there. The step from assistant to agent is not the moment the model sounds more capable. It is the moment language becomes accountable state change.
 
 Once a system can act, the design problem narrows and hardens. The important questions are no longer mainly about fluency or about reasoning in the abstract. They are about interfaces. What surface is the system allowed to touch? How are arguments validated? What comes back after the action? What permissions govern the call? How would you replay the event? How would you tell the difference between a completed write and a polite lie from the environment?
 
@@ -24,19 +24,19 @@ That is why the jump from assistant to agent looks smaller in a demo than it fee
 
 Once action is real, teams often make the next mistake quickly. They treat every broader surface as an upgrade in capability. In practice the opposite is usually true. Moving from typed APIs to browser automation to full GUI control is usually a decline in observability and reliability, tolerated only because the environment leaves you no cleaner path.
 
-The default should therefore be stricter than most teams make it: choose the narrowest action surface that still reaches the work.
+Use the narrowest action surface that still reaches the work.
 
 If a stable API exists, use it. If the work is software or repeatable transformation, code execution is often the right action surface because code can be tested, inspected, and replayed. If the work lives mainly in structured business data, SQL or a typed query layer is often the real operating surface even though consumer agent writing rarely treats it that way. Browser action matters when the system of record is web-native and no usable API exists. GUI action is a fallback for closed environments, not a badge of generality (Li et al.; Lei et al.; Deng et al.; Gu et al.).
 
 The practical question is not which surface looks most agentic. It is which surface gives the strongest contract around scope, execution, and observation.
 
-## Tool Use Breaks At Seams, Not In The Abstract
+## Tool Use Breaks At Seams, Not In Capability Scores
 
 The literature on tool use matters because it breaks a vague capability word into smaller failures that can be named and instrumented.
 
 First the system has to realize that a tool is needed at all. Many systems stay too long in text because the model keeps trying to answer from plausibility instead of reaching for a live capability. That is still the useful lesson of *Toolformer*.
 
-Then it has to choose the right tool. This is where *Gorilla* remains useful. The problem is not broad intelligence. It is discrimination across nearby interfaces.
+Then it has to choose the right tool. *Gorilla* remains useful here. The problem is not broad intelligence. It is discrimination across nearby interfaces.
 
 Then it has to bind the arguments correctly. This is where many teams get fooled. The system understood the task, picked the right endpoint, and still created a bad write because one field drifted from the contract. That is not a mystical model failure. It is an argument-construction failure that should be visible in the logs and preventable at the schema boundary.
 
@@ -68,11 +68,11 @@ A status object like that gives the reasoning layer something usable. A dump of 
 
 ## Use Action To Reduce Uncertainty
 
-The broader action chapter becomes most interesting where it connects action to perception rather than treating action as the final stage of a pipeline. The practical translation is simple: good agents do not only act to complete a task. They also act to reduce uncertainty before that uncertainty becomes expensive.
+The action chapter becomes most useful where it stops treating action as the end of a pipeline and starts treating it as a way to reduce uncertainty before that uncertainty becomes expensive.
 
-Before submitting a purchase order, validate the payload against the schema. Before relying on retrieved policy, check freshness. Before assuming a background job finished, poll the status endpoint. Before retrying a failed call, inspect what the endpoint actually expects. The point is not to add ceremony. The point is to stop treating internal confidence as a substitute for environmental confirmation.
+Before submitting a purchase order, validate the payload against the schema. Before relying on retrieved policy, check freshness. Before assuming a background job finished, poll the status endpoint. Before retrying a failed call, inspect what the endpoint actually expects. Good agents do not only act to complete a task. They also act to learn what state they are actually in.
 
-Once you see that pattern, action stops looking like the last step in the chain and starts looking like part of how the system learns what state it is actually in.
+That shift matters because it changes what the next essay has to solve. Once a workflow can act reliably enough to matter, continuity pressure arrives immediately. The system now needs rules for what it should remember about its own past.
 
 ## Action Surface Chooser
 
@@ -84,7 +84,7 @@ Once you see that pattern, action stops looking like the last step in the chain 
 | Browser automation | The system of record is web-native and lacks a useful API | Reach into real web workflows | The site is too brittle or visually ambiguous |
 | GUI automation | Every cleaner interface is unavailable | Access to otherwise closed systems | A stronger interface becomes available |
 
-The discipline is not to romanticize the broader surface. It is to treat broader surfaces as more expensive and less legible by default.
+Broader surfaces are usually more expensive and less legible. Treat them that way.
 
 ## The Review Standard
 
