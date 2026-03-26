@@ -1,5 +1,7 @@
 # Reviewable Run Dossier: Coding Bugfix Agent
 
+**Status:** `synthetic teaching dossier`
+
 This dossier applies the coding reference architecture to one repository-scoped bugfix. Read it linearly first. Use the supporting records only when you want to inspect how the run, approval boundary, or near miss is documented.
 
 ## Scenario and operating constraints

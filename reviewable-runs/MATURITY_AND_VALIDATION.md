@@ -14,17 +14,17 @@ That claim is useful, coherent, and well supported by the surrounding blueprint 
 
 ## Current Weakness
 
-The package is still stronger as a framing than as a validated operational system.
+The package is still stronger as a framework than as a broadly validated operational system.
 
-The current examples are synthetic teaching dossiers. They make the framework concrete, but they do not yet prove that the added review surface is worth its cost against plain logs or lighter monitoring.
+The package now includes one real captured coding run under `proofs/coding-real-run/`, but that is still a pilot rather than a broad validation set. Most of the example layer remains synthetic by design.
 
 ## Maturity Assessment
 
 - conceptual maturity: medium-high
-- package maturity: medium
-- empirical maturity: low
+- package maturity: medium-high
+- empirical maturity: low-medium
 
-The idea is mature enough to deserve its own package. It is not mature enough to claim that the current record surface is the final or universal standard.
+The idea is mature enough to deserve its own package and one real proof layer. It is not mature enough to claim that the current record surface is the final or universal standard.
 
 ## Publishability
 
@@ -34,7 +34,7 @@ This is publishable now as:
 - an architecture note
 - an operator-facing essay or series
 
-It is not yet publishable as a strong research claim unless it gains real runtime evidence and comparative validation.
+It is not yet publishable as a strong research claim unless it gains more than one real runtime proof and broader comparative validation.
 
 ## Most Practical First Use
 
@@ -53,9 +53,9 @@ Do not present this as mandatory heavy review paperwork for every low-risk trivi
 
 The next concrete validation steps are:
 
-1. take one real run, probably a coding run
-2. reconstruct it into the direct six-record surface
-3. compare that against raw logs or a plain transcript
-4. show that a reviewer can approve, debug, or reject more credibly
+1. repeat the proof with at least one enterprise or web run
+2. run the framework-evaluation method with actual reviewers
+3. measure time, unanswered questions, and reviewer confidence across raw-versus-packet review
+4. tighten the risk-tier policy from pilot use into a stable operator standard
 
-Until that exists, the package should stay honest about what is synthetic and what is still a claim.
+Until then, the package should stay honest about what is proven, what is pilot evidence, and what is still a claim.

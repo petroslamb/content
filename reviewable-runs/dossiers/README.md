@@ -2,6 +2,12 @@
 
 This folder is the package's primary concrete proof layer.
 
+Status note:
+
+- the dossiers in this folder are currently labeled `synthetic teaching dossier`
+- real proof artifacts live under `../proofs/`
+- status labels are defined in `../DOSSIER_STATUS.md`
+
 The upstream abstract architectures still live in `../../autonomous-agent-blueprint/implementation/use-cases/`. The dossiers here show what those defaults look like when one concrete run is made reviewable from end to end.
 
 These dossiers align most directly to `../reviewable-runs.md`. They are not meant to be a strict mechanical output of `../templates/` or `../evaluation/`.

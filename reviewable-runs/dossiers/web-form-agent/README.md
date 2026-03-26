@@ -1,5 +1,7 @@
 # Reviewable Run Dossier: Web Form Agent
 
+**Status:** `synthetic teaching dossier`
+
 This dossier applies the web reference architecture to one high-friction browser task. Read it linearly first. Use the supporting records only when you want to inspect how the browser run was grounded, gated, and reviewed.
 
 ## Scenario and operating constraints

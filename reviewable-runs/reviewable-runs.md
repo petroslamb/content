@@ -80,6 +80,8 @@ The most common failure in agent demos is to confuse trace visibility with syste
 
 This framework is not saying that every low-value run must emit a heavy dossier.
 
+The canonical operational version of these tiers is in `MINIMAL_VIABLE_REVIEWABLE_RUN.md`.
+
 ### Low Risk
 
 Use lightweight reconstruction. Runtime outputs and ordinary logs may be enough if the system can still recover task, action history, and basic verification on demand.
@@ -96,6 +98,7 @@ Use the full surface. Task, trace, evidence, verification, approval, and failure
 
 - `../autonomous-agent-blueprint/implementation/use-cases/` remains the upstream architecture source.
 - `dossiers/` turns those default architectures into linear examples that answer the six review questions for one concrete scenario.
+- `proofs/` tests the framework against real captured evidence and raw-versus-reviewable comparisons.
 - `dossiers/*/runtime-records/` contains the core run records.
 - `dossiers/*/governance-records/` contains the approval and failure-review records used when the scenario crosses a governance boundary.
 - `evaluation/` explains how to judge both architecture readiness and run-level reviewability.
