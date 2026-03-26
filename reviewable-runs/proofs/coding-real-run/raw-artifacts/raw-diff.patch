@@ -1,0 +1,9 @@
+--- invoice_before.py	2026-03-26 17:57:59
++++ src/billing/invoice.py	2026-03-26 17:57:30
+@@ -1,5 +1,5 @@
+ def serialize_invoice(amount_cents: int, discount_percent: int | None) -> dict:
+-    if discount_percent:
++    if discount_percent is not None:
+         discount_cents = round(amount_cents * (discount_percent / 100))
+         payable_cents = amount_cents - discount_cents
+         discount_label = f"{discount_percent}%"

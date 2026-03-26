@@ -1,5 +1,7 @@
 # Reviewable Run Dossier: Enterprise Policy Memo
 
+**Status:** `synthetic teaching dossier`
+
 This dossier applies the enterprise reference architecture to one policy-sensitive drafting task. Read it linearly first. Inspect the supporting records only if you want to audit how the run is grounded or governed.
 
 ## Scenario and operating constraints

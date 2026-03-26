@@ -12,18 +12,28 @@ Use this package when your question is not only "how should the agent be built?"
 2. `ORIGIN_AND_GAP.md`
 3. `reviewable-runs.md`
 4. `dossiers/README.md`
-5. `evaluation/README.md`
-6. `templates/README.md`
-7. `MATURITY_AND_VALIDATION.md`
+5. `proofs/README.md`
+6. `evaluation/README.md`
+7. `templates/README.md`
+8. `MINIMAL_VIABLE_REVIEWABLE_RUN.md`
+9. `IMPLEMENTATION_GUIDE.md`
+10. `FRAMEWORK_EVALUATION.md`
+11. `MATURITY_AND_VALIDATION.md`
 
 ## Package Map
 
 - `reviewable-runs.md`: canonical model and six review questions
 - `dossiers/`: worked examples that answer those questions for concrete runs
+- `proofs/`: real evidence artifacts and failure contrasts
 - `evaluation/`: review instruments for architectures and runs
 - `templates/`: direct record templates plus adjacent support patterns
 - `history/`: the older packet-oriented lineage kept for reference
 - `ORIGIN_AND_GAP.md`: why this package exists and how it emerged
+- `MINIMAL_VIABLE_REVIEWABLE_RUN.md`: canonical operational adoption standard
+- `IMPLEMENTATION_GUIDE.md`: how teams would actually build the record surface
+- `FRAMEWORK_EVALUATION.md`: how to judge whether the framework earns its cost
+- `DOSSIER_STATUS.md`: status labels for synthetic, real, and hybrid evidence
+- `PUBLISHING_OUTLINE.md`: publication path for the public argument
 - `MATURITY_AND_VALIDATION.md`: what is strong, what is synthetic, and what still needs proof
 
 ## What This Is
@@ -49,9 +59,13 @@ Read `ORIGIN_AND_GAP.md`, then `reviewable-runs.md`, then `MATURITY_AND_VALIDATI
 
 Read `reviewable-runs.md`, then `dossiers/comparison-matrix.md`, then the closest dossier.
 
+### If you want proof
+
+Read `proofs/README.md`, then `proofs/coding-real-run/README.md`, then `proofs/coding-real-run/comparison.md`.
+
 ### If you want to implement it
 
-Read `reviewable-runs.md`, then `evaluation/README.md`, then `templates/README.md`.
+Read `reviewable-runs.md`, then `MINIMAL_VIABLE_REVIEWABLE_RUN.md`, then `IMPLEMENTATION_GUIDE.md`, then `evaluation/README.md`, then `templates/README.md`.
 
 ### If you want the upstream architecture basis
 
