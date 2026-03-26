@@ -4,13 +4,15 @@ Memory usually disappoints for a simple reason. Teams think they are adding reca
 
 The useful second-pass view is harsher. Memory is not a single feature and not a single store. It is a set of decisions about which parts of the past deserve to stay live, which deserve to harden, which deserve to decay, and which should never have been written in the first place. That is what makes memory architecture so practical. It turns retained state from a quantity problem into a truth-management problem.
 
+The public essay keeps the law severe and narrow. This companion owns the surrounding terrain: derivation, retirement, procedural promotion, and the retrieval escalations that belong outside the deployable center.
+
 ## The Missing Middle Is Derivation
 
 A lot of memory systems implement only two verbs: write and retrieve. That is not enough.
 
 Raw history is rarely the right memory object. A long conversation may contain one durable fact, one correction worth reusing later, and a lot of local noise that should never survive the task. A terminal transcript may contain a convention, a failed approach, and an irrelevant detour. If the system stores all of that in one undifferentiated way, later retrieval has to sift meaning from debris.
 
-That is why derivation belongs at the center of a serious memory design. An observation becomes a fact summary, a failure lesson, a promotion candidate for a routine, or nothing at all. Without that middle step, "memory" becomes storage plus wishful retrieval.
+Derivation belongs at the center of a serious memory design. An observation becomes a fact summary, a failure lesson, a promotion candidate for a routine, or nothing at all. Without that middle step, "memory" becomes storage plus wishful retrieval.
 
 Generative Agents and Reflexion both matter here for the same deeper reason. They do not treat experience as valuable simply because it happened. They try to turn history into a more useful object. That is the part most teams still skip.
 
@@ -28,6 +30,16 @@ Procedural memory is reusable know-how. If it is absent, the system rediscovers 
 
 This is where the field still gets memory wrong. It asks whether the agent can remember when the real question is what kind of past the system is trying to preserve. Facts, episodes, and routines should not be written, retrieved, or retired under the same rules.
 
+## Read And Write Should Not Share The Same Threshold
+
+One of the most common memory design mistakes is to make writing easier than later trust can justify. The system writes a note because it might be useful, stores a correction because it sounds plausible, or saves a summary because the run felt important. Months later that same object comes back through retrieval as though it had earned durable status.
+
+Read policy and write policy should therefore be asymmetric. A workflow can often afford generous read access to well-governed memory classes while staying much stricter about what gets written, promoted, refreshed, or allowed to persist. That asymmetry is one of the simplest ways to keep memory from becoming a landfill of future interference.
+
+It also clarifies the role of humans and verification. Some facts should only become durable after a checked extraction step. Some routines should only become procedural memory after repeated success across similar tasks. Some episodic traces should stay local to case review instead of entering a shared store at all. Teams that skip this distinction usually end up debugging retrieval quality when the real mistake was admission policy.
+
+The asymmetry also gives builders a saner rollback path. When writes are selective, a bad memory policy can be corrected without excavating an entire polluted archive. When writes are loose and trust is generous, every cleanup becomes forensic work against history that never should have hardened.
+
 ## Retirement Is Part Of Accuracy
 
 Forgetting still sounds to many teams like a concession. It should sound more like hygiene in defense of truth.
@@ -39,6 +51,8 @@ MemoryBank remains useful because it keeps forcing this point back into the conv
 The operator rule is simple: introduce retirement before scale makes it painful. A team that waits until retrieval quality is already collapsing will have to unpick a polluted store rather than govern a clean one.
 
 Working memory deserves the same severity. Teams often think of it as free space because it lives close to generation. It is not free. Every irrelevant trace, old thought, or redundant observation entering active context competes with what the current step actually needs. Scarcity at the working layer is not a flaw in the system. It is part of how the system keeps the present task sharper than the rest of its history.
+
+Deletion belongs in the same doctrine. If the team cannot say how a fact, routine, or case summary should be retired when it stops being trustworthy, the memory layer is still incomplete. Durable state without a clear path to demotion is not a knowledge system. It is a queue for future contradiction. Good memory systems stay useful partly because they know how to forget on purpose.
 
 ## Procedural Memory Should Feel Earned
 
@@ -58,52 +72,6 @@ Graph-aware and richer relational memory approaches matter once the memory objec
 
 That is the correct escalation rule. Do not reach for graph-heavy memory because retrieval feels vaguely disappointing. Reach for it when failure analysis says the missing thing is relational structure rather than policy, freshness, or derivation quality.
 
-## Resources And References
+## Next Layer
 
-### [Memory Essay: Operating Agents II: The Agent That Forgets](../memory/03-memory-v5.md)
-
-Read the essay first for the sharp production claim: memory is governance over time, not a bigger prompt and not a larger pile of state.
-
-### [Builder Blueprint: Memory](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md)
-
-The blueprint is the operator-facing build order for this terrain: typed layers, lifecycle policy, retrieval choice, procedural promotion, and forgetting. Use it when you need to decide what memory capability to add next.
-
-### [Foundation Agents: Practical Chapters Guide](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/chapters-guide.md)
-
-The guide is the quickest route to the wider terrain behind the essay. It keeps the lifecycle explicit and prevents the topic from collapsing into store size or context length.
-
-### [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) (2023)
-
-MemGPT matters because it gives the memory cluster its cleanest mental model. The paper was trying to solve the mismatch between scarce active context and larger external state by treating memory as movement across tiers rather than as prompt packing. Its architectural move is simple and durable: what must stay live now is not the same thing as what can be fetched later.
-
-Builders should take the tiering lesson seriously. They should not copy any one implementation mechanically.
-
-### [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) (2023)
-
-Generative Agents matters because it separates raw experience from higher-order reflections. The paper was trying to make prior observations influence later behavior through distilled state rather than transcript bulk. That is why it still matters outside simulation. It makes derivation visible as a first-class design layer.
-
-Its influence should land on episodic design and memory summarization. It should not push most builders toward overcomplicated social simulation.
-
-### [MemoryBank: Enhancing Large Language Models with Long-Term Memory](https://arxiv.org/abs/2305.10250) (2023)
-
-MemoryBank matters because it restores forgetting to the center of memory quality. The paper was solving long-term retention under a decay and refresh logic rather than under a naive keep-everything rule. Its architectural move is to tie authority to later use instead of permanent storage.
-
-That should influence write and retirement policy directly. It should not be reduced to a novelty about human memory curves.
-
-### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (2023) and [Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory](https://arxiv.org/abs/2504.19413) (2025)
-
-These papers matter together because they solve the same practical problem from different directions. Reflexion turns failure into a reusable lesson instead of a dead transcript. Mem0 pushes selective extraction and consolidation instead of exhaustive storage. The common move is derivation: the memory object should be better than the raw history it came from.
-
-Builders should let that shape episodic and semantic memory design. They should not confuse selective extraction with license to store every low-value interaction.
-
-### [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) (2023)
-
-Voyager matters because it makes procedural memory concrete. The paper was solving compounding competence through a skill library that can be called again later. Its move is promotion: success stops being an isolated event and becomes reusable capability.
-
-That should influence teams who see repeated routines emerging in their workflows. It should not tempt them to promote every successful artifact into a permanent library entry.
-
-### [HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models](https://arxiv.org/abs/2405.14831) (2024)
-
-HippoRAG matters because it marks the point where memory objects become relational enough that flat retrieval stops being a serious interface. The paper was trying to solve linked, multi-hop recall rather than better ranking over isolated chunks.
-
-That is why it belongs late in the sequence. It should influence retrieval escalation only when the object itself demands more structure.
+Use the [public essay](../memory/03-memory-v6.md) for the doctrinal center, the [memory blueprint](../../core/practical-chapter-blueprints/01-memory-blueprint.md) for lifecycle policy and retrieval choice, and the paper notes for MemGPT, Generative Agents, MemoryBank, Reflexion, Mem0, Voyager, and HippoRAG when you need source-level detail rather than the broader companion cut.

@@ -2,7 +2,7 @@
 
 This folder contains the optimization bonus-post materials for the *Operating Agents* series:
 
-- `06-optimization-v5.md` - current public essay
+- `06-optimization-v6.md` - current public essay
 - earlier drafts remain for reference
 - `artifacts/` - transcripts, slides, and video from the presentation
 

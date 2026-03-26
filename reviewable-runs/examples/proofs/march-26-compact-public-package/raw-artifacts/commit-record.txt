@@ -1,0 +1,11 @@
+Commit boundary for this run:
+
+commit: e581b071cf318ef994a81ee863aa80f2b433918b
+summary: Refactor reviewable runs into compact public package
+recorded at: 2026-03-26T17:57:56Z
+
+Raw commit output:
+
+[main e581b07] Refactor reviewable runs into compact public package
+ 86 files changed, 476 insertions(+), 1080 deletions(-)
+

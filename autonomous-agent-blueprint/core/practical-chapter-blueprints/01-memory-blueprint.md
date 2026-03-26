@@ -200,7 +200,7 @@ If a memory layer adds cost but does not improve continuity, reuse, or retrieval
 
 ## Reading Sequence For This Chapter
 
-1. `../../essays/memory/03-memory-v5.md`
+1. `../../essays/memory/03-memory-v6.md`
 2. `../../essays/memory/companion.md`
 3. `papers/memgpt.md`
 4. `papers/generative_agents.md`

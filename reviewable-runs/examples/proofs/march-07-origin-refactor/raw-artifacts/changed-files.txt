@@ -1,0 +1,29 @@
+Selected changed surfaces reconstructed from the session trace:
+
+autonomous-agent-blueprint/BUILD_HISTORY.md
+autonomous-agent-blueprint/README.md
+autonomous-agent-blueprint/START_HERE.md
+autonomous-agent-blueprint/reviewable-runs.md
+autonomous-agent-blueprint/evaluation/architecture-review-checklist.md
+autonomous-agent-blueprint/evaluation/failure-mode-catalog.md
+autonomous-agent-blueprint/use-cases/coding-agent.md
+autonomous-agent-blueprint/use-cases/enterprise-agent.md
+autonomous-agent-blueprint/use-cases/web-agent.md
+autonomous-agent-blueprint/case-studies/README.md
+autonomous-agent-blueprint/case-studies/comparison-matrix.md
+autonomous-agent-blueprint/case-studies/coding-bugfix-agent/README.md
+autonomous-agent-blueprint/case-studies/coding-bugfix-agent/runtime-records/task-spec.md
+autonomous-agent-blueprint/case-studies/coding-bugfix-agent/runtime-records/execution-trace.md
+autonomous-agent-blueprint/case-studies/coding-bugfix-agent/runtime-records/evidence-record.md
+autonomous-agent-blueprint/case-studies/coding-bugfix-agent/runtime-records/verification-report.md
+autonomous-agent-blueprint/case-studies/coding-bugfix-agent/governance-records/approval-decision.md
+autonomous-agent-blueprint/case-studies/coding-bugfix-agent/governance-records/failure-review.md
+autonomous-agent-blueprint/case-studies/enterprise-policy-memo/...
+autonomous-agent-blueprint/case-studies/web-form-agent/...
+autonomous-agent-blueprint/archive/case-studies-v1/README.md
+autonomous-agent-blueprint/archive/case-studies-v1/coding-bugfix-agent.md
+autonomous-agent-blueprint/archive/case-studies-v1/enterprise-policy-memo.md
+autonomous-agent-blueprint/archive/case-studies-v1/web-form-agent.md
+
+The trace also shows patching of moved archive links after the folder move.
+

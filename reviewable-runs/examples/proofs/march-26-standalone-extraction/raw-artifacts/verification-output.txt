@@ -1,0 +1,23 @@
+Selected verification outputs from the raw session:
+
+$ rg -n "reviewable-runs|core/reviewable-runs\.md|implementation/evaluation|implementation/templates|implementation/case-studies" autonomous-agent-blueprint -g '*.md'
+(used repeatedly to confirm the blueprint package no longer routed into the derivative package)
+
+$ git status --short
+ M README.md
+ M autonomous-agent-blueprint/BUILD_HISTORY.md
+ M autonomous-agent-blueprint/README.md
+ ...
+ M reviewable-runs/README.md
+ ...
+
+$ rg -n "START_HERE\.md|REPOSITORY_ANALYSIS\.md|REPO_CLEANUP_PLAN\.md" autonomous-agent-blueprint -g '*.md'
+(final sweep returned no remaining active references)
+
+$ git commit -m "Extract reviewable runs into standalone package"
+[main f3c1241] Extract reviewable runs into standalone package
+ 95 files changed, 949 insertions(+), 1013 deletions(-)
+
+$ git status --short
+(no output)
+

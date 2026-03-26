@@ -2,7 +2,7 @@
 
 This folder contains the safety materials for the *Operating Agents* series:
 
-- `05-safety-v5.md` - current public essay
+- `05-safety-v6.md` - current public essay
 - earlier drafts remain for reference
 - `artifacts/` - transcripts, slides, and video from the presentation
 
