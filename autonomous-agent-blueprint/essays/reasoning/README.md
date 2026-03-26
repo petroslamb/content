@@ -2,7 +2,7 @@
 
 This folder contains the reasoning materials for the *Operating Agents* series:
 
-- `02-reasoning-planning-v5.md` - current public essay
+- `02-reasoning-planning-v6.md` - current public essay
 - earlier drafts remain for reference
 - `artifacts/` - transcripts, slides, and video from the presentation
 

@@ -2,7 +2,9 @@
 
 Agent safety gets described too often as though the main danger were a model saying the wrong thing. That is rarely the operational center once a system becomes useful. The more serious failures begin when a workflow can ingest outside material, store durable state, invoke tools, pull dependencies, call remote services, or hand artifacts to other agents. At that point the question is no longer whether the model can be coaxed into bad text. The question is which boundary will let bad influence travel farthest.
 
-That is why safety work becomes architectural so quickly. Each useful surface also creates a route by which compromised input, stale state, overbroad authority, or runtime drift can turn into consequential behavior. The system does not need to become evil. It only needs to trust the wrong thing at the wrong layer.
+Safety work becomes architectural quickly for the same reason. Each useful surface also creates a route by which compromised input, stale state, overbroad authority, or runtime drift can turn into consequential behavior. The system does not need to become evil. It only needs to trust the wrong thing at the wrong layer.
+
+The public essay keeps the law focused on trust boundaries. This companion owns the broader terrain: environment risk, supply-chain exposure, artifact contamination, and the reliability controls that become safety controls once consequence enters the loop.
 
 ## Interfaces Fail First, But Environments Fail Too
 
@@ -30,7 +32,7 @@ The essay kept the attention on prompt injection, retrieval poisoning, and inter
 
 That can happen through a retrieved help article. It can happen through a durable memory write. It can happen through a screenshot one agent hands to another. It can happen through a summary that quietly smuggles instructions, overclaims evidence, or freezes stale state into a reusable artifact.
 
-This is why retrieval and memory belong inside the default safety stack. Once the workflow acts on stored knowledge, the store is no longer just a relevance layer. It is a future influence layer. A system that writes to memory and later trusts it without friction has created a persistence mechanism for risk.
+Retrieval and memory belong inside the default safety stack for the same reason. Once the workflow acts on stored knowledge, the store is no longer just a relevance layer. It is a future influence layer. A system that writes to memory and later trusts it without friction has created a persistence mechanism for risk.
 
 The same logic applies to artifacts. Typed handoffs help because they reduce ambiguity. They do not make an artifact trustworthy. Trust has to reset at every transfer.
 
@@ -52,46 +54,18 @@ That is not glamorous, and it is exactly why it works. Most agent systems are st
 
 Replayability deserves emphasis because it is where prevention and accountability meet. If a team cannot reconstruct the retrieved document set, tool state, runtime version, permission scope, and approval trail that produced an incident, the system is not merely hard to debug. It is harder to contain. Safety architecture has to assume that some failures will escape. What matters then is whether the workflow leaves behind enough typed evidence to narrow blast radius and stop the same failure from propagating quietly.
 
-## Resources And References
+## Abuse Cases Belong In Predeployment Review
 
-### [Safety Essay: Operating Agents V: The Attack Surface You Built](../safety/05-safety-v5.md)
+One reason safety work stays abstract is that teams treat red-team style cases as optional stress rather than as design input. They launch the workflow, wait for the first ugly surprise, and then retrofit policy around the incident they happened to see.
 
-Read the essay first for the hard public claim that safety is interface architecture. It keeps the focus on boundary design where most current deployments still fail first.
+A stronger posture is to rehearse abuse before widening autonomy. Seed the retriever with misleading but plausible content. Pass a stale internal artifact through a trusted-looking handoff. Force the tool layer to encounter partial completion, suspicious instructions, or changed execution conditions. Then review the run as though it were real: what channel carried influence, what boundary failed to narrow it, what write path stayed too open, and what evidence would have been available to a human responder.
 
-### [Builder Blueprint: Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md)
+This kind of rehearsal turns safety from principle into architecture. It reveals whether trust classes are specific enough, whether approval actually protects the expensive actions, and whether the system leaves a typed trail strong enough for containment after the fact. A workflow that has never been tested against its own realistic contamination paths is still depending on luck.
 
-The blueprint is the build-facing control stack for this terrain: trust separation, tool containment, approval, memory hygiene, inter-agent skepticism, and evaluation. Use it when you need safety design choices rather than a wider conceptual map.
+It also reveals a harder truth. Some workflows should stay narrow. If abuse rehearsal keeps showing that one retrieval path, browser surface, or inter-agent handoff cannot be contained cleanly, the right answer may be to reduce autonomy rather than add another clever defense. Serious safety doctrine has to leave room for that verdict.
 
-### [Foundation Agents: Practical Chapters Guide](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/chapters-guide.md)
+That willingness to narrow scope is one of the clearest signs that the team is doing safety work rather than theater. A boundary that repeatedly fails review should lose authority until it earns it back. In this layer, restraint is often the most honest control, and the cheapest credible one available to the operator first.
 
-The guide is the quickest route to the larger threat map behind the essay. It keeps the focus on production risks that appear once systems can read, remember, and act through real interfaces.
+## Next Layer
 
-### [Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173) (2023)
-
-This paper matters because it changed the trust model for integrated language systems. It was solving a problem many builders had not named clearly enough yet: outside content can behave like instructions without ever entering the privileged prompt. Its architectural move is severe and durable. External text must stay data, not policy.
-
-That should influence every workflow that mixes browsing, retrieval, or external documents with later action. It should not be reduced to a warning that can be solved with stronger wording in the system prompt.
-
-### [InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents](https://arxiv.org/abs/2403.02691) (2024)
-
-InjecAgent matters because it moves injection from conceptual alarm into tool-using environments. The paper was trying to measure how indirect prompt attacks behave once the system can browse, invoke tools, and affect external state. Its move is evaluative rather than defensive.
-
-That matters because builders need attack surfaces they can test, not just anecdotes they can fear.
-
-### [Identifying the Risks of LM Agents with an LM-Emulated Sandbox](https://arxiv.org/abs/2309.15817) (2024)
-
-ToolEmu matters because it treats testing as part of the safety architecture. The paper was solving the problem of learning about unsafe tool behavior before the live system causes harm. Its key move is to put risky behavior inside an emulated environment where the workflow can be stressed without production fallout.
-
-That should influence sandboxing, pre-deployment evaluation, and runtime discipline. It should not be treated as a replacement for strong boundaries in the live system.
-
-### [AGENT POISON: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases](https://arxiv.org/abs/2407.12784) (2024) and [PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models](https://arxiv.org/abs/2402.07867) (2024)
-
-These papers matter together because they show that stored knowledge is part of the attack surface. They were solving variants of the same problem: future behavior can be steered by contaminating the state the workflow later treats as evidence. Their architectural move is to force retrieval and memory into the security perimeter rather than leaving them in a separate relevance bucket.
-
-That should influence ingestion policy, versioning, curation, and write control. It should not be read as a reason to distrust retrieval in general. The point is to govern it like infrastructure.
-
-### [Agent Smith: A Single Image Can Jailbreak One Million Multimodal LLM Agents Exponentially Fast](https://arxiv.org/abs/2402.08567) (2024)
-
-Agent Smith matters because it widens the contamination story beyond text. The paper was trying to show how one visual artifact can propagate across agents through memory and message exchange. Its deeper lesson is broader than multimodality: artifacts can carry influence across boundaries with more authority than teams expect.
-
-That should influence screenshot handling, inter-agent artifact policy, and trust reset at transfer. It should not be treated as a niche visual-security curiosity.
+Use the [public essay](../safety/05-safety-v6.md) for the doctrinal center, the [safety blueprint](../../core/practical-chapter-blueprints/06-safety-blueprint.md) for trust separation and control design, and the paper notes for Greshake, InjecAgent, ToolEmu, Agent Poison, PoisonedRAG, BadRAG, and Agent Smith when you need source-level detail rather than the broader companion cut.

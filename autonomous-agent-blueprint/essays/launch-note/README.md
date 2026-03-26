@@ -2,7 +2,7 @@
 
 This folder contains the Operating Agents series launch note:
 
-- `00-launch-note-v5.md` - current launch and framing document
+- `00-launch-note-v6.md` - current launch and framing document
 - `artifacts/` - transcripts, slides, and video from the presentation (if any)
 
 The launch note explains the series' philosophy, reading order, and how the public essays relate to the deeper blueprint stack.

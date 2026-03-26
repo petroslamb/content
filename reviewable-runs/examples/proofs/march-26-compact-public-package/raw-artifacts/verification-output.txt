@@ -1,0 +1,27 @@
+Selected verification outputs from the raw session:
+
+$ rg -n "START_HERE.md|ORIGIN_AND_GAP.md|MATURITY_AND_VALIDATION.md|MINIMAL_VIABLE_REVIEWABLE_RUN.md|IMPLEMENTATION_GUIDE.md|DOSSIER_STATUS.md|FRAMEWORK_EVALUATION.md|PUBLISHING_OUTLINE.md|dossiers/|proofs/|history/" reviewable-runs
+(used to find and remove old top-level entrypoints and outdated package paths)
+
+$ git status --short -- reviewable-runs
+ D reviewable-runs/DOSSIER_STATUS.md
+ D reviewable-runs/FRAMEWORK_EVALUATION.md
+ D reviewable-runs/IMPLEMENTATION_GUIDE.md
+ ...
+ M reviewable-runs/README.md
+ M reviewable-runs/evaluation/README.md
+ ...
+
+$ git status --short
+ M README.md
+ D reviewable-runs/DOSSIER_STATUS.md
+ D reviewable-runs/FRAMEWORK_EVALUATION.md
+ ...
+
+$ git commit -m "Refactor reviewable runs into compact public package"
+[main e581b07] Refactor reviewable runs into compact public package
+ 86 files changed, 476 insertions(+), 1080 deletions(-)
+
+$ git status --short
+(no output)
+

@@ -2,7 +2,7 @@
 
 This folder contains the action materials for the *Operating Agents* series:
 
-- `01-action-tool-use-v5.md` - current public essay
+- `01-action-tool-use-v6.md` - current public essay
 - earlier drafts remain for reference
 - `artifacts/` - transcripts, slides, and video from the presentation
 

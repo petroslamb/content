@@ -186,7 +186,7 @@ The right metric is not "how impressive the reasoning trace looks." It is whethe
 
 ## Reading Sequence For This Chapter
 
-1. `../../essays/reasoning/02-reasoning-planning-v5.md`
+1. `../../essays/reasoning/02-reasoning-planning-v6.md`
 2. `../../essays/reasoning/companion.md`
 3. `papers/react.md`
 4. `papers/least_to_most_prompting.md`

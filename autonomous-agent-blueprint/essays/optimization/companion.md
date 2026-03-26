@@ -4,6 +4,8 @@ Optimization becomes fake the moment a team confuses the easiest visible edit wi
 
 The useful second-pass reading of optimization is therefore narrower and harsher than the field likes. Improvement work is only real when the workflow is being treated as an object with stable objectives, comparable runs, and enough instrumentation to tell local gain from global drift.
 
+The public essay keeps the law severe and compact. This companion owns the broader terrain: local-versus-global misreads, bounded feedback loops, judge discipline, and the workflow-search literature that belongs outside the public coda.
+
 ## A Concrete Optimization Misread
 
 Take a contract-routing workflow that reads incoming documents, classifies them, extracts key fields, and decides whether they can be auto-routed or need human review.
@@ -28,9 +30,19 @@ The escalation rule is simple. Improve the cheapest surface that can plausibly r
 
 Once a system has several nodes, review stages, and handoffs, optimization stops being about any one prompt. Nodes, edges, schemas, tools, stop conditions, and failure recovery policies can all become optimization surfaces.
 
-That shift matters because it changes what counts as diagnosis. A weak answer may come from bad evidence rather than poor prompting. A slow workflow may come from redundant review rather than weak planning. A spiky correction burden may come from one threshold that routes too many cases into the same fragile path. Treating the workflow as the object forces teams to ask where the failure is actually being produced.
+That shift changes what counts as diagnosis. A weak answer may come from bad evidence rather than poor prompting. A slow workflow may come from redundant review rather than weak planning. A spiky correction burden may come from one threshold that routes too many cases into the same fragile path. Treating the workflow as the object forces teams to ask where the failure is actually being produced.
 
 This is also why optimization work starts to look more like systems engineering than prompt craft. Once the workflow becomes the object, every local change needs a story about downstream impact.
+
+## Human Review Load Is Part Of The Objective
+
+A lot of optimization stories quietly cheat by treating human effort as outside the score. The model gets a little cleaner, a judge score rises, and the team declares progress while reviewers spend longer untangling edge cases, correcting malformed outputs, or handling a larger queue of false escalations.
+
+That is not a side effect. It is part of the system objective. A workflow that marginally improves one automated node while increasing approval burden, correction time, or exception volume may have gotten worse in the only environment that matters. Review load belongs in the same measurement story as latency, accuracy, and cost because it is one of the main places where bad local optimization hides.
+
+This is also why optimization arguments should keep circling back to who pays for the claimed gain. If the answer is "the reviewer pays," the gain is probably not finished.
+
+The same logic applies to escalation design. A workflow that pushes more ambiguous cases into human review may look safer on paper while actually degrading the operating economics of the system. Review load is not a fallback bucket. It is one of the main constraints optimization is supposed to improve or at least preserve.
 
 ## Feedback Loops Are Useful Only While They Stay Bounded
 
@@ -52,46 +64,10 @@ The practical discipline is late power, early restraint. Freeze evaluation. Stab
 
 One more rule helps keep the whole topic honest: track failure categories, not just average scores. Aggregate lift can hide exactly the regressions that make production systems expensive. A routing tweak that helps easy contracts while harming rare escalations may look better on a dashboard and worse in the actual business. Optimization work gets more serious when teams can say not only that a score moved, but which failure class moved with it.
 
-## Resources And References
+Stable interfaces deserve the same emphasis. Workflow search is only interpretable when nodes, schemas, and evaluation targets are steady enough that a topology change actually means something. Otherwise the team is comparing moving graphs against moving objectives and calling the confusion exploration.
 
-### [Optimization Essay: Operating Agents VI: The Workflow Is the Object](../optimization/06-optimization-v5.md)
+This is the part of the doctrine most worth defending in a review meeting. Freeze the thing you are arguing about. If the objective, interface, and topology are all moving at once, the team is not running optimization. It is running simultaneous drift across several layers and hoping one of them looks better by the next checkpoint. Serious improvement needs a fixed object of dispute, a stable replay surface, and a reviewer who can still explain why the change is supposed to work. Without that discipline, even the smartest search loop becomes faster confusion, better narrated drift, and harder-to-audit change that no one can defend later when the costs land on real operators and reviewers downstream in production. Freeze the object before tuning the surface. Then keep it frozen long enough to learn something real from it. Hold the baseline steady.
 
-Read the essay first for the hard public claim that most agent optimization is fake without measurement. It keeps the center of gravity on workflow-level discipline rather than prompt churn.
+## Next Layer
 
-### [Builder Blueprint: Optimization and Self-Improvement](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
-
-The blueprint is the build-facing order of operations for improvement work: evaluation first, cheap fixes second, bounded feedback loops third, structural search last. Use it when you need a safe optimization sequence rather than a broader map.
-
-### [Foundation Agents: Practical Chapters Guide](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/chapters-guide.md)
-
-The guide is the quickest route to the larger terrain behind the essay. It keeps the optimization story attached to workflow structure, measurable change, and restraint around self-improvement.
-
-### [Large Language Models as Optimizers](https://arxiv.org/abs/2309.03409) (2024)
-
-OPRO matters because it reframes prompt editing as search under an objective instead of artisanal iteration. The paper was trying to solve a real problem: teams were already varying prompts, but without a disciplined loop for proposing, scoring, and retaining improvements. Its architectural move is to make the objective explicit.
-
-That should influence how builders think about prompt work. It should not tempt them to optimize prompts before the objective and downstream contracts are stable.
-
-### [TextGrad: Automatic "Differentiation" via Text](https://arxiv.org/abs/2406.07496) (2024)
-
-TextGrad matters because it extends the optimization story from one prompt to larger textual systems. The paper was trying to make feedback behave like a gradient over a multi-part language workflow rather than over one isolated instruction. Its move is important because it pushes the optimization object outward.
-
-Builders should let that influence how they think about node-level and workflow-level improvement. They should not mistake richer search surfaces for permission to skip basic instrumentation.
-
-### [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (2023) and [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) (2023)
-
-These papers matter together because they show two bounded versions of self-improvement. Reflexion stores lessons from failure. Voyager stores reusable routines from success. Both were solving cumulative improvement without retraining the base model. Their common move is to keep the feedback surface constrained enough that later behavior changes remain legible.
-
-That should influence teams building repeat-task workflows. It should not be generalized into a case for unconstrained self-editing.
-
-### [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) (2023)
-
-This work matters because scalable optimization needs scalable evaluation support. It was trying to solve the bottleneck where human review could not cover every experiment loop. Its move is practical but conditional: judges can stand in for some comparisons when their rubric alignment is known.
-
-Builders should use that lesson with calibration and periodic human checks. They should not let a judge become the only reality their workflow is optimizing toward.
-
-### [AFLOW: Automating Agentic Workflow Generation](https://arxiv.org/abs/2410.10762) (2025) and [GPTSwarm: Language Agents as Optimizable Graphs](https://arxiv.org/abs/2402.16823) (2024)
-
-These papers matter because they push optimization beyond local prompts and toward workflow topology itself. They were solving the harder problem of whether the arrangement of nodes and handoffs is part of what should be searched. Their move is powerful because many modern systems are already graph-shaped whether teams say so or not.
-
-That should influence late-stage teams with stable baselines and credible evaluation. It should not distract earlier teams from the cheaper fixes that still dominate returns.
+Use the [public essay](../optimization/06-optimization-v6.md) for the doctrinal center, the [optimization blueprint](../../core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md) for safe sequencing, and the paper notes for OPRO, TextGrad, Reflexion, Voyager, MT-Bench and Chatbot Arena, AFLOW, and GPTSwarm when you need source-level detail rather than the broader companion cut.

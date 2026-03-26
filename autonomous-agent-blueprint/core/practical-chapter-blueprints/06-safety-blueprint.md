@@ -202,7 +202,7 @@ A system that has never been stressed at these interfaces is not safe enough to 
 
 ## Reading Sequence For These Chapters
 
-1. `../../essays/safety/05-safety-v5.md`
+1. `../../essays/safety/05-safety-v6.md`
 2. `../../essays/safety/companion.md`
 3. `papers/greshake_indirect_prompt_injection.md`
 4. `papers/injecagent.md`

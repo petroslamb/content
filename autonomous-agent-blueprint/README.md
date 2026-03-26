@@ -17,11 +17,13 @@ If you are building, read in this order:
 If you are following the *Operating Agents* essays, read:
 
 1. `essays/README.md`
-2. `essays/launch-note/00-launch-note-v5.md`
+2. `essays/launch-note/00-launch-note-v6.md`
 3. the relevant topic essay
 4. the local `companion.md` as the substantial second-pass companion essay
 5. the matching file in `core/practical-chapter-blueprints/`
 6. the matching file in `reference/papers/`
+
+The essay package is being developed as an operating doctrine for builders rather than as a loose set of public essays. The doctrine standard lives in `essays/README.md`.
 
 ## Repository Map
 
@@ -38,7 +40,7 @@ If you are following the *Operating Agents* essays, read:
 
 ## Surface Roles
 
-- `essays/` is the public narrative layer.
+- `essays/` is the public doctrine layer for builders.
 - `core/` is the architecture decision layer.
 - `reference/` is the literature and source-audit layer.
 - `implementation/use-cases/` is the reference-architecture layer.

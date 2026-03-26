@@ -184,7 +184,7 @@ An optimization process without regression checks is a drift generator.
 
 ## Reading Sequence For These Chapters
 
-1. `../../essays/optimization/06-optimization-v5.md`
+1. `../../essays/optimization/06-optimization-v6.md`
 2. `../../essays/optimization/companion.md`
 3. `papers/opro.md`
 4. `papers/textgrad.md`
