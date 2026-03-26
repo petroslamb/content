@@ -170,11 +170,13 @@ If a multi-agent topology does not beat a strong single-agent workflow, it is co
 
 ## Reading Sequence For This Chapter
 
-1. `papers/metagpt.md`
-2. `papers/chatdev.md`
-3. `papers/autogen.md`
-4. `papers/mad.md`
-5. `papers/reconcile.md`
+1. `../../essays/multi-agent/04-multi-agent-v5.md`
+2. `../../essays/multi-agent/companion.md`
+3. `papers/metagpt.md`
+4. `papers/chatdev.md`
+5. `papers/autogen.md`
+6. `papers/mad.md`
+7. `papers/reconcile.md`
 
 ## Bottom Line
 

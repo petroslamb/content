@@ -222,18 +222,20 @@ The right action metric is not just "did the final answer look good." It is whet
 
 ## Reading Sequence For This Chapter
 
-1. `papers/toolformer.md`
-2. `papers/gorilla.md`
-3. `papers/hugginggpt.md`
-4. `papers/webagent.md`
-5. `papers/mind2web.md`
-6. `papers/swe_agent.md`
-7. `papers/bird.md`
-8. `papers/spider_2_0.md`
-9. `papers/mobile_agent.md`
-10. `papers/appagent.md`
-11. `papers/omniparser.md`
-12. `papers/opendevin.md`
+1. `../../essays/action/01-action-tool-use-v5.md`
+2. `../../essays/action/companion.md`
+3. `papers/toolformer.md`
+4. `papers/gorilla.md`
+5. `papers/hugginggpt.md`
+6. `papers/webagent.md`
+7. `papers/mind2web.md`
+8. `papers/swe_agent.md`
+9. `papers/bird.md`
+10. `papers/spider_2_0.md`
+11. `papers/mobile_agent.md`
+12. `papers/appagent.md`
+13. `papers/omniparser.md`
+14. `papers/opendevin.md`
 
 ## Bottom Line
 
