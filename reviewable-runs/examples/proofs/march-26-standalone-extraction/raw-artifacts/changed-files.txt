@@ -1,0 +1,29 @@
+Curated changed-file excerpt from commit `f3c1241`:
+
+README.md
+autonomous-agent-blueprint/BUILD_HISTORY.md
+autonomous-agent-blueprint/CHANGELOG.md
+autonomous-agent-blueprint/CONTRIBUTING.md
+autonomous-agent-blueprint/MAINTENANCE.md
+autonomous-agent-blueprint/README.md
+autonomous-agent-blueprint/REPOSITORY_ANALYSIS.md
+autonomous-agent-blueprint/REPO_CLEANUP_PLAN.md
+autonomous-agent-blueprint/START_HERE.md
+autonomous-agent-blueprint/implementation/README.md
+autonomous-agent-blueprint/implementation/use-cases/README.md
+autonomous-agent-blueprint/implementation/use-cases/coding-agent.md
+autonomous-agent-blueprint/implementation/use-cases/enterprise-agent.md
+autonomous-agent-blueprint/implementation/use-cases/web-agent.md
+reviewable-runs/README.md
+reviewable-runs/START_HERE.md
+reviewable-runs/ORIGIN_AND_GAP.md
+reviewable-runs/MATURITY_AND_VALIDATION.md
+reviewable-runs/reviewable-runs.md
+reviewable-runs/dossiers/README.md
+reviewable-runs/evaluation/README.md
+reviewable-runs/evaluation/run-review-checklist.md
+reviewable-runs/templates/README.md
+reviewable-runs/history/artifact-bundles-v1/README.md
+
+The full commit touched 95 files. This excerpt keeps the package-separation surfaces that mattered most to review.
+

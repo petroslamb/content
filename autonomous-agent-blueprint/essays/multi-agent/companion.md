@@ -1,8 +1,10 @@
 # Multi-Agent Companion
 
-The fastest way to make an agent system look more advanced is to multiply the number of roles. The fastest way to make it harder to govern is often the same move. That is why multi-agent design keeps attracting theater. A second model, a reviewer persona, a planner, a debate loop, a human approver, and suddenly the trace looks serious. What matters is not how many names appear in the workflow. It is whether the split buys a boundary the single-agent baseline could not provide cleanly.
+The fastest way to make an agent system look more advanced is to multiply the number of roles. The fastest way to make it harder to govern is often the same move. Multi-agent design keeps attracting theater for that reason. A second model, a reviewer persona, a planner, a debate loop, a human approver, and suddenly the trace looks serious. What matters is not how many names appear in the workflow. It is whether the split buys a boundary the single-agent baseline could not provide cleanly.
 
 That boundary can be worth a great deal. It can also cost more than it returns. The useful second-pass reading of multi-agent design is therefore economic before it is architectural. Every extra role adds latency, state transfer, evaluation burden, and another place where ambiguity can accumulate. A split should only survive if it pays for its own coordination debt.
+
+The public essay keeps the law narrow and adversarial. This companion owns the surrounding terrain: topology contrast, handoff economics, human placement, and protocol discussion that would have weakened the public chapter if it stayed inside it.
 
 ## Three Topologies, Three Very Different Bets
 
@@ -34,9 +36,17 @@ The practical win in multi-agent design is usually the handoff, not the existenc
 
 A good handoff says what artifact is being transferred, what status it carries, what evidence is attached, what the receiver is allowed to do with it, and what counts as done. A weak handoff is just a long message that mixes instructions, assumptions, context, and provisional conclusions. That is where many role-heavy systems quietly become unreviewable.
 
-This is why typed handoffs matter more than role names. A spec, evidence packet, patch, exception note, risk flag, or pass-fail record is stronger than a conversational blob because it lets the next stage know what is binding. It also lets a human reconstruct failure later.
+Typed handoffs matter more than role names. A spec, evidence packet, patch, exception note, risk flag, or pass-fail record is stronger than a conversational blob because it lets the next stage know what is binding. It also lets a human reconstruct failure later.
 
 There is an economic side to this too. Every handoff needs a budget. If a reviewer role never catches anything important, remove it. If a specialist uses the same tools and emits the same artifact as the orchestrator, collapse it. If a debate loop adds two minutes and no meaningful lift on hard cases, stop calling it architecture.
+
+## Collapse Roles When The Boundary Is Not Real
+
+Multi-agent systems get harder to simplify once the role names start to feel like identity. That is exactly when simplification matters most. A role should survive only if it creates a boundary that shows up in authority, evidence flow, or reviewability. If the planner and orchestrator use the same state, emit the same object, and differ only in narrative posture, the split is decorative. If a reviewer cannot point to a distinct check it performs, the split is decorative. If a specialist exists because the workflow "might need more perspectives," the split is decorative until proven otherwise.
+
+This is not a stylistic preference. Collapse discipline is what keeps topology from drifting away from the work. Every unnecessary role adds more transcript, more latency, and more state transfer that someone later has to untangle after a miss. Builders should get comfortable removing agents with the same seriousness they use when adding them. In most production settings, simplification is the most reliable multi-agent optimization available.
+
+The strongest signal here is not role count. It is whether failure review gets shorter after the split. If the answer is still no after several runs, the topology is telling you to collapse, not to elaborate.
 
 ## The Human Role Usually Determines Whether The Split Is Real
 
@@ -52,42 +62,10 @@ Conversation is useful. It is also one of the weakest coordination substrates in
 
 AutoGen mattered because it made programmable multi-agent interaction easy to build. That was a real contribution. It also made it easy to confuse communication fabric with architecture. Once every role can pass long, flexible messages, teams stop feeling the pressure to type artifacts, harden interfaces, or specify what a handoff actually means.
 
-That is why protocol talk only matters after topology discipline. MCP, A2A, and related infrastructure are heading in the right direction because coordination improves when interfaces harden. But a bad split with a cleaner protocol is still a bad split. The anti-pattern is overbuilding the transport layer before the workflow has earned the roles it is trying to connect.
+Protocol talk only matters after topology discipline. MCP, A2A, and related infrastructure are heading in the right direction because coordination improves when interfaces harden. But a bad split with a cleaner protocol is still a bad split. The anti-pattern is overbuilding the transport layer before the workflow has earned the roles it is trying to connect.
 
-## Resources And References
+That ordering is the safe one for a reason. Protocol improvements can lower friction, but they cannot rescue decorative topology. Builders should first prove that the role boundary itself earns its cost, then decide whether the transport layer deserves further engineering. Otherwise the team ends up perfecting coordination around a split it never should have kept. Good protocol work starts after the topology has survived simplification pressure, repeated review, and collapse pressure from real runs that matter in production for the actual task at hand and failure mode under review. First earn the split. Then harden the wire.
 
-### [Multi-Agent Essay: Operating Agents IV: When a Second Agent Earns Its Keep](../multi-agent/04-multi-agent-v5.md)
+## Next Layer
 
-Read the essay first for the hard public claim: extra agents only earn their keep when they buy a real boundary.
-
-### [Builder Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
-
-The blueprint is the build-facing guide for topology choice, handoff design, and evaluation. Use it when you need to decide whether to keep one orchestrator, add a reviewer, or move to an artifact pipeline.
-
-### [Foundation Agents: Practical Chapters Guide](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/chapters-guide.md)
-
-The guide is the quickest route to the larger landscape behind the essay. It keeps the focus on task-oriented interaction, explicit deliverables, and human participation rather than agent-society spectacle.
-
-### [MetaGPT: Software Engineers as Multi-Agent Society with LLM-based Agents](https://arxiv.org/abs/2308.00352) (2024)
-
-MetaGPT matters because it gives the clearest artifact-pipeline story in this cluster. The paper was trying to solve software work through staged deliverables rather than unstructured chat. Its architectural move is to make documents and outputs, not conversation volume, carry the workflow.
-
-That should influence builders who are deciding whether a split truly buys decomposition. It should not tempt them to copy visible role names without copying the artifact discipline that made the paper useful.
-
-### [ChatDev: Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) (2023)
-
-ChatDev matters because it shows another version of staged multi-role collaboration where deliverables remain visible enough to inspect. The paper was solving coordinated software production, but its broader move is to make specialization legible through outputs.
-
-Builders should borrow the emphasis on inspectable deliverables. They should not borrow the topology wholesale when their domain does not naturally produce the same artifacts.
-
-### [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155) (2023)
-
-AutoGen matters because it made conversation-based orchestration programmable. The paper was solving flexibility and reuse in multi-agent interaction. Its important move is infrastructural rather than doctrinal.
-
-That is why it is both useful and dangerous. Builders should let it influence coordination tooling. They should not let its flexibility excuse vague handoffs or decorative role proliferation.
-
-### [Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate](https://arxiv.org/abs/2305.19118) (2024) and [RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs](https://arxiv.org/abs/2309.13007) (2023)
-
-These papers matter because they isolate one narrow reason to add another role: structured disagreement can improve reliability when disagreement itself carries signal. They were not solving general topology design. They were solving critique under uncertainty.
-
-That should influence teams considering reviewer overlays or debate loops. It should not be generalized into a claim that more voices are usually better.
+Use the [public essay](../multi-agent/04-multi-agent-v6.md) for the doctrinal center, the [multi-agent blueprint](../../core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md) for topology choice and handoff design, and the paper notes for MetaGPT, ChatDev, AutoGen, MAD, and RECONCILE when you need source-level detail rather than the broader companion cut.

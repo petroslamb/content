@@ -1,0 +1,27 @@
+Curated changed-file excerpt from commit `e581b07`:
+
+README.md
+reviewable-runs/README.md
+reviewable-runs/USE_IT.md
+reviewable-runs/examples/README.md
+reviewable-runs/examples/proofs/README.md
+reviewable-runs/examples/proofs/coding-real-run/README.md
+reviewable-runs/examples/proofs/coding-real-run/comparison.md
+reviewable-runs/examples/teaching/README.md
+reviewable-runs/evaluation/README.md
+reviewable-runs/templates/README.md
+reviewable-runs/validation-lab/README.md
+reviewable-runs/archive/README.md
+reviewable-runs/archive/artifact-bundles-v1/README.md
+reviewable-runs/START_HERE.md
+reviewable-runs/ORIGIN_AND_GAP.md
+reviewable-runs/MATURITY_AND_VALIDATION.md
+reviewable-runs/MINIMAL_VIABLE_REVIEWABLE_RUN.md
+reviewable-runs/IMPLEMENTATION_GUIDE.md
+reviewable-runs/DOSSIER_STATUS.md
+reviewable-runs/FRAMEWORK_EVALUATION.md
+reviewable-runs/PUBLISHING_OUTLINE.md
+reviewable-runs/reviewable-runs.md
+
+The full commit touched 86 files. This excerpt keeps the package-shape surfaces that mattered most to the refactor.
+

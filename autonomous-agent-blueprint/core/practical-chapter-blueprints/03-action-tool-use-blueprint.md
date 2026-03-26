@@ -222,7 +222,7 @@ The right action metric is not just "did the final answer look good." It is whet
 
 ## Reading Sequence For This Chapter
 
-1. `../../essays/action/01-action-tool-use-v5.md`
+1. `../../essays/action/01-action-tool-use-v6.md`
 2. `../../essays/action/companion.md`
 3. `papers/toolformer.md`
 4. `papers/gorilla.md`

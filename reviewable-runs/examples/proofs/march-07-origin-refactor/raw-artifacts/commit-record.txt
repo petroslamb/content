@@ -1,0 +1,6 @@
+No commit was recorded for this run.
+
+The final assistant message explicitly ended at handoff:
+
+> I did not commit this refactor. The submodule working tree is now dirty, and the parent `content` repo will show the submodule as modified once you commit the nested repo state.
+

@@ -48,9 +48,10 @@ The practical version of this rule lives in `USE_IT.md`.
 Read these in order:
 
 1. `README.md`
-2. `examples/proofs/coding-real-run/README.md`
-3. `USE_IT.md`
-4. `evaluation/run-review-checklist.md`
+2. `examples/proofs/real-run-index.md`
+3. `examples/proofs/march-26-compact-public-package/README.md`
+4. `USE_IT.md`
+5. `evaluation/run-review-checklist.md`
 
 That path is the package front door.
 
@@ -72,7 +73,7 @@ That path is the package front door.
 
 Keep those separate mentally:
 
-- `examples/proofs/` shows that the framework can help on a real run
+- `examples/proofs/` shows that the framework can help on real runs, with the current flagship set indexed in `examples/proofs/real-run-index.md`
 - `examples/teaching/` shows what a clean reviewable run looks like
 - `validation-lab/` tests where the framework works, fails, and gets ambiguous
 - `archive/` is background, not the default path

@@ -1,0 +1,29 @@
+Selected verification outputs from the raw session:
+
+$ git status --short
+ M BUILD_HISTORY.md
+ M README.md
+ M START_HERE.md
+ RM case-studies/README.md -> archive/case-studies-v1/README.md
+ R  case-studies/artifacts/... -> archive/case-studies-v1/artifacts/...
+
+$ find case-studies -type f
+case-studies/coding-bugfix-agent/README.md
+case-studies/enterprise-policy-memo/README.md
+case-studies/web-form-agent/README.md
+case-studies/comparison-matrix.md
+case-studies/.../runtime-records/...
+case-studies/.../governance-records/...
+
+$ rg -n "reviewable-runs.md" README.md
+README.md:9:- `reviewable-runs.md`
+README.md:27:6. `reviewable-runs.md`
+README.md:56:- `reviewable-runs.md`: explanation of what a serious system must expose or reconstruct
+
+Final verification summary from the run:
+
+- confirmed the active `case-studies/` surface contains exactly the three dossier folders, one README, and one comparison matrix
+- confirmed the active path routes through `reviewable-runs.md` before the dossiers
+- confirmed remaining `artifact bundle` wording is only archival or historical
+- patched archived v1 moved links so they no longer point at broken relative paths
+

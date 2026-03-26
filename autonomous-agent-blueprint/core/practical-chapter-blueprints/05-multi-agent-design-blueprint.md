@@ -170,7 +170,7 @@ If a multi-agent topology does not beat a strong single-agent workflow, it is co
 
 ## Reading Sequence For This Chapter
 
-1. `../../essays/multi-agent/04-multi-agent-v5.md`
+1. `../../essays/multi-agent/04-multi-agent-v6.md`
 2. `../../essays/multi-agent/companion.md`
 3. `papers/metagpt.md`
 4. `papers/chatdev.md`

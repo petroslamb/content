@@ -2,7 +2,7 @@
 
 This folder contains the memory materials for the *Operating Agents* series:
 
-- `03-memory-v5.md` - current public essay
+- `03-memory-v6.md` - current public essay
 - earlier drafts remain for reference
 - `artifacts/` - transcripts, slides, and video from the presentation
 

@@ -11,8 +11,10 @@ It is split into two surfaces on purpose:
 
 If you want the strongest current evidence, start with:
 
-1. `proofs/coding-real-run/README.md`
-2. `proofs/coding-real-run/comparison.md`
+1. `proofs/real-run-index.md`
+2. `proofs/march-26-compact-public-package/README.md`
+3. `proofs/march-26-standalone-extraction/README.md`
+4. `proofs/march-07-origin-refactor/README.md`
 
 If you want clean teaching examples, start with:
 
@@ -31,11 +33,12 @@ This package uses three status labels:
 Current state:
 
 - the canonical examples in `teaching/` are `synthetic teaching dossier`
-- the coding proof in `proofs/coding-real-run/` is `real captured run`
+- the flagship real-trace proofs in `proofs/` are `real captured run`
+- the simpler starter proof in `proofs/coding-real-run/` is also `real captured run`
 
 ## What This Folder Is For
 
-- `proofs/` answers: does the framework help on a real run
+- `proofs/` answers: does the framework help on a real run, and which real runs are strong enough to publish
 - `teaching/` answers: what does a clean reviewable run look like
 
 If you want to pressure-test the framework itself, use `../validation-lab/README.md`.

@@ -2,7 +2,7 @@
 
 This folder contains the multi-agent materials for the *Operating Agents* series:
 
-- `04-multi-agent-v5.md` - current public essay
+- `04-multi-agent-v6.md` - current public essay
 - earlier drafts remain for reference
 - `artifacts/` - transcripts, slides, and video from the presentation
 
