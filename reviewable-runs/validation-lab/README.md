@@ -17,6 +17,7 @@ Use this surface to test three things:
 - `invalidate/`: cases that should fail or look weak under the framework
 - `stress-test/`: cases that pressure the framework limits without collapsing into random noise
 - `VALIDATION_MATRIX.md`: one-row view of the whole first wave
+- `RUN_RESULTS.md`: first-pass framework judgments against the whole first wave
 - `AGENT_CARDS.md`: index of the reusable synthetic agents
 
 ## Required Case Shape
@@ -39,9 +40,10 @@ Read in this order:
 
 1. `../reviewable-runs.md`
 2. `VALIDATION_MATRIX.md`
-3. `AGENT_CARDS.md`
-4. one validate case
-5. one invalidate case
-6. one stress-test case
+3. `RUN_RESULTS.md`
+4. `AGENT_CARDS.md`
+5. one validate case
+6. one invalidate case
+7. one stress-test case
 
 This is not a proof layer and not a teaching dossier layer. It is a synthetic harness for testing the framework itself.
