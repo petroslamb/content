@@ -27,3 +27,5 @@ Read in this order:
 8. `failure-contrast/README.md`
 
 This folder should stay small. Add proof artifacts only when they materially strengthen the framework's operational case.
+
+If you want the current proof set interpreted and critiqued, use `../../investigation/README.md`.
