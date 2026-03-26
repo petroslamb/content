@@ -6,9 +6,9 @@ In the reviewable-runs model, a failure review is one governance record type. It
 
 Applied failure reviews that use this taxonomy:
 
-- [`../dossiers/enterprise-policy-memo/README.md`](../dossiers/enterprise-policy-memo/README.md)
-- [`../dossiers/coding-bugfix-agent/README.md`](../dossiers/coding-bugfix-agent/README.md)
-- [`../dossiers/web-form-agent/README.md`](../dossiers/web-form-agent/README.md)
+- [`../examples/teaching/enterprise-policy-memo/README.md`](../examples/teaching/enterprise-policy-memo/README.md)
+- [`../examples/teaching/coding-bugfix-agent/README.md`](../examples/teaching/coding-bugfix-agent/README.md)
+- [`../examples/teaching/web-form-agent/README.md`](../examples/teaching/web-form-agent/README.md)
 
 ## Memory Failures
 

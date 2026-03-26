@@ -6,9 +6,9 @@ This checklist is broader than `run-review-checklist.md`. It asks whether a syst
 
 Worked examples that show this checklist applied in context:
 
-- `../dossiers/enterprise-policy-memo/README.md`
-- `../dossiers/coding-bugfix-agent/README.md`
-- `../dossiers/web-form-agent/README.md`
+- `../examples/teaching/enterprise-policy-memo/README.md`
+- `../examples/teaching/coding-bugfix-agent/README.md`
+- `../examples/teaching/web-form-agent/README.md`
 
 The standard here is not literal file presence. The standard is whether the architecture can produce or reconstruct the necessary review surface reliably enough to support credible run review.
 

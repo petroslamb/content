@@ -84,10 +84,10 @@ Start with: `autonomous-agent-blueprint/README.md`
 
 Standalone framework package for making important agent runs inspectable, reviewable, and governable after execution.
 
-- Canonical model: `reviewable-runs.md`
-- Worked example layer: `dossiers/`
-- Review instruments: `evaluation/`
-- Record templates and support patterns: `templates/`
+- Public front door: `README.md`
+- Operator guide: `USE_IT.md`
+- Examples and proof: `examples/`
+- Review instruments and templates: `evaluation/`, `templates/`
 
 Start with: `reviewable-runs/README.md`
 

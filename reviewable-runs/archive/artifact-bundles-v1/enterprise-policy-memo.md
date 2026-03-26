@@ -1,6 +1,6 @@
 # Worked Case Study: Enterprise Policy Memo
 
-> Historical note: This v1 packet-oriented case study was superseded by [`../../reviewable-runs.md`](../../reviewable-runs.md) and [`../../dossiers/enterprise-policy-memo/README.md`](../../dossiers/enterprise-policy-memo/README.md).
+> Historical note: This v1 packet-oriented case study was superseded by [`../../README.md`](../../README.md) and [`../../examples/teaching/enterprise-policy-memo/README.md`](../../examples/teaching/enterprise-policy-memo/README.md).
 
 This case applies the enterprise reference architecture to a concrete internal-governance task: drafting a policy memo that will be reviewed by compliance and then posted to an internal knowledge base.
 

@@ -1,78 +1,113 @@
 # Reviewable Runs
 
-This package is a standalone framework for making important agent runs inspectable, reviewable, and governable.
+Reviewable Runs is a practical framework for making important agent runs inspectable, reviewable, and governable after the fact.
 
-It did not originate as a literature distillation. It emerged from a gap in the `autonomous-agent-blueprint` package: the blueprints explain what a serious system should do, but they do not by themselves define what a serious run should expose or reconstruct for human review.
+Use it when the question is not just "can the agent do the task?" but "can a human later inspect what happened well enough to trust it, reject it, debug it, or learn from it?"
 
-Use this package when your question is not only "how should the agent be built?" but also "after the agent acts, what should a reviewer be able to inspect?"
+## What This Solves
 
-## Start Here
+Raw traces are usually too thin for serious review. They can show that a system did something without showing:
 
-1. `START_HERE.md`
-2. `ORIGIN_AND_GAP.md`
-3. `reviewable-runs.md`
-4. `dossiers/README.md`
-5. `proofs/README.md`
-6. `validation-lab/README.md`
-7. `evaluation/README.md`
-8. `templates/README.md`
-9. `MINIMAL_VIABLE_REVIEWABLE_RUN.md`
-10. `IMPLEMENTATION_GUIDE.md`
-11. `FRAMEWORK_EVALUATION.md`
-12. `MATURITY_AND_VALIDATION.md`
+- what the task actually was
+- what evidence or state mattered
+- how the result was checked
+- whether approval was required and when it happened
+- what failed or could fail
 
-## Package Map
+This framework turns that gap into a run-level review contract.
 
-- `reviewable-runs.md`: canonical model and six review questions
-- `dossiers/`: worked examples that answer those questions for concrete runs
-- `proofs/`: real evidence artifacts and failure contrasts
-- `validation-lab/`: explicitly synthetic validation, invalidation, and stress-test artifacts
-- `evaluation/`: review instruments for architectures and runs
-- `templates/`: direct record templates plus adjacent support patterns
-- `history/`: the older packet-oriented lineage kept for reference
-- `ORIGIN_AND_GAP.md`: why this package exists and how it emerged
-- `MINIMAL_VIABLE_REVIEWABLE_RUN.md`: canonical operational adoption standard
-- `IMPLEMENTATION_GUIDE.md`: how teams would actually build the record surface
-- `FRAMEWORK_EVALUATION.md`: how to judge whether the framework earns its cost
-- `DOSSIER_STATUS.md`: status labels for synthetic, real, and hybrid evidence
-- `PUBLISHING_OUTLINE.md`: publication path for the public argument
-- `MATURITY_AND_VALIDATION.md`: what is strong, what is synthetic, and what still needs proof
+## The Six Questions
 
-## What This Is
+Every meaningful run should make these questions answerable:
 
-- a run reviewability framework
-- a practical standard for reconstructing meaningful runs
-- a bridge between architecture, oversight, debugging, and postmortem review
+1. What was the task?
+2. What happened?
+3. What did it rely on?
+4. How was it checked?
+5. Who approved impact, or why was approval not required?
+6. What failed or could fail?
 
-## What This Is Not
+The point is not six markdown files. The point is reconstructability.
 
-- not a literature-first research package
-- not a model interpretability framework
-- not a generic logging manifesto
-- not a requirement that every trivial run emit a heavy dossier
+## The Three Layers
 
-## Reading Paths
+- runtime outputs: actions, observations, tool calls, intermediate state
+- system records: task spec, execution trace, evidence record, verification report
+- governance records: approval decision and failure review when the run crosses a meaningful control boundary
 
-### If you want the concept
+## Risk Tiers
 
-Read `ORIGIN_AND_GAP.md`, then `reviewable-runs.md`, then `MATURITY_AND_VALIDATION.md`.
+- low risk: lightweight reconstruction is enough if task, actions, and basic checking can be recovered without guesswork
+- medium risk: make task, trace, evidence, and verification explicit
+- high risk: add explicit approval and failure-review capability
 
-### If you want concrete examples
+The practical version of this rule lives in `USE_IT.md`.
 
-Read `reviewable-runs.md`, then `dossiers/comparison-matrix.md`, then the closest dossier.
+## Default Reading Path
 
-### If you want proof
+Read these in order:
 
-Read `proofs/README.md`, then `proofs/coding-real-run/README.md`, then `proofs/coding-real-run/comparison.md`.
+1. `README.md`
+2. `examples/proofs/coding-real-run/README.md`
+3. `USE_IT.md`
+4. `evaluation/run-review-checklist.md`
 
-### If you want to validate the framework limits
+That path is the package front door.
 
-Read `validation-lab/README.md`, then `validation-lab/VALIDATION_MATRIX.md`, then one validate case, one invalidate case, and one stress-test case.
+## Main Surfaces
 
-### If you want to implement it
+- `USE_IT.md`: day-to-day operator guide
+- `examples/`: what the framework looks like in practice
+- `evaluation/`: how to judge runs, architectures, and the framework itself
+- `templates/`: direct record templates plus a few supporting patterns
+- `validation-lab/`: advanced synthetic pressure-testing
+- `archive/`: background history only
 
-Read `reviewable-runs.md`, then `MINIMAL_VIABLE_REVIEWABLE_RUN.md`, then `IMPLEMENTATION_GUIDE.md`, then `evaluation/README.md`, then `templates/README.md`.
+## Examples, Proof, Validation, Archive
 
-### If you want the upstream architecture basis
+- real proof lives under `examples/proofs/`
+- synthetic teaching examples live under `examples/teaching/`
+- synthetic framework stress tests live under `validation-lab/`
+- historical packet-oriented lineage lives under `archive/`
 
-Read `../autonomous-agent-blueprint/core/agentic-architectures-blueprint.md`, then `../autonomous-agent-blueprint/core/practical-chapter-blueprints/README.md`, then the closest use case under `../autonomous-agent-blueprint/implementation/use-cases/`.
+Keep those separate mentally:
+
+- `examples/proofs/` shows that the framework can help on a real run
+- `examples/teaching/` shows what a clean reviewable run looks like
+- `validation-lab/` tests where the framework works, fails, and gets ambiguous
+- `archive/` is background, not the default path
+
+## Origin
+
+This package grew out of a real gap in `autonomous-agent-blueprint`.
+
+The blueprint package already required bounded control loops, verification, approval gates, and post-incident review. What it did not define clearly was the minimum review surface one meaningful run should expose or reconstruct for a human reviewer.
+
+Reviewable Runs is that missing run-level contract.
+
+## Current Maturity
+
+The framework is strong as an operating idea and increasingly solid as a package.
+
+- concept maturity: high enough to stand alone
+- package maturity: high enough for public use
+- empirical maturity: still limited
+
+Today it has one real captured proof run, a clear operator model, and a synthetic validation harness. It is publishable as a practical framework. It is not yet a broad research-grade claim.
+
+## Non-Goals
+
+- this is not model interpretability
+- this is not a generic logging manifesto
+- this is not mandatory paperwork for trivial low-risk runs
+- this is not a meta-system that should be heavier than the work itself
+
+## Publishing Path
+
+The package is already shaped for a practical public argument:
+
+1. why traces are not enough
+2. what a reviewable run must expose
+3. what this looks like on real and synthetic cases
+
+If you want the upstream architecture basis first, read `../autonomous-agent-blueprint/core/agentic-architectures-blueprint.md`, then `../autonomous-agent-blueprint/core/practical-chapter-blueprints/README.md`, then the closest use case under `../autonomous-agent-blueprint/implementation/use-cases/`.

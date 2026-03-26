@@ -1,6 +1,6 @@
 # Cross-Case Comparison Matrix
 
-> Historical note: This matrix belongs to the archived v1 case-study layer. The current default comparison lives in [`../../dossiers/comparison-matrix.md`](../../dossiers/comparison-matrix.md).
+> Historical note: This matrix belongs to the archived v1 case-study layer. The current default comparison lives in [`../../examples/teaching/comparison-matrix.md`](../../examples/teaching/comparison-matrix.md).
 
 Use this file to decide whether the enterprise, coding, or web archetype is your closest starting point.
 

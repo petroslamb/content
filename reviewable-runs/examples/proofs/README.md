@@ -13,8 +13,8 @@ Unlike the canonical dossiers, these artifacts are meant to prove that reviewabl
 
 Read in this order:
 
-1. `../reviewable-runs.md`
-2. `../MINIMAL_VIABLE_REVIEWABLE_RUN.md`
+1. `../../README.md`
+2. `../../USE_IT.md`
 3. `coding-real-run/README.md`
 4. `coding-real-run/comparison.md`
 5. `failure-contrast/README.md`

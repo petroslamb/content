@@ -1,6 +1,6 @@
 # Templates
 
-This folder contains the framework's record templates plus adjacent support patterns.
+This folder contains the record shapes that support Reviewable Runs.
 
 ## Direct Record Templates
 
@@ -17,10 +17,15 @@ This folder contains the framework's record templates plus adjacent support patt
 - `tool-contract-template.md`
 - `artifact-handoff-template.md`
 
-These adjacent patterns support implementation, but they are not the framework's direct six-record surface.
+These support implementation, but they are not the framework itself.
 
 ## How To Use This Folder
 
-Read `../reviewable-runs.md` first.
+Read `../USE_IT.md` first.
 
-Then use the direct record templates when you want a run-level review packet, and use the adjacent patterns when a system needs supporting contracts for memory, tools, or handoffs.
+Then:
+
+- use the six direct templates when a run actually needs an explicit review packet
+- use the adjacent patterns only when a system needs extra contracts for memory, tools, or handoffs
+
+If a run is low-risk and reconstructable from ordinary logs, you do not need to force these templates onto it.
