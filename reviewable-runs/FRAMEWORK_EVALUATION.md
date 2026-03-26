@@ -31,6 +31,18 @@ For each mode, record:
 - confidence score from 1 to 5
 - approve, reject, or escalate decision
 
+## Synthetic Evaluation Harness
+
+Use `validation-lab/VALIDATION_MATRIX.md` as the controlled synthetic harness.
+
+That matrix is not proof. Its job is different:
+
+- validate that the framework can recognize clean cases
+- invalidate runs that only look reviewable on the surface
+- expose edge conditions where reviewability becomes partial or contested
+
+The lab should be used to pressure the framework before or alongside real pilots, not instead of them.
+
 ## Suggested Review Worksheet
 
 For each reviewer:
@@ -70,6 +82,15 @@ This is the right first target because:
 - the evidence surface is concrete
 - verification is cheap
 - the approval gate is clear
+
+## Combined Evaluation Path
+
+Use both surfaces together:
+
+1. `proofs/coding-real-run/` for real-world value comparison against raw artifacts
+2. `validation-lab/VALIDATION_MATRIX.md` for synthetic coverage across good, bad, and edge cases
+
+That combination is the current evaluation harness for this package.
 
 ## Evaluation Standard
 
