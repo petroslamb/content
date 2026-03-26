@@ -55,7 +55,7 @@ The essays do not assume deep familiarity with the papers they cite. They bring 
 
 **Use the blueprints as the operator layer.** The essays are the public-facing narrative. The corresponding [*builder blueprints*](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/) in the repo are the decision guides with defaults, alternatives, escalation rules, and failure mode checklists. Read the essay first to understand the argument. Consult the blueprint when you need to make a concrete choice.
 
-**Keep the checklist in mind.** The [*architecture review checklist*](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/implementation/evaluation/architecture-review-checklist.md) turns the series thesis into falsifiable questions. A system is only as legible as its answers to those questions.
+**Keep the checklist in mind.** The architecture review checklist turns the series thesis into falsifiable questions. A system is only as legible as its answers to those questions.
 
 ---
 
@@ -85,6 +85,6 @@ The practical chapters guide ranks the chapters by builder value and identifies 
 
 The distillation makes the repo's conservative bias explicit: bounded workflows, typed memory, explicit handoffs, reviewability, safety boundaries.
 
-### [Architecture Review Checklist](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/implementation/evaluation/architecture-review-checklist.md)
+### Architecture Review Checklist
 
 The checklist turns architectural claims into review questions. It is the operational discipline behind the series.

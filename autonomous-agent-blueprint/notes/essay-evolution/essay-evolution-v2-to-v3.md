@@ -25,7 +25,7 @@ Internal drafting support for the `Operating Agents` rewrite package. This file 
 - Thesis: Most reasoning failures in production are scaffold failures. Teams keep shopping for a smarter mind when the real problem is the wrong structure.
 - Target reader payoff: The reader gets a failure-to-scaffold diagnosis framework with a conservative escalation path.
 - Central scenario: A document-review agent that keeps skipping one dependency and looks competent until a real reviewer checks the output.
-- Must-keep source assets: `02-reasoning-planning.md`, `02-reasoning-planning-blueprint.md`, `evaluation/failure-mode-catalog.md`, `papers/react.md`, `papers/chain_of_verification.md`, `papers/tree_of_thoughts.md`, `papers/lats.md`.
+- Must-keep source assets: `02-reasoning-planning.md`, `02-reasoning-planning-blueprint.md`, `failure-mode catalog`, `papers/react.md`, `papers/chain_of_verification.md`, `papers/tree_of_thoughts.md`, `papers/lats.md`.
 - Cuts to make from the current draft: Reduce the feel of method cataloging, keep one clear table, and trim repeated warnings about search.
 - Final end-section sources: ReAct, Least-to-Most, Chain-of-Verification, Tree of Thoughts, LATS.
 
@@ -52,7 +52,7 @@ Internal drafting support for the `Operating Agents` rewrite package. This file 
 - Thesis: Agent safety is not primarily about careful prompts. It is about whether the system treats content, memory, tools, handoffs, and approvals as separate trust boundaries.
 - Target reader payoff: The reader leaves with a concrete attack-chain model and a clear control map tied to real capability surfaces.
 - Central scenario: A support or operations agent reads hostile content, retrieves poisoned material, writes the wrong artifact, and passes contamination into the next tool or agent.
-- Must-keep source assets: `05-safety.md`, `06-safety-blueprint.md`, `evaluation/failure-mode-catalog.md`, `papers/greshake_indirect_prompt_injection.md`, `papers/poisonedrag.md`, `papers/agentsmith.md`, `papers/toolemu.md`, `papers/injecagent.md`.
+- Must-keep source assets: `05-safety.md`, `06-safety-blueprint.md`, `failure-mode catalog`, `papers/greshake_indirect_prompt_injection.md`, `papers/poisonedrag.md`, `papers/agentsmith.md`, `papers/toolemu.md`, `papers/injecagent.md`.
 - Cuts to make from the current draft: Replace generic middle sections with a more vivid attack chain, compress repeated statements that prompt safety is insufficient, and shorten the source tail.
 - Final end-section sources: Greshake et al., InjecAgent, PoisonedRAG, Agent Smith, ToolEmu.
 
@@ -61,6 +61,6 @@ Internal drafting support for the `Operating Agents` rewrite package. This file 
 - Thesis: If you cannot name which layer is failing and measure it against a stable objective, you are not optimizing an agent. You are editing it.
 - Target reader payoff: The reader gets an operational improvement order and a way to turn correction logs, retries, and approval data into a measured workflow program.
 - Central scenario: A production document-classification system that spends weeks in prompt churn while the real problem lives in evaluation design, schema quality, and weak metadata.
-- Must-keep source assets: `06-optimization.md`, `04-optimization-self-improvement-blueprint.md`, `evaluation/architecture-review-checklist.md`, `use-cases/enterprise-agent.md`, `use-cases/coding-agent.md`, `use-cases/web-agent.md`, `papers/opro.md`, `papers/textgrad.md`, `papers/reflexion.md`, `papers/mt_bench_chatbot_arena.md`.
+- Must-keep source assets: `06-optimization.md`, `04-optimization-self-improvement-blueprint.md`, `architecture review checklist`, `use-cases/enterprise-agent.md`, `use-cases/coding-agent.md`, `use-cases/web-agent.md`, `papers/opro.md`, `papers/textgrad.md`, `papers/reflexion.md`, `papers/mt_bench_chatbot_arena.md`.
 - Cuts to make from the current draft: Rebuild the opening and middle, reduce procedural tone, and make the evaluation layer the controlling argument rather than one section among many.
 - Final end-section sources: OPRO, TextGrad, Reflexion, AFLOW, MT-Bench and Chatbot Arena.

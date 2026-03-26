@@ -11,4 +11,4 @@ The launch note explains the series' philosophy, reading order, and how the publ
 
 **Where to go from here**:
 - If you're following the Operating Agents series, start here and then proceed to the [essay reading order](../README.md#v4-reading-order-current).
-- If you're building an agent, you may prefer to start at the root `START_HERE.md` for the builder path.
+- If you're building an agent, use the root `README.md` for the builder path.

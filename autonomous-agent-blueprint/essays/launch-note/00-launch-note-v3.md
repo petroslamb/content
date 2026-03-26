@@ -28,7 +28,7 @@ Part V deals with safety, but not as a compliance appendix. Once an agent can re
 
 The core run ends there on purpose. Safety is the last chapter in the main sequence because it is where the whole architecture becomes morally and operationally real. After that comes one bonus post on optimization. Teams reach for optimization too early, usually by editing prompts because prompts are the easiest visible surface to change. The harder discipline is to decide what the object of optimization actually is and whether the workflow is measured well enough for improvement to mean anything.
 
-That ordering reflects the review logic in the repo's [architecture checklist](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/implementation/evaluation/architecture-review-checklist.md). First define the task boundary and control loop. Then make action, memory, verification, trust separation, and approval reviewable. Only after that does optimization stop being guesswork.
+That ordering reflects the review logic in the repo's architecture checklist. First define the task boundary and control loop. Then make action, memory, verification, trust separation, and approval reviewable. Only after that does optimization stop being guesswork.
 
 If there is one sentence that should carry through the whole package, it is this: useful agents are not assembled by stacking capabilities until the demo looks impressive. They are assembled by making the control layers legible enough that when the system fails, someone can still say where the failure belongs.
 
@@ -50,7 +50,7 @@ This guide matters because it rearranges the survey into a practical reading ord
 
 This distillation is the clearest statement of the repo's operator bias and explains why the series focuses on operating layers rather than on model shopping.
 
-### [Architecture Review Checklist](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/implementation/evaluation/architecture-review-checklist.md)
+### Architecture Review Checklist
 
 This checklist matters because it turns the series thesis into a review standard for evidence, reconstruction, verification, and accountable approvals.
 

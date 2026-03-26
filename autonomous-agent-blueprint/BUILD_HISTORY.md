@@ -12,7 +12,7 @@ This file records the completed build-out that moved the repo from synthesis to 
 ## Phase 1: Make the Repo Navigable
 
 - [x] Rewrite the top-level README so it routes by user goal.
-- [x] Add `START_HERE.md` as the actual entrypoint for first-time readers.
+- [x] Add a dedicated first-time-reader entrypoint, later consolidated back into `README.md`.
 - [x] Classify the major documents as core, supporting, or exploratory through the main navigation surface.
 - [x] Move exploratory material into a dedicated `notes/` path.
 - [x] Add recommended reading paths for builders, writers, and researchers.
@@ -46,15 +46,14 @@ This file records the completed build-out that moved the repo from synthesis to 
 
 ## Phase 5: Add Evaluation And Review Assets
 
-- [x] Create `evaluation/architecture-review-checklist.md`.
-- [x] Create `evaluation/failure-mode-catalog.md`.
+- [x] Create the original architecture review and failure-mode assets.
 - [x] Add a cross-cutting architecture scorecard.
 - [x] Add chapter-linked review prompts.
 - [x] Add a threat-model checklist.
 
 ## Phase 6: Add Implementation-Adjacent Templates
 
-- [x] Create tool contract, memory record, run trace, approval gate, and artifact handoff templates.
+- [x] Create the original tool contract, memory record, run trace, approval gate, and artifact handoff templates.
 - [x] Keep templates structural and framework-agnostic.
 - [x] Link templates back to the relevant chapter and use-case docs.
 
@@ -83,4 +82,4 @@ This file records the completed build-out that moved the repo from synthesis to 
 - [x] Add realistic artifact bundles and failure reviews for each case.
 - [x] Add a cross-case comparison matrix and forward links from abstract use cases and evaluation docs.
 
-Historical note: the first packet-oriented worked-example layer was later superseded by `reviewable-runs.md` and a dossier-based `case-studies/` surface. The original material is preserved under `archive/case-studies-v1/` for reference only.
+Historical note: the worked-example layer that once lived here was later spun out into its own derivative package. This build history now records only the architecture package itself.

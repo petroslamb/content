@@ -4,7 +4,7 @@ Thank you for your interest in improving the Autonomous Agent Blueprint reposito
 
 ## Before Contributing
 
-- Read `REPOSITORY_ANALYSIS.md` to understand the repository's structure, transformation pipeline, and design decisions.
+- Read `README.md` to understand the package structure and reading paths.
 - Read `MAINTENANCE.md` for source intake rules, quality policy, confidence guidelines, and update requirements.
 
 ## How to Contribute
@@ -23,7 +23,9 @@ The `reference/papers/` directory contains distilled notes on individual researc
 1. Add your note file to `reference/papers/` with a clear, lowercase filename (e.g., `new_paper.md`).
 2. Update `reference/source-index.md` to include the new paper in the appropriate theme's table.
 3. Update `reference/literature-quality.md` if the paper's quality assessment differs from defaults.
-4. Open a PR describing the paper, its relevance, and where it should be cited.
+4. Update the relevant blueprint or use case only if the paper changes the package guidance.
+5. Record the change in `CHANGELOG.md`.
+6. Open a PR describing the paper, its relevance, and where it changed the package.
 
 ### Suggest Blueprint Changes
 
@@ -40,25 +42,23 @@ Blueprints are the stable core. Changes require strong evidence and consensus.
    - Current text and location
    - Proposed change
    - Supporting evidence (papers, case studies, benchmarks)
-   - Impact on use cases and downstream documents
+   - Impact on use cases and package defaults
 3. Expect discussion; maintainers will evaluate based on source quality, practical relevance, and consistency with the repo's philosophy.
 4. Changes to core documents may require updates to multiple locations (blueprint, companion note, source index).
 
-### Add a Use Case or Case Study
+### Add a Use Case
 
 **Use Cases** (`implementation/use-cases/`) compose multiple blueprints into end-to-end reference architectures for common scenarios (enterprise, coding, web, and similar bounded workflows).
 
-**Case Studies** (`implementation/case-studies/`) are linear worked dossiers backed by runtime records, governance records, or realistic artifacts that show how the guidance applies to a concrete task.
-
 **Requirements:**
 - Use cases must demonstrate composition of at least two blueprints with clear rationale.
-- Case studies must include actual run traces, logs, or realistic simulated artifacts (not just description).
 - Follow the structure and depth of existing examples.
 
 **Process:**
-1. Add your file(s) to the appropriate folder.
-2. Ensure the document cross-links to relevant blueprints and evaluation assets.
-3. Open a PR with a clear description of the scenario and what the case illustrates.
+1. Add new use cases under `implementation/use-cases/`.
+2. Ensure the document cross-links to relevant blueprints and source notes.
+3. Update `CHANGELOG.md`.
+4. Open a PR with a clear description of the scenario and what the use case illustrates.
 
 ### Report Gaps
 
@@ -81,7 +81,7 @@ Found something missing? The repository deliberately excludes some territories (
 
 - All contributions are reviewed by maintainers.
 - Contributions to core guidance (blueprints) require consensus and strong source backing.
-- Documentation improvements (clarifications, examples) are welcome and reviewed with lighter touch.
+- Documentation improvements are welcome, but this package prefers fewer clearer docs over more navigation layers.
 - Continuous integration may check formatting and link validity.
 - See `MAINTENANCE.md` for detailed update rules and confidence policy.
 

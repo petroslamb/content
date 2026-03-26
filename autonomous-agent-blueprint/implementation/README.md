@@ -1,10 +1,11 @@
 # Implementation
 
-This surface shows how the blueprint guidance turns into concrete systems and review artifacts.
+This surface stays focused on architecture composition.
 
-- `use-cases/` contains abstract reference architectures.
-- `case-studies/` contains concrete dossiers with runtime and governance records.
-- `evaluation/` contains pressure-test docs.
-- `templates/` contains reusable structural patterns.
+- `use-cases/` contains the abstract reference architectures built from the chapter blueprints.
 
-If your question is "what does this look like in practice," start here.
+## How To Read This Surface
+
+1. read the relevant file in `use-cases/`
+2. trace the subsystem choices back to the matching chapter blueprints
+3. use the source notes when you need paper-level grounding
