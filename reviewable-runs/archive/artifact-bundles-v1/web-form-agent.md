@@ -1,6 +1,6 @@
 # Worked Case Study: Web Form Agent
 
-> Historical note: This v1 packet-oriented case study was superseded by [`../../reviewable-runs.md`](../../reviewable-runs.md) and [`../../dossiers/web-form-agent/README.md`](../../dossiers/web-form-agent/README.md).
+> Historical note: This v1 packet-oriented case study was superseded by [`../../README.md`](../../README.md) and [`../../examples/teaching/web-form-agent/README.md`](../../examples/teaching/web-form-agent/README.md).
 
 This case applies the web reference architecture to a concrete browser task: gather evidence across several pages, fill a high-friction reimbursement form, and require approval before final submission.
 
