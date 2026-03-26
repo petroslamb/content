@@ -1,0 +1,34 @@
+Core runtime auth and client surfaces
+- `src/alphaxiv/auth.py`
+- `src/alphaxiv/client.py`
+- `src/alphaxiv/_core.py`
+- `src/alphaxiv/assistant.py`
+- `src/alphaxiv/__init__.py`
+
+CLI auth and command surfaces
+- `src/alphaxiv/cli/session.py`
+- `src/alphaxiv/cli/assistant.py`
+- `src/alphaxiv/cli/explore.py`
+- `src/alphaxiv/cli/helpers.py`
+- `src/alphaxiv/cli/paper.py`
+
+Docs and packaging
+- `README.md`
+- `docs/cli-reference.md`
+- `docs/development.md`
+- `docs/python-api.md`
+- `docs/api-inventory.md`
+- `pyproject.toml`
+- `LICENSE`
+- `.github/workflows/ci.yml`
+
+Verification and regression coverage
+- `tests/unit/test_auth.py`
+- `tests/unit/test_cli_context.py`
+- `tests/unit/test_assistant.py`
+- `tests/integration/test_client.py`
+- `tests/unit/test_types.py`
+
+Selection note
+- The commit touched 30 files in total.
+- This summary lists the surfaces that mattered most to reviewing the auth refactor as a bounded run.

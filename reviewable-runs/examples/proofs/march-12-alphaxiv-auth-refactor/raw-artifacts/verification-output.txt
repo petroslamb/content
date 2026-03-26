@@ -1,0 +1,29 @@
+Local verification loop observed in the session
+
+1. `uv run --extra dev pytest`
+- collected 61 tests
+- initial test run passed before later cleanup and commit work
+
+2. `uv run --extra dev ruff check .`
+- initially failed on many mechanical formatting/import issues already present in the repo
+- agent applied Ruff fix/format pass
+
+3. `uv run --extra dev mypy`
+- initially failed on type issues in auth parsing and callback annotations
+- agent fixed the reported issues and reran verification
+
+4. `uv run --extra dev ruff check .`
+- final result: `All checks passed!`
+
+5. `uv run --extra dev pytest`
+- rerun after the mypy fixes
+- final test pass observed before commit
+
+6. repo hygiene checks
+- local caches and virtualenv were identified and removed from the publishable tree
+- final pre-commit status still showed only the intended tracked changes plus the deliberate new files
+
+7. commit/push boundary
+- commit created: `24bdff1` `Refactor auth for API-key-first usage`
+- push result: `4550698..24bdff1  main -> main`
+- final reported state: clean working tree

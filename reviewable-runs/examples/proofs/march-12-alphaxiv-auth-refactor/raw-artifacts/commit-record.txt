@@ -1,0 +1,12 @@
+Commit boundary
+- commit: `24bdff13dace45c9a6777b97e6957d48e240396f`
+- short id: `24bdff1`
+- message: `Refactor auth for API-key-first usage`
+- branch at run time: `main`
+- remote push observed: `4550698..24bdff1  main -> main`
+
+Representative outcome
+- runtime auth moved to API-key-first behavior
+- browser login remained explicit and optional
+- publishability surfaces landed together with the refactor
+- working tree was reported clean after push
