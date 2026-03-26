@@ -79,3 +79,5 @@ Freeze the object before you tune the surface.
 **[*TextGrad*](https://arxiv.org/abs/2406.07496).** TextGrad matters because it sharpens the question of local optimization over bounded surfaces. It belongs in the chapter as a reminder that local improvement is real when the target and objective are already stable.
 
 **[*AFLOW*](https://arxiv.org/abs/2410.10762).** AFLOW matters because it pushes optimization up from prompts to workflow structure itself. That is real frontier territory. It also clarifies why the chapter insists on late power and early restraint.
+
+For the broader terrain this essay leaves out on purpose, read the [Optimization companion](./companion-v7.md). For the operator layer, sequencing rules, and evaluation defaults, read the [Optimization blueprint](../../core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md).

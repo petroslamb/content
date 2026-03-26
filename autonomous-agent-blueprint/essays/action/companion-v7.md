@@ -52,6 +52,18 @@ The useful second-pass lesson is restraint informed by range. Know what the fron
 
 The durable prestige metric is not apparent generality. It is reconstructibility under scrutiny. The best action layer is usually not the one with the broadest reach. It is the one that can prove what changed, why it was allowed to change, and how a reviewer would replay the boundary if something later went wrong.
 
+## Analytical References
+
+**[Toolformer note](../../reference/papers/toolformer.md).** This note is the cleanest source on why tool invocation matters as a conceptual bridge rather than as a product flourish. It is useful when a builder needs to explain why reaching for a tool is part of competence and not merely a wrapper around text generation.
+
+**[Gorilla note](../../reference/papers/gorilla.md).** This note is about API discrimination and argument construction. It helps when the workflow understands the task but still fails at endpoint choice, field shape, or spec drift.
+
+**[SWE-agent note](../../reference/papers/swe_agent.md).** This note is about agent-computer interfaces that make action replayable. It is the right reference when the argument turns on machine-checkable feedback, inspectable steps, and narrower action boundaries that localize failure.
+
+**[WebAgent note](../../reference/papers/webagent.md).** This note is about browser-native action when the environment refuses to expose a cleaner interface. It is useful as a cautionary source on why browser action inherits brittleness rather than magically granting maturity.
+
+**[AppAgent note](../../reference/papers/appagent.md).** This note is about GUI and app-surface action in closed environments. It matters when the builder needs a reference for why general computer use expands reach while weakening contracts and recovery.
+
 ## Sources Behind This Chapter
 
 The core sources behind this chapter are [*Toolformer*](https://arxiv.org/abs/2302.04761), [*Gorilla*](https://arxiv.org/abs/2305.15334), and [*SWE-agent*](https://arxiv.org/abs/2405.15793). They matter together because they move action away from the vague category of tool use and toward the stricter question of what kind of interface still lets a builder diagnose failure. Toolformer makes invocation legible, Gorilla sharpens the problem into interface choice and argument construction, and SWE-agent shows what happens when the environment answers in a replayable way.

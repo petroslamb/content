@@ -85,3 +85,5 @@ Sometimes the most serious safety move is not a clever defense. It is a narrower
 **[*Agent Poison*](https://arxiv.org/abs/2407.12784).** Agent Poison matters because it shows how durable memory and knowledge stores can become future influence channels. The lesson reinforces the chapter's insistence that memory policy is part of safety policy.
 
 **[*Agent Smith*](https://arxiv.org/abs/2402.08567).** Agent Smith matters because it makes cross-agent contamination feel concrete, especially once artifacts and multimodal inputs start moving between roles. It sharpens the rule that trust has to reset at every handoff.
+
+For the broader terrain this essay leaves out on purpose, read the [Safety companion](./companion-v7.md). For the operator layer, control surfaces, and red-team defaults, read the [Safety blueprint](../../core/practical-chapter-blueprints/06-safety-blueprint.md).
