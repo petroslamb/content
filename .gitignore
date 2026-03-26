@@ -28,6 +28,8 @@ publication_strategy_and_archive/publication_analysis_results.md
 
 # AI agent ops manifest (internal tooling only)
 AGENTS.md
+CLAUDE.md
+.claude/
 
 # Stray root-level generated assets
 Generated Image*.png
