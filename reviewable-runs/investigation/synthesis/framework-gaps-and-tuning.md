@@ -113,3 +113,35 @@ Tuning:
 - update maturity language after this investigation
 - keep the package honest about domain spread and manual overhead
 
+### 8. External-action boundary taxonomy needs to be sharper than commit-centric governance
+
+`Evidence base: mixed`  
+`Confidence: high`
+
+The YouTube playlist-order fix shows that some of the strongest real runs do not end at commits, merges, or releases. They end at a third-party platform state change that must be treated as an operational approval boundary in its own right.
+
+Evidence:
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/README.md`](../../examples/proofs/march-27-youtube-playlist-order-fix/README.md)
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/raw-artifacts/boundary-record.md`](../../examples/proofs/march-27-youtube-playlist-order-fix/raw-artifacts/boundary-record.md)
+- [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md)
+
+Tuning:
+- sharpen the boundary taxonomy for external platform actions
+- distinguish local artifact creation from the real operational stop boundary
+- make live third-party verification a first-class expectation for these runs
+
+### 9. API-insufficiency plus UI workaround is a real run type
+
+`Evidence base: real proof`  
+`Confidence: medium-high`
+
+The framework now has evidence for a meaningful run shape where API inspection identifies the problem, a UI step unlocks control, and the API then performs the durable state update. That mixed-control pattern should be handled explicitly rather than treated as an awkward exception.
+
+Evidence:
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/review-packet/execution-trace.md`](../../examples/proofs/march-27-youtube-playlist-order-fix/review-packet/execution-trace.md)
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/review-packet/failure-review.md`](../../examples/proofs/march-27-youtube-playlist-order-fix/review-packet/failure-review.md)
+
+Tuning:
+- note mixed API/UI control as a supported run shape
+- require the packet to record why the API-only path was insufficient
+- avoid collapsing browser intervention and API action into one vague “automation” label

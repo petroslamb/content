@@ -65,7 +65,19 @@ Evidence:
 - [`../../examples/proofs/coding-real-run/review-packet/approval-decision.md`](../../examples/proofs/coding-real-run/review-packet/approval-decision.md)
 - [`../../validation-lab/RUN_RESULTS.md`](../../validation-lab/RUN_RESULTS.md)
 
-### 6. Anti-patterns are already visible
+### 6. External-action runs need live state verification, not just local success signals
+
+`Evidence base: mixed`  
+`Confidence: high`
+
+The new YouTube evidence shows that verification changes meaning once the run acts on a third-party platform. In these cases, local script execution and repo artifacts are only supporting evidence. The decisive check is live state confirmation on the platform itself.
+
+Evidence:
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/README.md`](../../examples/proofs/march-27-youtube-playlist-order-fix/README.md)
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/raw-artifacts/verification-output.txt`](../../examples/proofs/march-27-youtube-playlist-order-fix/raw-artifacts/verification-output.txt)
+- [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md)
+
+### 7. Anti-patterns are already visible
 
 `Evidence base: mixed`  
 `Confidence: high`
@@ -85,7 +97,7 @@ The current best usage pattern is:
 3. choose the risk tier
 4. curate the minimum raw evidence set
 5. reconstruct the packet only as far as the review task requires
-6. review with the six questions
+6. for external-action runs, verify the live platform state explicitly
+7. review with the six questions
 
 That model is already supported by the evidence. What it lacks is lighter tooling, not conceptual clarity.
-

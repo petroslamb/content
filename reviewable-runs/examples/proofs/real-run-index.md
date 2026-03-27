@@ -14,8 +14,12 @@ Only three statuses are allowed here:
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | March 7 origin refactor | `019cc91f-24bb-73c3-a4c0-f20aa5a844a8` | `flagship proof` | Strong | Strong | Partial | Partial | Yes | Clear shift from artifact bundles to reviewable runs, strong dossier/evaluation/archive evidence, but stopped at handoff rather than commit. |
 | March 12 alphaXiv auth refactor | `019ce138-a4aa-7b22-ba6c-7964fe7b5261` | `flagship proof` | Strong | Strong | Strong | Strong | Yes | External coding-package run with API-key-first auth refactor, real local verification loop, and pushed commit boundary `24bdff1`. |
+| March 27 YouTube playlist-order fix | `019d3075-745a-7a51-a9de-57e05701e8fe` | `flagship proof` | Strong | Strong | Strong | Strong | Yes | External-action run with mixed API and Studio control, live playlist reorder, and final state verified directly on YouTube. |
 | March 26 standalone extraction | `019d2949-bad3-7000-82af-238c4a07affa` | `flagship proof` | Strong | Strong | Strong | Strong | Yes | Bounded restructuring run with explicit decoupling, cleanup, validation sweeps, and commit boundary `f3c1241`. |
 | March 26 compact public package refactor | `019d2949-bad3-7000-82af-238c4a07affa` | `flagship proof` | Strong | Strong | Strong | Strong | Yes | Focused packaging/usability refactor with explicit deletion of old front doors, path cleanup, and commit boundary `e581b07`. |
+| March 27 YouTube cross-link fallback | `019d3075-745a-7a51-a9de-57e05701e8fe` | `secondary candidate` | Strong | Strong | Strong | Partial | No | Useful external-action run with live description updates, but weaker than the playlist fix because the approval boundary is more implicit and the effect is less structurally testable. |
+| March 27 audio slideshow renderer | `019d3075-745a-7a51-a9de-57e05701e8fe` | `secondary candidate` | Strong | Strong | Partial | Partial | No | Good artifact-generation run with script and cue output, but weaker on external approval and downstream verification than the YouTube platform run. |
+| March 27 transcript alignment limit | `019d3075-745a-7a51-a9de-57e05701e8fe` | `secondary candidate` | Strong | Strong | Partial | Partial | No | Valuable real limit-finding run: the alignment helper worked as a draft mechanism, but the transcript/slide mismatch exposed a real automation boundary rather than a strong public proof. |
 | March 26 proof/operator docs expansion | `019d2949-bad3-7000-82af-238c4a07affa` | `secondary candidate` | Strong | Strong | Partial | Strong | No | Good real build run ending at `8210956`, but it overlaps heavily with later proof and package work. |
 | March 26 validation-lab creation | `019d2949-bad3-7000-82af-238c4a07affa` | `secondary candidate` | Strong | Strong | Partial | Strong | No | Useful for framework growth, but less representative as a first public proof than extraction or package refactor. |
 | March 26 validation results pass | `019d2949-bad3-7000-82af-238c4a07affa` | `secondary candidate` | Strong | Strong | Strong | Strong | No | Good run-level evaluation example ending at `c0ce338`, but best treated as support for the validation harness rather than a flagship proof. |
@@ -31,5 +35,6 @@ For now, the public proof set is:
 
 1. `march-07-origin-refactor/`
 2. `march-12-alphaxiv-auth-refactor/`
-3. `march-26-standalone-extraction/`
-4. `march-26-compact-public-package/`
+3. `march-27-youtube-playlist-order-fix/`
+4. `march-26-standalone-extraction/`
+5. `march-26-compact-public-package/`
