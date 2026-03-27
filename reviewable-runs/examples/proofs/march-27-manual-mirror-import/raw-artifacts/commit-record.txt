@@ -1,0 +1,8 @@
+Commit: `1e31aa9`
+Message: `Import Operating Agents mirror posts manually`
+
+## Boundary Notes
+
+- This commit is a strong internal checkpoint for the run.
+- It is not the final success condition by itself.
+- The publish boundary for the run is the successful `Deploy Mirror` execution and live Pages availability after the push to `main`.

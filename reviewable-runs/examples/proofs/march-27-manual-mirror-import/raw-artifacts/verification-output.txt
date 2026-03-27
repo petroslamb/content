@@ -1,0 +1,14 @@
+Decisive verification for this run came from two layers:
+
+1. Local validation
+- the manual import passed the full mirror check locally
+- a smoke test against `/posts/operating-agents-preface-a-field/` succeeded before push
+
+2. Remote deployed-state validation
+- commit `1e31aa9` was pushed to `main`
+- the `Deploy Mirror` workflow completed successfully
+- the live Pages site served the imported posts afterward
+
+Important review point:
+- local archive generation was necessary but not sufficient
+- the run should be treated as successful only because the public deploy completed and the mirrored URL resolved
