@@ -1,5 +1,7 @@
 # Operating Agents IV: The Second Agent Has To Buy A Boundary
 
+Read with: [Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/companion-v7.md) and [Multi-Agent Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md).
+
 A platform team built a six-role incident workflow after a string of painful production bugs. One role reproduced the issue, another gathered telemetry, another proposed the fix, another wrote the patch, another reviewed it, another prepared the release note, and a human approver signed at the end. Each handoff was a long conversational summary. One Friday the wrong rollback script shipped against the wrong service, and nobody could localize where the bad assumption had entered. The reproducer and patch writer had the same permissions. The reviewer never received a typed failure artifact. The approver had to reconstruct the whole run from chat.
 
 The system looked sophisticated. The split bought narration, not architecture.
@@ -64,14 +66,14 @@ That is the escalation rule for the chapter. Keep the default single-agent until
 
 ## Selected Sources
 
-**[*MAD*](https://arxiv.org/abs/2305.19118).** MAD matters because it makes critique legible as a specific reliability intervention rather than as a general argument for more voices. A second role earns its keep only when it changes what gets challenged.
+[MAD](https://arxiv.org/abs/2305.19118). MAD matters because it makes critique legible as a specific reliability intervention rather than as a general argument for more voices. A second role earns its keep only when it changes what gets challenged.
 
-**[*MetaGPT*](https://arxiv.org/abs/2308.00352).** MetaGPT matters because it pushed multi-agent design back toward documents, artifacts, and staged outputs at a moment when the field was drifting toward role-play. The chapter's emphasis on typed handoffs comes directly out of that correction.
+[MetaGPT](https://arxiv.org/abs/2308.00352). MetaGPT matters because it pushed multi-agent design back toward documents, artifacts, and staged outputs at a moment when the field was drifting toward role-play. The chapter's emphasis on typed handoffs comes directly out of that correction.
 
-**[*ChatDev*](https://arxiv.org/abs/2307.07924).** ChatDev matters because it makes the artifact-pipeline lesson visible in a more theatrical form. For this doctrine, the value is not the simulated company. It is the demonstration that stages become legible when they exchange inspectable objects instead of conversational blobs.
+[ChatDev](https://arxiv.org/abs/2307.07924). ChatDev matters because it makes the artifact-pipeline lesson visible in a more theatrical form. For this doctrine, the value is not the simulated company. It is the demonstration that stages become legible when they exchange inspectable objects instead of conversational blobs.
 
-**[*AutoGen*](https://arxiv.org/abs/2308.08155).** AutoGen matters because it made programmable multi-agent conversation practical and, by doing so, made it easier to confuse communication fabric with architecture. The chapter leans on it mostly as a warning. Flexible transport does not rescue a decorative split.
+[AutoGen](https://arxiv.org/abs/2308.08155). AutoGen matters because it made programmable multi-agent conversation practical and, by doing so, made it easier to confuse communication fabric with architecture. The chapter leans on it mostly as a warning. Flexible transport does not rescue a decorative split.
 
-**[*RECONCILE*](https://arxiv.org/abs/2309.13007).** RECONCILE matters because it sharpens the question of when disagreement carries real signal and when it is only extra overhead. That distinction helps keep critique in its lane instead of turning every hard workflow into a committee.
+[RECONCILE](https://arxiv.org/abs/2309.13007). RECONCILE matters because it sharpens the question of when disagreement carries real signal and when it is only extra overhead. That distinction helps keep critique in its lane instead of turning every hard workflow into a committee.
 
-For the broader terrain this essay leaves out on purpose, read the [Multi-agent companion](./companion-v7.md). For the operator layer, topology choices, and collapse discipline, read the [Multi-agent blueprint](../../core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md).
+For the broader terrain this essay leaves out on purpose, read the [Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/companion-v7.md). For the operator layer, topology choices, and collapse discipline, read the [Multi-Agent Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md).

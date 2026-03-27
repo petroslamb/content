@@ -1,5 +1,7 @@
 # Operating Agents II: Memory Needs Authority
 
+Read with: [Memory Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion-v7.md) and [Memory Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md).
+
 An internal policy assistant worked well in its first months. It answered benefits questions, surfaced current rules, and drafted quick compliance summaries with enough confidence that teams started treating it like background infrastructure. Then the failures changed shape. The answers were not obviously invented. They were outdated in operationally dangerous ways. A policy revision from three months ago failed to outrank the older version. A retired vendor relationship still appeared as active. A restructuring note from last quarter kept leaking into current org questions.
 
 The system was not forgetting facts. It was remembering them without authority.
@@ -75,10 +77,10 @@ Memory is not the art of keeping more. It is the discipline of keeping the right
 
 ## Selected Sources
 
-**[*MemGPT*](https://arxiv.org/abs/2310.08560).** MemGPT matters because it broke the lazy equation between more context and better memory. Its enduring value for this doctrine is the tiering mindset. Active context, external storage, and movement between them have to be governed explicitly if memory is going to help rather than interfere.
+[MemGPT](https://arxiv.org/abs/2310.08560). MemGPT matters because it broke the lazy equation between more context and better memory. Its enduring value for this doctrine is the tiering mindset. Active context, external storage, and movement between them have to be governed explicitly if memory is going to help rather than interfere.
 
-**[*MemoryBank*](https://arxiv.org/abs/2305.10250).** MemoryBank matters because it put decay and refresh back into the center of the conversation. That is essential to the chapter's law. Forgetting is not a weakness in a long-lived system. It is part of how retained state stays current enough to deserve trust.
+[MemoryBank](https://arxiv.org/abs/2305.10250). MemoryBank matters because it put decay and refresh back into the center of the conversation. That is essential to the chapter's law. Forgetting is not a weakness in a long-lived system. It is part of how retained state stays current enough to deserve trust.
 
-**[*Mem0*](https://arxiv.org/abs/2504.19413).** Mem0 matters because it pushes the literature toward derived memory objects rather than transcript hoarding. The doctrine depends on that move. Durable memory should usually be an extracted fact, promoted routine, or consolidated lesson rather than a raw conversational heap that retrieval later has to reinterpret.
+[Mem0](https://arxiv.org/abs/2504.19413). Mem0 matters because it pushes the literature toward derived memory objects rather than transcript hoarding. The doctrine depends on that move. Durable memory should usually be an extracted fact, promoted routine, or consolidated lesson rather than a raw conversational heap that retrieval later has to reinterpret.
 
-For the broader terrain this essay leaves out on purpose, read the [Memory companion](./companion-v7.md). For the operator layer, layer choices, and lifecycle rules, read the [Memory blueprint](../../core/practical-chapter-blueprints/01-memory-blueprint.md).
+For the broader terrain this essay leaves out on purpose, read the [Memory Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion-v7.md). For the operator layer, layer choices, and lifecycle rules, read the [Memory Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md).

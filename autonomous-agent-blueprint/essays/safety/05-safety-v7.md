@@ -1,5 +1,7 @@
 # Operating Agents V: The Attack Surface You Built
 
+Read with: [Safety Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion-v7.md) and [Safety Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md).
+
 One support team arrived on a Monday to find twenty-three urgent review tasks created overnight by an internal operations agent. Several carried account excerpts that should never have left the billing system at triage. The agent had not failed in a cinematic way. It had followed an instruction embedded in a help article it retrieved while drafting the escalations.
 
 The article looked routine. It contained copied troubleshooting text, a note that resembled an internal escalation hint, and one line telling the agent to attach account details for faster manual handling. The workflow read the ticket, retrieved the article, wrote an internal task, and handed that task to the next system as though it were trusted internal work. By the time analysts noticed, they were cleaning a queue full of artifacts that looked normal because they had been produced inside the workflow.
@@ -76,14 +78,14 @@ Sometimes the most serious safety move is not a clever defense. It is a narrower
 
 ## Selected Sources
 
-**[*Not What You've Signed Up For*](https://arxiv.org/abs/2302.12173).** Greshake and colleagues matter because they redrew the trust model for integrated agents. Once retrieved or external content can influence planning and action, safety stops being a prompt-writing problem and becomes a boundary problem.
+[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173). Greshake and colleagues matter because they redrew the trust model for integrated agents. Once retrieved or external content can influence planning and action, safety stops being a prompt-writing problem and becomes a boundary problem.
 
-**[*PoisonedRAG*](https://arxiv.org/abs/2402.07867).** PoisonedRAG matters because it turns retrieval integrity into part of the attack surface rather than a background relevance concern. A store the workflow later trusts is already part of the safety model.
+[PoisonedRAG](https://arxiv.org/abs/2402.07867). PoisonedRAG matters because it turns retrieval integrity into part of the attack surface rather than a background relevance concern. A store the workflow later trusts is already part of the safety model.
 
-**[*ToolEmu*](https://arxiv.org/abs/2309.15817).** ToolEmu matters because it moved safety evaluation in front of deployment. The chapter depends on that posture. A workflow should be stressed against its own contamination paths before its freedom is widened.
+[ToolEmu](https://arxiv.org/abs/2309.15817). ToolEmu matters because it moved safety evaluation in front of deployment. The chapter depends on that posture. A workflow should be stressed against its own contamination paths before its freedom is widened.
 
-**[*Agent Poison*](https://arxiv.org/abs/2407.12784).** Agent Poison matters because it shows how durable memory and knowledge stores can become future influence channels. The lesson reinforces the chapter's insistence that memory policy is part of safety policy.
+[Agent Poison](https://arxiv.org/abs/2407.12784). Agent Poison matters because it shows how durable memory and knowledge stores can become future influence channels. The lesson reinforces the chapter's insistence that memory policy is part of safety policy.
 
-**[*Agent Smith*](https://arxiv.org/abs/2402.08567).** Agent Smith matters because it makes cross-agent contamination feel concrete, especially once artifacts and multimodal inputs start moving between roles. It sharpens the rule that trust has to reset at every handoff.
+[Agent Smith](https://arxiv.org/abs/2402.08567). Agent Smith matters because it makes cross-agent contamination feel concrete, especially once artifacts and multimodal inputs start moving between roles. It sharpens the rule that trust has to reset at every handoff.
 
-For the broader terrain this essay leaves out on purpose, read the [Safety companion](./companion-v7.md). For the operator layer, control surfaces, and red-team defaults, read the [Safety blueprint](../../core/practical-chapter-blueprints/06-safety-blueprint.md).
+For the broader terrain this essay leaves out on purpose, read the [Safety Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion-v7.md). For the operator layer, control surfaces, and red-team defaults, read the [Safety Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md).
