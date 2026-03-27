@@ -17,8 +17,8 @@ jobs:
       ELEVENTY_PATH_PREFIX: /${{ github.event.repository.name }}/
       MIRROR_SITE_URL: https://${{ github.repository_owner }}.github.io
       MIRROR_REPO_URL: https://github.com/${{ github.repository }}
-      SUMMARY_PATH: ${{ runner.temp }}/substack-sync-summary.json
-      PR_BODY_PATH: ${{ runner.temp }}/substack-sync-body.md
+      SUMMARY_PATH: substack-sync-summary.json
+      PR_BODY_PATH: substack-sync-body.md
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
