@@ -2,8 +2,6 @@
 
 Read with: [Safety Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion-v7.md) and [Safety Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md).
 
-These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.
-
 Safety closes the core run because every capability above widens the attack surface. Once content, tools, and internal artifacts can move across the workflow, trust separation stops being a prompt preference and becomes a systems requirement.
 
 ![Slide 1: Agent Safety Is System Architecture](./artifacts/slides/Agent%20Safety%20Architecture/slide-001.png)
@@ -99,6 +97,8 @@ Every extra capability widens the attack surface. Broader tool access, larger co
 Sometimes the most serious safety move is not a clever defense. It is a narrower default.
 
 ![Slide 14: Control Matrix](./artifacts/slides/Agent%20Safety%20Architecture/slide-014.png)
+
+*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
 
 ## Selected Sources
 
