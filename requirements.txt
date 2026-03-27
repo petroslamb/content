@@ -13,3 +13,8 @@ markdownify
 
 # Substack Publishing/Posting API (Python)
 python-substack
+
+# YouTube Data API (Python)
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2

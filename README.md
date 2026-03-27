@@ -119,6 +119,7 @@ Start with: `publication_strategy_and_archive/README.md`
 This repository uses local tools for content workflows, tracked in `requirements.txt` and documented in `AGENTS.md`. Key tools include:
 - `markitdown` for PDF conversion
 - `notebooklm-py` for NotebookLM integration
+- the official Google Python client stack for YouTube Data API workflows
 - `scripts/sync_substack_archive.py` for Substack archive sync and manifest refresh
 
 Additionally, the repository incorporates two programmatic APIs for Substack publishing and posting workflows:
