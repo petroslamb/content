@@ -24,7 +24,7 @@ Evidence:
 Between the operator guide, checklist, real proofs, and synthetic harness, Reviewable Runs is no longer just an intuition. It is a working framework with a stable review unit, a stable question model, and visible best-fit domains.
 
 Evidence:
-- [`../../USE_IT.md`](../../USE_IT.md)
+- [`../../PLAYBOOK.md`](../../PLAYBOOK.md)
 - [`../../evaluation/run-review-checklist.md`](../../evaluation/run-review-checklist.md)
 - [`../../validation-lab/RUN_RESULTS.md`](../../validation-lab/RUN_RESULTS.md)
 

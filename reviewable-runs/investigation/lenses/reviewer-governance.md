@@ -14,7 +14,7 @@ Reviewable Runs is already strong at making approval timing, handoff quality, an
 
 - `Q2:` The framework struggles when responsibility is distributed or late. The synthetic retroactive-approval case and multi-agent handoff case show that the framework can expose the problem, but not yet rank or assign responsibility sharply enough. Evidence: [`../../validation-lab/RUN_RESULTS.md`](../../validation-lab/RUN_RESULTS.md).
 - `Q4:` Governance records remain highly hand-authored. The current framework does not yet specify how approval records or failure reviews should be captured from real systems rather than written after the fact.
-- `Q6:` The docs are directionally right, but they still blur some governance distinctions. A commit boundary, a review handoff, a release gate, and an external action boundary are not identical, and the framework should state that more crisply. Evidence: [`../../USE_IT.md`](../../USE_IT.md), [`../../examples/proofs/march-07-origin-refactor/review-packet/approval-decision.md`](../../examples/proofs/march-07-origin-refactor/review-packet/approval-decision.md).
+- `Q6:` The docs are directionally right, but the hardest cases still need careful judgment. A commit boundary, a review handoff, a release gate, and an external action boundary are not identical, and the framework should keep that distinction crisp. Evidence: [`../../PLAYBOOK.md`](../../PLAYBOOK.md), [`../../examples/proofs/march-07-origin-refactor/review-packet/approval-decision.md`](../../examples/proofs/march-07-origin-refactor/review-packet/approval-decision.md).
 
 ## What Is Missing
 
@@ -38,4 +38,3 @@ Reviewable Runs is already strong at making approval timing, handoff quality, an
 Overall confidence: `medium-high`
 
 Reason: the governance strengths are visible in both real and synthetic evidence, but the missing distinctions around distributed and late responsibility are still more diagnostic than solved.
-

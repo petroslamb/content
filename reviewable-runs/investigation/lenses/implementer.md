@@ -8,7 +8,7 @@ The framework concept is ahead of its implementation support. The record model i
 
 - `Q1:` The framework handles runs best when the underlying system already emits usable artifacts: diffs, tests, grep output, status checks, or browser state evidence. The coding and package-refactor proofs are strong precisely because the underlying data surface is concrete. Evidence: [`../../examples/proofs/coding-real-run/README.md`](../../examples/proofs/coding-real-run/README.md), [`../../examples/proofs/march-26-compact-public-package/README.md`](../../examples/proofs/march-26-compact-public-package/README.md).
 - `Q3:` The template/evaluation core is already aligned enough to build on. The six direct templates map cleanly to the run-review checklist, and the proofs reuse that shape well. Evidence: [`../../templates/README.md`](../../templates/README.md), [`../../evaluation/README.md`](../../evaluation/README.md).
-- `Q5:` The emitted-versus-reconstructed distinction in `USE_IT.md` is one of the framework's most implementation-useful ideas. It prevents the framework from requiring live prose generation for everything. Evidence: [`../../USE_IT.md`](../../USE_IT.md).
+- `Q5:` The emitted-versus-reconstructed distinction in `PLAYBOOK.md` is one of the framework's most implementation-useful ideas. It prevents the framework from requiring live prose generation for everything. Evidence: [`../../PLAYBOOK.md`](../../PLAYBOOK.md).
 
 ## What Failed
 
@@ -39,7 +39,7 @@ The framework concept is ahead of its implementation support. The record model i
 
 ## Strongest Evidence
 
-- [`../../USE_IT.md`](../../USE_IT.md)
+- [`../../PLAYBOOK.md`](../../PLAYBOOK.md)
 - [`../../templates/README.md`](../../templates/README.md)
 - [`../../examples/proofs/march-26-standalone-extraction/raw-artifacts/source-manifest.md`](../../examples/proofs/march-26-standalone-extraction/raw-artifacts/source-manifest.md)
 - [`../../validation-lab/RUN_RESULTS.md`](../../validation-lab/RUN_RESULTS.md)
@@ -49,4 +49,3 @@ The framework concept is ahead of its implementation support. The record model i
 Overall confidence: `high`
 
 Reason: the gap between conceptual clarity and implementation support is visible across every real proof and reinforced by the synthetic edge cases.
-

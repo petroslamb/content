@@ -1,6 +1,6 @@
 # Usage Findings
 
-This file answers the practical question: how should Reviewable Runs actually be used after the first real-proof and synthetic validation pass.
+This file is the evidence-and-critique backing for `PLAYBOOK.md`, not the main operator guide. It records the practical usage findings that the canonical playbook now compresses into direct operating rules.
 
 ## Findings
 
@@ -51,7 +51,7 @@ The framework should stay selective. The real-run index rejects or downgrades lo
 Evidence:
 - [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md)
 - [`../../validation-lab/RUN_RESULTS.md`](../../validation-lab/RUN_RESULTS.md)
-- [`../../USE_IT.md`](../../USE_IT.md)
+- [`../../PLAYBOOK.md`](../../PLAYBOOK.md)
 
 ### 5. Commit, handoff, and explicit non-approval reasons are all valid stop boundaries
 

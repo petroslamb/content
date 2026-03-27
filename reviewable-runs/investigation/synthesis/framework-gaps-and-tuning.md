@@ -14,7 +14,7 @@ The framework currently implies slicing, but the real proofs show it is foundati
 Evidence:
 - [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md)
 - [`../../examples/proofs/march-26-standalone-extraction/README.md`](../../examples/proofs/march-26-standalone-extraction/README.md)
-- [`../../USE_IT.md`](../../USE_IT.md)
+- [`../../PLAYBOOK.md`](../../PLAYBOOK.md)
 
 Tuning:
 - add explicit slicing rules to operator guidance
