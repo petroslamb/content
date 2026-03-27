@@ -45,13 +45,24 @@ Evidence:
 `Evidence base: mixed`  
 `Confidence: high`
 
-The real-proof layer now supports the framework on coding and documentation-heavy runs with clear artifact surfaces. The hardest questions, especially multi-agent responsibility and degraded reconstruction, are still mostly backed by synthetic evidence.
+The real-proof layer now supports the framework on coding, documentation-heavy, and at least one external-action platform run with clear live-state verification. The hardest questions, especially multi-agent responsibility and degraded reconstruction, are still mostly backed by synthetic evidence.
 
 Evidence:
 - [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md)
 - [`../../validation-lab/RUN_RESULTS.md`](../../validation-lab/RUN_RESULTS.md)
 
-### 5. The framework is good enough to keep and refine, not yet broad enough to overclaim
+### 5. The framework now has evidence that it can handle external operational boundaries, not only code boundaries
+
+`Evidence base: real proof`  
+`Confidence: high`
+
+The YouTube playlist-order case materially strengthens the framework because it proves the model can review a run whose meaningful effect happened on a third-party platform rather than inside the repo alone.
+
+Evidence:
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/README.md`](../../examples/proofs/march-27-youtube-playlist-order-fix/README.md)
+- [`../../examples/proofs/march-27-youtube-playlist-order-fix/review-packet/approval-decision.md`](../../examples/proofs/march-27-youtube-playlist-order-fix/review-packet/approval-decision.md)
+
+### 6. The framework is good enough to keep and refine, not yet broad enough to overclaim
 
 `Evidence base: inference`  
 `Confidence: medium-high`
@@ -79,4 +90,3 @@ It is missing:
 - sharper calibration
 - lighter implementation support
 - broader real-world proof
-

@@ -1,0 +1,28 @@
+Live verification observed in the session
+
+1. playlist inspection
+- queried both playlist orders through the YouTube API
+- confirmed that the course playlist ordering was reversed
+
+2. control-path constraint discovery
+- found that the API would not successfully override positions while the playlist remained in `Date published (newest)` mode
+- switched the course playlist to manual ordering in YouTube Studio
+
+3. reorder application
+- applied the corrected order through the API after the Studio mode change
+
+4. decisive verification
+- read back the final live course order directly from YouTube
+- confirmed:
+  - `Operating Agents I`
+  - `Operating Agents II`
+  - `Operating Agents III`
+  - `Operating Agents IV`
+  - `Operating Agents V`
+  - `Operating Agents Bonus`
+
+5. secondary verification
+- confirmed the TL;DR playlist was already in the correct order and was left unchanged
+
+Important note
+- the decisive check here is the live observed playlist order, not merely local script execution

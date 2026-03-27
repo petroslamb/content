@@ -1,0 +1,12 @@
+Operational surfaces that mattered to review
+- `youtube_data_api_playbook/scripts/sync_operating_agents_playlist_order.py`
+- `youtube_data_api_playbook/README.md`
+
+Live system surfaces that mattered to review
+- `Operating Agents` YouTube playlist `PL8lPx5mgRhhZiKRR-cLl7YJd6GXhcbZAr`
+- `Operating Agents TL;DR` YouTube playlist `PL8lPx5mgRhhZqC3XWgVDt_l8rG3kuRdLN`
+- YouTube Studio playlist settings for the course playlist
+
+Selection note
+- The decisive change was not a git diff alone.
+- The review surface must include the live platform state because success depended on YouTube rendering the corrected order.

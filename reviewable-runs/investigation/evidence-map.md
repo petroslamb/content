@@ -14,7 +14,10 @@ These are the highest-signal real runs in the package.
 2. [`../examples/proofs/march-26-standalone-extraction/README.md`](../examples/proofs/march-26-standalone-extraction/README.md)
    Why it matters: committed extraction run with strong boundary, strong structural validation, and explicit decoupling.
 
-3. [`../examples/proofs/march-26-compact-public-package/README.md`](../examples/proofs/march-26-compact-public-package/README.md)
+3. [`../examples/proofs/march-27-youtube-playlist-order-fix/README.md`](../examples/proofs/march-27-youtube-playlist-order-fix/README.md)
+   Why it matters: first external-action flagship proof with mixed API/UI control and live third-party state verification.
+
+4. [`../examples/proofs/march-26-compact-public-package/README.md`](../examples/proofs/march-26-compact-public-package/README.md)
    Why it matters: strongest current self-application of the framework on package shape, usability, and integrity checks.
 
 ## Starter Real Proof
@@ -53,4 +56,3 @@ Do not use these as primary evidence for the first investigation pass:
 - upstream blueprint material outside the current proof packets
 
 Use them only if a finding cannot be explained from current framework behavior alone.
-
