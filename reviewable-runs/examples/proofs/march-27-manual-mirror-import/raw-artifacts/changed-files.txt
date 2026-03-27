@@ -1,0 +1,22 @@
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-preface-a-field.md
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-preface-a-field.html
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-i-when-language.md
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-i-when-language.html
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-ii-memory-needs.md
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-ii-memory-needs.html
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-iii-diagnose-the.md
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-iii-diagnose-the.html
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-iv-the-second-agent.md
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-iv-the-second-agent.html
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-v-the-attack-surface.md
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-v-the-attack-surface.html
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-bonus-the-workflow.md
+publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-bonus-the-workflow.html
+publication_strategy_and_archive/substack_archive/metadata.json
+publication_strategy_and_archive/substack_archive/assets/
+
+## Review Notes
+
+- The run touched seven post pairs plus the archive metadata registry.
+- The asset folder change was large because all relative slide images had to be localized into the tracked archive.
+- The relevant review surface is the archive layer, not the upstream essay source files.
