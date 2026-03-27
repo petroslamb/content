@@ -97,6 +97,50 @@ The public mirror is published at [https://petroslamb.github.io/content/](https:
 4. Commit and push to `main`.
 5. Let the deploy workflow publish the mirror.
 
+## Manual Import Fallback
+
+Use this when the Substack sync workflow is blocked by upstream `403` responses but you already have the final markdown and local image assets.
+
+The manual import target is still the tracked archive under [`substack_archive/`](./substack_archive/). The mirror reads from the archive manifest and local snapshot files, so a manual import can publish new posts without changing the mirror code.
+
+Minimum required artifacts per post:
+
+- one markdown snapshot in `publication_strategy_and_archive/substack_archive/`
+- one HTML snapshot in `publication_strategy_and_archive/substack_archive/`
+- any referenced local images copied into `publication_strategy_and_archive/substack_archive/assets/`
+- one matching entry in [`metadata.json`](./substack_archive/metadata.json)
+
+Recommended manual process:
+
+1. Start from the canonical Substack slug, title, URL, and publish timestamp.
+2. Copy the markdown into `substack_archive/` using the standard filename pattern: `YYYY-MM-DD_<slug>.md`.
+3. Rewrite any relative image links so they point to `assets/<filename>`.
+4. Copy the actual image files into `substack_archive/assets/`.
+5. Create a same-stem HTML snapshot beside the markdown file.
+6. Add a `metadata.json` entry with the same slug and paths, `audience: "everyone"`, and `mirror_enabled: true`.
+7. Run `npm run check:mirror`.
+8. Commit and push to `main` so the Pages deploy workflow republishes the mirror.
+
+Required `metadata.json` keys:
+
+- `slug`
+- `title`
+- `url`
+- `post_date`
+- `audience`
+- `fetched_at`
+- `content_hash`
+- `md_path`
+- `html_path`
+- `hero_image`
+- `mirror_enabled`
+
+Replacement behavior:
+
+- Manual imports should use the canonical Substack slug.
+- If automated sync starts working again later, the sync is expected to replace the manual snapshot for that same slug rather than create a second visible post.
+- In other words, manual import is a fallback publication path, not a second archive namespace.
+
 ## Notes
 
 - The mirror only publishes posts where Substack reports `audience == "everyone"`.

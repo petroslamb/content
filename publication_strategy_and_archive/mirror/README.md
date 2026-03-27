@@ -97,6 +97,7 @@ The mirror does not fetch Substack directly. The sync step happens first through
 That means:
 
 - if a post is missing from the mirror, check the archive sync first
+- if sync is blocked upstream, you can manually import the post into `../substack_archive/` and `metadata.json`, then rerun `npm run check:mirror`
 - if a post renders without a research folder, add or update its entry in `post_map.yaml`
 - if a post should not appear publicly, inspect `mirror_enabled` in `metadata.json`
 
