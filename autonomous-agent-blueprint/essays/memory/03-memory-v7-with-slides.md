@@ -2,8 +2,6 @@
 
 Read with: [Memory Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion-v7.md) and [Memory Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md).
 
-These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.
-
 Memory follows because useful systems need a rule for what the past is still allowed to govern. Retrieval quality matters, but only after the workflow decides what should persist, what has lost authority, and what should be retired.
 
 ![Slide 1: The AI Memory Blueprint](./artifacts/slides/AI%20Memory%20Architecture/slide-001.png)
@@ -98,6 +96,8 @@ The wrong-layer failure is especially damaging because it feels superficially re
 ![Slide 13: Critical Failure Modes](./artifacts/slides/AI%20Memory%20Architecture/slide-013.png)
 
 Memory is not the art of keeping more. It is the discipline of keeping the right things in the right form for the right length of time. A trustworthy memory layer returns sanctioned state with provenance and expiry, not merely semantically nearby fragments from a crowded past that still happen to sound relevant. Good memory policy protects the present from the past.
+
+*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
 
 ## Selected Sources
 

@@ -1,4 +1,4 @@
-# Operating Agents: Reliability Starts Below the Model
+# Operating Agents: A Field Guide to Building Reliable Agent Systems
 
 A team spent six weeks improving an operations agent by editing the surface everybody could see. First they swapped in a newer model after the old one kept mishandling edge cases. Then they lengthened the system prompt after the model swap still let bad escalations through. Neither change touched the incident that finally forced a redesign. In one afternoon the agent pushed a batch of internal tickets forward as completed even though the downstream service had only queued them for later approval.
 
@@ -18,7 +18,18 @@ That decision rule is severe on purpose. If a workflow still relies on human com
 
 Each chapter makes one hard claim and pushes it until it becomes a design rule.
 
-The action essay argues that language becomes agency only when it becomes accountable state change. The memory essay argues that memory is governance over time, not storage. The reasoning essay argues that most production reasoning failures are control failures before they are intelligence failures. The multi-agent essay argues that extra agents multiply ambiguity unless they create a real boundary. The safety essay argues that agent safety is trust-boundary design rather than refusal theater. The bonus post argues that the workflow is the object once a system is stable enough to deserve improvement.
+### Read The Field Guides
+
+- [Operating Agents I: When Language Starts Making Commitments](https://lambpetros.substack.com/p/operating-agents-i-when-language) covers action.
+- [Operating Agents II: Memory Needs Authority](https://lambpetros.substack.com/p/operating-agents-ii-memory-needs) covers memory.
+- [Operating Agents III: Diagnose The Scaffold Before You Blame The Model](https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the) covers reasoning.
+- [Operating Agents IV: The Second Agent Is An Organizational Decision](https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent) covers multi-agent design.
+- [Operating Agents V: The Attack Surface Is The Architecture](https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface) covers safety.
+- [Operating Agents Bonus: The Workflow Becomes The Product](https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow) covers optimization once a system is stable enough to deserve improvement.
+
+### Go Deeper
+
+For the second pass, use the GitHub companions and blueprints as the operator layer. Action: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion-v7.md) and [Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md). Memory: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion-v7.md) and [Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md). Reasoning: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion-v7.md) and [Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md). Multi-agent: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/companion-v7.md) and [Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md). Safety: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion-v7.md) and [Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md). Optimization: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion-v7.md) and [Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md).
 
 Taken together, the bundle is not really about autonomy. It is about control surfaces. Where failure enters. Where trust is earned. Where authority should stop. What evidence should exist before a team widens the system. The field talks about agents as though the interesting question were how much apparent initiative the model can display. Builders usually discover that the harder question is whether the workflow still leaves behind enough structure for ordinary review.
 
@@ -36,7 +47,7 @@ The standard behind this series is severe on purpose. A good agent architecture 
 
 That is the doctrine this bundle is trying to install. Not maximum autonomy. Not model worship. Not decorative traces. Explicit layers, reviewable control, and narrower defaults than the field usually likes.
 
-Part I starts where language stops sounding useful and starts taking on consequence.
+[Part I](https://lambpetros.substack.com/p/operating-agents-i-when-language) starts where language stops sounding useful and starts taking on consequence. If you already know your bottleneck, jump straight from the essay into its companion and matching blueprint.
 
 ## Selected Sources
 

@@ -2,8 +2,6 @@
 
 Read with: [Action Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion-v7.md) and [Action Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).
 
-These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.
-
 This chapter starts with action because consequence arrives there first. The moment language can write, submit, execute, or send, the subject stops being fluency and becomes interface design.
 
 ![Slide 1: Architecting Reliable Action Systems](./artifacts/slides/Engineering%20Reliable%20Action/slide-001.png)
@@ -103,6 +101,8 @@ Validate the payload before the write. Poll the real status endpoint before trus
 That is why action belongs at the front of the public run. It is where agent rhetoric stops being cheap. Once a workflow can act, continuity pressure arrives immediately. The next question is no longer whether the system can do something. It is what parts of its own past it should be allowed to carry forward and trust the next time consequence enters the loop.
 
 ![Slide 14: Critical Structural Anti-Patterns](./artifacts/slides/Engineering%20Reliable%20Action/slide-014.png)
+
+*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
 
 ## Selected Sources
 

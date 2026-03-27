@@ -2,8 +2,6 @@
 
 Read with: [Reasoning Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion-v7.md) and [Reasoning Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md).
 
-These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.
-
 Reasoning comes after action and memory because a workflow with tools and durable state can still fail under a bad scaffold. The hard question is not whether the model can think at length. It is whether the loop knows when to think, what evidence to inspect, and when to stop.
 
 ![Slide 1: Reasoning and Planning Architectures](./artifacts/slides/Reasoning%20Architectures/slide-001.png)
@@ -95,6 +93,8 @@ If one generation is doing the work of several, a better model only buys a more 
 ![Slide 15: Evaluating the Reasoning Stack](./artifacts/slides/Reasoning%20Architectures/slide-015.png)
 
 ![Slide 16: Architectural Anti-Patterns](./artifacts/slides/Reasoning%20Architectures/slide-016.png)
+
+*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
 
 ## Selected Sources
 

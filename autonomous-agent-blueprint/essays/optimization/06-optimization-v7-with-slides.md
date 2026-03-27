@@ -2,8 +2,6 @@
 
 Read with: [Optimization Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion-v7.md) and [Optimization Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md).
 
-These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.
-
 Optimization stays last because the workflow becomes the object only after it is stable enough to deserve improvement. Before that point, prompt tuning is usually just movement on the easiest visible surface rather than progress on the system that actually carries the work.
 
 ![Slide 1: The Optimization Blueprint](./artifacts/slides/Agentic%20Optimization%20Blueprint/slide-001.png)
@@ -91,6 +89,8 @@ Bounded self-improvement is the version worth keeping. Improve only the surfaces
 Freeze the object before you tune the surface.
 
 ![Slide 9: The Pragmatic Standard](./artifacts/slides/Agentic%20Optimization%20Blueprint/slide-009.png)
+
+*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
 
 ## Selected Sources
 

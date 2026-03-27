@@ -2,8 +2,6 @@
 
 Read with: [Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/companion-v7.md) and [Multi-Agent Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md).
 
-These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.
-
 Multi-agent design comes later because extra roles only help after a single workflow is already legible enough to justify another boundary. More voices do not create structure on their own. They only widen ambiguity unless the handoff becomes explicit.
 
 ![Slide 1: Multi-Agent Design Blueprint](./artifacts/slides/Multi-Agent%20Design%20Blueprint/slide-001.png)
@@ -85,6 +83,8 @@ The conservative rule after deployment should be as strict as the rule before de
 Role count is sticky once teams grow attached to the theater of specialization. A named role starts to feel like a capability even when it is only extra latency. Builders should instead treat every role as guilty until it proves one thing: that removing it would blur authority, weaken critique, or erase a typed handoff the workflow genuinely needs.
 
 That is the escalation rule for the chapter. Keep the default single-agent until one of those three boundaries is clearly missing and measurable. Then split only what the workflow has earned.
+
+*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
 
 ## Selected Sources
 
