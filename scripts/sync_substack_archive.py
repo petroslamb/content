@@ -38,24 +38,27 @@ def iso_now() -> str:
 
 def discover_posts(session: requests.Session, base_url: str) -> list[dict[str, str]]:
     rss_url = f"{base_url.rstrip('/')}{RSS_PATH}"
-    response = session.get(rss_url, timeout=30)
-    response.raise_for_status()
-    root = ET.fromstring(response.text)
     discovered: dict[str, dict[str, str]] = {}
-    for item in root.findall("./channel/item"):
-        link = item.findtext("link", "").strip()
-        if not link or "/p/" not in link:
-            continue
-        slug = normalize_slug(link)
-        pub_date = item.findtext("pubDate", "").strip()
-        published_at = ""
-        if pub_date:
-            published_at = parsedate_to_datetime(pub_date).astimezone(timezone.utc).isoformat()
-        discovered[slug] = {
-            "slug": slug,
-            "url": link,
-            "published_at": published_at,
-        }
+    try:
+        response = session.get(rss_url, timeout=30)
+        response.raise_for_status()
+        root = ET.fromstring(response.text)
+        for item in root.findall("./channel/item"):
+            link = item.findtext("link", "").strip()
+            if not link or "/p/" not in link:
+                continue
+            slug = normalize_slug(link)
+            pub_date = item.findtext("pubDate", "").strip()
+            published_at = ""
+            if pub_date:
+                published_at = parsedate_to_datetime(pub_date).astimezone(timezone.utc).isoformat()
+            discovered[slug] = {
+                "slug": slug,
+                "url": link,
+                "published_at": published_at,
+            }
+    except (requests.RequestException, ET.ParseError):
+        discovered = {}
     if discovered:
         return list(discovered.values())
 
