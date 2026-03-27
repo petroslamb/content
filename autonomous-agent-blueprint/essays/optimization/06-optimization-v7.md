@@ -1,5 +1,7 @@
 # Operating Agents Bonus: The Workflow Is The Object
 
+Read with: [Optimization Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion-v7.md) and [Optimization Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md).
+
 Most agent optimization is fake.
 
 A team spent six weeks improving a document-routing workflow that was already useful enough to be tempting. Humans still corrected the tail of the work, but the economics made sense and the system was stable enough that the team decided it was time to improve it.
@@ -70,14 +72,14 @@ Freeze the object before you tune the surface.
 
 ## Selected Sources
 
-**[*OPRO*](https://arxiv.org/abs/2309.03409).** OPRO matters because it makes the prerequisite for optimization painfully clear. No stable objective, no real optimization. Only editing.
+[OPRO](https://arxiv.org/abs/2309.03409). OPRO matters because it makes the prerequisite for optimization painfully clear. No stable objective, no real optimization. Only editing.
 
-**[*MT-Bench and Chatbot Arena*](https://arxiv.org/abs/2306.05685).** MT-Bench and Chatbot Arena matter because they made comparative judging operational enough to influence real workflows. The chapter borrows the usable part of that lesson: evaluation has to be explicit, calibrated, and part of the system rather than an afterthought.
+[MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685). MT-Bench and Chatbot Arena matter because they made comparative judging operational enough to influence real workflows. The chapter borrows the usable part of that lesson: evaluation has to be explicit, calibrated, and part of the system rather than an afterthought.
 
-**[*Voyager*](https://arxiv.org/abs/2305.16291).** Voyager matters because it shows a believable path to bounded improvement. The system gets stronger by promoting validated routines, not by mutating every surface at once.
+[Voyager](https://arxiv.org/abs/2305.16291). Voyager matters because it shows a believable path to bounded improvement. The system gets stronger by promoting validated routines, not by mutating every surface at once.
 
-**[*TextGrad*](https://arxiv.org/abs/2406.07496).** TextGrad matters because it sharpens the question of local optimization over bounded surfaces. It belongs in the chapter as a reminder that local improvement is real when the target and objective are already stable.
+[TextGrad](https://arxiv.org/abs/2406.07496). TextGrad matters because it sharpens the question of local optimization over bounded surfaces. It belongs in the chapter as a reminder that local improvement is real when the target and objective are already stable.
 
-**[*AFLOW*](https://arxiv.org/abs/2410.10762).** AFLOW matters because it pushes optimization up from prompts to workflow structure itself. That is real frontier territory. It also clarifies why the chapter insists on late power and early restraint.
+[AFLOW](https://arxiv.org/abs/2410.10762). AFLOW matters because it pushes optimization up from prompts to workflow structure itself. That is real frontier territory. It also clarifies why the chapter insists on late power and early restraint.
 
-For the broader terrain this essay leaves out on purpose, read the [Optimization companion](./companion-v7.md). For the operator layer, sequencing rules, and evaluation defaults, read the [Optimization blueprint](../../core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md).
+For the broader terrain this essay leaves out on purpose, read the [Optimization Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion-v7.md). For the operator layer, sequencing rules, and evaluation defaults, read the [Optimization Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md).

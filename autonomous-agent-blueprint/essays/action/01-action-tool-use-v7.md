@@ -1,5 +1,7 @@
 # Operating Agents I: When Language Starts Making Commitments
 
+Read with: [Action Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion-v7.md) and [Action Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).
+
 A procurement team built an internal system that looked operational in every review meeting. It could read supplier policy, explain approval logic, draft the purchase-order payload, and tell an operator exactly what should happen next. The demos landed because the system sounded as if it were already doing the work. It named the right fields, the right exceptions, and the right downstream systems.
 
 Nothing happened until a human translated that prose into clicks and API calls.
@@ -70,10 +72,10 @@ That is why action belongs at the front of the public run. It is where agent rhe
 
 ## Selected Sources
 
-**[*Toolformer*](https://arxiv.org/abs/2302.04761).** Toolformer matters because it made tool invocation legible as part of competence rather than a theatrical wrapper around language generation. For this doctrine, its importance is not that the model can call a tool at all. It is that useful work starts when language chooses an interface that can change state.
+[Toolformer](https://arxiv.org/abs/2302.04761). Toolformer matters because it made tool invocation legible as part of competence rather than a theatrical wrapper around language generation. For this doctrine, its importance is not that the model can call a tool at all. It is that useful work starts when language chooses an interface that can change state.
 
-**[*Gorilla*](https://arxiv.org/abs/2305.15334).** Gorilla matters because it narrowed tool use down to interface discrimination and argument construction. That is exactly where many production failures live. A workflow can understand the task and still fail because the boundary object was wrong.
+[Gorilla](https://arxiv.org/abs/2305.15334). Gorilla matters because it narrowed tool use down to interface discrimination and argument construction. That is exactly where many production failures live. A workflow can understand the task and still fail because the boundary object was wrong.
 
-**[*SWE-agent*](https://arxiv.org/abs/2405.15793).** SWE-agent matters because it shows what a replayable action surface looks like once the environment returns machine-checkable feedback. The chapter leans on that lesson heavily. Narrow, inspectable action loops beat broader but blurrier ones because improvement depends on localized failure, not on impressive transcripts.
+[SWE-agent](https://arxiv.org/abs/2405.15793). SWE-agent matters because it shows what a replayable action surface looks like once the environment returns machine-checkable feedback. The chapter leans on that lesson heavily. Narrow, inspectable action loops beat broader but blurrier ones because improvement depends on localized failure, not on impressive transcripts.
 
-For the broader terrain this essay leaves out on purpose, read the [Action companion](./companion-v7.md). For the operator layer, build order, and anti-patterns, read the [Action blueprint](../../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).
+For the broader terrain this essay leaves out on purpose, read the [Action Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion-v7.md). For the operator layer, build order, and anti-patterns, read the [Action Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).

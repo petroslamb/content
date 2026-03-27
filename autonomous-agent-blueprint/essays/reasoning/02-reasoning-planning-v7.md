@@ -1,5 +1,7 @@
 # Operating Agents III: Diagnose the Scaffold Before You Shop the Model
 
+Read with: [Reasoning Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion-v7.md) and [Reasoning Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md).
+
 The recommendation looked careful. It quoted the exception clause, summarized the claim, named the likely payer outcome, and returned a clean structured decision. The reviewer rejected it in less than a minute. One required check was missing, and the workflow had never queried live payer status before drafting the answer.
 
 Nothing in the output looked absurd. That was the problem. It was polished enough to pass a casual read and brittle enough to fail the moment somebody asked whether the workflow had earned its confidence.
@@ -70,14 +72,14 @@ If one generation is doing the work of several, a better model only buys a more 
 
 ## Selected Sources
 
-**[*Least-to-Most Prompting*](https://arxiv.org/abs/2205.10625).** Least-to-Most matters because it shows why decomposition is not the baby version of reasoning. It is the paper behind the doctrine's first move: expose dependent subproblems before asking one generation to improvise the whole structure.
+[Least-to-Most Prompting](https://arxiv.org/abs/2205.10625). Least-to-Most matters because it shows why decomposition is not the baby version of reasoning. It is the paper behind the doctrine's first move: expose dependent subproblems before asking one generation to improvise the whole structure.
 
-**[*ReAct*](https://arxiv.org/abs/2210.03629).** ReAct matters because it binds reasoning to action and observation. The chapter's control-first view of reasoning owes a great deal to that move. A workflow that depends on live state but still reasons in prose is disconnected from reality.
+[ReAct](https://arxiv.org/abs/2210.03629). ReAct matters because it binds reasoning to action and observation. The chapter's control-first view of reasoning owes a great deal to that move. A workflow that depends on live state but still reasons in prose is disconnected from reality.
 
-**[*Chain-of-Verification*](https://arxiv.org/abs/2309.11495).** CoVe matters because it gives verification a real place in the workflow instead of leaving it as a vague norm. Trust should be earned in a distinct stage, not implied by the fluency of the first answer.
+[Chain-of-Verification](https://arxiv.org/abs/2309.11495). CoVe matters because it gives verification a real place in the workflow instead of leaving it as a vague norm. Trust should be earned in a distinct stage, not implied by the fluency of the first answer.
 
-**[*LLM+P*](https://arxiv.org/abs/2304.11477).** LLM+P matters because it marks the point where sequence itself becomes the risk. The paper's importance here is not frontier breadth. It is the escalation rule it implies: promote the plan into a first-class object only when prose can no longer carry the constraints safely.
+[LLM+P](https://arxiv.org/abs/2304.11477). LLM+P matters because it marks the point where sequence itself becomes the risk. The paper's importance here is not frontier breadth. It is the escalation rule it implies: promote the plan into a first-class object only when prose can no longer carry the constraints safely.
 
-**[*Tree of Thoughts*](https://arxiv.org/abs/2305.10601).** Tree of Thoughts matters in this doctrine mostly as a boundary marker. It clarifies what true branching search is for and, by contrast, what it is not for. Search belongs late, after decomposition, grounding, and verification are already doing their jobs.
+[Tree of Thoughts](https://arxiv.org/abs/2305.10601). Tree of Thoughts matters in this doctrine mostly as a boundary marker. It clarifies what true branching search is for and, by contrast, what it is not for. Search belongs late, after decomposition, grounding, and verification are already doing their jobs.
 
-For the broader terrain this essay leaves out on purpose, read the [Reasoning companion](./companion-v7.md). For the operator layer, chooser logic, and escalation defaults, read the [Reasoning blueprint](../../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md).
+For the broader terrain this essay leaves out on purpose, read the [Reasoning Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion-v7.md). For the operator layer, chooser logic, and escalation defaults, read the [Reasoning Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md).
