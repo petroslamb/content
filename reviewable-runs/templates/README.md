@@ -33,7 +33,7 @@ These support implementation, but they are not the framework itself.
 
 ## How To Use This Folder
 
-Read `../USE_IT.md` first.
+Read `../PLAYBOOK.md` first.
 
 Then:
 

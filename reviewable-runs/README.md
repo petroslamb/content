@@ -43,7 +43,7 @@ Meaningful review begins with a bounded run. If the task or stop boundary splits
 - medium risk: make task, trace, evidence, and verification explicit
 - high risk: add explicit approval and failure-review capability
 
-The practical version of this rule lives in `USE_IT.md`.
+The practical version of this rule lives in `PLAYBOOK.md`.
 
 ## Default Reading Path
 
@@ -51,15 +51,15 @@ Read these in order:
 
 1. `README.md`
 2. `examples/proofs/real-run-index.md`
-3. `examples/proofs/march-26-compact-public-package/README.md`
-4. `USE_IT.md`
+3. `examples/proofs/march-27-manual-mirror-import/README.md`
+4. `PLAYBOOK.md`
 5. `evaluation/run-review-checklist.md`
 
 That path is the package front door.
 
 ## Main Surfaces
 
-- `USE_IT.md`: day-to-day operator guide
+- `PLAYBOOK.md`: canonical operator playbook
 - `examples/`: what the framework looks like in practice
 - `evaluation/`: how to judge runs, architectures, and the framework itself
 - `templates/`: direct record templates plus a few supporting patterns

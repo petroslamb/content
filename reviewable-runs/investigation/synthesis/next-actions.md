@@ -93,7 +93,7 @@ Why last: doctrine should move after evidence and tooling, not before.
 
 Deliverable:
 - revise `README.md`
-- revise `USE_IT.md`
+- revise `PLAYBOOK.md`
 - revise `evaluation/README.md`
 
 Evidence:

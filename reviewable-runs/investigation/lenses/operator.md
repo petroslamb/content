@@ -13,8 +13,8 @@ Reviewable Runs works best as a post-run operating discipline for bounded, meani
 ## What Failed
 
 - `Q2:` The framework resists mega-sessions, opinion-only runs, and evidence-thin editorial work. The real-run index shows that open-ended review sessions and thinner writing runs qualify weakly or only as secondary candidates. Evidence: [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md).
-- `Q4:` The current use pattern is still too manual. The operator has to preserve the raw trace, identify the run boundary, curate the excerpt, and then reconstruct the packet. The package explains this, but it does not yet make it lightweight. Evidence: [`../../USE_IT.md`](../../USE_IT.md), [`../../examples/proofs/march-26-standalone-extraction/raw-artifacts/source-manifest.md`](../../examples/proofs/march-26-standalone-extraction/raw-artifacts/source-manifest.md).
-- `Q6:` The current docs still understate how central run slicing is. The proofs themselves show that the same long March 26 session only becomes reviewable when split at commit/task boundaries, but this is not yet framed as a first-class rule in the operator guidance. Evidence: [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md), [`../../USE_IT.md`](../../USE_IT.md).
+- `Q4:` The current use pattern is still too manual. The operator has to preserve the raw trace, identify the run boundary, curate the excerpt, and then reconstruct the packet. The package explains this, but it does not yet make it lightweight. Evidence: [`../../PLAYBOOK.md`](../../PLAYBOOK.md), [`../../examples/proofs/march-26-standalone-extraction/raw-artifacts/source-manifest.md`](../../examples/proofs/march-26-standalone-extraction/raw-artifacts/source-manifest.md).
+- `Q6:` The current docs now treat run slicing as a first-class rule, but the workflow still depends on operator judgment and manual curation. Evidence: [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md), [`../../PLAYBOOK.md`](../../PLAYBOOK.md).
 
 ## What Is Missing
 
@@ -31,11 +31,10 @@ Reviewable Runs works best as a post-run operating discipline for bounded, meani
 - [`../../examples/proofs/march-26-compact-public-package/comparison.md`](../../examples/proofs/march-26-compact-public-package/comparison.md)
 - [`../../examples/proofs/march-26-standalone-extraction/comparison.md`](../../examples/proofs/march-26-standalone-extraction/comparison.md)
 - [`../../examples/proofs/real-run-index.md`](../../examples/proofs/real-run-index.md)
-- [`../../USE_IT.md`](../../USE_IT.md)
+- [`../../PLAYBOOK.md`](../../PLAYBOOK.md)
 
 ## Confidence
 
 Overall confidence: `high`
 
 Reason: the core operator conclusions are supported by multiple real proofs plus the current run registry. The main uncertainty is breadth across domains, not the shape of the operator workflow itself.
-

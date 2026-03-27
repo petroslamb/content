@@ -41,7 +41,7 @@ These are the highest-signal real runs in the package.
 ## Current Framework Docs
 
 - [`../README.md`](../README.md)
-- [`../USE_IT.md`](../USE_IT.md)
+- [`../PLAYBOOK.md`](../PLAYBOOK.md)
 - [`../evaluation/README.md`](../evaluation/README.md)
 - [`../evaluation/run-review-checklist.md`](../evaluation/run-review-checklist.md)
 - [`../templates/README.md`](../templates/README.md)
