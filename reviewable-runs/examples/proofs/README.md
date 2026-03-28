@@ -40,3 +40,5 @@ Real-trace proofs in this folder rely on both:
 - the optional raw-artifact support layer used to preserve source manifests, excerpts, changed-surface summaries, verification outputs, and boundary records
 
 If you want the current proof set interpreted and critiqued, use `../../investigation/README.md`.
+
+If you want the real proof set compared systematically across run class, boundary type, verification mode, and packet weight, use `../../calibration/REAL_RUN_MATRIX.md`.

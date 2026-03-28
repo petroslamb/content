@@ -16,6 +16,8 @@ Raw traces are usually too thin for serious review. They can show that a system 
 
 This framework turns that gap into a run-level review contract.
 
+The framework is calibrated, not mechanical. It is meant to constrain interpretation, not eliminate it.
+
 ## The Six Questions
 
 Every meaningful run should make these questions answerable:
@@ -62,6 +64,7 @@ That path is the package front door.
 - `PLAYBOOK.md`: canonical operator playbook
 - `examples/`: what the framework looks like in practice
 - `evaluation/`: how to judge runs, architectures, and the framework itself
+- `calibration/`: advanced empirical comparison of the real-run corpus
 - `templates/`: direct record templates plus a few supporting patterns
 - `investigation/`: advanced findings and tuning notes for framework builders
 - `validation-lab/`: advanced synthetic pressure-testing
@@ -99,6 +102,8 @@ The framework is strong as an operating idea and increasingly solid as a package
 - empirical maturity: still limited
 
 Today it has multiple real captured proofs, a clear operator model, and a synthetic validation harness. It is publishable as a practical framework. It is not yet a broad research-grade claim.
+
+The current calibration also shows that strong framework fit is not the same thing as flagship proof status. Some bounded internal or limit-finding runs are strong uses of the framework even if they stay secondary in the public proof set.
 
 ## Non-Goals
 

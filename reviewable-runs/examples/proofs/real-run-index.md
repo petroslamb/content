@@ -8,6 +8,8 @@ Only three statuses are allowed here:
 - `secondary candidate`
 - `rejected`
 
+These statuses are proof-retention statuses, not framework-fit scores. A run can be a strong fit for Reviewable Runs and still remain a secondary candidate if it adds little new public proof value.
+
 ## Current Inventory
 
 | Run title | Source session | Status | Task boundary | Evidence | Verification | Approval | Public-facing now | Why it qualifies or fails |
