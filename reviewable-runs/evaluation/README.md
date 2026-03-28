@@ -44,6 +44,6 @@ The current framework-level test is:
 
 The package's first recorded synthetic results live in `../validation-lab/RUN_RESULTS.md`.
 
-If you want the evidence interpreted rather than just listed, use `../investigation/README.md`.
+If you want the evidence interpreted rather than just listed, use `../analysis/README.md`.
 
 Read this folder after `../README.md` and `../PLAYBOOK.md`.

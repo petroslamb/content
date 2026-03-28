@@ -55,4 +55,4 @@ Read in this order:
 
 This is not a proof layer and not a teaching dossier layer. It is a synthetic harness for testing the framework itself.
 
-If you want these synthetic results interpreted alongside the real proofs, use `../investigation/README.md`.
+If you want these synthetic results interpreted alongside the real proofs, use `../analysis/README.md`.

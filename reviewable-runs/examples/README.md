@@ -42,4 +42,5 @@ Current state:
 - `teaching/` answers: what does a clean reviewable run look like
 
 If you want to pressure-test the framework itself, use `../validation-lab/README.md`.
-If you want historical lineage, use `../archive/artifact-bundles-v1/README.md`.
+If you want the evidence interpreted and tuned empirically, use `../analysis/README.md`.
+If you want historical lineage, use `../archive/README.md`.

@@ -190,4 +190,4 @@ Use these proofs as the main operator references:
 
 After this guide, use `evaluation/run-review-checklist.md` to inspect a specific run.
 
-The rules in this playbook are grounded in the current real-run calibration layer at `calibration/`.
+The rules in this playbook are grounded in the current real-run analysis layer at `analysis/`.
