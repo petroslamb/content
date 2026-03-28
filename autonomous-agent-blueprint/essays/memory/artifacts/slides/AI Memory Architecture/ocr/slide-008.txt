@@ -1,0 +1,20 @@
+Forgetting is a mandatory feature
+for persistent intelligence.
+
+Forgetting Curve Intervention
+
+A. Store Everything B. Lifecycle & Pruning
+
+A
+
+Database fills with noise;
+retrieval quality degrades
+
+Retrieval Relevance
+
+Time / Interactions
+
+A memory system that never deletes or compresses is not persistent intelligence; it is slow
+corruption. Stale or low-value memories must weaken over time unless explicitly refreshed.
+
+Ai NotebookLM

@@ -1,0 +1,16 @@
+Evaluating the Architecture. A system that has never been stressed at
+these interfaces is not safe enough to deploy confidently.
+
+Re Injection Resistance ()\_ Red-Team Tool Scenarios
+Tests rel & Bypass Tests
+
+Stressing the Data Interface Stressing the Tool Interface
+with embedded instructions. and hard approval gates.
+
+AT Retrieval Poisoning > Cross-Agent
+Simulations So Contamination Drills
+
+Stressing the Memory Interface Stressing the Network Interface
+with malicious corpus data. with adversarial shared files.
+
+Ai NotebookLM

@@ -1,0 +1,20 @@
+Handling Failure with State, Not Apologies
+
+Tool errors must create machine-readable state, completely replacing
+free-form LLM apologies.
+
+[BRITTLE] I'
+m sorry, let
+Raw text stack trace me try again.
+
+{error_code: 400,
+
+Tool Fails
+
+retry_count: 2, Reasoning State
+[STABLE REACT LOOP] fallback_route: API_B}
+
+e Convert raw tool results into strict, e Track retries, failure modes, and
+typed observations. fallback routes explicitly.
+
+Ai NotebookLM

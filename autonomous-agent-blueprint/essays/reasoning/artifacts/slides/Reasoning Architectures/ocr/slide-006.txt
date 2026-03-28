@@ -1,0 +1,22 @@
+Module B — Grounding
+
+ReAct:
+ReAct: Synergizing
+Reasoning and Acting
+
+[Thought ]
+
+The indispensable control-loop backbone
+for tool-using agents. It prevents
+
+Task
+hallucinated plans by grounding verbal Progress
+problem-solving in the actual state of the
+world.
+
+RULE: Use ReAct whenever external state, [Observation] [Action]
+
+tools, live environment feedback, or long
+execution tasks are involved.
+
+Ai NotebookLM

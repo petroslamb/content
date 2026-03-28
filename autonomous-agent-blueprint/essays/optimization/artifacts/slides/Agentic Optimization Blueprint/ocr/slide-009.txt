@@ -1,0 +1,12 @@
+The Pragmatic Standard
+
+Optimize the agent workflow the way you
+would optimize any production system:
+with clear evaluation cases, explicit metrics,
+careful regression control, and a strong bias
+toward low-risk improvements before
+ambitious self-redesign.
+
+ROOTED LAYERS
+
+Ai NotebookLM

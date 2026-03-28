@@ -1,0 +1,18 @@
+Deconstructing the Action Monolith
+
+Engine Pipeline
+
+1. 2. 3 4. as
+
+Detection Selection Filling Execution Integration
+
+(Identifying (Choosing (Constructing (Running (Folding back
+tool need) Capability) arguments) safely) to reasoning)
+
+Most production failures occur here,
+not in general intelligence. (Ref: Gorilla)
+
+Treat the LLM as an orchestrator over
+specialist capabilities (Ref: HuggingGPT).
+
+Ai NotebookLM

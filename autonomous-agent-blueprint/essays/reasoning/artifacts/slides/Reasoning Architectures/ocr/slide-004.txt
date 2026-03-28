@@ -1,0 +1,28 @@
+The Default Reasoning Blueprint
+
+For most real systems, this is the starting line. Do not escalate
+to exotic methods before implementing this foundation.
+
+It =
+
+Stage 1: Decompose
+
+Turn task into bounded
+subgoals
+
+Stage 2: ReAct Loop
+
+Execute thought-action-
+observation cycle
+
+Stage 3: Verify
+
+Run explicit self-check
+before finalizing
+
+Stage 4: Learn
+
+Store lessons if task
+repeats
+
+Ai NotebookLM

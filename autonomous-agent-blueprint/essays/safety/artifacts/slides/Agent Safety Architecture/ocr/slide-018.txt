@@ -1,0 +1,21 @@
+—
+
+iy ifs
+
+a —~
+
+«Agent Safety _
+
+Is Achitecture.
+
+The moment a system reads untrusted content, stores durable
+
+state, or takes external action, boundaries and approval gates _
+
+become first-class design components.
+
+Rooted Layers // Research Lab Notes
+
+eel
+
+Ai NotebookLM

@@ -1,0 +1,10 @@
+The Model is Not Always the Problem
+
+The Illusion The Reality
+
+!
+
+Agent failures are often blamed on the model when the real failure is the workflow. A base model can be
+highly capable and still fail because the task requires decomposition, tool interaction, critique, or search.
+
+Ai NotebookLM

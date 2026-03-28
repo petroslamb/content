@@ -1,0 +1,32 @@
+Instrumentation Over Intuition
+
+Track:
+e Task Quality
+e Pass Rate
+« Tool Accuracy
+e Retrieval Quality
+e Latency
+¢ Cost
+« Stability across runs
+
+> An optimization process
+without regression checks
+is a drift generator.
+
+Severe Anti-Patterns
+
+Tuning prompts without locked eval
+cases.
+
+Searching topology before fixing
+obvious schema problems.
+
+Uncalibrated LLM-as-judge scoring.
+
+Allowing self-improvement to mutate
+safety-critical surfaces.
+
+Optimizing for benchmark scores while
+production latency/cost collapses.
+
+Ai NotebookLM

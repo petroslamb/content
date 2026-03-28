@@ -1,0 +1,18 @@
+Navigating the Five Action Surfaces
+
+Surface Best Use Main Strength Core Risk Escalate When
+Typed API Tools 2WSWE SS HOS EV ES Weak schemas No API exists
+systems inspectable
+Code Execution Software/Data Testable Unsafe scope Target Is
+Ul-bound
+. Measurable ; Task needs
+Database/SQL Analytics output Schema drift pe a
+Browser Action ELS ETEMIE SUSIE Stalel Brittle selectors — Highly visual Ul
+flows gaps
+Legacy Absolute last
+
+GUI Action Ultimate reach Highest fragility
+
+interfaces resort
+
+Ai NotebookLM

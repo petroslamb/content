@@ -1,0 +1,37 @@
+The Closed-Loop Action Architecture
+
+Every action
+logged with
+parameters, result,
+timestamp, and
+authorization
+context.
+
+Recovery
+
+Integration
+
+Pama 2
+
+Observation
+
+Reasoning
+
+ReAct
+
+Diagram
+
+Execution
+
+Surface Selection
+(APIs, DB, Code, Web, GUI)
+
+Specialize tools when
+domain semantics and
+failure handling
+meaningfully differ.
+
+Avoid generic, one-size-
+fits-all tool layers.
+
+Ai NotebookLM

@@ -1,0 +1,15 @@
+Boundary 1: Trust Separation. Never allow external content
+to share the same trust status as system instructions.
+
+system
+Instructions
+
+Model
+Execution
+
+Retrieved Text, Untrusted Content
+Emails, Files |
+
+Isolation Barrier
+
+Ai NotebookLM

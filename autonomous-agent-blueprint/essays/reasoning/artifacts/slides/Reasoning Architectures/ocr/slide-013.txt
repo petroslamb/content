@@ -1,0 +1,31 @@
+Diagnostic Routing: If X, Choose Y
+
+Select the reasoning structure dictated by the specific failure mode of your task.
+
+Task Characteristic
+
+Multi-step mostly deterministic
+
+Touches live state or tools
+
+First answer is close but weak
+
+Factual mistakes are primary risk
+
+One trace Is too brittle
+
+Real dead ends and branching
+
+[ Decomposition |
+
+{ ReAct ]
+
+[ Self-Refine ]
+
+[ Chain-of-Verification |]
+
+[ Self-Consistency |]
+
+[ Tree of Thoughts / LATS |]
+
+Ai NotebookLM

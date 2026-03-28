@@ -1,4 +1,5 @@
 {
+  "course_playlist_id": "PL8lPx5mgRhhZiKRR-cLl7YJd6GXhcbZAr",
   "playlist_id": "PL8lPx5mgRhhZqC3XWgVDt_l8rG3kuRdLN",
   "playlist_title": "Operating Agents TL;DR",
   "series_title": "Operating Agents",
@@ -9,9 +10,9 @@
       "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/action/artifacts/video/Assistant to Agent A Blueprint.mp4",
       "short_title": "Operating Agents TL;DR I: Action",
       "full_title": "Operating Agents TL;DR I: Why Reliable Agents Start with Action",
-      "full_episode_video_id": "F-2CiFoP0AY",
-      "full_episode_url": "https://www.youtube.com/watch?v=F-2CiFoP0AY",
-      "description_template": "Visual TL;DR for Operating Agents I.\n\nFull episode: https://www.youtube.com/watch?v=F-2CiFoP0AY\nRead with: Action Companion and Action Blueprint."
+      "full_episode_video_id": "swvX4mduJtk",
+      "full_episode_url": "https://www.youtube.com/watch?v=swvX4mduJtk",
+      "description_template": "Visual TL;DR for Operating Agents I.\n\nFull episode: https://www.youtube.com/watch?v=swvX4mduJtk\nRead with: Action Companion and Action Blueprint."
     },
     {
       "chapter": 2,
@@ -19,9 +20,9 @@
       "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/memory/artifacts/video/AI Agent Memory Blueprint.mp4",
       "short_title": "Operating Agents TL;DR II: Memory",
       "full_title": "Operating Agents TL;DR II: Why Agent Memory Needs Authority",
-      "full_episode_video_id": "Y3AHUHut29I",
-      "full_episode_url": "https://www.youtube.com/watch?v=Y3AHUHut29I",
-      "description_template": "Visual TL;DR for Operating Agents II.\n\nFull episode: https://www.youtube.com/watch?v=Y3AHUHut29I\nRead with: Memory Companion and Memory Blueprint."
+      "full_episode_video_id": "Pj4sjWvyJVQ",
+      "full_episode_url": "https://www.youtube.com/watch?v=Pj4sjWvyJVQ",
+      "description_template": "Visual TL;DR for Operating Agents II.\n\nFull episode: https://www.youtube.com/watch?v=Pj4sjWvyJVQ\nRead with: Memory Companion and Memory Blueprint."
     },
     {
       "chapter": 3,
@@ -29,9 +30,9 @@
       "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/reasoning/artifacts/video/AI Reasoning Builder's Guide.mp4",
       "short_title": "Operating Agents TL;DR III: Reasoning",
       "full_title": "Operating Agents TL;DR III: Diagnose the Scaffold Before You Shop the Model",
-      "full_episode_video_id": "i5BSNVCh89E",
-      "full_episode_url": "https://www.youtube.com/watch?v=i5BSNVCh89E",
-      "description_template": "Visual TL;DR for Operating Agents III.\n\nFull episode: https://www.youtube.com/watch?v=i5BSNVCh89E\nRead with: Reasoning Companion and Reasoning Blueprint."
+      "full_episode_video_id": "LykGDaONozw",
+      "full_episode_url": "https://www.youtube.com/watch?v=LykGDaONozw",
+      "description_template": "Visual TL;DR for Operating Agents III.\n\nFull episode: https://www.youtube.com/watch?v=LykGDaONozw\nRead with: Reasoning Companion and Reasoning Blueprint."
     },
     {
       "chapter": 4,
@@ -39,9 +40,9 @@
       "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/multi-agent/artifacts/video/Blueprint Multi-Agent AI.mp4",
       "short_title": "Operating Agents TL;DR IV: Multi-Agent",
       "full_title": "Operating Agents TL;DR IV: When the Second Agent Buys a Boundary",
-      "full_episode_video_id": "wfJ-CKxcQfU",
-      "full_episode_url": "https://www.youtube.com/watch?v=wfJ-CKxcQfU",
-      "description_template": "Visual TL;DR for Operating Agents IV.\n\nFull episode: https://www.youtube.com/watch?v=wfJ-CKxcQfU\nRead with: Multi-Agent Companion and Multi-Agent Blueprint."
+      "full_episode_video_id": "xxd2VKlqiL4",
+      "full_episode_url": "https://www.youtube.com/watch?v=xxd2VKlqiL4",
+      "description_template": "Visual TL;DR for Operating Agents IV.\n\nFull episode: https://www.youtube.com/watch?v=xxd2VKlqiL4\nRead with: Multi-Agent Companion and Multi-Agent Blueprint."
     },
     {
       "chapter": 5,
@@ -49,9 +50,9 @@
       "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/safety/artifacts/video/AI Agent Safety Blueprint.mp4",
       "short_title": "Operating Agents TL;DR V: Safety",
       "full_title": "Operating Agents TL;DR V: The Attack Surface Is the Architecture",
-      "full_episode_video_id": "c65D4EM385Y",
-      "full_episode_url": "https://www.youtube.com/watch?v=c65D4EM385Y",
-      "description_template": "Visual TL;DR for Operating Agents V.\n\nFull episode: https://www.youtube.com/watch?v=c65D4EM385Y\nRead with: Safety Companion and Safety Blueprint."
+      "full_episode_video_id": "biyIKcSp3Po",
+      "full_episode_url": "https://www.youtube.com/watch?v=biyIKcSp3Po",
+      "description_template": "Visual TL;DR for Operating Agents V.\n\nFull episode: https://www.youtube.com/watch?v=biyIKcSp3Po\nRead with: Safety Companion and Safety Blueprint."
     },
     {
       "chapter": 6,
@@ -59,9 +60,9 @@
       "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/optimization/artifacts/video/Optimizing AI Agents.mp4",
       "short_title": "Operating Agents TL;DR Bonus: Optimization",
       "full_title": "Operating Agents TL;DR Bonus: When the Workflow Becomes the Object",
-      "full_episode_video_id": "aU3RYyqICds",
-      "full_episode_url": "https://www.youtube.com/watch?v=aU3RYyqICds",
-      "description_template": "Visual TL;DR for the Operating Agents bonus chapter.\n\nFull episode: https://www.youtube.com/watch?v=aU3RYyqICds\nRead with: Optimization Companion and Optimization Blueprint."
+      "full_episode_video_id": "2Fs1iDw5I3Y",
+      "full_episode_url": "https://www.youtube.com/watch?v=2Fs1iDw5I3Y",
+      "description_template": "Visual TL;DR for the Operating Agents bonus chapter.\n\nFull episode: https://www.youtube.com/watch?v=2Fs1iDw5I3Y\nRead with: Optimization Companion and Optimization Blueprint."
     }
   ]
 }

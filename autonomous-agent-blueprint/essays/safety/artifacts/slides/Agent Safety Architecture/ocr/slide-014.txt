@@ -1,0 +1,88 @@
+Control Best Use Main Strength Main Risk if Escalate When
+Missing
+Trust separation | untrusted content Pe sel Na indirect prompt [TRIGGER:
+
+Tool containment
+
+Approval gates
+
+Retrieval and
+memory hygiene
+
+Inter-agent
+skepticism
+
+Verification
+
+and retrieval
+
+tool-using
+workflows
+
+high-impact
+actions
+
+RAG or durable
+memory
+
+multi-agent systems
+and artifact handoffs
+
+factual or
+high-stakes outputs
+
+behaving
+instructions
+
+narrows blast radius
+with least privilege
+
+creates accountable
+human oversight
+
+reduces poisoning
+and Stale-state risk
+
+blocks silent
+contamination
+between roles
+
+reduces unchecked
+error propagation
+
+injection
+
+unsafe or over-broad
+side effects
+
+irreversible
+mistakes
+
+corrupted or
+jammed grounding
+
+unsafe cross-agent
+message or file trust
+
+brittle outputs
+trigger actions
+
+ACTIONS_OR_WRITES_POSSIBLE]
+
+(TRIGGER:
+IRREVERSIBLE_ACTIONS_EXIST]
+
+[TRIGGER:
+DETERMINISTIC_CHECKS_FAIL]
+
+[TRIGGER:
+MULTI_TENANT_INGESTION]
+
+LTRIGGER:
+MULTIMODAL_INPUTS_GROW]
+
+[TRIGGER:
+HIGH_TASK_VALUE]
+
+Ai NotebookLM
+

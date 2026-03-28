@@ -1,0 +1,27 @@
+whenever the target environment allows it.
+
+E levat Nn 2 How A ge nts Act | Always move upward on the ladder
+
+Explicit
+Environment
+
+Action Representation
+Invocations
+
+Ladder
+
+The Standard. Typed tool
+calls directly into system
+APIs.
+
+Code & SQL
+
+Stronger. Executable,
+testable, measurable.
+
+Weakest form. Hard to replay,
+impossible to verify.
+
+Plain Text
+
+Ai NotebookLM

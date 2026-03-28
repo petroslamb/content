@@ -1,0 +1,13 @@
+The Research Foundation: Toolkits, not textbooks.
+
+Need to page info across long sessions? > (OS M pe aay ed a
+Agent repeats avoidable mistakes? >|" (verbal settortique & Episodic reflection)
+Need a policy for memory decay? > ce lee
+Need to extract salient info for production? > Pee Orc sc Re
+Vector retrieval misses linked multi-hop facts? > ee Lae
+Rediscovering the same routines? > pi
+
+Do not read these papers as abstract literature. Use them as deployable architectural
+
+solutions for specific system failure modes.
+Ai NotebookLM

@@ -1,0 +1,21 @@
+Module E — Consensus
+
+Self-Consistency
+
+The canonical reliability-through-sampling method. It strongly counters brittle,
+single-pass reasoning without fundamentally changing workflow topology.
+
+RULE: Add when different traces converge on the right answer, reliability matters more than
+latency, and sampling costs are acceptable.
+
+Sampled Reasoning Traces
+
+Selected
+Consensus
+
+Ai NotebookLM
+
+>
+Son \,
+uxt Node B
+7

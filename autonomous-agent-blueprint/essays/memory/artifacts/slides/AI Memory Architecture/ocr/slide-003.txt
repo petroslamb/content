@@ -1,0 +1,32 @@
+A memory architecture must answer four
+distinct questions.
+
+Time Horizon: Immediate > Durable
+
+If a system design cannot answer all four of these questions with specific routing logic,
+
+What belongs in active context
+right now?
+
+Working Memory
+
+What prior experiences should
+shape later behavior?
+
+Episodic Memory
+
+What durable facts should
+be retrieved on demand?
+
+semantic Memory
+
+What successful routines
+should become reusable skills?
+
+Procedural Memory
+
+Data Type: Declarative > Behavioral
+
+the agent does not actually have a memory architecture.
+
+Ai NotebookLM

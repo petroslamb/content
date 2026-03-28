@@ -1,0 +1,16 @@
+Evaluating the Reasoning Stack
+
+The right metric is not how impressive the reasoning trace looks. It is whether the structure
+measurably improves task completion without breaking the latency budget.
+
+First-pass & Post-verification success rates.
+
+Hallucination reduction.
+
+Tool-grounded plan coherence.
+
+Latency & token cost per solved task.
+
+1) &
+
+Ai NotebookLM

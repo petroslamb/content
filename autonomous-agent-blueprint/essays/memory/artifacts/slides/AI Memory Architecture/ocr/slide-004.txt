@@ -1,0 +1,34 @@
+The physical workspace analogy
+for agentic memory
+
+The Toolbelt
+(Procedural Memory)
+
+Callable skills, code templates,
+and reusable routines.
+
+The Workbench
+(Working Memory)
+
+Small, active space. Keeps
+only current task state and
+recent tool outputs.
+
+~—— The Filing Cabinet
+(Semantic Memory)
+
+Task-aware, structured facts,
+and reference documents.
+
+The Logbook
+(Episodic Memory)
+
+History of actions, failures,
+and reflections.
+
+Moh
+
+The context window is merely the workbench. True memory architecture requires moving
+information off the bench and into the correct storage mechanism before the workspace overflows.
+
+Ai NotebookLM

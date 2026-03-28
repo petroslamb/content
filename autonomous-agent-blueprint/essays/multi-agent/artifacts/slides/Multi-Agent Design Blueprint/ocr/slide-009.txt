@@ -1,0 +1,11 @@
+Prefer typed artifact handoffs over free-form conversation
+
+Free-form chat Typed Handoff Contracts
+
+Agents should exchange typed outputs, plans, documents, patches, or decisions.
+Why: Keeps coordination legible and debuggable.
+
+| The AutoGen Caveat: AutoGen makes conversation programmable, but unstructured
+chat is a risk. Always constrain it with clear roles and strict stop conditions.
+
+Ai NotebookLM

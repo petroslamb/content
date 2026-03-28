@@ -31,6 +31,7 @@ If a serious builder cannot lift a sentence from a chapter and use it to clarify
 - `multi-agent/` - multi-agent design
 - `safety/` - safety and attack surfaces
 - `optimization/` - optimization bonus post
+- `video-production-workflow.md` - chapter video replacement workflow for the long-form YouTube course
 - `operating-agents-coverage-map-v7.md` - bridge from the live essays to companions, blueprints, source notes, and the wider survey
 
 ## What Lives In A Topic Folder

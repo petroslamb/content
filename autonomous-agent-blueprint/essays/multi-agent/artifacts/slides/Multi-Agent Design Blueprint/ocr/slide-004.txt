@@ -1,0 +1,26 @@
+Multi-agent design Is an escalation
+path, not the baseline.
+
+Step 1: Build the
+single-agent
+baseline first.
+
+Step 2: Identify
+which failures
+are actually role-
+separable.
+
+Step 4: Add
+typed handoff
+Step 3: Split contracts.
+roles only by
+distinct tools or
+permissions.
+
+Step 5: Add
+review or debate
+roles strictly for
+measurable
+reliability gains.
+
+Ai NotebookLM

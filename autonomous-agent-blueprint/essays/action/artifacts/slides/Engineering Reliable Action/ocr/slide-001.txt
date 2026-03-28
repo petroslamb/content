@@ -1,0 +1,23 @@
+Architecting Reliable Action Systems
+
+Moving from language generation to explicit software execution.
+
+FE
+
+rH
+
+Reasoning
+
+co
+
+[VERSION: BUILDER]
+
+[TARGET: ENTERPRISE_SYSTEMS ]
+
+LSTATUS: ACTIVE]
+
+aa
+
+Execution
+
+Ai NotebookLM

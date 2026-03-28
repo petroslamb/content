@@ -1,0 +1,18 @@
+Interacting with Closed and Visual Systems
+
+When APIs are absent, transition to Bounding Box / DOM Tree
+interface-level interaction.
+
+e Browser Action: Use when exposing
+Stable web flows.
+(Refs: WebAgent, Mind2Web)
+
+e GUI/Mobile Action: Use only when
+forced by closed/legacy apps. Convert
+pixels into usable bounding boxes to
+overcome visual ambiguity.
+
+(Refs: Mobile-Agent, AppAgent,
+OmniParser)
+
+Ai NotebookLM

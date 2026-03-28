@@ -1,0 +1,19 @@
+Boundary 4: Memory Hygiene. Treat memory and knowledge
+stores as monitored infrastructure. Version, curate, and audit
+to prevent drift and poisoning.
+
+[Ingestion_Monitor ] ®
+
+>»
+
+° [Source_Curation]
+[Anomaly_Audit]
+
+Poisoned
+Inputs
+
+Durable Memory
+
+[Version Control]
+
+Ai NotebookLM

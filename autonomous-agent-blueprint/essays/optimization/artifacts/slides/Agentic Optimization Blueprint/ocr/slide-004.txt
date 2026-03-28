@@ -1,0 +1,28 @@
+The Research Landscape
+
+Grounding the four optimization levers in recent academic literature.
+
+AFLOW, GPTSwarm
+
+Treating workflow topology itself as a
+_ searchable object.
+
+Layer 4: Graph-Aware Search
+
+MT-Bench, Chatbot Arena
+Normalizing LLM-as-a-judge for task scoring.
+
+Layer 3: Evaluation Support |
+
+SELF-REFINE, Reflexion, Voyager, TextGrad
+
+| Memory-backed reflection, skill libraries, and
+automatic textual differentiation.
+
+Layer 2: Feedback & Critique ©
+
+ae es OPRO
+Layer 1: Prompts as Iteration | |\— ee ee ee peace Treats prompt writing as measurable
+Spa — oe optimization.
+
+Ai NotebookLM

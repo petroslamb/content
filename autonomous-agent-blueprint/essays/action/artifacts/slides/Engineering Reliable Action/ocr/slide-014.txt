@@ -1,0 +1,58 @@
+Critical Structural Anti-Patterns
+
+Z\
+
+1. The God-Agent
+
+Granting broad, generic
+permissions to a single agent
+rather than specializing tools.
+
+Z\
+
+3. Unnormalized
+Output
+
+Treating raw, unstructured tool
+output as ground truth without
+observation formatting.
+
+RAW_OUTPUT
+
+vensiee ag FIO
+tkhksaltisatlvoaa tbheiloepar 5
+page Sn b ks a qoeterdsnatesc
+TivBoS &la Shicy selsh645 goft
+
+teol cusput as Sro_peq
+init, Bng6147 b
+
+OBSERVATION_SCHEMA
+
+Z\
+
+2. Plain-Text Plans we
+
+Relying on plain-text action Step 1: step 2: Step 3: step 4:
+do this —>' then — then thls —> do this
+
+sequences when typed, “ne this... i sof
+
+programmatic actions are 1 x
+
+possible.
+
+GUI / COMPUTER USE
+
+“\
+
+4. Defaulting to
+Computer Use
+
+Treating general GU|/Computer
+use as a starting point rather than
+a fragile, last-resort fallback.
+
+FALLBACK
+
+Ai NotebookLM

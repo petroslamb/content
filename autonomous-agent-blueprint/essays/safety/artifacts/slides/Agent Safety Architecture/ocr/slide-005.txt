@@ -1,0 +1,11 @@
+From Text to Side Effects. Real-world agents don't just generate text;
+they map untrusted inputs to executable tool parameters.
+
+Tool Execution Matrix
+
+Injected Prompt
+LLM
+
+(malicious_string) Parser
+
+Ai NotebookLM

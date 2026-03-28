@@ -1,0 +1,12 @@
+The Default Safety Blueprint. Moving an instruction from
+user input to executed action through structural boundaries.
+
+Lr
+
+2 Executed
+— Action
+1. Trust 2 1 OOk 3. Approval 4, Memory 5. Inter-Agent 6. Verification
+Boundaries Containment Gates Hygiene Skepticism (Output )
+(Input ) Sandboxes
+
+Ai NotebookLM

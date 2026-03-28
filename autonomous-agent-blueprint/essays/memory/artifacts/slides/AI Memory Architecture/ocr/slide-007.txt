@@ -1,0 +1,14 @@
+A memory system is not a storage backend;
+it is a continuously running governor.
+
+The Lifecycle Pipeline
+
+|Derive/
+Summarize]
+
+[Acquire] -——>] [Encode] [Store] /-—— S| [Retrieve]
+
+Every memory write must answer four policy questions: Why is this worth storing? What
+type does It belong to? How will it be retrieved? When should it decay or be deleted?
+
+Ai NotebookLM

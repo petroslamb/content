@@ -1,0 +1,16 @@
+Designing for Absolute Reproducibility
+
+APIs Code
+{
+"action": "update_record",
+wis: 4Q2, Input 1»
+eStatuse, «Vall whedn, Data
+"timestamp": "2024-05-15T10:30:00z" i a Output
+1 : Data
+lf a clean API exists, prioritize typed tool calls. Use code when outputs must be testable and
+Massive API catalogs require precise argument replayable. Ideal for automated software
+construction and schema retrieval. engineering and repeatable transformations.
+
+[ [Swe-agent] [OpenHands] |
+
+Ai NotebookLM

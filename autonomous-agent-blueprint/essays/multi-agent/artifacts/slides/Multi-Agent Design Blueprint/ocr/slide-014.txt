@@ -1,0 +1,16 @@
+Multi-agent design is workflow
+decomposition, not magic emergence.
+
+Conservative by design:
+¢ One agent first.
+
+¢ Specialists second.
+e Structured handoffs over chatter.
+
+e Debate only when reliability demands it.
+
+(If it does not beat the baseline,
+it is complexity without justification)
+
+Rooted Layers
+Ai NotebookLM

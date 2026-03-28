@@ -1,0 +1,55 @@
+Method Comparison Matrix
+
+Method Best Use Main Strength Main Risk Escalate When
+Prompts & local node highest leverage, overfitting to tiny topology dominates
+schemas weakness lowest risk eval set failures
+
+self-Refine / repeated near-miss cheap feedback- weak critique failure persists
+Reflexion failures driven improvement signals lead to drift across cycles
+
+Tool & routing
+optimization
+
+wrong tool choice
+or weak recovery
+
+improves end-task
+reliability directly
+
+hidden regressions
+without tracking
+
+workflow shape is
+the bottleneck
+
+LLM-as-judge
+
+scaling comparative
+review
+
+cheaper than full
+human eval
+
+calibration errors
+and blind spots
+
+architecture is stable
+enough for search
+
+AFLOW or
+GPTSwarm
+
+mature multi-node
+workflows
+
+searches over
+workflow structure
+
+premature
+complexity and
+noisy search
+
+only after baseline is
+Stable & measured
+
+Ai NotebookLM

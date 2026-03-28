@@ -1,0 +1,17 @@
+Layer 1 & 2: Active State vs. Durable Knowledge.
+
+Layer 1: Working Memory Layer 2: Semantic Memory
+
+[ current_plan }
+
+scratchpad
+recent_tool_outputs
+Store documents, facts, and policies. Vector retrieval is the
+
+Must remain legible and cheap. Do not default, but domain-typing is required to prevent policy
+store history here. text and user records from collapsing into noise.
+
+The prompt should hold active state. The store should hold durable state. If the information
+will matter after the current step, it belongs outside the prompt.
+
+Ai NotebookLM

@@ -1,0 +1,263 @@
+{
+  "audio": "autonomous-agent-blueprint/essays/reasoning/artifacts/audio/Reasoning scaffolds for reliable AI agents.mp3",
+  "slides_dir": "autonomous-agent-blueprint/essays/reasoning/artifacts/slides/Reasoning Architectures",
+  "captions": "autonomous-agent-blueprint/essays/reasoning/artifacts/video/reasoning_auto_captions.srt",
+  "map": "autonomous-agent-blueprint/essays/reasoning/artifacts/video/reasoning_slide_transcript_map_ocr_verified.md",
+  "segments": [
+    {
+      "image": "slide-001.png",
+      "start": "00:00:27.189",
+      "note": "Transcript lines 0017-0029.",
+      "match_score": 0.3971,
+      "excerpt": "right? And we are pulling our source material today from rooted layers AI insights ground on research. We're going to refer to it naturally as the post throughout our conversation. That's good. And the post presents a premise that completely counters the prevailing narrative in the industry right now. Here is the hook. When an AI agent fails at a task,",
+      "matched_captions": [
+        ">> right? And we are pulling our source",
+        ">> right? And we are pulling our source material today from rooted layers AI",
+        "material today from rooted layers AI",
+        "material today from rooted layers AI insights grounded on research. We're",
+        "insights grounded on research. We're",
+        "insights grounded on research. We're going to refer to it naturally as the"
+      ]
+    },
+    {
+      "image": "slide-002.png",
+      "start": "00:01:10.870",
+      "note": "Transcript lines 0053-0105.",
+      "match_score": 0.8309,
+      "excerpt": "right? They think we'll just wait for GPT next or claw next. But the post argues this is usually the completely wrong culprit. The real problem isn't the model's baseline intelligence at all. No, it's that the workflow lacks the appropriate reasoning scaffold. Exactly. Even an incredibly capable frontier model will fail. The task requires decomposing a problem or interacting with live tools or searching for alternative paths.",
+      "matched_captions": [
+        ">> right? They think we'll just wait for",
+        ">> right? They think we'll just wait for GPT next or claw next. But the post",
+        "GPT next or claw next. But the post",
+        "GPT next or claw next. But the post argues this is usually the completely",
+        "argues this is usually the completely",
+        "argues this is usually the completely wrong culprit. The real problem isn't"
+      ]
+    },
+    {
+      "image": "slide-003.png",
+      "start": "00:02:52.790",
+      "note": "Transcript lines 0125-0205.",
+      "match_score": 0.7778,
+      "excerpt": "Okay, let's unpack this because to reach that optimal balance, the post makes a critical distinction right out the gate. It separates reasoning from planning. A hard line between the two. Yes, it points out that reasoning is not just this one monolithic capability. You have lightweight default methods. You have reliability overlays for error correction and then these highly expensive escalations that involve exploring multiple computational branches,",
+      "matched_captions": [
+        ">> Okay, let's unpack this because to reach",
+        ">> Okay, let's unpack this because to reach that optimal balance, the post makes a",
+        "that optimal balance, the post makes a",
+        "that optimal balance, the post makes a critical distinction right out of the",
+        "critical distinction right out of the",
+        "critical distinction right out of the gate. It separates reasoning from"
+      ]
+    },
+    {
+      "image": "slide-004.png",
+      "start": "00:06:59.110",
+      "note": "Transcript lines 0301-0413.",
+      "match_score": 0.6667,
+      "excerpt": "right? How do we connect the internal logic to the external execution. That leads us to the control loop pattern that the post considers the absolute default foundation for any agentic system. The baseline. The baseline. Stage one is decomposition and stage two is the react loop. Let's look at decomposition first. Okay. This is the practice of taking a massive high entropy task and strictly bounding it into a set of sub goals. The post points to frameworks like least tomost prompting and take a step back",
+      "matched_captions": [
+        ">> right? How do we connect the internal",
+        ">> right? How do we connect the internal logic to the external execution? That",
+        "logic to the external execution? That",
+        "logic to the external execution? That leads us to the control loop pattern",
+        "leads us to the control loop pattern",
+        "leads us to the control loop pattern that the post considers the absolute"
+      ]
+    },
+    {
+      "image": "slide-005.png",
+      "start": "00:07:10.309",
+      "note": "Transcript lines 0309-0389.",
+      "match_score": 0.8854,
+      "excerpt": "The baseline. Stage one is decomposition and stage two is the react loop. Let's look at decomposition first. Okay. This is the practice of taking a massive high entropy task and strictly bounding it into a set of sub goals. The post points to frameworks like least tomost prompting and take a step back",
+      "matched_captions": [
+        ">> The baseline. Stage one is decomposition",
+        ">> The baseline. Stage one is decomposition and stage two is the react loop. Let's",
+        "and stage two is the react loop. Let's",
+        "and stage two is the react loop. Let's look at decomposition first. Okay, this",
+        "look at decomposition first. Okay, this",
+        "look at decomposition first. Okay, this is the practice of taking a massive high"
+      ]
+    },
+    {
+      "image": "slide-006.png",
+      "start": "00:09:06.870",
+      "note": "Transcript lines 0393-0521.",
+      "match_score": 0.7328,
+      "excerpt": "But once the task is decomposed into these sub goals, we move to stage two, the react loop, which stands for synergizing, reasoning, and acting. Right? And react is the operational backbone for any tool using agent. It enforces a rigid cyclical progression. Thought, action, observation. Thought then action then observation. And why is this specific loop so critical to the practical stack? Because It is the mechanism that actually joins the reasoning to the planning.",
+      "matched_captions": [
+        ">> But once the task is decomposed into",
+        ">> But once the task is decomposed into these sub goals, we move to stage two,",
+        "these sub goals, we move to stage two,",
+        "these sub goals, we move to stage two, the react loop,",
+        "the react loop,",
+        "the react loop, >> which stands for synergizing, reasoning,"
+      ]
+    },
+    {
+      "image": "slide-007.png",
+      "start": "00:12:33.350",
+      "note": "Transcript lines 0541-0645.",
+      "match_score": 0.9444,
+      "excerpt": "The safety nets. The post details several methods to reinforce weak first pass reasoning. We've got self-refine, reflection, and chain of verification, which is known as coup. Let's break down the mechanics of these overlays because they apply to very different failure modes. We will start with self-refine.",
+      "matched_captions": [
+        ">> The safety nets. The post details",
+        ">> The safety nets. The post details several methods to reinforce weak first",
+        "several methods to reinforce weak first",
+        "several methods to reinforce weak first pass reasoning. We've got self-refine,",
+        "pass reasoning. We've got self-refine,",
+        "pass reasoning. We've got self-refine, reflection, and chain of verification,"
+      ]
+    },
+    {
+      "image": "slide-008.png",
+      "start": "00:15:25.189",
+      "note": "Transcript lines 0653-0801.",
+      "match_score": 0.5637,
+      "excerpt": "But then we arrive at the third overlay. And here's where it gets really interesting. Chain of verification or cove. This is is a big one. It is. The post highlights Cove as the most critical pattern for factual safety. It represents a fundamental departure from how most builders handle truthfulness right now because the standard way is broken. Completely broken. Instead of asking the model to review its own reasoning trace holistically, Cove decomposes the verification into an entirely isolated independent step.",
+      "matched_captions": [
+        ">> But then we arrive at the third overlay.",
+        ">> But then we arrive at the third overlay. And here's where it gets really",
+        "And here's where it gets really",
+        "And here's where it gets really interesting. Chain of verification or",
+        "interesting. Chain of verification or",
+        "interesting. Chain of verification or cove."
+      ]
+    },
+    {
+      "image": "slide-009.png",
+      "start": "00:18:58.789",
+      "note": "Transcript lines 0809-0953.",
+      "match_score": 0.2778,
+      "excerpt": "Okay. So, these reliability overlays self fine reflection and cove. They are highly effective for localized errors and factual grounding. Yes, but they assume the core reasoning path is generally sound. What if the task is computationally brittle? That's a different beast, right? What if the model executes a 10-step logic puzzle, gets it right 20% of the time, but completely cascades into failure the other 80% of the time due to minor token prediction variances early in the prompt?",
+      "matched_captions": [
+        ">> Okay. Okay, so these reliability",
+        ">> Okay. Okay, so these reliability overlays self-refine reflection and",
+        "overlays self-refine reflection and",
+        "overlays self-refine reflection and cove. They are highly effective for",
+        "cove. They are highly effective for",
+        "cove. They are highly effective for localized errors and factual grounding."
+      ]
+    },
+    {
+      "image": "slide-010.png",
+      "start": "00:21:59.350",
+      "note": "Transcript lines 0953-1069.",
+      "match_score": 0.6111,
+      "excerpt": "right? The user would be waiting forever. And then we reached the absolute heaviest artillery tree of thoughts and less the big ones. These methodologies abandon the linear progression of standard prompting entirely. They transform the reasoning process into a formal state space search. And the post is highly explicit here. These are extreme escalations, not standard architectural starting points.",
+      "matched_captions": [
+        ">> Right. the user would be waiting",
+        ">> Right. the user would be waiting forever. And then we reached the",
+        "forever. And then we reached the",
+        "forever. And then we reached the absolute heaviest artillery tree of",
+        "absolute heaviest artillery tree of",
+        "absolute heaviest artillery tree of thoughts and less"
+      ]
+    },
+    {
+      "image": "slide-011.png",
+      "start": "00:25:25.269",
+      "note": "Transcript lines 1089-1105.",
+      "match_score": 0.5,
+      "excerpt": "which transitions us perfectly into the operational synthesis. We've analyzed all the primitives, decomposition, and react. the baseline. We have explored the error correction overlays. Yeah. Self-refine, reflection, and cove, the safety nets, and we have outlined the expensive escalations, self-consistency, and tree search. How do you actually integrate these into a coherent system? The post provides a definitive five-step build order. This is the master blueprint.",
+      "matched_captions": [
+        ">> which transitions us perfectly into the",
+        ">> which transitions us perfectly into the operational synthesis. We've analyzed",
+        "operational synthesis. We've analyzed",
+        "operational synthesis. We've analyzed all the primitives, decomposition, and",
+        "all the primitives, decomposition, and",
+        "all the primitives, decomposition, and react,"
+      ]
+    },
+    {
+      "image": "slide-012.png",
+      "start": "00:25:38.470",
+      "note": "Transcript lines 1105-1201.",
+      "match_score": 0.6667,
+      "excerpt": "and we have outlined the expensive escalations, self-consistency, and tree search. How do you actually integrate these into a coherent system? The post provides a definitive five-step build order. This is the master blueprint. Let's walk through that build order and apply it to a realistic production scenario just so the scale and complexity is crystal clear.",
+      "matched_captions": [
+        ">> and we have outlined the expensive",
+        ">> and we have outlined the expensive escalations, self-consistency and tree",
+        "escalations, self-consistency and tree",
+        "escalations, self-consistency and tree search. How do you actually integrate",
+        "search. How do you actually integrate",
+        "search. How do you actually integrate these into a coherent system? The post"
+      ]
+    },
+    {
+      "image": "slide-014.png",
+      "start": "00:25:52.310",
+      "note": "Transcript lines 1109-1181.",
+      "match_score": 0.7328,
+      "excerpt": "Let's walk through that build order and apply it to a realistic production scenario just so the scale and complexity is crystal clear. What's that? Let's assume you are building an agent system to handle automated customer refund processing across multiple internal databases. Very standard enterprise use case,",
+      "matched_captions": [
+        ">> Let's walk through that build order and",
+        ">> Let's walk through that build order and apply it to a realistic production",
+        "apply it to a realistic production",
+        "apply it to a realistic production scenario just so the scale and",
+        "scenario just so the scale and",
+        "scenario just so the scale and complexity is crystal clear."
+      ]
+    },
+    {
+      "image": "slide-013.png",
+      "start": "00:28:16.230",
+      "note": "Transcript lines 1193-1201.",
+      "match_score": 0.6111,
+      "excerpt": "It is a strict decision matrix. If the task is multi-step but deterministic, rely on decomposition. Keep it simple. If it touches live state, you must use React. If factual accuracy is paramount, implement Cove. If the task requires exploring genuine alternative paths escalate to search.",
+      "matched_captions": [
+        ">> It is a strict decision matrix. If the",
+        ">> It is a strict decision matrix. If the task is multi-step but deterministic,",
+        "task is multi-step but deterministic,",
+        "task is multi-step but deterministic, rely on decomposition.",
+        "rely on decomposition.",
+        "rely on decomposition. >> Keep it simple."
+      ]
+    },
+    {
+      "image": "slide-016.png",
+      "start": "00:28:33.269",
+      "note": "Transcript lines 1205-1277.",
+      "match_score": 0.8021,
+      "excerpt": "So what does this all mean when these systems fail in production? The post lists several critical anti-atterns. And this is where the theoretical meets the practical, where the rubber meets the road. Exactly. Builders often overuse chain of thought without environmental grounding. Essentially letting the model hallucinate a perfect execution path without ever querying the live state.",
+      "matched_captions": [
+        ">> So, what does this all mean? When these",
+        ">> So, what does this all mean? When these systems fail in production, the post",
+        "systems fail in production, the post",
+        "systems fail in production, the post lists several critical anti-atterns, and",
+        "lists several critical anti-atterns, and",
+        "lists several critical anti-atterns, and this is where the theoretical meets the"
+      ]
+    },
+    {
+      "image": "slide-015.png",
+      "start": "00:30:33.269",
+      "note": "Transcript lines 1281-1309.",
+      "match_score": 0.7892,
+      "excerpt": "The post dictates strict objective evaluation metrics. You evaluate based on postverification success rate. Not how often the model generated a plausible sounding plan, but how often the final verified execution actually resolved the ticket or compiled the code. Real world results. Exactly. You evaluate based on tool grounded plan coherence. Does the generated sequence of actions actually map to the specific API constraints of the environment? And crucially, You evaluate based on latency and token cost per solved task.",
+      "matched_captions": [
+        ">> The post dictates strict objective",
+        ">> The post dictates strict objective evaluation metrics. You evaluate based",
+        "evaluation metrics. You evaluate based",
+        "evaluation metrics. You evaluate based on postverification success rate. Not",
+        "on postverification success rate. Not",
+        "on postverification success rate. Not how often the model generated a"
+      ]
+    },
+    {
+      "image": "slide-017.png",
+      "start": "00:32:36.240",
+      "note": "Transcript lines 1337-1369.",
+      "match_score": 0.6054,
+      "excerpt": "If there is a singular takeaway from this framework, it is that true expertise in AI system design is defined by restraint. Restraint is everything. It is incredibly tempting for builders to reach for the most complex cuttingedge search methodology they just read about. But the mark of a mature architect is knowing precisely when a simple decomposition and a basic React loop will solve the problem elegantly and cheaply.",
+      "matched_captions": [
+        ">> If there's a singular takeaway from this framework, it is that true expertise in",
+        "framework, it is that true expertise in",
+        "framework, it is that true expertise in AI system design is defined by",
+        "AI system design is defined by",
+        "AI system design is defined by restraint.",
+        "restraint."
+      ]
+    }
+  ]
+}

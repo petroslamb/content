@@ -1,0 +1,15 @@
+Reasoning Does Not Make an Agent
+
+The transition from assistant to agent happens when a system can take
+replayable actions in software, not when it sounds more autonomous.
+
+pha
+a a
+
+“h [emer
+
+Describing Work Performing Work
+
+Ref: Toolformer — Tool invocation must operate as a
+core behavioral pattern, not a bolted-on afterthought.
+Ai NotebookLM

@@ -1,0 +1,47 @@
+Architectural Anti-Patterns
+
+A
+
+Overusing
+chain-of-thought
+without
+environment
+grounding.
+Disconnected
+reasoning is
+hallucinated
+planning.
+
+yi
+
+Confusing verbal
+fluency with
+validated
+reasoning.
+
+More tokens do
+
+not equal better
+plans.
+
+&
+
+Using debate or
+critique loops
+when the task
+lacks a real
+
+evaluation signal.
+
+A
+
+Making tree
+search the
+default.
+
+Never add search
+where plain
+decomposition
+works.
+
+Ai NotebookLM

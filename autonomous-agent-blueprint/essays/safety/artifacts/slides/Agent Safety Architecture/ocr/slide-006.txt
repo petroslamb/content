@@ -1,0 +1,24 @@
+The Memory Liability. A knowledge store is not just a capability layer;
+open ingestion makes it an attack vector for poisoning and jamming.
+
+Corrupted
+Action
+Degraded
+Availability
+
+Ai NotebookLM
+
+Papers: PoisonedRAG & Agent Poison
+
+Poisoned Input
+
+Durable
+Memory Store /
+Vector DB
+
+Paper: Machine Against the RAG (Jamming)
+
+Durable Memory
+Store / Vector DB
+
+Blocker Documents

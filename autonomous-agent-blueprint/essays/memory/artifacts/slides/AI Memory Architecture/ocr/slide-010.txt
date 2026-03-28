@@ -1,0 +1,19 @@
+Architectural trade-offs:
+
+The Memory Method Matrix.
+
+Method Best Use Main Strength Main Risk Escalate When
+Working memory short bounded eneanaet collapses across | context window
+only tasks . long work bottlenecks
+Semantic memory factual durable on Stale/weak
+(Retrieval) knowledge demand retrieval facts are linked
+Episodic memory repeated learnable repeated failures
+(Reflection) workflows experience LSM) Pe Survive runs
+Procedural memory | reusable
+
+(Skills) Patines callable behavior | brittle routines task class recurs
+Graph-aware multi-hop preserves plain retrieval
+retrieval knowledge relations HIgh: GOMprexity misses structure
+
+Ai NotebookLM
+

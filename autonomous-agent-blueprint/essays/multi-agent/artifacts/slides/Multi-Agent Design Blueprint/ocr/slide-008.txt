@@ -1,0 +1,23 @@
+Reserve debate and consensus topologies
+
+for hard judgment tasks.
+
+Prompt
+
+Pattern: Debate or Consensus Group.
+
+Purpose: Surfaces informative disagreement and
+alternative views. Expensive and easy to overuse.
+
+Consensus
+
+Literature Foundation:
+MAD: Encourages divergent thinking and adversarial comparison.
+
+RECONCILE: Makes debate structured and pushes toward a
+
+confidence-aware decision process.
+
+LI
+
+Ai NotebookLM

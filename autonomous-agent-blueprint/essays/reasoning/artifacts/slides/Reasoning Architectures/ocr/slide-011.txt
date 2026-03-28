@@ -1,0 +1,20 @@
+Reasoning is an Architectural Menu,
+Not a Prompt Bag
+
+_ Emergency: Search
+Escapement (ToT/LATS)
+
+Reliability Overlays
+(CoVe, Consistency)
+
+The Core: Default Loop
+(Decomposition + ReAct)
+
+Base Model
+Roboto Mono
+
+The best insight from the literature is the selection logic. You do not use them all at once.
+Establish a grounded baseline and snap in reliability modules exactly where
+failure modes demand them.
+
+Ai NotebookLM

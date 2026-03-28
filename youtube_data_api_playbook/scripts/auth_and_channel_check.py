@@ -8,7 +8,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-SCOPES = ["https://www.googleapis.com/auth/youtube"]
+SCOPES = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 CLIENT_SECRETS_FILE = Path(".youtube/client_secret.json")
 TOKEN_FILE = Path(".youtube/token.json")
 

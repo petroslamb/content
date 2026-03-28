@@ -1,0 +1,30 @@
+Module D — Factual Safety
+
+Chain-of-Verification
+(CoVe)
+
+The most important factual-safety
+
+reasoning pattern. It decomposes
+
+verification into an isolated step initial
+rather than hoping the original Draft
+reasoning trace is naturally
+
+self-consistent.
+
+RULE: Add CoVe for high-stakes
+factual outputs, synthesis, and
+anything that will trigger
+irreversible actions.
+
+Extraction
+
+f
+
+Verification Sandbox
+
+Claim 1) ©
+( claim 2 ) eG)
+
+Ai NotebookLM

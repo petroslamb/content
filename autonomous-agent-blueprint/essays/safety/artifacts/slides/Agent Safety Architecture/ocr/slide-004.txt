@@ -1,0 +1,12 @@
+The Poisoned Context Window
+When external text and trusted instructions share the same space,
+instructions hide inside data and override system intent indirectly.
+
+system Prompt
+(Trusted)
+
+User Data /
+Retrieved Web Page
+(Untrusted)
+
+Ai NotebookLM
