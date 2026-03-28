@@ -2,14 +2,14 @@
 
 This file turns “we need more runs” into a finite acquisition plan.
 
-## Already Covered Well Enough For Calibration
+## Already Covered Well Enough
 
 - internal coding/package runs
 - repo/refactor runs
 - external-action third-party platform runs
 - publish/deploy runs
 
-These categories already have enough real evidence to calibrate the framework meaningfully.
+These categories already have enough real evidence to support meaningful framework calibration.
 
 ## Partially Covered
 
