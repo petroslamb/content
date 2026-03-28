@@ -1,15 +1,15 @@
-# Operating Agents III: Diagnose the Scaffold Before You Shop the Model
+# Operating Agents III: Reasoning Scaffolds and Planning
 
 Date: 2026-03-27
 URL: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
 
-# Operating Agents III: Diagnose the Scaffold Before You Shop the Model
+*Part of the Operating Agents series, a builder-first run on how modern agent systems actually work once language leaves the prompt and starts acting inside software.*
 
-Read with: [Reasoning Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion-v7.md) and [Reasoning Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md).
+#### Video TL;DR
 
 Reasoning comes after action and memory because a workflow with tools and durable state can still fail under a bad scaffold. The hard question is not whether the model can think at length. It is whether the loop knows when to think, what evidence to inspect, and when to stop.
 
-![Slide 1: Reasoning and Planning Architectures](assets/asset-0e489b7f5c2274f5.png)
+![Slide 1: Reasoning and Planning Architectures](assets/asset-3b906f4f29ed9e40.jpeg "Slide 1: Reasoning and Planning Architectures")
 
 The recommendation looked careful. It quoted the exception clause, summarized the claim, named the likely payer outcome, and returned a clean structured decision. The reviewer rejected it in less than a minute. One required check was missing, and the workflow had never queried live payer status before drafting the answer.
 
@@ -19,7 +19,9 @@ The team reacted the way many teams react. They added prompt detail. They tried 
 
 Most production reasoning failures are control failures before they are intelligence failures.
 
-![Slide 2: The Model Is Not Always the Problem](assets/asset-bb3fe6d1576d071f.png)
+That is the reasoning distillation taken here from the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and sharpened in the local [reasoning blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md). The transcript gives the prose its order, but the core claim is operational: many reasoning failures are really workflow failures in disguise.
+
+![Slide 2: The Model Is Not Always the Problem](assets/asset-30fe65db46716668.jpeg "Slide 2: The Model Is Not Always the Problem")
 
 ## Start With The Failure Shape
 
@@ -27,7 +29,7 @@ The easiest way to waste time in agent design is to answer the wrong failure wit
 
 The decision rule is colder than that. Diagnose the failure shape first, then install the lightest scaffold that corrects it.
 
-![Slide 3: The Escalation](assets/asset-47d768714e8d1a66.png)
+![Slide 3: The Escalation](assets/asset-7eea2a8240dad676.jpeg "Slide 3: The Escalation")
 
 If the system keeps compressing dependent checks into one answer, the first fix is decomposition. If it keeps reasoning as though the environment will obediently match its expectations, the first fix is a reason-act-observe loop. If a plausible answer is becoming consequence before it has earned trust, the first fix is verification. If the workflow keeps failing because order itself is the risk, the plan has to become a first-class object. Only when those simpler layers are already working and the task still contains real branching difficulty does search begin to earn its cost.
 
@@ -35,23 +37,23 @@ That selection logic is the argument of the chapter. Not the prestige order of m
 
 ## Decomposition Before Brilliance
 
-*Least-to-Most Prompting* mattered because it solved a problem builders still underrate. Many tasks arrive wrapped as one judgment even though they are structurally several judgments with dependencies. Eligibility before exception. Evidence before synthesis. Current state before recommendation. If the workflow is allowed to improvise those stages inside one generation, it can sound coherent while silently skipping the task's actual structure.
+*[Least-to-Most Prompting](https://arxiv.org/abs/2205.10625)* mattered because it solved a problem builders still underrate. Many tasks arrive wrapped as one judgment even though they are structurally several judgments with dependencies. Eligibility before exception. Evidence before synthesis. Current state before recommendation. If the workflow is allowed to improvise those stages inside one generation, it can sound coherent while silently skipping the task's actual structure.
 
 The paper's durable move was to externalize the sequence of subproblems before the model tried to solve the whole thing at once. That is more than a prompting trick. It is an architectural intervention. It separates "discover the task structure" from "execute the task." The workflow stops pretending that a multi-stage problem is a one-stage act of eloquence.
 
-![Slide 4: The Default Reasoning Blueprint](assets/asset-f5c3a8a56cc6f1c3.png)
+![Slide 4: The Default Reasoning Blueprint](assets/asset-17dbf516a79f298b.jpeg "Slide 4: The Default Reasoning Blueprint")
 
 Decomposition is often the most undervalued repair in the stack because it does not look glamorous. It does something better. It makes hidden dependencies visible enough to inspect.
 
-![Slide 5: Structural Decomposition](assets/asset-03831543b507c4a0.png)
+![Slide 5: Structural Decomposition](assets/asset-d5d0504122b93e28.jpeg "Slide 5: Structural Decomposition")
 
 ## ReAct When The World Can Contradict You
 
 The moment the task depends on tools, live records, code, or environment state, reasoning has to stop being a monologue and become a control loop.
 
-*ReAct* remains the control-loop paper because it attacked exactly that boundary. Chain-of-thought prompting had shown that models could narrate reasoning. What it could not do was keep that reasoning answerable to a world that could contradict it. ReAct bound thought to action and observation so the next step had to proceed from what actually happened rather than from what the model expected to happen.
+*[ReAct](https://arxiv.org/abs/2210.03629)* remains the control-loop paper because it attacked exactly that boundary. Chain-of-thought prompting had shown that models could narrate reasoning. What it could not do was keep that reasoning answerable to a world that could contradict it. ReAct bound thought to action and observation so the next step had to proceed from what actually happened rather than from what the model expected to happen.
 
-![Slide 6: Grounding with ReAct](assets/asset-7aeae78b2c86c570.png)
+![Slide 6: Grounding with ReAct](assets/asset-58ff7624804cf568.jpeg "Slide 6: Grounding with ReAct")
 
 That distinction still explains a large share of production failure. A workflow that keeps reasoning in prose while the real state lives in a ledger, browser, database, or tool result is not mainly suffering from weak intelligence. It is suffering from a broken loop. The model is being asked to reason from fiction.
 
@@ -61,9 +63,9 @@ ReAct belongs before heavier overlays in most practical stacks. If the environme
 
 Many workflows do not merely need better answers. They need answers that deserve consequence.
 
-*Chain-of-Verification* mattered because it gave that requirement a real place in the workflow. Draft the answer. Generate the questions that would challenge it. Answer those separately. Revise only after the checking stage. The contribution was topological before it was stylistic.
+*[Chain-of-Verification](https://arxiv.org/abs/2309.11495)* mattered because it gave that requirement a real place in the workflow. Draft the answer. Generate the questions that would challenge it. Answer those separately. Revise only after the checking stage. The contribution was topological before it was stylistic.
 
-![Slide 8: Chain-of-Verification](assets/asset-5d7138c9720c14e5.png)
+![Slide 8: Chain-of-Verification](assets/asset-76e9e7ccde00d0e4.jpeg "Slide 8: Chain-of-Verification")
 
 That move stops the first generation from silently certifying itself. A coherent answer may still be wrong. A polished recommendation may still be unsupported. Verification creates a stage where trust has to be earned rather than merely implied.
 
@@ -75,44 +77,46 @@ Reasoning and planning are adjacent but not interchangeable. A system can reason
 
 A claim can be routed before eligibility is confirmed. An appeal can be drafted before the denial code is verified. A field visit can be scheduled before the account state is refreshed. In those cases the problem is not only that the answer is weak. The problem is that the order of operations is smuggling risk into the workflow.
 
-That is where planner handoff belongs. Most teams should stay conservative and keep the plan in inspectable language for as long as possible. Some tasks stop being about better local reasoning and start being about whether the sequence itself respects prerequisites, scarce resources, and irreversible steps. *LLM+P* marks that escalation boundary. The lesson is not that every hard task wants a formal planner. It is that verbal scaffolds have a limit, and builders need a rule for noticing when they have reached it.
+That is where planner handoff belongs. Most teams should stay conservative and keep the plan in inspectable language for as long as possible. Some tasks stop being about better local reasoning and start being about whether the sequence itself respects prerequisites, scarce resources, and irreversible steps. *[LLM+P](https://arxiv.org/abs/2304.11477)* marks that escalation boundary. The lesson is not that every hard task wants a formal planner. It is that verbal scaffolds have a limit, and builders need a rule for noticing when they have reached it.
 
 Planning begins when sequence itself becomes the risk.
 
-![Slide 11: Reasoning Is an Architectural Menu](assets/asset-cd7d3c3b439035b7.png)
+![Slide 11: Reasoning Is an Architectural Menu](assets/asset-403a02ba0c457890.jpeg "Slide 11: Reasoning Is an Architectural Menu")
 
 ## Search Owes A Specific Debt
 
-Search-heavy methods matter because some tasks really do branch. They have several plausible paths, real dead ends, and choices that simpler scaffolds cannot resolve cleanly. That is the genuine contribution of work such as *Tree of Thoughts*.
+Search-heavy methods matter because some tasks really do branch. They have several plausible paths, real dead ends, and choices that simpler scaffolds cannot resolve cleanly. That is the genuine contribution of work such as *[Tree of Thoughts](https://arxiv.org/abs/2305.10601)*.
 
 They also attract one of the field's most persistent diagnosis errors. Teams often invoke search as a sign that they are taking reasoning seriously before they have proved that the task contains the kind of branching difficulty that would justify the cost.
 
 Search does not fix weak decomposition. It does not fix missing observation. It does not fix absent verification. If those layers are still weak, search mostly magnifies confusion and latency at the same time.
 
-![Slide 10: Search and Escalation](assets/asset-760f721792d7550a.png)
+![Slide 10: Search and Escalation](assets/asset-8266312bc2fcb0d1.jpeg "Slide 10: Search and Escalation")
 
 The escalation rule should stay severe. Decompose first. Then ground the workflow in live state. Then verify before consequence. Then promote the plan when commitment points are the problem. Only after that should search enter the picture, and only if branching difficulty still remains.
 
 If one generation is doing the work of several, a better model only buys a more polished mistake.
 
-![Slide 15: Evaluating the Reasoning Stack](assets/asset-1539dde736913c50.png)
+![Slide 15: Evaluating the Reasoning Stack](assets/asset-8623578814510a8c.jpeg "Slide 15: Evaluating the Reasoning Stack")
 
-![Slide 16: Architectural Anti-Patterns](assets/asset-a5d3e790a3433cff.png)
+![Slide 16: Architectural Anti-Patterns](assets/asset-39ecf62afc08e0a4.jpeg "Slide 16: Architectural Anti-Patterns")
 
-*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
+## References
 
-## Selected Sources
+[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is breadth. It places reasoning inside the larger operating stack of action, memory, coordination, safety, and optimization. This essay narrows that broader survey into one practical argument: the hardest part of reasoning in production is often not intelligence itself but the scaffold that decides when evidence is gathered, when checks happen, and when sequence becomes binding.
 
-[Least-to-Most Prompting](https://arxiv.org/abs/2205.10625). Least-to-Most matters because it shows why decomposition is not the baby version of reasoning. It is the paper behind the doctrine's first move: expose dependent subproblems before asking one generation to improvise the whole structure.
+[Chapter 7 Blueprint: Reasoning Scaffolds and Planning](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md) is the builder-facing backbone for this chapter. Its key contribution is diagnostic discipline. It turns the literature into an escalation rule: decompose first, then ground the loop in live state, then verify before consequence, then promote the plan when sequence becomes risky, and only then pay for search.
 
-[ReAct](https://arxiv.org/abs/2210.03629). ReAct matters because it binds reasoning to action and observation. The chapter's control-first view of reasoning owes a great deal to that move. A workflow that depends on live state but still reasons in prose is disconnected from reality.
+[Reasoning scaffolds for reliable AI agents transcript](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/artifacts/transcript_Reasoning%20scaffolds%20for%20reliable%20AI%20agents_full.txt) is the direct narrative source behind this draft. Its key contribution is the sequence the essay follows: failure-shape diagnosis, decomposition, ReAct-style control loops, explicit verification, planner escalation, and the late entry of search once simpler fixes have already been exhausted.
 
-[Chain-of-Verification](https://arxiv.org/abs/2309.11495). CoVe matters because it gives verification a real place in the workflow instead of leaving it as a vague norm. Trust should be earned in a distinct stage, not implied by the fluency of the first answer.
+*[Least-to-Most Prompting](https://arxiv.org/abs/2205.10625)* matters because it shows why decomposition is not the baby version of reasoning. Its key contribution is exposing dependent subproblems before asking one generation to improvise the whole structure. This essay leans on that move to treat decomposition as an architectural repair rather than as a prompting trick.
 
-[LLM+P](https://arxiv.org/abs/2304.11477). LLM+P matters because it marks the point where sequence itself becomes the risk. The paper's importance here is not frontier breadth. It is the escalation rule it implies: promote the plan into a first-class object only when prose can no longer carry the constraints safely.
+*[ReAct](https://arxiv.org/abs/2210.03629)* matters because it binds reasoning to action and observation. Its key contribution is making the world part of the loop instead of leaving the model alone with its expectations. That is why this essay treats grounding as a control requirement whenever the workflow depends on live state.
 
-[Tree of Thoughts](https://arxiv.org/abs/2305.10601). Tree of Thoughts matters in this doctrine mostly as a boundary marker. It clarifies what true branching search is for and, by contrast, what it is not for. Search belongs late, after decomposition, grounding, and verification are already doing their jobs.
+*[Chain-of-Verification](https://arxiv.org/abs/2309.11495)* matters because it gives verification an explicit place in the workflow rather than leaving it as a vague norm. Its key contribution is staging trust. A draft answer should not certify itself merely by sounding coherent. This essay uses that idea to separate answer production from consequence.
 
-For the broader terrain this essay leaves out on purpose, read the [Reasoning Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion-v7.md). For the operator layer, chooser logic, and escalation defaults, read the [Reasoning Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md).
+*[LLM+P](https://arxiv.org/abs/2304.11477)* matters because it marks the point where sequence itself becomes the risk. Its key contribution is showing when a plan has to become a first-class object rather than a soft implication inside prose. That is the escalation boundary this essay cares about.
 
-![Slide 17: Use the Lightest Structure That Works](assets/asset-d9a96c8c1c2ef70d.png)
+*[Tree of Thoughts](https://arxiv.org/abs/2305.10601)* matters here mostly as a boundary marker. Its key contribution is clarifying what real branching search is for and, by contrast, what it cannot repair. Search belongs late, after decomposition, grounding, and verification are already doing their jobs.
+
+![Slide 17: Use the Lightest Structure That Works](assets/asset-7e678d6539be748a.jpeg "Slide 17: Use the Lightest Structure That Works")

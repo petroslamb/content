@@ -1,0 +1,47 @@
+Deep Dive: The Orchestrators (APIs)
+
+[Toolformer |
+
+Tool invocation as an operating
+pattern, not an afterthought.
+
+Behavior shaping > Integration.
+
+J
+Text ~JOp—> Text
+ata
+
+[Gorilla]
+
+Framing tool use as API
+understanding and exact
+argument construction.
+
+{
+"type": "object",
+"properties": {..
+
+}
+
+SF
+
+ie
+
+[HuggingGPT ]
+
+The LLM as an orchestrator
+
+routing to specialist capabilities.
+
+[NLP
+Specialist]
+[Audio [Data
+Specialist] Specialist]
+AN
+[Vision
+Specialist]
+
+[HuggingGPT
+Controller]
+
+Ai NotebookLM

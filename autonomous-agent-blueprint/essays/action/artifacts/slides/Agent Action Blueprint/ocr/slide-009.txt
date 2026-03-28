@@ -1,0 +1,39 @@
+The Academic Foundation
+
+Mapping state-of-the-art research to their target action surfaces.
+
+APIs / Orchestration |
+
+[_Toolformer |]
+
+[Gorilla]
+
+[HuggingGPT ]
+
+Code / Software
+
+[SWE-agent]
+
+[OpenHands ]
+
+Database / SQL
+
+[BIRD]
+
+[Spider 2.0]
+
+Web / Browser
+
+[WebAgent ]
+
+[Mind2Web ]
+
+GUI / Vision
+
+[Mobile-Agent ]
+
+[AppAgent ]
+
+[OmniParser ]
+
+Ai NotebookLM

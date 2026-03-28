@@ -1,15 +1,15 @@
-# Operating Agents V: The Attack Surface You Built
+# Operating Agents V: Trust Boundaries and Agent Safety
 
 Date: 2026-03-27
 URL: https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface
 
-# Operating Agents V: The Attack Surface You Built
+*Part of the Operating Agents series, a builder-first run on how modern agent systems actually work once language leaves the prompt and starts acting inside software.*
 
-Read with: [Safety Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion-v7.md) and [Safety Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md).
+#### Video TL;DR
 
 Safety closes the core run because every capability above widens the attack surface. Once content, tools, and internal artifacts can move across the workflow, trust separation stops being a prompt preference and becomes a systems requirement.
 
-![Slide 1: Agent Safety Is System Architecture](assets/asset-267f1da1a2598ec0.png)
+![Slide 1: Agent Safety Is System Architecture](assets/asset-4569a2567cbaa642.jpeg "Slide 1: Agent Safety Is System Architecture")
 
 One support team arrived on a Monday to find twenty-three urgent review tasks created overnight by an internal operations agent. Several carried account excerpts that should never have left the billing system at triage. The agent had not failed in a cinematic way. It had followed an instruction embedded in a help article it retrieved while drafting the escalations.
 
@@ -19,7 +19,9 @@ Nothing about the model had to break in an exotic way. The system simply trusted
 
 Agent safety is trust-boundary design, not refusal theater.
 
-![Slide 2: Where Control Can Be Taken](assets/asset-f3314511c54eb291.png)
+That framing is the safety distillation taken here from the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and tightened in the local [safety blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md). The transcript supplies the progression, but the chapter's narrower claim is architectural: once content, memory, artifacts, and tools can move across the workflow, the real safety question is what trust each channel carries and what it is allowed to reach.
+
+![Slide 2: Where Control Can Be Taken](assets/asset-75de5bdfeca314cd.jpeg "Slide 2: Where Control Can Be Taken")
 
 ## One Hostile Input Can Become A Workflow
 
@@ -29,19 +31,19 @@ It can shape retrieval. It can land in memory. It can appear inside an internal 
 
 The decision rule is dull and severe for a reason. Model every channel by what trust it carries and what it can reach.
 
-![Slide 3: The Practical Attack Surface Map](assets/asset-88b5848dacb6c2d7.png)
+![Slide 3: The Practical Attack Surface Map](assets/asset-8a35e110fde79967.jpeg "Slide 3: The Practical Attack Surface Map")
 
 That question is better than asking whether the content looked suspicious, whether the prompt sounded careful, or whether the output still felt internally coherent. Safety begins when a system stops inheriting trust by accident.
 
 ## Trust Class Beats Prompt Tone
 
-*Not What You've Signed Up For* mattered because it attacked the old trust model directly. The paper was not mainly proving that prompt injection exists in principle. The field already suspected that. It showed that once language systems are integrated with outside content and tools, instructions and data can no longer be treated as though they deserve the same trust status.
+*[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173)* mattered because it attacked the old trust model directly. The paper was not mainly proving that prompt injection exists in principle. The field already suspected that. It showed that once language systems are integrated with outside content and tools, instructions and data can no longer be treated as though they deserve the same trust status.
 
 That changed the operator question from "how do I make the prompt stronger" to "what happens if retrieved or external content can influence the planner at all." Retrieved passages are evidence, not privileged instruction. Help text is observation, not authority. Another component's output is not safe merely because it came from inside the workflow.
 
 If a system cannot preserve those distinctions, it is not relying on safety controls. It is relying on tone and hope.
 
-![Slide 4: The Poisoned Context Window](assets/asset-4965524d71b9016e.png)
+![Slide 4: The Poisoned Context Window](assets/asset-7d5073b51bbed6d4.jpeg "Slide 4: The Poisoned Context Window")
 
 ## Tool Scope Is Safety Architecture
 
@@ -51,11 +53,11 @@ A tool that can search documentation does not deserve the same reach as a tool t
 
 That is why least privilege belongs in the center of agent safety rather than at the edge of it. The workflow should not be asked to maintain moral discipline with the same prompt while holding wildly different forms of authority.
 
-![Slide 5: From Text to Side Effects](assets/asset-7851c580c6d38e8e.png)
+![Slide 5: From Text to Side Effects](assets/asset-60b6f3f084198018.jpeg "Slide 5: From Text to Side Effects")
 
 The trust map has to say what a channel can read, what it can write, and what still requires a deterministic gate or human approval.
 
-```yaml
+```
 channel: retrieved_support_article
 trust_class: untrusted_content
 allowed_tools: ["search_docs", "draft_internal_task"]
@@ -65,33 +67,33 @@ approval_required: true
 
 That object matters because it forces the workflow to declare what this channel is allowed to influence. Safety becomes practical when channels carry policy instead of inheriting reach by accident.
 
-![Slide 10: Boundary One, Trust Separation](assets/asset-f9cef8fc3426cc42.png)
+![Slide 10: Boundary One, Trust Separation](assets/asset-ce64193f7db65ee7.jpeg "Slide 10: Boundary One, Trust Separation")
 
 ## Retrieval, Memory, And Handoffs Carry Influence Forward
 
 Modern agent writing still treats retrieval and memory as quality layers first and security layers second. Once the system acts on what it retrieves, that order is backwards.
 
-*PoisonedRAG* mattered because it showed that a knowledge store should not be treated as neutral substrate. A small amount of poisoned content can distort what the system sees, when it sees it, and how confidently it moves forward. The attack is interesting not because malicious documents exist, but because it collapses the old assumption that retrieval is merely a convenience layer beneath the real intelligence of the agent.
+*[PoisonedRAG](https://arxiv.org/abs/2402.07867)* mattered because it showed that a knowledge store should not be treated as neutral substrate. A small amount of poisoned content can distort what the system sees, when it sees it, and how confidently it moves forward. The attack is interesting not because malicious documents exist, but because it collapses the old assumption that retrieval is merely a convenience layer beneath the real intelligence of the agent.
 
 The same skepticism applies to memory writes and internal artifacts. A summary written by one agent can smuggle a poisoned instruction. A screenshot can carry hostile content across roles. A review packet can freeze stale evidence into a form the next stage mistakes for sanctioned state. Structured handoffs reduce ambiguity. They do not create trust.
 
-![Slide 6: The Memory Liability](assets/asset-84053f3d088f0a6a.png)
+![Slide 6: The Memory Liability](assets/asset-fd7e7757c9a6d240.jpeg "Slide 6: The Memory Liability")
 
 Trust has to reset at every handoff.
 
-![Slide 8: Safety Failures Happen at Interfaces](assets/asset-4052f3548a435f9e.png)
+![Slide 8: Safety Failures Happen at Interfaces](assets/asset-20e144ec63e72236.jpeg "Slide 8: Safety Failures Happen at Interfaces")
 
 ## Rehearse Abuse Before You Widen Autonomy
 
 The last major safety mistake is chronological. Teams wait until after deployment to discover what a tool-using workflow will do badly.
 
-*ToolEmu* mattered because it turned that sequence around. The paper's important move was not only sandboxing. It was evaluation before consequence. If a workflow can read untrusted content, invoke tools, and generate side effects, then the architecture should be pressure-tested before autonomy is widened.
+*[ToolEmu](https://arxiv.org/abs/2309.15817)* mattered because it turned that sequence around. The paper's important move was not only sandboxing. It was evaluation before consequence. If a workflow can read untrusted content, invoke tools, and generate side effects, then the architecture should be pressure-tested before autonomy is widened.
 
 That is also where approval belongs. Human approval is not a confession that the system is weak. It is recognition that some actions are expensive enough that accountability has to sit in the architecture itself. Financial actions, destructive writes, external submissions, legal or policy-sensitive moves, and hard-to-reverse operations should not be protected by prompt style alone. They need scoped tools, deterministic checks, and explicit gates.
 
 The escalation rule should stay hard. Widen autonomy only after trust separation, tool scope, handoff skepticism, deterministic checks, and approval are already explicit.
 
-![Slide 9: The Default Safety Blueprint](assets/asset-22a8c8cb2e01b40a.png)
+![Slide 9: The Default Safety Blueprint](assets/asset-dcdafa66003247f8.jpeg "Slide 9: The Default Safety Blueprint")
 
 ## Narrow The Surface Before You Widen Freedom
 
@@ -101,22 +103,24 @@ Every extra capability widens the attack surface. Broader tool access, larger co
 
 Sometimes the most serious safety move is not a clever defense. It is a narrower default.
 
-![Slide 14: Control Matrix](assets/asset-bd0edcb5a88fee48.png)
+![Slide 14: Control Matrix](assets/asset-6ebac316d9181a5c.jpeg "Slide 14: Control Matrix")
 
-*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
+## References
 
-## Selected Sources
+[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is breadth. It places safety in the larger operating stack of action, memory, reasoning, coordination, and optimization. This essay narrows that wider survey into one practical claim: safety in agent systems is mostly a problem of trust-boundary design.
 
-[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173). Greshake and colleagues matter because they redrew the trust model for integrated agents. Once retrieved or external content can influence planning and action, safety stops being a prompt-writing problem and becomes a boundary problem.
+[Chapter 11 Blueprint: Trust Boundaries and Agent Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md) is the builder-facing backbone for this chapter. Its key contribution is translating the safety literature into an interface map. It fixes the default controls around trust classes, tool scope, retrieval integrity, handoff skepticism, approval, and adversarial evaluation before autonomy is widened.
 
-[PoisonedRAG](https://arxiv.org/abs/2402.07867). PoisonedRAG matters because it turns retrieval integrity into part of the attack surface rather than a background relevance concern. A store the workflow later trusts is already part of the safety model.
+[The Architecture of AI Agent Safety transcript](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/artifacts/transcript_The%20Architecture%20of%20AI%20Agent%20Safety_full.txt) is the direct narrative source behind this draft. Its key contribution is structural. It gives the essay its flow from the opening failure archetype through trust separation, tool scope, retrieval and memory as integrity-sensitive infrastructure, skeptical handoffs, and the need to rehearse abuse before the system is granted more freedom.
 
-[ToolEmu](https://arxiv.org/abs/2309.15817). ToolEmu matters because it moved safety evaluation in front of deployment. The chapter depends on that posture. A workflow should be stressed against its own contamination paths before its freedom is widened.
+*[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173)* matters because it redrew the trust model for integrated agents. Its key contribution is making the distinction between instructions and data impossible to ignore once external content can influence planning and action. This essay leans on that move to treat retrieved content as evidence rather than authority.
 
-[Agent Poison](https://arxiv.org/abs/2407.12784). Agent Poison matters because it shows how durable memory and knowledge stores can become future influence channels. The lesson reinforces the chapter's insistence that memory policy is part of safety policy.
+*[PoisonedRAG](https://arxiv.org/abs/2402.07867)* matters because it turns retrieval integrity into part of the attack surface instead of a background relevance concern. Its key contribution is showing that a knowledge store the workflow later trusts is already part of the safety model.
 
-[Agent Smith](https://arxiv.org/abs/2402.08567). Agent Smith matters because it makes cross-agent contamination feel concrete, especially once artifacts and multimodal inputs start moving between roles. It sharpens the rule that trust has to reset at every handoff.
+*[ToolEmu](https://arxiv.org/abs/2309.15817)* matters because it moved safety evaluation in front of deployment. Its key contribution is sequencing: pressure-test the actual contamination paths and tool surfaces before widening autonomy.
 
-For the broader terrain this essay leaves out on purpose, read the [Safety Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion-v7.md). For the operator layer, control surfaces, and red-team defaults, read the [Safety Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md).
+*[Agent Poison](https://arxiv.org/abs/2407.12784)* matters because it shows how durable memory and knowledge stores can become future influence channels. Its key contribution is reinforcing that memory policy is part of safety policy once poisoned state can survive into later runs.
 
-![Slide 18: Safety Is Architecture](assets/asset-be3d47ab730ba2d4.png)
+*[Agent Smith](https://arxiv.org/abs/2402.08567)* matters because it makes cross-agent contamination feel concrete, especially once artifacts and multimodal inputs start moving between roles. Its key contribution is sharpening the rule that trust has to reset at every handoff rather than glide forward automatically.
+
+![Slide 18: Safety Is Architecture](assets/asset-e58bcbe0f01f4a41.jpeg "Slide 18: Safety Is Architecture")

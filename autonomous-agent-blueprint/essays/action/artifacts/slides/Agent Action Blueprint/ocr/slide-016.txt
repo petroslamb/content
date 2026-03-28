@@ -1,0 +1,8 @@
+The Bottom Line
+
+Action must be structured, bounded, and measurable.
+
+The transition from assistant to agent happens when the system takes
+replayable actions in software, not when it sounds more autonomous.
+
+Ai NotebookLM

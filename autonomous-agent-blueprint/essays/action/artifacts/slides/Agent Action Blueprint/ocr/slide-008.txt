@@ -1,0 +1,17 @@
+The Default Action Blueprint
+
+LLM / Reasoning Engine
+
+Execution Layer: Sandboxed, least-privilege environment. Validates
+inputs before execution, normalizes outputs after.
+
+Observation Layer: Converts raw results into typed observations. Note:
+
+Raw text causes loop failures; typed machine-readable state creates stability.
+
+Recovery Layer: Explicit tracking of retries and fallbacks. Errors must be
+returned as parsable state, not free-form conversational apologies.
+
+Environment (API / DB / Code / Web)
+
+Ai NotebookLM

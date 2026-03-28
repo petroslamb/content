@@ -1,0 +1,23 @@
+To build inspectable and reliable agents,
+we must answer three design questions.
+
+1. Surface
+
+2. Representation
+
+3. Integration
+
+What environment or
+interface should the
+agent act on?
+
+How should those
+actions be formatted
+and constrained?
+
+How are selection,
+
+execution, and observation
+wired back into reasoning?
+
+Ai NotebookLM

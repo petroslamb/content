@@ -1,0 +1,23 @@
+The Action Representation Ladder
+
+Typed Tool Calls
+
+Strongest representation.
+Inspectable, strongly typed,
+and explicitly bound to
+environment schemas.
+
+Plain Text
+
+Stronger representation. Highly
+testable and allows for iterative
+
+execution.
+
+Weakest representation. Hard to
+
+pic ele eee to Engineering Rule: Always move upward on the
+y hecho ladder whenever the environment allows.
+
+Ai NotebookLM
+
