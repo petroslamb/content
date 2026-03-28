@@ -1,0 +1,36 @@
+Deep Dive: The GUI & Vision Bottleneck
+
+[Structured DOM]
+(WebAgent, Mind2Web )
+
+ae
+
+im
+Sew 3a ae
+C1
+
+Generalist action over
+real websites.
+
+[Semi-Structured Mobile UI]
+(Mobile-Agent, AppAgent )
+
+a
+
+~
+
+ap ee
+
+Interacting via Ul
+
+when APIs fail.
+
+[Pure Pixels]
+(Visual ambiguity)
+
+Converts visually ambiguous pixels
+and layout back into machine-usable,
+
+parsed structure.
+
+Ai NotebookLM

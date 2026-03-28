@@ -1,0 +1,33 @@
+Surface Selection Heuristics
+
+IF (clean_
+
+RETURN
+} ELSE IF
+RETURN
+} ELSE IF
+RETURN
+} ELSE IF
+RETURN
+} ELSE IF
+RETURN
+
+api_exists) {
+
+typed_tool_calls; // Default first choice
+(requires_reproducibility) {
+executable_code;
+
+(workflow == "data_centric") {
+
+database_ sql;
+
+(stable_web_flow && no_api) {
+
+browser action;
+
+(closed_legacy_system) {
+
+Sui_action; // Warning: Fallback only
+
+Ai NotebookLM

@@ -1,0 +1,30 @@
+Measuring the Action Layer
+Do not measure “did the final answer look good.” Measure execution safety and reproducibility.
+
+— Tool selection accuracy
+
+— Argument accuracy
+
+— Action success rate
+
+— Recovery rate after failure
+
+Nin
+
+oe
+
+— Retry count
+
+ms
+
+es
+=
+el
+
+FA
+
+— Latency and cost per action
+
+— RepLayability and auditability
+
+Ai NotebookLM

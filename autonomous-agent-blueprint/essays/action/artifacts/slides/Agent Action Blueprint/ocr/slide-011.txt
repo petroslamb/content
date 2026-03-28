@@ -1,0 +1,40 @@
+Deep Dive: Software & Structured Data
+
+Code Execution (SWE-agent, OpenHands)
+
+Treats code, shell commands, and environment
+feedback as the primary action space.
+feedback as the primary action space. Highly
+replayable and naturally testable.
+
+Database / SQL (BIRD, Spider 2.0)
+
+Centers database action as a real enterprise
+surface. Moves beyond narrow benchmark
+prompts into real-world, schema-driven
+complexity.
+
+felele
+
+> ./run_tests.sh
+
+|PASS| 42 passing, @ failing
+
+Users
+
+Orders
+
+OrderItems
+
+id (PK) oles id (PK)
+username user_id (FK)
+
+id (PK)
+
+order date
+
+order_id (FK)
+
+product_id
+
+Ai NotebookLM

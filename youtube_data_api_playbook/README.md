@@ -244,3 +244,10 @@ Notes:
 - After replacement, update [operating_agents_tldr_metadata.json](/Users/petros/Projects/content/youtube_data_api_playbook/operating_agents_tldr_metadata.json) and rerun [sync_operating_agents_crosslinks.py](/Users/petros/Projects/content/youtube_data_api_playbook/scripts/sync_operating_agents_crosslinks.py) so the TL;DR descriptions and course descriptions resolve to the new full-video IDs.
 - Some chapter folders may contain zero-byte `*_auto_captions.srt` placeholders from failed earlier downloads. Check file size before using them as timing anchors.
 - The verified cue-sheet builder sorts slides by mapped transcript order rather than slide filename order, because some decks are sequenced differently from the spoken chapter.
+# YouTube Data API Playbook
+
+This folder contains the project-level YouTube automation scripts and related workflow notes.
+
+Supporting docs:
+
+- `operating_agents_video_production_workflow.md` - workflow for turning chapter slide decks and narrated audio into long-form course videos and replacing the live YouTube cuts

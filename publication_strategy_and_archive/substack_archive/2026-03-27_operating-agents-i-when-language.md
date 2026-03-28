@@ -1,122 +1,86 @@
-# Operating Agents I: When Language Starts Making Commitments
+# Operating Agents I: Action Systems and Tool Use
 
 Date: 2026-03-27
 URL: https://lambpetros.substack.com/p/operating-agents-i-when-language
 
-# Operating Agents I: When Language Starts Making Commitments
+*Part of the Operating Agents series, a builder-first run on how modern agent systems actually work once language leaves the prompt and starts acting inside software.*
 
-Read with: [Action Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion-v7.md) and [Action Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).
+#### Video TL;DR
 
-This chapter starts with action because consequence arrives there first. The moment language can write, submit, execute, or send, the subject stops being fluency and becomes interface design.
+## When Language Starts Doing Work
 
-![Slide 1: Architecting Reliable Action Systems](assets/asset-972fa5127760b49a.png)
+A language model can explain a batch file rename perfectly and still leave every file untouched. It can describe the shell command, warn about edge cases, and even produce a neat Python script for the job. Nothing in the directory changes until something executes the write, checks the result, and confirms that the state of the world is now different from what it was a minute earlier. That gap is where most of the confusion around agents begins. Systems that speak fluently about work are often treated as if they have already crossed into doing the work. They have not.
 
-A procurement team built an internal system that looked operational in every review meeting. It could read supplier policy, explain approval logic, draft the purchase-order payload, and tell an operator exactly what should happen next. The demos landed because the system sounded as if it were already doing the work. It named the right fields, the right exceptions, and the right downstream systems.
+This is the boundary that matters in action systems. The move from assistant to agent does not happen when a model sounds more forceful or more self-directed. It happens when language stops serving only as description and starts participating in state change. The moment an output can call an API, run code, submit a form, query a live database, or alter a software environment, the engineering problem changes with it. The question is no longer whether the model can produce plausible text about a task. The question is whether the system can take an action that is bounded, observable, replayable, and correct. That framing is the core action distillation taken here from the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and tightened in the local [action blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).
 
-Nothing happened until a human translated that prose into clicks and API calls.
+![Slide 2: Reasoning alone does not make a system an agent. Action does.](assets/asset-db4924a624c8bbaf.jpeg "Slide 2: Reasoning alone does not make a system an agent. Action does.")
 
-So the team gave the system write access to the procurement service. The first failure was boring. The model filled `currency_code` with `USD dollars` instead of `USD`, and the schema rejected the request. The second failure was worse. A downstream service had changed how it reported deferred writes. The agent treated a partial acknowledgment as completion, moved on, and the order never landed. The supplier discovered the gap before the team did.
+That shift is easier to see when action is treated as a representation problem instead of a marketing label. At the weakest end of the ladder sits plain text. A model writes, "I updated the customer record," and a human reader may feel satisfied. A machine should not. Plain text is hard to verify, hard to replay, and easy to misread. It carries intent in the loosest possible form. Code is stronger because it is executable and testable. A script can run, fail, return an error, or produce a measurable artifact. Typed tool calls are stronger still because they force intent into a narrow contract. A function call with defined fields, checked arguments, and structured output gives the system far less room to hide its mistakes inside a graceful paragraph.
 
-Language becomes agency only when it becomes accountable state change.
+![Slide 4: The Action Representation Ladder](assets/asset-93e40249b418fb37.jpeg "Slide 4: The Action Representation Ladder")
 
-![Slide 2: Reasoning Does Not Make an Agent](assets/asset-e878fe0677bcab76.png)
+This is why the gap between describing work and performing work does not close through reasoning alone. It closes when the action channel becomes strict enough that the model has to commit to something machine-readable. Once that happens, failure stops looking like vague weakness in the model and starts appearing at precise seams in the loop. The transcript is strongest here because it refuses to talk about tool use as one ability. It breaks the process into the places where systems actually fail.
 
-## Agency Begins At The Boundary
+## Where Tool Use Breaks
 
-There is a flattering way to talk about tool use that quietly ruins design work. It says an agent is a system with reasoning, memory, and the ability to call tools when needed. That definition is too broad to help a builder. An elaborate assistant already fits it.
+![Slide 5: Decomposing the Tool Use Monolith](assets/asset-bedda232469ca979.jpeg "Slide 5: Decomposing the Tool Use Monolith")
 
-The harsher definition is more useful. The assistant-agent boundary is crossed when language can create accountable state change outside the prompt. A system that only describes the workflow is still commentary. A system that can submit the order, modify the record, send the message, or write the file has crossed into a different engineering object.
+The first seam is tool need detection. A model has to recognize that the answer is not already inside its static training distribution and that live state is required. This sounds obvious until you watch a system bluff. Ask for a flight next Tuesday, a current balance, or a production metric, and the model has to suspend the impulse to answer from plausibility. It has to reach the colder conclusion that the right next step is not another sentence but an external call. A surprising amount of fragility begins here, because a system that fails to notice the need for action never reaches the rest of the pipeline.
 
-That shift raises the quality bar immediately. Once a system can act, the decisive questions stop being mainly about fluency. They become questions about boundary design. What surface is the system allowed to touch. How are arguments validated. What comes back after the action. What permissions govern the call. How would you replay the event. How would you tell the difference between completed work and a polite lie from the environment.
+The second seam is tool selection. Once a system knows it needs help from the world outside the prompt, it still has to choose the right interface. That problem grows harder as the catalog grows larger. In the abstract, "use a tool" sounds like one decision. In practice, it becomes a discrimination problem among overlapping APIs, search functions, internal services, data paths, and execution surfaces. A system can understand the task and still pick the wrong handle for it. That is one reason papers like *[Toolformer](https://arxiv.org/abs/2302.04761)* and *[Gorilla](https://arxiv.org/abs/2305.15334)* mattered when they appeared. They made tool use less mystical and more specific. The field had to stop asking whether a model could call a tool in principle and start asking whether it could identify the right one under real interface pressure.
 
-The enemy mistake here is simple. Teams treat tool use as a capability upgrade when it is really an interface design problem with consequences.
+Then comes argument filling, which is where many impressive systems fall apart in ways that look almost petty. The right tool is selected, but one field is wrong. A date arrives in the wrong order. A location is passed as free text when the schema expects an airport code. A status enum drifts. A parameter name changes in the documentation and the call quietly becomes invalid. This is not a side issue. It is often the entire action problem in miniature. The model may understand the business task perfectly and still fail because software does not reward approximation at the boundary. *[Gorilla](https://arxiv.org/abs/2305.15334)* helped make that plain by framing tool use as an API understanding problem rather than as a vague extension of general reasoning.
 
-## Tool Use Fails At Named Seams
+Even correctly formed intent is not enough. The next seam is execution itself. A system has to run the action inside a permission boundary that matches the task, with checks that keep obvious nonsense from reaching the environment. If the workflow needs read access to a database, read access is enough. If it needs to execute code, the code runs in a sandbox rather than against the open surface of a production machine. This part of the loop often receives less attention than planning because it looks mundane beside the spectacle of a model making decisions. It is not mundane at all. It is where architecture decides whether a small generation error becomes a recoverable miss or a live incident. And when the task itself spans multiple specialist capabilities rather than one narrow surface, orchestration work like *[HuggingGPT](https://arxiv.org/abs/2303.17580)* becomes relevant because the controller has to route execution cleanly instead of pretending one generic node can do everything.
 
-Production systems do not fail at action in the abstract. They fail at seams.
+The fifth seam is result integration, and it is the one teams routinely underestimate. Tool output is not self-explanatory just because it comes from a real system. An API may return an acknowledgment that means queued rather than complete. A database query may succeed but expose partial data. A shell command may emit a long stack trace that contains the one line that matters buried under noise. If raw output is dumped back into the model as a block of text, the system is pushed back toward the same ambiguity that made plain text a weak action representation in the first place. Reliable loops therefore do not only constrain invocation. They also constrain observation. Results have to come back in a shape the next step can reason over without guessing what happened.
 
-![Slide 3: Deconstructing the Action Monolith](assets/asset-b8dcd55843db1e4b.png)
+![Slide 8: The Default Action Blueprint](assets/asset-e451805b59cabd23.jpeg "Slide 8: The Default Action Blueprint")
 
-Sometimes the seam is tool need detection. The workflow stays in prose too long and answers from plausibility when it should have reached for live state. Sometimes the seam is tool selection. Several interfaces look close enough that the wrong one gets chosen even though the task itself was understood. Sometimes the seam is argument construction. The right surface gets called with the wrong enum, unit, or field shape, which is exactly what happened to `currency_code`.
+Seen together, these seams explain why action systems have such a different feel from ordinary chatbot evaluation. The public tends to judge by surface confidence. Did the final answer look coherent. Did the system sound sure of itself. Did the demo keep moving. Builders cannot afford that luxury. They need to know whether the right tool was chosen, whether the arguments were valid on the first try, whether execution succeeded safely, whether recovery happened after failure, and whether the entire sequence can be replayed after the fact. The unit of trust is no longer the paragraph. It is the action trace.
 
-Then comes execution scope. A tool that can search docs should not share the same trust posture as a tool that can submit a purchase order, delete a record, or send a customer-facing message. Least privilege is not a security ornament here. It is part of the action architecture itself.
+![Slide 13: Measuring the Action Layer](assets/asset-59c8679a93aa5716.jpeg "Slide 13: Measuring the Action Layer")
 
-![Slide 10: Enforcing Least-Privilege Execution](assets/asset-f0b4d5fc396bcc1d.png)
+## Choosing the Surface
 
-The final seam is result interpretation, and teams underrate it constantly. A queued job is read as a completed job. A warning is treated as success. A partially rendered browser state is treated as permission to proceed. A raw environment message becomes control policy by accident. If the observation side of the boundary is weak, the next reasoning step proceeds from fiction.
+This is also where the choice of action surface starts to matter more than many teams expect. If a clean API exists, that is usually the best place to begin because the environment already exposes a contract designed for machines. Code is the right surface when the task needs reproducibility, transformation, or testable logic. SQL belongs here as well, especially in enterprise work, because many high-value tasks are really structured data questions wearing the costume of general intelligence. Browser action enters only when the system that matters exposes no usable interface beyond the web itself. GUI action sits even farther out at the edge, where the software world has given the agent nothing but pixels, visual ambiguity, and shifting layouts.
 
-That seam view is more useful than almost any benchmark summary because it tells you what to instrument. If the system keeps choosing the wrong tool, strengthen the catalog and the retrieval layer around it. If it chooses correctly but fills arguments badly, fix schemas and validation. If it keeps moving forward on ambiguous state, strengthen the observation contract. The lazy move is to call all of this model behavior and go shopping again.
+![Slide 7: Surface Selection Heuristics](assets/asset-1cde0b95350dd403.jpeg "Slide 7: Surface Selection Heuristics")
 
-## Observation Is Part Of The Interface
+Each step away from typed interfaces increases the interpretive burden placed on the system. Browser control can still be effective, but selectors drift, page flows change, and completion is often implied rather than declared. GUI control is weaker still because the system is forced to infer structure from screenshots and coordinate systems that were designed for human eyes rather than machine contracts. That is exactly the pressure described by *[WebAgent](https://arxiv.org/abs/2307.12856)* on the browser side and by *[OmniParser](https://arxiv.org/abs/2408.00203)* once the interface collapses into pixels. This is why the most theatrical demos can be the least informative. A model clicking through a desktop may look more agentic than a typed service call. The quieter system is often the one with the stronger boundary.
 
-Many teams define what the model can send and barely define what the model is allowed to conclude from what comes back.
+![Slide 12: The GUI and Vision Bottleneck](assets/asset-7e44ced62a95967d.jpeg "Slide 12: The GUI and Vision Bottleneck")
 
-That omission is expensive. If tool results arrive as raw HTML, raw logs, or broad success language, the model has to infer too much. It may infer correctly often enough to look competent, which is exactly why the failure survives. A trustworthy action loop should not depend on whether the model happens to guess correctly about deferred writes, warning states, or retriable errors.
+That pattern shows up again in software engineering, which is why work like *[SWE-agent](https://arxiv.org/abs/2405.15793)* landed with such force. The point was not that code agents had become magically autonomous. The point was that repositories, shells, file operations, and tests form an action surface with harder feedback than prose ever can. A test passes or fails. A file edit applies or does not. An error log exposes the mismatch between intent and environment. Once a model can work inside that loop, the conversation about capability becomes less theatrical and more operational. The same logic extends to data systems. When an agent speaks SQL against live schemas instead of pretending to reason over exported text, the environment itself does part of the truth maintenance, which is why benchmarks like *[Spider 2.0](https://arxiv.org/abs/2411.07763)* matter more than older, cleaner text-to-SQL setups.
 
-![Slide 11: Handling Failure with State, Not Apologies](assets/asset-2386db94eb73ab4f.png)
+![Slide 11: Software and Structured Data as Action Surfaces](assets/asset-5b1082b141442dde.jpeg "Slide 11: Software and Structured Data as Action Surfaces")
 
-Important actions need observation contracts as explicit as their invocation contracts.
+## The World These Systems Need
 
-```json
-{
-  "status": "queued",
-  "write_applied": false,
-  "reason_code": "WAITING_APPROVAL",
-  "requires_review": true,
-  "next_allowed_action": "poll_after_approval"
-}
-```
+What emerges from all of this is a less glamorous view of agency and a more useful one. Reliable action is not a product of eloquence. It is a product of structure. Models improve, but they only become dependable workers when the surrounding world gives them surfaces that can be called precisely, observed clearly, and audited afterward. The transcript ends on the right provocation because it pushes the argument beyond model quality and into system design. If agents struggle in real environments, the bottleneck may not be that they lack intelligence. The bottleneck may be that we have spent decades building software for human interpretation and very little of it for machine action.
 
-That object is doing more than reporting state. It is telling the reasoning layer what reality now allows. A raw message saying "request received" does not do that. It forces the model to invent the missing policy in its own head.
+That possibility has a strange implication. The future of agents may depend less on teaching models to cope with every ambiguity in our software world and more on changing that world so ambiguity recedes at the boundary. Better schemas, cleaner APIs, typed observations, narrower permissions, and machine-readable state are not support work around the edges of intelligence. They are the conditions under which intelligence can act without dissolving into theater. For a long time the field treated tool use as a feature. It is starting to look more like an interface discipline. That is a quieter conclusion than the industry usually prefers. It is also the one most likely to hold.
 
-![Slide 9: The Closed-Loop Action Architecture](assets/asset-4b9fea286c0770e2.png)
+![Slide 16: The Bottom Line](assets/asset-f49bf980901e8282.jpeg "Slide 16: The Bottom Line")
 
-## Choose The Narrowest Surface
+## References
 
-Broader action surfaces are usually a decline in reliability rather than an upgrade in maturity. A typed API gives you argument checks, scoped permissions, idempotence hooks, and cleaner return objects. Code or SQL can give you replayability and local verification when the work is transformation, analysis, or constrained data change. Browser action becomes necessary when the system of record exposes no cleaner path, but it inherits brittle page state and thinner feedback. GUI action is the expensive last resort for closed environments. The reach is broader. The contract is weaker.
+[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is breadth. It maps the full foundation-agents landscape across action, memory, reasoning, coordination, optimization, and safety. This essay is a narrowed public extraction from that larger survey: it pulls out the action chapter, compresses it into a single narrative arc, and keeps only the design pressures that matter most for builders trying to understand when language becomes accountable software behavior.
 
-![Slide 4: Explicit Action Representation and the Environment Ladder](assets/asset-9799f8e2e7ce4f3d.png)
+[Chapter 8 Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md) is the builder-facing backbone for this chapter. Its key contribution is not new research but disciplined synthesis. It reduces the action problem to three design questions, fixes the action-surface hierarchy, names the representation ladder, and turns the literature into operating defaults around execution, observation, recovery, evaluation, build order, and anti-patterns.
 
-The decision rule should stay severe. Choose the narrowest action surface that still reaches the work.
+[Action Systems and Tool Use transcript](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/artifacts/transcript_Action%20Systems%20and%20Tool%20Use_full.txt) is the direct narrative source behind this draft. Its key contribution is structural rather than scholarly. It provides the progression this essay follows: the boundary between describing and performing work, the ladder from plain text to typed calls, the five failure seams of tool use, the escalation across action surfaces, and the closing argument that machine-readable environments matter as much as smarter models.
 
-![Slide 5: Navigating the Five Action Surfaces](assets/asset-ab735fbcfe2cd883.png)
+[Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) is the conceptual bridge from language-only generation to explicit tool use. Its key contribution is showing that tool invocation can become part of a model's operating pattern rather than a wrapper bolted on from outside. That matters here because the essay treats tool use as a native behavioral shift, not as a decorative product feature.
 
-The escalation rule follows from that sentence. Start with a typed API if it exists. Move to code or SQL when the work is governed by a constrained machine surface rather than a remote application boundary. Move to browser action only when the required operation is not exposed cleanly. Move to GUI only when every cleaner interface is unavailable. Wider surfaces are not prestige. They are taxes.
+[Gorilla: Large Language Model Connected with Massive APIs](https://arxiv.org/abs/2305.15334) narrows the action problem to API understanding and argument construction. Its key contribution is making clear that many failures do not come from weak general reasoning but from choosing the wrong interface or filling the schema incorrectly. That is why this essay treats argument accuracy as one of the main failure seams.
 
-![Slide 6: Designing for Absolute Reproducibility](assets/asset-225471a28d552167.png)
+[HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face](https://arxiv.org/abs/2303.17580) contributes the controller view of action. It treats the language model as an orchestrator that plans, routes, and integrates specialist capabilities instead of trying to do every subtask itself. That matters for this chapter because action systems often fail when one generalist node is forced to carry work that should have been delegated across narrower tools.
 
-That preference for narrow surfaces is not only about safety. It is about keeping action legible enough that a team can replay it, audit it, and improve it without reverse-engineering the model's intentions after the fact.
+[SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](https://arxiv.org/abs/2405.15793) is the clearest action paper for code as a serious operating surface. Its key contribution is showing that repositories, bounded editing commands, tests, and environment feedback form an interface that can make failure local and measurable. This is why the essay treats code as a stronger action representation than prose whenever reproducibility matters.
 
-![Slide 7: Operating on Enterprise Reality](assets/asset-7a3e362f66c0ab5a.png)
+[A Real-World WebAgent with Planning, Long Context Understanding, and Program Synthesis](https://arxiv.org/abs/2307.12856) is the anchor reference for browser-native action. Its key contribution is showing that web execution is not just clicking but a systems problem involving decomposition, long-context page understanding, and generated actions over unstable interfaces. That supports the essay's claim that browser automation is real action, but weaker and more brittle than typed machine surfaces.
 
-This is why papers such as *Toolformer*, *Gorilla*, and *SWE-agent* mattered. They moved the argument away from "can the model use tools" and toward a colder question: what kind of action boundary lets a system fail in ways a builder can still diagnose.
+[Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows](https://arxiv.org/abs/2411.07763) pushes the database story out of the toy-benchmark regime. Its key contribution is showing that enterprise SQL work means huge schemas, multiple dialects, codebases, metadata, and multi-step workflows rather than neat textbook prompts. That is why the essay treats SQL as a first-class action surface instead of a side case.
 
-![Slide 8: Interacting with Closed and Visual Systems](assets/asset-884046c8ccc3601b.png)
-
-This is also where the builder view becomes more useful than the benchmark view. The problem is not whether a model can touch a tool in principle. The problem is whether the action surface leaves behind enough structure to verify what happened, recover when it fails, and keep escalation expensive enough that teams do not jump to the weakest boundary first.
-
-## Action Should Reduce Uncertainty Before It Creates Consequence
-
-The deepest practical use of action is not simply to finish the workflow. It is to reduce uncertainty before uncertainty becomes expensive.
-
-Validate the payload before the write. Poll the real status endpoint before trusting a queued job. Query the live record before reasoning from stale memory. Ask the environment what changed instead of narrating what probably changed. The best action loops do not only perform tasks. They force the system back into contact with state.
-
-![Slide 13: Measuring Action Reality vs. Vibes](assets/asset-4832619a70591850.png)
-
-That is why action belongs at the front of the public run. It is where agent rhetoric stops being cheap. Once a workflow can act, continuity pressure arrives immediately. The next question is no longer whether the system can do something. It is what parts of its own past it should be allowed to carry forward and trust the next time consequence enters the loop.
-
-![Slide 14: Critical Structural Anti-Patterns](assets/asset-a830dab24ee5ff75.png)
-
-*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
-
-## Selected Sources
-
-[Toolformer](https://arxiv.org/abs/2302.04761). Toolformer matters because it made tool invocation legible as part of competence rather than a theatrical wrapper around language generation. For this doctrine, its importance is not that the model can call a tool at all. It is that useful work starts when language chooses an interface that can change state.
-
-[Gorilla](https://arxiv.org/abs/2305.15334). Gorilla matters because it narrowed tool use down to interface discrimination and argument construction. That is exactly where many production failures live. A workflow can understand the task and still fail because the boundary object was wrong.
-
-[SWE-agent](https://arxiv.org/abs/2405.15793). SWE-agent matters because it shows what a replayable action surface looks like once the environment returns machine-checkable feedback. The chapter leans on that lesson heavily. Narrow, inspectable action loops beat broader but blurrier ones because improvement depends on localized failure, not on impressive transcripts.
-
-For the broader terrain this essay leaves out on purpose, read the [Action Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion-v7.md). For the operator layer, build order, and anti-patterns, read the [Action Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md).
-
-![Slide 15: Action Must Be Bounded and Measurable](assets/asset-1c4aaf62decd6086.png)
+[OmniParser for Pure Vision Based GUI Agent](https://arxiv.org/abs/2408.00203) is the cleanest reference for the GUI perception bottleneck. Its key contribution is not proving that computer use is solved, but isolating the parsing problem that stands between screenshots and usable machine structure. That matters here because the essay's warning about GUI action rests on exactly this point: pixels are a weak contract unless another layer reconstructs the structure machines need.

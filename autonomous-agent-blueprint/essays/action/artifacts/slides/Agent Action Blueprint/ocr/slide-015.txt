@@ -1,0 +1,10 @@
+Critical Anti-Patterns
+
+Starting with general computer use as the default action surface.
+Granting broad permissions or letting one agent hold every tool.
+Mixing planning and execution privileges in one unrestricted node.
+Treating raw, unnormalized tool output as final truth.
+
+Shipping action layers without comprehensive logs and replayability.
+
+Ai NotebookLM

@@ -3,9 +3,7 @@
 Date: 2026-03-27
 URL: https://lambpetros.substack.com/p/operating-agents-preface-a-field
 
-# Operating Agents Preface: A Field Guide to Building Reliable Agent Systems
-
-![Rooted Layers Guides Cover](assets/asset-5f9b1351ea5f28dc.png)
+![](assets/asset-641c2bb92df1621d.jpeg)
 
 A team spent six weeks improving an operations agent by editing the surface everybody could see. First they swapped in a newer model after the old one kept mishandling edge cases. Then they lengthened the system prompt after the model swap still let bad escalations through. Neither change touched the incident that finally forced a redesign. In one afternoon the agent pushed a batch of internal tickets forward as completed even though the downstream service had only queued them for later approval.
 
@@ -67,3 +65,7 @@ That is the doctrine this bundle is trying to install. Not maximum autonomy. Not
 [Not What You've Signed Up For](https://arxiv.org/abs/2302.12173). Greshake and colleagues matter because they changed the safety question from prompt strength to trust separation. Once external content can influence planning and action, safety stops being a style problem and becomes an architecture problem. That shift underwrites the whole series.
 
 [OPRO](https://arxiv.org/abs/2309.03409). OPRO matters less here for prompt search itself than for the prerequisite it makes impossible to ignore. Optimization only begins once there is an objective and a repeatable evaluation loop. That is why this bundle treats optimization as late work for already legible systems rather than as an early badge of sophistication.
+
+![](assets/asset-51a017fac1748bc4.png)
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.

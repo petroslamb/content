@@ -1,0 +1,85 @@
+selecting the Action Surface:
+The Diagnostic Matrix
+
+Action surface
+
+Best use
+
+Main strength
+
+Main risk
+
+Escalate when
+
+Typed API tools
+
+business systems
+with good interfaces
+
+replayable and
+inspectable
+
+weak schemas or
+wrong arguments
+
+The required system
+has no usable API.
+
+Code execution
+
+software and data
+tasks
+
+executable, testable,
+replayable
+
+unsafe scope If
+poorly sandboxed
+
+The target system is
+external and Ul-bound.
+
+Database / SQL
+
+analytics and
+structured data work
+
+strong structure and
+measurable outputs
+
+schema drift and
+unsafe queries
+
+Tasks depend on web or
+GUI state instead.
+
+Browser action
+
+web-native
+workflows
+
+works where APIs are
+incomplete
+
+brittle selectors and
+page changes
+
+DOM access is not
+enough or the system is
+highly visual.
+
+GUI action
+
+closed or legacy
+interfaces
+
+reaches otherwise
+inaccessible systems
+
+highest fragility and
+weakest observability
+
+Only when every cleaner
+surface is unavailable.
+
+Ai NotebookLM

@@ -1,0 +1,25 @@
+Recommended Build Order
+
+4, GUI Add only for constrained
+automation legacy cases.
+
+Add where the environment
+Strictly demands It.
+
+3. Browser
+
+/ SQL
+
+2. Code
+execution
+
+Add for tasks requiring reproducibility.
+
+1. Typed tool
+calls (APIs)
+
+Start here.
+
+Expand tool catalogs only after measuring and mitigating failure modes in the current tier.
+
+Ai NotebookLM

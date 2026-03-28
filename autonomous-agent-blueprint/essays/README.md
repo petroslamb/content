@@ -1,6 +1,6 @@
 # Essays: Operating Agents
 
-This folder contains the public *Operating Agents* essay package. Each topic folder keeps the current `v7` essay, the archived `v6` baseline, the current companion, its local README, and any presentation artifacts together.
+This folder contains the live *Operating Agents* essay package. Each topic folder now holds one canonical live essay, one root-level `companion-v7.md`, presentation artifacts when they exist, and a local `archive/` folder for historical drafts, prior companions, local READMEs, and older publication candidates.
 
 ## Doctrine Goal
 
@@ -20,8 +20,6 @@ For this package, `A+++` means doctrine-level public writing:
 
 If a serious builder cannot lift a sentence from a chapter and use it to clarify an architecture argument next week, the essay is not finished.
 
-`v7` is the live publication candidate. `v6` remains the archived comparison baseline.
-
 ## Folder Map
 
 - `launch-note/` - series framing
@@ -31,32 +29,34 @@ If a serious builder cannot lift a sentence from a chapter and use it to clarify
 - `multi-agent/` - multi-agent design
 - `safety/` - safety and attack surfaces
 - `optimization/` - optimization bonus post
-- `video-production-workflow.md` - chapter video replacement workflow for the long-form YouTube course
-- `operating-agents-coverage-map-v7.md` - bridge from the live essays to companions, blueprints, source notes, and the wider survey
 
 ## What Lives In A Topic Folder
 
-Each topic folder contains the current `v7` essay, the archived `v6` essay baseline, the current `companion-v7.md`, the earlier companion baseline, the local `README.md`, and `artifacts/` when presentation material exists.
+Each topic folder contains:
 
-The companion is intentionally local now. It is not a short appendix or a bare reference list. It is a substantial second-pass essay for the interested reader: broader chapter terrain, booklet context, omitted method surface, and fuller source interpretation that would have overcomplicated the public post.
+- one canonical live essay file
+- one root-level `companion-v7.md`
+- `artifacts/` when presentation material exists
+- a local `archive/` folder for earlier drafts, prior baselines, and historical support files
 
 ## Reading Order
 
-### Current narrative order
+### Live essay layer
 
-1. `launch-note/00-launch-note-v7.md`
-2. `action/01-action-tool-use-v7.md`
-3. `memory/03-memory-v7.md`
-4. `reasoning/02-reasoning-planning-v7.md`
-5. `multi-agent/04-multi-agent-v7.md`
-6. `safety/05-safety-v7.md`
-7. `optimization/06-optimization-v7.md`
+- `action/01-action-tool-use.md`
+- `memory/02-memory-systems-and-authority.md`
+- `reasoning/03-reasoning-scaffolds-and-planning.md`
+- `multi-agent/04-multi-agent-boundaries-and-handoffs.md`
+- `safety/05-trust-boundaries-and-agent-safety.md`
+- `optimization/06-workflow-optimization-and-evaluation.md`
+
+Use the local `archive/` folder inside a topic if you need earlier drafts, prior baselines, or `with-slides` variants. The launch note and breadth-layer materials currently live under `launch-note/archive/`.
 
 ### Topic-to-blueprint mapping
 
 - Action essay `01` -> `../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
-- Reasoning essay `02` -> `../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`
-- Memory essay `03` -> `../core/practical-chapter-blueprints/01-memory-blueprint.md`
+- Memory essay `02` -> `../core/practical-chapter-blueprints/01-memory-blueprint.md`
+- Reasoning essay `03` -> `../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`
 - Multi-agent essay `04` -> `../core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md`
 - Safety essay `05` -> `../core/practical-chapter-blueprints/06-safety-blueprint.md`
 - Optimization essay `06` -> `../core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md`

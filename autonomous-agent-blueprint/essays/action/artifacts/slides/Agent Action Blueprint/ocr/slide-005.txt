@@ -1,0 +1,54 @@
+Decomposing the ‘Tool Use’ Monolith
+Tool use is not a single capability; it is a five-stage execution pipeline.
+
+LLM
+Reasoning
+
+1. Need
+Detection
+
+Does the current
+state require
+external data or
+action?
+
+2. TOOL
+Selection
+
+Which tool from
+the catalog
+solves this
+specific need?
+
+3. Argument
+Filling
+
+Constructing the
+exact
+
+schema-
+compliant
+payload.
+
+od
+
+4. Safe
+Execution
+
+Running the
+payload ina
+bounded,
+least-privilege
+sandbox.
+
+~
+
+5. Integration
+
+Formatting the
+result to return
+cleanly to the
+
+reasoning loop.
+
+Ai NotebookLM

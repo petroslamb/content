@@ -1,15 +1,15 @@
-# Operating Agents II: Memory Needs Authority
+# Operating Agents II: Memory Systems and Authority
 
 Date: 2026-03-27
 URL: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
 
-# Operating Agents II: Memory Needs Authority
+*Part of the Operating Agents series, a builder-first run on how modern agent systems actually work once language leaves the prompt and starts acting inside software.*
 
-Read with: [Memory Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion-v7.md) and [Memory Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md).
+#### Video TL;DR
 
 Memory follows because useful systems need a rule for what the past is still allowed to govern. Retrieval quality matters, but only after the workflow decides what should persist, what has lost authority, and what should be retired.
 
-![Slide 1: The AI Memory Blueprint](assets/asset-29c9e82b8b67188e.png)
+![Slide 1: The AI Memory Blueprint](assets/asset-da3f060d35e50235.jpeg "Slide 1: The AI Memory Blueprint")
 
 An internal policy assistant worked well in its first months. It answered benefits questions, surfaced current rules, and drafted quick compliance summaries with enough confidence that teams started treating it like background infrastructure. Then the failures changed shape. The answers were not obviously invented. They were outdated in operationally dangerous ways. A policy revision from three months ago failed to outrank the older version. A retired vendor relationship still appeared as active. A restructuring note from last quarter kept leaking into current org questions.
 
@@ -19,7 +19,9 @@ The team blamed retrieval first. They adjusted embeddings, chunking, and reranki
 
 Memory is governance over time, not storage.
 
-![Slide 2: Retrieval Quality Decay](assets/asset-ef9b9ae1b9670fd9.png)
+That framing is the memory distillation taken here from the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and tightened in the local [memory blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md). The transcript gives the piece its sequence, but the argument itself is narrower and colder than the usual retrieval story: a memory system fails long before retrieval if it never decided what the past is still allowed to govern.
+
+![Slide 2: Retrieval Quality Decay](assets/asset-35ab70d937ad39c1.jpeg "Slide 2: Retrieval Quality Decay")
 
 ## Retrieval Was Only The Messenger
 
@@ -31,35 +33,35 @@ The enemy mistake here is simple and costly. Teams notice stale or contaminated 
 
 ## MemGPT Changed The Question
 
-*MemGPT* mattered because it arrived while much of the field was still framing memory as longer context versus shorter context. The paper asked a colder question. What if the active context window should be treated as scarce fast memory and external stores should be treated as slower tiers that must be managed deliberately.
+*[MemGPT](https://arxiv.org/abs/2310.08560)* mattered because it arrived while much of the field was still framing memory as longer context versus shorter context. The paper asked a colder question. What if the active context window should be treated as scarce fast memory and external stores should be treated as slower tiers that must be managed deliberately.
 
 That move changed the operator question from "how much can I stuff into context" to "what belongs in active context now, what should live elsewhere, and what has lost the right to guide the current task." The operating-system analogy matters because it turns memory into a control problem. Explicit movement. Explicit tiers. Explicit pressure on what deserves to stay live.
 
 The durable contribution is not the metaphor by itself. It is the discipline that follows from it. A useful memory layer needs admission rules, derivation rules, freshness rules, and retirement rules. Otherwise the system's past becomes a crowd rather than a governed asset.
 
-![Slide 3: Four Distinct Memory Questions](assets/asset-e20699aa783c95c8.png)
+![Slide 3: Four Distinct Memory Questions](assets/asset-40d45397e066abfc.jpeg "Slide 3: Four Distinct Memory Questions")
 
 ## Four Kinds Of Past, Four Kinds Of Control
 
 The strongest practical contribution of the memory literature is not one storage mechanism. It is the insistence that different kinds of past fail differently.
 
-![Slide 4: The Physical Workspace Analogy](assets/asset-84a02ef5bae2f053.png)
+![Slide 4: The Physical Workspace Analogy](assets/asset-125b40de483af4a6.jpeg "Slide 4: The Physical Workspace Analogy")
 
 Working memory is current task state. It holds the active question, the plan, recent tool outputs, the evidence packet under review, and the scratch state the next step requires. Its failure mode is overload. If everything enters by default, nothing important dominates attention.
 
 Semantic memory is durable fact. Policies, docs, product knowledge, approved records, current reference data. Its failure mode is staleness and contamination. A semantically relevant chunk can still be superseded, adversarial, or simply wrong for the present state of the world.
 
-![Slide 5: Active State vs Durable Knowledge](assets/asset-1d06fd3ff487e22d.png)
+![Slide 5: Active State vs Durable Knowledge](assets/asset-b4e8481661fe94fd.jpeg "Slide 5: Active State vs Durable Knowledge")
 
 Episodic memory is prior experience. Past runs, corrections, approvals, near misses, reviewer comments, and notable failures. Its failure mode is amnesia of experience. The organization learns something the hard way and the system pays to relearn it.
 
 Procedural memory is reusable know-how. Templates, routines, playbooks, code snippets, validated tactics. Its failure mode is rediscovery. The same small class of problems gets solved from zero again and again because nothing durable was promoted out of event history.
 
-![Slide 6: Traces and Reusable Know-How](assets/asset-0b2770692d11efbf.png)
+![Slide 6: Traces and Reusable Know-How](assets/asset-19b08b7703619284.jpeg "Slide 6: Traces and Reusable Know-How")
 
 Those are not cognitive ornaments. They are four governance problems.
 
-```json
+```
 {
   "memory_type": "semantic",
   "content": "Vendor reimbursement policy updated: director approval required above 5000 EUR.",
@@ -76,15 +78,15 @@ The decision rule follows directly. Separate working, semantic, episodic, and pr
 
 ## Memory Needs Admission And Retirement
 
-*MemoryBank* mattered because it attacked one of the field's laziest assumptions. The assumption was that retention is always a virtue and forgetting is always a defect. That sounds flattering until a system has to operate over time. Then decay, refresh rules, and pruning start looking less like weakness and more like hygiene.
+*[MemoryBank](https://arxiv.org/abs/2305.10250)* mattered because it attacked one of the field's laziest assumptions. The assumption was that retention is always a virtue and forgetting is always a defect. That sounds flattering until a system has to operate over time. Then decay, refresh rules, and pruning start looking less like weakness and more like hygiene.
 
-![Slide 7: The Memory Lifecycle Pipeline](assets/asset-fdd310a2b1e213ee.png)
+![Slide 7: The Memory Lifecycle Pipeline](assets/asset-6ad215ca3b0bc329.jpeg "Slide 7: The Memory Lifecycle Pipeline")
 
 The paper's lasting contribution is not the metaphor it used. It is the restoration of forgetting to the center of correctness. Without decay or retirement, a memory system becomes less trustworthy over time even if retrieval still looks superficially good. The store accumulates ghosts of prior truth states and keeps returning them as though recency and authority were the same thing.
 
-![Slide 8: Forgetting Is Mandatory](assets/asset-7724f04ae76dece4.png)
+![Slide 8: Forgetting Is Mandatory](assets/asset-cec8feaaf32767c7.jpeg "Slide 8: Forgetting Is Mandatory")
 
-That is also where derivation becomes non-negotiable. A durable memory object is often not the conversation itself. It is the extracted fact, the consolidated note, the promoted routine, or the retired lesson that outlives the raw transcript. *Mem0* pushed the literature in that direction, and production systems should do the same. Useful memory is selective memory.
+That is also where derivation becomes non-negotiable. A durable memory object is often not the conversation itself. It is the extracted fact, the consolidated note, the promoted routine, or the retired lesson that outlives the raw transcript. *[Mem0](https://arxiv.org/abs/2504.19413)* pushed the literature in that direction, and production systems should do the same. Useful memory is selective memory.
 
 The escalation rule should therefore stay conservative. Do not reach for richer retrieval structures until write policy, provenance, freshness, derivation, and forgetting are already explicit. If those layers are still weak, a richer memory substrate mostly gives the clutter better geometry.
 
@@ -92,26 +94,28 @@ The escalation rule should therefore stay conservative. Do not reach for richer 
 
 The practical memory lesson is plain.
 
-![Slide 9: The Unified Memory System](assets/asset-1ca30f9b910cf983.png)
+![Slide 9: The Unified Memory System](assets/asset-dd787143132791b8.jpeg "Slide 9: The Unified Memory System")
 
 Keep working memory small and task-bound. Treat semantic memory as an authority layer with provenance, freshness, and retirement rules. Treat episodic memory as operational history with outcome and context. Treat procedural memory as earned competence rather than a junk drawer for every clever move that worked once.
 
 The wrong-layer failure is especially damaging because it feels superficially reasonable. Teams dump transcripts into semantic memory, policies into episodic records, or tentative tactics straight into procedural memory. The retrieval layer then faithfully returns the wrong kind of object. Similarity answers "does this match the query." It does not answer "should this still guide the system."
 
-![Slide 13: Critical Failure Modes](assets/asset-b2b5bd125fe6803a.png)
+![Slide 13: Critical Failure Modes](assets/asset-4fae5991a076b086.jpeg "Slide 13: Critical Failure Modes")
 
 Memory is not the art of keeping more. It is the discipline of keeping the right things in the right form for the right length of time. A trustworthy memory layer returns sanctioned state with provenance and expiry, not merely semantically nearby fragments from a crowded past that still happen to sound relevant. Good memory policy protects the present from the past.
 
-*These essays share one claim. Reliable agents do not come from stacking more visible capability on top of a strong model. They come from explicit operating layers a reviewer can still inspect when something breaks: action surfaces, memory policy, reasoning scaffolds, role boundaries, trust boundaries, and evaluation loops. Once a workflow can touch tools, durable state, approvals, or untrusted content, the architecture below the model decides whether the system is dependable.*
+## References
 
-## Selected Sources
+[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is breadth. It maps the wider foundation-agents stack across action, memory, reasoning, coordination, safety, and optimization. This essay is a narrowed public extraction from that larger survey, focusing only on the memory argument that matters for builders: the past becomes dangerous when it keeps influencing the workflow without explicit authority.
 
-[MemGPT](https://arxiv.org/abs/2310.08560). MemGPT matters because it broke the lazy equation between more context and better memory. Its enduring value for this doctrine is the tiering mindset. Active context, external storage, and movement between them have to be governed explicitly if memory is going to help rather than interfere.
+[Chapter 6 Blueprint: Memory Systems and Authority](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md) is the builder-facing backbone for this chapter. Its key contribution is synthesis under operational constraints. It separates working, semantic, episodic, and procedural memory into different governance problems, then translates the literature into concrete rules around admission, provenance, freshness, derivation, retirement, and forgetting.
 
-[MemoryBank](https://arxiv.org/abs/2305.10250). MemoryBank matters because it put decay and refresh back into the center of the conversation. That is essential to the chapter's law. Forgetting is not a weakness in a long-lived system. It is part of how retained state stays current enough to deserve trust.
+[The Four Layer AI Memory Blueprint transcript](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/artifacts/transcript_The%20Four%20Layer%20AI%20Memory%20Blueprint_full.txt) is the direct narrative source behind this draft. Its key contribution is structural. It gives the essay its sequence: the failure archetype of stale retrieval, the distinction between storage and governance, the tiering insight from operating-system style memory, the four memory types, and the insistence that forgetting is part of correctness rather than the opposite of it.
 
-[Mem0](https://arxiv.org/abs/2504.19413). Mem0 matters because it pushes the literature toward derived memory objects rather than transcript hoarding. The doctrine depends on that move. Durable memory should usually be an extracted fact, promoted routine, or consolidated lesson rather than a raw conversational heap that retrieval later has to reinterpret.
+*[MemGPT](https://arxiv.org/abs/2310.08560)* matters because it broke the lazy equation between more context and better memory. Its enduring contribution is the tiering mindset. Active context, external storage, and movement between them have to be governed explicitly if memory is going to help rather than interfere. This essay borrows that move to treat memory as a control problem rather than a storage contest.
 
-For the broader terrain this essay leaves out on purpose, read the [Memory Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion-v7.md). For the operator layer, layer choices, and lifecycle rules, read the [Memory Blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md).
+*[MemoryBank](https://arxiv.org/abs/2305.10250)* matters because it put decay and refresh back into the center of the conversation. Its key contribution is restoring forgetting to the architecture. In long-lived systems, retained state does not stay trustworthy by default. It has to lose authority, refresh, or disappear. That is why this essay treats retirement as part of correctness rather than as cleanup around the edges.
 
-![Slide 15: Memory Is Governable State](assets/asset-9a01bf54e1edd0c6.png)
+*[Mem0](https://arxiv.org/abs/2504.19413)* matters because it pushes the literature toward derived memory objects instead of transcript hoarding. Its key contribution is the idea that durable memory should usually be an extracted fact, a promoted routine, or a consolidated lesson rather than the raw conversation itself. That distinction is central to this essay's claim that useful memory is selective memory.
+
+![Slide 15: Memory Is Governable State](assets/asset-541187aec58b8fbb.jpeg "Slide 15: Memory Is Governable State")
