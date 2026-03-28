@@ -1,0 +1,25 @@
+Recommended Build Order
+
+=
+
+4 Add Self-Consiste
+when it buy
+
+3
+
+Add a small, isolated
+Verification step.
+
+2
+
+Introduce Self-Refinement
+where output S are nea r-misses i a a ae la a
+
+Escalate to Search meth
+for branching-hee
+
+1 Start with Decomposition plus ReAct.
+
+|__| a
+
+Ai NotebookLM

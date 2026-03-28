@@ -1,0 +1,16 @@
+Operating on Enterprise Reality
+
+Many valuable workflows are not web Structured Data Graph
+assistants; they are structured-data agents.
+
+Choose Database/SQL action when the
+agent must query, transform, or reason
+over core business data.
+
+Key Risk: Schema drift and unsafe,
+unrestricted query execution.
+
+[BIRD] | - Shifting from benchmark prompts to
+[Spider 2.0]| realistic enterprise workflow complexity.
+
+Ai NotebookLM

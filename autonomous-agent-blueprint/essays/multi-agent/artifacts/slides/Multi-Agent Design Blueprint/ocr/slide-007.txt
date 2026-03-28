@@ -1,0 +1,19 @@
+Add a critic overlay strictly to verify high-value outputs.
+
+Pattern: Critic or
+Reviewer Overlay.
+
+Best Use: Higher-stakes decisions
+or high-value artifacts where
+independent review is needed.
+
+Constraint: Do not add this
+extra cost to easy tasks where
+Simple, single-agent
+verification would be cheaper
+and sufficient.
+
+Primary
+Agent
+
+Ai NotebookLM

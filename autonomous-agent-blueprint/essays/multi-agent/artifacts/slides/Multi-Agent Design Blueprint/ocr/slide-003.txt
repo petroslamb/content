@@ -1,0 +1,10 @@
+Architecture begins with four practical workflow questions.
+
+O
+
+Is one agent enough? If not, what roles should be split?
+How should those roles Where does human supervision
+
+exchange work? remain mandatory?
+
+Ai NotebookLM

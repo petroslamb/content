@@ -1,0 +1,42 @@
+The Memory Evaluation Stack
+
+(PA \VCISNC AGM
+
+Retrieval
+Relevance
+
+Accuracy on real
+tasks.
+
+Stale-Memory
+Rate
+
+How much outdated
+state survives.
+
+Token
+Savings
+Compared to
+
+full-history
+baselines.
+
+Correction
+Recurrence
+Are mistakes
+
+actually learned
+from?
+
+Write
+Precision
+How often do stored
+
+items actually
+matter later?
+
+lf amemory layer adds infrastructure cost but does not improve
+continuity, procedural reuse, or token savings, it is broken.
+
+Ai NotebookLM
+

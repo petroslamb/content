@@ -1,0 +1,10 @@
+Architectural Anti-Patterns.
+Common mistakes in agent deployment design.
+
+Treating safety as a suffix prompt Agents writing to the same
+knowledge base they later trust
+
+Assuming more agents = more safety Relying =e asa tee gat for
+ard access contro
+
+Ai NotebookLM

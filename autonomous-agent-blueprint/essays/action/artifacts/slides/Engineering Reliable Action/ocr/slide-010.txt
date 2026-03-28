@@ -1,0 +1,26 @@
+Enforcing Least-Privilege Execution
+
+: : Output Normalization
+Execution must occur In a constrained,
+
+least-privilege environment. Sandboxed Execution Environment
+Validate In: Never execute raw LLM Input Validation
+¢ output without checking schema and
+scope.
+
+The Agent
+
+Normalize Out: Standardize results
+Engine
+
+¢ before feeding them back to the
+reasoning layer.
+
+3 Schema checking
+
+Crucial: Never mix planning and
+
+execution privileges in one
+unrestricted node.
+
+Ai NotebookLM

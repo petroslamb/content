@@ -1,0 +1,11 @@
+Multi-agent design solves specific engineering problems,
+not a lack of system intelligence.
+
+Agent Theater Workflow Decomposition
+
+Multi-agent systems should be designed strictly to achieve:
+1. Role separation.
+2. Reliability through critique.
+3. Task decomposition.
+
+Ai NotebookLM

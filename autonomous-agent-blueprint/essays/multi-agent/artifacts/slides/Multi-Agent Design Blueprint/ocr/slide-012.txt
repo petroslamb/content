@@ -1,0 +1,32 @@
+Match the architectural topology directly to the
+shape of the workflow problem.
+
+Bounded
+
+Problem eee
+
+Distinct tools
+or permissions?
+
+Staged
+artifacts?
+
+Need independent
+review?
+
+Informative
+disagreement
+needed?
+
+Single Agent
+
+Orchestrator +
+Specialists
+
+Role-Based Pipeline
+
+Critic Overlay
+
+Debate / Consensus
+
+Ai NotebookLM

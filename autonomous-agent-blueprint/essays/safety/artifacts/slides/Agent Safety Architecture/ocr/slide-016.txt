@@ -1,0 +1,5 @@
+Recommended Build Order. How a team should layer
+defenses from day one to pre-deployment.
+
+1
+Day 1 Development Staging Pre-Deployment

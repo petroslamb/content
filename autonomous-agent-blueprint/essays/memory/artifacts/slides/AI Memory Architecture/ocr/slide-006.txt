@@ -1,0 +1,16 @@
+Layer 3 & 4: Traces and Reusable Know-How.
+
+Layer 3: Episodic Memory Layer 4: Procedural Memory
+
+=
+
+[Correction]
+
+Not just a raw transcript. Must support lf a behavior repeats and succeeds, it stops
+reflection and future debugging. being rediscovered from scratch and becomes
+a Callable module.
+
+Episodic memory prevents the agent from repeating avoidable mistakes. Procedural memory
+ensures successful tool sequences and code patterns become permanent capabilities.
+
+Ai NotebookLM

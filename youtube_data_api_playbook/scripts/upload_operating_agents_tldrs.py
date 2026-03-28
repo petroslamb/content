@@ -7,7 +7,7 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-SCOPES = ["https://www.googleapis.com/auth/youtube"]
+SCOPES = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 TOKEN_FILE = Path(".youtube/token.json")
 METADATA_FILE = Path("youtube_data_api_playbook/operating_agents_tldr_metadata.json")
 MAX_DESCRIPTION_LEN = 5000

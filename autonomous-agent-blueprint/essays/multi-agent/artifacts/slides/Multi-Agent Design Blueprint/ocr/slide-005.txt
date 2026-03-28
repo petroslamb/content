@@ -1,0 +1,19 @@
+Delegate bounded work when distinct roles require
+different tools or permissions.
+
+Pattern: Orchestrator Plus
+Specialists
+
+The Default Step:
+
+This is the default multi-agent
+pattern for most practical
+systems.
+
+Constraint: If two agents do the
+same kind of work with different
+names, the split is unnecessary.
+Specialists must have distinct
+evaluation criteria.
+
+Ai NotebookLM

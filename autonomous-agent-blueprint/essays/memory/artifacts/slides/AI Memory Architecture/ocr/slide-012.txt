@@ -1,0 +1,30 @@
+The Deployment Protocol:
+Recommended Build Order.
+
+Level 5
+Escalate to
+graph/advanced
+Level 4 retrieval (only
+Add procedural when justified by
+
+memory once failure analysis).
+Level 3 repeated routines
+Introduce are visible.
+
+forgetting and
+Level 2 pruning before
+Add episodic volume explodes.
+traces and post-
+
+task summaries.
+
+Level 1
+
+Semantic retrieval
++ small working
+memory.
+
+Do not build Level 5 on day one. A robust memory architecture is layered incrementally
+as task complexity exposes the limits of the previous level.
+
+Ai NotebookLM

@@ -41,3 +41,6 @@ autonomous-agent-blueprint/papers/*.pdf
 hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/papers/
 hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/essays/**/papers/*.pdf
 ethereum_llm_governance/evidence_governance_pattern/papers/
+
+# Generated long-form course renders
+autonomous-agent-blueprint/essays/*/artifacts/video/*Timed Slides.mp4

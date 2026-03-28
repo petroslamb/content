@@ -1,0 +1,30 @@
+The diagnostic matrix for escalating multi-agent complexity.
+
+Pattern Best Use Main Strength Main Risk Escalate When
+Single Most bounded Cheapest/clearest | Overloaded Role separation
+orchestrator workflows baseline responsibilities | becomes real.
+Orchestrator + Distinct Bounded delegation | Fake specialists | Handoffs become
+specialists tools/permissions | with control doing same work artifact-heavy.
+
+Staged ; sit Soe
+Role-based ae aaneat/ Strong artifact Rigidity where Independent
+pipeline flow/reviewability | tasks vary review is weak.
+
+software work
+
+res High-value Targeted reliability} Extra cost on Disagreement itself
+Crrtter over Lay outputs improvement easy tasks adds insight.
+Hard judgment Surfaces Expensive, easy Simple review no
+
+Debate/consensus
+
+tasks
+
+alternative views
+
+to overuse
+
+longer suffices.
+
+Ai NotebookLM
+

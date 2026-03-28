@@ -1,0 +1,20 @@
+Module C — Iterative Reliability
+
+Self-Refine & Reflexion
+
+Stretches critique across multiple attempts. Self-refine is cheap and effective for fixing structural near-misses.
+Reflexion stores environmental failure signals to prevent repeated mistakes in subsequent runs.
+
+| RULE: Add when the first answer is close but weak, or when the environment provides clear success/failure signals.
+
+Reflexion Memory | Lessons Learned
+
+Input Constraint
+
+TT Ne WN Failure Signal WoitN
+
+Draft Critique Revise Draft Critique Revise
+| |
+Loop 1: Attempt 1 Attempt 2
+
+Ai NotebookLM

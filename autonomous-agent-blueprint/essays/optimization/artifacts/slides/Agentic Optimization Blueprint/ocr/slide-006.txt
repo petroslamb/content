@@ -1,0 +1,39 @@
+Architectural Escalation Triggers
+
+Stop at
+Prompts
+
+Target Tools
+
+Introduce Online
+Feedback
+
+Re-architect
+Workflow
+
+When the workflow
+structure is sound, and
+failure is isolated to
+underspecified
+instructions or bad
+
+formatting in 1-2 nodes.
+
+When end-task failures
+trace back to wrong
+arguments, weak catalog
+retrieval, or poor error
+recovery.
+
+Justified only when the
+environment is bounded,
+feedback signals are
+trustworthy, and high-risk
+surfaces are protected.
+
+When node order,
+branching, or role
+assignment matters more
+than prompt wording.
+
+Ai NotebookLM

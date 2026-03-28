@@ -1,0 +1,19 @@
+The Practical Attack Surface Map. Academic research mapped directly
+to the interfaces of modern agentic systems.
+
+Plead 2 LLM InjecAgent om
+Outputs Age nt ToolEmu
+
+Agent Poison, PoisonedRAG,
+BadRAG, Machine Against
+
+Indirect Prompt
+Injection
+(Greshake et al.)
+
+Chain-of-Verification &
+Agent Smith
+
+the RAG (Jamming)
+
+Ai NotebookLM

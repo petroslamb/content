@@ -1,0 +1,15 @@
+A valid topology must demonstrably beat
+a strong single-agent baseline.
+
+Cae
+
+End-Task Coordination Latency/Cost Failure
+Quality Overhead per Handoff Localization
+
+ANTI-PATTERN: splitting_before_baseline_understood
+ANTI-PATTERN: using_chat_instead_of_typed_artifacts
+
+ANTI-PATTERN: identical_permissions_across_agents
+ANTI-PATTERN: specialists_without_specialist_metrics
+
+Ai NotebookLM

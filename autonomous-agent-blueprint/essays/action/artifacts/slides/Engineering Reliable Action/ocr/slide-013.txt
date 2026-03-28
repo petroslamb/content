@@ -1,0 +1,19 @@
+Measuring Action Reality vs. Vibes
+
+End-Task Vibes Component Reality
+
+Tool Selection: 98. 4% |
+
+Argument Accuracy: 99.1%
+
+The final answer looks good! —>
+Recovery Rate: 84%
+
+Latency/Cost: epennazen
+
+A practical action layer cannot be Measure the system by whether it executed
+evaluated by final-answer aesthetics. the right steps safely and reproducibly.
+
+Key Metrics: Retry count, action success rate, replayability, and auditability.
+
+Ai NotebookLM

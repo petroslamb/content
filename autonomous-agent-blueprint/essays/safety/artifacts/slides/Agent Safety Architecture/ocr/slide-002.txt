@@ -1,0 +1,37 @@
+Once the agent can read, remember, and act, where can an attacker or failure
+chain take control? The safety chapters answer this practical question.
+
+LLM
+
+Safe in a chat demo.
+
+—
+
+Untrusted
+Content
+
+*
+
+‘LLM |/-—
+
+—
+
+re
+
+File
+Systems
+
+N®
+
+Durable
+Memory
+
+ExecutabLe
+Tools
+
+Other
+Agents
+
+Dangerous in production.
+
+Ai NotebookLM

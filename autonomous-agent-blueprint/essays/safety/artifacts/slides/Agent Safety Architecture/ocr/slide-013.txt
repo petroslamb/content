@@ -1,0 +1,14 @@
+Boundaries 5 & 6: Skepticism and Verification. Treat inter-agent messages
+as untrusted input channels, and run explicit verification on high-stakes
+outputs before publication.
+
+Skepticism Structured Handoff / Quarantine
+[Agent A] Message Payload ca [Agent B]
+
+Verification based on CoVe
+
+Important Output [World]
+
+Explicit Verification Check
+
+Ai NotebookLM

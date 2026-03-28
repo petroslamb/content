@@ -1,0 +1,21 @@
+The Unified Memory System Schematic
+
+[Semantic Memory ]
+
+a
+co
+#
+
+[Pruning / Forgetting Cron-Job]
+: Lab Cobalt Roboto Mono
+
+Raw Input
+
+>| [Working Memory] 7
+
+[Procedural Memory | [Episodic Memory]
+
+The complete architecture separates active reasoning from durable state, while a
+background lifecycle policy prevents the system from suffocating under its own history.
+
+Ai NotebookLM

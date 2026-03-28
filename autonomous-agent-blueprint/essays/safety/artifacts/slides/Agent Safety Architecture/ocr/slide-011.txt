@@ -1,0 +1,22 @@
+Boundaries 2 & 3: Containment and Approval. Separate the
+intent to act from the execution of the act. Run tools with least
+privilege and enforce hard gates for irreversible actions.
+
+Dangerous Design secure ar
+
+(Unrestricted Path)
+
+Proposed
+Action
+Payload
+
+Containment
+Sandbox
+
+Human /
+TK Deterministic
+Gate
+
+Execute Code / API Execute Code / API
+
+Ai NotebookLM

@@ -1,0 +1,10 @@
+Inter-Agent Contamination Flow. A single adversarial
+artifact can move through agent-to-agent interactions
+and memory-sharing workflows without repeated
+
+attacker intervention.
+Adversarial a
+Artifact > as
+Fast
+
+Ai NotebookLM

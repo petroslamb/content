@@ -1,0 +1,15 @@
+Keep humans as explicit, first-class
+nodes in the workflow.
+
+Human intervention remains
+
+Human review cannot be safely te ee
+delegated in specitic contexts. - Final Approval
+
+- Ambiguous Interpretation
+- Policy Judgment
+
+Agent
+F low
+
+Ai NotebookLM

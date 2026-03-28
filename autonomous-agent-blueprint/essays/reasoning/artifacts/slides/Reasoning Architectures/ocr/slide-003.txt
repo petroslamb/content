@@ -1,0 +1,49 @@
+The Escalation
+Thesis
+
+Reasoning is not a single
+technique. There are
+lightweight defaults, reliability
+overlays, and expensive
+search escalations.
+
+The goal is to choose the
+cheapest reasoning structure
+that reliably solves the task.
+Usng Inter
+
+Task Reliability & Branching Capability
+
+fil
+
+va 4 Heavyweight
+“A Search
+
+Self-Refine @- eS
+Pa £ if
+3 -@ CoVe
+i | I
+
+Reliability
+Overlays
+
+“
+
+‘ ‘ a
+Decomposition C)-
+-
+
+al
+a
+Pal
+y ReAct
+7
+f |
+
++ Lightweight
+
+Defaults
+
+Orchestration Complexity & Latency
+
+Ai NotebookLM

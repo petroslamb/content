@@ -1,0 +1,21 @@
+Recommended Build Order
+
+Step 5: Search Workflow Topology
+
+Apply AFLOW/GPTSwarm only after the simpler
+surfaces are already stable and measured.
+
+Scale evaluation support to handle increased iterations.
+
+Step 4: Introduce LLM-as-Judge 3
+
+Introduce critique or reflection where repeated failures occur.
+
+Step 3: Add Feedback Loops 3
+
+Step 2: Improve Cheapest Surfaces 1
+Fix output schemas, prompt clarity, and retrieval configs first. Highest leverage, lowest risk. 1
+
+step 1: Lock an Evaluation Set
+Define stable, repeatable tasks. Optimization without this is mostly noise.
+

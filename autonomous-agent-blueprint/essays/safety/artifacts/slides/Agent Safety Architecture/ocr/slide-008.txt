@@ -1,0 +1,12 @@
+Safety Failures Happen at Interfaces.
+The safety layer is not a single classifier or a suffix prompt.
+
+It is an interface architecture.
+
+Memory
+
+Agents
+
+Data World
+
+Ai NotebookLM

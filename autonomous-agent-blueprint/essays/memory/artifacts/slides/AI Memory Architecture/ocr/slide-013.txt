@@ -1,0 +1,19 @@
+Critical Failure Modes
+& Anti-Patterns.
+
+Mixing instructions and facts in the
+4 Same channel. S Type your memory by domain.
+
+x Storing raw transcripts Sf Store summarized, synthesized
+everywhere. facts.
+
+x Beginning with neural memory in S/ Manage explicit external memory
+model weights. first.
+
+x Treating memory retrieval scores / Retrieval is not a substitute for
+as trust scores. verification.
+
+The most common enterprise mistake is building a giant, undifferentiated ‘memory’
+collection where stale user state and core policies corrupt each other.
+
+Ai NotebookLM

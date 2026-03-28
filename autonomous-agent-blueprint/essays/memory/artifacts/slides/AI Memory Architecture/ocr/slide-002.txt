@@ -1,0 +1,18 @@
+Almost every serious agent breaks when the task
+exceeds a single prompt.
+
+CONTEXT_WINDOW S
+a a,
+we <7
+air Architectural
+decomposition.
+—
+
+Memory collapses.
+Retrieval quality decays.
+
+Without structural decomposition, memory collapses into two bad defaults: everything stays in the prompt
+until the context window breaks, or everything is dumped into a flat vector store where retrieval quality
+Slowly degrades. The real solution is separating active state from durable knowledge.
+
+Ai NotebookLM

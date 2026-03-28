@@ -1,0 +1,27 @@
+The Escalation Path: A Build Strategy
+
+Building an agent is not about granting a iti
+; * ienest risk STEDN -
+every tool at once. It is a stair-step process. ce tattied edsabedont
+
+Browser Action
+When APIs are incomplete |
+
+Database/SQL
+
+When environment
+demands data access
+
+Code Execution
+When reproducibility
+
+is needed The Golden Rule: Choose the narrowest,
+most stable action surface that reaches
+the busines system. Only step up when
+the environment forces you to.
+
+Typed API Tools
+
+Base layer
+
+Ai NotebookLM

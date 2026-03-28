@@ -1,0 +1,77 @@
+The Reasoning Method Matrix
+
+Method Best Use Main Strength Main Risk Escalate When
+ae structured ’ no external live tools
+@ Decomposition multi-step tasks lew See grounding matter
+
+@ RedAct
+
+') Self-Refine
+
+a Chain-of-
+Verification
+
+Self-
+» Consistency
+
+@ ToT / LATS
+
+tool-using tasks
+
+near-miss outputs
+
+high-stakes
+factual work
+
+brittle single
+traces
+
+branching
+planning
+
+ties reasoning
+to action
+
+cheap iterative
+improvement
+
+explicit
+verification path
+
+sampled
+consensus
+
+search over
+alternatives
+
+bounded tools
+needed
+
+polishes
+ungrounded work
+
+extra latency &
+cost
+
+expensive for
+routine
+
+heavy
+orchestration
+
+outputs stay
+brittle
+
+factual errors
+remain
+
+branching
+dominates
+
+genuinely needs
+multiple traces
+
+simpler
+scaffolds fail
+
+Ai NotebookLM

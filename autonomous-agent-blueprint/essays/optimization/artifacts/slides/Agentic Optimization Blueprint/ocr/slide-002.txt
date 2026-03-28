@@ -1,0 +1,16 @@
+The Target Has Shifted
+A working agent is only the beginning. Optimization
+must shift from single prompts to the entire workflow.
+
+Prompt Workflow Topology
+
+- Costs drift up
+- Latency stretches
+
+- Tool calls fail
+
+- Prompts regress
+
+The Production Reality
+
+Ai NotebookLM

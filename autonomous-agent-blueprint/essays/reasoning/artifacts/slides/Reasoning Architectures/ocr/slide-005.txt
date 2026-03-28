@@ -1,0 +1,28 @@
+Module A — Structural Decomposition
+
+Least-to-Most &
+Step-Back Prompting
+
+Define intermediate artifacts instead of asking
+the model to improvise the whole path.
+Decomposition is often meteriat.
+
+Decomposition is often more valuable than Checkpoint 2
+cleverness.
+Some failures are conceptual, requiring a step
+
+Checkpoint 3
+
+back into abstraction before solving locally.
+Final Solution
+
+Complex / Ambiguous Task
+
+Intermediate
+Checkpoint 1
+
+RULE: Use plain decomposition when the task is
+multi-step but mostly deterministic, and tool
+interaction is limited.
+
+Ai NotebookLM

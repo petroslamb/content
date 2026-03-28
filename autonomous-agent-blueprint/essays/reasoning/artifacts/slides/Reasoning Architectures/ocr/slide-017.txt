@@ -1,0 +1,6 @@
+The practical blueprint is not “use the smartest reasoning method.”
+
+It is “use the lightest reasoning
+structure that makes the task reliable.”
+
+Ai NotebookLM
