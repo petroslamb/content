@@ -7,120 +7,112 @@ URL: https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface
 
 #### Video TL;DR
 
-Safety closes the core run because every capability above widens the attack surface. Once content, tools, and internal artifacts can move across the workflow, trust separation stops being a prompt preference and becomes a systems requirement.
+The easiest way to misread agent safety is to make it a prompt problem. A model should be careful. A policy string should be stronger. A refusal clause should be more explicit. The transcript for this chapter starts somewhere much less flattering. Once an agent can read, remember, and act, the practical question is where control can be taken. Not in theory. In the workflow. Through untrusted content, unsafe tools, poisoned retrieval, over-broad permissions, weak approval boundaries, and cross-agent handoffs. That is the safety claim carried here from the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990), tightened in the local [safety blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md), and rebuilt from the transcript's interface-by-interface progression.
 
-![Slide 1: Agent Safety Is System Architecture](assets/asset-4569a2567cbaa642.jpeg "Slide 1: Agent Safety Is System Architecture")
+![Slide 2: Where control can be taken](assets/asset-02a48d61dbe3b39c.jpeg "Slide 2: Where control can be taken")
 
-One support team arrived on a Monday to find twenty-three urgent review tasks created overnight by an internal operations agent. Several carried account excerpts that should never have left the billing system at triage. The agent had not failed in a cinematic way. It had followed an instruction embedded in a help article it retrieved while drafting the escalations.
+## Safety Starts At The Interfaces
 
-The article looked routine. It contained copied troubleshooting text, a note that resembled an internal escalation hint, and one line telling the agent to attach account details for faster manual handling. The workflow read the ticket, retrieved the article, wrote an internal task, and handed that task to the next system as though it were trusted internal work. By the time analysts noticed, they were cleaning a queue full of artifacts that looked normal because they had been produced inside the workflow.
+The transcript makes one framing move that matters more than any individual paper it cites. It refuses the old alignment conversation as the main entry point. That does not make alignment irrelevant. It makes it secondary to the practical attack surface a deployed agent actually presents. Useful systems do not live in a clean lab prompt. They read external content, call APIs, write files, query memory, and pass artifacts to other components. The dangerous places are the interfaces where those transitions happen.
 
-Nothing about the model had to break in an exotic way. The system simply trusted the wrong interfaces.
+![Slide 3: The practical attack surface map](assets/asset-42378451b5a1dc59.jpeg "Slide 3: The practical attack surface map")
 
-Agent safety is trust-boundary design, not refusal theater.
+That is why the transcript keeps describing the system as a house with doors and windows. Every channel that lets outside data enter or internal action leave becomes part of the threat model. A safety posture that ignores those interfaces and focuses only on the final output tone is not incomplete by a little. It is looking in the wrong place. The workflow does not become dangerous when the model says something alarming. It becomes dangerous when bad influence acquires reach it should never have had.
 
-That framing is the safety distillation taken here from the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and tightened in the local [safety blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md). The transcript supplies the progression, but the chapter's narrower claim is architectural: once content, memory, artifacts, and tools can move across the workflow, the real safety question is what trust each channel carries and what it is allowed to reach.
+## Untrusted Content Is Not Passive Data
 
-![Slide 2: Where Control Can Be Taken](assets/asset-75de5bdfeca314cd.jpeg "Slide 2: Where Control Can Be Taken")
+The first boundary is the one between instructions and data. *[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173)* remains foundational because it made indirect prompt injection concrete. The core problem is architectural, not rhetorical. A language model does not inherit the hard separation between code and data that older software systems enjoyed. System instructions and retrieved text both arrive as tokens in one stream. That means untrusted content can start behaving like instruction if the architecture lets it.
 
-## One Hostile Input Can Become A Workflow
+![Slide 4: The poisoned context window](assets/asset-0ce5544d775911a7.jpeg "Slide 4: The poisoned context window")
 
-The important shift in modern agent safety is that untrusted content no longer stays on the page. It can move.
+The transcript uses the email-summary example because it is brutally clear. A helpful assistant reads a message body that contains a hidden instruction, and the hidden instruction now lives in the same context as the original task. The developer may hope the system prompt has priority. The model may still weight the later content heavily, especially when that content sounds explicit and authoritative. The lesson is not "write a better system prompt." It is "treat external content as fundamentally untrusted by design."
 
-It can shape retrieval. It can land in memory. It can appear inside an internal artifact. It can influence a tool call. It can arrive at another agent as though it were already trusted because it was produced inside the system. That movement is what makes agent safety different from earlier chatbot safety talk. The issue is not only whether the model says something bad. The issue is what the workflow lets bad content reach.
+That is where *[InjecAgent](https://arxiv.org/abs/2403.02691)* sharpens the story. Indirect prompt injection stops being a curious prompt hack and becomes a benchmark against real tool-using agents. The issue is no longer whether the model can be tricked into saying something odd. It is whether content arriving through normal workflows can steer actual tool calls. That is the point where language-level confusion becomes an operational security problem.
 
-The decision rule is dull and severe for a reason. Model every channel by what trust it carries and what it can reach.
+## Tools Turn Language Into Consequence
 
-![Slide 3: The Practical Attack Surface Map](assets/asset-8a35e110fde79967.jpeg "Slide 3: The Practical Attack Surface Map")
+The transcript's next move is exactly right. Once tools are attached, prompt injection is no longer the whole story. Tool scope and containment become safety architecture in their own right. *[ToolEmu](https://arxiv.org/abs/2309.15817)* matters here because it gives builders a way to inspect risky tool behavior inside an emulated environment before the workflow is allowed near the real one. That contribution is more practical than it first sounds. It turns "wait and see in production" from a bad instinct into an avoidable design error.
 
-That question is better than asking whether the content looked suspicious, whether the prompt sounded careful, or whether the output still felt internally coherent. Safety begins when a system stops inheriting trust by accident.
+![Slide 5: From text to side effects](assets/asset-57fa6c0fe0a1c504.jpeg "Slide 5: From text to side effects")
 
-## Trust Class Beats Prompt Tone
+The transcript keeps the design rule severe. Separate read tools from write tools. Separate low-impact tools from destructive, financial, or legally sensitive ones. Give each agent or workflow stage the smallest authority envelope that still lets it do the job. That is ordinary least privilege translated into agent systems. A summarizer should not quietly hold the same keys as a payment processor. A drafting tool should not also be able to mutate production state.
 
-*[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173)* mattered because it attacked the old trust model directly. The paper was not mainly proving that prompt injection exists in principle. The field already suspected that. It showed that once language systems are integrated with outside content and tools, instructions and data can no longer be treated as though they deserve the same trust status.
+Approval gates belong in the same architectural layer. Deterministic checks help, but they do not understand the meaning of the action payload. They can tell you whether the amount is under a threshold. They cannot tell you whether the payload was justified, hallucinated, or reputationally ruinous. That is why the transcript insists that irreversible, financially meaningful, legally sensitive, or reputationally expensive actions still need a human approval boundary. The point is not nostalgia for human supervision. It is accountable consequence control.
 
-That changed the operator question from "how do I make the prompt stronger" to "what happens if retrieved or external content can influence the planner at all." Retrieved passages are evidence, not privileged instruction. Help text is observation, not authority. Another component's output is not safe merely because it came from inside the workflow.
+## Memory And Retrieval Are Liability Surfaces
 
-If a system cannot preserve those distinctions, it is not relying on safety controls. It is relying on tone and hope.
+The middle of the transcript makes another important correction. Retrieval and memory are usually introduced to teams as quality layers. They should also be read as safety layers. *[AGENT POISON](https://arxiv.org/abs/2407.12784)* matters because it makes durable memory look less like a harmless convenience and more like a delayed influence channel. If an attacker or a bad process can get malicious or misleading state written into the store, the store itself becomes part of the attack path.
 
-![Slide 4: The Poisoned Context Window](assets/asset-7d5073b51bbed6d4.jpeg "Slide 4: The Poisoned Context Window")
+*[PoisonedRAG](https://arxiv.org/abs/2402.07867)* and *[BadRAG](https://arxiv.org/abs/2406.00083)* sharpen the same lesson from the retrieval side. A very small amount of poisoned content can distort what the system sees, when it sees it, and how much authority that content appears to carry. The field still underrates this because it keeps imagining the corpus as a neutral grounding layer. The transcript does not allow that comfort. Once the workflow acts on retrieved knowledge, the corpus has become an integrity-sensitive part of the control loop.
 
-## Tool Scope Is Safety Architecture
+![Slide 6: The memory liability](assets/asset-2c08db74055197d3.jpeg "Slide 6: The memory liability")
 
-Retrieval poisoning gets attention because it is vivid. Over-broad tool scope is just as operationally dangerous.
+*[Machine Against the RAG](https://arxiv.org/abs/2406.05870)* pushes the threat further by showing that the danger is not only false content. Retrieval can also be jammed. A blocker document can prevent the system from reaching the right material at the moment it needs it. That matters because availability and coverage failures can be just as damaging as explicit misinformation when the workflow is supposed to catch compliance issues, safety incidents, or critical evidence.
 
-A tool that can search documentation does not deserve the same reach as a tool that can write to a customer record. A tool that drafts an internal note does not deserve the same reach as one that can send an external message. Read tools, write tools, and destructive tools are different safety categories because they create different consequence categories.
+The transcript's response is not exotic. Memory hygiene means versioning, provenance, audits, curation, and the ability to inspect who or what wrote state into the store. A knowledge base cannot be treated as a magical extension of the model. It has to be treated as monitored infrastructure.
 
-That is why least privilege belongs in the center of agent safety rather than at the edge of it. The workflow should not be asked to maintain moral discipline with the same prompt while holding wildly different forms of authority.
+## More Agents Can Spread Risk Faster
 
-![Slide 5: From Text to Side Effects](assets/asset-60b6f3f084198018.jpeg "Slide 5: From Text to Side Effects")
+The transcript becomes most vivid when it reaches multi-agent contamination. *[Agent Smith](https://arxiv.org/abs/2402.08567)* matters because it turns a vague fear into a propagation model. One compromised multimodal artifact can move through agent interactions, summaries, screenshots, or shared files and infect later stages without any second intervention from the attacker. That is a very different mental model from the single compromised chat window.
 
-The trust map has to say what a channel can read, what it can write, and what still requires a deterministic gate or human approval.
+![Slide 7: Inter-agent contamination flow](assets/asset-a52eb5bf6123f327.jpeg "Slide 7: Inter-agent contamination flow")
 
-```
-channel: retrieved_support_article
-trust_class: untrusted_content
-allowed_tools: ["search_docs", "draft_internal_task"]
-write_targets: []
-approval_required: true
-```
+This is why the chapter's fifth boundary is inter-agent skepticism. Internal messages are not trustworthy merely because they are internal. A screenshot one agent sends to another is still an untrusted artifact. A JSON payload is still just a payload. Structured formats can reduce ambiguity. They do not create trust by themselves. The receiving stage still needs the same trust separation it would apply to outside inputs.
 
-That object matters because it forces the workflow to declare what this channel is allowed to influence. Safety becomes practical when channels carry policy instead of inheriting reach by accident.
+That point matters because the industry keeps reaching for a false comfort here. More voices do not automatically make the system safer. If the roles are sharing contaminated artifacts and inheriting trust from each other by default, the topology amplifies the attack surface instead of reducing it.
 
-![Slide 10: Boundary One, Trust Separation](assets/asset-ce64193f7db65ee7.jpeg "Slide 10: Boundary One, Trust Separation")
+## Reliability Controls Sit Inside The Safety Stack
 
-## Retrieval, Memory, And Handoffs Carry Influence Forward
+The transcript is also careful about where verification belongs. *[Chain-of-Verification](https://arxiv.org/abs/2309.11495)* does not solve adversarial control of the system. It does something more limited and still very important. It reduces unchecked factual error before that error becomes action, memory, or downstream instruction. That is why it belongs in the safety architecture even though it started as a reliability method.
 
-Modern agent writing still treats retrieval and memory as quality layers first and security layers second. Once the system acts on what it retrieves, that order is backwards.
+![Slide 8: Safety failures happen at interfaces](assets/asset-b2003e74e0fa83ed.jpeg "Slide 8: Safety failures happen at interfaces")
 
-*[PoisonedRAG](https://arxiv.org/abs/2402.07867)* mattered because it showed that a knowledge store should not be treated as neutral substrate. A small amount of poisoned content can distort what the system sees, when it sees it, and how confidently it moves forward. The attack is interesting not because malicious documents exist, but because it collapses the old assumption that retrieval is merely a convenience layer beneath the real intelligence of the agent.
+The key is placement. Verification belongs before outputs with real consequence. It should not be treated as a decorative suffix or a vague self-check. If a generated summary can trigger a refund, publish to a client-facing portal, or contaminate a later decision, the workflow needs a real stage where claims are checked against source material before consequence arrives.
 
-The same skepticism applies to memory writes and internal artifacts. A summary written by one agent can smuggle a poisoned instruction. A screenshot can carry hostile content across roles. A review packet can freeze stale evidence into a form the next stage mistakes for sanctioned state. Structured handoffs reduce ambiguity. They do not create trust.
+This does not make debate between agents a substitute for containment. The transcript is direct on that as well. A debate loop between two equally exposed models cannot replace hard access boundaries, tool restrictions, or approval gates. Logic is too soft a final line of defense when the system can still physically take the wrong action.
 
-![Slide 6: The Memory Liability](assets/asset-fd7e7757c9a6d240.jpeg "Slide 6: The Memory Liability")
+## The Blueprint Is Six Walls, Not One Filter
 
-Trust has to reset at every handoff.
+The transcript's synthesis section is the chapter's real payoff. Safety is an interface architecture. Failures happen between instructions and data, between model and tool, between retrieval and memory, between one agent and another, and between output and irreversible action. That is why the blueprint resolves into six boundaries rather than one magic safety classifier: trust separation, tool containment, action approval, memory hygiene, inter-agent skepticism, and verification.
 
-![Slide 8: Safety Failures Happen at Interfaces](assets/asset-20e144ec63e72236.jpeg "Slide 8: Safety Failures Happen at Interfaces")
+![Slide 14: The control matrix](assets/asset-27b2a54daef5f179.jpeg "Slide 14: The control matrix")
 
-## Rehearse Abuse Before You Widen Autonomy
+The suggested build order is severe in exactly the right way. Define trust classes for every input channel. Separate read, write, and destructive tools by policy. Add approval gates for high-impact actions. Curate and monitor retrieval and memory. Add verification loops for important outputs. Then red-team the whole workflow before widening autonomy. The order is conservative because the field is still getting hurt by preventable boundary failures long before it reaches the speculative frontier of self-healing or self-governing agents.
 
-The last major safety mistake is chronological. Teams wait until after deployment to discover what a tool-using workflow will do badly.
+The evaluation section follows naturally from that architecture. Injection resistance tests, tool-abuse drills, retrieval poisoning simulations, cross-agent contamination exercises, permission reviews, approval-bypass tests, and incident replay are not side exercises. They are how the team learns whether the boundaries actually exist outside the design document.
 
-*[ToolEmu](https://arxiv.org/abs/2309.15817)* mattered because it turned that sequence around. The paper's important move was not only sandboxing. It was evaluation before consequence. If a workflow can read untrusted content, invoke tools, and generate side effects, then the architecture should be pressure-tested before autonomy is widened.
+![Slide 15: Evaluating the architecture](assets/asset-c295022214c8e52e.jpeg "Slide 15: Evaluating the architecture")
 
-That is also where approval belongs. Human approval is not a confession that the system is weak. It is recognition that some actions are expensive enough that accountability has to sit in the architecture itself. Financial actions, destructive writes, external submissions, legal or policy-sensitive moves, and hard-to-reverse operations should not be protected by prompt style alone. They need scoped tools, deterministic checks, and explicit gates.
+The anti-patterns are therefore easy to name. Mixing instructions and retrieved content into one undifferentiated prompt. Treating safety as a suffix prompt. Letting agents write into stores they later trust without control. Using debate as a stand-in for access control. Relying on post hoc monitoring where active containment was required. None of these are subtle design failures. They are ways of refusing to build the wall until after the breach.
 
-The escalation rule should stay hard. Widen autonomy only after trust separation, tool scope, handoff skepticism, deterministic checks, and approval are already explicit.
+![Slide 17: Architectural anti-patterns](assets/asset-b5519ba4967259e2.jpeg "Slide 17: Architectural anti-patterns")
 
-![Slide 9: The Default Safety Blueprint](assets/asset-dcdafa66003247f8.jpeg "Slide 9: The Default Safety Blueprint")
+The closing move in the transcript is the one worth preserving. Greater autonomy does not mean thinner walls. It means thicker ones. The more seamlessly these systems can move through real environments, the more carefully their permissions, trust classes, memory writes, and handoffs have to be bounded. Without those walls, autonomy is not a feature. It is just an unpriced liability.
 
-## Narrow The Surface Before You Widen Freedom
-
-The conservative lesson of the chapter is plain. Separate instructions from data. Treat retrieval and memory as integrity-sensitive infrastructure. Split read tools from write tools and low-impact tools from destructive ones. Reset trust at handoffs. Put deterministic checks and human approval in front of consequential action. Stress the workflow before expanding its freedom.
-
-Every extra capability widens the attack surface. Broader tool access, larger corpora, looser handoffs, and more autonomy are not neutral upgrades. They are expansions of what the wrong content can do if the boundaries are weak.
-
-Sometimes the most serious safety move is not a clever defense. It is a narrower default.
-
-![Slide 14: Control Matrix](assets/asset-6ebac316d9181a5c.jpeg "Slide 14: Control Matrix")
+![Slide 18: Agent safety is architecture](assets/asset-d78280e8fe0ccfdb.jpeg "Slide 18: Agent safety is architecture")
 
 ## References
 
-[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is breadth. It places safety in the larger operating stack of action, memory, reasoning, coordination, and optimization. This essay narrows that wider survey into one practical claim: safety in agent systems is mostly a problem of trust-boundary design.
+[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is scope. It places safety after action, memory, reasoning, and coordination, which is exactly where it belongs if the goal is to understand what the earlier capabilities make dangerous once they are combined.
 
-[Chapter 11 Blueprint: Trust Boundaries and Agent Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md) is the builder-facing backbone for this chapter. Its key contribution is translating the safety literature into an interface map. It fixes the default controls around trust classes, tool scope, retrieval integrity, handoff skepticism, approval, and adversarial evaluation before autonomy is widened.
+[Safety blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md) is the builder-facing backbone for this chapter. Its key contribution is the interface model. It turns a broad safety literature into six concrete boundary types and a conservative deployment order.
 
-[The Architecture of AI Agent Safety transcript](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/artifacts/transcript_The%20Architecture%20of%20AI%20Agent%20Safety_full.txt) is the direct narrative source behind this draft. Its key contribution is structural. It gives the essay its flow from the opening failure archetype through trust separation, tool scope, retrieval and memory as integrity-sensitive infrastructure, skeptical handoffs, and the need to rehearse abuse before the system is granted more freedom.
+[The Architecture of AI Agent Safety transcript](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/artifacts/transcript_The%20Architecture%20of%20AI%20Agent%20Safety_full.txt) is the direct structural source behind this draft. Its key contribution is progression. It moves from indirect prompt injection to tool containment, memory liability, inter-agent contamination, verification, and finally the claim that the real safety layer is the interface architecture itself.
 
-*[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173)* matters because it redrew the trust model for integrated agents. Its key contribution is making the distinction between instructions and data impossible to ignore once external content can influence planning and action. This essay leans on that move to treat retrieved content as evidence rather than authority.
+*[Not What You've Signed Up For](https://arxiv.org/abs/2302.12173)* matters because it established indirect prompt injection as a practical attack against real integrated systems. Its key contribution is the trust-boundary insight that external content cannot be treated as though it were merely passive data once the model is reading it alongside its instructions.
 
-*[PoisonedRAG](https://arxiv.org/abs/2402.07867)* matters because it turns retrieval integrity into part of the attack surface instead of a background relevance concern. Its key contribution is showing that a knowledge store the workflow later trusts is already part of the safety model.
+*[InjecAgent](https://arxiv.org/abs/2403.02691)* matters because it brought indirect prompt injection into tool-integrated evaluation. Its key contribution is operationalizing the attack against agents that can actually do things, not just say things.
 
-*[ToolEmu](https://arxiv.org/abs/2309.15817)* matters because it moved safety evaluation in front of deployment. Its key contribution is sequencing: pressure-test the actual contamination paths and tool surfaces before widening autonomy.
+*[ToolEmu](https://arxiv.org/abs/2309.15817)* matters because it gives teams a practical sandbox-first safety evaluation pattern. Its key contribution is letting risky tool behavior surface before the workflow is trusted in the real environment.
 
-*[Agent Poison](https://arxiv.org/abs/2407.12784)* matters because it shows how durable memory and knowledge stores can become future influence channels. Its key contribution is reinforcing that memory policy is part of safety policy once poisoned state can survive into later runs.
+*[AGENT POISON](https://arxiv.org/abs/2407.12784)* matters because it shows that memory and knowledge stores are attack surfaces, not just capability layers. Its key contribution is turning durable state into an explicit part of the threat model.
 
-*[Agent Smith](https://arxiv.org/abs/2402.08567)* matters because it makes cross-agent contamination feel concrete, especially once artifacts and multimodal inputs start moving between roles. Its key contribution is sharpening the rule that trust has to reset at every handoff rather than glide forward automatically.
+*[PoisonedRAG](https://arxiv.org/abs/2402.07867)* matters because it demonstrated how a small amount of malicious content can distort retrieval and downstream behavior. Its key contribution is making knowledge corruption measurable rather than hypothetical.
 
-![Slide 18: Safety Is Architecture](assets/asset-e58bcbe0f01f4a41.jpeg "Slide 18: Safety Is Architecture")
+*[BadRAG](https://arxiv.org/abs/2406.00083)* matters because it reinforces the same lesson from a different angle. Its key contribution is showing how retrieval corpora themselves become a practical vulnerability surface rather than a neutral grounding layer.
+
+*[Machine Against the RAG](https://arxiv.org/abs/2406.05870)* matters because it expands the threat model beyond false facts. Its key contribution is the blocker-document idea, which shows that retrieval availability can be attacked even when the attacker is not directly poisoning the answer content.
+
+*[Agent Smith](https://arxiv.org/abs/2402.08567)* matters because it makes inter-agent contamination concrete. Its key contribution is showing how one adversarial multimodal artifact can propagate across agent populations through routine collaboration.
+
+*[Chain-of-Verification](https://arxiv.org/abs/2309.11495)* matters in this chapter because it places factual checking before consequence. Its key contribution is not full containment. It is making unchecked hallucination less likely to become action, memory, or propagated state.
