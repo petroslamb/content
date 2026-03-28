@@ -39,6 +39,8 @@ Do not apply the framework to a whole conversation by default. Slice the session
 
 The default process starts from trace preservation, not immediate packet writing.
 
+Important: `framework fit` and `proof promotion` are not the same thing. A run can be a strong use of the framework and still stay a secondary candidate because it adds little new public proof value.
+
 ## Boundary Types
 
 Accepted stop-boundary types:
@@ -53,6 +55,8 @@ Accepted stop-boundary types:
 
 External-action runs often use `submit` or `publish`, not `commit`.
 
+Bounded internal runs can still be strong when the boundary is `explicit non-approval reason`, as long as the reason is visible and the verification is strong.
+
 If the real boundary is unclear, the run is not ready for review.
 
 ## Verification Rules
@@ -66,6 +70,8 @@ Use the strongest final-state check available:
 - tests and validators for internal code
 - final UI or API state for third-party platforms
 - deployed public state for publish-style runs
+
+Limit-finding runs are valid if the learned boundary is explicit, evidence-backed, and useful for later review. A run does not have to end in conventional success to be strong.
 
 ## Minimum Surface By Risk
 
@@ -156,12 +162,16 @@ Escalate to a full packet when:
 
 Default to selective promotion. Do not archive every run as a flagship proof.
 
+A full packet is about review need, not prestige. Some strong runs should still remain lightweight or secondary.
+
 ## Common Anti-Patterns
 
 - treating a whole session as one run
 - using a fake commit boundary for an external-action run
 - treating raw trace as the final review surface
 - treating local success as decisive verification for an external system
+- treating limit-finding runs as automatic failures
+- treating flagship proof status as the same thing as framework strength
 - treating opinion-only review threads as runs
 - producing full packets for trivial work
 
@@ -179,3 +189,5 @@ Use these proofs as the main operator references:
 - broader calibration set: `examples/proofs/real-run-index.md`
 
 After this guide, use `evaluation/run-review-checklist.md` to inspect a specific run.
+
+The rules in this playbook are grounded in the current real-run calibration layer at `calibration/`.

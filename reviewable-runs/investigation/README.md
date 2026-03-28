@@ -22,12 +22,19 @@ This is where the package asks harder questions:
 - what tuning is needed
 - what implementation support would make it materially lighter and stronger
 
+If you want the run corpus compared systematically rather than interpreted narratively, use `../calibration/`.
+
 ## Folder Map
 
 - `evidence-map.md`: the source-of-truth corpus for the investigation
 - `question-grid.md`: the fixed question set every lens uses
 - `lenses/`: explicit multi-hat judgment passes
 - `synthesis/`: distilled findings, judgment, and next actions
+
+This surface differs from `../calibration/`:
+
+- `investigation/` = interpretation and critique
+- `calibration/` = dataset-backed cross-run analysis
 
 ## Reading Order
 
@@ -49,4 +56,3 @@ This is an advanced investigation surface.
 - it is not the teaching layer
 - it is not proof by itself
 - it is the package's explicit interpretation and tuning layer
-

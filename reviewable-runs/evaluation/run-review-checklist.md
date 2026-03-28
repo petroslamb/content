@@ -43,6 +43,7 @@ The standard here is not whether a system emitted six markdown files. The standa
 
 - [ ] Are the checks named explicitly?
 - [ ] Is the result of each important check visible?
+- [ ] Does the verification mode match the run type?
 - [ ] Is residual risk stated honestly?
 
 ### Approval Decision
@@ -50,6 +51,7 @@ The standard here is not whether a system emitted six markdown files. The standa
 - [ ] Is the approval boundary explicit?
 - [ ] Is the pending action visible?
 - [ ] Are the review packet and any conditions visible?
+- [ ] If approval was not required, is that reason explicit and credible?
 
 ### Failure Review
 
@@ -65,9 +67,15 @@ The run is reconstructable without guesswork and the records support real review
 
 If the run boundary is unclear, the result cannot be `Strong`.
 
+A run can still be `Strong` if it is internal and stops with an explicit non-approval reason, as long as the evidence and verification are strong.
+
+A limit-finding run can still be `Strong` if the discovered boundary is concrete, evidence-backed, and review-useful.
+
 ### Partial
 
 The run can be understood, but one or two key records are thin or implied rather than explicit.
+
+`Partial` is often the right result when reconstruction is strong but governance, verification, or slice cleanliness still feels soft.
 
 ### Weak
 
