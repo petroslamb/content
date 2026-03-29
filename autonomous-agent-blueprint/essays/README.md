@@ -2,23 +2,23 @@
 
 This folder contains the live *Operating Agents* essay package. Each topic folder now holds one canonical live essay, one root-level `companion-v7.md`, presentation artifacts when they exist, and a local `archive/` folder for historical drafts, prior companions, local READMEs, and older publication candidates.
 
-## Doctrine Goal
+## Course Goal
 
-The purpose of *Operating Agents* is not only to publish polished essays. The package exists to turn agent literature into an operating doctrine for builders.
+The purpose of *Operating Agents* is to teach how modern agent systems are designed, evaluated, and constrained in practice. The essays should read as course chapters, not as internal notes and not as slogan-first opinion pieces.
 
-That goal changes the quality bar. The series should be memorable because builders can reuse it in design reviews, postmortems, and architecture arguments, not only because the prose reads smoothly in a feed.
+That goal changes the quality bar. A strong chapter should help a reader understand the mechanism, learn a usable build methodology, and know which references deserve deeper study.
 
 ## A+++ Standard
 
-For this package, `A+++` means doctrine-level public writing:
+For this package, `A+++` means course-quality public writing:
 
-- each core essay gives builders one hard law they can carry into real decisions
-- each essay names the enemy mistake it is trying to eliminate
-- each essay gives a practical decision rule and an escalation rule
-- each essay anchors the doctrine in one vivid failure archetype
-- the literature serves the doctrine; companions and blueprints carry the wider taxonomy
+- each core essay can stand on its own without depending on lecture notes or internal source language
+- each essay defines the core concepts before using the specialized vocabulary
+- each essay teaches a practical methodology from baseline design to justified escalation
+- each essay explains why the cited papers matter instead of listing them as badges
+- the literature supports the lesson, while companions and blueprints carry the wider taxonomy
 
-If a serious builder cannot lift a sentence from a chapter and use it to clarify an architecture argument next week, the essay is not finished.
+If a serious builder cannot read a chapter, understand the operating problem, and apply its method to a real workflow review next week, the essay is not finished.
 
 ## Folder Map
 
@@ -66,12 +66,3 @@ Use the local `archive/` folder inside a topic if you need earlier drafts, prior
 - `../core/` contains the builder-facing defaults and reviewability contract.
 - `../reference/` contains the survey guide, distillation docs, source index, quality notes, and paper notes.
 - `../implementation/` contains use cases, case studies, evaluation docs, and templates.
-
-## Drafting Support
-
-Rewrite ledgers and planning notes live under `../notes/essay-evolution/`.
-
-Current active rewrite target:
-
-- `../notes/essay-evolution/essay-evolution-v6-to-v7.md` defines the doctrine-first `v7` rewrite plan.
-- `../notes/essay-evolution/essay-v7-doctrine-packs.md` locks the chapter-level doctrine packs behind the live `v7` drafts.
