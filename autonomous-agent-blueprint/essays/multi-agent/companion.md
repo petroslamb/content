@@ -76,37 +76,37 @@ There is also a timing question that good evaluation can answer. A topology may 
 
 ### MetaGPT
 
-[MetaGPT](../../reference/papers/metagpt.md) is one of the strongest papers for understanding role-based multi-agent design as artifact production rather than conversation. Its core contribution is not just role naming. It is the insistence that different agents exchange structured deliverables under explicit operating procedures. That makes the system more inspectable and helps explain why some multi-agent workflows feel coherent while others collapse into idle chatter.
+[MetaGPT](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/metagpt.md) is one of the strongest papers for understanding role-based multi-agent design as artifact production rather than conversation. Its core contribution is not just role naming. It is the insistence that different agents exchange structured deliverables under explicit operating procedures. That makes the system more inspectable and helps explain why some multi-agent workflows feel coherent while others collapse into idle chatter.
 
 Builders should read MetaGPT when the task naturally decomposes into specialist stages with meaningful outputs, such as requirements, designs, code changes, or reviews. It helps answer when extra agents create real boundaries. It should not be overclaimed as evidence that large agent teams are generally desirable. The paper’s lesson is strongest when role separation is authentic. Without that, the structure becomes overhead.
 
 ### ChatDev
 
-[ChatDev](../../reference/papers/chatdev.md) matters because it offers a slightly different route to role-based collaboration, using a staged software-team metaphor to organize work. Its value lies in showing how roles, deliverables, and review points can be chained into a pipeline without requiring every agent to behave like a generalist. It is one of the clearest examples of multi-agent design as workflow decomposition.
+[ChatDev](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/chatdev.md) matters because it offers a slightly different route to role-based collaboration, using a staged software-team metaphor to organize work. Its value lies in showing how roles, deliverables, and review points can be chained into a pipeline without requiring every agent to behave like a generalist. It is one of the clearest examples of multi-agent design as workflow decomposition.
 
 This paper is worth reading when the question is how to stage work across distinct responsibilities rather than how to create disagreement. It helps builders see what a role-based pipeline looks like when the handoffs are explicit. It should not be overread as a reason to reproduce an entire software organization inside every agent system. The practical takeaway is the structure of the handoff, not the size of the simulated team.
 
 ### AutoGen
 
-[AutoGen](../../reference/papers/autogen.md) is important because it made programmable multi-agent conversation reusable. That flexibility mattered for the field, since it lowered the barrier to experimenting with several roles and interaction patterns in one system. At the same time, the paper also reveals the main risk of flexible conversation-first systems: it becomes easy to overbuild topologies before the reason for the split is clear.
+[AutoGen](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/autogen.md) is important because it made programmable multi-agent conversation reusable. That flexibility mattered for the field, since it lowered the barrier to experimenting with several roles and interaction patterns in one system. At the same time, the paper also reveals the main risk of flexible conversation-first systems: it becomes easy to overbuild topologies before the reason for the split is clear.
 
 Builders should read AutoGen when they need to understand conversation as a coordination fabric and when a workflow genuinely benefits from multiple interactive roles. It is especially useful for prototyping. It should not be treated as a default architecture by itself. The missing piece is still boundary justification. AutoGen gives you a coordination substrate, not the argument for why a given topology is the right one.
 
 ### MAD
 
-[MAD](../../reference/papers/mad.md) is best understood as a reliability paper rather than a general multi-agent blueprint. Its central idea is that disagreement can surface errors and improve difficult judgments. That makes it valuable for tasks where independent critique adds information. It does not, by itself, justify a broad move to many-agent systems for routine work.
+[MAD](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/mad.md) is best understood as a reliability paper rather than a general multi-agent blueprint. Its central idea is that disagreement can surface errors and improve difficult judgments. That makes it valuable for tasks where independent critique adds information. It does not, by itself, justify a broad move to many-agent systems for routine work.
 
 Builders should read MAD when the design question is whether adversarial comparison helps on hard reasoning or judgment tasks. It clarifies when disagreement is informative enough to justify extra cost. It should not be overclaimed as proof that debate is generally superior to simpler verification. On many workflows, a critic or verifier is cheaper and clearer than a full debate topology.
 
 ### RECONCILE
 
-[RECONCILE](../../reference/papers/reconcile.md) matters because it treats consensus as a structured decision problem rather than as informal averaging. Its contribution is to show how multiple agents can disagree productively and still converge through an explicit reconciliation procedure. That makes it especially useful for understanding the distinction between generation diversity and decision policy.
+[RECONCILE](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/reconcile.md) matters because it treats consensus as a structured decision problem rather than as informal averaging. Its contribution is to show how multiple agents can disagree productively and still converge through an explicit reconciliation procedure. That makes it especially useful for understanding the distinction between generation diversity and decision policy.
 
 This paper is worth reading when a workflow genuinely benefits from several perspectives but needs a disciplined way to combine them. It helps clarify when consensus architecture is more appropriate than a simple reviewer overlay. It should not be overused. If the task does not gain from substantive disagreement, reconciliation machinery becomes elaborate ceremony.
 
 ### Booklet Taxonomies On Collaboration, Decision, And Protocols
 
-The multi-agent sections of the [foundation agents booklet](../../advances-and-challenges-in-foundation-agents.md) deserve to be treated as a reference family because they do something individual papers often do not: they map the field without collapsing its motives. Figures 12.3, 13.1, 14.4, 14.5, and 14.6, along with Tables 13.2, 14.1, and 16.1, give a coherent picture of collaboration goals, topology choices, decision structures, protocol layers, and benchmark categories. Their value is organizational as much as empirical.
+The multi-agent sections of the [foundation agents booklet](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) deserve to be treated as a reference family because they do something individual papers often do not: they map the field without collapsing its motives. Figures 12.3, 13.1, 14.4, 14.5, and 14.6, along with Tables 13.2, 14.1, and 16.1, give a coherent picture of collaboration goals, topology choices, decision structures, protocol layers, and benchmark categories. Their value is organizational as much as empirical.
 
 Builders should return to these taxonomy sections after reading one or two concrete papers. They help place a paper in the larger map and prevent design decisions from being made by analogy to the wrong research line. These sections should not be read as direct implementation recipes. Their purpose is to improve classification, not to replace the narrower blueprint that decides what a deployable workflow should start with.
 
