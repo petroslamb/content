@@ -4,7 +4,7 @@
 
 This course is a builder-first guide to how modern agent systems are designed, evaluated, and constrained in practice. It is not trying to explain every direction in agent research, and it is not trying to turn the field into a sequence of slogans. Its purpose is narrower and more useful. It aims to teach what a serious builder needs in order to inspect a real workflow, identify what layer is failing, and choose the right level of intervention.
 
-The package was distilled from the broader survey [*Advances and Challenges in Foundation Agents*](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md). That survey is wide by design. It covers memory, reasoning, action, optimization, collaboration, safety, and much more. This course takes the practical center of that larger landscape and turns it into a teaching sequence. The essays teach the operating problem. The companions widen the field. The blueprints turn the lesson into a builder-facing decision guide. The paper notes preserve the deeper source layer for readers who want to study the literature directly.
+The package was distilled from the broader survey [*Advances and Challenges in Foundation Agents*](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md). That survey is wide by design. It covers memory, reasoning, action, optimization, collaboration, safety, and much more. This course keeps the practical center of that landscape and then separates it into layers with different jobs. The essays are the public front door. The companions widen the map without bloating the main chapter. The blueprints are the load-bearing decision layer for builders who need defaults and escalation rules rather than another long explanation. The survey and paper notes remain the source and audit layer for readers who want to inspect where the compression came from.
 
 ## Who This Course Is For
 
@@ -42,11 +42,11 @@ Optimization is intentionally treated as a bonus module. It assumes the earlier 
 
 ## How To Use The Course Surfaces
 
-The package separates teaching, architecture, and literature so that each surface can stay readable.
+The package separates teaching, decision guidance, and source depth so each layer can stay readable and do one job well.
 
-The core essays are the public teaching layer. Each one is meant to stand on its own as a course chapter, explain the operating problem in clear prose, and give the reader a practical method rather than a pile of citations.
+The core essays are the public teaching layer and the front door into the package. Their job is to define the operating problem, establish the central thesis of the topic, and give the reader a usable method in chapter form. They are not supposed to carry every taxonomy, every edge case, or every decision table. If they tried, they would stop teaching and start sprawling.
 
-The companions are second-pass breadth chapters. They exist because the main essays should stay tight. A good core chapter teaches the practical center. A good companion widens the field, explains adjacent taxonomies and edge cases, and shows the reader how to use the literature without overwhelming the main path.
+The companions are second-pass breadth chapters. They exist because the main essays should stay tight. Their job is to widen the field without diluting the practical center. That is where the broader taxonomies, adjacent lines of work, interpretation of the literature, and category distinctions belong. A companion should make the field larger in a controlled way. It should not force the core chapter to become a survey in disguise.
 
 The current companion layer is:
 
@@ -57,20 +57,20 @@ The current companion layer is:
 - Safety: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion.md)
 - Optimization: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion.md)
 
-The blueprints are the practical implementation and review layer. They take the topic out of chapter form and turn it into a builder-facing decision guide. A reader who knows the problem but needs defaults, escalation rules, failure modes, and evaluation criteria should move from the essay and companion into the matching blueprint.
+The blueprints are the builder-facing decision layer, and in day-to-day architecture work they are often the most heavily used surface in the package. Their job is not to teach from zero. Their job is to compress the topic into defaults, escalation triggers, alternatives, failure review, and evaluation criteria. Once a reader knows which layer of the workflow is under strain, the matching blueprint should be the shortest path from understanding to a defensible design decision.
 
 The matching blueprint set is:
 
 - Action: [Chapter 8 Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md)
-- Memory: [Chapter 3 Blueprint: Memory Systems and Authority](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md)
-- Reasoning: [Chapter 2 Blueprint: Reasoning Scaffolds and Planning](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md)
-- Multi-Agent: [Chapter 14 Blueprint: Multi-Agent Boundaries and Handoffs](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
-- Safety: [Chapter 19 Blueprint: Trust Boundaries and Agent Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md)
-- Optimization: [Chapter 9 Blueprint: Workflow Optimization and Evaluation](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
+- Memory: [Chapter 3 Blueprint: Memory](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md)
+- Reasoning: [Chapter 2 Blueprint: Reasoning and Planning](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md)
+- Multi-Agent: [Chapter 14 Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
+- Safety: [Chapters 17, 18, and 19 Blueprint: Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md)
+- Optimization: [Chapters 9 and 11 Blueprint: Optimization and Self-Improvement](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
 
-The original survey is the source landscape from which this course was distilled. It is where the larger taxonomy lives and where the full breadth of the field remains visible. The course uses that breadth selectively, keeping the parts that matter most for deployable systems while preserving the survey as the deeper map behind the public teaching layer.
+The original survey is the source landscape from which this course was distilled. It keeps the wider field visible, including material that does not belong in the core teaching path. That breadth matters because a distillation is only trustworthy if the reader can still trace it back to the larger map.
 
-The paper notes remain the source-audit layer. They are where a reader goes once the local design question is clear and the next step is no longer orientation but close study of the underlying work.
+The paper notes remain the source-audit layer. They are where a reader goes once the local design question is specific and the next step is no longer orientation but close study. Their role is depth, provenance, and interpretive discipline. They justify the compression above them without forcing every reader to carry the full source load all the time.
 
 ## Two Orders Matter
 
