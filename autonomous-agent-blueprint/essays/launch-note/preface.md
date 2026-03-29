@@ -31,12 +31,12 @@ That is the standard the package is trying to meet. If a reader finishes the cou
 
 The public course has six sections, presented in this order.
 
-- **[Action](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/01-action-tool-use.md)** explains what changes when language gains the ability to produce bounded state change through tools, code, data systems, browsers, and other software interfaces.
-- **[Memory](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/02-memory-systems-and-authority.md)** explains how an agent should carry information across time without turning the past into an ungoverned source of present authority.
-- **[Reasoning](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/03-reasoning-scaffolds-and-planning.md)** explains how tasks should be structured, grounded, checked, and escalated when a single fluent pass is not enough.
-- **[Multi-Agent](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md)** explains when one workflow should become several roles and what kind of handoff makes that split real rather than theatrical.
-- **[Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/05-trust-boundaries-and-agent-safety.md)** explains where control can be lost once the system can read untrusted input, remember durable state, call tools, and exchange artifacts.
-- **[Optimization](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/06-workflow-optimization-and-evaluation.md)** explains how to improve the workflow once it works at all, and why the workflow rather than the prompt becomes the true object of optimization.
+- **[Action](https://lambpetros.substack.com/p/operating-agents-i-when-language)** explains what changes when language gains the ability to produce bounded state change through tools, code, data systems, browsers, and other software interfaces.
+- **[Memory](https://lambpetros.substack.com/p/operating-agents-ii-memory-needs)** explains how an agent should carry information across time without turning the past into an ungoverned source of present authority.
+- **[Reasoning](https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the)** explains how tasks should be structured, grounded, checked, and escalated when a single fluent pass is not enough.
+- **[Multi-Agent](https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent)** explains when one workflow should become several roles and what kind of handoff makes that split real rather than theatrical.
+- **[Safety](https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface)** explains where control can be lost once the system can read untrusted input, remember durable state, call tools, and exchange artifacts.
+- **[Optimization](https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow)** explains how to improve the workflow once it works at all, and why the workflow rather than the prompt becomes the true object of optimization.
 
 Optimization is intentionally treated as a bonus module. It assumes the earlier layers already exist in recognizable form. A workflow cannot be optimized responsibly before its memory, reasoning, action, coordination, and safety surfaces are clear enough to evaluate.
 
