@@ -72,6 +72,8 @@ The broader lesson is restrained but durable. Good reasoning design does not mea
 
 ![Slide 17: Use the lightest structure that works](./artifacts/slides/Reasoning%20Architectures/slide-017.png)
 
+For the broader taxonomy of reasoning methods, planner handoff logic, search escalations, and paper-by-paper reading guidance, continue with the [Reasoning Companion](./companion.md).
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](../../advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. It is useful here because it places reasoning next to action, memory, optimization, coordination, and safety, which helps the reader see that reasoning scaffolds are one layer of a larger operating system rather than a complete solution on their own.

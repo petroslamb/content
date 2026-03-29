@@ -72,6 +72,8 @@ The safe methodology is therefore bounded. Keep the evaluation set and governanc
 
 The course-level takeaway is deliberately plain. Optimize an agent workflow the way you would optimize any other distributed production system. Lock the objective. Measure the baseline honestly. Repair contracts before adding new reasoning layers. Add feedback where repeated failure proves it is worth the cost. Search topology only when simpler causes have been ruled out. Keep the optimizer away from the governance layer. That discipline is less exciting than endless prompt folklore, but it is the discipline that prevents a system from becoming more complicated while only appearing to become better.
 
+For the broader optimization map across prompts, tools, topology, judge systems, and bounded self-improvement, continue with the [Optimization Companion](./companion.md).
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](../../advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. It is useful here because it places optimization after the rest of the stack already exists, which is exactly when improvement becomes a workflow problem rather than a prompting hobby.

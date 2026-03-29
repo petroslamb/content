@@ -70,6 +70,8 @@ The course-level conclusion is not that agents are uniquely dangerous or impossi
 
 ![Slide 18: Agent safety is architecture](./artifacts/slides/Agent%20Safety%20Architecture/slide-018.png)
 
+For the wider threat taxonomies, contamination paths, retrieval and memory risks, and the deeper literature around safety architecture, continue with the [Safety Companion](./companion.md).
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](../../advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. It is useful here because it places safety after the rest of the stack becomes real, which is exactly when the topic stops being abstract and becomes a question of operational consequence.
