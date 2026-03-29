@@ -67,6 +67,10 @@ POST_SPECS = [
     ),
 ]
 
+PUBLISHED_MARKDOWN_TO_SUBSTACK_URL = {
+    spec.markdown_path.resolve(): f"{PUBLICATION_URL}/p/{spec.slug}" for spec in POST_SPECS
+}
+
 
 MD = MarkdownIt()
 INLINE_MD = MarkdownIt("commonmark")
@@ -76,6 +80,9 @@ def normalize_path_target(markdown_path: Path, target: str) -> str:
     if re.match(r"^[a-z]+://", target):
         return target
     resolved = (markdown_path.parent / unquote(target)).resolve()
+    published_url = PUBLISHED_MARKDOWN_TO_SUBSTACK_URL.get(resolved)
+    if published_url is not None:
+        return published_url
     rel = resolved.relative_to(REPO_ROOT).as_posix()
     return f"{GITHUB_BLOB_ROOT}/{quote(rel)}"
 
