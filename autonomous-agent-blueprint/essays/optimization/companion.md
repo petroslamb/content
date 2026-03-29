@@ -78,42 +78,42 @@ That composure is especially important because optimization papers often report 
 
 ### OPRO
 
-[OPRO](../../reference/papers/opro.md) matters because it formalized prompt improvement as an optimization problem rather than a craft exercise. The paper’s contribution is not simply that language models can generate alternate prompts. It is that prompt proposals can be evaluated, scored, and fed back into a loop that treats wording as a search target. That helped move prompt work from intuition toward measurable iteration.
+[OPRO](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/opro.md) matters because it formalized prompt improvement as an optimization problem rather than a craft exercise. The paper’s contribution is not simply that language models can generate alternate prompts. It is that prompt proposals can be evaluated, scored, and fed back into a loop that treats wording as a search target. That helped move prompt work from intuition toward measurable iteration.
 
 Builders should read OPRO when the workflow shape is sound and they need a disciplined way to improve local node instructions against a stable task objective. It is especially useful as a conceptual anchor for prompt optimization loops. It should not be overclaimed as a general agent-improvement framework. Without a reliable evaluation set, OPRO-style search is still just organized guessing.
 
 ### TextGrad
 
-[TextGrad](../../reference/papers/textgrad.md) is useful because it tries to make textual optimization more systematic by treating feedback as something like a gradient signal over prompts or textual artifacts. Its importance lies less in the metaphor itself and more in the ambition to convert diffuse quality judgments into iterative improvement steps that can be reused across tasks.
+[TextGrad](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/textgrad.md) is useful because it tries to make textual optimization more systematic by treating feedback as something like a gradient signal over prompts or textual artifacts. Its importance lies less in the metaphor itself and more in the ambition to convert diffuse quality judgments into iterative improvement steps that can be reused across tasks.
 
 This paper is worth reading when a team wants to understand the emerging language of optimization over text objects and when feedback signals are available but not yet being used coherently. It should not be read as proof that text optimization has achieved the rigor of ordinary gradient descent. The quality of the optimization still depends on evaluation and feedback design.
 
 ### Self-Refine And Reflexion
 
-[Self-Refine](../../reference/papers/self_refine.md) and [Reflexion](../../reference/papers/reflexion.md) belong together because both show how feedback loops can improve performance without immediately changing the larger workflow graph. Self-Refine operates within an iteration on one answer or artifact. Reflexion stretches the loop across attempts and stores lessons from failure. Together they define a useful middle layer between prompt tuning and structural redesign.
+[Self-Refine](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/self_refine.md) and [Reflexion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/reflexion.md) belong together because both show how feedback loops can improve performance without immediately changing the larger workflow graph. Self-Refine operates within an iteration on one answer or artifact. Reflexion stretches the loop across attempts and stores lessons from failure. Together they define a useful middle layer between prompt tuning and structural redesign.
 
 Builders should read these when repeated failure modes are visible and the system has signals strong enough to support critique or reflection. They help clarify when local feedback is the right optimization lever. They should not be overused. Without meaningful evaluation pressure, these loops can create polished drift instead of real improvement.
 
 ### Voyager
 
-[Voyager](../../reference/papers/voyager.md) matters in the optimization chapter because it makes skill accumulation visible as a form of workflow improvement. The paper shows how repeated success can be promoted into reusable procedures, reducing relearning cost over time. Its deeper contribution is not the embodied setting. It is the idea that experience can change the future workflow by altering what the system already knows how to do.
+[Voyager](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/voyager.md) matters in the optimization chapter because it makes skill accumulation visible as a form of workflow improvement. The paper shows how repeated success can be promoted into reusable procedures, reducing relearning cost over time. Its deeper contribution is not the embodied setting. It is the idea that experience can change the future workflow by altering what the system already knows how to do.
 
 Builders should read Voyager when repeated tasks are appearing and procedural reuse may be a better optimization path than repeated prompt edits. It clarifies when promotion into a skill library counts as real improvement. It should not be treated as permission to save every local success. The real lesson is selective procedural accumulation under clear success conditions.
 
 ### MT-Bench And Chatbot Arena
 
-[MT-Bench and Chatbot Arena](../../reference/papers/mt_bench_chatbot_arena.md) matter because they normalized the use of model-based and pairwise comparative judging at scale. Their contribution to the optimization discussion is indirect but important. They helped make the evaluation layer itself a design object, especially in settings where human review cannot cover every iteration.
+[MT-Bench and Chatbot Arena](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/mt_bench_chatbot_arena.md) matter because they normalized the use of model-based and pairwise comparative judging at scale. Their contribution to the optimization discussion is indirect but important. They helped make the evaluation layer itself a design object, especially in settings where human review cannot cover every iteration.
 
 Builders should read this reference when deciding how judge systems can support optimization without silently replacing stronger task metrics. It clarifies the promise and the risk of LLM-as-judge approaches. It should not be overclaimed as a general evaluation solution. Judge systems need calibration, spot checking, and task-aware boundaries if they are going to support optimization responsibly.
 
 ### AFLOW And GPTSwarm
 
-[AFLOW](../../reference/papers/aflow.md) and [GPTSwarm](../../reference/papers/gptswarm.md) belong together because both move optimization up to the topology layer. Instead of improving a single prompt or tool call, they search over workflow structure, node arrangement, and graph composition. Their value lies in showing that topology can itself be optimized, but only under a regime where evaluation is strong enough to distinguish better structures from noisier ones.
+[AFLOW](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/aflow.md) and [GPTSwarm](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/gptswarm.md) belong together because both move optimization up to the topology layer. Instead of improving a single prompt or tool call, they search over workflow structure, node arrangement, and graph composition. Their value lies in showing that topology can itself be optimized, but only under a regime where evaluation is strong enough to distinguish better structures from noisier ones.
 
 Builders should read these papers when the evidence really suggests that branching, ordering, or role allocation is the main bottleneck. They help answer when graph search becomes justified. They should not be read as a reason to skip simpler layers. If the baseline still has weak schemas or brittle tool use, topology search is likely to amplify confusion rather than solve it.
 
 ### The Booklet Optimization Chapter
 
-The [optimization sections of the foundation agents booklet](../../advances-and-challenges-in-foundation-agents.md) are worth treating as a reference family because they provide the layered map that keeps the rest of the literature in proportion. Figures 9.1 through 9.4 do not only summarize methods. They separate prompt optimization, workflow optimization, and tool optimization in a way that immediately changes build order and evaluation discipline.
+The [optimization sections of the foundation agents booklet](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) are worth treating as a reference family because they provide the layered map that keeps the rest of the literature in proportion. Figures 9.1 through 9.4 do not only summarize methods. They separate prompt optimization, workflow optimization, and tool optimization in a way that immediately changes build order and evaluation discipline.
 
 Builders should revisit those sections after reading one or two of the named papers above. The booklet helps place each method at the right layer of the stack and prevents optimization from collapsing into prompt craft or grand claims about self-improvement. It should not replace concrete paper reading, but it is one of the best guides for understanding what kind of object each method is actually trying to improve.

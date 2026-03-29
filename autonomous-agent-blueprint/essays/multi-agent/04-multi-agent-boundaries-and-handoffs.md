@@ -10,7 +10,7 @@
 
 A team can build an incident workflow with a planner agent, an analyst agent, an executor agent, and a reviewer agent, then still make the wrong rollback for a simple reason: all four nodes see the same context, hold the same permissions, and communicate through loose chat summaries that nobody can audit. The architecture looks elaborate. The boundary structure is thin. When the output is wrong, the team cannot tell which node introduced the mistake because no typed handoff artifact preserved the decision clearly enough to inspect. That is the failure shape that matters in multi-agent design. Additional agents only help when they create a boundary that makes the workflow clearer, safer, or easier to review.
 
-The first lesson, then, is that multi-agent architecture should be treated as an escalation rather than a baseline. The right starting question is not "how many agents should this workflow have." The right starting question is "what problem can one well-bounded agent not solve cleanly enough on its own." That framing follows the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and the local [multi-agent blueprint](../../core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md). The practical unit of analysis is the workflow boundary, not the number of speaking roles on the screen.
+The first lesson, then, is that multi-agent architecture should be treated as an escalation rather than a baseline. The right starting question is not "how many agents should this workflow have." The right starting question is "what problem can one well-bounded agent not solve cleanly enough on its own." That framing follows the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and the local [multi-agent blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md). The practical unit of analysis is the workflow boundary, not the number of speaking roles on the screen.
 
 ![Slide 2: Workflow decomposition over agent theater](./artifacts/slides/Multi-Agent%20Design%20Blueprint/slide-002.png)
 
@@ -70,13 +70,13 @@ The broader lesson is less dramatic than the industry story but more useful for 
 
 ![Slide 14: Multi-agent is workflow decomposition](./artifacts/slides/Multi-Agent%20Design%20Blueprint/slide-014.png)
 
-For the broader field map on collaboration types, decision structures, protocols, evaluation frameworks, and the surrounding literature, continue with the [Multi-Agent Companion](./companion.md).
+For the broader field map on collaboration types, decision structures, protocols, evaluation frameworks, and the surrounding literature, continue with the [Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/companion.md).
 
 ## References
 
-[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](../../advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the survey-level reference behind this series. It is useful here because it places multi-agent design after reasoning, action, and memory, which reinforces the idea that additional topology is an escalation on top of an already functioning workflow.
+[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the survey-level reference behind this series. It is useful here because it places multi-agent design after reasoning, action, and memory, which reinforces the idea that additional topology is an escalation on top of an already functioning workflow.
 
-[Chapter 14 Blueprint: Multi-Agent Design](../../core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md) is the most practical design aid for this topic. Read it when you want the conservative escalation path in operational form: one orchestrator first, then specialists, then pipelines, then critic overlays, and debate only when the task genuinely benefits from disagreement.
+[Chapter 14 Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md) is the most practical design aid for this topic. Read it when you want the conservative escalation path in operational form: one orchestrator first, then specialists, then pipelines, then critic overlays, and debate only when the task genuinely benefits from disagreement.
 
 [*MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework*](https://arxiv.org/abs/2308.00352) is helpful for understanding role-based decomposition through staged artifacts. Its main lesson is that multi-agent structure becomes usable when roles own concrete deliverables rather than just conversational personas.
 

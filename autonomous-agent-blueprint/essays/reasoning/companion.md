@@ -66,48 +66,48 @@ It also gives ordinary teams a stopping discipline. If decomposition, grounding,
 
 ### Least-to-Most Prompting
 
-[Least-to-Most Prompting](../../reference/papers/least_to_most_prompting.md) matters because it provides the cleanest case for decomposition as a first-class control move. The paper’s contribution is not just better results on complex tasks. It shows that many reasoning failures come from forcing the model to solve a large problem before stabilizing the smaller commitments that the larger problem depends on. That insight is simple and durable.
+[Least-to-Most Prompting](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/least_to_most_prompting.md) matters because it provides the cleanest case for decomposition as a first-class control move. The paper’s contribution is not just better results on complex tasks. It shows that many reasoning failures come from forcing the model to solve a large problem before stabilizing the smaller commitments that the larger problem depends on. That insight is simple and durable.
 
 Builders should read this paper when a task is multi-step, mostly deterministic, and failing because the model keeps skipping necessary intermediate structure. It helps answer when decomposition should be the first escalation. It should not be overclaimed as a universal reasoning solution. If the task depends on live state, tool interaction, or verification against the world, decomposition alone will not be enough.
 
 ### Step-Back Prompting
 
-[Step-Back Prompting](../../reference/papers/step_back_prompting.md) is valuable because it clarifies that some reasoning failures are failures of representation rather than sequence. The model is not necessarily missing a step. It may be operating at the wrong level of abstraction. The method helps by forcing a temporary move away from particulars so the broader governing principle becomes easier to identify.
+[Step-Back Prompting](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/step_back_prompting.md) is valuable because it clarifies that some reasoning failures are failures of representation rather than sequence. The model is not necessarily missing a step. It may be operating at the wrong level of abstraction. The method helps by forcing a temporary move away from particulars so the broader governing principle becomes easier to identify.
 
 This is the right paper to read when outputs feel trapped in surface detail or when the local question is really an instance of a more general structure. It clarifies when abstraction can outperform finer-grained decomposition. It should not be overused. If the task already has a clean explicit structure, adding abstraction can make the process less direct instead of more reliable.
 
 ### ReAct
 
-[ReAct](../../reference/papers/react.md) remains the anchor paper for grounded reasoning because it joins reasoning, action, and observation into one loop. Its significance is larger than the original benchmarks. It supplied the control pattern that now underlies a great deal of practical agent work: think enough to choose an action, observe what the environment returns, and reason again from updated state.
+[ReAct](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/react.md) remains the anchor paper for grounded reasoning because it joins reasoning, action, and observation into one loop. Its significance is larger than the original benchmarks. It supplied the control pattern that now underlies a great deal of practical agent work: think enough to choose an action, observe what the environment returns, and reason again from updated state.
 
 Builders should read ReAct when the task touches tools, search, code, or any other live interface. It explains why grounded loops often outperform pure chain-of-thought reasoning in agent settings. It should not be treated as a complete solution, because the loop still depends on verification, interface quality, and safe execution boundaries. ReAct gives the control structure. The rest of the architecture still matters.
 
 ### Self-Refine
 
-[Self-Refine](../../reference/papers/self_refine.md) matters because it demonstrates a practical draft-critique-revise loop that is lighter than full search and easier to add than planner integration. The paper is useful precisely because it is modest. It does not claim to solve all reasoning defects. It focuses on improving candidate outputs that are already close enough to benefit from structured feedback.
+[Self-Refine](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/self_refine.md) matters because it demonstrates a practical draft-critique-revise loop that is lighter than full search and easier to add than planner integration. The paper is useful precisely because it is modest. It does not claim to solve all reasoning defects. It focuses on improving candidate outputs that are already close enough to benefit from structured feedback.
 
 Read Self-Refine when the first answer is often near the target but inconsistent, unclear, or incomplete. It helps answer whether a cheap critique overlay is worth the extra pass. Do not overclaim it as a truth mechanism. It can polish a bad answer into a cleaner bad answer when the underlying issue is lack of grounding or lack of verification.
 
 ### Chain-of-Verification
 
-[Chain-of-Verification](../../reference/papers/chain_of_verification.md) is the most useful reasoning paper for separating critique from checking. Its contribution is to force explicit verification steps instead of trusting the original answer to remain self-consistent. That matters because many factual and logical failures survive ordinary refinement loops. The answer becomes clearer without becoming truer.
+[Chain-of-Verification](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/chain_of_verification.md) is the most useful reasoning paper for separating critique from checking. Its contribution is to force explicit verification steps instead of trusting the original answer to remain self-consistent. That matters because many factual and logical failures survive ordinary refinement loops. The answer becomes clearer without becoming truer.
 
 Builders should read this paper when the output will inform decisions or actions and the main concern is unsupported claims. It clarifies when verification should be a distinct stage in the workflow. It should not be oversold as a full safety layer. Verification reduces unchecked error, but it still depends on the availability of good checking strategies and, often, external evidence.
 
 ### Self-Consistency
 
-[Self-Consistency](../../reference/papers/self_consistency.md) matters because it reframes reliability as a sampling problem. Some tasks are brittle under a single chain of thought but stable when multiple independent traces converge. The contribution is conceptually simple but practically important: one pass may not reveal the model’s best reachable answer.
+[Self-Consistency](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/self_consistency.md) matters because it reframes reliability as a sampling problem. Some tasks are brittle under a single chain of thought but stable when multiple independent traces converge. The contribution is conceptually simple but practically important: one pass may not reveal the model’s best reachable answer.
 
 This is worth reading when the workflow can afford extra cost and the task is known to benefit from redundant reasoning. It sharpens the question of whether agreement among traces is a useful signal. It should not become a default overlay. If the latency budget is tight or the task primarily needs grounding, self-consistency can be expensive without solving the real problem.
 
 ### Tree Of Thoughts And LATS
 
-[Tree of Thoughts](../../reference/papers/tree_of_thoughts.md) and [LATS](../../reference/papers/lats.md) belong together because both treat reasoning as a search problem over alternative trajectories. Their value is that they make explicit what simpler methods often hide: some tasks have branching difficulty, dead ends, and alternative plans that deserve systematic exploration rather than a single forward pass.
+[Tree of Thoughts](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/tree_of_thoughts.md) and [LATS](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/lats.md) belong together because both treat reasoning as a search problem over alternative trajectories. Their value is that they make explicit what simpler methods often hide: some tasks have branching difficulty, dead ends, and alternative plans that deserve systematic exploration rather than a single forward pass.
 
 Builders should read these papers when simpler scaffolds have failed and the task really does involve meaningful alternative paths. They help clarify when search is justified and what new control burden it introduces. They should not be used to justify search as a general mark of sophistication. On many everyday tasks, search adds cost and complexity without improving the outcome.
 
 ### LLM+P
 
-[LLM+P](../../reference/papers/llm_plus_p.md) matters because it draws a cleaner line between verbal reasoning and explicit planning. The paper shows that when a task already has a formal planning structure, language models do not need to solve that structure alone. They can work with a planner, translating into it and out of it while leaving the core search or constraint handling to the more suitable system.
+[LLM+P](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/reference/papers/llm_plus_p.md) matters because it draws a cleaner line between verbal reasoning and explicit planning. The paper shows that when a task already has a formal planning structure, language models do not need to solve that structure alone. They can work with a planner, translating into it and out of it while leaving the core search or constraint handling to the more suitable system.
 
 Builders should read this when tasks have explicit rules, action preconditions, or long-horizon dependencies that natural-language reasoning keeps mishandling. It helps answer when to hand work off to a planner instead of extending the prompt stack. It should not be overclaimed as a replacement for ordinary reasoning scaffolds. Many tasks never need formal planning. The point is to know when some tasks clearly do.
