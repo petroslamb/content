@@ -14,7 +14,7 @@ If you are building, read in this order:
 4. the closest file in `implementation/use-cases/`
 5. the matching blueprint sections on verification, approval, and failure handling
 
-If you are following the *Operating Agents* essays, read:
+If you are following the *Operating Agents* course essays, read:
 
 1. `essays/README.md`
 2. `essays/launch-note/archive/00-launch-note-v8.md`
@@ -23,7 +23,7 @@ If you are following the *Operating Agents* essays, read:
 5. the matching file in `core/practical-chapter-blueprints/`
 6. the matching file in `reference/papers/`
 
-The essay package is being developed as an operating doctrine for builders rather than as a loose set of public essays. The doctrine standard lives in `essays/README.md`.
+The essay package is being developed as a structured course for builders rather than as a loose set of public essays. The chapter standard lives in `essays/README.md`.
 
 ## Repository Map
 
@@ -40,7 +40,7 @@ The essay package is being developed as an operating doctrine for builders rathe
 
 ## Surface Roles
 
-- `essays/` is the public doctrine layer for builders.
+- `essays/` is the public course-chapter layer for builders.
 - `core/` is the architecture decision layer.
 - `reference/` is the literature and source-audit layer.
 - `implementation/use-cases/` is the reference-architecture layer.
