@@ -6,7 +6,7 @@ import time
 from dataclasses import dataclass
 from io import BytesIO
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable, TypeVar
 from urllib.parse import quote, unquote
 
 from markdown_it import MarkdownIt
@@ -20,6 +20,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 GITHUB_BLOB_ROOT = "https://github.com/petroslamb/content/blob/main"
 COOKIE_PATH = Path("/tmp/substack_cookie_string.txt")
 PUBLICATION_URL = "https://lambpetros.substack.com"
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,16 @@ class PostSpec:
 
 
 POST_SPECS = [
+    PostSpec(
+        slug="operating-agents-preface-a-field",
+        markdown_path=REPO_ROOT
+        / "autonomous-agent-blueprint/essays/launch-note/preface.md",
+    ),
+    PostSpec(
+        slug="operating-agents-i-when-language",
+        markdown_path=REPO_ROOT
+        / "autonomous-agent-blueprint/essays/action/01-action-tool-use.md",
+    ),
     PostSpec(
         slug="operating-agents-ii-memory-needs",
         markdown_path=REPO_ROOT
@@ -316,21 +327,36 @@ def load_cookie_string() -> str:
     return cookie
 
 
+def retry_substack_call(fn: Callable[[], T]) -> T:
+    delay = 5
+    for attempt in range(6):
+        try:
+            return fn()
+        except SubstackAPIException as exc:
+            if "APIError(code=429)" not in str(exc) or attempt == 5:
+                raise
+            print(f"rate limited by Substack, retrying in {delay}s", flush=True)
+            time.sleep(delay)
+            delay *= 2
+
+
 def post_id_by_slug(api: substack.Api) -> dict[str, int]:
-    published = api.get_published_posts(limit=50)["posts"]
+    published = retry_substack_call(lambda: api.get_published_posts(limit=50))["posts"]
     return {post["slug"]: post["id"] for post in published}
 
 
 def main() -> None:
-    api = substack.Api(
-        cookies_string=load_cookie_string(),
-        publication_url=PUBLICATION_URL,
+    api = retry_substack_call(
+        lambda: substack.Api(
+            cookies_string=load_cookie_string(),
+            publication_url=PUBLICATION_URL,
+        )
     )
     slug_map = post_id_by_slug(api)
     sync = SubstackSync(api)
     for spec in POST_SPECS:
         post_id = slug_map[spec.slug]
-        print(f"syncing {spec.slug} -> {post_id}")
+        print(f"syncing {spec.slug} -> {post_id}", flush=True)
         sync.sync_post(spec, post_id)
 
 

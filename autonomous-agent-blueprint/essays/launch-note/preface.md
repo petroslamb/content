@@ -31,12 +31,12 @@ That is the standard the package is trying to meet. If a reader finishes the cou
 
 The public course has six sections, presented in this order.
 
-- **Action** explains what changes when language gains the ability to produce bounded state change through tools, code, data systems, browsers, and other software interfaces.
-- **Memory** explains how an agent should carry information across time without turning the past into an ungoverned source of present authority.
-- **Reasoning** explains how tasks should be structured, grounded, checked, and escalated when a single fluent pass is not enough.
-- **Multi-Agent** explains when one workflow should become several roles and what kind of handoff makes that split real rather than theatrical.
-- **Safety** explains where control can be lost once the system can read untrusted input, remember durable state, call tools, and exchange artifacts.
-- **Optimization** explains how to improve the workflow once it works at all, and why the workflow rather than the prompt becomes the true object of optimization.
+- **[Action](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/01-action-tool-use.md)** explains what changes when language gains the ability to produce bounded state change through tools, code, data systems, browsers, and other software interfaces.
+- **[Memory](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/02-memory-systems-and-authority.md)** explains how an agent should carry information across time without turning the past into an ungoverned source of present authority.
+- **[Reasoning](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/03-reasoning-scaffolds-and-planning.md)** explains how tasks should be structured, grounded, checked, and escalated when a single fluent pass is not enough.
+- **[Multi-Agent](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md)** explains when one workflow should become several roles and what kind of handoff makes that split real rather than theatrical.
+- **[Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/05-trust-boundaries-and-agent-safety.md)** explains where control can be lost once the system can read untrusted input, remember durable state, call tools, and exchange artifacts.
+- **[Optimization](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/06-workflow-optimization-and-evaluation.md)** explains how to improve the workflow once it works at all, and why the workflow rather than the prompt becomes the true object of optimization.
 
 Optimization is intentionally treated as a bonus module. It assumes the earlier layers already exist in recognizable form. A workflow cannot be optimized responsibly before its memory, reasoning, action, coordination, and safety surfaces are clear enough to evaluate.
 
@@ -48,7 +48,25 @@ The core essays are the public teaching layer. Each one is meant to stand on its
 
 The companions are second-pass breadth chapters. They exist because the main essays should stay tight. A good core chapter teaches the practical center. A good companion widens the field, explains adjacent taxonomies and edge cases, and shows the reader how to use the literature without overwhelming the main path.
 
+The current companion layer is:
+
+- Action: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion.md)
+- Memory: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion.md)
+- Reasoning: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion.md)
+- Multi-Agent: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/companion.md)
+- Safety: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion.md)
+- Optimization: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion.md)
+
 The blueprints are the practical implementation and review layer. They take the topic out of chapter form and turn it into a builder-facing decision guide. A reader who knows the problem but needs defaults, escalation rules, failure modes, and evaluation criteria should move from the essay and companion into the matching blueprint.
+
+The matching blueprint set is:
+
+- Action: [Chapter 8 Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md)
+- Memory: [Chapter 3 Blueprint: Memory Systems and Authority](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md)
+- Reasoning: [Chapter 2 Blueprint: Reasoning Scaffolds and Planning](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md)
+- Multi-Agent: [Chapter 14 Blueprint: Multi-Agent Boundaries and Handoffs](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
+- Safety: [Chapter 19 Blueprint: Trust Boundaries and Agent Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md)
+- Optimization: [Chapter 9 Blueprint: Workflow Optimization and Evaluation](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
 
 The original survey is the source landscape from which this course was distilled. It is where the larger taxonomy lives and where the full breadth of the field remains visible. The course uses that breadth selectively, keeping the parts that matter most for deployable systems while preserving the survey as the deeper map behind the public teaching layer.
 
