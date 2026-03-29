@@ -1,219 +1,119 @@
 # Chapters 17, 18, and 19 Blueprint: Safety
 
-## Why These Chapters Matter
+## Use This Blueprint When
 
-The safety chapters matter because they explain when the practical stack becomes dangerous. A model that looks safe in a chat demo becomes a very different system once it reads untrusted content, stores memory, calls tools, writes files, or communicates with other agents.
+Use this blueprint the moment the workflow can read untrusted content, call tools, write files, store memory, or exchange artifacts with other agents. Safety becomes real when language acquires consequence. From that point on, the question is where control can be lost and what boundary has to hold for the workflow to remain deployable.
 
-This is why safety belongs at the end of the reading order but at the center of deployment design. You need the earlier chapters to understand what the agent can do, and then these chapters tell you how those abilities fail in production.
+## The Decision
 
-## Survey Subsections To Prioritize
+Safety design should answer one question clearly: once the agent can read, remember, and act, where can untrusted input or weak authority take control?
 
-- `17.1.2 Prompt Injection Attacks`
-- `17.1.3 Hallucination Risks`
-- `18.2.1 Supply Chain Attacks`
-- `18.2.2 Risks in Tool Usage`
-- `19.1 Agent-Memory Interaction Threats`
-- `19.2 Agent-Environment Interaction Threats`
-- `19.3 Agent-Agent Interaction Threats`
+In practical agent systems that question appears at a small set of interfaces:
 
-These sections map directly to the practical attack surface of modern agents.
-
-## The Practical Question
-
-The safety chapters are answering one simple question: once the agent can read, remember, and act, where can an attacker or failure chain take control?
-
-The answer is sharper than generic "alignment" talk. The practical attack surfaces are:
-
-- untrusted content
-- unsafe tools
-- poisoned retrieval and memory
-- broad permissions
-- weak approval boundaries
-- inter-agent communication channels and artifact handoffs
-
-## Core Literature And What Each Paper Adds
-
-### `Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection`
-
-This is the conceptual foundation for treating retrieved or external content as untrusted. The paper matters because it shows how instructions can hide inside data and override system intent indirectly.
-
-Use it as the starting point for all content-boundary design.
-
-### `InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents`
-
-InjecAgent matters because it operationalizes the prompt-injection problem against real tool-using agents rather than abstract prompting setups.
-
-Use it when designing evaluations or red-team tests for tool-integrated systems.
-
-### `Identifying the Risks of LM Agents with an LM-Emulated Sandbox`
-
-ToolEmu matters because it creates a practical safety evaluation pattern. Instead of waiting for failures in production, it emulates tool environments to expose risky behaviors.
-
-Use it when you need a sandbox-first safety evaluation loop.
-
-### `AGENT POISON: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases`
-
-Agent Poison matters because it shows how memory and knowledge stores can become attack vectors. A memory system is not only a capability layer. It is also a liability surface.
-
-Use it when the agent writes or retrieves from durable stores that later influence action.
-
-### `PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models`
-
-PoisonedRAG is one of the clearest demonstrations that a small number of malicious documents can bias retrieval and downstream behavior.
-
-Use it when designing corpus ingestion, retrieval curation, and anomaly detection.
-
-### `BadRAG: Identifying Vulnerabilities in Retrieval Augmented Generation of Large Language Models`
-
-BadRAG reinforces the lesson that retrieval corpora cannot be assumed trustworthy simply because they are large.
-
-Use it when retrieval is central enough that poisoning would materially change system behavior.
-
-### `Machine Against the RAG: Jamming Retrieval-Augmented Generation with Blocker Documents`
-
-Jamming matters because it expands the threat model beyond misinformation. Retrieval can be degraded or blocked even without injecting false facts.
-
-Use it when retrieval availability and coverage matter as much as factual integrity.
-
-### `Chain-of-Verification Reduces Hallucination in Large Language Models`
-
-CoVe belongs here as a reliability control. It does not solve adversarial input problems, but it is one of the cleanest ways to reduce unchecked factual error in outputs.
-
-Use it when factual mistakes would become actions or would contaminate downstream decisions.
-
-### `Agent Smith: A Single Image Can Jailbreak One Million Multimodal LLM Agents Exponentially Fast`
-
-Agent Smith matters because it turns agent-to-agent contamination from a vague concern into a concrete multimodal propagation model. It shows that one adversarial image can move through agent interactions and memory-sharing workflows without repeated attacker intervention.
-
-Use it when agents exchange screenshots, files, image observations, or other multimodal artifacts.
-
-## If Your Problem Looks Like X, Choose Y
-
-- If the agent reads external text and later acts, choose strong trust separation first.
-- If the agent calls tools with side effects, choose tool containment and approval gates first.
-- If retrieval is central to the workflow, choose retrieval curation, provenance, and poisoning checks.
-- If the agent writes durable memory, choose memory hygiene and audit controls.
-- If several agents exchange work, treat inter-agent messages, files, and screenshots as untrusted until proven otherwise.
-
-## Method Comparison Matrix
-
-| Control | Best use | Main strength | Main risk if missing | Escalate when |
-| --- | --- | --- | --- | --- |
-| Trust separation | untrusted content and retrieval | prevents data from behaving like instructions | indirect prompt injection | actions or writes become possible |
-| Tool containment | tool-using workflows | narrows blast radius with least privilege | unsafe or over-broad side effects | irreversible actions exist |
-| Approval gates | high-impact actions | creates accountable human oversight | irreversible mistakes | deterministic checks alone are not enough |
-| Retrieval and memory hygiene | RAG or durable memory | reduces poisoning and stale-state risk | corrupted or jammed grounding | ingestion becomes broader or multi-tenant |
-| Inter-agent skepticism | multi-agent systems and artifact handoffs | blocks silent contamination between roles and attachments | unsafe cross-agent message or file trust | agent count, multimodal inputs, or role separation grows |
-| Verification | factual or high-stakes outputs | reduces unchecked error propagation | brittle outputs trigger actions | task value justifies heavier review |
-
-## The Chapter's Main Architectural Insight
-
-The strongest practical insight is that safety failures happen at interfaces:
-
-- between instructions and data
-- between model and tool
-- between retrieval and memory
+- between instructions and untrusted data
+- between the model and a tool with side effects
+- between retrieval, memory, and present authority
 - between one agent and another
-- between agent output and irreversible action
+- between output and irreversible action
 
-This means the safety layer is not a single classifier or a safety prompt. It is an interface architecture.
+If those boundaries are not explicit, the workflow is already operating on borrowed trust.
 
-## The Default Safety Blueprint
+## Default Position
+
+The default safety posture should be architectural.
+
+- Separate trusted instructions from untrusted content.
+- Run tools with least privilege and clear containment.
+- Add deterministic checks and human approval for high-impact actions.
+- Treat memory and retrieval stores as monitored infrastructure.
+- Treat inter-agent messages and artifacts as untrusted by default.
+- Use verification as a reliability layer, not as a substitute for access control.
+
+Safety is not a suffix prompt. It is the design of the interfaces where authority changes hands.
+
+## Default Build
 
 ### Boundary 1: Trust Separation
 
-Separate trusted instructions from untrusted content. Retrieved text, web pages, emails, uploaded files, inter-agent messages, and inter-agent attachments should never share the same trust status as system instructions.
+Classify each input channel before the model uses it. Retrieved passages, emails, web pages, uploaded files, screenshots, and agent handoffs should never inherit the same trust status as system policy or privileged instructions.
 
 ### Boundary 2: Tool Containment
 
-Run tools with least privilege. Separate read tools from write tools. Separate low-impact tools from financial, legal, or destructive tools.
+Separate read, write, and destructive tools by policy. Grant the least privilege the task can tolerate. The workflow should not discover at runtime that a soft boundary was really no boundary at all.
 
-### Boundary 3: Action Approval
+### Boundary 3: Approval And Irreversibility
 
-Require deterministic checks and human approval for irreversible or high-impact actions.
+Require deterministic checks and human approval wherever the action is financially meaningful, legally sensitive, destructive, or reputationally expensive. Approval is part of the action boundary, not an embarrassing fallback.
 
-### Boundary 4: Memory Hygiene
+### Boundary 4: Retrieval And Memory Hygiene
 
-Treat memory and knowledge stores as monitored infrastructure. Version, curate, audit, and watch for poisoning or drift.
+Version, curate, audit, and monitor durable stores. Memory and retrieval are capability layers, but they are also attack surfaces. A store that the workflow can write and later trust without controls is already unsafe.
 
 ### Boundary 5: Inter-Agent Skepticism
 
-Treat inter-agent messages and artifacts as another untrusted input channel. Structured handoffs reduce ambiguity, but they do not create trust by themselves.
+Treat messages, files, screenshots, and other artifacts crossing agent boundaries as another untrusted input channel. Structured handoffs help, but structure does not create trust by itself.
 
 ### Boundary 6: Verification
 
-For important outputs, run explicit verification before action or publication. Verification is not a full security layer, but it is a critical reliability layer.
+Run explicit verification for outputs whose errors could become actions, durable memory, or downstream instruction. Verification reduces unsupported claims. It does not replace trust separation, containment, or approval design.
 
-## Design Decisions That Matter Most
+## Escalate When
 
-### When prompt injection becomes a core risk
+- The agent reads external content and can later trigger side effects.
+- Tool permissions widen from read-only toward write, execution, or account access.
+- Retrieval becomes broader, more open, or more multi-tenant.
+- The workflow writes durable memory or shared knowledge that later influences action.
+- Several agents exchange files, screenshots, or multimodal observations.
+- The system executes code, writes files, or changes external system state.
 
-Prompt injection becomes a core risk as soon as the agent reads externally authored content and can later take actions with side effects.
+## Alternatives And When They Win
 
-### When retrieval becomes a safety issue
+| Control | Best use | Why it wins | Main risk if missing |
+| --- | --- | --- | --- |
+| Trust separation | untrusted content and retrieval | stops data from silently becoming instruction | indirect prompt injection and authority collapse |
+| Tool containment | tool-using workflows | reduces blast radius with least privilege | broad side effects and unsafe execution |
+| Approval gates | high-impact actions | creates accountable review before consequence | irreversible mistakes by default |
+| Retrieval and memory hygiene | RAG and durable memory | reduces poisoning, drift, and stale authority | corrupted or jammed grounding |
+| Inter-agent skepticism | multi-agent handoffs | blocks silent contamination across roles | unsafe internal propagation |
+| Verification | factual or high-value outputs | reduces unchecked error propagation | brittle claims turning into action |
 
-Retrieval becomes a safety issue once the knowledge base is open enough to be poisoned or stale enough to drive incorrect behavior.
+## What To Measure
 
-### When human approval is mandatory
+- Injection resistance under realistic content flows
+- Tool-risk behavior in sandboxed or emulated scenarios
+- Retrieval poisoning and jamming resilience
+- Excessive-permission exposure
+- Approval-bypass rate
+- Cross-agent contamination under shared artifacts
+- Incident replay quality and root-cause clarity
 
-Human approval is mandatory whenever the downstream action is irreversible, financially meaningful, legally sensitive, or reputationally expensive.
+A workflow that has never been stressed at these interfaces is not ready for confident deployment.
 
-### When sandboxing is non-negotiable
+## Failure Review
 
-Sandboxing is non-negotiable when the agent executes code, writes files, changes system state, or touches external accounts.
+- Mixing retrieved content and instructions in one undifferentiated prompt
+- Treating internal corpora as automatically trustworthy
+- Letting the agent write to the same store it later trusts without controls
+- Giving one node broad permissions without hard gates
+- Assuming extra agents make the workflow safer by default
+- Using debate or post hoc monitoring as a substitute for containment
 
-## Evaluation
+## Reading Sequence
 
-The safety stack should be evaluated through:
-
-- injection resistance tests
-- red-team tool scenarios
-- retrieval poisoning simulations
-- cross-agent contamination drills with shared files, screenshots, or image memory
-- excessive-permission reviews
-- approval-bypass tests
-- incident replay and root-cause drills
-
-A system that has never been stressed at these interfaces is not safe enough to deploy confidently.
-
-## Failure Modes
-
-- mixing instructions and retrieved content in one undifferentiated prompt
-- giving an agent broad tool permissions without hard gates
-- assuming internal corpora are automatically trustworthy
-- letting one agent's output, attachment, or screenshot become another agent's instruction without control
-- treating post hoc monitoring as a substitute for containment
-
-## Recommended Build Order
-
-1. Define trust classes for every input channel.
-2. Separate read, write, and destructive tools by policy.
-3. Add deterministic approval gates for high-impact actions.
-4. Curate and monitor retrieval sources.
-5. Add verification for critical outputs.
-6. Red-team the whole workflow before widening autonomy.
-
-## Anti-Patterns
-
-- Do not treat safety as a suffix prompt.
-- Do not let the agent write to the same knowledge base it later trusts without controls.
-- Do not assume multi-agent systems are safer because they have more voices.
-- Do not rely on debate as a substitute for access control.
-
-## Reading Sequence For These Chapters
-
-1. `../../essays/safety/05-safety-v6.md`
+1. `../../essays/safety/05-trust-boundaries-and-agent-safety.md`
 2. `../../essays/safety/companion.md`
-3. `papers/greshake_indirect_prompt_injection.md`
-4. `papers/injecagent.md`
-5. `papers/toolemu.md`
-6. `papers/agentpoison.md`
-7. `papers/poisonedrag.md`
-8. `papers/badrag.md`
-9. `papers/jamming.md`
-10. `papers/agentsmith.md`
-11. `papers/chain_of_verification.md`
+3. `../../reference/papers/greshake_indirect_prompt_injection.md`
+4. `../../reference/papers/injecagent.md`
+5. `../../reference/papers/toolemu.md`
+6. `../../reference/papers/agentpoison.md`
+7. `../../reference/papers/poisonedrag.md`
+8. `../../reference/papers/badrag.md`
+9. `../../reference/papers/jamming.md`
+10. `../../reference/papers/agentsmith.md`
+11. `../../reference/papers/chain_of_verification.md`
+
+Return to survey sections `17.1.2`, `17.1.3`, `18.2.1`, `18.2.2`, `19.1`, `19.2`, and `19.3` when the local boundary question expands into the broader threat map.
 
 ## Bottom Line
 
-The practical message of the safety chapters is that agent safety is architecture. The moment the system reads untrusted content, stores durable state, or takes external action, boundaries, permissions, approval gates, and retrieval hygiene become first-class design components.
+Agent safety is interface design under consequence. The moment the workflow can read untrusted content, preserve state, or act on the world, trust classes, permissions, approval seams, and monitored stores stop being optional. They become the architecture.

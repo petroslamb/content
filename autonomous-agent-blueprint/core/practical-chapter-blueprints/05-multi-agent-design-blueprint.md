@@ -1,183 +1,104 @@
 # Chapter 14 Blueprint: Multi-Agent Design
 
-## Why This Chapter Matters
+## Use This Blueprint When
 
-The multi-agent chapter matters because it asks a question many teams answer too casually: when should one agent become several? The practical answer is not "whenever we want more intelligence." It is "when role separation, structured handoff, or independent review clearly improve the workflow."
+Use this blueprint when one workflow is no longer enough and the team is considering additional agents, specialist roles, or review layers. The key question is not whether more agents sound more advanced. It is whether new boundaries will create cleaner role separation, safer authority, or stronger review than the best single-agent baseline.
 
-This chapter is useful because it separates serious workflow decomposition from agent theater.
+## The Decision
 
-## Survey Subsections To Prioritize
+Every multi-agent design has to answer four questions:
 
-- `14.1.2 Heterogeneous Agents`
-- `14.2.1 Static Topologies`
-- `14.3.4 Task-oriented Interaction`
-- `14.4 Human-Agent Collaboration`
-- `14.5 Decision-Making in Multi-Agent Systems`
-- `14.6.1 Types of Agent Messages`
-- `14.6.3 Next-Generation Communication Protocols`
+1. Is one strong orchestrator still enough?
+2. If not, what responsibility actually deserves separation?
+3. What artifact should pass between roles?
+4. Where does human review remain a first-class part of the topology?
 
-The task-oriented interaction and human collaboration sections are the most practical parts.
+If those questions are vague, the extra agents are probably decorative.
 
-## The Practical Question
+## Default Position
 
-The chapter is answering four questions:
+The default multi-agent stance should stay conservative.
 
-1. Is one agent enough?
-2. If not, what roles should be split?
-3. How should those roles exchange work?
-4. Where does human supervision remain mandatory?
+- Start with one orchestrator and bounded tools.
+- Split only where tools, permissions, deliverables, or evaluation logic genuinely differ.
+- Prefer typed artifact handoffs over free-form conversation.
+- Add review or debate roles only where reliability gains are measurable.
+- Treat protocol richness as a late concern rather than an opening move.
 
-Those are workflow-design questions, not philosophical ones.
+Multi-agent design is an escalation path in workflow decomposition, not a synonym for intelligence.
 
-## Core Literature And What Each Paper Adds
+## Default Build
 
-### `MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework`
+### Step 1: Prove The Single-Agent Baseline
 
-MetaGPT is one of the clearest role-based pipeline papers. It matters because agents exchange artifacts and documents rather than only conversation. That makes it architecturally valuable.
+Before adding roles, make the best one-agent workflow legible. If the baseline is weak, the topology will only spread confusion across more nodes.
 
-Use it when the system naturally decomposes into specialist roles with structured deliverables.
+### Step 2: Split By Responsibility, Not By Naming
 
-### `ChatDev: Communicative Agents for Software Development`
+Add specialists only when they own distinct tools, permissions, output formats, or evaluation standards. Two agents doing the same work under different titles are not a real split.
 
-ChatDev is another strong role-based collaboration system. It matters because it uses staged software-team roles as the organizing frame.
+### Step 3: Define The Handoff Artifact
 
-Use it when you want a pipeline view of multi-agent collaboration rather than a pure dialogue view.
+The handoff should be a typed plan, patch, review package, proposal, extracted dataset, or other inspectable artifact. Handoffs built only from open-ended conversation are harder to review, debug, and govern.
 
-### `AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation`
+### Step 4: Add Review Layers Sparingly
 
-AutoGen matters because it made multi-agent conversation programmable and reusable. Its practical value is flexibility, but that flexibility also makes it easier to overbuild.
+Critic or reviewer roles earn their place when the task is valuable enough that independent inspection improves reliability. Debate and consensus roles belong only where disagreement itself is informative.
 
-Use it when conversation is needed as a coordination fabric, but constrain it with clear roles and stop conditions.
+### Step 5: Keep Humans Inside The Topology
 
-### `Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate`
+Human review should remain explicit wherever approval, policy interpretation, or costly judgment is still required. In practical systems the human is often the highest-clearance node, not an embarrassing leftover from incomplete automation.
 
-MAD is best treated as a reliability paper more than a general architecture paper. It matters when multiple agents are being used to disagree productively.
+## Escalate When
 
-Use it when the goal is better answer quality through adversarial comparison, not role decomposition.
+- Distinct roles genuinely need different tools or permissions.
+- Work naturally moves through staged artifacts rather than one continuous loop.
+- Independent review would catch failures the main path routinely misses.
+- Disagreement between competing views is itself useful evidence.
+- The system is becoming independent enough that communication protocol and discovery standards start to matter.
 
-### `RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs`
+## Alternatives And When They Win
 
-RECONCILE matters because it makes debate more structured and confidence-aware. It pushes multi-agent reliability toward a stronger decision process.
+| Pattern | Best use | Why it wins | Main risk |
+| --- | --- | --- | --- |
+| Single orchestrator | most bounded workflows | cheapest and easiest to debug | overload if too many incompatible responsibilities accumulate |
+| Orchestrator plus specialists | distinct tools or permissions | bounded delegation under central control | fake specialists that do not own anything real |
+| Role-based pipeline | staged artifact-heavy work | strong reviewability and clean handoffs | rigidity where work varies too much |
+| Critic or reviewer overlay | high-value outputs | targeted reliability improvement | extra cost with little gain on easy work |
+| Debate or consensus group | hard judgment tasks | surfaces disagreement and alternatives | expensive and easy to romanticize |
 
-Use it when consensus and disagreement need to be managed explicitly.
+## What To Measure
 
-### Protocol Layer Notes
+- Improvement over the best single-agent baseline
+- Coordination overhead
+- Latency and cost per handoff
+- Failure localization, meaning how quickly the broken role can be found
+- Human supervision burden
+- Artifact quality at each boundary
 
-The chapter guide mentions MCP and A2A as protocol-adjacent infrastructure. Those are important conceptually, but the local chapter literature here is stronger on workflow patterns than on mature inter-agent protocol design.
+If the topology does not improve task quality, governance, or debugging clarity over the simpler baseline, it is not justified.
 
-## If Your Problem Looks Like X, Choose Y
+## Failure Review
 
-- If one agent can still own the task with bounded tools, keep one agent.
-- If distinct roles have different tools or permissions, choose orchestrator plus specialists.
-- If work naturally moves through staged artifacts, choose a role-based pipeline.
-- If reliability needs independent review, add a critic overlay.
-- If disagreement itself is informative, use debate or consensus methods sparingly.
+- Adding agents before the one-agent baseline is understood
+- Splitting by persona instead of by responsibility
+- Using conversation where an artifact contract should exist
+- Giving all roles the same permissions
+- Using debate where simple verification or review would be cheaper
+- Introducing protocol complexity before there are truly independent components
 
-## Method Comparison Matrix
+## Reading Sequence
 
-| Pattern | Best use | Main strength | Main risk | Escalate when |
-| --- | --- | --- | --- | --- |
-| Single orchestrator | most bounded workflows | cheapest and clearest baseline | overloaded responsibilities | role separation becomes real |
-| Orchestrator plus specialists | distinct tools or permissions | bounded delegation with clear control | fake specialists that do the same work | handoffs become artifact-heavy |
-| Role-based pipeline | staged document or software work | strong artifact flow and reviewability | rigidity where tasks vary a lot | independent review is still weak |
-| Critic or reviewer overlay | high-value outputs | targeted reliability improvement | extra cost with little gain on easy tasks | disagreement itself adds insight |
-| Debate or consensus group | hard judgment tasks | surfaces disagreement and alternative views | expensive and easy to overuse | only when simple review no longer suffices |
-
-## The Chapter's Main Architectural Insight
-
-The strongest practical insight is that multi-agent systems solve three different problems:
-
-- role separation
-- reliability through critique
-- task decomposition through artifact handoffs
-
-These should not be confused. A planner-reviewer pair is not the same architecture as a role-based software pipeline, and neither is the same as a debate system.
-
-## The Default Multi-Agent Blueprint
-
-### Default Position
-
-Start with one orchestrator if possible. Multi-agent design is an escalation path, not the baseline.
-
-### Add Specialists Only When Role Separation Is Real
-
-Specialists should exist when they have distinct tools, permissions, output formats, or evaluation logic. If two agents do the same kind of work with different names, the split is probably unnecessary.
-
-### Prefer Artifact Handoffs Over Free-Form Chat
-
-The most practical multi-agent systems exchange typed outputs, plans, documents, patches, or decisions. This keeps coordination legible and debuggable.
-
-### Use Debate Sparingly
-
-Debate or critique agents are useful when the task justifies independent review. They are expensive and should be applied where reliability is worth the cost.
-
-### Keep Humans As Explicit Participants
-
-Human review should appear as a first-class role in workflows where approval, interpretation, or policy judgment cannot be safely delegated.
-
-## Design Patterns
-
-### Orchestrator Plus Specialists
-
-One coordinator delegates bounded work to specialist roles. This is the default multi-agent pattern for most practical systems.
-
-### Role-Based Pipeline
-
-A fixed staged flow with distinct deliverables at each stage. This is a strong fit for software, document, and research workflows.
-
-### Critic Or Reviewer Overlay
-
-A critic agent reviews outputs from a primary agent or pipeline stage. This is best for higher-stakes decisions or high-value artifacts.
-
-### Debate Or Consensus Group
-
-Multiple agents produce competing views that are then reconciled. This should be reserved for tasks where disagreement is genuinely informative.
-
-## Failure Modes
-
-- splitting into multiple agents before the single-agent baseline is understood
-- using free-form conversation where typed artifacts would work better
-- giving all agents the same permissions
-- using debate where simple verification would be cheaper
-- adding specialist roles without specialist evaluation criteria
-
-## Evaluation
-
-A practical multi-agent system should be judged by:
-
-- end-task quality
-- coordination overhead
-- latency and cost per handoff
-- failure localization, meaning how easy it is to find the broken role
-- improvement over the best single-agent baseline
-
-If a multi-agent topology does not beat a strong single-agent workflow, it is complexity without justification.
-
-## Recommended Build Order
-
-1. Build the single-agent baseline first.
-2. Identify which failures are actually role-separable.
-3. Split only the roles that need different tools, permissions, or deliverables.
-4. Add typed handoff contracts.
-5. Add review or debate roles only where reliability gains are measurable.
-
-## Anti-Patterns
-
-- Do not start with large agent teams.
-- Do not let conversation substitute for interface design.
-- Do not assume more agents means more intelligence.
-- Do not build specialist roles without specialist metrics.
-
-## Reading Sequence For This Chapter
-
-1. `../../essays/multi-agent/04-multi-agent-v6.md`
+1. `../../essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md`
 2. `../../essays/multi-agent/companion.md`
-3. `papers/metagpt.md`
-4. `papers/chatdev.md`
-5. `papers/autogen.md`
-6. `papers/mad.md`
-7. `papers/reconcile.md`
+3. `../../reference/papers/metagpt.md`
+4. `../../reference/papers/chatdev.md`
+5. `../../reference/papers/autogen.md`
+6. `../../reference/papers/mad.md`
+7. `../../reference/papers/reconcile.md`
+
+Return to survey sections `14.1.2`, `14.2.1`, `14.3.4`, `14.4`, `14.5`, `14.6.1`, and `14.6.3` when the immediate design question expands into topology, decision, or protocol choices.
 
 ## Bottom Line
 
-The practical chapter blueprint is conservative by design: one agent first, specialists second, structured handoffs over chatter, and debate only when reliability needs it. Multi-agent design is workflow decomposition, not magic emergence.
+Treat every extra agent as a purchase that must keep proving its value. Start with one orchestrator, split only where authority or deliverables really differ, and make handoffs cold enough that both machines and humans can inspect them without reading a novel.
