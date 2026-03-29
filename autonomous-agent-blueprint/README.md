@@ -17,13 +17,13 @@ If you are building, read in this order:
 If you are following the *Operating Agents* course essays, read:
 
 1. `essays/README.md`
-2. `essays/launch-note/archive/00-launch-note-v8.md`
+2. `essays/launch-note/preface.md`
 3. the relevant topic essay
-4. the local `companion-v7.md` as the substantial second-pass companion essay
+4. the matching topic `companion.md`
 5. the matching file in `core/practical-chapter-blueprints/`
 6. the matching file in `reference/papers/`
 
-The essay package is being developed as a structured course for builders rather than as a loose set of public essays. The chapter standard lives in `essays/README.md`.
+The essay package is being developed as a structured course for builders rather than as a loose set of public essays. The chapter standard lives in `essays/README.md`, and the companion layer now serves as the second-pass breadth layer for each topic.
 
 ## Repository Map
 
@@ -40,7 +40,7 @@ The essay package is being developed as a structured course for builders rather 
 
 ## Surface Roles
 
-- `essays/` is the public course-chapter layer for builders.
+- `essays/` is the public course-chapter layer for builders, including core chapters and second-pass companions.
 - `core/` is the architecture decision layer.
 - `reference/` is the literature and source-audit layer.
 - `implementation/use-cases/` is the reference-architecture layer.

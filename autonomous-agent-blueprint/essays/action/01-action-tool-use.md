@@ -62,6 +62,8 @@ That possibility has a strange implication. The future of agents may depend less
 
 ![Slide 16: The Bottom Line](./artifacts/slides/Agent%20Action%20Blueprint/slide-016.png)
 
+For a broader map of action surfaces, tool-system taxonomy, browser and GUI escalation, and the surrounding literature, continue with the [Action Companion](./companion.md).
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](../../advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is breadth. It maps the full foundation-agents landscape across action, memory, reasoning, coordination, optimization, and safety. This essay is a narrowed public extraction from that larger survey: it pulls out the action chapter, compresses it into a single narrative arc, and keeps only the design pressures that matter most for builders trying to understand when language becomes accountable software behavior.

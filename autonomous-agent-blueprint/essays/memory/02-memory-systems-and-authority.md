@@ -70,6 +70,8 @@ The most important lesson is that continuity should be selective. A good memory 
 
 ![Slide 15: Memory is governable state](./artifacts/slides/AI%20Memory%20Architecture/slide-015.png)
 
+For the wider memory taxonomy, lifecycle models, retrieval escalations, and a deeper reading guide to the literature, continue with the [Memory Companion](./companion.md).
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](../../advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. Read it to place memory alongside action, reasoning, optimization, coordination, and safety. In the memory chapter, its main value is scope: it shows that persistence is not an isolated feature but one layer in a larger operating system for agents.

@@ -70,6 +70,8 @@ The broader lesson is less dramatic than the industry story but more useful for 
 
 ![Slide 14: Multi-agent is workflow decomposition](./artifacts/slides/Multi-Agent%20Design%20Blueprint/slide-014.png)
 
+For the broader field map on collaboration types, decision structures, protocols, evaluation frameworks, and the surrounding literature, continue with the [Multi-Agent Companion](./companion.md).
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](../../advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the survey-level reference behind this series. It is useful here because it places multi-agent design after reasoning, action, and memory, which reinforces the idea that additional topology is an escalation on top of an already functioning workflow.
