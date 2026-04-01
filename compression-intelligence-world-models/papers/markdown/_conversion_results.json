@@ -1,0 +1,104 @@
+[
+  {
+    "source": "chen_2022_compact_computational_holographic_display.pdf",
+    "target": "chen_2022_compact_computational_holographic_display.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "cheng_2025_facts_leaderboard.pdf",
+    "target": "cheng_2025_facts_leaderboard.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "deletang_2023_language_modeling_is_compression.pdf",
+    "target": "deletang_2023_language_modeling_is_compression.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "he_2024_hmt.pdf",
+    "target": "he_2024_hmt.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "huang_2023_hallucination_survey.pdf",
+    "target": "huang_2023_hallucination_survey.md",
+    "code": 0,
+    "stderr": " descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\nCould not get FontBBox from font descriptor because None cannot be parsed as 4 floats\n"
+  },
+  {
+    "source": "huang_2024_compression_represents_intelligence_linearly.pdf",
+    "target": "huang_2024_compression_represents_intelligence_linearly.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "javidi_2021_roadmap_on_digital_holography.pdf",
+    "target": "javidi_2021_roadmap_on_digital_holography.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "ji_2025_language_models_resist_alignment.pdf",
+    "target": "ji_2025_language_models_resist_alignment.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "kipf_2026_waiting_to_decompress.pdf",
+    "target": "kipf_2026_waiting_to_decompress.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "lamaakal_2025_tiny_language_models_for_automation_and_control.html",
+    "target": "lamaakal_2025_tiny_language_models_for_automation_and_control.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "li_2024_understanding_is_compression.pdf",
+    "target": "li_2024_understanding_is_compression.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "rivenson_2018_phase_recovery_holographic_reconstruction.pdf",
+    "target": "rivenson_2018_phase_recovery_holographic_reconstruction.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "tang_2025_compression_is_routing.pdf",
+    "target": "tang_2025_compression_is_routing.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "wan_2025_understanding_as_compression.pdf",
+    "target": "wan_2025_understanding_as_compression.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "zhao_2024_probabilistic_semantic_communications.pdf",
+    "target": "zhao_2024_probabilistic_semantic_communications.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "zheng_2026_proxy_compression_for_language_modeling.pdf",
+    "target": "zheng_2026_proxy_compression_for_language_modeling.md",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "source": "zhu_2025_scaling_latent_reasoning_via_looped_language_models.pdf",
+    "target": "zhu_2025_scaling_latent_reasoning_via_looped_language_models.md",
+    "code": 0,
+    "stderr": ""
+  }
+]
