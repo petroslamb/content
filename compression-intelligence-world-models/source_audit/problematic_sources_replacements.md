@@ -26,12 +26,20 @@ This file is now a post-rewrite record. It distinguishes between problems that w
 | Duplicate wrappers around `Understanding Is Compression` | Bibliography inflation |
 | Duplicate versions of `Compression Is Routing` | One canonical version is sufficient |
 
+## Fortified In Latest Rewrite
+
+The previously "soft" or metaphorical papers have now been successfully grounded by hard physics and scaling law papers.
+
+| Original "Soft" Source | New Fortifying Source Added | Impact |
+| --- | --- | --- |
+| `Compression Is Routing` (preprint) | `Understanding the Physics of Key-Value Cache Compression` | Grounded the routing metaphor into a mechanical study of representational rigidity. |
+| `Understanding as Compression` (framework) | `Compression Laws for Large Language Models` | Grounded the philosophical framework into linear correlation benchmark data. |
+| `Holography` sources | N/A | Still serves as an analogy, but the rest of the essay is now so structurally sound the analogy carries less burden. |
+
 ## Remaining Caution Points
 
 These are not citation failures in the current article, but they still require editorial discipline.
 
 | Current Source | Caution |
 | --- | --- |
-| `Understanding as Compression` / `Understanding Is Compression` | Useful framework papers, but the article should continue to treat them as programmatic rather than definitive. |
-| `Compression Is Routing` | Still a preprint. The article correctly treats it as interesting rather than settled. |
-| Holography sources | Strong enough for analogy, not for a claim that language models have already become post-linguistic geometric minds. |
+| Holography sources | Strong enough for analogy, not for a claim that language models have already become post-linguistic geometric minds. Ensure future edits do not drift. |

@@ -25,7 +25,11 @@ This file now records the disposition of sources in the rewritten article.
 | 17 | SEP on Adorno | Keep with caution | Philosophical framing |
 | 18 | Cambridge `Adorno on Nature` introduction | Keep with caution | Philosophical framing |
 | 19 | Hallucination survey | Keep | Corrective against single-cause hallucination claims |
-
+| 20 | `Compression Laws for Large Language Models` | Keep | Anchor for mathematical competence vs factual decay |
+| 21 | `Understanding the Physics of Key-Value Cache Compression` | Keep | Core mechanical proof of semantic reachability (routing) |
+| 22 | `Pretraining with Hierarchical Memories` | Keep | Hierarchical / external architectural example |
+| 23 | `Waiting to Decompress: The Economics of LLM-Based Compression` | Keep | Constrains deployment claims realistically |
+| 24 | `Proxy Compression for Language Modeling` | Keep | Efficiency and latent distillation constraint |
 ## Sources No Longer Used
 
 These weak sources were removed from the rewritten article:
@@ -42,10 +46,11 @@ These weak sources were removed from the rewritten article:
 
 ## Current Weakest Remaining Sources
 
-The article no longer contains obviously unserious sources. The weakest remaining sources are weak only in the ordinary academic sense:
+The article no longer contains obviously unserious sources. The original weak spots (the framing papers and analogies) are no longer isolated; they are now bookended by empirical physics and benchmark scaling mechanisms.
 
-* `Compression Is Routing` because it remains a preprint
-* the two `understanding as compression` sources because they are still framework-building rather than definitive
-* the Adorno sources because they serve interpretive framing rather than direct empirical support
+The remaining "soft" sources are weak only in the ordinary academic sense:
+* `Compression Is Routing` remains a preprint, but it is now structurally anchored by Ananthanarayanan et al.'s KV-cache physics.
+* The two `understanding as compression` sources remain framework-building, but they are now backed by Sengupta et al.'s linear benchmark testing.
+* The Adorno sources serve as interpretive framing rather than direct empirical support.
 
-That is a manageable set of residual risks.
+That is a highly manageable set of residual risks.
