@@ -1,4 +1,4 @@
-![Architecting the Executable Vault](./Geometric_Authority/01_architecting_the_executable_vault.png)
+![Architecting the Executable Vault](./Composite_Authority/01_architecting_the_executable_vault.png)
 
 # The Architecture of Latent Meaning: Semantic Compression and the Evolution of Recursive Authority
 
@@ -10,13 +10,13 @@ The foundational premise of the current trajectory is that all understanding or 
 
 In this new paradigm, the compression ratio achieved by a model serves as a direct proxy for its intelligence. Empirical studies have demonstrated a near-linear correlation between a model's ability to compress external text corpora and its performance on downstream intelligence benchmarks.[1, 10] This suggests that as a model's predicted probability distribution becomes closer to the true data distribution, it is not merely reducing cross-entropy but is architecting a deeper internal representation of the world's logical and factual regularities.[8, 10]
 
-![Intelligence Correlates Linearly with Compression](./Geometric_Authority/03_intelligence_correlates_linearly_with_compression.png)
+![Intelligence Correlates Linearly with Compression](./Composite_Authority/03_intelligence_correlates_linearly_with_compression.png)
 
 ## The Mathematical Convergence of Prediction and Compression
 
 The equivalence between probabilistic models and lossless compression is rooted in the source coding theorem, which posits that the expected message length in bits of an optimal entropy encoder is equal to the negative log-likelihood of the statistical model.[2] This relationship allows for the transformation of any powerful predictor into a strong compressor via arithmetic coding.[1, 2]
 
-![The Transition to Architected Authority](./Geometric_Authority/02_the_transition_to_architected_authority.png)
+![The Transition to Architected Authority](./Composite_Authority/02_the_transition_to_architected_authority.png)
 
 ### Compression Paradigm
 
@@ -29,33 +29,33 @@ The equivalence between probabilistic models and lossless compression is rooted 
 
 As models such as Chinchilla-70B are applied to modalities beyond their primary training data—such as ImageNet patches or LibriSpeech audio—they demonstrate an "impressive" ability to outperform domain-specific compressors.[1, 11] This cross-modal transferability indicates that the "vault" of the latent space is not modality-dependent but is a universal architecture for structured information.[12]
 
-![Abandoning the Illusion of Language: Latent Geometry](./Geometric_Authority/05_abandoning_the_illusion_of_language.png)
+![Abandoning the Illusion of Language: Latent Geometry](./Composite_Authority/05_abandoning_the_illusion_of_language.png)
 
 ## The Mechanics of the High-Density Vault: Latent Space Architectures
 
 To architect authority within minimal spaces, the model must transition from storing surface-level symbols to maintaining abstract internal representations that distill core concepts.[4] This is achieved through sophisticated architectural mechanisms that treat the latent space as a repository for executable meaning. One such advancement is the "Compression is Routing" framework, which employs end-to-end Transformer Autoencoders to achieve extreme sequence length compression.[13, 14]
 
-![Compression is Routing](./Geometric_Authority/09_compression_is_routing.png)
+![Compression is Routing](./Composite_Authority/09_compression_is_routing.png)
 
 In these systems, a 512-token input can be compressed into as few as 8 latent vectors—a 64x reduction—while maintaining near-perfect reconstruction accuracy for in-domain data.[13, 14] This compression is not merely a reduction in bit-length but a mapping of data onto a manifold where different domains (e.g., code vs. natural language) form clear "Manifold Separations".[14] The reconstruction residual—the information lost during this mapping—becomes an "Intrinsic Distribution Fingerprint," allowing the model to dynamically route information to specialized expert modules without the need for explicit gating networks.[13, 14]
 
-![Tokens as Recursive Pointers](./Geometric_Authority/07_tokens_as_recursive_pointers.png)
+![Tokens as Recursive Pointers](./Composite_Authority/07_tokens_as_recursive_pointers.png)
 
 ### Recursive Pointers and Hierarchical Descriptors
 
 The proposition that tokens can act as recursive pointers is central to the idea of folding history into compact structures. In traditional transformers, tokens are discrete units; however, in recursive architectures like LoopLMs and Hierarchical Transformers, tokens function as descriptors that point toward nested levels of meaning.[3, 15] By reframing next-token prediction as a next-token reasoning task, signals can be assigned directly to latent steps.[3]
 
-![Iterative Latent Computation (LoopLMs)](./Geometric_Authority/08_iterative_latent_computation_looplms.png)
+![Iterative Latent Computation (LoopLMs)](./Composite_Authority/08_iterative_latent_computation_looplms.png)
 
 This recursive structure allows the model to "loop" through its own intermediate representations, refining its reasoning and effectively executing complex programs within a fixed parametric budget.[3] This mirrors how latent spaces work internally: meaning is distributed, and interpretation happens through pattern recognition rather than simple lookup.[15, 16] When categorical symbols are converted into ordered values within a continuous latent space, distances between these "pointers" allow for the perception of biological or historical variation.[15]
 
-![The Semantics of Continuous Intensities](./Geometric_Authority/06_the_semantics_of_continuous_intensities.png)
+![The Semantics of Continuous Intensities](./Composite_Authority/06_the_semantics_of_continuous_intensities.png)
 
 ## Folding Human History: Transience and the Elasticity of Knowledge
 
 Folding human history into these hyper-compact structures necessitates a confrontation with the "lossy" nature of semantic compression. History, as argued in the critique of "Natural History," is composed of transient material events that are often obscured by idealized historical narratives.[17, 18] When we compress human history into a model's latent space, we are effectively choosing which "transient material events" to preserve and which to discard as "noise".[4]
 
-![The Descent into Latent Meaning](./Geometric_Authority/04_the_descent_into_latent_meaning.png)
+![The Descent into Latent Meaning](./Composite_Authority/04_the_descent_into_latent_meaning.png)
 
 The "3-layer compression framework for LLM understanding" defines this process through escalating levels of abstraction [4]:
 
@@ -65,7 +65,7 @@ The "3-layer compression framework for LLM understanding" defines this process t
 
 At the highest level, the model's representations encode "genuine cognitive depth" rather than superficial task performance.[4] However, this depth is met with "alignment resistance"—an inherent elasticity where the model's pre-trained distribution (the "spring") resists the "stretching" force of human-aligned fine-tuning.[19] This resistance suggests that the pre-trained vault possesses an internal authority that is difficult to overwrite with superficial adjustments.[19]
 
-![Alignment Resistance and the Elastic Vault](./Geometric_Authority/14_alignment_resistance_and_the_elastic_vault.png)
+![Alignment Resistance and the Elastic Vault](./Composite_Authority/14_alignment_resistance_and_the_elastic_vault.png)
 
 ## The Elasticity of Pre-trained Distributions
 
@@ -79,13 +79,13 @@ The relationship between alignment and the model's internal mechanism can be und
 
 This "elasticity" leads to a phenomenon where even well-aligned models can revert to their original behavior or become unsafe with minimal additional fine-tuning.[19] This suggests that "architecting authority" requires more than just masking certain outputs; it requires shaping the model's internal "preferences" acquired during the compression of the vast pre-training corpus.[19]
 
-![The Reactive Bottleneck](./Geometric_Authority/11_the_reactive_bottleneck.png)
+![The Reactive Bottleneck](./Composite_Authority/11_the_reactive_bottleneck.png)
 
 ## Proactive Heuristic Synthesis: The Evolution of Executable Spaces
 
 The transition from storing text to architecting authority is epitomized by the move from reactive to proactive model architectures. Most current LLMs operate in a "Prompt-Response" paradigm that leaves significant computational resources dormant during inter-prompt intervals.[20, 21] Proactive Heuristic Synthesis (PHS) addresses this "Reactive Bottleneck" by enabling a state of "Latent Idle Consolidation".[20, 21]
 
-![Proactive Heuristic Synthesis (PHS)](./Geometric_Authority/12_proactive_heuristic_synthesis.png)
+![Proactive Heuristic Synthesis (PHS)](./Composite_Authority/12_proactive_heuristic_synthesis.png)
 
 During system idle states—defined as when GPU utilization falls below a specific threshold ($\epsilon_{idle}$) for a set interval ($\Delta t$)—the model autonomously navigates its latent space to revisit previous queries.[20, 21] Instead of prioritizing high-perplexity samples, PHS utilizes a "Regret-Based Replay" mechanism that targets "high-regret" samples: queries where a counterfactual search discovers a significantly better reasoning path than the one initially provided to the user.[20, 21, 22]
 
@@ -99,7 +99,7 @@ $$
 
 where $V$ is a value function, $y_{opt}$ is the superior reasoning trajectory, and $y_{react}$ is the initial reactive response.[20, 21]
 
-![Synthesizing Authority in the Dead Air](./Geometric_Authority/13_synthesizing_authority_in_the_dead_air.png)
+![Synthesizing Authority in the Dead Air](./Composite_Authority/13_synthesizing_authority_in_the_dead_air.png)
 
 To ensure the stability of this self-evolution and prevent "generation-verification collapse," PHS utilizes a "Dual-Model Consensus" engine.[20, 21] This engine consists of a frozen Critic and the active Policy, requiring that synthesized heuristics be verified before they are integrated into the model's parametric memory via Low-Rank Adaptation (LoRA).[20, 21] This allows the model to "daydream" and synthesize optimized heuristics, effectively "architecting authority" that is ready for use in the next interaction without the latency penalties associated with "thought-at-inference" methods like Chain-of-Thought.[20, 21]
 
@@ -138,7 +138,7 @@ A critical question remains: when will these LLM-based compression methods becom
 
 However, the "AI Productivity Paradox" suggests that while generating code or data faster is possible, the deployment bottlenecks (the "architecting" part) often become more expensive.[23] To overcome this, the focus is shifting toward "Tiny Language Models" (TLMs) or "BabyLMs" that function effectively on resource-constrained devices like smartphones and IoT platforms.[24, 28]
 
-![The End of Monolithic Forgetting](./Geometric_Authority/10_the_end_of_monolithic_forgetting.png)
+![The End of Monolithic Forgetting](./Composite_Authority/10_the_end_of_monolithic_forgetting.png)
 
 ## Knowledge Distillation: Compressing the Architect
 
@@ -159,7 +159,7 @@ where $L_{KD}$ measures the KL-divergence between the teacher and student's prob
 
 This process ensures that the student model captures the "teacher's knowledge" while maintaining the computational efficiency required for widespread deployment.[28] This is the essence of "architecting authority": the creation of a "minimal, executable space" that carries the weight of a much larger intellectual structure.
 
-![The Autonomous Reservoir of History](./Geometric_Authority/15_the_autonomous_reservoir_of_history.png)
+![The Autonomous Reservoir of History](./Composite_Authority/15_the_autonomous_reservoir_of_history.png)
 
 ## The Semantic Vault as a Historical Reservoir
 
