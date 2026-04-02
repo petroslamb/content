@@ -1,6 +1,6 @@
 # Root-level tooling for content workflows
 markitdown[pdf]==0.1.5
-notebooklm-py[browser]==0.3.3
+notebooklm-py[browser]==0.3.4
 PyYAML>=6.0,<7.0
 
 # Shared content automation dependencies
@@ -19,4 +19,3 @@ google-api-python-client
 google-auth-oauthlib
 google-auth-httplib2
 alphaxiv-py
-
