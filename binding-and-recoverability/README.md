@@ -1,8 +1,11 @@
-# Structural Recoverability Line
+# Binding And Recoverability
 
-This folder currently holds the preserved drafts, sources, and research artifacts from the structural-recoverability line of the project.
+This folder now holds two related lines of work:
 
-That line is no longer the active flagship direction. It is kept because it contains useful arguments, sources, and dead ends that may still inform later work, especially the planned essay on the binding gap.
+- the active flagship direction around the binding gap
+- the preserved structural-recoverability line that led into it
+
+The binding-gap essay is now the live center of the project. The structural-recoverability materials remain here because they still contain useful arguments, papers, and dead ends that shaped the turn.
 
 ## North Star
 
@@ -31,18 +34,21 @@ Working standard: the essay succeeds when it gives the reader a new lens that is
 
 ## Orientation
 
+- Active flagship essay: [The_Binding_Gap.md](/Users/petros/Projects/content/binding-and-recoverability/The_Binding_Gap.md)
+- Active control artifact: [binding_gap_blueprint.md](/Users/petros/Projects/content/binding-and-recoverability/binding_gap_blueprint.md)
 - Preserved research-direction draft: [Structural_Recoverability.md](/Users/petros/Projects/content/binding-and-recoverability/Structural_Recoverability.md)
-- Earlier draft variants: [Recoverable_but_Not_Expressed.md](/Users/petros/Projects/content/binding-and-recoverability/Recoverable_but_Not_Expressed.md), [Recoverable_but_Not_Expressed_v2.md](/Users/petros/Projects/content/binding-and-recoverability/Recoverable_but_Not_Expressed_v2.md)
-- Archived control artifacts: [assistant_research_memo.md](/Users/petros/Projects/content/binding-and-recoverability/archive/Structural_Recoverability_Line/assistant_research_memo.md), [revision_blueprint.md](/Users/petros/Projects/content/binding-and-recoverability/archive/Structural_Recoverability_Line/revision_blueprint.md)
+- Surviving recoverability variant: [Recoverable_but_Not_Expressed_v2.md](/Users/petros/Projects/content/binding-and-recoverability/Recoverable_but_Not_Expressed_v2.md)
+- Archived recoverability artifacts: [Recoverable_but_Not_Expressed.md](/Users/petros/Projects/content/binding-and-recoverability/archive/Structural_Recoverability_Line/Recoverable_but_Not_Expressed.md), [assistant_research_memo.md](/Users/petros/Projects/content/binding-and-recoverability/archive/Structural_Recoverability_Line/assistant_research_memo.md), [revision_blueprint.md](/Users/petros/Projects/content/binding-and-recoverability/archive/Structural_Recoverability_Line/revision_blueprint.md)
 - Source library: `papers/`
 - Converted paper notes: `papers/markdown/`
 - Older archive material: `archive/`
 
 ## Working Guidance
 
+- Treat [The_Binding_Gap.md](/Users/petros/Projects/content/binding-and-recoverability/The_Binding_Gap.md) as the active flagship draft.
 - Treat the recoverability drafts as reference material, not as the current flagship thesis.
 - Salvage arguments, examples, and source leads selectively.
-- Do not assume the new binding-gap essay has to inherit the same conceptual frame.
-- Keep central terms stable. If `representation`, `recoverability`, `binding`, or `expression` shift sense, define the shift explicitly.
+- Do not assume the binding-gap essay has to inherit the recoverability frame.
+- Keep central terms stable. If `binding`, `attachment`, `representation`, or `expression` shift sense, define the shift explicitly.
 - Add concrete examples when abstraction starts floating free of reality.
 - Use sources to support and pressure-test the thesis, not to overwhelm it.
