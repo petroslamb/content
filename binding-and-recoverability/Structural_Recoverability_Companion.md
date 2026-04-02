@@ -1,6 +1,6 @@
 # Structural Recoverability
 
-This note sits behind [The Binding Gap](/Users/petros/Projects/content/binding-and-recoverability/The_Binding_Gap.md). The flagship essay makes a narrower claim: current language models exhibit a distinct, high-consequence family of binding-sensitive failures. This companion note names the larger frame that makes that claim intelligible, but it also states where that larger frame stops.
+This note sits alongside The Binding Gap as optional background rather than required scaffolding. The flagship essay stands on its own and makes a narrower claim: current language models exhibit a distinct, high-consequence family of binding-sensitive failures. This companion note offers the broader recoverability frame for readers who want it, and it also states where that larger frame currently stops.
 
 Structural recoverability asks a sharper question than the usual argument about whether a model "knows" something. It asks what kind of structure training preserved, whether that structure remains recoverable through the system's own usable inference paths, and where the chain from representation to expression gives way when task demands change. The frame is promising. It is not yet a finished theory.
 
