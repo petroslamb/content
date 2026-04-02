@@ -35,6 +35,7 @@ Working standard: the essay succeeds when it gives the reader a new lens that is
 ## Orientation
 
 - Active flagship essay: [The_Binding_Gap.md](/Users/petros/Projects/content/binding-and-recoverability/The_Binding_Gap.md)
+- Companion note: [Structural_Recoverability_Companion.md](/Users/petros/Projects/content/binding-and-recoverability/Structural_Recoverability_Companion.md)
 - Active control artifact: [binding_gap_blueprint.md](/Users/petros/Projects/content/binding-and-recoverability/binding_gap_blueprint.md)
 - Preserved research-direction draft: [Structural_Recoverability.md](/Users/petros/Projects/content/binding-and-recoverability/Structural_Recoverability.md)
 - Surviving recoverability variant: [Recoverable_but_Not_Expressed_v2.md](/Users/petros/Projects/content/binding-and-recoverability/Recoverable_but_Not_Expressed_v2.md)
@@ -46,6 +47,7 @@ Working standard: the essay succeeds when it gives the reader a new lens that is
 ## Working Guidance
 
 - Treat [The_Binding_Gap.md](/Users/petros/Projects/content/binding-and-recoverability/The_Binding_Gap.md) as the active flagship draft.
+- Treat [Structural_Recoverability_Companion.md](/Users/petros/Projects/content/binding-and-recoverability/Structural_Recoverability_Companion.md) as the expand-ready background note that carries the larger frame and its current stopping point.
 - Treat the recoverability drafts as reference material, not as the current flagship thesis.
 - Salvage arguments, examples, and source leads selectively.
 - Do not assume the binding-gap essay has to inherit the recoverability frame.
