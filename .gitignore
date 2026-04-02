@@ -1,5 +1,6 @@
 # Root-level local tooling
 .venv/
+.alphaxiv/
 .notebooklm/
 .youtube/
 
