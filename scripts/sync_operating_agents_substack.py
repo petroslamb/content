@@ -33,37 +33,37 @@ POST_SPECS = [
     PostSpec(
         slug="operating-agents-preface-a-field",
         markdown_path=REPO_ROOT
-        / "autonomous-agent-blueprint/essays/launch-note/preface.md",
+        / "publications/autonomous-agents/essays/launch-note/preface.md",
     ),
     PostSpec(
         slug="operating-agents-i-when-language",
         markdown_path=REPO_ROOT
-        / "autonomous-agent-blueprint/essays/action/01-action-tool-use.md",
+        / "publications/autonomous-agents/essays/action/01-action-tool-use.md",
     ),
     PostSpec(
         slug="operating-agents-ii-memory-needs",
         markdown_path=REPO_ROOT
-        / "autonomous-agent-blueprint/essays/memory/02-memory-systems-and-authority.md",
+        / "publications/autonomous-agents/essays/memory/02-memory-systems-and-authority.md",
     ),
     PostSpec(
         slug="operating-agents-iii-diagnose-the",
         markdown_path=REPO_ROOT
-        / "autonomous-agent-blueprint/essays/reasoning/03-reasoning-scaffolds-and-planning.md",
+        / "publications/autonomous-agents/essays/reasoning/03-reasoning-scaffolds-and-planning.md",
     ),
     PostSpec(
         slug="operating-agents-iv-the-second-agent",
         markdown_path=REPO_ROOT
-        / "autonomous-agent-blueprint/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md",
+        / "publications/autonomous-agents/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md",
     ),
     PostSpec(
         slug="operating-agents-v-the-attack-surface",
         markdown_path=REPO_ROOT
-        / "autonomous-agent-blueprint/essays/safety/05-trust-boundaries-and-agent-safety.md",
+        / "publications/autonomous-agents/essays/safety/05-trust-boundaries-and-agent-safety.md",
     ),
     PostSpec(
         slug="operating-agents-bonus-the-workflow",
         markdown_path=REPO_ROOT
-        / "autonomous-agent-blueprint/essays/optimization/06-workflow-optimization-and-evaluation.md",
+        / "publications/autonomous-agents/essays/optimization/06-workflow-optimization-and-evaluation.md",
     ),
 ]
 

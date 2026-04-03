@@ -6,7 +6,7 @@ This folder reconstructs the first explicit refactor that changed the upstream b
 
 ## Scenario
 
-The run takes an existing `autonomous-agent-blueprint` worked-example layer organized around artifact bundles and rewrites it around one clearer standard: one dossier per case, backed by runtime and governance records, with the old packet-oriented layer preserved as archive.
+The run takes an existing `publications/autonomous-agents` worked-example layer organized around artifact bundles and rewrites it around one clearer standard: one dossier per case, backed by runtime and governance records, with the old packet-oriented layer preserved as archive.
 
 ## Why This Proof Matters
 

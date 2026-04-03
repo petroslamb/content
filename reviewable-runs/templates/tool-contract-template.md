@@ -4,8 +4,8 @@ Use this template when defining a tool the agent may call. It is intentionally s
 
 Linked chapters:
 
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md`
 
 ```yaml
 tool_name: ""

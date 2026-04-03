@@ -35,9 +35,9 @@ Our standard bundle is:
 
 Prompt files used for the text-customized artifacts:
 
-- [prompts/audio.txt](./prompts/audio.txt)
-- [prompts/slide_deck.txt](./prompts/slide_deck.txt)
-- [prompts/video.txt](./prompts/video.txt)
+- [prompts/audio.txt](prompts/audio.txt)
+- [prompts/slide_deck.txt](prompts/slide_deck.txt)
+- [prompts/video.txt](prompts/video.txt)
 
 ## Create A Notebook
 

@@ -6,9 +6,10 @@ This is the canonical tracked workflow for taking a finished essay package to Su
 
 Use this when an article is ready enough to become a public post and the package already contains:
 
-- the live essay
-- its final or near-final references
-- any relevant artifact links or media placements
+- the canonical live essay
+- final or near-final references
+- any relevant media placements
+- completed polish work from [`../article-polish/README.md`](../article-polish/README.md)
 
 ## Canonical Publishing Expectations
 
@@ -20,7 +21,7 @@ When appropriate, the published essay should include:
 - appendices when they genuinely help
 - links back to the upstream repo for companions, datasets, or supporting material that do not fit inside the main essay
 
-If a draft still reads like repo documentation rather than a public essay, simplify the publication surface before publishing. In practice that often means trimming documentation furniture, overly mechanical endings, or long reference machinery that belongs in the repo more than in email or Substack.
+If a draft still reads like repo documentation rather than a public essay, simplify the publication surface before publishing. In practice that often means trimming documentation furniture, overly mechanical endings, or reference machinery that belongs in the repo more than in email or Substack.
 
 ## Evidence-Backed Defaults
 
@@ -31,7 +32,7 @@ If a draft still reads like repo documentation rather than a public essay, simpl
 ## Standard Flow
 
 1. confirm the live draft is the canonical publish target
-2. confirm references and appendices are publication-ready
+2. confirm article polish is complete
 3. insert the `Video TL;DR` block if a video artifact exists and the post format supports it
 4. publish with `python-substack` or a package-specific publishing helper
 5. refresh the tracked public archive if the post is part of the Substack archive system
@@ -48,9 +49,11 @@ If the published post belongs in the repo’s tracked public archive:
 1. refresh the archive
 2. validate the mirror
 3. confirm the publication maps back to the correct package or umbrella package
+4. if repo links changed because the package moved, use the migration manifest in [`../../publication_strategy_and_archive/link_migration_manifest.yaml`](../../publication_strategy_and_archive/link_migration_manifest.yaml) to plan the later live Substack patch pass
 
 ## Related Docs
 
 - [`../essay-iteration/README.md`](../essay-iteration/README.md)
 - [`../notebooklm-artifacts/README.md`](../notebooklm-artifacts/README.md)
+- [`../article-polish/README.md`](../article-polish/README.md)
 - [`../../publication_strategy_and_archive/README.md`](../../publication_strategy_and_archive/README.md)

@@ -4,8 +4,8 @@ Use this template when one agent, stage, or reviewer passes work to another.
 
 Linked chapters:
 
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md`
-- `../autonomous-agent-blueprint/implementation/use-cases/enterprise-agent.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md`
+- `../publications/autonomous-agents/implementation/use-cases/enterprise-agent.md`
 
 ```yaml
 artifact_id: ""

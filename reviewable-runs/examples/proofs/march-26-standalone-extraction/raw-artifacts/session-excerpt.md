@@ -6,7 +6,7 @@
 
 `2026-03-26T15:21:09Z` Assistant
 
-> I'm removing the downstream bridge surfaces from `autonomous-agent-blueprint` now. The blueprint package will go back to being a clean architecture-and-literature package, while `reviewable-runs` will carry the origin links back upstream.
+> I'm removing the downstream bridge surfaces from `publications/autonomous-agents` now. The blueprint package will go back to being a clean architecture-and-literature package, while `reviewable-runs` will carry the origin links back upstream.
 
 `2026-03-26T15:24:40Z` Assistant
 

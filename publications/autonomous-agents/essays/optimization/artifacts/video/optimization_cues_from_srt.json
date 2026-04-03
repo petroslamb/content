@@ -1,0 +1,143 @@
+{
+  "audio": "publications/autonomous-agents/essays/optimization/artifacts/audio/Optimizing AI Agent Workflows for Production.mp3",
+  "slides_dir": "publications/autonomous-agents/essays/optimization/artifacts/slides/Agentic Optimization Blueprint",
+  "captions": "publications/autonomous-agents/essays/optimization/artifacts/video/optimization_auto_captions.srt",
+  "map": "publications/autonomous-agents/essays/optimization/artifacts/video/optimization_slide_transcript_map_ocr_verified.md",
+  "segments": [
+    {
+      "image": "slide-001.png",
+      "start": "00:02:11.190",
+      "note": "Transcript lines 0097-0145.",
+      "match_score": 0.7778,
+      "excerpt": "Exactly. Our mission is to unpack the key ideas, the mental models, and the bigger patterns behind what Rooted Layers calls the optimization and self-improvement of AI workflows. Because that first working agent is really only the beginning, right? Once you actually have a workflow in place, your main problem is no longer invention. Your main problem shifts entirely early to improvement.",
+      "matched_captions": [
+        ">> Exactly. Our mission is to unpack the",
+        ">> Exactly. Our mission is to unpack the key ideas, the mental models, and the",
+        "key ideas, the mental models, and the",
+        "key ideas, the mental models, and the bigger patterns behind what Rooted",
+        "bigger patterns behind what Rooted",
+        "bigger patterns behind what Rooted Layers calls the optimization and"
+      ]
+    },
+    {
+      "image": "slide-002.png",
+      "start": "00:02:22.630",
+      "note": "Transcript lines 0101-0177.",
+      "match_score": 0.7448,
+      "excerpt": "Because that first working agent is really only the beginning, right? Once you actually have a workflow in place, your main problem is no longer invention. Your main problem shifts entirely early to improvement. Yeah. And a useful way to think about this is that in production, systems naturally degrade. I mean, they just do. They rot. Exactly. Prompts regress as models are quietly updated behind APIs. The data environment changes. If you do not have a rigorous mental model for how to apply improvement pressure to a live workflow,",
+      "matched_captions": [
+        ">> Because that first working agent is",
+        ">> Because that first working agent is really only the beginning,",
+        "really only the beginning,",
+        "really only the beginning, >> right? Once you actually have a workflow",
+        ">> right? Once you actually have a workflow",
+        ">> right? Once you actually have a workflow in place, your main problem is no longer"
+      ]
+    },
+    {
+      "image": "slide-003.png",
+      "start": "00:06:34.230",
+      "note": "Transcript lines 0261-0285.",
+      "match_score": 0.8333,
+      "excerpt": "Which brings us to a highly practical question for you, the listener. Once the system actually works, where exactly should improvement pressure be applied, right? If we aren't yelling at the single worker on the assembly line, what are we doing? Right? What are our actual options? The post identifies four specific levers we can pull. First, there's prompt improvement, which still exists, but we'll see it operates in a vastly different context now.",
+      "matched_captions": [
+        ">> Which brings us to a highly practical",
+        ">> Which brings us to a highly practical question for you, the listener. Once the",
+        "question for you, the listener. Once the",
+        "question for you, the listener. Once the system actually works, where exactly",
+        "system actually works, where exactly",
+        "system actually works, where exactly should improvement pressure be applied,"
+      ]
+    },
+    {
+      "image": "slide-004.png",
+      "start": "00:08:35.509",
+      "note": "Transcript lines 0333-0817.",
+      "match_score": 0.7778,
+      "excerpt": "So let's start with that first lever prompt improvement but doing it the automated way. The material highlights a paper called OPRO op which stands for large language models as optimizers. Right? The core concept here completely reframes prompt writing. It moves it away from human craft and turns it into an iterative optimization function.",
+      "matched_captions": [
+        ">> So let's start with that first lever",
+        ">> So let's start with that first lever prompt improvement but doing it the",
+        "prompt improvement but doing it the",
+        "prompt improvement but doing it the automated way. The material highlights a",
+        "automated way. The material highlights a",
+        "automated way. The material highlights a paper called OPRO."
+      ]
+    },
+    {
+      "image": "slide-008.png",
+      "start": "00:25:19.510",
+      "note": "Transcript lines 0953-1097.",
+      "match_score": 0.7778,
+      "excerpt": "Which brings us to a standout quote from the rooted layers analysis. And this is a concept that every listener should write on a sticky note and stick directly to their monitor. An optimization process with without regression checks is a drift generator. A drift generator. It is an entirely accurate chilling phrase. It really is. If you are constantly tweaking prompts, changing data schemas, and adding self-reflection loops without a rigid, unchanging baseline to test against, you aren't actually optimizing. You are just drifting.",
+      "matched_captions": [
+        ">> Which brings us to a standout quote from",
+        ">> Which brings us to a standout quote from the rooted layers analysis. And this is",
+        "the rooted layers analysis. And this is",
+        "the rooted layers analysis. And this is a concept that every listener should",
+        "a concept that every listener should",
+        "a concept that every listener should write on a sticky note and stick"
+      ]
+    },
+    {
+      "image": "slide-007.png",
+      "start": "00:26:53.830",
+      "note": "Transcript lines 1009-1261.",
+      "match_score": 1.0,
+      "excerpt": "I want to spend significant time here walking through this step by step. Step one, lock an evaluation set. The material says to freeze it. Define representative tasks before you tune a single parameter. This is your primary defense mechanism against becoming a drift generator. Before you change a single comma in your extraction prompt, you must build a comprehensive test suite. You need a diverse collection of representative tasks, historical inputs paired with their expected ideal outputs or strict success criteria.",
+      "matched_captions": [
+        ">> I want to spend significant time here",
+        ">> I want to spend significant time here walking through this step by step. Step",
+        "walking through this step by step. Step",
+        "walking through this step by step. Step one, lock an evaluation set. The",
+        "one, lock an evaluation set. The",
+        "one, lock an evaluation set. The material says to freeze it. Define your"
+      ]
+    },
+    {
+      "image": "slide-005.png",
+      "start": "00:29:20.870",
+      "note": "Transcript lines 1097-1233.",
+      "match_score": 0.8333,
+      "excerpt": "Exactly. Now, we want to fix it. Step three, improve the cheapest surfaces first. The blueprint lists these explicitly. Output schemas, prompt clarity, retrieval configuration tool descriptions and retree stop policies. What is fascinating here is what is deliberately not on this list. Right? Notice that rearchitecting the workflow or deploying self-refining loops is entirely absent from step three. The blueprint forces you to pick the absolute lowest hanging fruit",
+      "matched_captions": [
+        ">> Exactly. Now, we want to fix it. Step",
+        ">> Exactly. Now, we want to fix it. Step three, improve the cheapest surfaces",
+        "three, improve the cheapest surfaces",
+        "three, improve the cheapest surfaces first. The blueprint lists these",
+        "first. The blueprint lists these",
+        "first. The blueprint lists these explicitly. Output schemas, prompt"
+      ]
+    },
+    {
+      "image": "slide-006.png",
+      "start": "00:31:47.269",
+      "note": "Transcript lines 1189-1233.",
+      "match_score": 0.7708,
+      "excerpt": "That leads us down the blueprint to step four, right? Step four, add feedback loops. Here is where you finally introduce the techniques from the research papers we discussed earlier. Self-refinement, programmatic critique, or memorybacked reflection like reflection. But the blueprint adds a crucial non-negotiable condition. You only introduce these loops where there is empirical evidence from your measurements that they will reduce repeated systemic failures.",
+      "matched_captions": [
+        "cases. That leads us down the blueprint",
+        "cases. That leads us down the blueprint to step four,",
+        "to step four,",
+        "to step four, >> right? Step four, add feedback loops.",
+        ">> right? Step four, add feedback loops.",
+        ">> right? Step four, add feedback loops. >> Here is where you finally introduce the"
+      ]
+    },
+    {
+      "image": "slide-009.png",
+      "start": "00:42:26.069",
+      "note": "Transcript lines 1533-1597.",
+      "match_score": 0.9436,
+      "excerpt": "I think the core operational lesson here is that you must optimize an AI workflow. The exact same way you would optimize any complex distributed production software system. You need clear, locked, version controlled evaluation cases, you need explicit metrics covering quality, cost, and speed.",
+      "matched_captions": [
+        ">> I think the core operational lesson here",
+        ">> I think the core operational lesson here is that you must optimize an AI workflow",
+        "is that you must optimize an AI workflow",
+        "is that you must optimize an AI workflow the exact same way you would optimize",
+        "the exact same way you would optimize",
+        "the exact same way you would optimize any complex distributed production"
+      ]
+    }
+  ]
+}

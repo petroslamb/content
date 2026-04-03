@@ -1,7 +1,7 @@
 posts:
   the-illusion-of-the-swarm:
     title: The Illusion of the Swarm
-    research_folder: multi_agent_compiler_workaround
+    research_folder: publications/illusion-of-swarm
     summary: A research-backed argument that many multi-agent systems are temporary routing workarounds rather than the final architecture.
     tags:
       - agents
@@ -11,7 +11,7 @@ posts:
     status: published
   the-moltbook-phenomenon:
     title: The Moltbook Phenomenon
-    research_folder: the-moltbook-phenomenon
+    research_folder: publications/moltbook-phenomenon
     summary: An analysis of Meta's Moltbook acquisition and what it signals about product strategy, distribution, and AI-native social software.
     tags:
       - platforms
@@ -21,7 +21,7 @@ posts:
     status: published
   the-autonomy-tax:
     title: The Autonomy Tax
-    research_folder: ai_agents_enterprise_state
+    research_folder: publications/autonomy-tax
     summary: A thesis on why enterprise agents fail on control surfaces, auditability, and operations long before they fail on raw intelligence.
     tags:
       - enterprise
@@ -31,7 +31,7 @@ posts:
     status: published
   the-transformer-attractor:
     title: The Transformer Attractor
-    research_folder: neural_architectures
+    research_folder: publications/neural-architectures
     summary: A study of why modern model design keeps converging back toward transformer-like structures across domains and workloads.
     tags:
       - neural-architectures
@@ -41,7 +41,7 @@ posts:
     status: published
   when-the-llm-programs-its-own-thinking:
     title: When the LLM Programs Its Own Thinking
-    research_folder: rlm_jupyter
+    research_folder: publications/programmable-thinking
     summary: An exploration of shared-state Jupyter workflows where an LLM acts less like a chat agent and more like a programmable REPL collaborator.
     tags:
       - jupyter
@@ -51,7 +51,7 @@ posts:
     status: published
   the-orchestration-paradigm-issue-397:
     title: "The Orchestration Paradigm: Issue 4 - The Reality"
-    research_folder: agent_revolution
+    research_folder: publications/orchestration-paradigm
     summary: The closing issue in the Orchestration Paradigm series, focused on what survives contact with production constraints and evaluation.
     tags:
       - orchestration
@@ -64,7 +64,7 @@ posts:
     series_order: 4
   the-orchestration-paradigm-issue-cf4:
     title: "The Orchestration Paradigm: Issue 3 - The Behavior"
-    research_folder: agent_revolution
+    research_folder: publications/orchestration-paradigm
     summary: The third issue in the Orchestration Paradigm series, centered on behavior, coordination patterns, and failure modes inside agent stacks.
     tags:
       - orchestration
@@ -77,7 +77,7 @@ posts:
     series_order: 3
   the-orchestration-paradigm-issue:
     title: "The Orchestration Paradigm: Issue 2 - The Factory"
-    research_folder: agent_revolution
+    research_folder: publications/orchestration-paradigm
     summary: The second issue in the Orchestration Paradigm series, tracing how agent systems become factories of routing, tooling, and coordination.
     tags:
       - orchestration
@@ -90,7 +90,7 @@ posts:
     series_order: 2
   the-orchestration-paradigm-series:
     title: The Orchestration Paradigm Series
-    research_folder: agent_revolution
+    research_folder: publications/orchestration-paradigm
     summary: The series introduction and framing piece for a four-part investigation into AI orchestration patterns and their production reality.
     tags:
       - orchestration
@@ -103,7 +103,7 @@ posts:
     series_order: 1
   the-hardware-friction-map:
     title: The Hardware Friction Map
-    research_folder: hardware_compatibility_architecture_2023_2025
+    research_folder: publications/hardware-friction
     summary: A practical map of how hardware economics shapes model design, deployment choices, and the viability of ambitious architecture ideas.
     tags:
       - hardware
@@ -113,7 +113,7 @@ posts:
     status: published
   what-actually-works-the-hardware:
     title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)"
-    research_folder: hardware_compatibility_architecture_2023_2025
+    research_folder: publications/hardware-friction
     summary: The longer quantitative essay and dataset-backed argument for why hardware compatibility predicts which architectures reach production.
     tags:
       - hardware
@@ -123,7 +123,7 @@ posts:
     status: published
   the-agent-revolution:
     title: "Autonomous AI Agents: Core Foundations and Recent Breakthroughs"
-    research_folder: autonomous-agent-blueprint
+    research_folder: publications/autonomous-agents
     summary: A builder-first survey of foundation agent architectures, what changed in the literature, and how to choose practical defaults.
     tags:
       - agents
@@ -133,7 +133,7 @@ posts:
     status: published
   neural-architecture-design-as-a-compositional-32e:
     title: Neural Architecture Design as a Compositional Language
-    research_folder: neural_architectures
+    research_folder: publications/neural-architectures
     summary: The inaugural Rooted Layers essay on architecture design as a compositional system rather than a loose collection of model families.
     tags:
       - neural-architectures
@@ -141,6 +141,97 @@ posts:
       - research
     featured: false
     status: published
+  operating-agents-preface-a-field:
+    title: "Operating Agents: Preface"
+    research_folder: publications/autonomous-agents/essays/launch-note
+    summary: The framing note for the Operating Agents course, introducing the chapter structure, blueprints, companions, and builder-first doctrine.
+    tags:
+      - agents
+      - course
+      - operating-agents
+    featured: false
+    status: published
+    series_key: operating-agents
+    series_title: Operating Agents
+    series_order: 0
+  operating-agents-i-when-language:
+    title: "Operating Agents I: Action Systems and Tool Use"
+    research_folder: publications/autonomous-agents/essays/action
+    summary: The action chapter of Operating Agents, covering tool use, action surfaces, and the boundary between describing work and performing it.
+    tags:
+      - agents
+      - action
+      - operating-agents
+    featured: false
+    status: published
+    series_key: operating-agents
+    series_title: Operating Agents
+    series_order: 1
+  operating-agents-ii-memory-needs:
+    title: "Operating Agents II: Memory Systems and Authority"
+    research_folder: publications/autonomous-agents/essays/memory
+    summary: The memory chapter of Operating Agents, focused on memory layers, authority, retention policy, and evaluation.
+    tags:
+      - agents
+      - memory
+      - operating-agents
+    featured: false
+    status: published
+    series_key: operating-agents
+    series_title: Operating Agents
+    series_order: 2
+  operating-agents-iii-diagnose-the:
+    title: "Operating Agents III: Reasoning Scaffolds and Planning"
+    research_folder: publications/autonomous-agents/essays/reasoning
+    summary: The reasoning chapter of Operating Agents, covering scaffolds, planning, decomposition, and failure diagnosis.
+    tags:
+      - agents
+      - reasoning
+      - operating-agents
+    featured: false
+    status: published
+    series_key: operating-agents
+    series_title: Operating Agents
+    series_order: 3
+  operating-agents-iv-the-second-agent:
+    title: "Operating Agents IV: Multi-Agent Boundaries and Handoffs"
+    research_folder: publications/autonomous-agents/essays/multi-agent
+    summary: The multi-agent chapter of Operating Agents, focused on handoffs, transport, and when a second agent is actually justified.
+    tags:
+      - agents
+      - multi-agent
+      - operating-agents
+    featured: false
+    status: published
+    series_key: operating-agents
+    series_title: Operating Agents
+    series_order: 4
+  operating-agents-v-the-attack-surface:
+    title: "Operating Agents V: Trust Boundaries and Agent Safety"
+    research_folder: publications/autonomous-agents/essays/safety
+    summary: The safety chapter of Operating Agents, covering trust boundaries, attack surfaces, and architectural containment.
+    tags:
+      - agents
+      - safety
+      - operating-agents
+    featured: false
+    status: published
+    series_key: operating-agents
+    series_title: Operating Agents
+    series_order: 5
+  operating-agents-bonus-the-workflow:
+    title: "Operating Agents Bonus: Workflow Optimization and Evaluation"
+    research_folder: publications/autonomous-agents/essays/optimization
+    summary: The optimization and evaluation bonus chapter of Operating Agents, focused on workflow optimization, measurement, and bounded self-improvement.
+    tags:
+      - agents
+      - optimization
+      - operating-agents
+    featured: false
+    status: published
+    series_key: operating-agents
+    series_title: Operating Agents
+    series_order: 6
   coming-soon:
     title: Welcome
     research_folder: .

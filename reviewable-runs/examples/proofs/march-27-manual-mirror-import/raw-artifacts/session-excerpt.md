@@ -5,7 +5,7 @@ This is a curated chronological extract from the real Codex session. It keeps on
 ## Chronology
 
 1. User asks whether the new material can be added manually and explains that the local markdown already has the image links in place.
-2. User specifies the source set more concretely: the seven `v7-with-slides` essay files under `autonomous-agent-blueprint/essays`, with relative image paths that need to be copied along.
+2. User specifies the source set more concretely: the seven `v7-with-slides` essay files under `publications/autonomous-agents/essays`, with relative image paths that need to be copied along.
 3. The run shifts from workflow debugging to manual import planning in a clean worktree based on `github/main`.
 4. The assistant reports that the mirror needs archive files and `metadata.json`, then locates the seven source markdown files and their slide assets.
 5. Canonical title, slug, and publish-time data are pulled from the live feed with a browser-style user agent.

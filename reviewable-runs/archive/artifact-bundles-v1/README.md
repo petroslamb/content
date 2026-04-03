@@ -58,7 +58,7 @@ In production, these would not necessarily be markdown files. They might be job 
 
 Read in this order:
 
-1. the matching abstract use case in `../../../autonomous-agent-blueprint/implementation/use-cases/`
+1. the matching abstract use case in `../../../publications/autonomous-agents/implementation/use-cases/`
 2. the worked case study in this folder
 3. the artifact bundle under `artifacts/`
 4. `../../evaluation/architecture-readiness-checklist.md`

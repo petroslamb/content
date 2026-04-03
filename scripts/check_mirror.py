@@ -80,6 +80,8 @@ def validate_archive_assets(manifest: list[dict[str, str]]) -> None:
             if not token.startswith("assets/"):
                 continue
             asset_name = token.split(")", 1)[0]
+            if ' "' in asset_name:
+                asset_name = asset_name.split(' "', 1)[0]
             asset_path = markdown_path.parent / asset_name
             if not asset_path.exists():
                 raise SystemExit(f"Broken local asset reference in {markdown_path}: {asset_name}")

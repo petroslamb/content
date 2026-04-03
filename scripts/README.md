@@ -24,6 +24,7 @@ Tracked workflow:
 | `sync_substack_archive.py` | Canonical archive refresh: discovers public posts, localizes assets, writes markdown and HTML snapshots, updates `metadata.json`, and regenerates the root README publication table. | `npm run sync:substack` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
 | `archive_utils.py` | Shared paths and helpers for the archive manifest, `post_map.yaml`, and README table generation. | imported by other scripts | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
 | `check_mirror.py` | Structural validation for the archive and built mirror output. Checks metadata keys, archive files, asset references, generated README section, and built internal links. | `npm run check:mirror` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
+| `check_repo_links.py` | Validation pass for stale old-package paths, broken relative links, and outdated internal GitHub repo links after the `publications/` migration. | `npm run check:repo-links` | none |
 | `e2e_mirror_smoke.py` | Runtime smoke test for the built mirror at both root and prefixed path layouts. | `npm run check:mirror` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
 
 ### Operating Agents Substack Publishing
@@ -61,7 +62,7 @@ Tracked workflows:
 
 | Script | Role | Notes |
 | :--- | :--- | :--- |
-| `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | This is tied to `binding-and-recoverability/` assets and is not a general repo automation entrypoint. |
+| `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | This is tied to `publications/binding-gap/` assets and is not a general repo automation entrypoint. |
 
 ## Related Skill Split
 
@@ -78,6 +79,7 @@ If you only need the normal repo entrypoints, start with:
 ```bash
 npm run sync:substack
 npm run check:mirror
+npm run check:repo-links
 PYTHONUNBUFFERED=1 .venv/bin/python scripts/sync_operating_agents_substack.py
 ```
 

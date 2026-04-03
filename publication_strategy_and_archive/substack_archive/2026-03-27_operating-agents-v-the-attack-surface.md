@@ -11,7 +11,7 @@ URL: https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface
 
 A chatbot that produces a bad sentence inside a browser tab may be frustrating. An agent that can read email, retrieve a customer record, write a note, and issue a refund belongs to a different class of system. Once the workflow can read, remember, and act, a mistake no longer ends on the screen. It can pass through memory, tool calls, and handoffs until it becomes a state change someone else has to repair. That is why agent safety cannot be taught mainly as a matter of refusal style or abstract alignment language. It has to be taught as architecture.
 
-The central question is therefore not whether the model is "safe" in the abstract. The central question is what a bad input, a bad retrieval, or a bad inference can reach inside the system. That framing follows the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and the local [safety blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md). The practical focus is trust boundaries: the interfaces that determine how far hostile or mistaken content can travel before a harder control stops it.
+The central question is therefore not whether the model is "safe" in the abstract. The central question is what a bad input, a bad retrieval, or a bad inference can reach inside the system. That framing follows the broader [foundation-agents survey](https://arxiv.org/abs/2504.01990) and the local [safety blueprint](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md). The practical focus is trust boundaries: the interfaces that determine how far hostile or mistaken content can travel before a harder control stops it.
 
 ![Slide 2: Where control can be taken](assets/asset-da26a90630ac62f9.jpeg "Slide 2: Where control can be taken")
 
@@ -71,13 +71,13 @@ The course-level conclusion is not that agents are uniquely dangerous or impossi
 
 ![Slide 18: Agent safety is architecture](assets/asset-7aea7eb6a488425d.jpeg "Slide 18: Agent safety is architecture")
 
-For the wider threat taxonomies, contamination paths, retrieval and memory risks, and the deeper literature around safety architecture, continue with the [Safety Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion.md).
+For the wider threat taxonomies, contamination paths, retrieval and memory risks, and the deeper literature around safety architecture, continue with the [Safety Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/safety/companion.md).
 
 ## References
 
-[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. It is useful here because it places safety after the rest of the stack becomes real, which is exactly when the topic stops being abstract and becomes a question of operational consequence.
+[Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. It is useful here because it places safety after the rest of the stack becomes real, which is exactly when the topic stops being abstract and becomes a question of operational consequence.
 
-[Safety blueprint](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md) is the practical design reference for this chapter. It translates the safety literature into boundary categories, control surfaces, and a conservative deployment order that builders can apply directly during architecture review.
+[Safety blueprint](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md) is the practical design reference for this chapter. It translates the safety literature into boundary categories, control surfaces, and a conservative deployment order that builders can apply directly during architecture review.
 
 *[Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173)* is essential reading for the instruction-versus-data problem. It teaches why untrusted content can become a control channel inside an LLM workflow.
 
