@@ -1,117 +1,37 @@
-# What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023-2025)
+# Hardware Compatibility Architecture (2023-2025)
 
-**Status:** ✅ Published / Research Complete
-**Confidence:** 0.98/1.0 (Exhaustive Literature Review + Quantitative Scorecard)
-**Research Period:** Jan 2023 – Dec 2025
+Umbrella package for the hardware-friction line of work. It combines the long quantitative essay, the shorter friction-map publication, the scorecard methodology, and the research dataset that supports them.
 
----
+## Package Status
 
-## 1. Executive Summary
+- Archetype: Umbrella package
+- Status: Published umbrella
+- Publication map: *What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)* and *The Hardware Friction Map*
+- Related cross-package publication: *The Transformer Attractor* is published through [`../neural_architectures/`](../neural_architectures/), even though some shared upstream material lives here
+- Canonical workflow docs: [`../workflows/paper-intake/README.md`](../workflows/paper-intake/README.md), [`../workflows/essay-iteration/README.md`](../workflows/essay-iteration/README.md), [`../workflows/substack-publishing/README.md`](../workflows/substack-publishing/README.md)
 
-This project investigates why certain neural architectures (Transformers, MoEs) dominate production while others (Capsules, Neural ODEs) remain research curiosities.
+## Orientation
 
-**The Core Thesis:** Architecture adoption is not determined by "physics" or pure capability, but by an **economic hardware filter**.
-*   **Hardware Friction = Economic Cost:** The compatibility of an architecture's primitives with GPU hardware (Dense, GEMM-heavy) determines its "friction."
-*   **The "Startup Heuristic":** High friction scales exponential cost for resource-constrained teams (startups, labs), while low friction (Transformers) allows for rapid iteration.
+- Canonical long-form article: [`long_article_sections/What_Actually_Works_2023_2025.md`](./long_article_sections/What_Actually_Works_2023_2025.md)
+- Canonical shorter publication draft: [`essay_sections/The_Hardware_Friction_Map_Essay_substack.md`](./essay_sections/The_Hardware_Friction_Map_Essay_substack.md)
+- Scorecard methodology: [`hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md`](./hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md)
+- Public dataset and local working copy: [`research_artifacts/scorecard_dataset/`](./research_artifacts/scorecard_dataset/)
 
-We measure this friction using the **Hardware Friction Scorecard**, a quantitative methodology located in `research_artifacts/scorecard_dataset/`.
+## Source Layers
 
-### 🎯 Public Dataset
+- [`research_artifacts/`](./research_artifacts/) is the main evidence layer, including the scorecard dataset, source compilation, timelines, and supplementary analyses.
+- [`refs/research_references.md`](./refs/research_references.md) is the local reference surface.
+- [`essay_sections/`](./essay_sections/) and [`substack_drafts/`](./substack_drafts/) hold shorter publication-oriented markdown.
+- [`long_article_sections/`](./long_article_sections/) holds the longer article build.
 
-**The Hardware Friction Scorecard Dataset is now available as a standalone open-source repository:**
+## Artifacts, Distribution, And History
 
-📊 **[Hardware Friction Scorecard Dataset](https://github.com/petroslamb/hardware-friction-scorecard-dataset)**
+- Distribution assets for the essay line live in [`essay_sections/distribution/`](./essay_sections/distribution/).
+- Critiques and stress-test material live under both [`essay_sections/critiques/`](./essay_sections/critiques/) and [`hardware_friction_scorecard/critiques/`](./hardware_friction_scorecard/critiques/).
+- This package uses domain-specific history layers rather than one top-level `archive/`.
 
-This public dataset contains:
-- **119 architectures** scored on hardware compatibility (2017-2025)
-- Full scoring methodology and CSV/markdown data
-- 3 accompanying research essays
-- Usage examples and visualization code
-- **License:** CC BY 4.0 (open for academic and commercial use)
+## Working Guidance
 
-Use this dataset to:
-- Analyze architecture adoption patterns
-- Predict production viability of new architectures
-- Study the "Transformer Attractor" phenomenon across domains (text, image, video, audio)
-- Cite in academic research
-
-### 1.1 Start Here: Required Reading
-Before diving into the methodology, the reader should be acquainted with two core documents:
-
-1.  **The Framework (Essay):** [The Hardware Friction Map](./substack_drafts/Substack_Hardware_Friction_Map_Essay_v2.md)  
-    *Read this to understand the economic theory of "Hardware Friction" and why it kills startups.*
-2.  **The Methodology (Scorecard):** [The Rubric](./hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md)  
-    *Read this to understand the 5-axis Gate-1 scoring system (GA, MAL, PAR, STI, IM).*
-3.  **The Evidence (Dataset):** [The Scored Dataset](./research_artifacts/scorecard_dataset/scored_architectures.md)  
-    *Reference this to see the raw scores (Green/Yellow/Red) for 100+ architectures.*
-
----
-
-## 2. Methodology: The Hardware Friction Scorecard
-
-**Public Dataset:** The complete scored dataset is available at **[github.com/petroslamb/hardware-friction-scorecard-dataset](https://github.com/petroslamb/hardware-friction-scorecard-dataset)**
-
-Local copy: [`research_artifacts/scorecard_dataset/`](./research_artifacts/scorecard_dataset/)
-
-Our primary methodological contribution is a rigorously defined "Gate-1" adoption filter. Architectures are scored on five axes to predict their production viability.
-
-### The Scoring Rubric (0-10 Scale)
-*   **Hardware Friendliness (H)**: Measured by **GA** (Global Access), **MAL** (Memory Access Locality), and **PAR** (Parallelism).
-*   **Ecosystem Maturity (E)**: Measured by **STI** (Specialized Tooling Investment) and **IM** (Infrastructure Maturity).
-
-### Zones of Adoption
-*   🟢 **Green Zone (H≥5, E≥3):** Production-ready (e.g., Transformers, FlashAttention).
-*   🟡 **Yellow Zone (Infra-Limited):** Viable but expensive (e.g., MoE, custom kernels).
-*   🟠 **Orange Zone (Friction-Dominant):** Niche use cases (e.g., pure SSMs at scale).
-*   🔴 **Red Zone (Hardware-Hostile):** Research only (e.g., Spiking NN, Capsules).
-
-**Key Artifact:** The full scored dataset is available in the [public repository](https://github.com/petroslamb/hardware-friction-scorecard-dataset) with 119 architectures scored from 2017-2025.
-
----
-
-## 3. Key Findings (2023-2025)
-
-Validated against 50+ sources and the [`EXHAUSTIVE_FINAL_COMPILATION.md`](./research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md).
-
-1.  **Hardware Compatibility Predicts Adoption:** 100% of widespread production models (Llama, GPT-4, Claude) rely on GEMM-heavy, GPU-friendly primitives.
-2.  **Infrastructure Lag is Predictable:** There is a consistent **24-36 month lag** from research paper to standardized production infrastructure (e.g., FlashAttention: May 2022 Paper → May 2024 Standard).
-3.  **The "SSM Ceiling":** Pure State-Space Models (Mamba) have hit a ceiling at ~7B parameters. No frontier model (>70B) uses pure SSM; they all use **Hybrids** (Jamba, Qwen3-Next).
-4.  **MoE is the Frontier Standard:** Mixture-of-Experts has won the high-end scaling war (DeepSeek-V3, Llama 4, Mixtral) due to economic efficiency, despite initial infrastructure complexity.
-
----
-
-## 4. Repository Structure
-
-### 📂 Main Article & Narrative
-*   `long_article_sections/What_Actually_Works_2023_2025.md`: **Canonical Master Article**. The complete, polished text.
-*   `essay_sections/`: Components of the shorter "Friction Map" essay.
-*   `substack_drafts/`: Final markdown versions formatted for publication.
-
-### 📊 Research & Methodology
-*   `research_artifacts/scorecard_dataset/`: **(CRITICAL)** The quantitative dataset and scoring methodology.
-    *   `scored_architectures.md`: The canonical detailed scoring tables.
-    *   `param_location_ingestion_playbook.md`: Methodology for data ingestion (requires `ingestion_journal.md`).
-*   `research_artifacts/EXHAUSTIVE_FINAL_COMPILATION.md`: Master summary of all 50+ research sources.
-
-### 🧪 Supporting Evidence
-*   `research_artifacts/moe_speedup_data_wip.md`: Meta-analysis of MoE throughput.
-*   `research_artifacts/flash_attention_timeline.md`: Datapoints for the "Infrastructure Lag" finding.
-*   `research_artifacts/SSM_benchmark_findings.md`: Evidence for the "SSM Ceiling."
-
----
-
-## 6. Series Evolution: From "Filter" to "Friction Map"
-
-This research has evolved beyond a single article into a multi-part series.
-
-### Part 2: The Hardware Friction Map Essay
-*   **Concept:** Moves from the binary "Hardware Compatibility Filter" to a graded **"Hardware Friction Map"**. It introduces the "Startup Heuristic"—how capital hides friction for hyperscalers but kills startups.
-*   **Drafts:**
-    *   Canonical Draft: [`essay_sections/The_Hardware_Friction_Map_Essay_substack.md`](./essay_sections/The_Hardware_Friction_Map_Essay_substack.md)
-    *   Publication Candidate: [`substack_drafts/Substack_Hardware_Friction_Map_Essay_v2.md`](./substack_drafts/Substack_Hardware_Friction_Map_Essay_v2.md)
-
-### Part 3: Critiques & Stress Tests
-*   **Concept:** A transparent "Building in Public" meta-post detailing how we tried to break the Friction Map model and the critiques that survived.
-*   **Location:** [`substack_drafts/Substack_Hardware_Friction_Map_Critiques_and_Stress_Tests.md`](./substack_drafts/Substack_Hardware_Friction_Map_Critiques_and_Stress_Tests.md)
-
----
+- Treat the scorecard dataset as a first-class output, not just background evidence for the essay.
+- Keep the shared hardware-friction source layer here even when a downstream publication maps to another umbrella package.
+- When adding new evidence, update the relevant research artifact first and then propagate only the material changes into the publication surfaces.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Substack Archive Sync"
+  short_description: "Sync the Substack archive and mirror"
+  default_prompt: "Use $substack-archive-sync to run or troubleshoot the Substack archive sync and mirror validation workflow for this repo."
+
+policy:
+  allow_implicit_invocation: true

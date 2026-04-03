@@ -1,76 +1,57 @@
 # Essays: Operating Agents
 
-This folder contains the live *Operating Agents* essay package. It includes a live preface under `launch-note/`, and each topic folder holds one canonical live essay, one live companion, presentation artifacts when they exist, and a local `archive/` folder for historical drafts, prior companions, local READMEs, and older publication candidates.
+This folder is the live essay package for *Operating Agents*. It is the public course-chapter layer inside the broader [`autonomous-agent-blueprint/`](../README.md) umbrella package.
+
+## Package Role
+
+- Archetype: Umbrella subpackage
+- Status: Active course package
+- Live draft surface: one canonical essay plus one canonical companion per topic, with a local `archive/` and `artifacts/` inside each topic folder
+- Canonical workflow docs: [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md), [`../../workflows/notebooklm-artifacts/README.md`](../../workflows/notebooklm-artifacts/README.md), [`../../workflows/substack-publishing/README.md`](../../workflows/substack-publishing/README.md)
 
 ## Course Goal
 
-The purpose of *Operating Agents* is to teach how modern agent systems are designed, evaluated, and constrained in practice. The essays should read as course chapters, not as internal notes and not as slogan-first opinion pieces.
-
-That goal changes the quality bar. A strong chapter should help a reader understand the mechanism, learn a usable build methodology, and know which references deserve deeper study. The companion layer exists to widen that map without overcrowding the core essays.
-
-## A+++ Standard
-
-For this package, `A+++` means course-quality public writing:
-
-- each core essay can stand on its own without depending on lecture notes or internal source language
-- each companion works as a second-pass chapter that broadens the field and explains how to use the literature
-- each essay defines the core concepts before using the specialized vocabulary
-- each essay teaches a practical methodology from baseline design to justified escalation
-- each essay explains why the cited papers matter instead of listing them as badges
-- the literature supports the lesson, while the companion layer and the blueprints carry the wider taxonomy
-
-If a serious builder cannot read a chapter, understand the operating problem, and apply its method to a real workflow review next week, the essay is not finished.
+The purpose of *Operating Agents* is to teach how modern agent systems are designed, evaluated, and constrained in practice. These essays should read as course chapters for builders, not as internal notes and not as slogan-first opinion pieces.
 
 ## Folder Map
 
-- `launch-note/` - live course framing and preface
-- `action/` - action and tool use
-- `reasoning/` - reasoning and planning
-- `memory/` - memory and lifecycle
-- `multi-agent/` - multi-agent design
-- `safety/` - safety and attack surfaces
-- `optimization/` - optimization bonus post
+- [`launch-note/`](./launch-note/) holds the live course framing and preface.
+- [`action/`](./action/) holds the action and tool-use chapter.
+- [`memory/`](./memory/) holds the memory and lifecycle chapter.
+- [`reasoning/`](./reasoning/) holds the reasoning and planning chapter.
+- [`multi-agent/`](./multi-agent/) holds the handoffs and boundary-design chapter.
+- [`safety/`](./safety/) holds the trust-boundary and attack-surface chapter.
+- [`optimization/`](./optimization/) holds the optimization and evaluation bonus chapter.
 
-## What Lives In A Topic Folder
+## Canonical Topic Layout
 
-Each topic folder contains:
+Each topic folder should contain:
 
 - one canonical live essay file
-- one canonical live companion file
-- `artifacts/` when presentation material exists
-- a local `archive/` folder for earlier drafts, prior baselines, and historical support files
+- one canonical live `companion.md`
+- `artifacts/` when presentation media exists
+- a local `archive/` for prior drafts, retired companions, and historical support files
+
+The package standard is stable live chapter plus local archive history, not version-only sprawl.
 
 ## Reading Order
 
-### Live essay layer
-
-- `launch-note/preface.md`
-- `action/01-action-tool-use.md`
-- `action/companion.md`
-- `memory/02-memory-systems-and-authority.md`
-- `memory/companion.md`
-- `reasoning/03-reasoning-scaffolds-and-planning.md`
-- `reasoning/companion.md`
-- `multi-agent/04-multi-agent-boundaries-and-handoffs.md`
-- `multi-agent/companion.md`
-- `safety/05-trust-boundaries-and-agent-safety.md`
-- `safety/companion.md`
-- `optimization/06-workflow-optimization-and-evaluation.md`
-- `optimization/companion.md`
-
-Use the local `archive/` folder inside a topic if you need earlier drafts, prior baselines, or retired companion versions. The `launch-note/` folder now holds the live preface and cover art.
-
-### Topic-to-blueprint mapping
-
-- Action essay `01` -> `../core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
-- Memory essay `02` -> `../core/practical-chapter-blueprints/01-memory-blueprint.md`
-- Reasoning essay `03` -> `../core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`
-- Multi-agent essay `04` -> `../core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md`
-- Safety essay `05` -> `../core/practical-chapter-blueprints/06-safety-blueprint.md`
-- Optimization essay `06` -> `../core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md`
+- [`launch-note/preface.md`](./launch-note/preface.md)
+- [`action/01-action-tool-use.md`](./action/01-action-tool-use.md)
+- [`action/companion.md`](./action/companion.md)
+- [`memory/02-memory-systems-and-authority.md`](./memory/02-memory-systems-and-authority.md)
+- [`memory/companion.md`](./memory/companion.md)
+- [`reasoning/03-reasoning-scaffolds-and-planning.md`](./reasoning/03-reasoning-scaffolds-and-planning.md)
+- [`reasoning/companion.md`](./reasoning/companion.md)
+- [`multi-agent/04-multi-agent-boundaries-and-handoffs.md`](./multi-agent/04-multi-agent-boundaries-and-handoffs.md)
+- [`multi-agent/companion.md`](./multi-agent/companion.md)
+- [`safety/05-trust-boundaries-and-agent-safety.md`](./safety/05-trust-boundaries-and-agent-safety.md)
+- [`safety/companion.md`](./safety/companion.md)
+- [`optimization/06-workflow-optimization-and-evaluation.md`](./optimization/06-workflow-optimization-and-evaluation.md)
+- [`optimization/companion.md`](./optimization/companion.md)
 
 ## Relationship To Other Surfaces
 
-- `../core/` contains the builder-facing defaults and reviewability contract.
-- `../reference/` contains the survey guide, distillation docs, source index, quality notes, and paper notes.
-- `../implementation/` contains use cases, case studies, evaluation docs, and templates.
+- [`../core/`](../core/) contains the builder-facing defaults and chapter blueprints.
+- [`../reference/`](../reference/) contains the paper notes, source index, and literature-quality layer.
+- [`../implementation/`](../implementation/) contains practical use cases and evaluation-adjacent material.

@@ -1,34 +1,30 @@
-# Important Multi-Agent Papers From The Last 3 Months
+# Multi-Agent Compiler Workaround
 
-This note captures a full alphaXiv CLI research workflow run on 2026-03-16 for the question:
+Single-publication package behind the published Rooted Layers essay *The Illusion of the Swarm*. The folder keeps the alphaXiv research run, the draft ladder, the source papers, the media outputs, and the distribution material together.
 
-> Which papers from the last 3 months look most important for multi-agent systems?
+## Package Status
 
-Scope and constraints:
+- Archetype: Single-publication package
+- Status: Published
+- Publication map: *The Illusion of the Swarm*
+- Canonical workflow docs: [`../workflows/alphaxiv-research/README.md`](../workflows/alphaxiv-research/README.md), [`../workflows/essay-iteration/README.md`](../workflows/essay-iteration/README.md), [`../workflows/substack-publishing/README.md`](../workflows/substack-publishing/README.md)
 
-- Date window: roughly the prior 90 days
-- Retrieval first, synthesis second
-- Importance heuristic: feed prominence, engagement, GitHub traction, and substantive multi-agent contribution
-- Durable raw outputs are stored under `artifacts/`
+## Orientation
 
-Workflow files:
+- Live draft surface: [`2026-03-17-phase-transition-multi-agent-v9-substack.md`](./2026-03-17-phase-transition-multi-agent-v9-substack.md)
+- Blueprint / plan: [`article_plan.md`](./article_plan.md)
+- Review artifacts: [`2026-03-16-phase-transition-multi-agent-v5-claim-ledger.md`](./2026-03-16-phase-transition-multi-agent-v5-claim-ledger.md), [`2026-03-16-phase-transition-multi-agent-v6-review.md`](./2026-03-16-phase-transition-multi-agent-v6-review.md)
+- Research workflow record: [`01-topic-discovery.md`](./01-topic-discovery.md) through [`05-final-shortlist.md`](./05-final-shortlist.md), plus [`2026-03-16-cli-research-log.md`](./2026-03-16-cli-research-log.md)
 
-- [01-topic-discovery.md](01-topic-discovery.md)
-- [02-feed-candidates.md](02-feed-candidates.md)
-- [03-paper-inspection.md](03-paper-inspection.md)
-- [04-assistant-synthesis.md](04-assistant-synthesis.md)
-- [05-final-shortlist.md](05-final-shortlist.md)
+## Papers, Artifacts, And Distribution
 
-Raw artifacts:
+- Source papers live in [`papers/`](./papers/).
+- Raw deterministic research outputs from the alphaXiv workflow live in [`artifacts/`](./artifacts/).
+- Media artifacts live in [`assets/`](./assets/).
+- Distribution assets live in [`distribution/`](./distribution/).
 
-- `artifacts/`
+## Normalization Notes
 
-Final shortlist:
-
-1. `2602.01848` ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems
-2. `2601.04748` When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail
-3. `2603.00349` EmCoop: A Framework and Benchmark for Embodied Cooperation Among LLM Agents
-4. `2602.15382` The Vision Wormhole: Latent-Space Communication in Heterogeneous Multi-Agent Systems
-5. `2602.11865` Intelligent AI Delegation
-
-The shortlist and ranking were produced from deterministic CLI retrieval plus one final assistant comparison pass. The assistant did not replace the search process; it only refined the ordering at the end.
+- This package predates the newer `papers/markdown/` plus `papers/index.md` convention.
+- The dated draft ladder is currently the local archive. There is no dedicated `archive/` folder yet.
+- If the package is revisited, keep the published essay path stable and move superseded drafts into a local `archive/` instead of extending the root-level version ladder indefinitely.

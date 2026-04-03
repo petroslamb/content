@@ -1,0 +1,7 @@
+interface:
+  display_name: "Operating Agents Substack Sync"
+  short_description: "Publish Operating Agents posts to Substack"
+  default_prompt: "Use $operating-agents-substack-sync to republish Operating Agents essays from repo markdown and keep the archive in sync."
+
+policy:
+  allow_implicit_invocation: true

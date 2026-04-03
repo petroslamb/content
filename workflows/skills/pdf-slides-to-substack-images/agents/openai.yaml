@@ -1,0 +1,4 @@
+interface:
+  display_name: "PDF Slides to Substack Images"
+  short_description: "Export slide PDFs into Substack-ready PNG folders"
+  default_prompt: "Use $pdf-slides-to-substack-images to convert a slide PDF or folder of PDFs into zero-padded PNG folders for publishing."

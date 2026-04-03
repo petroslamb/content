@@ -1,0 +1,7 @@
+interface:
+  display_name: "NotebookLM Artifact Bundle"
+  short_description: "Generate and track the standard NotebookLM bundle"
+  default_prompt: "Use $notebooklm-artifact-bundle to generate the standard NotebookLM artifact bundle or recover a transcript from a generated audio artifact."
+
+policy:
+  allow_implicit_invocation: true

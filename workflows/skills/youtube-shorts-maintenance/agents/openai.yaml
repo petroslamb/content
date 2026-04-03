@@ -1,0 +1,7 @@
+interface:
+  display_name: "YouTube Shorts Maintenance"
+  short_description: "Inspect and maintain Shorts draft workflows"
+  default_prompt: "Use $youtube-shorts-maintenance to inspect the Shorts drafts playlist, check duplicates, or plan a description update."
+
+policy:
+  allow_implicit_invocation: true

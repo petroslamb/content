@@ -1,6 +1,8 @@
-# Root-level tooling for content workflows
+# Canonical article-development toolchain
 markitdown[pdf]==0.1.5
 notebooklm-py[browser]==0.3.4
+alphaxiv-py
+python-substack
 PyYAML>=6.0,<7.0
 
 # Shared content automation dependencies
@@ -11,16 +13,7 @@ python-dotenv
 playwright
 markdownify
 
-# Substack Publishing/Posting API (Python)
-python-substack
-
 # YouTube Data API (Python)
 google-api-python-client
 google-auth-oauthlib
 google-auth-httplib2
-
-# AlphaXiv API (Python)
-alphaxiv-py
-
-# NotebookLM API (Python)
-notebooklm-py
