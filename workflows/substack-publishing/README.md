@@ -8,7 +8,7 @@ Use this when an article is ready enough to become a public post and the package
 
 - the canonical live essay
 - final or near-final references
-- any relevant media placements
+- any relevant media placements with stable filenames and deliberate insertion points
 - completed polish work from [`../article-polish/README.md`](../article-polish/README.md)
 
 ## Canonical Publishing Expectations
@@ -32,7 +32,10 @@ If a draft still reads like repo documentation rather than a public essay, simpl
 ## Standard Flow
 
 1. confirm the live draft is the canonical publish target
-2. confirm article polish is complete
+2. confirm article polish is complete, including:
+   - final image naming
+   - intentional image placement
+   - any transcript-driven rehumanization pass
 3. insert the `Video TL;DR` block if a video artifact exists and the post format supports it
 4. publish with `python-substack` or a package-specific publishing helper
 5. refresh the tracked public archive if the post is part of the Substack archive system

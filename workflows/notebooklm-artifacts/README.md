@@ -26,7 +26,11 @@ The normal destination is the package or topic `artifacts/` folder.
 3. generate the standard artifact bundle
 4. poll the artifact tasks until the required outputs are ready
 5. download the artifacts into the essay or topic `artifacts/` folder
-6. hand off to [`../article-polish/README.md`](../article-polish/README.md) for image extraction, image placement, transcript round-trip, and final editorial use
+6. hand off to [`../article-polish/README.md`](../article-polish/README.md) for:
+   - semantic image naming
+   - intentional image placement in the live essay
+   - podcast transcript round-trip
+   - the final “rehumanization” editorial pass
 
 ## Artifact Placement
 
@@ -37,9 +41,15 @@ Default placement:
 
 If a package already uses a stronger established artifact convention, preserve it. Avoid duplicate artifact trees unless there is a strong reason to keep both.
 
+The binding-gap package is the clearest repo-local example of this rule:
+
+- NotebookLM outputs were initially produced under an essay-scoped artifact tree
+- the canonical home was later restored to package-level [`../../publications/binding-gap/artifacts/`](../../publications/binding-gap/artifacts/)
+- duplicate copies were removed because they made later editorial work and publication prep harder
+
 ## Transcript Round-Trip Boundary
 
-NotebookLM artifact generation includes the possibility of re-uploading the generated podcast audio as a source and exporting the resulting transcript. That round-trip is still part of the broader process, but the canonical editorial use of that transcript now lives in [`../article-polish/README.md`](../article-polish/README.md).
+NotebookLM artifact generation includes the possibility of re-uploading the generated podcast audio as a source and exporting the resulting transcript. That round-trip is still part of the broader process, but the canonical editorial use of that transcript now lives in [`../article-polish/README.md`](../article-polish/README.md), alongside image naming and placement.
 
 Operationally, the recurring successful path has been:
 
