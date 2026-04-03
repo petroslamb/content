@@ -90,3 +90,7 @@ For the broader optimization map across prompts, tools, topology, judge systems,
 *[Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685)* is the key evaluation-method reference in this chapter. It helps the reader understand both the power and the calibration risks of judge-based scoring for open-ended outputs.
 
 *[AFLOW: Automating Agentic Workflow Generation](https://arxiv.org/abs/2410.10762)* and *[GPTSwarm: Language Agents as Optimizable Graphs](https://arxiv.org/abs/2402.16823)* are the right references when the architecture itself may need to change. Their teaching value is partly positive and partly cautionary: topology can be optimized, but only after the objective and the lower-level contracts are already stable enough to support that search.
+
+## Chapters List
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.

@@ -73,6 +73,8 @@ The most important lesson is that continuity should be selective. A good memory 
 
 For the wider memory taxonomy, lifecycle models, retrieval escalations, and a deeper reading guide to the literature, continue with the [Memory Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/memory/companion.md).
 
+#### Next Chapter:
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. Read it to place memory alongside action, reasoning, optimization, coordination, and safety. In the memory chapter, its main value is scope: it shows that persistence is not an isolated feature but one layer in a larger operating system for agents.
@@ -92,3 +94,7 @@ For the wider memory taxonomy, lifecycle models, retrieval escalations, and a de
 *[HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models](https://arxiv.org/abs/2405.14831)* is the right escalation reference when flat similarity retrieval stops being enough. Read it when the problem is not recall in general but missing relationships among entities, events, or facts.
 
 *[Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291)* is the cleanest reference in this chapter for procedural promotion. It shows how repeated success can become an explicit skill library rather than remaining an expensive reasoning loop repeated from scratch.
+
+## Chapters List
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.

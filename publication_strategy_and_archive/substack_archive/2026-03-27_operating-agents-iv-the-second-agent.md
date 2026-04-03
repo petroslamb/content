@@ -73,6 +73,8 @@ The broader lesson is less dramatic than the industry story but more useful for 
 
 For the broader field map on collaboration types, decision structures, protocols, evaluation frameworks, and the surrounding literature, continue with the [Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/multi-agent/companion.md).
 
+#### Next Chapter:
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the survey-level reference behind this series. It is useful here because it places multi-agent design after reasoning, action, and memory, which reinforces the idea that additional topology is an escalation on top of an already functioning workflow.
@@ -88,3 +90,7 @@ For the broader field map on collaboration types, decision structures, protocols
 *[Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate](https://arxiv.org/abs/2305.19118)* is a useful reference for debate as a reliability overlay. Read it when the task benefits from competing arguments rather than from a single reviewer pass.
 
 *[RECONCILE: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs](https://arxiv.org/abs/2406.13670)* extends that idea by organizing disagreement into a consensus process. Its value in this chapter is as an escalation reference, not as a default topology.
+
+## Chapters List
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.

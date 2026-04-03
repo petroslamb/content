@@ -73,6 +73,8 @@ The course-level conclusion is not that agents are uniquely dangerous or impossi
 
 For the wider threat taxonomies, contamination paths, retrieval and memory risks, and the deeper literature around safety architecture, continue with the [Safety Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/safety/companion.md).
 
+## Next Chapter
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. It is useful here because it places safety after the rest of the stack becomes real, which is exactly when the topic stops being abstract and becomes a question of operational consequence.
@@ -90,3 +92,7 @@ For the wider threat taxonomies, contamination paths, retrieval and memory risks
 *[Agent Smith: A Single Image Can Jailbreak One Million Multimodal LLM Agents Exponentially Fast](https://arxiv.org/abs/2402.08567)* is useful for understanding contamination across agents and modalities. Its core value in this chapter is the reminder that internal propagation paths deserve the same scrutiny as external ones.
 
 *[Chain-of-Verification Reduces Hallucination in Large Language Models](https://arxiv.org/abs/2309.11495)* matters here as a verification reference. Read it to understand how factual checking can reduce the chance that unsupported claims become action, memory, or downstream instruction, while remembering that verification is only one layer in a broader safety architecture.
+
+## Chapters List
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.
