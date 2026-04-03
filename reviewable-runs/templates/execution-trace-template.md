@@ -4,8 +4,8 @@ Use this template when capturing what happened across one meaningful run.
 
 Linked chapters:
 
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
 - `../evaluation/run-review-checklist.md`
 
 ```yaml

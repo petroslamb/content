@@ -5,7 +5,7 @@ description: Use when Codex needs to republish the Operating Agents preface or e
 
 # Operating Agents Substack Sync
 
-Use this skill only when the user wants live Substack posts changed. This is the repo-specific publishing path for the Operating Agents preface plus the six essay posts under `autonomous-agent-blueprint/essays/`.
+Use this skill only when the user wants live Substack posts changed. This is the repo-specific publishing path for the Operating Agents preface plus the six essay posts under `publications/autonomous-agents/essays/`.
 
 ## Working Rules
 

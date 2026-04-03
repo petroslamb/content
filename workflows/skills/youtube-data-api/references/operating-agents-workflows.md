@@ -100,7 +100,7 @@ Recovery command:
   --write-auto-sub \
   --sub-lang en \
   --convert-subs srt \
-  -o "autonomous-agent-blueprint/essays/<slug>/artifacts/video/<slug>_auto_captions.%(ext)s" \
+  -o "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_auto_captions.%(ext)s" \
   "https://www.youtube.com/watch?v=<FULL_VIDEO_ID>"
 ```
 

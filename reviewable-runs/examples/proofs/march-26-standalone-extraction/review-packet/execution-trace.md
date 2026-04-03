@@ -31,7 +31,7 @@ steps:
   - step_id: "4"
     intent: "Validate and commit the extraction"
     observation: "Bridge references and deleted-root-doc references needed final sweeps"
-    action_taken: "Ran grep/status checks, staged `README.md`, `autonomous-agent-blueprint`, and `reviewable-runs`, and committed"
+    action_taken: "Ran grep/status checks, staged `README.md`, `publications/autonomous-agents`, and `reviewable-runs`, and committed"
     tool_used: "grep and git"
     output_artifact: "../raw-artifacts/commit-record.txt"
     verification_result: "Commit `f3c1241` landed and worktree became clean"

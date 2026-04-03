@@ -4,9 +4,9 @@ Use this template when a run crosses a meaningful approval boundary.
 
 Linked chapters:
 
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md`
-- `../autonomous-agent-blueprint/implementation/use-cases/enterprise-agent.md`
-- `../autonomous-agent-blueprint/implementation/use-cases/web-agent.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md`
+- `../publications/autonomous-agents/implementation/use-cases/enterprise-agent.md`
+- `../publications/autonomous-agents/implementation/use-cases/web-agent.md`
 
 ```md
 # Governance Record: Approval Decision

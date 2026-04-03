@@ -1,19 +1,19 @@
 Curated changed-file excerpt from commit `f3c1241`:
 
 README.md
-autonomous-agent-blueprint/BUILD_HISTORY.md
-autonomous-agent-blueprint/CHANGELOG.md
-autonomous-agent-blueprint/CONTRIBUTING.md
-autonomous-agent-blueprint/MAINTENANCE.md
-autonomous-agent-blueprint/README.md
-autonomous-agent-blueprint/REPOSITORY_ANALYSIS.md
-autonomous-agent-blueprint/REPO_CLEANUP_PLAN.md
-autonomous-agent-blueprint/START_HERE.md
-autonomous-agent-blueprint/implementation/README.md
-autonomous-agent-blueprint/implementation/use-cases/README.md
-autonomous-agent-blueprint/implementation/use-cases/coding-agent.md
-autonomous-agent-blueprint/implementation/use-cases/enterprise-agent.md
-autonomous-agent-blueprint/implementation/use-cases/web-agent.md
+publications/autonomous-agents/BUILD_HISTORY.md
+publications/autonomous-agents/CHANGELOG.md
+publications/autonomous-agents/CONTRIBUTING.md
+publications/autonomous-agents/MAINTENANCE.md
+publications/autonomous-agents/README.md
+publications/autonomous-agents/REPOSITORY_ANALYSIS.md
+publications/autonomous-agents/REPO_CLEANUP_PLAN.md
+publications/autonomous-agents/START_HERE.md
+publications/autonomous-agents/implementation/README.md
+publications/autonomous-agents/implementation/use-cases/README.md
+publications/autonomous-agents/implementation/use-cases/coding-agent.md
+publications/autonomous-agents/implementation/use-cases/enterprise-agent.md
+publications/autonomous-agents/implementation/use-cases/web-agent.md
 reviewable-runs/README.md
 reviewable-runs/START_HERE.md
 reviewable-runs/ORIGIN_AND_GAP.md

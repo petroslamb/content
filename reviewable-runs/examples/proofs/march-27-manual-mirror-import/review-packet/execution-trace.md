@@ -1,7 +1,7 @@
 # Execution Trace
 
 1. Confirmed the archive mirror only needed archive files plus `metadata.json` and did not require waiting for automated sync recovery.
-2. Located the seven source markdown files under `autonomous-agent-blueprint/essays` and their linked slide assets.
+2. Located the seven source markdown files under `publications/autonomous-agents/essays` and their linked slide assets.
 3. Pulled canonical slugs, titles, and publish timestamps from the live Substack feed using a browser-style user agent.
 4. Created the manual import in a clean worktree based on `github/main` so unrelated local changes would not leak into the publish path.
 5. Rewrote relative image references into tracked archive asset paths under `publication_strategy_and_archive/substack_archive/assets/`.

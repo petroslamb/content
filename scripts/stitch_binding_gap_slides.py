@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 BASE = Path(
-    "/Users/petros/Projects/content/binding-and-recoverability/essays/the-binding-gap/artifacts/slides"
+    "../publications/binding-gap/essays/the-binding-gap/artifacts/slides"
 )
 PRESENTER = BASE / "The_Binding_Gap_presenter"
 DETAILED = BASE / "The_Binding_Gap_detailed"

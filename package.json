@@ -1,13 +1,14 @@
 {
   "name": "content",
   "version": "1.0.0",
-  "description": "This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `ai_agents_enterprise_state`, `hardware_compatibility_architecture_2023_2025`).",
+  "description": "This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `publications/autonomy-tax`, `publications/hardware-friction`).",
   "main": "index.js",
   "scripts": {
     "sync:substack": ".venv/bin/python scripts/sync_substack_archive.py",
-    "build:mirror": "eleventy",
+    "build:mirror": "rm -rf publication_strategy_and_archive/mirror/_site && eleventy",
     "dev:mirror": "eleventy --serve",
-    "check:mirror": "npm run build:mirror && .venv/bin/python scripts/check_mirror.py && .venv/bin/python scripts/e2e_mirror_smoke.py"
+    "check:mirror": "npm run build:mirror && .venv/bin/python scripts/check_mirror.py && .venv/bin/python scripts/e2e_mirror_smoke.py",
+    "check:repo-links": ".venv/bin/python scripts/check_repo_links.py"
   },
   "keywords": [],
   "author": "",

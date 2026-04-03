@@ -12,9 +12,9 @@ The goal is to keep papers discoverable, convertible, and reusable across essay 
 
 If a package already has a stronger established source layer, preserve it. Examples:
 
-- `autonomous-agent-blueprint/reference/papers/`
-- `autonomous-agent-blueprint/reference/source-index.md`
-- dataset-specific paper trees inside `hardware_compatibility_architecture_2023_2025/`
+- `publications/autonomous-agents/reference/papers/`
+- `publications/autonomous-agents/reference/source-index.md`
+- dataset-specific paper trees inside `publications/hardware-friction/`
 
 ## Canonical Layout For Single-Publication Packages
 

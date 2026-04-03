@@ -86,7 +86,7 @@ Keep those separate mentally:
 
 ## Origin
 
-This package grew out of a real gap in `autonomous-agent-blueprint`.
+This package grew out of a real gap in `publications/autonomous-agents`.
 
 The blueprint package already required bounded control loops, verification, approval gates, and post-incident review. What it did not define clearly was the minimum review surface one meaningful run should expose or reconstruct for a human reviewer.
 
@@ -119,4 +119,4 @@ The package is already shaped for a practical public argument:
 2. what a reviewable run must expose
 3. what this looks like on real and synthetic cases
 
-If you want the upstream architecture basis first, read `../autonomous-agent-blueprint/core/agentic-architectures-blueprint.md`, then `../autonomous-agent-blueprint/core/practical-chapter-blueprints/README.md`, then the closest use case under `../autonomous-agent-blueprint/implementation/use-cases/`.
+If you want the upstream architecture basis first, read `../publications/autonomous-agents/core/agentic-architectures-blueprint.md`, then `../publications/autonomous-agents/core/practical-chapter-blueprints/README.md`, then the closest use case under `../publications/autonomous-agents/implementation/use-cases/`.

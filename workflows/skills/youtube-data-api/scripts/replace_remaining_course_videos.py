@@ -26,15 +26,15 @@ from youtube_common import DEFAULT_OPERATING_AGENTS_COURSE_PLAYLIST_ID, REPO_ROO
 
 MEDIA_BY_SLUG = {
     "memory": REPO_ROOT
-    / "autonomous-agent-blueprint/essays/memory/artifacts/video/Operating Agents II - Timed Slides.mp4",
+    / "publications/autonomous-agents/essays/memory/artifacts/video/Operating Agents II - Timed Slides.mp4",
     "reasoning": REPO_ROOT
-    / "autonomous-agent-blueprint/essays/reasoning/artifacts/video/Operating Agents III - Timed Slides.mp4",
+    / "publications/autonomous-agents/essays/reasoning/artifacts/video/Operating Agents III - Timed Slides.mp4",
     "multi-agent": REPO_ROOT
-    / "autonomous-agent-blueprint/essays/multi-agent/artifacts/video/Operating Agents IV - Timed Slides.mp4",
+    / "publications/autonomous-agents/essays/multi-agent/artifacts/video/Operating Agents IV - Timed Slides.mp4",
     "safety": REPO_ROOT
-    / "autonomous-agent-blueprint/essays/safety/artifacts/video/Operating Agents V - Timed Slides.mp4",
+    / "publications/autonomous-agents/essays/safety/artifacts/video/Operating Agents V - Timed Slides.mp4",
     "optimization": REPO_ROOT
-    / "autonomous-agent-blueprint/essays/optimization/artifacts/video/Operating Agents Bonus - Timed Slides.mp4",
+    / "publications/autonomous-agents/essays/optimization/artifacts/video/Operating Agents Bonus - Timed Slides.mp4",
 }
 
 

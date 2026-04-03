@@ -2,7 +2,7 @@
 
 **Status:** `real captured run`
 
-This folder reconstructs the run that finalized `reviewable-runs` as a standalone package and pushed `autonomous-agent-blueprint` back into a cleaner upstream role.
+This folder reconstructs the run that finalized `reviewable-runs` as a standalone package and pushed `publications/autonomous-agents` back into a cleaner upstream role.
 
 ## Scenario
 
@@ -21,7 +21,7 @@ This is the first fully committed real trace that shows Reviewable Runs operatin
 ## Run Outcome
 
 - `reviewable-runs` remained the standalone package
-- explicit routing from `autonomous-agent-blueprint` into `reviewable-runs` was removed
+- explicit routing from `publications/autonomous-agents` into `reviewable-runs` was removed
 - redundant root orientation docs in the blueprint package were removed
 - maintenance and contributing guidance were tightened
 - the resulting extraction landed as commit `f3c1241`

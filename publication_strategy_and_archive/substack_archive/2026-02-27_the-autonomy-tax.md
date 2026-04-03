@@ -85,7 +85,7 @@ Each tax, alone, looks manageable. Together, they explain why models that can re
 
 **They don’t add, they compound**. Here’s how: an incident (Tax 2) triggers an investigation, which reveals there’s no audit trail (Tax 3), which pulls your two best engineers off product work for a week (Tax 1). One failure, all three taxes, one event.
 
-The compounding is visible in the data. In the [Autonomy Tax Casebook,](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook.tsv) 28 coded public records, 21 directly support the tax model. Of those, governance is the primary tax in 12: the most frequent and least measured of the three.[[21](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook.tsv)]
+The compounding is visible in the data. In the [Autonomy Tax Casebook,](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax/sources/derived/autonomy_tax_casebook.tsv) 28 coded public records, 21 directly support the tax model. Of those, governance is the primary tax in 12: the most frequent and least measured of the three.[[21](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax/sources/derived/autonomy_tax_casebook.tsv)]
 
 If you’re a VP of Engineering planning to deploy agents across three business units this year, this compounding is what your budget doesn’t account for. Not the API costs, the review hours, incident remediation, and governance overhead that nobody has line-itemed yet. *(If you take nothing else from this essay: ask your three most senior engineers what percentage of their week is spent reviewing AI output. Most teams have never asked. Most are disturbed by the answer.)*
 
@@ -129,7 +129,7 @@ The decision logic is simple: score each of the three taxes Bounded Level 3 is a
 
 **In practice:** a support refund triage workflow (high volume, $1–$50 errors, standard data handling) scores a Net positive, but the review burden keeps it at Level 2.5 rather than Bounded Level 3. A procurement approval workflow (high error cost, regulated, no audit trail) gets blocked by the circuit breaker before you even calculate the score.
 
-*For the full scoring rubric, worked examples with mitigation paths, sensitivity analysis, and calibration guidance, see [The Autonomy Tax Scorecard](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/article_draft_v8B.md).*
+*For the full scoring rubric, worked examples with mitigation paths, sensitivity analysis, and calibration guidance, see [The Autonomy Tax Scorecard](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax/article_draft_v8B.md).*
 
 ### The Antithesis: When Bounded Level 3 Wins
 
@@ -173,7 +173,7 @@ That procurement agent’s $4,788 wasn’t a lot of money. But it was a precisel
 
 ***Scope note:** This analysis focuses on enterprises consuming commercial LLM APIs in US/EU markets. Self-hosted and open-weight deployments carry a different tax structure.[2]*
 
-*Open-source materials for this research package (drafts, casebook, scoring assets, and source manifest) are available in the [GitHub repository](https://github.com/petroslamb/autonomy-tax-enterprise-agents).*
+*Open-source materials for this research package (drafts, casebook, scoring assets, and source manifest) are available in the [GitHub repository](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax).*
 
 ---
 
@@ -185,7 +185,7 @@ That procurement agent’s $4,788 wasn’t a lot of money. But it was a precisel
 
 These are not aspirational. Each has a concrete deliverable.
 
-**1. Score your top three workflows.** Start with the workflows where you’re already considering or piloting AI assistance. Rank by monthly human-hours spent. Run each through the [Autonomy Tax Scorecard](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/article_draft_v8B.md). Output: a one-page ranked table with a recommended architecture level for each. Time: one meeting.
+**1. Score your top three workflows.** Start with the workflows where you’re already considering or piloting AI assistance. Rank by monthly human-hours spent. Run each through the [Autonomy Tax Scorecard](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax/article_draft_v8B.md). Output: a one-page ranked table with a recommended architecture level for each. Time: one meeting.
 
 **2. Instrument your most expensive LLM workflow.** Add four counters: retry rate, external-action rate, human-escalation rate, and review-time-per-output. Output: a baseline dashboard. Time: one sprint.
 
@@ -229,7 +229,7 @@ Those are measurement gaps, not reasons to suspend control discipline. They are 
 18. Observability platform pricing: [LangSmith](https://www.langchain.com/pricing-langsmith), [Braintrust](https://www.braintrust.dev/pricing). Figures are tooling-only, before integration engineering time.↩︎
 19. NCSC, [Guidelines for Secure AI System Development](https://www.ncsc.gov.uk/files/Guidelines-for-secure-AI-system-development.pdf).↩︎
 20. CISA et al., [Principles and Approaches for Security-by-Design and -Default](https://www.cisa.gov/sites/default/files/2023-06/principles_approaches_for_security-by-design-default_508c.pdf).↩︎
-21. The [Autonomy Tax Casebook](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook.tsv) codes 28 public records spanning incidents, field studies, regulatory milestones, and tooling baselines. Method notes: [autonomy_tax_casebook_method.md](https://github.com/petroslamb/autonomy-tax-enterprise-agents/blob/main/sources/derived/autonomy_tax_casebook_method.md).↩︎
+21. The [Autonomy Tax Casebook](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax/sources/derived/autonomy_tax_casebook.tsv) codes 28 public records spanning incidents, field studies, regulatory milestones, and tooling baselines. Method notes: [autonomy_tax_casebook_method.md](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax/sources/derived/autonomy_tax_casebook_method.md).↩︎
 22. Anthropic Engineering, [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents).↩︎
 23. OpenAI Developers, [Building Agents](https://developers.openai.com/tracks/building-agents/).↩︎
 24. [Pan et al. 2026](https://arxiv.org/abs/2512.04123), preprint, n=306 practitioners and 20 production case studies across 26 domains.↩︎

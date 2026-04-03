@@ -30,5 +30,5 @@
 
 `2026-03-10T11:26:12Z` Assistant
 
-> Implemented the refactor inside the `autonomous-agent-blueprint` submodule... I did not commit this refactor.
+> Implemented the refactor inside the `publications/autonomous-agents` submodule... I did not commit this refactor.
 

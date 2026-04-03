@@ -4,8 +4,8 @@ Use this template when capturing the task boundary for one meaningful run.
 
 Linked source surfaces:
 
-- `../autonomous-agent-blueprint/core/agentic-architectures-blueprint.md`
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`
+- `../publications/autonomous-agents/core/agentic-architectures-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md`
 - `../evaluation/run-review-checklist.md`
 
 ```md

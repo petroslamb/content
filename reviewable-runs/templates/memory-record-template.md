@@ -4,8 +4,8 @@ Use this template when defining a durable memory entry.
 
 Linked chapters:
 
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md`
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/01-memory-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md`
 
 ```yaml
 memory_id: ""

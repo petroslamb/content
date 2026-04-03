@@ -4,8 +4,8 @@ Use this template when capturing what the run relied on.
 
 Linked source surfaces:
 
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md`
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/01-memory-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md`
 - `../evaluation/run-review-checklist.md`
 
 ```md

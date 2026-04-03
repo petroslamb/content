@@ -1,6 +1,6 @@
 # Raw Artifact: Task Brief
 
-Implement the reviewable-runs refactor inside `autonomous-agent-blueprint`.
+Implement the reviewable-runs refactor inside `publications/autonomous-agents`.
 
 Replace packet-style artifact bundles with dossier-first case folders, route the repo through `reviewable-runs.md`, preserve the old packet-oriented layer as archive, and patch moved links so the archive remains usable.
 

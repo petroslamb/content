@@ -18,17 +18,17 @@ In practice:
 
 ## Layout
 
-- [`lib/archive-data.js`](./lib/archive-data.js): merges archive manifest and curated map into the data model used by the site
-- [`src/_data/`](./src/_data): 11ty global data entrypoints
-- [`src/_includes/`](./src/_includes): layouts and reusable partials
-- [`src/index.njk`](./src/index.njk): landing page
-- [`src/archive/index.njk`](./src/archive/index.njk): filterable archive page
-- [`src/posts/post.njk`](./src/posts/post.njk): per-post template
-- [`src/series/series.njk`](./src/series/series.njk): series landing pages
-- [`src/feed.xml.njk`](./src/feed.xml.njk): mirror RSS
-- [`src/sitemap.xml.njk`](./src/sitemap.xml.njk): sitemap
-- [`src/archive.json.njk`](./src/archive.json.njk): machine-readable archive export
-- [`src/static/`](./src/static): CSS and small client-side archive filtering
+- [`lib/archive-data.js`](lib/archive-data.js): merges archive manifest and curated map into the data model used by the site
+- [`src/_data/`](src/_data): 11ty global data entrypoints
+- [`src/_includes/`](src/_includes): layouts and reusable partials
+- [`src/index.njk`](src/index.njk): landing page
+- [`src/archive/index.njk`](src/archive/index.njk): filterable archive page
+- [`src/posts/post.njk`](src/posts/post.njk): per-post template
+- [`src/series/series.njk`](src/series/series.njk): series landing pages
+- [`src/feed.xml.njk`](src/feed.xml.njk): mirror RSS
+- [`src/sitemap.xml.njk`](src/sitemap.xml.njk): sitemap
+- [`src/archive.json.njk`](src/archive.json.njk): machine-readable archive export
+- [`src/static/`](src/static): CSS and small client-side archive filtering
 - `_site/`: generated output, gitignored
 
 ## Routes

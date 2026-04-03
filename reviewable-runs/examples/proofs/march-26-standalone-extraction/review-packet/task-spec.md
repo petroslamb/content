@@ -7,7 +7,7 @@ Finalize the extraction of `reviewable-runs` into a standalone package by removi
 ## Objective
 
 - make `reviewable-runs` the derivative package that points upstream, not the reverse
-- reduce root clutter in `autonomous-agent-blueprint`
+- reduce root clutter in `publications/autonomous-agents`
 - tighten maintenance and contributing guidance around post-publication research updates
 - commit the extraction as one coherent repo change
 
@@ -15,7 +15,7 @@ Finalize the extraction of `reviewable-runs` into a standalone package by removi
 
 - the user's decoupling and cleanup requests
 - the current bridge references in blueprint docs
-- the package docs in both `autonomous-agent-blueprint` and `reviewable-runs`
+- the package docs in both `publications/autonomous-agents` and `reviewable-runs`
 
 ## Constraints
 

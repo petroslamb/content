@@ -7,7 +7,7 @@
     {
       "chapter": 1,
       "slug": "action",
-      "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/action/artifacts/video/Assistant to Agent A Blueprint.mp4",
+      "local_video_path": "../../../../publications/autonomous-agents/essays/action/artifacts/video/Assistant to Agent A Blueprint.mp4",
       "short_title": "Operating Agents TL;DR I: Action",
       "full_title": "Operating Agents TL;DR I: Why Reliable Agents Start with Action",
       "full_episode_video_id": "swvX4mduJtk",
@@ -17,7 +17,7 @@
     {
       "chapter": 2,
       "slug": "memory",
-      "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/memory/artifacts/video/AI Agent Memory Blueprint.mp4",
+      "local_video_path": "../../../../publications/autonomous-agents/essays/memory/artifacts/video/AI Agent Memory Blueprint.mp4",
       "short_title": "Operating Agents TL;DR II: Memory",
       "full_title": "Operating Agents TL;DR II: Why Agent Memory Needs Authority",
       "full_episode_video_id": "Pj4sjWvyJVQ",
@@ -27,7 +27,7 @@
     {
       "chapter": 3,
       "slug": "reasoning",
-      "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/reasoning/artifacts/video/AI Reasoning Builder's Guide.mp4",
+      "local_video_path": "../../../../publications/autonomous-agents/essays/reasoning/artifacts/video/AI Reasoning Builder's Guide.mp4",
       "short_title": "Operating Agents TL;DR III: Reasoning",
       "full_title": "Operating Agents TL;DR III: Diagnose the Scaffold Before You Shop the Model",
       "full_episode_video_id": "LykGDaONozw",
@@ -37,7 +37,7 @@
     {
       "chapter": 4,
       "slug": "multi-agent",
-      "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/multi-agent/artifacts/video/Blueprint Multi-Agent AI.mp4",
+      "local_video_path": "../../../../publications/autonomous-agents/essays/multi-agent/artifacts/video/Blueprint Multi-Agent AI.mp4",
       "short_title": "Operating Agents TL;DR IV: Multi-Agent",
       "full_title": "Operating Agents TL;DR IV: When the Second Agent Buys a Boundary",
       "full_episode_video_id": "xxd2VKlqiL4",
@@ -47,7 +47,7 @@
     {
       "chapter": 5,
       "slug": "safety",
-      "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/safety/artifacts/video/AI Agent Safety Blueprint.mp4",
+      "local_video_path": "../../../../publications/autonomous-agents/essays/safety/artifacts/video/AI Agent Safety Blueprint.mp4",
       "short_title": "Operating Agents TL;DR V: Safety",
       "full_title": "Operating Agents TL;DR V: The Attack Surface Is the Architecture",
       "full_episode_video_id": "biyIKcSp3Po",
@@ -57,7 +57,7 @@
     {
       "chapter": 6,
       "slug": "optimization",
-      "local_video_path": "/Users/petros/Projects/content/autonomous-agent-blueprint/essays/optimization/artifacts/video/Optimizing AI Agents.mp4",
+      "local_video_path": "../../../../publications/autonomous-agents/essays/optimization/artifacts/video/Optimizing AI Agents.mp4",
       "short_title": "Operating Agents TL;DR Bonus: Optimization",
       "full_title": "Operating Agents TL;DR Bonus: When the Workflow Becomes the Object",
       "full_episode_video_id": "2Fs1iDw5I3Y",

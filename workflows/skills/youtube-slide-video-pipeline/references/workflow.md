@@ -30,7 +30,7 @@ Preferred managed caption path:
 ```bash
 .venv/bin/python workflows/skills/youtube-data-api/scripts/download_video_captions.py \
   --video-id <VIDEO_ID> \
-  --output "autonomous-agent-blueprint/essays/<slug>/artifacts/video/<slug>_auto_captions.srt"
+  --output "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_auto_captions.srt"
 ```
 
 Watch-page transcript fallback:
@@ -38,7 +38,7 @@ Watch-page transcript fallback:
 ```bash
 .venv/bin/python scripts/scrape_youtube_watch_transcript.py \
   --video-id <VIDEO_ID> \
-  --output "autonomous-agent-blueprint/essays/<slug>/artifacts/video/<slug>_watch_transcript.json"
+  --output "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_watch_transcript.json"
 ```
 
 ### 2. Draft An OCR-First Mapping
@@ -79,11 +79,11 @@ The render path expects a reviewed markdown table mapping `slide-XXX.png` to tra
 
 ```bash
 .venv/bin/python scripts/line_map_markdown_to_cues.py \
-  --map "autonomous-agent-blueprint/essays/<slug>/artifacts/video/<slug>_slide_transcript_map_ocr_verified.md" \
-  --captions "autonomous-agent-blueprint/essays/<slug>/artifacts/video/<slug>_auto_captions.srt" \
-  --transcript "autonomous-agent-blueprint/essays/<slug>/artifacts/transcript_<Chapter Title>_numbered.txt" \
-  --chapter-dir "autonomous-agent-blueprint/essays/<slug>" \
-  --output "autonomous-agent-blueprint/essays/<slug>/artifacts/video/<slug>_cues_from_srt.json"
+  --map "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_slide_transcript_map_ocr_verified.md" \
+  --captions "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_auto_captions.srt" \
+  --transcript "publications/autonomous-agents/essays/<slug>/artifacts/transcript_<Chapter Title>_numbered.txt" \
+  --chapter-dir "publications/autonomous-agents/essays/<slug>" \
+  --output "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_cues_from_srt.json"
 ```
 
 ### 5. Render The MP4

@@ -7,7 +7,7 @@ URL: https://lambpetros.substack.com/p/operating-agents-preface-a-field
 
 This course is a builder-first guide to how modern agent systems are designed, evaluated, and constrained in practice. It is not trying to explain every direction in agent research, and it is not trying to turn the field into a sequence of slogans. Its purpose is narrower and more useful. It aims to teach what a serious builder needs in order to inspect a real workflow, identify what layer is failing, and choose the right level of intervention.
 
-The package was distilled from the broader survey *[Advances and Challenges in Foundation Agents](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/advances-and-challenges-in-foundation-agents.md)*. That survey is wide by design. It covers memory, reasoning, action, optimization, collaboration, safety, and much more. This course keeps the practical center of that landscape and then separates it into layers with different jobs. The essays are the public front door. The companions widen the map without bloating the main chapter. The blueprints are the load-bearing decision layer for builders who need defaults and escalation rules rather than another long explanation. The survey and paper notes remain the source and audit layer for readers who want to inspect where the compression came from.
+The package was distilled from the broader survey *[Advances and Challenges in Foundation Agents](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/advances-and-challenges-in-foundation-agents.md)*. That survey is wide by design. It covers memory, reasoning, action, optimization, collaboration, safety, and much more. This course keeps the practical center of that landscape and then separates it into layers with different jobs. The essays are the public front door. The companions widen the map without bloating the main chapter. The blueprints are the load-bearing decision layer for builders who need defaults and escalation rules rather than another long explanation. The survey and paper notes remain the source and audit layer for readers who want to inspect where the compression came from.
 
 ## Who This Course Is For
 
@@ -61,33 +61,33 @@ The companions are second-pass breadth chapters. They exist because the main ess
 
 The current companion layer is:
 
-Action: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/action/companion.md)
+Action: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/action/companion.md)
 
-Memory: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/memory/companion.md)
+Memory: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/memory/companion.md)
 
-Reasoning: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/reasoning/companion.md)
+Reasoning: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/reasoning/companion.md)
 
-Multi-Agent: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/multi-agent/companion.md)
+Multi-Agent: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/multi-agent/companion.md)
 
-Safety: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/safety/companion.md)
+Safety: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/safety/companion.md)
 
-Optimization: [Companion](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/essays/optimization/companion.md)
+Optimization: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/optimization/companion.md)
 
 The blueprints are the builder-facing decision layer, and in day-to-day architecture work they are often the most heavily used surface in the package. Their job is not to teach from zero. Their job is to compress the topic into defaults, escalation triggers, alternatives, failure review, and evaluation criteria. Once a reader knows which layer of the workflow is under strain, the matching blueprint should be the shortest path from understanding to a defensible design decision.
 
 The matching blueprint set is:
 
-Action: [Chapter 8 Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md)
+Action: [Chapter 8 Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md)
 
-Memory: [Chapter 3 Blueprint: Memory](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/01-memory-blueprint.md)
+Memory: [Chapter 3 Blueprint: Memory](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/01-memory-blueprint.md)
 
-Reasoning: [Chapter 2 Blueprint: Reasoning and Planning](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md)
+Reasoning: [Chapter 2 Blueprint: Reasoning and Planning](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md)
 
-Multi-Agent: [Chapter 14 Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
+Multi-Agent: [Chapter 14 Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
 
-Safety: [Chapters 17, 18, and 19 Blueprint: Safety](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md)
+Safety: [Chapters 17, 18, and 19 Blueprint: Safety](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md)
 
-Optimization: [Chapters 9 and 11 Blueprint: Optimization and Self-Improvement](https://github.com/petroslamb/content/blob/main/autonomous-agent-blueprint/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
+Optimization: [Chapters 9 and 11 Blueprint: Optimization and Self-Improvement](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
 
 The original survey is the source landscape from which this course was distilled. It keeps the wider field visible, including material that does not belong in the core teaching path. That breadth matters because a distillation is only trustworthy if the reader can still trace it back to the larger map.
 

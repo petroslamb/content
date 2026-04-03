@@ -6,7 +6,7 @@ Linked source surfaces:
 
 - `../evaluation/failure-mode-catalog.md`
 - `../evaluation/run-review-checklist.md`
-- `../autonomous-agent-blueprint/core/practical-chapter-blueprints/06-safety-blueprint.md`
+- `../publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md`
 
 ```md
 # Governance Record: Failure Review
