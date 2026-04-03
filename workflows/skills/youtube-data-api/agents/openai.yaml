@@ -1,0 +1,7 @@
+interface:
+  display_name: "YouTube Data API"
+  short_description: "Repo YouTube automation workflows"
+  default_prompt: "Use $youtube-data-api to choose the right local YouTube Data API workflow for auth, caption recovery, playlist maintenance, or video replacement work in this repo."
+
+policy:
+  allow_implicit_invocation: true

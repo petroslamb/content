@@ -1,0 +1,7 @@
+interface:
+  display_name: "Markitdown Paper Intake"
+  short_description: "Canonical paper intake and PDF-to-Markdown flow"
+  default_prompt: "Use $markitdown-paper-intake to place papers in a package, convert them with markitdown, and update the local paper index using the repo's tracked workflow."
+
+policy:
+  allow_implicit_invocation: true

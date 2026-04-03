@@ -1,22 +1,28 @@
 # The Moltbook Phenomenon
 
-Research and writing package for an analysis of Meta's acquisition of Moltbook.
+Single-publication package behind the published Rooted Layers essay *The Moltbook Phenomenon*. The package keeps the main Substack draft, the deeper background analysis, exported media, and platform distribution material together.
 
-## Contents
+## Package Status
 
-### Research
+- Archetype: Single-publication package
+- Status: Published
+- Publication map: *The Moltbook Phenomenon*
+- Canonical workflow docs: [`../workflows/essay-iteration/README.md`](../workflows/essay-iteration/README.md), [`../workflows/notebooklm-artifacts/README.md`](../workflows/notebooklm-artifacts/README.md), [`../workflows/substack-publishing/README.md`](../workflows/substack-publishing/README.md)
 
-- `Meta's Moltbook Acquisition Analysis.md`: Full research analysis (source of truth, ~8,000 words)
+## Orientation
 
-### Substack Article
+- Live draft surface: [`The Moltbook Phenomenon — Substack.md`](<./The Moltbook Phenomenon — Substack.md>)
+- Background research / companion: [`Meta's Moltbook Acquisition Analysis.md`](<./Meta's Moltbook Acquisition Analysis.md>)
+- Historical draft: [`The Moltbook Phenomenon — Substack v1.md`](<./The Moltbook Phenomenon — Substack v1.md>)
 
-- `The Moltbook Phenomenon — Substack.md`: Current draft (v2, analytical voice)
-- `The Moltbook Phenomenon — Substack v1.md`: Earlier draft (conversational voice, archived)
+## Artifacts And Distribution
 
-### Media
+- Slide exports live in [`slides/`](./slides/).
+- Local media artifacts live at the package root, including the PDF, MP4, and audio files.
+- Distribution assets live in [`distribution/`](./distribution/).
 
-- `the-moltbook-phenomenon.pdf`: Original slide deck PDF (gitignored, local only)
-- `The_Moltbook_Phenomenon.pdf`: Presentation PDF (gitignored, local only)
-- `The_AI_Social_Network_That_Banned_Humans.m4a`: Audio (gitignored, local only)
-- `The_Moltbook_Phenomenon.mp4`: Video (gitignored, local only)
-- `slides/slide-01.png` through `slides/slide-17.png`: Rendered slide images
+## Normalization Notes
+
+- This package predates the newer `papers/` and `archive/` conventions.
+- The long-form background analysis currently acts as the research source layer.
+- If the package is revisited, add a dedicated `archive/` folder and move superseded Substack variants there.

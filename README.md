@@ -1,46 +1,87 @@
 # Rooted Layers — Research Repository
 
-This is the source material, research corpus, and companion reference for [Rooted Layers](https://lambpetros.substack.com), a publication on AI engineering, architecture economics, and production systems.
+This repository is the canonical working tree behind [Rooted Layers](https://lambpetros.substack.com). Most top-level folders are content-development packages for essays, supporting research, publication artifacts, and related distribution material.
 
-Each article on Substack links to the corresponding folder here for readers who want to go deeper: primary sources, evidence tables, scorecard datasets, architecture audits, and working drafts that did not make it into the final piece.
+The repo is meant to stay readable as it grows. The root docs orient you. Package README files explain local structure. Tracked workflow docs explain repeatable processes. Tracked repo-local skills now live under [`workflows/skills/`](./workflows/skills/README.md) and are mirrored into `.agents/skills/` for Codex discovery.
 
-**What you will find here:**
-- Research packages for published articles, each with their own README
-- Evidence layers: source manifests, annotated bibliographies, and scoring rubrics
-- A local archive of published articles in markdown and HTML snapshots
-- Working notes and in-progress research that may become future articles
+## North Star
 
-This is a living repository. Folders without a README are either legacy material or works in progress.
+Most folders in this repo are trying to support the same broad lifecycle:
 
----
+1. collect papers and convert them into usable markdown
+2. research and shortlist sources
+3. draft and iterate essays with supporting review artifacts
+4. generate NotebookLM media artifacts
+5. publish to Substack and sync the public archive
 
-## Repository Organization
+That lifecycle does not force every package into one rigid layout. The repo uses three package classes:
 
-Organized by topic. Each top-level folder corresponds to a research area or multi-part publication.
+- **Single-publication package**: one active essay project with a stable live draft surface plus local `archive/`
+- **Umbrella package**: multiple related publications or a course/series sharing papers, assets, or source layers
+- **Workflow/framework package**: tracked operational or conceptual infrastructure, not forced into the essay-package layout
 
-### Substack Metadata & Archiving
-The canonical record of published articles, along with publication analysis and future strategy drafts, is maintained in the `publication_strategy_and_archive/` directory. Archive refreshes run through `scripts/sync_substack_archive.py`, which pulls the public publication feed, refreshes normalized markdown and HTML snapshots, localizes assets, and updates the tracked manifest in `publication_strategy_and_archive/substack_archive/`.
+## How The Repo Works
 
-For orientation across the tracked root-level automation scripts, start with [`scripts/README.md`](./scripts/README.md).
+Use these layers in order:
 
-For the public mirror pipeline, use:
+1. **Package README**: the local source of truth for a folder’s structure, live draft surface, and publication map
+2. **Tracked workflows**: [`workflows/README.md`](./workflows/README.md) for canonical article-development playbooks
+3. **Scripts**: [`scripts/README.md`](./scripts/README.md) for tracked repo automation code
+4. **Publication archive**: [`publication_strategy_and_archive/README.md`](./publication_strategy_and_archive/README.md) for the public archive and mirror system
+5. **Tracked skills**: [`workflows/skills/README.md`](./workflows/skills/README.md) for the tracked skill bundle layer, mirrored locally into `.agents/skills/`
 
-- `npm run sync:substack` to refresh the tracked archive
-- `npm run build:mirror` to generate the GitHub Pages mirror
-- `npm run dev:mirror` to work on the mirror locally
-- `npm run check:mirror` to verify the archive, generated mapping table, and built site
+## Canonical Vocabulary
 
-The public mirror is published at [https://petroslamb.github.io/content/](https://petroslamb.github.io/content/).
+Across content packages, the repo now uses these terms consistently:
 
-Implementation docs live in:
+- **live draft**: the current canonical working essay path
+- **companion**: a second-pass supporting markdown that broadens or contextualizes the main essay
+- **blueprint / plan**: control document that shapes the essay or package direction
+- **claims / review artifacts**: scoring, critique, or evidence-control files used during iteration
+- **artifacts**: visuals, podcasts, videos, slide exports, transcripts, and related media outputs
+- **archive**: prior drafts, superseded companions, retired review files, and older local support material
+- **papers**: source PDFs and related paper intake material
+- **distribution / socials**: platform-specific posting assets or external-distribution material
 
-- [`publication_strategy_and_archive/README.md`](./publication_strategy_and_archive/README.md)
-- [`publication_strategy_and_archive/mirror/README.md`](./publication_strategy_and_archive/mirror/README.md)
-- [`scripts/README.md`](./scripts/README.md)
+For **single-publication packages**, the canonical paper-intake convention is:
 
-### Publication to Folder Mapping
+- `papers/`
+- `papers/markdown/`
+- `papers/index.md`
 
-The following table maps published Substack articles to their corresponding source folders in this repository:
+Umbrella packages can preserve stronger existing variants where they already carry more structure, such as:
+
+- [`autonomous-agent-blueprint/reference/papers/`](./autonomous-agent-blueprint/reference/papers/)
+- [`autonomous-agent-blueprint/reference/source-index.md`](./autonomous-agent-blueprint/reference/source-index.md)
+- hardware scorecard paper trees inside [`hardware_compatibility_architecture_2023_2025/`](./hardware_compatibility_architecture_2023_2025/)
+
+## Canonical Package Map
+
+The table below classifies the current top-level documented packages. Published articles may map to a shared umbrella package rather than one folder per post.
+
+| Folder | Archetype | Status | Orientation |
+| :--- | :--- | :--- | :--- |
+| `agent_revolution/` | Umbrella package | Published umbrella | [`README.md`](./agent_revolution/README.md) |
+| `ai_agents_enterprise_state/` | Single-publication package | Published | [`README.md`](./ai_agents_enterprise_state/README.md) |
+| `autonomous-agent-blueprint/` | Umbrella package | Published umbrella / active course | [`README.md`](./autonomous-agent-blueprint/README.md) |
+| `binding-and-recoverability/` | Single-publication package | Active | [`README.md`](./binding-and-recoverability/README.md) |
+| `ethereum_llm_governance/` | Single-publication package | Active | [`README.md`](./ethereum_llm_governance/README.md) |
+| `hardware_compatibility_architecture_2023_2025/` | Umbrella package | Published umbrella | [`README.md`](./hardware_compatibility_architecture_2023_2025/README.md) |
+| `multi_agent_compiler_workaround/` | Single-publication package | Published | [`README.md`](./multi_agent_compiler_workaround/README.md) |
+| `neural_architectures/` | Umbrella package | Published umbrella | [`README.md`](./neural_architectures/README.md) |
+| `publication_strategy_and_archive/` | Workflow/support package | Canonical archive infrastructure | [`README.md`](./publication_strategy_and_archive/README.md) |
+| `reviewable-runs/` | Workflow/framework package | Standalone framework package | [`README.md`](./reviewable-runs/README.md) |
+| `rlm_jupyter/` | Single-publication package | Published | [`README.md`](./rlm_jupyter/README.md) |
+| `scripts/` | Workflow/support package | Tracked repo automation | [`README.md`](./scripts/README.md) |
+| `security_research/` | Research bucket | Active research bucket | [`README.md`](./security_research/README.md) |
+| `the-moltbook-phenomenon/` | Single-publication package | Published | [`README.md`](./the-moltbook-phenomenon/README.md) |
+| `workflows/` | Workflow/support package | Canonical tracked playbooks | [`README.md`](./workflows/README.md) |
+
+Folders without a package README should be treated as supporting or legacy material until they are normalized.
+
+## Publication To Package Mapping
+
+The published archive is tracked centrally in `publication_strategy_and_archive/substack_archive/`. The generated table below maps published Substack posts to their canonical package or umbrella package in this repo.
 
 <!-- GENERATED_PUBLICATION_MAP:START -->
 | Substack Publication | Repository Folder |
@@ -61,90 +102,53 @@ The following table maps published Substack articles to their corresponding sour
 | **Welcome** | *(N/A / Root)* |
 <!-- GENERATED_PUBLICATION_MAP:END -->
 
-## Current Packages
+## Canonical Workflow Layer
 
-### [`ai_agents_enterprise_state/`](./ai_agents_enterprise_state/)
+Tracked workflow docs live in [`workflows/`](./workflows/). The current article-development canon is:
 
-Research and writing package for **The Autonomy Tax**, a three-piece publication series on why enterprise agents fail on control rather than intelligence.
+- [`workflows/paper-intake/README.md`](./workflows/paper-intake/README.md)
+- [`workflows/alphaxiv-research/README.md`](./workflows/alphaxiv-research/README.md)
+- [`workflows/essay-iteration/README.md`](./workflows/essay-iteration/README.md)
+- [`workflows/notebooklm-artifacts/README.md`](./workflows/notebooklm-artifacts/README.md)
+- [`workflows/substack-publishing/README.md`](./workflows/substack-publishing/README.md)
 
-- Implemented publication package: `v8A`, `v8B`, `v8C`
-- Evidence layer: `sources/`, including a source manifest and derived casebook
-- Scoring assets: `assets/` with scorecard templates and rubric material
+Adjacent publishing and channel workflows live in the same tracked layer:
 
-Start with: `ai_agents_enterprise_state/README.md`
+- [`workflows/substack-archive-sync/README.md`](./workflows/substack-archive-sync/README.md)
+- [`workflows/youtube-production/README.md`](./workflows/youtube-production/README.md)
+- [`workflows/youtube-channel-ops/README.md`](./workflows/youtube-channel-ops/README.md)
+- [`workflows/youtube-series-operating-agents/README.md`](./workflows/youtube-series-operating-agents/README.md)
 
-### [`autonomous-agent-blueprint/`](./autonomous-agent-blueprint/)
+Use these as the tracked source of truth for repeatable processes. Package README files should point at them instead of duplicating long playbooks.
 
-Local research corpus on foundation agents organized into a practical architecture guide and chapter-specific blueprints.
+## Toolchain
 
-- Main synthesis: `agentic-architectures-blueprint.md`
-- Chapter mapping: `foundation-agents-practical-chapters-guide.md`
-- Supporting material: `practical-chapter-blueprints/` and `papers/`
+The canonical article-development toolchain is tracked in [`requirements.txt`](./requirements.txt) and explained operationally in local [`AGENTS.md`](./AGENTS.md).
 
-Start with: `autonomous-agent-blueprint/README.md`
+Core tools:
 
-### [`reviewable-runs/`](./reviewable-runs/)
+- `markitdown[pdf]` for paper-to-markdown conversion
+- `alphaxiv-py` for paper discovery, inspection, and assistant-backed research
+- `notebooklm-py[browser]` for artifact generation and transcript round-trips
+- `python-substack` for publishing automation
 
-Standalone framework package for making important agent runs inspectable, reviewable, and governable after execution.
+Adjacent publishing automation:
 
-- Public front door: `README.md`
-- Operator guide: `USE_IT.md`
-- Examples and proof: `examples/`
-- Review instruments and templates: `evaluation/`, `templates/`
+- [`scripts/README.md`](./scripts/README.md) for tracked repo scripts
+- tracked helper skills under [`workflows/skills/`](./workflows/skills/README.md), mirrored locally into `.agents/skills/`
 
-Start with: `reviewable-runs/README.md`
+## Skill Bundles
 
-### [`hardware_compatibility_architecture_2023_2025/`](./hardware_compatibility_architecture_2023_2025/)
+Tracked repo-local skills live under [`workflows/skills/`](./workflows/skills/README.md). The local `.agents/skills/` tree is now a symlink mirror used for Codex discovery.
 
-Published research project: **What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023-2025)**. This package studies why GPU-friendly architectures dominate production and includes the associated hardware friction methodology and dataset.
+The tracked skill bundles should stay thinner than the workflow docs in [`workflows/`](./workflows/). They exist to execute the workflows efficiently, not to become the only place where the repo process is explained.
 
-- Canonical article and publication drafts
-- Quantitative scorecard and research artifacts
-- Supporting evidence on MoE adoption, FlashAttention, and SSM limits
-- Links to the public hardware friction scorecard dataset repository
+Current skill families include:
 
-Start with: `hardware_compatibility_architecture_2023_2025/README.md`
+- paper intake and PDF conversion
+- alphaXiv research
+- NotebookLM artifact generation
+- Substack archive and series-specific publishing
+- YouTube production and publishing automation
 
-### [`publication_strategy_and_archive/`](./publication_strategy_and_archive/)
-
-Centralized corpus for the Substack publication, containing the complete downloaded archive of published articles alongside detailed qualitative analysis and future strategic planning artifacts.
-
-- Publication qualitative analysis and review matrix
-- Future strategic blueprints and options
-- Canonical downloaded article markdown and metadata
-- Curated post-to-folder mapping for published essays
-- 11ty GitHub Pages mirror and deployment workflow
-
-Start with: `publication_strategy_and_archive/README.md`
-
-## Tooling
-
-This repository uses local tools for content workflows, tracked in `requirements.txt` and documented in `AGENTS.md`. Key tools include:
-- `markitdown` for PDF conversion
-- `notebooklm-py` for NotebookLM integration
-- the official Google Python client stack for YouTube Data API workflows
-- `scripts/sync_substack_archive.py` for Substack archive sync and manifest refresh
-
-For the repo-level script map and workflow grouping, use [`scripts/README.md`](./scripts/README.md).
-
-Additionally, the repository incorporates two programmatic APIs for Substack publishing and posting workflows:
-- **Python Substack Interface**: `python-substack` (Origin: [ma2za/python-substack](https://github.com/ma2za/python-substack))
-- **TypeScript Substack Interface**: `substack-api` (Origin: [jakub-k-slys/substack-api](https://github.com/jakub-k-slys/substack-api))
-
-## Other Top-Level Directories
-
-These directories exist at the repository root but do not currently expose a package-level `README.md`:
-
-- `agent_revolution/`
-- `neural_architectures/`
-- `paper_reviews/`
-- `reference/`
-- `rooted layers/`
-- `security_research/`
-
-Treat them as supporting or legacy material unless they are documented separately.
-
-## Notes
-
-- This root README summarizes the packages that currently define their own root-level documentation.
-- For current status, entry points, and working rules, use each package README as the source of truth.
+Use the root README and tracked workflow docs to understand how the repo works. Use local skills to execute that work efficiently in a Codex session.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "YouTube Slide Video Pipeline"
+  short_description: "Build narrated slide videos from transcripts and captions"
+  default_prompt: "Use $youtube-slide-video-pipeline to draft slide timing, build cue sheets, and render narrated slide videos for this repo."
+
+policy:
+  allow_implicit_invocation: true

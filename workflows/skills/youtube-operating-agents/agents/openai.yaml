@@ -1,0 +1,7 @@
+interface:
+  display_name: "YouTube Operating Agents"
+  short_description: "Operate the Operating Agents YouTube pipeline"
+  default_prompt: "Use $youtube-operating-agents to choose the right workflow for Operating Agents cross-links, playlist order, caption recovery, or replacement uploads."
+
+policy:
+  allow_implicit_invocation: true
