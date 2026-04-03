@@ -1,12 +1,11 @@
-# Root-level local tooling
-.venv/
-.alphaxiv/
-.notebooklm/
-.youtube/
-
-# Virtual environments for scorecard dataset tooling
-hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/.venv/
-hardware_compatibility_architecture_2023_2025/research_artifacts/scorecard_dataset/.papers_venv/
+# Local-only policy:
+# Keep all hidden files and folders ignored except `.github/`.
+# Do not override this rule when asked to "commit everything".
+.*
+**/.*
+!.gitignore
+!.github/
+!.github/**
 
 # OS
 .DS_Store
@@ -31,7 +30,6 @@ publication_strategy_and_archive/publication_analysis_results.md
 # AI agent ops manifest (internal tooling only)
 AGENTS.md
 CLAUDE.md
-.claude/
 
 # Stray root-level generated assets
 Generated Image*.png
