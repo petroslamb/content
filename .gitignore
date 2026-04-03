@@ -32,10 +32,7 @@ Generated Image*.png
 output/
 
 # Third-party research PDFs (downloaded papers — copyright risk for public distribution)
-publications/autonomous-agents/reference/papers/*.pdf
-publications/hardware-friction/research_artifacts/scorecard_dataset/papers/
-publications/hardware-friction/research_artifacts/scorecard_dataset/essays/**/papers/*.pdf
-publications/evidence-governance/evidence_governance_pattern/papers/
+**/papers/**/*.pdf
 
 # Generated long-form course renders
 publications/autonomous-agents/essays/*/artifacts/video/*Timed Slides.mp4
