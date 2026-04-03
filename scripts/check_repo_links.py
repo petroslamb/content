@@ -132,13 +132,13 @@ def validate_text(file_path: Path, text: str) -> list[str]:
     errors: list[str] = []
     rel = file_path.relative_to(REPO_ROOT).as_posix()
 
-    if ROOT_ABS_PREFIX in text:
+    if ROOT_ABS_PREFIX in text and rel != "scripts/check_repo_links.py":
         errors.append("contains absolute local repo path")
 
     if OLD_GITHUB_PATTERN.search(text):
         errors.append("contains stale github.com/petroslamb/content old-package URL")
 
-    if "github.com/petroslamb/autonomy-tax-enterprise-agents" in text:
+    if "github.com/petroslamb/autonomy-tax-enterprise-agents" in text and rel != "scripts/check_repo_links.py":
         errors.append("contains legacy autonomy-tax repo URL")
 
     if "github.com/petroslamb/content/blob/main/publications/" not in text:

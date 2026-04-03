@@ -173,7 +173,7 @@ That procurement agent’s $4,788 wasn’t a lot of money. But it was a precisel
 
 ***Scope note:** This analysis focuses on enterprises consuming commercial LLM APIs in US/EU markets. Self-hosted and open-weight deployments carry a different tax structure.[2]*
 
-*Open-source materials for this research package (drafts, casebook, scoring assets, and source manifest) are available in the [GitHub repository](https://github.com/petroslamb/content/blob/main/publications/autonomy-tax).*
+*Open-source materials for this research package (drafts, casebook, scoring assets, and source manifest) are available in the [GitHub repository](https://github.com/petroslamb/content/tree/main/publications/autonomy-tax).*
 
 ---
 

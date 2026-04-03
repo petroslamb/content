@@ -65,6 +65,8 @@ That possibility has a strange implication. The future of agents may depend less
 
 For a broader map of action surfaces, tool-system taxonomy, browser and GUI escalation, and the surrounding literature, continue with the [Action Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/action/companion.md).
 
+#### Next Chapter:
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the source booklet from which this chapter was ultimately distilled. Its key contribution is breadth. It maps the full foundation-agents landscape across action, memory, reasoning, coordination, optimization, and safety. This essay is a narrowed public extraction from that larger survey: it pulls out the action chapter, compresses it into a single narrative arc, and keeps only the design pressures that matter most for builders trying to understand when language becomes accountable software behavior.
@@ -86,3 +88,7 @@ For a broader map of action surfaces, tool-system taxonomy, browser and GUI esca
 [Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows](https://arxiv.org/abs/2411.07763) pushes the database story out of the toy-benchmark regime. Its key contribution is showing that enterprise SQL work means huge schemas, multiple dialects, codebases, metadata, and multi-step workflows rather than neat textbook prompts. That is why the essay treats SQL as a first-class action surface instead of a side case.
 
 [OmniParser for Pure Vision Based GUI Agent](https://arxiv.org/abs/2408.00203) is the cleanest reference for the GUI perception bottleneck. Its key contribution is not proving that computer use is solved, but isolating the parsing problem that stands between screenshots and usable machine structure. That matters here because the essay's warning about GUI action rests on exactly this point: pixels are a weak contract unless another layer reconstructs the structure machines need.
+
+## Chapters List
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.

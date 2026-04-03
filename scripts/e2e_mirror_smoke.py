@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
 
-from archive_utils import METADATA_PATH
+from archive_utils import METADATA_PATH, load_post_map
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MIRROR_OUTPUT = REPO_ROOT / "publication_strategy_and_archive" / "mirror" / "_site"
@@ -43,9 +43,14 @@ def expected_site_root(path_prefix: str) -> str:
 
 def first_mirrored_post() -> dict[str, object]:
     manifest = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+    post_map = load_post_map()
     for entry in manifest:
         if entry.get("mirror_enabled"):
-            return entry
+            mapped = post_map.get(str(entry["slug"]), {})
+            merged = dict(entry)
+            if mapped.get("title"):
+                merged["title"] = mapped["title"]
+            return merged
     raise SystemExit("No mirrored posts found in metadata.json")
 
 

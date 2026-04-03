@@ -75,6 +75,8 @@ The broader lesson is restrained but durable. Good reasoning design does not mea
 
 For the broader taxonomy of reasoning methods, planner handoff logic, search escalations, and paper-by-paper reading guidance, continue with the [Reasoning Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/reasoning/companion.md).
 
+#### Next Chapter:
+
 ## References
 
 [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/advances-and-challenges-in-foundation-agents.md) ([arXiv](https://arxiv.org/abs/2504.01990)) is the broad survey behind this series. It is useful here because it places reasoning next to action, memory, optimization, coordination, and safety, which helps the reader see that reasoning scaffolds are one layer of a larger operating system rather than a complete solution on their own.
@@ -96,3 +98,7 @@ For the broader taxonomy of reasoning methods, planner handoff logic, search esc
 *[Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171)* is the right reference when a single reasoning trace is too brittle. It teaches when multiple sampled traces are worth the added cost.
 
 *[Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601)*, *[Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models](https://arxiv.org/abs/2310.04406)*, and *[LLM+P: Empowering Large Language Models with Optimal Planning Proficiency](https://arxiv.org/abs/2304.11477)* are the heavy-search references in the chapter. Read them to understand when branching difficulty justifies more elaborate search and when it is better to hand part of the problem to a different planning substrate altogether.
+
+## Chapters List
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.

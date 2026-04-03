@@ -1,9 +1,9 @@
-# Operating Agents: Preface
+# Operating Agents Guide: Preface
 
 Date: 2026-03-27
 URL: https://lambpetros.substack.com/p/operating-agents-preface-a-field
 
-![Operating Agents Preface Cover](assets/asset-2afcc0a029741577.jpeg "Operating Agents Preface Cover")
+![Operating Agents Preface Cover](assets/asset-91072a3c5e434621.jpeg "Operating Agents Preface Cover")
 
 This course is a builder-first guide to how modern agent systems are designed, evaluated, and constrained in practice. It is not trying to explain every direction in agent research, and it is not trying to turn the field into a sequence of slogans. Its purpose is narrower and more useful. It aims to teach what a serious builder needs in order to inspect a real workflow, identify what layer is failing, and choose the right level of intervention.
 
@@ -23,13 +23,13 @@ By the end of the course, a reader should be able to inspect an agent workflow a
 
 In practical terms, the reader should be able to:
 
-review a live or proposed agent workflow and identify which architectural layer is carrying the failure
-
-choose the right chapter and matching blueprint for the problem at hand
-
-use the companion to widen the map when the main chapter is too narrow for the case
-
-know which papers deserve escalation once the local design question is clear
+> **review a live or proposed agent workflow and identify which architectural layer is carrying the failure**
+>
+> **choose the right chapter and matching blueprint for the problem at hand**
+>
+> **use the companion to widen the map when the main chapter is too narrow for the case**
+>
+> **know which papers deserve escalation once the local design question is clear**
 
 That is the standard the package is trying to meet. If a reader finishes the course and still cannot review a workflow that they may need to inspect next week, the course is not doing its job.
 
@@ -61,33 +61,33 @@ The companions are second-pass breadth chapters. They exist because the main ess
 
 The current companion layer is:
 
-Action: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/action/companion.md)
-
-Memory: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/memory/companion.md)
-
-Reasoning: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/reasoning/companion.md)
-
-Multi-Agent: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/multi-agent/companion.md)
-
-Safety: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/safety/companion.md)
-
-Optimization: [Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/optimization/companion.md)
+> **[Action Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/action/companion.md)**
+>
+> **[Memory Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/memory/companion.md)**
+>
+> **[Reasoning Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/reasoning/companion.md)**
+>
+> **[Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/multi-agent/companion.md)**
+>
+> **[Safety Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/safety/companion.md)**
+>
+> **[Optimization Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/optimization/companion.md)**
 
 The blueprints are the builder-facing decision layer, and in day-to-day architecture work they are often the most heavily used surface in the package. Their job is not to teach from zero. Their job is to compress the topic into defaults, escalation triggers, alternatives, failure review, and evaluation criteria. Once a reader knows which layer of the workflow is under strain, the matching blueprint should be the shortest path from understanding to a defensible design decision.
 
 The matching blueprint set is:
 
-Action: [Chapter 8 Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md)
-
-Memory: [Chapter 3 Blueprint: Memory](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/01-memory-blueprint.md)
-
-Reasoning: [Chapter 2 Blueprint: Reasoning and Planning](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md)
-
-Multi-Agent: [Chapter 14 Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)
-
-Safety: [Chapters 17, 18, and 19 Blueprint: Safety](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md)
-
-Optimization: [Chapters 9 and 11 Blueprint: Optimization and Self-Improvement](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)
+> **Action: [Chapter 8 Blueprint: Action Systems and Tool Use](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/03-action-tool-use-blueprint.md)**
+>
+> **Memory: [Chapter 3 Blueprint: Memory](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/01-memory-blueprint.md)**
+>
+> **Reasoning: [Chapter 2 Blueprint: Reasoning and Planning](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/02-reasoning-planning-blueprint.md)**
+>
+> **Multi-Agent: [Chapter 14 Blueprint: Multi-Agent Design](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/05-multi-agent-design-blueprint.md)**
+>
+> **Safety: [Chapters 17, 18, and 19 Blueprint: Safety](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/06-safety-blueprint.md)**
+>
+> **Optimization: [Chapters 9 and 11 Blueprint: Optimization and Self-Improvement](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practical-chapter-blueprints/04-optimization-self-improvement-blueprint.md)**
 
 The original survey is the source landscape from which this course was distilled. It keeps the wider field visible, including material that does not belong in the core teaching path. That breadth matters because a distillation is only trustworthy if the reader can still trace it back to the larger map.
 
@@ -107,14 +107,20 @@ The public sequence is for teaching. The blueprint order is for architectural de
 
 The cleanest study loop is simple.
 
-Read the essay first to understand the operating problem and the practical center of the chapter.
-
-Read the companion next if you need the wider field map, the omitted taxonomies, or a better guide to the surrounding literature.
-
-Read the matching blueprint when the question becomes architectural or operational and you need defaults, escalation rules, or evaluation criteria.
-
-Return to the survey or the paper notes only after the design question is specific enough that deeper reading will answer something concrete.
+> **Read the essay first to understand the operating problem and the practical center of the chapter.**
+>
+> **Read the companion next if you need the wider field map, the omitted taxonomies, or a better guide to the surrounding literature.**
+>
+> **Read the matching blueprint when the question becomes architectural or operational and you need defaults, escalation rules, or evaluation criteria.**
+>
+> **Return to the survey or the paper notes only after the design question is specific enough that deeper reading will answer something concrete.**
 
 Readers do not need to move linearly through the whole package every time. If the immediate task is a workflow review, it is often better to start with the chapter that matches the bottleneck, then use the companion and blueprint as depth layers. The course is structured so that this kind of targeted reading is possible without losing the larger map.
 
 The standard behind all of this is plain and demanding. The package favors bounded workflows over theatrical autonomy, explicit evaluation over decorative traces, typed memory over undifferentiated retention, strict action surfaces over vague intent, conservative multi-agent escalation over agent proliferation, and safety as architecture rather than as a soft suffix. If the course does its job, the reader should leave with something more durable than a list of methods. They should leave with a way to inspect agent systems soberly, name what matters in them, and improve them without confusing motion for progress.
+
+## First Chapter
+
+## Chapters List
+
+Thanks for reading Rooted Layers! Subscribe for free to receive new posts and support my work.
