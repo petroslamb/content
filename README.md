@@ -21,6 +21,8 @@ Organized by topic. Each top-level folder corresponds to a research area or mult
 ### Substack Metadata & Archiving
 The canonical record of published articles, along with publication analysis and future strategy drafts, is maintained in the `publication_strategy_and_archive/` directory. Archive refreshes run through `scripts/sync_substack_archive.py`, which pulls the public publication feed, refreshes normalized markdown and HTML snapshots, localizes assets, and updates the tracked manifest in `publication_strategy_and_archive/substack_archive/`.
 
+For orientation across the tracked root-level automation scripts, start with [`scripts/README.md`](./scripts/README.md).
+
 For the public mirror pipeline, use:
 
 - `npm run sync:substack` to refresh the tracked archive
@@ -34,6 +36,7 @@ Implementation docs live in:
 
 - [`publication_strategy_and_archive/README.md`](./publication_strategy_and_archive/README.md)
 - [`publication_strategy_and_archive/mirror/README.md`](./publication_strategy_and_archive/mirror/README.md)
+- [`scripts/README.md`](./scripts/README.md)
 
 ### Publication to Folder Mapping
 
@@ -121,6 +124,8 @@ This repository uses local tools for content workflows, tracked in `requirements
 - `notebooklm-py` for NotebookLM integration
 - the official Google Python client stack for YouTube Data API workflows
 - `scripts/sync_substack_archive.py` for Substack archive sync and manifest refresh
+
+For the repo-level script map and workflow grouping, use [`scripts/README.md`](./scripts/README.md).
 
 Additionally, the repository incorporates two programmatic APIs for Substack publishing and posting workflows:
 - **Python Substack Interface**: `python-substack` (Origin: [ma2za/python-substack](https://github.com/ma2za/python-substack))
