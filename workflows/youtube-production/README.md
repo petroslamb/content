@@ -100,6 +100,16 @@ Final render:
   --output <output.mp4>
 ```
 
+If you already have finished horizontal clips that need a vertical `9:16` delivery version for Shorts-style upload, convert them with:
+
+```bash
+.venv/bin/python scripts/convert_landscape_videos_to_portrait.py \
+  publications/<package>/artifacts/video/shorts \
+  --output-dir publications/<package>/artifacts/video/shorts/portrait
+```
+
+This keeps the whole horizontal frame visible by centering it over a blurred portrait background rather than cropping away slide text or captions.
+
 ### 6. Hand Off To Channel Workflows
 
 Once the MP4, cue sheet, and metadata are ready:

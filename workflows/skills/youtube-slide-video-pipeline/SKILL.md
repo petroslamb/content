@@ -91,6 +91,16 @@ Render the final video from the verified cue sheet:
   --output <output.mp4>
 ```
 
+If the input is already a finished horizontal clip and you only need a portrait delivery variant for Shorts-style upload, use:
+
+```bash
+.venv/bin/python scripts/convert_landscape_videos_to_portrait.py \
+  <shorts-dir-or-files> \
+  --output-dir <shorts-dir>/portrait
+```
+
+Prefer the blurred-background portrait treatment when the original frame already contains slides, text, or lower-thirds that would be damaged by an aggressive center crop.
+
 ### Hand Off To Upload Skills
 
 Once the MP4 and metadata are ready, switch to `youtube-operating-agents` or `youtube-data-api` for replacement uploads, playlist updates, and description sync.
