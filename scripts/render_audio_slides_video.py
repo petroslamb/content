@@ -7,6 +7,8 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+from PIL import Image
+
 
 def run(cmd: list[str]) -> str:
     result = subprocess.run(cmd, check=True, capture_output=True, text=True)
@@ -76,37 +78,79 @@ def load_cues(cues_path: Path) -> dict:
     return json.loads(cues_path.read_text())
 
 
-def validate_segments(segments: list[dict], audio_duration: float) -> list[tuple[str, float, float]]:
+def resolve_image_path(slides_dir: Path, segment: dict) -> Path:
+    image_path = segment.get("image_path")
+    if image_path:
+        return Path(image_path).resolve()
+    return (slides_dir / segment["image"]).resolve()
+
+
+def validate_segments(
+    slides_dir: Path, segments: list[dict], audio_duration: float
+) -> list[dict]:
     if not segments:
         raise ValueError("Cue sheet has no segments.")
 
     parsed = sorted(
-        ((segment["image"], parse_timestamp(segment["start"])) for segment in segments),
-        key=lambda item: (item[1], item[0]),
+        (
+            {
+                "image": segment["image"],
+                "image_path": resolve_image_path(slides_dir, segment),
+                "start": parse_timestamp(segment["start"]),
+            }
+            for segment in segments
+        ),
+        key=lambda item: (item["start"], item["image"], str(item["image_path"])),
     )
 
     validated = []
-    for index, (image, start) in enumerate(parsed):
+    for index, item in enumerate(parsed):
+        start = item["start"]
         if index + 1 < len(segments):
-            end = parsed[index + 1][1]
+            end = parsed[index + 1]["start"]
         else:
             end = audio_duration
         if end <= start:
-            raise ValueError(f"Segment {image} has non-increasing timestamps.")
-        validated.append((image, start, end))
+            raise ValueError(f"Segment {item['image']} has non-increasing timestamps.")
+        validated.append(
+            {
+                "image": item["image"],
+                "image_path": item["image_path"],
+                "start": start,
+                "end": end,
+            }
+        )
     return validated
 
 
-def build_concat_file(slides_dir: Path, segments: list[tuple[str, float, float]]) -> str:
+def build_concat_file(image_map: dict[Path, Path], segments: list[dict]) -> str:
     lines: list[str] = []
-    for image, start, end in segments:
-        duration = end - start
-        path = (slides_dir / image).resolve()
+    for segment in segments:
+        duration = segment["end"] - segment["start"]
+        path = image_map[segment["image_path"]]
         lines.append(f"file '{path}'")
         lines.append(f"duration {duration:.3f}")
     # Repeat the final file once more because ffmpeg concat expects the last frame to be re-declared.
-    lines.append(f"file '{(slides_dir / segments[-1][0]).resolve()}'")
+    lines.append(f"file '{image_map[segments[-1]['image_path']]}'")
     return "\n".join(lines) + "\n"
+
+
+def preprocess_slide_images(
+    segments: list[dict], width: int, height: int, output_dir: Path
+) -> dict[Path, Path]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    image_map: dict[Path, Path] = {}
+    for index, source in enumerate(sorted({segment["image_path"] for segment in segments})):
+        target = output_dir / f"{index:04d}_{source.name}"
+        with Image.open(source) as image:
+            rgb = image.convert("RGB")
+            rgb.thumbnail((width, height), Image.LANCZOS)
+            frame = Image.new("RGB", (width, height), "black")
+            offset = ((width - rgb.width) // 2, (height - rgb.height) // 2)
+            frame.paste(rgb, offset)
+            frame.save(target)
+        image_map[source] = target.resolve()
+    return image_map
 
 
 def render_video(cues_path: Path, output_path: Path, fps: int, width: int, height: int) -> None:
@@ -114,47 +158,51 @@ def render_video(cues_path: Path, output_path: Path, fps: int, width: int, heigh
     audio_path = Path(cues["audio"])
     slides_dir = Path(cues["slides_dir"])
     audio_duration = ffprobe_duration_seconds(audio_path)
-    segments = validate_segments(cues["segments"], audio_duration)
-    concat_text = build_concat_file(slides_dir, segments)
-
+    segments = validate_segments(slides_dir, cues["segments"], audio_duration)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as handle:
-        handle.write(concat_text)
-        concat_path = Path(handle.name)
-
-    try:
-        subprocess.run(
-            [
-                "ffmpeg",
-                "-y",
-                "-f",
-                "concat",
-                "-safe",
-                "0",
-                "-i",
-                str(concat_path),
-                "-i",
-                str(audio_path),
-                "-vf",
-                f"scale={width}:{height}:force_original_aspect_ratio=decrease,"
-                f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2,format=yuv420p",
-                "-r",
-                str(fps),
-                "-c:v",
-                "libx264",
-                "-preset",
-                "medium",
-                "-c:a",
-                "aac",
-                "-b:a",
-                "192k",
-                "-shortest",
-                str(output_path),
-            ],
-            check=True,
+    with tempfile.TemporaryDirectory(prefix="render-audio-slides-video-") as tmpdir:
+        tmpdir_path = Path(tmpdir)
+        prepared_slide_map = preprocess_slide_images(
+            segments, width, height, tmpdir_path / "slides"
         )
-    finally:
-        concat_path.unlink(missing_ok=True)
+        concat_text = build_concat_file(prepared_slide_map, segments)
+
+        with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as handle:
+            handle.write(concat_text)
+            concat_path = Path(handle.name)
+
+        try:
+            subprocess.run(
+                [
+                    "ffmpeg",
+                    "-y",
+                    "-f",
+                    "concat",
+                    "-safe",
+                    "0",
+                    "-i",
+                    str(concat_path),
+                    "-i",
+                    str(audio_path),
+                    "-vf",
+                    "format=yuv420p",
+                    "-r",
+                    str(fps),
+                    "-c:v",
+                    "libx264",
+                    "-preset",
+                    "medium",
+                    "-c:a",
+                    "aac",
+                    "-b:a",
+                    "192k",
+                    "-shortest",
+                    str(output_path),
+                ],
+                check=True,
+            )
+        finally:
+            concat_path.unlink(missing_ok=True)
 
 
 def parse_args():

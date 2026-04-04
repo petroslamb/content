@@ -99,6 +99,17 @@ def sorted_slides(slides_dir: Path) -> list[Path]:
     return slides
 
 
+def validate_support_slides_dir(primary_slides_dir: Path, support_slides_dir: Path) -> None:
+    primary_names = {slide.name for slide in sorted_slides(primary_slides_dir)}
+    support_names = {slide.name for slide in sorted_slides(support_slides_dir)}
+    missing = sorted(primary_names - support_names)
+    if missing:
+        raise FileNotFoundError(
+            f"Support slides directory {support_slides_dir} is missing slide files required by "
+            f"{primary_slides_dir}: {', '.join(missing[:5])}"
+        )
+
+
 def parse_srt(srt_path: Path) -> list[CaptionBlock]:
     raw = srt_path.read_text()
     blocks = [block.strip() for block in re.split(r"\n\s*\n", raw) if block.strip()]
@@ -158,15 +169,24 @@ def find_best_window(
     return best_start, best_end, best_score
 
 
-def align(slides_dir: Path, captions_path: Path) -> dict:
+def align(
+    slides_dir: Path, captions_path: Path, support_slides_dirs: list[Path] | None = None
+) -> dict:
+    support_slides_dirs = support_slides_dirs or []
+    for support_slides_dir in support_slides_dirs:
+        validate_support_slides_dir(slides_dir, support_slides_dir)
+
     captions = parse_srt(captions_path)
     slides = sorted_slides(slides_dir)
 
     segments = []
     min_index = 0
     for slide in slides:
-        ocr_text = ocr_slide(slide)
-        slide_tokens = normalize(ocr_text)
+        ocr_texts = [ocr_slide(slide)]
+        for support_slides_dir in support_slides_dirs:
+            ocr_texts.append(ocr_slide(support_slides_dir / slide.name))
+        combined_ocr_text = "\n".join(text for text in ocr_texts if text.strip())
+        slide_tokens = normalize(combined_ocr_text)
         start_idx, end_idx, score = find_best_window(slide_tokens, captions, min_index)
         matched = captions[start_idx:end_idx]
         start = matched[0].start if matched else "00:00:00.000"
@@ -174,16 +194,20 @@ def align(slides_dir: Path, captions_path: Path) -> dict:
             {
                 "image": slide.name,
                 "start": start,
+                "caption_start_index": start_idx,
+                "caption_end_index": max(start_idx, end_idx - 1),
                 "match_score": round(score, 4),
-                "ocr_excerpt": " ".join(ocr_text.split())[:280],
+                "ocr_excerpt": " ".join(combined_ocr_text.split())[:280],
+                "ocr_source_count": len(ocr_texts),
                 "matched_captions": [block.text for block in matched],
             }
         )
-        min_index = start_idx
+        min_index = max(start_idx + 1, end_idx - 1)
 
     return {
         "captions": str(captions_path),
         "slides_dir": str(slides_dir),
+        "support_slides_dirs": [str(path) for path in support_slides_dirs],
         "segments": segments,
     }
 
@@ -193,6 +217,12 @@ def parse_args():
         description="Draft slide-change timestamps by matching slide OCR against timed caption blocks."
     )
     parser.add_argument("--slides-dir", required=True, type=Path)
+    parser.add_argument(
+        "--support-slides-dir",
+        action="append",
+        type=Path,
+        help="Optional additional slide directory with matching filenames to contribute complementary OCR.",
+    )
     parser.add_argument("--captions", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     return parser.parse_args()
@@ -200,7 +230,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    alignment = align(args.slides_dir, args.captions)
+    alignment = align(args.slides_dir, args.captions, args.support_slides_dir)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(alignment, indent=2) + "\n")
     print(args.output)

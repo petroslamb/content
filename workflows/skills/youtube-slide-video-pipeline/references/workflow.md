@@ -15,6 +15,7 @@ Typical chapter layout:
 
 - `scripts/align_slides_to_transcript.py`: OCR-first draft alignment against an untimestamped transcript plus the audio duration.
 - `scripts/align_slides_to_captions.py`: OCR-first draft alignment against timed SRT captions.
+- `scripts/build_slideshow_from_captions.py`: caption-first shortcut that drafts a cue-sheet JSON and can render a first-pass MP4, optionally using a separate render slide directory with matching filenames.
 - `scripts/map_slides_to_transcript_lines.py`: optional drafting aid when you already have OCR text files and a numbered transcript.
 - `scripts/line_map_markdown_to_cues.py`: converts a reviewed markdown line-map plus timed captions into a renderable cue-sheet JSON.
 - `scripts/render_audio_slides_video.py`: generates a rough evenly spaced template or renders the final MP4 from a cue sheet.
@@ -61,6 +62,23 @@ Against timed captions:
   --captions <captions.srt> \
   --output <ocr-first.json>
 ```
+
+Caption-first cue-sheet plus draft render shortcut:
+
+```bash
+.venv/bin/python scripts/build_slideshow_from_captions.py \
+  --audio <audio.mp3> \
+  --captions <captions.srt> \
+  --slides-dir <ocr-slides-dir> \
+  --support-slides-dir <optional-second-ocr-slides-dir> \
+  --render-slides-dir <optional-render-slides-dir> \
+  --render-slides-dir <optional-second-render-slides-dir> \
+  --output-cues <draft-cues.json> \
+  --output-video <draft-video.mp4>
+```
+
+Use `--support-slides-dir` when a second slide deck adds complementary text that improves OCR-first boundary drafting.
+Use the `--slides-dir` / repeated `--render-slides-dir` split when OCR works better on one deck but the final review or rendered video should use one or more richer stitched or alternate decks that keep the same filenames.
 
 Optional line-range drafting when OCR text files already exist:
 

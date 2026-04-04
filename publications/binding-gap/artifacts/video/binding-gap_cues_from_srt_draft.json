@@ -1,0 +1,325 @@
+{
+  "audio": "publications/binding-gap/artifacts/audio/The_Binding_Gap_deep-dive_long.mp3",
+  "captions": "publications/binding-gap/artifacts/audio/The_Binding_Gap_deep-dive_long_auto_captions.srt",
+  "slides_dir": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter",
+  "alignment_source_slides_dir": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter",
+  "alignment_support_slides_dirs": [],
+  "render_variant_slides_dirs": [
+    "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter",
+    "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed"
+  ],
+  "segments": [
+    {
+      "image": "01_binding-gap-thesis.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/01_binding-gap-thesis.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0056-0057. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.4333,
+      "ocr_excerpt": "Rooted Layers: Al Insights Grounded on Research The Binding Gap Why th arge language models preserve e scene but drop the wiring. Ai NotebookLM",
+      "matched_captions": [
+        "rooted layers AI insights grounded on",
+        "research. We'll be referring to their"
+      ],
+      "caption_start_index": 56,
+      "caption_end_index": 57,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "01_binding-gap-thesis.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/01_binding-gap-thesis.png",
+      "start": "00:02:02.760",
+      "note": "Caption-first draft from slide OCR. Caption window 0056-0057. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.4333,
+      "ocr_excerpt": "Rooted Layers: Al Insights Grounded on Research The Binding Gap Why th arge language models preserve e scene but drop the wiring. Ai NotebookLM",
+      "matched_captions": [
+        "rooted layers AI insights grounded on",
+        "research. We'll be referring to their"
+      ],
+      "caption_start_index": 56,
+      "caption_end_index": 57,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "02_relation-reversal-anomaly.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/02_relation-reversal-anomaly.png",
+      "start": "00:04:05.519",
+      "note": "Caption-first draft from slide OCR. Caption window 0129-0129. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.2744,
+      "ocr_excerpt": "The Anomaly of Relation Reversal ! Input: A = \u201cTom Smith\u2019s wife is Mary Stone.\u201d Input: Q: \u201cWho is Mary Stone's husband?\u201d (wife) ? [Tom Smith] [Mary Stone] [Tom Smith] =\u2014=\u2014 = [Mary Stone] Boshi Wang and Huan Sun (2025) demonstrate that reversal failure reflects inconsistency and e",
+      "matched_captions": [
+        "Smith's wife is Mary Stone."
+      ],
+      "caption_start_index": 129,
+      "caption_end_index": 129,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "02_relation-reversal-anomaly.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/02_relation-reversal-anomaly.png",
+      "start": "00:08:40.959",
+      "note": "Caption-first draft from slide OCR. Caption window 0129-0129. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.2744,
+      "ocr_excerpt": "The Anomaly of Relation Reversal ! Input: A = \u201cTom Smith\u2019s wife is Mary Stone.\u201d Input: Q: \u201cWho is Mary Stone's husband?\u201d (wife) ? [Tom Smith] [Mary Stone] [Tom Smith] =\u2014=\u2014 = [Mary Stone] Boshi Wang and Huan Sun (2025) demonstrate that reversal failure reflects inconsistency and e",
+      "matched_captions": [
+        "Smith's wife is Mary Stone."
+      ],
+      "caption_start_index": 129,
+      "caption_end_index": 129,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "03_defining-the-binding-gap.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/03_defining-the-binding-gap.png",
+      "start": "00:13:16.399",
+      "note": "Caption-first draft from slide OCR. Caption window 0423-0427. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.2715,
+      "ocr_excerpt": "Defining the Binding Gap iT ie ee ee ee The model preserves enough semantic [v] Relevant semantic pisces are material to sound close ] tO correct but loses [Y]| Error occurs upon inversion, ] reassignment, or exact the exact attachment Bi Mace ze Uk that makes [Vv] Not caused by ",
+      "matched_captions": [
+        "number one, the relevant pieces, the",
+        "semantic materials, the names, the",
+        "numbers are present enough in the output",
+        "that the model's answer feels",
+        "uncomfortably close to the truth."
+      ],
+      "caption_start_index": 423,
+      "caption_end_index": 427,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "03_defining-the-binding-gap.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/03_defining-the-binding-gap.png",
+      "start": "00:13:51.640",
+      "note": "Caption-first draft from slide OCR. Caption window 0423-0427. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.2715,
+      "ocr_excerpt": "Defining the Binding Gap iT ie ee ee ee The model preserves enough semantic [v] Relevant semantic pisces are material to sound close ] tO correct but loses [Y]| Error occurs upon inversion, ] reassignment, or exact the exact attachment Bi Mace ze Uk that makes [Vv] Not caused by ",
+      "matched_captions": [
+        "number one, the relevant pieces, the",
+        "semantic materials, the names, the",
+        "numbers are present enough in the output",
+        "that the model's answer feels",
+        "uncomfortably close to the truth."
+      ],
+      "caption_start_index": 423,
+      "caption_end_index": 427,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "04_neighboring-failures-diagnostic-matrix.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/04_neighboring-failures-diagnostic-matrix.png",
+      "start": "00:14:26.880",
+      "note": "Caption-first draft from slide OCR. Caption window 0460-0460. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.1921,
+      "ocr_excerpt": "Differentiating the Binding Gap from Neighboring Failures Retrieval Miss Decomposition Generic ae De eendet teen Failure Hallucination | '@ Binding Gap Evidence in Context? No Yes No Yes Solving Right Subtask? N/A No Yes/No Yes Semantic Material No Varies No Yes Preserved? Core F",
+      "matched_captions": [
+        "between a retrieval miss and a binding"
+      ],
+      "caption_start_index": 460,
+      "caption_end_index": 460,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "04_neighboring-failures-diagnostic-matrix.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/04_neighboring-failures-diagnostic-matrix.png",
+      "start": "00:16:02.440",
+      "note": "Caption-first draft from slide OCR. Caption window 0460-0460. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.1921,
+      "ocr_excerpt": "Differentiating the Binding Gap from Neighboring Failures Retrieval Miss Decomposition Generic ae De eendet teen Failure Hallucination | '@ Binding Gap Evidence in Context? No Yes No Yes Solving Right Subtask? N/A No Yes/No Yes Semantic Material No Varies No Yes Preserved? Core F",
+      "matched_captions": [
+        "between a retrieval miss and a binding"
+      ],
+      "caption_start_index": 460,
+      "caption_end_index": 460,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "05_binding-as-manipulable-circuitry.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/05_binding-as-manipulable-circuitry.png",
+      "start": "00:17:38.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0557-0557. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.2271,
+      "ocr_excerpt": "Binding Exists as a Manipulable Internal Mechanism 3g g396 oe |] gl -\u2014 = roe cence aa oe ca \u201c| g a lea La ; <= \u2014\u2014 Cp OO ees. 46: oS SS MA boo ee me oa! \u00e9 a a 7 \u2014\u2014 == Baka of \u2014\u2014\u2014\u2014\u2014\u2014\u2014_ \u00e9 \" a [Entity Activations]; \u00a2 SS EH Be uA | CAttribute Activations] I | =F eal eee ee I OEE SS | ",
+      "matched_captions": [
+        "binding. What they discovered"
+      ],
+      "caption_start_index": 557,
+      "caption_end_index": 557,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "05_binding-as-manipulable-circuitry.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/05_binding-as-manipulable-circuitry.png",
+      "start": "00:21:22.640",
+      "note": "Caption-first draft from slide OCR. Caption window 0557-0557. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.2271,
+      "ocr_excerpt": "Binding Exists as a Manipulable Internal Mechanism 3g g396 oe |] gl -\u2014 = roe cence aa oe ca \u201c| g a lea La ; <= \u2014\u2014 Cp OO ees. 46: oS SS MA boo ee me oa! \u00e9 a a 7 \u2014\u2014 == Baka of \u2014\u2014\u2014\u2014\u2014\u2014\u2014_ \u00e9 \" a [Entity Activations]; \u00a2 SS EH Be uA | CAttribute Activations] I | =F eal eee ee I OEE SS | ",
+      "matched_captions": [
+        "binding. What they discovered"
+      ],
+      "caption_start_index": 557,
+      "caption_end_index": 557,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "06_fragility-of-thematic-roles.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/06_fragility-of-thematic-roles.png",
+      "start": "00:25:07.279",
+      "note": "Caption-first draft from slide OCR. Caption window 0790-0793. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.3174,
+      "ocr_excerpt": "The Weak Integration of Thematic Roles Base Sentence: \u201cThe agent pursued the patient.\u201d Human Geometry Bak Key Evidence: e Denning et al. (2025): Role information is extracted but influences overall sentence representations much more weakly than in humans. eAljaafari et al. (2025)",
+      "matched_captions": [
+        "object. But that role information",
+        "influences the model's overall",
+        "representation of the sentence much more",
+        "weakly than it does in humans."
+      ],
+      "caption_start_index": 790,
+      "caption_end_index": 793,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "06_fragility-of-thematic-roles.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/06_fragility-of-thematic-roles.png",
+      "start": "00:29:30.719",
+      "note": "Caption-first draft from slide OCR. Caption window 0790-0793. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.3174,
+      "ocr_excerpt": "The Weak Integration of Thematic Roles Base Sentence: \u201cThe agent pursued the patient.\u201d Human Geometry Bak Key Evidence: e Denning et al. (2025): Role information is extracted but influences overall sentence representations much more weakly than in humans. eAljaafari et al. (2025)",
+      "matched_captions": [
+        "object. But that role information",
+        "influences the model's overall",
+        "representation of the sentence much more",
+        "weakly than it does in humans."
+      ],
+      "caption_start_index": 790,
+      "caption_end_index": 793,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "07_meta-analysis-load-collapse.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/07_meta-analysis-load-collapse.png",
+      "start": "00:33:54.159",
+      "note": "Caption-first draft from slide OCR. Caption window 1061-1061. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.2152,
+      "ocr_excerpt": "The Load Spike of Meta-Analysis Extraction Reliability [Variable + Role > => + Method + Effect Size] \u00a3 LJ Single Task Complexity \u00a5 Full Association Property (Single Property > Full Association Tuples) Tuples Key Evidence: Tan and D\u2019Souza (2026). e When pushing models to turn scie",
+      "matched_captions": [
+        "They found cross analysis binding drift."
+      ],
+      "caption_start_index": 1061,
+      "caption_end_index": 1061,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "07_meta-analysis-load-collapse.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/07_meta-analysis-load-collapse.png",
+      "start": "00:36:44.520",
+      "note": "Caption-first draft from slide OCR. Caption window 1061-1061. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.2152,
+      "ocr_excerpt": "The Load Spike of Meta-Analysis Extraction Reliability [Variable + Role > => + Method + Effect Size] \u00a3 LJ Single Task Complexity \u00a5 Full Association Property (Single Property > Full Association Tuples) Tuples Key Evidence: Tan and D\u2019Souza (2026). e When pushing models to turn scie",
+      "matched_captions": [
+        "They found cross analysis binding drift."
+      ],
+      "caption_start_index": 1061,
+      "caption_end_index": 1061,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "08_mirage-of-surface-correctness.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/08_mirage-of-surface-correctness.png",
+      "start": "00:39:34.880",
+      "note": "Caption-first draft from slide OCR. Caption window 1226-1227. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.2576,
+      "ocr_excerpt": "The Mirage of Surface Correctness [Exact Fact Recall / Stable Binding] [Heuristics Recall] [Output : Correct Answer | [Guesswork ] [Generic LM Pressure] Key Evidence: Saynova et al. (2024). Correct factual completions can arise through mechanisms that have nothing to do with hold",
+      "matched_captions": [
+        "fact. They discovered that correct",
+        "factual completions can arise from"
+      ],
+      "caption_start_index": 1226,
+      "caption_end_index": 1227,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "08_mirage-of-surface-correctness.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/08_mirage-of-surface-correctness.png",
+      "start": "00:42:46.960",
+      "note": "Caption-first draft from slide OCR. Caption window 1226-1227. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.2576,
+      "ocr_excerpt": "The Mirage of Surface Correctness [Exact Fact Recall / Stable Binding] [Heuristics Recall] [Output : Correct Answer | [Guesswork ] [Generic LM Pressure] Key Evidence: Saynova et al. (2024). Correct factual completions can arise through mechanisms that have nothing to do with hold",
+      "matched_captions": [
+        "fact. They discovered that correct",
+        "factual completions can arise from"
+      ],
+      "caption_start_index": 1226,
+      "caption_end_index": 1227,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "09_attachment-first-architecture.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/09_attachment-first-architecture.png",
+      "start": "00:45:59.040",
+      "note": "Caption-first draft from slide OCR. Caption window 1423-1424. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.2645,
+      "ocr_excerpt": "Engineering for Attachment over Fluency Evaluation Mandate: Test exact role assignment, source attachment, and numeric grounding. REINFORCED ( ~ S| ATTACHNENT cg toda { * VECTOR BIKDING LAYER | - | . ( _\u2014\u2014\u2014s i Architecture Mandate: Design for role-stable internal representations ",
+      "matched_captions": [
+        "assignment, source attachment, and",
+        "numeric grounding."
+      ],
+      "caption_start_index": 1423,
+      "caption_end_index": 1424,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "09_attachment-first-architecture.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/09_attachment-first-architecture.png",
+      "start": "00:47:35.320",
+      "note": "Caption-first draft from slide OCR. Caption window 1423-1424. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.2645,
+      "ocr_excerpt": "Engineering for Attachment over Fluency Evaluation Mandate: Test exact role assignment, source attachment, and numeric grounding. REINFORCED ( ~ S| ATTACHNENT cg toda { * VECTOR BIKDING LAYER | - | . ( _\u2014\u2014\u2014s i Architecture Mandate: Design for role-stable internal representations ",
+      "matched_captions": [
+        "assignment, source attachment, and",
+        "numeric grounding."
+      ],
+      "caption_start_index": 1423,
+      "caption_end_index": 1424,
+      "render_variant": "The_Binding_Gap_detailed"
+    },
+    {
+      "image": "10_architectural-pressures-and-binding-wager.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_presenter/10_architectural-pressures-and-binding-wager.png",
+      "start": "00:49:11.599",
+      "note": "Caption-first draft from slide OCR. Caption window 1519-1525. Render variant: The_Binding_Gap_presenter.",
+      "match_score": 0.3376,
+      "ocr_excerpt": "The Binding Wager Fails Early Fails Late Role Multi-field Exact Source Open-ended Generic Simple Reversal Scientific Attribution Explanation Summarization Entity Extraction Spotting Key Insight: Attachment breaks before knowledge fades. If the Binding Gap is the defining fragilit",
+      "matched_captions": [
+        "weakness in models long before",
+        "open-ended explanation does. It predicts",
+        "that source attribution keeping a fact",
+        "tied to its citation will fail long",
+        "before generic text summarization fails.",
+        "Right?",
+        "It predicts that multi-field scientific"
+      ],
+      "caption_start_index": 1519,
+      "caption_end_index": 1525,
+      "render_variant": "The_Binding_Gap_presenter"
+    },
+    {
+      "image": "10_architectural-pressures-and-binding-wager.png",
+      "image_path": "publications/binding-gap/artifacts/slides/The_Binding_Gap_detailed/10_architectural-pressures-and-binding-wager.png",
+      "start": "00:51:49.683",
+      "note": "Caption-first draft from slide OCR. Caption window 1519-1525. Render variant: The_Binding_Gap_detailed.",
+      "match_score": 0.3376,
+      "ocr_excerpt": "The Binding Wager Fails Early Fails Late Role Multi-field Exact Source Open-ended Generic Simple Reversal Scientific Attribution Explanation Summarization Entity Extraction Spotting Key Insight: Attachment breaks before knowledge fades. If the Binding Gap is the defining fragilit",
+      "matched_captions": [
+        "weakness in models long before",
+        "open-ended explanation does. It predicts",
+        "that source attribution keeping a fact",
+        "tied to its citation will fail long",
+        "before generic text summarization fails.",
+        "Right?",
+        "It predicts that multi-field scientific"
+      ],
+      "caption_start_index": 1519,
+      "caption_end_index": 1525,
+      "render_variant": "The_Binding_Gap_detailed"
+    }
+  ]
+}

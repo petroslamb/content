@@ -3,9 +3,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-BASE = Path(
-    "../publications/binding-gap/essays/the-binding-gap/artifacts/slides"
-)
+REPO_ROOT = Path(__file__).resolve().parents[1]
+BASE = REPO_ROOT / "publications" / "binding-gap" / "artifacts" / "slides"
 PRESENTER = BASE / "The_Binding_Gap_presenter"
 DETAILED = BASE / "The_Binding_Gap_detailed"
 STITCHED = BASE / "stitched"

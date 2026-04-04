@@ -42,6 +42,29 @@ Against timed captions:
 
 If OCR text files and a numbered transcript already exist, `scripts/map_slides_to_transcript_lines.py` can draft line ranges before manual review.
 
+If you already have the timed `.srt` and want a caption-first draft cue sheet or a quick first-pass MP4, use the shortcut wrapper:
+
+```bash
+.venv/bin/python scripts/build_slideshow_from_captions.py \
+  --audio <audio.mp3> \
+  --captions <captions.srt> \
+  --slides-dir <ocr-slides-dir> \
+  --support-slides-dir <optional-second-ocr-slides-dir> \
+  --render-slides-dir <optional-render-slides-dir> \
+  --render-slides-dir <optional-second-render-slides-dir> \
+  --output-cues <draft-cues.json> \
+  --output-video <draft-video.mp4>
+```
+
+Use this fast path for useful draft videos and reviewable cue sheets. For dense decks, reordered slides, or publish-grade timing, keep the verified markdown map step below. Use `--support-slides-dir` when a second slide deck provides complementary text that can improve the OCR-first timing draft.
+
+When a package has multiple slide variants, split the concerns deliberately:
+
+- use the OCR-friendlier deck for `--slides-dir`
+- use one or more richer combined, stitched, or alternate decks for repeated `--render-slides-dir`
+
+That keeps the timing draft practical while still producing a more useful review or publication video. When multiple render decks are supplied, the wrapper interleaves them within each timed section for extra visual variation.
+
 ### 3. Review The Verified Markdown Map
 
 The render path expects a reviewed markdown slide-to-transcript map. Low OCR match scores are review targets, not auto-accepted timings. If the spoken order diverges from the slide order, record that deliberately in the verified map.
