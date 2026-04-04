@@ -1,5 +1,9 @@
 # The Binding Gap
 
+#### Video TL;DR
+
+[The Binding Gap explainer video](artifacts/video/The_Binding_Gap_explainer.mp4)
+
 Companion note: [Structural Recoverability](Structural_Recoverability_Companion.md). This note develops the larger recoverability frame behind the essay, including the `encoded -> recoverable -> expressed` ladder, the probe-versus-use distinction, and the current stopping point.
 
 ![Binding gap thesis](artifacts/slides/The_Binding_Gap_detailed/01_binding-gap-thesis.png)
