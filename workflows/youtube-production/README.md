@@ -11,6 +11,7 @@ Use this workflow before mutating the channel. It is the local production layer 
 - Prefer a real timed `.srt` file over watch-page transcript text whenever possible.
 - Keep render inputs and outputs close to the chapter’s `artifacts/video/` surface.
 - Do not render from unreviewed OCR output when the deck is dense, reordered, or diagram-heavy.
+- For faster Substack video processing, keep draft explainer renders in a standard web envelope: `1080p` or `1440p`, `H.264` video, bitrate at or below roughly `8 Mbps`, frame rate between `5` and `120` fps, and `AAC` audio.
 
 ## Canonical Flow
 

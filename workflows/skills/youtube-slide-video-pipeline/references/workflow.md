@@ -134,3 +134,15 @@ The working convention is:
 - `<Course Title>.mp4`
 
 Keep these files in `artifacts/video/` next to the chapter assets.
+
+## Render Compatibility Note
+
+When the output MP4 is intended for Substack, prefer a standard web-delivery envelope even for static-slide videos:
+
+- resolution at `1080p` or `1440p`
+- `H.264` video
+- bitrate at or below roughly `8 Mbps`
+- frame rate between `5` and `120` fps
+- `AAC` audio
+
+This reduces the chance of slow-processing warnings on upload.

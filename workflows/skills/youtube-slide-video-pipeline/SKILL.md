@@ -14,6 +14,7 @@ Use this skill for the local production stage before YouTube channel writes. Use
 3. Keep generated mapping, cue, caption, and render files near the chapter's `artifacts/video/` folder.
 4. If the Data API quota is exhausted, recover subtitles with `yt-dlp` or inspect the watch-page transcript instead of blocking the pipeline.
 5. Do not trust unreviewed OCR output on dense diagrams, reordered slides, or small labels. Verify the final mapping before rendering.
+6. If the MP4 is headed for Substack, prefer standard web render settings so the upload processes quickly: `1080p` or `1440p`, `H.264`, bitrate no higher than about `8 Mbps`, frame rate in the `5-120 fps` range, and `AAC` audio.
 
 ## Core Path
 
