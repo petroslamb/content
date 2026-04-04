@@ -1,5 +1,9 @@
 # The Binding Gap
 
+#### Video TL;DR
+
+[The Binding Gap explainer video](artifacts/video/The_Binding_Gap_explainer.mp4)
+
 ![Binding gap thesis](artifacts/slides/The_Binding_Gap_detailed/01_binding-gap-thesis.png)
 
 Tell a language model that Tom Smith's wife is Mary Stone. Then ask who Mary Stone's husband is. Nothing new has been added. The same pair is still in play, the same relation, the same world. Yet performance often drops sharply. Boshi Wang and Huan Sun use this Reversal Curse to show something more serious than a missing benchmark skill. Current transformer models can retain the ingredients of a fact while failing to keep the relation in a form that survives a change in role assignment. The names remain available. The relation remains familiar. What gives way is the attachment that tells the system which entity belongs in which slot. The words survive. The binding does not.
