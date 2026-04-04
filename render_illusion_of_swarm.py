@@ -19,7 +19,9 @@ def main():
     print(f"Output will be: {output_path}")
     print("This will take ~30-60 minutes. Starting...")
 
-    render_video(cues_path, output_path, fps=30, width=1920, height=1080)
+    # For slideshows, low fps (5) is sufficient since slides are static
+    # This dramatically speeds up rendering without affecting quality
+    render_video(cues_path, output_path, fps=5, width=1920, height=1080)
 
     print(f"\n✅ Video rendered successfully to: {output_path}")
     print(f"File size: {output_path.stat().st_size / 1024 / 1024:.1f} MB")

@@ -1,0 +1,231 @@
+{
+  "audio": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/AI_swarms_are_temporary_training_wheels.m4a",
+  "slides_dir": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms",
+  "support_slides_dirs": [],
+  "segments": [
+    {
+      "image": "slide-12.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-12.png",
+      "start": "00:00:00.000",
+      "note": "Title card: The Illusion of the Swarm — intro placeholder until first content slide",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-01.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-01.png",
+      "start": "00:01:18.960",
+      "note": "BMAS 01 — 'Multi-agent systems are a phase transition, not a destination'. Matches 'paradigm shift... foundational architecture of how complex AI systems are designed'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-03.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-03.png",
+      "start": "00:02:33.000",
+      "note": "BTS Folk Story vs Engineering Reality — matches 'society of minds... CEO agent, coder agent, reviewer agent... anthropomorphize the code'",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-02.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-02.png",
+      "start": "00:03:55.000",
+      "note": "BTS SEMANTIC COLLAPSE ZONE graph — matches 'UBC 2026 compilation function... questioned the foundational assumption'",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-03.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-03.png",
+      "start": "00:05:37.000",
+      "note": "BTS -53.7% / -49.5% dark slide — EXACT match to 'token use dropped by 53.7%, latency down 49.5%'",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-02.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-02.png",
+      "start": "00:06:43.920",
+      "note": "BMAS 02 — 'Swarm is a workaround for routing/state'. Matches 'explicit multi-agent structure is the operational tax'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-04.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-04.png",
+      "start": "00:09:06.000",
+      "note": "BMAS 04 — 'Personas compensate for brittleness'. Matches Kim 2025 180-config study, routing/memory/decomposition limits",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-05.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-05.png",
+      "start": "00:11:30.640",
+      "note": "BMAS 05 — 'Semantic collapse zone at 80-90 skills'. Matches 'catastrophic collapse around 80 to 90'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-03.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-03.png",
+      "start": "00:13:55.000",
+      "note": "BTS SEMANTIC COLLAPSE — matches 'drops catastrophically, GPT-4 threshold at ~84 skills'",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-06.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-06.png",
+      "start": "00:15:36.640",
+      "note": "BMAS 06 — 'Agent is a namespace'. Matches 'the agent is just a namespace... organizational folder'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-01.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-01.png",
+      "start": "00:17:37.200",
+      "note": "BTS 'Agent is not a persona, it's a namespace' + Semantic Quarantine. Matches ROMA intro discussion",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-07.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-07.png",
+      "start": "00:18:54.160",
+      "note": "BMAS 07 — ROMA architecture: atomizer→planner→executor→aggregator. Matches '+9.9% accuracy'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-04.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-04.png",
+      "start": "00:20:30.000",
+      "note": "BTS Recursive Architectures ROMA flowchart — detailed Roma architecture visual reinforcement",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-08.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-08.png",
+      "start": "00:23:37.760",
+      "note": "BMAS 08 — 4 conditions for multi-agent: Heterogeneity, Trust, Environment, Exploration. Matches 'heterogeneity... trust boundaries... embodied coordination... exploration'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-09.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-09.png",
+      "start": "00:25:40.000",
+      "note": "BMAS 09 — 'Capability differences require hard boundaries'. Substrates + Authority. Matches 'code model, vision model, verifier... irreducible'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-10.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-10.png",
+      "start": "00:28:36.400",
+      "note": "BMAS 10 — 'Distributed environments justify distinct actors'. Space & Time + Coverage. EmCoop & MultiAgentBench. Matches 'embodied agents can interrupt and replan'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-11.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-11.png",
+      "start": "00:29:55.000",
+      "note": "BMAS 11 — 'Natural language is expensive, lossy'. Text translation penalty. Matches 'bad game of telephone'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-05.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-05.png",
+      "start": "00:32:20.000",
+      "note": "BTS VISION WORMHOLE vs Old Way — direct latent representation mapping vs text bottleneck",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-12.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-12.png",
+      "start": "00:34:12.000",
+      "note": "BMAS 12 — 'Direct hidden-state transfer bypasses text'. +6.3% accuracy, 1.87x speed. Matches LatentMAS 'telepathy'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-01.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-01.png",
+      "start": "00:35:40.000",
+      "note": "BTS 'Agent is namespace' — visual reinforcement during latent channel discussion",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-13.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-13.png",
+      "start": "00:37:07.440",
+      "note": "BMAS 13 — 'Bounded schemas outperform debate'. EmCoop, JSON over paragraphs. Matches 'prefer typed fields'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-06.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-06.png",
+      "start": "00:38:00.000",
+      "note": "BTS Agentic Playbook: 3 pillars — Recursive Architectures, Tiered Active Memory, Latent Messaging",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-14.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-14.png",
+      "start": "00:39:14.400",
+      "note": "BMAS 14 — 'Permanent value is trajectory data'. Training wheels → policy. Matches 'scaffolds distill into base model'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-15.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-15.png",
+      "start": "00:40:34.480",
+      "note": "BMAS 15 — External scaffolding → policy updates. EMPO2, Agentic Memory, AgentArk. Matches 'off-policy updates'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-08.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-08.png",
+      "start": "00:47:52.000",
+      "note": "BTS Agentic Operating System layers — ROMA + Semantic Quarantine + AgeMem. Visual recap of all 3 pillars",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-16.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-16.png",
+      "start": "00:48:05.599",
+      "note": "BMAS 16 — 5 engineering directives for Monday. Matches '1: Start Single, 2: Think in Namespaces, 3: Avoid Committees, 4: Minimize English, 5: Internalize Scaffolds'",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-09.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-09.png",
+      "start": "00:49:30.000",
+      "note": "BTS 'Stop building societies of minds. Start building resilient compilers.' — closing directive",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-17.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-17.png",
+      "start": "00:50:53.040",
+      "note": "BMAS 17 — Two Q1 2027 predictions: Graph Simplification + Non-Text Production Handoffs",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-02.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-02.png",
+      "start": "00:52:40.000",
+      "note": "BTS Folk Story vs Engineering Reality — recap the core thesis as we close out",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-18.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/slide-18.png",
+      "start": "00:53:50.000",
+      "note": "BMAS 18 — Empirical foundations and peer-reviewed anchors. 12 papers: Li, Wang, Zhu, Yang, Liu, Kim, Alzu'bi",
+      "render_variant": "Beyond_Multi-Agent_Swarms"
+    },
+    {
+      "image": "slide-11.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-11.png",
+      "start": "00:54:30.000",
+      "note": "BTS Next-Gen Operating System closing image — ROMA + Semantic Quarantine + Active State layers",
+      "render_variant": "Beyond_the_Swarm"
+    },
+    {
+      "image": "slide-10.png",
+      "image_path": "publications/illusion-of-swarm/assets/Beyond_the_Swarm/slide-10.png",
+      "start": "00:55:00.000",
+      "note": "BTS Latent Rollout — final technical slide as the outro music fades",
+      "render_variant": "Beyond_the_Swarm"
+    }
+  ]
+}
