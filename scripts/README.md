@@ -69,6 +69,7 @@ Tracked workflows:
 | `map_slides_to_transcript_lines.py` | Drafts transcript line ranges from OCR text files and a numbered transcript. | line-range drafting | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `line_map_markdown_to_cues.py` | Converts a reviewed markdown line map plus timed captions into the final cue-sheet JSON used for rendering. | verified cue generation | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `render_audio_slides_video.py` | Generates a rough evenly spaced template or renders the final MP4 from a cue sheet. | template or final render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
+| `convert_landscape_videos_to_portrait.py` | Converts landscape MP4 clips into portrait `9:16` versions by centering the original frame over a blurred vertical background, keeping output in a standard `H.264`/`AAC` web-delivery envelope. | prep horizontal clips for Shorts-style upload | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `scrape_youtube_watch_transcript.py` | Scrapes the visible watch-page transcript panel into JSON when you need a browser fallback for transcript inspection. | transcript fallback or debugging | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 
 ## Package-Specific Utility
