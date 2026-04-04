@@ -323,12 +323,13 @@ class MarkdownPostSync:
         existing_doc = json.loads(body) if isinstance(body, str) else body
         video_node = self.video_node_from_draft(draft, existing_doc)
         title, body_json = self.markdown_to_doc(config.markdown_path, video_node)
-        updated = run_with_retry(
-            self.api.put_draft,
-            config.post_id,
-            draft_title=title,
-            draft_body=body_json,
-        )
+        put_kwargs = {
+            "draft_title": title,
+            "draft_body": body_json,
+        }
+        if draft.get("draft_video_upload_id") is not None:
+            put_kwargs["draft_video_upload_id"] = draft["draft_video_upload_id"]
+        updated = run_with_retry(self.api.put_draft, config.post_id, **put_kwargs)
         if config.publish:
             run_with_retry(
                 self.api.publish_draft,
