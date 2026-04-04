@@ -17,6 +17,12 @@ Use this file when deciding which local YouTube script to run and how risky it i
 - Key args: `--video-id`, `--output`, optional `--language`, `--track-kind`, `--format`.
 - Behavior: tries the Data API first, then falls back to watch-page caption track recovery on 403.
 
+### `recover_transcript_via_temporary_upload.py`
+
+- Purpose: wrap local audio with a still image, upload it as a temporary video, wait for automatic captions, download the resulting `.srt`, and remove the temporary upload.
+- Key args: `--audio-path`, `--image-path`, `--title`, `--output`, optional `--privacy-status`, optional `--poll-interval`, optional `--timeout`.
+- Risk: uploads and deletes a YouTube video. Leave `--keep-video` on only when you intentionally want to inspect the upload later.
+
 ### `check_duplicates.py`
 
 - Purpose: report duplicate video IDs in a playlist.
