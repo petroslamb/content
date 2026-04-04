@@ -33,6 +33,18 @@ This can open a browser on first run, writes `.youtube/token.json`, and prints c
 
 Default output is `srt`. The script prefers English `asr` and falls back to watch-page recovery on some 403 paths.
 
+If you only have local audio and need YouTube to generate the timestamps first, use the temporary upload path:
+
+```bash
+.venv/bin/python workflows/skills/youtube-data-api/scripts/recover_transcript_via_temporary_upload.py \
+  --audio-path <path/to/audio.m4a-or-mp3> \
+  --image-path <path/to/still-image.png> \
+  --title "<temporary video title>" \
+  --output <path/to/output.srt>
+```
+
+This creates an unlisted upload by default, waits for automatic captions, downloads the `.srt`, and deletes the temporary video unless you pass `--keep-video`.
+
 ### 3. Diagnose Playlist State Or Shorts State
 
 Use the read-first scripts for inspection:

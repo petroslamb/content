@@ -5,6 +5,7 @@ from datetime import date, datetime
 from pathlib import Path
 
 from google.auth.transport.requests import Request
+from google.auth.exceptions import RefreshError
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -13,7 +14,7 @@ SCOPES = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_ROOT = SCRIPT_DIR.parent
-REPO_ROOT = SKILL_ROOT.parent.parent
+REPO_ROOT = SCRIPT_DIR.parents[3]
 
 CLIENT_SECRETS_FILE = REPO_ROOT / ".youtube" / "client_secret.json"
 TOKEN_FILE = REPO_ROOT / ".youtube" / "token.json"
@@ -36,10 +37,14 @@ def load_credentials(interactive: bool = False) -> Credentials:
         return creds
 
     if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-        TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
-        TOKEN_FILE.write_text(creds.to_json())
-        return creds
+        try:
+            creds.refresh(Request())
+        except RefreshError:
+            creds = None
+        else:
+            TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+            TOKEN_FILE.write_text(creds.to_json())
+            return creds
 
     if not interactive:
         if not TOKEN_FILE.exists():

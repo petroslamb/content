@@ -1,0 +1,6720 @@
+1
+00:00:00,080 --> 00:00:04,319
+So, I want you to imagine um sitting
+
+2
+00:00:02,639 --> 00:00:05,040
+across a chess board from a reigning
+
+3
+00:00:04,319 --> 00:00:06,319
+grandmaster.
+
+4
+00:00:05,040 --> 00:00:09,280
+Okay, I'm picturing it.
+
+5
+00:00:06,319 --> 00:00:10,800
+Right. And they open the game with this
+
+6
+00:00:09,280 --> 00:00:12,480
+brilliant defense. You've just Well,
+
+7
+00:00:10,800 --> 00:00:14,000
+you've never seen it before. They are
+
+8
+00:00:12,480 --> 00:00:15,599
+completely controlling the board,
+
+9
+00:00:14,000 --> 00:00:18,240
+just totally dismantling you.
+
+10
+00:00:15,599 --> 00:00:21,039
+Exactly. They execute this seemingly
+
+11
+00:00:18,240 --> 00:00:23,199
+impossible like 12 move combination that
+
+12
+00:00:21,039 --> 00:00:24,000
+leaves you absolutely speechless.
+
+13
+00:00:23,199 --> 00:00:26,240
+Wow.
+
+14
+00:00:24,000 --> 00:00:28,080
+And then for their 13th move, they pick
+
+15
+00:00:26,240 --> 00:00:29,599
+up a rook and they just try to move it
+
+16
+00:00:28,080 --> 00:00:30,720
+diagonally across the board. Wait,
+
+17
+00:00:29,599 --> 00:00:33,200
+diagonally.
+
+18
+00:00:30,720 --> 00:00:34,239
+Yeah. Completely oblivious to the basic
+
+19
+00:00:33,200 --> 00:00:35,520
+rules of the piece.
+
+20
+00:00:34,239 --> 00:00:40,399
+Oh man.
+
+21
+00:00:35,520 --> 00:00:42,640
+That jarring almost uh vertigoinducing
+
+22
+00:00:40,399 --> 00:00:44,719
+paradox, you know, utter transcendent
+
+23
+00:00:42,640 --> 00:00:46,960
+brilliance combined with this sudden
+
+24
+00:00:44,719 --> 00:00:48,320
+fundamental structural stupidity. That
+
+25
+00:00:46,960 --> 00:00:49,760
+is exactly the feeling we are all
+
+26
+00:00:48,320 --> 00:00:50,719
+experiencing with modern artificial
+
+27
+00:00:49,760 --> 00:00:52,239
+intelligence right now.
+
+28
+00:00:50,719 --> 00:00:52,960
+It really is. It's the perfect way to
+
+29
+00:00:52,239 --> 00:00:54,320
+describe it,
+
+30
+00:00:52,960 --> 00:00:55,840
+right? I mean, you can open a prompt
+
+31
+00:00:54,320 --> 00:00:57,760
+window and have an incredibly
+
+32
+00:00:55,840 --> 00:01:00,160
+sophisticated conversation. Yeah. You
+
+33
+00:00:57,760 --> 00:01:02,960
+can ask a language model to synthesize
+
+34
+00:01:00,160 --> 00:01:06,560
+the geopolitical causes of a historical
+
+35
+00:01:02,960 --> 00:01:08,479
+war or uh explain quantum entanglement
+
+36
+00:01:06,560 --> 00:01:08,960
+using the vocabulary of a 19th century
+
+37
+00:01:08,479 --> 00:01:09,760
+poet.
+
+38
+00:01:08,960 --> 00:01:11,920
+And it does it
+
+39
+00:01:09,760 --> 00:01:14,479
+it does it with this astonishing
+
+40
+00:01:11,920 --> 00:01:16,159
+seamless fluency. It feels like you are
+
+41
+00:01:14,479 --> 00:01:18,400
+interfacing with this brilliant mind.
+
+42
+00:01:16,159 --> 00:01:20,799
+Yeah. But then right in the middle of
+
+43
+00:01:18,400 --> 00:01:22,799
+this high-level intellectual exchange,
+
+44
+00:01:20,799 --> 00:01:25,520
+the system will just stumble on a
+
+45
+00:01:22,799 --> 00:01:27,680
+logical relationship so basic, so
+
+46
+00:01:25,520 --> 00:01:28,799
+structurally simple that it completely
+
+47
+00:01:27,680 --> 00:01:29,840
+shatters the illusion.
+
+48
+00:01:28,799 --> 00:01:30,880
+It's wild.
+
+49
+00:01:29,840 --> 00:01:32,560
+You're left sitting at your desk
+
+50
+00:01:30,880 --> 00:01:34,880
+wondering how a system that possesses so
+
+51
+00:01:32,560 --> 00:01:37,360
+much apparent knowledge can fail so
+
+52
+00:01:34,880 --> 00:01:38,159
+fundamentally at like basic wiring.
+
+53
+00:01:37,360 --> 00:01:39,759
+Exactly.
+
+54
+00:01:38,159 --> 00:01:42,320
+So today we are going to unpack the
+
+55
+00:01:39,759 --> 00:01:43,840
+mechanics behind that exact paradox. Our
+
+56
+00:01:42,320 --> 00:01:46,240
+insights for this deep dive come from
+
+57
+00:01:43,840 --> 00:01:47,920
+rooted layers AI insights grounded on
+
+58
+00:01:46,240 --> 00:01:50,479
+research. We'll be referring to their
+
+59
+00:01:47,920 --> 00:01:52,079
+synthesis naturally as the post as we
+
+60
+00:01:50,479 --> 00:01:52,479
+sort of, you know, think out loud today.
+
+61
+00:01:52,079 --> 00:01:55,040
+Yeah.
+
+62
+00:01:52,479 --> 00:01:57,200
+And it is the perfect puzzle for us to
+
+63
+00:01:55,040 --> 00:01:59,759
+pull apart because that disconnect you
+
+64
+00:01:57,200 --> 00:02:02,320
+just described between surface fluency
+
+65
+00:01:59,759 --> 00:02:05,520
+and structural failure, it isn't just a
+
+66
+00:02:02,320 --> 00:02:07,040
+quirky bug. It is arguably um the single
+
+67
+00:02:05,520 --> 00:02:08,560
+most important roadblock in the
+
+68
+00:02:07,040 --> 00:02:10,399
+evolution of artificial intelligence
+
+69
+00:02:08,560 --> 00:02:12,000
+right now. Right? Our mission today is
+
+70
+00:02:10,399 --> 00:02:14,400
+to really move beyond that feeling of
+
+71
+00:02:12,000 --> 00:02:17,120
+surprise and actually map the physical
+
+72
+00:02:14,400 --> 00:02:19,520
+mechanics of this phenomenon. The post
+
+73
+00:02:17,120 --> 00:02:21,680
+introduces a foundational mental model
+
+74
+00:02:19,520 --> 00:02:22,560
+to explain this which it calls the
+
+75
+00:02:21,680 --> 00:02:23,760
+binding gap.
+
+76
+00:02:22,560 --> 00:02:25,680
+The binding gap. Okay.
+
+77
+00:02:23,760 --> 00:02:27,680
+Yeah. And we are going on a pretty
+
+78
+00:02:25,680 --> 00:02:30,000
+extensive microscopic journey today to
+
+79
+00:02:27,680 --> 00:02:32,480
+understand it. We'll start by defining
+
+80
+00:02:30,000 --> 00:02:34,959
+the bizarre behavioral quirks this gap
+
+81
+00:02:32,480 --> 00:02:36,319
+produces. Then we are going to do
+
+82
+00:02:34,959 --> 00:02:37,760
+something really fascinating.
+
+83
+00:02:36,319 --> 00:02:39,360
+I love fascinating. What are we doing?
+
+84
+00:02:37,760 --> 00:02:41,440
+We are going to look at the literal
+
+85
+00:02:39,360 --> 00:02:43,599
+physical mathematics inside these neural
+
+86
+00:02:41,440 --> 00:02:44,480
+networks to prove that this gap exists
+
+87
+00:02:43,599 --> 00:02:46,480
+mechanically.
+
+88
+00:02:44,480 --> 00:02:48,000
+Oh wow. Okay. Lifting the hood.
+
+89
+00:02:46,480 --> 00:02:49,760
+Exactly. And we'll follow that up by
+
+90
+00:02:48,000 --> 00:02:52,000
+looking at what happens when researchers
+
+91
+00:02:49,760 --> 00:02:53,599
+stress test these models with complex
+
+92
+00:02:52,000 --> 00:02:55,280
+real world scientific data where you
+
+93
+00:02:53,599 --> 00:02:57,040
+know these failures stop being funny and
+
+94
+00:02:55,280 --> 00:02:59,120
+start being highly consequential.
+
+95
+00:02:57,040 --> 00:03:01,680
+Yeah. Where the stakes actually matter.
+
+96
+00:02:59,120 --> 00:03:04,080
+Exactly. Finally, we will discuss how
+
+97
+00:03:01,680 --> 00:03:06,319
+uncovering this binding gap completely
+
+98
+00:03:04,080 --> 00:03:08,720
+rewrites the agenda for the future of AI
+
+99
+00:03:06,319 --> 00:03:10,720
+engineering. A useful way to think about
+
+100
+00:03:08,720 --> 00:03:13,280
+this conversation is that we are
+
+101
+00:03:10,720 --> 00:03:15,760
+shifting from treating AI as a magical
+
+102
+00:03:13,280 --> 00:03:17,680
+unpredictable black box to treating it
+
+103
+00:03:15,760 --> 00:03:20,239
+as a mechanical engine with very
+
+104
+00:03:17,680 --> 00:03:21,840
+specific identifiable gears.
+
+105
+00:03:20,239 --> 00:03:23,440
+And we are going to look closely at the
+
+106
+00:03:21,840 --> 00:03:24,159
+exact gear that keeps slipping.
+
+107
+00:03:23,440 --> 00:03:26,480
+You got it.
+
+108
+00:03:24,159 --> 00:03:28,720
+I love that approach. So, we have our
+
+109
+00:03:26,480 --> 00:03:30,400
+researcher hats on today. We're looking
+
+110
+00:03:28,720 --> 00:03:32,239
+for the underlying patterns and we're
+
+111
+00:03:30,400 --> 00:03:34,400
+trying to map the exact borders of this
+
+112
+00:03:32,239 --> 00:03:35,680
+problem rather than just, you know,
+
+113
+00:03:34,400 --> 00:03:37,040
+marveling at the outputs,
+
+114
+00:03:35,680 --> 00:03:38,560
+right? Let's get into the mechanics.
+
+115
+00:03:37,040 --> 00:03:40,480
+Let's jump right into the deep end with
+
+116
+00:03:38,560 --> 00:03:42,879
+a concept that the post uses as its
+
+117
+00:03:40,480 --> 00:03:45,680
+foundational anchor. This devs from a
+
+118
+00:03:42,879 --> 00:03:48,400
+2025 paper by researchers Bosshi Wang
+
+119
+00:03:45,680 --> 00:03:50,080
+and Juan Sun. They explore a phenomenon
+
+120
+00:03:48,400 --> 00:03:52,159
+known as the reversal curse.
+
+121
+00:03:50,080 --> 00:03:52,640
+The reversal curse. It's such a great
+
+122
+00:03:52,159 --> 00:03:53,440
+name.
+
+123
+00:03:52,640 --> 00:03:53,760
+It really is.
+
+124
+00:03:53,440 --> 00:03:55,519
+Yeah.
+
+125
+00:03:53,760 --> 00:03:58,080
+And the post gives this deceptively
+
+126
+00:03:55,519 --> 00:03:59,920
+simple example of it in action. So
+
+127
+00:03:58,080 --> 00:04:01,920
+imagine you open a fresh session with a
+
+128
+00:03:59,920 --> 00:04:05,519
+language model and you teach it a brand
+
+129
+00:04:01,920 --> 00:04:08,239
+new isolated fact. You type in Tom
+
+130
+00:04:05,519 --> 00:04:09,599
+Smith's wife is Mary Stone.
+
+131
+00:04:08,239 --> 00:04:12,799
+Huh? Pretty straightforward,
+
+132
+00:04:09,599 --> 00:04:16,959
+right? Simple enough. The model absorbs
+
+133
+00:04:12,799 --> 00:04:20,079
+this context. It confirms it. But then
+
+134
+00:04:16,959 --> 00:04:22,479
+immediately after you ask the model,
+
+135
+00:04:20,079 --> 00:04:23,440
+"Who is Mary Stone's husband?"
+
+136
+00:04:22,479 --> 00:04:25,199
+And what happens?
+
+137
+00:04:23,440 --> 00:04:25,680
+The model's performance just falls off a
+
+138
+00:04:25,199 --> 00:04:26,560
+cliff.
+
+139
+00:04:25,680 --> 00:04:28,639
+Oh, wow.
+
+140
+00:04:26,560 --> 00:04:30,560
+Yeah. It hesitates or it hallucinates a
+
+141
+00:04:28,639 --> 00:04:32,000
+totally different name or it outright
+
+142
+00:04:30,560 --> 00:04:33,680
+says it doesn't have enough information
+
+143
+00:04:32,000 --> 00:04:35,040
+to answer. See, when you first observe
+
+144
+00:04:33,680 --> 00:04:35,600
+that behavior, it feels almost
+
+145
+00:04:35,040 --> 00:04:36,400
+impossible.
+
+146
+00:04:35,600 --> 00:04:38,320
+Totally impossible
+
+147
+00:04:36,400 --> 00:04:40,720
+because logically nothing new has been
+
+148
+00:04:38,320 --> 00:04:42,720
+added to the world state. The exact same
+
+149
+00:04:40,720 --> 00:04:44,479
+pair of individual entities is in play.
+
+150
+00:04:42,720 --> 00:04:46,720
+The exact same marital relation exists
+
+151
+00:04:44,479 --> 00:04:48,960
+between them. But Wang and Sun treat
+
+152
+00:04:46,720 --> 00:04:49,600
+this reversal curse as a massive red
+
+153
+00:04:48,960 --> 00:04:50,320
+flag.
+
+154
+00:04:49,600 --> 00:04:51,919
+How so?
+
+155
+00:04:50,320 --> 00:04:53,840
+Well, they argue that this isn't just a
+
+156
+00:04:51,919 --> 00:04:55,919
+funny oddity you find on a standardized
+
+157
+00:04:53,840 --> 00:04:57,360
+benchmark test. It actually exposes a
+
+158
+00:04:55,919 --> 00:04:58,960
+foundational design flaw in the
+
+159
+00:04:57,360 --> 00:05:01,040
+transformer architecture,
+
+160
+00:04:58,960 --> 00:05:03,440
+which is the underlying structure of
+
+161
+00:05:01,040 --> 00:05:04,240
+basically all modern large language
+
+162
+00:05:03,440 --> 00:05:07,199
+models. Right.
+
+163
+00:05:04,240 --> 00:05:09,440
+Exactly. Their core thesis is that these
+
+164
+00:05:07,199 --> 00:05:11,840
+models are incredibly good at retaining
+
+165
+00:05:09,440 --> 00:05:13,919
+the individual ingredients of a fact.
+
+166
+00:05:11,840 --> 00:05:15,520
+Like they know Tom, they know Mary, they
+
+167
+00:05:13,919 --> 00:05:17,840
+know the concept of marriage, right?
+
+168
+00:05:15,520 --> 00:05:19,759
+But they fail completely at keeping the
+
+169
+00:05:17,840 --> 00:05:21,840
+relation between those ingredients in a
+
+170
+00:05:19,759 --> 00:05:23,919
+format that can survive a change in
+
+171
+00:05:21,840 --> 00:05:26,320
+perspective or role assignment.
+
+172
+00:05:23,919 --> 00:05:28,479
+Okay. I really want to try and visualize
+
+173
+00:05:26,320 --> 00:05:30,800
+what is actually happening inside the
+
+174
+00:05:28,479 --> 00:05:32,639
+model when it fails at this
+
+175
+00:05:30,800 --> 00:05:34,320
+because from a human perspective,
+
+176
+00:05:32,639 --> 00:05:35,919
+relationships are almost always
+
+177
+00:05:34,320 --> 00:05:36,479
+inherently birectional,
+
+178
+00:05:35,919 --> 00:05:38,400
+right? Yeah.
+
+179
+00:05:36,479 --> 00:05:39,759
+If I know that I'm your friend,
+
+180
+00:05:38,400 --> 00:05:42,720
+I automatically know that you are my
+
+181
+00:05:39,759 --> 00:05:44,720
+friend. If A equals B, B equals A.
+
+182
+00:05:42,720 --> 00:05:46,400
+My brain doesn't have to like store
+
+183
+00:05:44,720 --> 00:05:47,360
+those as two completely separate
+
+184
+00:05:46,400 --> 00:05:49,280
+isolated files.
+
+185
+00:05:47,360 --> 00:05:49,680
+No, it's just one connected concept for
+
+186
+00:05:49,280 --> 00:05:52,639
+us,
+
+187
+00:05:49,680 --> 00:05:54,479
+right? But for the AI, the names Tom and
+
+188
+00:05:52,639 --> 00:05:56,880
+Mary are still hovering there in its
+
+189
+00:05:54,479 --> 00:05:58,880
+active memory. The semantic concept of a
+
+190
+00:05:56,880 --> 00:05:59,280
+spouse is highly familiar to its
+
+191
+00:05:58,880 --> 00:06:00,479
+training.
+
+192
+00:05:59,280 --> 00:06:02,000
+Yeah, the ingredients are there.
+
+193
+00:06:00,479 --> 00:06:05,120
+So, what gives way, according to the
+
+194
+00:06:02,000 --> 00:06:07,280
+post, is the attachment itself, the
+
+195
+00:06:05,120 --> 00:06:09,759
+literal wiring that tells the system
+
+196
+00:06:07,280 --> 00:06:11,919
+exactly which entity belongs in which
+
+197
+00:06:09,759 --> 00:06:14,479
+slot in that specific relationship.
+
+198
+00:06:11,919 --> 00:06:16,800
+The wiring just snaps. And Wang and
+
+199
+00:06:14,479 --> 00:06:19,199
+Sun's research points to two very
+
+200
+00:06:16,800 --> 00:06:21,680
+specific internal pressures that cause
+
+201
+00:06:19,199 --> 00:06:23,039
+that fragility. The first mechanism they
+
+202
+00:06:21,680 --> 00:06:24,160
+identify is what they call
+
+203
+00:06:23,039 --> 00:06:26,080
+inconsistency.
+
+204
+00:06:24,160 --> 00:06:27,280
+Inconsistency. Okay. What does that mean
+
+205
+00:06:26,080 --> 00:06:28,960
+in this context?
+
+206
+00:06:27,280 --> 00:06:30,880
+Well, to understand this, we have to
+
+207
+00:06:28,960 --> 00:06:33,199
+remember that language models don't read
+
+208
+00:06:30,880 --> 00:06:34,960
+words like we do. They translate words
+
+209
+00:06:33,199 --> 00:06:36,400
+into highdimensional mathematical
+
+210
+00:06:34,960 --> 00:06:37,600
+representations or vectors.
+
+211
+00:06:36,400 --> 00:06:39,600
+Right? A bunch of numbers.
+
+212
+00:06:37,600 --> 00:06:41,440
+Exactly. And what Wang and Sun found is
+
+213
+00:06:39,600 --> 00:06:43,199
+that a model literally represents an
+
+214
+00:06:41,440 --> 00:06:45,039
+entity differently in its internal
+
+215
+00:06:43,199 --> 00:06:47,039
+mathematical space depending on the
+
+216
+00:06:45,039 --> 00:06:47,759
+syntactic role that entity is currently
+
+217
+00:06:47,039 --> 00:06:48,479
+occupying.
+
+218
+00:06:47,759 --> 00:06:50,560
+Wait, really?
+
+219
+00:06:48,479 --> 00:06:51,919
+Yeah. Tom functioning as a husband has a
+
+220
+00:06:50,560 --> 00:06:54,160
+genuinely different mathematical
+
+221
+00:06:51,919 --> 00:06:56,479
+signature than Tom functioning as the
+
+222
+00:06:54,160 --> 00:06:57,600
+subject of the sentence. The math morphs
+
+223
+00:06:56,479 --> 00:07:00,000
+based on the grammar.
+
+224
+00:06:57,600 --> 00:07:01,360
+Oh, wow. So because the word Tom is
+
+225
+00:07:00,000 --> 00:07:04,319
+doing a different job in the second
+
+226
+00:07:01,360 --> 00:07:06,960
+sentence, the AI's internal mathematical
+
+227
+00:07:04,319 --> 00:07:08,960
+shape for Tom changes so much that it
+
+228
+00:07:06,960 --> 00:07:09,680
+just like loses track of the connection
+
+229
+00:07:08,960 --> 00:07:12,160
+to Mary.
+
+230
+00:07:09,680 --> 00:07:14,000
+That is a big piece of it. Yes. But it
+
+231
+00:07:12,160 --> 00:07:16,560
+is compounded by the second pressure
+
+232
+00:07:14,000 --> 00:07:18,800
+they identified which is entanglement.
+
+233
+00:07:16,560 --> 00:07:21,360
+Entanglement like quantum entanglement
+
+234
+00:07:18,800 --> 00:07:23,759
+kind of but in a semantic space. When a
+
+235
+00:07:21,360 --> 00:07:26,639
+model learns, it isn't filing facts into
+
+236
+00:07:23,759 --> 00:07:28,960
+neat isolated folders. It is absorbing
+
+237
+00:07:26,639 --> 00:07:31,280
+massive continuous streams of data and
+
+238
+00:07:28,960 --> 00:07:33,280
+nearby concepts in its vast mathematical
+
+239
+00:07:31,280 --> 00:07:33,840
+space start to pull on each other.
+
+240
+00:07:33,280 --> 00:07:35,360
+Ah,
+
+241
+00:07:33,840 --> 00:07:37,520
+they interfere with one another. The
+
+242
+00:07:35,360 --> 00:07:39,840
+representations get tangled up. So you
+
+243
+00:07:37,520 --> 00:07:42,319
+have these inconsistent shifting shapes
+
+244
+00:07:39,840 --> 00:07:44,160
+for the entities combined with a highly
+
+245
+00:07:42,319 --> 00:07:46,400
+entangled mathematical space.
+
+246
+00:07:44,160 --> 00:07:48,479
+So when you ask the model to reverse the
+
+247
+00:07:46,400 --> 00:07:50,319
+relation and change the roles,
+
+248
+00:07:48,479 --> 00:07:52,319
+the specific fragile attachment holding
+
+249
+00:07:50,319 --> 00:07:54,879
+Tom and Mary together simply cannot
+
+250
+00:07:52,319 --> 00:07:56,400
+survive the transformation. It breaks.
+
+251
+00:07:54,879 --> 00:07:58,400
+Okay, a useful way to think about this
+
+252
+00:07:56,400 --> 00:08:00,240
+is like having all the ingredients for a
+
+253
+00:07:58,400 --> 00:08:01,759
+highly complex recipe sitting out on
+
+254
+00:08:00,240 --> 00:08:03,599
+your kitchen counter. You've got the
+
+255
+00:08:01,759 --> 00:08:04,160
+flour, the eggs, the sugar, the baking
+
+256
+00:08:03,599 --> 00:08:05,360
+powder.
+
+257
+00:08:04,160 --> 00:08:07,599
+All right, you're ready to bake.
+
+258
+00:08:05,360 --> 00:08:09,840
+You have absolutely everything you need,
+
+259
+00:08:07,599 --> 00:08:11,280
+but you have completely misplaced the
+
+260
+00:08:09,840 --> 00:08:13,280
+instructions that tell you which
+
+261
+00:08:11,280 --> 00:08:14,160
+ingredient goes into which bowl and at
+
+262
+00:08:13,280 --> 00:08:14,639
+what temperature.
+
+263
+00:08:14,160 --> 00:08:16,639
+Yes,
+
+264
+00:08:14,639 --> 00:08:18,560
+you know you need flour and eggs, but
+
+265
+00:08:16,639 --> 00:08:20,319
+instead of baking a cake, you end up
+
+266
+00:08:18,560 --> 00:08:20,879
+with scrambled eggs covered in raw
+
+267
+00:08:20,319 --> 00:08:22,080
+flour,
+
+268
+00:08:20,879 --> 00:08:24,319
+which is disgusting.
+
+269
+00:08:22,080 --> 00:08:26,400
+It's terrible. But the ingredients are
+
+270
+00:08:24,319 --> 00:08:28,800
+in the room. They are fully available to
+
+271
+00:08:26,400 --> 00:08:30,960
+you, but the delivery is disastrous
+
+272
+00:08:28,800 --> 00:08:32,800
+because the instructions, the wiring,
+
+273
+00:08:30,960 --> 00:08:34,080
+the attachment are missing.
+
+274
+00:08:32,800 --> 00:08:35,839
+That's a perfect analogy.
+
+275
+00:08:34,080 --> 00:08:38,479
+And what the post points out, which I
+
+276
+00:08:35,839 --> 00:08:40,320
+find really deeply fascinating, is that
+
+277
+00:08:38,479 --> 00:08:43,120
+because the ingredients are still in the
+
+278
+00:08:40,320 --> 00:08:44,399
+room, the model doesn't just output
+
+279
+00:08:43,120 --> 00:08:46,800
+total gibberish.
+
+280
+00:08:44,399 --> 00:08:48,160
+Right. It doesn't say Mary Stone's
+
+281
+00:08:46,800 --> 00:08:49,760
+husband is a toaster.
+
+282
+00:08:48,160 --> 00:08:51,360
+Exactly. It stays in the right
+
+283
+00:08:49,760 --> 00:08:53,279
+neighborhood, which is what makes this
+
+284
+00:08:51,360 --> 00:08:55,040
+failure mode so insidious.
+
+285
+00:08:53,279 --> 00:08:56,959
+Yeah. The outputs of a model suffering
+
+286
+00:08:55,040 --> 00:08:59,440
+from this specific type of failure are
+
+287
+00:08:56,959 --> 00:09:01,200
+rarely absurd. The post uses a great
+
+288
+00:08:59,440 --> 00:09:03,200
+phrase for this. The outputs are
+
+289
+00:09:01,200 --> 00:09:05,360
+annoyingly adjacent to truth.
+
+290
+00:09:03,200 --> 00:09:05,839
+Annoyingly adjacent to truth. I love
+
+291
+00:09:05,360 --> 00:09:07,680
+that
+
+292
+00:09:05,839 --> 00:09:09,680
+the model keeps the overall scene
+
+293
+00:09:07,680 --> 00:09:12,080
+intact, but it drops the internal
+
+294
+00:09:09,680 --> 00:09:13,760
+wiring. If you ask it about a research
+
+295
+00:09:12,080 --> 00:09:16,000
+paper, it remembers that we are talking
+
+296
+00:09:13,760 --> 00:09:18,560
+about biology. It remembers the core
+
+297
+00:09:16,000 --> 00:09:20,160
+topic, but it completely misplaces the
+
+298
+00:09:18,560 --> 00:09:22,000
+specific citation.
+
+299
+00:09:20,160 --> 00:09:24,320
+Or if you ask it about a physics
+
+300
+00:09:22,000 --> 00:09:26,480
+equation, it keeps the names of the
+
+301
+00:09:24,320 --> 00:09:28,399
+variables, but it assigns the numerical
+
+302
+00:09:26,480 --> 00:09:30,880
+value to the wrong pair.
+
+303
+00:09:28,399 --> 00:09:32,800
+Exactly. It provides a user with this
+
+304
+00:09:30,880 --> 00:09:35,040
+incredibly convincing illusion that it
+
+305
+00:09:32,800 --> 00:09:37,519
+knows exactly what it's talking about,
+
+306
+00:09:35,040 --> 00:09:39,839
+but the specific granular answer it
+
+307
+00:09:37,519 --> 00:09:41,839
+provides is structurally compromised.
+
+308
+00:09:39,839 --> 00:09:43,600
+You know, this fits a broader pattern
+
+309
+00:09:41,839 --> 00:09:46,320
+we're seeing across the entire AI
+
+310
+00:09:43,600 --> 00:09:48,160
+ecosystem. Right now, we have this crude
+
+311
+00:09:46,320 --> 00:09:50,240
+catch-all umbrella term we use whenever
+
+312
+00:09:48,160 --> 00:09:51,440
+an AI gets something wrong. We say the
+
+313
+00:09:50,240 --> 00:09:53,040
+AI hallucinated.
+
+314
+00:09:51,440 --> 00:09:54,399
+Oh, I hate that term sometimes,
+
+315
+00:09:53,040 --> 00:09:56,320
+right? Because if we just call
+
+316
+00:09:54,399 --> 00:09:58,399
+everything a hallucination, we are
+
+317
+00:09:56,320 --> 00:10:01,040
+lumping together fundamentally different
+
+318
+00:09:58,399 --> 00:10:03,040
+mechanical failures. It's like a doctor
+
+319
+00:10:01,040 --> 00:10:03,440
+diagnosing every single ailment as a
+
+320
+00:10:03,040 --> 00:10:04,880
+fever.
+
+321
+00:10:03,440 --> 00:10:05,440
+It doesn't help you cure the patient at
+
+322
+00:10:04,880 --> 00:10:07,760
+all.
+
+323
+00:10:05,440 --> 00:10:10,160
+Exactly. And that logically moves us to
+
+324
+00:10:07,760 --> 00:10:11,839
+the next major argument in the post. If
+
+325
+00:10:10,160 --> 00:10:14,480
+we want to understand this, we need to
+
+326
+00:10:11,839 --> 00:10:16,640
+draw strict uncompromising borders
+
+327
+00:10:14,480 --> 00:10:17,920
+around this phenomenon. We need a highly
+
+328
+00:10:16,640 --> 00:10:18,560
+precise vocabulary.
+
+329
+00:10:17,920 --> 00:10:20,959
+We do.
+
+330
+00:10:18,560 --> 00:10:24,160
+And the post proposes the specific term
+
+331
+00:10:20,959 --> 00:10:25,760
+for this exact failure, the binding gap.
+
+332
+00:10:24,160 --> 00:10:27,360
+Yeah. And the author of the post is
+
+333
+00:10:25,760 --> 00:10:30,079
+incredibly meticulous about this
+
+334
+00:10:27,360 --> 00:10:32,880
+definition. Establishing a new term in a
+
+335
+00:10:30,079 --> 00:10:34,640
+field moving this fast only works if the
+
+336
+00:10:32,880 --> 00:10:36,560
+borders of that term stay incredibly
+
+337
+00:10:34,640 --> 00:10:37,519
+clear. So how do they define the
+
+338
+00:10:36,560 --> 00:10:39,120
+borders?
+
+339
+00:10:37,519 --> 00:10:40,880
+Well, they dedicate a significant
+
+340
+00:10:39,120 --> 00:10:43,200
+portion of the synthesis to defining
+
+341
+00:10:40,880 --> 00:10:44,880
+what the binding gap is not. It is
+
+342
+00:10:43,200 --> 00:10:45,680
+essentially a process of diagnostic
+
+343
+00:10:44,880 --> 00:10:47,360
+elimination.
+
+344
+00:10:45,680 --> 00:10:47,760
+Okay. Process of elimination. Walk me
+
+345
+00:10:47,360 --> 00:10:49,200
+through it.
+
+346
+00:10:47,760 --> 00:10:50,880
+First, they point out that a binding gap
+
+347
+00:10:49,200 --> 00:10:52,880
+is not a retrieval miss. There is
+
+348
+00:10:50,880 --> 00:10:55,440
+research cited here by Bulosadall from
+
+349
+00:10:52,880 --> 00:10:57,200
+2026 which examines systems designed to
+
+350
+00:10:55,440 --> 00:10:59,120
+search external databases or the
+
+351
+00:10:57,200 --> 00:11:00,560
+internet for information, you know,
+
+352
+00:10:59,120 --> 00:11:02,800
+retrieval augmented generation,
+
+353
+00:11:00,560 --> 00:11:04,480
+right? R A. If the system executes a
+
+354
+00:11:02,800 --> 00:11:06,560
+search, fails to find the correct
+
+355
+00:11:04,480 --> 00:11:09,040
+document, and therefore never brings the
+
+356
+00:11:06,560 --> 00:11:11,200
+needed evidence into its working memory,
+
+357
+00:11:09,040 --> 00:11:12,640
+that is a retrieval miss. The
+
+358
+00:11:11,200 --> 00:11:14,000
+information was simply never on the
+
+359
+00:11:12,640 --> 00:11:15,600
+table to begin with.
+
+360
+00:11:14,000 --> 00:11:18,720
+Because going back to our recipe
+
+361
+00:11:15,600 --> 00:11:20,240
+analogy, for it to be a binding gap. The
+
+362
+00:11:18,720 --> 00:11:22,079
+flour and the eggs have to actually be
+
+363
+00:11:20,240 --> 00:11:24,240
+in the kitchen. If you never went to the
+
+364
+00:11:22,079 --> 00:11:25,920
+grocery store to buy the eggs, you can't
+
+365
+00:11:24,240 --> 00:11:28,160
+blame a binding failure.
+
+366
+00:11:25,920 --> 00:11:30,720
+Exactly that. The ingredients must be
+
+367
+00:11:28,160 --> 00:11:32,399
+present. Second, the post draws a
+
+368
+00:11:30,720 --> 00:11:35,200
+boundary against what it calls a
+
+369
+00:11:32,399 --> 00:11:38,079
+downstream context utilization failure,
+
+370
+00:11:35,200 --> 00:11:39,040
+referencing a 2026 paper by Pandy.
+
+371
+00:11:38,079 --> 00:11:40,800
+Okay, what's that?
+
+372
+00:11:39,040 --> 00:11:42,800
+Imagine the model does retrieve the
+
+373
+00:11:40,800 --> 00:11:44,480
+right document. The exact answer is
+
+374
+00:11:42,800 --> 00:11:47,120
+sitting right there in its context
+
+375
+00:11:44,480 --> 00:11:49,040
+window, plain as day, but for whatever
+
+376
+00:11:47,120 --> 00:11:51,279
+reason, perhaps the user's prompt was
+
+377
+00:11:49,040 --> 00:11:53,040
+overly complex or the document was 50
+
+378
+00:11:51,279 --> 00:11:55,600
+pages long and overwhelmed the attention
+
+379
+00:11:53,040 --> 00:11:57,600
+mechanism, the model just ignores that
+
+380
+00:11:55,600 --> 00:11:59,440
+specific paragraph entirely and goes off
+
+381
+00:11:57,600 --> 00:11:59,920
+on a tangent. So, it saw it but ignored
+
+382
+00:11:59,440 --> 00:12:02,160
+it.
+
+383
+00:11:59,920 --> 00:12:04,640
+Right? That is a failure to utilize
+
+384
+00:12:02,160 --> 00:12:06,160
+provided context. The system ignored the
+
+385
+00:12:04,640 --> 00:12:08,000
+ingredient entirely rather than trying
+
+386
+00:12:06,160 --> 00:12:09,200
+to use it and wiring it incorrectly.
+
+387
+00:12:08,000 --> 00:12:11,120
+Got it. What's next?
+
+388
+00:12:09,200 --> 00:12:13,360
+Third, it is not a decomposition
+
+389
+00:12:11,120 --> 00:12:16,399
+failure. This happens when you give a
+
+390
+00:12:13,360 --> 00:12:18,560
+model a complex multi-step logic or math
+
+391
+00:12:16,399 --> 00:12:21,360
+problem and it just breaks a problem
+
+392
+00:12:18,560 --> 00:12:23,200
+apart completely wrong from step one. It
+
+393
+00:12:21,360 --> 00:12:25,440
+heads down the wrong logical path
+
+394
+00:12:23,200 --> 00:12:26,079
+entirely, solving the wrong sub
+
+395
+00:12:25,440 --> 00:12:28,480
+problems.
+
+396
+00:12:26,079 --> 00:12:30,880
+Okay, I track that. And finally, the
+
+397
+00:12:28,480 --> 00:12:32,880
+post is very clear that the binding gap
+
+398
+00:12:30,880 --> 00:12:33,839
+is not what we would call a generic
+
+399
+00:12:32,880 --> 00:12:34,160
+hallucination.
+
+400
+00:12:33,839 --> 00:12:36,160
+Right?
+
+401
+00:12:34,160 --> 00:12:38,800
+The catchall. A generic hallucination is
+
+402
+00:12:36,160 --> 00:12:41,200
+when the model just completely untethers
+
+403
+00:12:38,800 --> 00:12:43,200
+from reality and from any factual
+
+404
+00:12:41,200 --> 00:12:44,959
+support provided in the prompt. It
+
+405
+00:12:43,200 --> 00:12:47,200
+starts fabricating content from scratch,
+
+406
+00:12:44,959 --> 00:12:49,040
+making up fake legal precedents,
+
+407
+00:12:47,200 --> 00:12:50,959
+inventing historical figures out of
+
+408
+00:12:49,040 --> 00:12:52,079
+whole cloth, or creating fictional
+
+409
+00:12:50,959 --> 00:12:53,920
+academic papers.
+
+410
+00:12:52,079 --> 00:12:56,000
+There's no preserved semantic material
+
+411
+00:12:53,920 --> 00:12:57,760
+from the prompt being miswired there.
+
+412
+00:12:56,000 --> 00:12:59,600
+Exactly. It's just the model's text
+
+413
+00:12:57,760 --> 00:13:01,680
+generation engine running hot and
+
+414
+00:12:59,600 --> 00:13:03,200
+producing pure fiction.
+
+415
+00:13:01,680 --> 00:13:05,519
+So if we strip all of those other
+
+416
+00:13:03,200 --> 00:13:06,399
+distinct mechanical failures away, what
+
+417
+00:13:05,519 --> 00:13:08,639
+are we left with?
+
+418
+00:13:06,399 --> 00:13:11,120
+We are left with the posts three marks
+
+419
+00:13:08,639 --> 00:13:12,800
+of a true verifiable binding gap
+
+420
+00:13:11,120 --> 00:13:14,240
+failure. These are the diagnostic
+
+421
+00:13:12,800 --> 00:13:14,560
+criteria that engineers need to look
+
+422
+00:13:14,240 --> 00:13:16,399
+for.
+
+423
+00:13:14,560 --> 00:13:19,279
+Okay, let's hear the three marks. Mark
+
+424
+00:13:16,399 --> 00:13:21,440
+number one, the relevant pieces, the
+
+425
+00:13:19,279 --> 00:13:24,079
+semantic materials, the names, the
+
+426
+00:13:21,440 --> 00:13:25,760
+numbers are present enough in the output
+
+427
+00:13:24,079 --> 00:13:27,360
+that the model's answer feels
+
+428
+00:13:25,760 --> 00:13:28,720
+uncomfortably close to the truth.
+
+429
+00:13:27,360 --> 00:13:29,279
+Right. The scrambled eggs with raw
+
+430
+00:13:28,720 --> 00:13:32,480
+flour.
+
+431
+00:13:29,279 --> 00:13:34,480
+Exactly. Mark number two. The error
+
+432
+00:13:32,480 --> 00:13:37,600
+becomes visible exactly at the moment
+
+433
+00:13:34,480 --> 00:13:40,000
+when a specific role, a specific source
+
+434
+00:13:37,600 --> 00:13:42,480
+attribution, or a specific numeric
+
+435
+00:13:40,000 --> 00:13:44,480
+attachment really matters. It's the
+
+436
+00:13:42,480 --> 00:13:47,040
+inversion, the reassignment, or the
+
+437
+00:13:44,480 --> 00:13:47,839
+precise pairing that breaks the system.
+
+438
+00:13:47,040 --> 00:13:50,399
+And mark three.
+
+439
+00:13:47,839 --> 00:13:52,079
+Mark number three, the failure cannot be
+
+440
+00:13:50,399 --> 00:13:54,079
+better explained by one of those other
+
+441
+00:13:52,079 --> 00:13:56,560
+categories we just eliminated, like a
+
+442
+00:13:54,079 --> 00:13:58,480
+missing database retrieval or solving
+
+443
+00:13:56,560 --> 00:14:00,320
+the wrong mathematical subtask.
+
+444
+00:13:58,480 --> 00:14:01,279
+So, it's a very narrow specific
+
+445
+00:14:00,320 --> 00:14:03,040
+diagnosis.
+
+446
+00:14:01,279 --> 00:14:05,040
+Yes. When you have all three of those
+
+447
+00:14:03,040 --> 00:14:06,639
+marks present simultaneously, you are
+
+448
+00:14:05,040 --> 00:14:08,399
+looking at the binding gap. You are
+
+449
+00:14:06,639 --> 00:14:10,079
+looking at a system that possesses the
+
+450
+00:14:08,399 --> 00:14:12,000
+pieces but fundamentally lost the
+
+451
+00:14:10,079 --> 00:14:14,399
+wiring. Okay, here's where it gets
+
+452
+00:14:12,000 --> 00:14:16,240
+incredibly interesting, but I feel the
+
+453
+00:14:14,399 --> 00:14:17,680
+need to push back just a little bit or
+
+454
+00:14:16,240 --> 00:14:18,880
+at least play devil's advocate for you,
+
+455
+00:14:17,680 --> 00:14:20,160
+the listener, who might be wondering
+
+456
+00:14:18,880 --> 00:14:21,279
+about the practicality of this.
+
+457
+00:14:20,160 --> 00:14:23,120
+Sure, lay it on me.
+
+458
+00:14:21,279 --> 00:14:24,720
+I can hear someone thinking, okay, this
+
+459
+00:14:23,120 --> 00:14:26,880
+taxonomy is very intellectually
+
+460
+00:14:24,720 --> 00:14:29,680
+stimulating. I understand the difference
+
+461
+00:14:26,880 --> 00:14:32,160
+between a retrieval miss and a binding
+
+462
+00:14:29,680 --> 00:14:33,839
+gap. But are we just splitting hairs
+
+463
+00:14:32,160 --> 00:14:34,480
+here for the sake of writing academic
+
+464
+00:14:33,839 --> 00:14:35,680
+papers?
+
+465
+00:14:34,480 --> 00:14:37,199
+That's a fair question,
+
+466
+00:14:35,680 --> 00:14:39,600
+right? Like why does it matter so much
+
+467
+00:14:37,199 --> 00:14:42,320
+if we insist on calling it a binding gap
+
+468
+00:14:39,600 --> 00:14:44,480
+versus just saying the AI hallucinated a
+
+469
+00:14:42,320 --> 00:14:46,959
+connection or got confused by the
+
+470
+00:14:44,480 --> 00:14:48,959
+prompt? Does this level of linguistic
+
+471
+00:14:46,959 --> 00:14:50,720
+precision actually change anything for
+
+472
+00:14:48,959 --> 00:14:51,279
+the person trying to build or use these
+
+473
+00:14:50,720 --> 00:14:53,600
+models?
+
+474
+00:14:51,279 --> 00:14:56,880
+It is a vital question because taxonomy
+
+475
+00:14:53,600 --> 00:14:58,720
+without application is just well trivia.
+
+476
+00:14:56,880 --> 00:15:00,720
+But the precision here is what actually
+
+477
+00:14:58,720 --> 00:15:01,440
+leads to engineering solutions.
+
+478
+00:15:00,720 --> 00:15:03,519
+How so?
+
+479
+00:15:01,440 --> 00:15:05,760
+Let's use a mechanical analogy. If you
+
+480
+00:15:03,519 --> 00:15:08,000
+have a complex piece of heavy machinery
+
+481
+00:15:05,760 --> 00:15:10,320
+on a factory floor and it stops working
+
+482
+00:15:08,000 --> 00:15:12,959
+and you misdiagnose a broken electrical
+
+483
+00:15:10,320 --> 00:15:15,120
+wire as a dead battery, you are going to
+
+484
+00:15:12,959 --> 00:15:17,199
+spend all day swapping in fresh
+
+485
+00:15:15,120 --> 00:15:17,760
+batteries and you will never fix the
+
+486
+00:15:17,199 --> 00:15:19,040
+machine.
+
+487
+00:15:17,760 --> 00:15:19,760
+Right. You're treating the wrong
+
+488
+00:15:19,040 --> 00:15:22,240
+disease.
+
+489
+00:15:19,760 --> 00:15:23,920
+Exactly. The umbrella term hallucination
+
+490
+00:15:22,240 --> 00:15:26,320
+is the equivalent of just saying the
+
+491
+00:15:23,920 --> 00:15:29,440
+machine is broken. It completely
+
+492
+00:15:26,320 --> 00:15:31,279
+flattens landscape of AI failures. If an
+
+493
+00:15:29,440 --> 00:15:33,519
+AI engineer thinks a model is
+
+494
+00:15:31,279 --> 00:15:35,760
+hallucinating a factual connection
+
+495
+00:15:33,519 --> 00:15:37,839
+because it simply lacks knowledge, their
+
+496
+00:15:35,760 --> 00:15:38,959
+instinct will be to fix it by feeding
+
+497
+00:15:37,839 --> 00:15:40,720
+the model more data.
+
+498
+00:15:38,959 --> 00:15:42,399
+They will train it on more books, expand
+
+499
+00:15:40,720 --> 00:15:44,880
+its database, give it more parameters.
+
+500
+00:15:42,399 --> 00:15:47,680
+Yep. But if the problem is actually a
+
+501
+00:15:44,880 --> 00:15:48,880
+binding gap, feeding the model more data
+
+502
+00:15:47,680 --> 00:15:51,839
+won't help at all
+
+503
+00:15:48,880 --> 00:15:53,519
+because more data doesn't fix the wire.
+
+504
+00:15:51,839 --> 00:15:55,600
+In fact, if we go back to what Wang and
+
+505
+00:15:53,519 --> 00:15:57,519
+Sun said about entanglement, dumping
+
+506
+00:15:55,600 --> 00:15:59,279
+more data into the model might actually
+
+507
+00:15:57,519 --> 00:16:01,440
+increase the mathematical entanglement
+
+508
+00:15:59,279 --> 00:16:04,000
+and make the binding gap even worse.
+
+509
+00:16:01,440 --> 00:16:06,000
+It absolutely could. By isolating this
+
+510
+00:16:04,000 --> 00:16:08,079
+specific family of high consequence
+
+511
+00:16:06,000 --> 00:16:09,759
+failures, failures where the structural
+
+512
+00:16:08,079 --> 00:16:11,360
+attachment matters more than the topical
+
+513
+00:16:09,759 --> 00:16:13,040
+familiarity. Researchers can stop
+
+514
+00:16:11,360 --> 00:16:14,480
+throwing raw data at the problem and
+
+515
+00:16:13,040 --> 00:16:16,880
+start designing highly targeted
+
+516
+00:16:14,480 --> 00:16:19,199
+architectural interventions. narrow
+
+517
+00:16:16,880 --> 00:16:20,880
+defensible terms allow us to isolate the
+
+518
+00:16:19,199 --> 00:16:23,120
+exact mechanical flaw.
+
+519
+00:16:20,880 --> 00:16:25,440
+That broken wire analogy actually
+
+520
+00:16:23,120 --> 00:16:28,000
+perfectly sets up the entire next phase
+
+521
+00:16:25,440 --> 00:16:29,680
+of our exploration. Because if we are
+
+522
+00:16:28,000 --> 00:16:31,440
+going to sit here and confidently claim
+
+523
+00:16:29,680 --> 00:16:33,600
+that there's a broken wire inside the
+
+524
+00:16:31,440 --> 00:16:34,079
+AI, we have a burden of proof.
+
+525
+00:16:33,600 --> 00:16:35,519
+We do.
+
+526
+00:16:34,079 --> 00:16:37,279
+We have to prove that there are actual
+
+527
+00:16:35,519 --> 00:16:39,920
+wires in there to begin with. We have to
+
+528
+00:16:37,279 --> 00:16:42,639
+ask the hard question. Is this idea of
+
+529
+00:16:39,920 --> 00:16:44,800
+binding just an external psychological
+
+530
+00:16:42,639 --> 00:16:46,399
+metaphor we are imposing on the model's
+
+531
+00:16:44,800 --> 00:16:47,199
+text output to make ourselves feel
+
+532
+00:16:46,399 --> 00:16:49,680
+better
+
+533
+00:16:47,199 --> 00:16:52,160
+or is there actual physical mathematical
+
+534
+00:16:49,680 --> 00:16:54,560
+machinery inside the artificial neural
+
+535
+00:16:52,160 --> 00:16:55,440
+network that handles and drops these
+
+536
+00:16:54,560 --> 00:16:57,440
+bindings
+
+537
+00:16:55,440 --> 00:16:59,839
+and that is exactly where the post
+
+538
+00:16:57,440 --> 00:17:01,920
+explicitly transitions from behavioral
+
+539
+00:16:59,839 --> 00:17:03,680
+observation to mechanistic evidence. We
+
+540
+00:17:01,920 --> 00:17:04,720
+are lifting the hood on the engine. I am
+
+541
+00:17:03,680 --> 00:17:06,400
+so ready for this
+
+542
+00:17:04,720 --> 00:17:08,160
+good because this is where the research
+
+543
+00:17:06,400 --> 00:17:09,760
+crosses over from computer science into
+
+544
+00:17:08,160 --> 00:17:12,720
+something that feels almost like digital
+
+545
+00:17:09,760 --> 00:17:14,400
+neuroscience. The post acknowledges that
+
+546
+00:17:12,720 --> 00:17:16,720
+if binding were just an external label
+
+547
+00:17:14,400 --> 00:17:18,799
+we slap on bad paragraphs, it would be a
+
+548
+00:17:16,720 --> 00:17:20,880
+weak, untestable theory. But the
+
+549
+00:17:18,799 --> 00:17:23,360
+mechanistic interpretability literature
+
+550
+00:17:20,880 --> 00:17:25,600
+has moved far beyond that. We now have
+
+551
+00:17:23,360 --> 00:17:27,760
+concrete proof that binding is a task
+
+552
+00:17:25,600 --> 00:17:28,880
+solved internally with dedicated
+
+553
+00:17:27,760 --> 00:17:30,480
+mathematical structures.
+
+554
+00:17:28,880 --> 00:17:33,120
+Dedicated structures. Okay, lay it out.
+
+555
+00:17:30,480 --> 00:17:35,520
+The post highlights a pivotal 2023 paper
+
+556
+00:17:33,120 --> 00:17:38,000
+by researchers Fang and Steinhart that
+
+557
+00:17:35,520 --> 00:17:40,000
+looks specifically at in context entity
+
+558
+00:17:38,000 --> 00:17:41,840
+binding. What they discovered
+
+559
+00:17:40,000 --> 00:17:42,320
+fundamentally changes how we view these
+
+560
+00:17:41,840 --> 00:17:43,360
+models.
+
+561
+00:17:42,320 --> 00:17:45,280
+What do they find?
+
+562
+00:17:43,360 --> 00:17:47,919
+They found that language models don't
+
+563
+00:17:45,280 --> 00:17:49,919
+just rely on a vague amorphous cloud of
+
+564
+00:17:47,919 --> 00:17:51,919
+general semantic association to keep
+
+565
+00:17:49,919 --> 00:17:53,760
+things together. when they need to link
+
+566
+00:17:51,919 --> 00:17:56,000
+two things, they actually generate and
+
+567
+00:17:53,760 --> 00:17:58,080
+attach specific internal mathematical
+
+568
+00:17:56,000 --> 00:18:01,360
+structures, which Fang and Steinhart
+
+569
+00:17:58,080 --> 00:18:02,320
+call binding ID vectors to entities and
+
+570
+00:18:01,360 --> 00:18:03,840
+their attributes.
+
+571
+00:18:02,320 --> 00:18:05,760
+Okay, I really want to slow down and
+
+572
+00:18:03,840 --> 00:18:07,360
+unpack what a binding I vector is
+
+573
+00:18:05,760 --> 00:18:09,520
+because we're talking about visualizing
+
+574
+00:18:07,360 --> 00:18:10,320
+the internal invisible brain activity of
+
+575
+00:18:09,520 --> 00:18:10,880
+the AI,
+
+576
+00:18:10,320 --> 00:18:12,880
+right?
+
+577
+00:18:10,880 --> 00:18:15,280
+A vector in the context of machine
+
+578
+00:18:12,880 --> 00:18:16,960
+learning is essentially a very long list
+
+579
+00:18:15,280 --> 00:18:18,720
+of numbers. You can think of it as a
+
+580
+00:18:16,960 --> 00:18:20,640
+coordinate or a direction and a
+
+581
+00:18:18,720 --> 00:18:22,080
+magnitude pointing somewhere in an
+
+582
+00:18:20,640 --> 00:18:23,360
+unimaginably highdimensional
+
+583
+00:18:22,080 --> 00:18:26,880
+mathematical space.
+
+584
+00:18:23,360 --> 00:18:27,600
+Exactly. It's how the AI represents any
+
+585
+00:18:26,880 --> 00:18:29,520
+concept.
+
+586
+00:18:27,600 --> 00:18:32,720
+And what I understand Fang and
+
+587
+00:18:29,520 --> 00:18:35,039
+Steinhardt to be saying is that when the
+
+588
+00:18:32,720 --> 00:18:36,960
+AI reads a simple sentence like the red
+
+589
+00:18:35,039 --> 00:18:38,640
+apple is on the table, it doesn't just
+
+590
+00:18:36,960 --> 00:18:41,440
+light up the apple concept and the red
+
+591
+00:18:38,640 --> 00:18:42,080
+concept in a general glowing soup of
+
+592
+00:18:41,440 --> 00:18:44,160
+activation.
+
+593
+00:18:42,080 --> 00:18:46,559
+No, it's way more specific than that. It
+
+594
+00:18:44,160 --> 00:18:49,840
+literally generates a specific newly
+
+595
+00:18:46,559 --> 00:18:51,600
+minted ID tag vector and it physically
+
+596
+00:18:49,840 --> 00:18:53,520
+integrates that tag into the
+
+597
+00:18:51,600 --> 00:18:55,840
+mathematical representations of both
+
+598
+00:18:53,520 --> 00:18:57,919
+Apple and red across its internal
+
+599
+00:18:55,840 --> 00:18:59,840
+processing layers to lock them together.
+
+600
+00:18:57,919 --> 00:19:02,160
+That is a phenomenal way to visualize
+
+601
+00:18:59,840 --> 00:19:04,240
+it. It is a discrete internally
+
+602
+00:19:02,160 --> 00:19:05,919
+generated mechanism for attachment. It
+
+603
+00:19:04,240 --> 00:19:06,320
+is a temporary lock and key.
+
+604
+00:19:05,919 --> 00:19:08,000
+Wow.
+
+605
+00:19:06,320 --> 00:19:09,520
+And the reason we know this isn't just a
+
+606
+00:19:08,000 --> 00:19:11,200
+theory is because researchers can
+
+607
+00:19:09,520 --> 00:19:12,080
+perform what are called causal
+
+608
+00:19:11,200 --> 00:19:13,360
+interventions.
+
+609
+00:19:12,080 --> 00:19:13,679
+Pausal interventions. What does that
+
+610
+00:19:13,360 --> 00:19:14,960
+mean?
+
+611
+00:19:13,679 --> 00:19:17,120
+They don't just observe the network,
+
+612
+00:19:14,960 --> 00:19:18,880
+they actively mess with it. They can run
+
+613
+00:19:17,120 --> 00:19:21,039
+a prompt through the active neural
+
+614
+00:19:18,880 --> 00:19:23,520
+network, pause the computation
+
+615
+00:19:21,039 --> 00:19:25,919
+mid-stream, locate these specific
+
+616
+00:19:23,520 --> 00:19:27,600
+binding ID vectors within the layers,
+
+617
+00:19:25,919 --> 00:19:29,120
+and surgically alter the numbers.
+
+618
+00:19:27,600 --> 00:19:31,600
+They literally reach into the math.
+
+619
+00:19:29,120 --> 00:19:34,320
+Yes, they reach into the highdimensional
+
+620
+00:19:31,600 --> 00:19:36,720
+math and do vector subtraction to unbind
+
+621
+00:19:34,320 --> 00:19:38,640
+the red from the apple. And when they
+
+622
+00:19:36,720 --> 00:19:40,160
+let the model finish computing, the
+
+623
+00:19:38,640 --> 00:19:42,160
+output changes accordingly.
+
+624
+00:19:40,160 --> 00:19:44,240
+That is wild. But the research gets even
+
+625
+00:19:42,160 --> 00:19:48,080
+more hyperspecific than that. The post
+
+626
+00:19:44,240 --> 00:19:50,720
+brings in a subsequent 2024 paper by D
+
+627
+00:19:48,080 --> 00:19:52,640
+Heinserling and anyway they push this
+
+628
+00:19:50,720 --> 00:19:55,120
+mechanistic search even further. They
+
+629
+00:19:52,640 --> 00:19:56,880
+didn't just find these general ID tags.
+
+630
+00:19:55,120 --> 00:20:00,320
+They identified a very specific
+
+631
+00:19:56,880 --> 00:20:03,360
+location, a low rank ordering subspace.
+
+632
+00:20:00,320 --> 00:20:04,559
+Okay, low rank ordering subspace. That
+
+633
+00:20:03,360 --> 00:20:05,280
+sounds incredibly intimidating.
+
+634
+00:20:04,559 --> 00:20:06,480
+It's a mouthful.
+
+635
+00:20:05,280 --> 00:20:07,919
+It sounds like something an engineer
+
+636
+00:20:06,480 --> 00:20:09,440
+would yell about in a science fiction
+
+637
+00:20:07,919 --> 00:20:11,440
+movie right before the warp drive
+
+638
+00:20:09,440 --> 00:20:13,440
+explodes. Let's translate that into
+
+639
+00:20:11,440 --> 00:20:14,960
+plain English. What is a subspace and
+
+640
+00:20:13,440 --> 00:20:17,120
+how does it order things?
+
+641
+00:20:14,960 --> 00:20:19,200
+Think of the model's total internal
+
+642
+00:20:17,120 --> 00:20:21,760
+representation space as a massive
+
+643
+00:20:19,200 --> 00:20:23,919
+multi-dimensional volume. We humans live
+
+644
+00:20:21,760 --> 00:20:26,480
+in three dimensions, but these models
+
+645
+00:20:23,919 --> 00:20:27,440
+operate in spaces with tens of thousands
+
+646
+00:20:26,480 --> 00:20:28,960
+of dimensions.
+
+647
+00:20:27,440 --> 00:20:31,679
+Hard to picture, but okay.
+
+648
+00:20:28,960 --> 00:20:33,840
+A subspace is just a specific smaller
+
+649
+00:20:31,679 --> 00:20:37,280
+section or geometric plane cut through
+
+650
+00:20:33,840 --> 00:20:39,520
+that massive volume. What Dy Heinserling
+
+651
+00:20:37,280 --> 00:20:41,679
+and Inoui discovered is that there is a
+
+652
+00:20:39,520 --> 00:20:44,320
+highly specific geometric area inside
+
+653
+00:20:41,679 --> 00:20:46,640
+the model whose entire job its only
+
+654
+00:20:44,320 --> 00:20:48,799
+function is to steer which attribute
+
+655
+00:20:46,640 --> 00:20:50,320
+gets bound to which entity based on the
+
+656
+00:20:48,799 --> 00:20:52,240
+order they appeared in the text.
+
+657
+00:20:50,320 --> 00:20:53,919
+Wait, so it's a dedicated switchboard?
+
+658
+00:20:52,240 --> 00:20:56,320
+It functions exactly as the physical
+
+659
+00:20:53,919 --> 00:20:58,320
+switchboard. The post gives a brilliant
+
+660
+00:20:56,320 --> 00:21:01,200
+example of a causal intervention
+
+661
+00:20:58,320 --> 00:21:03,200
+targeting this specific area. Imagine
+
+662
+00:21:01,200 --> 00:21:05,600
+you give the model a prompt describing a
+
+663
+00:21:03,200 --> 00:21:06,799
+box that contains coffee and a bag that
+
+664
+00:21:05,600 --> 00:21:09,200
+contains a stone.
+
+665
+00:21:06,799 --> 00:21:11,360
+Okay, box has coffee, bag has a stone.
+
+666
+00:21:09,200 --> 00:21:13,760
+The researchers can pause the model, go
+
+667
+00:21:11,360 --> 00:21:15,840
+into the specific ordering subspace and
+
+668
+00:21:13,760 --> 00:21:18,000
+mathematically patch or invert the
+
+669
+00:21:15,840 --> 00:21:18,559
+direction of the vectors in that exact
+
+670
+00:21:18,000 --> 00:21:19,679
+location.
+
+671
+00:21:18,559 --> 00:21:21,600
+It's flipping the numbers,
+
+672
+00:21:19,679 --> 00:21:23,600
+right? They don't change the words box,
+
+673
+00:21:21,600 --> 00:21:25,440
+bag, coffee, or stone. They just flip
+
+674
+00:21:23,600 --> 00:21:27,120
+the switchboard. And suddenly the model
+
+675
+00:21:25,440 --> 00:21:29,440
+will confidently output that the box
+
+676
+00:21:27,120 --> 00:21:30,320
+contains the stone and the bag contains
+
+677
+00:21:29,440 --> 00:21:32,240
+the coffee.
+
+678
+00:21:30,320 --> 00:21:33,679
+That is staggering. It means we aren't
+
+679
+00:21:32,240 --> 00:21:36,240
+just looking at the output of a
+
+680
+00:21:33,679 --> 00:21:38,080
+mysterious black box anymore where we
+
+681
+00:21:36,240 --> 00:21:40,159
+throw a bunch of words in, cross our
+
+682
+00:21:38,080 --> 00:21:41,039
+fingers, and pray that good words come
+
+683
+00:21:40,159 --> 00:21:43,679
+out the other side.
+
+684
+00:21:41,039 --> 00:21:46,320
+No, we are mapping the circuitry.
+
+685
+00:21:43,679 --> 00:21:48,960
+We have actually found the tiny internal
+
+686
+00:21:46,320 --> 00:21:51,360
+switchboard operator inside the neural
+
+687
+00:21:48,960 --> 00:21:53,679
+network. We can watch them physically
+
+688
+00:21:51,360 --> 00:21:56,480
+unplugging the stone cable from the bag
+
+689
+00:21:53,679 --> 00:21:58,640
+jack and plugging it into the box jack.
+
+690
+00:21:56,480 --> 00:21:59,280
+We are mapping the anatomy of artificial
+
+691
+00:21:58,640 --> 00:22:01,440
+thought.
+
+692
+00:21:59,280 --> 00:22:04,159
+The implications of this for how we
+
+693
+00:22:01,440 --> 00:22:06,559
+build, test, and debug AI in the future
+
+694
+00:22:04,159 --> 00:22:08,720
+are profound. Historically, when a
+
+695
+00:22:06,559 --> 00:22:10,880
+language model made a factual mistake,
+
+696
+00:22:08,720 --> 00:22:12,080
+engineers had a very blunt toolkit,
+
+697
+00:22:10,880 --> 00:22:13,360
+just retraining it, right?
+
+698
+00:22:12,080 --> 00:22:15,440
+Yeah. They would adjust massive
+
+699
+00:22:13,360 --> 00:22:16,880
+systemwide learning parameters or they
+
+700
+00:22:15,440 --> 00:22:18,240
+would try to filter the training data
+
+701
+00:22:16,880 --> 00:22:20,159
+and just hope the model learned the
+
+702
+00:22:18,240 --> 00:22:22,159
+pattern better the next time. But if we
+
+703
+00:22:20,159 --> 00:22:24,960
+can isolate the exact mathematical
+
+704
+00:22:22,159 --> 00:22:26,960
+vector and the exact subspace that binds
+
+705
+00:22:24,960 --> 00:22:29,679
+a specific attribute to a specific
+
+706
+00:22:26,960 --> 00:22:30,640
+object, the future of AI debugging looks
+
+707
+00:22:29,679 --> 00:22:31,200
+entirely different.
+
+708
+00:22:30,640 --> 00:22:33,520
+How so?
+
+709
+00:22:31,200 --> 00:22:35,679
+It looks much more like neurosurgery. If
+
+710
+00:22:33,520 --> 00:22:37,919
+a medical AI hallucinates a dangerous
+
+711
+00:22:35,679 --> 00:22:40,000
+interaction between two drugs, we might
+
+712
+00:22:37,919 --> 00:22:42,000
+not need to retrain a trillion parameter
+
+713
+00:22:40,000 --> 00:22:44,159
+model from scratch. we might be able to
+
+714
+00:22:42,000 --> 00:22:46,640
+go in and adjust the specific subspace
+
+715
+00:22:44,159 --> 00:22:48,880
+where that binding failed to take hold.
+
+716
+00:22:46,640 --> 00:22:51,360
+We are moving from behavioral psychology
+
+717
+00:22:48,880 --> 00:22:52,559
+to cellular biology and how we treat
+
+718
+00:22:51,360 --> 00:22:54,320
+these systems.
+
+719
+00:22:52,559 --> 00:22:57,200
+It fundamentally changes the paradigm of
+
+720
+00:22:54,320 --> 00:22:58,559
+what it means to improve an AI. But um
+
+721
+00:22:57,200 --> 00:23:00,720
+and I think this is a necessary
+
+722
+00:22:58,559 --> 00:23:03,200
+transition point. It's one thing to bind
+
+723
+00:23:00,720 --> 00:23:04,080
+a single simple attribute to a single
+
+724
+00:23:03,200 --> 00:23:05,200
+simple object,
+
+725
+00:23:04,080 --> 00:23:06,960
+a stone in a bag,
+
+726
+00:23:05,200 --> 00:23:09,840
+right? Or the color red to an apple.
+
+727
+00:23:06,960 --> 00:23:11,120
+Those are very isolated, almost toylike
+
+728
+00:23:09,840 --> 00:23:11,520
+laboratory examples.
+
+729
+00:23:11,120 --> 00:23:13,679
+Yeah.
+
+730
+00:23:11,520 --> 00:23:16,320
+How does this internal switchboard
+
+731
+00:23:13,679 --> 00:23:18,640
+handle the messy, ambiguous, incredibly
+
+732
+00:23:16,320 --> 00:23:19,679
+complex flow of natural human language?
+
+733
+00:23:18,640 --> 00:23:21,200
+Oh, it struggles.
+
+734
+00:23:19,679 --> 00:23:23,520
+Because when we speak or write, we don't
+
+735
+00:23:21,200 --> 00:23:25,440
+just list entity attribute pairs. We
+
+736
+00:23:23,520 --> 00:23:27,679
+tell complex stories. We describe
+
+737
+00:23:25,440 --> 00:23:29,039
+cascading events with multiple actors.
+
+738
+00:23:27,679 --> 00:23:30,640
+This is where the challenge scales up
+
+739
+00:23:29,039 --> 00:23:32,400
+exponentially. And it brings us to the
+
+740
+00:23:30,640 --> 00:23:34,799
+bridge from simple entity binding to
+
+741
+00:23:32,400 --> 00:23:35,520
+what linguists call thematic role
+
+742
+00:23:34,799 --> 00:23:37,919
+assignment.
+
+743
+00:23:35,520 --> 00:23:40,400
+Thematic role assignment. Yes, thematic
+
+744
+00:23:37,919 --> 00:23:43,039
+role assignment is the deep machinery of
+
+745
+00:23:40,400 --> 00:23:44,640
+who did what to whom. It's the event
+
+746
+00:23:43,039 --> 00:23:47,520
+structure, the causal logic of a
+
+747
+00:23:44,640 --> 00:23:50,799
+sentence. The post introduces a crucial
+
+748
+00:23:47,520 --> 00:23:53,039
+2025 paper by Denning, Guo, Snfgella,
+
+749
+00:23:50,799 --> 00:23:55,360
+and Blank that investigates how language
+
+750
+00:23:53,039 --> 00:23:56,400
+models handle this exact bridge.
+
+751
+00:23:55,360 --> 00:23:58,080
+Okay, what do they do?
+
+752
+00:23:56,400 --> 00:24:00,400
+Well, in natural language, you can have
+
+753
+00:23:58,080 --> 00:24:02,960
+two sentences that share the exact same
+
+754
+00:24:00,400 --> 00:24:04,400
+vocabulary, the exact same entities, but
+
+755
+00:24:02,960 --> 00:24:06,159
+have completely reversed event
+
+756
+00:24:04,400 --> 00:24:08,000
+structures. The classic linguistic
+
+757
+00:24:06,159 --> 00:24:10,000
+example is the dog bit the man versus
+
+758
+00:24:08,000 --> 00:24:12,240
+the man bit the dog. Right? The entities
+
+759
+00:24:10,000 --> 00:24:14,480
+man dog are identical. The action biting
+
+760
+00:24:12,240 --> 00:24:16,400
+is identical. But the roles, the agent
+
+761
+00:24:14,480 --> 00:24:18,400
+who initiates the action and the patient
+
+762
+00:24:16,400 --> 00:24:18,799
+who receives the action are completely
+
+763
+00:24:18,400 --> 00:24:20,400
+swapped.
+
+764
+00:24:18,799 --> 00:24:22,159
+And for a human being listening to those
+
+765
+00:24:20,400 --> 00:24:23,440
+sentences, that role assignment is the
+
+766
+00:24:22,159 --> 00:24:24,080
+single most important part of the
+
+767
+00:24:23,440 --> 00:24:24,559
+communication.
+
+768
+00:24:24,080 --> 00:24:26,000
+Absolutely.
+
+769
+00:24:24,559 --> 00:24:27,840
+It dictates the entire meaning, the
+
+770
+00:24:26,000 --> 00:24:30,400
+entire mental image, and the entire
+
+771
+00:24:27,840 --> 00:24:32,640
+consequence of the event. If you tell me
+
+772
+00:24:30,400 --> 00:24:34,400
+the man bit the dog, my brain
+
+773
+00:24:32,640 --> 00:24:37,120
+immediately flags that as a highly
+
+774
+00:24:34,400 --> 00:24:38,720
+unusual, specific, newsworthy event
+
+775
+00:24:37,120 --> 00:24:40,799
+entirely because of how the roles are
+
+776
+00:24:38,720 --> 00:24:41,279
+assigned. The structure dominates the
+
+777
+00:24:40,799 --> 00:24:42,880
+meaning.
+
+778
+00:24:41,279 --> 00:24:45,440
+And that is exactly where human
+
+779
+00:24:42,880 --> 00:24:48,640
+cognition and AI computation diverge
+
+780
+00:24:45,440 --> 00:24:50,799
+wildly. Humans integrate thematic roles
+
+781
+00:24:48,640 --> 00:24:53,279
+incredibly strongly into our overall
+
+782
+00:24:50,799 --> 00:24:54,880
+understanding of a situation. But what
+
+783
+00:24:53,279 --> 00:24:56,480
+Denning and their colleagues found
+
+784
+00:24:54,880 --> 00:24:58,480
+through their experiments is that while
+
+785
+00:24:56,480 --> 00:25:00,080
+large language models can extract agent
+
+786
+00:24:58,480 --> 00:25:01,360
+and patient information,
+
+787
+00:25:00,080 --> 00:25:03,279
+wait, they can extract it?
+
+788
+00:25:01,360 --> 00:25:05,760
+Yes, they do possess internal
+
+789
+00:25:03,279 --> 00:25:07,279
+mathematical mechanisms that recognize
+
+790
+00:25:05,760 --> 00:25:09,520
+who is the subject and who is the
+
+791
+00:25:07,279 --> 00:25:11,200
+object. But that role information
+
+792
+00:25:09,520 --> 00:25:13,200
+influences the model's overall
+
+793
+00:25:11,200 --> 00:25:15,039
+representation of the sentence much more
+
+794
+00:25:13,200 --> 00:25:16,720
+weakly than it does in humans.
+
+795
+00:25:15,039 --> 00:25:17,200
+So they see it, but they don't care as
+
+796
+00:25:16,720 --> 00:25:19,200
+much.
+
+797
+00:25:17,200 --> 00:25:21,200
+Exactly. The model captures the roles,
+
+798
+00:25:19,200 --> 00:25:23,279
+yes, but the role structure does not
+
+799
+00:25:21,200 --> 00:25:24,880
+dominate the model's broader thoughts or
+
+800
+00:25:23,279 --> 00:25:27,200
+semantic associations about the
+
+801
+00:25:24,880 --> 00:25:28,080
+sentence. The structure is secondary to
+
+802
+00:25:27,200 --> 00:25:29,679
+the vocabulary.
+
+803
+00:25:28,080 --> 00:25:32,240
+Okay. But post then layers in another
+
+804
+00:25:29,679 --> 00:25:34,480
+piece of evidence, a 2025 paper by
+
+805
+00:25:32,240 --> 00:25:36,640
+Aljafari, Carvalio, and Freighus, which
+
+806
+00:25:34,480 --> 00:25:38,320
+looks at the specific circuitry inside
+
+807
+00:25:36,640 --> 00:25:40,159
+the models handling these roles.
+
+808
+00:25:38,320 --> 00:25:43,120
+Yes. And they found that there are
+
+809
+00:25:40,159 --> 00:25:45,440
+indeed compact causally localized
+
+810
+00:25:43,120 --> 00:25:47,440
+circuits inside the models dedicated to
+
+811
+00:25:45,440 --> 00:25:49,279
+processing semantic roles. So the
+
+812
+00:25:47,440 --> 00:25:50,240
+machinery is definitively there. It's
+
+813
+00:25:49,279 --> 00:25:51,840
+not missing.
+
+814
+00:25:50,240 --> 00:25:54,480
+But when you put the Denning paper and
+
+815
+00:25:51,840 --> 00:25:56,880
+the Aljafari paper together, the Post
+
+816
+00:25:54,480 --> 00:25:59,600
+advocates for what it calls a precise
+
+817
+00:25:56,880 --> 00:26:01,360
+middle position. And understanding this
+
+818
+00:25:59,600 --> 00:26:03,279
+precise middle position is absolutely
+
+819
+00:26:01,360 --> 00:26:04,559
+crucial to understanding the limits of
+
+820
+00:26:03,279 --> 00:26:06,000
+modern AI.
+
+821
+00:26:04,559 --> 00:26:08,720
+It is the key to the whole thing.
+
+822
+00:26:06,000 --> 00:26:10,799
+The position is this role binding is
+
+823
+00:26:08,720 --> 00:26:14,559
+real inside the system. The circuits
+
+824
+00:26:10,799 --> 00:26:16,320
+exist, but it is so weakly integrated
+
+825
+00:26:14,559 --> 00:26:18,640
+into the broader network or so
+
+826
+00:26:16,320 --> 00:26:20,320
+fundamentally fragile that the model can
+
+827
+00:26:18,640 --> 00:26:22,559
+maintain an incredibly high level of
+
+828
+00:26:20,320 --> 00:26:24,400
+surface fluency while having completely
+
+829
+00:26:22,559 --> 00:26:25,279
+unstable structural attachments
+
+830
+00:26:24,400 --> 00:26:27,520
+underneath.
+
+831
+00:26:25,279 --> 00:26:29,679
+It exposes the central paradox of the
+
+832
+00:26:27,520 --> 00:26:31,600
+current generative AI boom. You can have
+
+833
+00:26:29,679 --> 00:26:33,440
+a model write a beautifully flowing,
+
+834
+00:26:31,600 --> 00:26:35,679
+grammatically pristine, highly
+
+835
+00:26:33,440 --> 00:26:38,080
+articulate four paragraph essay
+
+836
+00:26:35,679 --> 00:26:39,520
+describing a complex historical battle.
+
+837
+00:26:38,080 --> 00:26:40,000
+Right? It sounds like a historian wrote
+
+838
+00:26:39,520 --> 00:26:42,640
+it
+
+839
+00:26:40,000 --> 00:26:44,720
+exactly. While simultaneously on a deep
+
+840
+00:26:42,640 --> 00:26:47,039
+structural level, it is fundamentally
+
+841
+00:26:44,720 --> 00:26:49,520
+confusing which army actually initiated
+
+842
+00:26:47,039 --> 00:26:51,840
+the flank and which army retreated. The
+
+843
+00:26:49,520 --> 00:26:53,600
+surface of the text looks pristine, but
+
+844
+00:26:51,840 --> 00:26:55,360
+the structural loadbearing pillars
+
+845
+00:26:53,600 --> 00:26:56,960
+underneath are made of sand.
+
+846
+00:26:55,360 --> 00:26:59,039
+I have to pause here because this
+
+847
+00:26:56,960 --> 00:27:01,039
+creates a huge cognitive dissonance for
+
+848
+00:26:59,039 --> 00:27:03,039
+me and I'm sure for anyone listening who
+
+849
+00:27:01,039 --> 00:27:05,440
+uses these tools daily. Oh, I'm sure
+
+850
+00:27:03,039 --> 00:27:08,320
+if the systems grasp on who did what to
+
+851
+00:27:05,440 --> 00:27:10,640
+whom so inherently fragile and if it's
+
+852
+00:27:08,320 --> 00:27:11,679
+so weakly integrated compared to a human
+
+853
+00:27:10,640 --> 00:27:13,279
+brain
+
+854
+00:27:11,679 --> 00:27:15,360
+how are these models passing the bar
+
+855
+00:27:13,279 --> 00:27:17,600
+exam? How are they writing coherent
+
+856
+00:27:15,360 --> 00:27:19,840
+college level essays that fool
+
+857
+00:27:17,600 --> 00:27:22,400
+professors? How is the illusion of deep
+
+858
+00:27:19,840 --> 00:27:24,320
+competence so incredibly convincing if
+
+859
+00:27:22,400 --> 00:27:25,520
+the underlying binding is constantly on
+
+860
+00:27:24,320 --> 00:27:27,120
+the verge of snapping?
+
+861
+00:27:25,520 --> 00:27:28,640
+It is a great question and it forces us
+
+862
+00:27:27,120 --> 00:27:30,640
+to look at how these models actually
+
+863
+00:27:28,640 --> 00:27:32,400
+generate text. These models are trained
+
+864
+00:27:30,640 --> 00:27:34,400
+on the statistical patterns of trillions
+
+865
+00:27:32,400 --> 00:27:36,640
+of words scraped from the internet in
+
+866
+00:27:34,400 --> 00:27:39,039
+standard everyday conversational text or
+
+867
+00:27:36,640 --> 00:27:41,120
+even in broad open-ended essay writing.
+
+868
+00:27:39,039 --> 00:27:43,039
+Broad semantic association is often
+
+869
+00:27:41,120 --> 00:27:45,039
+enough to fake structural comprehension.
+
+870
+00:27:43,039 --> 00:27:47,039
+Fake it. How do you fake that? Well, if
+
+871
+00:27:45,039 --> 00:27:49,440
+you ask an AI to write an essay about
+
+872
+00:27:47,039 --> 00:27:51,840
+the causes of the French Revolution, the
+
+873
+00:27:49,440 --> 00:27:54,000
+general statistical cloud of concepts,
+
+874
+00:27:51,840 --> 00:27:57,200
+famine, taxation, marinet, the
+
+875
+00:27:54,000 --> 00:27:59,440
+guillotine, the Bastile is so incredibly
+
+876
+00:27:57,200 --> 00:28:01,840
+dense and so highly correlated in the
+
+877
+00:27:59,440 --> 00:28:04,320
+training data that the model can string
+
+878
+00:28:01,840 --> 00:28:07,279
+them together fluently without needing
+
+879
+00:28:04,320 --> 00:28:08,799
+perfectly rigid complex causal bindings
+
+880
+00:28:07,279 --> 00:28:10,880
+at every single step.
+
+881
+00:28:08,799 --> 00:28:13,279
+Ah, I see. The sheer statistical
+
+882
+00:28:10,880 --> 00:28:15,520
+momentum of the language itself carries
+
+883
+00:28:13,279 --> 00:28:17,760
+the model through the paragraph. It is
+
+884
+00:28:15,520 --> 00:28:18,320
+surfing on the statistical wave of human
+
+885
+00:28:17,760 --> 00:28:19,919
+language.
+
+886
+00:28:18,320 --> 00:28:21,520
+Okay, that makes sense. Because human
+
+887
+00:28:19,919 --> 00:28:24,080
+language is so full of predictable
+
+888
+00:28:21,520 --> 00:28:25,679
+patterns, cliches, and redundancies. The
+
+889
+00:28:24,080 --> 00:28:27,440
+model can sort of surf on top of those
+
+890
+00:28:25,679 --> 00:28:30,159
+waves without ever having to dive down
+
+891
+00:28:27,440 --> 00:28:31,520
+and rigidly bind the underlying logic.
+
+892
+00:28:30,159 --> 00:28:32,960
+It just knows that words about the
+
+893
+00:28:31,520 --> 00:28:33,279
+French Revolution generally sound like
+
+894
+00:28:32,960 --> 00:28:33,679
+this.
+
+895
+00:28:33,279 --> 00:28:35,440
+Exactly.
+
+896
+00:28:33,679 --> 00:28:37,679
+But that makes me wonder about us. Why
+
+897
+00:28:35,440 --> 00:28:40,159
+do human brains integrate thematic roles
+
+898
+00:28:37,679 --> 00:28:41,760
+so much more strongly? Why does who did
+
+899
+00:28:40,159 --> 00:28:43,760
+what to whom dominate our
+
+900
+00:28:41,760 --> 00:28:45,200
+representations while it's just a weak
+
+901
+00:28:43,760 --> 00:28:47,200
+easily dropped signal for a
+
+902
+00:28:45,200 --> 00:28:48,720
+multi-billion parameter transformer?
+
+903
+00:28:47,200 --> 00:28:51,520
+It almost certainly comes down to our
+
+904
+00:28:48,720 --> 00:28:53,600
+physical embodiment. Humans are physical
+
+905
+00:28:51,520 --> 00:28:56,080
+creatures existing in a physical world
+
+906
+00:28:53,600 --> 00:28:56,960
+governed by strict unforgiving laws of
+
+907
+00:28:56,080 --> 00:28:58,559
+cause and effect,
+
+908
+00:28:56,960 --> 00:29:00,640
+right? Gravity, momentum, all
+
+909
+00:28:58,559 --> 00:29:02,640
+from the moment a human infant is born,
+
+910
+00:29:00,640 --> 00:29:05,200
+they learn about agents and patients by
+
+911
+00:29:02,640 --> 00:29:07,840
+interacting with physics. A baby pushes
+
+912
+00:29:05,200 --> 00:29:10,799
+a block and the block moves. The baby is
+
+913
+00:29:07,840 --> 00:29:12,480
+the agent. The block is the patient. If
+
+914
+00:29:10,799 --> 00:29:12,880
+the baby doesn't push, the block doesn't
+
+915
+00:29:12,480 --> 00:29:14,320
+move.
+
+916
+00:29:12,880 --> 00:29:16,720
+Action and reaction.
+
+917
+00:29:14,320 --> 00:29:18,799
+Exactly. Our entire cognitive
+
+918
+00:29:16,720 --> 00:29:20,960
+architecture, our entire brain is built
+
+919
+00:29:18,799 --> 00:29:22,880
+from the ground up to track causal
+
+920
+00:29:20,960 --> 00:29:24,320
+relationships because our physical
+
+921
+00:29:22,880 --> 00:29:25,120
+survival depends on it.
+
+922
+00:29:24,320 --> 00:29:27,039
+And the AI,
+
+923
+00:29:25,120 --> 00:29:29,440
+a language model has no body, no
+
+924
+00:29:27,039 --> 00:29:32,000
+physical world, no sensory input, and no
+
+925
+00:29:29,440 --> 00:29:33,840
+inherent concept of cause and effect. It
+
+926
+00:29:32,000 --> 00:29:36,240
+is trained purely on predicting the next
+
+927
+00:29:33,840 --> 00:29:38,159
+token in a string of text. It learns the
+
+928
+00:29:36,240 --> 00:29:38,559
+shapes of words, not the physics of the
+
+929
+00:29:38,159 --> 00:29:39,039
+world.
+
+930
+00:29:38,559 --> 00:29:40,559
+Wow.
+
+931
+00:29:39,039 --> 00:29:42,080
+So, it naturally builds an internal
+
+932
+00:29:40,559 --> 00:29:43,840
+architecture where statistical
+
+933
+00:29:42,080 --> 00:29:46,799
+co-occurrence is the dominant driving
+
+934
+00:29:43,840 --> 00:29:49,279
+force and rigorous structural binding is
+
+935
+00:29:46,799 --> 00:29:51,919
+a secondary fragile byproduct.
+
+936
+00:29:49,279 --> 00:29:53,600
+That is a profound distinction. We learn
+
+937
+00:29:51,919 --> 00:29:56,880
+from interacting with physics. They
+
+938
+00:29:53,600 --> 00:29:59,039
+learn from mapping syntax. So, if broad
+
+939
+00:29:56,880 --> 00:30:01,600
+semantic association is enough to fake
+
+940
+00:29:59,039 --> 00:30:04,159
+it in an essay or a casual chat or even
+
+941
+00:30:01,600 --> 00:30:06,080
+a poetry generation prompt, what happens
+
+942
+00:30:04,159 --> 00:30:07,360
+when we remove the safety net of those
+
+943
+00:30:06,080 --> 00:30:08,240
+statistical patterns?
+
+944
+00:30:07,360 --> 00:30:09,840
+Things get messy.
+
+945
+00:30:08,240 --> 00:30:11,679
+What happens when we raise the stakes,
+
+946
+00:30:09,840 --> 00:30:13,200
+strip away the narrative fluff, and
+
+947
+00:30:11,679 --> 00:30:15,120
+force the model into an environment
+
+948
+00:30:13,200 --> 00:30:17,360
+where it has to handle dense,
+
+949
+00:30:15,120 --> 00:30:19,279
+mathematically rigid relationships,
+
+950
+00:30:17,360 --> 00:30:20,159
+where broad association is completely
+
+951
+00:30:19,279 --> 00:30:21,679
+useless.
+
+952
+00:30:20,159 --> 00:30:23,279
+That is exactly where the illusion
+
+953
+00:30:21,679 --> 00:30:25,520
+shatters and that is where the post
+
+954
+00:30:23,279 --> 00:30:27,360
+takes us next to prove its point. To
+
+955
+00:30:25,520 --> 00:30:29,760
+truly see the catastrophic nature of the
+
+956
+00:30:27,360 --> 00:30:30,720
+binding gap in action, we need an
+
+957
+00:30:29,760 --> 00:30:32,159
+ultimate stress test.
+
+958
+00:30:30,720 --> 00:30:32,480
+An ultimate stress test. What do they
+
+959
+00:30:32,159 --> 00:30:34,799
+do?
+
+960
+00:30:32,480 --> 00:30:37,279
+The post points to a 2026 paper by
+
+961
+00:30:34,799 --> 00:30:39,360
+researchers Zinten and Jennifer Duza as
+
+962
+00:30:37,279 --> 00:30:41,440
+the strongest, most rigorous version of
+
+963
+00:30:39,360 --> 00:30:43,039
+this test. They took these advanced
+
+964
+00:30:41,440 --> 00:30:44,960
+language models out of the comfortable
+
+965
+00:30:43,039 --> 00:30:46,880
+realm of writing essays and generating
+
+966
+00:30:44,960 --> 00:30:49,200
+code snippets and they put them to work
+
+967
+00:30:46,880 --> 00:30:51,120
+on a grueling, highly unforgiving
+
+968
+00:30:49,200 --> 00:30:51,919
+realworld scientific task,
+
+969
+00:30:51,120 --> 00:30:54,240
+which was
+
+970
+00:30:51,919 --> 00:30:55,760
+evidence extraction for metaanalysis.
+
+971
+00:30:54,240 --> 00:30:57,840
+Okay. I think we need to define what
+
+972
+00:30:55,760 --> 00:31:00,640
+that setting actually looks like because
+
+973
+00:30:57,840 --> 00:31:02,640
+a metaanalysis is intense work. A
+
+974
+00:31:00,640 --> 00:31:04,720
+metaanalysis is essentially a master
+
+975
+00:31:02,640 --> 00:31:06,480
+study that combines the statistical
+
+976
+00:31:04,720 --> 00:31:08,720
+results of multiple independent
+
+977
+00:31:06,480 --> 00:31:09,440
+scientific studies to find an overall
+
+978
+00:31:08,720 --> 00:31:10,960
+truth.
+
+979
+00:31:09,440 --> 00:31:11,520
+Right? It's the gold standard in
+
+980
+00:31:10,960 --> 00:31:13,520
+science.
+
+981
+00:31:11,520 --> 00:31:16,240
+To do this, human researchers have to
+
+982
+00:31:13,520 --> 00:31:18,960
+read dozens, sometimes hundreds of
+
+983
+00:31:16,240 --> 00:31:21,600
+incredibly dense scientific papers, and
+
+984
+00:31:18,960 --> 00:31:24,080
+they have to extract highly specific
+
+985
+00:31:21,600 --> 00:31:26,799
+structured data records from the pros.
+
+986
+00:31:24,080 --> 00:31:28,320
+They have to read a 30-page PDF and turn
+
+987
+00:31:26,799 --> 00:31:28,799
+it into a rigid database.
+
+988
+00:31:28,320 --> 00:31:30,559
+Exactly.
+
+989
+00:31:28,799 --> 00:31:32,720
+You need to find the specific variables
+
+990
+00:31:30,559 --> 00:31:34,559
+being tested, the specific statistical
+
+991
+00:31:32,720 --> 00:31:36,320
+methods being used to compare them, the
+
+992
+00:31:34,559 --> 00:31:37,519
+specific roles of those variables, which
+
+993
+00:31:36,320 --> 00:31:39,679
+one is dependent, which one is
+
+994
+00:31:37,519 --> 00:31:41,679
+independent, and the exact numerical
+
+995
+00:31:39,679 --> 00:31:43,840
+effect sizes. And they have to keep all
+
+996
+00:31:41,679 --> 00:31:44,640
+of those data points perfectly rigidly
+
+997
+00:31:43,840 --> 00:31:46,720
+linked together.
+
+998
+00:31:44,640 --> 00:31:49,039
+And as Tan and Duza point out in their
+
+999
+00:31:46,720 --> 00:31:50,960
+methodology, the difficulty here isn't
+
+1000
+00:31:49,039 --> 00:31:52,960
+just spotting isolated pieces of
+
+1001
+00:31:50,960 --> 00:31:54,720
+information. It's not a word search.
+
+1002
+00:31:52,960 --> 00:31:57,200
+Language models are actually quite good
+
+1003
+00:31:54,720 --> 00:31:59,519
+at spotting isolated entities. If you
+
+1004
+00:31:57,200 --> 00:32:02,000
+upload a scientific paper and ask a
+
+1005
+00:31:59,519 --> 00:32:03,760
+model a simple single property query
+
+1006
+00:32:02,000 --> 00:32:06,960
+like what was the name of the dependent
+
+1007
+00:32:03,760 --> 00:32:08,480
+variable in experiment 2. Okay, it
+
+1008
+00:32:06,960 --> 00:32:09,279
+performs moderately well. It can find
+
+1009
+00:32:08,480 --> 00:32:09,840
+the token.
+
+1010
+00:32:09,279 --> 00:32:12,240
+Okay,
+
+1011
+00:32:09,840 --> 00:32:14,799
+the real difficulty, the absolute crux
+
+1012
+00:32:12,240 --> 00:32:16,799
+of the meta analysis task is preserving
+
+1013
+00:32:14,799 --> 00:32:19,120
+the relations that make those isolated
+
+1014
+00:32:16,799 --> 00:32:20,880
+data points analytically usable. You
+
+1015
+00:32:19,120 --> 00:32:22,960
+have to know which specific variable is
+
+1016
+00:32:20,880 --> 00:32:25,279
+paired with which specific role under
+
+1017
+00:32:22,960 --> 00:32:27,360
+which specific statistical method to
+
+1018
+00:32:25,279 --> 00:32:27,919
+produce which specific numerical effect
+
+1019
+00:32:27,360 --> 00:32:30,399
+size.
+
+1020
+00:32:27,919 --> 00:32:32,000
+It is a massive highly entangled web of
+
+1021
+00:32:30,399 --> 00:32:33,840
+rigid mathematical attachments.
+
+1022
+00:32:32,000 --> 00:32:35,279
+It's a nightmare for a transformer.
+
+1023
+00:32:33,840 --> 00:32:36,799
+Let's walk through a simulated example
+
+1024
+00:32:35,279 --> 00:32:39,519
+of how this breaks down just to make it
+
+1025
+00:32:36,799 --> 00:32:41,679
+concrete. Imagine an AI is reading a
+
+1026
+00:32:39,519 --> 00:32:45,120
+paper studying the effects of a new beta
+
+1027
+00:32:41,679 --> 00:32:46,880
+blocker drug. The paper says in cohort A
+
+1028
+00:32:45,120 --> 00:32:48,640
+taking the beta blocker, heart rate
+
+1029
+00:32:46,880 --> 00:32:51,360
+decreased by 15 beats per minute using
+
+1030
+00:32:48,640 --> 00:32:53,360
+an ANOVA analysis. In cohort B taking
+
+1031
+00:32:51,360 --> 00:32:55,840
+the placebo, heart rate remained stable,
+
+1032
+00:32:53,360 --> 00:32:57,200
+but reports of nausea increased by 20%
+
+1033
+00:32:55,840 --> 00:32:58,399
+based on a chai square test.
+
+1034
+00:32:57,200 --> 00:33:00,880
+Okay, dense paragraph,
+
+1035
+00:32:58,399 --> 00:33:03,120
+right? The AI reads that it successfully
+
+1036
+00:33:00,880 --> 00:33:05,760
+identifies all the tokens. Cohort A,
+
+1037
+00:33:03,120 --> 00:33:09,919
+cohort B, beta blocker, placebo, heart
+
+1038
+00:33:05,760 --> 00:33:11,760
+rate, nausea, 15 BPM, 20%. ANOVA, chai
+
+1039
+00:33:09,919 --> 00:33:16,200
+square. It has the ingredients. Yeah,
+
+1040
+00:33:11,760 --> 00:33:16,200
+but when it
+
+1041
+00:33:16,480 --> 00:33:19,480
+tends
+
+1042
+00:33:21,360 --> 00:33:25,440
+asked to extract full association
+
+1043
+00:33:23,360 --> 00:33:27,200
+tupils, meaning the complete perfectly
+
+1044
+00:33:25,440 --> 00:33:29,679
+linked set of data points across the
+
+1045
+00:33:27,200 --> 00:33:31,120
+entire document, their reliability drops
+
+1046
+00:33:29,679 --> 00:33:32,559
+to near zero.
+
+1047
+00:33:31,120 --> 00:33:34,240
+Near zero. Wow.
+
+1048
+00:33:32,559 --> 00:33:36,159
+And what makes this paper so critical
+
+1049
+00:33:34,240 --> 00:33:37,840
+for understanding the binding gap is
+
+1050
+00:33:36,159 --> 00:33:39,600
+that the researchers documented the
+
+1051
+00:33:37,840 --> 00:33:41,679
+specific patterns of how the models
+
+1052
+00:33:39,600 --> 00:33:43,840
+failed. They didn't just fail randomly.
+
+1053
+00:33:41,679 --> 00:33:44,240
+They failed in ways that scream binding
+
+1054
+00:33:43,840 --> 00:33:45,360
+gaps.
+
+1055
+00:33:44,240 --> 00:33:46,799
+What kind of failures?
+
+1056
+00:33:45,360 --> 00:33:48,880
+For example, they found frequent role
+
+1057
+00:33:46,799 --> 00:33:50,480
+reversals where the model successfully
+
+1058
+00:33:48,880 --> 00:33:52,480
+identified the independent and dependent
+
+1059
+00:33:50,480 --> 00:33:53,360
+variables but swapped their positions in
+
+1060
+00:33:52,480 --> 00:33:54,159
+the final output.
+
+1061
+00:33:53,360 --> 00:33:56,799
+So swap them.
+
+1062
+00:33:54,159 --> 00:33:58,720
+They found cross analysis binding drift.
+
+1063
+00:33:56,799 --> 00:34:00,799
+In your example, the model might
+
+1064
+00:33:58,720 --> 00:34:03,360
+correctly extract the beta blocker heart
+
+1065
+00:34:00,799 --> 00:34:05,679
+rate data, but wrongly state that it was
+
+1066
+00:34:03,360 --> 00:34:08,159
+analyzed using the chai square test from
+
+1067
+00:34:05,679 --> 00:34:10,240
+the other paragraph. The method drifted
+
+1068
+00:34:08,159 --> 00:34:11,280
+across the semantic space and attached
+
+1069
+00:34:10,240 --> 00:34:12,879
+to the wrong node.
+
+1070
+00:34:11,280 --> 00:34:14,720
+Yikes. What else?
+
+1071
+00:34:12,879 --> 00:34:17,280
+They also found what they call instance
+
+1072
+00:34:14,720 --> 00:34:19,359
+compression in dense result sections.
+
+1073
+00:34:17,280 --> 00:34:21,280
+This is when a paragraph lists four or
+
+1074
+00:34:19,359 --> 00:34:23,440
+five different data points backto back
+
+1075
+00:34:21,280 --> 00:34:24,560
+and the model unable to maintain four
+
+1076
+00:34:23,440 --> 00:34:27,119
+separate binding structures
+
+1077
+00:34:24,560 --> 00:34:29,040
+simultaneously just mushes them together
+
+1078
+00:34:27,119 --> 00:34:30,079
+blending variables from one study with
+
+1079
+00:34:29,040 --> 00:34:32,240
+numbers from another.
+
+1080
+00:34:30,079 --> 00:34:34,560
+Just a blended mess. And finally, they
+
+1081
+00:34:32,240 --> 00:34:36,399
+found massive numeric misattribution,
+
+1082
+00:34:34,560 --> 00:34:38,560
+which is simply assigning the right
+
+1083
+00:34:36,399 --> 00:34:40,960
+numbers to the wrong variables. It knows
+
+1084
+00:34:38,560 --> 00:34:43,280
+20% is important, but it attaches it to
+
+1085
+00:34:40,960 --> 00:34:46,399
+the heart rate instead of the nausea.
+
+1086
+00:34:43,280 --> 00:34:48,879
+This is the perfect terrifying realworld
+
+1087
+00:34:46,399 --> 00:34:51,280
+manifestation of the binding gap.
+
+1088
+00:34:48,879 --> 00:34:52,960
+Because, as the post emphasizes, this
+
+1089
+00:34:51,280 --> 00:34:55,359
+specific list of errors completely
+
+1090
+00:34:52,960 --> 00:34:57,200
+destroys the easy excuse that the model
+
+1091
+00:34:55,359 --> 00:34:59,040
+just didn't see the information or that
+
+1092
+00:34:57,200 --> 00:35:01,119
+the context window was too small. The
+
+1093
+00:34:59,040 --> 00:35:04,240
+papers were in the context window.
+
+1094
+00:35:01,119 --> 00:35:06,560
+Exactly. The models often correctly
+
+1095
+00:35:04,240 --> 00:35:08,240
+recognize the variable names. They
+
+1096
+00:35:06,560 --> 00:35:10,000
+correctly recognized the statistical
+
+1097
+00:35:08,240 --> 00:35:12,400
+methods. They successfully identified
+
+1098
+00:35:10,000 --> 00:35:13,520
+the exact numbers in the text. All the
+
+1099
+00:35:12,400 --> 00:35:14,400
+ingredients were in the room.
+
+1100
+00:35:13,520 --> 00:35:17,040
+They were
+
+1101
+00:35:14,400 --> 00:35:19,359
+the collapse happened purely because the
+
+1102
+00:35:17,040 --> 00:35:21,680
+internal mathematical representation
+
+1103
+00:35:19,359 --> 00:35:24,000
+could not keep them securely attached to
+
+1104
+00:35:21,680 --> 00:35:26,000
+one another across the density of the
+
+1105
+00:35:24,000 --> 00:35:28,000
+scientific text and the changing scope
+
+1106
+00:35:26,000 --> 00:35:29,920
+of the sentences. It fits a broader
+
+1107
+00:35:28,000 --> 00:35:32,160
+pattern we're seeing across enterprise
+
+1108
+00:35:29,920 --> 00:35:35,839
+AI deployment and it highlights a
+
+1109
+00:35:32,160 --> 00:35:37,760
+critical, often ignored danger. AI fails
+
+1110
+00:35:35,839 --> 00:35:40,560
+exactly at the point where faithful,
+
+1111
+00:35:37,760 --> 00:35:42,720
+reliable use actually begins. In a
+
+1112
+00:35:40,560 --> 00:35:44,720
+scientific or research setting, a system
+
+1113
+00:35:42,720 --> 00:35:47,040
+that identifies the correct numerical
+
+1114
+00:35:44,720 --> 00:35:49,200
+effect size but binds it to the wrong
+
+1115
+00:35:47,040 --> 00:35:51,040
+variable pair hasn't just made a slight
+
+1116
+00:35:49,200 --> 00:35:52,320
+acceptable error. It has produced
+
+1117
+00:35:51,040 --> 00:35:53,680
+something worse than useless.
+
+1118
+00:35:52,320 --> 00:35:55,920
+It has produced highly confident
+
+1119
+00:35:53,680 --> 00:35:57,599
+misinformation. The exact same goes for
+
+1120
+00:35:55,920 --> 00:35:59,440
+carrying a statistical method into the
+
+1121
+00:35:57,599 --> 00:36:01,599
+wrong comparison. A useful way to think
+
+1122
+00:35:59,440 --> 00:36:04,400
+about this is like an overwhelmed waiter
+
+1123
+00:36:01,599 --> 00:36:06,560
+at a very busy, very noisy restaurant.
+
+1124
+00:36:04,400 --> 00:36:09,040
+You have a table of six people and they
+
+1125
+00:36:06,560 --> 00:36:11,839
+all fire off complex, highly specific
+
+1126
+00:36:09,040 --> 00:36:14,240
+orders in rapid succession.
+
+1127
+00:36:11,839 --> 00:36:16,240
+I'll have the steak, medium rare, no
+
+1128
+00:36:14,240 --> 00:36:18,079
+asparagus, substitute potatoes. I'll
+
+1129
+00:36:16,240 --> 00:36:19,680
+have the salmon sauce on the side,
+
+1130
+00:36:18,079 --> 00:36:21,520
+chicken, extra asparagus.
+
+1131
+00:36:19,680 --> 00:36:24,000
+I'm stressed just listening to that.
+
+1132
+00:36:21,520 --> 00:36:25,760
+Right. The waiter stands there. They
+
+1133
+00:36:24,000 --> 00:36:28,079
+listen intently. They nod, but they
+
+1134
+00:36:25,760 --> 00:36:30,240
+don't write anything down. They've heard
+
+1135
+00:36:28,079 --> 00:36:32,079
+the order perfectly. Their acoustic
+
+1136
+00:36:30,240 --> 00:36:35,040
+processing worked. They know that
+
+1137
+00:36:32,079 --> 00:36:37,119
+somewhere at table 4, a steak exists, a
+
+1138
+00:36:35,040 --> 00:36:39,520
+salmon exists, potatoes exist, and a
+
+1139
+00:36:37,119 --> 00:36:40,880
+side sauce exists. The ingredients are
+
+1140
+00:36:39,520 --> 00:36:42,560
+logged in their short-term memory.
+
+1141
+00:36:40,880 --> 00:36:44,160
+Yep. The items are retrieved,
+
+1142
+00:36:42,560 --> 00:36:45,920
+but under the immense pressure of the
+
+1143
+00:36:44,160 --> 00:36:48,160
+noisy environment, the entanglement of
+
+1144
+00:36:45,920 --> 00:36:50,160
+all those requests, they completely drop
+
+1145
+00:36:48,160 --> 00:36:52,400
+the internal wiring. They bring the
+
+1146
+00:36:50,160 --> 00:36:54,480
+salmon with no asparagus, the steak with
+
+1147
+00:36:52,400 --> 00:36:56,240
+sauce on the side, and they confidently
+
+1148
+00:36:54,480 --> 00:36:57,680
+hand the substituted potatoes to the
+
+1149
+00:36:56,240 --> 00:36:59,359
+person who ordered the chicken. Exactly.
+
+1150
+00:36:57,680 --> 00:37:01,520
+They kept the semantic neighborhood of
+
+1151
+00:36:59,359 --> 00:37:04,320
+the table's overall order perfectly
+
+1152
+00:37:01,520 --> 00:37:06,320
+intact, but the delivery is disastrous
+
+1153
+00:37:04,320 --> 00:37:07,599
+because the precise individual
+
+1154
+00:37:06,320 --> 00:37:09,680
+attachment failed.
+
+1155
+00:37:07,599 --> 00:37:11,920
+That is an excellent analogy, and it
+
+1156
+00:37:09,680 --> 00:37:14,079
+scales up terrifyingly well to the real
+
+1157
+00:37:11,920 --> 00:37:16,240
+world stakes we are talking about. Let's
+
+1158
+00:37:14,079 --> 00:37:18,240
+paint a vivid picture of what this means
+
+1159
+00:37:16,240 --> 00:37:20,240
+outside of a restaurant in a setting
+
+1160
+00:37:18,240 --> 00:37:21,520
+like healthcare. Oh, healthcare. Yeah,
+
+1161
+00:37:20,240 --> 00:37:23,280
+this is where it gets scary.
+
+1162
+00:37:21,520 --> 00:37:25,599
+Imagine a major hospital network
+
+1163
+00:37:23,280 --> 00:37:28,160
+deciding to deploy an advanced language
+
+1164
+00:37:25,599 --> 00:37:29,760
+model to rapidly summarize thousands of
+
+1165
+00:37:28,160 --> 00:37:31,440
+dense clinical trials to help
+
+1166
+00:37:29,760 --> 00:37:34,640
+busyoncologists make treatment
+
+1167
+00:37:31,440 --> 00:37:36,880
+decisions. The AI is fed a trial about a
+
+1168
+00:37:34,640 --> 00:37:39,119
+new experimental chemotherapy drug,
+
+1169
+00:37:36,880 --> 00:37:40,480
+let's call it drug X, being compared to
+
+1170
+00:37:39,119 --> 00:37:42,960
+a standard placebo.
+
+1171
+00:37:40,480 --> 00:37:45,200
+Okay, drug X versus placebo. The paper's
+
+1172
+00:37:42,960 --> 00:37:47,359
+dense results section notes that drug X
+
+1173
+00:37:45,200 --> 00:37:49,440
+showed a remarkable 40% reduction in
+
+1174
+00:37:47,359 --> 00:37:51,200
+tumor size while the placebo group
+
+1175
+00:37:49,440 --> 00:37:53,599
+experienced severe unrelated side
+
+1176
+00:37:51,200 --> 00:37:55,680
+effects like internal bleeding. The AI
+
+1177
+00:37:53,599 --> 00:37:57,920
+processes this complex text. It
+
+1178
+00:37:55,680 --> 00:38:01,280
+successfully extracts the core entities
+
+1179
+00:37:57,920 --> 00:38:02,960
+drug X placebo 40% reduction severe
+
+1180
+00:38:01,280 --> 00:38:05,359
+internal bleeding. It has the
+
+1181
+00:38:02,960 --> 00:38:07,200
+ingredients but due to the binding gap
+
+1182
+00:38:05,359 --> 00:38:09,359
+under the mathematical pressure of the
+
+1183
+00:38:07,200 --> 00:38:12,000
+dense medical jargon the internal
+
+1184
+00:38:09,359 --> 00:38:12,640
+switchboard flips. It swaps the roles.
+
+1185
+00:38:12,000 --> 00:38:14,880
+Oh no.
+
+1186
+00:38:12,640 --> 00:38:16,640
+It outputs a beautifully written, highly
+
+1187
+00:38:14,880 --> 00:38:18,640
+professional summary for the oncologist
+
+1188
+00:38:16,640 --> 00:38:20,880
+that says, "The clinical trial showed
+
+1189
+00:38:18,640 --> 00:38:22,800
+that drug X is associated with severe
+
+1190
+00:38:20,880 --> 00:38:25,200
+internal bleeding while the placebo
+
+1191
+00:38:22,800 --> 00:38:27,680
+showed a 40% reduction in tumor size."
+
+1192
+00:38:25,200 --> 00:38:29,440
+Wow, that is genuinely chilling because
+
+1193
+00:38:27,680 --> 00:38:31,200
+the semantic neighborhood is perfectly
+
+1194
+00:38:29,440 --> 00:38:33,040
+flawlessly correct. If you just skim the
+
+1195
+00:38:31,200 --> 00:38:35,280
+summary, it sounds highly technical,
+
+1196
+00:38:33,040 --> 00:38:36,880
+highly plausible, and perfectly fluent.
+
+1197
+00:38:35,280 --> 00:38:38,240
+It doesn't sound like a hallucination.
+
+1198
+00:38:36,880 --> 00:38:39,920
+It sounds like a medical report.
+
+1199
+00:38:38,240 --> 00:38:42,320
+It sounds completely legitimate. But the
+
+1200
+00:38:39,920 --> 00:38:44,960
+internal wiring failure has literally
+
+1201
+00:38:42,320 --> 00:38:47,440
+inverted reality, making the output
+
+1202
+00:38:44,960 --> 00:38:49,920
+incredibly dangerous for a patient. And
+
+1203
+00:38:47,440 --> 00:38:51,760
+if a system can fail this disastrously
+
+1204
+00:38:49,920 --> 00:38:53,920
+while still sounding completely
+
+1205
+00:38:51,760 --> 00:38:56,240
+confident and while outputting real
+
+1206
+00:38:53,920 --> 00:38:58,400
+source data points, it means we have a
+
+1207
+00:38:56,240 --> 00:39:00,880
+massive systemic blind spot in how we
+
+1208
+00:38:58,400 --> 00:39:02,800
+are judging these tools. We cannot trust
+
+1209
+00:39:00,880 --> 00:39:05,599
+our traditional intuitive ways of
+
+1210
+00:39:02,800 --> 00:39:07,599
+judging whether an AI is correct or not.
+
+1211
+00:39:05,599 --> 00:39:09,839
+Fluency is not a proxy for structural
+
+1212
+00:39:07,599 --> 00:39:11,760
+accuracy. That realization brings us to
+
+1213
+00:39:09,839 --> 00:39:13,599
+the disciplinary anchor of the post and
+
+1214
+00:39:11,760 --> 00:39:15,680
+perhaps its most important philosophical
+
+1215
+00:39:13,599 --> 00:39:18,400
+argument, the trap of surface
+
+1216
+00:39:15,680 --> 00:39:20,320
+correctness. The post introduces a 2024
+
+1217
+00:39:18,400 --> 00:39:22,079
+paper by Denita Cenova and her
+
+1218
+00:39:20,320 --> 00:39:23,760
+collaborators. Cenova's team
+
+1219
+00:39:22,079 --> 00:39:25,599
+investigated a very fundamental
+
+1220
+00:39:23,760 --> 00:39:27,680
+question. When a language model gives
+
+1221
+00:39:25,599 --> 00:39:29,280
+you a correct factual answer, how did it
+
+1222
+00:39:27,680 --> 00:39:30,160
+actually arrive there mechanically?
+
+1223
+00:39:29,280 --> 00:39:31,599
+Right? How did it know?
+
+1224
+00:39:30,160 --> 00:39:33,119
+And what they found completely shatters
+
+1225
+00:39:31,599 --> 00:39:34,880
+the comforting illusion that a right
+
+1226
+00:39:33,119 --> 00:39:36,720
+answer means the model understands the
+
+1227
+00:39:34,880 --> 00:39:38,240
+fact. They discovered that correct
+
+1228
+00:39:36,720 --> 00:39:40,160
+factual completions can arise from
+
+1229
+00:39:38,240 --> 00:39:42,160
+several entirely distinct internal
+
+1230
+00:39:40,160 --> 00:39:43,599
+mechanisms and most of them have nothing
+
+1231
+00:39:42,160 --> 00:39:44,960
+to do with stable knowledge.
+
+1232
+00:39:43,599 --> 00:39:46,960
+I really want to dive into this because
+
+1233
+00:39:44,960 --> 00:39:49,920
+this challenges everything we assume
+
+1234
+00:39:46,960 --> 00:39:52,960
+about interacting with AI. See, Nova
+
+1235
+00:39:49,920 --> 00:39:54,960
+found four distinct paths a model can
+
+1236
+00:39:52,960 --> 00:39:55,920
+take to arrive at a correct answer.
+
+1237
+00:39:54,960 --> 00:39:56,480
+Let's walk through them.
+
+1238
+00:39:55,920 --> 00:39:58,720
+Let's do it.
+
+1239
+00:39:56,480 --> 00:40:02,000
+The first one is what we hope the model
+
+1240
+00:39:58,720 --> 00:40:04,480
+is doing every time. Exact fact recall.
+
+1241
+00:40:02,000 --> 00:40:07,040
+The model is asked a question. It
+
+1242
+00:40:04,480 --> 00:40:08,720
+accesses a stable securely bound
+
+1243
+00:40:07,040 --> 00:40:11,280
+representation of that fact in its
+
+1244
+00:40:08,720 --> 00:40:13,280
+internal geometry and it outputs it. The
+
+1245
+00:40:11,280 --> 00:40:15,200
+wire is intact. But the other three
+
+1246
+00:40:13,280 --> 00:40:15,760
+mechanisms are where the illusion takes
+
+1247
+00:40:15,200 --> 00:40:18,079
+hold.
+
+1248
+00:40:15,760 --> 00:40:20,320
+Yes. The second mechanism is heruristics
+
+1249
+00:40:18,079 --> 00:40:21,760
+recall. In this scenario, the model
+
+1250
+00:40:20,320 --> 00:40:24,079
+doesn't actually have a rigid binding
+
+1251
+00:40:21,760 --> 00:40:25,760
+for the specific fact requested, but it
+
+1252
+00:40:24,079 --> 00:40:27,359
+applies a general statistical rule of
+
+1253
+00:40:25,760 --> 00:40:29,440
+thumb that happens to lead to the
+
+1254
+00:40:27,359 --> 00:40:31,839
+correct answer in this specific edge
+
+1255
+00:40:29,440 --> 00:40:33,440
+case. It's taking a structural shortcut
+
+1256
+00:40:31,839 --> 00:40:35,280
+like a lucky guess based on a rule,
+
+1257
+00:40:33,440 --> 00:40:37,359
+right? The third mechanism is simple
+
+1258
+00:40:35,280 --> 00:40:39,040
+guesswork. The model essentially flips a
+
+1259
+00:40:37,359 --> 00:40:40,720
+mathematically weighted coin based on
+
+1260
+00:40:39,040 --> 00:40:43,119
+limited context. The text prediction
+
+1261
+00:40:40,720 --> 00:40:44,560
+engine fires and it simply gets lucky.
+
+1262
+00:40:43,119 --> 00:40:47,359
+Just rolling the dice.
+
+1263
+00:40:44,560 --> 00:40:50,000
+Exactly. But the fourth mechanism is the
+
+1264
+00:40:47,359 --> 00:40:52,079
+most pervasive and the most deceptive.
+
+1265
+00:40:50,000 --> 00:40:52,960
+They call it generic language modeling
+
+1266
+00:40:52,079 --> 00:40:55,040
+pressure.
+
+1267
+00:40:52,960 --> 00:40:56,720
+Generic language modeling pressure.
+
+1268
+00:40:55,040 --> 00:40:58,160
+Let's explain what that actually means
+
+1269
+00:40:56,720 --> 00:41:00,400
+mechanically because it sounds like
+
+1270
+00:40:58,160 --> 00:41:01,359
+jargon, but it explains so much of the
+
+1271
+00:41:00,400 --> 00:41:02,480
+AI's behavior.
+
+1272
+00:41:01,359 --> 00:41:04,160
+Well, let's hear it.
+
+1273
+00:41:02,480 --> 00:41:06,880
+Imagine I ask a model, what is the
+
+1274
+00:41:04,160 --> 00:41:09,920
+capital of France? And it outputs the
+
+1275
+00:41:06,880 --> 00:41:12,480
+word Paris. As a human, I assume the
+
+1276
+00:41:09,920 --> 00:41:14,079
+model retrieved a securely bound factual
+
+1277
+00:41:12,480 --> 00:41:16,480
+relationship between the concept of
+
+1278
+00:41:14,079 --> 00:41:17,440
+capital, the entity France, and the
+
+1279
+00:41:16,480 --> 00:41:19,520
+entity Paris.
+
+1280
+00:41:17,440 --> 00:41:21,119
+Right? But generic language modeling
+
+1281
+00:41:19,520 --> 00:41:24,000
+pressure means that even if the model
+
+1282
+00:41:21,119 --> 00:41:26,480
+has completely lost that specific rigid
+
+1283
+00:41:24,000 --> 00:41:28,640
+relational binding, even if the wire is
+
+1284
+00:41:26,480 --> 00:41:31,440
+completely severed, the word Paris is
+
+1285
+00:41:28,640 --> 00:41:33,280
+just statistically so overwhelmingly
+
+1286
+00:41:31,440 --> 00:41:34,960
+common in the broad semantic cloud of
+
+1287
+00:41:33,280 --> 00:41:35,680
+words related to France, cities, and
+
+1288
+00:41:34,960 --> 00:41:37,280
+Europe
+
+1289
+00:41:35,680 --> 00:41:39,280
+that the text prediction engine just
+
+1290
+00:41:37,280 --> 00:41:41,040
+outputs Paris by default.
+
+1291
+00:41:39,280 --> 00:41:42,079
+It's a statistical reflex, not a
+
+1292
+00:41:41,040 --> 00:41:43,920
+retrieved memory.
+
+1293
+00:41:42,079 --> 00:41:46,079
+Exactly. It gets the right answer purely
+
+1294
+00:41:43,920 --> 00:41:47,520
+because Paris is a highly probable token
+
+1295
+00:41:46,079 --> 00:41:49,200
+in that semantic neighborhood, not
+
+1296
+00:41:47,520 --> 00:41:50,960
+because it successfully navigated a
+
+1297
+00:41:49,200 --> 00:41:53,119
+rigid logical relationship.
+
+1298
+00:41:50,960 --> 00:41:54,640
+It is the ultimate parlor trick. And
+
+1299
+00:41:53,119 --> 00:41:56,800
+this is why the post emphatically
+
+1300
+00:41:54,640 --> 00:41:59,520
+declares that surface correctness is a
+
+1301
+00:41:56,800 --> 00:42:01,280
+weak witness. If an AI gives you the
+
+1302
+00:41:59,520 --> 00:42:03,119
+right answer to a question, it
+
+1303
+00:42:01,280 --> 00:42:06,240
+absolutely does not prove that the model
+
+1304
+00:42:03,119 --> 00:42:08,800
+preserved a stable task ready reliable
+
+1305
+00:42:06,240 --> 00:42:10,240
+relation in its internal machinery. it
+
+1306
+00:42:08,800 --> 00:42:12,079
+might have just gotten lucky via
+
+1307
+00:42:10,240 --> 00:42:13,119
+heristics or generic statistical
+
+1308
+00:42:12,079 --> 00:42:15,200
+pressure surfing.
+
+1309
+00:42:13,119 --> 00:42:17,520
+And conversely, if it gives you a wrong
+
+1310
+00:42:15,200 --> 00:42:19,040
+answer, it doesn't mean all traces of
+
+1311
+00:42:17,520 --> 00:42:20,960
+the correct fact vanished from its
+
+1312
+00:42:19,040 --> 00:42:23,280
+training data. It might just mean the
+
+1313
+00:42:20,960 --> 00:42:25,680
+fragile binding snapped at the very last
+
+1314
+00:42:23,280 --> 00:42:27,359
+millisecond of computation. I find this
+
+1315
+00:42:25,680 --> 00:42:29,200
+deeply frustrating as someone who uses
+
+1316
+00:42:27,359 --> 00:42:31,440
+these tools because it completely
+
+1317
+00:42:29,200 --> 00:42:33,599
+appends how we think about evaluating AI
+
+1318
+00:42:31,440 --> 00:42:35,520
+competence. The post points out that the
+
+1319
+00:42:33,599 --> 00:42:37,359
+concept of the binding gap prevents us
+
+1320
+00:42:35,520 --> 00:42:39,119
+from telling what it calls a hidden
+
+1321
+00:42:37,359 --> 00:42:40,720
+knowledge story about AI.
+
+1322
+00:42:39,119 --> 00:42:43,359
+We do love to tell ourselves that story.
+
+1323
+00:42:40,720 --> 00:42:45,599
+We do. We like to anthropomorphize. We
+
+1324
+00:42:43,359 --> 00:42:47,280
+say the AI is like a brilliant but
+
+1325
+00:42:45,599 --> 00:42:48,880
+sleepy student who has read every book
+
+1326
+00:42:47,280 --> 00:42:50,400
+in the library. And if it gets a
+
+1327
+00:42:48,880 --> 00:42:53,520
+multiple choice question right, it means
+
+1328
+00:42:50,400 --> 00:42:55,680
+it knows the material. But SOVA's work
+
+1329
+00:42:53,520 --> 00:42:58,000
+and the reality of the binding gap
+
+1330
+00:42:55,680 --> 00:43:00,640
+forces us to look way beyond topical
+
+1331
+00:42:58,000 --> 00:43:02,480
+familiarity. It forces us to realize
+
+1332
+00:43:00,640 --> 00:43:04,800
+that knowing the ingredients and
+
+1333
+00:43:02,480 --> 00:43:06,720
+maintaining the wiring are two entirely
+
+1334
+00:43:04,800 --> 00:43:07,280
+different computational acts for these
+
+1335
+00:43:06,720 --> 00:43:09,760
+machines.
+
+1336
+00:43:07,280 --> 00:43:12,319
+It raises massive systemic implications
+
+1337
+00:43:09,760 --> 00:43:13,839
+for the entire tech industry. Right now,
+
+1338
+00:43:12,319 --> 00:43:16,240
+there is an arms race to build the
+
+1339
+00:43:13,839 --> 00:43:17,920
+biggest, smartest AI. And the way
+
+1340
+00:43:16,240 --> 00:43:19,680
+companies prove their AI is better than
+
+1341
+00:43:17,920 --> 00:43:21,119
+the competitors is by running it through
+
+1342
+00:43:19,680 --> 00:43:22,319
+standardized benchmarks.
+
+1343
+00:43:21,119 --> 00:43:23,920
+Right. The leaderboards.
+
+1344
+00:43:22,319 --> 00:43:25,440
+Exactly. They ask it thousands of
+
+1345
+00:43:23,920 --> 00:43:27,040
+multiple choice questions or they ask it
+
+1346
+00:43:25,440 --> 00:43:29,599
+to summarize Wikipedia articles. And if
+
+1347
+00:43:27,040 --> 00:43:30,960
+it scores 95% surface correctness, they
+
+1348
+00:43:29,599 --> 00:43:32,960
+put out a press release and declare
+
+1349
+00:43:30,960 --> 00:43:34,720
+victory. But if those standard
+
+1350
+00:43:32,960 --> 00:43:36,720
+benchmarks are predominantly measuring
+
+1351
+00:43:34,720 --> 00:43:38,800
+topical fluency and generic language
+
+1352
+00:43:36,720 --> 00:43:40,480
+modeling pressure, if they aren't
+
+1353
+00:43:38,800 --> 00:43:42,800
+aggressively testing the structural
+
+1354
+00:43:40,480 --> 00:43:45,680
+integrity of the internal bindings under
+
+1355
+00:43:42,800 --> 00:43:47,359
+stress, are we just building a massive
+
+1356
+00:43:45,680 --> 00:43:49,200
+trillion dollar house of cards?
+
+1357
+00:43:47,359 --> 00:43:51,359
+That's the billion-dollar question. Are
+
+1358
+00:43:49,200 --> 00:43:54,160
+we deploying systems into medical,
+
+1359
+00:43:51,359 --> 00:43:56,079
+legal, and scientific fields that have a
+
+1360
+00:43:54,160 --> 00:43:58,000
+fundamentally brittle architecture
+
+1361
+00:43:56,079 --> 00:43:58,640
+hidden underneath a veneer of perfect
+
+1362
+00:43:58,000 --> 00:44:00,319
+grammar?
+
+1363
+00:43:58,640 --> 00:44:02,880
+I have to express genuine frustration
+
+1364
+00:44:00,319 --> 00:44:04,800
+here because this raises an incredibly
+
+1365
+00:44:02,880 --> 00:44:07,440
+difficult question for you, the end
+
+1366
+00:44:04,800 --> 00:44:09,599
+user. If even the correct answers might
+
+1367
+00:44:07,440 --> 00:44:12,000
+just be lucky guesses based on generic
+
+1368
+00:44:09,599 --> 00:44:13,760
+statistical reflexes, how can you ever
+
+1369
+00:44:12,000 --> 00:44:15,839
+trust what you're looking at?
+
+1370
+00:44:13,760 --> 00:44:17,680
+It's hard to know. If I use an AI to
+
+1371
+00:44:15,839 --> 00:44:19,920
+help me research a complex legal
+
+1372
+00:44:17,680 --> 00:44:22,319
+precedent and it gives me a perfectly
+
+1373
+00:44:19,920 --> 00:44:24,720
+cited, highly detailed, beautifully
+
+1374
+00:44:22,319 --> 00:44:26,240
+structured answer, I have absolutely no
+
+1375
+00:44:24,720 --> 00:44:29,359
+way of knowing if that output was
+
+1376
+00:44:26,240 --> 00:44:31,599
+generated by stable, reliable internal
+
+1377
+00:44:29,359 --> 00:44:33,440
+circuit or if it was just a fragile
+
+1378
+00:44:31,599 --> 00:44:34,800
+statistical house of cards that just
+
+1379
+00:44:33,440 --> 00:44:37,200
+happened to not collapse on this
+
+1380
+00:44:34,800 --> 00:44:39,200
+specific prompt. Are we fundamentally
+
+1381
+00:44:37,200 --> 00:44:40,640
+evaluating these tools the wrong way?
+
+1382
+00:44:39,200 --> 00:44:42,400
+Have we been grading them on their
+
+1383
+00:44:40,640 --> 00:44:44,319
+handwriting instead of their math? The
+
+1384
+00:44:42,400 --> 00:44:45,680
+short difficult answer is yes. We have
+
+1385
+00:44:44,319 --> 00:44:47,200
+been evaluating them the wrong way.
+
+1386
+00:44:45,680 --> 00:44:49,599
+We've been completely seduced by
+
+1387
+00:44:47,200 --> 00:44:51,520
+fluency. But the frustration you are
+
+1388
+00:44:49,599 --> 00:44:53,119
+expressing is actually the necessary
+
+1389
+00:44:51,520 --> 00:44:54,160
+catalyst for the final phase of the
+
+1390
+00:44:53,119 --> 00:44:55,599
+post's argument.
+
+1391
+00:44:54,160 --> 00:44:57,280
+Okay. Where does it go from here?
+
+1392
+00:44:55,599 --> 00:44:59,680
+The realization that the binding gap
+
+1393
+00:44:57,280 --> 00:45:01,760
+exists, that it is a physical mechanical
+
+1394
+00:44:59,680 --> 00:45:04,319
+failure and that surface correctness is
+
+1395
+00:45:01,760 --> 00:45:05,839
+a statistical trap shouldn't cause us to
+
+1396
+00:45:04,319 --> 00:45:08,480
+throw our hands up in despair and
+
+1397
+00:45:05,839 --> 00:45:10,319
+abandon AI. Instead, it gives the
+
+1398
+00:45:08,480 --> 00:45:13,359
+research and engineering community a
+
+1399
+00:45:10,319 --> 00:45:15,839
+highly concrete, highly specific roadmap
+
+1400
+00:45:13,359 --> 00:45:17,839
+to actually fix the technology. It
+
+1401
+00:45:15,839 --> 00:45:18,400
+fundamentally changes the agenda for the
+
+1402
+00:45:17,839 --> 00:45:20,240
+future.
+
+1403
+00:45:18,400 --> 00:45:22,560
+Because if we finally know exactly how
+
+1404
+00:45:20,240 --> 00:45:24,560
+and why the wire is broken, we can start
+
+1405
+00:45:22,560 --> 00:45:27,119
+engineering better wires.
+
+1406
+00:45:24,560 --> 00:45:29,839
+The post outlines a two-pronged approach
+
+1407
+00:45:27,119 --> 00:45:32,319
+for this future agenda. Major changes in
+
+1408
+00:45:29,839 --> 00:45:34,319
+how we evaluate models and major changes
+
+1409
+00:45:32,319 --> 00:45:36,240
+in the actual architectural design of
+
+1410
+00:45:34,319 --> 00:45:37,440
+the models themselves. Let's start with
+
+1411
+00:45:36,240 --> 00:45:38,160
+the evaluation side.
+
+1412
+00:45:37,440 --> 00:45:39,599
+Let's hear it.
+
+1413
+00:45:38,160 --> 00:45:41,599
+The Post argues that we have to stop
+
+1414
+00:45:39,599 --> 00:45:43,599
+treating topical fluency. The ability to
+
+1415
+00:45:41,599 --> 00:45:45,280
+sound human and articulate as a
+
+1416
+00:45:43,599 --> 00:45:47,280
+sufficient proxy for competence.
+
+1417
+00:45:45,280 --> 00:45:48,640
+The era of testing billion-dollar models
+
+1418
+00:45:47,280 --> 00:45:50,560
+by having them write sonnetss or
+
+1419
+00:45:48,640 --> 00:45:52,240
+open-ended essays needs to end or at
+
+1420
+00:45:50,560 --> 00:45:54,640
+least be recognized as a superficial
+
+1421
+00:45:52,240 --> 00:45:56,480
+parlor trick. The new evaluation agenda
+
+1422
+00:45:54,640 --> 00:45:59,040
+must put intense, relentless,
+
+1423
+00:45:56,480 --> 00:46:00,800
+adversarial pressure on exact role
+
+1424
+00:45:59,040 --> 00:46:01,920
+assignment, source attachment, and
+
+1425
+00:46:00,800 --> 00:46:03,760
+numeric grounding.
+
+1426
+00:46:01,920 --> 00:46:05,440
+So, we need harder tests. We need
+
+1427
+00:46:03,760 --> 00:46:08,079
+benchmarks that are specifically
+
+1428
+00:46:05,440 --> 00:46:10,160
+designed to be binding heavy. We need
+
+1429
+00:46:08,079 --> 00:46:13,599
+tests that look exactly like Tan and
+
+1430
+00:46:10,160 --> 00:46:16,160
+Duza's metaanalysis extraction. Dense,
+
+1431
+00:46:13,599 --> 00:46:18,480
+rigid, deeply entangled webs of
+
+1432
+00:46:16,160 --> 00:46:20,880
+variables and numbers where any generic
+
+1433
+00:46:18,480 --> 00:46:22,880
+statistical guessing, any reliance on
+
+1434
+00:46:20,880 --> 00:46:25,200
+language modeling pressure will
+
+1435
+00:46:22,880 --> 00:46:27,839
+immediately lead to a catastrophic
+
+1436
+00:46:25,200 --> 00:46:30,000
+measurable failure. We have to start
+
+1437
+00:46:27,839 --> 00:46:31,920
+testing the joints, not just admiring
+
+1438
+00:46:30,000 --> 00:46:33,760
+the paint job. And once we are testing
+
+1439
+00:46:31,920 --> 00:46:35,920
+the joints properly and exposing the
+
+1440
+00:46:33,760 --> 00:46:37,839
+flaws, we can start implementing actual
+
+1441
+00:46:35,920 --> 00:46:40,160
+architectural interventions to reinforce
+
+1442
+00:46:37,839 --> 00:46:41,839
+them. The post highlights several
+
+1443
+00:46:40,160 --> 00:46:43,520
+potential solutions that engineers are
+
+1444
+00:46:41,839 --> 00:46:46,400
+currently exploring on the bleeding edge
+
+1445
+00:46:43,520 --> 00:46:49,040
+of AI research. One fascinating approach
+
+1446
+00:46:46,400 --> 00:46:50,319
+is called schema intermediate records.
+
+1447
+00:46:49,040 --> 00:46:52,000
+Oh, that's an interesting one.
+
+1448
+00:46:50,319 --> 00:46:53,920
+This essentially means forcing the model
+
+1449
+00:46:52,000 --> 00:46:55,760
+to explicitly write out the structural
+
+1450
+00:46:53,920 --> 00:46:57,359
+logic of the data it is processing
+
+1451
+00:46:55,760 --> 00:46:58,800
+before it generates text. What
+
+1452
+00:46:57,359 --> 00:47:01,040
+it's like forcing a math student to show
+
+1453
+00:46:58,800 --> 00:47:03,760
+their work. The model has to draw a
+
+1454
+00:47:01,040 --> 00:47:06,400
+literal mathematical map of the entities
+
+1455
+00:47:03,760 --> 00:47:09,040
+and their relations before it is allowed
+
+1456
+00:47:06,400 --> 00:47:10,720
+to generate its final output paragraph.
+
+1457
+00:47:09,040 --> 00:47:12,240
+It creates an explicit external
+
+1458
+00:47:10,720 --> 00:47:15,280
+scaffolding so the system doesn't have
+
+1459
+00:47:12,240 --> 00:47:17,040
+to rely entirely on its fragile internal
+
+1460
+00:47:15,280 --> 00:47:17,839
+highdimensional vectors to keep things
+
+1461
+00:47:17,040 --> 00:47:19,760
+straight.
+
+1462
+00:47:17,839 --> 00:47:22,720
+Another major intervention they discuss
+
+1463
+00:47:19,760 --> 00:47:24,319
+is provenence aware training. This means
+
+1464
+00:47:22,720 --> 00:47:25,920
+changing the fundamental way the model
+
+1465
+00:47:24,319 --> 00:47:28,000
+learns from its training data in the
+
+1466
+00:47:25,920 --> 00:47:29,839
+first place. Instead of just absorbing a
+
+1467
+00:47:28,000 --> 00:47:32,000
+fact and letting it dissolve into a
+
+1468
+00:47:29,839 --> 00:47:34,400
+general entangled soup of semantic
+
+1469
+00:47:32,000 --> 00:47:37,040
+knowledge, the architecture forces the
+
+1470
+00:47:34,400 --> 00:47:39,680
+model to maintain a rigid permanent
+
+1471
+00:47:37,040 --> 00:47:42,079
+mathematical link between a fact and the
+
+1472
+00:47:39,680 --> 00:47:44,400
+specific document or the specific source
+
+1473
+00:47:42,079 --> 00:47:44,880
+that provided that fact. It anchors the
+
+1474
+00:47:44,400 --> 00:47:46,000
+knowledge.
+
+1475
+00:47:44,880 --> 00:47:47,280
+It anchors it. I like that.
+
+1476
+00:47:46,000 --> 00:47:48,880
+And perhaps most importantly,
+
+1477
+00:47:47,280 --> 00:47:50,560
+referencing back to the Wang and Sun
+
+1478
+00:47:48,880 --> 00:47:52,800
+paper we started with, they discussed
+
+1479
+00:47:50,560 --> 00:47:53,839
+the need for rostable internal
+
+1480
+00:47:52,800 --> 00:47:55,599
+representations,
+
+1481
+00:47:53,839 --> 00:47:57,440
+right? Addressing the inconsistency
+
+1482
+00:47:55,599 --> 00:47:58,400
+problem where the math changes based on
+
+1483
+00:47:57,440 --> 00:48:00,720
+the grammar.
+
+1484
+00:47:58,400 --> 00:48:03,040
+Exactly. The goal is to design entirely
+
+1485
+00:48:00,720 --> 00:48:04,800
+new neural network architectures.
+
+1486
+00:48:03,040 --> 00:48:07,119
+Perhaps moving beyond the standard
+
+1487
+00:48:04,800 --> 00:48:08,800
+transformer to architectures like Jeepa
+
+1488
+00:48:07,119 --> 00:48:10,960
+or joint embedding predictive
+
+1489
+00:48:08,800 --> 00:48:12,640
+architectures where the internal
+
+1490
+00:48:10,960 --> 00:48:15,599
+mathematical representation of the
+
+1491
+00:48:12,640 --> 00:48:17,440
+entity Tom doesn't radically morph and
+
+1492
+00:48:15,599 --> 00:48:19,200
+change shape just because he moves from
+
+1493
+00:48:17,440 --> 00:48:19,920
+being the subject of a sentence to being
+
+1494
+00:48:19,200 --> 00:48:21,599
+the object.
+
+1495
+00:48:19,920 --> 00:48:23,280
+So the token stays the same
+
+1496
+00:48:21,599 --> 00:48:25,040
+if the mathematical representation is
+
+1497
+00:48:23,280 --> 00:48:27,359
+stable. Regardless of its syntactic
+
+1498
+00:48:25,040 --> 00:48:29,280
+role, the binding attaching him to Mary
+
+1499
+00:48:27,359 --> 00:48:30,559
+is much less likely to snap under the
+
+1500
+00:48:29,280 --> 00:48:32,400
+pressure of entanglement.
+
+1501
+00:48:30,559 --> 00:48:34,240
+If we pull all of this together and
+
+1502
+00:48:32,400 --> 00:48:36,079
+connect it to the bigger picture, the
+
+1503
+00:48:34,240 --> 00:48:38,880
+author of the post distills all of this
+
+1504
+00:48:36,079 --> 00:48:41,680
+complex research down to one incredibly
+
+1505
+00:48:38,880 --> 00:48:43,280
+sharp, almost provocative wager. The
+
+1506
+00:48:41,680 --> 00:48:45,359
+post says this is a wager sharp enough
+
+1507
+00:48:43,280 --> 00:48:47,359
+to be proven wrong, which as any
+
+1508
+00:48:45,359 --> 00:48:50,079
+scientist knows is the hallmark of a
+
+1509
+00:48:47,359 --> 00:48:52,319
+truly great theory. The wager is this.
+
+1510
+00:48:50,079 --> 00:48:54,480
+If the binding gap is a real fundamental
+
+1511
+00:48:52,319 --> 00:48:56,960
+family of mechanical failures, then as
+
+1512
+00:48:54,480 --> 00:48:58,960
+we push models harder in the real world,
+
+1513
+00:48:56,960 --> 00:49:01,680
+binding heavy tasks will break much,
+
+1514
+00:48:58,960 --> 00:49:03,200
+much earlier than broad topical tasks.
+
+1515
+00:49:01,680 --> 00:49:04,960
+Let's lay out the specific predictions
+
+1516
+00:49:03,200 --> 00:49:07,359
+of that wager because they really serve
+
+1517
+00:49:04,960 --> 00:49:09,839
+as a roadmap for the next 5 years of AI
+
+1518
+00:49:07,359 --> 00:49:11,599
+research. The post predicts that role
+
+1519
+00:49:09,839 --> 00:49:13,280
+reversal will expose catastrophic
+
+1520
+00:49:11,599 --> 00:49:15,920
+weakness in models long before
+
+1521
+00:49:13,280 --> 00:49:18,160
+open-ended explanation does. It predicts
+
+1522
+00:49:15,920 --> 00:49:20,240
+that source attribution keeping a fact
+
+1523
+00:49:18,160 --> 00:49:22,559
+tied to its citation will fail long
+
+1524
+00:49:20,240 --> 00:49:23,119
+before generic text summarization fails.
+
+1525
+00:49:22,559 --> 00:49:25,119
+Right?
+
+1526
+00:49:23,119 --> 00:49:26,960
+It predicts that multi-field scientific
+
+1527
+00:49:25,119 --> 00:49:28,880
+extraction like the meta analysis we
+
+1528
+00:49:26,960 --> 00:49:31,200
+discussed will completely collapse
+
+1529
+00:49:28,880 --> 00:49:33,520
+before simple entity spotting shows any
+
+1530
+00:49:31,200 --> 00:49:35,520
+degradation. And most importantly for
+
+1531
+00:49:33,520 --> 00:49:36,800
+the engineers building the future, it
+
+1532
+00:49:35,520 --> 00:49:38,640
+wagers that the architectural
+
+1533
+00:49:36,800 --> 00:49:40,160
+interventions we just discussed, the
+
+1534
+00:49:38,640 --> 00:49:42,240
+schema records, the rolestable
+
+1535
+00:49:40,160 --> 00:49:44,400
+representations will buy their first
+
+1536
+00:49:42,240 --> 00:49:47,119
+serious measurable performance gains on
+
+1537
+00:49:44,400 --> 00:49:48,800
+these dense binding heavy tasks long
+
+1538
+00:49:47,119 --> 00:49:50,480
+before they make the model any better at
+
+1539
+00:49:48,800 --> 00:49:52,079
+writing a generic fluent essay.
+
+1540
+00:49:50,480 --> 00:49:54,000
+So if I am understanding this wager
+
+1541
+00:49:52,079 --> 00:49:55,680
+correctly, the post is essentially
+
+1542
+00:49:54,000 --> 00:49:58,960
+throwing down a gauntlet to the entire
+
+1543
+00:49:55,680 --> 00:50:00,640
+industry. It is daring the AI community,
+
+1544
+00:49:58,960 --> 00:50:02,640
+the companies spending billions on
+
+1545
+00:50:00,640 --> 00:50:04,720
+compute power, to stop testing their
+
+1546
+00:50:02,640 --> 00:50:07,200
+models on writing poetry or summarizing
+
+1547
+00:50:04,720 --> 00:50:09,520
+Wikipedia pages and instead test them on
+
+1548
+00:50:07,200 --> 00:50:11,839
+keeping 50 distinct scientific variables
+
+1549
+00:50:09,520 --> 00:50:13,839
+tied to their exact origins with their
+
+1550
+00:50:11,839 --> 00:50:15,839
+exact effect sizes and their exact
+
+1551
+00:50:13,839 --> 00:50:16,319
+statistical methods without slipping
+
+1552
+00:50:15,839 --> 00:50:17,520
+once.
+
+1553
+00:50:16,319 --> 00:50:19,359
+That's the real challenge.
+
+1554
+00:50:17,520 --> 00:50:21,760
+That is the real frontier of artificial
+
+1555
+00:50:19,359 --> 00:50:24,319
+intelligence. If those asymmetries
+
+1556
+00:50:21,760 --> 00:50:26,640
+appear, if the models consistently fail
+
+1557
+00:50:24,319 --> 00:50:29,280
+at rigid binding while still excelling
+
+1558
+00:50:26,640 --> 00:50:31,119
+at statistical fluency, then the binding
+
+1559
+00:50:29,280 --> 00:50:32,960
+gap is real and the entire industry
+
+1560
+00:50:31,119 --> 00:50:35,680
+needs to pivot its focus away from scale
+
+1561
+00:50:32,960 --> 00:50:37,839
+and toward structure. Progress, as the
+
+1562
+00:50:35,680 --> 00:50:39,680
+post states, matters most, not in making
+
+1563
+00:50:37,839 --> 00:50:41,440
+models sound more human, but in
+
+1564
+00:50:39,680 --> 00:50:43,359
+preserving the exact attachments that
+
+1565
+00:50:41,440 --> 00:50:45,839
+faithful, reliable use actually depends
+
+1566
+00:50:43,359 --> 00:50:47,520
+on. And conversely, if those asymmetries
+
+1567
+00:50:45,839 --> 00:50:49,359
+do not appear, then the concept of the
+
+1568
+00:50:47,520 --> 00:50:51,920
+binding gap is too loose and we are back
+
+1569
+00:50:49,359 --> 00:50:53,599
+to the drawing board. But given the
+
+1570
+00:50:51,920 --> 00:50:56,400
+overwhelming wealth of mechanistic
+
+1571
+00:50:53,599 --> 00:50:58,559
+evidence, from Wang and Sun's reversal
+
+1572
+00:50:56,400 --> 00:51:01,359
+curse to Fang and Steinhard's binding
+
+1573
+00:50:58,559 --> 00:51:03,760
+vectors to DY's causal interventions in
+
+1574
+00:51:01,359 --> 00:51:06,160
+the switchboard subspace to Tan and
+
+1575
+00:51:03,760 --> 00:51:08,480
+Duza's metaanalysis collapse, the
+
+1576
+00:51:06,160 --> 00:51:09,359
+evidence strongly suggests this wager
+
+1577
+00:51:08,480 --> 00:51:11,359
+will hold true.
+
+1578
+00:51:09,359 --> 00:51:13,280
+It seems highly probable. The binding
+
+1579
+00:51:11,359 --> 00:51:15,839
+gap gives us a powerful precise new
+
+1580
+00:51:13,280 --> 00:51:17,599
+lens. It forces us to stop asking the
+
+1581
+00:51:15,839 --> 00:51:19,680
+shallow question, what facts did the
+
+1582
+00:51:17,599 --> 00:51:21,760
+model memorize and start asking the
+
+1583
+00:51:19,680 --> 00:51:24,000
+structural question, did it keep those
+
+1584
+00:51:21,760 --> 00:51:25,280
+facts attached in the exact logical form
+
+1585
+00:51:24,000 --> 00:51:26,960
+the task required?
+
+1586
+00:51:25,280 --> 00:51:29,040
+This has been an absolutely incredible
+
+1587
+00:51:26,960 --> 00:51:30,559
+eye-opening journey. We started with a
+
+1588
+00:51:29,040 --> 00:51:32,559
+simple almost trivial puzzle, the
+
+1589
+00:51:30,559 --> 00:51:34,000
+reversal curse, where an AI knows Tom
+
+1590
+00:51:32,559 --> 00:51:36,000
+and Mary are married but forgets who
+
+1591
+00:51:34,000 --> 00:51:38,160
+Mary's husband is. And by pulling
+
+1592
+00:51:36,000 --> 00:51:40,079
+relentlessly on that single tread, we've
+
+1593
+00:51:38,160 --> 00:51:42,000
+unpacked the entire internal
+
+1594
+00:51:40,079 --> 00:51:43,200
+mathematical machinery of modern
+
+1595
+00:51:42,000 --> 00:51:44,800
+artificial intelligence.
+
+1596
+00:51:43,200 --> 00:51:46,960
+We really went deep today.
+
+1597
+00:51:44,800 --> 00:51:48,400
+We moved from behavioral quirks to
+
+1598
+00:51:46,960 --> 00:51:50,079
+finding the literal internal
+
+1599
+00:51:48,400 --> 00:51:51,839
+highdimensional vectors where concepts
+
+1600
+00:51:50,079 --> 00:51:53,760
+are bound together to seeing how
+
+1601
+00:51:51,839 --> 00:51:56,000
+terrifyingly fragile those bindings are
+
+1602
+00:51:53,760 --> 00:51:57,839
+compared to human cognition. We looked
+
+1603
+00:51:56,000 --> 00:52:00,000
+at the real world consequences of this
+
+1604
+00:51:57,839 --> 00:52:01,680
+fragility in scientific research where
+
+1605
+00:52:00,000 --> 00:52:04,000
+swapping a variable and a placebo can
+
+1606
+00:52:01,680 --> 00:52:06,000
+invert reality. And finally, we realize
+
+1607
+00:52:04,000 --> 00:52:08,319
+that our human obsession with surface
+
+1608
+00:52:06,000 --> 00:52:10,000
+correctness and fluency has blinded us
+
+1609
+00:52:08,319 --> 00:52:12,160
+to the structural weaknesses of these
+
+1610
+00:52:10,000 --> 00:52:14,480
+systems, requiring a completely new
+
+1611
+00:52:12,160 --> 00:52:17,280
+rigorous agenda for how we evaluate and
+
+1612
+00:52:14,480 --> 00:52:19,040
+build the future of AI. The ultimate
+
+1613
+00:52:17,280 --> 00:52:20,640
+takeaway here is that true competence,
+
+1614
+00:52:19,040 --> 00:52:22,640
+whether in a silicon machine or a
+
+1615
+00:52:20,640 --> 00:52:24,400
+biological mind, isn't just about having
+
+1616
+00:52:22,640 --> 00:52:26,319
+the ingredients in the room. It's about
+
+1617
+00:52:24,400 --> 00:52:28,319
+keeping them accurately, rigorously
+
+1618
+00:52:26,319 --> 00:52:30,880
+connected under immense pressure.
+
+1619
+00:52:28,319 --> 00:52:33,040
+It is a profound shift in perspective.
+
+1620
+00:52:30,880 --> 00:52:35,599
+And as we wrap up this deep dive, I want
+
+1621
+00:52:33,040 --> 00:52:37,359
+to leave you, the listener, with a final
+
+1622
+00:52:35,599 --> 00:52:39,440
+lingering thought that builds on
+
+1623
+00:52:37,359 --> 00:52:41,520
+everything we've discussed today. We
+
+1624
+00:52:39,440 --> 00:52:43,200
+spent this entire time dissecting the
+
+1625
+00:52:41,520 --> 00:52:45,520
+mechanical failures of artificial
+
+1626
+00:52:43,200 --> 00:52:48,000
+intelligence, marveling at how a system
+
+1627
+00:52:45,520 --> 00:52:50,160
+can possess so much semantic knowledge,
+
+1628
+00:52:48,000 --> 00:52:52,559
+yet struggle so fundamentally with the
+
+1629
+00:52:50,160 --> 00:52:54,640
+binding gap, with keeping concepts
+
+1630
+00:52:52,559 --> 00:52:56,079
+cleanly separated and properly attached
+
+1631
+00:52:54,640 --> 00:52:58,160
+under the pressures of mathematical
+
+1632
+00:52:56,079 --> 00:53:00,079
+entanglement and inconsistency.
+
+1633
+00:52:58,160 --> 00:53:02,079
+Yeah. But as we map the anatomy of
+
+1634
+00:53:00,079 --> 00:53:04,480
+artificial thought, it makes you wonder
+
+1635
+00:53:02,079 --> 00:53:06,640
+deeply about human cognition. Think
+
+1636
+00:53:04,480 --> 00:53:08,319
+about the architecture of your own mind.
+
+1637
+00:53:06,640 --> 00:53:10,240
+Have you ever vividly remembered a
+
+1638
+00:53:08,319 --> 00:53:12,000
+brilliant, insightful quote, but
+
+1639
+00:53:10,240 --> 00:53:12,640
+confidently attributed it to the wrong
+
+1640
+00:53:12,000 --> 00:53:13,599
+person
+
+1641
+00:53:12,640 --> 00:53:15,200
+all the time?
+
+1642
+00:53:13,599 --> 00:53:17,280
+Have you ever recalled a childhood
+
+1643
+00:53:15,200 --> 00:53:19,359
+memory perfectly, seeing the scene in
+
+1644
+00:53:17,280 --> 00:53:21,200
+vivid detail, only to realize years
+
+1645
+00:53:19,359 --> 00:53:22,880
+later that you swapped the roles and it
+
+1646
+00:53:21,200 --> 00:53:23,839
+was actually your sibling who took the
+
+1647
+00:53:22,880 --> 00:53:26,000
+action, not you?
+
+1648
+00:53:23,839 --> 00:53:28,160
+Oh, absolutely. When we suffer from our
+
+1649
+00:53:26,000 --> 00:53:30,880
+own biological versions of entanglement
+
+1650
+00:53:28,160 --> 00:53:32,400
+and inconsistency, when our own memories
+
+1651
+00:53:30,880 --> 00:53:34,880
+drift and misattribute under the
+
+1652
+00:53:32,400 --> 00:53:37,119
+pressure of time, emotion, and density,
+
+1653
+00:53:34,880 --> 00:53:39,200
+are we experiencing a deeply human
+
+1654
+00:53:37,119 --> 00:53:41,359
+version of the binding gap? We judge
+
+1655
+00:53:39,200 --> 00:53:43,040
+these machines incredibly harshly for
+
+1656
+00:53:41,359 --> 00:53:45,200
+dropping their wiring. But perhaps
+
+1657
+00:53:43,040 --> 00:53:46,720
+studying exactly how and why artificial
+
+1658
+00:53:45,200 --> 00:53:48,559
+intelligence fails to hold the world
+
+1659
+00:53:46,720 --> 00:53:50,559
+together might eventually be the key
+
+1660
+00:53:48,559 --> 00:53:52,240
+that teaches us how our own fragile,
+
+1661
+00:53:50,559 --> 00:53:54,240
+remarkable minds managed to do it at
+
+1662
+00:53:52,240 --> 00:53:56,319
+all. That is an incredible humbling
+
+1663
+00:53:54,240 --> 00:53:58,400
+thought to walk away with. The broken
+
+1664
+00:53:56,319 --> 00:54:00,480
+machinery of artificial intelligence
+
+1665
+00:53:58,400 --> 00:54:03,200
+holding up a mirror to the fragile,
+
+1666
+00:54:00,480 --> 00:54:05,040
+miraculous wiring of human memory. Next
+
+1667
+00:54:03,200 --> 00:54:07,440
+time you open a prompt window and use an
+
+1668
+00:54:05,040 --> 00:54:09,200
+AI tool, pay attention to the wiring.
+
+1669
+00:54:07,440 --> 00:54:11,280
+Look past the fluent pros and the
+
+1670
+00:54:09,200 --> 00:54:13,119
+confident tone. Notice that the system
+
+1671
+00:54:11,280 --> 00:54:14,160
+keeps the scene but drops the precise
+
+1672
+00:54:13,119 --> 00:54:15,920
+attachment
+
+1673
+00:54:14,160 --> 00:54:17,920
+because you now have a name and
+
+1674
+00:54:15,920 --> 00:54:19,359
+mechanical understanding for exactly
+
+1675
+00:54:17,920 --> 00:54:21,760
+what is happening in the highdimensional
+
+1676
+00:54:19,359 --> 00:54:23,839
+math beneath the surface. the binding
+
+1677
+00:54:21,760 --> 00:54:25,440
+gap. Thank you so much for joining us on
+
+1678
+00:54:23,839 --> 00:54:27,200
+this deep dive. Keep questioning the
+
+1679
+00:54:25,440 --> 00:54:30,440
+wiring. Stay curious and we will see you
+
+1680
+00:54:27,200 --> 00:54:30,440
+next time.
+
