@@ -40,6 +40,24 @@ Use the draft aligners for first-pass timing:
 
 If you already have slide OCR text files and a numbered transcript, `scripts/map_slides_to_transcript_lines.py` can draft line ranges before manual verification.
 
+If you already have timed captions and want a fast cue-sheet plus draft render path, use:
+
+```bash
+.venv/bin/python scripts/build_slideshow_from_captions.py \
+  --audio <audio.mp3> \
+  --captions <captions.srt> \
+  --slides-dir <ocr-slides-dir> \
+  --support-slides-dir <optional-second-ocr-slides-dir> \
+  --render-slides-dir <optional-render-slides-dir> \
+  --output-cues <draft-cues.json> \
+  --output-video <draft-video.mp4>
+```
+
+Use `--support-slides-dir` when a second deck carries complementary text or annotations that can improve the OCR-first timing draft.
+Use repeated `--render-slides-dir` flags when the OCR-friendly slides and the final render slides share filenames but differ in presentation. The wrapper will interleave those render decks within each timed section.
+
+This is the right pattern when a package has a stitched comparison deck or a richer review deck: draft timings from the cleaner OCR source, then render or visually review against the richer surface.
+
 ### Convert A Verified Map Into Cues
 
 Once the markdown slide-to-transcript map is reviewed, build the renderable cue sheet:

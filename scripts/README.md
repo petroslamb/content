@@ -52,7 +52,8 @@ Tracked workflows:
 | Script | Role | Typical Use | Related Skill |
 | :--- | :--- | :--- | :--- |
 | `align_slides_to_transcript.py` | Drafts slide timing from OCR plus an untimestamped transcript and audio duration. | first-pass alignment | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
-| `align_slides_to_captions.py` | Drafts slide timing from OCR plus timed SRT captions. | first-pass alignment with captions | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
+| `align_slides_to_captions.py` | Drafts slide timing from OCR plus timed SRT captions and can blend OCR from complementary slide directories that share the same filenames. | first-pass alignment with captions | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
+| `build_slideshow_from_captions.py` | Drafts a cue sheet from timed SRT captions plus slide OCR, can blend complementary OCR slide decks, and can render a first-pass MP4 while interleaving multiple render slide directories that share the same filenames. | caption-first draft render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `map_slides_to_transcript_lines.py` | Drafts transcript line ranges from OCR text files and a numbered transcript. | line-range drafting | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `line_map_markdown_to_cues.py` | Converts a reviewed markdown line map plus timed captions into the final cue-sheet JSON used for rendering. | verified cue generation | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `render_audio_slides_video.py` | Generates a rough evenly spaced template or renders the final MP4 from a cue sheet. | template or final render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
@@ -62,7 +63,7 @@ Tracked workflows:
 
 | Script | Role | Notes |
 | :--- | :--- | :--- |
-| `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | This is tied to `publications/binding-gap/` assets and is not a general repo automation entrypoint. |
+| `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | This is tied to `publications/binding-gap/` assets and is useful as a richer review or render surface after OCR-first cue drafting. It is not a general repo automation entrypoint. |
 
 ## Related Skill Split
 
