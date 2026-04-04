@@ -39,6 +39,18 @@ Tracked workflow:
 | :--- | :--- | :--- | :--- |
 | `sync_operating_agents_substack.py` | Republishes the preface and six essay posts, preserves the embedded video block, rewrites published essay links to Substack URLs, and retries on Substack rate limits. | `.venv/bin/python scripts/sync_operating_agents_substack.py` | [`operating-agents-substack-sync`](../workflows/skills/operating-agents-substack-sync/SKILL.md) |
 
+### Generic Substack Draft Sync
+
+This workflow updates one existing Substack draft from a canonical local markdown file without driving the browser UI.
+
+Tracked workflow:
+
+- [`../workflows/substack-publishing/README.md`](../workflows/substack-publishing/README.md)
+
+| Script | Role | Normal Entry Point | Related Skill |
+| :--- | :--- | :--- | :--- |
+| `sync_markdown_post_to_substack.py` | Syncs one markdown file into one existing Substack draft, uploads local images, preserves or injects the draft's uploaded video block when the markdown uses a `#### Video TL;DR` section, and can reuse a logged-in Chrome session over CDP to mint the auth cookie string. | `.venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url https://<subdomain>.substack.com --post-id <id> --markdown <file> --chrome-debug-url http://127.0.0.1:9222` | none |
+
 ### YouTube Slide-To-Video Production
 
 These scripts handle the local production stage for narrated slide videos before any YouTube upload or replacement step.

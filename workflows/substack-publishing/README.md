@@ -40,6 +40,38 @@ If a draft still reads like repo documentation rather than a public essay, simpl
 4. publish with `python-substack` or a package-specific publishing helper
 5. refresh the tracked public archive if the post is part of the Substack archive system
 
+## Existing-Draft API Sync
+
+When a post already exists as a Substack draft and the goal is to replace its body from the repo's canonical markdown, use the generic single-post sync script instead of editing in the browser.
+
+Recommended path:
+
+```bash
+.venv/bin/python scripts/sync_markdown_post_to_substack.py \
+  --publication-url https://lambpetros.substack.com \
+  --post-id <DRAFT_ID> \
+  --markdown publications/<package>/<live-draft>.md \
+  --chrome-debug-url http://127.0.0.1:9222
+```
+
+This path:
+
+- reuses an already logged-in Chrome session over CDP to extract the Substack cookie string without browser interaction
+- uploads standalone markdown images to Substack
+- preserves an existing `video` node or injects one from `draft_video_upload_id`
+- recognizes a `#### Video TL;DR` heading in the markdown and places the uploaded draft video directly under it
+- leaves the post as a draft unless you explicitly pass `--publish`
+
+For the video block, keep this pattern in the canonical markdown:
+
+```md
+#### Video TL;DR
+
+[Descriptive video label](artifacts/video/example.mp4)
+```
+
+The local `.mp4` link is a placement marker for the sync script. The script does not upload the video file itself. It expects the target Substack draft already to have an uploaded video asset, exposed as `draft_video_upload_id`, and then builds the correct embedded `video` node in the draft body.
+
 ## Package-Specific Exceptions
 
 - Some series or packages have specialized publishing helpers, such as the Operating Agents Substack sync path.
