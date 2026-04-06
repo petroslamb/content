@@ -1,0 +1,96 @@
+{
+  "audio": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms/AI_swarms_are_temporary_training_wheels.m4a",
+  "slides_dir": "publications/illusion-of-swarm/assets/Beyond_Multi-Agent_Swarms",
+  "segments": [
+    {
+      "image": "slide-01.png",
+      "start": "00:00:00.000",
+      "note": "Intro / Phase Transition"
+    },
+    {
+      "image": "slide-02.png",
+      "start": "00:02:30.000",
+      "note": "Workaround for routing and state limits"
+    },
+    {
+      "image": "slide-03.png",
+      "start": "00:05:33.000",
+      "note": "Compilation Efficiency (53.7%)"
+    },
+    {
+      "image": "slide-04.png",
+      "start": "00:09:00.000",
+      "note": "Personas / Single-model brittleness (Kim et al., 2025)"
+    },
+    {
+      "image": "slide-05.png",
+      "start": "00:11:25.000",
+      "note": "Semantic collapse zone (80-90 skills)"
+    },
+    {
+      "image": "slide-06.png",
+      "start": "00:15:30.000",
+      "note": "Agent as a namespace"
+    },
+    {
+      "image": "slide-07.png",
+      "start": "00:18:50.000",
+      "note": "ROMA architecture"
+    },
+    {
+      "image": "slide-08.png",
+      "start": "00:23:30.000",
+      "note": "4 conditions for multi-agent"
+    },
+    {
+      "image": "slide-09.png",
+      "start": "00:25:35.000",
+      "note": "Capability differences / Hard boundaries"
+    },
+    {
+      "image": "slide-10.png",
+      "start": "00:28:30.000",
+      "note": "Distributed environments / Space & Time"
+    },
+    {
+      "image": "slide-11.png",
+      "start": "00:29:50.000",
+      "note": "Telephone effect / Text latency"
+    },
+    {
+      "image": "slide-12.png",
+      "start": "00:34:05.000",
+      "note": "LatentMAS / Direct hidden-state transfer"
+    },
+    {
+      "image": "slide-13.png",
+      "start": "00:37:00.000",
+      "note": "JSON over paragraphs / Bounded schemas"
+    },
+    {
+      "image": "slide-14.png",
+      "start": "00:39:10.000",
+      "note": "Trajectory data importance"
+    },
+    {
+      "image": "slide-15.png",
+      "start": "00:40:30.000",
+      "note": "External scaffolding / policy updates (EMPO2)"
+    },
+    {
+      "image": "slide-16.png",
+      "start": "00:48:00.000",
+      "note": "5 engineering directives"
+    },
+    {
+      "image": "slide-17.png",
+      "start": "00:50:50.000",
+      "note": "2027 Predictions"
+    },
+    {
+      "image": "slide-18.png",
+      "start": "00:53:45.000",
+      "note": "Empirical foundations (Li, Kim)"
+    }
+  ]
+}
