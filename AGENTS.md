@@ -55,6 +55,7 @@ For single-publication packages, prefer this paper-intake structure unless the p
 | inspect auth, captions, playlists, or Shorts on YouTube | [`workflows/youtube-channel-ops/README.md`](workflows/youtube-channel-ops/README.md) | [`workflows/skills/youtube-data-api/`](workflows/skills/youtube-data-api/) or [`workflows/skills/youtube-shorts-maintenance/`](workflows/skills/youtube-shorts-maintenance/) |
 | manage the Operating Agents YouTube series | [`workflows/youtube-series-operating-agents/README.md`](workflows/youtube-series-operating-agents/README.md) | [`workflows/skills/youtube-operating-agents/`](workflows/skills/youtube-operating-agents/) and [`workflows/skills/youtube-data-api/`](workflows/skills/youtube-data-api/) |
 | inspect tracked automation | [`scripts/README.md`](scripts/README.md) | the specific script or workflow doc |
+| perform security research or red-teaming survey | [`publications/security-research/README.md`](publications/security-research/README.md) | its local research papers and surveys |
 
 ## Local Skills
 

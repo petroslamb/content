@@ -1,5 +1,18 @@
 [
   {
+    "slug": "the-binding-gap",
+    "title": "The Binding Gap",
+    "url": "https://lambpetros.substack.com/p/the-binding-gap",
+    "post_date": "2026-04-04T15:03:46.194Z",
+    "audience": "everyone",
+    "fetched_at": "2026-04-07T15:18:03.587399+00:00",
+    "content_hash": "f6196f6808666575706abdda6a6f041e34c03d2ed324127d0b5925f604e772af",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-04-04_the-binding-gap.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-04-04_the-binding-gap.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-73f3d10e16f0faf2.jpeg",
+    "mirror_enabled": true
+  },
+  {
     "slug": "operating-agents-preface-a-field",
     "title": "Operating Agents Guide: Preface",
     "url": "https://lambpetros.substack.com/p/operating-agents-preface-a-field",
@@ -18,8 +31,8 @@
     "url": "https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow",
     "post_date": "2026-03-27T10:13:24.924Z",
     "audience": "everyone",
-    "fetched_at": "2026-04-03T19:09:22.021738+00:00",
-    "content_hash": "85b1595e2772ff4e0262a5b09087c9e865ea5f95f1ec246710736fad7d219c04",
+    "fetched_at": "2026-04-07T15:18:04.634807+00:00",
+    "content_hash": "51c31110e428f892a867b01423499e25950991c475dc1e2dc1fc3c6929427517",
     "md_path": "publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-bonus-the-workflow.md",
     "html_path": "publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-bonus-the-workflow.html",
     "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-1411d3a152cc9644.jpeg",
@@ -244,19 +257,6 @@
     "md_path": "publication_strategy_and_archive/substack_archive/2025-12-02_the-agent-revolution.md",
     "html_path": "publication_strategy_and_archive/substack_archive/2025-12-02_the-agent-revolution.html",
     "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-04448ffe5bc7a341.png",
-    "mirror_enabled": true
-  },
-  {
-    "slug": "neural-architecture-design-as-a-compositional-32e",
-    "title": "Neural Architecture Design as a Compositional Language",
-    "url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
-    "post_date": "2025-11-27T16:04:27.908Z",
-    "audience": "everyone",
-    "fetched_at": "2026-03-23T19:06:40.823507+00:00",
-    "content_hash": "7a2986631662e1f6730309c427813030991130c9f86869e6854ab35f525c28c9",
-    "md_path": "publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.md",
-    "html_path": "publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.html",
-    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-29678f54f2010396.png",
     "mirror_enabled": true
   }
 ]

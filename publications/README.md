@@ -33,6 +33,7 @@ Workflow/framework packages stay at the repository root and are documented elsew
 | [`hardware-friction/`](hardware-friction/README.md) | Umbrella | Published umbrella | Hardware-friction map, scorecard, long-form article, and dataset |
 | [`neural-architectures/`](neural-architectures/README.md) | Umbrella | Published umbrella | Architecture-language essay line including *The Transformer Attractor* |
 | [`orchestration-paradigm/`](orchestration-paradigm/README.md) | Umbrella | Published umbrella | The Orchestration Paradigm series and ToolOrchestra research package |
+| [`security-research/`](security-research/README.md) | Single-publication | Active / unpublished | Red-teaming and AI-security research bucket |
 
 ## Canonical Single-Publication Contract
 

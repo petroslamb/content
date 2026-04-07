@@ -1,0 +1,29 @@
+publication: illusion-of-swarm
+stages:
+  paper_intake:
+    done: true
+    last_updated: '2026-04-07'
+  research:
+    done: true
+    last_updated: '2026-04-07'
+  essay_iteration:
+    done: true
+    last_updated: '2026-04-07'
+  notebooklm_artifacts:
+    done: true
+    last_updated: '2026-04-07'
+  article_polish:
+    done: true
+    last_updated: '2026-04-07'
+  substack_publishing:
+    done: true
+    last_updated: '2026-04-07'
+  archive_sync:
+    done: true
+    last_updated: '2026-04-07'
+  youtube_production:
+    done: true
+    last_updated: '2026-04-07'
+  distribution:
+    done: false
+    last_updated: null
