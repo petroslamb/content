@@ -1,25 +1,45 @@
 #!/usr/bin/env python3
 """
-Upload Binding Gap Shorts to YouTube with main video reference.
+Upload Publication Shorts to YouTube with main video reference.
+Run from project root: .venv/bin/python scripts/upload_publication_shorts.py --package <package_name> --video-id <main_video_id>
 """
 
 import os
 import sys
+import argparse
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent / 'workflows' / 'skills' / 'youtube-data-api' / 'scripts'))
+# Add the youtube skill scripts directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / 'workflows' / 'skills' / 'youtube-data-api' / 'scripts'))
 
-from youtube_common import build_youtube
-from googleapiclient.http import MediaFileUpload
-from googleapiclient.errors import HttpError
+try:
+    from youtube_common import build_youtube
+    from googleapiclient.http import MediaFileUpload
+    from googleapiclient.errors import HttpError
+except ImportError:
+    print("ERROR: Could not import YouTube client libraries. Make sure you are running from the project root.")
+    sys.exit(1)
 
 def main():
+    parser = argparse.ArgumentParser(description="Upload publication shorts to YouTube.")
+    parser.add_argument("--package", required=True, help="Package name (e.g., binding-gap)")
+    parser.add_argument("--video-id", required=True, help="Main video ID for the essay")
+    parser.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"], help="Privacy status (default: public)")
+    args = parser.parse_args()
+
     youtube = build_youtube()
-    main_video_id = 'cBrtKPp4kqw'  # The Binding Gap (podcast version) - main essay video
+    main_video_id = args.video_id
     main_video_url = f'https://www.youtube.com/watch?v={main_video_id}'
 
-    shorts_dir = Path('publications/binding-gap/artifacts/video/shorts/portrait')
+    shorts_dir = Path('publications') / args.package / 'artifacts' / 'video' / 'shorts' / 'portrait'
+    if not shorts_dir.exists():
+        print(f"ERROR: Shorts directory not found: {shorts_dir}")
+        sys.exit(1)
+
     video_files = sorted(shorts_dir.glob('*.mp4'))
+    if not video_files:
+        print(f"No .mp4 files found in {shorts_dir}")
+        sys.exit(0)
 
     print(f"Found {len(video_files)} short(s) to upload\n")
 
@@ -28,13 +48,17 @@ def main():
         title = video_path.stem.replace('_portrait', '').replace('_', ' ')
         full_title = f"{title} #shorts"
 
+        # Guess tags from package name or filename
+        tags = ['AI', 'research', 'shorts']
+        tags.extend(args.package.split('-'))
+        
         description = f"""{title}
 
-This is a short excerpt from "The Binding Gap" essay.
+This is a short excerpt from the "{args.package.replace('-', ' ').title()}" essay.
 
 Main video (full essay): {main_video_url}
 
-#bindinggap #ai #llm #research #shorts"""
+#{args.package.replace('-', '')} #ai #research #shorts"""
 
         print(f"Uploading: {full_title}")
         print(f"From: {video_path.name}")
@@ -43,12 +67,12 @@ Main video (full essay): {main_video_url}
             'snippet': {
                 'title': full_title,
                 'description': description,
-                'tags': ['AI', 'binding gap', 'language models', 'LLM', 'research', 'shorts'],
+                'tags': tags,
                 'categoryId': '27',  # Education
                 'defaultLanguage': 'en'
             },
             'status': {
-                'privacyStatus': 'public',
+                'privacyStatus': args.privacy,
                 'selfDeclaredMadeForKids': False
             }
         }
@@ -87,7 +111,7 @@ Main video (full essay): {main_video_url}
                 body={
                     'id': video_id,
                     'status': {
-                        'privacyStatus': 'public',
+                        'privacyStatus': args.privacy,
                         'relatedVideoIds': [main_video_id]
                     }
                 }

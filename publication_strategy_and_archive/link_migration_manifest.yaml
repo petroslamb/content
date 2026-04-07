@@ -19,6 +19,8 @@ package_moves:
   new_path: publications/programmable-thinking
 - old_path: the-moltbook-phenomenon
   new_path: publications/moltbook-phenomenon
+- old_path: security_research
+  new_path: publications/security-research
 repo_link_rewrites:
 - repo_file: README.md
   old_target: ./AGENTS.md
@@ -90,7 +92,7 @@ repo_link_rewrites:
   rewrite_type: relative-link
 - repo_file: README.md
   old_target: ./security_research/README.md
-  new_target: security_research/README.md
+  new_target: publications/security-research/README.md
   rewrite_type: relative-link
 - repo_file: README.md
   old_target: ./the-moltbook-phenomenon/README.md
