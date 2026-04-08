@@ -15,6 +15,7 @@ Single-publication package for the active binding-gap essay and the earlier stru
 - Recent draft ladder: [`The_Binding_Gap_v2.md`](The_Binding_Gap_v2.md), [`The_Binding_Gap_v3.md`](The_Binding_Gap_v3.md)
 - Companion: [`Structural_Recoverability_Companion.md`](Structural_Recoverability_Companion.md)
 - Blueprint / plan: [`binding_gap_blueprint.md`](binding_gap_blueprint.md)
+- Distribution map (all platforms): [`distribution.md`](distribution.md)
 - Earlier thesis line: [`Structural_Recoverability.md`](Structural_Recoverability.md), [`Recoverable_but_Not_Expressed_v2.md`](Recoverable_but_Not_Expressed_v2.md)
 - Local scripts: [`scripts/`](scripts/)
 

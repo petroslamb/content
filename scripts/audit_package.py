@@ -57,15 +57,20 @@ def audit_package(package_name):
     for d, desc in dirs_to_check.items():
         if d in ignore:
             continue
-        # Check both the directory and the old 'papers' folder for backward compat during transition
-        p = package_path / d
+        
+        # Canonical directory is 'papers' for the evidence layer
+        target_dir = d
+        if d == "sources": # Internal check uses 'sources' as the concept name
+             target_dir = "papers"
+
+        p = package_path / target_dir
         if not p.is_dir():
-            if d == "sources" and (package_path / "papers").is_dir():
-                report["checks"].append({"status": "INFO", "message": f"Legacy folder 'papers/' found. Consider renaming to 'sources/'."})
+            if target_dir == "papers" and (package_path / "sources").is_dir():
+                report["checks"].append({"status": "INFO", "message": f"Legacy folder 'sources/' found. Consider renaming to 'papers/'."})
             else:
-                report["checks"].append({"status": "WARNING", "message": f"Missing '{d}/' directory. ({desc})"})
+                report["checks"].append({"status": "WARNING", "message": f"Missing '{target_dir}/' directory. ({desc})"})
         else:
-            report["checks"].append({"status": "PASS", "message": f"'{d}/' directory present."})
+            report["checks"].append({"status": "PASS", "message": f"'{target_dir}/' directory present."})
 
     # 2. Pointer Checks
     md_path_str = config.get("markdown_path")
@@ -96,7 +101,12 @@ def audit_package(package_name):
     return report
 
 def print_report(report):
-    print(f"\nPRE-FLIGHT ADVISORY: {report['package']} (Rev {report['revision']})")
+    if "id" in report and (report["id"] == "error" or report["id"] == "warning"):
+        color = "\033[91m" if report["id"] == "error" else "\033[93m"
+        print(f"\n{color}[{report['id'].upper()}]\033[0m {report['message']}")
+        return
+
+    print(f"\nPRE-FLIGHT ADVISORY: {report['package']} (Rev {report.get('revision', 1)})")
     print("-" * 50)
     for c in report["checks"]:
         color = ""
