@@ -12,6 +12,10 @@ import json
 from pathlib import Path
 from datetime import datetime
 
+# Advisory Auditor (local import)
+sys.path.append(str(Path(__file__).parent))
+from audit_package import audit_package, print_report
+
 # --- Configuration & Registry ---
 
 STAGES = [
@@ -174,6 +178,14 @@ def main():
     if not status_data:
         print(f"ERROR: No status.yaml found for package '{args.package}'")
         sys.exit(1)
+
+    # 0. Advisory Pre-Flight Audit
+    try:
+        report = audit_package(args.package)
+        print_report(report)
+    except Exception as e:
+        # Advisory only, do not block
+        print(f"\033[93m[WARNING] Pre-flight audit failed to run: {e}\033[0m")
 
     # 1. Dependency Check (advisory by default)
     if args.stage in DEPENDENCY_MAP:
