@@ -1,4 +1,14 @@
 posts:
+  the-binding-gap:
+    title: The Binding Gap
+    research_folder: publications/binding-gap
+    summary: An investigation into why LLMs often preserve semantic ingredients while failing at the exact relational binding that makes the answer faithful.
+    tags:
+      - neural-architectures
+      - evaluation
+      - research
+    featured: true
+    status: published
   the-illusion-of-the-swarm:
     title: The Illusion of the Swarm
     research_folder: publications/illusion-of-swarm
