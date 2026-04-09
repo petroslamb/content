@@ -101,7 +101,7 @@ The goal is that a future editor can tell why the image exists without reopening
 
 ## Stage 2: Intentional Image Placement
 
-The point is not to maximize image count. The point is to improve comprehension.
+The point is not to minimize image count either. The point is to improve comprehension.
 
 Use images when they:
 
@@ -109,8 +109,19 @@ Use images when they:
 - compress a list of distinctions into one visual surface
 - reduce repetition in the prose
 - help the reader carry a taxonomy or pipeline forward
+- give the reader a stable diagram they can reuse across several later sections
 
 Do not place images only because they exist.
+Do not cap images artificially if several visuals each do real explanatory work.
+
+The practical sequence that has worked best in the repo is:
+
+1. start with the obvious load-bearing visuals only
+2. reread the essay as a reader, looking for long dry stretches where a diagram would materially reduce cognitive load
+3. add one image at a time into those gaps, then reread the local section before adding the next
+4. stop when the remaining unused visuals feel repetitive rather than clarifying
+
+That sequence matters because the right visual density is rarely obvious from the deck alone. It emerges from alternating between essay reading and selective placement.
 
 Placement rules:
 
@@ -119,6 +130,7 @@ Placement rules:
 - avoid stacking several visuals without enough prose between them
 - if one visual supports several later sections, place it once at the earliest decisive point and refer back to it in prose
 - keep the markdown readable even if the image does not load
+- treat the opening and conclusion as distinct visual slots rather than as overflow zones for leftover slides
 
 The normal editorial move is:
 
@@ -126,7 +138,13 @@ The normal editorial move is:
 2. insert it immediately before or after that paragraph
 3. reread the surrounding prose so the image and text cooperate rather than compete
 
+Two additional moves are now canonical:
+
+1. if the essay opens with a title visual, consider a second early "thesis bridge" image before the first major section when it helps the reader grasp the argument's governing shift
+2. if a late-body image and a summary image compete for the same conceptual space, move the summary image under the conclusion so it resolves the essay instead of crowding the final section
+
 If an image feels decorative after insertion, remove it.
+If several images remain genuinely load-bearing after insertion, keep them.
 
 ## Stage 3: Transcript Round-Trip And Rehumanization
 
@@ -172,6 +190,7 @@ Before handing off to Substack publishing, reread the essay as one package rathe
 Check for:
 
 - image names and placements that still make sense after the last rewrite
+- visual spacing that still gives the prose room to breathe between diagrams
 - references that are complete, precise, and consistently formatted
 - short orientation blurbs only where they genuinely help
 - appendix material that belongs at the end rather than in the main flow
@@ -195,6 +214,7 @@ This workflow is complete when:
 
 - the live draft reads better, not just longer
 - every kept image has a defensible editorial reason to be there
+- the essay is not visually starved when additional diagrams would clearly help readers hold the argument
 - image filenames are understandable out of context
 - the transcript round-trip improved clarity or warmth without weakening claims
 - references and repo links are publication-ready
