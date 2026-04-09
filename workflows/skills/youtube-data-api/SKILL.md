@@ -83,6 +83,23 @@ Use this when a publication package has a finished longform video, a TL;DR compa
 
 The script is dry-run by default. Add `--apply` to upload both videos, add them to playlists, cross-link the descriptions, and pin them to the top of their playlists when requested.
 
+### Publication Shorts Distribution
+
+Use this after the portrait Shorts masters already exist inside a package. Keep this downstream from Shorts creation; do not mix clip-selection logic into this step.
+
+```bash
+.venv/bin/python scripts/upload_publication_shorts.py \
+  --package <publication-package-path-under-publications> \
+  --main-video-id <LONGFORM_VIDEO_ID> \
+  --playlist-id <SHORTS_PLAYLIST_ID> \
+  --essay-url <canonical-essay-url> \
+  --full-video-url <longform-youtube-url> \
+  --tldr-url <tldr-youtube-url> \
+  --apply
+```
+
+This wrapper is dry-run by default. It uploads all portrait Shorts in the package folder, adds them to the target playlist, and attempts to set the long-form upload as the Shorts related video.
+
 ### Operating Agents Uploads, Ordering, And Replacements
 
 Use the Operating Agents scripts when the user is working on the course or TL;DR series:

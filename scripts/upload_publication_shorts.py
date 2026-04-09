@@ -1,7 +1,17 @@
 #!/usr/bin/env python3
 """
-Upload Publication Shorts to YouTube with main video reference.
-Run from project root: .venv/bin/python scripts/upload_publication_shorts.py --package <package_name> --video-id <main_video_id>
+Upload publication Shorts from a package portrait folder, add them to a target
+playlist, and set the related long-form video reference when possible.
+
+Run from project root:
+  .venv/bin/python scripts/upload_publication_shorts.py \
+    --package <package_name> \
+    --main-video-id <main_video_id> \
+    --playlist-id <shorts_playlist_id> \
+    --essay-url <canonical_essay_url> \
+    --full-video-url <longform_video_url> \
+    [--tldr-url <tldr_video_url>] \
+    [--apply]
 """
 
 import os
@@ -23,12 +33,17 @@ except ImportError:
 def main():
     parser = argparse.ArgumentParser(description="Upload publication shorts to YouTube.")
     parser.add_argument("--package", required=True, help="Package name (e.g., binding-gap)")
-    parser.add_argument("--video-id", required=True, help="Main video ID for the essay")
+    parser.add_argument("--main-video-id", required=True, help="Main long-form video ID for the Shorts related-video field")
+    parser.add_argument("--playlist-id", required=True, help="Target Shorts playlist ID")
+    parser.add_argument("--essay-url", required=True, help="Canonical essay URL")
+    parser.add_argument("--full-video-url", required=True, help="Public URL for the long-form video")
+    parser.add_argument("--tldr-url", help="Optional public URL for the TL;DR companion")
     parser.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"], help="Privacy status (default: public)")
+    parser.add_argument("--apply", action="store_true", help="Upload and mutate YouTube state. Without this, print the plan only.")
     args = parser.parse_args()
 
     youtube = build_youtube()
-    main_video_id = args.video_id
+    main_video_id = args.main_video_id
     main_video_url = f'https://www.youtube.com/watch?v={main_video_id}'
 
     shorts_dir = Path('publications') / args.package / 'artifacts' / 'video' / 'shorts' / 'portrait'
@@ -41,7 +56,17 @@ def main():
         print(f"No .mp4 files found in {shorts_dir}")
         sys.exit(0)
 
-    print(f"Found {len(video_files)} short(s) to upload\n")
+    print(f"Found {len(video_files)} short(s) to upload")
+    print(f"Target playlist: {args.playlist_id}")
+    print(f"Related long-form video: {main_video_url}")
+    if not args.apply:
+        print("\nDry run only. Add --apply to upload and write YouTube state.")
+        for video_path in video_files:
+            title = video_path.stem.replace('_portrait', '').replace('_', ' ')
+            print(f" - {title} #shorts <- {video_path.name}")
+        return
+
+    print()
 
     for video_path in video_files:
         # Create title from filename (remove _portrait.mp4)
@@ -52,13 +77,23 @@ def main():
         tags = ['AI', 'research', 'shorts']
         tags.extend(args.package.split('-'))
         
-        description = f"""{title}
-
-This is a short excerpt from the "{args.package.replace('-', ' ').title()}" essay.
-
-Main video (full essay): {main_video_url}
-
-#{args.package.replace('-', '')} #ai #research #shorts"""
+        description_lines = [
+            f"{title}",
+            "",
+            "Short clip from a Rooted Layers long-form research video.",
+            "",
+            f"Original essay: {args.essay_url}",
+            f"Full visual deep dive: {args.full_video_url}",
+        ]
+        if args.tldr_url:
+            description_lines.append(f"TL;DR video: {args.tldr_url}")
+        description_lines.extend(
+            [
+                "",
+                f"#{args.package.replace('-', '').replace('/', '')} #ai #research #shorts",
+            ]
+        )
+        description = "\n".join(description_lines)
 
         print(f"Uploading: {full_title}")
         print(f"From: {video_path.name}")
@@ -103,6 +138,20 @@ Main video (full essay): {main_video_url}
         video_id = response['id']
         print(f"  Uploaded! Video ID: {video_id}")
         print(f"  URL: https://www.youtube.com/watch?v={video_id}")
+
+        try:
+            youtube.playlistItems().insert(
+                part='snippet',
+                body={
+                    'snippet': {
+                        'playlistId': args.playlist_id,
+                        'resourceId': {'kind': 'youtube#video', 'videoId': video_id},
+                    }
+                },
+            ).execute()
+            print(f"  Added to playlist: {args.playlist_id}")
+        except HttpError as e:
+            print(f"  Could not add to playlist: {e}")
 
         # Update video to set relatedVideoIds (promote main video as related)
         try:
