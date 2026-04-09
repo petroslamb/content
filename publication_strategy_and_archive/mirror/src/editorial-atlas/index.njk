@@ -18,26 +18,36 @@ extraScripts:
         </p>
         <div class="atlas-hero-list" id="atlas-hero-metrics">
           <div class="atlas-hero-metric">
-            <strong>{{ editorialAtlas.stats.totalEssays }}</strong>
+            <strong id="stat-total-essays">{{ editorialAtlas.stats.totalEssays }}</strong>
             <span>Published essays</span>
           </div>
           <div class="atlas-hero-metric">
-            <strong>{{ editorialAtlas.stats.topPower }}</strong>
+            <strong id="stat-top-power">{{ editorialAtlas.stats.topPower }}</strong>
             <span>Top power score</span>
           </div>
           <div class="atlas-hero-metric">
-            <strong>{{ editorialAtlas.stats.topTraction }}</strong>
+            <strong id="stat-top-traction">{{ editorialAtlas.stats.topTraction }}</strong>
             <span>Top traction score</span>
           </div>
           <div class="atlas-hero-metric">
-            <strong>{{ editorialAtlas.stats.topCraft }}</strong>
+            <strong id="stat-top-craft">{{ editorialAtlas.stats.topCraft }}</strong>
             <span>Top craft score</span>
           </div>
+        </div>
+        <div class="atlas-model-control">
+          <label for="atlas-model-selector" class="atlas-field">
+            <span>Audit Model</span>
+            <select id="atlas-model-selector">
+              {% for id, model in editorialAtlas.models %}
+              <option value="{{ id }}" {% if id == editorialAtlas.defaultModel %}selected{% endif %}>{{ model.model_display_name }}</option>
+              {% endfor %}
+            </select>
+          </label>
         </div>
       </div>
       <aside class="atlas-hero-card atlas-anchor-list">
         <h2>Current anchor essays</h2>
-        <ol>
+        <ol id="atlas-anchor-list">
           {% for essay in editorialAtlas.topAnchors %}
           <li><strong>{{ essay.title }}</strong><br>{{ essay.identity }}</li>
           {% endfor %}

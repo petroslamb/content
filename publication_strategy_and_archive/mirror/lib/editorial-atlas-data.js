@@ -15,29 +15,45 @@ function loadAtlasJson() {
 
 function buildEditorialAtlasData() {
   const atlas = loadAtlasJson();
-  const essays = [...(atlas.essays || [])];
-  const topAnchors = essays
-    .slice()
-    .sort((left, right) => {
-      if (right.publication_power !== left.publication_power) {
-        return right.publication_power - left.publication_power;
+  const models = atlas.models || {};
+  const defaultModelId = atlas.defaultModel || Object.keys(models)[0];
+  
+  // Transform all models to include their derived stats/anchors if not already present
+  const enrichedModels = {};
+  for (const [id, data] of Object.entries(models)) {
+    const essays = [...(data.essays || [])];
+    enrichedModels[id] = {
+      ...data,
+      essays,
+      // The Python script now pre-calculates these, but we keep the fallback logic for robustness
+      topAnchors: data.top_anchors || essays
+        .slice()
+        .sort((left, right) => {
+          if (right.publication_power !== left.publication_power) {
+            return right.publication_power - left.publication_power;
+          }
+          return right.traction - left.traction;
+        })
+        .slice(0, 6),
+      stats: data.stats || {
+        totalEssays: essays.length,
+        topPower: Math.max(...essays.map((essay) => essay.publication_power || 0), 0),
+        topTraction: Math.max(...essays.map((essay) => essay.traction || 0), 0),
+        topCraft: Math.max(...essays.map((essay) => essay.craft || 0), 0),
       }
-      return right.traction - left.traction;
-    })
-    .slice(0, 6);
+    };
+  }
+
+  const defaultModel = enrichedModels[defaultModelId] || { essays: [], stats: {}, topAnchors: [] };
 
   return {
     ...atlas,
-    essays,
-    topAnchors,
+    models: enrichedModels,
+    defaultModel: defaultModelId,
+    // Provide top-level keys for the initial SSR render (Gemini usually)
+    ...defaultModel,
     routes: {
       page: "/editorial-atlas/",
-    },
-    stats: {
-      totalEssays: essays.length,
-      topPower: Math.max(...essays.map((essay) => essay.publication_power || 0)),
-      topTraction: Math.max(...essays.map((essay) => essay.traction || 0)),
-      topCraft: Math.max(...essays.map((essay) => essay.craft || 0)),
     },
   };
 }

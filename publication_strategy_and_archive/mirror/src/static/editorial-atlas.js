@@ -4,8 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!root || !dataNode) return;
 
   const atlas = JSON.parse(dataNode.textContent);
-  const essays = [...(atlas.essays || [])];
-  const essayMap = new Map(essays.map((essay) => [essay.title, essay]));
+  const models = atlas.models || {};
+  
+  // State variables that change per model
+  let essays = [];
+  let essayMap = new Map();
+  let selectedEssayTitle = "";
+  let routingCenterTitle = "";
+
   const moveLabels = {
     failure_or_anomaly_cold_open: "Cold open",
     contrarian_compression: "Contrarian compression",
@@ -59,10 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     { key: "reference_handling", label: "Reference Handling" },
   ];
 
-  let selectedEssayTitle = essayMap.has("The Transformer Attractor")
-    ? "The Transformer Attractor"
-    : essays[0]?.title;
-  let routingCenterTitle = selectedEssayTitle;
   const tooltipNode = document.getElementById("atlas-tooltip");
 
   function metricColor(value) {
@@ -815,15 +817,43 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function init() {
+  function loadModel(modelId) {
+    const model = models[modelId];
+    if (!model) return;
+
+    // Update state
+    essays = [...(model.essays || [])];
+    essayMap = new Map(essays.map((essay) => [essay.title, essay]));
+    
+    // Set default selections for this model
+    selectedEssayTitle = essayMap.has("The Transformer Attractor")
+      ? "The Transformer Attractor"
+      : essays[0]?.title;
+    routingCenterTitle = selectedEssayTitle;
+
+    // Update Hero Metrics
+    if (model.stats) {
+      document.getElementById("stat-total-essays").textContent = model.stats.totalEssays;
+      document.getElementById("stat-top-power").textContent = model.stats.topPower;
+      document.getElementById("stat-top-traction").textContent = model.stats.topTraction;
+      document.getElementById("stat-top-craft").textContent = model.stats.topCraft;
+    }
+
+    // Update Anchor List
+    const anchorList = document.getElementById("atlas-anchor-list");
+    if (anchorList && model.top_anchors) {
+      anchorList.innerHTML = model.top_anchors
+        .map(essay => `<li><strong>${essay.title}</strong><br>${essay.identity}</li>`)
+        .join("");
+    }
+
+    // Refresh Visualizations
     renderScatter("atlas-scatter-root", "traction", "craft", "Traction", "Craft", essays);
-    renderLegend("atlas-constellation-legend");
     renderHeatmap();
     renderRoutingControls();
     renderRoutingTool();
 
     renderScatter("atlas-debate-root", "debate", "precision", "Debate", "Precision", essays);
-    renderLegend("atlas-debate-legend");
     renderMiniTable("atlas-debate-table", essays.slice().sort((a, b) => (b.debate + b.precision) - (a.debate + a.precision) || b.debate - a.debate), [
       { key: "title", render: (row) => `<strong>${row.title}</strong>` },
       { key: "debate", num: true },
@@ -831,7 +861,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ]);
 
     renderScatter("atlas-synthesis-root", "synthesis", "utility", "Synthesis", "Utility", essays);
-    renderLegend("atlas-synthesis-legend");
     renderMiniTable("atlas-synthesis-table", essays.slice().sort((a, b) => (b.synthesis + b.utility) - (a.synthesis + a.utility) || b.synthesis - a.synthesis), [
       { key: "title", render: (row) => `<strong>${row.title}</strong>` },
       { key: "synthesis", num: true },
@@ -839,7 +868,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ]);
 
     renderScatter("atlas-opening-ending-root", "opening", "ending", "Opening", "Ending", essays);
-    renderLegend("atlas-opening-ending-legend");
     renderMiniTable(
       "atlas-opening-ending-table",
       essays
@@ -855,9 +883,25 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     renderMoveMatrix();
+    updateSelectionViews();
+  }
+
+  function init() {
+    renderLegend("atlas-constellation-legend");
+    renderLegend("atlas-debate-legend");
+    renderLegend("atlas-synthesis-legend");
+    renderLegend("atlas-opening-ending-legend");
+    
     bindTabs();
     bindSubtabs();
-    updateSelectionViews();
+
+    const modelSelector = document.getElementById("atlas-model-selector");
+    if (modelSelector) {
+      modelSelector.addEventListener("change", (e) => loadModel(e.target.value));
+      loadModel(modelSelector.value);
+    } else {
+      loadModel(atlas.defaultModel || Object.keys(models)[0]);
+    }
   }
 
   init();

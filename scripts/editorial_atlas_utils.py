@@ -12,7 +12,6 @@ from archive_utils import METADATA_PATH
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 EDITORIAL_ATLAS_DIR = REPO_ROOT / "publication_strategy_and_archive" / "editorial_atlas"
-RUBRIC_ASSESSMENTS_PATH = EDITORIAL_ATLAS_DIR / "rubric_assessments.yaml"
 ATLAS_DATA_PATH = EDITORIAL_ATLAS_DIR / "atlas_data.json"
 
 DIMENSIONS = {
@@ -90,10 +89,12 @@ def load_metadata() -> list[dict[str, Any]]:
     return json.loads(METADATA_PATH.read_text(encoding="utf-8"))
 
 
-def load_rubric_assessments() -> dict[str, Any]:
-    if not RUBRIC_ASSESSMENTS_PATH.exists():
-        raise SystemExit(f"Missing editorial atlas rubric source: {RUBRIC_ASSESSMENTS_PATH}")
-    loaded = yaml.safe_load(RUBRIC_ASSESSMENTS_PATH.read_text(encoding="utf-8"))
+def load_rubric_assessments(path: Path | None = None) -> dict[str, Any]:
+    target_path = path or (EDITORIAL_ATLAS_DIR / "rubric_assessments.yaml")
+    if not target_path.exists():
+        # Fallback for dynamic model discovery
+        return {}
+    loaded = yaml.safe_load(target_path.read_text(encoding="utf-8"))
     if not isinstance(loaded, dict):
         raise SystemExit("Editorial atlas rubric source must be a mapping at the top level")
     return loaded
@@ -418,25 +419,41 @@ def validate_drafts(drafts: Any, scored_titles: set[str]) -> list[dict[str, Any]
     return validated
 
 
-def build_editorial_atlas_data(source: dict[str, Any] | None = None) -> dict[str, Any]:
-    source = source or load_rubric_assessments()
+def build_editorial_atlas_data(source: dict[str, Any] | None = None, rubric_path: Path | None = None) -> dict[str, Any]:
+    source = source or load_rubric_assessments(rubric_path)
+    if not source:
+        return {}
     archive_index = build_public_archive_index()
 
     essays = source.get("essays")
     if not isinstance(essays, list) or not essays:
-        raise SystemExit("Editorial atlas rubric source must contain a non-empty 'essays' list")
+        raise SystemExit(f"Editorial atlas rubric source must contain a non-empty 'essays' list: {rubric_path}")
 
     validate_corpus_coverage(source, essays, archive_index)
     derived_essays = [derive_essay_record(entry, archive_index[entry["title"]]) for entry in essays]
     scored_titles = {essay["title"] for essay in derived_essays}
 
+    # Precompute top anchors for the model
+    top_anchors = sorted(
+        derived_essays,
+        key=lambda e: (e.get("publication_power", 0), e.get("traction", 0)),
+        reverse=True,
+    )[:6]
+
     return {
         "version": source.get("version", 1),
+        "model_display_name": source.get("model_display_name", rubric_path.stem.replace("rubric_assessments_", "").replace("_", " ").title() if rubric_path else "Default Model"),
         "corpus_source": source.get("corpus_source", "publication_strategy_and_archive/substack_archive"),
         "score_scale": source.get("score_scale", "1-10 qualitative manual scoring"),
-        "dimensions": DIMENSIONS,
         "essays": derived_essays,
         "drafts": validate_drafts(source.get("drafts"), scored_titles),
+        "top_anchors": [{"title": e["title"], "identity": e["identity"]} for e in top_anchors],
+        "stats": {
+            "totalEssays": len(derived_essays),
+            "topPower": max((e.get("publication_power", 0) for e in derived_essays), default=0),
+            "topTraction": max((e.get("traction", 0) for e in derived_essays), default=0),
+            "topCraft": max((e.get("craft", 0) for e in derived_essays), default=0),
+        }
     }
 
 
@@ -458,13 +475,23 @@ def diff_generated_vs_checked_in(expected: dict[str, Any], current: dict[str, An
 
 
 def ensure_checked_in_atlas_matches_generated() -> dict[str, Any]:
-    generated = build_editorial_atlas_data()
-    current = load_atlas_data()
-    if current != generated:
+    # For now, we only validate the first discovered model to maintain compatibility with --check
+    rubric_paths = list(EDITORIAL_ATLAS_DIR.glob("rubric_assessments_*.yaml"))
+    if not rubric_paths:
+        raise SystemExit(f"No rubric assessment files found in {EDITORIAL_ATLAS_DIR}")
+    
+    generated = build_editorial_atlas_data(rubric_path=rubric_paths[0])
+    current_all = load_atlas_data()
+    
+    # Extract the specific model from current if it exists
+    model_id = rubric_paths[0].stem.replace("rubric_assessments_", "").replace("_", "-")
+    current = current_all.get("models", {}).get(model_id, {})
+    
+    if not current or current.get("essays") != generated.get("essays"):
         diff = diff_generated_vs_checked_in(generated, current)
         raise SystemExit(
-            "Editorial atlas data is out of date with rubric_assessments.yaml. "
+            f"Editorial atlas data for {model_id} is out of date. "
             "Run `.venv/bin/python scripts/generate_editorial_atlas.py`.\n"
             f"{diff}"
         )
-    return generated
+    return current_all

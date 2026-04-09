@@ -5,7 +5,8 @@ import json
 
 from editorial_atlas_utils import (
     ATLAS_DATA_PATH,
-    RUBRIC_ASSESSMENTS_PATH,
+    DIMENSIONS,
+    EDITORIAL_ATLAS_DIR,
     build_editorial_atlas_data,
     ensure_checked_in_atlas_matches_generated,
     render_json,
@@ -28,28 +29,45 @@ def main() -> None:
     args = parse_args()
     if args.check:
         atlas = ensure_checked_in_atlas_matches_generated()
+        models = atlas.get("models", {})
         print(
             json.dumps(
                 {
                     "checked": str(ATLAS_DATA_PATH),
-                    "source": str(RUBRIC_ASSESSMENTS_PATH),
-                    "essays": len(atlas["essays"]),
-                    "drafts": len(atlas["drafts"]),
+                    "models": list(models.keys()),
+                    "essays_per_model": {m: len(models[m]["essays"]) for m in models},
                 },
                 indent=2,
             )
         )
         return
 
-    atlas = build_editorial_atlas_data()
-    ATLAS_DATA_PATH.write_text(render_json(atlas), encoding="utf-8")
+    rubric_paths = sorted(EDITORIAL_ATLAS_DIR.glob("rubric_assessments_*.yaml"))
+    
+    combined_atlas = {
+        "models": {},
+        "defaultModel": "",
+        "dimensions": DIMENSIONS
+    }
+    
+    for path in rubric_paths:
+        model_id = path.stem.replace("rubric_assessments_", "").replace("_", "-")
+        atlas_node = build_editorial_atlas_data(rubric_path=path)
+        combined_atlas["models"][model_id] = atlas_node
+        
+    if "gpt-5-4-xhigh" in combined_atlas["models"]:
+        combined_atlas["defaultModel"] = "gpt-5-4-xhigh"
+    elif rubric_paths:
+        combined_atlas["defaultModel"] = rubric_paths[0].stem.replace("rubric_assessments_", "").replace("_", "-")
+            
+    ATLAS_DATA_PATH.write_text(render_json(combined_atlas), encoding="utf-8")
+    
     print(
         json.dumps(
             {
                 "wrote": str(ATLAS_DATA_PATH),
-                "source": str(RUBRIC_ASSESSMENTS_PATH),
-                "essays": len(atlas["essays"]),
-                "drafts": len(atlas["drafts"]),
+                "models_included": list(combined_atlas["models"].keys()),
+                "total_models": len(combined_atlas["models"]),
             },
             indent=2,
         )
