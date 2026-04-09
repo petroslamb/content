@@ -25,6 +25,7 @@ This leaf package keeps its runnable blueprint local while reusing the umbrella 
 - `status.yaml`: leaf lifecycle manifest for the runner
 - `artifacts/`: local assets tied specifically to this slug package
 - `archive/`: prior snapshots or staged rewrite history for this leaf package
+- Canonical local video artifact: [`artifacts/video/neural-architecture-design-as-a-compositional-32e_slides_video_final.mp4`](artifacts/video/neural-architecture-design-as-a-compositional-32e_slides_video_final.mp4)
 
 ## Working Rule
 

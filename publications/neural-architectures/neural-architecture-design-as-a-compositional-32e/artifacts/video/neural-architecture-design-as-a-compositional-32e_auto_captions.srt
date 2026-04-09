@@ -1,0 +1,3288 @@
+1
+00:00:00,160 --> 00:00:04,560
+You know when we talk about complex
+
+2
+00:00:02,320 --> 00:00:06,720
+engineering like say building a
+
+3
+00:00:04,560 --> 00:00:09,360
+suspension bridge or designing a
+
+4
+00:00:06,720 --> 00:00:12,080
+supersonic jet there is this deeply
+
+5
+00:00:09,360 --> 00:00:12,559
+ingrained expectation of well surgical
+
+6
+00:00:12,080 --> 00:00:14,160
+precision.
+
+7
+00:00:12,559 --> 00:00:14,639
+Oh absolutely it's total top down
+
+8
+00:00:14,160 --> 00:00:16,800
+control
+
+9
+00:00:14,639 --> 00:00:19,119
+right everything is deterministic. The
+
+10
+00:00:16,800 --> 00:00:21,680
+blueprint dictates the exact loadbearing
+
+11
+00:00:19,119 --> 00:00:23,439
+capacity of a steel beam and the final
+
+12
+00:00:21,680 --> 00:00:25,680
+structure reflects that blueprint
+
+13
+00:00:23,439 --> 00:00:27,599
+perfectly. But if you look at how we
+
+14
+00:00:25,680 --> 00:00:29,439
+actually build complex artificial
+
+15
+00:00:27,599 --> 00:00:31,119
+intelligence systems today, that
+
+16
+00:00:29,439 --> 00:00:32,160
+illusion of rigid engineering just
+
+17
+00:00:31,119 --> 00:00:34,079
+completely falls apart.
+
+18
+00:00:32,160 --> 00:00:35,680
+It really does. I mean, we essentially
+
+19
+00:00:34,079 --> 00:00:37,120
+started out trying to build neural
+
+20
+00:00:35,680 --> 00:00:37,600
+networks the same way we built those jet
+
+21
+00:00:37,120 --> 00:00:37,920
+engines.
+
+22
+00:00:37,600 --> 00:00:40,239
+Yeah.
+
+23
+00:00:37,920 --> 00:00:43,200
+We treated AI like a custom machine
+
+24
+00:00:40,239 --> 00:00:45,040
+watch where a master watchmaker, in this
+
+25
+00:00:43,200 --> 00:00:47,440
+case, a machine learning researcher,
+
+26
+00:00:45,040 --> 00:00:49,039
+files down every single gear by hand,
+
+27
+00:00:47,440 --> 00:00:49,600
+you know, deciding exactly what each
+
+28
+00:00:49,039 --> 00:00:50,960
+layer should do,
+
+29
+00:00:49,600 --> 00:00:52,559
+which sounds logical at first,
+
+30
+00:00:50,960 --> 00:00:53,920
+right? But we quickly found out that
+
+31
+00:00:52,559 --> 00:00:55,920
+micromanaging the architecture of
+
+32
+00:00:53,920 --> 00:00:56,879
+intelligence simply doesn't scale. It
+
+33
+00:00:55,920 --> 00:00:59,120
+just breaks.
+
+34
+00:00:56,879 --> 00:01:00,879
+Which is exactly the massive paradigm
+
+35
+00:00:59,120 --> 00:01:02,399
+shift we're unpacking today. I was
+
+36
+00:01:00,879 --> 00:01:04,879
+recently reading this incredible piece
+
+37
+00:01:02,399 --> 00:01:07,600
+of research, a text called rooted layers
+
+38
+00:01:04,879 --> 00:01:09,600
+AI systems grounded in research.
+
+39
+00:01:07,600 --> 00:01:11,280
+Oh yeah, that's a fantastic piece.
+
+40
+00:01:09,600 --> 00:01:13,520
+It really is. It's a phenomenal
+
+41
+00:01:11,280 --> 00:01:15,600
+historical analysis of how neural
+
+42
+00:01:13,520 --> 00:01:17,840
+architecture evolved over the last
+
+43
+00:01:15,600 --> 00:01:19,200
+decade. And uh throughout our
+
+44
+00:01:17,840 --> 00:01:21,280
+conversation today, we'll just refer to
+
+45
+00:01:19,200 --> 00:01:21,920
+this source naturally as the post.
+
+46
+00:01:21,280 --> 00:01:24,400
+Sounds good.
+
+47
+00:01:21,920 --> 00:01:26,320
+So it traces this fascinating arc from
+
+48
+00:01:24,400 --> 00:01:29,119
+human engineers trying to script
+
+49
+00:01:26,320 --> 00:01:30,960
+competence layer by layer to what we do
+
+50
+00:01:29,119 --> 00:01:33,520
+now, which is building endlessly
+
+51
+00:01:30,960 --> 00:01:34,880
+scalable governed ecosystems where the
+
+52
+00:01:33,520 --> 00:01:35,920
+internal structure basically
+
+53
+00:01:34,880 --> 00:01:37,439
+self-organizes.
+
+54
+00:01:35,920 --> 00:01:39,759
+Yeah. And a useful way to think about
+
+55
+00:01:37,439 --> 00:01:41,520
+this is realizing that the history of
+
+56
+00:01:39,759 --> 00:01:42,240
+deep learning architecture isn't just a
+
+57
+00:01:41,520 --> 00:01:43,759
+hardware story,
+
+58
+00:01:42,240 --> 00:01:44,479
+right? It's not just we got better
+
+59
+00:01:43,759 --> 00:01:46,240
+graphics cards.
+
+60
+00:01:44,479 --> 00:01:47,680
+Exactly. We didn't just get faster GPUs
+
+61
+00:01:46,240 --> 00:01:49,520
+and make the models bigger. We
+
+62
+00:01:47,680 --> 00:01:51,600
+fundamentally redefined what the act of
+
+63
+00:01:49,520 --> 00:01:54,479
+design even means in this space. We
+
+64
+00:01:51,600 --> 00:01:57,360
+moved from bespoke stacks of handcrafted
+
+65
+00:01:54,479 --> 00:01:59,439
+mathematical operations to trainable
+
+66
+00:01:57,360 --> 00:02:01,439
+blocks and eventually to these highly
+
+67
+00:01:59,439 --> 00:02:02,880
+portable computer recipes.
+
+68
+00:02:01,439 --> 00:02:04,000
+So if you're listening to this and
+
+69
+00:02:02,880 --> 00:02:07,360
+you're trying to cut through the
+
+70
+00:02:04,000 --> 00:02:09,119
+absolute avalanche of AI, you know, the
+
+71
+00:02:07,360 --> 00:02:11,520
+constant breathless announcements about
+
+72
+00:02:09,119 --> 00:02:14,080
+parameter counts or the latest chatbot
+
+73
+00:02:11,520 --> 00:02:16,400
+passing a bar exam. Understanding this
+
+74
+00:02:14,080 --> 00:02:18,800
+architectural shift is really the only
+
+75
+00:02:16,400 --> 00:02:19,200
+way to grasp why these models actually
+
+76
+00:02:18,800 --> 00:02:20,400
+work.
+
+77
+00:02:19,200 --> 00:02:21,920
+I completely agree. It's the
+
+78
+00:02:20,400 --> 00:02:23,520
+foundational context you need.
+
+79
+00:02:21,920 --> 00:02:26,000
+And to do that, we have to look back at
+
+80
+00:02:23,520 --> 00:02:28,800
+the era when every layer was effectively
+
+81
+00:02:26,000 --> 00:02:31,840
+a human guess. Let's rewind to the
+
+82
+00:02:28,800 --> 00:02:32,720
+bespoke age, specifically 2012 with
+
+83
+00:02:31,840 --> 00:02:36,239
+Alexet.
+
+84
+00:02:32,720 --> 00:02:38,160
+Yeah. So AlexNet is um it's the perfect
+
+85
+00:02:36,239 --> 00:02:39,920
+baseline. The team behind it basically
+
+86
+00:02:38,160 --> 00:02:42,000
+proved that deep convolutional neural
+
+87
+00:02:39,920 --> 00:02:43,360
+networks could absolutely shatter the
+
+88
+00:02:42,000 --> 00:02:43,920
+existing benchmarks for image
+
+89
+00:02:43,360 --> 00:02:45,120
+recognition.
+
+90
+00:02:43,920 --> 00:02:46,239
+Shatter them completely.
+
+91
+00:02:45,120 --> 00:02:48,000
+Right? But looking back at the
+
+92
+00:02:46,239 --> 00:02:49,920
+architecture diagram today, it is
+
+93
+00:02:48,000 --> 00:02:51,840
+intensely particular. It is aggressively
+
+94
+00:02:49,920 --> 00:02:53,440
+customized to the specific hardware
+
+95
+00:02:51,840 --> 00:02:55,760
+constraints of the GPUs they were using
+
+96
+00:02:53,440 --> 00:02:58,319
+back then and heavily overindexed on the
+
+97
+00:02:55,760 --> 00:03:00,480
+specific quirks of the imageet data set.
+
+98
+00:02:58,319 --> 00:03:03,599
+Yeah, the post refers to AlexNet as
+
+99
+00:03:00,480 --> 00:03:05,519
+competent wager, which I love. The
+
+100
+00:03:03,599 --> 00:03:07,360
+designers were placing very specific
+
+101
+00:03:05,519 --> 00:03:09,920
+bets on the geometry of feature
+
+102
+00:03:07,360 --> 00:03:13,599
+extraction. For instance, the very first
+
+103
+00:03:09,920 --> 00:03:15,840
+layer uses an 11 by11 receptive field
+
+104
+00:03:13,599 --> 00:03:17,040
+with an aggressive stride of four,
+
+105
+00:03:15,840 --> 00:03:19,280
+which is huge.
+
+106
+00:03:17,040 --> 00:03:21,040
+It is. Now, mathematically, you're
+
+107
+00:03:19,280 --> 00:03:22,800
+throwing away a massive amount of
+
+108
+00:03:21,040 --> 00:03:24,879
+spatial resolution right out of the
+
+109
+00:03:22,800 --> 00:03:26,800
+gate, right? And you're making up for it
+
+110
+00:03:24,879 --> 00:03:29,280
+by projecting into a deeper channel
+
+111
+00:03:26,800 --> 00:03:30,959
+space. You're forcefully dictating
+
+112
+00:03:29,280 --> 00:03:33,040
+exactly where the network is allowed to
+
+113
+00:03:30,959 --> 00:03:34,239
+extract fine details and where it's
+
+114
+00:03:33,040 --> 00:03:36,159
+forced to compress.
+
+115
+00:03:34,239 --> 00:03:37,840
+I'd add that it's almost a hangover from
+
+116
+00:03:36,159 --> 00:03:38,959
+the classical computer vision era.
+
+117
+00:03:37,840 --> 00:03:39,840
+Oh, that makes sense. Like feature
+
+118
+00:03:38,959 --> 00:03:42,720
+engineering.
+
+119
+00:03:39,840 --> 00:03:44,080
+Exactly. So early AI was still clinging
+
+120
+00:03:42,720 --> 00:03:45,680
+to that culture.
+
+121
+00:03:44,080 --> 00:03:48,080
+The researchers were still acting as the
+
+122
+00:03:45,680 --> 00:03:49,200
+primary architects of visual extraction.
+
+123
+00:03:48,080 --> 00:03:51,280
+They're looking at the network and
+
+124
+00:03:49,200 --> 00:03:52,799
+basically decreeing, okay, layer 1 will
+
+125
+00:03:51,280 --> 00:03:54,000
+be the edge detector. Layer three is
+
+126
+00:03:52,799 --> 00:03:56,000
+where the representation becomes
+
+127
+00:03:54,000 --> 00:03:57,760
+translation and variant. and layer five
+
+128
+00:03:56,000 --> 00:03:59,840
+will pipe into these massive, dense,
+
+129
+00:03:57,760 --> 00:04:00,879
+fully connected layers for the final
+
+130
+00:03:59,840 --> 00:04:02,400
+classification.
+
+131
+00:04:00,879 --> 00:04:04,640
+It's like building an assembly line
+
+132
+00:04:02,400 --> 00:04:06,720
+where you explicitly say station one
+
+133
+00:04:04,640 --> 00:04:08,400
+only does sorting, station two only does
+
+134
+00:04:06,720 --> 00:04:10,080
+hammering instead of just having a
+
+135
+00:04:08,400 --> 00:04:11,519
+general purpose robotic arm.
+
+136
+00:04:10,080 --> 00:04:15,200
+That is a perfect analogy. It was a
+
+137
+00:04:11,519 --> 00:04:17,600
+highly localized custombuilt machine.
+
+138
+00:04:15,200 --> 00:04:19,840
+And because of that, it didn't leave
+
+139
+00:04:17,600 --> 00:04:21,519
+behind a reusable discipline. You
+
+140
+00:04:19,840 --> 00:04:23,440
+couldn't just take the AlexNet logic and
+
+141
+00:04:21,519 --> 00:04:23,759
+say, "Hey, let's stack this to a 100
+
+142
+00:04:23,440 --> 00:04:25,199
+layers,"
+
+143
+00:04:23,759 --> 00:04:26,720
+right? It would just fall apart.
+
+144
+00:04:25,199 --> 00:04:28,320
+Yeah. It would break mathematically and
+
+145
+00:04:26,720 --> 00:04:29,759
+computationally. It wasn't designed for
+
+146
+00:04:28,320 --> 00:04:31,680
+infinite scale,
+
+147
+00:04:29,759 --> 00:04:34,880
+which puts the field at a really
+
+148
+00:04:31,680 --> 00:04:37,600
+fascinating crossroads by about 2014.
+
+149
+00:04:34,880 --> 00:04:39,520
+Everyone knows convolutions work, but no
+
+150
+00:04:37,600 --> 00:04:41,919
+one has a universal rule book for
+
+151
+00:04:39,520 --> 00:04:43,840
+building them. And we see the community
+
+152
+00:04:41,919 --> 00:04:44,639
+essentially split into two competing
+
+153
+00:04:43,840 --> 00:04:45,919
+philosophies.
+
+154
+00:04:44,639 --> 00:04:48,400
+The great divergence. Yeah,
+
+155
+00:04:45,919 --> 00:04:50,400
+exactly. On one side, you have the VGG
+
+156
+00:04:48,400 --> 00:04:52,639
+approach and on the other you have
+
+157
+00:04:50,400 --> 00:04:54,479
+inception from the Google team. two
+
+158
+00:04:52,639 --> 00:04:56,639
+radically different answers to the exact
+
+159
+00:04:54,479 --> 00:04:58,320
+same pressure, which was the need to go
+
+160
+00:04:56,639 --> 00:04:58,639
+deeper to get better representations.
+
+161
+00:04:58,320 --> 00:05:00,720
+Right?
+
+162
+00:04:58,639 --> 00:05:02,880
+Let's look at VGG first because it did
+
+163
+00:05:00,720 --> 00:05:06,320
+something brutally elegant.
+
+164
+00:05:02,880 --> 00:05:09,600
+VGG stripped away all of those bespoke
+
+165
+00:05:06,320 --> 00:05:12,320
+11 by11 or 5x5 filters we just saw in
+
+166
+00:05:09,600 --> 00:05:13,840
+Alex Net and replaced them with pure
+
+167
+00:05:12,320 --> 00:05:15,759
+unadulterated repetition.
+
+168
+00:05:13,840 --> 00:05:18,000
+Just the same thing over and over,
+
+169
+00:05:15,759 --> 00:05:20,800
+right? They proved that simply repeating
+
+170
+00:05:18,000 --> 00:05:23,520
+a tiny 3x3 convolution over and over
+
+171
+00:05:20,800 --> 00:05:25,280
+again could not only match but beat the
+
+172
+00:05:23,520 --> 00:05:26,720
+decorated complex designs.
+
+173
+00:05:25,280 --> 00:05:28,960
+And the math behind that is just
+
+174
+00:05:26,720 --> 00:05:31,199
+brilliant. Like if I stack two 3x3
+
+175
+00:05:28,960 --> 00:05:33,440
+convolutions, the effective receptive
+
+176
+00:05:31,199 --> 00:05:33,759
+field on the original image is 5x5.
+
+177
+00:05:33,440 --> 00:05:36,639
+Exactly.
+
+178
+00:05:33,759 --> 00:05:38,720
+If I stack three, it's 7 by 7. But by
+
+179
+00:05:36,639 --> 00:05:40,880
+using the smaller 3x3's, I am
+
+180
+00:05:38,720 --> 00:05:43,039
+drastically reducing the total parameter
+
+181
+00:05:40,880 --> 00:05:45,199
+count while simultaneously injecting way
+
+182
+00:05:43,039 --> 00:05:46,880
+more nonlinear activation functions like
+
+183
+00:05:45,199 --> 00:05:48,160
+real use between the layers,
+
+184
+00:05:46,880 --> 00:05:49,520
+which is huge for learning.
+
+185
+00:05:48,160 --> 00:05:51,360
+Yeah. So the network becomes more
+
+186
+00:05:49,520 --> 00:05:53,280
+discriminative, leaner, and totally
+
+187
+00:05:51,360 --> 00:05:55,440
+uniform. You're elevating the unit of
+
+188
+00:05:53,280 --> 00:05:57,919
+design from a highly specific custom
+
+189
+00:05:55,440 --> 00:05:59,680
+layer up to a repeated motif.
+
+190
+00:05:57,919 --> 00:06:02,000
+That's the critical conceptual leap
+
+191
+00:05:59,680 --> 00:06:04,639
+right there. Repetition was suddenly no
+
+192
+00:06:02,000 --> 00:06:06,560
+longer seen as naive or lazy. But
+
+193
+00:06:04,639 --> 00:06:08,560
+inception, which was happening at almost
+
+194
+00:06:06,560 --> 00:06:10,080
+the exact same time, went in the
+
+195
+00:06:08,560 --> 00:06:12,000
+completely opposite direction.
+
+196
+00:06:10,080 --> 00:06:14,000
+Yeah, inception is wild to look at.
+
+197
+00:06:12,000 --> 00:06:16,400
+It really is. An inception module takes
+
+198
+00:06:14,000 --> 00:06:18,160
+an input tensor and branches it out,
+
+199
+00:06:16,400 --> 00:06:20,160
+running multiple different operations in
+
+200
+00:06:18,160 --> 00:06:23,120
+parallel. It runs a one by one
+
+201
+00:06:20,160 --> 00:06:25,680
+convolution, a 3x3, a 5x5, and a max
+
+202
+00:06:23,120 --> 00:06:26,800
+pooling operation all at the same time.
+
+203
+00:06:25,680 --> 00:06:28,560
+Wow.
+
+204
+00:06:26,800 --> 00:06:30,720
+And then it concatenates the feature
+
+205
+00:06:28,560 --> 00:06:33,039
+maps back together. It's essentially
+
+206
+00:06:30,720 --> 00:06:34,960
+saying we don't know which spatial scale
+
+207
+00:06:33,039 --> 00:06:37,199
+is most relevant here. So let's just
+
+208
+00:06:34,960 --> 00:06:38,639
+compute all of them locally and let the
+
+209
+00:06:37,199 --> 00:06:39,280
+training process figure out how to
+
+210
+00:06:38,639 --> 00:06:40,720
+weight them.
+
+211
+00:06:39,280 --> 00:06:42,560
+Now looking at inception from our
+
+212
+00:06:40,720 --> 00:06:44,639
+current Jantage point in the era of
+
+213
+00:06:42,560 --> 00:06:47,039
+ultra ununiform transformers, it feels
+
+214
+00:06:44,639 --> 00:06:47,680
+almost I don't know overly complicated.
+
+215
+00:06:47,039 --> 00:06:49,199
+Oh, absolutely.
+
+216
+00:06:47,680 --> 00:06:50,960
+It looks like throwing everything at the
+
+217
+00:06:49,199 --> 00:06:52,720
+wall to see what sticks.
+
+218
+00:06:50,960 --> 00:06:54,639
+Was it obvious to researchers at the
+
+219
+00:06:52,720 --> 00:06:57,039
+time that the brutalist uniformity of
+
+220
+00:06:54,639 --> 00:06:59,280
+VGG was ultimately the smarter path?
+
+221
+00:06:57,039 --> 00:07:01,120
+No, actually. and the post explicitly
+
+222
+00:06:59,280 --> 00:07:03,840
+warns against that kind of historical
+
+223
+00:07:01,120 --> 00:07:05,360
+flattening. This fits a broader pattern
+
+224
+00:07:03,840 --> 00:07:07,520
+we're seeing across the history of
+
+225
+00:07:05,360 --> 00:07:09,599
+computing. The inevitable winning
+
+226
+00:07:07,520 --> 00:07:10,319
+architecture is rarely obvious in the
+
+227
+00:07:09,599 --> 00:07:11,759
+moment.
+
+228
+00:07:10,319 --> 00:07:12,319
+Oh, interesting. So, it was a real
+
+229
+00:07:11,759 --> 00:07:15,280
+debate.
+
+230
+00:07:12,319 --> 00:07:18,000
+A huge debate. In 2014, the field was
+
+231
+00:07:15,280 --> 00:07:20,479
+genuinely undecided. Both were valid,
+
+232
+00:07:18,000 --> 00:07:22,400
+highly competitive answers. Inception
+
+233
+00:07:20,479 --> 00:07:24,800
+proved that carefully composed local
+
+234
+00:07:22,400 --> 00:07:27,599
+heterogeneity was an incredibly powerful
+
+235
+00:07:24,800 --> 00:07:29,280
+theory. It squeezed maximum performance
+
+236
+00:07:27,599 --> 00:07:29,840
+out of tight parameter budgets.
+
+237
+00:07:29,280 --> 00:07:32,479
+Right?
+
+238
+00:07:29,840 --> 00:07:34,639
+VGG conversely proved repetition was
+
+239
+00:07:32,479 --> 00:07:36,240
+robust. Neither approach was a straw
+
+240
+00:07:34,639 --> 00:07:36,960
+man. They were both brilliant in
+
+241
+00:07:36,240 --> 00:07:40,160
+different ways.
+
+242
+00:07:36,960 --> 00:07:41,840
+But VGG had a hidden fatal flaw. Right.
+
+243
+00:07:40,160 --> 00:07:44,000
+It proved that stacking blocks was
+
+244
+00:07:41,840 --> 00:07:45,599
+theoretically elegant. But it completely
+
+245
+00:07:44,000 --> 00:07:47,039
+failed to solve the optimization physics
+
+246
+00:07:45,599 --> 00:07:48,479
+of actually training them once they got
+
+247
+00:07:47,039 --> 00:07:50,240
+past what 20 or 30 layers.
+
+248
+00:07:48,479 --> 00:07:52,240
+Yeah, exactly. The deeper the stack, the
+
+249
+00:07:50,240 --> 00:07:54,080
+harder the network crashed. Which brings
+
+250
+00:07:52,240 --> 00:07:55,599
+us to arguably the most important
+
+251
+00:07:54,080 --> 00:07:57,840
+architectural breakthrough of the
+
+252
+00:07:55,599 --> 00:07:58,879
+decade, the ResNet paper in 2015.
+
+253
+00:07:57,840 --> 00:08:00,560
+Oh, absolutely. Hey,
+
+254
+00:07:58,879 --> 00:08:03,199
+Kim and his colleagues identified what
+
+255
+00:08:00,560 --> 00:08:05,520
+we now call the degradation problem. And
+
+256
+00:08:03,199 --> 00:08:07,680
+it's crucial to distinguish this from
+
+257
+00:08:05,520 --> 00:08:09,520
+the vanishing gradient problem, which
+
+258
+00:08:07,680 --> 00:08:11,840
+the community had mostly solved at that
+
+259
+00:08:09,520 --> 00:08:12,879
+point with careful initialization and
+
+260
+00:08:11,840 --> 00:08:14,879
+bash norm.
+
+261
+00:08:12,879 --> 00:08:15,440
+Right? This wasn't just gradients dying
+
+262
+00:08:14,879 --> 00:08:17,039
+out.
+
+263
+00:08:15,440 --> 00:08:18,800
+No, the degradation problem was
+
+264
+00:08:17,039 --> 00:08:22,160
+different. They found that if you took a
+
+265
+00:08:18,800 --> 00:08:25,199
+20 layer plane network and just added 36
+
+266
+00:08:22,160 --> 00:08:27,199
+more layers to it, the 56 layer network
+
+267
+00:08:25,199 --> 00:08:27,599
+had a significantly higher training
+
+268
+00:08:27,199 --> 00:08:30,160
+error.
+
+269
+00:08:27,599 --> 00:08:31,120
+And that is mathematically maddening.
+
+270
+00:08:30,160 --> 00:08:33,680
+It makes no sense
+
+271
+00:08:31,120 --> 00:08:35,919
+because logically the deeper model
+
+272
+00:08:33,680 --> 00:08:38,080
+strictly contains the solution space of
+
+273
+00:08:35,919 --> 00:08:39,919
+the shallower model. At the absolute
+
+274
+00:08:38,080 --> 00:08:42,080
+worst, the network should just learn to
+
+275
+00:08:39,919 --> 00:08:43,360
+use the first 20 layers to do the work
+
+276
+00:08:42,080 --> 00:08:45,200
+and then set the weights of the
+
+277
+00:08:43,360 --> 00:08:47,040
+remaining 36 layers. So, they just pass
+
+278
+00:08:45,200 --> 00:08:48,560
+the data along completely unaltered.
+
+279
+00:08:47,040 --> 00:08:49,279
+Exactly. They should easily learn an
+
+280
+00:08:48,560 --> 00:08:51,040
+identity mapping.
+
+281
+00:08:49,279 --> 00:08:53,279
+But gradient descent just could not find
+
+282
+00:08:51,040 --> 00:08:54,880
+that solution. The optimizer was getting
+
+283
+00:08:53,279 --> 00:08:56,959
+totally lost in the depth.
+
+284
+00:08:54,880 --> 00:08:59,120
+Right. Because forcing a standard
+
+285
+00:08:56,959 --> 00:09:01,680
+convolutional layer to learn a perfect
+
+286
+00:08:59,120 --> 00:09:04,160
+identity mapping to output exactly what
+
+287
+00:09:01,680 --> 00:09:05,839
+was inputed is highly non-trivial for
+
+288
+00:09:04,160 --> 00:09:06,480
+the optimizer to actually learn from
+
+289
+00:09:05,839 --> 00:09:07,120
+scratch.
+
+290
+00:09:06,480 --> 00:09:09,200
+Right. Right.
+
+291
+00:09:07,120 --> 00:09:12,080
+So, ResNet introduced a structural
+
+292
+00:09:09,200 --> 00:09:14,560
+mandate, residual path discipline. They
+
+293
+00:09:12,080 --> 00:09:16,080
+altered the fundamental wiring. Instead
+
+294
+00:09:14,560 --> 00:09:17,920
+of training every layer as a total
+
+295
+00:09:16,080 --> 00:09:19,279
+rewrite of the incoming data, they
+
+296
+00:09:17,920 --> 00:09:20,480
+introduced a skip connection.
+
+297
+00:09:19,279 --> 00:09:22,399
+A skip connection. Okay.
+
+298
+00:09:20,480 --> 00:09:24,800
+Yeah. The data flows down a main
+
+299
+00:09:22,399 --> 00:09:26,560
+unaltered highway and the convolutional
+
+300
+00:09:24,800 --> 00:09:28,720
+layers sit off to the side. They take
+
+301
+00:09:26,560 --> 00:09:31,040
+the input, calculate a delta or a small
+
+302
+00:09:28,720 --> 00:09:32,720
+mathematical correction, and then add
+
+303
+00:09:31,040 --> 00:09:34,560
+that residual correction back into the
+
+304
+00:09:32,720 --> 00:09:37,120
+main flow. A useful way to think about
+
+305
+00:09:34,560 --> 00:09:39,600
+this is editing a document. A plain
+
+306
+00:09:37,120 --> 00:09:42,320
+network forces you to rewrite the entire
+
+307
+00:09:39,600 --> 00:09:44,480
+essay from memory at every single stage,
+
+308
+00:09:42,320 --> 00:09:46,480
+which is exhausting and prone to error.
+
+309
+00:09:44,480 --> 00:09:48,640
+Exactly. ResNet just gives you a track
+
+310
+00:09:46,480 --> 00:09:50,480
+changes feature. You keep the original
+
+311
+00:09:48,640 --> 00:09:52,000
+essay and just add your specific tweak.
+
+312
+00:09:50,480 --> 00:09:53,440
+You fundamentally change what the
+
+313
+00:09:52,000 --> 00:09:55,120
+weights are responsible for.
+
+314
+00:09:53,440 --> 00:09:56,800
+That is a perfect way to put it. You
+
+315
+00:09:55,120 --> 00:09:58,720
+aren't asking the layer to learn the
+
+316
+00:09:56,800 --> 00:10:00,320
+entire representation from scratch.
+
+317
+00:09:58,720 --> 00:10:01,519
+You're just asking it to learn the
+
+318
+00:10:00,320 --> 00:10:03,200
+perturbation,
+
+319
+00:10:01,519 --> 00:10:05,360
+right? And if the layer has nothing
+
+320
+00:10:03,200 --> 00:10:07,920
+useful to add, driving the weights to
+
+321
+00:10:05,360 --> 00:10:09,600
+zero naturally results in an identity
+
+322
+00:10:07,920 --> 00:10:11,279
+mapping which is trivial for the
+
+323
+00:10:09,600 --> 00:10:13,519
+optimizer to execute.
+
+324
+00:10:11,279 --> 00:10:16,720
+Exactly. And the global consequence of
+
+325
+00:10:13,519 --> 00:10:19,200
+that local change is just staggering.
+
+326
+00:10:16,720 --> 00:10:21,279
+Depth stopped behaving like a fragile
+
+327
+00:10:19,200 --> 00:10:23,040
+serial chain of transformations and
+
+328
+00:10:21,279 --> 00:10:24,079
+started behaving like an accumulated
+
+329
+00:10:23,040 --> 00:10:25,360
+refinement process.
+
+330
+00:10:24,079 --> 00:10:27,440
+It unlocked everything.
+
+331
+00:10:25,360 --> 00:10:30,240
+It really did. This is the pivotal
+
+332
+00:10:27,440 --> 00:10:32,320
+moment of the deep dive. Uniformity was
+
+333
+00:10:30,240 --> 00:10:34,959
+no longer just an aesthetic choice. It
+
+334
+00:10:32,320 --> 00:10:37,680
+became a robust optimization strategy
+
+335
+00:10:34,959 --> 00:10:39,839
+that unlocked almost unlimited scale.
+
+336
+00:10:37,680 --> 00:10:41,360
+They were suddenly training 152 layer
+
+337
+00:10:39,839 --> 00:10:43,040
+networks, even on a thousand layer
+
+338
+00:10:41,360 --> 00:10:44,800
+networks, seamlessly.
+
+339
+00:10:43,040 --> 00:10:46,399
+But the post makes a really nuanced
+
+340
+00:10:44,800 --> 00:10:48,000
+point here. It wasn't just the mere
+
+341
+00:10:46,399 --> 00:10:50,160
+presence of extra branches that made
+
+342
+00:10:48,000 --> 00:10:50,640
+ResNet work. It was a strict geometric
+
+343
+00:10:50,160 --> 00:10:52,079
+discipline.
+
+344
+00:10:50,640 --> 00:10:53,440
+Yes, the discipline is key.
+
+345
+00:10:52,079 --> 00:10:55,920
+I was looking back at the follow-up
+
+346
+00:10:53,440 --> 00:10:58,399
+paper from 2016 specifically analyzing
+
+347
+00:10:55,920 --> 00:11:00,000
+these identity mappings. They prove that
+
+348
+00:10:58,399 --> 00:11:01,920
+you absolutely cannot mess with the
+
+349
+00:11:00,000 --> 00:11:03,839
+shortcut path. If you try to scale the
+
+350
+00:11:01,920 --> 00:11:06,079
+shortcut with a multiplier or put a
+
+351
+00:11:03,839 --> 00:11:08,000
+dropout gate on it or project it, the
+
+352
+00:11:06,079 --> 00:11:09,279
+optimization immediately degrades.
+
+353
+00:11:08,000 --> 00:11:11,279
+It falls apart entirely.
+
+354
+00:11:09,279 --> 00:11:13,760
+You have to protect that pristine flow
+
+355
+00:11:11,279 --> 00:11:15,600
+of information at all costs. The
+
+356
+00:11:13,760 --> 00:11:17,360
+discipline of the path matters more than
+
+357
+00:11:15,600 --> 00:11:19,120
+just having extra branches.
+
+358
+00:11:17,360 --> 00:11:21,120
+I'm so glad you brought up the 2016
+
+359
+00:11:19,120 --> 00:11:23,120
+paper because it highlights that the
+
+360
+00:11:21,120 --> 00:11:25,279
+network architecture is now actively
+
+361
+00:11:23,120 --> 00:11:28,480
+managing the topology of information
+
+362
+00:11:25,279 --> 00:11:31,040
+flow. And this fundamentally altered how
+
+363
+00:11:28,480 --> 00:11:33,440
+researchers understood deep networks.
+
+364
+00:11:31,040 --> 00:11:35,279
+Take Vetitall's 2016 paper which
+
+365
+00:11:33,440 --> 00:11:36,000
+proposed the ensemble framing of
+
+366
+00:11:35,279 --> 00:11:38,240
+ResNets.
+
+367
+00:11:36,000 --> 00:11:39,760
+Oh, that paper is fascinating. My read
+
+368
+00:11:38,240 --> 00:11:41,279
+on the VET paper is that it completely
+
+369
+00:11:39,760 --> 00:11:43,760
+deconstructed the idea that a deep
+
+370
+00:11:41,279 --> 00:11:44,160
+ResNet is just one long hierarchical
+
+371
+00:11:43,760 --> 00:11:44,800
+chain.
+
+372
+00:11:44,160 --> 00:11:46,399
+Yep.
+
+373
+00:11:44,800 --> 00:11:47,760
+Because of the skip connections, you
+
+374
+00:11:46,399 --> 00:11:50,160
+essentially have an exponential number
+
+375
+00:11:47,760 --> 00:11:51,839
+of parallel paths the data can take. And
+
+376
+00:11:50,160 --> 00:11:53,760
+what they found by dropping layers at
+
+377
+00:11:51,839 --> 00:11:55,839
+test time was that ResNets behave more
+
+378
+00:11:53,760 --> 00:11:57,040
+like a massive ensemble of relatively
+
+379
+00:11:55,839 --> 00:11:58,640
+shallow networks.
+
+380
+00:11:57,040 --> 00:12:00,880
+I'd actually refine that slightly
+
+381
+00:11:58,640 --> 00:12:04,000
+because as the post clarifies, calling
+
+382
+00:12:00,880 --> 00:12:05,279
+it just a bag of shallow networks is a
+
+383
+00:12:04,000 --> 00:12:06,959
+bit of a common misconception.
+
+384
+00:12:05,279 --> 00:12:08,720
+Oh, really? How so?
+
+385
+00:12:06,959 --> 00:12:11,040
+The brilliant insight is really about
+
+386
+00:12:08,720 --> 00:12:12,880
+the gradient flow, the pathwise nature
+
+387
+00:12:11,040 --> 00:12:15,279
+of it. If you look at the distribution
+
+388
+00:12:12,880 --> 00:12:17,519
+of the path lengths, the vast majority
+
+389
+00:12:15,279 --> 00:12:19,360
+of the gradient signal, the mathematical
+
+390
+00:12:17,519 --> 00:12:21,760
+updates that actually peach the network
+
+391
+00:12:19,360 --> 00:12:23,200
+during back propagation concentrates on
+
+392
+00:12:21,760 --> 00:12:23,920
+relatively short paths.
+
+393
+00:12:23,200 --> 00:12:25,680
+Oh, I see.
+
+394
+00:12:23,920 --> 00:12:28,240
+Yeah. Typically spanning only 10 to 30
+
+395
+00:12:25,680 --> 00:12:29,760
+effective layers, even inside a massive
+
+396
+00:12:28,240 --> 00:12:32,000
+110 layer scaffold.
+
+397
+00:12:29,760 --> 00:12:34,240
+Oh wow. So the massive 110 layer depth
+
+398
+00:12:32,000 --> 00:12:36,560
+is providing representational capacity,
+
+399
+00:12:34,240 --> 00:12:38,720
+a huge parameter space for the model to
+
+400
+00:12:36,560 --> 00:12:40,399
+store knowledge. But the residual design
+
+401
+00:12:38,720 --> 00:12:42,079
+makes that capacity trainable by
+
+402
+00:12:40,399 --> 00:12:44,240
+ensuring the error signal doesn't have
+
+403
+00:12:42,079 --> 00:12:45,760
+to survive a torturous 110step
+
+404
+00:12:44,240 --> 00:12:47,279
+multiplication chain.
+
+405
+00:12:45,760 --> 00:12:47,839
+Exactly. It just takes the express
+
+406
+00:12:47,279 --> 00:12:48,880
+lanes.
+
+407
+00:12:47,839 --> 00:12:50,720
+That is so cool.
+
+408
+00:12:48,880 --> 00:12:53,440
+It is. And this directly bridges into
+
+409
+00:12:50,720 --> 00:12:54,399
+the work by like all in 2018 on lost
+
+410
+00:12:53,440 --> 00:12:56,399
+landscapes.
+
+411
+00:12:54,399 --> 00:12:58,000
+For deep plane networks, the lost
+
+412
+00:12:56,399 --> 00:12:59,839
+landscape, the geometric space the
+
+413
+00:12:58,000 --> 00:13:02,160
+optimizer has to navigate to minimize
+
+414
+00:12:59,839 --> 00:13:03,040
+error becomes completely chaotic as you
+
+415
+00:13:02,160 --> 00:13:04,880
+add layers.
+
+416
+00:13:03,040 --> 00:13:05,600
+Just jagged peaks and valleys
+
+417
+00:13:04,880 --> 00:13:07,440
+everywhere.
+
+418
+00:13:05,600 --> 00:13:09,360
+Exactly. Severe non-convexity. the
+
+419
+00:13:07,440 --> 00:13:09,680
+optimizer just gets stuck.
+
+420
+00:13:09,360 --> 00:13:11,680
+Yeah.
+
+421
+00:13:09,680 --> 00:13:14,160
+But when you add those exact skip
+
+422
+00:13:11,680 --> 00:13:16,639
+connections, the landscape miraculously
+
+423
+00:13:14,160 --> 00:13:19,200
+flattens out into smooth convex-like
+
+424
+00:13:16,639 --> 00:13:21,519
+basins. It acts as a bridge between
+
+425
+00:13:19,200 --> 00:13:23,760
+structural design and trainability.
+
+426
+00:13:21,519 --> 00:13:25,680
+The skip connections basically pave a
+
+427
+00:13:23,760 --> 00:13:26,639
+direct road to the global minimum
+
+428
+00:13:25,680 --> 00:13:28,480
+pretty much.
+
+429
+00:13:26,639 --> 00:13:30,639
+So putting this all together, the
+
+430
+00:13:28,480 --> 00:13:32,399
+bespoke era ended not because we found
+
+431
+00:13:30,639 --> 00:13:34,160
+better custom filters, but because
+
+432
+00:13:32,399 --> 00:13:36,320
+ResNet proved we could build a
+
+433
+00:13:34,160 --> 00:13:37,200
+governable scaffold for infinite depth.
+
+434
+00:13:36,320 --> 00:13:38,160
+But there is a catch.
+
+435
+00:13:37,200 --> 00:13:40,160
+There's always a catch.
+
+436
+00:13:38,160 --> 00:13:42,079
+We solved depth, but the block we were
+
+437
+00:13:40,160 --> 00:13:44,240
+repeating, the convolution, was still
+
+438
+00:13:42,079 --> 00:13:46,639
+deeply tied to the specific domain of
+
+439
+00:13:44,240 --> 00:13:48,720
+image processing. It had a massive
+
+440
+00:13:46,639 --> 00:13:51,200
+inductive bias for 2D spatial
+
+441
+00:13:48,720 --> 00:13:53,360
+relationships. It was frankly useless
+
+442
+00:13:51,200 --> 00:13:54,399
+for sequential data like text,
+
+443
+00:13:53,360 --> 00:13:56,240
+right? You couldn't run a sentence
+
+444
+00:13:54,399 --> 00:13:58,160
+through a CNN very effectively.
+
+445
+00:13:56,240 --> 00:14:00,480
+Exactly. Which brings us to the next
+
+446
+00:13:58,160 --> 00:14:02,000
+paradigm shift, the portable block. What
+
+447
+00:14:00,480 --> 00:14:04,000
+if we could design a block that wasn't
+
+448
+00:14:02,000 --> 00:14:06,000
+just repeatable, but completely portable
+
+449
+00:14:04,000 --> 00:14:08,959
+across any type of data? Now we're
+
+450
+00:14:06,000 --> 00:14:11,839
+entering the era from roughly 2017 to
+
+451
+00:14:08,959 --> 00:14:14,240
+2020. The era of the transformer
+
+452
+00:14:11,839 --> 00:14:15,680
+introduced by Voswani at all in
+
+453
+00:14:14,240 --> 00:14:17,360
+attention is all you need.
+
+454
+00:14:15,680 --> 00:14:19,680
+The paper that changed everything.
+
+455
+00:14:17,360 --> 00:14:22,079
+Literally what they did was conceptually
+
+456
+00:14:19,680 --> 00:14:23,760
+violent to the existing paradigms. They
+
+457
+00:14:22,079 --> 00:14:25,680
+completely abandoned the convolutions we
+
+458
+00:14:23,760 --> 00:14:27,760
+use for vision and they abandoned the
+
+459
+00:14:25,680 --> 00:14:30,000
+recurrent neural networks the LSTMs and
+
+460
+00:14:27,760 --> 00:14:31,600
+GRUs that we absolutely relied on for
+
+461
+00:14:30,000 --> 00:14:33,920
+language processing. And what they
+
+462
+00:14:31,600 --> 00:14:36,079
+replaced it with was a block whose
+
+463
+00:14:33,920 --> 00:14:38,639
+external shape was remarkably stable,
+
+464
+00:14:36,079 --> 00:14:41,199
+incredibly parallelizable on hardware,
+
+465
+00:14:38,639 --> 00:14:42,399
+and completely agnostic to the inherent
+
+466
+00:14:41,199 --> 00:14:44,480
+structure of the data.
+
+467
+00:14:42,399 --> 00:14:46,800
+Right inside the block, the core engine
+
+468
+00:14:44,480 --> 00:14:48,880
+is multi-head self attention paired with
+
+469
+00:14:46,800 --> 00:14:50,720
+a point-wise feed forward expansion.
+
+470
+00:14:48,880 --> 00:14:53,040
+And what's vital here is how that engine
+
+471
+00:14:50,720 --> 00:14:54,639
+is packaged. The post astutely points
+
+472
+00:14:53,040 --> 00:14:56,639
+out that the attention mechanism itself
+
+473
+00:14:54,639 --> 00:14:59,040
+is brilliant, but it only scales because
+
+474
+00:14:56,639 --> 00:15:01,040
+it is wrapped inside the exact residual
+
+475
+00:14:59,040 --> 00:15:03,360
+scaffold we just learned about. It uses
+
+476
+00:15:01,040 --> 00:15:05,120
+skip connections and layer normalization
+
+477
+00:15:03,360 --> 00:15:06,800
+to provide a perfectly clean
+
+478
+00:15:05,120 --> 00:15:09,199
+mathematical interface to the next
+
+479
+00:15:06,800 --> 00:15:11,600
+block. It shortens the architectural
+
+480
+00:15:09,199 --> 00:15:13,760
+distance between domains. If you can
+
+481
+00:15:11,600 --> 00:15:14,720
+turn data into a token, you can run it
+
+482
+00:15:13,760 --> 00:15:16,480
+through this block.
+
+483
+00:15:14,720 --> 00:15:18,079
+Yes, I want to dig into the self
+
+484
+00:15:16,480 --> 00:15:20,240
+attention mechanism because it
+
+485
+00:15:18,079 --> 00:15:22,720
+represents a total departure from how we
+
+486
+00:15:20,240 --> 00:15:25,120
+previously processed sequences. In an
+
+487
+00:15:22,720 --> 00:15:27,199
+old RNN, you process a sentence
+
+488
+00:15:25,120 --> 00:15:29,279
+sequentially. Word one, then word two,
+
+489
+00:15:27,199 --> 00:15:29,839
+then word three. You pass a hidden state
+
+490
+00:15:29,279 --> 00:15:30,959
+along,
+
+491
+00:15:29,839 --> 00:15:33,519
+which is slow,
+
+492
+00:15:30,959 --> 00:15:36,160
+super slow. But self attention takes an
+
+493
+00:15:33,519 --> 00:15:37,920
+entire sequence of tokens and computes a
+
+494
+00:15:36,160 --> 00:15:40,480
+denth matrix of interactions all at
+
+495
+00:15:37,920 --> 00:15:42,079
+once. For every single token, it
+
+496
+00:15:40,480 --> 00:15:44,320
+calculates how much attention it should
+
+497
+00:15:42,079 --> 00:15:45,760
+pay to every other token, regardless of
+
+498
+00:15:44,320 --> 00:15:47,279
+how far apart they are in the sequence.
+
+499
+00:15:45,760 --> 00:15:48,399
+And that destroys the bottleneck of
+
+500
+00:15:47,279 --> 00:15:48,880
+sequential processing
+
+501
+00:15:48,399 --> 00:15:50,240
+completely.
+
+502
+00:15:48,880 --> 00:15:52,160
+But it also raises a massive
+
+503
+00:15:50,240 --> 00:15:53,920
+architectural question for me. If the
+
+504
+00:15:52,160 --> 00:15:56,560
+transformer is just the same uniform
+
+505
+00:15:53,920 --> 00:15:59,040
+block repeated 12 or 24 times, how does
+
+506
+00:15:56,560 --> 00:16:00,959
+it handle complex tasks? In the old
+
+507
+00:15:59,040 --> 00:16:03,759
+days, we'd build a specific module for
+
+508
+00:16:00,959 --> 00:16:05,920
+grammar and another for logic. How does
+
+509
+00:16:03,759 --> 00:16:07,440
+a uniform block do both? This is where
+
+510
+00:16:05,920 --> 00:16:10,160
+the structural emergence comes in, and
+
+511
+00:16:07,440 --> 00:16:12,720
+it's fascinating. The probing studies on
+
+512
+00:16:10,160 --> 00:16:15,600
+the BERT model by Clark at all and Tenny
+
+513
+00:16:12,720 --> 00:16:15,920
+at all in 2019 really shed light on
+
+514
+00:16:15,600 --> 00:16:18,000
+this.
+
+515
+00:16:15,920 --> 00:16:20,480
+What did they do? They froze a fully
+
+516
+00:16:18,000 --> 00:16:22,240
+trained BERT model and trained tiny
+
+517
+00:16:20,480 --> 00:16:24,399
+linear classifiers on top of its
+
+518
+00:16:22,240 --> 00:16:25,839
+internal activations to see what the
+
+519
+00:16:24,399 --> 00:16:26,399
+individual attention heads had actually
+
+520
+00:16:25,839 --> 00:16:28,480
+learned.
+
+521
+00:16:26,399 --> 00:16:30,079
+Okay. And what did they find?
+
+522
+00:16:28,480 --> 00:16:32,399
+They discovered spontaneous
+
+523
+00:16:30,079 --> 00:16:34,800
+differentiation. The training process
+
+524
+00:16:32,399 --> 00:16:36,240
+itself had induced specialization inside
+
+525
+00:16:34,800 --> 00:16:38,240
+the uniform scaffold.
+
+526
+00:16:36,240 --> 00:16:40,160
+Wait, really? Just organically?
+
+527
+00:16:38,240 --> 00:16:42,000
+Organically. Clark's work showed
+
+528
+00:16:40,160 --> 00:16:44,000
+specific attention heads had specialized
+
+529
+00:16:42,000 --> 00:16:45,759
+to attend heavily to direct objects,
+
+530
+00:16:44,000 --> 00:16:46,880
+while others specialized in tracking
+
+531
+00:16:45,759 --> 00:16:47,759
+noun modifiers.
+
+532
+00:16:46,880 --> 00:16:49,519
+That's incredible.
+
+533
+00:16:47,759 --> 00:16:51,279
+And Tenny's research revealed a clear
+
+534
+00:16:49,519 --> 00:16:53,360
+continuous ordering across the depth of
+
+535
+00:16:51,279 --> 00:16:54,880
+the network. The lower layers of the
+
+536
+00:16:53,360 --> 00:16:57,120
+transformer had essentially learned
+
+537
+00:16:54,880 --> 00:16:59,279
+basic syntax and local sentence
+
+538
+00:16:57,120 --> 00:17:01,680
+structure. The middle layers handled
+
+539
+00:16:59,279 --> 00:17:04,079
+syntactic parsing and the highest layers
+
+540
+00:17:01,680 --> 00:17:06,319
+handled complex semantic roles. So it
+
+541
+00:17:04,079 --> 00:17:08,799
+organically rediscovered the classical
+
+542
+00:17:06,319 --> 00:17:10,640
+NLP pipeline without any human engineer
+
+543
+00:17:08,799 --> 00:17:11,039
+ever drawing a blueprint for it.
+
+544
+00:17:10,640 --> 00:17:13,280
+Exactly.
+
+545
+00:17:11,039 --> 00:17:15,360
+You didn't build a room for syntax. You
+
+546
+00:17:13,280 --> 00:17:17,360
+provided a governable environment,
+
+547
+00:17:15,360 --> 00:17:19,360
+flooded it with data and the
+
+548
+00:17:17,360 --> 00:17:21,120
+intelligence organized itself.
+
+549
+00:17:19,360 --> 00:17:23,199
+That is the takeaway for the listener
+
+550
+00:17:21,120 --> 00:17:24,640
+right there. The human designer is no
+
+551
+00:17:23,199 --> 00:17:26,160
+longer architecting the functional
+
+552
+00:17:24,640 --> 00:17:28,000
+compartments. They just build the
+
+553
+00:17:26,160 --> 00:17:30,320
+environment and the structure emerges
+
+554
+00:17:28,000 --> 00:17:32,240
+during training. that radically changes
+
+555
+00:17:30,320 --> 00:17:34,320
+where human creativity and engineering
+
+556
+00:17:32,240 --> 00:17:36,640
+effort are spent. And once you have a
+
+557
+00:17:34,320 --> 00:17:38,880
+unit that is this stable and capable of
+
+558
+00:17:36,640 --> 00:17:40,240
+self-organization, you can fully exploit
+
+559
+00:17:38,880 --> 00:17:42,320
+the economics of scale,
+
+560
+00:17:40,240 --> 00:17:45,360
+which is what Radford at all
+
+561
+00:17:42,320 --> 00:17:47,360
+demonstrated with GPT2 in 2019. The
+
+562
+00:17:45,360 --> 00:17:49,840
+repeated block itself becomes a viable
+
+563
+00:17:47,360 --> 00:17:51,520
+scaling unit. Architectural novelty is
+
+564
+00:17:49,840 --> 00:17:53,600
+no longer the default route to better
+
+565
+00:17:51,520 --> 00:17:55,600
+results. Stability makes scale
+
+566
+00:17:53,600 --> 00:17:57,600
+cumulative. Every time you increase the
+
+567
+00:17:55,600 --> 00:17:59,200
+parameter count, the model smoothly got
+
+568
+00:17:57,600 --> 00:18:00,799
+better. And this portable stability
+
+569
+00:17:59,200 --> 00:18:03,440
+eventually escapes language and comes
+
+570
+00:18:00,799 --> 00:18:05,520
+back to conquer vision. In 2020, the
+
+571
+00:18:03,440 --> 00:18:07,360
+team at Google introduced the vision
+
+572
+00:18:05,520 --> 00:18:09,360
+transformer or VIT,
+
+573
+00:18:07,360 --> 00:18:10,880
+right? Taking transformers to images.
+
+574
+00:18:09,360 --> 00:18:13,280
+They literally took the standard
+
+575
+00:18:10,880 --> 00:18:15,440
+language transformer block, chopped an
+
+576
+00:18:13,280 --> 00:18:18,320
+image up into pixel patches, flattened
+
+577
+00:18:15,440 --> 00:18:20,799
+them, treated each patch exactly like a
+
+578
+00:18:18,320 --> 00:18:23,039
+word token, and just fed it through. But
+
+579
+00:18:20,799 --> 00:18:24,799
+wait, didn't VIT prove that
+
+580
+00:18:23,039 --> 00:18:26,880
+convolutional biases were totally
+
+581
+00:18:24,799 --> 00:18:28,640
+obsolete? that transformers were just
+
+582
+00:18:26,880 --> 00:18:30,799
+inherently better at everything.
+
+583
+00:18:28,640 --> 00:18:33,440
+Ah, no. And I am so glad you pushed back
+
+584
+00:18:30,799 --> 00:18:36,160
+on that because the post explicitly
+
+585
+00:18:33,440 --> 00:18:37,760
+warns against that myth. It is a
+
+586
+00:18:36,160 --> 00:18:39,039
+dangerous oversimplification.
+
+587
+00:18:37,760 --> 00:18:40,880
+Okay, clarify that for me.
+
+588
+00:18:39,039 --> 00:18:42,000
+The VAT paper contains a critical
+
+589
+00:18:40,880 --> 00:18:43,760
+nuance.
+
+590
+00:18:42,000 --> 00:18:45,440
+When they trained the vision transformer
+
+591
+00:18:43,760 --> 00:18:47,600
+on modest data sets like the standard
+
+592
+00:18:45,440 --> 00:18:49,840
+imageet with a million images, it
+
+593
+00:18:47,600 --> 00:18:51,360
+actually lagged behind comparable
+
+594
+00:18:49,840 --> 00:18:52,880
+state-of-the-art ResNets.
+
+595
+00:18:51,360 --> 00:18:54,400
+Oh, I didn't realize that because it
+
+596
+00:18:52,880 --> 00:18:56,400
+lacked the inductive bias.
+
+597
+00:18:54,400 --> 00:18:58,480
+Exactly. A convolutional neural network
+
+598
+00:18:56,400 --> 00:19:00,320
+has translation and variance hardwired
+
+599
+00:18:58,480 --> 00:19:02,080
+into its math. It intrinsically
+
+600
+00:19:00,320 --> 00:19:03,840
+understands that a cluster of pixels in
+
+601
+00:19:02,080 --> 00:19:06,000
+the top left corner has the same
+
+602
+00:19:03,840 --> 00:19:07,360
+fundamental spatial relationship as a
+
+603
+00:19:06,000 --> 00:19:09,440
+cluster in the bottom right.
+
+604
+00:19:07,360 --> 00:19:11,919
+Right? But the plane transformer has
+
+605
+00:19:09,440 --> 00:19:14,559
+zero spatial awareness. It treats patch
+
+606
+00:19:11,919 --> 00:19:17,200
+one and patch 50 as completely arbitrary
+
+607
+00:19:14,559 --> 00:19:19,600
+tokens until the data forces it to learn
+
+608
+00:19:17,200 --> 00:19:22,000
+the geometry of a 2D grid from scratch.
+
+609
+00:19:19,600 --> 00:19:24,559
+Right. It is a true tabular blank slate.
+
+610
+00:19:22,000 --> 00:19:26,240
+Yeah. It only won when the researchers
+
+611
+00:19:24,559 --> 00:19:28,720
+scaled the pre-training data up
+
+612
+00:19:26,240 --> 00:19:30,880
+massively. At that massive scale, the
+
+613
+00:19:28,720 --> 00:19:32,240
+blank slate had enough raw data to
+
+614
+00:19:30,880 --> 00:19:34,160
+organically learn a better
+
+615
+00:19:32,240 --> 00:19:35,440
+representation of 2D space than the
+
+616
+00:19:34,160 --> 00:19:36,960
+human engineered priors.
+
+617
+00:19:35,440 --> 00:19:38,400
+But at smaller scales, the human
+
+618
+00:19:36,960 --> 00:19:40,400
+hardwiring still wins.
+
+619
+00:19:38,400 --> 00:19:43,120
+Exactly. Portability is regime
+
+620
+00:19:40,400 --> 00:19:44,960
+dependent, not magical. It requires the
+
+621
+00:19:43,120 --> 00:19:47,280
+regime of massive compute and massive
+
+622
+00:19:44,960 --> 00:19:48,320
+data to overcome its lack of innate
+
+623
+00:19:47,280 --> 00:19:50,160
+structural bias.
+
+624
+00:19:48,320 --> 00:19:51,840
+That is a vital distinction. Okay, so
+
+625
+00:19:50,160 --> 00:19:53,679
+we've crossed the Rubicon here. The
+
+626
+00:19:51,840 --> 00:19:56,160
+transformer block is the undisputed
+
+627
+00:19:53,679 --> 00:19:58,320
+backbone. We know it self-organizes. We
+
+628
+00:19:56,160 --> 00:19:59,919
+know it scales predictably. So, if we
+
+629
+00:19:58,320 --> 00:20:00,720
+aren't designing blocks anymore, what
+
+630
+00:19:59,919 --> 00:20:02,240
+are we designing?
+
+631
+00:20:00,720 --> 00:20:04,000
+Well, the job of the human architect
+
+632
+00:20:02,240 --> 00:20:05,919
+shifted upward. We're designing the
+
+633
+00:20:04,000 --> 00:20:07,679
+space the blocks live in. We shift from
+
+634
+00:20:05,919 --> 00:20:08,880
+designing individual models to designing
+
+635
+00:20:07,679 --> 00:20:10,880
+the meta architecture.
+
+636
+00:20:08,880 --> 00:20:13,360
+Designing design spaces.
+
+637
+00:20:10,880 --> 00:20:16,320
+Exactly. The post highlights neural
+
+638
+00:20:13,360 --> 00:20:18,880
+architecture search NAS by Zuff and Lee
+
+639
+00:20:16,320 --> 00:20:21,440
+and subsequent work like Darts as the
+
+640
+00:20:18,880 --> 00:20:23,280
+conceptual bridge to this new era. We
+
+641
+00:20:21,440 --> 00:20:24,559
+stop trying to explain why one single
+
+642
+00:20:23,280 --> 00:20:26,080
+model won, right?
+
+643
+00:20:24,559 --> 00:20:28,640
+Instead, we design a controlled
+
+644
+00:20:26,080 --> 00:20:30,640
+population or a family discipline where
+
+645
+00:20:28,640 --> 00:20:33,039
+a whole distribution of nearby models
+
+646
+00:20:30,640 --> 00:20:34,240
+behaves predictably based on simple
+
+647
+00:20:33,039 --> 00:20:36,000
+linear rules.
+
+648
+00:20:34,240 --> 00:20:39,440
+It's the difference between trying to
+
+649
+00:20:36,000 --> 00:20:41,520
+breed one single champion racehorse
+
+650
+00:20:39,440 --> 00:20:43,520
+versus figuring out the underlying
+
+651
+00:20:41,520 --> 00:20:45,679
+genetic rules that guarantee a whole
+
+652
+00:20:43,520 --> 00:20:47,280
+bloodline of healthy fast horses.
+
+653
+00:20:45,679 --> 00:20:49,200
+That is exactly it. You aren't hunting
+
+654
+00:20:47,280 --> 00:20:51,120
+for anomalies. You are engineering the
+
+655
+00:20:49,200 --> 00:20:52,960
+distribution and predicting behavior
+
+656
+00:20:51,120 --> 00:20:54,960
+across scales became the most important
+
+657
+00:20:52,960 --> 00:20:57,200
+metric which leads us directly to Kaplan
+
+658
+00:20:54,960 --> 00:20:58,480
+at all in 2020 and the formulation of
+
+659
+00:20:57,200 --> 00:21:00,799
+neural scaling laws.
+
+660
+00:20:58,480 --> 00:21:02,240
+The computer recipe the Kaplan paper
+
+661
+00:21:00,799 --> 00:21:04,000
+essentially mapped the physics of the
+
+662
+00:21:02,240 --> 00:21:06,000
+transformer. They demonstrated
+
+663
+00:21:04,000 --> 00:21:07,600
+empirically that if you plot the loss of
+
+664
+00:21:06,000 --> 00:21:09,440
+a language model against the compute
+
+665
+00:21:07,600 --> 00:21:11,600
+budget, the data set size, the parameter
+
+666
+00:21:09,440 --> 00:21:14,000
+count, it follows remarkably smooth
+
+667
+00:21:11,600 --> 00:21:15,919
+predictable power laws. It spans over
+
+668
+00:21:14,000 --> 00:21:18,159
+seven orders of magnitude of compute
+
+669
+00:21:15,919 --> 00:21:19,840
+without breaking trend. A good
+
+670
+00:21:18,159 --> 00:21:21,840
+architecture is basically one that stays
+
+671
+00:21:19,840 --> 00:21:24,159
+predictable across different budgets.
+
+672
+00:21:21,840 --> 00:21:25,840
+Exactly. The macroscale behavior
+
+673
+00:21:24,159 --> 00:21:28,320
+overrides the microarchchitectural
+
+674
+00:21:25,840 --> 00:21:30,240
+tweaks. But as the post points out,
+
+675
+00:21:28,320 --> 00:21:30,960
+Kaplan's initial recipe was actually
+
+676
+00:21:30,240 --> 00:21:33,200
+flawed.
+
+677
+00:21:30,960 --> 00:21:35,200
+Oh, right. The chinchilla correction.
+
+678
+00:21:33,200 --> 00:21:36,960
+Yeah. It took 2 years for the community
+
+679
+00:21:35,200 --> 00:21:39,120
+to realize that they were reading the
+
+680
+00:21:36,960 --> 00:21:41,520
+scaling laws slightly wrong. A
+
+681
+00:21:39,120 --> 00:21:44,400
+correction brought by Hoffman at all
+
+682
+00:21:41,520 --> 00:21:46,799
+in 2022 with the Chinchilla paper. The
+
+683
+00:21:44,400 --> 00:21:48,159
+realization that early large models were
+
+684
+00:21:46,799 --> 00:21:50,320
+drastically undertrained,
+
+685
+00:21:48,159 --> 00:21:52,320
+severely undertrained. Kaplan's
+
+686
+00:21:50,320 --> 00:21:53,919
+extrapolation suggested you should spend
+
+687
+00:21:52,320 --> 00:21:56,400
+the vast majority of your compute
+
+688
+00:21:53,919 --> 00:21:58,320
+expanding the model's parameter size and
+
+689
+00:21:56,400 --> 00:22:00,159
+only marginally increasing the data,
+
+690
+00:21:58,320 --> 00:22:01,760
+which led to these bloated models that
+
+691
+00:22:00,159 --> 00:22:03,440
+didn't have enough data to properly
+
+692
+00:22:01,760 --> 00:22:05,600
+crystallize their representations.
+
+693
+00:22:03,440 --> 00:22:07,600
+Exactly. Hoffman's team proved
+
+694
+00:22:05,600 --> 00:22:10,720
+mathematically that parameter count and
+
+695
+00:22:07,600 --> 00:22:12,400
+training tokens must be scaled equally.
+
+696
+00:22:10,720 --> 00:22:14,320
+And this fits a broader pattern we're
+
+697
+00:22:12,400 --> 00:22:16,559
+seeing. architecture is no longer just
+
+698
+00:22:14,320 --> 00:22:18,960
+the block. It is the block plus the
+
+699
+00:22:16,559 --> 00:22:21,360
+exact recipe of how to spend data
+
+700
+00:22:18,960 --> 00:22:23,280
+parameters and compute together.
+
+701
+00:22:21,360 --> 00:22:24,320
+Training allocation is now a primary
+
+702
+00:22:23,280 --> 00:22:27,200
+design variable
+
+703
+00:22:24,320 --> 00:22:29,120
+which is a profound evolution. But just
+
+704
+00:22:27,200 --> 00:22:31,200
+because the external scaffford is stable
+
+705
+00:22:29,120 --> 00:22:32,799
+and the scaling laws are known doesn't
+
+706
+00:22:31,200 --> 00:22:34,320
+mean architects just packed up and went
+
+707
+00:22:32,799 --> 00:22:36,000
+home, right? They started making
+
+708
+00:22:34,320 --> 00:22:37,600
+surgical edits inside the scaffold.
+
+709
+00:22:36,000 --> 00:22:39,520
+Oh, definitely. The external scaffold
+
+710
+00:22:37,600 --> 00:22:41,440
+remains untouched, but the internal
+
+711
+00:22:39,520 --> 00:22:42,960
+plumbing is constantly being refined. We
+
+712
+00:22:41,440 --> 00:22:44,799
+call these disciplined edits,
+
+713
+00:22:42,960 --> 00:22:46,799
+right? Moving into the modern era.
+
+714
+00:22:44,799 --> 00:22:50,159
+Yeah. The post highlights things like
+
+715
+00:22:46,799 --> 00:22:51,919
+RMS norm and GLU variants like Swigglu.
+
+716
+00:22:50,159 --> 00:22:54,400
+These are subblock refinements
+
+717
+00:22:51,919 --> 00:22:56,559
+like dropping the mean centering in
+
+718
+00:22:54,400 --> 00:22:58,559
+normalization to save compute cycles.
+
+719
+00:22:56,559 --> 00:23:00,799
+Exactly. We aren't replacing the whole
+
+720
+00:22:58,559 --> 00:23:02,640
+transformer backbone. We are just
+
+721
+00:23:00,799 --> 00:23:04,640
+optimizing the internal plumbing for
+
+722
+00:23:02,640 --> 00:23:07,360
+cheaper normalization and gated feed
+
+723
+00:23:04,640 --> 00:23:09,919
+forwards. The external scaffold remains
+
+724
+00:23:07,360 --> 00:23:12,000
+perfectly intact. Okay, I'm with you on
+
+725
+00:23:09,919 --> 00:23:13,679
+the surgical edits, but I have to push
+
+726
+00:23:12,000 --> 00:23:14,400
+back hard here on the overarching
+
+727
+00:23:13,679 --> 00:23:15,679
+narrative. Uh
+
+728
+00:23:14,400 --> 00:23:17,840
+oh, lay it on me.
+
+729
+00:23:15,679 --> 00:23:20,559
+We have spent this entire deep dive
+
+730
+00:23:17,840 --> 00:23:23,919
+talking about how uniform repetition
+
+731
+00:23:20,559 --> 00:23:25,679
+beat bespoke handcrafted heterogeneity.
+
+732
+00:23:23,919 --> 00:23:28,000
+We celebrated the death of the messy
+
+733
+00:23:25,679 --> 00:23:30,159
+inception era, but now everyone is
+
+734
+00:23:28,000 --> 00:23:32,640
+talking about MOY mixture of experts.
+
+735
+00:23:30,159 --> 00:23:34,080
+Ah, yes. Isn't routing data through
+
+736
+00:23:32,640 --> 00:23:36,320
+eight different specialized subnet
+
+737
+00:23:34,080 --> 00:23:39,280
+networks just a return to the messy
+
+738
+00:23:36,320 --> 00:23:40,640
+heterogeneous Alexet days? Isn't that a
+
+739
+00:23:39,280 --> 00:23:42,640
+massive step backward?
+
+740
+00:23:40,640 --> 00:23:44,080
+It's an incredibly valid challenge. On a
+
+741
+00:23:42,640 --> 00:23:46,320
+surface level, looking at a block
+
+742
+00:23:44,080 --> 00:23:48,080
+diagram, MOI absolutely looks like a
+
+743
+00:23:46,320 --> 00:23:50,320
+regression to inception. But
+
+744
+00:23:48,080 --> 00:23:51,919
+mechanistically, the post clarifies why
+
+745
+00:23:50,320 --> 00:23:53,760
+it is fundamentally different.
+
+746
+00:23:51,919 --> 00:23:55,840
+Okay, explain how it works. To see why
+
+747
+00:23:53,760 --> 00:23:58,240
+we trace the routing logic from Shazir's
+
+748
+00:23:55,840 --> 00:24:00,480
+sparsely gated MO in 2017 through switch
+
+749
+00:23:58,240 --> 00:24:03,600
+transformers up to modern architectures
+
+750
+00:24:00,480 --> 00:24:05,520
+like mixtrol in 2024. In MOI you use
+
+751
+00:24:03,600 --> 00:24:07,360
+sparse conditional computation. You
+
+752
+00:24:05,520 --> 00:24:09,200
+wrote tokens to specific experts.
+
+753
+00:24:07,360 --> 00:24:11,200
+So instead of a dense feed forward
+
+754
+00:24:09,200 --> 00:24:13,039
+network, you have multiple smaller ones.
+
+755
+00:24:11,200 --> 00:24:15,200
+Yes. But the critical difference from
+
+756
+00:24:13,039 --> 00:24:16,880
+the old bespoke era is how the data gets
+
+757
+00:24:15,200 --> 00:24:18,960
+to those experts. It is not a
+
+758
+00:24:16,880 --> 00:24:21,120
+repudiation of the scaffold story. It is
+
+759
+00:24:18,960 --> 00:24:22,960
+the controlled return of heterogeneity.
+
+760
+00:24:21,120 --> 00:24:25,440
+Controlled how? The specialization is
+
+761
+00:24:22,960 --> 00:24:27,520
+managed by an algorithmic router, not a
+
+762
+00:24:25,440 --> 00:24:29,600
+human writing a bespoke blueprint.
+
+763
+00:24:27,520 --> 00:24:32,240
+Oh, I see. The router looks at the token
+
+764
+00:24:29,600 --> 00:24:34,000
+and decides expert 3 is best for this.
+
+765
+00:24:32,240 --> 00:24:36,080
+Exactly. The familiar transformer
+
+766
+00:24:34,000 --> 00:24:38,640
+scaffold remains perfectly intact around
+
+767
+00:24:36,080 --> 00:24:41,360
+it. Its heterogeneity safely contained
+
+768
+00:24:38,640 --> 00:24:43,760
+inside a governable system. The
+
+769
+00:24:41,360 --> 00:24:46,480
+localized heterogeneity of the experts
+
+770
+00:24:43,760 --> 00:24:48,640
+is managed entirely by gradient descent.
+
+771
+00:24:46,480 --> 00:24:50,799
+So the network itself decides how to
+
+772
+00:24:48,640 --> 00:24:53,279
+specialize. It is algorithmic
+
+773
+00:24:50,799 --> 00:24:54,159
+non-uniformity safely governed by the
+
+774
+00:24:53,279 --> 00:24:55,039
+scaling laws.
+
+775
+00:24:54,159 --> 00:24:57,760
+You nailed it.
+
+776
+00:24:55,039 --> 00:25:00,640
+Wow. So, stepping back to summarize this
+
+777
+00:24:57,760 --> 00:25:02,320
+massive arc from Alex Net to mix. The
+
+778
+00:25:00,640 --> 00:25:04,320
+fundamental definition of architectural
+
+779
+00:25:02,320 --> 00:25:05,120
+cleverness has completely flipped.
+
+780
+00:25:04,320 --> 00:25:06,960
+It really has.
+
+781
+00:25:05,120 --> 00:25:09,200
+It's no longer about drawing a novel
+
+782
+00:25:06,960 --> 00:25:11,279
+internal diagram or guessing the perfect
+
+783
+00:25:09,200 --> 00:25:13,200
+filter size. It's about building a
+
+784
+00:25:11,279 --> 00:25:14,960
+sturdy enough scaffold that training can
+
+785
+00:25:13,200 --> 00:25:16,880
+specialize within it without tearing it
+
+786
+00:25:14,960 --> 00:25:18,240
+apart. To reiterate the post perfectly,
+
+787
+00:25:16,880 --> 00:25:20,159
+architecture ceased to be the place
+
+788
+00:25:18,240 --> 00:25:21,760
+where one scripts competence layer by
+
+789
+00:25:20,159 --> 00:25:23,679
+layer and became the place where one
+
+790
+00:25:21,760 --> 00:25:25,279
+specifies which kinds of order training
+
+791
+00:25:23,679 --> 00:25:27,440
+can reliably elaborate.
+
+792
+00:25:25,279 --> 00:25:29,840
+It is a fundamental humbling of the
+
+793
+00:25:27,440 --> 00:25:31,600
+human engineer. We learned that the most
+
+794
+00:25:29,840 --> 00:25:33,919
+powerful thing we can build is a blank
+
+795
+00:25:31,600 --> 00:25:35,919
+slate with perfect internal physics and
+
+796
+00:25:33,919 --> 00:25:36,480
+then let the data do the actual
+
+797
+00:25:35,919 --> 00:25:37,360
+building.
+
+798
+00:25:36,480 --> 00:25:39,600
+Beautifully put,
+
+799
+00:25:37,360 --> 00:25:42,640
+which leaves us with a truly fascinating
+
+800
+00:25:39,600 --> 00:25:44,960
+frontier. If the internal scaffolding is
+
+801
+00:25:42,640 --> 00:25:46,559
+now highly stable and the models are
+
+802
+00:25:44,960 --> 00:25:49,360
+effectively organizing their own
+
+803
+00:25:46,559 --> 00:25:52,240
+internal structures during training,
+
+804
+00:25:49,360 --> 00:25:54,640
+where does the human architect go next?
+
+805
+00:25:52,240 --> 00:25:56,720
+That is the milliondoll question.
+
+806
+00:25:54,640 --> 00:25:58,960
+If we've essentially perfected the blank
+
+807
+00:25:56,720 --> 00:26:00,320
+slate environment for the AI to learn,
+
+808
+00:25:58,960 --> 00:26:02,320
+perhaps the next frontier of
+
+809
+00:26:00,320 --> 00:26:04,960
+architecture won't be about manipulating
+
+810
+00:26:02,320 --> 00:26:07,279
+neural network layers at all. Maybe it's
+
+811
+00:26:04,960 --> 00:26:08,880
+about architecting the flow of realworld
+
+812
+00:26:07,279 --> 00:26:10,880
+physical data that feeds them.
+
+813
+00:26:08,880 --> 00:26:12,880
+Oh wow. We are no longer designing the
+
+814
+00:26:10,880 --> 00:26:14,240
+brain. We have to design the sensory
+
+815
+00:26:12,880 --> 00:26:16,080
+nervous system of the world that the
+
+816
+00:26:14,240 --> 00:26:18,240
+brain plugs into. Something for you to
+
+817
+00:26:16,080 --> 00:26:20,720
+mull over as you watch the next massive
+
+818
+00:26:18,240 --> 00:26:22,159
+MOY model drop in the headlines. Thank
+
+819
+00:26:20,720 --> 00:26:23,840
+you so much for joining us on this deep
+
+820
+00:26:22,159 --> 00:26:25,600
+dive. It's been an absolute privilege to
+
+821
+00:26:23,840 --> 00:26:28,600
+explore the physics of intelligence with
+
+822
+00:26:25,600 --> 00:26:28,600
+you.
+

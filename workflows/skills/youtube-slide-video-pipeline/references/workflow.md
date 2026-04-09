@@ -34,6 +34,16 @@ Preferred managed caption path:
   --output "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_auto_captions.srt"
 ```
 
+If you only have local audio, recover timings by temporary upload:
+
+```bash
+.venv/bin/python workflows/skills/youtube-data-api/scripts/recover_transcript_via_temporary_upload.py \
+  --audio-path <audio.mp3> \
+  --image-path <still-image.png> \
+  --title "<temporary caption recovery title>" \
+  --output "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_auto_captions.srt"
+```
+
 Watch-page transcript fallback:
 
 ```bash
@@ -42,7 +52,7 @@ Watch-page transcript fallback:
   --output "publications/autonomous-agents/essays/<slug>/artifacts/video/<slug>_watch_transcript.json"
 ```
 
-### 2. Draft An OCR-First Mapping
+### 2. Draft An OCR-First Mapping Or Switch Early To Manual Review
 
 Against the full transcript:
 
@@ -80,6 +90,8 @@ Caption-first cue-sheet plus draft render shortcut:
 Use `--support-slides-dir` when a second slide deck adds complementary text that improves OCR-first boundary drafting.
 Use the `--slides-dir` / repeated `--render-slides-dir` split when OCR works better on one deck but the final review or rendered video should use one or more richer stitched or alternate decks that keep the same filenames.
 
+If the deck is already a raw numbered sequence that follows the narration, preserve all numbered slides and use OCR only to recover likely section boundaries. Do not let weak OCR matches collapse the deck into a few late slides.
+
 Optional line-range drafting when OCR text files already exist:
 
 ```bash
@@ -89,9 +101,10 @@ Optional line-range drafting when OCR text files already exist:
   --output <line-map-draft.json>
 ```
 
-### 3. Verify The Markdown Line Map
+### 3. Verify The Reviewed Cue Plan
 
-The render path expects a reviewed markdown table mapping `slide-XXX.png` to transcript line ranges. Do not render directly from unreviewed OCR output when the deck is dense or slide order diverges from transcript order.
+Correct slide timing matters more than even spacing. If OCR under-matches a dense deck, replace it with a hand-built cue sheet from the SRT plus a visual slide read. The even-spacing template is a scaffold, not a final timing plan.
+The render path expects a reviewed timing plan. Do not render directly from unreviewed OCR output when the deck is dense or slide order diverges from transcript order.
 
 ### 4. Convert The Verified Map Into Final Cues
 
@@ -120,8 +133,11 @@ Final render:
 ```bash
 .venv/bin/python scripts/render_audio_slides_video.py render \
   --cues <cues.json> \
-  --output <output.mp4>
+  --output <output.mp4> \
+  --fps 5
 ```
+
+Render uses the script defaults for slide videos: `libx264`, `-preset medium`, `crf 23`, `1920x1080`, and `192kbps AAC`.
 
 ## Output Naming
 
@@ -134,6 +150,8 @@ The working convention is:
 - `<Course Title>.mp4`
 
 Keep these files in `artifacts/video/` next to the chapter assets.
+
+Verify the output duration against the narration after render. If the video stream overruns the audio, trim the final MP4 back to the audio duration before promotion.
 
 ## Render Compatibility Note
 

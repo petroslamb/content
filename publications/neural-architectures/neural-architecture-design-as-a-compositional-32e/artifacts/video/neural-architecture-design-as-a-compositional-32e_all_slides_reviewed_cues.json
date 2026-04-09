@@ -1,0 +1,121 @@
+{
+  "audio": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/audio/from_bespoke_layers_to_scalable_ai_scaffolds_deep-dive_long.mp3",
+  "captions": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural-architecture-design-as-a-compositional-32e_auto_captions.srt",
+  "slides_dir": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed",
+  "segments": [
+    {
+      "image": "RootedLayers.png",
+      "image_path": "/Users/petros/Projects/content/RootedLayers.png",
+      "start": "00:00:00.000",
+      "note": "Brand opener."
+    },
+    {
+      "image": "slide-001.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-001.png",
+      "start": "00:00:08.000",
+      "note": "Essay title card."
+    },
+    {
+      "image": "slide-002.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-002.png",
+      "start": "00:01:21.920",
+      "note": "Changing object of design and thesis framing."
+    },
+    {
+      "image": "slide-003.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-003.png",
+      "start": "00:02:26.000",
+      "note": "Bespoke age and AlexNet-era stage design."
+    },
+    {
+      "image": "slide-004.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-004.png",
+      "start": "00:04:31.680",
+      "note": "2014 crossroads: VGG versus Inception."
+    },
+    {
+      "image": "slide-005.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-005.png",
+      "start": "00:07:36.960",
+      "note": "Optimization wall before trainability."
+    },
+    {
+      "image": "slide-006.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-006.png",
+      "start": "00:07:55.599",
+      "note": "Residual path discipline and ResNet hinge."
+    },
+    {
+      "image": "slide-007.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-007.png",
+      "start": "00:11:33.440",
+      "note": "Short effective routes inside the residual scaffold."
+    },
+    {
+      "image": "slide-008.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-008.png",
+      "start": "00:12:52.000",
+      "note": "Loss-landscape smoothing and numerical environment."
+    },
+    {
+      "image": "slide-009.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-009.png",
+      "start": "00:14:00.000",
+      "note": "Transformer as standardized shipping container."
+    },
+    {
+      "image": "slide-010.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-010.png",
+      "start": "00:16:03.759",
+      "note": "Emergent differentiation inside the scaffold."
+    },
+    {
+      "image": "slide-011.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-011.png",
+      "start": "00:18:39.039",
+      "note": "Portability is regime-dependent in ViT."
+    },
+    {
+      "image": "slide-012.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-012.png",
+      "start": "00:20:00.720",
+      "note": "Meta-design and the family/design-space turn."
+    },
+    {
+      "image": "slide-013.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-013.png",
+      "start": "00:20:58.480",
+      "note": "Compute recipe as a design variable."
+    },
+    {
+      "image": "slide-014.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-014.png",
+      "start": "00:22:44.799",
+      "note": "Inward refinement of the standard recipe."
+    },
+    {
+      "image": "slide-015.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-015.png",
+      "start": "00:23:15.679",
+      "note": "Return of specialization under strict control."
+    },
+    {
+      "image": "slide-016.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-016.png",
+      "start": "00:25:00.640",
+      "note": "Evolution of the architect's job."
+    },
+    {
+      "image": "slide-017.png",
+      "image_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/slides/the_neural_scaffold_detailed/slide-017.png",
+      "start": "00:25:39.600",
+      "note": "Modern architectural stack synthesis."
+    },
+    {
+      "image": "RootedLayers_inverted.png",
+      "image_path": "/Users/petros/Projects/content/RootedLayers_inverted.png",
+      "start": "00:26:20.720",
+      "note": "Closing brand card over the thank-you tail."
+    }
+  ]
+}

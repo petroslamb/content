@@ -12,10 +12,14 @@ Use this skill for the local production stage before YouTube channel writes. Use
 1. Prefer local alignment and rendering work first. This stage does not require YouTube write quota.
 2. Caption timestamps are the timing anchor. OCR is only a drafting aid.
 3. Keep generated mapping, cue, caption, and render files near the chapter's `artifacts/video/` folder.
-4. If the Data API quota is exhausted, recover subtitles with `yt-dlp` or inspect the watch-page transcript instead of blocking the pipeline.
-5. Do not trust unreviewed OCR output on dense diagrams, reordered slides, or small labels. Verify the final mapping before rendering.
-6. If the MP4 is headed for Substack, prefer standard web-delivery: `1080p` or `1440p`, `H.264`, bitrate no higher than ~8 Mbps, **5 fps for slide-only videos**, and `AAC` audio.
-7. Render uses script defaults: `-preset medium`, `crf 23`, 1920×1080, 192kbps AAC. Don't adjust these for slideshows.
+4. If you only have local audio, recover a real `.srt` via the temporary-upload path instead of inventing timings from an untimed transcript.
+5. If the Data API quota is exhausted, recover subtitles with `yt-dlp` or inspect the watch-page transcript instead of blocking the pipeline.
+6. Do not trust unreviewed OCR output on dense diagrams, reordered slides, or small labels. Verify the final mapping before rendering.
+7. If the raw numbered deck already follows the narration, keep all numbered slides and place them by section timing. Do not let weak OCR matches drop large parts of the deck.
+8. Correct slide timing matters more than uniform spacing. Even spacing is a scaffold, not a final cue plan.
+9. If the MP4 is headed for Substack, prefer standard web-delivery: `1080p` or `1440p`, `H.264`, bitrate no higher than ~8 Mbps, **5 fps for slide-only videos**, and `AAC` audio.
+10. Render uses script defaults: `-preset medium`, `crf 23`, 1920×1080, 192kbps AAC. Don't adjust these for slideshows.
+9. Verify final MP4 duration against the narration. If the container overruns the audio, trim it back before promotion.
 
 ## Core Paths
 
@@ -23,10 +27,11 @@ All command sequences, full script usage, and output conventions are in [`refere
 
 ### High-level sequence
 
-1. **Recover timing** — download auto-captions (Data API) or fall back to `yt-dlp` / watch-page scrape
-2. **Build cues** — OCR alignment if scores > 0.30, otherwise manual SRT + slide curation
+1. **Recover timing** — download auto-captions (Data API), use the temporary-upload path for local audio, or fall back to `yt-dlp` / watch-page scrape
+2. **Build cues** — OCR alignment if scores > 0.30, otherwise manual SRT + visual slide curation
 3. **Render MP4** — `scripts/render_audio_slides_video.py render --fps 5` for slide-only videos
-4. **Hand off** — to `youtube-operating-agents` or `youtube-data-api` for channel writes
+4. **Verify duration** — confirm the MP4 tracks the narration and trim if needed
+5. **Hand off** — to `youtube-operating-agents` or `youtube-data-api` for channel writes
 
 ### Multi-deck interleaving
 

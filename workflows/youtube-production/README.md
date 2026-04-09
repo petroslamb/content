@@ -26,6 +26,7 @@ Use this workflow before mutating the channel. It is the local production layer 
 - Caption timestamps are the timing anchor. OCR is only for drafting aid.
 - `quotaExceeded` should not stop local production work. Keep moving on subtitle recovery, cue generation, and rendering.
 - Prefer a real timed `.srt` file over watch-page transcript text whenever possible.
+- If only local audio exists, recover the `.srt` by temporary unlisted upload rather than inventing timings from an untimed transcript.
 - Keep render inputs and outputs close to the chapter's `artifacts/video/` surface.
 - Do not render from unreviewed OCR output when the deck is dense, reordered, or diagram-heavy.
 - **5 fps for slide-only videos** — dramatically smaller file with zero quality loss for static images.
@@ -38,6 +39,8 @@ Use this workflow before mutating the channel. It is the local production layer 
 
 Download auto-captions from YouTube Data API (preferred) or fall back to `yt-dlp` / watch-page scraping. Zero-byte files are not valid; recover a real SRT before proceeding.
 
+If you only have local audio and no managed YouTube video yet, use the temporary-upload path from [`../youtube-channel-ops/README.md`](../youtube-channel-ops/README.md): upload an unlisted still-image video, wait for automatic captions, download the `.srt`, then delete the temporary upload.
+
 ### Phase 2 — Build the cue sheet
 
 Three paths exist, chosen by how well the slides match the spoken narration:
@@ -48,11 +51,13 @@ Three paths exist, chosen by how well the slides match the spoken narration:
 
 1. **Read the SRT** — scan for topic keywords, named papers, numeric values, and section transitions. Use `grep -i "keyword"` to find where specific concepts appear.
 2. **Visually read every slide** — use multimodal image read to extract text and diagram content. Don't rely on OCR for dense diagrams.
-3. **Map each slide to its audio moment** — align slide content to the approximate timestamp where that topic is discussed. Prefer slightly early placement over perfectly synced.
-4. **Interleave multiple decks** — if you have light/dark variants, alternate them for visual variety. Aim for a slide change every 1–3 minutes.
-5. **Write a hand-crafted cue sheet JSON** with the structure below.
+3. **If the raw numbered deck already follows the spoken order, keep all numbered slides** — don't drop slides just because OCR under-matched. Preserve the full deck and place it by section timing.
+4. **Map each slide to its real audio moment** — align slide content to the timestamp where that topic is discussed. Correct timing matters more than uniform spacing. Use even spacing only as a temporary scaffold, not as the reviewed final cue plan.
+5. **Add branded opener/closer cards only if they improve the package** — they are optional wrappers around the deck, not replacements for content slides.
+6. **Interleave multiple decks only when they genuinely help** — if you have light/dark variants, alternate them for visual variety. Aim for a slide change every 1–3 minutes.
+7. **Write a hand-crafted cue sheet JSON** with the structure below.
 
-**Path C — Template draft.** `scripts/render_audio_slides_video.py template` gives evenly-spaced slides. Useful as a scaffold but rarely publish-ready.
+**Path C — Template draft.** `scripts/render_audio_slides_video.py template` gives evenly-spaced slides. Useful as a scaffold but not a reviewed final cue sheet.
 
 ### Phase 3 — Render the MP4
 
@@ -64,6 +69,8 @@ Three paths exist, chosen by how well the slides match the spoken narration:
 ```
 
 If rendering is interrupted or crashes mid-write, the output is truncated (missing the `moov atom` header) and unplayable. Delete and re-run. A 5ps render of a 55-minute narration takes roughly 5–7 minutes.
+
+After rendering, verify that the output duration matches the narration closely. If the video stream overruns the audio despite `-shortest`, trim the container back to the audio duration before treating the MP4 as publishable.
 
 ### Phase 4 — Hand off
 

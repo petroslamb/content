@@ -7,7 +7,7 @@ Status: Polished live draft
 
 #### Video TL;DR
 
-[Neural Architecture Design explainer video](artifacts/video/neural_architecture_design_explainer.mp4)
+[Neural Architecture Design slide video](artifacts/video/neural-architecture-design-as-a-compositional-32e_slides_video_final.mp4)
 
 ![Neural architecture design as a reusable scaffold](artifacts/slides/11-opening-title-slide.png)
 
