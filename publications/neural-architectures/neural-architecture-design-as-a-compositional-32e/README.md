@@ -5,7 +5,7 @@ Leaf publication package for the legacy slug-based workflow surface behind the p
 ## Package Role
 
 - Archetype: Leaf package inside the [`../README.md`](../README.md) umbrella
-- Status: Published post plus promoted leaf-first workflow pilot
+- Status: Published post plus completed leaf-first refinement pass
 - Canonical live draft: [`neural-architecture-design-as-a-compositional-32e.md`](neural-architecture-design-as-a-compositional-32e.md)
 - Active essay frame: *Neural Architecture Design as a Reusable Scaffold*
 - Canonical workflows: [`../../../workflows/paper-intake/README.md`](../../../workflows/paper-intake/README.md), [`../../../workflows/alphaxiv-research/README.md`](../../../workflows/alphaxiv-research/README.md), [`../../../workflows/essay-iteration/README.md`](../../../workflows/essay-iteration/README.md), [`../../../workflows/notebooklm-artifacts/README.md`](../../../workflows/notebooklm-artifacts/README.md), [`../../../workflows/article-polish/README.md`](../../../workflows/article-polish/README.md), [`../../../workflows/substack-publishing/README.md`](../../../workflows/substack-publishing/README.md), [`../../../workflows/youtube-production/README.md`](../../../workflows/youtube-production/README.md), [`../../../workflows/youtube-channel-ops/README.md`](../../../workflows/youtube-channel-ops/README.md), [`../../../workflows/distribution/README.md`](../../../workflows/distribution/README.md)
@@ -20,9 +20,9 @@ Leaf publication package for the legacy slug-based workflow surface behind the p
 
 This leaf package keeps its runnable blueprint local while reusing the umbrella paper library rather than maintaining a duplicate evidence tree. The manifest points to the shared papers through `config.evidence_path`.
 
-## Pilot Rollout Coverage
+## Completed Pass Coverage
 
-The first full workflow pilot on this leaf package covered more than the minimal article lifecycle:
+The completed neural-architecture refinement pass on this leaf package covered more than the minimal article lifecycle:
 
 - shared paper intake and validation against [`../papers/`](../papers/)
 - blueprint hardening and live-draft replacement under this leaf package
@@ -32,7 +32,15 @@ The first full workflow pilot on this leaf package covered more than the minimal
 - manifest-driven Shorts derivation under `artifacts/video/shorts/`
 - Substack draft-sync preparation for the existing post target
 
-That matters because the package now carries both the publication draft and the working artifact stack that the recent rollout actually used.
+That matters because the package now carries both the publication draft and the working artifact stack that the completed pass actually used.
+
+The remaining outward-facing stages are still separate on purpose:
+
+- `substack_publishing` is for the actual draft-sync or publish action
+- `archive_sync` is for the public archive refresh after a live change
+- `distribution` is for downstream channel follow-through after publication
+
+Those should only be marked done when the external work actually happens.
 
 ## Local Working Surfaces
 
