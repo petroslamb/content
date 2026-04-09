@@ -5,13 +5,33 @@ This directory holds the tracked repo-level automation code. These scripts are t
 ## How To Read This Folder
 
 - Start here when you need to understand a root-level automation workflow.
+- Treat blueprint hardening and alphaXiv validation as workflow-and-skill processes, not root-script entrypoints. They currently have no dedicated root script by design because they depend on judgment and evidence review rather than fixed automation.
 - Use `npm run ...` entry points when they exist instead of calling lower-level scripts by habit.
 - Treat `archive_utils.py` as a support module, not a user-facing entrypoint.
 - Treat `stitch_binding_gap_slides.py` as a package-specific utility, not a general repo workflow.
 
-## Primary Workflows
+## Lifecycle / Status Automation
 
-### Substack Archive And Mirror
+These scripts keep the publication lifecycle contracts, manifests, and refinement cycles coherent. They are the automation layer behind the tracked stage ids, but they do not replace the workflow docs that define how the work should actually be done.
+
+Tracked docs:
+
+- [`../workflows/README.md`](../workflows/README.md)
+- [`../workflows/essay-iteration/README.md`](../workflows/essay-iteration/README.md)
+
+| Script | Role | Normal Entry Point | Notes |
+| :--- | :--- | :--- | :--- |
+| `lifecycle.py` | Shared lifecycle constants, stage-to-workflow mapping, and workflow-frontmatter loader used by the other lifecycle scripts. | imported by other scripts | This is the contract layer, not a direct user command. |
+| `init_status.py` | Initializes `status.yaml` manifests for publication packages. | `.venv/bin/python scripts/init_status.py --package <package>` | Use `--recursive` when bootstrapping many README-backed packages. |
+| `sync_status_schema.py` | Adds missing lifecycle stages and leaf defaults to existing manifests after schema changes. | `.venv/bin/python scripts/sync_status_schema.py` | Maintenance helper when the tracked stage list changes. |
+| `check_status.py` | Prints the leaf-package lifecycle matrix across `publications/`. | `.venv/bin/python scripts/check_status.py` | Fast visibility into current package state. |
+| `run_stage.py` | Inspects one lifecycle stage, resolves its workflow contract, and can execute or mark the stage state. | `npm run run -- --package <package> --stage <stage>` | This is the stage runner surface. |
+| `start_refinement.py` | Starts a new refinement cycle by bumping revision, optionally syncing from archive, and resetting selected stages. | `.venv/bin/python scripts/start_refinement.py --package <package> --reset <stage,...>` | The main automation entrypoint for a new bounded rewrite cycle. |
+| `sync_from_archive.py` | Copies a published archive snapshot back into a package and updates `status.yaml` with the resolved markdown path and slug. | `.venv/bin/python scripts/sync_from_archive.py --package <package>` | Used directly and by `start_refinement.py`. |
+| `audit_package.py` | Runs an advisory structural and evidence-drift audit for one package. | `.venv/bin/python scripts/audit_package.py --package <package>` | Used directly and by `run_stage.py` during stage resolution. |
+| `update_initial_status.py` | Historical batch bootstrap helper for early lifecycle manifests. | `.venv/bin/python scripts/update_initial_status.py` | Keep for backfill history; not the normal day-to-day entrypoint. |
+
+## Publication / Archive Automation
 
 These scripts maintain the tracked Substack archive in `publication_strategy_and_archive/` and validate the Eleventy mirror.
 
@@ -51,7 +71,7 @@ Tracked workflow:
 | :--- | :--- | :--- | :--- |
 | `sync_markdown_post_to_substack.py` | Syncs one markdown file into one existing Substack draft, uploads local images, preserves or injects the draft's uploaded video block when the markdown uses a `#### Video TL;DR` section, and can reuse a logged-in Chrome session over CDP to mint the auth cookie string. | `.venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url https://<subdomain>.substack.com --post-id <id> --markdown <file> --chrome-debug-url http://127.0.0.1:9222` | none |
 
-### YouTube Slide-To-Video Production
+## Media / Render Automation
 
 These scripts handle the local production stage for narrated slide videos before any YouTube upload or replacement step.
 
@@ -69,14 +89,20 @@ Tracked workflows:
 | `map_slides_to_transcript_lines.py` | Drafts transcript line ranges from OCR text files and a numbered transcript. | line-range drafting | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `line_map_markdown_to_cues.py` | Converts a reviewed markdown line map plus timed captions into the final cue-sheet JSON used for rendering. | verified cue generation | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `render_audio_slides_video.py` | Generates a rough evenly spaced template or renders the final MP4 from a cue sheet. | template or final render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
+| `render_publication_video.py` | Thin convenience wrapper that renders one package's final publication video from its prepared cues. | package-level final render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `convert_landscape_videos_to_portrait.py` | Converts landscape MP4 clips into portrait `9:16` versions by centering the original frame over a blurred vertical background, keeping output in a standard `H.264`/`AAC` web-delivery envelope. | prep horizontal clips for Shorts-style upload | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `scrape_youtube_watch_transcript.py` | Scrapes the visible watch-page transcript panel into JSON when you need a browser fallback for transcript inspection. | transcript fallback or debugging | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 
-## Package-Specific Utility
+## Package-Specific Utilities
+
+These scripts are thin wrappers or local helpers. They are useful, but they are not the canonical repo workflow surface.
 
 | Script | Role | Notes |
 | :--- | :--- | :--- |
-| `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | This is tied to `publications/binding-gap/` assets and is useful as a richer review or render surface after OCR-first cue drafting. It is not a general repo automation entrypoint. |
+| `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | Tied to `publications/binding-gap/` assets. Useful as a richer review or render surface after OCR-first cue drafting. |
+| `list_youtube_videos.py` | Lists videos from the authenticated YouTube channel. | Thin wrapper around the YouTube skill script layer. Use [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) for the canonical process. |
+| `upload_publication_tldrs.py` | Uploads TL;DR video variants from one package into a playlist. | Thin publication-specific wrapper around the YouTube API helper stack. |
+| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package and links them back to the main video. | Thin publication-specific wrapper around the YouTube API helper stack. |
 
 ## Related Skill Split
 
@@ -84,7 +110,7 @@ Some adjacent automation lives outside this folder:
 
 - YouTube channel-management, caption download, temporary upload transcript recovery, Shorts maintenance, playlist updates, and replacement uploads live under [`../workflows/skills/youtube-data-api/scripts/`](../workflows/skills/youtube-data-api/scripts/) and are documented canonically in [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) and [`../workflows/youtube-series-operating-agents/README.md`](../workflows/youtube-series-operating-agents/README.md).
 - PDF slide export lives under [`../workflows/skills/pdf-slides-to-substack-images/scripts/`](../workflows/skills/pdf-slides-to-substack-images/scripts/).
-- NotebookLM and alphaXiv workflows are documented canonically under [`../workflows/`](../workflows/README.md) and do not use this root `scripts/` folder as their main implementation surface.
+- NotebookLM, blueprint hardening, and alphaXiv validation are documented canonically under [`../workflows/`](../workflows/README.md) and do not use this root `scripts/` folder as their main implementation surface.
 
 ## Safe Starting Points
 

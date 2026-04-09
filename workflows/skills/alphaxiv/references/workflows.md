@@ -119,6 +119,62 @@ Common mistakes:
 - Using only one signal or one query and never expanding with `paper similar`.
 - Treating `assistant` as the first-pass retrieval surface instead of using `search`, `feed`, and `paper` first.
 
+## Run a gap-closing evidence pass for a blueprint
+
+Goal:
+
+- Pressure-test a weak or overstated blueprint claim against exact anchor papers before deciding whether new intake is necessary.
+
+Recommended command order:
+
+```bash
+alphaxiv search papers "<exact claim term or paper title>"
+alphaxiv paper show <paper-id>
+alphaxiv paper summary <paper-id>
+alphaxiv paper overview <paper-id>
+alphaxiv paper pdf download <package>/papers/<filename>.pdf
+```
+
+How to interpret the outputs:
+
+- `search papers` confirms the exact anchor and nearby alternatives instead of trusting memory.
+- `paper show` is the identity check before you lean on the paper.
+- `paper summary` is the fastest claim-triage surface.
+- `paper overview` is only for cases where the summary is too compressed to decide what the paper licenses.
+- `paper pdf download` should happen only when the paper is strong enough to be promoted into package intake.
+
+Common mistakes:
+
+- Downloading papers into the package before deciding whether they materially change the claim set.
+- Reopening broad discovery when the real task is testing whether an existing claim survives.
+- Jumping to the assistant before the anchor set is stable.
+
+## Run a framing challenge pass after the anchor set is stable
+
+Goal:
+
+- Test whether the top-level synthesis or metaphor should survive once the underlying anchor papers are fixed.
+
+Recommended command order:
+
+```bash
+alphaxiv assistant start "Given these anchor papers, what claims are actually licensed, what nearby claims are not licensed, and what alternative framing is more defensible?"
+alphaxiv assistant reply "Does the current synthesis survive as stated, or should it be narrowed or replaced?"
+alphaxiv assistant history
+```
+
+How to interpret the outputs:
+
+- The assistant is not there to invent a frame. It is there to pressure-test whether the current one survives contact with the anchors.
+- The useful output is usually a narrower wording, a clearer non-claim, or a better alternative frame.
+- `assistant history` is the checkpoint when you need to carry the result back into the blueprint without keeping a bloated session open.
+
+Common mistakes:
+
+- Asking the assistant for a grand synthesis before the anchor papers have been stabilized.
+- Treating a persuasive answer as evidence instead of feeding it back into the blueprint as a framing decision.
+- Keeping the old top-level metaphor just because the newer one feels less elegant.
+
 ## Use the assistant after retrieval
 
 Goal:

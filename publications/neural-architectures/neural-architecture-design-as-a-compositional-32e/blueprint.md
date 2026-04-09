@@ -1,133 +1,214 @@
-# Revision 2 Blueprint: Neural Architecture Design as a Compositional Language
+# Revision 2 Research Blueprint: Neural Architecture Design
 
-This blueprint maps the conceptual and structural architecture for the "High-Fidelity" refinement of the flagship essay.
+This document defines the evidence-backed research model for the neural architecture design package. Its subject is not one named model family and not one metaphor. Its subject is how the design target moved from bespoke model instances toward reusable blocks, trainable paths, parameterized design spaces, scalable recipes, and controlled non-uniformity.
 
-The historical eras remain the primary narrative and argumentative spine. The six principles below are a provisional synthesis distilled from those eras rather than fixed doctrine; the later `v2` rewrite may merge, rename, or revise them if the evidence no longer supports the exact six-part split.
+The synthesis in this blueprint is provisional. Every major claim is either licensed by the local paper set or marked as a multi-source inference. Attractive framings that exceed the evidence are treated as risks, not as premises.
 
-## 1. Thematology (The Conceptual Engines)
+## 1. Subject Model
 
-| Theme | The "Scaffold" Principle | Goal for Revision 2 |
-|:---|:---|:---|
-| **Scaffold vs Blueprint** | Architecture is a capacity space, not a rigid machine. | Establish the "Grammar" as a search space for gradient descent. |
-| **Compositional Uniformity** | Stacked identical blocks win over custom hierarchies. | Detail the stability benefits (hyperparameters, parallelization). |
-| **The Ensemble Fabric** | ResNets consist of $2^n$ overlapping shallow paths. | **[NEW]** Pivot from "Deep Hierarchy" to pathwise trainability and shallow-path support. |
-| **The Gating Syntax** | Multiplicative operators ($\times$) become high-value control operators inside scalable blocks. | **[NEW]** Balance the Additive Residual ($+$) with gated FFN operators ($x \cdot \sigma(x \cdot W)$) without overstating universality. |
-| **The Normalization Leveler** | Blocks need lightweight numerical alignment to be composed reliably. | **[NEW]** Frame RMSNorm as a strong example of rescaling-based alignment rather than a metaphysical necessity. |
-| **Optimization-First** | Architecture is good if it creates a smooth loss surface. | Link to the Li et al. (2018) "Loss Landscape" research. |
+Neural architecture design is treated here as the design of computational constraints that make certain families of models trainable, scalable, and reusable under a given optimization regime. The evidence base supports five recurring objects of design:
 
-## 2. Structural Architecture (The Arc)
+- repeated blocks
+- identity-preserving paths
+- reusable block recipes
+- parameterized design spaces
+- controlled non-uniformity inside a stable scaffold
 
-### Part 1: The Principle Summary (The Hook)
-*   **Objective**: Contrast "Designing a machine" with "Writing a grammar."
-*   **Tone**: Insightful, vocabulary-changing.
-*   **Key Moves**: The move from `if-then` logic to `Search Space` creation.
+The strongest organizing frame in the current evidence base is **from design spaces to emergent phenomenology**, with **path-gradient trainability** as the main mechanistic thread. Three alternative frames remain useful but secondary:
 
-### Part 2: The Historical Genealogy (The Eras)
-*   **Era 1: The Hand-Crafted Hierarchy (2012-2015)**
-    *   AlexNet (Custom) vs. VGGNet (Uniformity).
-    *   **Indispensable conceptual move**: the field moves from bespoke layer stacks toward repeatable block patterns that can be scaled and reasoned about.
-    *   **Indispensable evidence anchor**: VGG-style uniform stacking as the precursor to the later compositional grammar.
-    *   **Feeds the provisional synthesis by**: setting up **Compositional Uniformity** as the first serious design advantage over handcrafted heterogeneity.
-*   **Era 2: The Modular Revolution (2015-2017)**
-    *   ResNet (The breakthrough of Residuals) vs. Inception (The parallel committee).
-    *   **Indispensable conceptual move**: residual addition turns depth from a brittle hierarchy into an iterated refinement process.
-    *   **Indispensable evidence anchor**: `2015_ResNet.md` with `2016_ResNet_Ensembles.md` as the decisive interpretive companion.
-    *   **Feeds the provisional synthesis by**: grounding **The Ensemble Fabric** and showing why residual pathways matter more than handcrafted depth alone.
-*   **Era 3: The Universal Block (2017-2019)**
-    *   Transformers ($Q, K, V$) and the birth of a unified scaling unit.
-    *   **Indispensable conceptual move**: a single reusable block becomes powerful enough to dominate sequence modeling without bespoke recurrence or convolution.
-    *   **Indispensable evidence anchor**: `2017_Transformers.md`, with `2019_BERT_Attention.md` explaining emergent internal role differentiation.
-    *   **Feeds the provisional synthesis by**: strengthening **Compositional Uniformity** and **Scaffold vs Blueprint** while showing that specialization can emerge inside a repeated scaffold.
-*   **Era 4: The Strategic Design Space (2017-2023)**
-    *   NAS (Search) and RegNet (Designing the principles of the space).
-    *   **Indispensable conceptual move**: the object of design shifts from a single architecture instance to the design space itself.
-    *   **Indispensable evidence anchor**: `2020_RegNet.md`, with `2019_DARTS.md` as the search-side contrast case.
-    *   **Feeds the provisional synthesis by**: sharpening **Scaffold vs Blueprint** and supporting the claim that architectures increasingly function as parameterized search spaces rather than frozen machines.
-*   **Era 5: The Understanding Era (2019-2023)**
-    *   Scaling Laws, Lottery Tickets, and Loss Landscapes.
-    *   **Indispensable conceptual move**: architecture quality is increasingly judged by optimization geometry, trainability, and predictable scaling behavior rather than visual cleverness.
-    *   **Indispensable evidence anchor**: `2018_Loss_Landscapes.md` and `2020_Scaling_Laws.md`.
-    *   **Feeds the provisional synthesis by**: giving real substance to **Optimization-First** and explaining why certain architectural families survive scaling.
-*   **Era 6: The Hybrid Era (2023-Present)**
-    *   Learned non-uniformity (MoE) and Alternative Primitives (Mamba).
-    *   **Indispensable conceptual move**: non-uniform specialization returns, but now inside a scalable, trainable scaffold rather than as a return to bespoke architecture.
-    *   **Indispensable evidence anchor**: `2024_Mixtral.md` and `2025_DR_Tulu.md`.
-    *   **Feeds the provisional synthesis by**: updating **The Gating Syntax** and extending **Scaffold vs Blueprint** from architectural blocks to training scaffolds.
+- **Trainability-first design**: captures the residual and loss-landscape story, but underweights the design-space shift.
+- **Conditional computation as unifying principle**: sharp for late sparse and gated systems, too narrow for the earlier eras.
+- **Path-gradient hypothesis**: strong as mechanism, weaker as a full historical account.
 
-#### Note on emphasis for the eventual rewrite
+The current evidence does **not** establish architecture as a literal grammar. At most it supports a weaker synthesis label: modern architectures increasingly look like reusable operator regimes and scalable recipes rather than bespoke diagrams.
 
-- **Core later-era material**: MoE gating, transformer-era uniform blocks, scaling/loss-landscape evidence, and the DR Tulu shift from architecture design to training-scaffold design.
-- **Compressible later-era material**: catalog-like enumeration of every modern primitive or every NAS variant. The point is to justify the current compositional paradigm, not to produce a broad architecture survey.
+## 2. Historical Findings
 
-### Part 3: The Detailed Synthesis (The Theory)
-*   Drafting the 6 "Design Principles" (Uniformity, Residuals, Swappability, etc.).
-*   Connecting each principle to a specific local source in `../papers/markdown/`.
+### Era 1: Bespoke Stacks to Repeated Blocks
 
-### Part 4: The Horizon (The Future)
-*   Forecast: Dynamic Architectures and Cross-Modal Composability.
-*   The "DR Tulu" Shift: From designing blocks to designing training scaffolds.
+**Problem**
+Early deep learning systems could scale benchmark performance, but the architecture itself still lived in bespoke layer-by-layer judgment about receptive fields, module order, and local hierarchy.
 
-### Part 5: The Closing Argument (The Thesis)
-*   Architects as "Grammarians of Computation."
-*   Final validation of the "Scaffold Hypothesis."
+**Change in the object of design**
+The field began shifting from the custom stack toward the repeated block as the reusable unit of thought.
 
-## 3. Success Rubric (Revision 2 Goals)
-To reach an "outstanding" threshold as per `workflows/essay-iteration`, the draft must be reviewably better than the current live draft rather than merely different.
+**Anchor findings**
+- `2012_AlexNet.md`: deep convolutional vision models can win at scale with enough compute and data, but the architecture remains highly specific to the designer's local choices.
+- `2014_VGGNet.md`: repeated small convolutions can compete with and simplify more ornate local design, making uniform repetition a serious design advantage before residual methods.
+- `2014_Inception.md`: parallel composition keeps handcrafted operator variety alive as a competing answer to the same problem.
 
-| Axis | Success looks like | Obvious failure looks like | Required improvement over current draft |
+**What this era demonstrates**
+Uniform repetition became a viable design strategy before the field had a clean answer to deep trainability.
+
+**What this era does not justify**
+It does not prove that uniformity alone solves depth, nor that early CNN history already implies a general compositional language.
+
+### Era 2: Residual and Identity Structure Make Depth Trainable
+
+**Problem**
+Increasing depth raised training error instead of simply improving representation power. The issue was not just expressivity. It was optimization.
+
+**Change in the object of design**
+Depth stopped being treated mainly as a serial hierarchy and became an identity-preserving path structure in which layers refine rather than replace.
+
+**Anchor findings**
+- `2015_ResNet.md`: residual formulation eases optimization and turns depth into additive refinement.
+- `2016_Identity_Mappings.md`: identity skip paths and pre-activation units materially improve signal propagation and optimization; deviations from identity shortcuts impede training.
+- `2016_ResNet_Ensembles.md`: effective training relies heavily on short paths inside the residual network rather than on one monolithic full-depth chain.
+- `2018_Loss_Landscapes.md`: skip connections promote flatter, less chaotic optimization regions and help explain why very deep residual systems remain trainable.
+
+**What this era demonstrates**
+Residual and identity structure make depth trainable by preserving direct forward and backward routes and by shortening effective paths through the network.
+
+**What this era does not justify**
+It does not prove that every successful architecture reduces to a residual ensemble, nor that semantic hierarchy itself is explained by the shallow-path story.
+
+### Era 3: The Reusable Transformer Block and Emergent Internal Stratification
+
+**Problem**
+Sequence modeling still relied on architecture-specific bottlenecks such as recurrence and convolution, while the field lacked a block that could scale broadly across tasks.
+
+**Change in the object of design**
+The design target moved toward a reusable block recipe whose external interface stayed stable while training differentiated its internal use.
+
+**Anchor findings**
+- `2017_Transformers.md`: self-attention plus feed-forward sublayers inside residual structure creates a reusable block that removes sequence-aligned recurrence.
+- `2019_GPT-2.md`: repeating the same transformer block at larger scales becomes a viable way to improve capability without redesigning the core architecture each time.
+- `2019_BERT_Attention.md`: attention heads specialize in recognizable linguistic behaviors, but the evidence is head-level and partial rather than a complete pipeline theory.
+- `2019_BERT_Rediscovers_Pipeline.md`: probing results show a layerwise ordering from lower-level to higher-level linguistic abstractions within BERT.
+- `2020_ViT.md`: the transformer block transfers to vision when pretraining scale is high enough, showing that the block is reusable outside language even without convolutional inductive bias.
+
+**What this era demonstrates**
+One good block can become a reusable scaling unit, and repeated uniform scaffolds can develop differentiated internal roles after training.
+
+**What this era does not justify**
+It does not prove a neat universal NLP pipeline inside transformers, and it does not prove transformers dominate every regime regardless of data scale or inductive bias.
+
+### Era 4: From Architecture Instances to Design Spaces and Scalable Recipes
+
+**Problem**
+Manual architecture design did not scale cleanly as the number of design choices increased, and the field needed better ways to reason about model families rather than single winning instances.
+
+**Change in the object of design**
+The object of design moved upward from one architecture instance to the search space, the design space, and the compute-aware recipe that governs a whole family of models.
+
+**Anchor findings**
+- `2017_NAS.md`: architecture search can be posed as an automated search over compositional choices, but the result remains a fixed discovered instance.
+- `2019_DARTS.md`: architecture itself can be relaxed into a differentiable optimization object.
+- `2020_RegNet.md`: the design target can be a parameterized population of models governed by simple regularities rather than one hand-tuned network.
+- `2020_Scaling_Laws.md`: performance follows predictable scaling regularities, and many architectural shape choices matter less than scale within broad ranges.
+- `2022_Chinchilla.md`: compute-optimal recipes require balancing model size and training tokens more carefully than Kaplan-style scaling implied, making recipe quality a first-class design concern.
+
+**What this era demonstrates**
+Architecture increasingly means the design of a family, a search space, or a compute-aware recipe rather than only the naming of one network diagram.
+
+**What this era does not justify**
+It does not prove that NAS or RegNet became the dominant frontier workflow, and it does not imply that architecture has become irrelevant once scaling enters the story.
+
+### Era 5: Operator Refinement and Controlled Non-Uniformity
+
+**Problem**
+Once a stable scaffold exists, progress often depends less on inventing a wholly new backbone and more on improving the operators, control mechanisms, and specialization patterns inside that scaffold.
+
+**Change in the object of design**
+The design target becomes a stable repeated scaffold plus selective operator refinement and conditional specialization.
+
+**Anchor findings**
+- `2019_RMSNorm.md`: lightweight rescaling can preserve the useful stabilization properties of normalization without requiring full recentering in every setting.
+- `2020_GLU_Variants.md`: multiplicative feed-forward variants such as GEGLU and SwiGLU improve transformer blocks under matched parameter and compute budgets.
+- `2017_Sparsely_Gated_MoE.md`: sparse gating makes conditional computation operational at large scale and shows that specialization can be reintroduced without dense all-expert computation.
+- `2021_Switch_Transformers.md`: simplified top-1 routing makes sparse expert models easier to train and scale, turning MoE from a promising mechanism into a more adoptable large-model recipe.
+- `2024_Mixtral.md`: sparse routing remains compatible with a stable transformer scaffold and serves as a late exemplar rather than the origin of the MoE line.
+
+**What this era demonstrates**
+Recent innovation often elaborates a stable scaffold through operator refinement and conditional computation rather than through a return to bespoke monolithic architecture.
+
+**What this era does not justify**
+It does not prove that gating or RMSNorm are universal doctrines, and it does not prove that surrounding training procedure has already superseded architecture as the main design surface.
+
+## 3. Derived Synthesis
+
+The following findings are the strongest multi-source inferences this evidence base supports.
+
+### 1. Repeated blocks win when scale and reuse dominate
+
+VGG, ResNet, transformers, ViT, and RegNet all point in the same direction: once scale, maintenance cost, and family-level predictability matter, repeated blocks tend to beat bespoke heterogeneity. This is not a claim that uniformity always wins. It is a claim that the repeated block became the default unit of scalable architectural reasoning.
+
+### 2. Residual and identity structure make depth trainable by preserving short effective paths
+
+The ResNet cluster, the identity-mapping refinement, the Veit path analysis, and the loss-landscape work all converge on one mechanism: successful deep architectures preserve direct routes for information and gradient. This is the strongest mechanistic story in the package.
+
+### 3. Uniform scaffolds can produce differentiated internal roles without hand-designed module hierarchy
+
+The transformer/BERT cluster supports a narrower but important conclusion: repeated uniform stacks need not remain functionally uniform after training. The strongest safe formulation is emergent stratification, not a rigid rediscovered pipeline.
+
+### 4. Design increasingly targets spaces, recipes, and reusable operator constraints
+
+DARTS, RegNet, Kaplan, and Chinchilla show that the design problem now includes the search surface and the scaling recipe, not just the named architecture. The model family and its training allocation are part of the object being designed.
+
+### 5. Controlled non-uniformity returns inside a stable scaffold
+
+The later literature does not reverse the uniform-block story. It qualifies it. Routing, gating, and lightweight normalization show how selective non-uniformity can be reintroduced without abandoning the stable scaffold that made large-scale training feasible in the first place. The strongest version of this claim now runs through the Shazeer-to-Switch line, with Mixtral as a recent illustration rather than as the historical anchor.
+
+## 4. Explicit Guardrails
+
+The following moves are not licensed by the current evidence set and should be treated as errors if they reappear downstream.
+
+- Do not treat architecture as a literal grammar or language unless new evidence is added that directly justifies that framing.
+- Do not present DARTS or RegNet as the dominant frontier workflow for modern large language models.
+- Do not use `2019_BERT_Attention.md` alone to claim a neat pipeline from syntax to semantics across layers.
+- Do not use `2020_Scaling_Laws.md` alone for scaling doctrine after `2022_Chinchilla.md` revised the compute-optimal picture.
+- Do not present `2025_DR_Tulu.md` as proof that architecture has already been displaced by training scaffolds.
+- Do not promote `2019_RMSNorm.md` or `2020_GLU_Variants.md` into universal principles for all successful models.
+- Do not use ViT to claim that inductive bias no longer matters in general; its results are explicitly scale-contingent.
+- Do not convert the residual-path story into a total explanation of representation quality or semantic organization.
+- Do not treat `2024_Mixtral.md` as the origin point of sparse conditional computation; it is a late exemplar in a longer MoE line.
+
+## 5. Claim-to-Evidence Ledger
+
+### Primary anchors
+
+| Source | Result | Licenses | Does not license |
 |:---|:---|:---|:---|
-| **Technical Fidelity** | Each major principle-bearing claim is backed by a local paper with a real result, mechanism, or empirical pattern. | Claims about gating, normalization, scaling, or specialization float free of the local evidence base. | Add direct local support for the normalization and gating arguments, and make the optimization claims less generic. |
-| **Conceptual Clarity** | The "grammar" analogy explains what operators do: addition refines, gating selects, normalization levels, and search spaces constrain viable composition. | The metaphor remains attractive but vague, or collapses into component name-dropping. | Make the six-principle synthesis feel earned by the history, not imposed from above. |
-| **Historical Lineage** | The move from AlexNet to DR Tulu reads as cumulative and intelligible, with each era changing what "design" means. | The essay turns into a list of architectures or jumps from era to era without argumentative accumulation. | Clarify what each era contributes to the final thesis instead of treating eras as chronology alone. |
-| **Voice Consistency** | The prose keeps the repo's auditor tone: exact, thesis-driven, and skeptical of hype. | The draft slips into generic futurism, promotional language, or empty grand statements. | Keep the stronger theoretical framing without sacrificing the publication's established voice discipline. |
-| **Evidence Density** | Citations are integrated where argumentative pressure is highest, especially when the essay introduces a new operator or principle. | Evidence appears mostly as end-loaded references or as ornamental paper mentions. | Increase local evidence exactly in the under-grounded sections instead of adding more breadth. |
+| `2012_AlexNet.md` | Bespoke deep CNN wins at ImageNet scale with the right compute and data regime. | Early large-scale success still depended on local architectural judgment. | A general reusable block story. |
+| `2014_VGGNet.md` | Repeated small convolutions scale competitively against more ornate alternatives. | Uniform repetition became a serious design strategy before residuals. | A full explanation of trainability or a universal rule of architectural simplicity. |
+| `2015_ResNet.md` | Residual addition eases optimization and enables much deeper networks. | Depth can be reframed as additive refinement. | Why identity-preserving detail matters most. |
+| `2016_Identity_Mappings.md` | Identity skips and pre-activation materially improve signal propagation and optimization. | The strongest version of the trainability story depends on identity paths, not just residual form in the abstract. | That normalization or skip variants are interchangeable. |
+| `2016_ResNet_Ensembles.md` | Residual networks behave like collections of short effective paths during training. | Pathwise trainability and shallow effective depth are central to residual success. | A complete semantic interpretation of deep residual systems. |
+| `2017_Transformers.md` | Self-attention plus residual structure yields a highly parallel reusable block. | The transformer block is a reusable scaling unit, not merely an NLP curiosity. | That transformers are automatically universal without further evidence. |
+| `2019_GPT-2.md` | Scaling a repeated transformer block yields broader zero-shot behavior. | Capability can increase through repeated use of a stable block rather than core redesign. | Compute-optimal scaling doctrine. |
+| `2019_BERT_Attention.md` | Attention heads display partial syntactic and coreference-related specializations. | Functional specialization can emerge inside repeated transformer stacks. | A clean layerwise pipeline or a full theory of internal hierarchy. |
+| `2019_BERT_Rediscovers_Pipeline.md` | Probing reveals ordered layerwise stratification across linguistic tasks. | Some pretrained transformers exhibit stage-like representational ordering. | That every transformer or every task follows the same pipeline. |
+| `2020_ViT.md` | A pure transformer can work for vision at large pretraining scale. | The transformer block transfers beyond language under the right data regime. | That vision inductive biases no longer matter in smaller-scale or all-data regimes. |
+| `2017_NAS.md` | Architecture search can be automated over a space of compositional choices. | Search spaces are legitimate objects of architectural design. | That searched architectures are themselves simple or generalizable principles. |
+| `2019_DARTS.md` | Architecture choice can be relaxed into a differentiable optimization problem. | Architecture can be treated as an optimization object. | That this became the dominant design path for frontier systems. |
+| `2020_RegNet.md` | Network design spaces can be simplified into regular, interpretable families. | The design target can be the family rather than the instance. | That one vision design-space result governs all modern architecture work. |
+| `2018_Loss_Landscapes.md` | Skip connections correlate with flatter, less chaotic optimization regions. | Architectural form affects optimization geometry. | A complete theory of generalization or a universal geometry law. |
+| `2020_Scaling_Laws.md` | Performance follows strong power-law regularities under scale. | Scaling behavior is a first-class design filter. | The final compute-optimal model/data recipe. |
+| `2022_Chinchilla.md` | Compute-optimal training requires much more data than Kaplan-style practice implied. | Recipe quality includes model/data balance, not just model size. | That architecture shape is irrelevant once scaling is optimized. |
+| `2019_RMSNorm.md` | Rescaling-only normalization can match LayerNorm in some settings with efficiency gains. | Lightweight normalization can be part of an efficient stable block recipe. | That full recentering is never needed or that RMSNorm is universally best. |
+| `2020_GLU_Variants.md` | Gated FFN variants improve transformer quality under matched budgets. | Multiplicative control operators matter inside the transformer block. | A universal theory of gating across all architectures. |
+| `2017_Sparsely_Gated_MoE.md` | Sparse gating makes extremely large conditional-computation models practical and introduces the load-balancing machinery that makes MoE usable. | The modern sparse-specialization line has a real pre-transformer historical anchor. | That sparse MoE immediately became the dominant default architecture across the field. |
+| `2021_Switch_Transformers.md` | Top-1 expert routing simplifies sparse MoE training and makes very large sparse transformers much easier to scale. | Controlled non-uniformity can be made operational inside a stable large-model recipe. | That sparse routing is automatically the best choice in every scale regime or workload. |
+| `2024_Mixtral.md` | Sparse expert routing improves capability-efficiency tradeoffs inside a transformer scaffold. | The MoE line remains live in recent frontier-adjacent practice. | The origin of sparse routing or a claim that sparse routing is always superior. |
 
-### Revision acceptance
+### Secondary and demoted sources
 
-A `v2` candidate is only strong enough if:
+| Source | Safe role | Why it is demoted |
+|:---|:---|:---|
+| `2018_BERT.md` | General BERT background and pretraining context. | The stronger layerwise hierarchy claims come from the later probing papers, not from the base model paper itself. |
+| `2019_Lottery_Ticket.md` | Optional support for the idea that large networks contain trainable substructures. | It does not directly explain the historical shift in architecture design and can easily be overstretched into a generic scaffold theory. |
+| `2021_Transformer_Circuits.md` | Optional evidence that reusable primitives can compose into interpretable behaviors. | It studies simplified attention-only models and does not directly license the package's larger historical claims. |
+| `2023_MoE.md` and `2023_MoE_Instruction.md` | Adjacent context for sparse specialization. | The stronger historical line now runs through `2017_Sparsely_Gated_MoE.md` and `2021_Switch_Transformers.md`; these 2023 papers are no longer load-bearing. |
+| `2023_Mamba.md` | Alternative primitive example. | It is useful only if the blueprint later broadens toward alternative sequence mixers. The current frame does not require it. |
+| `2025_DR_Tulu.md` | Horizon evidence for outward pressure on training procedure. | It is not a historical anchor for neural architecture design and should not carry the late-era conclusion. |
 
-- the historical eras remain readable and cumulative
-- the principle synthesis feels derived from the history rather than pasted onto it
-- the normalization and gating claims are explicitly supported by local sources
-- the optimization/scaling argument says something more precise than "good architectures train better"
-- the revision is tighter, not merely longer
+## 6. Conditional Evidence Triggers
 
-## 4. Evidence Mapping (Local Sources)
-The following sources in `../papers/markdown/` must be cross-referenced for data points and argumentative support:
+The following papers are not currently required because the present claim set has been narrowed. They become mandatory only if the blueprint broadens again.
 
-- [x] `2015_ResNet.md` - **Foundational**: licenses the residual formulation and the claim that depth becomes iterative refinement rather than plain stack depth.
-- [x] `2016_ResNet_Ensembles.md` - **Foundational**: licenses the "Ensemble Fabric" reading and supports the pivot from deep hierarchy to overlapping shallow paths.
-- [x] `2017_Transformers.md` - **Foundational**: licenses the transformer block as a universal compositional unit built from reusable operators.
-- [x] `2019_BERT_Attention.md` - **Supporting**: licenses the claim that functional hierarchy and specialization can emerge inside repeated uniform stacks.
-- [x] `2018_Loss_Landscapes.md` - **Foundational**: licenses the optimization-geometry argument that architectural viability is partly about smoother, more navigable training surfaces.
-- [x] `2020_Scaling_Laws.md` - **Supporting**: licenses the claim that scalable architectural families survive because they behave predictably under compute/data growth.
-- [x] `2019_RMSNorm.md` - **Foundational**: licenses the "Normalization Leveler" claim in its weaker, better-supported form: stable compositional blocks benefit from lightweight rescaling, and full re-centering is not always necessary.
-- [x] `2020_GLU_Variants.md` - **Foundational**: licenses the "Gating Syntax" claim in transformer feed-forward blocks by showing that multiplicative variants can outperform plain ReLU/GELU choices.
-- [x] `2020_RegNet.md` - **Supporting, promoted to required**: licenses the "design the space, not the instance" move by explicitly treating architecture design as design-space design.
-- [x] `2019_DARTS.md` - **Supporting, promoted to required contrast**: licenses the search-space side of the same move and prevents the RegNet point from reading as purely vision-specific.
-- [x] `2024_Mixtral.md` - **Modern-extension**: licenses learned non-uniformity, sparse routing, and the return of specialization inside a still-uniform scaffold.
-- [x] `2025_DR_Tulu.md` - **Modern-extension**: licenses the move from architectural scaffolds toward training scaffolds as the frontier design lever.
-
-### Citation drift to correct
-
-The earlier blueprint referred vaguely to "the 3 missing papers." For Revision 2, the missing or underused required sources are:
-
-1. `2019_RMSNorm.md` - needed to make the normalization argument specific rather than gestural.
-2. `2020_GLU_Variants.md` - needed to make the gating argument about operator choice rather than generic MoE routing.
-3. `2020_RegNet.md` - needed to ground the "design the space, not the instance" claim as an explicit design paradigm.
-
-`2019_DARTS.md` should also be treated as required supporting contrast for the same design-space transition even if it is not one of the three main drift corrections.
-
-### Under-grounded claims in current draft
-
-- **Ensemble fabric**: present, but still not central enough to the essay's explanation of why residual depth remains trainable via short effective paths.
-- **Gating syntax**: directionally present, but should stay close to the evidence from gated transformer FFNs unless more sources are added.
-- **Normalization leveler**: conceptually strong, but should be argued as numerical alignment/rescaling support, not as an absolute universal requirement.
-- **Optimization geometry / scaling viability**: currently persuasive but somewhat generic; needs tighter linkage to `2018_Loss_Landscapes.md` and `2020_Scaling_Laws.md`.
-- **Component-library claims**: parts of the "Llama-style" or modern block-library discussion risk sounding catalog-like unless tied back to the design-space and operator arguments.
-
-## 5. Revision Status
-- **Current Version**: Substack Snapshot (Nov 2025).
-- **Target Revision**: Revision 2 (High-Fidelity, historically grounded idea essay).
-- **Blueprint State**: This blueprint is now the preparation surface for the rewrite; no separate package-local memo is required unless the evidence changes materially.
-- **Audit Requirement**: Correct the citation drift named above and ensure the six principles remain provisional outputs of the historical arc rather than a rigid pre-committed framework.
+- **Highway Networks or equivalent early trainability paper**: required if the trainability story is generalized beyond residual and identity structure.
+- **BatchNorm and original LayerNorm**: required if normalization is treated as a historically central line rather than a local refinement inside modern blocks.
+- **GShard or equivalent distributed sparse-model paper**: required if the MoE line is reframed around infrastructure and sharding rather than architectural simplification and adoptability.
+- **NAS survey or explicit architecture-grammar paper**: required if the blueprint reintroduces strong “language,” “grammar,” or “cell syntax” claims.
+- **RL or training-scaffold paper cluster**: required if the blueprint again tries to claim that surrounding procedure has become the main post-architecture locus of progress.

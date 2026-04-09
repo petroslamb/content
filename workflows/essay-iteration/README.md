@@ -52,16 +52,117 @@ Before a serious review pass, pull the package context that actually defines the
 - prior live drafts or comparison baselines when the task is version-to-version review
 - package evidence surface when the rewrite is evidence-sensitive and the blueprint makes source-backed claims
 
+For a **cold replacement review** on a bounded candidate, the default minimum context is narrower:
+
+- the candidate draft
+- the current live draft
+- the root [`voice_consistency_guide.md`](../../voice_consistency_guide.md)
+
+Use the blueprint only after the main cold read if blueprint alignment needs comment. Do not let the blueprint pre-justify the draft.
+
 ## Evidence-Backed Defaults
 
 - Brutal reviews in this repo are expected to be explicit, scored, and rubric-driven. Casual “looks good” feedback is not enough when a draft is near publication.
 - If the user asks for version comparison, keep the rubric stable across versions so the comparison stays apples-to-apples.
 - When the package is clearly aiming at public publication, include importance, distinctiveness, or virality as separate axes instead of collapsing everything into one prose-quality score.
+- When a bounded candidate is being considered for promotion into the live path, run a cold replacement review before promotion if the package does not already have a stronger established editorial gate.
 - When a draft is already close, prefer surgical fixes that clear the remaining blockers over a broad rewrite that destabilizes the whole piece.
 - The stable-live-draft-plus-archive model is the default. The main exception is when a package explicitly manages parallel bundle baselines, in which case versioned siblings can temporarily stay live until one becomes canonical.
 - For refinement passes on an existing essay, harden the blueprint before a major rewrite when the blueprint is derived from the draft and still contains fuzzy claims, unresolved citation drift, or under-specified revision goals.
 - When a major rewrite is needed, prefer a clearly named bounded candidate such as `-v2.md` or `-revision-2.md` before promoting it into the stable live path. Do not overwrite the live draft first and decide later what changed.
 - If the blueprint already exists, use it as the preparation surface instead of creating a separate memo by default. Add a new memo only when the blueprint cannot absorb the needed evidence validation cleanly.
+- For evidence-sensitive rewrites, do not draft against alphaXiv-only context if the missing papers are already known. Intake first, then harden the blueprint, then draft the article.
+
+## Blueprint Hardening
+
+Use blueprint hardening when the package already has a blueprint or plan, but that surface still behaves like an author memo, a section outline, or a thesis dump rather than a rewrite-governing research artifact.
+
+The recurring strong pattern is:
+
+1. convert the blueprint from essay-outline or process language into a standalone research surface
+2. replace vague principles with source-backed findings or explicitly labeled synthesis
+3. add explicit guardrails for non-claims, historical overreach, and evidence mismatch
+4. add a claim-to-evidence ledger when the rewrite is evidence-sensitive and multiple papers are doing different argumentative jobs
+5. add conditional evidence triggers when extra papers should only be intaken if a claim survives pressure-testing
+6. use alphaXiv in narrow validation mode and paper intake only when the claim set actually changes
+
+For evidence-sensitive article work, the preparation order is:
+
+1. intake missing papers into the canonical evidence surface
+2. harden the blueprint against that evidence surface
+3. write the bounded article candidate
+
+Do not invert that order unless the package already has every load-bearing paper locally.
+
+The acceptance bar is higher than “better notes.” A hardened blueprint should:
+
+- contain no memo-language about the essay-writing process
+- avoid imposed synthesis that the evidence has not earned
+- avoid ornamental citations that do not change what the blueprint is allowed to claim
+- separate source-backed findings from higher-level synthesis
+- be strong enough to govern a bounded rewrite without reopening the whole argument from scratch
+
+If hardening collapses the original frame, narrow or replace the frame before starting the rewrite. Do not carry a broken synthesis forward just because it sounded good in the previous draft.
+
+## Citation And Reference Defaults
+
+When the package is writing an evidence-sensitive public article rather than a private memo, use these defaults unless the package already has a stronger established convention:
+
+- Use inline author-style citations in the body, for example `(He et al., 2015)` rather than raw URLs, bare paper titles, or numeric bracket citations.
+- Keep inline citations attached to argumentative claims, not every sentence. A citation should mark where the evidence is doing work.
+- End the article with a real reference section. Do not stop at a bare link dump when the references are part of the reading experience.
+- When the cited papers are doing substantive argumentative work, give each reference at least a short paragraph explaining why it matters to the essay. The reference section can therefore be annotated, not just bibliographic.
+- Keep the article reference section distinct from `papers/index.md`. The article references explain argumentative importance; the paper index tracks the local source library.
+
+## Cold Replacement Review
+
+Use this review mode when a bounded candidate might replace the live draft and the decision should be made against a high publication bar rather than against local momentum.
+
+The default posture is:
+
+- prefer a fresh thread or new context window so the read is actually cold
+- compare the candidate against the live draft on substance, argumentative force, and replacement-readiness, not surface polish alone
+- also score the candidate against the north star of an outstanding essay, not just against the current package baseline
+- prefer false negatives over false positives when the replacement decision is genuinely unclear
+
+The review should default to this output shape:
+
+1. findings first, ordered by severity
+2. prioritized issue list using `P0` through `P3`
+3. strict scorecard with category scores and a weighted overall score
+4. explicit replacement verdict
+5. explicit north-star verdict
+6. one short paragraph on the main blocker to replacement and the main blocker to outstanding quality
+
+Expected scoring categories for this mode:
+
+- thesis strength
+- argumentative force
+- historical honesty
+- evidence discipline
+- conceptual precision
+- structural coherence
+- intellectual necessity of prose
+- voice quality
+- replacement readiness
+- outstanding-essay proximity
+
+Priority meanings:
+
+- `P0`: fatal replacement blocker
+- `P1`: major weakness that materially limits the essay
+- `P2`: real but non-fatal weakness
+- `P3`: polish-level issue
+
+Cold replacement reviews should explicitly call out:
+
+- where the draft only works if the reader already shares the author's framing
+- where the history feels imposed, over-smoothed, or too neat
+- where citations are present but not actually doing argumentative work
+- where the prose sounds high-level without doing necessary intellectual work
+- where the title, subtitle, or framing outruns what the body really proves
+
+If the live draft is still stronger in any important way, say so directly. If the candidate is cleaner but thinner, that should count against promotion rather than for it.
 
 ## Canonical Iteration Loop
 
@@ -70,18 +171,22 @@ Before a serious review pass, pull the package context that actually defines the
 3. if the package already has a blueprint or plan, harden it before a major rewrite when the next direction is still fuzzy or under-evidenced
 4. use the review and any hardened blueprint to shape the next iteration plan
 5. get user approval before a major rewrite pass when the next direction materially changes the essay
-6. if the draft is close, apply bounded fixes first; otherwise produce a clearly bounded candidate and compare it against the live draft before promotion
-7. archive superseded versions, local review files, and retired companions once they are no longer the active surface
+6. if the draft is close, apply bounded fixes first; otherwise produce a clearly bounded candidate
+7. run a cold replacement review before promotion when the candidate is a serious replacement contender
+8. compare, choose, and only then promote or archive
+9. archive superseded versions, local review files, and retired companions once they are no longer the active surface
 
 ## Refinement Defaults
 
 For a published or older essay under refinement, the recurring strong pattern is:
 
 1. keep the current live draft intact
-2. harden the blueprint until it can actually govern the rewrite
-3. run targeted validation against the package evidence surface when principle-level claims need pressure-testing
-4. write a bounded `v2` candidate beside the live draft
-5. compare, choose, and only then promote one draft back into the canonical live path
+2. intake missing load-bearing papers into the package evidence surface if the claim set still depends on temporary research context
+3. harden the blueprint until it becomes a standalone research artifact rather than a memo or loose outline
+4. run targeted validation against the package evidence surface when principle-level claims need pressure-testing
+5. write a bounded candidate beside the live draft
+6. run a cold replacement review against both the live draft and the outstanding-essay bar
+7. compare, choose, and only then promote one draft back into the canonical live path
 
 This is the default refinement loop unless the package has a stronger established editorial process.
 

@@ -10,9 +10,9 @@ The current defaults in this directory were tightened against recurring March-Ap
 
 | Workflow | Use When | Related Skill Bundle |
 | :--- | :--- | :--- |
-| [`paper-intake/README.md`](paper-intake/README.md) | collecting papers, converting PDFs to markdown, and maintaining the package paper index | [`skills/markitdown-paper-intake/`](skills/markitdown-paper-intake/) |
-| [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | discovering papers, inspecting them, and using the alphaXiv assistant after retrieval | [`skills/alphaxiv/`](skills/alphaxiv/) |
-| [`essay-iteration/README.md`](essay-iteration/README.md) | moving from live draft to review, rewrite, scoring, and archive discipline | package-local docs plus review artifacts |
+| [`paper-intake/README.md`](paper-intake/README.md) | promoting already-selected papers into the package evidence surface, converting PDFs to markdown, and maintaining the paper index | [`skills/markitdown-paper-intake/`](skills/markitdown-paper-intake/) |
+| [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | discovering papers, refining a shortlist, and pressure-testing active claims against anchor papers before intake | [`skills/alphaxiv/`](skills/alphaxiv/) |
+| [`essay-iteration/README.md`](essay-iteration/README.md) | hardening blueprints, running review and rewrite cycles, and maintaining live-draft/archive discipline | package-local docs plus review artifacts |
 | [`notebooklm-artifacts/README.md`](notebooklm-artifacts/README.md) | generating audio, slide, and video artifacts and downloading them into package artifacts | [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/), [`skills/pdf-slides-to-substack-images/`](skills/pdf-slides-to-substack-images/) |
 | [`article-polish/README.md`](article-polish/README.md) | naming and placing images, transcript round-trips, rehumanizing the draft, and final reference cleanup before publication | package-local docs plus NotebookLM/PDF helpers |
 | [`substack-publishing/README.md`](substack-publishing/README.md) | preparing and publishing essays to Substack and syncing their public presentation | package-local docs plus Substack helpers |
@@ -24,29 +24,59 @@ The current defaults in this directory were tightened against recurring March-Ap
 
 ## Canonical Article Lifecycle
 
-The tracked article-development sequence is:
+The lifecycle stage ids remain unchanged for runner compatibility. The working taxonomy for article development is:
 
-1. paper intake
-2. alphaXiv research
-3. essay iteration
-4. NotebookLM artifacts
-5. article polish
-6. Substack publishing
-7. archive sync
+1. **discovery**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) to find and inspect candidate papers before they are admitted into a package
+2. **validation**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) in narrow claim-testing mode against the active anchor papers and package evidence surface
+3. **blueprint hardening**: use [`essay-iteration/README.md`](essay-iteration/README.md) as the governing process surface, with targeted help from [`alphaxiv-research/README.md`](alphaxiv-research/README.md) and [`paper-intake/README.md`](paper-intake/README.md) when evidence needs to be tightened
+4. **draft iteration**: use [`essay-iteration/README.md`](essay-iteration/README.md) to produce bounded rewrite candidates beside the live draft and compare before promotion
+5. **production and publishing**: use NotebookLM, polish, publishing, archive-sync, distribution, and video workflows once the live draft is ready for outward-facing work
 
 Optional post-publication follow-through can continue with:
 
-8. distribution
-9. YouTube production or channel operations when the package includes video work
+1. distribution
+2. YouTube production or channel operations when the package includes video work
+
+The runner still uses the stage sequence:
+
+1. `paper_intake`
+2. `research`
+3. `essay_iteration`
+4. `notebooklm_artifacts`
+5. `article_polish`
+6. `substack_publishing`
+7. `archive_sync`
+8. `distribution`
+9. `youtube_production`
 
 For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 
-1. harden the package blueprint if it is still fuzzy or under-evidenced
-2. use alphaXiv in targeted validation mode against the active anchor papers when needed
-3. produce a bounded `v2` candidate beside the stable live draft
-4. compare before promotion instead of overwriting first
+1. intake missing papers into the package evidence surface if the active claims still rely on temporary or alphaXiv-only context
+2. harden the package blueprint if it is still fuzzy, under-evidenced, or outrunning the current anchor set
+3. use alphaXiv in targeted validation mode against the active anchor papers when needed
+4. produce a bounded candidate beside the stable live draft
+5. run a cold replacement review against both the live draft and the outstanding-essay bar
+6. compare before promotion instead of overwriting first
 
 That lifecycle is the cross-package default. Package READMEs can add local surfaces or exceptions, but they should not redefine the shared process when a tracked workflow already exists here.
+
+## When To Use Which Surface
+
+Use these surfaces differently:
+
+| Surface | Use It For | Do Not Use It For |
+| :--- | :--- | :--- |
+| [`paper-intake/README.md`](paper-intake/README.md) | local evidence storage, PDF download destination, markdown conversion, and `papers/index.md` maintenance once a paper is clearly in scope | broad discovery, loose literature browsing, or framing debates before the paper is selected |
+| [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | broad discovery, shortlist refinement, and narrow claim pressure-testing against exact anchor papers | acting as the package’s long-term evidence store or replacing the package blueprint |
+| [`essay-iteration/README.md`](essay-iteration/README.md) | rewrite-governing blueprints, bounded draft cycles, brutal review artifacts, cold replacement reviews, and the compare-before-promotion loop | paper retrieval or package evidence storage |
+
+Blueprint hardening is therefore a named cross-cutting mode rather than a separate top-level workflow. It spans essay iteration, targeted alphaXiv validation, and selective paper intake when the claim set actually changes.
+
+For evidence-sensitive rewrites, the default order is therefore:
+
+1. paper intake
+2. blueprint hardening
+3. bounded article rewrite
 
 ## How To Use This Layer
 
