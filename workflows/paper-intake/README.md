@@ -55,6 +55,7 @@ Recommended meanings:
 - When a package already tracks a paper manifest or source index, update that existing structure instead of creating a second parallel inventory just because `papers/index.md` is the generic default.
 - Move vetted papers out of temporary holding folders or scratch notes into the canonical package paper tree as soon as they become part of the live source library.
 - If a new paper only sharpens an existing claim, prefer adding it as an annotated reference or source note instead of forcing a body rewrite.
+- For evidence-sensitive article rewrites, finish paper intake before hardening the blueprint or drafting the next article candidate. Temporary alphaXiv-only context is not a stable source surface.
 
 ## Conversion Flow
 
@@ -99,6 +100,11 @@ Minimum useful fields:
 - short relevance note
 
 If the package already keeps annotated references inside the essay or companion, the local index can stay short and point outward rather than repeating the same notes twice.
+
+The package paper index and the article reference section do different jobs:
+
+- `papers/index.md` is the local library surface and should stay lightweight
+- the article reference section can carry longer relevance paragraphs when the essay itself needs annotated references
 
 ## Related Skill Bundle
 

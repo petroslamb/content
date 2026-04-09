@@ -5,7 +5,7 @@ description: Use when the user wants to work with the alphaXiv CLI to search for
 <!-- alphaxiv-py v0.4.2 -->
 # alphaXiv CLI
 
-Use this skill when the user wants to use the alphaXiv CLI to find papers, inspect one paper, build a shortlist, or use the authenticated assistant from the terminal.
+Use this skill when the user wants to use the alphaXiv CLI to find papers, inspect one paper, build a shortlist, validate blueprint claims against anchor papers, or use the authenticated assistant from the terminal.
 
 This skill is CLI-only. Do not switch to Python SDK guidance unless the user explicitly asks for Python usage instead of terminal usage.
 
@@ -78,12 +78,13 @@ every assistant command.
    for every latency issue.
 7. When the task is blueprint or draft validation rather than paper discovery, stay narrow: reopen the exact anchor papers, inspect them with deterministic commands, and use the assistant only to pressure-test whether the current wording or synthesis is defensible.
 8. In validation mode, do not reopen broad search unless the existing anchor set clearly fails to support the active claims.
+9. In article-development work, this validation mode is often the highest-value use of alphaXiv. Do not default to broad discovery when the real problem is an overclaimed blueprint.
 
 ## Reference map
 
 Read only the reference file you need:
 
-- `../../../workflows/alphaxiv-research/README.md`: tracked canonical research workflow for discovery, shortlist building, and assistant use.
+- `../../../workflows/alphaxiv-research/README.md`: tracked canonical research workflow for discovery, validation, shortlist building, and assistant use.
 - `references/workflows.md`: task workflows that combine commands into research tasks.
 - `references/command-map.md`: concise command-family map, auth requirements, mutation notes, and nearby-command disambiguation.
-- `references/rollout-lessons.md`: browser-auth persistence, assistant overload mitigation, and feed-filter discovery patterns recovered from real usage.
+- `references/rollout-lessons.md`: browser-auth persistence, assistant overload mitigation, validation-mode lessons, and feed-filter discovery patterns recovered from real usage.

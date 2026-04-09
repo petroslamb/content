@@ -15,6 +15,13 @@ Use this file when the user is hitting auth friction, assistant-quality problems
 - When that happens, use smaller, focused prompts and start a fresh `assistant start` session instead of endlessly extending one overloaded chat.
 - Use `assistant list` and `assistant history` to recover prior context rather than forcing one session to carry everything.
 
+## Validation Mode
+
+- Validation mode works best when the anchor set is explicit before any assistant prompt.
+- Reopen the exact papers with deterministic commands first; do not let the assistant infer the evidence set from memory.
+- Use the assistant to ask what the papers license, what they do not license, and whether the top-level framing survives.
+- If the anchor set fails, reopen search narrowly. If the frame fails, change the blueprint. Do not treat both problems as "find more papers."
+
 ## Feed Discovery
 
 - When recency or ranking matters, prefer `feed filters search` plus `feed list` rather than guessing topic slugs or relying on generic keyword search.
