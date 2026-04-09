@@ -258,5 +258,31 @@
     "html_path": "publication_strategy_and_archive/substack_archive/2025-12-02_the-agent-revolution.html",
     "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-04448ffe5bc7a341.png",
     "mirror_enabled": true
+  },
+  {
+    "slug": "neural-architecture-design-as-a-compositional-32e",
+    "title": "Neural Architecture Design as a Reusable Scaffold: A History Review",
+    "url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
+    "post_date": "2025-11-27T16:04:27.908Z",
+    "audience": "everyone",
+    "fetched_at": "2026-04-09T20:09:48.197605+00:00",
+    "content_hash": "28c8ae102443170567edacf8f766cff35cf4c3cd9b035157bdcda78eede1d0fb",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-8de911714cb4c83b.jpeg",
+    "mirror_enabled": true
+  },
+  {
+    "slug": "coming-soon",
+    "title": "Welcome",
+    "url": "https://lambpetros.substack.com/p/coming-soon",
+    "post_date": "2025-11-27T15:19:30.913Z",
+    "audience": "everyone",
+    "fetched_at": "2026-04-09T20:09:48.681742+00:00",
+    "content_hash": "7d9382e3e37a2c74b50235e5250915244b0dc6b42596b78fee082fafbca1d89e",
+    "md_path": "publication_strategy_and_archive/substack_archive/2025-11-27_coming-soon.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2025-11-27_coming-soon.html",
+    "hero_image": "publication_strategy_and_archive/substack_archive/assets/asset-04448ffe5bc7a341.png",
+    "mirror_enabled": true
   }
 ]
