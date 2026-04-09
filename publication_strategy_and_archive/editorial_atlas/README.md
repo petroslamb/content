@@ -20,6 +20,7 @@ resist.
 ## What This Package Contains
 
 - [`process.md`](process.md): scoring method, section slots, and usage notes
+- [`rubric.md`](rubric.md): reusable scoring rubric for future essay passes
 - [`corpus_inventory.md`](corpus_inventory.md): inventory of all archive essays
 - [`essay_atlas.md`](essay_atlas.md): whole-essay scoring pass across the corpus
 - [`attractor_cards.md`](attractor_cards.md): short reusable profile cards for

@@ -131,7 +131,23 @@ extraScripts:
 
       <section class="atlas-panel">
         <p class="eyebrow">View 3</p>
-        <h2>Draft pull vector</h2>
+        <h2>Essay routing vector</h2>
+        <p class="atlas-note">
+          Put any published essay in the center, choose the editorial goal, and
+          the surrounding essays recompute as stronger neighbors, section
+          donors, and resists. This is a routing tool, not a static poster.
+        </p>
+        <div class="atlas-routing-controls">
+          <label class="atlas-field">
+            <span>Center essay</span>
+            <select id="atlas-routing-center"></select>
+          </label>
+          <label class="atlas-field">
+            <span>Goal</span>
+            <select id="atlas-routing-goal"></select>
+          </label>
+          <button class="atlas-action-button" id="atlas-use-selected" type="button">Use selected essay</button>
+        </div>
         <div class="atlas-vector-grid">
           <div>
             <div class="atlas-draft-head" id="atlas-draft-head"></div>
@@ -142,15 +158,16 @@ extraScripts:
             <table class="atlas-pull-table">
               <thead>
                 <tr>
-                  <th>Section</th>
-                  <th>Pull essay</th>
-                  <th>Desired strength</th>
+                  <th>Relation</th>
+                  <th>Essay</th>
+                  <th>Why it helps</th>
                 </tr>
               </thead>
               <tbody id="atlas-pull-table-body"></tbody>
             </table>
             <p class="atlas-footer-note">
-              This vector view is not a ranking device. It is a design-time routing view for shaping a new public essay intentionally.
+              Green nodes are stronger neighbors, gold nodes are section donors,
+              and rust nodes are tempting anti-models to resist.
             </p>
           </div>
         </div>
