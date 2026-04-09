@@ -1,0 +1,205 @@
+{
+  "title": "Architecture Flashcards",
+  "cards": [
+    {
+      "front": "In the context of deep learning history, what does it mean for an architecture to be a 'bespoke stack'?",
+      "back": "The designer makes specific local judgments about the purpose and operation of each individual layer or stage."
+    },
+    {
+      "front": "What was the significance of the 11x11 filters used in the early stages of AlexNet?",
+      "back": "They represented a designer's wager on how to extract early features under limited GPU memory and ImageNet-scale data."
+    },
+    {
+      "front": "Why is AlexNet considered part of the 'older world' of architecture design?",
+      "back": "Its success relied on a highly particular, non-reusable diagram tied to specific training conditions."
+    },
+    {
+      "front": "What architectural simplification did VGG introduce to compete with bespoke designs?",
+      "back": "It utilized a repeated scaffold of 3x3 convolutions throughout the network."
+    },
+    {
+      "front": "How did the Inception architecture's design philosophy differ from VGG's?",
+      "back": "Inception used parallel transformations within modules to maintain local heterogeneity rather than uniform repetition."
+    },
+    {
+      "front": "What is the primary architectural 'unit of reasoning' introduced by the VGG model?",
+      "back": "The repeated motif or block, rather than the individual layer."
+    },
+    {
+      "front": "What is the 'degradation problem' observed in deep plain networks before the advent of ResNet?",
+      "back": "Deeper models showed higher training error than shallower ones, despite having greater expressive capacity."
+    },
+    {
+      "front": "In a residual network, what is the role of a layer compared to a standard deep stack?",
+      "back": "The layer provides a bounded correction (delta) to the input rather than a total replacement of the representation."
+    },
+    {
+      "front": "State the governing update equation for a basic residual block.",
+      "back": "$y = F(x) + x$"
+    },
+    {
+      "front": "How does residual design transform the behavior of a deep network from a serial chain into something else?",
+      "back": "It turns the network into an accumulated refinement of the signal."
+    },
+    {
+      "front": "What was the core finding of the 'Identity Mappings in Deep Residual Networks' paper regarding shortcut paths?",
+      "back": "Optimization is best when the shortcut path is a clean identity mapping without scaling, gating, or projections."
+    },
+    {
+      "front": "What is the purpose of the 'pre-activation' redesign in residual blocks?",
+      "back": "To ensure that forward signals and backward gradients can propagate directly across many blocks via the identity path."
+    },
+    {
+      "front": "According to Veit et al., how does the design of ResNets affect gradient flow during training?",
+      "back": "Gradients concentrate on relatively short paths embedded within the deep scaffold."
+    },
+    {
+      "front": "What effect do skip connections have on a neural network's loss landscape?",
+      "back": "They delay the onset of chaotic geometry and promote flatter, more traversable landscapes."
+    },
+    {
+      "front": "How did the Transformer block inherit the 'residual lesson' from computer vision?",
+      "back": "It packages attention and feed-forward units inside a stable, repeatable residual scaffold."
+    },
+    {
+      "front": "What architectural feature of the Transformer allows it to be more parallelizable than previous sequence models?",
+      "back": "The abandonment of recurrence in favor of self-attention and pointwise operations within blocks."
+    },
+    {
+      "front": "Why is the Transformer block described as a 'portable' design object?",
+      "back": "Its core interface (residual + mixing + expansion) can be applied to any domain where tokens can be defined."
+    },
+    {
+      "front": "What did BERT analyses by Clark et al. reveal about specialization in uniform scaffolds?",
+      "back": "Individual attention heads specialized in specific linguistic tasks like syntax or coreference without being hard-coded to do so."
+    },
+    {
+      "front": "What is 'emergent differentiation' in the context of repeated blocks?",
+      "back": "The phenomenon where uniform layers develop distinct functional roles during the training process."
+    },
+    {
+      "front": "How did GPT-2 demonstrate the value of stable architectural families?",
+      "back": "It showed that model capability increases by scaling width, depth, and data without changing the core block design."
+    },
+    {
+      "front": "Under what conditions did the Vision Transformer (ViT) prove competitive with CNNs?",
+      "back": "When the scale of data and pretraining was large enough to overcome the lack of convolutional inductive bias."
+    },
+    {
+      "front": "What shift in design focus did Neural Architecture Search (NAS) represent?",
+      "back": "Moving from designing a single model instance to designing a search space of admissible operations."
+    },
+    {
+      "front": "How does the DARTS method approach architectural selection?",
+      "back": "By relaxing discrete architectural choices into a differentiable surface that can be optimized."
+    },
+    {
+      "front": "What is a 'network design space' as defined in the RegNet research?",
+      "back": "A population of architectures sharing a structural rule set and governed by simple regularities."
+    },
+    {
+      "front": "What relationship does Kaplan et al.'s scaling law describe?",
+      "back": "A smooth power-law relationship between performance and factors like parameters, data, and compute."
+    },
+    {
+      "front": "According to the Chinchilla (Hoffmann et al.) findings, what was a common flaw in early large language models?",
+      "back": "They were significantly undertrained relative to their parameter counts."
+    },
+    {
+      "front": "What is the 'compute-optimal' scaling recipe suggested by the Chinchilla paper?",
+      "back": "Model size and the number of training tokens should be increased in equal proportions as compute grows."
+    },
+    {
+      "front": "How does RMSNorm simplify the standard Layer Normalization process?",
+      "back": "It removes the recentering (mean subtraction) operation, focusing only on rescaling by the root mean square."
+    },
+    {
+      "front": "What is the functional benefit of using GLU (Gated Linear Unit) variants in Transformer blocks?",
+      "back": "They improve model quality within the feed-forward sub-block under matched computational budgets."
+    },
+    {
+      "front": "How does a Mixture-of-Experts (MoE) layer introduce non-uniformity into a model?",
+      "back": "By using a router to activate only a small subset of specialized 'expert' parameters for each input."
+    },
+    {
+      "front": "What simplification did Switch Transformers introduce to Mixture-of-Experts routing?",
+      "back": "Each token is routed to only a single expert to reduce communication and complexity."
+    },
+    {
+      "front": "Why is MoE considered 'controlled' non-uniformity rather than bespoke design?",
+      "back": "The specialization is learned through a routing problem within a stable scaffold rather than being hand-authored."
+    },
+    {
+      "front": "What does 'path discipline' refer to in the evolution of neural architecture?",
+      "back": "The intentional design of information flow to ensure gradients and signals can traverse the entire depth of the network."
+    },
+    {
+      "front": "In modern AI, why has stability in architecture become an asset for scaling?",
+      "back": "It allows progress to be cumulative across different scales rather than requiring redesign for every increment."
+    },
+    {
+      "front": "How has the role of the neural architect changed from the 'Bespoke Age' to the present?",
+      "back": "From hand-authoring machines in detail to defining sturdy scaffolds that training can elaborate within."
+    },
+    {
+      "front": "What characterizes the 'Inward side' of the new design regime (post-Transformer stabilization)?",
+      "back": "Refining local operators (like normalization or gating) within a fixed, trusted external scaffold."
+    },
+    {
+      "front": "Why was VGG's use of multiple small filters (3x3) considered a superior substitute for larger kernels?",
+      "back": "It allowed for deeper stacks and preserved a cleaner, more regular external form while maintaining expressivity."
+    },
+    {
+      "front": "What does the 'ensemble' view of ResNet imply about the nominal depth of a 110-layer model?",
+      "back": "The model's actual training work is often done by much shallower effective paths embedded within that nominal depth."
+    },
+    {
+      "front": "Concept: Identity Shortcut Path",
+      "back": "Definition: A connection that passes input directly to a subsequent layer without transformation, facilitating gradient flow in deep networks."
+    },
+    {
+      "front": "Why did the Transformer effectively 'shorten' the architectural distance between different AI domains?",
+      "back": "It provided a universal block recipe that works wherever sequence-like tokenization is possible."
+    },
+    {
+      "front": "What is the 'distributional' move in architecture design represented by RegNet?",
+      "back": "Judging the quality of a design space as a whole rather than evaluating individual model instances."
+    },
+    {
+      "front": "In the context of the essay, what is the definition of an architectural 'scaffold'?",
+      "back": "A design that preserves its governing logic under repetition, depth, scale, and selective modification."
+    },
+    {
+      "front": "Why does the essay argue that architecture has ceased to be where designers 'script competence'?",
+      "back": "Architecture now specifies the environment where training reliably elaborates order, rather than coding the order itself."
+    },
+    {
+      "front": "What is the historical significance of the Mixtral model regarding MoE?",
+      "back": "It demonstrated that routed expert structures could be integrated into familiar, open-weight transformer scaffolds."
+    },
+    {
+      "front": "In AlexNet, where did the designer choose to spend dense parameters?",
+      "back": "In the wide fully connected (FC) layers at the head of the classification network."
+    },
+    {
+      "front": "How does the 'residual additive demand' differ from the 'plain stack replacement demand'?",
+      "back": "The layer only needs to find a small improvement rather than inventing a completely new successful representation from scratch."
+    },
+    {
+      "front": "What does the 'unraveled' view of a residual network reveal?",
+      "back": "A collection of many routes of varying lengths through which information can flow."
+    },
+    {
+      "front": "What is the primary constraint addressed by the 'Chinchilla' scaling study?",
+      "back": "Determining the optimal allocation of a fixed compute budget between model size and data volume."
+    },
+    {
+      "front": "How do gated feed-forward layers (GLU) refine the Transformer block?",
+      "back": "They provide a more effective sub-block transformation for the 'expansion' phase of the residual cycle."
+    },
+    {
+      "front": "How did the success of VGG influence the perception of 'simplicity' in AI design?",
+      "back": "It proved that simplicity and repetition could be more competitive and respectable than intricate, hand-shaped hierarchies."
+    }
+  ]
+}

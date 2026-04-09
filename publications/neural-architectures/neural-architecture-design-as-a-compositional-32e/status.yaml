@@ -14,7 +14,7 @@ stages:
     last_updated: '2026-04-09'
   notebooklm_artifacts:
     done: true
-    last_updated: '2026-04-07'
+    last_updated: '2026-04-09'
   article_polish:
     done: false
     last_updated: '2026-04-07'
