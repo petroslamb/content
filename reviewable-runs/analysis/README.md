@@ -23,6 +23,7 @@ This is not part of the default front-door reading path.
 - `FINDINGS.md`: the merged findings and second-pass judgment
 - `TUNING_CANDIDATES.md`: bounded framework changes justified by the evidence
 - `COVERAGE_GAPS.md`: the acquisition plan for the next empirical categories
+- `NEURAL_ARCHITECTURE_PILOT_REVIEW.md`: commit-sliced review of the April 2026 neural-architecture workflow pilot and what it reveals about framework fit
 
 ## How To Read This Folder
 
