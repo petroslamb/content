@@ -1,18 +1,18 @@
 # Neural Architectures
 
-Umbrella package for the architecture-language line of the publication. It is the canonical publication home for *Neural Architecture Design as a Compositional Language* and *The Transformer Attractor*, while also holding adjacent working material on multimodal and component-level architecture trends.
+Umbrella package for the neural-architecture essay line of the publication. It is the canonical publication home for the published essay *Neural Architecture Design as a Compositional Language*, the promoted scaffold rewrite *Neural Architecture Design as a Reusable Scaffold*, and *The Transformer Attractor*, while also holding adjacent working material on multimodal and component-level architecture trends.
 
 ## Package Status
 
 - Archetype: Umbrella package
 - Status: Published umbrella
-- Publication map: *Neural Architecture Design as a Compositional Language* and *The Transformer Attractor*
+- Publication map: published *Neural Architecture Design as a Compositional Language*, promoted scaffold essay *Neural Architecture Design as a Reusable Scaffold*, and *The Transformer Attractor*
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
 
 ## Orientation
 
-- Published essay surface: [`Neural Architecture Design as a Compositional Language.md`](<Neural Architecture Design as a Compositional Language.md>)
-- Runnable leaf package for the slug-based workflow pilot: [`neural-architecture-design-as-a-compositional-32e/README.md`](neural-architecture-design-as-a-compositional-32e/README.md)
+- Published legacy essay surface: [`Neural Architecture Design as a Compositional Language.md`](<Neural Architecture Design as a Compositional Language.md>)
+- Runnable leaf package for the promoted scaffold essay: [`neural-architecture-design-as-a-compositional-32e/README.md`](neural-architecture-design-as-a-compositional-32e/README.md)
 - Adjacent live working files: [`The Next Frontier in AI PART 1.md`](<The Next Frontier in AI PART 1.md>), [`The Next Frontier in AI PART 2.md`](<The Next Frontier in AI PART 2.md>), [`Multimodal Reasoning with Integrated Transformers.md`](<Multimodal Reasoning with Integrated Transformers.md>)
 
 ## Shared Sources And Artifacts
