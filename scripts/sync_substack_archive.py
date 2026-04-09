@@ -80,6 +80,36 @@ def discover_posts(session: requests.Session, base_url: str) -> list[dict[str, s
     return fallback
 
 
+def merge_with_published_post_map(
+    discovered_posts: list[dict[str, str]],
+    post_map: dict[str, dict[str, Any]],
+    base_url: str,
+) -> list[dict[str, str]]:
+    merged: list[dict[str, str]] = []
+    seen_slugs: set[str] = set()
+    for discovered in discovered_posts:
+        slug = discovered["slug"]
+        if slug in seen_slugs:
+            continue
+        seen_slugs.add(slug)
+        merged.append(discovered)
+
+    for slug, entry in post_map.items():
+        if slug in seen_slugs:
+            continue
+        if entry.get("status") != "published":
+            continue
+        merged.append(
+            {
+                "slug": slug,
+                "url": f"{base_url.rstrip('/')}/p/{slug}",
+                "published_at": "",
+            }
+        )
+        seen_slugs.add(slug)
+    return merged
+
+
 def fetch_post(session: requests.Session, base_url: str, slug: str) -> dict[str, Any]:
     url = f"{base_url.rstrip('/')}{POST_API_PATH.format(slug=slug)}"
     response = session.get(url, timeout=30)
@@ -367,6 +397,7 @@ def sync_archive(base_url: str, output_dir: Path, summary_path: Path | None) -> 
             existing_manifest = {}
 
     post_map = load_post_map()
+    discovered_posts = merge_with_published_post_map(discovered_posts, post_map, base_url)
     desired_assets: set[str] = set()
     expected_stems: set[str] = set()
     manifest: list[dict[str, Any]] = []
