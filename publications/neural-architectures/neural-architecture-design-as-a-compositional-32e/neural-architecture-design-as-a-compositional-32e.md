@@ -1,1121 +1,227 @@
-# Neural Architecture Design as a Compositional Language
+# Neural Architecture Design as a Reusable Scaffold
 
-Date: 2025-11-27
-URL: https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e
+*How the field moved from bespoke stacks to trainable blocks, portable recipes, and controlled non-uniformity*
 
-### Introduction: The Architect’s Secret
+Draft Date: 2026-04-09  
+Status: Revision 4 candidate
 
-It’s a common misconception to think of designing a neural network like writing a piece of traditional software. We imagine architects meticulously programming every logical step, crafting a perfect, intricate machine from the ground up. But the reality of modern AI is far more counter-intuitive and fascinating.
+For a long stretch of deep learning history, architecture design meant deciding what each part of a network should do. That older picture was not a misunderstanding. It fit the technical reality of the time. When AlexNet appeared, its large early filters, staged reductions in kernel size, pooling pattern, and fully connected head all expressed a concrete view about how visual abstraction should be assembled under the combined pressures of ImageNet-scale data and GPU-bound training. The achievement was not only that the model was deep enough and trained hard enough. It was also that the diagram itself still carried a large share of the designer's judgment about the order in which the representation should become more invariant, more selective, and more task-ready. Early deep learning systems were still close enough to feature-engineering culture that one could point to a stage and say what kind of operation it was supposed to specialize in. Architecture still looked like the construction of a specific machine, not the definition of a reusable regime (Krizhevsky et al., 2012).
 
-The most successful AI architectures aren’t rigid blueprints; they are flexible scaffolds. An architect’s job is not to design a flawless machine, but to create a rich environment—a framework of possibilities—where an algorithm can learn and discover solutions on its own. This post explores five of the most surprising and impactful ideas that have shaped this new philosophy, revealing how the field shifted from building models to writing the very language of computation.
+That picture became steadily less accurate over the next decade. The strongest line of progress did not come from ever more intricate local diagrams. It came from learning how to build architectures whose power depended less on bespoke variation at each stage and more on the reliability of a repeated scaffold. In that newer regime, the pressure falls elsewhere: on whether the block can be repeated, whether the paths through the network remain trainable, whether the same design can scale across budgets, and whether later special cases can be added without destabilizing the whole.
 
---------------------------------------------------------------------------------
+In this essay, a scaffold does not mean a vague platform or a loose label for "structure." It means a design that can preserve its governing logic under repetition, under depth, under scale, and under selective modification. It is something one can trust to keep working while the surrounding ambitions change. That is the historical correction the essay needs to make precise. Neural architecture design moved away from local stage-by-stage judgment and toward reusable scaffolds whose blocks, paths, families, and recipes could be governed with far more confidence than the custom stacks that came before.
 
-### 1. Architectures Aren’t Blueprints; They’re Scaffolds
+## The Bespoke Age (2012-2014)
 
-The “Scaffold Hypothesis” is a simple but profound idea: an architect’s primary role is to create a *space of possible computations* where an optimization process like gradient descent can easily find effective solutions.
+AlexNet is the right place to begin because it still belongs to the older world in a strong sense. Its success depended on more than architecture, but the architecture itself remains highly particular. The first convolution uses an 11x11 receptive field and a stride large enough to cut spatial resolution quickly. Later stages move to smaller filters, then the network transitions into wide fully connected layers before classification. Nothing about that pattern yet reads like a general law of good design. It reads like a competent wager about how to distribute computation across a limited training setup: what kind of early feature extraction was feasible, how fast spatial compression should happen, and where it still made sense to spend dense parameters. AlexNet was historically decisive because it proved deep convolutional networks could win under realistic scale. Yet it did not leave behind a reusable discipline the field could simply keep extending. It left behind a successful object, rich in local choices and tied closely to the conditions under which it was built (Krizhevsky et al., 2012).
 
-This stands in stark contrast to traditional programming, where a developer specifies exact instructions like `if x > 5, then do y`. In AI architecture, the goal is different. Take the Transformer model’s famous Query-Key-Value (QKV) attention mechanism. The designers didn’t explicitly program the network to “use Q for asking what information is needed, K for signaling what information is available, and V for providing that information.” Instead, they created a mathematical structure where that function was *easy to learn*. The network discovered this communication protocol on its own through training.
+The next two landmarks matter because they show that the field had not yet converged on what should replace that bespoke style. VGG and Inception respond to the same pressure, but they respond in different directions. VGG shows that a network built from repeated 3x3 convolutions can outperform more decorated local designs. That was a serious simplification, and it changed what counted as architectural sophistication. Repetition no longer looked naive. It looked competitive. Inception took the opposite path. Instead of committing to one operator and repeating it, the model offers several transformations in parallel and lets training sort out their relative value inside each module. That branch is historically important because it keeps alive the idea that architectural intelligence might still reside in carefully composed local heterogeneity. Both papers are signs of transition rather than final settlement. VGG raises the credibility of repeated motifs. Inception preserves local heterogeneity as a live answer rather than a straw man. The historical point is not that one was smart and the other was confused. It is that the field was still deciding whether architecture should become more regular or more locally heterogeneous, and both answers still looked plausible in 2014 (Simonyan and Zisserman, 2014; Szegedy et al., 2014).
 
-This principle reframes the entire design process. The architecture is no longer the final product but the starting point for discovery.
+## Repetition Before Trainability (2014-2015)
 
-The architecture is the hypothesis; training is the proof.
+VGG's contribution is easy to flatten into a slogan about simplicity, but that misses the narrower and more important shift it introduced. VGG did not yet turn repeated blocks into the master key to modern scale. It made them respectable. By showing that small convolutions stacked repeatedly could beat more visibly hand-shaped hierarchies, VGG moved the unit of reasoning upward from the individual layer to the repeated motif. That is already a major change. A model family can now differ by depth while preserving most of its design logic. A designer can ask what one simple pattern does when reiterated, rather than reinventing each stage from scratch. Just as importantly, VGG suggests that local architectural expressivity need not come from operator variety alone. Several small filters in sequence can substitute for larger bespoke kernels while preserving a cleaner external form. Still, the paper does not yet make repeated depth a fully stable strategy. Its deeper variants are harder to optimize, and the design remains closer to a disciplined stack than to a scaffold whose growth laws are genuinely understood. Repetition became attractive in this period because it reduced ornamental variation, not because the field had solved the problem of training very deep uniform networks (Simonyan and Zisserman, 2014).
 
-This shift explains why simple, repeated structures are so effective. Instead of pre-ordaining a complex function, they provide a flexible, high-dimensional canvas and a simple set of rules, allowing the training process itself to paint the masterpiece.
+That unresolved problem matters because it kept the field from turning architectural regularity into a reliable scaling method. The obstacle was not expressive power in the abstract. It was optimization. The ResNet paper states the issue in its most useful form: deeper plain networks can show *higher training error* than shallower ones, even though a deeper model should contain the shallower solution by construction if the added layers can learn identity mappings. That result cuts against the comforting idea that one can simply keep stacking repeated modules and wait for gradient descent to sort things out. It also matters because it rules out an easy story in which depth failed only because the models overfit or because the training budget was too small. The deeper models were harder to fit in the first place. Once that degradation pattern becomes the central fact, the historical question changes. The problem is no longer whether repetition can be elegant. The problem is whether repeated depth can remain traversable enough for training to exploit it at all. Until the field had a real answer to that, the move away from bespoke stacks remained suggestive but incomplete (He et al., 2015).
 
---------------------------------------------------------------------------------
+## Residual Path Discipline (2015-2018)
 
-### 2. Simpler and Deeper Beats Clever and Custom
+ResNet changed the argument because it changed what a new layer was being asked to do. Its governing update can be written in one line:
 
-Early in deep learning’s history, models like AlexNet were built with custom-designed layers, each with a specific, hand-tuned purpose. The field has since learned a powerful lesson: uniformity and simplicity almost always win. The shift began with models like VGGNet and ResNet, which abandoned complex, varied layers in favor of stacking simple, identical blocks over and over again.
-
-This wasn’t just a competition between models; it was a clash of design philosophies. The complex Inception model represented a “clever, parallel committee” approach, where designers offered the model multiple hand-tuned computational paths at once. In contrast, ResNet championed a “brute-force sequential” approach with a single, deep compositional rule. ResNet’s victory proved that a simple, repeatable formula was far more scalable and powerful.
-
-...simpler, more uniform building blocks win over complex, hand-tuned modules.
-
-The power of this principle is staggering. A massive model like GPT-3 is built by repeating the exact same architectural block 96 times. This principle of uniform, repeatable blocks became the bedrock of modern AI. But to truly scale it, researchers had to solve a fundamental problem: how do you make a network hundreds of layers deep without the signal getting lost? The answer came in a single, elegant formula.
-
---------------------------------------------------------------------------------
-
-### 3. A Single, Simple Formula Unlocked Extreme Depth
-
-A breakthrough paper from 2015 revealed a disarmingly simple formula that would shatter the perceived limits of network depth: the “residual connection.” The formula is just `x_out = x_in + F(x_in)`.
-
-This small addition caused a massive paradigm shift. Before ResNet, architects asked, “What should each layer compute?” After ResNet, the question became, “What *refinement* should each layer add?” By making each layer learn a modification to the input (`F(x_in)`) rather than an entirely new representation, the model’s task became dramatically easier.
-
-This changed the network’s job from replacing information at each layer to *accumulating refinements*. The final output is no longer the result of a complex transformation, but the sum of the original input plus a series of small, learned adjustments: `Output = Input + Block₁(Input) + Block₂(...) + ...`. This is the foundational compositional operator of modern deep learning. This simple change created “gradient highways” that allowed networks to be built with 100+ layers, enabling the extreme depth that powers today’s most capable models.
-
---------------------------------------------------------------------------------
-
-### 4. Sophisticated Specialization Emerges From Identical Blocks
-
-One of the most stunning validations of the “scaffold hypothesis” came from analyzing models like BERT. BERT is constructed from a stack of identical Transformer blocks; architecturally, layer 2 is the same as layer 10. Yet, after training, these identical layers learn to perform distinct and specialized roles.
-
-Analysis revealed a clear functional hierarchy that emerged on its own:
-
-- **Early layers:** Focus on syntax and surface-level features (e.g., making determiners attend to their nouns).
-- **Middle layers:** Learn more abstract semantic relationships and entity recognition.
-- **Late layers:** Handle complex, long-range tasks like coreference resolution (e.g., linking the pronoun “it” back to its subject paragraphs earlier).
-
-This specialization was not designed by an architect; it was discovered by the training process as an efficient way to solve the problem. The uniform stack of blocks provided the capacity, and optimization found the structure.
-
-The architecture didn’t specify this hierarchy—training discovered it!
-
-This demonstrates that a well-designed architectural scaffold doesn’t need to encode complex behaviors itself. It only needs to create a space where those behaviors are easy for the model to learn.
-
---------------------------------------------------------------------------------
-
-### 5. Today’s AI Is Built With Standardized “Lego” Blocks
-
-The modern process of designing a new state-of-the-art AI model has evolved significantly. Instead of inventing novel architectures from scratch, designers now select high-performing components from a shared, validated library—much like building with a set of standardized Lego blocks.
-
-This library includes proven solutions for every part of a model’s core block:
-
-- **Position Encodings:** RoPE (Rotary Position Embeddings)
-- **Normalizations:** RMSNorm
-- **MLP Variants:** SwiGLU (Swish-Gated Linear Unit)
-
-A model like Llama 3 is a perfect example of this philosophy. It is a stack of 80 identical blocks, where each block is a carefully chosen composition of these best-in-class, off-the-shelf components. This design can be elegantly captured in just a few lines of code:
-
-```
-class LlamaBlock:
-    attention = GroupedQueryAttention(
-        position_encoding=RoPE
-    )
-    norm1 = RMSNorm()
-    mlp = SwiGLU()
-    norm2 = RMSNorm()
-
-# Stack 80 identical blocks
-model = Stack([LlamaBlock() for _ in range(80)])
+```text
+x_{l+1} = x_l + F(x_l)
 ```
 
-This modularity allows the entire field to advance more rapidly. Researchers can innovate on a single component and instantly plug it into a wide range of existing models. This shifts the focus from bespoke architecture design to engineering better training methods and scaling up proven formulas with confidence.
+That expression is small enough to be underestimated. A plain deep stack treats each layer as a replacement step. The representation arriving at layer `l` is transformed into a new representation that must be good enough to hand off downstream. Residual learning makes a more modest and more trainable demand. The layer need only supply a correction relative to an input that remains available on a direct path. The model can preserve what is already useful and add what is newly necessary. That sounds like a local reformulation, but its consequence is global. Very deep models no longer need every block to be a successful stand-alone rewrite. They need each block to make a bounded improvement while preserving a route along which earlier useful structure can survive. Depth therefore stops behaving like a fragile serial chain of rewrites and starts behaving like accumulated refinement. This is the hinge of the whole history. Once repeated blocks can contribute deltas rather than total rewrites, uniformity stops being just a clean design aesthetic. It becomes an optimization strategy that can support scale (He et al., 2015).
 
---------------------------------------------------------------------------------
+The later identity-mappings paper is where that strategy becomes mechanistically sharp instead of rhetorically attractive. The authors do not merely say that skip connections help. They show that the help depends on how little the shortcut path is disturbed. Scaling, gating, or projecting the shortcut degrades optimization relative to a clean identity path, and the pre-activation redesign pushes the network closer to a regime in which forward signal and backward gradient can propagate directly across many blocks. This is why it is not enough to say that residual networks have an extra branch. The important feature is the discipline of the path. A deep residual stack is easier to train when the architecture preserves a route that is as close as possible to unchanged transmission, while relegating the learned transformation to a bounded residual contribution. That is a much stronger claim than "skip connections are useful." It says that the object of design has already started to move from local computation alone toward the geometry of information flow through the whole scaffold (He et al., 2016).
 
-### Conclusion: From Building Models to Writing Grammars
+Veit and colleagues make that point legible from another angle. Their famous "ensemble" framing is often quoted too loosely, as if ResNet had been explained away into a bag of shallow subnetworks. The better reading is pathwise rather than sloganistic. Once the residual network is unraveled into many routes of different lengths, the surprising fact is not just that many such paths exist. It is that the gradients doing useful training work concentrate disproportionately on relatively short paths, even inside a very deep model. A 110-layer network can receive most of its gradient through paths much shallower than its nominal depth. Full nominal depth still matters as capacity and representational room. What changes is how residual design makes that depth usable by embedding short effective routes inside a deep scaffold. Training no longer has to push every signal through one uninterrupted tower. The scaffold is deep, while the usable routes through it remain manageable (Veit et al., 2016).
 
-The journey from AlexNet to modern LLMs validates a powerful set of principles. We learned that architectures are scaffolds, not blueprints (1); that simple, deep repetition beats clever customization (2); that a single formula could unlock this depth by reframing computation as refinement (3); that specialization emerges from this uniformity rather than needing to be designed (4); and that this entire process has culminated in a modular, ‘Lego-like’ design philosophy that accelerates the entire field (5).
+Li and colleagues connect the same story back to optimization geometry. Their loss-landscape visualizations are not a complete theory of trainability, but they supply an important missing bridge between architectural form and optimization behavior. As networks deepen, the loss surface can become increasingly chaotic and hard to traverse. Skip connections do not abolish non-convexity, but they do delay the transition into that more chaotic regime and are associated with flatter, better behaved landscapes. That result matters historically because it shows that the residual turn was not only a conceptual reframing of what layers compute. It also changed the numerical environment in which depth could be optimized. Put the ResNet paper, the identity-mapping analysis, the path view, and the loss-landscape evidence together, and a clearer statement becomes possible: the field learned how to build a trainable scaffold for repeated depth. That is the moment when repeated blocks stop being merely simpler than bespoke ones and start being more governable (Li et al., 2018).
 
-The story of neural architecture design is a journey away from crafting specific models and toward designing compositional languages. The most impactful breakthroughs have consistently been those that provided simpler, more general, and more scalable building blocks. This evolution has validated the core theme: the goal is not to build a machine, but to create a rich scaffold that allows intelligence to emerge.
+## The Transformer as a Portable Block (2017-2020)
 
-We’re not building neural networks anymore. We’re building grammars of computation, and training is the process of writing programs in those grammars.
+The transformer inherits that residual lesson even as it abandons convolution and recurrence at the core of sequence modeling. Its real historical scale comes from more than attention alone. Vaswani and colleagues produce a block whose external shape is stable, repeatable, and highly parallelizable:
 
-*Read the next post on this series:*
-
-# Deep Dive
-
-A good way to read this long post, is to play the podacast audio, while following the text under it. It outlines a new “grammar” emerged in the last 13 years of deep learning research progress. The post outlines several of the seminal papers and their incremental contributions to the field of AI. So you get a historical flashback as a treat :)
-
-*How the deep learning field evolved from designing specific models to designing languages of reusable components*
-
----
-
-## Introduction: The Scaffold Hypothesis
-
-A profound shift is occurring in how we think about neural network architecture. Rather than viewing architecture design as “building the perfect model,” researchers increasingly recognize it as **creating computational scaffolds that training discovers how to exploit**.
-
-This is a departure from traditional software engineering. When you write a program, you specify exactly what happens: `if x > 5, then do y`. But when you design a neural architecture, you’re doing something different: you’re creating a *space of possible computations* and letting gradient descent search through that space.
-
-Consider the standard Transformer layer with its Query-Key-Value attention mechanism. The designers didn’t program the network to “use Q for asking what information is needed and K for signaling what information is available.” Instead, they created a mathematical structure where this pattern is *easy to learn*, and gradient descent discovered it. The architecture is the hypothesis; training is the proof.
-
-This blog post traces how this understanding emerged, from early hand-crafted networks to today’s modular, compositional design philosophy. We’ll see how “designing architectures” evolved into “designing languages of components,” and why this shift matters for the future of AI.
-
----
-
-## Era 1: The Hand-Crafted Hierarchy (2012-2015)
-
-### AlexNet (2012): The Custom Stack
-
-**Paper:** “ImageNet Classification with Deep Convolutional Neural Networks” (Krizhevsky, Sutskever, Hinton, 2012)
-
-**Citation:** <https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks>
-
-**The Architecture:**
-
-```
-Conv(11×11) → MaxPool → Conv(5×5) → MaxPool →
-Conv(3×3) → Conv(3×3) → Conv(3×3) → MaxPool →
-FC(4096) → FC(4096) → FC(1000)
+```text
+x = x + Attention(LayerNorm(x))
+x = x + MLP(LayerNorm(x))
 ```
 
-**The Mindset:** Each layer was individually designed. The choice of 11×11 convolutions first, then 5×5, then 3×3 wasn’t based on a general principle—it was a specific hypothesis about how visual processing should work. The architecture encoded the designers’ beliefs about hierarchical feature extraction: large receptive fields first (for global structure), then smaller ones (for details).
+Inside that block, self-attention gives every position access to content-dependent interactions across the sequence, but the larger architectural point is that those interactions now live inside a residual scaffold that can be stacked without redesigning the computation at each depth. The dominant sequence models before this point had to carry their long-range reasoning through recurrent time or through convolutional approximations to it. The transformer instead packages self-attention and feed-forward computation into a portable block with a clean interface to the next layer. That makes two things simultaneously true. The model is more parallel in hardware terms, and its basic unit is easier to repeat as a design object. It also shortens the architectural distance between domains. Once the core unit is "residual block plus content-dependent mixing plus pointwise expansion," the same diagram can plausibly be redeployed wherever tokens or token-like units can be defined. The transformer therefore does not merely replace one primitive with another. It carries residual path discipline into a block recipe that can travel beyond the problem on which it was born (Vaswani et al., 2017).
 
-**Key Contribution:** Proved that deep networks could work at scale. But the architecture itself was a monolithic, task-specific design.
+The BERT analyses matter because they show what can happen *inside* such a repeated scaffold once training has enough room to differentiate roles. Clark and colleagues find attention heads that specialize in recognizable behaviors such as positional offsets, delimiter handling, syntactic relations, and some coreference-linked patterns. Tenney and colleagues, working at the level of probing tasks across layers, find a broad ordering in which lower-level linguistic information becomes legible earlier and higher-level signals later, in a sequence reminiscent of the classical NLP pipeline. Used carelessly, those results invite a mythology in which transformers secretly contain a neat modular hierarchy waiting to be named. Used properly, they support a narrower conclusion that matters more. A stack built from uniform blocks need not remain functionally uniform after training. Differentiation can emerge inside a repeated scaffold without being hard-coded into separate architectural compartments. That matters because it changes where the designer has to spend architectural creativity. Instead of drafting one module for syntax and another for semantics, the designer can create a repeated environment in which such role separation is likely to emerge. Functional order survives, but it no longer has to be drawn directly into the diagram from the start (Clark et al., 2019; Tenney et al., 2019).
 
-**The Problem:** Every new domain required a new custom architecture. Transfer learning was limited because the architectural choices were entangled with the specific task.
+GPT-2 and ViT then push the argument along two different axes. GPT-2 shows that capability can keep rising when one scales a stable transformer family rather than redesigning its architecture for every increment. More significant than the banal fact that larger models often do better is that the repeated block itself has become a viable scaling unit. The model improves by more width, more depth, more data, and longer training, while the architectural core stays recognizably the same. By the time that lesson becomes visible, architectural novelty has ceased to be the default route to better results in language modeling. Stability becomes an asset because it makes scale cumulative rather than disruptive (Radford et al., 2019). ViT extends that result across domain, but only under a condition that the essay has to keep visible. Transformers did not prove convolutional inductive bias obsolete in one stroke. The paper says the opposite in effect: when data and pretraining scale are modest, transformers lag comparable CNNs because they lack those biases; when scale becomes large enough, the vanilla transformer applied to image patches can compete or win. That is exactly why ViT belongs here. It shows that the reusable block is portable, but its portability is regime-dependent rather than magical (Dosovitskiy et al., 2020).
 
----
+## Families, Recipes, and Controlled Non-Uniformity (2017-2024)
 
-### VGGNet (2014): The First Hint of Repetition
+Once the field has a reliable block, the natural design question rises above the individual model instance. Neural architecture search made that shift explicit by treating the search space itself as a designed object. In the original NAS work, what is specified is no longer only a single architecture but a controlled population of admissible operations and compositions over which a search procedure can operate. DARTS sharpens the move by relaxing discrete architectural choices into a differentiable surface. Neither paper should be exaggerated into the literal driver of frontier large-model practice. Their value is historical and conceptual. They make it obvious that the object of design can be the space of possible models rather than one fixed diagram. RegNet states that turn even more cleanly. Radosavovic and colleagues explicitly design a network design space whose good models are governed by simple regularities and quantized linear rules, and they treat the quality of a design space as something to analyze distributionally rather than instance by instance. That distributional move matters because it changes what architectural understanding looks like. The goal is no longer only to explain why one network won. It is to define a regime in which many nearby networks behave well for reasons that can be stated simply. At that point architecture is no longer just a blueprint. It is a family discipline: a population of architectures sharing one structural rule set (Zoph and Le, 2017; Liu et al., 2019; Radosavovic et al., 2020).
 
-**Paper:** “Very Deep Convolutional Networks for Large-Scale Image Recognition” (Simonyan & Zisserman, 2014)
+The scaling-law literature moves the target upward again by forcing the field to care about how a family behaves under enlargement and training, not merely whether one representative model looks elegant. Kaplan and colleagues show smooth power-law relationships between performance and scale factors such as parameters, data, and compute, with relatively weak dependence on many other shape choices within a broad transformer regime. That result does not make architecture irrelevant. It makes stable architectural families more valuable, because their scaling behavior becomes part of what is being designed. Once performance varies smoothly with scale, a family can be judged not only by what it does at one size but by whether it remains a good bet across many budgets. The winning architecture is increasingly the one that stays predictable while scale changes, not the one that dazzles at one carefully tuned operating point (Kaplan et al., 2020). The distinction from the previous paragraph matters here. RegNet is about what kind of model family should exist. Kaplan begins to show what kind of scaling behavior makes such a family attractive. Hoffmann and colleagues then push that second question into a genuine recipe claim by arguing that many large models were significantly undertrained. Compute-optimal scaling requires model size and training tokens to grow far more evenly than the field had recently assumed. Chinchilla matters because it turns training allocation into a design variable rather than a downstream implementation detail. A model family is not just a block stacked many times. It is a block plus a recipe for how parameter count, data, and compute should be spent together, and that recipe can materially change which family looks best in practice (Hoffmann et al., 2022).
 
-**Citation:** <https://arxiv.org/abs/1409.1556>
+This is also the context in which smaller operator-level changes become historically meaningful without being inflated into grand theories. Once the transformer scaffold stabilizes, improvements often arrive not by replacing the backbone but by refining the operators that live inside it. RMSNorm argues that full recentering is not always necessary for effective normalization, offering a cheaper and often competitive alternative inside deep architectures (Zhang and Sennrich, 2019). GLU variants show that gated feed-forward layers can improve transformer quality under matched budgets, making the feed-forward sub-block itself a live target of refinement rather than a solved detail (Shazeer, 2020). This is the inward side of the new design regime. When the external scaffold is stable, the pressure to innovate shifts toward sub-block choices whose effects can propagate across an entire family without changing its identity. These papers belong to the stabilized-scaffold regime. Progress now comes from disciplined edits inside a standard block recipe rather than from wholesale replacement of the backbone. Local operator choices matter, but they matter as refinements of a trusted external form.
 
-**The Insight:** What if we stopped varying everything and just used simple, repeated patterns?
+Mixture-of-experts models are where non-uniformity returns, and the history only makes sense if that return is described carefully. Shazeer and colleagues did not reintroduce old-style handcrafted heterogeneity. They made sparse conditional computation operational inside a larger learned system by letting a router activate only a small subset of experts per example while explicitly managing balance across them (Shazeer et al., 2017). The important point is that specialization reappears as a routing problem, not as a hand-authored module inventory. Switch Transformers make the recipe simpler and more adoptable by routing each token to just one expert, cutting some of the communication and training complexity that had limited broader uptake while preserving the core advantage of sparse specialization (Fedus et al., 2021). Mixtral then shows the same pattern in a contemporary open-weight setting: the model keeps an otherwise familiar transformer architecture and swaps the dense feed-forward block for routed experts selected per token (Jiang et al., 2024). That is why MoE belongs in this essay. It is not a repudiation of the scaffold story. It is the controlled return of heterogeneity *inside* a scaffold stable enough to host it without collapsing back into bespoke design.
 
-**The Architecture:**
+## Conclusion
 
-```
-[Conv(3×3) → Conv(3×3) → MaxPool] × multiple times
-```
+The line from AlexNet to contemporary large models is not best understood as a parade of ever more powerful architectures. It is better understood as a change in what architecture design is trying to control. Early systems still looked like hand-built stacks whose local stages embodied much of the designer's theory about the task. VGG made repetition respectable. ResNet and the identity-mapping work made repeated depth truly viable by turning path discipline into a first-class design concern. The transformer then packaged that discipline into a portable block that could scale within language and, under the right data regime, travel into vision. Once those blocks stabilized, the design target moved upward toward families and compute-aware recipes, while operator refinements and MoE models showed how local departures from uniformity could be introduced without abandoning the scaffold.
 
-**Key Contribution:** Introduced the idea of *architectural uniformity*. Instead of carefully varying kernel sizes (11×11, then 5×5, then 3×3), use the same simple 3×3 convolution throughout. Depth comes from repetition, not from custom hierarchies.
+The deeper change is that architecture ceased to be the place where one scripts competence layer by layer and became the place where one specifies which kinds of order training can reliably elaborate. That is why modern architectural progress can look oddly conservative on the surface. The diagram changes less because the real object under refinement is no longer the individual model but the regime that can survive repetition, scale, and controlled exception. Older criteria for architectural cleverness therefore lost prestige. A model no longer matters because it presents a novel internal diagram. It matters when its governing scaffold can absorb depth, transfer, and local specialization without becoming opaque or brittle. The architect's job is no longer to hand-author the machine in detail. It is to define a scaffold sturdy enough that training can specialize within it without tearing it apart.
 
-**Why It Mattered:** This was the first move toward *compositional design*. The basic block (two conv layers + pooling) became a reusable module. VGG-16 and VGG-19 differed only in how many times this block was repeated—the first example of “architecture as a parameterized family” rather than “a single design.”
+## References
 
-**The Limitation:** Still no theoretical justification for why repetition works, and training very deep VGG networks was difficult (gradient flow issues).
+### Krizhevsky et al. (2012)
 
----
+*ImageNet Classification with Deep Convolutional Neural Networks*  
+<https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks>
 
-## Era 2: The Modular Revolution (2015-2017)
+AlexNet is the baseline for the older design picture. The paper matters here because it shows a historically successful network whose architecture is still strongly shaped by local judgment about stage order, receptive fields, and dense heads.
 
-### ResNet (2015): The Block as the Fundamental Unit
+### Simonyan and Zisserman (2014)
 
-**Paper:** “Deep Residual Learning for Image Recognition” (He et al., 2015)
+*Very Deep Convolutional Networks for Large-Scale Image Recognition*  
+<https://arxiv.org/abs/1409.1556>
 
-**Citation:** <https://arxiv.org/abs/1512.03385>
+VGG is the first clean demonstration that repeated small convolutions can outperform more decorated local design. Its role in the essay is to make repetition historically credible before repetition becomes fully trainable at scale.
 
-**The Breakthrough:** This paper fundamentally changed how we think about architecture design.
+### Szegedy et al. (2014)
 
-**The Residual Block:**
+*Going Deeper with Convolutions*  
+<https://arxiv.org/abs/1409.4842>
 
-```
-x_out = x_in + F(x_in)
-```
+Inception keeps local heterogeneity alive as a serious alternative at exactly the moment VGG is making regularity look attractive. The paper prevents the history from being flattened into an inevitability story in which uniform repetition was the only available path.
 
-Where F is typically:
+### He et al. (2015)
 
-```
-Conv(1×1) → BatchNorm → ReLU →
-Conv(3×3) → BatchNorm → ReLU →
-Conv(1×1) → BatchNorm
-```
+*Deep Residual Learning for Image Recognition*  
+<https://arxiv.org/abs/1512.03385>
 
-**The Paradigm Shift:**
+This is the essay's central hinge. ResNet reframes depth as additive refinement and turns repeated blocks from a stylistic simplification into a scalable optimization strategy.
 
-Before ResNet, the question was: “What should each layer compute?”
+### He et al. (2016)
 
-After ResNet, the question became: “What *refinement* should each layer add?”
+*Identity Mappings in Deep Residual Networks*  
+<https://arxiv.org/abs/1603.05027>
 
-**Key Contributions:**
+The identity-mappings paper sharpens the residual argument by showing that clean shortcut paths matter materially. It licenses the stronger claim that path discipline, not just extra branching, is what changed the trainability of depth.
 
-1. **Residual connections enable training of 100+ layer networks** by providing gradient highways
-2. **Proved uniformity works:** ResNet-50, ResNet-101, ResNet-152 differ only in how many times the same block repeats
-3. **The block becomes the design unit:** Instead of designing networks layer-by-layer, design one good block and stack it
+### Veit et al. (2016)
 
-**The Compositional Insight:**
+*Residual Networks Behave Like Ensembles of Relatively Shallow Networks*  
+<https://arxiv.org/abs/1605.06431>
 
-ResNet showed that you could view a deep network as:
+This paper is used here for its path argument, not for the shallow "ResNets are ensembles" slogan. It helps explain why very deep residual networks remain trainable by embedding short effective routes inside a much deeper scaffold.
 
-```
-Output = Input + Block₁(Input) + Block₂(...) + ... + Blockₙ(...)
-```
+### Li et al. (2018)
 
-Each block makes a “suggestion” for how to modify the representation. The network doesn’t *replace* information at each layer—it *accumulates refinements*. This is fundamentally compositional: the final result is a sum of contributions from independent modules.
+*Visualizing the Loss Landscape of Neural Nets*  
+<https://arxiv.org/abs/1712.09913>
 
-**Evidence of Emergent Specialization:**
+Li et al. connect architecture to optimization geometry. Their results support the claim that skip connections help delay the onset of chaotic loss landscapes, making them an important bridge between structural design and practical trainability.
 
-Later analysis (Veit et al., 2016, “Residual Networks Behave Like Ensembles of Relatively Shallow Networks”) showed that ResNet blocks naturally specialize:
+### Vaswani et al. (2017)
 
-- Early blocks: low-level features (edges, textures)
-- Middle blocks: mid-level features (object parts)
-- Late blocks: high-level features (complete objects)
+*Attention Is All You Need*  
+<https://arxiv.org/abs/1706.03762>
 
-This happened without any explicit supervision or architectural variation—the blocks were all identical, but training caused them to specialize!
+The transformer matters here because it turns residual discipline into a repeatable, parallel block recipe. The essay relies on this paper as the point where reusable-block design becomes portable beyond convolutional vision history.
 
----
+### Clark et al. (2019)
 
-### Inception/GoogLeNet (2014-2016): Exploring Parallel Composition
+*What Does BERT Look At? An Analysis of BERT's Attention*  
+<https://arxiv.org/abs/1906.04341>
 
-**Paper:** “Going Deeper with Convolutions” (Szegedy et al., 2014)
+Clark et al. provide evidence that repeated transformer blocks can differentiate internally after training. The paper is useful precisely because its claim is local and restrained, not because it offers a full reverse engineering of BERT.
 
-**Citation:** <https://arxiv.org/abs/1409.4842>
+### Tenney et al. (2019)
 
-**The Alternative Composition:** While ResNet did sequential composition (stack blocks), Inception explored *parallel composition*.
+*BERT Rediscovers the Classical NLP Pipeline*  
+<https://arxiv.org/abs/1905.05950>
 
-**The Inception Module:**
+Tenney et al. support a carefully limited claim about ordered layerwise stratification inside pretrained transformers. The paper matters because it shows how a repeated scaffold can recover staged functionality without needing bespoke architectural compartments.
 
-```
-Input → ├─ Conv(1×1) ──────────┐
-        ├─ Conv(1×1) → Conv(3×3) ─┤
-        ├─ Conv(1×1) → Conv(5×5) ─┤
-        └─ MaxPool → Conv(1×1) ───┘
-                                   ↓
-                            [Concatenate]
-```
+### Radford et al. (2019)
 
-**The Idea:** Instead of choosing one operation (3×3 or 5×5 conv), do *all* of them and let the network learn to weight them appropriately during training.
+*Language Models are Unsupervised Multitask Learners*  
+<https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf>
 
-**Key Contribution:** Demonstrated that architectural choice could be *deferred to training time*. The architecture provides multiple computational paths, and gradient descent learns which to emphasize.
+GPT-2 is used here to show that a stable transformer block can serve as a scaling unit. The paper's argumentative job is not to prove all later scaling-law claims, but to show that capability can rise without architectural redesign.
 
-**The Limitation:** Inception modules were complex and had many hyperparameters. Unlike ResNet’s simple, uniform blocks, Inception was harder to reason about and modify.
+### Dosovitskiy et al. (2020)
 
-**Historical Note:** While influential, the field largely converged on ResNet’s simpler compositional pattern. This suggests a principle: *simpler, more uniform building blocks win over complex, hand-tuned modules*.
+*An Image is Worth 16x16 Words*  
+<https://arxiv.org/abs/2010.11929>
 
----
+ViT strengthens the portability claim while preserving an important limit. The paper shows that a vanilla transformer can travel into vision under sufficient data and pretraining scale, while also making clear that inductive bias still matters in smaller-data regimes.
 
-## Era 3: The Compositional Explosion (2017-2019)
+### Zoph and Le (2017)
 
-### Transformers (2017): A New Universal Block
+*Neural Architecture Search with Reinforcement Learning*  
+<https://arxiv.org/abs/1611.01578>
 
-**Paper:** “Attention Is All You Need” (Vaswani et al., 2017)
+NAS matters because it makes the search space itself into a designed object. In this essay it marks the early upward move from designing one model instance to designing a controlled space of admissible models.
 
-**Citation:** <https://arxiv.org/abs/1706.03762>
+### Liu et al. (2019)
 
-**The Revolutionary Building Block:**
+*DARTS: Differentiable Architecture Search*  
+<https://arxiv.org/abs/1806.09055>
 
-```
-TransformerLayer(x):
-  # Sub-block 1: Attention
-  x = x + MultiHeadAttention(LayerNorm(x))
+DARTS pushes architectural choice into the language of continuous optimization. Its value here is conceptual rather than literal frontier relevance: it makes architecture legible as something that can itself be optimized.
 
-  # Sub-block 2: Feed-Forward
-  x = x + MLP(LayerNorm(x))
+### Radosavovic et al. (2020)
 
-  return x
-```
+*Designing Network Design Spaces*  
+<https://arxiv.org/abs/2003.13678>
 
-**Why This Mattered:**
+RegNet is the clearest single paper in the local source set for the claim that the design target can be a family rather than one network. The essay depends on it to justify the shift from blueprint thinking to design-space discipline.
 
-1. **Modular sub-components:** The attention mechanism itself is compositional:
+### Kaplan et al. (2020)
 
-```
-Q = W_Q × x  (what to search for)
-K = W_K × x  (how to be found)
-V = W_V × x  (what information to provide)
-```
+*Scaling Laws for Neural Language Models*  
+<https://arxiv.org/abs/2001.08361>
 
-1. Each component (Q, K, V) is a learned projection, and their interaction is a fixed mathematical operation (scaled dot-product attention).
-2. **Universal applicability:** Unlike CNNs (spatial bias) or RNNs (sequential bias), the Transformer block worked for:
+Kaplan et al. matter because they make scaling behavior part of the architectural conversation. The paper is used here to show that stable families increasingly win not only because they work, but because their behavior under enlargement becomes predictable.
 
-   - Language (BERT, GPT)
-   - Vision (ViT)
-   - Audio (Whisper)
-   - Multi-modal tasks (CLIP, Flamingo)
-3. **Extreme uniformity:** GPT-2 (1.5B parameters) used the *exact same block* 48 times. GPT-3 (175B) used it 96 times. The only scaling dimension was repetition count and hidden size.
+### Hoffmann et al. (2022)
 
-**The Compositional Language Emerges:**
+*Training Compute-Optimal Large Language Models*  
+<https://arxiv.org/abs/2203.15556>
 
-The Transformer defined a **vocabulary of components**:
+Chinchilla corrects the first-generation scaling recipe by showing that many large models were undertrained. Its role in the essay is to make compute-aware training allocation part of the design target itself.
 
-- **Mixing operations:** Attention, MLP
-- **Connections:** Residual (+)
-- **Normalizations:** LayerNorm
-- **Position information:** Sinusoidal embeddings
+### Zhang and Sennrich (2019)
 
-These could be mixed and matched. Within a few years, researchers were systematically exploring this design space.
+*Root Mean Square Layer Normalization*  
+<https://arxiv.org/abs/1910.07467>
 
----
+RMSNorm supports a narrow but important point about local operator refinement inside a stable block. It helps show how architectural progress continues after scaffold stabilization without requiring wholesale redesign.
 
-### BERT (2018): Emergent Specialization at Scale
+### Shazeer (2020)
 
-**Paper:** “BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding” (Devlin et al., 2018)
+*GLU Variants Improve Transformer*  
+<https://arxiv.org/abs/2002.05202>
 
-**Citation:** <https://arxiv.org/abs/1810.04805>
+This paper gives the feed-forward refinement story a concrete footing. It shows how gated MLP variants improve transformer blocks under controlled comparisons, which is exactly the kind of inward refinement the essay needs.
 
-**The Architecture:** Literally just 12-24 stacked Transformer blocks (identical to the original paper).
+### Shazeer et al. (2017)
 
-**The Surprise:** Analysis of what BERT learned (Clark et al., 2019, “What Does BERT Look At?”) revealed that despite identical architecture across all layers, the network developed a clear hierarchy:
+*Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer*  
+<https://arxiv.org/abs/1701.06538>
 
-**Layer 1-4 (Early):**
+Shazeer et al. are the historical anchor for the return of specialization. The paper matters because it makes sparse conditional computation operational without returning to dense handcrafted heterogeneity.
 
-- Attention heads focus on syntactic relationships (e.g., determiners attending to their nouns)
-- Learn part-of-speech patterns
-- Capture local, surface-level features
+### Fedus et al. (2021)
 
-**Layer 5-8 (Middle):**
+*Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity*  
+<https://arxiv.org/abs/2101.03961>
 
-- Semantic role labeling emerges
-- Entity recognition patterns
-- More abstract semantic relationships
+Switch Transformers belong here because they simplify MoE routing enough to make sparse specialization more adoptable at large scale. Their role is to show controlled non-uniformity becoming a workable recipe inside a stable transformer scaffold.
 
-**Layer 9-12 (Late):**
+### Jiang et al. (2024)
 
-- Coreference resolution (pronouns to antecedents)
-- Pragmatic inference
-- Task-specific behaviors
+*Mixtral of Experts*  
+<https://arxiv.org/abs/2401.04088>
 
-**The Profound Implication:**
-
-The architecture didn’t specify this hierarchy—training discovered it! The uniform stack of transformer blocks provided a *scaffold*, and the optimization process found that specialization by depth was an effective strategy.
-
-This validated the “scaffold hypothesis”: good architectural design isn’t about encoding specific behaviors, but about creating a space where useful behaviors are easy to learn.
-
-**Paper:** “What Does BERT Look At? An Analysis of BERT’s Attention” (Clark et al., 2019)
-
-**Citation:** <https://arxiv.org/abs/1906.04341>
-
----
-
-### GPT-2 (2019): Scaling the Block
-
-**Paper:** “Language Models are Unsupervised Multitask Learners” (Radford et al., 2019)
-
-**Citation:** <https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf>
-
-**The Experiment:** What happens if you take the Transformer block and just… scale it?
-
-**The Results:**
-
-```
-GPT-2 Small:   12 layers  × identical blocks = 117M params
-GPT-2 Medium:  24 layers  × identical blocks = 345M params
-GPT-2 Large:   36 layers  × identical blocks = 762M params
-GPT-2 XL:      48 layers  × identical blocks = 1.5B params
-```
-
-**Key Finding:** Smooth scaling laws. Performance improved predictably with depth and width, following power laws (later formalized by Kaplan et al., 2020).
-
-**The Implication:** The Transformer block had become a **universal scaling unit**. The field moved from “designing architectures” to “scaling a fixed architecture.”
-
----
-
-## Era 4: The Search Era (2017-2021)
-
-### Neural Architecture Search (2017-2019): Automating Component Discovery
-
-**Foundational Paper:** “Neural Architecture Search with Reinforcement Learning” (Zoph & Le, 2017)
-
-**Citation:** <https://arxiv.org/abs/1611.01578>
-
-**The Motivation:** If architectures are compositions of building blocks, can we automate the search over combinations?
-
-**The NAS Approach:**
-
-1. **Define a search space:**
-
-```
-Operations = {conv3x3, conv5x5, maxpool, avgpool, skip, ...}
-Connections = {sequential, parallel, skip-connection, ...}
-```
-
-1. **Use RL/evolution/gradient methods to search for combinations**
-2. **Evaluate thousands of candidate architectures**
-
-**Key Contribution:** Made explicit that architecture design is about choosing from a **compositional language**. The search space IS the language—a grammar of components and composition rules.
-
-**Example Search Space (from paper):**
-
-```
-Cell = Composition of:
-  - 5-7 operations (chosen from operation set)
-  - Connection patterns between operations
-  - Reduction cells vs. normal cells
-```
-
-The final architecture is a repetition of discovered cells—again, the pattern of uniform blocks!
-
----
-
-### DARTS (2019): Differentiable Architecture Search
-
-**Paper:** “DARTS: Differentiable Architecture Search” (Liu et al., 2019)
-
-**Citation:** <https://arxiv.org/abs/1806.09055>
-
-**The Innovation:** Instead of discrete search, treat architecture as a *continuous mixture* of operations.
-
-**The Formulation:**
-
-```
-Output = Σᵢ (αᵢ · Operation_i(input))
-
-where α are learned weights (architecture parameters)
-```
-
-**The Insight:** Architecture search becomes *gradient descent on architecture parameters* alongside weight parameters. The network literally learns which components to use!
-
-**Why This Matters:** Blurs the line between architecture design and training. The “language of components” becomes a differentiable space that can be optimized directly.
-
-**The Discovered Pattern:** DARTS consistently discovered skip connections and 3×3 separable convolutions—the same patterns humans had manually designed (ResNet, Xception). This validated that certain compositional patterns are fundamentally effective.
-
----
-
-### Designing Network Design Spaces (2020): Principles Over Architectures
-
-**Paper:** “Designing Network Design Spaces” (Radosavovic et al., 2020)
-
-**Citation:** <https://arxiv.org/abs/2003.13678>
-
-**The Paradigm Shift:**
-
-Instead of searching for *one best architecture*, this paper asked: **What principles make a** ***family*** **of architectures work?**
-
-**The Methodology:**
-
-1. Define design dimensions:
-
-   - Depth (number of blocks)
-   - Width (channels per layer)
-   - Group width (grouped convolutions)
-   - Bottleneck ratio (expansion in blocks)
-2. Sample thousands of random architectures from this space
-3. Identify empirical principles:
-
-```
-Good design space:
-- Width increases gradually across stages (not drastically)
-- Depth is similar across stages
-- Bottleneck ratio around 1.0 performs best
-- Group width of 8-16 is optimal
-```
-
-1. Create RegNet family following these principles
-
-**The Revolutionary Idea:**
-
-> “Rather than focusing on designing individual network instances, we design network design spaces that parametrize populations of networks.”
-
-This is exactly the “compositional language” perspective! They defined:
-
-- **Primitives:** Block structure (X block with group convolution)
-- **Composition rules:** How blocks stack (stage structure)
-- **Constraints:** Principles that make compositions effective
-
-**The Result:** RegNet architectures, generated by simple rules, matched or beat hand-designed networks and NAS-discovered architectures.
-
-**The Implication:** Good architecture design is about **defining the right constraints on the compositional space**, not finding one perfect instantiation.
-
----
-
-## Era 5: The Understanding Era (2019-2023)
-
-### Scaling Laws (2020): Why Depth Matters
-
-**Paper:** “Scaling Laws for Neural Language Models” (Kaplan et al., 2020)
-
-**Citation:** <https://arxiv.org/abs/2001.08361>
-
-**The Empirical Discovery:**
-
-Model performance follows predictable power laws:
-
-```
-Loss ∝ (1/N^α) × (1/D^β) × (1/C^γ)
-
-where:
-N = number of parameters
-D = dataset size
-C = compute budget
-```
-
-**The Architectural Implication:**
-
-For fixed compute budget, optimal allocation is:
-
-- Depth: ~40-80 layers for 7B-70B models
-- Width: 4K-8K hidden dimensions
-
-**Why This Matters:** Explains why ~32 layers emerged as the “standard” for 7B models—not because 32 is magic, but because it’s the optimal depth for that parameter budget given current optimization methods.
-
-**The Deeper Insight:**
-
-The paper showed that architecture scaling (depth, width) should be done *proportionally*. You can’t just make one dimension huge—there’s an optimal balance. This suggests that the “compositional structure” (how blocks combine) has mathematical constraints.
-
----
-
-### Lottery Ticket Hypothesis (2019): Architectures as Search Spaces
-
-**Paper:** “The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks” (Frankle & Carbin, 2019)
-
-**Citation:** <https://arxiv.org/abs/1803.03635>
-
-**The Finding:**
-
-> “Dense, randomly-initialized networks contain sparse subnetworks that—when trained in isolation—reach test accuracy comparable to the original network”
-
-**The Interpretation:** A large architecture isn’t just a single computational graph—it’s a *space of possible subnetworks*. Training searches through this space.
-
-**Why Repetition Works:**
-
-Having 32 identical transformer layers provides many possible “paths” through the network. Some paths might be more important than others, but having redundancy:
-
-1. Makes optimization easier (more chances to find good solutions)
-2. Provides fallback routes if some paths fail
-3. Allows different paths to specialize
-
-**The Compositional View:** The architecture is less like a designed circuit and more like a **fabric of possibilities** that training selectively activates.
-
----
-
-### Visualizing Loss Landscapes (2018): Why Blocks Enable Training
-
-**Paper:** “Visualizing the Loss Landscape of Neural Nets” (Li et al., 2018)
-
-**Citation:** <https://arxiv.org/abs/1712.09913>
-
-**The Discovery:** Networks with residual connections have dramatically smoother loss landscapes than networks without them.
-
-**Visual Result:**
-
-```
-Without residuals: Chaotic, many local minima, sharp peaks
-With residuals:    Smooth convex-like regions, gentle slopes
-```
-
-**The Implication:** The residual block structure doesn’t just make gradients flow—it fundamentally changes the *optimization geometry*. The compositional structure (x + F(x)) creates a more trainable space than a monolithic design.
-
-**Why This Validates Compositionality:** Good architectural building blocks aren’t just about expressiveness—they’re about creating loss landscapes that optimization algorithms can navigate.
-
----
-
-### Mechanistic Interpretability: Circuits Emerge from Blocks
-
-**Paper/Project:** “A Mathematical Framework for Transformer Circuits” (Elhage et al., 2021)
-
-**Citation:** <https://transformer-circuits.pub/2021/framework/index.html>
-
-**The Discovery:** Within transformer blocks, specific **circuits** emerge—reusable patterns of computation that implement recognizable algorithms.
-
-**Examples Found:**
-
-- **Induction heads:** Blocks that detect “A…B…A” patterns and predict “B”
-- **Previous token heads:** Heads that always attend to the previous token
-- **Duplicate token heads:** Heads that find copies of the current token
-
-**The Profound Insight:**
-
-These circuits are **compositions of the primitive operations** (Q, K, V projections, attention, MLPs). They’re not explicitly programmed—they emerge during training because the block structure makes them easy to implement.
-
-**The Analogy:**
-
-```
-Assembly language provides: MOV, ADD, JMP
-Programmers discover:      Loops, function calls, recursion
-
-Transformer blocks provide: Q, K, V, MLP
-Training discovers:         Induction heads, copying, matching
-```
-
-The architecture defines a **computational primitive set**, and training discovers **algorithms** built from those primitives.
-
----
-
-## Era 6: The Hybrid Era (2023-Present)
-
-### Moving Beyond Pure Uniformity
-
-By 2023, researchers had thoroughly validated uniform repetition. But they also began asking: **When should we break uniformity?**
-
----
-
-### Mixture of Experts (2022-2024): Conditional Composition
-
-**Paper:** “Mixture-of-Experts Meets Instruction Tuning” (Shen et al., 2023) and “Mixtral of Experts” (Jiang et al., 2024)
-
-**Citations:**
-
-- <https://arxiv.org/abs/2305.14705>
-- <https://arxiv.org/abs/2401.04088>
-
-**The Idea:** Replace uniform MLP blocks with *conditional selection* from multiple expert MLPs.
-
-**The Architecture:**
-
-```
-Standard Transformer:
-  All tokens → Same MLP → Output
-
-MoE Transformer:
-  Each token → Router → Select 2 of 8 expert MLPs → Output
-```
-
-**Why It Works:**
-
-Different experts naturally specialize:
-
-- Expert 1: Math/code
-- Expert 2: Creative writing
-- Expert 3: Factual knowledge
-- Expert 4: Translation
-- etc.
-
-**The Compositional Insight:** This is **learned non-uniformity**. The architecture still uses identical blocks, but adds a routing mechanism that lets tokens take different computational paths. The specialization isn’t hand-coded—it emerges during training.
-
-**Mixtral-8×7B Results:**
-
-- 8 experts, each 7B parameters
-- Total: 47B parameters, but only 13B active per token
-- Matches 70B dense models at 5× lower inference cost
-
-**The Pattern:** When breaking uniformity helps, let the *model* learn when to break it (via routers), rather than hard-coding architectural variation.
-
----
-
-### Mamba (2023): Alternative Primitives
-
-**Paper:** “Mamba: Linear-Time Sequence Modeling with Selective State Spaces” (Gu & Dao, 2023)
-
-**Citation:** <https://arxiv.org/abs/2312.00752>
-
-**The Question:** Does *attention* have to be the core primitive, or can we use different building blocks?
-
-**The Mamba Block:**
-
-```
-Instead of: Attention + MLP
-Use:        Selective State Space Layer + MLP
-```
-
-State space models (SSMs) are an alternative to attention for sequence mixing:
-
-- **Attention:** O(n²) complexity, global context
-- **SSM:** O(n) complexity, selective memory
-
-**Why This Matters:** Shows that the Transformer block structure (mixing layer + pointwise layer + residuals) is more fundamental than any specific mixing mechanism. You can swap attention for SSMs and keep everything else.
-
-**The Compositional Lesson:** A good architectural “language” should have **swappable components**. The residual + norm + mixing + MLP structure is the syntax; attention vs SSM is vocabulary choice.
-
----
-
-### Hybrid Architectures: Compositional Mixing
-
-**Recent Trend (2023-2024):** Combine different primitive types in one model.
-
-**Example: Jamba (AI21 Labs, 2024)**
-
-```
-Layers 1-8:   Mamba blocks (efficient, local context)
-Layers 9-16:  Attention blocks (global reasoning)
-Layers 17-24: Mamba blocks (local refinement)
-Layers 25-32: Attention blocks (output generation)
-```
-
-**Why It Works:**
-
-- Mamba handles repetitive patterns efficiently
-- Attention handles long-range dependencies
-- Different layers need different capabilities
-
-**The Design Philosophy:** Don’t force uniformity where non-uniformity helps, but make the non-uniformity **principled** (alternating pattern) rather than ad-hoc.
-
----
-
-## Era 7: Modern Compositional Thinking (2024-Present)
-
-### Current State: Component Libraries
-
-Today, architecture design has evolved into **selecting from a library of validated components**:
-
-**Attention Variants:**
-
-- Multi-head attention (original)
-- Multi-query attention (faster inference)
-- Grouped-query attention (balance speed/quality)
-- Flash Attention (optimized implementation)
-
-**Position Encodings:**
-
-- Sinusoidal (original)
-- Learned absolute
-- Rotary (RoPE) - current best for long context
-- ALiBi - best for length generalization
-
-**Normalizations:**
-
-- LayerNorm (original)
-- RMSNorm (simpler, just as good)
-- Pre-norm vs post-norm (pre-norm won)
-
-**Activations:**
-
-- ReLU (original)
-- GELU (better for transformers)
-- SiLU/Swish (used in modern LLMs)
-
-**MLP Variants:**
-
-- Standard (Linear → Act → Linear)
-- GLU (Gated Linear Unit)
-- SwiGLU (current best) - Llama, Qwen, Mistral all use this
-
-**The Design Process Today:**
-
-1. Start with base Transformer block structure (proven)
-2. Select components from validated options:
-
-```
-Attention: GQA
-Position: RoPE
-Norm: RMSNorm
-MLP: SwiGLU
-```
-
-1. Determine scaling (depth, width) using scaling laws
-2. Add specialized components if needed (MoE, hybrid layers)
-
-**Example: Llama 3 (2024)**
-
-```
-class LlamaBlock:
-    attention = GroupedQueryAttention(
-        position_encoding=RoPE
-    )
-    norm1 = RMSNorm()
-    mlp = SwiGLU()
-    norm2 = RMSNorm()
-# Stack 80 identical blocksmodel = Stack([LlamaBlock() for _ in range(80)])
-```
-
-Every component is a *choice from the library*, not a custom design.
-
----
-
-### DR Tulu (2025): RL with Evolving Rubrics
-
-**Paper:** “DR Tulu: Reinforcement Learning with Evolving Rubrics for Deep Research” (Shao, Asai, et al., 2025)
-
-**Citation:** <https://arxiv.org/abs/2511.19399>
-
-**Relevance to Compositional Design:**
-
-DR Tulu demonstrates a new dimension of the “scaffold hypothesis”: not just architectural scaffolds, but **training scaffolds** that evolve with the model.
-
-**The Method:**
-
-- Base architecture: Standard Qwen3-8B (proven Transformer blocks)
-- Innovation: Not in architecture, but in training methodology
-- Evolving rubrics provide dynamic learning objectives
-
-**The Insight:** Once we have good architectural building blocks (Transformer layers), the frontier shifts to **how we train** those blocks. The compositional language extends beyond static structure to dynamic training procedures.
-
-**Why This Fits the Narrative:**
-
-1. **Uses standard components:** Proves you don’t need novel architecture
-2. **Focuses on training:** The next dimension of compositionality
-3. **Achieves SOTA:** 8B model matches 175B+ proprietary systems
-
-The field is moving from “what blocks should we use?” to “how should we train the blocks we have?”
-
----
-
-## The Emerging Principles
-
-From this 13-year journey, several principles have crystallized:
-
-### Principle 1: Uniformity Enables Scale
-
-**Evidence:**
-
-- ResNet: 50-152 layers of identical blocks
-- GPT-3: 96 identical transformer layers
-- Llama 70B: 80 identical blocks
-
-**Why:** Uniform blocks are easier to:
-
-- Optimize (one set of hyperparameters)
-- Scale (just add more)
-- Analyze (compare across depths)
-- Parallelize (same computation)
-
-**Exception:** When introducing non-uniformity, make it *learned* (MoE routing) or *principled* (alternating patterns).
-
----
-
-### Principle 2: Residual Structure is Fundamental
-
-**Evidence:**
-
-- Every modern architecture uses residuals (ResNet, Transformer, Mamba)
-- Loss landscape analysis shows they enable training
-- Theory: Residuals create implicit ensembles
-
-**Why:** `x + F(x)` is more than a training trick—it’s a **compositional operator** that allows additive construction of representations.
-
----
-
-### Principle 3: Specialization Emerges, Don’t Force It
-
-**Evidence:**
-
-- BERT layers specialize despite identical architecture
-- MoE experts specialize without explicit supervision
-- Early/mid/late layers learn different abstractions naturally
-
-**Why:** The optimization landscape naturally encourages specialization when it’s useful. Pre-specifying it (e.g., “layer 1-10 for syntax, 11-20 for semantics”) often hurts because you might be wrong about what’s needed.
-
-**Design Implication:** Provide uniform capacity and let training discover the specialization pattern.
-
----
-
-### Principle 4: Components Should Be Swappable
-
-**Evidence:**
-
-- Can swap attention → SSM (Mamba)
-- Can swap GELU → SiLU (minimal impact)
-- Can swap LayerNorm → RMSNorm (often better)
-
-**Why:** Good “compositional languages” have **interfaces** that allow substitution. The Transformer block structure:
-
-```
-x = x + Mixing(Norm(x))
-x = x + Pointwise(Norm(x))
-```
-
-doesn’t care whether Mixing is attention, convolution, or SSM—the interface is the same.
-
----
-
-### Principle 5: Depth Is Iterative Refinement
-
-**Evidence:**
-
-- Lottery ticket hypothesis: Many paths through the network
-- Scaling laws: Depth and width must scale proportionally
-- Interpretability: Later layers refine earlier representations
-
-**Why:** Deep networks don’t work by hierarchical stages (layer 1 → 2 → 3 → …) but by **iterative refinement** where each layer adds a small update. The residual structure makes this explicit.
-
-**Math:**
-
-```
-x_out = x_0 + Δx_1 + Δx_2 + ... + Δx_n
-
-Each layer contributes a refinement Δx_i
-```
-
----
-
-### Principle 6: Optimization Geometry Determines Viability
-
-**Evidence:**
-
-- Loss landscape visualizations (Li et al., 2018)
-- Why some architectures train better than others
-- Batch normalization, layer normalization effects
-
-**Why:** An architecture isn’t good because it’s “more expressive”—it’s good because gradient descent can find good solutions. The compositional structure creates a trainable loss surface.
-
----
-
-## The Future: From Blocks to Ecosystems
-
-Where is this heading?
-
-### Trend 1: Learned Architecture Components
-
-**Current:** Hand-design the component library
-
-**Future:** Meta-learning to discover new primitives
-
-**Example Research:**
-
-- AutoML-Zero (Google): Evolve mathematical operations from scratch
-- Neural Tangent Kernel theory: Understand what functions different architectures can learn
-- Mechanistic design: Design blocks to implement specific circuits
-
----
-
-### Trend 2: Dynamic Architectures
-
-**Current:** Fixed depth/width at train time
-
-**Future:** Adapt architecture during inference
-
-**Examples:**
-
-- Early exit (stop when confident)
-- Adaptive depth (harder inputs get more layers)
-- Conditional computation (activate only needed blocks)
-
-**The Vision:** Architecture becomes a **menu of computational options**, and the model learns a policy for which options to use per input.
-
----
-
-### Trend 3: Compositional Training Methods
-
-DR Tulu represents this: keeping architecture simple while making training more sophisticated.
-
-**Other Examples:**
-
-- Curriculum learning (order training data compositionally)
-- Multi-task learning (compose objectives)
-- Evolving loss functions (like evolving rubrics)
-
-**The Shift:** From “design better blocks” to “design better training procedures that teach existing blocks new tricks.”
-
----
-
-### Trend 4: Cross-Modal Composability
-
-**Current:** Different architectures for vision (CNNs/ViT), language (Transformers), audio (Conformers)
-
-**Future:** Universal blocks that work across modalities
-
-**Progress:**
-
-- Vision Transformers (apply language blocks to vision)
-- Perceiver architecture (unified for all inputs)
-- Flamingo (mix image and text blocks)
-
-**The Goal:** A single compositional language that works for any data type, with modality-specific adaptations happening via learned components (like MoE), not architectural redesign.
-
----
-
-### Trend 5: Efficiency Through Compositionality
-
-**The Realization:** The same compositional structure that makes architectures trainable also makes them compressible.
-
-**Examples:**
-
-- LoRA: Only a subset of weights need adaptation
-- Quantization: Different blocks can use different precisions
-- Pruning: Remove entire blocks with minimal impact
-- Distillation: Compress 100-layer → 12-layer models
-
-**Why Compositionality Helps:** If blocks are modular and somewhat redundant, you can remove/compress/approximate individual blocks without breaking the whole system.
-
----
-
-## Conclusion: The Scaffold Hypothesis Validated
-
-We’ve traced a 13-year journey from AlexNet’s hand-crafted hierarchy to today’s compositional design philosophy. The field discovered that:
-
-1. **Uniformity scales better than specificity**
-
-   ResNet’s repeated blocks beat carefully designed hierarchies
-2. **Emergent specialization beats forced specialization**
-
-   BERT’s layers learned syntax→semantics→pragmatics without being told to
-3. **Simple primitives enable complex behaviors**
-
-   Q, K, V attention supports everything from grammar to reasoning
-4. **Composition rules matter as much as components**
-
-   Residual connections fundamentally changed what’s learnable
-5. **Architecture is a hypothesis space for training to explore**
-
-   Lottery tickets, loss landscapes, and scaling laws all point to this
-
-**The Modern Paradigm:**
-
-Architecture design is no longer “build the perfect network.” It’s “design a compositional language of:
-
-- **Primitives** (attention, MLPs, convolutions, SSMs)
-- **Composition operators** (residuals, concatenation, gating)
-- **Structural patterns** (repeated blocks, skip connections)
-
-that create a space where gradient descent can discover useful algorithms.”
-
-**Why This Matters:**
-
-This shift has practical consequences:
-
-- **Faster iteration:** Test new components without redesigning everything
-- **Better transfer:** Components learned in one context work in another
-- **Clearer debugging:** Understand what each block does
-- **Principled scaling:** Apply scaling laws confidently
-- **Open science:** Share component libraries, not monolithic models
-
-**The Open Questions:**
-
-1. **What are the fundamental primitives?** We have attention, convolution, SSMs—what else?
-2. **What composition operators haven’t we discovered?** Residuals were a breakthrough—what’s the next one?
-3. **How do we design for interpretability?** Can we build blocks that are compositionally interpretable (circuits)?
-4. **What’s the optimal balance between uniformity and specialization?** MoE shows some heterogeneity helps—what’s the right amount?
-5. **Can we automate principled design?** Not NAS (search), but discovering the principles (like RegNet did)?
-
-**The Through-Line:**
-
-From AlexNet to DR Tulu, the most successful architectures weren’t the most clever—they were the most **compositional**. They gave training a rich space to explore, with clear building blocks and combination rules.
-
-As we move into the era of ever-larger models trained on ever-more compute, this compositional perspective becomes even more critical. We can’t manually design networks at trillion-parameter scale. We need to design **languages** that scale.
-
-The scaffold hypothesis—that architecture creates a space for training to discover algorithms—has been thoroughly validated. The future isn’t designing better specific models; it’s designing better languages for describing computational structures, and better training methods for teaching those structures to do useful work.
-
-**We’re not building neural networks anymore. We’re building grammars of computation, and training is the process of writing programs in those grammars.**
-
----
-
-## References & Further Reading
-
-### Foundational Papers (Chronological)
-
-1. **Krizhevsky et al. (2012)** - AlexNet: ImageNet Classification with Deep CNNs
-
-   <https://papers.nips.cc/paper/4824>
-2. **Simonyan & Zisserman (2014)** - VGGNet: Very Deep Convolutional Networks
-
-   <https://arxiv.org/abs/1409.1556>
-3. **He et al. (2015)** - ResNet: Deep Residual Learning for Image Recognition
-
-   <https://arxiv.org/abs/1512.03385>
-4. **Vaswani et al. (2017)** - Attention Is All You Need
-
-   <https://arxiv.org/abs/1706.03762>
-5. **Devlin et al. (2018)** - BERT: Pre-training of Deep Bidirectional Transformers
-
-   <https://arxiv.org/abs/1810.04805>
-
-### Understanding Architectures
-
-1. **Veit et al. (2016)** - Residual Networks Behave Like Ensembles
-
-   <https://arxiv.org/abs/1605.06431>
-2. **Li et al. (2018)** - Visualizing the Loss Landscape of Neural Nets
-
-   <https://arxiv.org/abs/1712.09913>
-3. **Clark et al. (2019)** - What Does BERT Look At?
-
-   <https://arxiv.org/abs/1906.04341>
-4. **Frankle & Carbin (2019)** - The Lottery Ticket Hypothesis
-
-   <https://arxiv.org/abs/1803.03635>
-5. **Kaplan et al. (2020)** - Scaling Laws for Neural Language Models
-
-   <https://arxiv.org/abs/2001.08361>
-
-### Architecture Search & Design
-
-1. **Zoph & Le (2017)** - Neural Architecture Search with Reinforcement Learning
-
-   <https://arxiv.org/abs/1611.01578>
-2. **Liu et al. (2019)** - DARTS: Differentiable Architecture Search
-
-   <https://arxiv.org/abs/1806.09055>
-3. **Radosavovic et al. (2020)** - Designing Network Design Spaces
-
-   <https://arxiv.org/abs/2003.13678>
-
-### Modern Architectures & Surveys
-
-1. **Lin et al. (2022)** - A Survey of Transformers
-
-   <https://arxiv.org/abs/2106.04554>
-2. **Gu & Dao (2023)** - Mamba: Linear-Time Sequence Modeling with SSMs
-
-   <https://arxiv.org/abs/2312.00752>
-3. **Jiang et al. (2024)** - Mixtral of Experts
-
-   <https://arxiv.org/abs/2401.04088>
-4. **Shao, Asai et al. (2025)** - DR Tulu: RL with Evolving Rubrics for Deep Research
-
-   <https://arxiv.org/abs/2511.19399>
-
-### Books
-
-1. **Goodfellow, Bengio, Courville (2016)** - Deep Learning
-
-https://www.deeplearningbook.org/
-
-1. **Prince (2023)** - Understanding Deep Learning
-
-   <https://udlbook.github.io/udlbook/>
-
-### Online Resources
-
-1. **Transformer Circuits (Anthropic)** - Mechanistic Interpretability
-
-https://transformer-circuits.pub/
-
-1. **Distill.pub** - Visual Explanations of ML Concepts
-
-https://distill.pub/
-
----
-
-*This blog post synthesizes insights from 13 years of research into neural architecture design. The field continues to evolve rapidly—the best way to stay current is to follow major ML conferences (NeurIPS, ICML, ICLR) and research blogs from leading labs.*
+Mixtral serves as a late exemplar rather than an origin story. It shows that routed expert structure remains active in current practice while preserving the familiar transformer scaffold around it.

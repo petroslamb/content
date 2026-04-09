@@ -66,16 +66,21 @@ Use the blueprint only after the main cold read if blueprint alignment needs com
 - If the user asks for version comparison, keep the rubric stable across versions so the comparison stays apples-to-apples.
 - When the package is clearly aiming at public publication, include importance, distinctiveness, or virality as separate axes instead of collapsing everything into one prose-quality score.
 - When a bounded candidate is being considered for promotion into the live path, run a cold replacement review before promotion if the package does not already have a stronger established editorial gate.
+- After a brutal review or cold replacement review that does not clear promotion, the next step is a high-bar blueprint hardening gate. Either produce a blueprint strong enough to govern a rewrite aimed at the outstanding-essay bar, or conclude explicitly that the current frame cannot reach that bar from the available evidence.
 - When a draft is already close, prefer surgical fixes that clear the remaining blockers over a broad rewrite that destabilizes the whole piece.
 - The stable-live-draft-plus-archive model is the default. The main exception is when a package explicitly manages parallel bundle baselines, in which case versioned siblings can temporarily stay live until one becomes canonical.
 - For refinement passes on an existing essay, harden the blueprint before a major rewrite when the blueprint is derived from the draft and still contains fuzzy claims, unresolved citation drift, or under-specified revision goals.
 - When a major rewrite is needed, prefer a clearly named bounded candidate such as `-v2.md` or `-revision-2.md` before promoting it into the stable live path. Do not overwrite the live draft first and decide later what changed.
 - If the blueprint already exists, use it as the preparation surface instead of creating a separate memo by default. Add a new memo only when the blueprint cannot absorb the needed evidence validation cleanly.
 - For evidence-sensitive rewrites, do not draft against alphaXiv-only context if the missing papers are already known. Intake first, then harden the blueprint, then draft the article.
+- When a hardened blueprint is aiming at the outstanding bar, an external AI review of the blueprint can be useful before the essay prewrite gate, but that review is advisory. The writer remains responsible for adjudicating which findings matter, which are misreads, and which proposed fixes would actually improve the governing surface.
+- Before writing a high-bar bounded draft, run an essay prewrite gate. Either produce an essay-governing prewrite surface strong enough to support an outstanding draft, or conclude explicitly that the essay is not yet writable at that bar.
 
 ## Blueprint Hardening
 
 Use blueprint hardening when the package already has a blueprint or plan, but that surface still behaves like an author memo, a section outline, or a thesis dump rather than a rewrite-governing research artifact.
+
+When blueprint hardening is triggered by a blocking brutal review or cold replacement review, it becomes the next mandatory step rather than an optional preparation pass.
 
 The recurring strong pattern is:
 
@@ -94,6 +99,13 @@ For evidence-sensitive article work, the preparation order is:
 
 Do not invert that order unless the package already has every load-bearing paper locally.
 
+For post-review hardening, the gate is binary:
+
+1. produce an outstanding-governing blueprint that sets the next rewrite direction at the top bar
+2. or issue an explicit impossibility finding that names the frame or evidence gap blocking that bar
+
+Do not proceed from a merely cleaner outline, a softer memo, or a partially tightened thesis dump.
+
 The acceptance bar is higher than “better notes.” A hardened blueprint should:
 
 - contain no memo-language about the essay-writing process
@@ -101,8 +113,57 @@ The acceptance bar is higher than “better notes.” A hardened blueprint shoul
 - avoid ornamental citations that do not change what the blueprint is allowed to claim
 - separate source-backed findings from higher-level synthesis
 - be strong enough to govern a bounded rewrite without reopening the whole argument from scratch
+- either set a top-bar rewrite direction or state explicitly why that bar is not reachable from the current frame and evidence base
 
 If hardening collapses the original frame, narrow or replace the frame before starting the rewrite. Do not carry a broken synthesis forward just because it sounded good in the previous draft.
+
+## External Blueprint Review
+
+Use this optional step after blueprint hardening when the package is aiming at the outstanding bar and the author wants one more cold pass on the governing surface before the essay prewrite gate.
+
+The external review is advisory, not binding:
+
+1. gather the review against the blueprint itself, not the draft or the general idea of the essay
+2. adjudicate each finding as the writer: accept, reject, downgrade, or defer
+3. integrate only the fixes that materially strengthen the blueprint's governance
+4. do not let an external review reopen a settled frame unless it exposes a real evidence gap, conceptual contradiction, or governance failure
+
+The goal is not consensus. The goal is to improve the blueprint without surrendering authorship of the argument.
+
+Strong uses of this step:
+
+- catching fuzzy seams between adjacent concepts that the blueprint names but does not operationalize
+- finding places where the blueprint bans failure modes without positively specifying the governing correction
+- pressure-testing whether the evidence ledger and section contract actually agree
+
+Weak uses of this step:
+
+- treating every external suggestion as mandatory
+- letting a reviewer push the essay back toward a broader or safer frame the blueprint has already rejected
+- outsourcing title, opening, or structural judgment when the writer already has a stronger evidence-backed view
+
+If the review surfaces only minor or clearly mistaken points, note that and move on. Do not perform ceremonial re-hardening.
+
+## Essay Prewrite Gate
+
+Use this gate after blueprint hardening, and after any optional external blueprint review, before drafting when the package is aiming at a high publication bar rather than a routine incremental revision.
+
+The essay prewrite gate is also binary:
+
+1. produce an essay-governing prewrite surface strong enough to support an outstanding draft
+2. or conclude explicitly that the essay is not yet writable at that bar from the current frame, evidence, or voice constraints
+
+The prewrite surface should not be a rough outline. It should set:
+
+- the active working title or title family if that matters
+- the exact essay promise
+- the required structural spine
+- the paragraph-level burden or equivalent section-level burden
+- which papers must do body work versus reference-only work
+- cut order if the draft becomes bloated
+- explicit failure triggers that void the pass
+
+If that surface cannot be produced cleanly, do not draft. Return to blueprint hardening, evidence intake, or an impossibility finding.
 
 ## Citation And Reference Defaults
 
@@ -164,17 +225,32 @@ Cold replacement reviews should explicitly call out:
 
 If the live draft is still stronger in any important way, say so directly. If the candidate is cleaner but thinner, that should count against promotion rather than for it.
 
+## Post-Review Blueprint Gate
+
+Use this gate immediately after a brutal review or cold replacement review when the review does not clear promotion and the next direction is still materially unsettled.
+
+This gate is binary:
+
+1. produce a rewrite-governing blueprint strong enough to aim at the outstanding-essay bar
+2. or issue an explicit impossibility finding naming the frame mismatch, evidence gap, or title-level overreach that blocks that bar
+
+No middleground is allowed here. Do not launch another broad rewrite from a cleaner outline, a softened memo, or a partially improved blueprint.
+
 ## Canonical Iteration Loop
 
 1. maintain one stable live draft path
 2. run a brutal review with explicit scoring or rubric criteria when the draft is mature enough
-3. if the package already has a blueprint or plan, harden it before a major rewrite when the next direction is still fuzzy or under-evidenced
-4. use the review and any hardened blueprint to shape the next iteration plan
-5. get user approval before a major rewrite pass when the next direction materially changes the essay
-6. if the draft is close, apply bounded fixes first; otherwise produce a clearly bounded candidate
-7. run a cold replacement review before promotion when the candidate is a serious replacement contender
-8. compare, choose, and only then promote or archive
-9. archive superseded versions, local review files, and retired companions once they are no longer the active surface
+3. if the review does not clearly support promotion or bounded fixes, run the post-review blueprint gate as the next step
+4. either produce an outstanding-governing blueprint or state explicitly why that bar is not reachable from the current frame and evidence
+5. if the blueprint passes, optionally run an external blueprint review and adjudicate it as the writer
+6. run the essay prewrite gate before drafting
+7. either produce an essay-governing prewrite surface or conclude explicitly that the essay is not yet writable at the target bar
+8. use that result to decide whether another rewrite is viable at all
+9. get user approval before a major rewrite pass when the next direction materially changes the essay
+10. if the draft is close, apply bounded fixes first; otherwise produce a clearly bounded candidate
+11. run a cold replacement review before promotion when the candidate is a serious replacement contender
+12. compare, choose, and only then promote or archive
+13. archive superseded versions, local review files, and retired companions once they are no longer the active surface
 
 ## Refinement Defaults
 
@@ -183,10 +259,13 @@ For a published or older essay under refinement, the recurring strong pattern is
 1. keep the current live draft intact
 2. intake missing load-bearing papers into the package evidence surface if the claim set still depends on temporary research context
 3. harden the blueprint until it becomes a standalone research artifact rather than a memo or loose outline
-4. run targeted validation against the package evidence surface when principle-level claims need pressure-testing
-5. write a bounded candidate beside the live draft
-6. run a cold replacement review against both the live draft and the outstanding-essay bar
-7. compare, choose, and only then promote one draft back into the canonical live path
+4. optionally run an external blueprint review and integrate only the adjudicated fixes that materially improve governance
+5. run the essay prewrite gate before drafting any high-bar bounded candidate
+6. run targeted validation against the package evidence surface when principle-level claims need pressure-testing
+7. write a bounded candidate beside the live draft
+8. run a cold replacement review against both the live draft and the outstanding-essay bar
+9. if the review blocks promotion, return immediately to the post-review blueprint gate instead of launching another freehand rewrite
+10. compare, choose, and only then promote one draft back into the canonical live path
 
 This is the default refinement loop unless the package has a stronger established editorial process.
 

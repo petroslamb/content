@@ -11,6 +11,7 @@ Seminal and support papers referenced in the flagship essay *Neural Architecture
 | 2014 | Inception: Going Deeper with Convolutions | [2014_Inception.pdf](2014_Inception.pdf) | [markdown/2014_Inception.md](markdown/2014_Inception.md) | Era 2: Parallel composition |
 | 2015 | ResNet: Deep Residual Learning for Image Recognition | [2015_ResNet.pdf](2015_ResNet.pdf) | [markdown/2015_ResNet.md](markdown/2015_ResNet.md) | Era 2: Residual connections |
 | 2016 | Identity Mappings in Deep Residual Networks | [2016_Identity_Mappings.pdf](2016_Identity_Mappings.pdf) | [markdown/2016_Identity_Mappings.md](markdown/2016_Identity_Mappings.md) | Era 2: Identity path refinement |
+| 2016 | Residual Networks Behave Like Ensembles of Relatively Shallow Networks | [2016_ResNet_Ensembles.pdf](2016_ResNet_Ensembles.pdf) | [markdown/2016_ResNet_Ensembles.md](markdown/2016_ResNet_Ensembles.md) | Era 2: Effective short paths in residual training |
 | 2017 | Transformers: Attention Is All You Need | [2017_Transformers.pdf](2017_Transformers.pdf) | [markdown/2017_Transformers.md](markdown/2017_Transformers.md) | Era 3: Universal block |
 | 2018 | BERT: Deep Bidirectional Transformers | [2018_BERT.pdf](2018_BERT.pdf) | [markdown/2018_BERT.md](markdown/2018_BERT.md) | Era 3: Functional hierarchy |
 | 2019 | What Does BERT Look At? | [2019_BERT_Attention.pdf](2019_BERT_Attention.pdf) | [markdown/2019_BERT_Attention.md](markdown/2019_BERT_Attention.md) | Era 3: Attention analysis |
