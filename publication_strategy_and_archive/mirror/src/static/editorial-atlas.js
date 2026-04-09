@@ -20,6 +20,34 @@ document.addEventListener("DOMContentLoaded", () => {
     chapterized_technical_explainer: "Chapterized explainer",
     doctrine_ending: "Doctrine ending",
   };
+  const moveCodes = {
+    failure_or_anomaly_cold_open: "CO",
+    contrarian_compression: "CC",
+    coined_frame_with_borders: "CF",
+    scroll_map: "SM",
+    builder_first_doctrine: "BD",
+    historical_synthesis: "HS",
+    practical_heuristic_section: "PH",
+    falsifiable_prediction_close: "PC",
+    topical_narrative_hijack: "TH",
+    series_packaging: "SP",
+    chapterized_technical_explainer: "CE",
+    doctrine_ending: "DE",
+  };
+  const moveDescriptions = {
+    failure_or_anomaly_cold_open: "Opens by surfacing a failure, anomaly, or surprising tension before explanation.",
+    contrarian_compression: "States a sharp contrarian claim in a compressed, portable form early in the piece.",
+    coined_frame_with_borders: "Introduces a named concept or frame and then defines its boundaries clearly.",
+    scroll_map: "Gives the reader a visible roadmap of the argument so the essay feels navigable while reading.",
+    builder_first_doctrine: "Translates the argument into advice or doctrine aimed at builders and operators.",
+    historical_synthesis: "Compresses several papers, periods, or strands of work into one integrated line of argument.",
+    practical_heuristic_section: "Includes a concrete heuristic, filter, or scoring rule that a reader can reuse.",
+    falsifiable_prediction_close: "Ends with a prediction or testable claim that sharpens the thesis.",
+    topical_narrative_hijack: "Uses a current event, trend, or public object as the entry point into the deeper argument.",
+    series_packaging: "Clearly frames the piece as part of a larger sequence, package, or recurring structure.",
+    chapterized_technical_explainer: "Organizes the piece as a staged explainer with chapter-like progression.",
+    doctrine_ending: "Closes with a takeaway doctrine or operating rule rather than only summary.",
+  };
   const moveOrder = Object.keys(moveLabels);
   const wholeKeys = ["traction", "craft", "debate", "precision", "synthesis", "utility"];
   const sectionKeys = [
@@ -30,56 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
     { key: "ending", label: "Ending" },
     { key: "reference_handling", label: "Reference Handling" },
   ];
-  const goalConfig = {
-    improve_overall: {
-      label: "Improve overall",
-      summary: "Find nearby stronger publication objects without changing the essay's type too much.",
-      targetKeys: ["traction", "craft", "precision"],
-      protectedKeys: ["synthesis", "utility"],
-      targetDeltas: { traction: 1, craft: 1, precision: 1 },
-    },
-    increase_traction: {
-      label: "Increase traction",
-      summary: "Push the essay toward a stronger public object without throwing away its reasoning quality.",
-      targetKeys: ["traction", "debate"],
-      protectedKeys: ["craft", "precision"],
-      targetDeltas: { traction: 1, debate: 1, craft: 1 },
-    },
-    increase_precision: {
-      label: "Increase precision",
-      summary: "Tighten borders and concept control while preserving enough spread to stay alive publicly.",
-      targetKeys: ["precision", "craft"],
-      protectedKeys: ["traction", "synthesis"],
-      targetDeltas: { precision: 1, craft: 1 },
-    },
-    increase_synthesis: {
-      label: "Increase synthesis",
-      summary: "Deepen integration and historical / research compression without becoming dead survey weight.",
-      targetKeys: ["synthesis", "craft"],
-      protectedKeys: ["traction", "precision"],
-      targetDeltas: { synthesis: 1, craft: 1, utility: 1 },
-    },
-    increase_utility: {
-      label: "Increase utility",
-      summary: "Make the essay more operational and reusable without collapsing it into a thinner checklist object.",
-      targetKeys: ["utility", "traction"],
-      protectedKeys: ["precision", "craft"],
-      targetDeltas: { utility: 1, traction: 1, precision: 1 },
-    },
-    patch_weak_sections: {
-      label: "Patch weak sections",
-      summary: "Keep the essay's basic identity but repair the slots where it is visibly underpowered.",
-      targetKeys: ["craft", "precision"],
-      protectedKeys: ["synthesis", "debate"],
-      targetDeltas: { craft: 1, precision: 1 },
-    },
-  };
 
   let selectedEssayTitle = essayMap.has("The Transformer Attractor")
     ? "The Transformer Attractor"
     : essays[0]?.title;
   let routingCenterTitle = selectedEssayTitle;
-  let routingGoalKey = "improve_overall";
+  const tooltipNode = document.getElementById("atlas-tooltip");
 
   function metricColor(value) {
     if (value >= 9) return "#1f6b5c";
@@ -189,13 +173,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .join(", ");
   }
 
-  function summarizeDiff(center, candidate, focusKeys, protectedKeys) {
+  function summarizeDiff(center, candidate, focusKeys = ["traction", "craft", "precision"], protectedKeys = ["synthesis", "utility"]) {
     const focus = focusKeys
       .map((key) => ({ key, delta: (candidate[key] || 0) - (center[key] || 0) }))
-      .filter((item) => item.delta !== 0)
-      .sort((left, right) => Math.abs(right.delta) - Math.abs(left.delta))
+      .filter((item) => item.delta > 0)
+      .sort((left, right) => right.delta - left.delta)
       .slice(0, 2)
-      .map((item) => `${item.delta > 0 ? "+" : ""}${item.delta} ${item.key}`)
+      .map((item) => `+${item.delta} ${item.key}`)
       .join(", ");
     const tradeoff = protectedKeys
       .map((key) => ({ key, delta: (candidate[key] || 0) - (center[key] || 0) }))
@@ -204,55 +188,26 @@ document.addEventListener("DOMContentLoaded", () => {
       .slice(0, 1)
       .map((item) => `${item.delta} ${item.key}`)
       .join(", ");
-    if (focus && tradeoff) return `${focus}; tradeoff ${tradeoff}`;
+    if (focus && tradeoff) return `${focus}; watch ${tradeoff}`;
     return focus || tradeoff || "nearby profile";
   }
 
-  function buildTargetPosition(center, goalKey) {
-    const goal = goalConfig[goalKey];
-    const target = { ...center };
-    Object.entries(goal.targetDeltas || {}).forEach(([key, delta]) => {
-      target[key] = clamp((target[key] || 0) + delta, 1, 10);
-    });
-
-    if (goalKey === "patch_weak_sections") {
-      const weak = weakestSections(center);
-      if (weak.some((slot) => ["opening", "thesis_lock", "ending"].includes(slot.key) && slot.value <= 7)) {
-        target.traction = clamp(target.traction + 1, 1, 10);
-      }
-      if (weak.some((slot) => ["borders", "reference_handling"].includes(slot.key) && slot.value <= 7)) {
-        target.precision = clamp(target.precision + 1, 1, 10);
-      }
-      if (weak.some((slot) => ["development", "reference_handling"].includes(slot.key) && slot.value <= 7)) {
-        target.synthesis = clamp(target.synthesis + 1, 1, 10);
-      }
-    }
-
-    return {
-      traction: target.traction,
-      craft: target.craft,
-      debate: target.debate,
-      precision: target.precision,
-      synthesis: target.synthesis,
-      utility: target.utility,
-    };
-  }
-
-  function strongerNeighbors(center, goalKey) {
-    const goal = goalConfig[goalKey];
+  function strongerNeighbors(center) {
     return essays
       .filter((essay) => essay.title !== center.title)
       .map((essay) => {
-        const targetGain = goal.targetKeys.reduce((sum, key) => sum + ((essay[key] || 0) - (center[key] || 0)), 0);
-        const protectedLoss = goal.protectedKeys.reduce(
-          (sum, key) => sum + Math.max(0, (center[key] || 0) - (essay[key] || 0)),
-          0,
-        );
+        const targetGain =
+          Math.max(0, (essay.traction || 0) - (center.traction || 0)) +
+          Math.max(0, (essay.craft || 0) - (center.craft || 0)) +
+          Math.max(0, (essay.precision || 0) - (center.precision || 0));
+        const protectedLoss =
+          Math.max(0, (center.synthesis || 0) - (essay.synthesis || 0)) +
+          Math.max(0, (center.utility || 0) - (essay.utility || 0));
         const score =
-          targetGain * 3 +
-          ((essay.publication_power || 0) - (center.publication_power || 0)) * 1.1 -
-          protectedLoss * 2.2 -
-          distance(center, essay) * 0.55;
+          targetGain * 2.8 +
+          ((essay.publication_power || 0) - (center.publication_power || 0)) -
+          protectedLoss * 1.7 -
+          distance(center, essay) * 0.75;
         return {
           essay,
           targetGain,
@@ -264,11 +219,11 @@ document.addEventListener("DOMContentLoaded", () => {
       .sort((left, right) => right.score - left.score)
       .slice(0, 2)
       .map((item, index) => ({
-        relation: "Stronger neighbor",
+        relation: "Stronger essay",
         priority: index,
         essay: item.essay.title,
-        note: summarizeDiff(center, item.essay, goal.targetKeys, goal.protectedKeys),
-        shortReason: "nearby stronger object",
+        note: summarizeDiff(center, item.essay),
+        shortReason: "nearby stronger",
       }));
   }
 
@@ -290,60 +245,56 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!donor) return null;
         used.add(donor.essay.title);
         return {
-          relation: "Section donor",
+          relation: "Slot donor",
           priority: slot.value,
           essay: donor.essay.title,
           note: `${slot.label} ${center[slot.key]} → ${donor.essay[slot.key]}`,
-          shortReason: slot.label.toLowerCase(),
+          shortReason: slot.label,
         };
       })
       .filter(Boolean)
       .slice(0, 3);
   }
 
-  function resists(center, goalKey) {
-    const goal = goalConfig[goalKey];
+  function riskNotes(center, neighbors, donors) {
+    const candidateTitles = new Set([
+      ...neighbors.map((item) => item.essay),
+      ...donors.map((item) => item.essay),
+    ]);
+
     return essays
-      .filter((essay) => essay.title !== center.title)
+      .filter((essay) => essay.title !== center.title && candidateTitles.has(essay.title) && essay.overpull_risk)
       .map((essay) => {
-        const targetGain = goal.targetKeys.reduce((sum, key) => sum + ((essay[key] || 0) - (center[key] || 0)), 0);
-        const protectedLoss = goal.protectedKeys.reduce(
-          (sum, key) => sum + Math.max(0, (center[key] || 0) - (essay[key] || 0)),
-          0,
-        );
-        const riskWeight = essay.overpull_risk ? 1 : 0;
-        const score = targetGain * 0.9 + protectedLoss * 2 + distance(center, essay) * 0.35 + riskWeight;
-        return { essay, targetGain, protectedLoss, score };
+        const similarity = distance(center, essay);
+        const temptation =
+          Math.max(0, (essay.traction || 0) - (center.traction || 0)) +
+          Math.max(0, (essay.craft || 0) - (center.craft || 0)) +
+          Math.max(0, (essay.publication_power || 0) - (center.publication_power || 0));
+        return { essay, score: temptation - similarity * 0.25 };
       })
-      .filter((item) => item.targetGain > 0 && item.protectedLoss >= 1)
       .sort((left, right) => right.score - left.score)
       .slice(0, 2)
       .map((item, index) => ({
-        relation: "Resist",
+        relation: "Risk",
         priority: index,
         essay: item.essay.title,
-        note: item.essay.overpull_risk || summarizeDiff(center, item.essay, goal.targetKeys, goal.protectedKeys),
-        shortReason: "tempting but distorting",
+        note: item.essay.overpull_risk,
+        shortReason: "over-copy risk",
       }));
   }
 
-  function buildRoutingModel(center, goalKey) {
-    const goal = goalConfig[goalKey];
-    const targetPosition = buildTargetPosition(center, goalKey);
-    const neighbors = strongerNeighbors(center, goalKey);
+  function buildImprovementModel(center) {
+    const neighbors = strongerNeighbors(center);
     const donors = sectionDonors(center);
-    const resistNodes = resists(center, goalKey);
+    const risks = riskNotes(center, neighbors, donors);
     const strongest = strongestSections(center).map((slot) => `${slot.label.toLowerCase()} ${slot.value}`).join(", ");
     const weakest = formatWeakSections(center);
 
     return {
-      goal,
-      targetPosition,
       neighbors,
       donors,
-      resistNodes,
-      summary:
-        `${goal.summary} Weakest slots: ${weakest}. Current strengths: ${strongest}.`,
+      risks,
+      summary: `Weakest slots: ${weakest}. Current strengths: ${strongest}.`,
     };
   }
 
@@ -359,6 +310,48 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="atlas-compact-box"><strong>${essay.confidence}</strong><span>confidence</span></div>
       </div>
     `;
+  }
+
+  function compareRead(essay) {
+    const statements = [];
+    if (essay.debate >= 8 && essay.precision >= 8) {
+      statements.push("balanced between public tension and conceptual control");
+    } else if (essay.debate > essay.precision) {
+      statements.push("tilts toward public argument more than conceptual discipline");
+    } else if (essay.precision > essay.debate) {
+      statements.push("tilts toward conceptual discipline more than public argument");
+    }
+
+    if (essay.synthesis >= essay.utility) {
+      statements.push("leans more toward synthesis than immediate operator utility");
+    } else {
+      statements.push("leans more toward operator use than synthesis density");
+    }
+
+    const openingGap = essay.opening - essay.ending;
+    if (openingGap >= 2) {
+      statements.push("is more ignition-heavy than landing-heavy");
+    } else if (openingGap <= -2) {
+      statements.push("lands harder than it opens");
+    } else {
+      statements.push("has a relatively balanced opening and ending profile");
+    }
+
+    return statements.join("; ");
+  }
+
+  function renderComparePanel(essay) {
+    renderCompactDetail("atlas-compare-detail", essay);
+    const debateNode = document.getElementById("atlas-compare-debate");
+    const synthesisNode = document.getElementById("atlas-compare-synthesis");
+    const openingNode = document.getElementById("atlas-compare-opening");
+    const readNode = document.getElementById("atlas-compare-read");
+    if (!debateNode || !synthesisNode || !openingNode || !readNode) return;
+
+    debateNode.textContent = `debate ${essay.debate}, precision ${essay.precision}`;
+    synthesisNode.textContent = `synthesis ${essay.synthesis}, utility ${essay.utility}`;
+    openingNode.textContent = `opening ${essay.opening}, ending ${essay.ending}, gap ${essay.opening - essay.ending > 0 ? "+" : ""}${essay.opening - essay.ending}`;
+    readNode.textContent = compareRead(essay);
   }
 
   function renderDetail(essay) {
@@ -384,9 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateSelectionViews() {
     const essay = selectedEssay();
     renderDetail(essay);
-    renderCompactDetail("atlas-debate-detail", essay);
-    renderCompactDetail("atlas-synthesis-detail", essay);
-    renderCompactDetail("atlas-openings-detail", essay);
+    renderComparePanel(essay);
     renderCompactDetail("atlas-moves-detail", essay);
     document.querySelectorAll("[data-essay-title]").forEach((node) => {
       node.classList.toggle("selected-row", node.dataset.essayTitle === essay.title);
@@ -405,14 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const select = document.getElementById("atlas-routing-center");
     if (select) select.value = title;
     setSelectedEssay(title);
-    renderRoutingTool();
-  }
-
-  function setRoutingGoal(goalKey) {
-    if (!goalConfig[goalKey]) return;
-    routingGoalKey = goalKey;
-    const select = document.getElementById("atlas-routing-goal");
-    if (select) select.value = goalKey;
     renderRoutingTool();
   }
 
@@ -533,10 +516,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderMoveMatrix() {
+    const keyNode = document.getElementById("atlas-move-key");
     const table = document.getElementById("atlas-move-matrix");
     const thead = table.querySelector("thead");
     const tbody = table.querySelector("tbody");
-    thead.innerHTML = `<tr><th>Essay</th>${moveOrder.map((key) => `<th>${moveLabels[key]}</th>`).join("")}</tr>`;
+    if (keyNode) {
+      keyNode.innerHTML = moveOrder
+        .map((key) => `<span class="atlas-move-key-item atlas-tooltip-target" data-tooltip="${moveLabels[key]}: ${moveDescriptions[key]}"><span class="atlas-move-key-code">${moveCodes[key]}</span><span>${moveLabels[key]}</span></span>`)
+        .join("");
+    }
+    thead.innerHTML = `<tr><th>Essay</th>${moveOrder.map((key) => `<th class="atlas-tooltip-target" data-tooltip="${moveLabels[key]}: ${moveDescriptions[key]}">${moveCodes[key]}</th>`).join("")}</tr>`;
     tbody.innerHTML = essays
       .slice()
       .sort((a, b) => b.publication_power - a.publication_power || b.traction - a.traction)
@@ -544,19 +533,58 @@ document.addEventListener("DOMContentLoaded", () => {
         <tr class="atlas-click-row" data-essay-title="${essay.title}">
           <td><strong>${essay.title}</strong></td>
           ${moveOrder.map((key) => essay.moves.includes(key)
-            ? `<td><span class="atlas-move-hit">●</span></td>`
-            : `<td><span class="atlas-move-miss">·</span></td>`).join("")}
+            ? `<td class="atlas-tooltip-target" data-tooltip="${moveLabels[key]}: ${moveDescriptions[key]}"><span class="atlas-move-hit">●</span></td>`
+            : `<td class="atlas-tooltip-target" data-tooltip="${moveLabels[key]}: ${moveDescriptions[key]}"><span class="atlas-move-miss">·</span></td>`).join("")}
         </tr>
       `).join("");
     tbody.querySelectorAll("[data-essay-title]").forEach((node) => {
       node.addEventListener("click", () => setSelectedEssay(node.dataset.essayTitle));
     });
+    bindTooltips();
+  }
+
+  function bindTooltips() {
+    if (!tooltipNode) return;
+    const show = (event) => {
+      const target = event.currentTarget;
+      const text = target.dataset.tooltip;
+      if (!text) return;
+      tooltipNode.textContent = text;
+      tooltipNode.classList.add("visible");
+      tooltipNode.setAttribute("aria-hidden", "false");
+      moveTooltip(event);
+    };
+    const hide = () => {
+      tooltipNode.classList.remove("visible");
+      tooltipNode.setAttribute("aria-hidden", "true");
+    };
+    document.querySelectorAll(".atlas-tooltip-target").forEach((node) => {
+      if (node.dataset.tooltipBound === "true") return;
+      node.dataset.tooltipBound = "true";
+      node.addEventListener("mouseenter", show);
+      node.addEventListener("mouseleave", hide);
+      node.addEventListener("mousemove", moveTooltip);
+      node.addEventListener("focus", show);
+      node.addEventListener("blur", hide);
+    });
+  }
+
+  function moveTooltip(event) {
+    if (!tooltipNode || !tooltipNode.classList.contains("visible")) return;
+    const offset = 14;
+    const width = tooltipNode.offsetWidth || 220;
+    const height = tooltipNode.offsetHeight || 48;
+    const maxX = window.innerWidth - width - 12;
+    const maxY = window.innerHeight - height - 12;
+    const x = Math.min(event.clientX + offset, maxX);
+    const y = Math.min(event.clientY + offset, maxY);
+    tooltipNode.style.left = `${Math.max(12, x)}px`;
+    tooltipNode.style.top = `${Math.max(12, y)}px`;
   }
 
   function renderRoutingControls() {
     const centerSelect = document.getElementById("atlas-routing-center");
-    const goalSelect = document.getElementById("atlas-routing-goal");
-    if (!centerSelect || !goalSelect) return;
+    if (!centerSelect) return;
 
     centerSelect.innerHTML = essays
       .slice()
@@ -566,14 +594,6 @@ document.addEventListener("DOMContentLoaded", () => {
     centerSelect.value = routingCenterTitle;
     centerSelect.addEventListener("change", (event) => {
       setRoutingCenter(event.target.value);
-    });
-
-    goalSelect.innerHTML = Object.entries(goalConfig)
-      .map(([key, goal]) => `<option value="${key}">${goal.label}</option>`)
-      .join("");
-    goalSelect.value = routingGoalKey;
-    goalSelect.addEventListener("change", (event) => {
-      setRoutingGoal(event.target.value);
     });
 
     const button = document.getElementById("atlas-use-selected");
@@ -590,7 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rows = [
       ...model.neighbors.map((item) => ({ ...item, kind: "neighbor" })),
       ...model.donors.map((item) => ({ ...item, kind: "donor" })),
-      ...model.resistNodes.map((item) => ({ ...item, kind: "resist" })),
+      ...model.risks.map((item) => ({ ...item, kind: "risk" })),
     ];
     tbody.innerHTML = rows.map((item) => `
       <tr class="atlas-click-row" data-essay-title="${item.essay}">
@@ -615,26 +635,26 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     model.neighbors.forEach((item) => addNode(item, "neighbor"));
     model.donors.forEach((item) => addNode(item, "donor"));
-    model.resistNodes.forEach((item) => addNode(item, "resist"));
+    model.risks.forEach((item) => addNode(item, "risk"));
 
     const positions = {
-      resist: [
-        { x: 260, y: 20, width: 220, height: 66 },
-        { x: 514, y: 38, width: 220, height: 66 },
+      risk: [
+        { x: 272, y: 20, width: 236, height: 66 },
+        { x: 518, y: 36, width: 236, height: 66 },
       ],
       neighbor: [
-        { x: 42, y: 110, width: 220, height: 72 },
-        { x: 520, y: 110, width: 220, height: 72 },
+        { x: 36, y: 118, width: 228, height: 76 },
+        { x: 518, y: 118, width: 228, height: 76 },
       ],
       donor: [
-        { x: 32, y: 302, width: 224, height: 72 },
-        { x: 278, y: 328, width: 224, height: 72 },
-        { x: 524, y: 302, width: 224, height: 72 },
+        { x: 28, y: 310, width: 230, height: 76 },
+        { x: 275, y: 334, width: 230, height: 76 },
+        { x: 522, y: 310, width: 230, height: 76 },
       ],
     };
 
     const nodes = [];
-    ["resist", "neighbor", "donor"].forEach((kind) => {
+    ["risk", "neighbor", "donor"].forEach((kind) => {
       const matching = [...nodeMap.entries()]
         .filter(([, meta]) => meta.kinds.has(kind))
         .slice(0, positions[kind].length);
@@ -654,7 +674,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const styleMap = {
-      resist: {
+      risk: {
         fill: "rgba(184,95,61,0.08)",
         stroke: "rgba(184,95,61,0.26)",
         line: "#b85f3d",
@@ -702,7 +722,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const rootNode = document.getElementById("atlas-vector-root");
     rootNode.innerHTML = `
-      <svg viewBox="0 0 780 430" role="img" aria-label="Essay routing vector view">
+      <svg viewBox="0 0 780 430" role="img" aria-label="Essay improvement panel">
         <defs>
           <marker id="atlas-arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
             <path d="M0,0 L10,5 L0,10 z" fill="#1f6b5c"></path>
@@ -716,7 +736,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </defs>
         <rect x="275" y="176" width="230" height="92" rx="18" fill="rgba(31,107,92,0.10)" stroke="#1f6b5c" stroke-width="2"></rect>
         <text x="390" y="212" text-anchor="middle" font-family="var(--serif)" font-size="24" fill="#1f1a14">${center.title}</text>
-        <text x="390" y="236" text-anchor="middle" font-size="13" fill="#64584a">${goalConfig[routingGoalKey].label}</text>
+        <text x="390" y="236" text-anchor="middle" font-size="13" fill="#64584a">weak slots, donors, stronger essays, risks</text>
         <text x="390" y="256" text-anchor="middle" font-size="12" fill="#64584a">${center.identity}</text>
         ${rects}
         ${lines}
@@ -730,15 +750,17 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderRoutingTool() {
     const center = routingCenterEssay();
     if (!center) return;
-    const model = buildRoutingModel(center, routingGoalKey);
-    const goal = model.goal;
+    const model = buildImprovementModel(center);
+    const strongerList = model.neighbors.map((item) => shortTitle(essayMap.get(item.essay) || { title: item.essay })).join(", ");
+    const donorList = model.donors.map((item) => item.shortReason).join(", ");
 
     document.getElementById("atlas-draft-head").innerHTML = `
       <strong>${center.title}</strong>
       <span>${center.identity}</span>
-      <span>${goal.label}: current T/C ${center.traction}/${center.craft} → target ${model.targetPosition.traction}/${model.targetPosition.craft}; precision ${center.precision} → ${model.targetPosition.precision}; utility ${center.utility} → ${model.targetPosition.utility}</span>
+      <span>traction/craft ${center.traction}/${center.craft}, precision ${center.precision}, synthesis ${center.synthesis}, utility ${center.utility}</span>
     `;
-    document.getElementById("atlas-draft-problem").textContent = model.summary;
+    document.getElementById("atlas-draft-problem").textContent =
+      `${model.summary} Best donor slots: ${donorList || "none identified"}. Closest stronger essays: ${strongerList || "none identified"}.`;
     renderRoutingTable(model);
     renderRoutingDiagram(center, model);
   }
@@ -752,6 +774,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         document.querySelectorAll(".atlas-tab-panel").forEach((panel) => {
           panel.classList.toggle("active", panel.id === `atlas-tab-${target}`);
+        });
+      });
+    });
+  }
+
+  function bindSubtabs() {
+    document.querySelectorAll(".atlas-subtab-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.subtab;
+        document.querySelectorAll(".atlas-subtab-btn").forEach((node) => {
+          node.classList.toggle("active", node.dataset.subtab === target);
+        });
+        document.querySelectorAll(".atlas-subtab-panel").forEach((panel) => {
+          panel.classList.toggle("active", panel.id === `atlas-subtab-${target}`);
         });
       });
     });
@@ -798,6 +834,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderMoveMatrix();
     bindTabs();
+    bindSubtabs();
     updateSelectionViews();
   }
 
