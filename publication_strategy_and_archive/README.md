@@ -2,12 +2,13 @@
 
 This directory is the publication operations layer for Rooted Layers.
 
-It holds four different things:
+It holds five different things:
 
 - the raw downloaded Substack archive
 - the curated mapping between published essays and repo folders
 - the tracked migration manifest for repo-link rewrites
 - the 11ty GitHub Pages mirror
+- the editorial atlas for publication-object analysis
 - longer-term publication strategy notes
 
 Substack remains the canonical publication surface. The mirror exists to keep public essays close to their research folders, raw snapshots, and provenance.
@@ -18,6 +19,7 @@ Substack remains the canonical publication surface. The mirror exists to keep pu
 - [`post_map.yaml`](post_map.yaml): hand-edited mapping from Substack slug to research folder, series metadata, tags, and summary text
 - [`link_migration_manifest.yaml`](link_migration_manifest.yaml): tracked map of package moves plus repo-link and Substack-link rewrites for the `publications/` migration
 - [`mirror/`](mirror/): 11ty source for the public GitHub Pages mirror
+- [`editorial_atlas/`](editorial_atlas/): canonical atlas data, docs, and pull-sheet artifacts for the essay corpus
 - [`future_publication_strategy.md`](future_publication_strategy.md): longer-term planning notes
 - [`publication_analysis_results.md`](publication_analysis_results.md): qualitative review material
 
@@ -28,6 +30,7 @@ The working split is intentional:
 - `substack_archive/` is generated data. Do not hand-edit archived post files there.
 - `post_map.yaml` is curated data. Edit this file when you want to connect an essay to a research folder, add a series, change a summary, or adjust tags.
 - `link_migration_manifest.yaml` is the tracked planning layer for package moves and later live Substack link patches.
+- `editorial_atlas/` is curated strategy data. Edit it when you want to change the atlas scores, pulls, or analysis docs.
 - `mirror/` is presentation code. Edit it when you want to change the public site.
 
 ## Commands

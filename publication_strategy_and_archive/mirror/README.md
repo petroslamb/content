@@ -6,15 +6,17 @@ The site is a mirror, not the canonical publication endpoint. Substack remains c
 
 ## Inputs
 
-The mirror is built from two upstream sources:
+The mirror is built from three upstream sources:
 
 - [`../substack_archive/metadata.json`](../substack_archive/metadata.json): generated archive manifest
 - [`../post_map.yaml`](../post_map.yaml): hand-edited curation layer
+- [`../editorial_atlas/atlas_data.json`](../editorial_atlas/atlas_data.json): hand-maintained editorial atlas data
 
 In practice:
 
 - the archive supplies post bodies, canonical Substack URLs, timestamps, and localized assets
 - the post map supplies research-folder links, series grouping, tags, summaries, and featured status
+- the editorial atlas supplies essay-level scores, section scores, move tags, and draft-pull objects for the public atlas route
 
 ## Layout
 
@@ -23,6 +25,7 @@ In practice:
 - [`src/_includes/`](src/_includes): layouts and reusable partials
 - [`src/index.njk`](src/index.njk): landing page
 - [`src/archive/index.njk`](src/archive/index.njk): filterable archive page
+- [`src/editorial-atlas/index.njk`](src/editorial-atlas/index.njk): public editorial atlas page
 - [`src/posts/post.njk`](src/posts/post.njk): per-post template
 - [`src/series/series.njk`](src/series/series.njk): series landing pages
 - [`src/feed.xml.njk`](src/feed.xml.njk): mirror RSS
@@ -37,6 +40,7 @@ The mirror currently publishes:
 
 - `/`
 - `/archive/`
+- `/editorial-atlas/`
 - `/posts/<slug>/`
 - `/series/<series_key>/`
 - `/feed.xml`
@@ -61,6 +65,7 @@ Use `check:mirror` before pushing. It validates:
 - generated root README mapping content
 - internal links in the built mirror
 - representative HTTP smoke routes for the built mirror
+- editorial atlas data shape and the built atlas route
 
 ## Environment Variables
 

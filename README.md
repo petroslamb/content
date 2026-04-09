@@ -29,7 +29,7 @@ That lifecycle does not force one rigid folder shape on every package. The repo 
 | `publications/` | Canonical essay and publication packages | [`publications/README.md`](publications/README.md) |
 | `workflows/` | Canonical tracked playbooks | [`workflows/README.md`](workflows/README.md) |
 | `scripts/` | Tracked repo automation | [`scripts/README.md`](scripts/README.md) |
-| `publication_strategy_and_archive/` | Substack archive, mirror, and publication map | [`publication_strategy_and_archive/README.md`](publication_strategy_and_archive/README.md) |
+| `publication_strategy_and_archive/` | Substack archive, mirror, publication map, and editorial atlas | [`publication_strategy_and_archive/README.md`](publication_strategy_and_archive/README.md) |
 | `reviewable-runs/` | Reviewable execution framework and examples | [`reviewable-runs/README.md`](reviewable-runs/README.md) |
 | `publications/security-research/` | Research bucket, not yet normalized into publication packages | [`publications/security-research/README.md`](publications/security-research/README.md) |
 

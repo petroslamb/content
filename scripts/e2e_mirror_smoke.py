@@ -41,6 +41,14 @@ def expected_site_root(path_prefix: str) -> str:
     return path_prefix
 
 
+def normalized_internal_route(path_prefix: str, route_path: str) -> str:
+    normalized = route_path if route_path.startswith("/") else f"/{route_path}"
+    for prefix in (path_prefix, expected_site_root(path_prefix)):
+        if prefix != "/" and normalized.startswith(prefix):
+            return "/" + normalized[len(prefix) :].lstrip("/")
+    return normalized
+
+
 def first_mirrored_post() -> dict[str, object]:
     manifest = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
     post_map = load_post_map()
@@ -104,16 +112,19 @@ def main() -> None:
     with server_root_for_prefix(path_prefix) as serve_root, serve_directory(serve_root) as origin:
         homepage_path = with_prefix(path_prefix, "/")
         archive_path = with_prefix(path_prefix, "/archive/")
+        atlas_path = with_prefix(path_prefix, "/editorial-atlas/")
         post_path = with_prefix(path_prefix, f"/posts/{slug}/")
         feed_path = with_prefix(path_prefix, "/feed.xml")
 
         homepage = requests.get(f"{origin}{homepage_path}", timeout=10)
         archive = requests.get(f"{origin}{archive_path}", timeout=10)
+        atlas_page = requests.get(f"{origin}{atlas_path}", timeout=10)
         post_page = requests.get(f"{origin}{post_path}", timeout=10)
         feed = requests.get(f"{origin}{feed_path}", timeout=10)
 
         assert_ok(homepage, "Homepage")
         assert_ok(archive, "Archive page")
+        assert_ok(atlas_page, "Editorial atlas page")
         assert_ok(post_page, "Post page")
         assert_ok(feed, "Feed")
 
@@ -128,17 +139,38 @@ def main() -> None:
             )
 
         archive_link = None
+        atlas_link = None
         for anchor in soup.find_all("a", href=True):
-            if urlparse(anchor["href"]).path == archive_path:
+            parsed_path = normalized_internal_route(path_prefix, urlparse(anchor["href"]).path)
+            if parsed_path == "/archive/":
                 archive_link = anchor
-                break
+            if parsed_path == "/editorial-atlas/":
+                atlas_link = anchor
         if archive_link is None:
             raise SystemExit("Homepage is missing the archive navigation link")
+        if atlas_link is None:
+            raise SystemExit("Homepage is missing the editorial atlas link")
 
         archive_soup = BeautifulSoup(archive.text, "html.parser")
         archive_text = archive_soup.get_text(" ", strip=True)
         if title not in archive_text:
             raise SystemExit(f"Archive page does not contain mirrored post title: {title}")
+
+        atlas_soup = BeautifulSoup(atlas_page.text, "html.parser")
+        atlas_text = atlas_soup.get_text(" ", strip=True)
+        if "Published essays as a navigable editorial system" not in atlas_text:
+            raise SystemExit("Editorial atlas page is missing the expected page heading")
+        expected_tabs = {"overview", "debate", "synthesis", "openings", "moves"}
+        found_tabs = {
+            button.get("data-tab")
+            for button in atlas_soup.select(".atlas-tab-btn[data-tab]")
+            if button.get("data-tab")
+        }
+        if not expected_tabs.issubset(found_tabs):
+            raise SystemExit(
+                "Editorial atlas page is missing the expected tab labels "
+                f"(found {sorted(found_tabs)})"
+            )
 
         post_soup = BeautifulSoup(post_page.text, "html.parser")
         if "Read on Substack" not in post_soup.get_text(" ", strip=True):
@@ -155,6 +187,7 @@ def main() -> None:
                 "checked_routes": [
                     homepage_path,
                     archive_path,
+                    atlas_path,
                     post_path,
                     feed_path,
                 ],

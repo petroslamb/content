@@ -1,6 +1,6 @@
 # Editorial Atlas
 
-Root-level editorial instrumentation for the published essay corpus in
+Editorial instrumentation for the published essay corpus in
 [`publication_strategy_and_archive/substack_archive/`](../publication_strategy_and_archive/substack_archive/).
 
 This package is intentionally independent of the tracked workflow docs. It is
@@ -30,13 +30,11 @@ resist.
 - [`draft_pull_sheet_template.md`](draft_pull_sheet_template.md): reusable
   design sheet for future drafts
 - [`atlas_data.json`](atlas_data.json): machine-readable essay atlas data
-- [`render_view.py`](render_view.py): static HTML renderer for the atlas
-- [`index.html`](index.html): generated tabbed atlas viewer
 - [`visualizations.md`](visualizations.md): visual layer notes for the atlas
 
 ## Viewer Tabs
 
-The generated viewer currently exposes five tabs:
+The public mirror viewer currently exposes five tabs:
 
 - `Overview`: traction x craft constellation, essay detail card, section
   heatmap, and draft pull vector
@@ -45,7 +43,7 @@ The generated viewer currently exposes five tabs:
 - `Openings × Endings`: section-level ignition versus landing strength
 - `Move Matrix`: reverse-engineered editorial moves across the whole corpus
 
-The current viewer also does three things the first pass did not:
+The mirror route also does three things the first pass did not:
 
 - uses a shared selected-essay state across the axis views and tables
 - encodes confidence directly in the scatterplots
