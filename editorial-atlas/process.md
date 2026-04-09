@@ -1,0 +1,124 @@
+# Process
+
+## Purpose
+
+This package turns the published archive into a reusable editorial reference
+set. The goal is not literary judgment in the abstract. The goal is to support
+three practical tasks:
+
+1. Position a new draft against real prior essay objects
+2. Diagnose why a draft feels weak or mis-shaped
+3. Borrow strengths from earlier essays without flattening them into generic
+   writing advice
+
+## Corpus Source
+
+The source corpus is the published markdown layer under
+[`../publication_strategy_and_archive/substack_archive/`](../publication_strategy_and_archive/substack_archive/).
+
+The current pass covers all 20 archive essays.
+
+## Method
+
+Each essay gets four layers of analysis:
+
+1. **Whole-essay atlas**
+   - `Traction`: how naturally the piece works as a public object
+   - `Craft`: how strong the piece is as prose and essay structure
+   - `Publication Power`: coarse combined judgment, weighted toward traction
+2. **Attractor card**
+   - short reusable profile for editorial borrowing
+3. **Section atlas**
+   - `Opening`
+   - `Development`
+   - `Ending`
+   - `Evidence Control`
+4. **Move library**
+   - Named editorial moves drawn from concrete archive examples
+
+This is a manual first pass. It is meant to be useful, not falsely precise.
+
+## Score Semantics
+
+`10` exceptional  
+`8-9` strong  
+`6-7` solid but uneven or narrower  
+`5` or below noticeable weakness or non-flagship behavior
+
+## Composite Definitions
+
+### Traction
+
+A synthesis of:
+
+- hook strength
+- thesis compression
+- frame portability
+- audience breadth
+- debate energy
+- usable public packaging
+
+### Craft
+
+A synthesis of:
+
+- sentence rhythm
+- paragraph control
+- structural pacing
+- evidence integration
+- ending strength
+
+### Publication Power
+
+A coarse combined judgment intended for editorial routing, not leaderboard use.
+This pass leans slightly toward traction because the object of interest is the
+published essay as a public artifact.
+
+## Section Slots
+
+To make unlike essays comparable, the section pass normalizes them into six
+editorial slots:
+
+- `Opening`: how the piece earns attention and establishes stakes
+- `Thesis Lock`: where the claim becomes stable and memorable
+- `Development`: the main middle architecture of the argument
+- `Borders / Counterpressure`: where the piece narrows scope, adds limits, or
+  handles objections
+- `Ending`: how the piece lands and closes
+- `Reference Handling`: how sources are integrated into the essay object
+
+Not every essay has each slot equally. Some pieces are powered by opening and
+ending, some by the middle, some by series scaffolding.
+
+## Confidence Scale
+
+- `High`: directly read and compared in detail during this pass
+- `Medium`: enough direct reading to score with confidence, but not exhaustively
+- `Low`: scored from lighter sampling, structure, and archive context
+
+## How To Use This Package
+
+### For a New Draft
+
+1. Read [`essay_atlas.md`](essay_atlas.md) to identify likely pull essays
+2. Read the relevant rows in [`section_atlas.md`](section_atlas.md)
+3. Use [`draft_pull_sheet_template.md`](draft_pull_sheet_template.md) before or
+   during revision
+4. Borrow one or two strengths intentionally rather than imitating a whole essay
+
+### For Retrospectives
+
+Use the atlas to compare:
+
+- what kind of object the draft intended to be
+- what kind of object it actually became
+- which sections created the gap
+
+## Known Limits
+
+- The archive includes series entries and chapter-like pieces alongside flagship
+  essays. The atlas keeps that heterogeneity visible rather than pretending all
+  items are the same kind of object.
+- Scores are qualitative judgments, not measurements.
+- This package should remain essay-anchored. If it drifts into abstract traits
+  without concrete archive examples, it will become generic quickly.
