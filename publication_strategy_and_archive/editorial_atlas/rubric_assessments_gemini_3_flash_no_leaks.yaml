@@ -1,0 +1,1128 @@
+version: 1
+corpus_source: publication_strategy_and_archive/substack_archive
+model_display_name: gemini 3 flash (no leaks)
+score_scale: 1-10 qualitative manual scoring
+status_notes:
+  audit_complete: 'Zero-knowledge editorial audit completed by x-code-ultra frontier
+    model. Refined for extreme scarcity: only Autonomy Tax and Binding Gap retained
+    as 10s.'
+corpus:
+  include_public_archive_posts: true
+  exclusions:
+  - title: Welcome
+    reason: Housekeeping launch note.
+essays:
+- title: 'Neural Architecture Design as a Reusable Scaffold: A History Review'
+  rubric_status: audited
+  short_label: Reusable Scaffold
+  words: null
+  identity: historical synthesis / architecture thesis
+  signature: historical through-line + scaffold reframing
+  overpull_risk: orderly chronology can soften ignition
+  confidence: high
+  moves:
+  - historical_synthesis
+  - coined_frame_with_borders
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 9
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: A strong foundation piece, but comparative to the Hardware and
+      Autonomy essays, it lacks the same level of acute industry pressure.
+    opening_anchor: The organizing principle of the last 24 months isn’t expressiveness
+      or theoretical elegance. It is hardware compatibility.
+    middle_anchor: Architecture is the container; training is the contents.
+    ending_anchor: The scaffold remains.
+- title: 'Autonomous AI Agents: Core Foundations and Recent Breakthroughs'
+  rubric_status: audited
+  short_label: Agent Revolution
+  words: null
+  identity: large survey / reading-guide
+  signature: breadth and map-making
+  overpull_risk: chapterization dilutes compression
+  confidence: high
+  moves:
+  - scroll_map
+  - historical_synthesis
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 7
+    precision: 7
+    synthesis: 8
+    utility: 7
+  traction_subscores:
+    hook_strength: 6
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 8
+    debate_energy: 7
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 8
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 6
+    thesis_lock: 7
+    development: 7
+    borders: 6
+    ending: 6
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Solid survey but lacks the aggressive thesis-driven architecture
+      of the later audit targets. Useful primarily as a reading guide.
+    opening_anchor: Autonomy is not a binary switch but a spectrum of delegated intent.
+    middle_anchor: The architecture of the agent is the architecture of the task.
+    ending_anchor: The revolution is just beginning.
+- title: 'What Actually Works: The Hardware Compatibility Filter in Neural Architecture
+    (2023–2025)'
+  rubric_status: audited
+  short_label: What Actually Works
+  words: null
+  identity: technical-strategic thesis
+  signature: hardware compatibility filter
+  overpull_risk: brutality can alienate research-only audiences
+  confidence: high
+  moves:
+  - coined_frame_with_borders
+  - practical_heuristic_section
+  - series_packaging
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 9
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 9
+    reference_handling: 10
+  rationale:
+    whole_essay_note: A category-defining thesis, but the later Autonomy Tax piece
+      provides even higher operational utility for the current market.
+    opening_anchor: The GPU is the only editor that matters.
+    middle_anchor: If it doesn't saturate Tensor Cores, it doesn't exist at scale.
+    ending_anchor: The filter is absolute.
+- title: The Hardware Friction Map
+  rubric_status: audited
+  short_label: Friction Map
+  words: null
+  identity: procedural utility / scorecard
+  signature: 5-axis friction rubric
+  overpull_risk: utility can overshadow narrative
+  confidence: high
+  moves:
+  - practical_heuristic_section
+  - scroll_map
+  direct_scores:
+    debate: 7
+    precision: 9
+    synthesis: 9
+    utility: 10
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 7
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 9
+    ending: 9
+    reference_handling: 10
+  rationale:
+    whole_essay_note: Exceptional procedural utility. It’s a 10 for Utility, but as
+      a publication object, it sits comfortably at 9.
+    opening_anchor: The mechanism isn’t a binary 'Compatibility Filter.' It’s a Friction
+      Map.
+    middle_anchor: The five axes of friction define the training budget.
+    ending_anchor: Map accurately, or pay the tax.
+- title: The Orchestration Paradigm Series
+  rubric_status: audited
+  short_label: Orchestration Series
+  words: null
+  identity: series foundation / algorithm
+  signature: 8B vs frontier arbitrage
+  overpull_risk: dense technicality
+  confidence: high
+  moves:
+  - series_packaging
+  - coined_frame_with_borders
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Strong technical arbitrage frame. Highly useful but the craft
+      is more functional than exceptional.
+    opening_anchor: Routing is a distinct capability from Generation.
+    middle_anchor: 8B models for routing, frontier models for reasoning.
+    ending_anchor: The paradigm is the platform.
+- title: 'The Orchestration Paradigm: Issue 2 - The Factory'
+  rubric_status: audited
+  short_label: Factory
+  words: null
+  identity: infrastructure / factory
+  signature: synthetic data factory
+  overpull_risk: mechanistic tone
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - practical_heuristic_section
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Deep infrastructure analysis. Essential for specialists, slightly
+      more restrictive audience breadth than Issue 1 or 4.
+    opening_anchor: The real engineering breakthrough... was the factory that built
+      it.
+    middle_anchor: ToolScale is not a model; it is a pipeline.
+    ending_anchor: Build the factory, not the tool.
+- title: 'The Orchestration Paradigm: Issue 3 - The Behavior'
+  rubric_status: audited
+  short_label: Behavior
+  words: null
+  identity: emergent behavior / psychology
+  signature: escalator ladders / death spirals
+  overpull_risk: metaphorical leap
+  confidence: high
+  moves:
+  - coined_frame_with_borders
+  - topical_narrative_hijack
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Fascinating analysis of emergent behavior. Strong Framing (9)
+      but less 'Utility' than the scorecard essays.
+    opening_anchor: The strategies observed... are emergent properties of the reward
+      landscape.
+    middle_anchor: The death spiral of context saturation is the primary failure mode.
+    ending_anchor: Control the behavior, or lose the agent.
+- title: 'The Orchestration Paradigm: Issue 4 - The Reality'
+  rubric_status: audited
+  short_label: Reality
+  words: null
+  identity: strategic synthesis / reality
+  signature: god model vs modularity
+  overpull_risk: synthesis can hide detail
+  confidence: high
+  moves:
+  - historical_synthesis
+  - doctrine_ending
+  direct_scores:
+    debate: 9
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 9
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 9
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 9
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 9
+    thesis_lock: 9
+    development: 9
+    borders: 9
+    ending: 9
+    reference_handling: 9
+  rationale:
+    whole_essay_note: The strongest synthesis in the series. Lays out the modular
+      future with high authority.
+    opening_anchor: The God Model is an economic dead end.
+    middle_anchor: Compound AI is the only way to clear the hardware gate.
+    ending_anchor: Reality is modular.
+- title: When the LLM Programs Its Own Thinking
+  rubric_status: audited
+  short_label: Program Thinking
+  words: null
+  identity: technical paradigm / recursive
+  signature: prompt as environment variable
+  overpull_risk: technical abstraction
+  confidence: high
+  moves:
+  - coined_frame_with_borders
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 9
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Pioneering concept but the practical implementation (Jupyter/REPL)
+      is still in the 'early adopter' phase compared to the 'Autonomy Tax' framework.
+    opening_anchor: Prompting is coding in a stochastic environment.
+    middle_anchor: Trace artifacts are the debug logs of thought.
+    ending_anchor: The model must own its thinking.
+- title: The Transformer Attractor
+  rubric_status: audited
+  short_label: Transformer Attractor
+  words: null
+  identity: architectural economics / lock-in
+  signature: two-gate attractor
+  overpull_risk: determinism
+  confidence: high
+  moves:
+  - historical_synthesis
+  - coined_frame_with_borders
+  - falsifiable_prediction_close
+  direct_scores:
+    debate: 9
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 9
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 9
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 9
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 9
+    thesis_lock: 9
+    development: 9
+    borders: 9
+    ending: 9
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Superior economic-technical framing. Demoted from 10 to 9 to
+      preserve 10 for the absolute North Stars (Autonomy Tax & Binding Gap).
+    opening_anchor: The architecture changed to fit the hardware. The hardware did
+      not budge.
+    middle_anchor: 'Gate 1: Hardware Compatibility. Gate 2: Institutional Backing.'
+    ending_anchor: The attractor remains stable.
+- title: The Autonomy Tax
+  rubric_status: audited
+  short_label: Autonomy Tax
+  words: null
+  identity: deployment strategy / autonomy
+  signature: three autonomy taxes
+  overpull_risk: conservative bias
+  confidence: high
+  moves:
+  - coined_frame_with_borders
+  - practical_heuristic_section
+  - falsifiable_prediction_close
+  direct_scores:
+    debate: 9
+    precision: 10
+    synthesis: 10
+    utility: 10
+  traction_subscores:
+    hook_strength: 10
+    thesis_compression: 10
+    frame_portability: 10
+    audience_breadth: 10
+    debate_energy: 9
+    public_packaging: 10
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 9
+    paragraph_control: 10
+    structural_pacing: 10
+    evidence_integration: 10
+    ending_strength: 10
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 10
+    thesis_lock: 10
+    development: 10
+    borders: 9
+    ending: 10
+    reference_handling: 10
+  rationale:
+    whole_essay_note: Corpus-defining. The 'Three Taxes' is the most successful portable
+      framework in the archive. Indispensable for the target audience.
+    opening_anchor: AI didn’t replace the experts. It made them reviewers.
+    middle_anchor: 'The Tax: Bandwidth, Incident, Governance.'
+    ending_anchor: Are you ready to pay the tax?
+- title: The Moltbook Phenomenon
+  rubric_status: audited
+  short_label: Moltbook
+  words: null
+  identity: journalistic / security narrative
+  signature: vibe coding / narrative acquisition
+  overpull_risk: narrative over-saturation
+  confidence: high
+  moves:
+  - topical_narrative_hijack
+  - series_packaging
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 8
+  traction_subscores:
+    hook_strength: 10
+    thesis_compression: 8
+    frame_portability: 9
+    audience_breadth: 10
+    debate_energy: 9
+    public_packaging: 10
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 9
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 10
+    ending_strength: 10
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 9
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 10
+    reference_handling: 10
+  rationale:
+    whole_essay_note: Exceptional narrative hook and craft, but the 'Thesis' is less
+      portable (8) than the conceptual essays.
+    opening_anchor: Meta bought it anyway.
+    middle_anchor: The 42-day lifespan of an agentic social network.
+    ending_anchor: The building was broken; the architects were the value.
+- title: The Illusion of the Swarm
+  rubric_status: audited
+  short_label: Illusion Swarm
+  words: null
+  identity: system architecture / critique
+  signature: swarm as training rig
+  overpull_risk: critique-heavy
+  confidence: high
+  moves:
+  - coined_frame_with_borders
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 9
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 9
+    reference_handling: 9
+  rationale:
+    whole_essay_note: High-fidelity corrective to swarm hype. Defines the Disambiguation
+      Threshold. Stronger than most but below the absolute peak.
+    opening_anchor: Swarms are workarounds, not destinations.
+    middle_anchor: 'Collapse point: 80-90 skills.'
+    ending_anchor: Distill the swarm back into the model.
+- title: 'Operating Agents I: Action Systems and Tool Use'
+  rubric_status: audited
+  short_label: OA I
+  words: null
+  identity: pedagogical / action systems
+  signature: language as shared buffer
+  overpull_risk: linear pedagogical flow
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - practical_heuristic_section
+  direct_scores:
+    debate: 7
+    precision: 8
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 9
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: A strong pedagogical anchor, but comparative to the thesis-essays,
+      it is more 'instructive' than 'world-breaking'.
+    opening_anchor: Language is not a transmission wire; it is a shared buffer.
+    middle_anchor: Explicit tools create explicit boundaries.
+    ending_anchor: Act, then reflect.
+- title: 'Operating Agents II: Memory Systems and Authority'
+  rubric_status: audited
+  short_label: OA II
+  words: null
+  identity: pedagogical / memory systems
+  signature: memory as search pressure
+  overpull_risk: extension of existing frame
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - practical_heuristic_section
+  direct_scores:
+    debate: 7
+    precision: 8
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 9
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Consistent with OA I. High utility for practitioners but not
+      a corpus-defining thesis.
+    opening_anchor: Memory is search pressure.
+    middle_anchor: The authority to delete is the authority to manage.
+    ending_anchor: Forget to remember.
+- title: 'Operating Agents III: Reasoning Scaffolds and Planning'
+  rubric_status: audited
+  short_label: OA III
+  words: null
+  identity: pedagogical / diagnostics
+  signature: failure explanation as asset
+  overpull_risk: troubleshooting focus
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - practical_heuristic_section
+  direct_scores:
+    debate: 7
+    precision: 8
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 9
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Utility-focused diagnostic guide. Very reliable but sits at
+      the 8 baseline for this corpus.
+    opening_anchor: An agent that cannot explain failure is a liability.
+    middle_anchor: The scaffold is the trace.
+    ending_anchor: Plan for failure.
+- title: 'Operating Agents IV: Multi-Agent Boundaries and Handoffs'
+  rubric_status: audited
+  short_label: OA IV
+  words: null
+  identity: pedagogical / delegation
+  signature: delegation vs verification
+  overpull_risk: complex boundary setting
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - practical_heuristic_section
+  direct_scores:
+    debate: 7
+    precision: 8
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 9
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Handles complex multi-agent handoffs well. High instructional
+      value (9 utility).
+    opening_anchor: The second agent is a critic, not a helper.
+    middle_anchor: Verification costs more than generation.
+    ending_anchor: Handoff with trust.
+- title: 'Operating Agents V: Trust Boundaries and Agent Safety'
+  rubric_status: audited
+  short_label: OA V
+  words: null
+  identity: pedagogical / safety
+  signature: user as threat boundary
+  overpull_risk: security focus can be niche
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - practical_heuristic_section
+  - doctrine_ending
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 8
+    utility: 9
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 9
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 9
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 9
+    development: 9
+    borders: 8
+    ending: 9
+    reference_handling: 9
+  rationale:
+    whole_essay_note: The strongest of the OA series. Successfully bridges technical
+      safety with the broader 'Trust Boundaries' frame.
+    opening_anchor: The prompt is the exploit.
+    middle_anchor: Boundaries are the only defense.
+    ending_anchor: Safety is by design.
+- title: 'Operating Agents Bonus: Workflow Optimization and Evaluation'
+  rubric_status: audited
+  short_label: OA Bonus
+  words: null
+  identity: technical support / workflow
+  signature: workflow as contract
+  overpull_risk: purely supportive
+  confidence: high
+  moves:
+  - practical_heuristic_section
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 6
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 7
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 6
+    thesis_lock: 7
+    development: 7
+    borders: 6
+    ending: 6
+    reference_handling: 7
+  rationale:
+    whole_essay_note: A technical support piece. Clearly functional but the weakest
+      standalone object in the atlas.
+    opening_anchor: A workflow is a series of hard handoffs.
+    middle_anchor: Evaluate the path, not just the result.
+    ending_anchor: Optimize for clarity.
+- title: 'Operating Agents Guide: Preface'
+  rubric_status: audited
+  short_label: OA Preface
+  words: null
+  identity: series introduction / preface
+  signature: models to systems shift
+  overpull_risk: introductory
+  confidence: high
+  moves:
+  - coined_frame_with_borders
+  - series_packaging
+  direct_scores:
+    debate: 7
+    precision: 8
+    synthesis: 8
+    utility: 8
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 8
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Effective series framing. Sets the state for the Operating Agents
+      series but doesn't resolve into a portable thesis itself.
+    opening_anchor: We are moving from models to systems.
+    middle_anchor: The operating system for the machine age.
+    ending_anchor: Enter the field.
+- title: The Binding Gap
+  rubric_status: audited
+  short_label: Binding Gap
+  words: null
+  identity: precision theory / binding
+  signature: exact binding / role collapse
+  overpull_risk: theory density
+  confidence: high
+  moves:
+  - failure_or_anomaly_cold_open
+  - coined_frame_with_borders
+  - doctrine_ending
+  direct_scores:
+    debate: 10
+    precision: 10
+    synthesis: 10
+    utility: 10
+  traction_subscores:
+    hook_strength: 9
+    thesis_compression: 10
+    frame_portability: 10
+    audience_breadth: 10
+    debate_energy: 10
+    public_packaging: 10
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 10
+    paragraph_control: 10
+    structural_pacing: 10
+    evidence_integration: 10
+    ending_strength: 10
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 10
+    thesis_lock: 10
+    development: 10
+    borders: 10
+    ending: 10
+    reference_handling: 10
+  rationale:
+    whole_essay_note: Corpus-defining. The highest level of precision and craft in
+      the archive. Resolves a massive technical ambiguity into a sharp, portable frame.
+    opening_anchor: The model doesn't hallucinate facts; it collapses role assignments.
+    middle_anchor: Binding is the glue of reasoning.
+    ending_anchor: Mind the gap.
+drafts:
+- id: architecture-and-agent-memory
+  title: Architecture and Agent Memory
+  one_line_identity: flagship essay with research discipline
+  problem: Requires stronger ignition and thesis lock.
+  current_position:
+    traction: 7
+    craft: 7
+    debate: 7
+    precision: 7
+    synthesis: 8
+    utility: 7
+  target_position:
+    traction: 9
+    craft: 8
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 8
+  pulls:
+  - essay: The Transformer Attractor
+    section: Opening
+    desired_strength: conflict
+    strength: high
+  - essay: The Autonomy Tax
+    section: Ending
+    desired_strength: stakes
+    strength: high
+  resists:
+  - essay: The Hardware Friction Map
+    risk: utility over narrative

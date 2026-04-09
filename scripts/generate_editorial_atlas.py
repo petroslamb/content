@@ -51,10 +51,19 @@ def main() -> None:
     }
     
     for path in rubric_paths:
+        if path.name == "rubric_assessments_template.yaml":
+            continue
+            
         model_id = path.stem.replace("rubric_assessments_", "").replace("_", "-")
-        atlas_node = build_editorial_atlas_data(rubric_path=path)
-        combined_atlas["models"][model_id] = atlas_node
-        
+        try:
+            atlas_node = build_editorial_atlas_data(rubric_path=path)
+            if not atlas_node:
+                continue
+            combined_atlas["models"][model_id] = atlas_node
+        except SystemExit as e:
+            print(f"Skipping model {model_id} due to incomplete audit: {e}")
+            continue
+            
     if "gpt-5-4-xhigh" in combined_atlas["models"]:
         combined_atlas["defaultModel"] = "gpt-5-4-xhigh"
     elif rubric_paths:
