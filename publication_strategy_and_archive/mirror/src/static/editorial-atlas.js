@@ -93,6 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return essay.short_label || essay.title;
   }
 
+  function essayMetricSummary(essay) {
+    return `${essay.title}. Traction ${essay.traction}, craft ${essay.craft}, publication power ${essay.publication_power}, debate ${essay.debate}, precision ${essay.precision}, synthesis ${essay.synthesis}, utility ${essay.utility}.`;
+  }
+
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
   }
@@ -305,9 +309,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <h3>${shortTitle(essay)}</h3>
       <p>${essay.identity}</p>
       <div class="atlas-compact-grid">
-        <div class="atlas-compact-box"><strong>${essay.debate}</strong><span>debate</span></div>
-        <div class="atlas-compact-box"><strong>${essay.precision}</strong><span>precision</span></div>
-        <div class="atlas-compact-box"><strong>${essay.confidence}</strong><span>confidence</span></div>
+        <div class="atlas-compact-box atlas-tooltip-target" data-tooltip="Debate ${essay.debate}: how naturally this essay invites public argument, reaction, or discussion."><strong>${essay.debate}</strong><span>debate</span></div>
+        <div class="atlas-compact-box atlas-tooltip-target" data-tooltip="Precision ${essay.precision}: how clearly this essay defines borders, scope, and concept control."><strong>${essay.precision}</strong><span>precision</span></div>
+        <div class="atlas-compact-box atlas-tooltip-target" data-tooltip="Confidence ${essay.confidence}: how directly and deeply this essay was read during the scoring pass."><strong>${essay.confidence}</strong><span>confidence</span></div>
       </div>
     `;
   }
@@ -352,6 +356,14 @@ document.addEventListener("DOMContentLoaded", () => {
     synthesisNode.textContent = `synthesis ${essay.synthesis}, utility ${essay.utility}`;
     openingNode.textContent = `opening ${essay.opening}, ending ${essay.ending}, gap ${essay.opening - essay.ending > 0 ? "+" : ""}${essay.opening - essay.ending}`;
     readNode.textContent = compareRead(essay);
+    debateNode.classList.add("atlas-tooltip-target");
+    synthesisNode.classList.add("atlas-tooltip-target");
+    openingNode.classList.add("atlas-tooltip-target");
+    readNode.classList.add("atlas-tooltip-target");
+    debateNode.dataset.tooltip = `Debate ${essay.debate}, precision ${essay.precision}. This view shows how much the essay trades public argument for conceptual control.`;
+    synthesisNode.dataset.tooltip = `Synthesis ${essay.synthesis}, utility ${essay.utility}. This view shows whether the essay behaves more like an archive anchor or an operator-facing object.`;
+    openingNode.dataset.tooltip = `Opening ${essay.opening}, ending ${essay.ending}. Positive gap means the essay opens stronger than it lands; negative gap means the close is stronger than the ignition.`;
+    readNode.dataset.tooltip = compareRead(essay);
   }
 
   function renderDetail(essay) {
@@ -367,10 +379,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("atlas-detail-sections").textContent =
       `opening ${essay.opening}, thesis ${essay.thesis_lock}, development ${essay.development}, borders ${essay.borders}, ending ${essay.ending}, refs ${essay.reference_handling}`;
     document.getElementById("atlas-detail-chips").innerHTML = `
-      <span class="atlas-chip">${essay.identity}</span>
-      <span class="atlas-chip">traction ${essay.traction}</span>
-      <span class="atlas-chip">craft ${essay.craft}</span>
-      <span class="atlas-chip">confidence ${essay.confidence}</span>
+      <span class="atlas-chip atlas-tooltip-target" data-tooltip="Editorial identity: ${essay.identity}.">${essay.identity}</span>
+      <span class="atlas-chip atlas-tooltip-target" data-tooltip="Traction ${essay.traction}: how well this essay works as a public object.">traction ${essay.traction}</span>
+      <span class="atlas-chip atlas-tooltip-target" data-tooltip="Craft ${essay.craft}: how strong this essay is as prose and essay architecture.">craft ${essay.craft}</span>
+      <span class="atlas-chip atlas-tooltip-target" data-tooltip="Confidence ${essay.confidence}: how stable this score is within the current atlas pass.">confidence ${essay.confidence}</span>
     `;
   }
 
@@ -382,6 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-essay-title]").forEach((node) => {
       node.classList.toggle("selected-row", node.dataset.essayTitle === essay.title);
     });
+    bindTooltips();
   }
 
   function setSelectedEssay(title) {
@@ -441,7 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const labelX = x + essay.label_dx;
       const labelY = y + essay.label_dy;
       return `
-        <g class="atlas-scatter-point" data-essay-title="${essay.title}" style="cursor:pointer">
+        <g class="atlas-scatter-point atlas-tooltip-target" data-essay-title="${essay.title}" data-tooltip="${essayMetricSummary(essay)} ${xLabel} ${essay[xKey]}, ${yLabel} ${essay[yKey]}." style="cursor:pointer">
           <circle cx="${x}" cy="${y}" r="${r}" fill="${metricColor(essay.publication_power)}" fill-opacity="${confidenceOpacity(essay.confidence)}" stroke="#fff8f0" stroke-width="2" stroke-dasharray="${confidenceStroke(essay.confidence)}">
             <title>${essay.title}</title>
           </circle>
@@ -467,6 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
     rootNode.querySelectorAll(".atlas-scatter-point").forEach((node) => {
       node.addEventListener("click", () => setSelectedEssay(node.dataset.essayTitle));
     });
+    bindTooltips();
   }
 
   function renderHeatmap() {
@@ -475,9 +489,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .slice()
       .sort((a, b) => b.publication_power - a.publication_power || b.traction - a.traction)
       .map((essay) => {
-        const metrics = ["opening", "thesis_lock", "development", "borders", "ending", "reference_handling"]
-          .map((key) => `<td class="num"><span class="atlas-heat-cell" style="background:${heatColor(essay[key])}">${essay[key]}</span></td>`)
-          .join("");
         const pairs = [
           ["opening", essay.opening],
           ["thesis", essay.thesis_lock],
@@ -490,8 +501,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return `
           <tr class="atlas-click-row" data-essay-title="${essay.title}">
             <td><strong>${essay.title}</strong></td>
-            ${metrics}
-            <td>${powerSource}</td>
+            ${["opening", "thesis_lock", "development", "borders", "ending", "reference_handling"]
+              .map((key) => `<td class="num"><span class="atlas-heat-cell atlas-tooltip-target" data-tooltip="${essay.title}: ${key.replace(/_/g, " ")} score ${essay[key]}.">${essay[key]}</span></td>`)
+              .join("")}
+            <td><span class="atlas-tooltip-target" data-tooltip="${essay.title}: strongest section slot is ${powerSource}.">${powerSource}</span></td>
           </tr>
         `;
       })
@@ -500,6 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.querySelectorAll("[data-essay-title]").forEach((node) => {
       node.addEventListener("click", () => setSelectedEssay(node.dataset.essayTitle));
     });
+    bindTooltips();
   }
 
   function renderMiniTable(tableId, rows, columns) {
@@ -513,6 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.querySelectorAll("[data-essay-title]").forEach((node) => {
       node.addEventListener("click", () => setSelectedEssay(node.dataset.essayTitle));
     });
+    bindTooltips();
   }
 
   function renderMoveMatrix() {
@@ -613,7 +628,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ...model.risks.map((item) => ({ ...item, kind: "risk" })),
     ];
     tbody.innerHTML = rows.map((item) => `
-      <tr class="atlas-click-row" data-essay-title="${item.essay}">
+      <tr class="atlas-click-row atlas-tooltip-target" data-essay-title="${item.essay}" data-tooltip="${item.relation}: ${item.essay}. ${item.note}">
         <td><span class="atlas-route-badge atlas-route-badge--${item.kind}">${item.relation}</span></td>
         <td><strong>${item.essay}</strong></td>
         <td>${item.note}</td>
@@ -622,6 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.querySelectorAll("[data-essay-title]").forEach((node) => {
       node.addEventListener("click", () => setSelectedEssay(node.dataset.essayTitle));
     });
+    bindTooltips();
   }
 
   function renderRoutingDiagram(center, model) {
@@ -744,7 +760,13 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     rootNode.querySelectorAll(".atlas-vector-node").forEach((node) => {
       node.addEventListener("click", () => setSelectedEssay(node.dataset.essayTitle));
+      const match = nodes.find((item) => item.title === node.dataset.essayTitle);
+      if (match) {
+        node.classList.add("atlas-tooltip-target");
+        node.dataset.tooltip = `${match.short}: ${match.subtitle}`;
+      }
     });
+    bindTooltips();
   }
 
   function renderRoutingTool() {
