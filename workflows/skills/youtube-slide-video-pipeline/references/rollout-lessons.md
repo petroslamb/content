@@ -8,6 +8,10 @@ These constraints came from the Operating Agents YouTube production rollout.
 - Low match scores are review targets, not auto-accepted timings.
 - Some decks diverge from spoken order. Favor semantic transcript order and record that deliberately in the verified cue sheet.
 - Zero-byte local SRT files are not valid inputs. Recover a real subtitle file before building cues.
+- When only local audio exists, the temporary unlisted-upload path is a valid caption-recovery step. Use it to get a real `.srt`, then delete the temporary video.
+- If a raw numbered deck already follows the spoken order, keep all numbered slides in the reviewed cue sheet. Do not let weak OCR matches drop half the deck.
+- Correct slide timing is more important than uniform spacing. Even spacing is only a drafting scaffold.
+- Verify final MP4 duration against the audio. If the container overruns, trim it back to the narration length before promotion.
 
 ## API Limits And Fallbacks
 

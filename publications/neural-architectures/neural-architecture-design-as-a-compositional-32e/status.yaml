@@ -1,7 +1,7 @@
 kind: leaf
 publication: neural-architecture-design-as-a-compositional-32e
 parent_package: neural-architectures
-revision: 3
+revision: 4
 stages:
   paper_intake:
     done: true
@@ -25,8 +25,8 @@ stages:
     done: false
     last_updated: '2026-04-07'
   youtube_production:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-09'
   distribution:
     done: false
     last_updated: null
