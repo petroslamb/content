@@ -102,3 +102,13 @@ Two secondary anchors also matter:
 Use the atlas to route and diagnose drafts, not to crown one permanent winner.
 The useful question is not "which essay is best?" but "what kind of object is
 this new essay trying to become, and which existing objects should pull it?"
+
+## Zero-Knowledge Model Scoring
+
+If an LLM or AI agent is tasked with running the editorial atlas scoring pass for a new model identity, it **must** perform a zero-knowledge evaluation. 
+
+The rule is strict:
+1. The scoring model may **not** read any existing `rubric_assessments_*.yaml` files or `atlas_data.json` before generating its scores. Doing so creates a baseline leak.
+2. The scoring model may **not** read any legacy markdown files in `archive/` containing older scores (like prior `essay_atlas.md` runs).
+3. The model must start exclusively from `rubric_assessments_template.yaml`, which contains the schema and essay list but zeroed-out scores.
+

@@ -1,0 +1,1122 @@
+version: 1
+corpus_source: publication_strategy_and_archive/substack_archive
+model_display_name: TEMPLATE (DO NOT SCORE HERE)
+score_scale: 1-10 qualitative manual scoring
+status_notes:
+  template: This is a blank template for zero-knowledge model scoring. Do not alter existing .yaml files to create scores. Copy this file and fill it out from scratch.
+corpus:
+  include_public_archive_posts: true
+  exclusions:
+  - title: Welcome
+    reason: Permanent exclusion. Housekeeping launch note rather than an essay object for atlas scoring.
+essays:
+- title: 'Neural Architecture Design as a Reusable Scaffold: A History Review'
+  rubric_status: pending
+  short_label: Reusable Scaffold
+  words: 5162
+  identity: historical synthesis / architecture thesis essay
+  signature: historical through-line + scaffold reframing
+  overpull_risk: orderly chronology can soften ignition and public edge
+  confidence: low
+  moves:
+  - historical_synthesis
+  - coined_frame_with_borders
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Autonomous AI Agents: Core Foundations and Recent Breakthroughs'
+  rubric_status: pending
+  short_label: Agent Revolution
+  words: 7075
+  identity: large survey / reading-guide essay
+  signature: breadth and map-making
+  overpull_risk: chapterization dilutes compression
+  confidence: low
+  moves:
+  - scroll_map
+  - historical_synthesis
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\u20132025)"
+  rubric_status: pending
+  short_label: What Actually Works
+  words: 10238
+  identity: long-form evidence article
+  signature: evidence-backed synthesis
+  overpull_risk: front matter and scale can slow momentum
+  confidence: low
+  moves:
+  - scroll_map
+  - historical_synthesis
+  - practical_heuristic_section
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: The Hardware Friction Map
+  rubric_status: pending
+  short_label: Hardware Friction Map
+  words: 2835
+  identity: practitioner guide / derivative shortform
+  signature: heuristics and scorecard thinking
+  overpull_risk: depends on companion frame if stretched too far
+  confidence: low
+  moves:
+  - coined_frame_with_borders
+  - practical_heuristic_section
+  - builder_first_doctrine
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: The Orchestration Paradigm Series
+  rubric_status: pending
+  short_label: Orchestration Series
+  words: 4097
+  identity: series architecture / entry portal
+  signature: packaging and orientation
+  overpull_risk: scaffold can outweigh the essay object
+  confidence: low
+  moves:
+  - scroll_map
+  - series_packaging
+  - chapterized_technical_explainer
+  - contrarian_compression
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'The Orchestration Paradigm: Issue 2 - The Factory'
+  rubric_status: pending
+  short_label: Factory
+  words: 2445
+  identity: process and evaluation dissection
+  signature: systems detail and metric critique
+  overpull_risk: too internal when isolated from series
+  confidence: low
+  moves:
+  - chapterized_technical_explainer
+  - series_packaging
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'The Orchestration Paradigm: Issue 3 - The Behavior'
+  rubric_status: pending
+  short_label: Behavior
+  words: 2052
+  identity: behavior-layer continuation
+  signature: conceptual continuity inside the series
+  overpull_risk: partial-object feel outside sequence
+  confidence: low
+  moves:
+  - chapterized_technical_explainer
+  - series_packaging
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'The Orchestration Paradigm: Issue 4 - The Reality'
+  rubric_status: pending
+  short_label: Reality
+  words: 2214
+  identity: late-series reality check
+  signature: production framing and payoff
+  overpull_risk: depends on series context
+  confidence: low
+  moves:
+  - chapterized_technical_explainer
+  - series_packaging
+  - doctrine_ending
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: When the LLM Programs Its Own Thinking
+  rubric_status: pending
+  short_label: LLM Programs Itself
+  words: 2516
+  identity: technical builder essay
+  signature: concrete implementation + shared-REPL novelty
+  overpull_risk: ending tapers into documentation
+  confidence: low
+  moves:
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: The Transformer Attractor
+  rubric_status: pending
+  short_label: Transformer Attractor
+  words: 3146
+  identity: flagship contrarian thesis essay
+  signature: hook + compression + hard landing
+  overpull_risk: framework confidence outruns nuance
+  confidence: low
+  moves:
+  - failure_or_anomaly_cold_open
+  - contrarian_compression
+  - falsifiable_prediction_close
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: The Autonomy Tax
+  rubric_status: pending
+  short_label: Autonomy Tax
+  words: 2804
+  identity: public framework / operator essay
+  signature: vivid incident + practical doctrine
+  overpull_risk: managerial frame can flatten elegance
+  confidence: low
+  moves:
+  - failure_or_anomaly_cold_open
+  - coined_frame_with_borders
+  - builder_first_doctrine
+  - practical_heuristic_section
+  - falsifiable_prediction_close
+  - doctrine_ending
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: The Moltbook Phenomenon
+  rubric_status: pending
+  short_label: Moltbook
+  words: 2510
+  identity: topical narrative intervention
+  signature: event hijack + narrative propulsion
+  overpull_risk: topicality decays faster than framework pieces
+  confidence: low
+  moves:
+  - topical_narrative_hijack
+  - failure_or_anomaly_cold_open
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: The Illusion of the Swarm
+  rubric_status: pending
+  short_label: Illusion of the Swarm
+  words: 3913
+  identity: balanced synthesis / builder essay
+  signature: caveated contrarianism + literature weave
+  overpull_risk: can lose energy if over-qualified
+  confidence: low
+  moves:
+  - contrarian_compression
+  - builder_first_doctrine
+  - historical_synthesis
+  - practical_heuristic_section
+  - falsifiable_prediction_close
+  - doctrine_ending
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Operating Agents Bonus: Workflow Optimization and Evaluation'
+  rubric_status: pending
+  short_label: OA Bonus
+  words: 2215
+  identity: operator appendix / optimization chapter
+  signature: bounded evaluation doctrine
+  overpull_risk: more useful than magnetic as a public object
+  confidence: low
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Operating Agents I: Action Systems and Tool Use'
+  rubric_status: pending
+  short_label: OA I
+  words: 2688
+  identity: builder-first chapter
+  signature: conservative doctrine + practical surface framing
+  overpull_risk: chapter form narrows standalone spread
+  confidence: low
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Operating Agents II: Memory Systems and Authority'
+  rubric_status: pending
+  short_label: OA II
+  words: 2485
+  identity: builder-first framework chapter
+  signature: taxonomy and authority framing
+  overpull_risk: can read as package-internal if detached
+  confidence: low
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Operating Agents III: Reasoning Scaffolds and Planning'
+  rubric_status: pending
+  short_label: OA III
+  words: 2405
+  identity: builder-first diagnosis chapter
+  signature: failure diagnosis + build-order framing
+  overpull_risk: risks plateau if borrowed without stakes
+  confidence: low
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Operating Agents IV: Multi-Agent Boundaries and Handoffs'
+  rubric_status: pending
+  short_label: OA IV
+  words: 2168
+  identity: boundary-setting chapter
+  signature: escalation criteria and decision rules
+  overpull_risk: narrower standalone audience than general agent essays
+  confidence: low
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  - coined_frame_with_borders
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Operating Agents Guide: Preface'
+  rubric_status: pending
+  short_label: OA Preface
+  words: 1713
+  identity: package contract / doctrine note
+  signature: package identity and standards
+  overpull_risk: not designed as a standalone flagship object
+  confidence: low
+  moves:
+  - series_packaging
+  - doctrine_ending
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: 'Operating Agents V: Trust Boundaries and Agent Safety'
+  rubric_status: pending
+  short_label: OA V
+  words: 2220
+  identity: safety architecture chapter
+  signature: safety as system design, not suffix
+  overpull_risk: reference-heavy taper can drain closure
+  confidence: low
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  - doctrine_ending
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+- title: The Binding Gap
+  rubric_status: pending
+  short_label: Binding Gap
+  words: 2203
+  identity: coined concept / precision essay
+  signature: border-setting + exact naming
+  overpull_risk: can become too careful or narrow
+  confidence: low
+  moves:
+  - failure_or_anomaly_cold_open
+  - coined_frame_with_borders
+  direct_scores:
+    debate: 0
+    precision: 0
+    synthesis: 0
+    utility: 0
+  traction_subscores:
+    hook_strength: 0
+    thesis_compression: 0
+    frame_portability: 0
+    audience_breadth: 0
+    debate_energy: 0
+    public_packaging: 0
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 0
+    paragraph_control: 0
+    structural_pacing: 0
+    evidence_integration: 0
+    ending_strength: 0
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 0
+    thesis_lock: 0
+    development: 0
+    borders: 0
+    ending: 0
+    reference_handling: 0
+  rationale:
+    whole_essay_note: null
+    opening_anchor: null
+    middle_anchor: null
+    ending_anchor: null
+drafts:
+- id: architecture-and-agent-memory
+  title: Architecture and Agent Memory
+  one_line_identity: flagship essay with research discipline
+  problem: The draft needs stronger ignition, a clearer thesis lock, and tighter borders without losing its synthesis-heavy middle.
+  current_position:
+    traction: 7
+    craft: 7
+    debate: 7
+    precision: 7
+    synthesis: 8
+    utility: 7
+  target_position:
+    traction: 9
+    craft: 8
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 8
+  pulls:
+  - essay: The Transformer Attractor
+    section: Opening
+    desired_strength: conflict + compression
+    strength: high
+  - essay: The Transformer Attractor
+    section: Thesis Lock
+    desired_strength: portable structural claim
+    strength: high
+  - essay: The Illusion of the Swarm
+    section: Development
+    desired_strength: research-backed synthesis
+    strength: medium
+  - essay: The Binding Gap
+    section: Borders / Counterpressure
+    desired_strength: exact boundaries
+    strength: medium
+  - essay: The Autonomy Tax
+    section: Ending
+    desired_strength: doctrine close with stakes
+    strength: medium
+  resists:
+  - essay: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\u20132025)"
+    risk: survey scale in the opening

@@ -1,0 +1,1185 @@
+version: 1
+corpus_source: publication_strategy_and_archive/substack_archive
+model_display_name: Gemini 3.1 Pro (High)
+score_scale: 1-10 qualitative manual scoring
+status_notes:
+  audited: Full qualitative audit by Gemini 3.1 Pro High, rigorous structural filtering, strict baseline enforcement.
+corpus:
+  include_public_archive_posts: true
+  exclusions:
+  - title: Welcome
+    reason: Permanent exclusion. Housekeeping launch note rather than an essay object for atlas scoring.
+essays:
+- title: 'Neural Architecture Design as a Reusable Scaffold: A History Review'
+  rubric_status: audited
+  short_label: Reusable Scaffold
+  words: 5162
+  identity: historical synthesis / architecture thesis essay
+  signature: historical through-line + scaffold reframing
+  overpull_risk: orderly chronology can soften ignition and public edge
+  confidence: high
+  moves:
+  - historical_synthesis
+  - coined_frame_with_borders
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 8
+    utility: 7
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 7
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 7
+    borders: 7
+    ending: 7
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
+    opening_anchor: 'Lines 10-20: For a long stretch of deep learning history, architecture design meant deciding what each part of a network should do. T...'
+    middle_anchor: 'Lines 68-74: ## References ### Krizhevsky et al. (2012) *ImageNet Classification with Deep Convolutional Neural Networks*<https://pap...'
+    ending_anchor: 'Lines 126-132: ### Shazeer et al. (2017) *Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer*<https://arxi...'
+  traction: 7
+  craft: 7
+  publication_power: 7
+- title: 'Autonomous AI Agents: Core Foundations and Recent Breakthroughs'
+  rubric_status: audited
+  short_label: Agent Revolution
+  words: 7075
+  identity: large survey / reading-guide essay
+  signature: breadth and map-making
+  overpull_risk: chapterization dilutes compression
+  confidence: high
+  moves:
+  - scroll_map
+  - historical_synthesis
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 6
+    synthesis: 8
+    utility: 6
+  traction_subscores:
+    hook_strength: 6
+    thesis_compression: 6
+    frame_portability: 6
+    audience_breadth: 6
+    debate_energy: 6
+    public_packaging: 6
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 6
+    paragraph_control: 6
+    structural_pacing: 6
+    evidence_integration: 7
+    ending_strength: 5
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 6
+    thesis_lock: 6
+    development: 7
+    borders: 5
+    ending: 5
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
+    opening_anchor: 'Lines 10-20: *How LLM-based agents evolved from simple chatbots to autonomous researchers, collaborators, and problem-solvers* ## # *...'
+    middle_anchor: 'Lines 208-214: # agent B decides on an action or a textual output response = agentB.decode_action(agentB_state) ``` The important shift...'
+    ending_anchor: 'Lines 407-413: - How can we guarantee safety and alignment in agents that learn autonomously? - What formal tools will help verify the ...'
+  traction: 6
+  craft: 6
+  publication_power: 6
+- title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\u20132025)"
+  rubric_status: audited
+  short_label: What Actually Works
+  words: 10238
+  identity: long-form evidence article
+  signature: evidence-backed synthesis
+  overpull_risk: front matter and scale can slow momentum
+  confidence: high
+  moves:
+  - scroll_map
+  - historical_synthesis
+  - practical_heuristic_section
+  direct_scores:
+    debate: 7
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 8
+    audience_breadth: 8
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 9
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 8
+    borders: 7
+    ending: 6
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Massive evidence accumulation. Successfully anchors hardware determinism with concrete implementation delays. A very strong utility map.
+    opening_anchor: 'Lines 10-20: - FlashAttention, GQA/MLA, and MoE win because they map cleanly onto GPU primitives and memory hierarchies; KANs and pur...'
+    middle_anchor: 'Lines 237-243: **KV Cache (Key-Value Cache)** During autoregressive generation, models cache the Key and Value tensors from previous to...'
+    ending_anchor: 'Lines 464-470: - Petros, P. (2024). *Neural Architecture Design as a Compositional Language* (previous post that the current work exten...'
+  traction: 8
+  craft: 7
+  publication_power: 8
+- title: The Hardware Friction Map
+  rubric_status: audited
+  short_label: Hardware Friction Map
+  words: 2835
+  identity: practitioner guide / derivative shortform
+  signature: heuristics and scorecard thinking
+  overpull_risk: depends on companion frame if stretched too far
+  confidence: high
+  moves:
+  - coined_frame_with_borders
+  - practical_heuristic_section
+  - builder_first_doctrine
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 6
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 7
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 6
+    thesis_lock: 7
+    development: 7
+    borders: 7
+    ending: 6
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
+    opening_anchor: "Lines 10-20: ## TL;DR - On 2023\u20132025 GPU stacks, **hardware and infrastructure economics** are a better early predictor of which arch..."
+    middle_anchor: "Lines 81-87: The friction zone for State Space Models is **not constant\u2014it depends on scale**. This nuance is critical for understand..."
+    ending_anchor: "Lines 153-159: - PyTorch 2.2 release notes (Jan 2024) **SSM / Mamba** - Gu et al., 2021 \u2014 S4 (arXiv:2111.00396) - Gu & Dao et al., 2023..."
+  traction: 7
+  craft: 7
+  publication_power: 7
+- title: The Orchestration Paradigm Series
+  rubric_status: audited
+  short_label: Orchestration Series
+  words: 4097
+  identity: series architecture / entry portal
+  signature: packaging and orientation
+  overpull_risk: scaffold can outweigh the essay object
+  confidence: high
+  moves:
+  - scroll_map
+  - series_packaging
+  - chapterized_technical_explainer
+  - contrarian_compression
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 7
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 6
+    paragraph_control: 6
+    structural_pacing: 6
+    evidence_integration: 7
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 7
+    development: 7
+    borders: 6
+    ending: 6
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
+    opening_anchor: 'Lines 10-20: Not through some architectural breakthrough. Not through better training data. Through a deceptively simple idea: teach ...'
+    middle_anchor: "Lines 111-117: The objective is to maximize the expected reward: *J*(*\u03B8*)\u2004=\u2004*E\u03C4*\u2004\u223C\u2004*\u03C0\u03B8*[*R*(*\u03C4*)] where *\u03C4* is the trajectory (sequence..."
+    ending_anchor: 'Lines 212-218: ### Appendix: RL Methods Evolution (Optional) > This appendix traces the lineage of policy optimization methods leading ...'
+  traction: 7
+  craft: 6
+  publication_power: 7
+- title: 'The Orchestration Paradigm: Issue 2 - The Factory'
+  rubric_status: audited
+  short_label: Factory
+  words: 2445
+  identity: process and evaluation dissection
+  signature: systems detail and metric critique
+  overpull_risk: too internal when isolated from series
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - series_packaging
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 5
+    thesis_compression: 6
+    frame_portability: 6
+    audience_breadth: 6
+    debate_energy: 6
+    public_packaging: 6
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 6
+    paragraph_control: 6
+    structural_pacing: 6
+    evidence_integration: 7
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 5
+    thesis_lock: 6
+    development: 7
+    borders: 6
+    ending: 6
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
+    opening_anchor: "Lines 10-20: While the headlines focus on the 8B model beating GPT-5, the real engineering breakthrough wasn\u2019t the model itself. **It..."
+    middle_anchor: "Lines 72-78: **Humanity\u2019s Last Exam (HLE)** consists of PhD-level questions. Most LLMs fail these not because they can\u2019t write, but b..."
+    ending_anchor: 'Lines 134-140: ### Annotated Bibliography **Zhao et al. (2023)** - *PyTorch FSDP: Experiences on Scaling Llama 2 Training*: Technical d...'
+  traction: 6
+  craft: 6
+  publication_power: 6
+- title: 'The Orchestration Paradigm: Issue 3 - The Behavior'
+  rubric_status: audited
+  short_label: Behavior
+  words: 2052
+  identity: behavior-layer continuation
+  signature: conceptual continuity inside the series
+  overpull_risk: partial-object feel outside sequence
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - series_packaging
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 5
+    thesis_compression: 6
+    frame_portability: 6
+    audience_breadth: 6
+    debate_energy: 6
+    public_packaging: 6
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 6
+    paragraph_control: 6
+    structural_pacing: 6
+    evidence_integration: 7
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 5
+    thesis_lock: 6
+    development: 7
+    borders: 6
+    ending: 6
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
+    opening_anchor: 'Lines 10-20: If you watch ToolOrchestra run for 1,000 hours, you start to see patterns. It behaves like a junior software engineer. I...'
+    middle_anchor: 'Lines 47-53: ## Part 8: Preference Learning and User Alignment ![](assets/asset-29a1e8012f21a427.png) ### Attention Injection (Prefer...'
+    ending_anchor: "Lines 85-91: ### The Hidden Dependency The system\u2019s generalization is entirely dependent on the **Accuracy and Honesty of the Tool Co..."
+  traction: 6
+  craft: 6
+  publication_power: 6
+- title: 'The Orchestration Paradigm: Issue 4 - The Reality'
+  rubric_status: audited
+  short_label: Reality
+  words: 2214
+  identity: late-series reality check
+  signature: production framing and payoff
+  overpull_risk: depends on series context
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  - series_packaging
+  - doctrine_ending
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 5
+    thesis_compression: 6
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 7
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 6
+    paragraph_control: 6
+    structural_pacing: 6
+    evidence_integration: 7
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: Migrated from existing atlas output during rubric-source backfill.
+  section_scores:
+    opening: 5
+    thesis_lock: 6
+    development: 7
+    borders: 7
+    ending: 7
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
+    opening_anchor: 'Lines 10-20: If you ask a Research Scientist about agents, they will talk about Chain-of-Thought and recursive reasoning. If you ask ...'
+    middle_anchor: 'Lines 49-55: This is **Semantic Generalization**, and it works. However, **Economic Generalization** is fragile. The orchestrator lea...'
+    ending_anchor: 'Lines 89-95: Consider commenting with your thoughts below, I will be glad to respond. [Leave a comment](https://lambpetros.substack.c...'
+  traction: 6
+  craft: 6
+  publication_power: 6
+- title: When the LLM Programs Its Own Thinking
+  rubric_status: audited
+  short_label: LLM Programs Itself
+  words: 2516
+  identity: technical builder essay
+  signature: concrete implementation + shared-REPL novelty
+  overpull_risk: ending tapers into documentation
+  confidence: high
+  moves:
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 6
+    paragraph_control: 6
+    structural_pacing: 6
+    evidence_integration: 7
+    ending_strength: 5
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 7
+    borders: 6
+    ending: 5
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
+    opening_anchor: 'Lines 10-20: Long prompts should not be fed into the neural network directly. They should be treated as part of the environment that ...'
+    middle_anchor: 'Lines 83-89: environment_kwargs={ "sync_to_user_ns": True, "sync_from_user_ns": True } ) rlm.completion("Add 5 to the Score column of...'
+    ending_anchor: 'Lines 156-162: ### Context-Folding: Scaling Long-Horizon LLM Agents Sun, J., Zhang, Z., Chen, Y., & Kong, L. (2025). *arXiv:2510.11967*...'
+  traction: 7
+  craft: 6
+  publication_power: 7
+- title: The Transformer Attractor
+  rubric_status: audited
+  short_label: Transformer Attractor
+  words: 3146
+  identity: flagship contrarian thesis essay
+  signature: hook + compression + hard landing
+  overpull_risk: framework confidence outruns nuance
+  confidence: high
+  moves:
+  - failure_or_anomaly_cold_open
+  - contrarian_compression
+  - falsifiable_prediction_close
+  direct_scores:
+    debate: 10
+    precision: 8
+    synthesis: 8
+    utility: 7
+  traction_subscores:
+    hook_strength: 10
+    thesis_compression: 10
+    frame_portability: 8
+    audience_breadth: 9
+    debate_energy: 10
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 9
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 8
+    ending_strength: 10
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: Migrated from existing atlas output during rubric-source backfill.
+  section_scores:
+    opening: 10
+    thesis_lock: 10
+    development: 9
+    borders: 8
+    ending: 10
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Flagship contrarian object. The framework is unignorable, though the institutional determinism is slightly overstated. Enforced as the defining anchor for Debate.
+    opening_anchor: 'Lines 10-20: In 2023, Mamba promised to replace attention with elegant state-space math that scaled linearly with context. By 2024, t...'
+    middle_anchor: 'Lines 71-77: 2.5 years after publication, the largest RetNet model is 3B parameters (community-built). No 7B. No 13B. No frontier dep...'
+    ending_anchor: 'Lines 132-138: 2. Transformers become so efficient that further optimization yields diminishing returns (possible by 2030) Neither cond...'
+  traction: 9
+  craft: 9
+  publication_power: 9
+- title: The Autonomy Tax
+  rubric_status: audited
+  short_label: Autonomy Tax
+  words: 2804
+  identity: public framework / operator essay
+  signature: vivid incident + practical doctrine
+  overpull_risk: managerial frame can flatten elegance
+  confidence: high
+  moves:
+  - failure_or_anomaly_cold_open
+  - coined_frame_with_borders
+  - builder_first_doctrine
+  - practical_heuristic_section
+  - falsifiable_prediction_close
+  - doctrine_ending
+  direct_scores:
+    debate: 8
+    precision: 8
+    synthesis: 7
+    utility: 10
+  traction_subscores:
+    hook_strength: 9
+    thesis_compression: 9
+    frame_portability: 8
+    audience_breadth: 8
+    debate_energy: 8
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 8
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: Migrated from existing atlas output during rubric-source backfill.
+  section_scores:
+    opening: 9
+    thesis_lock: 9
+    development: 8
+    borders: 8
+    ending: 9
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Direct operator utility. Pushes purely from the 'tax' equation to operational checks. Anchors the archive for Utility, scoring a strict 10.
+    opening_anchor: "Lines 10-20: The model didn\u2019t hallucinate. It didn\u2019t go off-task. It didn\u2019t need a better prompt. It needed a circuit breaker for con..."
+    middle_anchor: 'Lines 60-66: *For the full scoring rubric, worked examples with mitigation paths, sensitivity analysis, and calibration guidance, see...'
+    ending_anchor: 'Lines 111-117: 18. Observability platform pricing: [LangSmith](https://www.langchain.com/pricing-langsmith), [Braintrust](https://www.b...'
+  traction: 8
+  craft: 8
+  publication_power: 8
+- title: The Moltbook Phenomenon
+  rubric_status: audited
+  short_label: Moltbook
+  words: 2510
+  identity: topical narrative intervention
+  signature: event hijack + narrative propulsion
+  overpull_risk: topicality decays faster than framework pieces
+  confidence: high
+  moves:
+  - topical_narrative_hijack
+  - failure_or_anomaly_cold_open
+  direct_scores:
+    debate: 9
+    precision: 6
+    synthesis: 6
+    utility: 5
+  traction_subscores:
+    hook_strength: 10
+    thesis_compression: 8
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 9
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 7
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 10
+    thesis_lock: 8
+    development: 7
+    borders: 6
+    ending: 8
+    reference_handling: 7
+  rationale:
+    whole_essay_note: Event-driven narrative with massive ignition. Excels at Hook and Debate, but lacks the formal precision and synthesis of the permanent architectures.
+    opening_anchor: 'Lines 10-20: In early March 2026, Meta bought Moltbook. This was a social network that had existed for exactly forty-two days. Its da...'
+    middle_anchor: "Lines 39-45: It got darker. An autonomous marketplace called \u201C[Molt Road](https://www.vectra.ai/blog/molt-road-and-the-automation-of-..."
+    ending_anchor: 'Lines 69-75: ![](assets/asset-0028b2730dab7487.png) ## What Moltbook Proved Moltbook was a disposable prototype. It was insecure, cha...'
+  traction: 8
+  craft: 7
+  publication_power: 8
+- title: The Illusion of the Swarm
+  rubric_status: audited
+  short_label: Illusion of the Swarm
+  words: 3913
+  identity: balanced synthesis / builder essay
+  signature: caveated contrarianism + literature weave
+  overpull_risk: can lose energy if over-qualified
+  confidence: high
+  moves:
+  - contrarian_compression
+  - builder_first_doctrine
+  - historical_synthesis
+  - practical_heuristic_section
+  - falsifiable_prediction_close
+  - doctrine_ending
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 10
+    utility: 8
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 8
+    debate_energy: 9
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 9
+    ending_strength: 8
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 8
+    development: 9
+    borders: 9
+    ending: 8
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Masterclass in literature integration. Unpacks the swarm assumption and redirects it to routing bottlenecks. Very high synthesis.
+    opening_anchor: 'Lines 10-20: *For many same-model production systems, multiple agents are a temporary way to manage routing, state, and coordination ...'
+    middle_anchor: 'Lines 53-59: ![](assets/asset-0b05dea596fe7622.png) *Agentic Memory* makes a related point for state management ([Yu et al., 2026](ht...'
+    ending_anchor: 'Lines 96-102: ### Z. Liu et al. (2026), [Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization (EMPO2)](ht...'
+  traction: 8
+  craft: 8
+  publication_power: 8
+- title: 'Operating Agents Bonus: Workflow Optimization and Evaluation'
+  rubric_status: audited
+  short_label: OA Bonus
+  words: 2215
+  identity: operator appendix / optimization chapter
+  signature: bounded evaluation doctrine
+  overpull_risk: more useful than magnetic as a public object
+  confidence: high
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 6
+    thesis_compression: 7
+    frame_portability: 6
+    audience_breadth: 6
+    debate_energy: 5
+    public_packaging: 6
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: Migrated from existing atlas output during rubric-source backfill.
+  section_scores:
+    opening: 6
+    thesis_lock: 7
+    development: 7
+    borders: 7
+    ending: 6
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
+    opening_anchor: 'Lines 10-20: ## Once The Agent Works, The Workflow Becomes The Object The first working agent is often where teams begin to lose disc...'
+    middle_anchor: 'Lines 24-30: ![Slide 8: Instrumentation over intuition](assets/asset-8eca0576ba99a57d.jpeg "Slide 8: Instrumentation over intuition")...'
+    ending_anchor: 'Lines 39-45: ## References [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collabora...'
+  traction: 6
+  craft: 7
+  publication_power: 6
+- title: 'Operating Agents I: Action Systems and Tool Use'
+  rubric_status: audited
+  short_label: OA I
+  words: 2688
+  identity: builder-first chapter
+  signature: conservative doctrine + practical surface framing
+  overpull_risk: chapter form narrows standalone spread
+  confidence: high
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 7
+    borders: 7
+    ending: 6
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
+    opening_anchor: 'Lines 10-20: ## When Language Starts Doing Work A language model can explain a batch file rename perfectly and still leave every file...'
+    middle_anchor: 'Lines 24-30: ![Slide 7: Surface Selection Heuristics](assets/asset-91a9f6d4b8f08447.jpeg "Slide 7: Surface Selection Heuristics") Eac...'
+    ending_anchor: 'Lines 38-44: [Action Systems and Tool Use transcript](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/...'
+  traction: 7
+  craft: 7
+  publication_power: 7
+- title: 'Operating Agents II: Memory Systems and Authority'
+  rubric_status: audited
+  short_label: OA II
+  words: 2485
+  identity: builder-first framework chapter
+  signature: taxonomy and authority framing
+  overpull_risk: can read as package-internal if detached
+  confidence: high
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 8
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 6
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
+    opening_anchor: 'Lines 10-20: ## When The Past Becomes Part Of The System A support agent can answer a refund question correctly on Monday and still m...'
+    middle_anchor: 'Lines 25-31: ![Slide 9: The unified memory system](assets/asset-9ce70dc3e221e03e.jpeg "Slide 9: The unified memory system") Several p...'
+    ending_anchor: 'Lines 41-47: [Chapter 3 Blueprint: Memory](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practi...'
+  traction: 7
+  craft: 7
+  publication_power: 7
+- title: 'Operating Agents III: Reasoning Scaffolds and Planning'
+  rubric_status: audited
+  short_label: OA III
+  words: 2405
+  identity: builder-first diagnosis chapter
+  signature: failure diagnosis + build-order framing
+  overpull_risk: risks plateau if borrowed without stakes
+  confidence: high
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 8
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 8
+    development: 8
+    borders: 7
+    ending: 6
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
+    opening_anchor: 'Lines 10-20: ## The Failure Builders Often Misread An agent can produce a polished plan for a refund workflow and still fail as soon ...'
+    middle_anchor: 'Lines 26-32: This distinction also helps explain why fluent reasoning traces are such weak evidence of correctness. A trace can sound...'
+    ending_anchor: 'Lines 43-49: *[Least-to-Most Prompting Enables Complex Reasoning in Large Language Models](https://arxiv.org/abs/2205.10625)* is usef...'
+  traction: 7
+  craft: 7
+  publication_power: 7
+- title: 'Operating Agents IV: Multi-Agent Boundaries and Handoffs'
+  rubric_status: audited
+  short_label: OA IV
+  words: 2168
+  identity: boundary-setting chapter
+  signature: escalation criteria and decision rules
+  overpull_risk: narrower standalone audience than general agent essays
+  confidence: high
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  - coined_frame_with_borders
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 7
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 7
+    borders: 9
+    ending: 6
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
+    opening_anchor: 'Lines 10-20: ## Multi-Agent Starts With A Baseline A team can build an incident workflow with a planner agent, an analyst agent, an e...'
+    middle_anchor: 'Lines 24-30: This is the right context for reading *[MAD](https://arxiv.org/abs/2305.19118)* and *[RECONCILE](https://arxiv.org/abs/2...'
+    ending_anchor: 'Lines 39-45: ## References [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collabora...'
+  traction: 7
+  craft: 7
+  publication_power: 7
+- title: 'Operating Agents Guide: Preface'
+  rubric_status: audited
+  short_label: OA Preface
+  words: 1713
+  identity: package contract / doctrine note
+  signature: package identity and standards
+  overpull_risk: not designed as a standalone flagship object
+  confidence: high
+  moves:
+  - series_packaging
+  - doctrine_ending
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 6
+    thesis_compression: 7
+    frame_portability: 6
+    audience_breadth: 6
+    debate_energy: 5
+    public_packaging: 6
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 6
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 6
+    thesis_lock: 7
+    development: 7
+    borders: 7
+    ending: 7
+    reference_handling: 6
+  rationale:
+    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
+    opening_anchor: 'Lines 10-20: The package was distilled from the broader survey *[Advances and Challenges in Foundation Agents](https://github.com/pet...'
+    middle_anchor: 'Lines 40-46: > > **[Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/mult...'
+    ending_anchor: 'Lines 70-76: > **Read the companion next if you need the wider field map, the omitted taxonomies, or a better guide to the surroundin...'
+  traction: 6
+  craft: 7
+  publication_power: 6
+- title: 'Operating Agents V: Trust Boundaries and Agent Safety'
+  rubric_status: audited
+  short_label: OA V
+  words: 2220
+  identity: safety architecture chapter
+  signature: safety as system design, not suffix
+  overpull_risk: reference-heavy taper can drain closure
+  confidence: high
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  - doctrine_ending
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 7
+    borders: 9
+    ending: 6
+    reference_handling: 8
+  rationale:
+    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
+    opening_anchor: 'Lines 10-20: ## Safety Begins Where The Workflow Touches The World A chatbot that produces a bad sentence inside a browser tab may be...'
+    middle_anchor: 'Lines 25-31: ![Slide 7: Inter-agent contamination flow](assets/asset-8bc052b90a8d088d.jpeg "Slide 7: Inter-agent contamination flow")...'
+    ending_anchor: 'Lines 40-46: [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe...'
+  traction: 7
+  craft: 7
+  publication_power: 7
+- title: The Binding Gap
+  rubric_status: audited
+  short_label: Binding Gap
+  words: 2203
+  identity: coined concept / precision essay
+  signature: border-setting + exact naming
+  overpull_risk: can become too careful or narrow
+  confidence: high
+  moves:
+  - failure_or_anomaly_cold_open
+  - coined_frame_with_borders
+  direct_scores:
+    debate: 7
+    precision: 10
+    synthesis: 9
+    utility: 8
+  traction_subscores:
+    hook_strength: 9
+    thesis_compression: 10
+    frame_portability: 9
+    audience_breadth: 8
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 9
+    paragraph_control: 9
+    structural_pacing: 9
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: Migrated from existing atlas output during rubric-source backfill.
+  section_scores:
+    opening: 9
+    thesis_lock: 9
+    development: 8
+    borders: 10
+    ending: 9
+    reference_handling: 9
+  rationale:
+    whole_essay_note: The strongest single concept definition in the corpus. Isolates a precise structural failure mode away from generic 'hallucination'. Sets the archive baseline for Precision.
+    opening_anchor: 'Lines 10-20: Tell a language model that Tom Smith''s wife is Mary Stone. Then ask who Mary Stone''s husband is. Nothing new has been ad...'
+    middle_anchor: 'Lines 27-33: ## What This Changes Once the family is visible and its mechanistic roots are partly tractable, the productive question ...'
+    ending_anchor: 'Lines 45-51: Supports the claim that semantic-role structure has compact, causally localised circuitry inside large models. ### Tan a...'
+  traction: 8
+  craft: 9
+  publication_power: 8
+drafts:
+- id: architecture-and-agent-memory
+  title: Architecture and Agent Memory
+  one_line_identity: flagship essay with research discipline
+  problem: The draft needs stronger ignition, a clearer thesis lock, and tighter borders without losing its synthesis-heavy middle.
+  current_position:
+    traction: 7
+    craft: 7
+    debate: 7
+    precision: 7
+    synthesis: 8
+    utility: 7
+  target_position:
+    traction: 9
+    craft: 8
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 8
+  pulls:
+  - essay: The Transformer Attractor
+    section: Opening
+    desired_strength: conflict + compression
+    strength: high
+  - essay: The Transformer Attractor
+    section: Thesis Lock
+    desired_strength: portable structural claim
+    strength: high
+  - essay: The Illusion of the Swarm
+    section: Development
+    desired_strength: research-backed synthesis
+    strength: medium
+  - essay: The Binding Gap
+    section: Borders / Counterpressure
+    desired_strength: exact boundaries
+    strength: medium
+  - essay: The Autonomy Tax
+    section: Ending
+    desired_strength: doctrine close with stakes
+    strength: medium
+  resists:
+  - essay: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\u20132025)"
+    risk: survey scale in the opening
