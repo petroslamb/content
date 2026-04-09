@@ -49,6 +49,10 @@ This is a manual first pass. It is meant to be useful, not falsely precise.
 `6-7` solid but uneven or narrower  
 `5` or below noticeable weakness or non-flagship behavior
 
+For reusable scoring rules, dimension anchors, and worksheet format, use
+[`rubric.md`](rubric.md). This file stays shorter and describes the atlas
+method at a package level.
+
 ## Composite Definitions
 
 ### Traction
