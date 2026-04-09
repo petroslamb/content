@@ -1,3 +1,20 @@
+---
+workflow_id: notebooklm_artifacts
+runner_mode: guided
+default_skill: notebooklm-artifact-bundle
+launch_templates: []
+required_context:
+  - canonical live draft
+  - target NotebookLM notebook id or exact title
+  - destination artifacts directory
+expected_outputs:
+  - downloaded artifact bundle in the package artifact surface
+  - task or transcript references needed for later polish
+done_when:
+  - the required NotebookLM artifacts are downloaded into the canonical artifact home
+approval_gate: none
+---
+
 # NotebookLM Artifacts
 
 This is the canonical tracked workflow for generating and downloading NotebookLM media artifacts during essay development.

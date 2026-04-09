@@ -1,132 +1,146 @@
 #!/usr/bin/env python3
 """
-Advisory Package Auditor: Scans a publication package for structural health
-based on the "Scaffold Hypothesis" (workflows/package-normalization/README.md).
+Advisory Package Auditor: scans a publication package for structural health
+based on the scaffold workflow.
 """
 
+from __future__ import annotations
+
 import argparse
-import os
 import re
-import yaml
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-PUBLICATIONS_DIR = REPO_ROOT / "publications"
+from lifecycle import REPO_ROOT, load_status_ref, resolve_package_path
 
-def load_status(package_path):
-    status_path = package_path / "status.yaml"
-    if not status_path.exists():
-        return None
-    with open(status_path) as f:
-        return yaml.safe_load(f)
 
-def scan_for_urls(markdown_path):
+def scan_for_urls(markdown_path: Path) -> set[str]:
     if not markdown_path.exists():
         return set()
     text = markdown_path.read_text()
-    # Simple regex for common academic/source URLs
-    urls = re.findall(r'https?://(?:papers\.nips\.cc|arxiv\.org|pdf|transformer-circuits\.pub)[^\s\)]+', text)
+    urls = re.findall(r"https?://(?:papers\.nips\.cc|arxiv\.org|pdf|transformer-circuits\.pub)[^\s\)]+", text)
     return set(urls)
 
-def audit_package(package_name):
-    package_path = PUBLICATIONS_DIR / package_name
-    if not package_path.exists():
-        return {"id": "error", "message": f"Package '{package_name}' not found."}
 
-    status = load_status(package_path)
-    if not status:
-        return {"id": "warning", "message": "Missing 'status.yaml' manifest."}
+def resolve_evidence_root(package_path: Path, status_data: dict) -> tuple[Path | None, str]:
+    config = status_data.get("config", {})
+    evidence_path = config.get("evidence_path")
+    if evidence_path:
+        resolved = (REPO_ROOT / evidence_path).resolve()
+        return resolved, f"Shared evidence path: {evidence_path}"
 
-    config = status.get("config", {})
-    ignore = config.get("ignore_scaffold_audit", [])
-    
+    for dirname in ["sources", "papers"]:
+        candidate = package_path / dirname
+        if candidate.is_dir():
+            return candidate, f"Local evidence directory: {dirname}/"
+    return None, "No evidence directory configured"
+
+
+def count_local_sources(evidence_root: Path) -> int:
+    for dirname in ["markdown", "sources/markdown", "papers/markdown"]:
+        candidate = evidence_root / dirname
+        if candidate.exists():
+            return len(list(candidate.glob("*.md")))
+    return 0
+
+
+def audit_package(package_arg: str) -> dict:
+    try:
+        manifest_ref, status_data = load_status_ref(package_arg)
+    except FileNotFoundError:
+        package_path = resolve_package_path(package_arg)
+        return {"id": "warning", "message": f"Missing 'status.yaml' manifest in {package_path.relative_to(REPO_ROOT)}."}
+    except ValueError as exc:
+        return {"id": "error", "message": str(exc)}
+
+    package_path = manifest_ref.package_path
+    config = status_data.get("config", {})
+    ignore = set(config.get("ignore_scaffold_audit", []))
+
     report = {
-        "package": package_name,
-        "revision": status.get("revision", 1),
+        "package": manifest_ref.package_key,
+        "revision": status_data.get("revision", 1),
         "checks": [],
-        "evidence_drift": []
+        "evidence_drift": [],
     }
 
-    # 1. Structural Checks
-    dirs_to_check = {
-        "sources": "Evidence layer for research materials",
-        "artifacts": "Output layer for media/production assets",
-        "archive": "Historical draft history"
-    }
-
-    for d, desc in dirs_to_check.items():
-        if d in ignore:
-            continue
-        
-        # Canonical directory is 'papers' for the evidence layer
-        target_dir = d
-        if d == "sources": # Internal check uses 'sources' as the concept name
-             target_dir = "papers"
-
-        p = package_path / target_dir
-        if not p.is_dir():
-            if target_dir == "papers" and (package_path / "sources").is_dir():
-                report["checks"].append({"status": "INFO", "message": f"Legacy folder 'sources/' found. Consider renaming to 'papers/'."})
-            else:
-                report["checks"].append({"status": "WARNING", "message": f"Missing '{target_dir}/' directory. ({desc})"})
+    evidence_root, evidence_label = resolve_evidence_root(package_path, status_data)
+    if evidence_root:
+        if evidence_root.exists():
+            report["checks"].append({"status": "PASS", "message": evidence_label})
         else:
-            report["checks"].append({"status": "PASS", "message": f"'{target_dir}/' directory present."})
-
-    # 2. Pointer Checks
-    md_path_str = config.get("markdown_path")
-    if md_path_str:
-        md_path = REPO_ROOT / md_path_str
-        if not md_path.exists():
-            report["checks"].append({"status": "FAIL", "message": f"config.markdown_path points to missing file: {md_path_str}"})
-        else:
-            report["checks"].append({"status": "PASS", "message": f"Live draft link valid: {md_path.name}"})
-            
-            # 3. Evidence Discovery (Citation Drift)
-            found_urls = scan_for_urls(md_path)
-            if found_urls:
-                # Check sources/markdown for matches (very rough heuristic check for now)
-                sources_dir = package_path / "sources" / "markdown"
-                if not sources_dir.exists():
-                    sources_dir = package_path / "papers" / "markdown" # Compat
-                
-                if sources_dir.exists():
-                    local_count = len(list(sources_dir.glob("*.md")))
-                    if len(found_urls) > local_count + 2: # Buffer for non-paper URLs
-                         report["evidence_drift"].append(f"Draft cites {len(found_urls)} external links, but only {local_count} local sources found.")
-                else:
-                    report["evidence_drift"].append(f"Draft cites {len(found_urls)} external links, but no local sources directory found.")
+            report["checks"].append({"status": "FAIL", "message": f"{evidence_label} does not exist."})
     else:
+        report["checks"].append({"status": "WARNING", "message": "Missing local or shared evidence directory."})
+
+    for dirname, description in {
+        "artifacts": "Output layer for media and production assets",
+        "archive": "Historical draft history",
+    }.items():
+        if dirname in ignore:
+            continue
+        candidate = package_path / dirname
+        if candidate.is_dir():
+            report["checks"].append({"status": "PASS", "message": f"'{dirname}/' directory present."})
+        else:
+            report["checks"].append({"status": "WARNING", "message": f"Missing '{dirname}/' directory. ({description})"})
+
+    markdown_path_str = config.get("markdown_path")
+    if not markdown_path_str:
         report["checks"].append({"status": "WARNING", "message": "Missing 'config.markdown_path' in status.yaml"})
+        return report
+
+    markdown_path = REPO_ROOT / markdown_path_str
+    if not markdown_path.exists():
+        report["checks"].append({"status": "FAIL", "message": f"config.markdown_path points to missing file: {markdown_path_str}"})
+        return report
+
+    report["checks"].append({"status": "PASS", "message": f"Live draft link valid: {markdown_path.name}"})
+
+    found_urls = scan_for_urls(markdown_path)
+    if found_urls and evidence_root and evidence_root.exists():
+        local_count = count_local_sources(evidence_root)
+        if len(found_urls) > local_count + 2:
+            report["evidence_drift"].append(
+                f"Draft cites {len(found_urls)} external links, but only {local_count} local source markdown files were found."
+            )
+    elif found_urls and not evidence_root:
+        report["evidence_drift"].append(
+            f"Draft cites {len(found_urls)} external links, but no local or shared evidence directory is configured."
+        )
 
     return report
 
-def print_report(report):
-    if "id" in report and (report["id"] == "error" or report["id"] == "warning"):
+
+def print_report(report: dict) -> None:
+    if "id" in report and report["id"] in {"error", "warning"}:
         color = "\033[91m" if report["id"] == "error" else "\033[93m"
-        print(f"\n{color}[{report['id'].upper()}]\033[0m {report['message']}")
+        print(f"{color}[{report['id'].upper()}]\033[0m {report['message']}")
         return
 
-    print(f"\nPRE-FLIGHT ADVISORY: {report['package']} (Rev {report.get('revision', 1)})")
+    print(f"PRE-FLIGHT ADVISORY: {report['package']} (Rev {report.get('revision', 1)})")
     print("-" * 50)
-    for c in report["checks"]:
+    for check in report["checks"]:
         color = ""
-        if c["status"] == "PASS": color = "\033[92m" # Green
-        elif c["status"] == "WARNING": color = "\033[93m" # Yellow
-        elif c["status"] == "FAIL": color = "\033[91m" # Red
-        elif c["status"] == "INFO": color = "\033[94m" # Blue
-        
-        print(f"{color}[{c['status']}]\033[0m {c['message']}")
+        if check["status"] == "PASS":
+            color = "\033[92m"
+        elif check["status"] == "WARNING":
+            color = "\033[93m"
+        elif check["status"] == "FAIL":
+            color = "\033[91m"
+        elif check["status"] == "INFO":
+            color = "\033[94m"
+        print(f"{color}[{check['status']}]\033[0m {check['message']}")
 
     if report["evidence_drift"]:
         print("\n\033[96mEVIDENCE DISCOVERY:\033[0m")
-        for d in report["evidence_drift"]:
-            print(f"  {d}")
+        for item in report["evidence_drift"]:
+            print(f"  {item}")
     print("-" * 50)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Audit a publication package.")
-    parser.add_argument("--package", required=True, help="Package name")
-    parser.add_argument("--quiet", action="store_true", help="Only show warnings/fails")
+    parser.add_argument("--package", required=True, help="Package path relative to publications/")
     args = parser.parse_args()
 
     report = audit_package(args.package)

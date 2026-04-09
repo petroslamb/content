@@ -1,3 +1,21 @@
+---
+workflow_id: archive_sync
+runner_mode: scripted
+default_skill: substack-archive-sync
+launch_templates:
+  - ".venv/bin/python scripts/sync_substack_archive.py"
+  - "npm run check:mirror"
+required_context:
+  - repo root environment with archive scripts available
+  - up-to-date publication metadata or recently published post
+expected_outputs:
+  - refreshed tracked public archive
+  - updated archive metadata and README publication map
+done_when:
+  - the archive refresh completes successfully and the mirror validation pass is clean
+approval_gate: none
+---
+
 # Substack Archive Sync
 
 This is the tracked canonical workflow for refreshing the public Substack archive, validating the Eleventy mirror, and handling the manual-import fallback when sync is blocked.
