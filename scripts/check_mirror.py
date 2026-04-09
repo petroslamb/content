@@ -16,11 +16,16 @@ from archive_utils import (
     render_publication_mapping_table,
     replace_generated_section,
 )
+from editorial_atlas_utils import (
+    ATLAS_DATA_PATH as GENERATED_ATLAS_DATA_PATH,
+    EDITORIAL_ATLAS_DIR,
+    RUBRIC_ASSESSMENTS_PATH,
+    ensure_checked_in_atlas_matches_generated,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MIRROR_OUTPUT = REPO_ROOT / "publication_strategy_and_archive" / "mirror" / "_site"
-EDITORIAL_ATLAS_DIR = REPO_ROOT / "publication_strategy_and_archive" / "editorial_atlas"
-EDITORIAL_ATLAS_DATA_PATH = EDITORIAL_ATLAS_DIR / "atlas_data.json"
+EDITORIAL_ATLAS_DATA_PATH = GENERATED_ATLAS_DATA_PATH
 PATH_PREFIX = os.environ.get("ELEVENTY_PATH_PREFIX", "/").strip()
 SITE_URL = os.environ.get("MIRROR_SITE_URL", "https://petroslamb.github.io/content").rstrip("/")
 
@@ -85,10 +90,12 @@ def validate_editorial_atlas() -> None:
         raise SystemExit(f"Missing editorial atlas directory: {EDITORIAL_ATLAS_DIR}")
     if not EDITORIAL_ATLAS_DATA_PATH.exists():
         raise SystemExit(f"Missing editorial atlas data: {EDITORIAL_ATLAS_DATA_PATH}")
+    if not RUBRIC_ASSESSMENTS_PATH.exists():
+        raise SystemExit(f"Missing editorial atlas rubric source: {RUBRIC_ASSESSMENTS_PATH}")
 
-    atlas = json.loads(EDITORIAL_ATLAS_DATA_PATH.read_text(encoding="utf-8"))
-    essays = atlas.get("essays")
-    drafts = atlas.get("drafts")
+    atlas = ensure_checked_in_atlas_matches_generated()
+    essays = atlas["essays"]
+    drafts = atlas["drafts"]
     if not isinstance(essays, list) or not essays:
         raise SystemExit("Editorial atlas data must contain a non-empty 'essays' list")
     if not isinstance(drafts, list) or not drafts:
@@ -228,6 +235,7 @@ def main() -> None:
                 "checked_posts": len(manifest),
                 "checked_html_files": len(iter_built_html_files()),
                 "checked_editorial_atlas": True,
+                "generated_editorial_atlas": str(EDITORIAL_ATLAS_DATA_PATH),
                 "path_prefix": normalize_path_prefix(PATH_PREFIX),
             },
             indent=2,

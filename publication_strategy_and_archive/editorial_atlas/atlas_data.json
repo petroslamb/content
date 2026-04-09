@@ -23,6 +23,36 @@
   },
   "essays": [
     {
+      "file": "2025-11-27_neural-architecture-design-as-a-compositional-32e.md",
+      "title": "Neural Architecture Design as a Reusable Scaffold: A History Review",
+      "date": "2025-11-27",
+      "words": 5162,
+      "traction": 7,
+      "craft": 8,
+      "publication_power": 7,
+      "opening": 7,
+      "development": 8,
+      "ending": 8,
+      "evidence": 8,
+      "identity": "historical synthesis / architecture thesis essay",
+      "signature": "historical through-line + scaffold reframing",
+      "overpull_risk": "orderly chronology can soften ignition and public edge",
+      "confidence": "high",
+      "debate": 6,
+      "precision": 8,
+      "synthesis": 9,
+      "utility": 7,
+      "moves": [
+        "historical_synthesis",
+        "coined_frame_with_borders",
+        "chapterized_technical_explainer"
+      ],
+      "short_label": "Reusable Scaffold",
+      "thesis_lock": 8,
+      "borders": 7,
+      "reference_handling": 8
+    },
+    {
       "file": "2025-12-02_the-agent-revolution.md",
       "title": "Autonomous AI Agents: Core Foundations and Recent Breakthroughs",
       "date": "2025-12-02",
