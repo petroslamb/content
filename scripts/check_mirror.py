@@ -19,13 +19,21 @@ from archive_utils import (
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MIRROR_OUTPUT = REPO_ROOT / "publication_strategy_and_archive" / "mirror" / "_site"
+EDITORIAL_ATLAS_DIR = REPO_ROOT / "publication_strategy_and_archive" / "editorial_atlas"
+EDITORIAL_ATLAS_DATA_PATH = EDITORIAL_ATLAS_DIR / "atlas_data.json"
 PATH_PREFIX = os.environ.get("ELEVENTY_PATH_PREFIX", "/").strip()
+SITE_URL = os.environ.get("MIRROR_SITE_URL", "https://petroslamb.github.io/content").rstrip("/")
 
 
 def normalize_path_prefix(raw: str) -> str:
     if not raw or raw == "/":
         return "/"
     return f"/{raw.strip('/')}/"
+
+
+def configured_site_path_prefix() -> str:
+    site_path = urlparse(SITE_URL).path or "/"
+    return normalize_path_prefix(site_path)
 
 
 def required_file_target(root: Path, href_path: str) -> Path:
@@ -72,6 +80,66 @@ def validate_metadata() -> list[dict[str, str]]:
     return manifest
 
 
+def validate_editorial_atlas() -> None:
+    if not EDITORIAL_ATLAS_DIR.exists():
+        raise SystemExit(f"Missing editorial atlas directory: {EDITORIAL_ATLAS_DIR}")
+    if not EDITORIAL_ATLAS_DATA_PATH.exists():
+        raise SystemExit(f"Missing editorial atlas data: {EDITORIAL_ATLAS_DATA_PATH}")
+
+    atlas = json.loads(EDITORIAL_ATLAS_DATA_PATH.read_text(encoding="utf-8"))
+    essays = atlas.get("essays")
+    drafts = atlas.get("drafts")
+    if not isinstance(essays, list) or not essays:
+        raise SystemExit("Editorial atlas data must contain a non-empty 'essays' list")
+    if not isinstance(drafts, list) or not drafts:
+        raise SystemExit("Editorial atlas data must contain a non-empty 'drafts' list")
+
+    essay_required = {
+        "title",
+        "traction",
+        "craft",
+        "publication_power",
+        "debate",
+        "precision",
+        "synthesis",
+        "utility",
+        "confidence",
+        "short_label",
+        "moves",
+        "opening",
+        "thesis_lock",
+        "development",
+        "borders",
+        "ending",
+        "reference_handling",
+    }
+    for essay in essays:
+        missing = essay_required.difference(essay)
+        if missing:
+            raise SystemExit(f"Editorial atlas essay missing keys {sorted(missing)}: {essay.get('title', essay)}")
+        if not isinstance(essay["moves"], list):
+            raise SystemExit(f"Editorial atlas essay moves must be a list: {essay['title']}")
+
+    for draft in drafts:
+        for key in ("title", "current_position", "target_position", "pulls", "resists"):
+            if key not in draft:
+                raise SystemExit(f"Editorial atlas draft missing key '{key}': {draft}")
+        for position_key in ("current_position", "target_position"):
+            position = draft[position_key]
+            required = {"traction", "craft", "debate", "precision", "synthesis", "utility"}
+            missing = required.difference(position)
+            if missing:
+                raise SystemExit(
+                    f"Editorial atlas draft {position_key} missing keys {sorted(missing)}: {draft['title']}"
+                )
+        if not isinstance(draft["pulls"], list) or not draft["pulls"]:
+            raise SystemExit(f"Editorial atlas draft pulls must be a non-empty list: {draft['title']}")
+        for pull in draft["pulls"]:
+            for key in ("essay", "section", "desired_strength"):
+                if key not in pull:
+                    raise SystemExit(f"Editorial atlas draft pull missing '{key}': {draft['title']}")
+
+
 def validate_archive_assets(manifest: list[dict[str, str]]) -> None:
     for entry in manifest:
         markdown_path = REPO_ROOT / entry["md_path"]
@@ -99,9 +167,9 @@ def iter_built_html_files() -> list[Path]:
 
 
 def normalize_internal_path(link_path: str) -> str:
-    prefix = normalize_path_prefix(PATH_PREFIX)
-    if prefix != "/" and link_path.startswith(prefix):
-        return "/" + link_path[len(prefix) :].lstrip("/")
+    for prefix in (normalize_path_prefix(PATH_PREFIX), configured_site_path_prefix()):
+        if prefix != "/" and link_path.startswith(prefix):
+            return "/" + link_path[len(prefix) :].lstrip("/")
     return link_path
 
 
@@ -136,6 +204,12 @@ def validate_built_links() -> None:
                 raise SystemExit(f"Broken built link in {html_file}: {value} -> {target}")
 
 
+def validate_editorial_atlas_route() -> None:
+    target = required_file_target(MIRROR_OUTPUT, "/editorial-atlas/")
+    if not target.exists():
+        raise SystemExit("Built mirror is missing /editorial-atlas/index.html")
+
+
 def main() -> None:
     if not POST_MAP_PATH.exists():
         raise SystemExit(f"Missing post map: {POST_MAP_PATH}")
@@ -143,14 +217,17 @@ def main() -> None:
         raise SystemExit(f"Missing archive directory: {ARCHIVE_DIR}")
 
     manifest = validate_metadata()
+    validate_editorial_atlas()
     validate_archive_assets(manifest)
     validate_readme_generation(load_post_map())
     validate_built_links()
+    validate_editorial_atlas_route()
     print(
         json.dumps(
             {
                 "checked_posts": len(manifest),
                 "checked_html_files": len(iter_built_html_files()),
+                "checked_editorial_atlas": True,
                 "path_prefix": normalize_path_prefix(PATH_PREFIX),
             },
             indent=2,

@@ -1,0 +1,273 @@
+---
+layout: layouts/base.njk
+title: Editorial Atlas | Rooted Layers Mirror
+description: Public editorial atlas for the Rooted Layers essay corpus, rendered from the publication strategy system.
+extraStylesheets:
+  - /assets/editorial-atlas.css
+extraScripts:
+  - /assets/editorial-atlas.js
+---
+<section class="atlas-page" data-editorial-atlas>
+  <div class="atlas-shell">
+    <section class="atlas-hero">
+      <div class="atlas-hero-card">
+        <p class="eyebrow">Editorial Atlas</p>
+        <h1>Published essays as a navigable editorial system</h1>
+        <p class="atlas-hero-copy">
+          This public atlas turns the essay archive into a strategy surface. The point is not ranking for its own sake. The point is to see what kinds of publication objects already exist, where they get their force, and which earlier essays should pull a new draft.
+        </p>
+        <div class="atlas-hero-list" id="atlas-hero-metrics">
+          <div class="atlas-hero-metric">
+            <strong>{{ editorialAtlas.stats.totalEssays }}</strong>
+            <span>Published essays</span>
+          </div>
+          <div class="atlas-hero-metric">
+            <strong>{{ editorialAtlas.stats.topPower }}</strong>
+            <span>Top power score</span>
+          </div>
+          <div class="atlas-hero-metric">
+            <strong>{{ editorialAtlas.stats.topTraction }}</strong>
+            <span>Top traction score</span>
+          </div>
+          <div class="atlas-hero-metric">
+            <strong>{{ editorialAtlas.stats.topCraft }}</strong>
+            <span>Top craft score</span>
+          </div>
+        </div>
+      </div>
+      <aside class="atlas-hero-card atlas-anchor-list">
+        <h2>Current anchor essays</h2>
+        <ol>
+          {% for essay in editorialAtlas.topAnchors %}
+          <li><strong>{{ essay.title }}</strong><br>{{ essay.identity }}</li>
+          {% endfor %}
+        </ol>
+      </aside>
+    </section>
+
+    <nav class="atlas-tab-bar" aria-label="Atlas views">
+      <button class="atlas-tab-btn active" data-tab="overview">Overview</button>
+      <button class="atlas-tab-btn" data-tab="debate">Debate × Precision</button>
+      <button class="atlas-tab-btn" data-tab="synthesis">Synthesis × Utility</button>
+      <button class="atlas-tab-btn" data-tab="openings">Openings × Endings</button>
+      <button class="atlas-tab-btn" data-tab="moves">Move Matrix</button>
+    </nav>
+
+    <section id="atlas-tab-overview" class="atlas-tab-panel active">
+      <section class="atlas-layout">
+        <div class="atlas-panel">
+          <p class="eyebrow">View 1</p>
+          <h2>Constellation</h2>
+          <p class="atlas-note">
+            X axis is traction. Y axis is craft. Dot size tracks publication power. Click any point to inspect the essay card. Overlapping essays get small plotted decimal offsets so the underlying score remains intact while the map stays legible.
+          </p>
+          <div id="atlas-scatter-root"></div>
+          <div class="atlas-legend" id="atlas-constellation-legend"></div>
+        </div>
+        <div class="atlas-panel atlas-detail-card">
+          <p class="eyebrow">Selected Essay</p>
+          <h2 id="atlas-detail-title">{{ editorialAtlas.essays[0].title }}</h2>
+          <p class="atlas-note" id="atlas-detail-subtitle"></p>
+          <div class="atlas-detail-meta">
+            <div class="atlas-meta-box">
+              <span>Traction</span>
+              <strong id="atlas-detail-traction"></strong>
+            </div>
+            <div class="atlas-meta-box">
+              <span>Craft</span>
+              <strong id="atlas-detail-craft"></strong>
+            </div>
+            <div class="atlas-meta-box">
+              <span>Power</span>
+              <strong id="atlas-detail-power"></strong>
+            </div>
+          </div>
+          <div id="atlas-detail-chips"></div>
+          <div class="atlas-detail-copy">
+            <div>
+              <strong>Identity</strong>
+              <span id="atlas-detail-identity"></span>
+            </div>
+            <div>
+              <strong>Signature</strong>
+              <span id="atlas-detail-signature"></span>
+            </div>
+            <div>
+              <strong>Overpull risk</strong>
+              <span id="atlas-detail-risk"></span>
+            </div>
+            <div>
+              <strong>Section profile</strong>
+              <span id="atlas-detail-sections"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="atlas-panel atlas-panel-spaced">
+        <p class="eyebrow">View 2</p>
+        <h2>Section heatmap</h2>
+        <p class="atlas-note">
+          This view makes section borrowing visible. It shows where each essay gets its force rather than just where it lands overall.
+        </p>
+        <div class="atlas-heatmap-wrap">
+          <table class="atlas-heatmap-table" id="atlas-heatmap-table">
+            <thead>
+              <tr>
+                <th>Essay</th>
+                <th class="num">Opening</th>
+                <th class="num">Thesis</th>
+                <th class="num">Development</th>
+                <th class="num">Borders</th>
+                <th class="num">Ending</th>
+                <th class="num">Refs</th>
+                <th>Power source</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="atlas-panel">
+        <p class="eyebrow">View 3</p>
+        <h2>Draft pull vector</h2>
+        <div class="atlas-vector-grid">
+          <div>
+            <div class="atlas-draft-head" id="atlas-draft-head"></div>
+            <p class="atlas-vector-note" id="atlas-draft-problem"></p>
+            <div id="atlas-vector-root"></div>
+          </div>
+          <div>
+            <table class="atlas-pull-table">
+              <thead>
+                <tr>
+                  <th>Section</th>
+                  <th>Pull essay</th>
+                  <th>Desired strength</th>
+                </tr>
+              </thead>
+              <tbody id="atlas-pull-table-body"></tbody>
+            </table>
+            <p class="atlas-footer-note">
+              This vector view is not a ranking device. It is a design-time routing view for shaping a new public essay intentionally.
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="atlas-tab-debate" class="atlas-tab-panel">
+      <div class="atlas-tab-grid">
+        <div class="atlas-panel">
+          <p class="eyebrow">Axis View</p>
+          <h2>Debate × Precision</h2>
+          <p class="atlas-note">
+            This separates essays built to travel in public argument from essays built to hold sharper conceptual borders.
+          </p>
+          <div id="atlas-debate-root"></div>
+          <div class="atlas-legend" id="atlas-debate-legend"></div>
+        </div>
+        <div class="atlas-panel">
+          <p class="eyebrow">Read</p>
+          <h2>What this view clarifies</h2>
+          <p class="atlas-note">
+            `Transformer Attractor` and `Moltbook` sit far toward public argument. `Binding Gap` sits far toward precision. `Autonomy Tax` and `Illusion of the Swarm` are balanced enough to work as both strong public objects and controlled frameworks.
+          </p>
+          <div class="atlas-compact-detail" id="atlas-debate-detail"></div>
+          <table class="atlas-mini-table" id="atlas-debate-table">
+            <thead>
+              <tr>
+                <th>Essay</th>
+                <th class="num">Debate</th>
+                <th class="num">Precision</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="atlas-tab-synthesis" class="atlas-tab-panel">
+      <div class="atlas-tab-grid">
+        <div class="atlas-panel">
+          <p class="eyebrow">Axis View</p>
+          <h2>Synthesis × Utility</h2>
+          <p class="atlas-note">
+            This separates archive-anchor surveys from operator-facing essays. It helps distinguish flagship essays from synthesis anchors and practical companion objects.
+          </p>
+          <div id="atlas-synthesis-root"></div>
+          <div class="atlas-legend" id="atlas-synthesis-legend"></div>
+        </div>
+        <div class="atlas-panel">
+          <p class="eyebrow">Read</p>
+          <h2>Which essays dominate this tradeoff</h2>
+          <div class="atlas-compact-detail" id="atlas-synthesis-detail"></div>
+          <table class="atlas-mini-table" id="atlas-synthesis-table">
+            <thead>
+              <tr>
+                <th>Essay</th>
+                <th class="num">Synthesis</th>
+                <th class="num">Utility</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="atlas-footer-note">
+            `What Actually Works` and `Illusion of the Swarm` are the strongest synthesis anchors. `Autonomy Tax` and the `Operating Agents` set dominate the utility side.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="atlas-tab-openings" class="atlas-tab-panel">
+      <div class="atlas-tab-grid">
+        <div class="atlas-panel">
+          <p class="eyebrow">Section View</p>
+          <h2>Openings × Endings</h2>
+          <p class="atlas-note">
+            This compares how essays start and how they land. It helps diagnose pieces that ignite well but taper, or essays that only become strong late.
+          </p>
+          <div id="atlas-opening-ending-root"></div>
+          <div class="atlas-legend" id="atlas-opening-ending-legend"></div>
+        </div>
+        <div class="atlas-panel">
+          <p class="eyebrow">Read</p>
+          <h2>Opening / ending profile</h2>
+          <div class="atlas-compact-detail" id="atlas-openings-detail"></div>
+          <table class="atlas-mini-table" id="atlas-opening-ending-table">
+            <thead>
+              <tr>
+                <th>Essay</th>
+                <th class="num">Opening</th>
+                <th class="num">Ending</th>
+                <th class="num">Gap</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="atlas-tab-moves" class="atlas-tab-panel">
+      <section class="atlas-panel">
+        <p class="eyebrow">Pattern View</p>
+        <h2>Move matrix</h2>
+        <p class="atlas-note">
+          This connects the visual atlas back to the reverse-engineered move library. It shows which essays exemplify which recurring editorial moves.
+        </p>
+        <div class="atlas-compact-detail" id="atlas-moves-detail"></div>
+        <div class="atlas-matrix-wrap">
+          <table class="atlas-matrix-table" id="atlas-move-matrix">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <script id="editorial-atlas-data" type="application/json">{{ editorialAtlas | json | safe }}</script>
+</section>
