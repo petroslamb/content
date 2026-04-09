@@ -44,8 +44,10 @@ Tracked workflow:
 | Script | Role | Normal Entry Point | Related Skill |
 | :--- | :--- | :--- | :--- |
 | `sync_substack_archive.py` | Canonical archive refresh: discovers public posts, localizes assets, writes markdown and HTML snapshots, updates `metadata.json`, and regenerates the root README publication table. | `npm run sync:substack` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
+| `generate_editorial_atlas.py` | Generates `publication_strategy_and_archive/editorial_atlas/atlas_data.json` from `publication_strategy_and_archive/editorial_atlas/rubric_assessments.yaml` and can verify that the checked-in atlas still matches the rubric source. | `npm run sync:editorial-atlas` | none |
+| `editorial_atlas_utils.py` | Shared rubric-source validation and atlas derivation helpers used by the generator and mirror checks. | imported by other scripts | none |
 | `archive_utils.py` | Shared paths and helpers for the archive manifest, `post_map.yaml`, and README table generation. | imported by other scripts | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
-| `check_mirror.py` | Structural validation for the archive, editorial atlas, and built mirror output. Checks metadata keys, atlas schema, archive files, asset references, generated README section, and built internal links. | `npm run check:mirror` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
+| `check_mirror.py` | Structural validation for the archive, editorial atlas, and built mirror output. Checks metadata keys, rubric-derived atlas generation, archive files, asset references, generated README section, and built internal links. | `npm run check:mirror` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
 | `check_repo_links.py` | Validation pass for stale old-package paths, broken relative links, and outdated internal GitHub repo links after the `publications/` migration. | `npm run check:repo-links` | none |
 | `e2e_mirror_smoke.py` | Runtime smoke test for the built mirror at both root and prefixed path layouts. | `npm run check:mirror` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
 
@@ -121,6 +123,7 @@ If you only need the normal repo entrypoints, start with:
 
 ```bash
 npm run sync:substack
+npm run sync:editorial-atlas
 npm run check:mirror
 npm run check:repo-links
 PYTHONUNBUFFERED=1 .venv/bin/python scripts/sync_operating_agents_substack.py

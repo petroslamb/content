@@ -33,12 +33,18 @@ The working split is intentional:
 - `editorial_atlas/` is curated strategy data. Edit it when you want to change the atlas scores, pulls, or analysis docs.
 - `mirror/` is presentation code. Edit it when you want to change the public site.
 
+Inside `editorial_atlas/`, the editable rubric source is
+`rubric_assessments.yaml`. The published machine-readable view
+`atlas_data.json` is generated from that rubric source and should not drift from
+it.
+
 ## Commands
 
 Run these from the repository root:
 
 ```bash
 npm run sync:substack
+npm run sync:editorial-atlas
 npm run build:mirror
 npm run dev:mirror
 npm run check:mirror
@@ -47,9 +53,10 @@ npm run check:mirror
 What each command does:
 
 - `sync:substack`: pulls the public publication feed, refreshes local markdown and HTML snapshots, localizes assets, updates `metadata.json`, and regenerates the root README mapping table
+- `sync:editorial-atlas`: regenerates `editorial_atlas/atlas_data.json` from `editorial_atlas/rubric_assessments.yaml`
 - `build:mirror`: builds the 11ty site into `publication_strategy_and_archive/mirror/_site`
 - `dev:mirror`: runs the 11ty dev server for mirror work
-- `check:mirror`: rebuilds the site and validates metadata, local assets, generated README content, and built internal links
+- `check:mirror`: rebuilds the site and validates metadata, rubric-derived atlas generation, local assets, generated README content, and built internal links
 
 ## Data Files
 

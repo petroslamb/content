@@ -10,13 +10,15 @@ The mirror is built from three upstream sources:
 
 - [`../substack_archive/metadata.json`](../substack_archive/metadata.json): generated archive manifest
 - [`../post_map.yaml`](../post_map.yaml): hand-edited curation layer
-- [`../editorial_atlas/atlas_data.json`](../editorial_atlas/atlas_data.json): hand-maintained editorial atlas data
+- [`../editorial_atlas/atlas_data.json`](../editorial_atlas/atlas_data.json): generated editorial atlas data for the public route
+- [`../editorial_atlas/rubric_assessments.yaml`](../editorial_atlas/rubric_assessments.yaml): canonical rubric-input source for the atlas scores
 
 In practice:
 
 - the archive supplies post bodies, canonical Substack URLs, timestamps, and localized assets
 - the post map supplies research-folder links, series grouping, tags, summaries, and featured status
 - the editorial atlas supplies essay-level scores, section scores, move tags, and draft-pull objects for the public atlas route
+- `atlas_data.json` is expected to round-trip from `rubric_assessments.yaml`; `npm run check:mirror` now fails when the generated atlas and the checked-in JSON diverge
 
 ## Layout
 

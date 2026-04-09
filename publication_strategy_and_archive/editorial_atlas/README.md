@@ -21,6 +21,7 @@ resist.
 
 - [`process.md`](process.md): scoring method, section slots, and usage notes
 - [`rubric.md`](rubric.md): reusable scoring rubric for future essay passes
+- [`rubric_assessments.yaml`](rubric_assessments.yaml): canonical rubric-input source for the scored corpus
 - [`corpus_inventory.md`](corpus_inventory.md): inventory of all archive essays
 - [`essay_atlas.md`](essay_atlas.md): whole-essay scoring pass across the corpus
 - [`attractor_cards.md`](attractor_cards.md): short reusable profile cards for
@@ -32,6 +33,37 @@ resist.
   design sheet for future drafts
 - [`atlas_data.json`](atlas_data.json): machine-readable essay atlas data
 - [`visualizations.md`](visualizations.md): visual layer notes for the atlas
+
+## Data Contract
+
+`rubric_assessments.yaml` is now the editable scoring source. It stores the
+rubric inputs needed to derive:
+
+- direct whole-essay dimensions
+- traction subdimensions
+- craft subdimensions
+- section-slot scores
+- explicit corpus exclusions
+- draft routing objects
+
+`atlas_data.json` is the generated mirror-facing artifact. Regenerate it with:
+
+```bash
+npm run sync:editorial-atlas
+```
+
+Validate that the checked-in atlas still matches the rubric source with:
+
+```bash
+.venv/bin/python scripts/generate_editorial_atlas.py --check
+```
+
+Current note:
+
+- entries marked `rubric_status: migrated` were backfilled from the earlier
+  atlas output so the system becomes reproducible and testable
+- they still need manual rationale and passage-anchor audit before they should
+  be treated as fully rubric-audited records
 
 ## Viewer Tabs
 
