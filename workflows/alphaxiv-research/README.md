@@ -1,3 +1,20 @@
+---
+workflow_id: research
+runner_mode: guided
+default_skill: alphaxiv
+launch_templates: []
+required_context:
+  - package README or leaf README
+  - current research question or thesis direction
+  - package evidence surface for shortlisted papers
+expected_outputs:
+  - shortlist of candidate papers with rationale
+  - selected papers ready to move into paper intake
+done_when:
+  - the shortlist is grounded enough to drive package-local paper intake or source discussion
+approval_gate: none
+---
+
 # alphaXiv Research
 
 This is the canonical tracked workflow for paper discovery and source discussion using `alphaxiv-py`.
@@ -9,6 +26,7 @@ Use alphaXiv to:
 - discover papers
 - inspect one paper in detail
 - build a shortlist
+- validate or pressure-test blueprint and draft claims against anchor papers already in scope
 - use the assistant after deterministic retrieval
 
 The assistant is not the first step. Retrieval is.
@@ -47,6 +65,8 @@ If assistant chats start feeling slow or overloaded, start a fresh assistant ses
 - Shortlist before synthesis. The assistant is for comparison and explanation after retrieval, not a substitute for retrieval.
 - Keep practical anchor papers visible while researching. The recurring successful pattern in this repo is not a loose memo; it is a grounded reading path tied to concrete papers and why they matter.
 - Once you know a paper belongs in the project, move it into the package paper-intake workflow quickly instead of leaving it in alphaXiv-only context.
+- When a package already has a strong local paper set, use alphaXiv in validation mode before reopening broad discovery. Validate the claims, partitions, or phrasings that might outrun the evidence instead of searching loosely for "more papers."
+- Validation mode should stay narrow: inspect the exact anchor papers, then use the assistant only to pressure-test whether the current wording or synthesis is defensible.
 
 ## Canonical Research Flow
 
@@ -56,6 +76,17 @@ If assistant chats start feeling slow or overloaded, start a fresh assistant ses
 4. use `assistant start` or `assistant reply` only once the shortlist or comparison target is clear
 5. move selected papers into the package paper-intake workflow
 6. if the assistant session becomes sluggish, open a fresh one rather than stretching the same chat indefinitely
+
+## Validation Flow
+
+When a package already has a blueprint, draft, and local paper set, use alphaXiv like this:
+
+1. identify the claims or categories that look overstated, overlapping, or weakly evidenced
+2. inspect the exact anchor papers again with deterministic `paper` commands
+3. use the assistant only after retrieval to ask whether the wording, partition, or historical framing is actually supported
+4. feed the result back into the package blueprint or rewrite plan rather than treating it as a new intake pass
+
+This is still "research" in repo terms, but it is validation research rather than discovery research.
 
 ## How This Fits The Repo
 

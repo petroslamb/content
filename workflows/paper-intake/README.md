@@ -1,3 +1,21 @@
+---
+workflow_id: paper_intake
+runner_mode: guided
+default_skill: markitdown-paper-intake
+launch_templates: []
+required_context:
+  - package README or leaf README
+  - target evidence surface or source index
+  - paper files or source URLs to intake
+expected_outputs:
+  - original paper files placed in the package evidence surface
+  - converted markdown in the evidence markdown directory when needed
+  - updated paper or source index
+done_when:
+  - selected papers are stored locally and the package evidence index is current
+approval_gate: none
+---
+
 # Paper Intake
 
 This is the canonical tracked workflow for bringing papers into a content package.

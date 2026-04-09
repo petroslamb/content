@@ -18,6 +18,7 @@ The current defaults in this directory were tightened against recurring March-Ap
 | [`substack-publishing/README.md`](substack-publishing/README.md) | preparing and publishing essays to Substack and syncing their public presentation | package-local docs plus Substack helpers |
 | [`substack-archive-sync/README.md`](substack-archive-sync/README.md) | refreshing the tracked public archive, validating the mirror, and using the manual-import fallback | [`skills/substack-archive-sync/`](skills/substack-archive-sync/) |
 | [`youtube-production/README.md`](youtube-production/README.md) | turning slide decks, transcripts, captions, and audio into a verified MP4 before upload | [`skills/youtube-slide-video-pipeline/`](skills/youtube-slide-video-pipeline/) |
+| [`distribution/README.md`](distribution/README.md) | handling post-publication distribution work for the channels that matter to a package | package-local `distribution/` or `socials/` surfaces |
 | [`youtube-channel-ops/README.md`](youtube-channel-ops/README.md) | authenticated YouTube channel work such as OAuth checks, caption recovery, playlist diagnostics, and Shorts maintenance | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/youtube-shorts-maintenance/`](skills/youtube-shorts-maintenance/) |
 | [`youtube-series-operating-agents/README.md`](youtube-series-operating-agents/README.md) | the Operating Agents YouTube series layer: TL;DR uploads, cross-links, playlist order, and replacement uploads | [`skills/youtube-operating-agents/`](skills/youtube-operating-agents/), [`skills/youtube-data-api/`](skills/youtube-data-api/) |
 
@@ -32,6 +33,18 @@ The tracked article-development sequence is:
 5. article polish
 6. Substack publishing
 7. archive sync
+
+Optional post-publication follow-through can continue with:
+
+8. distribution
+9. YouTube production or channel operations when the package includes video work
+
+For refinement cycles on an existing essay, the recurring April 2026 pattern is:
+
+1. harden the package blueprint if it is still fuzzy or under-evidenced
+2. use alphaXiv in targeted validation mode against the active anchor papers when needed
+3. produce a bounded `v2` candidate beside the stable live draft
+4. compare before promotion instead of overwriting first
 
 That lifecycle is the cross-package default. Package READMEs can add local surfaces or exceptions, but they should not redefine the shared process when a tracked workflow already exists here.
 

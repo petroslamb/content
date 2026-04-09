@@ -1,3 +1,22 @@
+---
+workflow_id: substack_publishing
+runner_mode: hybrid
+default_skill: null
+launch_templates:
+  - ".venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path}"
+required_context:
+  - config.markdown_path
+  - config.substack_url
+  - config.substack_post_id
+  - existing Substack draft or publish target
+expected_outputs:
+  - synced Substack draft or published post
+  - publication-ready markdown rendered in the target Substack post
+done_when:
+  - the synced post has been reviewed and explicitly approved as complete
+approval_gate: required_before_live_publish
+---
+
 # Substack Publishing
 
 This is the canonical tracked workflow for taking a finished essay package to Substack.

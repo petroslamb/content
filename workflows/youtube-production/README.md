@@ -1,3 +1,20 @@
+---
+workflow_id: youtube_production
+runner_mode: guided
+default_skill: youtube-slide-video-pipeline
+launch_templates: []
+required_context:
+  - canonical audio narration
+  - slide images or PDFs
+  - timed captions or transcript inputs
+expected_outputs:
+  - reviewed cue sheet
+  - verified MP4 in the package video artifact surface
+done_when:
+  - the local MP4 render is verified and ready for channel-side upload or replacement work
+approval_gate: required_before_channel_mutation
+---
+
 # YouTube Production
 
 This is the tracked canonical workflow for the local production stage that turns narrated audio, slide images, transcripts, and captions into a verified MP4 before any YouTube upload or replacement step.

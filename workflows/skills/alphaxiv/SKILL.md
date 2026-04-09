@@ -76,6 +76,8 @@ every assistant command.
    relevant paper ids, while keeping the older session available through `assistant history` or
    `assistant list`. Frame this as a mitigation for session-growth slowdown, not a guaranteed fix
    for every latency issue.
+7. When the task is blueprint or draft validation rather than paper discovery, stay narrow: reopen the exact anchor papers, inspect them with deterministic commands, and use the assistant only to pressure-test whether the current wording or synthesis is defensible.
+8. In validation mode, do not reopen broad search unless the existing anchor set clearly fails to support the active claims.
 
 ## Reference map
 

@@ -1,3 +1,21 @@
+---
+workflow_id: article_polish
+runner_mode: guided
+default_skill: null
+launch_templates: []
+required_context:
+  - canonical live draft
+  - package artifact surface with NotebookLM or local media outputs
+  - current references and supporting links
+expected_outputs:
+  - polished live draft with intentional media placement
+  - semantically named kept images in the artifact surface
+  - publication-ready references and repo links
+done_when:
+  - the draft is publication-ready and ready to hand off to Substack publishing
+approval_gate: required_before_publish
+---
+
 # Article Polish
 
 This is the canonical tracked workflow for the editorial stage between NotebookLM artifact generation and final Substack publication.
