@@ -81,7 +81,33 @@ When a publication package has both a finished longform MP4 and a TL;DR companio
 
 The script is dry-run by default. Add `--apply` only when the titles, summaries, playlist ids, and essay URL are settled.
 
-### 5. Branch To The Correct Next Workflow
+### 5. Upload Publication Shorts To The Channel
+
+Treat Shorts distribution as its own downstream workflow surface. The validated boundary is:
+
+1. portrait masters already exist under the package
+2. upload them
+3. add them to the target Shorts playlist
+4. set the related-video field to the canonical long-form upload
+
+Use the package wrapper for this path:
+
+```bash
+.venv/bin/python scripts/upload_publication_shorts.py \
+  --package <publication-package-path-under-publications> \
+  --main-video-id <LONGFORM_VIDEO_ID> \
+  --playlist-id <SHORTS_PLAYLIST_ID> \
+  --essay-url <canonical-essay-url> \
+  --full-video-url <longform-youtube-url> \
+  --tldr-url <tldr-youtube-url> \
+  --apply
+```
+
+This script is dry-run by default. It uploads every `*.mp4` in `artifacts/video/shorts/portrait/`, adds them to the target playlist, and attempts to set the long-form video as the Shorts related video through the API.
+
+Do not merge this with Shorts creation logic in the same workflow surface. Keep `clip selection -> portrait conversion/render` as the upstream phase, and treat upload-plus-linking as the downstream phase that can be frozen and reused independently.
+
+### 6. Branch To The Correct Next Workflow
 
 - If the task is local slide/audio/caption production, move to [`../youtube-production/README.md`](../youtube-production/README.md).
 - If the task is the Operating Agents course or TL;DR series, move to [`../youtube-series-operating-agents/README.md`](../youtube-series-operating-agents/README.md).

@@ -102,7 +102,7 @@ These scripts are thin wrappers or local helpers. They are useful, but they are 
 | `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | Tied to `publications/binding-gap/` assets. Useful as a richer review or render surface after OCR-first cue drafting. |
 | `list_youtube_videos.py` | Lists videos from the authenticated YouTube channel. | Thin wrapper around the YouTube skill script layer. Use [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) for the canonical process. |
 | `upload_publication_tldrs.py` | Uploads TL;DR video variants from one package into a playlist. | Thin publication-specific wrapper around the YouTube API helper stack. |
-| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package and links them back to the main video. | Thin publication-specific wrapper around the YouTube API helper stack. |
+| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package, adds them to a Shorts playlist, and links them back to the main long-form video. | Thin publication-specific wrapper around the YouTube API helper stack. Defaults to dry-run. |
 
 ## Related Skill Split
 
