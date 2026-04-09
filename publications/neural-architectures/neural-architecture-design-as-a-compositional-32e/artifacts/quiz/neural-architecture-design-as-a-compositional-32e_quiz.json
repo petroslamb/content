@@ -1,0 +1,265 @@
+{
+  "title": "Architecture Quiz",
+  "questions": [
+    {
+      "question": "In the context of early deep learning history, why is AlexNet characterized as a 'bespoke' architecture rather than a 'reusable scaffold'?",
+      "answerOptions": [
+        {
+          "text": "Its design was a collection of local wagers about stage-specific computation tailored to limited GPU resources.",
+          "isCorrect": true,
+          "rationale": "The author argues that AlexNet's specific choices, like large early filters and varying kernel sizes, reflected a designer's local judgment rather than a general, repeatable law."
+        },
+        {
+          "text": "It relied exclusively on fully connected layers, making it impossible to apply to spatial data outside of ImageNet.",
+          "isCorrect": false,
+          "rationale": "AlexNet used convolutional layers; the 'bespoke' label refers to the specific distribution of computation, not a lack of convolutional structure."
+        },
+        {
+          "text": "The model failed to prove that deep convolutional networks could win at scale, requiring manual feature engineering.",
+          "isCorrect": false,
+          "rationale": "AlexNet was historically decisive because it successfully proved deep networks could win at scale, even if its architecture was highly particular."
+        },
+        {
+          "text": "It lacked a classification head, forcing designers to invent new stages for every task.",
+          "isCorrect": false,
+          "rationale": "AlexNet had a concrete fully connected head; the bespoke nature refers to the internal assembly logic, not a missing output stage."
+        }
+      ],
+      "hint": "Consider the difference between a specific machine designed for a single purpose and a generalized blueprint."
+    },
+    {
+      "question": "What fundamental tension did the VGG and Inception models represent in 2014 regarding the future of architecture design?",
+      "answerOptions": [
+        {
+          "text": "The choice between uniform repetition of simple motifs and carefully composed local heterogeneity.",
+          "isCorrect": true,
+          "rationale": "VGG popularized the repeated 3x3 convolution, while Inception utilized parallel, diverse transformations within modules, leaving the field undecided on regularity versus complexity."
+        },
+        {
+          "text": "The conflict between using convolutional layers and adopting recurrent neural networks for vision.",
+          "isCorrect": false,
+          "rationale": "Both VGG and Inception were primarily convolutional; the debate centered on the structure and regularity of those convolutions."
+        },
+        {
+          "text": "Whether to prioritize increasing the width of the network or the spatial resolution of the input.",
+          "isCorrect": false,
+          "rationale": "The tension was about the 'architectural intelligence' of the modules themselves, specifically whether to simplify the operators or keep them diverse."
+        },
+        {
+          "text": "The trade-off between training speed on GPUs and the interpretability of individual filters.",
+          "isCorrect": false,
+          "rationale": "While training speed is always a factor, the historical point made by the text focuses on the structural logic of repetition versus heterogeneity."
+        }
+      ],
+      "hint": "Recall how one model used only one operator type while the other used several in parallel."
+    },
+    {
+      "question": "According to the ResNet paper (He et al., 2015), what was the primary evidence that optimization, rather than expressive power, was the bottleneck for very deep networks?",
+      "answerOptions": [
+        {
+          "text": "Deeper plain networks exhibited higher training error than their shallower counterparts.",
+          "isCorrect": true,
+          "rationale": "If the issue were capacity, the deeper model should have lower training error; higher training error suggests the optimization process failed to find a solution the model should theoretically contain."
+        },
+        {
+          "text": "Deep models suffered from extreme overfitting when trained on small datasets.",
+          "isCorrect": false,
+          "rationale": "The text explicitly states that degradation was not due to overfitting, as the training error itself was higher in deeper models."
+        },
+        {
+          "text": "Vanishing gradients completely stopped signal propagation after the first ten layers.",
+          "isCorrect": false,
+          "rationale": "While related to optimization, the central 'fact' cited by the text is the paradoxical increase in training error as depth increased."
+        },
+        {
+          "text": "The total parameter count became too large for the training budget to accommodate.",
+          "isCorrect": false,
+          "rationale": "The text focuses on the optimization 'degradation pattern' where deeper models are harder to fit, regardless of the budget."
+        }
+      ],
+      "hint": "Look for a result that contradicts the expected behavior of a model with more parameters."
+    },
+    {
+      "question": "How does 'residual path discipline' change the functional requirement of an individual layer within a deep stack?",
+      "answerOptions": [
+        {
+          "text": "A layer must provide a bounded correction to the existing representation rather than a total rewrite.",
+          "isCorrect": true,
+          "rationale": "Residual learning allows the identity path to preserve useful structure, leaving the layer to focus only on learning a 'delta' or refinement."
+        },
+        {
+          "text": "Each layer is required to become a stand-alone, highly expressive transformation that replaces the input.",
+          "isCorrect": false,
+          "rationale": "This describes the 'plain stack' approach that residual learning sought to fix by reducing the burden on individual layers."
+        },
+        {
+          "text": "The layer must downsample the spatial resolution to ensure the residual path remains trainable.",
+          "isCorrect": false,
+          "rationale": "Spatial resolution management is a separate concern; the residual discipline is about the logic of the representation update."
+        },
+        {
+          "text": "The shortcut path must be heavily gated to prevent the gradient from bypassing the weights entirely.",
+          "isCorrect": false,
+          "rationale": "The identity-mappings paper argued the opposite: that scaling or gating the shortcut actually degrades optimization."
+        }
+      ],
+      "hint": "Think about whether a layer is responsible for the whole signal or just a modification of it."
+    },
+    {
+      "question": "What is the 'pathwise' reading of ResNet's success as suggested by Veit et al. (2016)?",
+      "answerOptions": [
+        {
+          "text": "Residual design embeds many short, effective routes for gradients within a much deeper nominal scaffold.",
+          "isCorrect": true,
+          "rationale": "The analysis shows that useful training work is concentrated on paths shallower than the total network depth, making the deep scaffold manageable."
+        },
+        {
+          "text": "ResNets are essentially a collection of independent, shallow subnetworks that do not share parameters.",
+          "isCorrect": false,
+          "rationale": "The text warns against this 'loose' sloganistic interpretation, noting that nominal depth still provides necessary capacity and room."
+        },
+        {
+          "text": "The network performs best when every possible path through the skip connections is of equal length.",
+          "isCorrect": false,
+          "rationale": "Residual design inherently creates paths of many different lengths; the key is that the shorter ones enable effective training."
+        },
+        {
+          "text": "Shortcuts only serve as a fallback when the main convolutional layers fail to converge.",
+          "isCorrect": false,
+          "rationale": "Shortcuts are a structural discipline that changes how the entire network is trained, not just a backup mechanism."
+        }
+      ],
+      "hint": "Consider why a 110-layer network might train as if it were much shallower."
+    },
+    {
+      "question": "The Transformer is described as a 'portable block' because it packages residual discipline with which key combination of operations?",
+      "answerOptions": [
+        {
+          "text": "Self-attention and pointwise feed-forward expansion.",
+          "isCorrect": true,
+          "rationale": "The text identifies the core unit as 'residual block plus content-dependent mixing plus pointwise expansion,' which can travel across domains."
+        },
+        {
+          "text": "Recurrent gated units and global spatial pooling.",
+          "isCorrect": false,
+          "rationale": "The Transformer specifically abandons recurrence and convolution in favor of parallelizable attention."
+        },
+        {
+          "text": "Convolutional filters and max-pooling layers inside a residual scaffold.",
+          "isCorrect": false,
+          "rationale": "While it inherits the residual scaffold, the Transformer replaces convolutions with self-attention for sequence modeling."
+        },
+        {
+          "text": "Sparse expert routing and linear projection of positional offsets.",
+          "isCorrect": false,
+          "rationale": "Expert routing is a later addition (MoE) to the scaffold, not part of the 'vanilla' portable block described in the Transformer section."
+        }
+      ],
+      "hint": "Identify the two main sub-blocks inside a standard Transformer layer."
+    },
+    {
+      "question": "How do the analyses of BERT by Clark et al. and Tenney et al. justify the use of uniform scaffolds?",
+      "answerOptions": [
+        {
+          "text": "They demonstrate that functional differentiation and ordered hierarchies can emerge from uniform blocks during training.",
+          "isCorrect": true,
+          "rationale": "The papers show that specialization (like syntax vs. semantics) occurs without being hard-coded into separate architectural compartments."
+        },
+        {
+          "text": "They prove that uniform blocks are better than bespoke modules because they prevent the emergence of linguistic pipelines.",
+          "isCorrect": false,
+          "rationale": "The studies actually find that a 'classical NLP pipeline' *does* emerge, suggesting the scaffold allows for, rather than prevents, this order."
+        },
+        {
+          "text": "They show that attention heads must be manually assigned specific roles to achieve state-of-the-art performance.",
+          "isCorrect": false,
+          "rationale": "The differentiation is emergent; the designer creates the 'environment' rather than scripting the roles by hand."
+        },
+        {
+          "text": "They argue that syntactic and semantic processing are too complex for non-uniform architectures to handle.",
+          "isCorrect": false,
+          "rationale": "The argument is that uniform scaffolds are sturdy enough to *support* this complexity without requiring manual authoring of modules."
+        }
+      ],
+      "hint": "Focus on whether specialization is pre-programmed or learned by the network."
+    },
+    {
+      "question": "What historical shift does the 'RegNet' approach (Radosavovic et al., 2020) represent in neural architecture design?",
+      "answerOptions": [
+        {
+          "text": "Moving the design target from a single model instance to a population-level 'design space' governed by rules.",
+          "isCorrect": true,
+          "rationale": "RegNet treats the quality of the design space distributionally, defining regimes where many nearby networks behave predictably."
+        },
+        {
+          "text": "Replacing human intuition with reinforcement learning to find the single best set of weights.",
+          "isCorrect": false,
+          "rationale": "This describes early NAS or general training; RegNet specifically focuses on designing the rules that define a family of architectures."
+        },
+        {
+          "text": "Strictly limiting networks to linear growth in parameter count to ensure low latency.",
+          "isCorrect": false,
+          "rationale": "While RegNet uses quantized linear rules, its goal is to define a robust family discipline, not just to limit growth."
+        },
+        {
+          "text": "The complete abandonment of residual blocks in favor of quantized search operations.",
+          "isCorrect": false,
+          "rationale": "RegNet focuses on the search space over models, often still utilizing standard building blocks like those in the residual family."
+        }
+      ],
+      "hint": "Think about the transition from a 'blueprint' to a 'structural rule set'."
+    },
+    {
+      "question": "In the Chinchilla paper (Hoffmann et al., 2022), what was the critical 'recipe' correction for compute-optimal scaling?",
+      "answerOptions": [
+        {
+          "text": "Model size and training token count should grow in roughly equal proportions.",
+          "isCorrect": true,
+          "rationale": "The paper argued that previous large models were significantly undertrained and that data must scale along with parameter count."
+        },
+        {
+          "text": "Parameter count must grow exponentially faster than the data budget to exploit large-scale compute.",
+          "isCorrect": false,
+          "rationale": "The paper actually found that models were 'parameter-heavy' and 'data-poor,' suggesting data should grow more than previously thought."
+        },
+        {
+          "text": "The learning rate must be adjusted based on the square root of the number of training tokens.",
+          "isCorrect": false,
+          "rationale": "While training details matter, the core 'Chinchilla' claim is about the balance between model size and the volume of training data."
+        },
+        {
+          "text": "Scaling the number of layers is always more compute-efficient than scaling the width of each block.",
+          "isCorrect": false,
+          "rationale": "Chinchilla's focus is on the macro-allocation of compute between parameters and data, rather than specific internal shape ratios."
+        }
+      ],
+      "hint": "Recall why many large models were considered 'undertrained'."
+    },
+    {
+      "question": "How does the 'Mixture-of-Experts' (MoE) framework reintroduce non-uniformity without returning to the 'bespoke' age?",
+      "answerOptions": [
+        {
+          "text": "It treats specialization as a dynamic routing problem within a stable scaffold rather than a hand-authored inventory.",
+          "isCorrect": true,
+          "rationale": "MoE allows the system to learn to activate subsets of experts per token while preserving the overarching transformer structure."
+        },
+        {
+          "text": "It requires the designer to manually specify which expert handles syntax and which handles semantics.",
+          "isCorrect": false,
+          "rationale": "The router learns these assignments; the designer provides the mechanism for conditional computation, not the specific roles."
+        },
+        {
+          "text": "It replaces the residual scaffold with a series of parallel, handcrafted feature extractors.",
+          "isCorrect": false,
+          "rationale": "MoE typically lives *inside* a familiar scaffold, such as replacing a dense feed-forward block with a routed expert layer."
+        },
+        {
+          "text": "It eliminates the need for feed-forward layers by routing tokens directly to the output head.",
+          "isCorrect": false,
+          "rationale": "MoE usually scales the feed-forward capacity by having many versions of it (experts), rather than eliminating it."
+        }
+      ],
+      "hint": "Consider the role of a 'router' versus the role of a 'human architect'."
+    }
+  ]
+}
