@@ -45,6 +45,13 @@ The generated viewer currently exposes five tabs:
 - `Openings × Endings`: section-level ignition versus landing strength
 - `Move Matrix`: reverse-engineered editorial moves across the whole corpus
 
+The current viewer also does three things the first pass did not:
+
+- uses a shared selected-essay state across the axis views and tables
+- encodes confidence directly in the scatterplots
+- drives the pull vector from a real draft object in
+  [`atlas_data.json`](atlas_data.json) instead of a hard-coded example
+
 ## Current Read
 
 This first pass suggests four distinct anchor roles inside the archive:

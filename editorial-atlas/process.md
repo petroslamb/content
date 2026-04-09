@@ -30,11 +30,15 @@ Each essay gets four layers of analysis:
    - short reusable profile for editorial borrowing
 3. **Section atlas**
    - `Opening`
+   - `Thesis Lock`
    - `Development`
+   - `Borders / Counterpressure`
    - `Ending`
-   - `Evidence Control`
+   - `Reference Handling`
 4. **Move library**
    - Named editorial moves drawn from concrete archive examples
+5. **Draft objects**
+   - data-backed pull sheets that route a new draft toward specific archive essays
 
 This is a manual first pass. It is meant to be useful, not falsely precise.
 
@@ -120,5 +124,8 @@ Use the atlas to compare:
   essays. The atlas keeps that heterogeneity visible rather than pretending all
   items are the same kind of object.
 - Scores are qualitative judgments, not measurements.
+- The viewer now exposes a richer section model than the earliest markdown table
+  pass. Prefer [`atlas_data.json`](atlas_data.json) and the generated viewer
+  when those diverge from older prose summaries.
 - This package should remain essay-anchored. If it drifts into abstract traits
   without concrete archive examples, it will become generic quickly.

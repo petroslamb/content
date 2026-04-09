@@ -17,6 +17,12 @@ The current viewer exposes five tabs:
 - `Openings × Endings`: section-level ignition versus landing strength
 - `Move Matrix`: editorial moves distributed across the corpus
 
+The current implementation also adds:
+
+- shared essay selection across the scatterplots and tables
+- confidence encoding in the scatter views
+- a data-backed draft object for the pull vector
+
 ## 1. Constellation View
 
 `x = Traction`  
@@ -64,7 +70,7 @@ quadrantChart
     "What Actually Works": [0.80, 0.70]
     "Moltbook Phenomenon": [0.80, 0.70]
     "Hardware Friction Map": [0.70, 0.70]
-    "RLM Programs Its Own Thinking": [0.70, 0.60]
+    "LLM Programs Itself": [0.70, 0.60]
     "Operating Agents I": [0.70, 0.70]
     "Operating Agents II": [0.70, 0.70]
     "Operating Agents III": [0.70, 0.70]
@@ -112,20 +118,29 @@ Legend:
 - `7-8` strong
 - `5-6` functional but not defining
 
+The generated viewer now uses six normalized section slots:
+
+- `Opening`
+- `Thesis Lock`
+- `Development`
+- `Borders / Counterpressure`
+- `Ending`
+- `Reference Handling`
+
 ### Heatmap
 
-| Essay | Opening | Development | Ending | Evidence | Power Source |
-| --- | ---: | ---: | ---: | ---: | --- |
-| The Transformer Attractor | 10 | 9 | 10 | 8 | opening + ending lock |
-| The Binding Gap | 9 | 8 | 9 | 9 | concept control |
-| The Autonomy Tax | 9 | 8 | 9 | 8 | incident + doctrine |
-| The Illusion of the Swarm | 8 | 9 | 8 | 9 | middle synthesis |
-| What Actually Works | 7 | 8 | 6 | 9 | evidence architecture |
-| The Moltbook Phenomenon | 10 | 7 | 8 | 7 | topical narrative opening |
-| The Hardware Friction Map | 6 | 7 | 6 | 8 | heuristic section |
-| When the LLM Programs Its Own Thinking | 7 | 7 | 5 | 7 | implementation examples |
-| Operating Agents II | 7 | 8 | 6 | 8 | taxonomy middle |
-| Operating Agents III | 7 | 8 | 6 | 8 | diagnosis middle |
+| Essay | Opening | Thesis | Development | Borders | Ending | Refs | Power Source |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| The Transformer Attractor | 10 | 10 | 9 | 8 | 10 | 8 | opening + thesis + ending lock |
+| The Binding Gap | 9 | 9 | 8 | 10 | 9 | 9 | concept control |
+| The Autonomy Tax | 9 | 9 | 8 | 8 | 9 | 8 | incident + doctrine |
+| The Illusion of the Swarm | 8 | 8 | 9 | 9 | 8 | 9 | middle synthesis + borders |
+| What Actually Works | 7 | 7 | 8 | 7 | 6 | 9 | evidence architecture |
+| The Moltbook Phenomenon | 10 | 8 | 7 | 6 | 8 | 7 | topical narrative opening |
+| The Hardware Friction Map | 6 | 7 | 7 | 8 | 6 | 8 | heuristic section |
+| When the LLM Programs Its Own Thinking | 7 | 7 | 7 | 6 | 5 | 7 | implementation examples |
+| Operating Agents II | 7 | 8 | 8 | 8 | 6 | 8 | taxonomy middle |
+| Operating Agents III | 7 | 8 | 8 | 7 | 6 | 8 | diagnosis middle |
 
 ### Heatmap Read
 

@@ -222,6 +222,48 @@ def main() -> None:
       color: var(--ink);
     }}
 
+    .compact-detail {{
+      margin: 14px 0 16px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(31, 42, 38, 0.04);
+      border: 1px solid rgba(31, 42, 38, 0.08);
+    }}
+
+    .compact-detail h3 {{
+      margin: 0 0 6px;
+      font-size: 1.12rem;
+    }}
+
+    .compact-detail p {{
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }}
+
+    .compact-grid {{
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }}
+
+    .compact-box {{
+      padding: 9px 10px;
+      border-radius: 12px;
+      background: rgba(251, 247, 240, 0.86);
+    }}
+
+    .compact-box strong {{
+      display: block;
+      font-size: 1rem;
+    }}
+
+    .compact-box span {{
+      color: var(--muted);
+      font-size: 0.82rem;
+    }}
+
     .heatmap-table {{
       width: 100%;
       border-collapse: collapse;
@@ -368,6 +410,18 @@ def main() -> None:
       font-variant-numeric: tabular-nums;
     }}
 
+    .click-row {{
+      cursor: pointer;
+    }}
+
+    .click-row:hover td {{
+      background: rgba(31, 107, 92, 0.05);
+    }}
+
+    .selected-row td {{
+      background: rgba(31, 107, 92, 0.10);
+    }}
+
     .matrix-wrap {{
       overflow-x: auto;
     }}
@@ -396,6 +450,11 @@ def main() -> None:
       z-index: 1;
     }}
 
+    .matrix-table tr.selected-row td,
+    .matrix-table tr.selected-row td:first-child {{
+      background: rgba(31, 107, 92, 0.10);
+    }}
+
     .move-hit {{
       border-radius: 8px;
       font-weight: 700;
@@ -405,6 +464,21 @@ def main() -> None:
 
     .move-miss {{
       color: #a9b0ab;
+    }}
+
+    .draft-head {{
+      margin-bottom: 14px;
+    }}
+
+    .draft-head strong {{
+      display: block;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }}
+
+    .draft-head span {{
+      color: var(--muted);
+      font-size: 0.94rem;
     }}
 
     @media (max-width: 980px) {{
@@ -432,7 +506,8 @@ def main() -> None:
       }}
 
       .hero-list,
-      .detail-meta {{
+      .detail-meta,
+      .compact-grid {{
         grid-template-columns: 1fr;
       }}
     }}
@@ -533,9 +608,11 @@ def main() -> None:
               <tr>
                 <th>Essay</th>
                 <th class="num">Opening</th>
+                <th class="num">Thesis</th>
                 <th class="num">Development</th>
+                <th class="num">Borders</th>
                 <th class="num">Ending</th>
-                <th class="num">Evidence</th>
+                <th class="num">Refs</th>
                 <th>Power source</th>
               </tr>
             </thead>
@@ -549,11 +626,8 @@ def main() -> None:
         <h2>Draft pull vector</h2>
         <div class="vector-grid">
           <div>
-            <p class="vector-note">
-              Example design problem: a new flagship essay on architecture and
-              agent memory needs stronger ignition, better borders, and a denser
-              synthesis middle.
-            </p>
+            <div class="draft-head" id="draft-head"></div>
+            <p class="vector-note" id="draft-problem"></p>
             <div id="vector-root"></div>
           </div>
           <div>
@@ -565,33 +639,7 @@ def main() -> None:
                   <th>Desired strength</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Opening</td>
-                  <td>The Transformer Attractor</td>
-                  <td>conflict + compression</td>
-                </tr>
-                <tr>
-                  <td>Thesis lock</td>
-                  <td>The Transformer Attractor</td>
-                  <td>portable structural claim</td>
-                </tr>
-                <tr>
-                  <td>Development</td>
-                  <td>The Illusion of the Swarm</td>
-                  <td>research-backed synthesis</td>
-                </tr>
-                <tr>
-                  <td>Borders</td>
-                  <td>The Binding Gap</td>
-                  <td>exact boundaries</td>
-                </tr>
-                <tr>
-                  <td>Ending</td>
-                  <td>The Autonomy Tax</td>
-                  <td>doctrine close with stakes</td>
-                </tr>
-              </tbody>
+              <tbody id="pull-table-body"></tbody>
             </table>
             <p class="footer-note">
               This vector view is not a ranking device. It is a design-time
@@ -624,6 +672,7 @@ def main() -> None:
             and `Illusion of the Swarm` are balanced enough to work as both
             strong public objects and controlled frameworks.
           </p>
+          <div class="compact-detail" id="debate-detail"></div>
           <table class="mini-table" id="debate-table">
             <thead>
               <tr>
@@ -654,6 +703,7 @@ def main() -> None:
         <div class="panel">
           <p class="eyebrow">Read</p>
           <h2>Which essays dominate this tradeoff</h2>
+          <div class="compact-detail" id="synthesis-detail"></div>
           <table class="mini-table" id="synthesis-table">
             <thead>
               <tr>
@@ -689,6 +739,7 @@ def main() -> None:
         <div class="panel">
           <p class="eyebrow">Read</p>
           <h2>Opening / ending profile</h2>
+          <div class="compact-detail" id="openings-detail"></div>
           <table class="mini-table" id="opening-ending-table">
             <thead>
               <tr>
@@ -714,6 +765,7 @@ def main() -> None:
           moves, so the atlas can guide drafting rather than just describe the
           archive.
         </p>
+        <div class="compact-detail" id="moves-detail"></div>
         <div class="matrix-wrap">
           <table class="matrix-table" id="move-matrix">
             <thead></thead>
@@ -759,6 +811,10 @@ def main() -> None:
       'doctrine_ending'
     ];
 
+    const drafts = [...(atlas.drafts || [])];
+    const essayMap = new Map(essays.map(essay => [essay.title, essay]));
+    let selectedEssayTitle = 'The Transformer Attractor';
+
     function metricColor(value) {{
       if (value >= 9) return '#1f6b5c';
       if (value >= 8) return '#497e68';
@@ -766,21 +822,29 @@ def main() -> None:
       return '#b85f3d';
     }}
 
+    function confidenceRank(confidence) {{
+      return confidence === 'high' ? 3 : confidence === 'medium' ? 2 : 1;
+    }}
+
+    function confidenceStroke(confidence) {{
+      if (confidence === 'high') return '0';
+      if (confidence === 'medium') return '5 3';
+      return '2 3';
+    }}
+
+    function confidenceOpacity(confidence) {{
+      if (confidence === 'high') return 0.82;
+      if (confidence === 'medium') return 0.72;
+      return 0.62;
+    }}
+
     function heatColor(value) {{
       const alpha = 0.10 + ((value - 5) / 5) * 0.28;
       return `rgba(31, 107, 92, ${{alpha.toFixed(3)}})`;
     }}
 
-    function shortTitle(title) {{
-      return title
-        .replace('What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023-2025)', 'What Actually Works')
-        .replace('What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)', 'What Actually Works')
-        .replace('Autonomous AI Agents: Core Foundations and Recent Breakthroughs', 'Agent Revolution')
-        .replace('Operating Agents Guide: Preface', 'Operating Agents Preface')
-        .replace('Operating Agents Bonus: Workflow Optimization and Evaluation', 'Operating Agents Bonus')
-        .replace('When the LLM Programs Its Own Thinking', 'RLM Programs Itself')
-        .replace('The Orchestration Paradigm: ', '')
-        .replace('Operating Agents ', 'OA ');
+    function shortTitle(essay) {{
+      return essay.short_label || essay.title;
     }}
 
     function clamp(value, min, max) {{
@@ -829,6 +893,10 @@ def main() -> None:
 
     const plottedEssays = buildPlottedEssays(essays, 'traction', 'craft');
 
+    function selectedEssay() {{
+      return essayMap.get(selectedEssayTitle) || plottedEssays[0];
+    }}
+
     function topAnchors() {{
       return essays
         .slice()
@@ -857,6 +925,29 @@ def main() -> None:
       `).join('');
     }}
 
+    function renderCompactDetail(targetId, essay) {{
+      const root = document.getElementById(targetId);
+      if (!root) return;
+      root.innerHTML = `
+        <h3>${{essay.short_label || essay.title}}</h3>
+        <p>${{essay.identity}}</p>
+        <div class="compact-grid">
+          <div class="compact-box">
+            <strong>${{essay.debate}}</strong>
+            <span>debate</span>
+          </div>
+          <div class="compact-box">
+            <strong>${{essay.precision}}</strong>
+            <span>precision</span>
+          </div>
+          <div class="compact-box">
+            <strong>${{essay.confidence}}</strong>
+            <span>confidence</span>
+          </div>
+        </div>
+      `;
+    }}
+
     function renderDetail(essay) {{
       document.getElementById('detail-title').textContent = essay.title;
       document.getElementById('detail-subtitle').textContent = `${{essay.date}} | ${{essay.words}} words | confidence: ${{essay.confidence}}`;
@@ -867,12 +958,31 @@ def main() -> None:
       document.getElementById('detail-signature').textContent = essay.signature;
       document.getElementById('detail-risk').textContent = essay.overpull_risk;
       document.getElementById('detail-sections').textContent =
-        `opening ${{essay.opening}}, development ${{essay.development}}, ending ${{essay.ending}}, evidence ${{essay.evidence}}`;
+        `opening ${{essay.opening}}, thesis ${{essay.thesis_lock}}, development ${{essay.development}}, borders ${{essay.borders}}, ending ${{essay.ending}}, refs ${{essay.reference_handling}}`;
       document.getElementById('detail-chips').innerHTML = `
         <span class="chip">${{essay.identity}}</span>
         <span class="chip">traction ${{essay.traction}}</span>
         <span class="chip">craft ${{essay.craft}}</span>
+        <span class="chip">confidence ${{essay.confidence}}</span>
       `;
+    }}
+
+    function updateSelectionViews() {{
+      const essay = selectedEssay();
+      renderDetail(essay);
+      renderCompactDetail('debate-detail', essay);
+      renderCompactDetail('synthesis-detail', essay);
+      renderCompactDetail('openings-detail', essay);
+      renderCompactDetail('moves-detail', essay);
+      document.querySelectorAll('[data-essay-title]').forEach(node => {{
+        node.classList.toggle('selected-row', node.dataset.essayTitle === essay.title);
+      }});
+    }}
+
+    function setSelectedEssay(title) {{
+      if (!essayMap.has(title)) return;
+      selectedEssayTitle = title;
+      updateSelectionViews();
     }}
 
     function renderScatter() {{
@@ -909,13 +1019,15 @@ def main() -> None:
         const fill = metricColor(essay.publication_power);
         const labelX = x + essay.label_dx;
         const labelY = y + essay.label_dy;
+        const fillOpacity = confidenceOpacity(essay.confidence);
+        const strokeDash = confidenceStroke(essay.confidence);
         const label = `
           <line x1="${{x}}" y1="${{y}}" x2="${{labelX}}" y2="${{labelY}}" stroke="rgba(31,42,38,0.14)" stroke-width="1" />
-          <text x="${{labelX}}" y="${{labelY}}" font-size="10.5" font-weight="600" text-anchor="${{essay.label_anchor}}" fill="#1f2a26" paint-order="stroke" stroke="rgba(251,247,240,0.92)" stroke-width="4" stroke-linejoin="round">${{shortTitle(essay.title)}}</text>
+          <text x="${{labelX}}" y="${{labelY}}" font-size="10.5" font-weight="600" text-anchor="${{essay.label_anchor}}" fill="#1f2a26" paint-order="stroke" stroke="rgba(251,247,240,0.92)" stroke-width="4" stroke-linejoin="round">${{shortTitle(essay)}}</text>
         `;
         return `
           <g class="scatter-point" data-index="${{idx}}" style="cursor:pointer">
-            <circle cx="${{x}}" cy="${{y}}" r="${{r}}" fill="${{fill}}" fill-opacity="0.82" stroke="#f4efe6" stroke-width="2">
+            <circle cx="${{x}}" cy="${{y}}" r="${{r}}" fill="${{fill}}" fill-opacity="${{fillOpacity}}" stroke="#f4efe6" stroke-width="2" stroke-dasharray="${{strokeDash}}">
               <title>${{essay.title}}</title>
             </circle>
             ${{label}}
@@ -939,7 +1051,7 @@ def main() -> None:
       root.querySelectorAll('.scatter-point').forEach(node => {{
         node.addEventListener('click', () => {{
           const essay = plottedEssays[Number(node.dataset.index)];
-          renderDetail(essay);
+          setSelectedEssay(essay.title);
         }});
       }});
 
@@ -948,6 +1060,7 @@ def main() -> None:
         <span><span class="legend-dot" style="background:${{metricColor(8)}}"></span>power 8</span>
         <span><span class="legend-dot" style="background:${{metricColor(7)}}"></span>power 7</span>
         <span><span class="legend-dot" style="background:${{metricColor(6)}}"></span>power 6</span>
+        <span>solid = high confidence, dashed = lower confidence</span>
       `;
     }}
 
@@ -985,13 +1098,15 @@ def main() -> None:
         const r = 5 + essay.publication_power * 0.85;
         const labelX = x + essay.label_dx;
         const labelY = y + essay.label_dy;
+        const fillOpacity = confidenceOpacity(essay.confidence);
+        const strokeDash = confidenceStroke(essay.confidence);
         return `
-          <g>
-            <circle cx="${{x}}" cy="${{y}}" r="${{r}}" fill="${{metricColor(essay.publication_power)}}" fill-opacity="0.82" stroke="#f4efe6" stroke-width="2">
+          <g class="metric-point" data-essay-title="${{essay.title}}" style="cursor:pointer">
+            <circle cx="${{x}}" cy="${{y}}" r="${{r}}" fill="${{metricColor(essay.publication_power)}}" fill-opacity="${{fillOpacity}}" stroke="#f4efe6" stroke-width="2" stroke-dasharray="${{strokeDash}}">
               <title>${{essay.title}}</title>
             </circle>
             <line x1="${{x}}" y1="${{y}}" x2="${{labelX}}" y2="${{labelY}}" stroke="rgba(31,42,38,0.14)" stroke-width="1" />
-            <text x="${{labelX}}" y="${{labelY}}" font-size="10.5" font-weight="600" text-anchor="${{essay.label_anchor}}" fill="#1f2a26" paint-order="stroke" stroke="rgba(251,247,240,0.92)" stroke-width="4" stroke-linejoin="round">${{shortTitle(essay.title)}}</text>
+            <text x="${{labelX}}" y="${{labelY}}" font-size="10.5" font-weight="600" text-anchor="${{essay.label_anchor}}" fill="#1f2a26" paint-order="stroke" stroke="rgba(251,247,240,0.92)" stroke-width="4" stroke-linejoin="round">${{shortTitle(essay)}}</text>
           </g>
         `;
       }}).join('');
@@ -1015,8 +1130,13 @@ def main() -> None:
           <span><span class="legend-dot" style="background:${{metricColor(8)}}"></span>power 8</span>
           <span><span class="legend-dot" style="background:${{metricColor(7)}}"></span>power 7</span>
           <span><span class="legend-dot" style="background:${{metricColor(6)}}"></span>power 6</span>
+          <span>solid = high confidence, dashed = lower confidence</span>
         `;
       }}
+
+      root.querySelectorAll('.metric-point').forEach(node => {{
+        node.addEventListener('click', () => setSelectedEssay(node.dataset.essayTitle));
+      }});
     }}
 
     function renderHeatmap() {{
@@ -1025,18 +1145,21 @@ def main() -> None:
         .slice()
         .sort((a, b) => b.publication_power - a.publication_power || b.traction - a.traction)
         .map(essay => {{
-          const metrics = ['opening', 'development', 'ending', 'evidence'].map(key => {{
+          const metrics = ['opening', 'thesis_lock', 'development', 'borders', 'ending', 'reference_handling'].map(key => {{
             const value = essay[key];
             return `<td class="num"><span class="heat-cell" style="display:inline-block;min-width:44px;padding:8px 10px;background:${{heatColor(value)}}">${{value}}</span></td>`;
           }}).join('');
-          const powerSource =
-            essay.opening >= 9 ? 'opening-led' :
-            essay.development >= 9 ? 'middle-led' :
-            essay.ending >= 9 ? 'ending-led' :
-            essay.evidence >= 9 ? 'evidence-led' :
-            'balanced';
+          const pairs = [
+            ['opening', essay.opening],
+            ['thesis', essay.thesis_lock],
+            ['development', essay.development],
+            ['borders', essay.borders],
+            ['ending', essay.ending],
+            ['refs', essay.reference_handling]
+          ];
+          const powerSource = pairs.sort((a, b) => b[1] - a[1])[0][0];
           return `
-            <tr>
+            <tr class="click-row" data-essay-title="${{essay.title}}">
               <td><strong>${{essay.title}}</strong></td>
               ${{metrics}}
               <td>${{powerSource}}</td>
@@ -1044,26 +1167,31 @@ def main() -> None:
           `;
         }}).join('');
       tbody.innerHTML = rows;
+      tbody.querySelectorAll('[data-essay-title]').forEach(node => {{
+        node.addEventListener('click', () => setSelectedEssay(node.dataset.essayTitle));
+      }});
     }}
 
     function renderMiniTable(tableId, rows, columns) {{
       const tbody = document.querySelector(`#${{tableId}} tbody`);
       tbody.innerHTML = rows.map(row => `
-        <tr>
+        <tr class="click-row" data-essay-title="${{row.title}}">
           ${{columns.map(col => {{
             const cls = col.num ? ' class="num"' : '';
             return `<td${{cls}}>${{typeof col.render === 'function' ? col.render(row) : row[col.key]}}</td>`;
           }}).join('')}}
         </tr>
       `).join('');
+      tbody.querySelectorAll('[data-essay-title]').forEach(node => {{
+        node.addEventListener('click', () => setSelectedEssay(node.dataset.essayTitle));
+      }});
     }}
 
     function renderDebatePrecision() {{
       renderMetricScatter('debate-root', 'debate-legend', 'debate', 'precision', 'Debate', 'Precision');
       const rows = essays
         .slice()
-        .sort((a, b) => (b.debate + b.precision) - (a.debate + a.precision) || b.debate - a.debate)
-        .slice(0, 10);
+        .sort((a, b) => (b.debate + b.precision) - (a.debate + a.precision) || b.debate - a.debate);
       renderMiniTable('debate-table', rows, [
         {{ key: 'title', render: row => `<strong>${{row.title}}</strong>` }},
         {{ key: 'debate', num: true }},
@@ -1075,8 +1203,7 @@ def main() -> None:
       renderMetricScatter('synthesis-root', 'synthesis-legend', 'synthesis', 'utility', 'Synthesis', 'Utility');
       const rows = essays
         .slice()
-        .sort((a, b) => (b.synthesis + b.utility) - (a.synthesis + a.utility) || b.synthesis - a.synthesis)
-        .slice(0, 10);
+        .sort((a, b) => (b.synthesis + b.utility) - (a.synthesis + a.utility) || b.synthesis - a.synthesis);
       renderMiniTable('synthesis-table', rows, [
         {{ key: 'title', render: row => `<strong>${{row.title}}</strong>` }},
         {{ key: 'synthesis', num: true }},
@@ -1089,7 +1216,6 @@ def main() -> None:
       const rows = essays
         .slice()
         .sort((a, b) => Math.abs(b.opening - b.ending) - Math.abs(a.opening - a.ending) || b.opening - a.opening)
-        .slice(0, 12)
         .map(row => ({{
           ...row,
           gap: row.opening - row.ending
@@ -1116,7 +1242,7 @@ def main() -> None:
         .slice()
         .sort((a, b) => b.publication_power - a.publication_power || b.traction - a.traction)
         .map(essay => `
-          <tr>
+          <tr class="click-row" data-essay-title="${{essay.title}}">
             <td><strong>${{essay.title}}</strong></td>
             ${{MOVE_ORDER.map(key => essay.moves.includes(key)
               ? `<td><span class="move-hit">●</span></td>`
@@ -1125,6 +1251,9 @@ def main() -> None:
           </tr>
         `).join('');
       tbody.innerHTML = rows;
+      tbody.querySelectorAll('[data-essay-title]').forEach(node => {{
+        node.addEventListener('click', () => setSelectedEssay(node.dataset.essayTitle));
+      }});
     }}
 
     function activateTab(target) {{
@@ -1143,7 +1272,86 @@ def main() -> None:
     }}
 
     function renderVector() {{
+      const draft = drafts[0];
+      if (!draft) return;
       const root = document.getElementById('vector-root');
+      const draftHead = document.getElementById('draft-head');
+      const draftProblem = document.getElementById('draft-problem');
+      const pullBody = document.getElementById('pull-table-body');
+
+      draftHead.innerHTML = `
+        <strong>${{draft.title}}</strong>
+        <span>${{draft.one_line_identity}}</span>
+        <span>current T/C ${{draft.current_position.traction}}/${{draft.current_position.craft}} → target T/C ${{draft.target_position.traction}}/${{draft.target_position.craft}}, precision ${{draft.current_position.precision}} → ${{draft.target_position.precision}}</span>
+      `;
+      draftProblem.textContent = draft.problem;
+      pullBody.innerHTML = [
+        ...draft.pulls.map(item => `
+          <tr>
+            <td>${{item.section}}</td>
+            <td>${{item.essay}}</td>
+            <td>${{item.desired_strength}}</td>
+          </tr>
+        `),
+        ...draft.resists.map(item => `
+          <tr>
+            <td>Resist</td>
+            <td>${{item.essay}}</td>
+            <td>${{item.risk}}</td>
+          </tr>
+        `)
+      ].join('');
+
+      const positions = [
+        {{ x: 28, y: 46, width: 190, height: 72 }},
+        {{ x: 492, y: 42, width: 178, height: 72 }},
+        {{ x: 26, y: 252, width: 208, height: 72 }},
+        {{ x: 478, y: 252, width: 202, height: 72 }},
+        {{ x: 250, y: 18, width: 190, height: 64 }}
+      ];
+      const nodeMap = new Map();
+      draft.pulls.forEach(item => {{
+        if (!nodeMap.has(item.essay)) nodeMap.set(item.essay, {{ type: 'pull', notes: [] }});
+        nodeMap.get(item.essay).notes.push(item.section.toLowerCase());
+      }});
+      draft.resists.forEach(item => {{
+        nodeMap.set(item.essay, {{ type: 'resist', notes: [item.risk] }});
+      }});
+
+      const nodes = [...nodeMap.entries()].slice(0, positions.length).map(([title, meta], idx) => {{
+        const essay = essayMap.get(title);
+        const pos = positions[idx];
+        const cx = pos.x + pos.width / 2;
+        const cy = pos.y + pos.height / 2;
+        return {{
+          title,
+          short: essay ? shortTitle(essay) : title,
+          subtitle: meta.type === 'resist'
+            ? `resist: ${{meta.notes[0]}}`
+            : meta.notes.join(' + '),
+          type: meta.type,
+          ...pos,
+          cx,
+          cy
+        }};
+      }});
+
+      const rects = nodes.map(node => `
+        <rect x="${{node.x}}" y="${{node.y}}" width="${{node.width}}" height="${{node.height}}" rx="16"
+          fill="${{node.type === 'resist' ? 'rgba(184,95,61,0.08)' : 'rgba(31,107,92,0.08)'}}"
+          stroke="${{node.type === 'resist' ? 'rgba(184,95,61,0.26)' : 'rgba(31,107,92,0.26)'}}"></rect>
+        <text x="${{node.cx}}" y="${{node.y + 31}}" text-anchor="middle" font-size="18" font-family="var(--serif)" fill="#1f2a26">${{node.short}}</text>
+        <text x="${{node.cx}}" y="${{node.y + 51}}" text-anchor="middle" font-size="12" fill="#5f6b64">${{node.subtitle}}</text>
+      `).join('');
+
+      const lines = nodes.map(node => `
+        <line x1="${{node.cx}}" y1="${{node.cy}}" x2="345" y2="175"
+          stroke="${{node.type === 'resist' ? '#b85f3d' : '#1f6b5c'}}"
+          stroke-width="${{node.type === 'resist' ? '2.6' : '3.0'}}"
+          stroke-dasharray="${{node.type === 'resist' ? '8 8' : '0'}}"
+          marker-end="url(#${{node.type === 'resist' ? 'arrow-rust' : 'arrow-green'}})"></line>
+      `).join('');
+
       root.innerHTML = `
         <svg viewBox="0 0 700 360" role="img" aria-label="Draft pull vector view">
           <defs>
@@ -1155,29 +1363,10 @@ def main() -> None:
             </marker>
           </defs>
           <rect x="250" y="130" width="190" height="90" rx="18" fill="rgba(31,107,92,0.10)" stroke="#1f6b5c" stroke-width="2"></rect>
-          <text x="345" y="168" text-anchor="middle" font-family="var(--serif)" font-size="24" fill="#1f2a26">New Draft</text>
-          <text x="345" y="194" text-anchor="middle" font-size="13" fill="#5f6b64">flagship essay with research discipline</text>
-
-          <rect x="28" y="46" width="178" height="72" rx="16" fill="rgba(31,107,92,0.08)" stroke="rgba(31,107,92,0.26)"></rect>
-          <text x="117" y="77" text-anchor="middle" font-size="18" font-family="var(--serif)" fill="#1f2a26">Transformer Attractor</text>
-          <text x="117" y="97" text-anchor="middle" font-size="12" fill="#5f6b64">opener + compression</text>
-
-          <rect x="492" y="42" width="178" height="72" rx="16" fill="rgba(31,107,92,0.08)" stroke="rgba(31,107,92,0.26)"></rect>
-          <text x="581" y="73" text-anchor="middle" font-size="18" font-family="var(--serif)" fill="#1f2a26">Binding Gap</text>
-          <text x="581" y="93" text-anchor="middle" font-size="12" fill="#5f6b64">borders + naming</text>
-
-          <rect x="26" y="252" width="208" height="72" rx="16" fill="rgba(31,107,92,0.08)" stroke="rgba(31,107,92,0.26)"></rect>
-          <text x="130" y="283" text-anchor="middle" font-size="18" font-family="var(--serif)" fill="#1f2a26">Illusion of the Swarm</text>
-          <text x="130" y="303" text-anchor="middle" font-size="12" fill="#5f6b64">middle synthesis</text>
-
-          <rect x="484" y="252" width="196" height="72" rx="16" fill="rgba(184,95,61,0.08)" stroke="rgba(184,95,61,0.26)"></rect>
-          <text x="582" y="283" text-anchor="middle" font-size="18" font-family="var(--serif)" fill="#1f2a26">What Actually Works</text>
-          <text x="582" y="303" text-anchor="middle" font-size="12" fill="#5f6b64">resist: survey scale</text>
-
-          <line x1="206" y1="104" x2="250" y2="148" stroke="#1f6b5c" stroke-width="3.5" marker-end="url(#arrow-green)"></line>
-          <line x1="492" y1="105" x2="440" y2="150" stroke="#1f6b5c" stroke-width="2.4" marker-end="url(#arrow-green)"></line>
-          <line x1="234" y1="266" x2="250" y2="220" stroke="#1f6b5c" stroke-width="2.6" marker-end="url(#arrow-green)"></line>
-          <line x1="484" y1="270" x2="440" y2="220" stroke="#b85f3d" stroke-width="2.6" stroke-dasharray="8 8" marker-end="url(#arrow-rust)"></line>
+          <text x="345" y="168" text-anchor="middle" font-family="var(--serif)" font-size="24" fill="#1f2a26">${{draft.title}}</text>
+          <text x="345" y="194" text-anchor="middle" font-size="13" fill="#5f6b64">${{draft.one_line_identity}}</text>
+          ${{rects}}
+          ${{lines}}
         </svg>
       `;
     }}
@@ -1191,7 +1380,7 @@ def main() -> None:
     renderSynthesisUtility();
     renderOpeningsEndings();
     renderMoveMatrix();
-    renderDetail(plottedEssays.find(e => e.title === 'The Transformer Attractor') || plottedEssays[0]);
+    setSelectedEssay(selectedEssayTitle);
   </script>
 </body>
 </html>
