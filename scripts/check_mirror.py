@@ -19,7 +19,6 @@ from archive_utils import (
 from editorial_atlas_utils import (
     ATLAS_DATA_PATH as GENERATED_ATLAS_DATA_PATH,
     EDITORIAL_ATLAS_DIR,
-    RUBRIC_ASSESSMENTS_PATH,
     ensure_checked_in_atlas_matches_generated,
 )
 
@@ -90,16 +89,12 @@ def validate_editorial_atlas() -> None:
         raise SystemExit(f"Missing editorial atlas directory: {EDITORIAL_ATLAS_DIR}")
     if not EDITORIAL_ATLAS_DATA_PATH.exists():
         raise SystemExit(f"Missing editorial atlas data: {EDITORIAL_ATLAS_DATA_PATH}")
-    if not RUBRIC_ASSESSMENTS_PATH.exists():
-        raise SystemExit(f"Missing editorial atlas rubric source: {RUBRIC_ASSESSMENTS_PATH}")
 
     atlas = ensure_checked_in_atlas_matches_generated()
-    essays = atlas["essays"]
-    drafts = atlas["drafts"]
-    if not isinstance(essays, list) or not essays:
-        raise SystemExit("Editorial atlas data must contain a non-empty 'essays' list")
-    if not isinstance(drafts, list) or not drafts:
-        raise SystemExit("Editorial atlas data must contain a non-empty 'drafts' list")
+    
+    models = atlas.get("models", {})
+    if not models:
+        raise SystemExit("Editorial atlas data must contain at least one model")
 
     essay_required = {
         "title",
@@ -120,31 +115,42 @@ def validate_editorial_atlas() -> None:
         "ending",
         "reference_handling",
     }
-    for essay in essays:
-        missing = essay_required.difference(essay)
-        if missing:
-            raise SystemExit(f"Editorial atlas essay missing keys {sorted(missing)}: {essay.get('title', essay)}")
-        if not isinstance(essay["moves"], list):
-            raise SystemExit(f"Editorial atlas essay moves must be a list: {essay['title']}")
 
-    for draft in drafts:
-        for key in ("title", "current_position", "target_position", "pulls", "resists"):
-            if key not in draft:
-                raise SystemExit(f"Editorial atlas draft missing key '{key}': {draft}")
-        for position_key in ("current_position", "target_position"):
-            position = draft[position_key]
-            required = {"traction", "craft", "debate", "precision", "synthesis", "utility"}
-            missing = required.difference(position)
+    for model_id, model_data in models.items():
+        essays = model_data.get("essays", [])
+        drafts = model_data.get("drafts", [])
+        
+        if not essays:
+            raise SystemExit(f"Model {model_id} has no essays")
+        if not drafts:
+            raise SystemExit(f"Model {model_id} has no drafts")
+
+        # Validate each essay across all models for schema compliance
+        for essay in essays:
+            missing = essay_required.difference(essay)
             if missing:
-                raise SystemExit(
-                    f"Editorial atlas draft {position_key} missing keys {sorted(missing)}: {draft['title']}"
-                )
-        if not isinstance(draft["pulls"], list) or not draft["pulls"]:
-            raise SystemExit(f"Editorial atlas draft pulls must be a non-empty list: {draft['title']}")
-        for pull in draft["pulls"]:
-            for key in ("essay", "section", "desired_strength"):
-                if key not in pull:
-                    raise SystemExit(f"Editorial atlas draft pull missing '{key}': {draft['title']}")
+                raise SystemExit(f"Editorial atlas essay missing keys {sorted(missing)} in model {model_id}: {essay.get('title', essay)}")
+            if not isinstance(essay["moves"], list):
+                raise SystemExit(f"Editorial atlas essay moves must be a list in model {model_id}: {essay['title']}")
+
+        for draft in drafts:
+            for key in ("title", "current_position", "target_position", "pulls", "resists"):
+                if key not in draft:
+                    raise SystemExit(f"Editorial atlas draft missing key '{key}' in model {model_id}: {draft}")
+            for position_key in ("current_position", "target_position"):
+                position = draft[position_key]
+                required = {"traction", "craft", "debate", "precision", "synthesis", "utility"}
+                missing = required.difference(position)
+                if missing:
+                    raise SystemExit(
+                        f"Editorial atlas draft {position_key} missing keys {sorted(missing)} in model {model_id}: {draft['title']}"
+                    )
+            if not isinstance(draft["pulls"], list) or not draft["pulls"]:
+                raise SystemExit(f"Editorial atlas draft pulls must be a non-empty list in model {model_id}: {draft['title']}")
+            for pull in draft["pulls"]:
+                for key in ("essay", "section", "desired_strength"):
+                    if key not in pull:
+                        raise SystemExit(f"Editorial atlas draft pull missing '{key}' in model {model_id}: {draft['title']}")
 
 
 def validate_archive_assets(manifest: list[dict[str, str]]) -> None:

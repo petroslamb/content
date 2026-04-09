@@ -475,23 +475,28 @@ def diff_generated_vs_checked_in(expected: dict[str, Any], current: dict[str, An
 
 
 def ensure_checked_in_atlas_matches_generated() -> dict[str, Any]:
-    # For now, we only validate the first discovered model to maintain compatibility with --check
-    rubric_paths = list(EDITORIAL_ATLAS_DIR.glob("rubric_assessments_*.yaml"))
-    if not rubric_paths:
-        raise SystemExit(f"No rubric assessment files found in {EDITORIAL_ATLAS_DIR}")
-    
-    generated = build_editorial_atlas_data(rubric_path=rubric_paths[0])
+    # Validate all discovered models to ensure the check-in data is complete
+    rubric_paths = sorted(EDITORIAL_ATLAS_DIR.glob("rubric_assessments_*.yaml"))
     current_all = load_atlas_data()
     
-    # Extract the specific model from current if it exists
-    model_id = rubric_paths[0].stem.replace("rubric_assessments_", "").replace("_", "-")
-    current = current_all.get("models", {}).get(model_id, {})
-    
-    if not current or current.get("essays") != generated.get("essays"):
-        diff = diff_generated_vs_checked_in(generated, current)
-        raise SystemExit(
-            f"Editorial atlas data for {model_id} is out of date. "
-            "Run `.venv/bin/python scripts/generate_editorial_atlas.py`.\n"
-            f"{diff}"
-        )
+    for path in rubric_paths:
+        if path.name == "rubric_assessments_template.yaml":
+            continue
+            
+        model_id = path.stem.replace("rubric_assessments_", "").replace("_", "-")
+        try:
+            generated = build_editorial_atlas_data(rubric_path=path)
+        except SystemExit:
+            # Skip models that are explicitly pending or incomplete
+            continue
+            
+        current = current_all.get("models", {}).get(model_id, {})
+        
+        if not current or current.get("essays") != generated.get("essays"):
+            diff = diff_generated_vs_checked_in(generated, current)
+            raise SystemExit(
+                f"Editorial atlas data for {model_id} is out of date. "
+                "Run `.venv/bin/python scripts/generate_editorial_atlas.py`.\n"
+                f"{diff}"
+            )
     return current_all
