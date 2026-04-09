@@ -1,5 +1,6 @@
 .atlas-page {
   margin-top: 1rem;
+  position: relative;
 }
 
 .atlas-shell {
@@ -10,13 +11,16 @@
 .atlas-hero,
 .atlas-layout,
 .atlas-vector-grid,
-.atlas-tab-grid {
+.atlas-tab-grid,
+.atlas-compare-grid,
+.atlas-compare-stack {
   display: grid;
   gap: 1rem;
 }
 
 .atlas-routing-controls,
-.atlas-field {
+.atlas-field,
+.atlas-subtab-bar {
   display: grid;
   gap: 0.55rem;
 }
@@ -35,8 +39,22 @@
   align-items: start;
 }
 
+.atlas-compare-grid {
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
+  align-items: start;
+}
+
+.atlas-compare-stack {
+  grid-template-columns: 1fr;
+}
+
+.atlas-compare-detail-panel {
+  position: sticky;
+  top: 1rem;
+}
+
 .atlas-routing-controls {
-  grid-template-columns: minmax(220px, 1.2fr) minmax(220px, 1.1fr) auto;
+  grid-template-columns: minmax(260px, 1fr) auto;
   align-items: end;
   margin: 1rem 0 1.1rem;
 }
@@ -134,6 +152,35 @@
   background: var(--ink);
   color: #fff8f0;
   border-color: var(--ink);
+}
+
+.atlas-subtab-bar {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.atlas-subtab-btn {
+  border: 1px solid rgba(54, 42, 28, 0.12);
+  background: rgba(255, 251, 245, 0.75);
+  color: var(--muted);
+  padding: 0.72rem 0.9rem;
+  border-radius: 16px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.atlas-subtab-btn.active {
+  background: rgba(31, 107, 92, 0.1);
+  color: var(--ink);
+  border-color: rgba(31, 107, 92, 0.2);
+}
+
+.atlas-subtab-panel {
+  display: none;
+}
+
+.atlas-subtab-panel.active {
+  display: block;
 }
 
 .atlas-field span {
@@ -248,12 +295,47 @@
   overflow-x: auto;
 }
 
+.atlas-move-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.55rem;
+  margin: 0 0 0.9rem;
+}
+
+.atlas-move-key-item {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.28rem 0.52rem;
+  border-radius: 999px;
+  background: rgba(31, 42, 38, 0.05);
+  border: 1px solid rgba(31, 42, 38, 0.08);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.atlas-move-key-code {
+  display: inline-block;
+  min-width: 2.1rem;
+  text-align: center;
+  padding: 0.12rem 0.3rem;
+  border-radius: 999px;
+  background: rgba(31, 107, 92, 0.1);
+  color: #1f6b5c;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
 .atlas-heatmap-table,
 .atlas-mini-table,
 .atlas-pull-table,
 .atlas-matrix-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.atlas-mini-table {
+  margin-top: 0.9rem;
 }
 
 .atlas-heatmap-table th,
@@ -298,7 +380,28 @@
 .atlas-matrix-table td {
   text-align: center;
   white-space: nowrap;
-  font-size: 0.92rem;
+  font-size: 0.84rem;
+}
+
+.atlas-matrix-table {
+  table-layout: fixed;
+  min-width: 980px;
+}
+
+.atlas-matrix-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgba(255, 251, 245, 0.98);
+}
+
+.atlas-matrix-table th:not(:first-child),
+.atlas-matrix-table td:not(:first-child) {
+  width: 58px;
+  min-width: 58px;
+  max-width: 58px;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
 }
 
 .atlas-matrix-table th:first-child,
@@ -306,15 +409,20 @@
   text-align: left;
   position: sticky;
   left: 0;
-  z-index: 1;
+  z-index: 3;
   background: rgba(255, 251, 245, 0.98);
+  min-width: 220px;
+  width: 220px;
 }
 
 .atlas-move-hit {
   display: inline-block;
-  padding: 0.1rem 0.45rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  line-height: 1.35rem;
   border-radius: 8px;
   background: rgba(31, 107, 92, 0.14);
+  font-weight: 700;
 }
 
 .atlas-move-miss {
@@ -344,6 +452,37 @@
   color: #9a4e35;
 }
 
+.atlas-route-badge--risk {
+  background: rgba(184, 95, 61, 0.12);
+  color: #9a4e35;
+}
+
+.atlas-tooltip-target {
+  cursor: help;
+}
+
+.atlas-tooltip {
+  position: fixed;
+  z-index: 50;
+  max-width: 280px;
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(31, 26, 20, 0.96);
+  color: #fff8f0;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.atlas-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .atlas-draft-head {
   margin-bottom: 0.8rem;
 }
@@ -362,11 +501,16 @@
   .atlas-hero,
   .atlas-layout,
   .atlas-vector-grid,
-  .atlas-tab-grid {
+  .atlas-tab-grid,
+  .atlas-compare-grid {
     grid-template-columns: 1fr;
   }
 
   .atlas-routing-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .atlas-subtab-bar {
     grid-template-columns: 1fr;
   }
 

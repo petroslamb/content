@@ -160,7 +160,7 @@ def main() -> None:
         atlas_text = atlas_soup.get_text(" ", strip=True)
         if "Published essays as a navigable editorial system" not in atlas_text:
             raise SystemExit("Editorial atlas page is missing the expected page heading")
-        expected_tabs = {"overview", "debate", "synthesis", "openings", "moves"}
+        expected_tabs = {"overview", "compare", "moves"}
         found_tabs = {
             button.get("data-tab")
             for button in atlas_soup.select(".atlas-tab-btn[data-tab]")

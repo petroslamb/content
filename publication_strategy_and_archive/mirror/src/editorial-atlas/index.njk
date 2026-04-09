@@ -47,9 +47,7 @@ extraScripts:
 
     <nav class="atlas-tab-bar" aria-label="Atlas views">
       <button class="atlas-tab-btn active" data-tab="overview">Overview</button>
-      <button class="atlas-tab-btn" data-tab="debate">Debate × Precision</button>
-      <button class="atlas-tab-btn" data-tab="synthesis">Synthesis × Utility</button>
-      <button class="atlas-tab-btn" data-tab="openings">Openings × Endings</button>
+      <button class="atlas-tab-btn" data-tab="compare">Compare</button>
       <button class="atlas-tab-btn" data-tab="moves">Move Matrix</button>
     </nav>
 
@@ -131,20 +129,17 @@ extraScripts:
 
       <section class="atlas-panel">
         <p class="eyebrow">View 3</p>
-        <h2>Essay routing vector</h2>
+        <h2>Improvement panel</h2>
         <p class="atlas-note">
-          Put any published essay in the center, choose the editorial goal, and
-          the surrounding essays recompute as stronger neighbors, section
-          donors, and resists. This is a routing tool, not a static poster.
+          Put any published essay in the center and the panel answers a smaller
+          set of revision questions: which slots are weakest, which essays are
+          the best donors for those slots, which nearby essays are stronger
+          overall, and what over-copying risks to watch.
         </p>
         <div class="atlas-routing-controls">
           <label class="atlas-field">
             <span>Center essay</span>
             <select id="atlas-routing-center"></select>
-          </label>
-          <label class="atlas-field">
-            <span>Goal</span>
-            <select id="atlas-routing-goal"></select>
           </label>
           <button class="atlas-action-button" id="atlas-use-selected" type="button">Use selected essay</button>
         </div>
@@ -160,110 +155,119 @@ extraScripts:
                 <tr>
                   <th>Relation</th>
                   <th>Essay</th>
-                  <th>Why it helps</th>
+                  <th>Use</th>
                 </tr>
               </thead>
               <tbody id="atlas-pull-table-body"></tbody>
             </table>
             <p class="atlas-footer-note">
-              Green nodes are stronger neighbors, gold nodes are section donors,
-              and rust nodes are tempting anti-models to resist.
+              Green nodes are nearby stronger essays, gold nodes are slot
+              donors, and rust nodes are caution notes rather than direct
+              templates.
             </p>
           </div>
         </div>
       </section>
     </section>
 
-    <section id="atlas-tab-debate" class="atlas-tab-panel">
-      <div class="atlas-tab-grid">
-        <div class="atlas-panel">
-          <p class="eyebrow">Axis View</p>
-          <h2>Debate × Precision</h2>
-          <p class="atlas-note">
-            This separates essays built to travel in public argument from essays built to hold sharper conceptual borders.
-          </p>
-          <div id="atlas-debate-root"></div>
-          <div class="atlas-legend" id="atlas-debate-legend"></div>
-        </div>
-        <div class="atlas-panel">
-          <p class="eyebrow">Read</p>
-          <h2>What this view clarifies</h2>
-          <p class="atlas-note">
-            `Transformer Attractor` and `Moltbook` sit far toward public argument. `Binding Gap` sits far toward precision. `Autonomy Tax` and `Illusion of the Swarm` are balanced enough to work as both strong public objects and controlled frameworks.
-          </p>
-          <div class="atlas-compact-detail" id="atlas-debate-detail"></div>
-          <table class="atlas-mini-table" id="atlas-debate-table">
-            <thead>
-              <tr>
-                <th>Essay</th>
-                <th class="num">Debate</th>
-                <th class="num">Precision</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    <section id="atlas-tab-compare" class="atlas-tab-panel">
+      <div class="atlas-compare-grid">
+        <div class="atlas-compare-stack">
+          <div class="atlas-subtab-bar" aria-label="Compare projections">
+            <button class="atlas-subtab-btn active" data-subtab="debate">Debate × Precision</button>
+            <button class="atlas-subtab-btn" data-subtab="synthesis">Synthesis × Utility</button>
+            <button class="atlas-subtab-btn" data-subtab="openings">Openings × Endings</button>
+          </div>
 
-    <section id="atlas-tab-synthesis" class="atlas-tab-panel">
-      <div class="atlas-tab-grid">
-        <div class="atlas-panel">
-          <p class="eyebrow">Axis View</p>
-          <h2>Synthesis × Utility</h2>
-          <p class="atlas-note">
-            This separates archive-anchor surveys from operator-facing essays. It helps distinguish flagship essays from synthesis anchors and practical companion objects.
-          </p>
-          <div id="atlas-synthesis-root"></div>
-          <div class="atlas-legend" id="atlas-synthesis-legend"></div>
-        </div>
-        <div class="atlas-panel">
-          <p class="eyebrow">Read</p>
-          <h2>Which essays dominate this tradeoff</h2>
-          <div class="atlas-compact-detail" id="atlas-synthesis-detail"></div>
-          <table class="atlas-mini-table" id="atlas-synthesis-table">
-            <thead>
-              <tr>
-                <th>Essay</th>
-                <th class="num">Synthesis</th>
-                <th class="num">Utility</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-          <p class="atlas-footer-note">
-            `What Actually Works` and `Illusion of the Swarm` are the strongest synthesis anchors. `Autonomy Tax` and the `Operating Agents` set dominate the utility side.
-          </p>
-        </div>
-      </div>
-    </section>
+          <div class="atlas-panel atlas-subtab-panel active" id="atlas-subtab-debate">
+            <p class="eyebrow">Projection 1</p>
+            <h2>Debate × Precision</h2>
+            <p class="atlas-note">
+              Public-argument energy versus concept-border control.
+            </p>
+            <div id="atlas-debate-root"></div>
+            <div class="atlas-legend" id="atlas-debate-legend"></div>
+            <table class="atlas-mini-table" id="atlas-debate-table">
+              <thead>
+                <tr>
+                  <th>Essay</th>
+                  <th class="num">Debate</th>
+                  <th class="num">Precision</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
 
-    <section id="atlas-tab-openings" class="atlas-tab-panel">
-      <div class="atlas-tab-grid">
-        <div class="atlas-panel">
-          <p class="eyebrow">Section View</p>
-          <h2>Openings × Endings</h2>
-          <p class="atlas-note">
-            This compares how essays start and how they land. It helps diagnose pieces that ignite well but taper, or essays that only become strong late.
-          </p>
-          <div id="atlas-opening-ending-root"></div>
-          <div class="atlas-legend" id="atlas-opening-ending-legend"></div>
+          <div class="atlas-panel atlas-subtab-panel" id="atlas-subtab-synthesis">
+            <p class="eyebrow">Projection 2</p>
+            <h2>Synthesis × Utility</h2>
+            <p class="atlas-note">
+              Archive-anchor integration versus operator-facing usefulness.
+            </p>
+            <div id="atlas-synthesis-root"></div>
+            <div class="atlas-legend" id="atlas-synthesis-legend"></div>
+            <table class="atlas-mini-table" id="atlas-synthesis-table">
+              <thead>
+                <tr>
+                  <th>Essay</th>
+                  <th class="num">Synthesis</th>
+                  <th class="num">Utility</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="atlas-panel atlas-subtab-panel" id="atlas-subtab-openings">
+            <p class="eyebrow">Projection 3</p>
+            <h2>Openings × Endings</h2>
+            <p class="atlas-note">
+              How essays ignite versus how they land.
+            </p>
+            <div id="atlas-opening-ending-root"></div>
+            <div class="atlas-legend" id="atlas-opening-ending-legend"></div>
+            <table class="atlas-mini-table" id="atlas-opening-ending-table">
+              <thead>
+                <tr>
+                  <th>Essay</th>
+                  <th class="num">Opening</th>
+                  <th class="num">Ending</th>
+                  <th class="num">Gap</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
-        <div class="atlas-panel">
-          <p class="eyebrow">Read</p>
-          <h2>Opening / ending profile</h2>
-          <div class="atlas-compact-detail" id="atlas-openings-detail"></div>
-          <table class="atlas-mini-table" id="atlas-opening-ending-table">
-            <thead>
-              <tr>
-                <th>Essay</th>
-                <th class="num">Opening</th>
-                <th class="num">Ending</th>
-                <th class="num">Gap</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+
+        <div class="atlas-panel atlas-compare-detail-panel">
+          <p class="eyebrow">Selected Essay</p>
+          <h2>Cross-view read</h2>
+          <p class="atlas-note">
+            One shared interpretation panel for all three projections. Select an
+            essay from any graph or table and compare how its position changes
+            across public tension, synthesis utility, and opening/ending shape.
+          </p>
+          <div class="atlas-compact-detail" id="atlas-compare-detail"></div>
+          <div class="atlas-detail-copy">
+            <div>
+              <strong>Debate × Precision</strong>
+              <span id="atlas-compare-debate"></span>
+            </div>
+            <div>
+              <strong>Synthesis × Utility</strong>
+              <span id="atlas-compare-synthesis"></span>
+            </div>
+            <div>
+              <strong>Openings × Endings</strong>
+              <span id="atlas-compare-opening"></span>
+            </div>
+            <div>
+              <strong>Interpretation</strong>
+              <span id="atlas-compare-read"></span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -276,6 +280,7 @@ extraScripts:
           This connects the visual atlas back to the reverse-engineered move library. It shows which essays exemplify which recurring editorial moves.
         </p>
         <div class="atlas-compact-detail" id="atlas-moves-detail"></div>
+        <div class="atlas-move-key" id="atlas-move-key"></div>
         <div class="atlas-matrix-wrap">
           <table class="atlas-matrix-table" id="atlas-move-matrix">
             <thead></thead>
@@ -287,4 +292,5 @@ extraScripts:
   </div>
 
   <script id="editorial-atlas-data" type="application/json">{{ editorialAtlas | json | safe }}</script>
+  <div class="atlas-tooltip" id="atlas-tooltip" role="tooltip" aria-hidden="true"></div>
 </section>
