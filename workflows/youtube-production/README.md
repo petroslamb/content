@@ -76,6 +76,41 @@ After rendering, verify that the output duration matches the narration closely. 
 
 Once the MP4 is verified, switch to the channel workflows for auth checks, playlist updates, and upload.
 
+### Optional Phase 5 — Derive Shorts From The Verified Long-Form
+
+If the finished video has insight-dense segments that can stand alone in roughly `45` to `120` seconds, derive Shorts from the verified long-form rather than rebuilding them from scratch.
+
+Use this path when:
+
+- the long-form already has a trusted timed `.srt`
+- the rendered master is the source of truth for visuals
+- the goal is to publish multiple Shorts that point back to the long-form upload
+
+Canonical sequence:
+
+1. Read the timed `.srt` and pick segments that contain one clear idea with a clean beginning and payoff.
+2. Write a `shorts_manifest.json` next to `artifacts/video/shorts/` with:
+   - `slug`
+   - `title`
+   - `summary`
+   - `start`
+   - `end`
+   - optional `publish_at`
+3. Render the Shorts from the long-form master:
+
+```bash
+.venv/bin/python scripts/create_publication_shorts_from_longform.py \
+  --video-file <longform.mp4> \
+  --manifest <shorts_manifest.json>
+```
+
+This produces:
+
+- `artifacts/video/shorts/landscape/*.mp4`
+- `artifacts/video/shorts/portrait/*_portrait.mp4`
+
+4. Hand the finished portrait clips to the channel workflow for upload, playlist placement, related-video linkage, and optional scheduled release.
+
 ## Cue Sheet Structure
 
 The render script expects a JSON cue sheet with these fields:
