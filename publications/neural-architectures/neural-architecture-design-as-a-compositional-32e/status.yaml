@@ -34,4 +34,5 @@ config:
   markdown_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
   evidence_path: publications/neural-architectures/papers
   substack_slug: neural-architecture-design-as-a-compositional-32e
+  substack_post_id: 180114871
   substack_url: https://lambpetros.substack.com
