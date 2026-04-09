@@ -11,6 +11,7 @@ Examples:
 from __future__ import annotations
 
 import argparse
+import json
 import shlex
 import string
 import subprocess
@@ -164,70 +165,39 @@ def print_stage_summary(
         print("\nLaunch Templates: none")
 
 
-def log_run(package_key: str, stage: str, action: str, success: bool, output: str, commands: list[str]) -> None:
+def log_run(
+    package_key: str,
+    stage: str,
+    action: str,
+    success: bool,
+    output: str,
+    commands: list[str],
+    workflow_path: Path,
+    status_path: Path,
+) -> None:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     package_id = package_key.replace("/", "__")
-    run_id = f"{timestamp}_{package_id}_{stage}_{action}"
-    run_dir = Path("reviewable-runs/examples/proofs") / run_id
-    packet_dir = run_dir / "review-packet"
-    packet_dir.mkdir(parents=True, exist_ok=True)
+    log_dir = REPO_ROOT / "reviewable-runs" / "logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_path = log_dir / f"{timestamp}_{package_id}_{stage}_{action}.json"
 
-    status_str = "SUCCESS" if success else "FAILURE"
-    command_block = "\n".join(commands) if commands else "None"
+    output_limit = 6000
+    payload = {
+        "kind": "lifecycle_stage_run",
+        "timestamp": timestamp,
+        "package": package_key,
+        "stage": stage,
+        "action": action,
+        "success": success,
+        "workflow_doc": str(workflow_path.relative_to(REPO_ROOT)),
+        "status_path": str(status_path.relative_to(REPO_ROOT)),
+        "commands": commands,
+        "output_excerpt": output[-output_limit:],
+        "output_truncated": len(output) > output_limit,
+    }
+    log_path.write_text(json.dumps(payload, indent=2) + "\n")
 
-    task_spec = f"""# Task Spec
-
-## Run Type
-Lifecycle Stage {action}: {stage}
-
-## Objective
-Process the '{stage}' stage for '{package_key}' using the '{action}' action.
-
-## Success Criteria
-- The requested action completes without error
-- The resulting manifest state matches the runner mode contract
-"""
-    (packet_dir / "task-spec.md").write_text(task_spec)
-
-    execution_trace = f"""# Execution Trace
-
-1. Target package: {package_key}
-2. Stage: {stage}
-3. Action: {action}
-4. Commands attempted:
-```
-{command_block}
-```
-5. Execution timestamp: {timestamp}
-
-## Raw Output Snippet
-```
-{output[-4000:]}
-```
-"""
-    (packet_dir / "execution-trace.md").write_text(execution_trace)
-
-    verification_report = f"""# Verification Report
-
-## Outcome
-Status: {status_str}
-
-## Details
-Stage '{stage}' was processed for package '{package_key}' using action '{action}'.
-"""
-    (packet_dir / "verification-report.md").write_text(verification_report)
-
-    readme = f"""# Run Record: {run_id}
-
-- **Package**: {package_key}
-- **Stage**: {stage}
-- **Action**: {action}
-- **Status**: {status_str}
-- **Packet**: [review-packet/](review-packet/)
-"""
-    (run_dir / "README.md").write_text(readme)
-
-    print(f"Reviewable Run recorded to {run_dir}")
+    print(f"Lifecycle run logged to {log_path.relative_to(REPO_ROOT)}")
 
 
 def format_commands(templates: list[str], resolved_args: dict, passthrough_args: list[str]) -> list[str]:
@@ -348,7 +318,16 @@ def main() -> None:
         else:
             print("Stage execution failed.")
 
-        log_run(manifest_ref.package_key, args.stage, "execute", success, output, commands)
+        log_run(
+            manifest_ref.package_key,
+            args.stage,
+            "execute",
+            success,
+            output,
+            commands,
+            workflow_contract["path"],
+            manifest_ref.status_path,
+        )
         if not success:
             sys.exit(1)
         return
@@ -361,7 +340,16 @@ def main() -> None:
         save_status(manifest_ref.package_path, status_data)
         message = f"Stage '{args.stage}' marked done for '{manifest_ref.package_key}'."
         print(message)
-        log_run(manifest_ref.package_key, args.stage, "mark-done", True, message, [])
+        log_run(
+            manifest_ref.package_key,
+            args.stage,
+            "mark-done",
+            True,
+            message,
+            [],
+            workflow_contract["path"],
+            manifest_ref.status_path,
+        )
         return
 
     if args.mark_undone:
@@ -372,7 +360,16 @@ def main() -> None:
         save_status(manifest_ref.package_path, status_data)
         message = f"Stage '{args.stage}' marked not done for '{manifest_ref.package_key}'."
         print(message)
-        log_run(manifest_ref.package_key, args.stage, "mark-undone", True, message, [])
+        log_run(
+            manifest_ref.package_key,
+            args.stage,
+            "mark-undone",
+            True,
+            message,
+            [],
+            workflow_contract["path"],
+            manifest_ref.status_path,
+        )
         return
 
 
