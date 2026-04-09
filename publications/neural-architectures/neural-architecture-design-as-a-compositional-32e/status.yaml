@@ -16,8 +16,8 @@ stages:
     done: true
     last_updated: '2026-04-09'
   article_polish:
-    done: false
-    last_updated: '2026-04-07'
+    done: true
+    last_updated: '2026-04-09'
   substack_publishing:
     done: false
     last_updated: '2026-04-07'

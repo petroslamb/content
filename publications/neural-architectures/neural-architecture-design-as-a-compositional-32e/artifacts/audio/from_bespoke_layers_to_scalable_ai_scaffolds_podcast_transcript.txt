@@ -1,0 +1,86 @@
+Source: 7c089c50-b0ab-486d-9162-d8b50242c8f1
+Title: from_bespoke_layers_to_scalable_ai_scaffolds_deep-dive_long.mp3
+Characters: 28,715
+
+Content:
+You know when we talk about complex engineering like say building a suspension 
+bridge or designing a supersonic jet there is this deeply ingrained expectation 
+of well surgical precision.
+
+
+
+Oh absolutely. It's total top down control
+
+
+
+right. Everything is deterministic. The blueprint dictates the exact loadbearing
+capacity of a steel beam and the final structure reflects that blueprint 
+perfectly. But if you look at how we actually build complex artificial 
+intelligence systems today that illusion of engineering just completely falls 
+apart.
+
+
+
+It really does. I mean, we essentially started out trying to build neural 
+networks the same way we built those jet engines.
+
+
+
+Yeah.
+
+
+
+We treated AI like a custom machine watch where a master watch maker, in this 
+case a machine learning researcher, files down every single gear by hand. You 
+know, deciding exactly what each layer should do,
+
+
+
+which sounds logical at first,
+
+
+
+right? But we quickly found out that micromanaging the architecture of 
+intelligence simply doesn't scale. It just breaks.
+
+
+
+Which is exactly the massive paradigm shift we're unpacking. Today I was 
+recently reading this incredible piece of research, a text called rooted layers 
+AI systems grounded in research.
+
+
+
+Oh yeah, that's a fantastic piece.
+
+
+
+It really is. It's a phenomenal historical analysis of how neural architecture 
+evolved over the last decade. And uh throughout our conversation today, we'll 
+just refer to this source naturally as the post.
+
+
+
+Sounds good.
+
+
+
+So it traces this fascinating arc from human engineers trying to script 
+competence layer by layer to what we do now, which is build building endlessly 
+scalable governed ecosystems where the internal structure basically 
+self-organizes.
+
+
+
+Yeah. And a useful way to think about this is realizing that the history of deep
+learning architecture isn't just a hardware story.
+
+
+
+Right. It's not just we got better graphics cards.
+
+
+
+Exactly. We didn't just get faster GPUs and make the models bigger. 
+
+... (26,715 more chars, use -o to save full content)
