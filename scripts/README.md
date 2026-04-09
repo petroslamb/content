@@ -90,6 +90,7 @@ Tracked workflows:
 | `line_map_markdown_to_cues.py` | Converts a reviewed markdown line map plus timed captions into the final cue-sheet JSON used for rendering. | verified cue generation | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `render_audio_slides_video.py` | Generates a rough evenly spaced template or renders the final MP4 from a cue sheet. | template or final render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `render_publication_video.py` | Thin convenience wrapper that renders one package's final publication video from its prepared cues. | package-level final render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
+| `create_publication_shorts_from_longform.py` | Slices a verified long-form MP4 into named short clips from a manifest and renders portrait Shorts variants. | package-level Shorts derivation from one long-form video | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `convert_landscape_videos_to_portrait.py` | Converts landscape MP4 clips into portrait `9:16` versions by centering the original frame over a blurred vertical background, keeping output in a standard `H.264`/`AAC` web-delivery envelope. | prep horizontal clips for Shorts-style upload | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `scrape_youtube_watch_transcript.py` | Scrapes the visible watch-page transcript panel into JSON when you need a browser fallback for transcript inspection. | transcript fallback or debugging | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 
@@ -102,7 +103,7 @@ These scripts are thin wrappers or local helpers. They are useful, but they are 
 | `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | Tied to `publications/binding-gap/` assets. Useful as a richer review or render surface after OCR-first cue drafting. |
 | `list_youtube_videos.py` | Lists videos from the authenticated YouTube channel. | Thin wrapper around the YouTube skill script layer. Use [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) for the canonical process. |
 | `upload_publication_tldrs.py` | Uploads TL;DR video variants from one package into a playlist. | Thin publication-specific wrapper around the YouTube API helper stack. |
-| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package, adds them to a Shorts playlist, and links them back to the main long-form video. | Thin publication-specific wrapper around the YouTube API helper stack. Defaults to dry-run. |
+| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package, adds them to a Shorts playlist, links them back to the main long-form video, and can schedule release times from a manifest. | Thin publication-specific wrapper around the YouTube API helper stack. Defaults to dry-run. |
 
 ## Related Skill Split
 

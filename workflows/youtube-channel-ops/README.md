@@ -105,6 +105,26 @@ Use the package wrapper for this path:
 
 This script is dry-run by default. It uploads every `*.mp4` in `artifacts/video/shorts/portrait/`, adds them to the target playlist, and attempts to set the long-form video as the Shorts related video through the API.
 
+If the package has a `shorts_manifest.json`, pass it so the upload uses:
+
+- explicit titles and summaries
+- stable ordering
+- optional scheduled release times via `publishAt`
+
+```bash
+.venv/bin/python scripts/upload_publication_shorts.py \
+  --package <publication-package-path-under-publications> \
+  --main-video-id <LONGFORM_VIDEO_ID> \
+  --playlist-id <SHORTS_PLAYLIST_ID> \
+  --essay-url <canonical-essay-url> \
+  --full-video-url <longform-youtube-url> \
+  --tldr-url <tldr-youtube-url> \
+  --manifest <shorts_manifest.json> \
+  --apply
+```
+
+For scheduled release, set explicit UTC `publish_at` values in the manifest. A practical default is `2` to `3` Shorts per day at fixed local times rather than dumping the batch all at once.
+
 Do not merge this with Shorts creation logic in the same workflow surface. Keep `clip selection -> portrait conversion/render` as the upstream phase, and treat upload-plus-linking as the downstream phase that can be frozen and reused independently.
 
 ### 6. Branch To The Correct Next Workflow

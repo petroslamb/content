@@ -14,9 +14,9 @@ Run from project root:
     [--apply]
 """
 
-import os
 import sys
 import argparse
+import json
 from pathlib import Path
 
 # Add the youtube skill scripts directory to path
@@ -38,6 +38,7 @@ def main():
     parser.add_argument("--essay-url", required=True, help="Canonical essay URL")
     parser.add_argument("--full-video-url", required=True, help="Public URL for the long-form video")
     parser.add_argument("--tldr-url", help="Optional public URL for the TL;DR companion")
+    parser.add_argument("--manifest", type=Path, help="Optional manifest JSON to control titles, summaries, ordering, and scheduling.")
     parser.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"], help="Privacy status (default: public)")
     parser.add_argument("--apply", action="store_true", help="Upload and mutate YouTube state. Without this, print the plan only.")
     args = parser.parse_args()
@@ -51,26 +52,53 @@ def main():
         print(f"ERROR: Shorts directory not found: {shorts_dir}")
         sys.exit(1)
 
-    video_files = sorted(shorts_dir.glob('*.mp4'))
-    if not video_files:
+    planned_items: list[dict] = []
+    if args.manifest:
+        manifest = json.loads(args.manifest.read_text())
+        for index, clip in enumerate(manifest.get("clips", []), start=1):
+            video_path = shorts_dir / f"{index:02d}-{clip['slug']}_portrait.mp4"
+            if not video_path.exists():
+                print(f"WARNING: Missing portrait clip for manifest entry, skipping: {video_path}")
+                continue
+            planned_items.append(
+                {
+                    "video_path": video_path,
+                    "title": clip["title"],
+                    "summary": clip.get("summary", ""),
+                    "publish_at": clip.get("publish_at"),
+                }
+            )
+    else:
+        video_files = sorted(shorts_dir.glob('*.mp4'))
+        planned_items = [
+            {
+                "video_path": video_path,
+                "title": video_path.stem.replace('_portrait', '').replace('_', ' '),
+                "summary": "",
+                "publish_at": None,
+            }
+            for video_path in video_files
+        ]
+
+    if not planned_items:
         print(f"No .mp4 files found in {shorts_dir}")
         sys.exit(0)
 
-    print(f"Found {len(video_files)} short(s) to upload")
+    print(f"Found {len(planned_items)} short(s) to upload")
     print(f"Target playlist: {args.playlist_id}")
     print(f"Related long-form video: {main_video_url}")
     if not args.apply:
         print("\nDry run only. Add --apply to upload and write YouTube state.")
-        for video_path in video_files:
-            title = video_path.stem.replace('_portrait', '').replace('_', ' ')
-            print(f" - {title} #shorts <- {video_path.name}")
+        for item in planned_items:
+            schedule_suffix = f" @ {item['publish_at']}" if item["publish_at"] else ""
+            print(f" - {item['title']} #shorts <- {item['video_path'].name}{schedule_suffix}")
         return
 
     print()
 
-    for video_path in video_files:
-        # Create title from filename (remove _portrait.mp4)
-        title = video_path.stem.replace('_portrait', '').replace('_', ' ')
+    for item in planned_items:
+        video_path = item["video_path"]
+        title = item["title"]
         full_title = f"{title} #shorts"
 
         # Guess tags from package name or filename
@@ -82,9 +110,15 @@ def main():
             "",
             "Short clip from a Rooted Layers long-form research video.",
             "",
-            f"Original essay: {args.essay_url}",
-            f"Full visual deep dive: {args.full_video_url}",
         ]
+        if item["summary"]:
+            description_lines.extend([item["summary"], ""])
+        description_lines.extend(
+            [
+                f"Original essay: {args.essay_url}",
+                f"Full visual deep dive: {args.full_video_url}",
+            ]
+        )
         if args.tldr_url:
             description_lines.append(f"TL;DR video: {args.tldr_url}")
         description_lines.extend(
@@ -107,10 +141,12 @@ def main():
                 'defaultLanguage': 'en'
             },
             'status': {
-                'privacyStatus': args.privacy,
+                'privacyStatus': 'private' if item["publish_at"] else args.privacy,
                 'selfDeclaredMadeForKids': False
             }
         }
+        if item["publish_at"]:
+            body['status']['publishAt'] = item["publish_at"]
 
         media = MediaFileUpload(
             str(video_path),
@@ -160,8 +196,10 @@ def main():
                 body={
                     'id': video_id,
                     'status': {
-                        'privacyStatus': args.privacy,
-                        'relatedVideoIds': [main_video_id]
+                        'privacyStatus': 'private' if item["publish_at"] else args.privacy,
+                        'selfDeclaredMadeForKids': False,
+                        'relatedVideoIds': [main_video_id],
+                        **({'publishAt': item["publish_at"]} if item["publish_at"] else {}),
                     }
                 }
             ).execute()

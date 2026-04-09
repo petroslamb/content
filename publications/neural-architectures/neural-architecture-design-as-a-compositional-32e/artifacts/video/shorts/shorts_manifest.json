@@ -1,0 +1,58 @@
+{
+  "source_video": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural-architecture-design-as-a-compositional-32e_slides_video_final.mp4",
+  "related_video_id": "-2CM4JYfQAs",
+  "essay_url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
+  "full_video_url": "https://www.youtube.com/watch?v=-2CM4JYfQAs",
+  "tldr_url": "https://www.youtube.com/watch?v=BSwFQTIrAmQ",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "why-handcrafted-ai-breaks",
+      "title": "Why Handcrafted AI Breaks at Scale",
+      "summary": "Early neural networks treated intelligence like a handcrafted machine. The break came when that approach stopped scaling.",
+      "start": "00:00:37.920",
+      "end": "00:02:03.900",
+      "publish_at": "2026-04-10T07:00:00Z"
+    },
+    {
+      "slug": "resnet-fixed-depth",
+      "title": "ResNet Fixed the Depth Problem",
+      "summary": "ResNet worked because it stopped forcing every layer to rewrite the whole signal and let layers learn residual corrections instead.",
+      "start": "00:08:12.800",
+      "end": "00:09:45.000",
+      "publish_at": "2026-04-10T11:00:00Z"
+    },
+    {
+      "slug": "transformer-portable-block",
+      "title": "The Transformer Won as a Portable Block",
+      "summary": "Transformers mattered not just because of attention, but because the whole block became portable across domains once wrapped in a stable residual scaffold.",
+      "start": "00:13:58.160",
+      "end": "00:15:18.100",
+      "publish_at": "2026-04-10T15:00:00Z"
+    },
+    {
+      "slug": "portability-needs-scale",
+      "title": "Transformer Portability Depends on Scale",
+      "summary": "Vision Transformers did not kill inductive bias. They only beat ResNets once scale supplied enough data to learn structure from scratch.",
+      "start": "00:18:30.799",
+      "end": "00:19:50.400",
+      "publish_at": "2026-04-11T07:00:00Z"
+    },
+    {
+      "slug": "the-compute-recipe-became-design",
+      "title": "The Compute Recipe Became the Design",
+      "summary": "Once transformer behavior became predictable under scaling laws, architecture design moved upward into budgets, data allocation, and training recipes.",
+      "start": "00:20:57.200",
+      "end": "00:22:14.200",
+      "publish_at": "2026-04-11T11:00:00Z"
+    },
+    {
+      "slug": "moe-is-controlled-heterogeneity",
+      "title": "MoE Is Controlled Heterogeneity",
+      "summary": "Mixture-of-experts looks like a return to messy heterogeneity, but the specialization is now governed by routing inside a stable scaffold.",
+      "start": "00:23:15.679",
+      "end": "00:24:31.200",
+      "publish_at": "2026-04-11T15:00:00Z"
+    }
+  ]
+}

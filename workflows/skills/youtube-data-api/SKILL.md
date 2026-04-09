@@ -100,6 +100,8 @@ Use this after the portrait Shorts masters already exist inside a package. Keep 
 
 This wrapper is dry-run by default. It uploads all portrait Shorts in the package folder, adds them to the target playlist, and attempts to set the long-form upload as the Shorts related video.
 
+If a package has `artifacts/video/shorts/shorts_manifest.json`, pass `--manifest` so the wrapper uses explicit titles, summaries, and optional `publishAt` schedule times instead of inferring everything from filenames.
+
 ### Operating Agents Uploads, Ordering, And Replacements
 
 Use the Operating Agents scripts when the user is working on the course or TL;DR series:

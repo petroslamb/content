@@ -20,6 +20,7 @@ Typical chapter layout:
 - `scripts/line_map_markdown_to_cues.py`: converts a reviewed markdown line-map plus timed captions into a renderable cue-sheet JSON.
 - `scripts/render_audio_slides_video.py`: generates a rough evenly spaced template or renders the final MP4 from a cue sheet.
 - `scripts/scrape_youtube_watch_transcript.py`: captures the visible watch-page transcript into JSON for inspection or fallback analysis.
+- `scripts/create_publication_shorts_from_longform.py`: slices a verified long-form MP4 into named short clips from a manifest, then renders portrait variants for Shorts upload.
 - `workflows/skills/youtube-data-api/scripts/download_video_captions.py`: preferred managed caption downloader when auth and quota are available.
 
 ## Core Sequence
@@ -139,6 +140,22 @@ Final render:
 
 Render uses the script defaults for slide videos: `libx264`, `-preset medium`, `crf 23`, `1920x1080`, and `192kbps AAC`.
 
+### 6. Optional Shorts Derivation From The Long-Form
+
+When the rendered long-form has strong stand-alone segments, derive Shorts from the verified MP4 plus its timed `.srt`:
+
+1. pick segments that each make one idea land cleanly
+2. write `artifacts/video/shorts/shorts_manifest.json`
+3. render them with:
+
+```bash
+.venv/bin/python scripts/create_publication_shorts_from_longform.py \
+  --video-file <longform.mp4> \
+  --manifest <shorts_manifest.json>
+```
+
+This writes both `landscape/` and `portrait/` outputs under `artifacts/video/shorts/`.
+
 ## Output Naming
 
 The working convention is:
@@ -150,6 +167,12 @@ The working convention is:
 - `<Course Title>.mp4`
 
 Keep these files in `artifacts/video/` next to the chapter assets.
+
+If Shorts are derived from the long-form, keep the adjacent convention:
+
+- `artifacts/video/shorts/shorts_manifest.json`
+- `artifacts/video/shorts/landscape/*.mp4`
+- `artifacts/video/shorts/portrait/*_portrait.mp4`
 
 Verify the output duration against the narration after render. If the video stream overruns the audio, trim the final MP4 back to the audio duration before promotion.
 

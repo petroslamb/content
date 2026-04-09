@@ -62,9 +62,10 @@ Use this file when deciding which local YouTube script to run and how risky it i
 ### `scripts/upload_publication_shorts.py`
 
 - Purpose: upload all portrait Shorts variants from one publication package, add them to a target Shorts playlist, and set the related-video field to the canonical long-form upload when the API allows it.
-- Key args: `--package`, `--main-video-id`, `--playlist-id`, `--essay-url`, `--full-video-url`, optional `--tldr-url`, optional `--privacy`, optional `--apply`.
+- Key args: `--package`, `--main-video-id`, `--playlist-id`, `--essay-url`, `--full-video-url`, optional `--tldr-url`, optional `--manifest`, optional `--privacy`, optional `--apply`.
 - Safe mode: default behavior is dry-run.
 - Risk: uploads videos, writes playlist entries, and updates video status only when `--apply` is present.
+- Scheduling: if a manifest carries `publish_at`, the script uploads the Short as `private`, sets `publishAt`, and keeps the related-video linkage intact.
 
 ### `upload_operating_agents_tldrs.py`
 
