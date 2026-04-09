@@ -143,6 +143,8 @@ The lightest useful retention set is:
 
 Add the six review records only when the run needs a real review packet or proof artifact.
 
+Routine lifecycle or stage-run automation should default to the lightweight `logs/` layer first. Promote a run into `examples/proofs/` only after a real review decision that it adds retained proof value.
+
 ## When To Escalate To A Full Packet
 
 Lightweight reconstruction is enough when:

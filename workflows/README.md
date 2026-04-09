@@ -22,6 +22,22 @@ The current defaults in this directory were tightened against recurring March-Ap
 | [`youtube-channel-ops/README.md`](youtube-channel-ops/README.md) | authenticated YouTube channel work such as OAuth checks, caption recovery, playlist diagnostics, and Shorts maintenance | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/youtube-shorts-maintenance/`](skills/youtube-shorts-maintenance/) |
 | [`youtube-series-operating-agents/README.md`](youtube-series-operating-agents/README.md) | the Operating Agents YouTube series layer: TL;DR uploads, cross-links, playlist order, and replacement uploads | [`skills/youtube-operating-agents/`](skills/youtube-operating-agents/), [`skills/youtube-data-api/`](skills/youtube-data-api/) |
 
+## Working Hierarchy
+
+The April 2026 neural-architecture pilot made one structural fact clearer: this repo needs a layered reading order, not just a flat stage list.
+
+Use the layers like this:
+
+| Layer | Main Question | Canonical Surface |
+| :--- | :--- | :--- |
+| package context | what publication object am I actually changing? | package `README.md`, leaf `README.md`, and `status.yaml` |
+| lifecycle workflow | what kind of work am I doing right now? | the relevant tracked workflow doc in this directory |
+| execution help | which commands, helper scripts, or repo-local skills actually perform it? | [`skills/`](skills/README.md) and [`../scripts/README.md`](../scripts/README.md) |
+| routine run record | what happened in this bounded operational run? | [`../reviewable-runs/logs/README.md`](../reviewable-runs/logs/README.md) |
+| retained proof | which runs are strong enough to preserve as reviewable-run examples? | [`../reviewable-runs/examples/proofs/README.md`](../reviewable-runs/examples/proofs/README.md) |
+
+That separation matters. Workflow docs explain the process. Skills and scripts execute the process. Reviewable Runs records what happened. Those are different layers and should not collapse into one another.
+
 ## Canonical Article Lifecycle
 
 The lifecycle stage ids remain unchanged for runner compatibility. The working taxonomy for article development is:
@@ -50,6 +66,20 @@ The runner still uses the stage sequence:
 7. `archive_sync`
 8. `distribution`
 9. `youtube_production`
+
+For real end-to-end work, treat those flat stage ids as a compatibility layer over a more useful hierarchy:
+
+1. **Evidence shaping**: `paper_intake`, `research`
+2. **Draft governance and rewrite**: `essay_iteration`
+3. **Package media production**: `notebooklm_artifacts`, `article_polish`, `youtube_production`
+4. **Publication and outward release**: `substack_publishing`, `archive_sync`, `distribution`
+
+Two adjacent operational surfaces often appear during a real rollout but are not default `status.yaml` stages:
+
+- [`youtube-channel-ops/README.md`](youtube-channel-ops/README.md): channel-side upload, captions, playlist mutation, and Shorts release work
+- [`youtube-series-operating-agents/README.md`](youtube-series-operating-agents/README.md): series-specific YouTube operations that do not belong in a generic article lifecycle
+
+This distinction is intentional. `youtube_production` ends at a verified local MP4. Channel mutation is a separate operational boundary with different auth, quota, and approval risks.
 
 For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 
