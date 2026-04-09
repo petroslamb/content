@@ -108,7 +108,7 @@ These scripts are thin wrappers or local helpers. They are useful, but they are 
 
 Some adjacent automation lives outside this folder:
 
-- YouTube channel-management, caption download, temporary upload transcript recovery, Shorts maintenance, playlist updates, and replacement uploads live under [`../workflows/skills/youtube-data-api/scripts/`](../workflows/skills/youtube-data-api/scripts/) and are documented canonically in [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) and [`../workflows/youtube-series-operating-agents/README.md`](../workflows/youtube-series-operating-agents/README.md).
+- YouTube channel-management, caption download, temporary upload transcript recovery, playlist diagnostics, generic publication bundle uploads, Shorts maintenance, and replacement uploads live under [`../workflows/skills/youtube-data-api/scripts/`](../workflows/skills/youtube-data-api/scripts/) and are documented canonically in [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) and [`../workflows/youtube-series-operating-agents/README.md`](../workflows/youtube-series-operating-agents/README.md).
 - PDF slide export lives under [`../workflows/skills/pdf-slides-to-substack-images/scripts/`](../workflows/skills/pdf-slides-to-substack-images/scripts/).
 - NotebookLM, blueprint hardening, and alphaXiv validation are documented canonically under [`../workflows/`](../workflows/README.md) and do not use this root `scripts/` folder as their main implementation surface.
 

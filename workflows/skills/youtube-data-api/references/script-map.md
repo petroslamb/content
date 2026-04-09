@@ -53,6 +53,12 @@ Use this file when deciding which local YouTube script to run and how risky it i
 - Risk: destructive metadata overwrite only when `--apply` is present.
 - Default template: `references/shorts_description_template.md`.
 
+### `upload_publication_video_bundle.py`
+
+- Purpose: upload one publication longform video plus one TL;DR companion, add them to target playlists, cross-link the descriptions, optionally include chapters on the longform upload, and optionally pin both playlist entries to position `0`.
+- Key args: `--longform-file`, `--longform-title`, `--longform-summary`, `--longform-playlist-id`, `--tldr-file`, `--tldr-title`, `--tldr-summary`, `--tldr-playlist-id`, `--essay-url`, optional `--chapters-file`, optional `--pin-to-top`, optional `--apply`.
+- Risk: uploads two videos, edits descriptions, and writes playlist entries only when `--apply` is present.
+
 ### `upload_operating_agents_tldrs.py`
 
 - Purpose: upload TL;DR videos listed in metadata, add them to the target playlist, and update the full-episode descriptions.
