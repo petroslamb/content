@@ -1,5 +1,6 @@
 version: 1
 corpus_source: publication_strategy_and_archive/substack_archive
+model_display_name: "GPT-5.4 xhigh"
 score_scale: 1-10 qualitative manual scoring
 status_notes:
   migrated: Backfilled from the previous atlas_data.json so the atlas becomes rubric-derived and testable. Passage-level rationale and anchors still need manual audit.
