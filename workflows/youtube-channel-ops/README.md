@@ -60,7 +60,28 @@ Use the mutating scripts only after confirming scope:
 
 These mutating scripts default to dry-run. Add `--apply` only when the user clearly wants the channel write.
 
-### 4. Branch To The Correct Next Workflow
+### 4. Upload Publication Longform And TL;DR Bundles
+
+When a publication package has both a finished longform MP4 and a TL;DR companion, use the bundle uploader instead of treating them as unrelated one-off uploads:
+
+```bash
+.venv/bin/python workflows/skills/youtube-data-api/scripts/upload_publication_video_bundle.py \
+  --longform-file <longform.mp4> \
+  --longform-title "<longform title>" \
+  --longform-summary "<longform summary>" \
+  --longform-playlist-id <VISUAL_DEEP_DIVES_PLAYLIST_ID> \
+  --tldr-file <tldr.mp4> \
+  --tldr-title "<tldr title>" \
+  --tldr-summary "<tldr summary>" \
+  --tldr-playlist-id <SUMMARIES_PLAYLIST_ID> \
+  --essay-url <canonical essay url> \
+  --chapters-file <chapters.txt> \
+  --pin-to-top
+```
+
+The script is dry-run by default. Add `--apply` only when the titles, summaries, playlist ids, and essay URL are settled.
+
+### 5. Branch To The Correct Next Workflow
 
 - If the task is local slide/audio/caption production, move to [`../youtube-production/README.md`](../youtube-production/README.md).
 - If the task is the Operating Agents course or TL;DR series, move to [`../youtube-series-operating-agents/README.md`](../youtube-series-operating-agents/README.md).

@@ -62,6 +62,27 @@ Use these scripts for repo-specific Shorts playlist maintenance:
 
 These scripts now accept explicit playlist/date inputs, and the mutating ones default to dry-run.
 
+### Publication Longform Plus TL;DR Uploads
+
+Use this when a publication package has a finished longform video, a TL;DR companion, target playlists, and a canonical essay URL:
+
+```bash
+.venv/bin/python workflows/skills/youtube-data-api/scripts/upload_publication_video_bundle.py \
+  --longform-file <longform.mp4> \
+  --longform-title "<longform title>" \
+  --longform-summary "<one-paragraph summary>" \
+  --longform-playlist-id <VISUAL_DEEP_DIVES_PLAYLIST_ID> \
+  --tldr-file <tldr.mp4> \
+  --tldr-title "<tldr title>" \
+  --tldr-summary "<short summary>" \
+  --tldr-playlist-id <SUMMARIES_PLAYLIST_ID> \
+  --essay-url <substack-or-canonical-essay-url> \
+  --chapters-file <chapters.txt> \
+  --pin-to-top
+```
+
+The script is dry-run by default. Add `--apply` to upload both videos, add them to playlists, cross-link the descriptions, and pin them to the top of their playlists when requested.
+
 ### Operating Agents Uploads, Ordering, And Replacements
 
 Use the Operating Agents scripts when the user is working on the course or TL;DR series:
