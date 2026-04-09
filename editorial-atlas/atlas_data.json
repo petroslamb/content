@@ -14,9 +14,11 @@
     ],
     "section": [
       "opening",
+      "thesis_lock",
       "development",
+      "borders",
       "ending",
-      "evidence"
+      "reference_handling"
     ]
   },
   "essays": [
@@ -44,7 +46,11 @@
         "scroll_map",
         "historical_synthesis",
         "chapterized_technical_explainer"
-      ]
+      ],
+      "short_label": "Agent Revolution",
+      "thesis_lock": 6,
+      "borders": 5,
+      "reference_handling": 7
     },
     {
       "file": "2025-12-06_what-actually-works-the-hardware.md",
@@ -70,7 +76,11 @@
         "scroll_map",
         "historical_synthesis",
         "practical_heuristic_section"
-      ]
+      ],
+      "short_label": "What Actually Works",
+      "thesis_lock": 7,
+      "borders": 7,
+      "reference_handling": 9
     },
     {
       "file": "2025-12-10_the-hardware-friction-map.md",
@@ -96,7 +106,11 @@
         "coined_frame_with_borders",
         "practical_heuristic_section",
         "builder_first_doctrine"
-      ]
+      ],
+      "short_label": "Hardware Friction Map",
+      "thesis_lock": 7,
+      "borders": 8,
+      "reference_handling": 8
     },
     {
       "file": "2025-12-26_the-orchestration-paradigm-series.md",
@@ -123,7 +137,11 @@
         "series_packaging",
         "chapterized_technical_explainer",
         "contrarian_compression"
-      ]
+      ],
+      "short_label": "Orchestration Series",
+      "thesis_lock": 7,
+      "borders": 6,
+      "reference_handling": 7
     },
     {
       "file": "2025-12-29_the-orchestration-paradigm-issue.md",
@@ -148,7 +166,11 @@
       "moves": [
         "chapterized_technical_explainer",
         "series_packaging"
-      ]
+      ],
+      "short_label": "Factory",
+      "thesis_lock": 6,
+      "borders": 6,
+      "reference_handling": 7
     },
     {
       "file": "2025-12-29_the-orchestration-paradigm-issue-cf4.md",
@@ -173,7 +195,11 @@
       "moves": [
         "chapterized_technical_explainer",
         "series_packaging"
-      ]
+      ],
+      "short_label": "Behavior",
+      "thesis_lock": 6,
+      "borders": 6,
+      "reference_handling": 7
     },
     {
       "file": "2025-12-29_the-orchestration-paradigm-issue-397.md",
@@ -199,7 +225,11 @@
         "chapterized_technical_explainer",
         "series_packaging",
         "doctrine_ending"
-      ]
+      ],
+      "short_label": "Reality",
+      "thesis_lock": 6,
+      "borders": 7,
+      "reference_handling": 7
     },
     {
       "file": "2026-01-14_when-the-llm-programs-its-own-thinking.md",
@@ -223,7 +253,11 @@
       "utility": 9,
       "moves": [
         "chapterized_technical_explainer"
-      ]
+      ],
+      "short_label": "LLM Programs Itself",
+      "thesis_lock": 7,
+      "borders": 6,
+      "reference_handling": 7
     },
     {
       "file": "2026-01-15_the-transformer-attractor.md",
@@ -249,7 +283,11 @@
         "failure_or_anomaly_cold_open",
         "contrarian_compression",
         "falsifiable_prediction_close"
-      ]
+      ],
+      "short_label": "Transformer Attractor",
+      "thesis_lock": 10,
+      "borders": 8,
+      "reference_handling": 8
     },
     {
       "file": "2026-02-27_the-autonomy-tax.md",
@@ -278,7 +316,11 @@
         "practical_heuristic_section",
         "falsifiable_prediction_close",
         "doctrine_ending"
-      ]
+      ],
+      "short_label": "Autonomy Tax",
+      "thesis_lock": 9,
+      "borders": 8,
+      "reference_handling": 8
     },
     {
       "file": "2026-03-12_the-moltbook-phenomenon.md",
@@ -303,7 +345,11 @@
       "moves": [
         "topical_narrative_hijack",
         "failure_or_anomaly_cold_open"
-      ]
+      ],
+      "short_label": "Moltbook",
+      "thesis_lock": 8,
+      "borders": 6,
+      "reference_handling": 7
     },
     {
       "file": "2026-03-17_the-illusion-of-the-swarm.md",
@@ -332,7 +378,11 @@
         "practical_heuristic_section",
         "falsifiable_prediction_close",
         "doctrine_ending"
-      ]
+      ],
+      "short_label": "Illusion of the Swarm",
+      "thesis_lock": 8,
+      "borders": 9,
+      "reference_handling": 9
     },
     {
       "file": "2026-03-27_operating-agents-bonus-the-workflow.md",
@@ -357,7 +407,11 @@
       "moves": [
         "builder_first_doctrine",
         "chapterized_technical_explainer"
-      ]
+      ],
+      "short_label": "OA Bonus",
+      "thesis_lock": 7,
+      "borders": 7,
+      "reference_handling": 8
     },
     {
       "file": "2026-03-27_operating-agents-i-when-language.md",
@@ -382,7 +436,11 @@
       "moves": [
         "builder_first_doctrine",
         "chapterized_technical_explainer"
-      ]
+      ],
+      "short_label": "OA I",
+      "thesis_lock": 7,
+      "borders": 7,
+      "reference_handling": 8
     },
     {
       "file": "2026-03-27_operating-agents-ii-memory-needs.md",
@@ -407,7 +465,11 @@
       "moves": [
         "builder_first_doctrine",
         "chapterized_technical_explainer"
-      ]
+      ],
+      "short_label": "OA II",
+      "thesis_lock": 8,
+      "borders": 8,
+      "reference_handling": 8
     },
     {
       "file": "2026-03-27_operating-agents-iii-diagnose-the.md",
@@ -432,7 +494,11 @@
       "moves": [
         "builder_first_doctrine",
         "chapterized_technical_explainer"
-      ]
+      ],
+      "short_label": "OA III",
+      "thesis_lock": 8,
+      "borders": 7,
+      "reference_handling": 8
     },
     {
       "file": "2026-03-27_operating-agents-iv-the-second-agent.md",
@@ -458,7 +524,11 @@
         "builder_first_doctrine",
         "chapterized_technical_explainer",
         "coined_frame_with_borders"
-      ]
+      ],
+      "short_label": "OA IV",
+      "thesis_lock": 7,
+      "borders": 9,
+      "reference_handling": 8
     },
     {
       "file": "2026-03-27_operating-agents-preface-a-field.md",
@@ -483,7 +553,11 @@
       "moves": [
         "series_packaging",
         "doctrine_ending"
-      ]
+      ],
+      "short_label": "OA Preface",
+      "thesis_lock": 7,
+      "borders": 7,
+      "reference_handling": 6
     },
     {
       "file": "2026-03-27_operating-agents-v-the-attack-surface.md",
@@ -509,7 +583,11 @@
         "builder_first_doctrine",
         "chapterized_technical_explainer",
         "doctrine_ending"
-      ]
+      ],
+      "short_label": "OA V",
+      "thesis_lock": 7,
+      "borders": 9,
+      "reference_handling": 8
     },
     {
       "file": "2026-04-04_the-binding-gap.md",
@@ -534,6 +612,72 @@
       "moves": [
         "failure_or_anomaly_cold_open",
         "coined_frame_with_borders"
+      ],
+      "short_label": "Binding Gap",
+      "thesis_lock": 9,
+      "borders": 10,
+      "reference_handling": 9
+    }
+  ],
+  "drafts": [
+    {
+      "id": "architecture-and-agent-memory",
+      "title": "Architecture and Agent Memory",
+      "one_line_identity": "flagship essay with research discipline",
+      "problem": "The draft needs stronger ignition, a clearer thesis lock, and tighter borders without losing its synthesis-heavy middle.",
+      "current_position": {
+        "traction": 7,
+        "craft": 7,
+        "debate": 7,
+        "precision": 7,
+        "synthesis": 8,
+        "utility": 7
+      },
+      "target_position": {
+        "traction": 9,
+        "craft": 8,
+        "debate": 8,
+        "precision": 9,
+        "synthesis": 9,
+        "utility": 8
+      },
+      "pulls": [
+        {
+          "essay": "The Transformer Attractor",
+          "section": "Opening",
+          "desired_strength": "conflict + compression",
+          "strength": "high"
+        },
+        {
+          "essay": "The Transformer Attractor",
+          "section": "Thesis Lock",
+          "desired_strength": "portable structural claim",
+          "strength": "high"
+        },
+        {
+          "essay": "The Illusion of the Swarm",
+          "section": "Development",
+          "desired_strength": "research-backed synthesis",
+          "strength": "medium"
+        },
+        {
+          "essay": "The Binding Gap",
+          "section": "Borders / Counterpressure",
+          "desired_strength": "exact boundaries",
+          "strength": "medium"
+        },
+        {
+          "essay": "The Autonomy Tax",
+          "section": "Ending",
+          "desired_strength": "doctrine close with stakes",
+          "strength": "medium"
+        }
+      ],
+      "resists": [
+        {
+          "essay": "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)",
+          "risk": "survey scale in the opening"
+        }
       ]
     }
   ]
