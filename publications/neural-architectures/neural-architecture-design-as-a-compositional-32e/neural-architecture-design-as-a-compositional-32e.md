@@ -5,6 +5,10 @@
 Draft Date: 2026-04-09  
 Status: Polished live draft
 
+#### Video TL;DR
+
+[Neural Architecture Design explainer video](artifacts/video/neural_architecture_design_explainer.mp4)
+
 ![Neural architecture design as a reusable scaffold](artifacts/slides/11-opening-title-slide.png)
 
 For a long stretch of deep learning history, architecture design meant deciding what each part of a network should do. That older picture was not a misunderstanding. It fit the technical reality of the time. When AlexNet appeared, its large early filters, staged reductions in kernel size, pooling pattern, and fully connected head all expressed a concrete view about how visual abstraction should be assembled under the combined pressures of ImageNet-scale data and GPU-bound training. The achievement was not only that the model was deep enough and trained hard enough. It was also that the diagram itself still carried a large share of the designer's judgment about the order in which the representation should become more invariant, more selective, and more task-ready. Early deep learning systems were still close enough to feature-engineering culture that one could point to a stage and say what kind of operation it was supposed to specialize in. Architecture still looked like the construction of a specific machine, not the definition of a reusable regime (Krizhevsky et al., 2012).
