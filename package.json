@@ -9,8 +9,13 @@
     "build:mirror": "rm -rf publication_strategy_and_archive/mirror/_site && eleventy",
     "dev:mirror": "eleventy --serve",
     "check:mirror": "npm run build:mirror && .venv/bin/python scripts/check_mirror.py && .venv/bin/python scripts/e2e_mirror_smoke.py",
+    "check:harness": ".venv/bin/python scripts/check_harness.py",
     "status": ".venv/bin/python scripts/check_status.py",
     "run": ".venv/bin/python scripts/run_stage.py",
+    "stage:next": ".venv/bin/python scripts/next_action.py",
+    "stage:resolve": ".venv/bin/python scripts/run_stage.py",
+    "stage:run": ".venv/bin/python scripts/run_stage.py --execute",
+    "package:init": ".venv/bin/python scripts/init_package.py",
     "refine": ".venv/bin/python scripts/start_refinement.py",
     "sync:from-archive": ".venv/bin/python scripts/sync_from_archive.py",
     "check:repo-links": ".venv/bin/python scripts/check_repo_links.py"

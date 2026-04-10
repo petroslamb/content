@@ -1,0 +1,44 @@
+version: 1
+mode: local-first
+read_only_allowed:
+  operations:
+    - repo exploration
+    - package status inspection
+    - workflow resolution
+    - package audit
+    - contract validation
+local_write_allowed:
+  paths:
+    - publications/
+    - scripts/
+    - reviewable-runs/logs/
+  operations:
+    - package scaffolding
+    - launch pack generation
+    - local scripted stage execution
+auto_mark_done_allowed:
+  runner_modes:
+    - scripted
+  denied_stages:
+    - notebooklm_artifacts
+    - substack_publishing
+    - distribution
+approval_required:
+  stages:
+    - notebooklm_artifacts
+    - substack_publishing
+    - distribution
+  approval_gates:
+    - required_before_publish
+    - required_before_live_publish
+    - required_before_external_posting
+    - required_before_channel_mutation
+disallowed_without_explicit_user_request:
+  stages:
+    - substack_publishing
+    - distribution
+  actions:
+    - live publish
+    - authenticated remote mutation
+    - playlist mutation
+    - external posting

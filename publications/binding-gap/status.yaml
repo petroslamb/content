@@ -2,6 +2,8 @@ publication: binding-gap
 config:
   substack_post_id: 159985792
   substack_url: https://lambpetros.substack.com
+  markdown_path: publications/binding-gap/the-binding-gap.md
+  substack_slug: the-binding-gap
 stages:
   paper_intake:
     done: true

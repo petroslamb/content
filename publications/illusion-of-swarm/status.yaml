@@ -27,3 +27,7 @@ stages:
   distribution:
     done: false
     last_updated: null
+config:
+  markdown_path: publications/illusion-of-swarm/the-illusion-of-the-swarm.md
+  substack_slug: the-illusion-of-the-swarm
+  substack_url: https://lambpetros.substack.com
