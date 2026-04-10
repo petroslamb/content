@@ -93,6 +93,12 @@ This repo intentionally keeps hidden folders local-only. The `.gitignore` rule s
 - `AGENTS.md` is also local-only and should not be force-added.
 - If a user asks for a commit, stage the tracked, non-ignored subset unless they explicitly ask to change the ignore policy itself.
 
+## Submodule Exceptions
+
+While most publication packages are inlined into the main repository, certain packages remain as git submodules to preserve large evidence layers or independent commit history.
+
+- **`publications/autonomy-tax`**: A documented exception. It maintains a 136MB history including large research datasets (`sources/raw/`) that are preserved in their original nested git structure.
+
 ## Python Environment Policy
 
 This repository keeps a root-level virtual environment at `./.venv/` for shared local tooling.

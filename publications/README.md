@@ -23,7 +23,7 @@ Workflow/framework packages stay at the repository root and are documented elsew
 
 | Folder | Archetype | Status | Notes |
 | :--- | :--- | :--- | :--- |
-| [`autonomy-tax/`](autonomy-tax/README.md) | Single-publication | Published | Three-piece publication package; nested git repo with its own history |
+| [`autonomy-tax/`](autonomy-tax/README.md) | Single-publication | Published | Three-piece publication package; nested git repo preserved for heavy evidence/history |
 | [`binding-gap/`](binding-gap/README.md) | Single-publication | Active | Canonical live binding-gap essay plus companion and artifact pipeline |
 | [`evidence-governance/`](evidence-governance/README.md) | Single-publication | Active / unpublished in Rooted Layers archive | Main essay plus governance-pattern companion and external proof repo |
 | [`illusion-of-swarm/`](illusion-of-swarm/README.md) | Single-publication | Published | alphaXiv-driven research package behind *The Illusion of the Swarm* |
