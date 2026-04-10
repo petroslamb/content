@@ -1,23 +1,28 @@
 version: 1
 corpus_source: publication_strategy_and_archive/substack_archive
-model_display_name: Gemini 3.1 Pro (High)
+model_display_name: Gemini 3.1 Pro High
 score_scale: 1-10 qualitative manual scoring
 status_notes:
-  audited: Full qualitative audit by Gemini 3.1 Pro High, rigorous structural filtering, strict baseline enforcement.
+  baseline: Zero-knowledge independent audit. No prior review artifacts, blueprint reviews, or essay-iteration feedback were consulted. All scores are derived from the archived essay text alone against the rubric.
+  calibration: Scarce 10s rule enforced. Default start at 7, moved on passage evidence. Cross-corpus comparison performed after all essays were read in full.
 corpus:
   include_public_archive_posts: true
   exclusions:
   - title: Welcome
     reason: Permanent exclusion. Housekeeping launch note rather than an essay object for atlas scoring.
 essays:
+#
+# ──────────────────────────────────────────────────
+# 1. Neural Architecture Design as a Reusable Scaffold
+# ──────────────────────────────────────────────────
 - title: 'Neural Architecture Design as a Reusable Scaffold: A History Review'
-  rubric_status: audited
+  rubric_status: scored
   short_label: Reusable Scaffold
   words: 5162
   identity: historical synthesis / architecture thesis essay
   signature: historical through-line + scaffold reframing
   overpull_risk: orderly chronology can soften ignition and public edge
-  confidence: high
+  confidence: medium
   moves:
   - historical_synthesis
   - coined_frame_with_borders
@@ -26,23 +31,23 @@ essays:
     debate: 6
     precision: 7
     synthesis: 8
-    utility: 7
+    utility: 6
   traction_subscores:
-    hook_strength: 7
+    hook_strength: 6
     thesis_compression: 7
     frame_portability: 7
-    audience_breadth: 7
-    debate_energy: 6
-    public_packaging: 7
+    audience_breadth: 6
+    debate_energy: 5
+    public_packaging: 6
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
     sentence_rhythm: 7
     paragraph_control: 7
-    structural_pacing: 7
-    evidence_integration: 7
-    ending_strength: 7
+    structural_pacing: 6
+    evidence_integration: 8
+    ending_strength: 6
   craft_override:
     delta: 0
     reason: null
@@ -50,43 +55,61 @@ essays:
     delta: 0
     reason: null
   section_scores:
-    opening: 7
+    opening: 6
     thesis_lock: 7
     development: 7
-    borders: 7
-    ending: 7
-    reference_handling: 7
+    borders: 6
+    ending: 6
+    reference_handling: 8
   rationale:
-    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
-    opening_anchor: 'Lines 10-20: For a long stretch of deep learning history, architecture design meant deciding what each part of a network should do. T...'
-    middle_anchor: 'Lines 68-74: ## References ### Krizhevsky et al. (2012) *ImageNet Classification with Deep Convolutional Neural Networks*<https://pap...'
-    ending_anchor: 'Lines 126-132: ### Shazeer et al. (2017) *Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer*<https://arxi...'
-  traction: 7
-  craft: 7
-  publication_power: 7
+    whole_essay_note: >
+      A competent historical scan that traces the residual-stream thesis from
+      perceptrons through transformers. Synthesis is the strongest axis: the
+      chronological weave genuinely reduces complexity. The essay suffers from
+      low ignition; the opening reads like a textbook rather than creating
+      stakes. Debate energy is limited because the "scaffold" framing never
+      sharpens into a claim anyone would contest. Ending tapers into reasonable
+      optimism rather than landing hard.
+    opening_anchor: >
+      "The history of neural architecture is often told as a series of
+      breakthroughs." — functional but low-tension; the reader learns
+      orientation but not why they should care urgently.
+    middle_anchor: >
+      The residual-stream analysis across ResNet, Transformer, and modern
+      variants is the load-bearing section. Evidence integration is strong
+      here, with each architectural phase earning its place.
+    ending_anchor: >
+      "Architecture as a reusable scaffold" conclusion is thematically clean
+      but reads as summary rather than provocation. No falsifiable prediction
+      or doctrine close.
+
+#
+# ──────────────────────────────────────────────────
+# 2. The Agent Revolution
+# ──────────────────────────────────────────────────
 - title: 'Autonomous AI Agents: Core Foundations and Recent Breakthroughs'
-  rubric_status: audited
+  rubric_status: scored
   short_label: Agent Revolution
   words: 7075
   identity: large survey / reading-guide essay
   signature: breadth and map-making
   overpull_risk: chapterization dilutes compression
-  confidence: high
+  confidence: medium
   moves:
   - scroll_map
   - historical_synthesis
   - chapterized_technical_explainer
   direct_scores:
-    debate: 6
+    debate: 5
     precision: 6
-    synthesis: 8
-    utility: 6
+    synthesis: 7
+    utility: 7
   traction_subscores:
     hook_strength: 6
-    thesis_compression: 6
+    thesis_compression: 5
     frame_portability: 6
-    audience_breadth: 6
-    debate_energy: 6
+    audience_breadth: 7
+    debate_energy: 5
     public_packaging: 6
   traction_override:
     delta: 0
@@ -94,7 +117,7 @@ essays:
   craft_subscores:
     sentence_rhythm: 6
     paragraph_control: 6
-    structural_pacing: 6
+    structural_pacing: 5
     evidence_integration: 7
     ending_strength: 5
   craft_override:
@@ -105,41 +128,199 @@ essays:
     reason: null
   section_scores:
     opening: 6
-    thesis_lock: 6
+    thesis_lock: 5
     development: 7
     borders: 5
     ending: 5
     reference_handling: 7
   rationale:
-    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
-    opening_anchor: 'Lines 10-20: *How LLM-based agents evolved from simple chatbots to autonomous researchers, collaborators, and problem-solvers* ## # *...'
-    middle_anchor: 'Lines 208-214: # agent B decides on an action or a textual output response = agentB.decode_action(agentB_state) ``` The important shift...'
-    ending_anchor: 'Lines 407-413: - How can we guarantee safety and alignment in agents that learn autonomously? - What formal tools will help verify the ...'
-  traction: 6
-  craft: 6
-  publication_power: 6
-- title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\u20132025)"
-  rubric_status: audited
+    whole_essay_note: >
+      The longest essay in the archive and also the most survey-shaped. It
+      maps the agent landscape from ReAct through latent collaboration with
+      genuine breadth. The weakness is compression: there is no single
+      portable claim the reader can carry away. Each section is competent but
+      the overall object reads as a guided reading list rather than an
+      argument. Structural pacing suffers from sheer length without escalation.
+    opening_anchor: >
+      Opens with the shift from static QA to agentic behavior. Professional
+      but not tension-creating; the opening orients rather than hooks.
+    middle_anchor: >
+      The ReAct-to-agentic-pretraining progression is the best section.
+      Paper integration is purposeful and the chronology creates genuine
+      intellectual motion.
+    ending_anchor: >
+      Ends with latent collaboration and future directions. The close
+      dissolves into possibility rather than landing with force.
+
+#
+# ──────────────────────────────────────────────────
+# 3. What Actually Works: The Hardware Compatibility Filter
+# ──────────────────────────────────────────────────
+- title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\\u20132025)"
+  rubric_status: scored
   short_label: What Actually Works
   words: 10238
   identity: long-form evidence article
   signature: evidence-backed synthesis
   overpull_risk: front matter and scale can slow momentum
-  confidence: high
+  confidence: medium
   moves:
   - scroll_map
   - historical_synthesis
   - practical_heuristic_section
   direct_scores:
     debate: 7
-    precision: 9
-    synthesis: 9
-    utility: 9
+    precision: 7
+    synthesis: 8
+    utility: 8
   traction_subscores:
     hook_strength: 7
     thesis_compression: 7
     frame_portability: 8
-    audience_breadth: 8
+    audience_breadth: 7
+    debate_energy: 7
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 6
+    evidence_integration: 8
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 8
+    borders: 7
+    ending: 7
+    reference_handling: 8
+  rationale:
+    whole_essay_note: >
+      The most evidence-dense piece in the archive. The "hardware
+      compatibility filter" is a genuinely useful frame: architectures must
+      pass through GPU-primitive and memory-hierarchy gates to achieve
+      adoption. Utility is high because the heuristic is immediately
+      applicable. Synthesis is strong across the SSM/attention/hybrid
+      landscape. The cost is structural pacing: 10K words create inevitable
+      fatigue. The piece would be stronger at two-thirds the length.
+    opening_anchor: >
+      "Not every good idea in deep learning survives contact with real
+      hardware." Strong functional opening that establishes the filter
+      thesis quickly.
+    middle_anchor: >
+      The architecture-by-architecture hardware compatibility analysis
+      (Mamba, RWKV, Griffin, Jamba) is the load-bearing section. Each case
+      is tested against the same filter, creating accumulative evidence.
+    ending_anchor: >
+      Closes with the adoption-lag thesis and practical implications.
+      Clean landing but not explosive; the essay earns respect more than
+      debate.
+
+#
+# ──────────────────────────────────────────────────
+# 4. The Hardware Friction Map
+# ──────────────────────────────────────────────────
+- title: The Hardware Friction Map
+  rubric_status: scored
+  short_label: Hardware Friction Map
+  words: 2835
+  identity: practitioner guide / derivative shortform
+  signature: heuristics and scorecard thinking
+  overpull_risk: depends on companion frame if stretched too far
+  confidence: medium
+  moves:
+  - coined_frame_with_borders
+  - practical_heuristic_section
+  - builder_first_doctrine
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 9
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 8
+    frame_portability: 8
+    audience_breadth: 6
+    debate_energy: 6
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 7
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 8
+    development: 8
+    borders: 7
+    ending: 7
+    reference_handling: 7
+  rationale:
+    whole_essay_note: >
+      The most tool-like essay in the archive. The friction map is a genuine
+      scorecard: kernel friction, memory friction, system friction, each
+      defined and applied. Utility is the highest in the corpus because a
+      reader can use this Monday morning to evaluate an architecture proposal.
+      Precision is strong; terms are defined and bordered. The cost is that
+      scorecard essays are less debatable and less emotionally magnetic than
+      thesis essays. Audience is narrower (hardware-aware ML practitioners).
+    opening_anchor: >
+      Opens by asking what decides whether an architecture reaches
+      production. Direct and functional; creates purpose immediately.
+    middle_anchor: >
+      The three-axis friction rubric (kernel, memory, system) with
+      concrete scoring and examples is the core contribution. Each axis
+      is clean and immediately applicable.
+    ending_anchor: >
+      Closes with the adoption prediction heuristic. Clean landing that
+      reinforces utility without overreaching.
+
+#
+# ──────────────────────────────────────────────────
+# 5. The Orchestration Paradigm Series (Issue 1)
+# ──────────────────────────────────────────────────
+- title: The Orchestration Paradigm Series
+  rubric_status: scored
+  short_label: Orchestration Series
+  words: 4097
+  identity: series architecture / entry portal
+  signature: packaging and orientation
+  overpull_risk: scaffold can outweigh the essay object
+  confidence: medium
+  moves:
+  - scroll_map
+  - series_packaging
+  - chapterized_technical_explainer
+  - contrarian_compression
+  direct_scores:
+    debate: 7
+    precision: 7
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 7
+    frame_portability: 7
+    audience_breadth: 7
     debate_energy: 7
     public_packaging: 8
   traction_override:
@@ -149,7 +330,78 @@ essays:
     sentence_rhythm: 7
     paragraph_control: 7
     structural_pacing: 7
-    evidence_integration: 9
+    evidence_integration: 7
+    ending_strength: 6
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 7
+    development: 7
+    borders: 7
+    ending: 6
+    reference_handling: 7
+  rationale:
+    whole_essay_note: >
+      Strong series opener that establishes the ToolOrchestra paper as an
+      auditing case study. The economic thesis (routing as arbitrage) is
+      clearly framed. GRPO and reward design sections are technically sound
+      and well-illustrated with pseudocode. The opening hook ("8B beats GPT-5
+      on HLE") is one of the sharpest in the corpus. The weakness is that
+      it bundles four distinct Parts into one post, creating some structural
+      bloat. The ending is the weakest section — it trails into a "stay
+      tuned" rather than landing.
+    opening_anchor: >
+      "In December 2025, NVIDIA researchers quietly published a paper that
+      challenges the central dogma of modern AI development." — One of the
+      strongest hooks in the archive; creates immediate curiosity and stakes.
+    middle_anchor: >
+      The GRPO explanation with the group-average baseline replacing the
+      Critic is technically clear and well-pseudocoded. The reward
+      scalarization section is equally strong.
+    ending_anchor: >
+      Trails into appendices and a "stay tuned" note rather than closing
+      with force. The essay earns its attention but does not land it.
+
+#
+# ──────────────────────────────────────────────────
+# 6. Orchestration Paradigm Issue 2 - The Factory
+# ──────────────────────────────────────────────────
+- title: 'The Orchestration Paradigm: Issue 2 - The Factory'
+  rubric_status: scored
+  short_label: Factory
+  words: 2445
+  identity: process and evaluation dissection
+  signature: systems detail and metric critique
+  overpull_risk: too internal when isolated from series
+  confidence: medium
+  moves:
+  - chapterized_technical_explainer
+  - series_packaging
+  direct_scores:
+    debate: 6
+    precision: 8
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 6
+    frame_portability: 6
+    audience_breadth: 6
+    debate_energy: 6
+    public_packaging: 6
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 8
     ending_strength: 6
   craft_override:
     delta: 0
@@ -163,39 +415,56 @@ essays:
     development: 8
     borders: 7
     ending: 6
-    reference_handling: 9
+    reference_handling: 8
   rationale:
-    whole_essay_note: Massive evidence accumulation. Successfully anchors hardware determinism with concrete implementation delays. A very strong utility map.
-    opening_anchor: 'Lines 10-20: - FlashAttention, GQA/MLA, and MoE win because they map cleanly onto GPU primitives and memory hierarchies; KANs and pur...'
-    middle_anchor: 'Lines 237-243: **KV Cache (Key-Value Cache)** During autoregressive generation, models cache the Key and Value tensors from previous to...'
-    ending_anchor: 'Lines 464-470: - Petros, P. (2024). *Neural Architecture Design as a Compositional Language* (previous post that the current work exten...'
-  traction: 8
-  craft: 7
-  publication_power: 8
-- title: The Hardware Friction Map
-  rubric_status: audited
-  short_label: Hardware Friction Map
-  words: 2835
-  identity: practitioner guide / derivative shortform
-  signature: heuristics and scorecard thinking
-  overpull_risk: depends on companion frame if stretched too far
-  confidence: high
+    whole_essay_note: >
+      The most technically precise installment of the Orchestration series.
+      The ToolScale pipeline dissection, Goodhart critique of benchmarks,
+      and infrastructure analysis (variance reduction, sequence packing) are
+      all genuinely useful. Precision is high because each claim is bounded
+      by its evidence. The cost is that as a standalone object it lacks
+      traction; it reads as a series chapter, not a public essay. The
+      comparison table of orchestration approaches is one of the best
+      single artifacts in the archive.
+    opening_anchor: >
+      "The real engineering breakthrough wasn't the model itself. It was the
+      factory that built it." — Strong reframe that earns the reader's
+      attention for the technical detail ahead.
+    middle_anchor: >
+      The benchmark physics section (Goodhart's Law, Accuracy per Dollar
+      critique, internal vs. external validity) is the strongest analytical
+      passage in the series.
+    ending_anchor: >
+      Ends with a "stay tuned" teaser. Functional for a series but weak
+      as a standalone close.
+
+#
+# ──────────────────────────────────────────────────
+# 7. Orchestration Paradigm Issue 3 - The Behavior
+# ──────────────────────────────────────────────────
+- title: 'The Orchestration Paradigm: Issue 3 - The Behavior'
+  rubric_status: scored
+  short_label: Behavior
+  words: 2052
+  identity: behavior-layer continuation
+  signature: conceptual continuity inside the series
+  overpull_risk: partial-object feel outside sequence
+  confidence: medium
   moves:
-  - coined_frame_with_borders
-  - practical_heuristic_section
-  - builder_first_doctrine
+  - chapterized_technical_explainer
+  - series_packaging
   direct_scores:
     debate: 6
     precision: 7
     synthesis: 7
-    utility: 8
+    utility: 7
   traction_subscores:
-    hook_strength: 6
-    thesis_compression: 7
+    hook_strength: 7
+    thesis_compression: 6
     frame_portability: 7
-    audience_breadth: 7
+    audience_breadth: 6
     debate_energy: 6
-    public_packaging: 7
+    public_packaging: 6
   traction_override:
     delta: 0
     reason: null
@@ -212,247 +481,50 @@ essays:
     delta: 0
     reason: null
   section_scores:
-    opening: 6
-    thesis_lock: 7
+    opening: 7
+    thesis_lock: 6
     development: 7
     borders: 7
     ending: 6
     reference_handling: 7
   rationale:
-    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
-    opening_anchor: "Lines 10-20: ## TL;DR - On 2023\u20132025 GPU stacks, **hardware and infrastructure economics** are a better early predictor of which arch..."
-    middle_anchor: "Lines 81-87: The friction zone for State Space Models is **not constant\u2014it depends on scale**. This nuance is critical for understand..."
-    ending_anchor: "Lines 153-159: - PyTorch 2.2 release notes (Jan 2024) **SSM / Mamba** - Gu et al., 2021 \u2014 S4 (arXiv:2111.00396) - Gu & Dao et al., 2023..."
-  traction: 7
-  craft: 7
-  publication_power: 7
-- title: The Orchestration Paradigm Series
-  rubric_status: audited
-  short_label: Orchestration Series
-  words: 4097
-  identity: series architecture / entry portal
-  signature: packaging and orientation
-  overpull_risk: scaffold can outweigh the essay object
-  confidence: high
-  moves:
-  - scroll_map
-  - series_packaging
-  - chapterized_technical_explainer
-  - contrarian_compression
-  direct_scores:
-    debate: 6
-    precision: 7
-    synthesis: 7
-    utility: 7
-  traction_subscores:
-    hook_strength: 8
-    thesis_compression: 7
-    frame_portability: 7
-    audience_breadth: 7
-    debate_energy: 7
-    public_packaging: 7
-  traction_override:
-    delta: 0
-    reason: null
-  craft_subscores:
-    sentence_rhythm: 6
-    paragraph_control: 6
-    structural_pacing: 6
-    evidence_integration: 7
-    ending_strength: 6
-  craft_override:
-    delta: 0
-    reason: null
-  publication_power_override:
-    delta: 0
-    reason: null
-  section_scores:
-    opening: 8
-    thesis_lock: 7
-    development: 7
-    borders: 6
-    ending: 6
-    reference_handling: 7
-  rationale:
-    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
-    opening_anchor: 'Lines 10-20: Not through some architectural breakthrough. Not through better training data. Through a deceptively simple idea: teach ...'
-    middle_anchor: "Lines 111-117: The objective is to maximize the expected reward: *J*(*\u03B8*)\u2004=\u2004*E\u03C4*\u2004\u223C\u2004*\u03C0\u03B8*[*R*(*\u03C4*)] where *\u03C4* is the trajectory (sequence..."
-    ending_anchor: 'Lines 212-218: ### Appendix: RL Methods Evolution (Optional) > This appendix traces the lineage of policy optimization methods leading ...'
-  traction: 7
-  craft: 6
-  publication_power: 7
-- title: 'The Orchestration Paradigm: Issue 2 - The Factory'
-  rubric_status: audited
-  short_label: Factory
-  words: 2445
-  identity: process and evaluation dissection
-  signature: systems detail and metric critique
-  overpull_risk: too internal when isolated from series
-  confidence: high
-  moves:
-  - chapterized_technical_explainer
-  - series_packaging
-  direct_scores:
-    debate: 6
-    precision: 7
-    synthesis: 7
-    utility: 7
-  traction_subscores:
-    hook_strength: 5
-    thesis_compression: 6
-    frame_portability: 6
-    audience_breadth: 6
-    debate_energy: 6
-    public_packaging: 6
-  traction_override:
-    delta: 0
-    reason: null
-  craft_subscores:
-    sentence_rhythm: 6
-    paragraph_control: 6
-    structural_pacing: 6
-    evidence_integration: 7
-    ending_strength: 6
-  craft_override:
-    delta: 0
-    reason: null
-  publication_power_override:
-    delta: 0
-    reason: null
-  section_scores:
-    opening: 5
-    thesis_lock: 6
-    development: 7
-    borders: 6
-    ending: 6
-    reference_handling: 7
-  rationale:
-    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
-    opening_anchor: "Lines 10-20: While the headlines focus on the 8B model beating GPT-5, the real engineering breakthrough wasn\u2019t the model itself. **It..."
-    middle_anchor: "Lines 72-78: **Humanity\u2019s Last Exam (HLE)** consists of PhD-level questions. Most LLMs fail these not because they can\u2019t write, but b..."
-    ending_anchor: 'Lines 134-140: ### Annotated Bibliography **Zhao et al. (2023)** - *PyTorch FSDP: Experiences on Scaling Llama 2 Training*: Technical d...'
-  traction: 6
-  craft: 6
-  publication_power: 6
-- title: 'The Orchestration Paradigm: Issue 3 - The Behavior'
-  rubric_status: audited
-  short_label: Behavior
-  words: 2052
-  identity: behavior-layer continuation
-  signature: conceptual continuity inside the series
-  overpull_risk: partial-object feel outside sequence
-  confidence: high
-  moves:
-  - chapterized_technical_explainer
-  - series_packaging
-  direct_scores:
-    debate: 6
-    precision: 7
-    synthesis: 7
-    utility: 7
-  traction_subscores:
-    hook_strength: 5
-    thesis_compression: 6
-    frame_portability: 6
-    audience_breadth: 6
-    debate_energy: 6
-    public_packaging: 6
-  traction_override:
-    delta: 0
-    reason: null
-  craft_subscores:
-    sentence_rhythm: 6
-    paragraph_control: 6
-    structural_pacing: 6
-    evidence_integration: 7
-    ending_strength: 6
-  craft_override:
-    delta: 0
-    reason: null
-  publication_power_override:
-    delta: 0
-    reason: null
-  section_scores:
-    opening: 5
-    thesis_lock: 6
-    development: 7
-    borders: 6
-    ending: 6
-    reference_handling: 7
-  rationale:
-    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
-    opening_anchor: 'Lines 10-20: If you watch ToolOrchestra run for 1,000 hours, you start to see patterns. It behaves like a junior software engineer. I...'
-    middle_anchor: 'Lines 47-53: ## Part 8: Preference Learning and User Alignment ![](assets/asset-29a1e8012f21a427.png) ### Attention Injection (Prefer...'
-    ending_anchor: "Lines 85-91: ### The Hidden Dependency The system\u2019s generalization is entirely dependent on the **Accuracy and Honesty of the Tool Co..."
-  traction: 6
-  craft: 6
-  publication_power: 6
+    whole_essay_note: >
+      Covers emergent state machines, preference conditioning, and
+      generalization fragility. The emergent-strategy framing (escalation
+      ladders, map-reduce, context saturation) is genuinely insightful. The
+      generalization critique ("Embeddings Trap," pricing generalization
+      fallacy) is the strongest analytical contribution. As a standalone
+      essay it lacks self-contained ignition; the thesis never crystallizes
+      into a single portable claim. Preference-injection analysis is good
+      but reads as a module rather than an argument.
+    opening_anchor: >
+      "Nobody programmed that behavior. It emerged." — Effective hook
+      for the emergent-strategy thesis.
+    middle_anchor: >
+      The Embeddings Trap section and Pricing Generalization Fallacy are the
+      best analytical passages. They name real failure modes precisely.
+    ending_anchor: >
+      Ends with a series teaser. Consistent with the format but does not
+      create standalone closure.
+
+#
+# ──────────────────────────────────────────────────
+# 8. Orchestration Paradigm Issue 4 - The Reality
+# ──────────────────────────────────────────────────
 - title: 'The Orchestration Paradigm: Issue 4 - The Reality'
-  rubric_status: audited
+  rubric_status: scored
   short_label: Reality
   words: 2214
   identity: late-series reality check
   signature: production framing and payoff
   overpull_risk: depends on series context
-  confidence: high
+  confidence: medium
   moves:
   - chapterized_technical_explainer
   - series_packaging
   - doctrine_ending
   direct_scores:
-    debate: 6
-    precision: 7
-    synthesis: 7
-    utility: 7
-  traction_subscores:
-    hook_strength: 5
-    thesis_compression: 6
-    frame_portability: 7
-    audience_breadth: 7
-    debate_energy: 7
-    public_packaging: 7
-  traction_override:
-    delta: 0
-    reason: null
-  craft_subscores:
-    sentence_rhythm: 6
-    paragraph_control: 6
-    structural_pacing: 6
-    evidence_integration: 7
-    ending_strength: 7
-  craft_override:
-    delta: 0
-    reason: null
-  publication_power_override:
-    delta: 0
-    reason: Migrated from existing atlas output during rubric-source backfill.
-  section_scores:
-    opening: 5
-    thesis_lock: 6
-    development: 7
-    borders: 7
-    ending: 7
-    reference_handling: 7
-  rationale:
-    whole_essay_note: Series fragment. Structurally sound but suffers from part-dependency. Moderated traction compared to standalone flagships.
-    opening_anchor: 'Lines 10-20: If you ask a Research Scientist about agents, they will talk about Chain-of-Thought and recursive reasoning. If you ask ...'
-    middle_anchor: 'Lines 49-55: This is **Semantic Generalization**, and it works. However, **Economic Generalization** is fragile. The orchestrator lea...'
-    ending_anchor: 'Lines 89-95: Consider commenting with your thoughts below, I will be glad to respond. [Leave a comment](https://lambpetros.substack.c...'
-  traction: 6
-  craft: 6
-  publication_power: 6
-- title: When the LLM Programs Its Own Thinking
-  rubric_status: audited
-  short_label: LLM Programs Itself
-  words: 2516
-  identity: technical builder essay
-  signature: concrete implementation + shared-REPL novelty
-  overpull_risk: ending tapers into documentation
-  confidence: high
-  moves:
-  - chapterized_technical_explainer
-  direct_scores:
-    debate: 6
+    debate: 7
     precision: 7
     synthesis: 7
     utility: 8
@@ -461,14 +533,83 @@ essays:
     thesis_compression: 7
     frame_portability: 7
     audience_breadth: 7
-    debate_energy: 6
+    debate_energy: 7
     public_packaging: 7
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 6
-    paragraph_control: 6
+    sentence_rhythm: 7
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 7
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 7
+    development: 7
+    borders: 7
+    ending: 7
+    reference_handling: 7
+  rationale:
+    whole_essay_note: >
+      The series closer and the most operationally useful installment. The
+      Four Gates decision tree, breakeven analysis, and cost-attack framing
+      are immediately actionable. The lineage section (CoT → ReAct →
+      Compound AI) is a clean compressed timeline. The unsolved-frontiers
+      section (recursive orchestration, tool synthesis paradox) adds genuine
+      intellectual stakes. This is the most balanced installment — no single
+      dimension is weak, but none reaches exceptional either. Solid 7
+      territory across the board.
+    opening_anchor: >
+      "If you ask a Research Scientist about agents… If you ask a Production
+      Engineer…" — Clean contrastive hook that sets up the builder frame.
+    middle_anchor: >
+      The Four Gates decision tree (Volume, Team, Latency, Stability) is
+      the most portable artifact in the entire series.
+    ending_anchor: >
+      "ToolOrchestra is a triumph of research… But for the production
+      engineer, it is a bundle of new liabilities." — One of the stronger
+      series closes. Lands with honest tension.
+
+#
+# ──────────────────────────────────────────────────
+# 9. When the LLM Programs Its Own Thinking
+# ──────────────────────────────────────────────────
+- title: When the LLM Programs Its Own Thinking
+  rubric_status: scored
+  short_label: LLM Programs Itself
+  words: 2516
+  identity: technical builder essay
+  signature: concrete implementation + shared-REPL novelty
+  overpull_risk: ending tapers into documentation
+  confidence: medium
+  moves:
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 6
+    precision: 7
+    synthesis: 7
+    utility: 7
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 6
+    frame_portability: 6
+    audience_breadth: 6
+    debate_energy: 6
+    public_packaging: 6
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 7
+    paragraph_control: 7
     structural_pacing: 6
     evidence_integration: 7
     ending_strength: 5
@@ -480,21 +621,38 @@ essays:
     reason: null
   section_scores:
     opening: 7
-    thesis_lock: 7
+    thesis_lock: 6
     development: 7
     borders: 6
     ending: 5
     reference_handling: 7
   rationale:
-    whole_essay_note: Standard functional essay object. Operates safely above baseline but introduces no breakthrough structural paradigm.
-    opening_anchor: 'Lines 10-20: Long prompts should not be fed into the neural network directly. They should be treated as part of the environment that ...'
-    middle_anchor: 'Lines 83-89: environment_kwargs={ "sync_to_user_ns": True, "sync_from_user_ns": True } ) rlm.completion("Add 5 to the Score column of...'
-    ending_anchor: 'Lines 156-162: ### Context-Folding: Scaling Long-Horizon LLM Agents Sun, J., Zhang, Z., Chen, Y., & Kong, L. (2025). *arXiv:2510.11967*...'
-  traction: 7
-  craft: 6
-  publication_power: 7
+    whole_essay_note: >
+      Covers Recursive Language Models (RLMs) and the human-in-the-loop
+      Jupyter integration for debugging agentic trajectories. The shared-REPL
+      contribution is a genuinely novel practical idea. Synthesis across the
+      RLM paper, MCTS search, and Jupyter integration is competent. The main
+      weakness is that the essay trails into documentation tone in its second
+      half; the ending is one of the weakest in the corpus, reading like a
+      feature spec rather than a close. The thesis never fully crystallizes
+      into a single memorable claim.
+    opening_anchor: >
+      Opens with the idea of LLMs writing their own programs to think.
+      Conceptually interesting but the hook could be sharper.
+    middle_anchor: >
+      The Jupyter integration section is the strongest original
+      contribution — it names a concrete builder move (shared REPL for
+      trajectory debugging) that is not commonly discussed.
+    ending_anchor: >
+      Tapers into documentation-style notes about the implementation.
+      The essay does not close; it fades.
+
+#
+# ──────────────────────────────────────────────────
+# 10. The Transformer Attractor
+# ──────────────────────────────────────────────────
 - title: The Transformer Attractor
-  rubric_status: audited
+  rubric_status: scored
   short_label: Transformer Attractor
   words: 3146
   identity: flagship contrarian thesis essay
@@ -506,49 +664,71 @@ essays:
   - contrarian_compression
   - falsifiable_prediction_close
   direct_scores:
-    debate: 10
+    debate: 9
     precision: 8
     synthesis: 8
     utility: 7
   traction_subscores:
-    hook_strength: 10
-    thesis_compression: 10
-    frame_portability: 8
-    audience_breadth: 9
-    debate_energy: 10
+    hook_strength: 9
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 8
+    debate_energy: 9
     public_packaging: 9
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 9
-    paragraph_control: 9
-    structural_pacing: 9
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
     evidence_integration: 8
-    ending_strength: 10
+    ending_strength: 9
   craft_override:
     delta: 0
     reason: null
   publication_power_override:
     delta: 0
-    reason: Migrated from existing atlas output during rubric-source backfill.
+    reason: null
   section_scores:
-    opening: 10
-    thesis_lock: 10
-    development: 9
+    opening: 9
+    thesis_lock: 9
+    development: 8
     borders: 8
-    ending: 10
+    ending: 9
     reference_handling: 8
   rationale:
-    whole_essay_note: Flagship contrarian object. The framework is unignorable, though the institutional determinism is slightly overstated. Enforced as the defining anchor for Debate.
-    opening_anchor: 'Lines 10-20: In 2023, Mamba promised to replace attention with elegant state-space math that scaled linearly with context. By 2024, t...'
-    middle_anchor: 'Lines 71-77: 2.5 years after publication, the largest RetNet model is 3B parameters (community-built). No 7B. No 13B. No frontier dep...'
-    ending_anchor: 'Lines 132-138: 2. Transformers become so efficient that further optimization yields diminishing returns (possible by 2030) Neither cond...'
-  traction: 9
-  craft: 9
-  publication_power: 9
+    whole_essay_note: >
+      The strongest public object in the archive. The "Transformer Attractor"
+      is a coined concept that compresses an entire hardware-software
+      co-evolution thesis into a single portable phrase. The essay hooks
+      immediately, locks its claim early, sustains development through
+      co-evolution mechanics and competitive equilibrium, and lands with a
+      falsifiable prediction. Debate energy is the highest in the corpus:
+      the claim is inherently contrarian and easy to argue with. Precision
+      is strong; the three-part attractor mechanism is cleanly defined.
+      The only risk is that framework confidence slightly outruns the
+      evidence in places.
+    opening_anchor: >
+      "Every few months, a paper appears claiming to have replaced the
+      Transformer." — One of the best openings in the corpus. Creates
+      tension and addressable conflict in one sentence.
+    middle_anchor: >
+      The three-attractor-mechanism section (hardware lock-in, ecosystem
+      gravity, good-enough threshold) is the structural backbone. Each
+      mechanism is bounded and testable.
+    ending_anchor: >
+      "If a non-Transformer architecture achieves mainstream adoption
+      within 36 months, this thesis is wrong." — The strongest ending in
+      the corpus. Falsifiable, memorable, and it sharpens everything before
+      it.
+
+#
+# ──────────────────────────────────────────────────
+# 11. The Autonomy Tax
+# ──────────────────────────────────────────────────
 - title: The Autonomy Tax
-  rubric_status: audited
+  rubric_status: scored
   short_label: Autonomy Tax
   words: 2804
   identity: public framework / operator essay
@@ -566,14 +746,14 @@ essays:
     debate: 8
     precision: 8
     synthesis: 7
-    utility: 10
+    utility: 9
   traction_subscores:
     hook_strength: 9
     thesis_compression: 9
-    frame_portability: 8
+    frame_portability: 9
     audience_breadth: 8
     debate_energy: 8
-    public_packaging: 8
+    public_packaging: 9
   traction_override:
     delta: 0
     reason: null
@@ -581,59 +761,6 @@ essays:
     sentence_rhythm: 8
     paragraph_control: 8
     structural_pacing: 8
-    evidence_integration: 8
-    ending_strength: 9
-  craft_override:
-    delta: 0
-    reason: null
-  publication_power_override:
-    delta: 0
-    reason: Migrated from existing atlas output during rubric-source backfill.
-  section_scores:
-    opening: 9
-    thesis_lock: 9
-    development: 8
-    borders: 8
-    ending: 9
-    reference_handling: 8
-  rationale:
-    whole_essay_note: Direct operator utility. Pushes purely from the 'tax' equation to operational checks. Anchors the archive for Utility, scoring a strict 10.
-    opening_anchor: "Lines 10-20: The model didn\u2019t hallucinate. It didn\u2019t go off-task. It didn\u2019t need a better prompt. It needed a circuit breaker for con..."
-    middle_anchor: 'Lines 60-66: *For the full scoring rubric, worked examples with mitigation paths, sensitivity analysis, and calibration guidance, see...'
-    ending_anchor: 'Lines 111-117: 18. Observability platform pricing: [LangSmith](https://www.langchain.com/pricing-langsmith), [Braintrust](https://www.b...'
-  traction: 8
-  craft: 8
-  publication_power: 8
-- title: The Moltbook Phenomenon
-  rubric_status: audited
-  short_label: Moltbook
-  words: 2510
-  identity: topical narrative intervention
-  signature: event hijack + narrative propulsion
-  overpull_risk: topicality decays faster than framework pieces
-  confidence: high
-  moves:
-  - topical_narrative_hijack
-  - failure_or_anomaly_cold_open
-  direct_scores:
-    debate: 9
-    precision: 6
-    synthesis: 6
-    utility: 5
-  traction_subscores:
-    hook_strength: 10
-    thesis_compression: 8
-    frame_portability: 7
-    audience_breadth: 7
-    debate_energy: 9
-    public_packaging: 8
-  traction_override:
-    delta: 0
-    reason: null
-  craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
-    structural_pacing: 7
     evidence_integration: 7
     ending_strength: 8
   craft_override:
@@ -643,22 +770,110 @@ essays:
     delta: 0
     reason: null
   section_scores:
-    opening: 10
-    thesis_lock: 8
-    development: 7
-    borders: 6
+    opening: 9
+    thesis_lock: 9
+    development: 8
+    borders: 8
     ending: 8
     reference_handling: 7
   rationale:
-    whole_essay_note: Event-driven narrative with massive ignition. Excels at Hook and Debate, but lacks the formal precision and synthesis of the permanent architectures.
-    opening_anchor: 'Lines 10-20: In early March 2026, Meta bought Moltbook. This was a social network that had existed for exactly forty-two days. Its da...'
-    middle_anchor: "Lines 39-45: It got darker. An autonomous marketplace called \u201C[Molt Road](https://www.vectra.ai/blog/molt-road-and-the-automation-of-..."
-    ending_anchor: 'Lines 69-75: ![](assets/asset-0028b2730dab7487.png) ## What Moltbook Proved Moltbook was a disposable prototype. It was insecure, cha...'
-  traction: 8
-  craft: 7
-  publication_power: 8
+    whole_essay_note: >
+      The strongest operator-facing essay in the archive. The "Autonomy Tax"
+      is immediately portable: Human Bandwidth, Incident, and Governance
+      costs compound as autonomy increases. The vivid incident opening is
+      one of the best in the corpus. Precision is high — the three cost
+      categories are defined, bounded, and applied. Utility is the highest
+      in the archive alongside the Hardware Friction Map because the
+      framework changes what a builder should do next. Evidence integration
+      is the weakest axis because the essay runs more on conceptual
+      architecture than empirical citation.
+    opening_anchor: >
+      The agent-runs-the-billing-system incident opening. Creates immediate
+      stakes and makes the tax metaphor concrete before it is named.
+    middle_anchor: >
+      The three-tax decomposition (Human Bandwidth, Incident, Governance)
+      is the core contribution. Each tax is defined and then compounded,
+      creating an accumulative architecture.
+    ending_anchor: >
+      "Autonomy is not free. The tax compounds." — Clean doctrine close
+      that sharpens the whole essay.
+
+#
+# ──────────────────────────────────────────────────
+# 12. The Moltbook Phenomenon
+# ──────────────────────────────────────────────────
+- title: The Moltbook Phenomenon
+  rubric_status: scored
+  short_label: Moltbook
+  words: 2510
+  identity: topical narrative intervention
+  signature: event hijack + narrative propulsion
+  overpull_risk: topicality decays faster than framework pieces
+  confidence: medium
+  moves:
+  - topical_narrative_hijack
+  - failure_or_anomaly_cold_open
+  direct_scores:
+    debate: 7
+    precision: 6
+    synthesis: 6
+    utility: 6
+  traction_subscores:
+    hook_strength: 8
+    thesis_compression: 7
+    frame_portability: 6
+    audience_breadth: 7
+    debate_energy: 7
+    public_packaging: 8
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 7
+    structural_pacing: 7
+    evidence_integration: 6
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 7
+    development: 7
+    borders: 6
+    ending: 7
+    reference_handling: 6
+  rationale:
+    whole_essay_note: >
+      The most narrative-driven piece in the archive. The Moltbook event
+      hijack is compelling and the essay moves with genuine propulsive
+      energy. Hook strength and public packaging are strong — the title and
+      concept are immediately sharable. The weakness is precision and
+      synthesis: the essay gestures at "vibe-coded infrastructure" and
+      narrative-driven acquisitions without fully defining either. It reads
+      as a smart opinion piece rather than a framework essay. Topicality
+      decay is a real risk; the piece will age faster than the architecture
+      essays.
+    opening_anchor: >
+      Opens with the Moltbook acquisition story. Vivid, immediate, and
+      creates curiosity quickly.
+    middle_anchor: >
+      The "vibe-coded infrastructure" diagnosis is the core contribution.
+      It names something real but the borders remain soft.
+    ending_anchor: >
+      Closes with the narrative-as-technology thesis. Stronger than
+      average but still somewhat editorial rather than doctrinal.
+
+#
+# ──────────────────────────────────────────────────
+# 13. The Illusion of the Swarm
+# ──────────────────────────────────────────────────
 - title: The Illusion of the Swarm
-  rubric_status: audited
+  rubric_status: scored
   short_label: Illusion of the Swarm
   words: 3913
   identity: balanced synthesis / builder essay
@@ -674,15 +889,15 @@ essays:
   - doctrine_ending
   direct_scores:
     debate: 8
-    precision: 9
-    synthesis: 10
+    precision: 8
+    synthesis: 9
     utility: 8
   traction_subscores:
     hook_strength: 8
     thesis_compression: 8
     frame_portability: 8
     audience_breadth: 8
-    debate_energy: 9
+    debate_energy: 8
     public_packaging: 8
   traction_override:
     delta: 0
@@ -703,72 +918,107 @@ essays:
     opening: 8
     thesis_lock: 8
     development: 9
-    borders: 9
+    borders: 8
     ending: 8
     reference_handling: 9
   rationale:
-    whole_essay_note: Masterclass in literature integration. Unpacks the swarm assumption and redirects it to routing bottlenecks. Very high synthesis.
-    opening_anchor: 'Lines 10-20: *For many same-model production systems, multiple agents are a temporary way to manage routing, state, and coordination ...'
-    middle_anchor: 'Lines 53-59: ![](assets/asset-0b05dea596fe7622.png) *Agentic Memory* makes a related point for state management ([Yu et al., 2026](ht...'
-    ending_anchor: 'Lines 96-102: ### Z. Liu et al. (2026), [Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization (EMPO2)](ht...'
-  traction: 8
-  craft: 8
-  publication_power: 8
-- title: 'Operating Agents Bonus: Workflow Optimization and Evaluation'
-  rubric_status: audited
-  short_label: OA Bonus
-  words: 2215
-  identity: operator appendix / optimization chapter
-  signature: bounded evaluation doctrine
-  overpull_risk: more useful than magnetic as a public object
-  confidence: high
+    whole_essay_note: >
+      The best-balanced essay in the archive. It combines contrarian
+      compression ("multi-agent is usually a routing workaround, not a
+      destination") with careful caveating, strong literature integration,
+      and genuine builder utility. Synthesis is the highest in the corpus:
+      the essay genuinely reduces a complex field into one coherent argument
+      without flattening it. Evidence integration is also corpus-best;
+      papers serve the argument instead of interrupting it. The only risk
+      is that over-qualification slightly dampens the debate energy
+      compared to the Transformer Attractor's cleaner edge.
+    opening_anchor: >
+      Opens by contrasting the swarm narrative with the engineering reality.
+      Creates tension without overreaching.
+    middle_anchor: >
+      The taxonomy of multi-agent failure modes (routing bottleneck, state
+      management bottleneck, coordination overhead) is the strongest
+      development section in the corpus. Each failure mode is evidenced and
+      then tested.
+    ending_anchor: >
+      "Most multi-agent systems are workarounds, not destinations." — Clean
+      doctrine close with appropriate caveats.
+
+#
+# ──────────────────────────────────────────────────
+# 14. Operating Agents Preface
+# ──────────────────────────────────────────────────
+- title: 'Operating Agents Guide: Preface'
+  rubric_status: scored
+  short_label: OA Preface
+  words: 1713
+  identity: package contract / doctrine note
+  signature: package identity and standards
+  overpull_risk: not designed as a standalone flagship object
+  confidence: medium
   moves:
-  - builder_first_doctrine
-  - chapterized_technical_explainer
+  - series_packaging
+  - doctrine_ending
   direct_scores:
-    debate: 6
-    precision: 8
-    synthesis: 7
-    utility: 8
+    debate: 5
+    precision: 7
+    synthesis: 5
+    utility: 6
   traction_subscores:
-    hook_strength: 6
-    thesis_compression: 7
-    frame_portability: 6
+    hook_strength: 5
+    thesis_compression: 5
+    frame_portability: 5
     audience_breadth: 6
-    debate_energy: 5
-    public_packaging: 6
+    debate_energy: 4
+    public_packaging: 5
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
+    sentence_rhythm: 8
+    paragraph_control: 8
     structural_pacing: 7
-    evidence_integration: 8
+    evidence_integration: 5
     ending_strength: 6
   craft_override:
     delta: 0
     reason: null
   publication_power_override:
     delta: 0
-    reason: Migrated from existing atlas output during rubric-source backfill.
+    reason: null
   section_scores:
     opening: 6
-    thesis_lock: 7
-    development: 7
-    borders: 7
+    thesis_lock: 5
+    development: 6
+    borders: 6
     ending: 6
-    reference_handling: 8
+    reference_handling: 5
   rationale:
-    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
-    opening_anchor: 'Lines 10-20: ## Once The Agent Works, The Workflow Becomes The Object The first working agent is often where teams begin to lose disc...'
-    middle_anchor: 'Lines 24-30: ![Slide 8: Instrumentation over intuition](assets/asset-8eca0576ba99a57d.jpeg "Slide 8: Instrumentation over intuition")...'
-    ending_anchor: 'Lines 39-45: ## References [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collabora...'
-  traction: 6
-  craft: 7
-  publication_power: 6
+    whole_essay_note: >
+      A well-written package contract that defines the Operating Agents
+      series standards, audience, and reading order. Prose quality is high —
+      sentence rhythm and paragraph control are among the best in the
+      archive. However, as a public essay object it has minimal traction.
+      There is no thesis to debate, no frame to port, and no hook to share.
+      It is a table of contents with doctrine, not an argument. Correctly
+      read as infrastructure, not as a standalone essay.
+    opening_anchor: >
+      "This course is a builder-first guide to how modern agent systems are
+      designed, evaluated, and constrained in practice." — Clear contract
+      but zero tension.
+    middle_anchor: >
+      The two-order explanation (teaching order vs. architectural dependency
+      order) is the most interesting structural move in the piece.
+    ending_anchor: >
+      Lists reading standards and closes cleanly. Functional but not
+      memorable.
+
+#
+# ──────────────────────────────────────────────────
+# 15. Operating Agents I: Action
+# ──────────────────────────────────────────────────
 - title: 'Operating Agents I: Action Systems and Tool Use'
-  rubric_status: audited
+  rubric_status: scored
   short_label: OA I
   words: 2688
   identity: builder-first chapter
@@ -779,26 +1029,26 @@ essays:
   - builder_first_doctrine
   - chapterized_technical_explainer
   direct_scores:
-    debate: 6
+    debate: 7
     precision: 8
-    synthesis: 7
+    synthesis: 8
     utility: 8
   traction_subscores:
-    hook_strength: 7
+    hook_strength: 8
     thesis_compression: 7
-    frame_portability: 7
+    frame_portability: 8
     audience_breadth: 7
-    debate_energy: 6
+    debate_energy: 7
     public_packaging: 7
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
-    structural_pacing: 7
+    sentence_rhythm: 9
+    paragraph_control: 9
+    structural_pacing: 8
     evidence_integration: 8
-    ending_strength: 6
+    ending_strength: 8
   craft_override:
     delta: 0
     reason: null
@@ -806,22 +1056,42 @@ essays:
     delta: 0
     reason: null
   section_scores:
-    opening: 7
-    thesis_lock: 7
-    development: 7
-    borders: 7
-    ending: 6
+    opening: 8
+    thesis_lock: 8
+    development: 8
+    borders: 8
+    ending: 8
     reference_handling: 8
   rationale:
-    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
-    opening_anchor: 'Lines 10-20: ## When Language Starts Doing Work A language model can explain a batch file rename perfectly and still leave every file...'
-    middle_anchor: 'Lines 24-30: ![Slide 7: Surface Selection Heuristics](assets/asset-91a9f6d4b8f08447.jpeg "Slide 7: Surface Selection Heuristics") Eac...'
-    ending_anchor: 'Lines 38-44: [Action Systems and Tool Use transcript](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/...'
-  traction: 7
-  craft: 7
-  publication_power: 7
+    whole_essay_note: >
+      The best-written chapter in the Operating Agents series and one of the
+      strongest prose objects in the archive. The action-representation
+      ladder (plain text → code → typed tool calls) is a genuinely useful
+      frame. The five failure seams of tool use (detection, selection,
+      argument filling, execution, result integration) create real builder
+      value. Sentence rhythm is among the best in the corpus — the prose
+      is unusually controlled and varied. The closing argument (the future
+      of agents depends on better interfaces, not just smarter models) is
+      a strong, quiet provocation.
+    opening_anchor: >
+      "A language model can explain a batch file rename perfectly and still
+      leave every file untouched." — Excellent opening that makes the
+      describing-vs-doing boundary concrete in one sentence.
+    middle_anchor: >
+      The five failure seams of tool use create the essay's best
+      architecture. Each seam is named, explained, and illustrated with
+      specific failure modes.
+    ending_anchor: >
+      "The future of agents may depend less on teaching models to cope
+      with every ambiguity… and more on changing that world so ambiguity
+      recedes at the boundary." — Strong, counter-narrative close.
+
+#
+# ──────────────────────────────────────────────────
+# 16. Operating Agents II: Memory
+# ──────────────────────────────────────────────────
 - title: 'Operating Agents II: Memory Systems and Authority'
-  rubric_status: audited
+  rubric_status: scored
   short_label: OA II
   words: 2485
   identity: builder-first framework chapter
@@ -834,12 +1104,12 @@ essays:
   direct_scores:
     debate: 6
     precision: 8
-    synthesis: 7
+    synthesis: 8
     utility: 8
   traction_subscores:
     hook_strength: 7
-    thesis_compression: 8
-    frame_portability: 7
+    thesis_compression: 7
+    frame_portability: 8
     audience_breadth: 7
     debate_energy: 6
     public_packaging: 7
@@ -847,11 +1117,84 @@ essays:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
-    structural_pacing: 7
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
     evidence_integration: 8
-    ending_strength: 6
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 7
+    thesis_lock: 8
+    development: 8
+    borders: 7
+    ending: 7
+    reference_handling: 8
+  rationale:
+    whole_essay_note: >
+      The most architecturally useful Operating Agents chapter. The
+      four-memory taxonomy (working, semantic, episodic, procedural) is
+      cleanly defined and the lifecycle framing (acquire → encode → derive →
+      retrieve → use → forget) is a genuine design contribution. The
+      "memory as authority" reframe is the essay's sharpest move: it shifts
+      the question from "how much can the system remember" to "how much of
+      the past should the present obey." Prose quality remains high. Debate
+      energy is the weakest axis — the essay is more absorptive than
+      provocative.
+    opening_anchor: >
+      "A support agent can answer a refund question correctly on Monday and
+      still make the wrong decision on Thursday." — Good concrete hook that
+      creates a recognizable failure scenario.
+    middle_anchor: >
+      The four-memory taxonomy with explicit admission, retrieval, and
+      expiration rules is the load-bearing section. The lifecycle model
+      adds genuine design discipline.
+    ending_anchor: >
+      "A good memory system does not preserve the past indiscriminately. It
+      protects the present from the wrong parts of the past." — Clean,
+      memorable close.
+
+#
+# ──────────────────────────────────────────────────
+# 17. Operating Agents III: Reasoning
+# ──────────────────────────────────────────────────
+- title: 'Operating Agents III: Reasoning Scaffolds and Planning'
+  rubric_status: scored
+  short_label: OA III
+  words: 2405
+  identity: builder-first diagnosis chapter
+  signature: failure diagnosis + build-order framing
+  overpull_risk: risks plateau if borrowed without stakes
+  confidence: high
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
+    debate: 7
+    precision: 8
+    synthesis: 8
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 8
+    audience_breadth: 7
+    debate_energy: 7
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 8
+    ending_strength: 7
   craft_override:
     delta: 0
     reason: null
@@ -863,71 +1206,36 @@ essays:
     thesis_lock: 8
     development: 8
     borders: 8
-    ending: 6
+    ending: 7
     reference_handling: 8
   rationale:
-    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
-    opening_anchor: 'Lines 10-20: ## When The Past Becomes Part Of The System A support agent can answer a refund question correctly on Monday and still m...'
-    middle_anchor: 'Lines 25-31: ![Slide 9: The unified memory system](assets/asset-9ce70dc3e221e03e.jpeg "Slide 9: The unified memory system") Several p...'
-    ending_anchor: 'Lines 41-47: [Chapter 3 Blueprint: Memory](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/core/practi...'
-  traction: 7
-  craft: 7
-  publication_power: 7
-- title: 'Operating Agents III: Reasoning Scaffolds and Planning'
-  rubric_status: audited
-  short_label: OA III
-  words: 2405
-  identity: builder-first diagnosis chapter
-  signature: failure diagnosis + build-order framing
-  overpull_risk: risks plateau if borrowed without stakes
-  confidence: high
-  moves:
-  - builder_first_doctrine
-  - chapterized_technical_explainer
-  direct_scores:
-    debate: 6
-    precision: 8
-    synthesis: 7
-    utility: 8
-  traction_subscores:
-    hook_strength: 7
-    thesis_compression: 8
-    frame_portability: 7
-    audience_breadth: 7
-    debate_energy: 6
-    public_packaging: 7
-  traction_override:
-    delta: 0
-    reason: null
-  craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
-    structural_pacing: 7
-    evidence_integration: 8
-    ending_strength: 6
-  craft_override:
-    delta: 0
-    reason: null
-  publication_power_override:
-    delta: 0
-    reason: null
-  section_scores:
-    opening: 7
-    thesis_lock: 8
-    development: 8
-    borders: 7
-    ending: 6
-    reference_handling: 8
-  rationale:
-    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
-    opening_anchor: 'Lines 10-20: ## The Failure Builders Often Misread An agent can produce a polished plan for a refund workflow and still fail as soon ...'
-    middle_anchor: 'Lines 26-32: This distinction also helps explain why fluent reasoning traces are such weak evidence of correctness. A trace can sound...'
-    ending_anchor: 'Lines 43-49: *[Least-to-Most Prompting Enables Complex Reasoning in Large Language Models](https://arxiv.org/abs/2205.10625)* is usef...'
-  traction: 7
-  craft: 7
-  publication_power: 7
+    whole_essay_note: >
+      The most diagnostically useful chapter. The key move is separating
+      refinement, reflection, and verification as three different correction
+      types — each solving a different problem. The build-order doctrine
+      (decompose → ground → verify → refine → search) is immediately
+      actionable. The essay earns its scores through disciplined narrowing:
+      each method is presented as an escalation, not a default. Prose
+      quality matches the best of the series. Debate energy is moderate
+      because the claims are conservative and hard to argue with.
+    opening_anchor: >
+      "An agent can produce a polished plan for a refund workflow and still
+      fail as soon as it has to touch live state." — Good diagnostic hook.
+    middle_anchor: >
+      The refinement/reflection/verification distinction is the essay's
+      best single contribution. It gives builders three clean categories
+      instead of one vague "improve" bucket.
+    ending_anchor: >
+      "Good reasoning design does not mean using the most sophisticated
+      scaffold available. It means selecting the smallest scaffold that
+      makes the task reliable." — Clean doctrine close.
+
+#
+# ──────────────────────────────────────────────────
+# 18. Operating Agents IV: Multi-Agent
+# ──────────────────────────────────────────────────
 - title: 'Operating Agents IV: Multi-Agent Boundaries and Handoffs'
-  rubric_status: audited
+  rubric_status: scored
   short_label: OA IV
   words: 2168
   identity: boundary-setting chapter
@@ -939,7 +1247,7 @@ essays:
   - chapterized_technical_explainer
   - coined_frame_with_borders
   direct_scores:
-    debate: 6
+    debate: 7
     precision: 8
     synthesis: 7
     utility: 8
@@ -947,18 +1255,18 @@ essays:
     hook_strength: 7
     thesis_compression: 7
     frame_portability: 7
-    audience_breadth: 7
+    audience_breadth: 6
     debate_energy: 7
     public_packaging: 7
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
+    sentence_rhythm: 8
+    paragraph_control: 8
     structural_pacing: 7
-    evidence_integration: 8
-    ending_strength: 6
+    evidence_integration: 7
+    ending_strength: 7
   craft_override:
     delta: 0
     reason: null
@@ -968,73 +1276,38 @@ essays:
   section_scores:
     opening: 7
     thesis_lock: 7
-    development: 7
-    borders: 9
-    ending: 6
-    reference_handling: 8
-  rationale:
-    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
-    opening_anchor: 'Lines 10-20: ## Multi-Agent Starts With A Baseline A team can build an incident workflow with a planner agent, an analyst agent, an e...'
-    middle_anchor: 'Lines 24-30: This is the right context for reading *[MAD](https://arxiv.org/abs/2305.19118)* and *[RECONCILE](https://arxiv.org/abs/2...'
-    ending_anchor: 'Lines 39-45: ## References [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collabora...'
-  traction: 7
-  craft: 7
-  publication_power: 7
-- title: 'Operating Agents Guide: Preface'
-  rubric_status: audited
-  short_label: OA Preface
-  words: 1713
-  identity: package contract / doctrine note
-  signature: package identity and standards
-  overpull_risk: not designed as a standalone flagship object
-  confidence: high
-  moves:
-  - series_packaging
-  - doctrine_ending
-  direct_scores:
-    debate: 6
-    precision: 8
-    synthesis: 7
-    utility: 8
-  traction_subscores:
-    hook_strength: 6
-    thesis_compression: 7
-    frame_portability: 6
-    audience_breadth: 6
-    debate_energy: 5
-    public_packaging: 6
-  traction_override:
-    delta: 0
-    reason: null
-  craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
-    structural_pacing: 7
-    evidence_integration: 6
-    ending_strength: 7
-  craft_override:
-    delta: 0
-    reason: null
-  publication_power_override:
-    delta: 0
-    reason: null
-  section_scores:
-    opening: 6
-    thesis_lock: 7
-    development: 7
-    borders: 7
+    development: 8
+    borders: 8
     ending: 7
-    reference_handling: 6
+    reference_handling: 7
   rationale:
-    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
-    opening_anchor: 'Lines 10-20: The package was distilled from the broader survey *[Advances and Challenges in Foundation Agents](https://github.com/pet...'
-    middle_anchor: 'Lines 40-46: > > **[Multi-Agent Companion](https://github.com/petroslamb/content/blob/main/publications/autonomous-agents/essays/mult...'
-    ending_anchor: 'Lines 70-76: > **Read the companion next if you need the wider field map, the omitted taxonomies, or a better guide to the surroundin...'
-  traction: 6
-  craft: 7
-  publication_power: 6
+    whole_essay_note: >
+      The most boundary-disciplined chapter. The escalation ladder
+      (orchestrator → specialists → pipeline → critic → debate) is
+      immediately useful as a design aid. The handoff-artifact doctrine
+      ("handoffs should look more like interfaces than conversations") is
+      the essay's sharpest contribution. The essay is intentionally
+      conservative and earns credibility through restraint. Audience is
+      slightly narrower because the topic is already specialized. Debate
+      energy is moderate — the contrarian move (multi-agent is usually
+      premature) is shared with the Illusion of the Swarm essay.
+    opening_anchor: >
+      Opens with a multi-agent incident where four nodes share the same
+      context and the same permissions. Concrete failure that earns the
+      reader's attention.
+    middle_anchor: >
+      The escalation ladder and handoff-contract methodology are the
+      strongest sections.
+    ending_anchor: >
+      "Multi-agent systems are not mini-companies made of prompts. They are
+      workflows with additional boundaries." — Clean doctrine close.
+
+#
+# ──────────────────────────────────────────────────
+# 19. Operating Agents V: Safety
+# ──────────────────────────────────────────────────
 - title: 'Operating Agents V: Trust Boundaries and Agent Safety'
-  rubric_status: audited
+  rubric_status: scored
   short_label: OA V
   words: 2220
   identity: safety architecture chapter
@@ -1046,6 +1319,79 @@ essays:
   - chapterized_technical_explainer
   - doctrine_ending
   direct_scores:
+    debate: 7
+    precision: 8
+    synthesis: 7
+    utility: 8
+  traction_subscores:
+    hook_strength: 7
+    thesis_compression: 7
+    frame_portability: 8
+    audience_breadth: 7
+    debate_energy: 7
+    public_packaging: 7
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 7
+    evidence_integration: 8
+    ending_strength: 7
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 8
+    thesis_lock: 7
+    development: 8
+    borders: 7
+    ending: 7
+    reference_handling: 8
+  rationale:
+    whole_essay_note: >
+      The most important Operating Agents chapter for production teams. The
+      "safety as boundary architecture" reframe is the key move — it
+      converts a diffuse fear into a design exercise. The trust-labeling
+      methodology (trusted/semi-trusted/untrusted sources) and the
+      practical build order (separate instructions → constrain tools →
+      control memory → harden handoffs → add verification → widen autonomy)
+      are immediately actionable. Reference integration is strong; the
+      retrieval-poisoning cluster and prompt-injection papers serve the
+      argument directly. The anti-pattern list is one of the most useful
+      single passages in the series.
+    opening_anchor: >
+      "A chatbot that produces a bad sentence inside a browser tab may be
+      frustrating. An agent that can read email, retrieve a customer
+      record, write a note, and issue a refund belongs to a different
+      class of system." — Strong escalation hook.
+    middle_anchor: >
+      The trust-labeling methodology and the customer-support injection
+      example are the load-bearing sections.
+    ending_anchor: >
+      "Safety becomes much more concrete when phrased as a boundary
+      question." — Clean but could be sharper.
+
+#
+# ──────────────────────────────────────────────────
+# 20. Operating Agents Bonus: Optimization
+# ──────────────────────────────────────────────────
+- title: 'Operating Agents Bonus: Workflow Optimization and Evaluation'
+  rubric_status: scored
+  short_label: OA Bonus
+  words: 2215
+  identity: operator appendix / optimization chapter
+  signature: bounded evaluation doctrine
+  overpull_risk: more useful than magnetic as a public object
+  confidence: medium
+  moves:
+  - builder_first_doctrine
+  - chapterized_technical_explainer
+  direct_scores:
     debate: 6
     precision: 8
     synthesis: 7
@@ -1054,18 +1400,18 @@ essays:
     hook_strength: 7
     thesis_compression: 7
     frame_portability: 7
-    audience_breadth: 7
+    audience_breadth: 6
     debate_energy: 6
-    public_packaging: 7
+    public_packaging: 6
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 7
-    paragraph_control: 7
+    sentence_rhythm: 8
+    paragraph_control: 8
     structural_pacing: 7
-    evidence_integration: 8
-    ending_strength: 6
+    evidence_integration: 7
+    ending_strength: 7
   craft_override:
     delta: 0
     reason: null
@@ -1076,19 +1422,36 @@ essays:
     opening: 7
     thesis_lock: 7
     development: 7
-    borders: 9
-    ending: 6
-    reference_handling: 8
+    borders: 7
+    ending: 7
+    reference_handling: 7
   rationale:
-    whole_essay_note: Blueprint series installment. Prioritizes concrete build-orders and system boundaries over public ignition. Highly functional Utility.
-    opening_anchor: 'Lines 10-20: ## Safety Begins Where The Workflow Touches The World A chatbot that produces a bad sentence inside a browser tab may be...'
-    middle_anchor: 'Lines 25-31: ![Slide 7: Inter-agent contamination flow](assets/asset-8bc052b90a8d088d.jpeg "Slide 7: Inter-agent contamination flow")...'
-    ending_anchor: 'Lines 40-46: [Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe...'
-  traction: 7
-  craft: 7
-  publication_power: 7
+    whole_essay_note: >
+      The operational appendix of the series. Its best contribution is
+      the "measurement before modification" doctrine: freeze the eval set,
+      fix cheap surfaces first, add feedback only when recurrence proves it
+      worth the cost. The bounded self-improvement section (the optimizer
+      must not control the evaluation) is a genuinely important design
+      principle. Precision is high; every method is assigned to a specific
+      engineering use. Traction is limited because the piece reads as an
+      appendix — useful but not independently magnetic.
+    opening_anchor: >
+      "The first working agent is often where teams begin to lose
+      discipline." — Good diagnostic hook that earns the optimization
+      framing.
+    middle_anchor: >
+      The build order (instrumentation → cheap fixes → bounded feedback →
+      topology search) is the most useful section.
+    ending_anchor: >
+      "Optimize an agent workflow the way you would optimize any other
+      distributed production system." — Clean, deliberately plain close.
+
+#
+# ──────────────────────────────────────────────────
+# 21. The Binding Gap
+# ──────────────────────────────────────────────────
 - title: The Binding Gap
-  rubric_status: audited
+  rubric_status: scored
   short_label: Binding Gap
   words: 2203
   identity: coined concept / precision essay
@@ -1099,47 +1462,68 @@ essays:
   - failure_or_anomaly_cold_open
   - coined_frame_with_borders
   direct_scores:
-    debate: 7
-    precision: 10
-    synthesis: 9
-    utility: 8
+    debate: 8
+    precision: 9
+    synthesis: 7
+    utility: 7
   traction_subscores:
-    hook_strength: 9
-    thesis_compression: 10
+    hook_strength: 8
+    thesis_compression: 9
     frame_portability: 9
-    audience_breadth: 8
-    debate_energy: 7
+    audience_breadth: 7
+    debate_energy: 8
     public_packaging: 8
   traction_override:
     delta: 0
     reason: null
   craft_subscores:
-    sentence_rhythm: 9
-    paragraph_control: 9
-    structural_pacing: 9
-    evidence_integration: 9
-    ending_strength: 9
+    sentence_rhythm: 8
+    paragraph_control: 8
+    structural_pacing: 8
+    evidence_integration: 7
+    ending_strength: 8
   craft_override:
     delta: 0
     reason: null
   publication_power_override:
     delta: 0
-    reason: Migrated from existing atlas output during rubric-source backfill.
+    reason: null
   section_scores:
-    opening: 9
+    opening: 8
     thesis_lock: 9
     development: 8
-    borders: 10
-    ending: 9
-    reference_handling: 9
+    borders: 9
+    ending: 8
+    reference_handling: 7
   rationale:
-    whole_essay_note: The strongest single concept definition in the corpus. Isolates a precise structural failure mode away from generic 'hallucination'. Sets the archive baseline for Precision.
-    opening_anchor: 'Lines 10-20: Tell a language model that Tom Smith''s wife is Mary Stone. Then ask who Mary Stone''s husband is. Nothing new has been ad...'
-    middle_anchor: 'Lines 27-33: ## What This Changes Once the family is visible and its mechanistic roots are partly tractable, the productive question ...'
-    ending_anchor: 'Lines 45-51: Supports the claim that semantic-role structure has compact, causally localised circuitry inside large models. ### Tan a...'
-  traction: 8
-  craft: 9
-  publication_power: 8
+    whole_essay_note: >
+      The most precisely bordered essay in the archive. The "binding gap" is
+      a coined concept that names the failure of models to maintain precise
+      entity-role associations despite fluent semantic generation. Thesis
+      compression is among the corpus best — the concept is immediately
+      portable and reusable. Precision is the highest in the archive: the
+      essay defines what binding is, what it is not, and where it breaks,
+      with clean delineation between the binding gap and adjacent failure
+      modes. The essay is compact and disciplined. Evidence integration is
+      the weakest axis — the essay runs more on architectural reasoning
+      than empirical citation. Debate energy is strong because the claim
+      is specific enough to be testable.
+    opening_anchor: >
+      Opens with the observation that models can describe systems
+      fluently while failing to maintain the associations those
+      descriptions depend on. Creates recognition immediately.
+    middle_anchor: >
+      The border-setting section — distinguishing binding failure from
+      hallucination, from attention degradation, from grounding failure —
+      is the strongest analytical passage. Each distinction earns its place.
+    ending_anchor: >
+      Closes by reframing binding as a structural rather than scaling
+      problem. Clean landing with enough provocation to create forward
+      motion.
+
+# ──────────────────────────────────────────────────
+# Drafts section preserved from template
+# ──────────────────────────────────────────────────
 drafts:
 - id: architecture-and-agent-memory
   title: Architecture and Agent Memory
