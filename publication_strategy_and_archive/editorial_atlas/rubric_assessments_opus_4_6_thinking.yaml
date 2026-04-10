@@ -1,6 +1,6 @@
 version: 1
 corpus_source: publication_strategy_and_archive/substack_archive
-model_display_name: Gemini 3.1 Pro High
+model_display_name: Opus 4.6 Thinking
 score_scale: 1-10 qualitative manual scoring
 status_notes:
   baseline: Zero-knowledge independent audit. No prior review artifacts, blueprint reviews, or essay-iteration feedback were consulted. All scores are derived from the archived essay text alone against the rubric.
@@ -16,7 +16,7 @@ essays:
 # 1. Neural Architecture Design as a Reusable Scaffold
 # ──────────────────────────────────────────────────
 - title: 'Neural Architecture Design as a Reusable Scaffold: A History Review'
-  rubric_status: scored
+  rubric_status: audited
   short_label: Reusable Scaffold
   words: 5162
   identity: historical synthesis / architecture thesis essay
@@ -88,7 +88,7 @@ essays:
 # 2. The Agent Revolution
 # ──────────────────────────────────────────────────
 - title: 'Autonomous AI Agents: Core Foundations and Recent Breakthroughs'
-  rubric_status: scored
+  rubric_status: audited
   short_label: Agent Revolution
   words: 7075
   identity: large survey / reading-guide essay
@@ -156,8 +156,8 @@ essays:
 # ──────────────────────────────────────────────────
 # 3. What Actually Works: The Hardware Compatibility Filter
 # ──────────────────────────────────────────────────
-- title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023\\u20132025)"
-  rubric_status: scored
+- title: "What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)"
+  rubric_status: audited
   short_label: What Actually Works
   words: 10238
   identity: long-form evidence article
@@ -229,7 +229,7 @@ essays:
 # 4. The Hardware Friction Map
 # ──────────────────────────────────────────────────
 - title: The Hardware Friction Map
-  rubric_status: scored
+  rubric_status: audited
   short_label: Hardware Friction Map
   words: 2835
   identity: practitioner guide / derivative shortform
@@ -299,7 +299,7 @@ essays:
 # 5. The Orchestration Paradigm Series (Issue 1)
 # ──────────────────────────────────────────────────
 - title: The Orchestration Paradigm Series
-  rubric_status: scored
+  rubric_status: audited
   short_label: Orchestration Series
   words: 4097
   identity: series architecture / entry portal
@@ -372,7 +372,7 @@ essays:
 # 6. Orchestration Paradigm Issue 2 - The Factory
 # ──────────────────────────────────────────────────
 - title: 'The Orchestration Paradigm: Issue 2 - The Factory'
-  rubric_status: scored
+  rubric_status: audited
   short_label: Factory
   words: 2445
   identity: process and evaluation dissection
@@ -443,7 +443,7 @@ essays:
 # 7. Orchestration Paradigm Issue 3 - The Behavior
 # ──────────────────────────────────────────────────
 - title: 'The Orchestration Paradigm: Issue 3 - The Behavior'
-  rubric_status: scored
+  rubric_status: audited
   short_label: Behavior
   words: 2052
   identity: behavior-layer continuation
@@ -512,7 +512,7 @@ essays:
 # 8. Orchestration Paradigm Issue 4 - The Reality
 # ──────────────────────────────────────────────────
 - title: 'The Orchestration Paradigm: Issue 4 - The Reality'
-  rubric_status: scored
+  rubric_status: audited
   short_label: Reality
   words: 2214
   identity: late-series reality check
@@ -583,7 +583,7 @@ essays:
 # 9. When the LLM Programs Its Own Thinking
 # ──────────────────────────────────────────────────
 - title: When the LLM Programs Its Own Thinking
-  rubric_status: scored
+  rubric_status: audited
   short_label: LLM Programs Itself
   words: 2516
   identity: technical builder essay
@@ -652,7 +652,7 @@ essays:
 # 10. The Transformer Attractor
 # ──────────────────────────────────────────────────
 - title: The Transformer Attractor
-  rubric_status: scored
+  rubric_status: audited
   short_label: Transformer Attractor
   words: 3146
   identity: flagship contrarian thesis essay
@@ -728,7 +728,7 @@ essays:
 # 11. The Autonomy Tax
 # ──────────────────────────────────────────────────
 - title: The Autonomy Tax
-  rubric_status: scored
+  rubric_status: audited
   short_label: Autonomy Tax
   words: 2804
   identity: public framework / operator essay
@@ -803,7 +803,7 @@ essays:
 # 12. The Moltbook Phenomenon
 # ──────────────────────────────────────────────────
 - title: The Moltbook Phenomenon
-  rubric_status: scored
+  rubric_status: audited
   short_label: Moltbook
   words: 2510
   identity: topical narrative intervention
@@ -873,7 +873,7 @@ essays:
 # 13. The Illusion of the Swarm
 # ──────────────────────────────────────────────────
 - title: The Illusion of the Swarm
-  rubric_status: scored
+  rubric_status: audited
   short_label: Illusion of the Swarm
   words: 3913
   identity: balanced synthesis / builder essay
@@ -949,7 +949,7 @@ essays:
 # 14. Operating Agents Preface
 # ──────────────────────────────────────────────────
 - title: 'Operating Agents Guide: Preface'
-  rubric_status: scored
+  rubric_status: audited
   short_label: OA Preface
   words: 1713
   identity: package contract / doctrine note
@@ -1018,7 +1018,7 @@ essays:
 # 15. Operating Agents I: Action
 # ──────────────────────────────────────────────────
 - title: 'Operating Agents I: Action Systems and Tool Use'
-  rubric_status: scored
+  rubric_status: audited
   short_label: OA I
   words: 2688
   identity: builder-first chapter
@@ -1091,7 +1091,7 @@ essays:
 # 16. Operating Agents II: Memory
 # ──────────────────────────────────────────────────
 - title: 'Operating Agents II: Memory Systems and Authority'
-  rubric_status: scored
+  rubric_status: audited
   short_label: OA II
   words: 2485
   identity: builder-first framework chapter
@@ -1164,7 +1164,7 @@ essays:
 # 17. Operating Agents III: Reasoning
 # ──────────────────────────────────────────────────
 - title: 'Operating Agents III: Reasoning Scaffolds and Planning'
-  rubric_status: scored
+  rubric_status: audited
   short_label: OA III
   words: 2405
   identity: builder-first diagnosis chapter
@@ -1235,7 +1235,7 @@ essays:
 # 18. Operating Agents IV: Multi-Agent
 # ──────────────────────────────────────────────────
 - title: 'Operating Agents IV: Multi-Agent Boundaries and Handoffs'
-  rubric_status: scored
+  rubric_status: audited
   short_label: OA IV
   words: 2168
   identity: boundary-setting chapter
@@ -1307,7 +1307,7 @@ essays:
 # 19. Operating Agents V: Safety
 # ──────────────────────────────────────────────────
 - title: 'Operating Agents V: Trust Boundaries and Agent Safety'
-  rubric_status: scored
+  rubric_status: audited
   short_label: OA V
   words: 2220
   identity: safety architecture chapter
@@ -1381,7 +1381,7 @@ essays:
 # 20. Operating Agents Bonus: Optimization
 # ──────────────────────────────────────────────────
 - title: 'Operating Agents Bonus: Workflow Optimization and Evaluation'
-  rubric_status: scored
+  rubric_status: audited
   short_label: OA Bonus
   words: 2215
   identity: operator appendix / optimization chapter
@@ -1451,7 +1451,7 @@ essays:
 # 21. The Binding Gap
 # ──────────────────────────────────────────────────
 - title: The Binding Gap
-  rubric_status: scored
+  rubric_status: audited
   short_label: Binding Gap
   words: 2203
   identity: coined concept / precision essay
