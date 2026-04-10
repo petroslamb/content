@@ -1,6 +1,6 @@
 # Strategic Plan: From Content Repo to Agentic Content SaaS
 
-> _Based on repo audit, April 6, 2026. Starting point: Level 2 automation (tool-assisted, human-glued)._
+> _Based on repo audit, April 6-10, 2026. Current starting point: roughly Level 3 automation (structured, agent-ready, partially executable), not yet harness-native._
 
 ---
 
@@ -11,6 +11,26 @@ You are not building a content repo. You are — whether you intended to or not 
 The path from here to SaaS is not a pivot. It is the same work, done in a way that separates "what you know" from "only you can run it."
 
 This plan has four phases with explicit gates. You should not move through a gate until it is honest.
+
+## Current Assessment
+
+The repo is no longer at the "tool-assisted, human-glued" stage described in the original framing.
+
+What is already true:
+
+- root-level ad hoc Python entrypoints are gone
+- publication `status.yaml` manifests exist and are already in use
+- `scripts/check_status.py` gives one-command lifecycle visibility
+- `scripts/run_stage.py` exists and resolves stage contracts from workflow docs
+- workflow docs already carry machine-readable frontmatter such as `runner_mode`, `approval_gate`, `required_context`, and `done_when`
+
+What is not yet true:
+
+- the full lifecycle is not agent-executable end to end, because many core stages are still `guided`
+- the repo does not yet expose a harness-facing capability layer for Codex or similar agents to discover, plan, and run work with minimal custom prompting
+- the run logging is operationally useful, but it is not yet the full retained proof surface originally imagined in Phase 1
+
+So the honest read is: **Phase 1 is substantially met as internal repo normalization, but not yet met as independent harness execution.** That makes the right next move a bridging phase, not a jump straight to a standalone agentic platform.
 
 ---
 
@@ -63,6 +83,108 @@ Every `run_stage.py` execution should write a lightweight run record to `reviewa
 > 1. Can I describe the status of every publication in one command?
 > 2. Can another agent (or a future employee) pick up any half-finished package and know exactly where it is?
 > 3. Are there zero scripts that mention a specific essay name?
+
+### Phase 1 Verdict
+
+**Mostly achieved.**
+
+The repo now behaves like a structured operating environment rather than a pile of scripts. The remaining gap is not basic cleanup. The remaining gap is that a general-purpose agent harness still needs repo-specific guidance from you to operate reliably across the lifecycle.
+
+That means the next honest phase is not "build the full local dashboard and agentic platform." It is: **make this repo legible and executable to external agent harnesses.**
+
+---
+
+## Phase 1.5 — Harness-Native Autonomy _(next 1–3 months)_
+
+**Goal**: Given an idea and a package target, a general-purpose agent harness such as Codex can discover the repo contract, choose the next valid action, execute bounded work, and leave an inspectable record with minimal human glue.
+
+This is deliberately **not** a standalone agent platform. It is the integration layer between this repo and capable external harnesses. In practice, this may be the better first objective than Phase 2 because it uses the agent runtime you already have access to instead of forcing you to build your own orchestration stack too early.
+
+### Milestones
+
+#### M1.5.1 — Harness Contract Surface
+Add a single tracked machine-readable contract such as `agent_contract.yaml` or `harness_contract.yaml` at repo root. It should define:
+
+- repo purpose and lifecycle stages
+- canonical package discovery rules
+- the allowed entrypoints (`npm run status`, `npm run run -- ...`, key scripts, key skills)
+- stage prerequisites and mutation boundaries
+- what counts as success, review, approval, and stop conditions
+- where agents should write logs versus durable artifacts
+
+**Deliverable**: A harness can read one file and understand how to operate in this repo without relying on a long custom prompt.
+
+#### M1.5.2 — Idea-To-Package Intake
+Create a generic intake command such as `scripts/init_package.py --idea "..." --slug ...` or `content-agent init --idea ...` that scaffolds a package, seeds `status.yaml`, and points the agent at the first actionable stage.
+
+**Deliverable**: "Here is an idea" becomes a runnable repo state, not a conversation-dependent setup step.
+
+#### M1.5.3 — Next-Action Resolution
+Add a `scripts/next_action.py --package <name>` resolver that returns:
+
+- current lifecycle state
+- the next valid stage
+- whether that stage is `scripted`, `hybrid`, or `guided`
+- required missing context
+- whether human approval is required before mutation
+
+**Deliverable**: A harness no longer has to infer what to do next from prose.
+
+#### M1.5.4 — Guided Stage Launch Packs
+For every `guided` stage, define a standard launch pack the harness can emit automatically:
+
+- task brief
+- required files and paths
+- skill or script to use
+- explicit completion criteria
+- explicit review gate
+
+This can live as generated markdown or JSON in `reviewable-runs/logs/` or a new `runs/` surface.
+
+**Deliverable**: Even when a stage is not fully automated, the harness can enter it with a bounded, repeatable operating packet rather than freeform interpretation.
+
+#### M1.5.5 — Harness Adapters For Existing Skills
+Wrap the existing workflow-and-skill system with stable adapter commands so the harness uses repo-native interfaces instead of bespoke instructions. Examples:
+
+- `npm run stage:resolve -- --package <pkg> --stage <stage>`
+- `npm run stage:run -- --package <pkg> --stage <stage>`
+- `npm run stage:next -- --package <pkg>`
+
+**Deliverable**: Codex or another harness can stay inside a small command surface and does not need to know the internal script map.
+
+#### M1.5.6 — Autonomy Boundaries And Approval Rules
+Define a small policy file for what a harness may do without asking again. At minimum:
+
+- safe read-only exploration
+- safe local file mutations inside package scope
+- stages that may auto-mark done
+- stages that always require explicit approval before external side effects
+- external services that are allowed, denied, or require confirmation
+
+**Deliverable**: Independent operation becomes possible because the harness has authority boundaries, not because it guesses correctly.
+
+#### M1.5.7 — Harness Proof Runs
+Run at least three real idea-to-stage proofs using Codex or an equivalent harness:
+
+- one research-heavy essay
+- one polish/publish continuation of an existing package
+- one media or distribution-adjacent task
+
+Each proof should measure:
+
+- prompt length required to get started
+- number of manual interventions
+- number of repo-discovery failures
+- whether the harness chose the next step correctly
+
+**Deliverable**: Evidence that the repo is actually harness-operable, not just theoretically well documented.
+
+### Phase 1.5 Gate Criteria
+> [!IMPORTANT]
+> **Do not enter Phase 2 until you can honestly answer YES to all of these:**
+> 1. Can Codex or a similar harness determine the next valid action for a package without you explaining the repo?
+> 2. Can the harness start from an idea or package target and produce bounded outputs with the correct logs and approval behavior?
+> 3. Have at least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract?
 
 ---
 
@@ -247,8 +369,8 @@ At this point, the business is making revenue and has defensible moat. Three rea
 
 ## The Single Most Important Next Step
 
-Start Phase 1, milestone M1.2 — the `status.yaml` per publication.
+Start Phase 1.5, milestone M1.5.1 — the harness contract surface.
 
-It costs you 2 hours. It gives you immediate operational clarity. It is the seed from which every downstream automation grows. Nothing in Phase 2 or beyond is possible without knowing "where is each essay in the lifecycle?"
+The `status.yaml` layer, stage runner, and workflow frontmatter now exist. The missing step is not more internal cleanup. The missing step is making those contracts legible to an external agent harness in one stable place.
 
-The `reviewable-runs` framework you already have tells you *how* an agent should be audited. The `status.yaml` system tells you *what* there is to run. Together they form the nucleus of the product.
+The `reviewable-runs` framework tells you *how* runs should be inspected. The lifecycle layer tells you *what* can be run. A harness contract tells Codex *how to operate independently inside this repo*. That is the highest-leverage bridge between today's repo and any later agentic platform.

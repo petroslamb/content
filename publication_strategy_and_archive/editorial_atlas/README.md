@@ -33,6 +33,8 @@ resist.
   design sheet for future drafts
 - [`atlas_data.json`](atlas_data.json): machine-readable essay atlas data
 - [`visualizations.md`](visualizations.md): visual layer notes for the atlas
+- [`archive/`](archive/): legacy evaluative markdown and qualitative notes;
+  not safe to read before a zero-knowledge scoring pass
 
 ## Data Contract
 
@@ -83,20 +85,6 @@ The mirror route also does three things the first pass did not:
 - drives the pull vector from a real draft object in
   [`atlas_data.json`](atlas_data.json) instead of a hard-coded example
 
-## Current Read
-
-This first pass suggests four distinct anchor roles inside the archive:
-
-- `The Transformer Attractor`: strongest flagship public object
-- `The Binding Gap`: strongest prose precision and concept control
-- `The Autonomy Tax`: strongest practical/public framework
-- `The Illusion of the Swarm`: strongest balanced research-to-builder synthesis
-
-Two secondary anchors also matter:
-
-- `What Actually Works`: strongest long-form evidence-heavy survey object
-- `The Moltbook Phenomenon`: strongest topical narrative hijack
-
 ## Working Rule
 
 Use the atlas to route and diagnose drafts, not to crown one permanent winner.
@@ -105,10 +93,39 @@ this new essay trying to become, and which existing objects should pull it?"
 
 ## Zero-Knowledge Model Scoring
 
-If an LLM or AI agent is tasked with running the editorial atlas scoring pass for a new model identity, it **must** perform a zero-knowledge evaluation. 
+If an LLM or AI agent is tasked with running the editorial atlas scoring pass
+for a new model identity, it **must** perform a zero-knowledge evaluation.
 
-The rule is strict:
-1. The scoring model may **not** read any existing `rubric_assessments_*.yaml` files or `atlas_data.json` before generating its scores. Doing so creates a baseline leak.
-2. The scoring model may **not** read any legacy markdown files in `archive/` containing older scores (like prior `essay_atlas.md` runs).
-3. The model must start exclusively from `rubric_assessments_template.yaml`, which contains the schema and essay list but zeroed-out scores.
+Use this explicit protocol.
 
+### Safe Inputs Before Scoring
+
+These files are safe to read before the model assigns scores:
+
+1. this [`README.md`](README.md), which must remain non-evaluative
+2. [`process.md`](process.md)
+3. [`rubric.md`](rubric.md)
+4. [`rubric_assessments_template.yaml`](rubric_assessments_template.yaml)
+5. the published markdown essays in `substack_archive/`
+
+### Unsafe Inputs Before Scoring
+
+These files create a baseline leak and may **not** be read before scoring:
+
+1. any `rubric_assessments_*.yaml` file other than
+   `rubric_assessments_template.yaml`
+2. [`atlas_data.json`](atlas_data.json)
+3. any evaluative markdown in [`archive/`](archive/), including prior atlas
+   runs, attractor summaries, or qualitative readouts
+4. any future note that ranks essays, names current anchors, or summarizes
+   corpus winners
+
+### Repository Hygiene For Zero-Knowledge Scoring
+
+To keep zero-knowledge scoring possible:
+
+1. keep this `README.md` free of rankings, anchor winners, or comparative
+   judgments about individual essays
+2. put evaluative summaries in [`archive/`](archive/) or model-specific rubric
+   files instead
+3. treat any future evaluative prose added to `README.md` as a protocol break
