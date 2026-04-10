@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Five-Component Pattern for AI Evidence Governance</title>
+<style>
+body {
+  margin: 0;
+  background: #f6f1e7;
+  color: #1f1a14;
+  font-family: "IBM Plex Sans", "Avenir Next", sans-serif;
+}
+main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+h1 {
+  font-family: "Iowan Old Style", "Palatino Linotype", serif;
+  font-size: clamp(2.3rem, 3vw, 3.7rem);
+  line-height: 1.05;
+  margin-bottom: 0.4em;
+}
+.meta {
+  color: #5f5548;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border-radius: 16px;
+}
+a {
+  color: #1f4b6e;
+}
+pre, code {
+  font-family: "IBM Plex Mono", monospace;
+}
+blockquote {
+  margin: 1.8rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #b07a44;
+  color: #5f5548;
+}
+</style>
+</head>
+<body>
+  <main>
+    <h1>The Five-Component Pattern for AI Evidence Governance</h1>
+    <p class="meta">Published 2026-02-18 · <a href="https://lambpetros.substack.com/p/the-five-component-pattern-for-ai">Read on Substack</a></p>
+    <h1>The Five-Component Pattern for AI Evidence Governance</h1>
+<p><strong>A reusable pattern for teams that need to trust LLM-generated analysis in high-stakes workflows</strong></p>
+<p><em>This is for teams shipping LLM-assisted analysis in high-stakes workflows — protocol security, compliance auditing, code review — where "the model said so" isn't good enough.</em></p>
+<p><em>Part 2 of <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/13260c8/publications/substack_post_v2.md">Measuring Trust: The Gap Between AI Auditing and Correctness</a></em></p>
+<hr/>
+<h2>The Problem</h2>
+<p>Last month, our AI verification tool produced a polished summary claiming "all obligations properly mapped" — while the same run's data pointed to ABI wrappers, test files, and RPC helpers that had nothing to do with the actual protocol logic. Both documents were confident. Both were AI-generated. They contradicted each other.</p>
+<p>This isn't a bug in the model. It's a failure in evidence governance.</p>
+<p>We had no rule for which artifact to trust when outputs disagreed. No procedure for tracking that disagreement. No way to prevent the contradiction from silently propagating into external claims.</p>
+<p>Recent work makes this sharper: models hallucinate with high certainty even when they "know" the correct answer in nearby settings (Simhi et al., 2025). Confidence and correctness decouple in practice. And once report generation is cheap, the bottleneck shifts to tracing and verification effort (Rasheed et al., 2026). Our aim is not only higher answer quality; it is lower verification burden per claim, so auditing remains cheaper than redoing the analysis.</p>
+<p>This post describes the operational pattern we built to fix that.</p>
+<hr/>
+<h2>What Exists and Where the Gap Is</h2>
+<p>Three streams of work address LLM trustworthiness, but none answers the operational question practitioners hit daily. Each stream solves part of the problem; the gap is in the space between them.</p>
+<p><strong>Capability benchmarks</strong> (HELM (Liang et al., 2023), hallucination studies) tell you how a model performs on standardized tasks. <strong>Governance frameworks</strong> (NIST AI RMF (Tabassi, 2023), safety-case work) tell you what organizational policies to have. <strong>Claim-level verification</strong> — the newest stream — is converging on tools for decomposing outputs into atomic claims, assigning per-claim verdicts, and surfacing disagreements as first-class signals (Rasheed et al., 2026; Ji et al., 2026; Chen, J. et al., 2025; Lu et al., 2025).</p>
+<p>None of these answers: <em>when this specific run's summary contradicts its own underlying data, which artifact do you trust, and how do you make that decision repeatable across a team?</em></p>
+<p>Evidence-based medicine solved a version of this decades ago — the Cochrane hierarchy ranks RCTs above case reports above expert opinion (Sackett et al., 1996). We adapted that principle for LLM outputs. The result is a five-component pattern combining: evidence hierarchy, scoring rubric, contradiction register, claim ledger, and release gating. In our literature and repository scan, we did not find a widely adopted artifact-level pattern that integrates all five.</p>
+<hr/>
+<h2>The Five-Component Pattern</h2>
+<h3>1. Evidence Hierarchy: Raw Artifacts Beat Narratives</h3>
+<p>Which evidence wins when sources disagree:</p>
+<ul>
+<li><strong>Tier 1 (strongest): raw run artifacts.</strong> CSVs, model transcripts, prompts, phase outputs.</li>
+<li><strong>Tier 2: validation documents.</strong> Row-level scoring with rubric-based adjudication.</li>
+<li><strong>Tier 3 (weakest): narrative summaries.</strong> README prose, run summaries, retrospective commentary.</li>
+</ul>
+<p>When tiers conflict, the strongest tier wins. This single rule prevents the most common failure mode: confident narrative overriding contradictory evidence. <em>Med-R²</em> (Lu et al., 2025) validates this independently — their system filters lower-level evidence when it conflicts with higher-level evidence, providing deterministic tie-break rules under conflict.</p>
+<hr/>
+<h3>2. Scoring Rubric: Five Dimensions, Not Pass/Fail</h3>
+<p>Every mapping is <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/scoring_rubric.md">scored</a> on five dimensions (0–2 each):</p>
+<ol>
+<li><strong>Statement fidelity</strong> — does the obligation match the EIP text?</li>
+<li><strong>Spec location validity</strong> — does the cited spec code implement this?</li>
+<li><strong>Client location validity</strong> — is the cited client code relevant, or noise?</li>
+<li><strong>Flow plausibility</strong> — does the code-flow narrative connect entrypoint to enforcement?</li>
+<li><strong>Evidence sufficiency</strong> — enough artifact-level evidence to adjudicate?</li>
+</ol>
+<p>Total (0–10) maps to: <code>valid</code> (≥8), <code>partial</code> (5–7), <code>invalid</code> (≤4), <code>disputed</code> (contested requirement). This replaces "looks plausible" with structured, repeatable judgment. <em>MedRAGChecker</em> (Ji et al., 2026) supports the design: multi-signal verification reduces false confidence compared with single-signal pass/fail.</p>
+<hr/>
+<h3>3. Contradiction Register: Disagreements Are Data, Not Bugs</h3>
+<p>Contradictions between artifacts are <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/contradictions.csv">first-class workflow objects</a>. Each entry gets an ID, the conflicting claims with sources, a resolution rule, and a <code>tier_preferred</code> field that enforces the hierarchy mechanically.</p>
+<p><strong>CTR-001 — the moment that changed how we work:</strong> The run's narrative said <em>"all obligations properly mapped."</em> The same run's per-obligation CSV showed client-location fields pointing to <code>accounts/abi/bind/bind.go</code> (an ABI wrapper), <code>ethclient/ethclient_test.go</code> (a test file), and <code>internal/ethapi/api.go</code> (an RPC helper) — none of which implement EIP-1559 pricing logic. Before the register, the polished narrative would have silently overridden the noisy data. After, CTR-001 was logged, the narrative claim was downgraded, and the resolution rule was recorded for future runs.</p>
+<p>Result: <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/contradictions.csv">8 contradictions</a> surfaced across <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/sample_scored_run.csv">81 scored mappings</a>, 3 claims downgraded. <em>Rethinking All Evidence</em> (Chen, J. et al., 2025) validates the approach — their system generates conflict flags with rationale and feeds them into synthesis instead of suppressing disagreement.</p>
+<hr/>
+<h3>4. Claim Ledger: No Claim Without Evidence and Counterevidence</h3>
+<p>The <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/evidence_ledger.md">evidence ledger</a> ties every public-facing claim to supporting evidence, a confidence tag, and any known counterevidence. Claims can only be promoted when evidence improves, and must be downgraded when it weakens. No ledger entry means no external claim.</p>
+<p><em>From Fluent to Verifiable</em> (Rasheed et al., 2026) gives this a formal scaffold — their AAR framework defines provenance coverage, provenance soundness, contradiction transparency, and audit effort as measurable properties. Our ledger enforces the first three; the fourth (audit effort per claim) is our highest-priority unmade improvement.</p>
+<p><em>EviBound</em> (Chen, R., 2025) reinforces the enforcement side: claims only propagate with machine-checkable evidence. Their ablation data (hallucination rates: 100% → 25% → 0% as gates are added) provides directional evidence that dual gates outperform prompt-only setups.</p>
+<hr/>
+<h3>5. The Operating Loop: How the Components Connect</h3>
+<p>The five components form an iterative loop:</p>
+<p><strong>Run pipeline → Score obligations → Log contradictions → Apply fixes → Re-score → Repeat</strong></p>
+<p>Each iteration either promotes claim confidence or flags new contradictions. Both outcomes are useful — the loop is productive even when things get worse, because deterioration is now visible and actionable.</p>
+<p><em>SOPBench</em> (Li et al., 2025) justifies this directly: across 24,000+ agent trajectories, many strong models sit in the 30–50% procedural compliance band. Outcome success does not guarantee procedural compliance. Our loop enforces that each cycle includes rubric scoring, contradiction logging, and ledger updating as mandatory steps.</p>
+<p>Our target release discipline follows a dual-gate structure inspired by <em>EviBound</em>: <strong>Gate A</strong> validates the claim contract pre-execution; <strong>Gate B</strong> validates machine-checkable artifacts post-execution. We currently enforce these as manual checklist steps; full automation is planned but not yet implemented. Claims failing either gate are blocked from publication.</p>
+<hr/>
+<h2>What Changed When We Deployed It</h2>
+<p><strong>Before (CTR-001):</strong> A polished narrative overrode contradictory row-level data. Nobody noticed because there was no rule for which source to prefer.</p>
+<p><strong>After:</strong> <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/contradictions.csv">8 contradictions</a> surfaced across <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/sample_scored_run.csv">81 scored mappings</a>. 3 claims downgraded.</p>
+<p>Direct-adjudication burden was <a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/sample_scored_run.csv">38.3% (18/47)</a>, but 72.2% of that burden came from Haiku outputs (<a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/6a21cce/publications/evidence_governance_pattern/metric_derivations.md">derivation</a>). Without Haiku rows, follow-up burden drops to 15.6% (5/32). Model choice is part of governance: Haiku-tier output is triage-grade in this PoC, while claim promotion requires stronger-model adjudication.</p>
+<p>The goal, as <em>From Fluent to Verifiable</em> frames it, is <code>E_verify ≪ E_generate</code>. Governance didn't just measure overall burden — it exposed <em>where</em> the burden concentrates, making model-tier selection an auditable governance decision rather than a cost guess.</p>
+<p>The meta-irony: much of the governance scaffolding was itself built with AI assistance. The AI is mediocre at protocol verification. It's surprisingly good at building infrastructure that exposes its own mediocrity.</p>
+<hr/>
+<h2>How to Adopt This in Five Steps</h2>
+<p>You don't need the full stack on day one. Ordered by ROI:</p>
+<ol>
+<li>
+<p><strong>Create a contradiction register.</strong> CSV is fine: ID, conflicting claims, sources, resolution rule, status. Forces the team to notice disagreements that currently get silently resolved.</p>
+</li>
+<li>
+<p><strong>Start a claim ledger.</strong> Every external claim gets an evidence link and confidence tag. Turns "we think X" into "we claim X based on Y, with known counterevidence Z."</p>
+</li>
+<li>
+<p><strong>Define your evidence hierarchy.</strong> Rank your artifact types. When they conflict, which wins? Even two tiers (raw output &gt; summary) beats nothing.</p>
+</li>
+<li>
+<p><strong>Build a scoring rubric.</strong> What dimensions matter? Score them 0/1/2. Makes quality assessment repeatable.</p>
+</li>
+<li>
+<p><strong>Gate external claims on the ledger.</strong> No entry, no claim. Without this, everything above is optional documentation.</p>
+</li>
+</ol>
+<p>Start with 1 and 2. Formalize 3 and 4 as the team develops shared judgment. Step 5 is what makes the rest structural.</p>
+<hr/>
+<h2>What This Doesn't Solve</h2>
+<p><strong>Doesn't improve model accuracy.</strong> The LLM is exactly as wrong as before. The pattern makes errors findable, not rare.</p>
+<p><strong>Doesn't remove domain experts.</strong> Someone still adjudicates. <em>SOPBench</em> shows even strong models fail required verification steps.</p>
+<p><strong>Doesn't scale without reviewer time.</strong> The governance <em>is</em> review time. The aggregate 38.3% rate is real, though heavily model-tier concentrated (72.2% from Haiku). Stronger models reduce burden but don't eliminate it.</p>
+<p><strong>Doesn't survive gaming.</strong> Garbage in the ledger, fake resolutions, rubber-stamped gates — the pattern is as strong as the team's commitment. As <em>The BIG Argument for AI Safety Cases</em> warns, safety cases become paperwork without the right operational mindset (Habli et al., 2025).</p>
+<p><strong>Doesn't prove cross-domain transfer.</strong> Tested in one environment: Ethereum protocol verification with Claude models. Likely portable, not proven portable.</p>
+<p>The pattern makes trust decisions auditable, disputable, and updateable. It doesn't make them easy.</p>
+<hr/>
+<h2>Where to Look</h2>
+<p>The tool is open source: <strong><a href="https://github.com/petroslamb/ethereum-protocol-verification/tree/ca15d40">eip-verify on GitHub</a></strong>. Governance artifacts:</p>
+<ul>
+<li><a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/contradictions.csv">Contradiction register</a> (8 tracked contradictions)</li>
+<li><a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/evidence_ledger.md">Evidence ledger</a> (claim-level evidence tracking)</li>
+<li><a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/scoring_rubric.md">Scoring rubric</a> (five-dimension quality assessment)</li>
+<li><a href="https://github.com/petroslamb/ethereum-protocol-verification/blob/ca15d40/docs/evaluations/sample_scored_run.csv">Scored dataset</a> (81 mappings, 47 direct-adjudication)</li>
+</ul>
+<p>The strongest contribution isn't a claim that verification is solved. It's a workflow where every trust decision is inspectable, disputable, and updateable.</p>
+<p><em>Evidence artifact links are pinned to commit <a href="https://github.com/petroslamb/ethereum-protocol-verification/tree/ca15d40"><code>ca15d40</code></a>. The Part 1 narrative and metric derivations are pinned to later commits (<a href="https://github.com/petroslamb/ethereum-protocol-verification/tree/13260c8"><code>13260c8</code></a>, <a href="https://github.com/petroslamb/ethereum-protocol-verification/tree/6a21cce"><code>6a21cce</code></a>) because they were written after the evidence pack was frozen.</em></p>
+<hr/>
+<h2>References</h2>
+<ul>
+<li>Chen, J. et al. (2025). <em>Rethinking All Evidence: Enhancing Trustworthy RAG via Conflict-Driven Summarization.</em> arXiv:2507.01281.</li>
+<li>Chen, R. (2025). <em>Evidence-Bound Autonomous Research (EviBound).</em> arXiv:2511.05524.</li>
+<li>Habli, I. et al. (2025). <em>The BIG Argument for AI Safety Cases.</em> arXiv:2503.11705.</li>
+<li>Ji, Y. et al. (2026). <em>MedRAGChecker: Claim-Level Verification for Biomedical RAG.</em> arXiv:2601.06519.</li>
+<li>Li, Z. et al. (2025). <em>SOPBench: Evaluating Language Agents at Following SOPs and Constraints.</em> arXiv:2503.08669.</li>
+<li>Liang, P. et al. (2023). <em>Holistic Evaluation of Language Models.</em> TMLR.</li>
+<li>Lu, K. et al. (2025). <em>Med-R²: Crafting Trustworthy LLM Physicians via EBM.</em> arXiv:2501.11885.</li>
+<li>Rasheed, R. A. et al. (2026). <em>From Fluent to Verifiable: Claim-Level Auditability for Deep Research Agents.</em> arXiv:2602.13855.</li>
+<li>Sackett, D. L. et al. (1996). <em>Evidence Based Medicine: What It Is and What It Isn't.</em> BMJ, 312(7023), 71–72.</li>
+<li>Simhi, A. et al. (2025). <em>Trust Me, I'm Wrong: LLMs Hallucinate with Certainty Despite Knowing the Answer.</em> arXiv:2502.12964.</li>
+<li>Tabassi, E. (2023). <em>AI Risk Management Framework (AI RMF 1.0).</em> NIST AI 100-1.</li>
+</ul>
+
+  </main>
+</body>
+</html>

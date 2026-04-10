@@ -118,6 +118,9 @@ The published archive is tracked centrally in `publication_strategy_and_archive/
 | **Operating Agents IV: Multi-Agent Boundaries and Handoffs** | `publications/autonomous-agents/essays/multi-agent/` |
 | **Operating Agents V: Trust Boundaries and Agent Safety** | `publications/autonomous-agents/essays/safety/` |
 | **Operating Agents Bonus: Workflow Optimization and Evaluation** | `publications/autonomous-agents/essays/optimization/` |
+| **Measuring Trust: The Gap Between AI Auditing and Correctness** | `publications/evidence-governance/measuring-trust-the-gap-between-ai/` |
+| **The Five-Component Pattern for AI Evidence Governance** | `publications/evidence-governance/the-five-component-pattern-for-ai/` |
+| **Your AI Is Confidently Wrong — And You Have No Rule for What to Do About It** | `publications/evidence-governance/your-ai-is-confidently-wrong-and/` |
 | **Welcome** | *(N/A / Root)* |
 <!-- GENERATED_PUBLICATION_MAP:END -->
 

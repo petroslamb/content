@@ -143,6 +143,45 @@
     "mirror_enabled": true
   },
   {
+    "slug": "your-ai-is-confidently-wrong-and",
+    "title": "Your AI Is Confidently Wrong — And You Have No Rule for What to Do About It",
+    "url": "https://lambpetros.substack.com/p/your-ai-is-confidently-wrong-and",
+    "post_date": "2026-02-18T17:49:44.630Z",
+    "audience": "everyone",
+    "fetched_at": "2026-04-10T22:54:03.369948+00:00",
+    "content_hash": "6d13f635b5e59895d049fe815e313e68a79f0b1ea59843249463cedfac6bedf7",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-02-18_your-ai-is-confidently-wrong-and.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-02-18_your-ai-is-confidently-wrong-and.html",
+    "hero_image": null,
+    "mirror_enabled": false
+  },
+  {
+    "slug": "the-five-component-pattern-for-ai",
+    "title": "The Five-Component Pattern for AI Evidence Governance",
+    "url": "https://lambpetros.substack.com/p/the-five-component-pattern-for-ai",
+    "post_date": "2026-02-18T15:42:37.994Z",
+    "audience": "everyone",
+    "fetched_at": "2026-04-10T22:54:03.473278+00:00",
+    "content_hash": "0b93aa220ce6f935c00ee0edaf20fc06b5721ab7b30f5c65e0f3d281500843e0",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-02-18_the-five-component-pattern-for-ai.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-02-18_the-five-component-pattern-for-ai.html",
+    "hero_image": null,
+    "mirror_enabled": false
+  },
+  {
+    "slug": "measuring-trust-the-gap-between-ai",
+    "title": "Measuring Trust: The Gap Between AI Auditing and Correctness",
+    "url": "https://lambpetros.substack.com/p/measuring-trust-the-gap-between-ai",
+    "post_date": "2026-02-18T14:41:22.326Z",
+    "audience": "everyone",
+    "fetched_at": "2026-04-10T22:54:03.427992+00:00",
+    "content_hash": "3703b7367a2bc3c108427b950242d36695d0579867768998340fadedc040741c",
+    "md_path": "publication_strategy_and_archive/substack_archive/2026-02-18_measuring-trust-the-gap-between-ai.md",
+    "html_path": "publication_strategy_and_archive/substack_archive/2026-02-18_measuring-trust-the-gap-between-ai.html",
+    "hero_image": null,
+    "mirror_enabled": false
+  },
+  {
     "slug": "the-transformer-attractor",
     "title": "The Transformer Attractor",
     "url": "https://lambpetros.substack.com/p/the-transformer-attractor",

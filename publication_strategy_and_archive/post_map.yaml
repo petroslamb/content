@@ -242,6 +242,45 @@ posts:
     series_key: operating-agents
     series_title: Operating Agents
     series_order: 6
+  measuring-trust-the-gap-between-ai:
+    title: "Measuring Trust: The Gap Between AI Auditing and Correctness"
+    research_folder: publications/evidence-governance/measuring-trust-the-gap-between-ai
+    summary: The earlier evidence-governance essay on the gap between inspectability and actual correctness in AI auditing workflows.
+    tags:
+      - governance
+      - verification
+      - ai-auditing
+    featured: false
+    status: draft
+    series_key: evidence-governance
+    series_title: Evidence Governance
+    series_order: 1
+  the-five-component-pattern-for-ai:
+    title: The Five-Component Pattern for AI Evidence Governance
+    research_folder: publications/evidence-governance/the-five-component-pattern-for-ai
+    summary: The companion essay formalizing the five-component evidence-governance pattern for high-stakes LLM workflows.
+    tags:
+      - governance
+      - pattern
+      - verification
+    featured: false
+    status: draft
+    series_key: evidence-governance
+    series_title: Evidence Governance
+    series_order: 2
+  your-ai-is-confidently-wrong-and:
+    title: "Your AI Is Confidently Wrong — And You Have No Rule for What to Do About It"
+    research_folder: publications/evidence-governance/your-ai-is-confidently-wrong-and
+    summary: The flagship evidence-governance essay on why teams need operational rules for resolving contradictions in AI-generated analysis.
+    tags:
+      - governance
+      - trust
+      - verification
+    featured: true
+    status: draft
+    series_key: evidence-governance
+    series_title: Evidence Governance
+    series_order: 3
   coming-soon:
     title: Welcome
     research_folder: .
