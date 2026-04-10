@@ -1,19 +1,22 @@
 # Evidence Governance
 
-Single-publication package for the evidence-governance essay line. The package combines the main Rooted Layers essay draft, a deeper governance-pattern companion, visuals, audio/video outputs, and platform distribution material.
+Umbrella package for the evidence-governance essay line. The package now treats the three Substack draft surfaces as separate leaf publications while keeping the research, visuals, audio/video outputs, and distribution material in one shared source tree.
 
 ## Package Status
 
-- Archetype: Single-publication package
-- Status: Active
-- Publication map: not yet published in the tracked Rooted Layers Substack archive
+- Archetype: Umbrella package
+- Status: Active umbrella with three unpublished Substack draft leaves
+- Publication map: three unpublished draft leaves under this umbrella, not yet published in the tracked Rooted Layers public archive
 - Canonical workflow docs: [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md), [`../../workflows/article-polish/README.md`](../../workflows/article-polish/README.md), [`../../workflows/substack-publishing/README.md`](../../workflows/substack-publishing/README.md)
 
 ## Orientation
 
-- Live draft surface: [`substack_post_killer.md`](substack_post_killer.md)
-- Earlier long-form draft: [`substack_post_v2.md`](substack_post_v2.md)
-- Canonical companion: [`evidence_governance_pattern/substack_post_evidence_governance.md`](evidence_governance_pattern/substack_post_evidence_governance.md)
+- Flagship leaf: [`your-ai-is-confidently-wrong-and/README.md`](your-ai-is-confidently-wrong-and/README.md)
+- Trust-gap leaf: [`measuring-trust-the-gap-between-ai/README.md`](measuring-trust-the-gap-between-ai/README.md)
+- Companion leaf: [`the-five-component-pattern-for-ai/README.md`](the-five-component-pattern-for-ai/README.md)
+- Shared flagship source surface: [`substack_post_killer.md`](substack_post_killer.md)
+- Shared earlier long-form source: [`substack_post_v2.md`](substack_post_v2.md)
+- Shared companion source: [`evidence_governance_pattern/substack_post_evidence_governance.md`](evidence_governance_pattern/substack_post_evidence_governance.md)
 - Technical summary variant: [`ethresearch_post.md`](ethresearch_post.md)
 - Local subpackage guide: [`evidence_governance_pattern/README.md`](evidence_governance_pattern/README.md)
 
@@ -21,7 +24,7 @@ Single-publication package for the evidence-governance essay line. The package c
 
 - The current paper surface lives in [`evidence_governance_pattern/papers/`](evidence_governance_pattern/papers/).
 - Supporting research synthesis and bibliography live in [`evidence_governance_pattern/`](evidence_governance_pattern/).
-- Package-level artifacts live across [`visuals/`](visuals/), [`assets/`](assets/), and the package-root audio/video files.
+- Package-level shared artifacts live across [`visuals/`](visuals/), [`assets/`](assets/), and the package-root audio/video files.
 - Channel-specific distribution material lives in [`socials/`](socials/).
 - Retired or superseded publication surfaces should move into [`archive/`](archive/) instead of adding unlimited root-level version sprawl.
 
@@ -35,7 +38,8 @@ That repository remains the canonical home for the scored dataset, contradiction
 
 ## Working Guidance
 
-- Treat [`substack_post_killer.md`](substack_post_killer.md) as the canonical live publication target unless the user explicitly chooses another draft.
+- Treat the leaf packages as the canonical publication objects for lifecycle work.
+- Treat the root markdown files as shared source surfaces retained for continuity and cross-links during the umbrella transition.
 - Treat the governance-pattern companion as the deeper supporting surface, not as a replacement for the flagship essay.
 - Preserve the external proof-repo links when they are still the authoritative evidence location.
 - If this package gets published through Rooted Layers, keep the archive and link-migration manifest updated so repo links remain aligned with the canonical paths.

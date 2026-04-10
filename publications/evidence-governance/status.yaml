@@ -1,9 +1,13 @@
+kind: umbrella
 publication: evidence-governance
+revision: 1
 config:
-  markdown_path: publications/evidence-governance/substack_post_killer.md
-  substack_post_id: 188403075
-  substack_slug: your-ai-is-confidently-wrong-and
-  substack_url: https://lambpetros.substack.com
+  default_leaf_package: evidence-governance/your-ai-is-confidently-wrong-and
+  shared_evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
+  leaf_packages:
+    - evidence-governance/your-ai-is-confidently-wrong-and
+    - evidence-governance/measuring-trust-the-gap-between-ai
+    - evidence-governance/the-five-component-pattern-for-ai
 stages:
   paper_intake:
     done: true

@@ -1,0 +1,38 @@
+kind: leaf
+publication: your-ai-is-confidently-wrong-and
+parent_package: evidence-governance
+revision: 1
+config:
+  markdown_path: publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md
+  substack_post_id: 188403075
+  substack_slug: your-ai-is-confidently-wrong-and
+  substack_url: https://lambpetros.substack.com
+  evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
+stages:
+  paper_intake:
+    done: true
+    last_updated: '2026-04-07'
+  research:
+    done: true
+    last_updated: '2026-04-07'
+  essay_iteration:
+    done: true
+    last_updated: '2026-04-07'
+  notebooklm_artifacts:
+    done: false
+    last_updated: null
+  article_polish:
+    done: true
+    last_updated: '2026-04-07'
+  substack_publishing:
+    done: false
+    last_updated: null
+  archive_sync:
+    done: false
+    last_updated: null
+  youtube_production:
+    done: false
+    last_updated: null
+  distribution:
+    done: false
+    last_updated: null
