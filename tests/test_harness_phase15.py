@@ -8,13 +8,13 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 import harness  # noqa: E402
 import next_action  # noqa: E402
+import sync_from_archive  # noqa: E402
 
 
 class HarnessPhase15Tests(unittest.TestCase):
@@ -113,6 +113,35 @@ class HarnessPhase15Tests(unittest.TestCase):
         payload = json.loads(result.stdout)
         self.assertIn("not executable", payload["error"])
         self.assertTrue(any("hybrid" in issue for issue in payload["blocking_issues"]))
+
+    def test_archive_sync_copies_referenced_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_root = Path(tmpdir)
+            package_dir = tmp_root / "publications" / "demo"
+            package_dir.mkdir(parents=True)
+            archive_dir = tmp_root / "publication_strategy_and_archive" / "substack_archive"
+            archive_assets_dir = archive_dir / "assets"
+            archive_assets_dir.mkdir(parents=True)
+
+            archive_markdown = archive_dir / "demo.md"
+            archive_markdown.write_text(
+                "# Demo\n\n![](assets/asset-one.png)\n\n![](assets/asset-two.jpeg)\n\n![](assets/asset-one.png)\n"
+            )
+            (archive_assets_dir / "asset-one.png").write_text("one")
+            (archive_assets_dir / "asset-two.jpeg").write_text("two")
+
+            destination = package_dir / "demo.md"
+
+            with mock.patch.object(sync_from_archive, "REPO_ROOT", tmp_root), mock.patch.object(
+                sync_from_archive, "ARCHIVE_ASSETS_DIR", archive_assets_dir
+            ):
+                sync_from_archive.shutil.copy2(archive_markdown, destination)
+                copied_assets = sync_from_archive.sync_assets_for_markdown(destination)
+
+                copied_names = sorted(path.name for path in copied_assets)
+                self.assertEqual(copied_names, ["asset-one.png", "asset-two.jpeg"])
+                self.assertTrue((destination.parent / "assets" / "asset-one.png").exists())
+                self.assertTrue((destination.parent / "assets" / "asset-two.jpeg").exists())
 
 
 if __name__ == "__main__":
