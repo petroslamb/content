@@ -181,10 +181,147 @@ Each proof should measure:
 
 ### Phase 1.5 Gate Criteria
 > [!IMPORTANT]
-> **Do not enter Phase 2 until you can honestly answer YES to all of these:**
+> **Do not enter Phase 1.6 until you can honestly answer YES to all of these:**
 > 1. Can Codex or a similar harness determine the next valid action for a package without you explaining the repo?
 > 2. Can the harness start from an idea or package target and produce bounded outputs with the correct logs and approval behavior?
 > 3. Have at least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract?
+
+---
+
+## Phase 1.6 — The Operator Shell _(next 1–2 months after 1.5)_
+
+**Goal**: Make the harness-operable repo actually pleasant, routable, and reliable to use day to day by adding a thin operator layer on top of the machine contract.
+
+Phase 1.5 gives Codex a stable machine-facing contract. Phase 1.6 gives you the equivalent of a working operating shell: named entrypoints, generated skill docs, visible safety controls, proof-run evaluation, and selective persistent browser support for the auth-heavy stages that are painful in raw CLI mode.
+
+This is still **not** the standalone agentic platform. It is the human-and-agent operating layer above the repo contract and below the future platform.
+
+### Milestones
+
+#### M1.6.1 — Content Skill Pack On Top Of The Harness
+Add a small repo-local Codex skill family that wraps the new harness interfaces rather than bypassing them. Initial skills:
+
+- `/content-office-hours`
+- `/content-next`
+- `/content-research`
+- `/content-polish`
+- `/content-publish-check`
+- `/content-proof-run`
+
+Each skill should call `package:init`, `stage:next`, `stage:resolve`, `stage:run`, and launch-pack generation as the underlying execution surface rather than duplicating logic.
+
+**Deliverable**: The repo is usable through named content workflows instead of raw command memory.
+
+#### M1.6.2 — Generated Skill Docs From The Contract
+Generate the skill reference from:
+
+- `harness_contract.yaml`
+- `harness_policy.yaml`
+- workflow frontmatter
+
+Do not hand-maintain a second instruction universe. The generated output should keep skill docs aligned with the actual command surface, available stages, and approval boundaries.
+
+**Deliverable**: The operator layer cannot drift silently away from the machine layer.
+
+#### M1.6.3 — Visible Safety Controls
+Add operator-facing safety commands or skill modes equivalent to:
+
+- careful mode for destructive or remote actions
+- freeze mode for bounded file-scope edits
+- guard mode for both at once
+
+The policy file remains the source of truth, but the safety state should also be visible and invokable by a human or harness during a run.
+
+**Deliverable**: Safety is not just encoded in YAML. It is part of the operating experience.
+
+#### M1.6.4 — Proof-Run Evaluation Harness
+Create a repeatable evaluation path for real Codex runs against this repo. Each eval should capture:
+
+- the task prompt
+- the command surface used
+- the run outcome
+- approval-boundary behavior
+- repo-discovery failures
+- whether the harness chose the next stage correctly
+
+The emphasis is not on synthetic demos. It is on real bounded runs against actual packages and actual workflow state.
+
+**Deliverable**: You can measure whether the operator shell makes Codex more reliable, not just assume it.
+
+#### M1.6.5 — Selective Persistent Browser Support
+Add a persistent browser session layer only for the places where it actually matters:
+
+- Substack
+- NotebookLM
+- YouTube Studio or other auth-heavy browser operations
+
+Do not generalize this into a universal browser platform. The point is to preserve authenticated state and reduce friction in the browser-heavy publication steps.
+
+**Deliverable**: Browser-bound stages stop paying the cold-start and re-auth tax on every run.
+
+#### M1.6.6 — Skill-Routed Lifecycle Defaults
+Teach the operator shell how to route common requests to the right workflow mode:
+
+- idea framing goes to `/content-office-hours`
+- package continuation goes to `/content-next`
+- ambiguous paper work goes to `/content-research`
+- pre-publish work goes to `/content-polish` or `/content-publish-check`
+
+The routing should stay minimal and explicit. Avoid a black-box meta-agent. The point is better dispatch, not hidden orchestration.
+
+**Deliverable**: The first command a user or harness reaches for is usually the right one.
+
+### Phase 1.6 Gate Criteria
+> [!IMPORTANT]
+> **Do not enter Phase 2 until you can honestly answer YES to all of these:**
+> 1. Can a user or harness operate the repo through a small named skill surface instead of remembering raw commands?
+> 2. Do the skill docs stay aligned automatically with the harness contract and policy?
+> 3. Have real proof runs shown that the operator shell reduces prompt glue, navigation errors, or unsafe behavior?
+> 4. Are the auth-heavy browser steps materially easier because session state persists where it matters?
+
+---
+
+## Optional Track — Research Brain _(not on the critical path)_
+
+**Goal**: If the markdown corpus gets large enough that cross-package retrieval becomes a real bottleneck, add a repo-native research memory layer on top of the existing markdown source of truth.
+
+This is **not** a committed next phase and should not delay Phase 1.5, Phase 1.6, or Phase 2. It is an optional future direction inspired by `gbrain`-style markdown-first retrieval systems.
+
+### What This Would Be
+
+- markdown remains the canonical source of truth
+- a retrieval/index layer sits on top of the repo
+- Codex can search prior essays, papers, claims, companions, and review artifacts across packages more intelligently than raw `grep`
+- the system helps answer questions such as:
+  - where have I already made this argument?
+  - which papers across the repo support or contradict this claim?
+  - what prior package already contains the framing I need?
+
+### What This Would Not Be
+
+- not a replacement for the lifecycle/harness layer
+- not a blocker for the operator shell
+- not a new canonical authoring surface
+- not a mandatory Postgres/pgvector project unless simple retrieval stops being enough
+
+### Trigger Conditions
+
+Only promote this from optional idea to active project if at least one of these becomes true:
+
+- cross-package research recall is slowing real essay work
+- the agent repeatedly misses relevant prior material that already exists in the repo
+- `grep` plus current repo structure is no longer enough to answer normal research questions quickly
+
+### Minimal Version
+
+If you pursue it, start with the smallest useful layer:
+
+- index package markdown, papers, claims, companions, and review artifacts
+- support keyword search first
+- add semantic or hybrid retrieval only if the corpus and query patterns justify it
+- keep the markdown files themselves as the only canonical truth surface
+
+**Deliverable**: Better research recall for Codex and for you, without changing how the repo is authored.
 
 ---
 

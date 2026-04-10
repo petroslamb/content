@@ -41,6 +41,23 @@ Use these layers in order:
 4. the matching workflow doc in [`workflows/`](workflows/README.md)
 5. tracked scripts and tracked skills if execution help is needed
 
+## Harness Surface
+
+The repo now exposes a tracked harness-facing surface for Codex-style operation:
+
+- [`harness_contract.yaml`](harness_contract.yaml): machine-readable repo contract
+- [`harness_policy.yaml`](harness_policy.yaml): local-first autonomy and approval boundaries
+
+Stable entrypoints:
+
+- `npm run stage:next -- --package <package> --format json`
+- `npm run stage:resolve -- --package <package> --stage <stage> --format json`
+- `npm run stage:run -- --package <package> --stage <stage> --format json`
+- `npm run package:init -- --idea "..." --format json`
+- `npm run check:harness`
+
+These surfaces do not replace the workflow docs. They make the existing lifecycle legible to an external harness without relying on a long custom prompt.
+
 ## Canonical Vocabulary
 
 Across content packages, use these terms consistently:

@@ -27,3 +27,7 @@ stages:
   distribution:
     done: false
     last_updated: null
+config:
+  markdown_path: publications/moltbook-phenomenon/the-moltbook-phenomenon.md
+  substack_slug: the-moltbook-phenomenon
+  substack_url: https://lambpetros.substack.com

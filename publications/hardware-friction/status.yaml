@@ -27,3 +27,7 @@ stages:
   distribution:
     done: false
     last_updated: null
+config:
+  markdown_path: publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md
+  substack_slug: what-actually-works-the-hardware
+  substack_url: https://lambpetros.substack.com

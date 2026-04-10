@@ -27,3 +27,7 @@ stages:
   distribution:
     done: false
     last_updated: null
+config:
+  markdown_path: publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md
+  substack_slug: when-the-llm-programs-its-own-thinking
+  substack_url: https://lambpetros.substack.com

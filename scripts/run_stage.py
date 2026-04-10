@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """
 Resolve, execute, or update a publication lifecycle stage.
-
-Examples:
-  .venv/bin/python scripts/run_stage.py --package neural-architectures/neural-architecture-design-as-a-compositional-32e --stage essay_iteration
-  .venv/bin/python scripts/run_stage.py --package neural-architectures/neural-architecture-design-as-a-compositional-32e --stage archive_sync --execute
-  .venv/bin/python scripts/run_stage.py --package neural-architectures/neural-architecture-design-as-a-compositional-32e --stage essay_iteration --mark-done
 """
 
 from __future__ import annotations
@@ -17,9 +12,13 @@ import string
 import subprocess
 import sys
 from datetime import datetime
-from pathlib import Path
 
-from audit_package import audit_package, print_report
+from audit_package import print_report
+from harness import (
+    build_stage_resolution,
+    emit_launch_pack,
+    repo_relpath,
+)
 from lifecycle import (
     DEPENDENCY_MAP,
     REPO_ROOT,
@@ -82,12 +81,12 @@ def filter_passthrough_args(unknown: list[str], template_fields: set[str]) -> li
 
 def resolve_args(package_key: str, status_data: dict, extra_args: dict) -> dict:
     config = status_data.get("config", {})
-    package_path = Path("publications") / package_key
+    package_path = f"publications/{package_key}"
     inferred = {
         "package_key": package_key,
-        "package_name": package_path.name,
-        "package_path": str(package_path),
-        "publication": status_data.get("publication", package_path.name),
+        "package_name": package_key.split("/")[-1],
+        "package_path": package_path,
+        "publication": status_data.get("publication", package_key.split("/")[-1]),
     }
     return {**inferred, **config, **extra_args}
 
@@ -109,60 +108,24 @@ def enforce_single_mutation(args: argparse.Namespace) -> None:
         raise ValueError("Use only one of --execute, --mark-done, or --mark-undone per invocation.")
 
 
-def format_context_item(item: str, resolved_args: dict) -> str:
-    if item.startswith("config."):
-        key = item.split(".", 1)[1]
-        value = resolved_args.get(key)
-        if value is None:
-            return f"{item}: <missing>"
-        return f"{item}: {value}"
-    return item
+def format_commands(templates: list[str], resolved_args: dict, passthrough_args: list[str]) -> list[str]:
+    commands = []
+    for template in templates:
+        command = template.format(**resolved_args)
+        if passthrough_args:
+            command = f"{command} {shlex.join(passthrough_args)}"
+        commands.append(command)
+    return commands
 
 
-def print_stage_summary(
-    package_key: str,
-    status_data: dict,
-    stage: str,
-    workflow_contract: dict,
-    resolved_args: dict,
-) -> None:
-    metadata = workflow_contract["metadata"]
-    stage_data = status_data.get("stages", {}).get(stage, {})
-    workflow_relpath = workflow_contract["path"].relative_to(REPO_ROOT)
-
-    print(f"PACKAGE: {package_key}")
-    print(f"Publication: {status_data.get('publication', package_key)}")
-    print(f"Stage: {stage}")
-    print(f"Current State: done={stage_data.get('done', False)} last_updated={stage_data.get('last_updated')}")
-    print(f"Workflow Doc: {workflow_relpath}")
-    print(f"Runner Mode: {metadata['runner_mode']}")
-    print(f"Default Skill: {metadata['default_skill'] or 'none'}")
-    print(f"Approval Gate: {metadata['approval_gate']}")
-
-    warnings = get_dependency_warnings(stage, status_data)
-    if warnings:
-        print("\nDependency Warnings:")
-        for warning in warnings:
-            print(f"  - {warning}")
-
-    print("\nRequired Context:")
-    for item in metadata["required_context"]:
-        print(f"  - {format_context_item(item, resolved_args)}")
-
-    print("\nExpected Outputs:")
-    for item in metadata["expected_outputs"]:
-        print(f"  - {item}")
-
-    print("\nDone When:")
-    for item in metadata["done_when"]:
-        print(f"  - {item}")
-
-    if metadata["launch_templates"]:
-        print("\nLaunch Templates:")
-        for template in metadata["launch_templates"]:
-            print(f"  - {template}")
-    else:
-        print("\nLaunch Templates: none")
+def maybe_block_for_done_stage(args: argparse.Namespace, stage_data: dict, action_label: str) -> str | None:
+    if action_label == "execute" and stage_data.get("done") and not args.force:
+        return "Stage is already marked done. Use --force to execute it again."
+    if action_label == "mark-done" and stage_data.get("done") and not args.force:
+        return "Stage is already marked done. Use --force to update the timestamp anyway."
+    if action_label == "mark-undone" and not stage_data.get("done") and not args.force:
+        return "Stage is already marked not done. Use --force to update the timestamp anyway."
+    return None
 
 
 def log_run(
@@ -172,9 +135,9 @@ def log_run(
     success: bool,
     output: str,
     commands: list[str],
-    workflow_path: Path,
-    status_path: Path,
-) -> None:
+    workflow_doc: str,
+    status_path: str,
+) -> str:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     package_id = package_key.replace("/", "__")
     log_dir = REPO_ROOT / "reviewable-runs" / "logs"
@@ -189,38 +152,72 @@ def log_run(
         "stage": stage,
         "action": action,
         "success": success,
-        "workflow_doc": str(workflow_path.relative_to(REPO_ROOT)),
-        "status_path": str(status_path.relative_to(REPO_ROOT)),
+        "workflow_doc": workflow_doc,
+        "status_path": status_path,
         "commands": commands,
         "output_excerpt": output[-output_limit:],
         "output_truncated": len(output) > output_limit,
     }
     log_path.write_text(json.dumps(payload, indent=2) + "\n")
-
-    print(f"Lifecycle run logged to {log_path.relative_to(REPO_ROOT)}")
-
-
-def format_commands(templates: list[str], resolved_args: dict, passthrough_args: list[str]) -> list[str]:
-    commands = []
-    for template in templates:
-        command = template.format(**resolved_args)
-        if passthrough_args:
-            command = f"{command} {shlex.join(passthrough_args)}"
-        commands.append(command)
-    return commands
+    return repo_relpath(log_path)
 
 
-def maybe_block_for_done_stage(args: argparse.Namespace, stage_data: dict, action_label: str) -> bool:
-    if action_label == "execute" and stage_data.get("done") and not args.force:
-        print("Stage is already marked done. Use --force to execute it again.")
-        return True
-    if action_label == "mark-done" and stage_data.get("done") and not args.force:
-        print("Stage is already marked done. Use --force to update the timestamp anyway.")
-        return True
-    if action_label == "mark-undone" and not stage_data.get("done") and not args.force:
-        print("Stage is already marked not done. Use --force to update the timestamp anyway.")
-        return True
-    return False
+def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch_pack_path: str | None) -> None:
+    state = resolution["current_state"]
+    print(f"PACKAGE: {resolution['package']}")
+    print(f"Stage: {resolution['stage']}")
+    print(f"Current State: done={state.get('done', False)} last_updated={state.get('last_updated')}")
+    print(f"Workflow Doc: {resolution['workflow_doc']}")
+    print(f"Runner Mode: {resolution['runner_mode']}")
+    print(f"Default Skill: {resolution['default_skill'] or 'none'}")
+    print(f"Approval Gate: {resolution['approval_gate']}")
+    print(f"Requires Approval: {resolution['requires_approval']}")
+    print(f"Can Execute: {resolution['can_execute']}")
+
+    if dependency_warnings:
+        print("\nDependency Warnings:")
+        for warning in dependency_warnings:
+            print(f"  - {warning}")
+
+    if resolution["blocking_issues"]:
+        print("\nBlocking Issues:")
+        for issue in resolution["blocking_issues"]:
+            print(f"  - {issue}")
+
+    print("\nRequired Context:")
+    for item in resolution["required_context"]:
+        value = item.get("value")
+        if value is None:
+            print(f"  - {item['name']}: {item['status']}")
+        else:
+            print(f"  - {item['name']}: {item['status']} ({value})")
+
+    print("\nExpected Outputs:")
+    for item in resolution["expected_outputs"]:
+        print(f"  - {item}")
+
+    print("\nDone When:")
+    for item in resolution["done_when"]:
+        print(f"  - {item}")
+
+    if resolution["launch_templates"]:
+        print("\nLaunch Templates:")
+        for template in resolution["launch_templates"]:
+            print(f"  - {template}")
+    else:
+        print("\nLaunch Templates: none")
+
+    print("\nSuggested Commands:")
+    for command in resolution["suggested_commands"]:
+        print(f"  - {command}")
+
+    if launch_pack_path:
+        print(f"\nLaunch pack written to {launch_pack_path}")
+
+
+def emit_result(payload: dict, output_format: str) -> None:
+    if output_format == "json":
+        print(json.dumps(payload, indent=2))
 
 
 def main() -> None:
@@ -229,148 +226,216 @@ def main() -> None:
     parser.add_argument("--stage", required=True, choices=STAGES, help="Stage to inspect or mutate")
     parser.add_argument("--strict-deps", action="store_true", help="Block execute/mark-done when dependencies are not done")
     parser.add_argument("--force", action="store_true", help="Allow reruns or redundant state changes")
-    parser.add_argument("--execute", action="store_true", help="Execute launch templates for scripted or hybrid stages")
+    parser.add_argument("--execute", action="store_true", help="Execute launch templates for scripted stages")
     parser.add_argument("--mark-done", action="store_true", help="Mark the stage as done without executing a command")
     parser.add_argument("--mark-undone", action="store_true", help="Mark the stage as not done")
+    parser.add_argument("--emit-launch-pack", action="store_true", help="Write a machine-readable launch pack to reviewable-runs/logs/")
+    parser.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
     args, unknown = parser.parse_known_args()
 
     try:
         enforce_single_mutation(args)
         manifest_ref, status_data = load_status_ref(args.package)
-    except (FileNotFoundError, ValueError) as exc:
-        print(f"ERROR: {exc}")
-        sys.exit(1)
-
-    try:
         workflow_contract = load_workflow_contract(args.stage)
+        resolution = build_stage_resolution(args.package, args.stage)
     except (FileNotFoundError, ValueError, KeyError) as exc:
-        print(f"ERROR: {exc}")
+        if args.format == "json":
+            print(json.dumps({"error": str(exc)}, indent=2))
+        else:
+            print(f"ERROR: {exc}")
         sys.exit(1)
-
-    extra_args = parse_extra_args(unknown)
-    resolved_args = resolve_args(manifest_ref.package_key, status_data, extra_args)
-    print_stage_summary(manifest_ref.package_key, status_data, args.stage, workflow_contract, resolved_args)
-
-    try:
-        report = audit_package(manifest_ref.package_key)
-        print()
-        print_report(report)
-    except Exception as exc:
-        print(f"\n[WARNING] Pre-flight audit failed to run: {exc}")
 
     stage_data = status_data.setdefault("stages", {}).setdefault(
         args.stage,
         {"done": False, "last_updated": None},
     )
-    warnings = get_dependency_warnings(args.stage, status_data)
-    if args.strict_deps and warnings and (args.execute or args.mark_done):
-        print("\nERROR: Dependency check failed with --strict-deps enabled.")
-        for warning in warnings:
-            print(f"  - {warning}")
+    dependency_warnings = get_dependency_warnings(args.stage, status_data)
+    if args.strict_deps and dependency_warnings and (args.execute or args.mark_done):
+        message = {
+            "error": "Dependency check failed with --strict-deps enabled.",
+            "dependency_warnings": dependency_warnings,
+        }
+        if args.format == "json":
+            print(json.dumps(message, indent=2))
+        else:
+            print("\nERROR: Dependency check failed with --strict-deps enabled.")
+            for warning in dependency_warnings:
+                print(f"  - {warning}")
         sys.exit(1)
 
+    launch_pack_path = None
+    if args.emit_launch_pack:
+        launch_pack_path = repo_relpath(emit_launch_pack(resolution))
+        resolution["launch_pack_path"] = launch_pack_path
+        resolution["log_target"] = launch_pack_path
+
     if not any([args.execute, args.mark_done, args.mark_undone]):
+        if args.format == "json":
+            print(json.dumps(resolution, indent=2))
+            return
+        print_stage_summary(resolution, dependency_warnings, launch_pack_path)
+        print()
+        print_report(resolution["package_audit"])
         return
 
     metadata = workflow_contract["metadata"]
+
     if args.execute:
-        if maybe_block_for_done_stage(args, stage_data, "execute"):
+        block_message = maybe_block_for_done_stage(args, stage_data, "execute")
+        if block_message:
+            if args.format == "json":
+                print(json.dumps({"message": block_message, "stage": args.stage, "package": manifest_ref.package_key}, indent=2))
+            else:
+                print(block_message)
             return
-        if metadata["runner_mode"] == "guided":
-            print("ERROR: Guided stages do not support --execute. Resolve the stage and use --mark-done after completing the work.")
+        if not resolution["can_execute"]:
+            message = {
+                "error": f"Stage '{args.stage}' is not executable under the current Phase 1.5 policy.",
+                "blocking_issues": resolution["blocking_issues"],
+            }
+            if args.format == "json":
+                print(json.dumps(message, indent=2))
+            else:
+                print(message["error"])
+                for issue in resolution["blocking_issues"]:
+                    print(f"  - {issue}")
             sys.exit(1)
         if not metadata["launch_templates"]:
-            print("ERROR: This stage has no launch templates to execute.")
+            message = {"error": f"Stage '{args.stage}' has no launch templates to execute."}
+            if args.format == "json":
+                print(json.dumps(message, indent=2))
+            else:
+                print(message["error"])
             sys.exit(1)
 
         try:
+            extra_args = parse_extra_args(unknown)
+            resolved_args = resolve_args(manifest_ref.package_key, status_data, extra_args)
             passthrough_args = filter_passthrough_args(
                 unknown,
                 extract_template_fields(metadata["launch_templates"]),
             )
             commands = format_commands(metadata["launch_templates"], resolved_args, passthrough_args)
         except KeyError as exc:
-            print(f"ERROR: Missing required parameter {exc} for stage '{args.stage}'.")
-            print("Provide it through status.yaml config or pass the corresponding CLI flag.")
+            message = {
+                "error": f"Missing required parameter {exc} for stage '{args.stage}'.",
+                "blocking_issues": [f"Provide {exc} through status.yaml config or the CLI."],
+            }
+            if args.format == "json":
+                print(json.dumps(message, indent=2))
+            else:
+                print(message["error"])
             sys.exit(1)
 
         outputs = []
         success = True
         for command in commands:
-            print(f"\nExecuting: {command}")
+            if args.format == "text":
+                print(f"\nExecuting: {command}")
             process = subprocess.run(command, shell=True, capture_output=True, text=True)
             snippet = process.stdout + ("\n" if process.stdout and process.stderr else "") + process.stderr
             outputs.append(f"$ {command}\n{snippet}")
             if process.returncode != 0:
                 success = False
-                print(process.stderr or process.stdout)
                 break
 
         output = "\n\n".join(outputs)
-        if success:
-            if metadata["runner_mode"] == "scripted":
-                stage_data["done"] = True
-                stage_data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
-                save_status(manifest_ref.package_path, status_data)
-                print("Stage executed successfully and was marked done.")
-            else:
-                print("Stage executed successfully. Review the outcome, then use --mark-done when you want to close it.")
+        if success and resolution["auto_mark_done_allowed"]:
+            stage_data["done"] = True
+            stage_data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
+            save_status(manifest_ref.package_path, status_data)
+            outcome = "Stage executed successfully and was marked done."
+        elif success:
+            outcome = "Stage executed successfully. Review the outcome, then use --mark-done when appropriate."
         else:
-            print("Stage execution failed.")
+            outcome = "Stage execution failed."
 
-        log_run(
+        log_path = log_run(
             manifest_ref.package_key,
             args.stage,
             "execute",
             success,
             output,
             commands,
-            workflow_contract["path"],
-            manifest_ref.status_path,
+            resolution["workflow_doc"],
+            repo_relpath(manifest_ref.status_path),
         )
+        payload = {
+            **resolution,
+            "action": "execute",
+            "success": success,
+            "commands": commands,
+            "output_excerpt": output[-6000:],
+            "log_path": log_path,
+            "message": outcome,
+            "current_state": stage_data,
+        }
+        if args.format == "json":
+            print(json.dumps(payload, indent=2))
+        else:
+            print(outcome)
+            print(f"Lifecycle run logged to {log_path}")
         if not success:
             sys.exit(1)
         return
 
     if args.mark_done:
-        if maybe_block_for_done_stage(args, stage_data, "mark-done"):
+        block_message = maybe_block_for_done_stage(args, stage_data, "mark-done")
+        if block_message:
+            if args.format == "json":
+                print(json.dumps({"message": block_message, "stage": args.stage, "package": manifest_ref.package_key}, indent=2))
+            else:
+                print(block_message)
             return
         stage_data["done"] = True
         stage_data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
         save_status(manifest_ref.package_path, status_data)
         message = f"Stage '{args.stage}' marked done for '{manifest_ref.package_key}'."
-        print(message)
-        log_run(
+        log_path = log_run(
             manifest_ref.package_key,
             args.stage,
             "mark-done",
             True,
             message,
             [],
-            workflow_contract["path"],
-            manifest_ref.status_path,
+            resolution["workflow_doc"],
+            repo_relpath(manifest_ref.status_path),
         )
+        payload = {**resolution, "action": "mark-done", "success": True, "log_path": log_path, "message": message}
+        if args.format == "json":
+            print(json.dumps(payload, indent=2))
+        else:
+            print(message)
+            print(f"Lifecycle run logged to {log_path}")
         return
 
-    if args.mark_undone:
-        if maybe_block_for_done_stage(args, stage_data, "mark-undone"):
-            return
-        stage_data["done"] = False
-        stage_data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
-        save_status(manifest_ref.package_path, status_data)
-        message = f"Stage '{args.stage}' marked not done for '{manifest_ref.package_key}'."
-        print(message)
-        log_run(
-            manifest_ref.package_key,
-            args.stage,
-            "mark-undone",
-            True,
-            message,
-            [],
-            workflow_contract["path"],
-            manifest_ref.status_path,
-        )
+    block_message = maybe_block_for_done_stage(args, stage_data, "mark-undone")
+    if block_message:
+        if args.format == "json":
+            print(json.dumps({"message": block_message, "stage": args.stage, "package": manifest_ref.package_key}, indent=2))
+        else:
+            print(block_message)
         return
+    stage_data["done"] = False
+    stage_data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
+    save_status(manifest_ref.package_path, status_data)
+    message = f"Stage '{args.stage}' marked not done for '{manifest_ref.package_key}'."
+    log_path = log_run(
+        manifest_ref.package_key,
+        args.stage,
+        "mark-undone",
+        True,
+        message,
+        [],
+        resolution["workflow_doc"],
+        repo_relpath(manifest_ref.status_path),
+    )
+    payload = {**resolution, "action": "mark-undone", "success": True, "log_path": log_path, "message": message}
+    if args.format == "json":
+        print(json.dumps(payload, indent=2))
+    else:
+        print(message)
+        print(f"Lifecycle run logged to {log_path}")
 
 
 if __name__ == "__main__":

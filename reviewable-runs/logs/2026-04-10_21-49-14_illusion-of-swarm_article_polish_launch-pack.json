@@ -1,0 +1,46 @@
+{
+  "kind": "harness_launch_pack",
+  "timestamp": "2026-04-10_21-49-14",
+  "task_brief": "Advance package 'illusion-of-swarm' through the 'article_polish' stage using 'workflows/article-polish/README.md'.",
+  "package": "illusion-of-swarm",
+  "stage": "article_polish",
+  "workflow_doc": "workflows/article-polish/README.md",
+  "runner_mode": "guided",
+  "approval_gate": "required_before_publish",
+  "required_context": [
+    {
+      "name": "canonical live draft",
+      "status": "missing",
+      "blocking": true
+    },
+    {
+      "name": "package artifact surface with NotebookLM or local media outputs",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/illusion-of-swarm/artifacts"
+    },
+    {
+      "name": "current references and supporting links",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/illusion-of-swarm/papers/index.md"
+    }
+  ],
+  "suggested_commands": [
+    "npm run stage:resolve -- --package illusion-of-swarm --stage article_polish --format json",
+    "npm run stage:resolve -- --package illusion-of-swarm --stage article_polish --emit-launch-pack --format json"
+  ],
+  "suggested_skill": null,
+  "expected_outputs": [
+    "polished live draft with intentional media placement",
+    "semantically named kept images in the artifact surface",
+    "publication-ready references and repo links"
+  ],
+  "done_when": [
+    "the draft is publication-ready and ready to hand off to Substack publishing"
+  ],
+  "blocking_issues": [
+    "Missing required context: canonical live draft",
+    "Runner mode 'guided' is not directly executable in Phase 1.5; resolve it or emit a launch pack."
+  ]
+}
