@@ -138,7 +138,7 @@ def validate_text(file_path: Path, text: str) -> list[str]:
     if OLD_GITHUB_PATTERN.search(text):
         errors.append("contains stale github.com/petroslamb/content old-package URL")
 
-    if "github.com/petroslamb/autonomy-tax-enterprise-agents" in text and rel != "scripts/check_repo_links.py":
+    if "github.com/petroslamb/autonomy-tax-enterprise-agents" in text and rel != "scripts/check_repo_links.py" and rel != ".gitmodules" and not rel.startswith("publications/autonomy-tax/"):
         errors.append("contains legacy autonomy-tax repo URL")
 
     if "github.com/petroslamb/content/blob/main/publications/" not in text:
