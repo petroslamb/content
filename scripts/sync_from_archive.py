@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -20,8 +21,10 @@ from lifecycle import REPO_ROOT, load_status, package_key_for_path, resolve_pack
 
 
 ARCHIVE_DIR = REPO_ROOT / "publication_strategy_and_archive" / "substack_archive"
+ARCHIVE_ASSETS_DIR = ARCHIVE_DIR / "assets"
 METADATA_PATH = ARCHIVE_DIR / "metadata.json"
 POST_MAP_PATH = REPO_ROOT / "publication_strategy_and_archive" / "post_map.yaml"
+ASSET_PATH_PATTERN = re.compile(r"assets/([A-Za-z0-9._-]+)")
 
 
 def load_metadata() -> list[dict]:
@@ -79,6 +82,38 @@ def determine_destination_path(package_path: Path, slug: str, umbrella: bool, st
     return package_path / f"{slug}.md"
 
 
+def referenced_archive_assets(markdown_text: str) -> list[str]:
+    seen = set()
+    assets = []
+    for match in ASSET_PATH_PATTERN.finditer(markdown_text):
+        filename = match.group(1)
+        if filename not in seen:
+            assets.append(filename)
+            seen.add(filename)
+    return assets
+
+
+def sync_assets_for_markdown(markdown_path: Path) -> list[Path]:
+    markdown_text = markdown_path.read_text()
+    filenames = referenced_archive_assets(markdown_text)
+    if not filenames:
+        return []
+
+    destination_assets_dir = markdown_path.parent / "assets"
+    destination_assets_dir.mkdir(parents=True, exist_ok=True)
+
+    copied = []
+    for filename in filenames:
+        source = ARCHIVE_ASSETS_DIR / filename
+        if not source.exists():
+            print(f"  WARNING: Referenced asset not found in archive: assets/{filename}")
+            continue
+        destination = destination_assets_dir / filename
+        shutil.copy2(source, destination)
+        copied.append(destination)
+    return copied
+
+
 def sync_slug(package_path: Path, slug: str, archive_entry: dict, umbrella: bool, status_data: dict | None) -> Path | None:
     archive_markdown = REPO_ROOT / archive_entry["md_path"]
     if not archive_markdown.exists():
@@ -93,6 +128,12 @@ def sync_slug(package_path: Path, slug: str, archive_entry: dict, umbrella: bool
         new_content = archive_markdown.read_text()
         if old_content == new_content:
             print(f"  Already in sync: {destination_path.relative_to(REPO_ROOT)}")
+            copied_assets = sync_assets_for_markdown(destination_path)
+            if copied_assets:
+                print(
+                    f"  Synced {len(copied_assets)} referenced asset(s) into "
+                    f"{destination_path.parent.relative_to(REPO_ROOT) / 'assets'}"
+                )
             return destination_path
         archive_dir = package_path / "archive"
         archive_dir.mkdir(exist_ok=True)
@@ -102,6 +143,9 @@ def sync_slug(package_path: Path, slug: str, archive_entry: dict, umbrella: bool
 
     shutil.copy2(archive_markdown, destination_path)
     print(f"  Synced: {archive_markdown.relative_to(REPO_ROOT)} -> {destination_path.relative_to(REPO_ROOT)}")
+    copied_assets = sync_assets_for_markdown(destination_path)
+    if copied_assets:
+        print(f"  Synced {len(copied_assets)} referenced asset(s) into {destination_path.parent.relative_to(REPO_ROOT) / 'assets'}")
     return destination_path
 
 
