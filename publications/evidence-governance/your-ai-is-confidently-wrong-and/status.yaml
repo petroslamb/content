@@ -1,7 +1,7 @@
 kind: leaf
 publication: your-ai-is-confidently-wrong-and
 parent_package: evidence-governance
-revision: 1
+revision: 3
 config:
   markdown_path: publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md
   substack_post_id: 188403075
@@ -16,23 +16,23 @@ stages:
     done: true
     last_updated: '2026-04-07'
   essay_iteration:
-    done: true
-    last_updated: '2026-04-07'
+    done: false
+    last_updated: '2026-04-14'
   notebooklm_artifacts:
     done: false
     last_updated: null
   article_polish:
-    done: true
-    last_updated: '2026-04-07'
+    done: false
+    last_updated: '2026-04-14'
   substack_publishing:
     done: false
-    last_updated: null
+    last_updated: '2026-04-14'
   archive_sync:
     done: false
-    last_updated: null
+    last_updated: '2026-04-14'
   youtube_production:
     done: false
     last_updated: null
   distribution:
     done: false
-    last_updated: null
+    last_updated: '2026-04-14'
