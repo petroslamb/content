@@ -14,8 +14,8 @@ Umbrella package for the evidence-governance essay line. Following a consolidati
 - **Flagship leaf**: [`your-ai-is-confidently-wrong-and/README.md`](your-ai-is-confidently-wrong-and/README.md)
 - **Technical Companion**: [`your-ai-is-confidently-wrong-and/companion.md`](your-ai-is-confidently-wrong-and/companion.md)
 - **Shared research surface**: [`evidence_governance_pattern/README.md`](evidence_governance_pattern/README.md)
-- **Consolidated Blueprint**: [`consolidated_blueprint.md`](consolidated_blueprint.md)
-- **Review History**: [`review_brutal_draft.md`](review_brutal_draft.md)
+- **Current decision surface**: [`your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-decision-r4.md`](your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-decision-r4.md)
+- **Archived umbrella consolidation artifacts**: [`archive/umbrella-history/`](archive/umbrella-history/)
 
 ## Papers, Artifacts, And Archive
 
@@ -37,3 +37,4 @@ That repository remains the canonical home for the scored dataset, contradiction
 - Treat the flagship leaf as the canonical publication object for lifecycle work.
 - Use the consolidated blueprint for any further refinement cycles.
 - Preserve the external proof-repo links when they are still the authoritative evidence location.
+- Treat old umbrella-level review and consolidation artifacts as historical context in [`archive/umbrella-history/`](archive/umbrella-history/), not as the active governing surface.
