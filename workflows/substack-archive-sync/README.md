@@ -1,6 +1,7 @@
 ---
 workflow_id: archive_sync
 runner_mode: scripted
+launch_mode: local_mutation
 default_skill: substack-archive-sync
 launch_templates:
   - ".venv/bin/python scripts/sync_substack_archive.py"

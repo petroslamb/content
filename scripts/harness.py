@@ -13,6 +13,17 @@ from pathlib import Path
 import yaml
 
 from audit_package import audit_package, resolve_evidence_root
+from essay_iteration_support import (
+    describe_packet_paths,
+    resolve_companion_path,
+    resolve_evidence_surface as resolve_essay_evidence_surface,
+    resolve_leaf_readme,
+    resolve_live_draft,
+    resolve_nearest_blueprint_path,
+    resolve_parent_package_path,
+    resolve_parent_package_readme,
+    resolve_review_artifact_paths,
+)
 from lifecycle import PUBLICATIONS_DIR, REPO_ROOT, STAGES, load_status_ref, load_workflow_contract
 
 
@@ -22,6 +33,7 @@ HARNESS_POLICY_PATH = REPO_ROOT / "harness_policy.yaml"
 LOGS_DIR = REPO_ROOT / "reviewable-runs" / "logs"
 
 REQUIRED_NPM_SCRIPTS = {
+    "check:essay-iteration",
     "stage:next",
     "stage:resolve",
     "stage:run",
@@ -49,7 +61,9 @@ PATH_LIKE_SUFFIXES = (
 )
 
 
-def repo_relpath(path: Path) -> str:
+def repo_relpath(path: Path | None) -> str | None:
+    if path is None:
+        return None
     try:
         return path.resolve().relative_to(REPO_ROOT).as_posix()
     except ValueError:
@@ -119,12 +133,17 @@ def build_harness_contract() -> dict:
         stage_contracts[stage] = {
             "workflow_doc": repo_relpath(workflow_contract["path"]),
             "runner_mode": metadata["runner_mode"],
+            "launch_mode": metadata["launch_mode"],
             "default_skill": metadata["default_skill"],
             "approval_gate": metadata["approval_gate"],
             "required_context": metadata["required_context"],
             "expected_outputs": metadata["expected_outputs"],
             "done_when": metadata["done_when"],
             "launch_templates": metadata["launch_templates"],
+            "packet_templates": metadata["packet_templates"],
+            "validator_commands": metadata["validator_commands"],
+            "judgment_policy": metadata["judgment_policy"],
+            "prohibited_moves": metadata["prohibited_moves"],
         }
 
     command_surface = {}
@@ -204,12 +223,7 @@ def resolve_config_context(status_data: dict, key: str) -> dict:
 
 
 def resolve_markdown_path(package_path: Path, status_data: dict) -> Path | None:
-    markdown_path = resolve_config_value(status_data, "markdown_path")
-    if isinstance(markdown_path, str):
-        candidate = REPO_ROOT / markdown_path
-        if candidate.exists():
-            return candidate
-    return None
+    return resolve_live_draft(package_path, status_data)
 
 
 def resolve_artifacts_dir(package_path: Path, status_data: dict) -> Path | None:
@@ -261,7 +275,7 @@ def find_first_matching_file(root: Path, suffixes: tuple[str, ...]) -> Path | No
 
 
 def parse_research_direction(package_path: Path) -> str | None:
-    readme = find_package_readme(package_path)
+    readme = resolve_leaf_readme(package_path)
     if not readme:
         return None
     for line in readme.read_text().splitlines():
@@ -314,10 +328,45 @@ def resolve_context_item(item: str, package_path: Path, status_data: dict) -> di
         return resolve_config_context(status_data, item.split(".", 1)[1])
 
     if item == "package README or leaf README":
-        readme = find_package_readme(package_path)
+        readme = resolve_leaf_readme(package_path)
         if readme:
             return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(readme)}
         return {"name": item, "status": "missing", "blocking": True}
+
+    if item == "leaf package README":
+        readme = resolve_leaf_readme(package_path)
+        if readme:
+            return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(readme)}
+        return {"name": item, "status": "missing", "blocking": True}
+
+    if item == "parent umbrella README when present":
+        readme = resolve_parent_package_readme(package_path, status_data)
+        if readme:
+            return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(readme)}
+        return {"name": item, "status": "advisory", "blocking": False}
+
+    if item == "companion when present":
+        companion = resolve_companion_path(package_path)
+        if companion:
+            return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(companion)}
+        return {"name": item, "status": "advisory", "blocking": False}
+
+    if item == "nearest blueprint when present":
+        blueprint = resolve_nearest_blueprint_path(package_path, status_data)
+        if blueprint:
+            return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(blueprint)}
+        return {"name": item, "status": "advisory", "blocking": False}
+
+    if item == "nearest review artifacts when present":
+        review_artifacts = resolve_review_artifact_paths(package_path, status_data)
+        if review_artifacts:
+            return {
+                "name": item,
+                "status": "resolved",
+                "blocking": False,
+                "value": [repo_relpath(path) for path in review_artifacts],
+            }
+        return {"name": item, "status": "advisory", "blocking": False}
 
     if item == "current research question or thesis direction":
         direction = parse_research_direction(package_path)
@@ -434,20 +483,27 @@ def compute_stage_capabilities(stage: str, metadata: dict, required_context: lis
     blocking_issues.extend(f"Missing required context: {item}" for item in missing_context)
 
     requires_approval = stage_requires_approval(stage, metadata, policy)
-    if metadata["runner_mode"] != "scripted":
+    scaffold_only_execute = (
+        metadata["runner_mode"] == "hybrid" and metadata["launch_mode"] == "scaffold_only"
+    )
+    runner_allows_execute = metadata["runner_mode"] == "scripted" or scaffold_only_execute
+
+    if not runner_allows_execute:
         blocking_issues.append(
-            f"Runner mode '{metadata['runner_mode']}' is not directly executable in Phase 1.5; resolve it or emit a launch pack."
+            f"Runner mode '{metadata['runner_mode']}' with launch_mode '{metadata['launch_mode']}' is not directly executable in Phase 1.5; resolve it or emit a launch pack."
         )
 
-    if stage in policy.get("approval_required", {}).get("stages", []):
+    approval_blocks_execute = requires_approval and not scaffold_only_execute
+
+    if stage in policy.get("approval_required", {}).get("stages", []) and approval_blocks_execute:
         blocking_issues.append(
             f"Policy requires explicit approval before unattended execution of '{stage}'."
         )
 
     can_execute = (
-        metadata["runner_mode"] == "scripted"
+        runner_allows_execute
         and not missing_context
-        and not requires_approval
+        and not approval_blocks_execute
     )
     return requires_approval, can_execute, blocking_issues
 
@@ -473,6 +529,56 @@ def build_stage_suggested_commands(package_key: str, stage: str, can_execute: bo
     return commands
 
 
+def build_resolution_args(package_key: str, status_data: dict) -> dict:
+    config = status_data.get("config", {})
+    package_path = f"publications/{package_key}"
+    return {
+        "package_key": package_key,
+        "package_name": package_key.split("/")[-1],
+        "package_path": package_path,
+        "publication": status_data.get("publication", package_key.split("/")[-1]),
+        **config,
+    }
+
+
+def render_command_templates(templates: list[str], package_key: str, status_data: dict) -> list[str]:
+    resolved_args = build_resolution_args(package_key, status_data)
+    commands = []
+    for template in templates:
+        commands.append(template.format(**resolved_args))
+    return commands
+
+
+def resolve_packet_template_paths(packet_templates: list[str]) -> list[str]:
+    resolved: list[str] = []
+    for template in packet_templates:
+        candidate = (REPO_ROOT / template).resolve()
+        resolved.append(repo_relpath(candidate))
+    return resolved
+
+
+def build_package_context_paths(package_path: Path, status_data: dict) -> dict:
+    live_draft = resolve_markdown_path(package_path, status_data)
+    leaf_readme = resolve_leaf_readme(package_path)
+    parent_path = resolve_parent_package_path(package_path, status_data)
+    parent_readme = resolve_parent_package_readme(package_path, status_data)
+    companion = resolve_companion_path(package_path)
+    blueprint = resolve_nearest_blueprint_path(package_path, status_data)
+    review_artifacts = resolve_review_artifact_paths(package_path, status_data)
+    evidence_surface = resolve_essay_evidence_surface(package_path, status_data)
+
+    return {
+        "live_draft_path": repo_relpath(live_draft),
+        "leaf_readme_path": repo_relpath(leaf_readme),
+        "parent_package_path": repo_relpath(parent_path),
+        "parent_package_readme_path": repo_relpath(parent_readme),
+        "companion_path": repo_relpath(companion),
+        "nearest_blueprint_path": repo_relpath(blueprint),
+        "review_artifact_paths": [repo_relpath(path) for path in review_artifacts],
+        "evidence_surface_path": repo_relpath(evidence_surface),
+    }
+
+
 def build_stage_resolution(package_arg: str, stage: str) -> dict:
     manifest_ref, status_data = load_status_ref(package_arg)
     workflow_contract = load_workflow_contract(stage)
@@ -489,11 +595,19 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         required_context,
         policy,
     )
+    package_context_paths = build_package_context_paths(manifest_ref.package_path, status_data)
+    packet_paths = {}
+    if stage == "essay_iteration":
+        live_draft = resolve_markdown_path(manifest_ref.package_path, status_data)
+        revision = status_data.get("revision")
+        packet_paths = describe_packet_paths(live_draft, revision if isinstance(revision, int) else None)
+
     return {
         "package": manifest_ref.package_key,
         "revision": status_data.get("revision", 1),
         "stage": stage,
         "runner_mode": metadata["runner_mode"],
+        "launch_mode": metadata["launch_mode"],
         "approval_gate": metadata["approval_gate"],
         "requires_approval": requires_approval,
         "can_execute": can_execute,
@@ -504,11 +618,17 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "workflow_doc": repo_relpath(workflow_contract["path"]),
         "default_skill": metadata["default_skill"],
         "launch_templates": metadata["launch_templates"],
+        "packet_templates": resolve_packet_template_paths(metadata["packet_templates"]),
+        "validator_commands": render_command_templates(metadata["validator_commands"], manifest_ref.package_key, status_data),
+        "judgment_policy": metadata["judgment_policy"],
+        "prohibited_moves": metadata["prohibited_moves"],
         "expected_outputs": metadata["expected_outputs"],
         "done_when": metadata["done_when"],
         "package_audit": audit_package(manifest_ref.package_key),
         "auto_mark_done_allowed": auto_mark_done_allowed(stage, metadata, policy),
         "current_state": status_data.get("stages", {}).get(stage, {"done": False, "last_updated": None}),
+        "package_context_paths": package_context_paths,
+        "packet_paths": packet_paths,
     }
 
 
@@ -528,12 +648,19 @@ def emit_launch_pack(resolution: dict) -> Path:
         "stage": resolution["stage"],
         "workflow_doc": resolution["workflow_doc"],
         "runner_mode": resolution["runner_mode"],
+        "launch_mode": resolution["launch_mode"],
         "approval_gate": resolution["approval_gate"],
         "required_context": resolution["required_context"],
         "suggested_commands": resolution["suggested_commands"],
         "suggested_skill": resolution["default_skill"],
+        "package_context_paths": resolution["package_context_paths"],
+        "packet_paths": resolution["packet_paths"],
         "expected_outputs": resolution["expected_outputs"],
         "done_when": resolution["done_when"],
+        "packet_templates": resolution["packet_templates"],
+        "validator_commands": resolution["validator_commands"],
+        "judgment_policy": resolution["judgment_policy"],
+        "prohibited_moves": resolution["prohibited_moves"],
         "blocking_issues": resolution["blocking_issues"],
     }
     log_path.write_text(json.dumps(payload, indent=2) + "\n")

@@ -47,7 +47,7 @@ The lifecycle stage ids remain unchanged for runner compatibility. The working t
 3. **blueprint hardening**: use [`essay-iteration/README.md`](essay-iteration/README.md) as the governing process surface, with targeted help from [`alphaxiv-research/README.md`](alphaxiv-research/README.md) and [`paper-intake/README.md`](paper-intake/README.md) when evidence needs to be tightened. After a blocking high-bar review, this is the mandatory next step and must either set an outstanding-governing rewrite direction or record an explicit impossibility finding
 4. **external blueprint review**: optionally use [`essay-iteration/README.md`](essay-iteration/README.md) for an advisory outside review of the hardened blueprint before the prewrite gate. The writer adjudicates the findings and integrates only what materially improves the governing surface
 5. **essay prewrite gate**: use [`essay-iteration/README.md`](essay-iteration/README.md) to decide whether an outstanding essay is actually writable before prose drafting begins. This step must either produce an essay-governing prewrite surface or an explicit blocker
-6. **draft iteration**: use [`essay-iteration/README.md`](essay-iteration/README.md) to produce bounded rewrite candidates beside the live draft and compare before promotion
+6. **draft iteration**: use [`essay-iteration/README.md`](essay-iteration/README.md) to seed the package-local essay packet, produce bounded rewrite candidates beside the live draft, and compare before promotion
 7. **production and publishing**: use NotebookLM, polish, publishing, archive-sync, distribution, and video workflows once the live draft is ready for outward-facing work
 
 Optional post-publication follow-through can continue with:
@@ -88,12 +88,15 @@ For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 3. optionally run an external blueprint review, but keep it advisory and adjudicate the fixes as the writer
 4. run the essay prewrite gate before drafting: either produce an essay-governing prewrite surface or conclude explicitly that the essay is not yet writable at the target bar
 5. use alphaXiv in targeted validation mode against the active anchor papers when needed
-6. produce a bounded candidate beside the stable live draft
-7. run a cold replacement review against both the live draft and the outstanding-essay bar
-8. if that review does not clear promotion, return immediately to blueprint hardening at the same top bar: either produce an outstanding-governing blueprint or conclude explicitly that the current frame cannot reach that bar from the available evidence
+6. run `stage:run` for `essay_iteration` to seed or refresh the package-local packet beside the stable live draft
+7. fill that packet with a bounded candidate, replacement review, scorecard, and decision artifact
+8. run the packet validator before claiming the packet is ready for review
 9. compare before promotion instead of overwriting first
+10. if that review does not clear promotion, return immediately to blueprint hardening at the same top bar: either produce an outstanding-governing blueprint or conclude explicitly that the current frame cannot reach that bar from the available evidence
 
 That lifecycle is the cross-package default. Package READMEs can add local surfaces or exceptions, but they should not redefine the shared process when a tracked workflow already exists here.
+
+For `essay_iteration`, `stage:run` now means “seed or refresh the package-local packet scaffold.” It does not mean “complete the rewrite stage automatically.” Promotion, stage completion, and top-tier score claims remain gated behind stronger review or human approval.
 
 ## When To Use Which Surface
 

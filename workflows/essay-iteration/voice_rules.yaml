@@ -1,0 +1,16 @@
+version: 1
+banned_literals:
+  - "—"
+  - "rich tapestry"
+banned_regex:
+  - "\\bFurthermore,\\b"
+  - "\\bMoreover,\\b"
+  - "\\bIn conclusion,\\b"
+  - "\\bTo summarize,\\b"
+  - "\\bIt is important to note\\b"
+  - "\\bdelve\\b"
+  - "\\bnavigate\\b"
+  - "\\bunlock\\b"
+  - "\\bleverage\\b"
+  - "\\btestament\\b"
+  - "\\bcrucial\\b"
