@@ -114,6 +114,27 @@ ending, some by the middle, some by series scaffolding.
    during revision
 4. Borrow one or two strengths intentionally rather than imitating a whole essay
 
+### For a Live-Draft Scoring Pass
+
+Use this mode when you want to place an unpublished draft against the archive
+without pretending it is already part of the stable corpus.
+
+Minimum procedure:
+
+1. read the full draft once without scoring
+2. choose three anchor essays: one nearby, one stronger, and one weaker
+3. write a 2-4 sentence whole-draft rationale
+4. capture one opening anchor, one middle anchor, and one ending anchor
+5. score direct dimensions, traction, craft, publication power, and section
+   slots
+6. state the main blocker to the next score up
+7. if the draft is being considered for promotion, say explicitly whether the
+   score is against corpus standards or only against the package's previous
+   version
+
+Do not report a high draft score from cleanup or consolidation alone. A draft
+gets atlas credit only for the essay object it has become on the page.
+
 ### For Retrospectives
 
 Use the atlas to compare:

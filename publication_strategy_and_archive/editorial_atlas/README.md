@@ -91,6 +91,27 @@ Use the atlas to route and diagnose drafts, not to crown one permanent winner.
 The useful question is not "which essay is best?" but "what kind of object is
 this new essay trying to become, and which existing objects should pull it?"
 
+## Live Draft Use
+
+The atlas can be used on unpublished or in-flight drafts, but draft scoring is
+an editorial routing exercise, not a shortcut to self-certification.
+
+Hard rules for live-draft use:
+
+1. do not claim a draft is `9`, `10`, or "outstanding" from relative cleanup
+   alone
+2. do not score from a draft's improvement over its own prior version without
+   also comparing it against archive anchors
+3. for any serious draft score, capture a short rationale plus opening, middle,
+   and ending anchors
+4. compare against at least three archive essays: one nearby, one stronger, and
+   one weaker
+5. if the draft is being considered for promotion, pair atlas scoring with the
+   package's actual editorial gate rather than replacing that gate
+
+The atlas helps answer "what kind of object is this?" It does not by itself
+answer "should this replace the live draft?"
+
 ## Zero-Knowledge Model Scoring
 
 If an LLM or AI agent is tasked with running the editorial atlas scoring pass
