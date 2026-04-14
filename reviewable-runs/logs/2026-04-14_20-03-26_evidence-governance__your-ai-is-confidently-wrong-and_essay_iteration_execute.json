@@ -1,0 +1,15 @@
+{
+  "kind": "lifecycle_stage_run",
+  "timestamp": "2026-04-14_20-03-26",
+  "package": "evidence-governance/your-ai-is-confidently-wrong-and",
+  "stage": "essay_iteration",
+  "action": "execute",
+  "success": true,
+  "workflow_doc": "workflows/essay-iteration/README.md",
+  "status_path": "publications/evidence-governance/your-ai-is-confidently-wrong-and/status.yaml",
+  "commands": [
+    ".venv/bin/python scripts/init_essay_iteration_packet.py --package evidence-governance/your-ai-is-confidently-wrong-and"
+  ],
+  "output_excerpt": "$ .venv/bin/python scripts/init_essay_iteration_packet.py --package evidence-governance/your-ai-is-confidently-wrong-and\nInitialized essay-iteration packet for evidence-governance/your-ai-is-confidently-wrong-and\nPacket manifest: publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-essay-iteration-packet-r3.json\n  - blueprint: kept\n  - candidate: kept\n  - replacement_review: kept\n  - atlas_scorecard: kept\n  - decision: kept\n  - manifest: written\n",
+  "output_truncated": false
+}

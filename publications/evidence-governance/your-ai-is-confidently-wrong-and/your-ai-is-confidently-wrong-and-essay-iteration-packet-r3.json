@@ -26,10 +26,10 @@
     "leaf_readme_path": "publications/evidence-governance/your-ai-is-confidently-wrong-and/README.md",
     "parent_package_readme_path": "publications/evidence-governance/README.md",
     "companion_path": "publications/evidence-governance/your-ai-is-confidently-wrong-and/companion.md",
-    "nearest_blueprint_path": "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-blueprint-r2.md",
+    "nearest_blueprint_path": "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-blueprint-r3.md",
     "review_artifact_paths": [
-      "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-replacement-review-r2.md",
-      "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-atlas-scorecard-r2.md",
+      "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-replacement-review-r3.md",
+      "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-atlas-scorecard-r3.md",
       "publications/evidence-governance/review_brutal_draft.md"
     ],
     "evidence_surface_path": "publications/evidence-governance/evidence_governance_pattern/papers",
