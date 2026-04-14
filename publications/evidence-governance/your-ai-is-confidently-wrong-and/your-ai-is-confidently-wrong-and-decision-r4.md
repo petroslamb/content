@@ -4,7 +4,7 @@ package: "evidence-governance/your-ai-is-confidently-wrong-and"
 revision: 4
 judgment_policy: "evidence_gate"
 live_draft_path: "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md"
-candidate_path: "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-candidate-r3.md"
+candidate_path: "publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and-candidate-r4.md"
 recommendation: case_study_flagship_now
 promotion_allowed: false
 requires_human_approval: true
@@ -21,7 +21,7 @@ This judgment is consistent with the package's own proof boundary:
 
 - the current empirical base is one project, three EIPs, 81 scored rows, and 47 direct-adjudication rows in [`companion.md`](companion.md)
 - the broader literature supports the shape of the synthesis, but the package memo explicitly warns against treating portability, generalization, or correctness gains as already proven in [`../evidence_governance_pattern/research_findings.md`](../evidence_governance_pattern/research_findings.md)
-- the current blueprint already states that the pattern is supported by the `eip-verify` pilot plus converging literature, not by cross-domain validation, in [`your-ai-is-confidently-wrong-and-blueprint-r3.md`](your-ai-is-confidently-wrong-and-blueprint-r3.md)
+- the active bounded blueprint now treats the project as a case-study flagship rather than a doctrine claim in [`your-ai-is-confidently-wrong-and-blueprint-r4.md`](your-ai-is-confidently-wrong-and-blueprint-r4.md)
 
 ## Why This File
 
@@ -29,7 +29,7 @@ This finding belongs in the **decision surface**.
 
 - [`your-ai-is-confidently-wrong-and.md`](your-ai-is-confidently-wrong-and.md) is the essay surface.
 - [`companion.md`](companion.md) is the package-local evidence surface.
-- [`your-ai-is-confidently-wrong-and-blueprint-r3.md`](your-ai-is-confidently-wrong-and-blueprint-r3.md) is the rewrite-governing surface.
+- [`your-ai-is-confidently-wrong-and-blueprint-r4.md`](your-ai-is-confidently-wrong-and-blueprint-r4.md) is the rewrite-governing surface.
 - This file records the routing decision between viable next paths.
 
 ## What The Current Evidence Supports
@@ -100,5 +100,5 @@ If the goal remains the outstanding doctrine essay, do **not** keep polishing th
 
 - Keep findings and path selection here in `decision-r4`.
 - Keep metrics, artifacts, and package-local proof in [`companion.md`](companion.md).
-- If path A is chosen, create a new bounded rewrite surface such as `your-ai-is-confidently-wrong-and-blueprint-r4.md` for the case-study version.
+- Path A is now instantiated in [`your-ai-is-confidently-wrong-and-blueprint-r4.md`](your-ai-is-confidently-wrong-and-blueprint-r4.md) and [`your-ai-is-confidently-wrong-and-candidate-r4.md`](your-ai-is-confidently-wrong-and-candidate-r4.md).
 - If path B is chosen, create an evidence-expansion memo or blueprint in the leaf before drafting again.

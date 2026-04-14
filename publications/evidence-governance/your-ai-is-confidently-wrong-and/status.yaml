@@ -1,7 +1,7 @@
 kind: leaf
 publication: your-ai-is-confidently-wrong-and
 parent_package: evidence-governance
-revision: 3
+revision: 4
 config:
   markdown_path: publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md
   substack_post_id: 188403075
