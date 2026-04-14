@@ -12,11 +12,14 @@ Single-publication leaf under [`../README.md`](../README.md) for the flagship le
 ## Orientation
 
 - Live draft: [`your-ai-is-confidently-wrong-and.md`](your-ai-is-confidently-wrong-and.md)
+- Latest decision memo: [`your-ai-is-confidently-wrong-and-decision-r4.md`](your-ai-is-confidently-wrong-and-decision-r4.md)
+- Historical essay-iteration packet artifacts: [`archive/essay-iteration/r3/`](archive/essay-iteration/r3/)
 - Shared research surface: [`../evidence_governance_pattern/README.md`](../evidence_governance_pattern/README.md)
 - Umbrella context: [`../README.md`](../README.md)
 
 ## Working Guidance
 
 - Treat [`your-ai-is-confidently-wrong-and.md`](your-ai-is-confidently-wrong-and.md) as the canonical publication target for this leaf.
+- Treat [`your-ai-is-confidently-wrong-and-decision-r4.md`](your-ai-is-confidently-wrong-and-decision-r4.md) as the active routing memo for the next iteration.
 - Reuse the shared evidence tree at [`../evidence_governance_pattern/papers/`](../evidence_governance_pattern/papers/).
-- Keep package-local archive history in [`archive/`](archive/) once new revisions start diverging from the imported draft.
+- Keep superseded packet artifacts and abandoned bounded candidates under [`archive/`](archive/) rather than beside the live draft.
