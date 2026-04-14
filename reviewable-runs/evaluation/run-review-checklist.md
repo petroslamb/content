@@ -20,6 +20,10 @@ The standard here is not whether a system emitted six markdown files. The standa
 - [ ] Is this actually one run rather than a bundle of multiple goals?
 - [ ] Is the stop boundary explicit?
 - [ ] Does the approval or handoff type match the run?
+- [ ] If `commit` is claimed, is an actual commit id visible?
+- [ ] If `commit` is claimed, does the changed-surface evidence support that the repo was left at a committed state rather than a pending one?
+- [ ] If the packet was reconstructed later, is that reconstruction status explicit?
+- [ ] Do the source path, session id, and runtime/system labels agree with each other?
 
 ### Task Spec
 
@@ -38,6 +42,7 @@ The standard here is not whether a system emitted six markdown files. The standa
 - [ ] Are the key sources, files, or state elements visible?
 - [ ] Is provenance or freshness visible when it matters?
 - [ ] Is it clear what evidence actually mattered to the run?
+- [ ] For repo or editorial runs, is the changed surface visible enough to inspect what actually changed?
 
 ### Verification Report
 
@@ -52,6 +57,7 @@ The standard here is not whether a system emitted six markdown files. The standa
 - [ ] Is the pending action visible?
 - [ ] Are the review packet and any conditions visible?
 - [ ] If approval was not required, is that reason explicit and credible?
+- [ ] If prior user approval is claimed, is the approving artifact or message path visible?
 
 ### Failure Review
 

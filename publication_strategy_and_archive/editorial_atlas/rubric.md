@@ -70,6 +70,15 @@ Before finalizing an essay record, capture:
 5. `Confidence`
    `High`, `Medium`, or `Low` using the rules below.
 
+For live-draft scoring, also capture:
+
+6. `Anchor comparison`
+   Name one nearby archive essay, one stronger archive essay, and one weaker
+   archive essay used for calibration.
+7. `Next-score blocker`
+   One sentence on the main reason the draft does not yet deserve the next score
+   up.
+
 ## Scoring Procedure
 
 Run the scoring pass in this order.
@@ -88,6 +97,14 @@ Run the scoring pass in this order.
 
 Do not start from existing atlas scores when rescoring a piece. Score from the
 essay itself first, then compare against the atlas for consistency.
+
+For unpublished drafts, do not start from the package's previous score or from
+the author's target bar. Score the draft against the archive first, then note
+whether it improved relative to the prior draft.
+
+Do not award `9` or `10` to a live draft unless the worksheet evidence would
+still support that score when compared directly against the strongest archive
+anchors. "Better than before" is not enough.
 
 ## Whole-Essay Dimensions
 
@@ -501,6 +518,8 @@ To keep scores comparable across passes:
 4. Use `10` sparingly. It should feel corpus-defining, not merely very good.
 5. If an essay is highly unusual, explain the exception rather than hiding it in
    a rounded score.
+6. For live drafts, separate "better than the previous package draft" from
+   "actually at this corpus tier."
 
 ## Minimal Scoring Worksheet
 

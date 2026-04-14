@@ -59,6 +59,32 @@ Bounded internal runs can still be strong when the boundary is `explicit non-app
 
 If the real boundary is unclear, the run is not ready for review.
 
+## Boundary Honesty
+
+Name the boundary that actually happened, not the boundary you hoped the run would reach.
+
+Use these hard rules:
+
+- a pending or planned commit is not a `commit` boundary
+- uncommitted local changes are not a `commit` boundary
+- a packet written after the fact does not upgrade the underlying run boundary
+- if the run stopped at walkthrough, status update, or reviewer handoff, prefer `handoff` or `explicit non-approval reason`
+- if a later commit happens in a different turn or session, that is a different run unless the slice is reconstructed explicitly and honestly
+
+For repository runs that claim `commit`, make the commit id visible. If the commit id is absent, the default assumption should be that the run did not reach a commit boundary.
+
+## Reconstructed Packets
+
+Many strong proofs are reconstructed after the original run. That is acceptable, but the reconstruction must stay honest about provenance.
+
+Minimum rules:
+
+- distinguish native runtime artifacts from later review-packet prose
+- point the source manifest at the real capture system and real path
+- if the task used a different runtime or agent environment, say so explicitly
+- keep trace-path dates, session ids, and source-system labels consistent across the packet
+- do not imply that a review packet was present during execution if it was assembled afterward
+
 ## Verification Rules
 
 Internal code runs can often verify with tests, checks, and changed surface evidence.
@@ -141,6 +167,12 @@ The lightest useful retention set is:
 - verification summary
 - boundary record
 
+For internal repository or editorial refactor runs, also prefer:
+
+- final git status or equivalent changed-surface record
+- commit record if a commit boundary is claimed
+- explicit approval artifact when a major rewrite or destructive archive move was user-approved
+
 Add the six review records only when the run needs a real review packet or proof artifact.
 
 Routine lifecycle or stage-run automation should default to the lightweight `logs/` layer first. Promote a run into `examples/proofs/` only after a real review decision that it adds retained proof value.
@@ -170,7 +202,9 @@ A full packet is about review need, not prestige. Some strong runs should still 
 
 - treating a whole session as one run
 - using a fake commit boundary for an external-action run
+- using a fake commit boundary for an internal run with no actual commit id
 - treating raw trace as the final review surface
+- mixing reconstructed packet prose with incorrect source paths or session metadata
 - treating local success as decisive verification for an external system
 - treating limit-finding runs as automatic failures
 - treating flagship proof status as the same thing as framework strength
