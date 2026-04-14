@@ -58,6 +58,28 @@ WORKFLOW_REQUIRED_KEYS = [
     "approval_gate",
 ]
 
+WORKFLOW_OPTIONAL_DEFAULTS = {
+    "launch_mode": "none",
+    "packet_templates": [],
+    "validator_commands": [],
+    "judgment_policy": "unrestricted",
+    "prohibited_moves": [],
+}
+
+VALID_LAUNCH_MODES = {
+    "none",
+    "scaffold_only",
+    "local_mutation",
+    "external_mutation",
+}
+
+VALID_JUDGMENT_POLICIES = {
+    "unrestricted",
+    "draft_only",
+    "conditional_promote",
+    "full_promote",
+}
+
 
 @dataclass(frozen=True)
 class ManifestRef:
@@ -175,6 +197,10 @@ def load_workflow_contract(stage: str) -> dict:
     text = workflow_path.read_text()
     frontmatter_text, body = split_frontmatter(text)
     metadata = yaml.safe_load(frontmatter_text) or {}
+    if not isinstance(metadata, dict):
+        raise ValueError(
+            f"Workflow doc {workflow_path.relative_to(REPO_ROOT)} frontmatter must be a mapping."
+        )
 
     missing = [key for key in WORKFLOW_REQUIRED_KEYS if key not in metadata]
     if missing:
@@ -188,6 +214,8 @@ def load_workflow_contract(stage: str) -> dict:
             f"'{metadata['workflow_id']}', expected '{stage}'."
         )
 
+    metadata = {**WORKFLOW_OPTIONAL_DEFAULTS, **metadata}
+
     runner_mode = metadata["runner_mode"]
     if runner_mode not in {"guided", "scripted", "hybrid"}:
         raise ValueError(
@@ -200,7 +228,25 @@ def load_workflow_contract(stage: str) -> dict:
             f"Workflow doc {workflow_path.relative_to(REPO_ROOT)} must define launch_templates as a list."
         )
 
+    launch_mode = metadata["launch_mode"]
+    if launch_mode not in VALID_LAUNCH_MODES:
+        raise ValueError(
+            f"Workflow doc {workflow_path.relative_to(REPO_ROOT)} has invalid launch_mode '{launch_mode}'."
+        )
+
+    judgment_policy = metadata["judgment_policy"]
+    if judgment_policy not in VALID_JUDGMENT_POLICIES:
+        raise ValueError(
+            f"Workflow doc {workflow_path.relative_to(REPO_ROOT)} has invalid judgment_policy '{judgment_policy}'."
+        )
+
     for list_key in ["required_context", "expected_outputs", "done_when"]:
+        if not isinstance(metadata[list_key], list):
+            raise ValueError(
+                f"Workflow doc {workflow_path.relative_to(REPO_ROOT)} must define {list_key} as a list."
+            )
+
+    for list_key in ["packet_templates", "validator_commands", "prohibited_moves"]:
         if not isinstance(metadata[list_key], list):
             raise ValueError(
                 f"Workflow doc {workflow_path.relative_to(REPO_ROOT)} must define {list_key} as a list."

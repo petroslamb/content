@@ -1,18 +1,38 @@
 ---
 workflow_id: essay_iteration
-runner_mode: guided
+runner_mode: hybrid
+launch_mode: scaffold_only
 default_skill: null
-launch_templates: []
+launch_templates:
+  - ".venv/bin/python scripts/init_essay_iteration_packet.py --package {package_key}"
+packet_templates:
+  - "workflows/essay-iteration/templates/hardened_blueprint_template.md"
+  - "workflows/essay-iteration/templates/candidate_template.md"
+  - "workflows/essay-iteration/templates/cold_replacement_review_template.md"
+  - "workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md"
+  - "workflows/essay-iteration/templates/promotion_decision_template.md"
+validator_commands:
+  - "npm run check:essay-iteration -- --package {package_key}"
 required_context:
   - canonical live draft
-  - package README or leaf README
-  - blueprint, companion, or review artifacts when present
+  - leaf package README
+  - parent umbrella README when present
+  - companion when present
+  - nearest blueprint when present
+  - nearest review artifacts when present
+  - target evidence surface or source index
 expected_outputs:
-  - updated live draft or bounded rewrite candidate
-  - review artifact or rubric pass when the revision is substantive
+  - essay-iteration packet manifest beside the live draft
+  - bounded rewrite candidate and structured review artifacts within the packet
 done_when:
-  - the live draft is ready for the next lifecycle stage and any active review artifacts reflect the current direction
+  - a validated packet exists beside the live draft and the current direction is explicit enough for human review or the next lifecycle handoff
 approval_gate: required_for_major_rewrite
+judgment_policy: draft_only
+prohibited_moves:
+  - Do not overwrite the current live draft before a replacement verdict exists.
+  - Do not archive adjacent leaves before the promotion decision is explicit.
+  - Do not mark the stage done from a weak-model run without human review.
+  - Do not claim Publication Power 9 or above under the draft-only policy.
 ---
 
 # Essay Iteration
@@ -28,6 +48,55 @@ The repo standard is:
 - older versions and superseded support files moved into local `archive/`
 
 The default is not “versioned files forever” and not “rewrite in place with no history.”
+
+## Scaffolded Hybrid Flow
+
+`essay_iteration` is now a scaffolded hybrid stage rather than a prose-only guided stage.
+
+The intended sequence is:
+
+1. set the leaf package `status.yaml` so `essay_iteration` is the next stage
+2. run `npm run stage:run -- --package <leaf> --stage essay_iteration`
+3. let the scaffold script create a package-local packet beside the live draft
+4. point the model at the leaf package plus that packet manifest
+5. fill the packet, run the validator, and leave promotion to a stronger reviewer or human approver
+
+The scaffold step is allowed without promotion approval because it only creates or refreshes the working packet. It does not authorize replacement of the live draft and it does not mark the stage done automatically.
+
+## Packet Manifest
+
+The package-local essay-iteration packet is the canonical machine-readable contract for weaker models. It should be sufficient, together with the leaf package itself, for a weaker model to work without a custom rescue prompt.
+
+The packet manifest must name:
+
+- the live draft
+- the leaf README
+- the parent umbrella README when present
+- the nearest companion, blueprint, and review artifacts
+- the evidence surface or source index
+- the generated packet file targets
+- the validator command
+- the judgment policy
+- the prohibited moves
+
+Treat the packet manifest as the primary execution surface. The workflow prose remains the policy layer, but the packet is the object a weaker model should actually follow.
+
+## Weak-Model Judgment Limit
+
+Under the default `draft_only` judgment policy, a weaker model may:
+
+- harden the blueprint
+- write a bounded candidate
+- fill a replacement review
+- fill an atlas-style scorecard
+- recommend whether to revise again or keep the live draft
+
+It may not:
+
+- promote the candidate into the live path on its own
+- mark the stage done on its own
+- claim `Publication Power` `9` or above as a settled outcome
+- treat package cleanup as proof that the essay has cleared the publication bar
 
 ## Recommended Supporting Files
 
@@ -66,6 +135,7 @@ Use the blueprint only after the main cold read if blueprint alignment needs com
 - If the user asks for version comparison, keep the rubric stable across versions so the comparison stays apples-to-apples.
 - When the package is clearly aiming at public publication, include importance, distinctiveness, or virality as separate axes instead of collapsing everything into one prose-quality score.
 - When a bounded candidate is being considered for promotion into the live path, run a cold replacement review before promotion if the package does not already have a stronger established editorial gate.
+- When an umbrella package is being collapsed from multiple live leaves into one flagship essay, treat that as a bounded candidate and replacement decision, not as a cleanup pass. Keep the prior live leaves readable until one candidate actually clears promotion.
 - After a brutal review or cold replacement review that does not clear promotion, the next step is a high-bar blueprint hardening gate. Either produce a blueprint strong enough to govern a rewrite aimed at the outstanding-essay bar, or conclude explicitly that the current frame cannot reach that bar from the available evidence.
 - When a draft is already close, prefer surgical fixes that clear the remaining blockers over a broad rewrite that destabilizes the whole piece.
 - The stable-live-draft-plus-archive model is the default. The main exception is when a package explicitly manages parallel bundle baselines, in which case versioned siblings can temporarily stay live until one becomes canonical.
@@ -75,6 +145,7 @@ Use the blueprint only after the main cold read if blueprint alignment needs com
 - For evidence-sensitive rewrites, do not draft against alphaXiv-only context if the missing papers are already known. Intake first, then harden the blueprint, then draft the article.
 - When a hardened blueprint is aiming at the outstanding bar, an external AI review of the blueprint can be useful before the essay prewrite gate, but that review is advisory. The writer remains responsible for adjudicating which findings matter, which are misreads, and which proposed fixes would actually improve the governing surface.
 - Before writing a high-bar bounded draft, run an essay prewrite gate. Either produce an essay-governing prewrite surface strong enough to support an outstanding draft, or conclude explicitly that the essay is not yet writable at that bar.
+- Do not let package cleanliness, folder normalization, or archive work stand in for proof that the new essay is stronger. A cleaner package can still contain a thinner publication object.
 
 ## Blueprint Hardening
 
@@ -114,6 +185,14 @@ The acceptance bar is higher than “better notes.” A hardened blueprint shoul
 - separate source-backed findings from higher-level synthesis
 - be strong enough to govern a bounded rewrite without reopening the whole argument from scratch
 - either set a top-bar rewrite direction or state explicitly why that bar is not reachable from the current frame and evidence base
+
+For weaker models or loosely supervised runs, require this exact minimum output contract for a hardened blueprint:
+
+- one paragraph on the active thesis and why this frame survives pressure
+- one section-level argument spine with the burden of each section
+- one explicit source-backed claim ledger naming which sources do body work
+- one borders list naming what the essay will not claim
+- one failure-trigger list naming what would void the rewrite
 
 If hardening collapses the original frame, narrow or replace the frame before starting the rewrite. Do not carry a broken synthesis forward just because it sounded good in the previous draft.
 
@@ -163,7 +242,36 @@ The prewrite surface should not be a rough outline. It should set:
 - cut order if the draft becomes bloated
 - explicit failure triggers that void the pass
 
+For weaker models or autonomous runs, require this exact minimum output contract for the prewrite gate:
+
+- `Promise`: one sentence on what the essay will prove
+- `Spine`: ordered section list with the argumentative job of each section
+- `Paragraph burden`: one sentence on what each section must accomplish before moving on
+- `Evidence burden`: which papers or artifacts must appear in the body versus references only
+- `Cut order`: what gets cut first if the draft bloats
+- `Failure triggers`: the signs that mean the draft should not be promoted
+
 If that surface cannot be produced cleanly, do not draft. Return to blueprint hardening, evidence intake, or an impossibility finding.
+
+## Umbrella Consolidation
+
+Use this mode when several related leaves inside one umbrella package are being collapsed into one flagship publication object.
+
+The default sequence is:
+
+1. identify the current live leaves and the specific reason consolidation is needed
+2. run a scored brutal review or cold comparison across the candidate leaves
+3. produce one hardened blueprint for the proposed flagship object
+4. run the essay prewrite gate for that flagship object
+5. write one bounded flagship candidate beside the existing surfaces when feasible
+6. run a cold replacement review against the strongest prior leaf, not just against the author's intent
+7. promote only after the candidate wins on publication power rather than cleanliness alone
+8. archive the superseded leaves only after the promotion decision is explicit
+
+Strong warning:
+
+- do not overwrite the only surviving live leaf first and decide later whether the consolidation worked
+- do not archive adjacent leaves before the replacement verdict is explicit unless the package is already in a transitional non-public state and that exception is stated directly
 
 ## Citation And Reference Defaults
 

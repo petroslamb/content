@@ -1,6 +1,7 @@
 ---
 workflow_id: substack_publishing
 runner_mode: hybrid
+launch_mode: external_mutation
 default_skill: null
 launch_templates:
   - ".venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path}"

@@ -169,6 +169,7 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
     print(f"Current State: done={state.get('done', False)} last_updated={state.get('last_updated')}")
     print(f"Workflow Doc: {resolution['workflow_doc']}")
     print(f"Runner Mode: {resolution['runner_mode']}")
+    print(f"Launch Mode: {resolution['launch_mode']}")
     print(f"Default Skill: {resolution['default_skill'] or 'none'}")
     print(f"Approval Gate: {resolution['approval_gate']}")
     print(f"Requires Approval: {resolution['requires_approval']}")
@@ -206,6 +207,26 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
             print(f"  - {template}")
     else:
         print("\nLaunch Templates: none")
+
+    if resolution["packet_templates"]:
+        print("\nPacket Templates:")
+        for template in resolution["packet_templates"]:
+            print(f"  - {template}")
+
+    if resolution["validator_commands"]:
+        print("\nValidator Commands:")
+        for command in resolution["validator_commands"]:
+            print(f"  - {command}")
+
+    if resolution["prohibited_moves"]:
+        print("\nProhibited Moves:")
+        for move in resolution["prohibited_moves"]:
+            print(f"  - {move}")
+
+    if resolution["packet_paths"]:
+        print("\nPacket Paths:")
+        for name, path in resolution["packet_paths"].items():
+            print(f"  - {name}: {path}")
 
     print("\nSuggested Commands:")
     for command in resolution["suggested_commands"]:
