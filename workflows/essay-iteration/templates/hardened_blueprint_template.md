@@ -27,3 +27,19 @@ State what gets cut first if the candidate bloats.
 ## Failure triggers
 
 List the signs that void the rewrite or force a return to blueprint hardening.
+
+## Opening Lab
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`
+
+## Object Decision
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`
+
+## Body / Support / Footnote Ledger
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`
+
+## Second-Pass Bet
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`

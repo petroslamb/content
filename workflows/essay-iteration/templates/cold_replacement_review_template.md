@@ -7,6 +7,8 @@ live_draft_path: "$live_draft_path"
 candidate_path: "$candidate_path"
 replacement_verdict: pending
 north_star_verdict: pending
+dominant_blocker_slug: ""
+continue_iteration: null
 evidence_anchor_paths: []
 ---
 # Cold Replacement Review
@@ -46,3 +48,19 @@ State whether the candidate is still below, at, or above the target essay bar.
 ## Main Blockers
 
 State the main blocker to replacement and the main blocker to outstanding quality.
+
+## Dominant Blocker
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`
+
+## North-Star Delta
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`
+
+## Continue Or Stop
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`
+
+## If Continue, What Gets Cut
+
+Required only when north-star escalation mode is active; otherwise write `Not active.`

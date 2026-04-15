@@ -1,6 +1,6 @@
 kind: leaf
 publication: clean-interface-illusion
-revision: 2
+revision: 3
 config:
   markdown_path: publications/clean-interface-illusion/clean-interface-illusion.md
   evidence_path: publications/clean-interface-illusion/papers
