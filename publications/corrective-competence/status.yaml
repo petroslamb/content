@@ -6,7 +6,7 @@ config:
   evidence_path: publications/corrective-competence/papers
 stages:
   paper_intake:
-    done: false
+    done: true
     last_updated: '2026-04-15'
   research:
     done: true
