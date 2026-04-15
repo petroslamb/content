@@ -96,8 +96,19 @@ class EssayIterationPacketTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0, msg=result.stdout + result.stderr)
         return json.loads(result.stdout)
 
-    def load_packet(self, package_dir: Path, package_key: str) -> tuple[dict, dict[str, Path]]:
-        manifest_path = package_dir / f"{package_key}-essay-iteration-packet-r1.json"
+    def set_revision(self, package_dir: Path, revision: int) -> None:
+        status_path = package_dir / "status.yaml"
+        status = yaml.safe_load(status_path.read_text())
+        status["revision"] = revision
+        status_path.write_text(yaml.safe_dump(status, sort_keys=False))
+
+    def load_packet(
+        self,
+        package_dir: Path,
+        package_key: str,
+        revision: int = 1,
+    ) -> tuple[dict, dict[str, Path]]:
+        manifest_path = package_dir / f"{package_key}-essay-iteration-packet-r{revision}.json"
         packet = json.loads(manifest_path.read_text())
         outputs = {
             name: (REPO_ROOT / relpath).resolve()
@@ -105,9 +116,39 @@ class EssayIterationPacketTests(unittest.TestCase):
         }
         return packet, outputs
 
-    def populate_valid_packet(self, package_dir: Path, package_key: str) -> tuple[dict, dict[str, Path]]:
+    def write_packet_manifest(
+        self,
+        package_dir: Path,
+        package_key: str,
+        revision: int,
+        packet: dict,
+    ) -> None:
+        manifest_path = package_dir / f"{package_key}-essay-iteration-packet-r{revision}.json"
+        manifest_path.write_text(json.dumps(packet, indent=2))
+
+    def populate_valid_packet(
+        self,
+        package_dir: Path,
+        package_key: str,
+        *,
+        revision: int = 1,
+        schema_version: int | None = 2,
+        north_star_verdict: str = "below_target",
+        recommendation: str = "revise_candidate",
+        dominant_blocker_slug: str = "",
+        continue_iteration: bool | None = None,
+        rewrite_mode: str = "",
+        stop_gate_status: str = "inactive",
+    ) -> tuple[dict, dict[str, Path]]:
+        self.set_revision(package_dir, revision)
         self.run_init(package_key)
-        packet, outputs = self.load_packet(package_dir, package_key)
+        packet, outputs = self.load_packet(package_dir, package_key, revision=revision)
+
+        if schema_version is None:
+            packet.pop("packet_schema_version", None)
+        else:
+            packet["packet_schema_version"] = schema_version
+        self.write_packet_manifest(package_dir, package_key, revision, packet)
 
         outputs["blueprint"].write_text(
             "# Hardened Blueprint\n\n"
@@ -116,7 +157,11 @@ class EssayIterationPacketTests(unittest.TestCase):
             "## Paragraph burden\n\nEach section has a job.\n\n"
             "## Evidence burden\n\nBody work and references are separated.\n\n"
             "## Cut order\n\nTrim examples before the core argument.\n\n"
-            "## Failure triggers\n\nPromotion is void if the evidence no longer supports the claim.\n"
+            "## Failure triggers\n\nPromotion is void if the evidence no longer supports the claim.\n\n"
+            "## Opening Lab\n\nNot active.\n\n"
+            "## Object Decision\n\nNot active.\n\n"
+            "## Body / Support / Footnote Ledger\n\nNot active.\n\n"
+            "## Second-Pass Bet\n\nNot active.\n"
         )
         outputs["candidate"].write_text(
             "# Candidate Draft\n\n"
@@ -130,12 +175,14 @@ class EssayIterationPacketTests(unittest.TestCase):
             {
                 "kind": "essay_iteration_replacement_review",
                 "package": package_key,
-                "revision": 1,
+                "revision": revision,
                 "judgment_policy": "draft_only",
                 "live_draft_path": packet["live_draft_path"],
                 "candidate_path": packet["candidate_path"],
                 "replacement_verdict": "revise_again",
-                "north_star_verdict": "below_target",
+                "north_star_verdict": north_star_verdict,
+                "dominant_blocker_slug": dominant_blocker_slug,
+                "continue_iteration": continue_iteration,
                 "evidence_anchor_paths": [packet["live_draft_path"], packet["candidate_path"]],
             },
             (
@@ -145,7 +192,11 @@ class EssayIterationPacketTests(unittest.TestCase):
                 "## Scorecard\n\n- Thesis strength: 8\n\n"
                 "## Replacement Verdict\n\nRevise again.\n\n"
                 "## North-Star Verdict\n\nBelow target.\n\n"
-                "## Main Blockers\n\nUtility and limits still need sharpening.\n"
+                "## Main Blockers\n\nUtility and limits still need sharpening.\n\n"
+                "## Dominant Blocker\n\nNot active.\n\n"
+                "## North-Star Delta\n\nNot active.\n\n"
+                "## Continue Or Stop\n\nNot active.\n\n"
+                "## If Continue, What Gets Cut\n\nNot active.\n"
             ),
         )
 
@@ -154,7 +205,7 @@ class EssayIterationPacketTests(unittest.TestCase):
             {
                 "kind": "essay_iteration_atlas_scorecard",
                 "package": package_key,
-                "revision": 1,
+                "revision": revision,
                 "judgment_policy": "draft_only",
                 "candidate_path": packet["candidate_path"],
                 "opening_anchor": "candidate:1",
@@ -188,19 +239,24 @@ class EssayIterationPacketTests(unittest.TestCase):
             {
                 "kind": "essay_iteration_decision",
                 "package": package_key,
-                "revision": 1,
+                "revision": revision,
                 "judgment_policy": "draft_only",
                 "live_draft_path": packet["live_draft_path"],
                 "candidate_path": packet["candidate_path"],
-                "recommendation": "revise_candidate",
+                "recommendation": recommendation,
                 "promotion_allowed": False,
                 "requires_human_approval": True,
+                "rewrite_mode": rewrite_mode,
+                "stop_gate_status": stop_gate_status,
             },
             (
                 "# Promotion Decision\n\n"
-                "## Recommendation\n\nrevise_candidate\n\n"
+                f"## Recommendation\n\n{recommendation}\n\n"
                 "## Promotion Gate\n\nHuman review still required.\n\n"
-                "## Required Follow-Through\n\nRevise the candidate and rerun validation.\n"
+                "## Required Follow-Through\n\nRevise the candidate and rerun validation.\n\n"
+                "## Escalation Decision\n\nNot active.\n\n"
+                "## Rewrite Mode\n\nNot active.\n\n"
+                "## Stop Gate For Next Pass\n\nNot active.\n"
             ),
         )
 
@@ -335,6 +391,169 @@ class EssayIterationPacketTests(unittest.TestCase):
             package_dir = Path(tmpdir)
             package_key = create_temp_leaf_package(package_dir)
             self.populate_valid_packet(package_dir, package_key)
+
+            payload = self.run_validator(package_key, expect_success=True)
+            self.assertTrue(payload["success"])
+
+    def test_schema_v1_packet_still_valid(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            self.populate_valid_packet(package_dir, package_key, schema_version=None)
+
+            payload = self.run_validator(package_key, expect_success=True)
+            self.assertTrue(payload["success"])
+
+    def test_schema_v2_non_escalation_packet_passes(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, outputs = self.populate_valid_packet(
+                package_dir,
+                package_key,
+                schema_version=2,
+                north_star_verdict="below_target",
+                recommendation="revise_candidate",
+                stop_gate_status="inactive",
+            )
+
+            payload = self.run_validator(package_key, expect_success=True)
+            self.assertTrue(payload["success"])
+            self.assertEqual(packet["packet_schema_version"], 2)
+            decision_frontmatter, _ = yaml.safe_load(outputs["decision"].read_text().split("---\n", 2)[1]), outputs["decision"].read_text().split("---\n", 2)[2]
+            self.assertEqual(decision_frontmatter["stop_gate_status"], "inactive")
+
+    def test_schema_v2_escalation_requires_new_fields(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            _, outputs = self.populate_valid_packet(
+                package_dir,
+                package_key,
+                schema_version=2,
+                north_star_verdict="below_north_star",
+                recommendation="revise_candidate",
+                dominant_blocker_slug="abstract-opening-and-evidence-distribution",
+                continue_iteration=True,
+                rewrite_mode="compression_with_ignition",
+                stop_gate_status="armed",
+            )
+
+            review_frontmatter, review_body = yaml.safe_load(outputs["replacement_review"].read_text().split("---\n", 2)[1]), outputs["replacement_review"].read_text().split("---\n", 2)[2]
+            review_frontmatter.pop("dominant_blocker_slug", None)
+            review_body = review_body.replace("## Dominant Blocker\n\nNot active.\n\n", "")
+            write_frontmatter_markdown(outputs["replacement_review"], review_frontmatter, review_body)
+
+            payload = self.run_validator(package_key, expect_success=False)
+            self.assertTrue(any("dominant_blocker_slug" in error for error in payload["errors"]))
+            self.assertTrue(any("Dominant Blocker" in error for error in payload["errors"]))
+
+    def test_first_escalation_pass_can_arm_stop_gate(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            self.populate_valid_packet(
+                package_dir,
+                package_key,
+                schema_version=2,
+                north_star_verdict="below_north_star",
+                recommendation="revise_candidate",
+                dominant_blocker_slug="abstract-opening-and-evidence-distribution",
+                continue_iteration=True,
+                rewrite_mode="compression_with_ignition",
+                stop_gate_status="armed",
+            )
+
+            payload = self.run_validator(package_key, expect_success=True)
+            self.assertTrue(payload["success"])
+
+    def test_same_blocker_second_pass_must_fire_stop_gate(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            self.populate_valid_packet(
+                package_dir,
+                package_key,
+                revision=2,
+                schema_version=2,
+                north_star_verdict="below_north_star",
+                recommendation="revise_candidate",
+                dominant_blocker_slug="late-compression-and-landing",
+                continue_iteration=True,
+                rewrite_mode="late_compression_and_landing",
+                stop_gate_status="armed",
+            )
+            self.populate_valid_packet(
+                package_dir,
+                package_key,
+                revision=3,
+                schema_version=2,
+                north_star_verdict="below_north_star",
+                recommendation="revise_candidate",
+                dominant_blocker_slug="late-compression-and-landing",
+                continue_iteration=True,
+                rewrite_mode="late_compression_and_landing",
+                stop_gate_status="armed",
+            )
+
+            payload = self.run_validator(package_key, expect_success=False)
+            self.assertTrue(any("same dominant_blocker_slug persists" in error for error in payload["errors"]))
+            self.assertTrue(any("stop_flagship_iteration" in error for error in payload["errors"]))
+
+    def test_changed_blocker_allows_one_more_pass(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            self.populate_valid_packet(
+                package_dir,
+                package_key,
+                revision=2,
+                schema_version=2,
+                north_star_verdict="below_north_star",
+                recommendation="revise_candidate",
+                dominant_blocker_slug="abstract-opening-and-evidence-distribution",
+                continue_iteration=True,
+                rewrite_mode="compression_with_ignition",
+                stop_gate_status="armed",
+            )
+            self.populate_valid_packet(
+                package_dir,
+                package_key,
+                revision=3,
+                schema_version=2,
+                north_star_verdict="below_north_star",
+                recommendation="revise_candidate",
+                dominant_blocker_slug="late-compression-and-landing",
+                continue_iteration=True,
+                rewrite_mode="late_compression_and_landing",
+                stop_gate_status="armed",
+            )
+
+            payload = self.run_validator(package_key, expect_success=True)
+            self.assertTrue(payload["success"])
+
+    def test_immediate_stop_after_first_escalation_is_valid(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            self.populate_valid_packet(
+                package_dir,
+                package_key,
+                schema_version=2,
+                north_star_verdict="below_north_star",
+                recommendation="revise_candidate",
+                dominant_blocker_slug="frame-ceiling",
+                continue_iteration=False,
+                rewrite_mode="stop_flagship_iteration",
+                stop_gate_status="fired",
+            )
 
             payload = self.run_validator(package_key, expect_success=True)
             self.assertTrue(payload["success"])

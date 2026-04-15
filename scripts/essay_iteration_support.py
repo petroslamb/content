@@ -11,6 +11,8 @@ import re
 from lifecycle import PUBLICATIONS_DIR, REPO_ROOT
 
 
+PACKET_SCHEMA_VERSION = 2
+
 BLUEPRINT_PATTERNS = ("*blueprint*.md", "*plan*.md")
 REVIEW_PATTERNS = ("*review*.md", "*scorecard*.md", "*claims*.md", "*rubric*.md")
 
@@ -21,6 +23,13 @@ BLUEPRINT_HEADINGS = [
     "## Evidence burden",
     "## Cut order",
     "## Failure triggers",
+]
+
+ESCALATION_BLUEPRINT_HEADINGS = [
+    "## Opening Lab",
+    "## Object Decision",
+    "## Body / Support / Footnote Ledger",
+    "## Second-Pass Bet",
 ]
 
 REVIEW_FRONTMATTER_FIELDS = [
@@ -34,6 +43,11 @@ REVIEW_FRONTMATTER_FIELDS = [
     "north_star_verdict",
 ]
 
+ESCALATION_REVIEW_FRONTMATTER_FIELDS = [
+    "dominant_blocker_slug",
+    "continue_iteration",
+]
+
 REVIEW_BODY_HEADINGS = [
     "## Findings",
     "## Prioritized Issues",
@@ -41,6 +55,13 @@ REVIEW_BODY_HEADINGS = [
     "## Replacement Verdict",
     "## North-Star Verdict",
     "## Main Blockers",
+]
+
+ESCALATION_REVIEW_BODY_HEADINGS = [
+    "## Dominant Blocker",
+    "## North-Star Delta",
+    "## Continue Or Stop",
+    "## If Continue, What Gets Cut",
 ]
 
 SCORECARD_FRONTMATTER_FIELDS = [
@@ -86,10 +107,21 @@ DECISION_FRONTMATTER_FIELDS = [
     "requires_human_approval",
 ]
 
+ESCALATION_DECISION_FRONTMATTER_FIELDS = [
+    "rewrite_mode",
+    "stop_gate_status",
+]
+
 DECISION_BODY_HEADINGS = [
     "## Recommendation",
     "## Promotion Gate",
     "## Required Follow-Through",
+]
+
+ESCALATION_DECISION_BODY_HEADINGS = [
+    "## Escalation Decision",
+    "## Rewrite Mode",
+    "## Stop Gate For Next Pass",
 ]
 
 ARCHIVE_ANCHOR_FIELDS = [
@@ -126,6 +158,14 @@ PACKET_TEMPLATE_TARGETS = {
     "promotion_decision_template.md": "decision",
 }
 
+ESCALATION_STOP_GATE_STATUSES = {
+    "inactive",
+    "armed",
+    "fired",
+}
+
+DOMINANT_BLOCKER_SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
 
 def repo_relpath(path: Path | None) -> str | None:
     if path is None:
@@ -144,6 +184,29 @@ def resolve_config_path(status_data: dict, key: str) -> Path | None:
     if candidate.exists():
         return candidate
     return None
+
+
+def packet_schema_version(packet: dict) -> int:
+    version = packet.get("packet_schema_version", 1)
+    if not isinstance(version, int):
+        raise ValueError("Packet manifest field 'packet_schema_version' must be an integer.")
+    return version
+
+
+def escalation_mode_active(
+    packet: dict,
+    review_frontmatter: dict,
+    decision_frontmatter: dict,
+) -> bool:
+    return (
+        packet_schema_version(packet) >= 2
+        and review_frontmatter.get("north_star_verdict") == "below_north_star"
+        and decision_frontmatter.get("recommendation") == "revise_candidate"
+    )
+
+
+def valid_dominant_blocker_slug(value: object) -> bool:
+    return isinstance(value, str) and bool(DOMINANT_BLOCKER_SLUG_RE.fullmatch(value))
 
 
 def resolve_live_draft(package_path: Path, status_data: dict) -> Path | None:

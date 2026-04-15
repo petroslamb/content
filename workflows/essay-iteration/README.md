@@ -344,21 +344,55 @@ This gate is binary:
 
 No middleground is allowed here. Do not launch another broad rewrite from a cleaner outline, a softened memo, or a partially improved blueprint.
 
+## North-Star Escalation Mode
+
+Use this mode only when all of the following are true:
+
+- the current replacement review has `north_star_verdict: below_north_star`
+- the current decision still has `recommendation: revise_candidate`
+- the packet manifest has `packet_schema_version >= 2`
+
+This mode does not create a new memo type, packet type, or sidecar artifact family. It extends the existing blueprint, replacement review, and decision surfaces so the packet is forced to answer the questions that matter after a failed flagship attempt.
+
+The purpose is convergence, not more paperwork. When the mode is active, the packet must name:
+
+- the dominant blocker to north-star progress
+- the exact rewrite bet for the next pass
+- what gets cut or demoted if iteration continues
+- whether another flagship pass is allowed at all
+
+The stop rule is hard:
+
+1. the first failed flagship candidate may arm one constrained escalation pass
+2. if the next candidate is still below north star and the `dominant_blocker_slug` is unchanged, the stop gate fires
+3. once the stop gate fires, do not write another blind local flagship pass from the same frame
+
+Allowed outcomes after the stop gate fires:
+
+- publish the current candidate as a strong non-flagship piece
+- narrow or reframe the topic into a different object
+- split a broader stakes branch into a companion
+- shelve the flagship claim
+
+The escalation headings inside the packet are required only when this mode is active. Outside the mode, they may remain present as `Not active.` scaffolding.
+
 ## Canonical Iteration Loop
 
 1. maintain one stable live draft path
 2. run a brutal review with explicit scoring or rubric criteria when the draft is mature enough
 3. if the review does not clearly support promotion or bounded fixes, run the post-review blueprint gate as the next step
 4. either produce an outstanding-governing blueprint or state explicitly why that bar is not reachable from the current frame and evidence
-5. if the blueprint passes, optionally run an external blueprint review and adjudicate it as the writer
-6. run the essay prewrite gate before drafting
-7. either produce an essay-governing prewrite surface or conclude explicitly that the essay is not yet writable at the target bar
-8. use that result to decide whether another rewrite is viable at all
-9. get user approval before a major rewrite pass when the next direction materially changes the essay
-10. if the draft is close, apply bounded fixes first; otherwise produce a clearly bounded candidate
-11. run a cold replacement review before promotion when the candidate is a serious replacement contender
-12. compare, choose, and only then promote or archive
-13. archive superseded versions, local review files, and retired companions once they are no longer the active surface
+5. if north-star escalation mode is active, fill the escalation sections before another bounded candidate is authorized
+6. if the blueprint passes, optionally run an external blueprint review and adjudicate it as the writer
+7. run the essay prewrite gate before drafting
+8. either produce an essay-governing prewrite surface or conclude explicitly that the essay is not yet writable at the target bar
+9. use that result to decide whether another rewrite is viable at all
+10. get user approval before a major rewrite pass when the next direction materially changes the essay
+11. if the draft is close, apply bounded fixes first; otherwise produce a clearly bounded candidate
+12. run a cold replacement review before promotion when the candidate is a serious replacement contender
+13. if north-star escalation mode is active, compare the new candidate against the prior `dominant_blocker_slug` and stop when the same blocker persists
+14. compare, choose, and only then promote or archive
+15. archive superseded versions, local review files, and retired companions once they are no longer the active surface
 
 ## Refinement Defaults
 
