@@ -13,6 +13,7 @@ The current defaults in this directory were tightened against recurring March-Ap
 | [`paper-intake/README.md`](paper-intake/README.md) | promoting already-selected papers into the package evidence surface, converting PDFs to markdown, and maintaining the paper index | [`skills/markitdown-paper-intake/`](skills/markitdown-paper-intake/) |
 | [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | discovering papers, refining a shortlist, and pressure-testing active claims against anchor papers before intake | [`skills/alphaxiv/`](skills/alphaxiv/) |
 | [`essay-iteration/README.md`](essay-iteration/README.md) | hardening blueprints, running review and rewrite cycles, and maintaining live-draft/archive discipline | package-local docs plus review artifacts |
+| [`post-ceiling-pivot/README.md`](post-ceiling-pivot/README.md) | **experimental**: a flagship essay has clearly capped out and the package needs a research-grounded pivot before opening a new flagship object | package-local stop-gate findings plus [`alphaxiv-research/README.md`](alphaxiv-research/README.md) |
 | [`notebooklm-artifacts/README.md`](notebooklm-artifacts/README.md) | generating audio, slide, and video artifacts and downloading them into package artifacts | [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/), [`skills/pdf-slides-to-substack-images/`](skills/pdf-slides-to-substack-images/) |
 | [`article-polish/README.md`](article-polish/README.md) | naming and placing images, transcript round-trips, rehumanizing the draft, and final reference cleanup before publication | package-local docs plus NotebookLM/PDF helpers |
 | [`substack-publishing/README.md`](substack-publishing/README.md) | preparing and publishing essays to Substack and syncing their public presentation | package-local docs plus Substack helpers |
@@ -93,6 +94,8 @@ For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 8. run the packet validator before claiming the packet is ready for review
 9. compare before promotion instead of overwriting first
 10. if that review does not clear promotion, return immediately to blueprint hardening at the same top bar: either produce an outstanding-governing blueprint or conclude explicitly that the current frame cannot reach that bar from the available evidence
+
+If that cycle ends in an explicit frame ceiling rather than a rewrite path, do not keep iterating locally by default. Use the experimental [`post-ceiling-pivot/README.md`](post-ceiling-pivot/README.md) workflow to decide whether a real new flagship object exists before drafting again.
 
 That lifecycle is the cross-package default. Package READMEs can add local surfaces or exceptions, but they should not redefine the shared process when a tracked workflow already exists here.
 

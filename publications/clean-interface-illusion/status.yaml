@@ -9,11 +9,11 @@ stages:
     done: true
     last_updated: '2026-04-15'
   research:
-    done: true
+    done: false
     last_updated: '2026-04-15'
   essay_iteration:
     done: false
-    last_updated: null
+    last_updated: '2026-04-15'
   notebooklm_artifacts:
     done: false
     last_updated: null
