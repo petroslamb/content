@@ -1,0 +1,147 @@
+{
+  "kind": "essay_iteration_packet",
+  "package": "clean-interface-illusion",
+  "revision": 2,
+  "workflow_doc": "workflows/essay-iteration/README.md",
+  "judgment_policy": "draft_only",
+  "live_draft_path": "publications/clean-interface-illusion/clean-interface-illusion.md",
+  "candidate_path": "publications/clean-interface-illusion/clean-interface-illusion-candidate-r2.md",
+  "packet_manifest_path": "publications/clean-interface-illusion/clean-interface-illusion-essay-iteration-packet-r2.json",
+  "validator_commands": [
+    "npm run check:essay-iteration -- --package clean-interface-illusion"
+  ],
+  "prohibited_moves": [
+    "Do not overwrite the current live draft before a replacement verdict exists.",
+    "Do not archive adjacent leaves before the promotion decision is explicit.",
+    "Do not mark the stage done from a weak-model run without human review.",
+    "Do not claim Publication Power 9 or above under the draft-only policy."
+  ],
+  "archive_anchor_requirements": [
+    "one nearby archive anchor",
+    "one stronger archive anchor",
+    "one weaker archive anchor"
+  ],
+  "input_paths": {
+    "live_draft_path": "publications/clean-interface-illusion/clean-interface-illusion.md",
+    "leaf_readme_path": "publications/clean-interface-illusion/README.md",
+    "parent_package_readme_path": null,
+    "companion_path": null,
+    "nearest_blueprint_path": "publications/clean-interface-illusion/clean-interface-illusion-blueprint-r1.md",
+    "review_artifact_paths": [
+      "publications/clean-interface-illusion/clean-interface-illusion-replacement-review-r1.md",
+      "publications/clean-interface-illusion/clean-interface-illusion-atlas-scorecard-r1.md"
+    ],
+    "evidence_surface_path": "publications/clean-interface-illusion/papers",
+    "voice_rules_path": "workflows/essay-iteration/voice_rules.yaml"
+  },
+  "output_paths": {
+    "manifest": "publications/clean-interface-illusion/clean-interface-illusion-essay-iteration-packet-r2.json",
+    "blueprint": "publications/clean-interface-illusion/clean-interface-illusion-blueprint-r2.md",
+    "candidate": "publications/clean-interface-illusion/clean-interface-illusion-candidate-r2.md",
+    "replacement_review": "publications/clean-interface-illusion/clean-interface-illusion-replacement-review-r2.md",
+    "atlas_scorecard": "publications/clean-interface-illusion/clean-interface-illusion-atlas-scorecard-r2.md",
+    "decision": "publications/clean-interface-illusion/clean-interface-illusion-decision-r2.md"
+  },
+  "packet_templates": {
+    "blueprint": "workflows/essay-iteration/templates/hardened_blueprint_template.md",
+    "candidate": "workflows/essay-iteration/templates/candidate_template.md",
+    "replacement_review": "workflows/essay-iteration/templates/cold_replacement_review_template.md",
+    "atlas_scorecard": "workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md",
+    "decision": "workflows/essay-iteration/templates/promotion_decision_template.md"
+  },
+  "required_sections": {
+    "blueprint_headings": [
+      "## Promise",
+      "## Spine",
+      "## Paragraph burden",
+      "## Evidence burden",
+      "## Cut order",
+      "## Failure triggers"
+    ],
+    "review_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "judgment_policy",
+      "live_draft_path",
+      "candidate_path",
+      "replacement_verdict",
+      "north_star_verdict"
+    ],
+    "review_body_headings": [
+      "## Findings",
+      "## Prioritized Issues",
+      "## Scorecard",
+      "## Replacement Verdict",
+      "## North-Star Verdict",
+      "## Main Blockers"
+    ],
+    "scorecard_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "judgment_policy",
+      "candidate_path",
+      "opening_anchor",
+      "middle_anchor",
+      "ending_anchor",
+      "nearby_archive_anchor",
+      "stronger_archive_anchor",
+      "weaker_archive_anchor",
+      "traction",
+      "craft",
+      "publication_power",
+      "next_score_blocker"
+    ],
+    "scorecard_body_headings": [
+      "## Whole-Draft Rationale",
+      "## Opening Anchor",
+      "## Middle Anchor",
+      "## Ending Anchor",
+      "## Archive Anchors",
+      "## Direct Dimensions",
+      "## Traction",
+      "## Craft",
+      "## Publication Power",
+      "## Next-score Blocker"
+    ],
+    "decision_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "judgment_policy",
+      "live_draft_path",
+      "candidate_path",
+      "recommendation",
+      "promotion_allowed",
+      "requires_human_approval"
+    ],
+    "decision_body_headings": [
+      "## Recommendation",
+      "## Promotion Gate",
+      "## Required Follow-Through"
+    ],
+    "candidate_limits_headings": [
+      "## Limits",
+      "## Borders",
+      "## What This Will Not Fix",
+      "## What This Essay Will Not Claim"
+    ],
+    "candidate_references_headings": [
+      "## References",
+      "## Endmatter",
+      "## Sources",
+      "## Further Reading"
+    ],
+    "archive_anchor_fields": [
+      "nearby_archive_anchor",
+      "stronger_archive_anchor",
+      "weaker_archive_anchor"
+    ],
+    "passage_anchor_fields": [
+      "opening_anchor",
+      "middle_anchor",
+      "ending_anchor"
+    ]
+  }
+}

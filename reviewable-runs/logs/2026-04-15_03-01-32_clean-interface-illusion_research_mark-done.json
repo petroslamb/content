@@ -1,0 +1,13 @@
+{
+  "kind": "lifecycle_stage_run",
+  "timestamp": "2026-04-15_03-01-32",
+  "package": "clean-interface-illusion",
+  "stage": "research",
+  "action": "mark-done",
+  "success": true,
+  "workflow_doc": "workflows/alphaxiv-research/README.md",
+  "status_path": "publications/clean-interface-illusion/status.yaml",
+  "commands": [],
+  "output_excerpt": "Stage 'research' marked done for 'clean-interface-illusion'.",
+  "output_truncated": false
+}
