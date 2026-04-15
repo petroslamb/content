@@ -2,18 +2,19 @@
 
 Single-publication leaf package for the essay line that began as a flagship attempt on why agent benchmark success is often misread as deployment readiness.
 
-Research direction: Preserve the capped `clean-interface-illusion` essay as a donor object, then test adjacent flagship objects without pivoting prematurely. A pivot is only valid after a research-grounding gate clears.
+Research direction: Preserve the capped `clean-interface-illusion` essay as a donor object, then hand off to a successor package only after a research-grounding gate clears. That gate has now cleared for corrective competence.
 
 ## Package Status
 
 - Archetype: Leaf package
-- Status: Active unpublished essay
+- Status: Active donor leaf / capped flagship attempt
 - Canonical workflow docs: [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
 
 ## Orientation
 
 - Live draft: [`clean-interface-illusion.md`](clean-interface-illusion.md)
 - Active blueprint: [`blueprint.md`](blueprint.md)
+- Cleared successor package: [`../corrective-competence/README.md`](../corrective-competence/README.md)
 - Evidence surface: [`papers/`](papers/)
 - Evidence index: [`papers/index.md`](papers/index.md)
 - Artifact surface: [`artifacts/`](artifacts/)
@@ -37,20 +38,20 @@ Research direction: Preserve the capped `clean-interface-illusion` essay as a do
 - Keep alphaXiv discovery and validation results out of prose memory and move only selected papers into [`papers/`](papers/) through the tracked paper-intake workflow.
 - Use essay-iteration packet artifacts for bounded candidates, reviews, and scorecards rather than overwriting the live draft first.
 - Treat the `r3` packet as the proof surface for the stop gate, not as a prelude to `r4`.
-- Treat the post-ceiling reframe and pivot-slate files as the current strategic surfaces until a new flagship object or sibling package is initialized.
+- Treat the post-ceiling reframe and pivot-slate files as the strategic provenance layer now that the successor package has been initialized.
 - Treat any named pivot candidate as provisional until the grounding review explicitly clears a new flagship object.
 - Treat [`clean-interface-illusion-process-capture.md`](clean-interface-illusion-process-capture.md) as the canonical local record of how the post-ceiling pivot workflow was actually run in this package.
 
 ## Current Frame
 
-The original flagship brief is now capped. The current package is in a deliberate reframe:
+The original flagship brief is now capped. The current package is now a deliberate donor leaf:
 
 - `clean-interface-illusion` remains the donor essay and the record of the stop-gate decision
 - `Capability Is Not Delegation` is now a blocked hypothesis, not an approved pivot
 - `From Accuracy to Readiness` has been overtaken as the strongest provisional successor
 - `Corrective Competence / Capability-Comprehension Gap` is now cleared for a north-star flagship pivot attempt after the full-package clearance pass
 - `Contestability-Preserving Workflow Design` is now the strongest adjacent workflow seam
-- the next workflow move is to open the new flagship object around corrective competence, with contestability treated as the strongest supporting seam, not to keep hunting for another candidate
+- the successor package is now [`../corrective-competence/README.md`](../corrective-competence/README.md), with contestability treated as the strongest supporting seam rather than the top-level object
 
 The donor thesis line remains narrower than a generic "benchmarks are bad" complaint:
 

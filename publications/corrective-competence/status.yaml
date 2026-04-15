@@ -1,0 +1,34 @@
+kind: leaf
+publication: corrective-competence
+revision: 1
+config:
+  markdown_path: publications/corrective-competence/corrective-competence.md
+  evidence_path: publications/corrective-competence/papers
+stages:
+  paper_intake:
+    done: false
+    last_updated: '2026-04-15'
+  research:
+    done: true
+    last_updated: '2026-04-15'
+  essay_iteration:
+    done: false
+    last_updated: '2026-04-15'
+  notebooklm_artifacts:
+    done: false
+    last_updated: null
+  article_polish:
+    done: false
+    last_updated: null
+  substack_publishing:
+    done: false
+    last_updated: null
+  archive_sync:
+    done: false
+    last_updated: null
+  youtube_production:
+    done: false
+    last_updated: null
+  distribution:
+    done: false
+    last_updated: null
