@@ -33,7 +33,8 @@ This package begins after the post-ceiling pivot process in `clean-interface-ill
 - Cleared flagship object: corrective competence / capability-comprehension gap
 - Strongest supporting seam: contestability-preserving workflow design
 - Strongest rival frame to keep bounded: appropriate reliance engineering
-- Immediate task: intake the core paper seam locally, then harden the blueprint before opening a bounded candidate
+- First execution step complete: the core intake batch is now local, with converted markdown tracked in [`papers/markdown/`](papers/markdown/)
+- Immediate next task: harden the blueprint before opening a bounded candidate
 
 ## Donor Handoff
 
