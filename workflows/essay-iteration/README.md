@@ -158,15 +158,16 @@ The recurring strong pattern is:
 1. convert the blueprint from essay-outline or process language into a standalone research surface
 2. replace vague principles with source-backed findings or explicitly labeled synthesis
 3. add explicit guardrails for non-claims, historical overreach, and evidence mismatch
-4. add a claim-to-evidence ledger when the rewrite is evidence-sensitive and multiple papers are doing different argumentative jobs
+4. add a claim-to-evidence ledger using [`../evidence-authorization/README.md`](../evidence-authorization/README.md) when the rewrite is evidence-sensitive and multiple papers are doing different argumentative jobs
 5. add conditional evidence triggers when extra papers should only be intaken if a claim survives pressure-testing
 6. use alphaXiv in narrow validation mode and paper intake only when the claim set actually changes
 
 For evidence-sensitive article work, the preparation order is:
 
 1. intake missing papers into the canonical evidence surface
-2. harden the blueprint against that evidence surface
-3. write the bounded article candidate
+2. run evidence authorization if the source set needs a claim-permission layer
+3. harden the blueprint against that authorized evidence surface
+4. write the bounded article candidate
 
 Do not invert that order unless the package already has every load-bearing paper locally.
 

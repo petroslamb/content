@@ -28,6 +28,8 @@ This is why the frame cannot live inside model psychology alone. Model overconfi
 
 The debt compounds because each downstream layer receives the confidence without receiving the compression that created it. A claim loses its evidence texture when it becomes a summary. A summary loses its caveats when it becomes a score. A score loses its boundary conditions when it becomes a deployment argument. By the time a human is asked to approve the result, the workflow may have preserved the conclusion and stripped away the means of challenging it.
 
+The ordinary practice this challenges is familiar: treating a polished answer, a green evaluation dashboard, or a human approval as if confidence had been paid for once and could now be reused everywhere. Confidence debt says those are transfer points, not settlement points. Each one can move trust forward while leaving the evidence behind.
+
 ## The First Gate: Claim Auditability
 
 The first repair is artifact-level. A workflow has to decide what kind of object is allowed to settle a claim.
@@ -68,7 +70,7 @@ The second gate is therefore a reliability release gate. A score can support dep
 
 The human layer is where confidence debt becomes hardest to recover. Earlier layers can be repaired by better artifacts or stronger evaluations. Human correction capacity is slower to rebuild once the workflow stops exercising it.
 
-The persistence evidence is blunt. Liu et al. (2026) find that AI assistance improved immediate performance while reducing later unassisted performance and increasing task abandonment once the assistant disappeared. Ten minutes of assistance does not ruin a person. It can still leave a residue by changing what the person practices, how long they persists, and whether they build the habits that later oversight depends on.
+The persistence evidence is blunt. Liu et al. (2026) find that AI assistance improved immediate performance while reducing later unassisted performance and increasing task abandonment once the assistant disappeared. Ten minutes of assistance does not ruin a person. It can still leave a residue by changing what the person practices, how long they persist, and whether they build the habits that later oversight depends on.
 
 The software-learning evidence makes the mechanism more visible. Shen and Tamkin (2026) find that AI assistance impaired conceptual understanding, code reading, and debugging performance for developers learning an asynchronous Python library. Interaction pattern carried the meaningful split. Developers who stayed conceptually engaged retained more. Developers who treated the assistant as a contractor and themselves as reviewers of finished work lost more of the skill needed to validate and debug.
 
@@ -104,13 +106,21 @@ That is the right epistemic status for the thesis. The full three-layer cascade 
 
 The compounding is what gives the term its force. A single wrong summary is an error. A single over-read score is an evaluation mistake. A single passive reviewer is a human-factors problem. Confidence debt appears when the workflow lets each one finance the next.
 
-## Borders
+## Borders and Limits
 
 The strongest rival frame is appropriate reliance. It should be taken seriously. Under-reliance and over-reliance are both real. Expert users can reject useful AI advice, accept bad AI advice, or become anchored by an initial suggestion under time pressure. Calibration, uncertainty display, feedback, and interface design all matter.
+
+The hard version of that objection is not hypothetical. Chen et al. (2025) find that radiologists under-relied on a stronger prostate-MRI AI system, while Rosbach et al. (2026) show the opposite pressure in computational pathology: automation bias and anchoring can pull experts toward incorrect machine advice. Ibrahim et al. (2025) are right to frame overreliance as something systems must measure and mitigate. The reliance problem cuts both ways.
 
 They do not absorb confidence debt because they usually begin too late. Appropriate reliance asks how a person should weight AI advice at the moment of decision. Confidence debt asks what evidence reached that person, what reliability claim licensed the deployment, and what correction capacity the workflow preserved before the person saw the answer. A radiologist, engineer, or reviewer can be perfectly calibrated against the interface they receive and still be trapped inside evidence that was over-compressed before it reached them.
 
 This border is important because confidence debt should not become a bloated synonym for every AI trust problem. It is narrower than "AI can be wrong" and narrower than "people trust AI too much." The frame applies when trust moves downstream faster than the evidentiary, evaluative, and human controls that should constrain it. Where a workflow keeps claims auditable, releases systems only inside measured reliability envelopes, and gives reviewers real co-audit support, confidence debt is being paid down even if the model still makes mistakes.
+
+The doctrine should also stay inside its evidence. The three-gate stack has not been validated as one complete deployment system. The evidence base supports each gate from adjacent directions, but it does not yet prove that combining them will eliminate confidence debt in the field.
+
+There are no universal thresholds here. A hospital triage system, a code assistant, an internal research tool, and a customer-support agent need different reliability envelopes, escalation rules, and co-audit interfaces. A domain with reversible low-stakes outputs can tolerate more debt than a domain where errors become official records or irreversible actions.
+
+Provenance displays are not enough. Better benchmarks are not enough. Human oversight is not enough. Each can become another surface where confidence appears to have been handled while the debt moves somewhere else. The test is whether the workflow preserved a concrete right of dispute: the ability to inspect the claim, challenge the score, and correct the answer before trust hardens into action.
 
 ## The Doctrine
 
@@ -134,14 +144,6 @@ The human gate asks what software helps the reviewer see what the AI answer hide
 
 The doctrine should read less like a compliance checklist than a locator for borrowed trust. If the claim cannot be audited, the debt is at the artifact layer. If the score has outrun its reliability envelope, the debt is at the evaluation layer. If the reviewer is being asked to approve an answer without structured correction support, the debt is at the human layer.
 
-## Limits
-
-The doctrine should not be sold as solved science. The three-gate stack has not been validated as one complete deployment system. The evidence base supports each gate from adjacent directions, but it does not yet prove that combining them will eliminate confidence debt in the field.
-
-There are no universal thresholds here. A hospital triage system, a code assistant, an internal research tool, and a customer-support agent need different reliability envelopes, escalation rules, and co-audit interfaces. A domain with reversible low-stakes outputs can tolerate more debt than a domain where errors become official records or irreversible actions.
-
-Provenance displays are not enough. Better benchmarks are not enough. Human oversight is not enough. Each can become another surface where confidence appears to have been handled while the debt moves somewhere else. The test is whether the workflow preserved a concrete right of dispute: the ability to inspect the claim, challenge the score, and correct the answer before trust hardens into action.
-
 ## Conclusion
 
 Confidence debt accrues when output moves faster than evidence. It compounds when each layer of the workflow inherits confidence without inheriting the means to dispute it. The polished summary, the benchmark score, and the human approval can all look reasonable in isolation while together forming a pipeline that borrows trust at every step.
@@ -152,24 +154,26 @@ The repair is a stricter contract for delegation, not generalized skepticism. Ma
 
 - **Lambropoulos, P. (2025a).** *eip-verify: AI-Assisted Verification of Ethereum Protocol Implementations.* [Project repository](https://github.com/petroslamb/ethereum-protocol-verification).
 - **Lambropoulos, P. (2025b).** *eip-verify evidence artifacts.* Commit-pinned to [`ca15d40`](https://github.com/petroslamb/eth-llm-poc/tree/ca15d40): [`sample_scored_run.csv`](https://github.com/petroslamb/eth-llm-poc/blob/ca15d40/docs/evaluations/sample_scored_run.csv), [`scoring_rubric.md`](https://github.com/petroslamb/eth-llm-poc/blob/ca15d40/docs/evaluations/scoring_rubric.md), [`contradictions.csv`](https://github.com/petroslamb/eth-llm-poc/blob/ca15d40/docs/evaluations/contradictions.csv), [`evidence_ledger.md`](https://github.com/petroslamb/eth-llm-poc/blob/ca15d40/docs/evaluations/evidence_ledger.md).
-- **From Fluent to Verifiable.** *Claim-Level Auditability for Deep Research Agents.* Claim-level auditability, semantic provenance, contradiction transparency, and audit effort.
-- **PaperTrail.** *A Claim-Evidence Interface for Grounding Provenance in LLM-based Scholarly Q&A.* Claim-evidence matching, supported and unsupported claim surfacing, and the trust-behavior gap.
-- **AI-Assisted Engineering Should Track the Epistemic Status and Temporal Validity of Architectural Decisions.** Epistemic status and evidence expiry for AI-assisted decision records.
-- **Compliance-by-Construction Argument Graphs.** Evidence-linked formal argument records and deterministic validation of promoted claims.
-- **Yue, Y., et al. (2024).** *tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains.* Repeated-run reliability collapse behind one-shot pass rates.
-- **Liu, Z., et al. (2024).** *WebSuite: Systematically Evaluating Why Web Agents Fail.* Failure attribution and action-level diagnosis inside web-agent evaluation.
-- **Yuan, B., et al. (2026).** *WebForge: Breaking the Realism-Reproducibility-Scalability Trilemma in Browser Agent Benchmark.* Richer environments and multidimensional difficulty control.
-- **Dong, C., et al. (2026).** *Towards a Science of AI Agent Reliability.* Reliability dimensions beyond scalar capability.
-- **ReliabilityBench.** *Evaluating LLM Agent Reliability Under Production-Like Stress Conditions.* Repeated-run consistency, perturbation robustness, and infrastructure fault tolerance through R(k, epsilon, lambda).
-- **Beyond pass@1.** *A Reliability Science Framework for Long-Horizon LLM Agents.* Reliability decay, variance amplification, graceful degradation, and meltdown onset.
-- **Capable but Unreliable.** *Canonical Path Deviation as a Causal Mechanism of Agent Failure in Long-Horizon Tasks.* Trajectory drift as a mechanism for capable-but-unreliable agents.
-- **Measuring Agents in Production.** Production-agent practice around bounded autonomy, structured workflows, monitoring, and human oversight.
-- **AgentCompass.** Production trace monitoring, error taxonomy, localization, and fix recipes for agentic workflows.
-- **Xiao, Y., et al. (2026).** *AI Assistance Reduces Persistence and Hurts Independent Performance.* Causal evidence that assistance can reduce later unassisted performance and persistence.
-- **Tankelevitch, L., et al. (2026).** *How AI Impacts Skill Formation.* Interaction patterns, conceptual understanding, code reading, and debugging ability under AI assistance.
-- **Rich, B., et al. (2026).** *Mitigating "Epistemic Debt" in Generative AI-Scaffolded Novice Programming using Metacognitive Scripts.* Scaffolded versus unrestricted AI assistance and later maintenance performance.
-- **Varanasi, S., et al. (2026).** *The Competence Shadow: Theory and Bounds of AI Assistance in Safety Engineering.* Machine-pruned search spaces and compounding hidden omissions.
-- **Co-audit.** *Tools to Help Humans Double-Check AI-Generated Content.* Tool-assisted human audit as a distinct interaction layer.
-- **Cognitive Forcing Functions for Execution Plans in AI-Assisted Writing.** Assumption-focused prompts and behavioral reductions in overreliance.
-- **Capel, L., et al. (2025).** *From Evidence to Decision: Exploring Evaluative AI.* Hypothesis-driven support that shows evidence for and against candidate judgments.
-- **Measuring and Mitigating Overreliance is Necessary for Building Human-Compatible AI.** Overreliance as a measurement and mitigation problem.
+- **Rasheed, R. A., Mukherjee, A., Banerjee, S., & Hazra, R. (2026).** *From Fluent to Verifiable: Claim-Level Auditability for Deep Research Agents.* arXiv:2602.13855.
+- **Martin-Boyle, A., Brown, M. C., Leckey, C. A. C., & Kaur, H. (2026).** *PaperTrail: A Claim-Evidence Interface for Grounding Provenance in LLM-based Scholarly Q&A.* CHI 2026. https://doi.org/10.1145/3772318.3791101.
+- **Gilda, S., & Gilda, S. (2026).** *AI-Assisted Engineering Should Track the Epistemic Status and Temporal Validity of Architectural Decisions.* arXiv:2601.21116.
+- **Moghaddam, M. T. (2026).** *Compliance-by-Construction Argument Graphs: Using Generative AI to Produce Evidence-Linked Formal Arguments for Certification-Grade Accountability.* arXiv:2604.04103.
+- **Yao, S., Shinn, N., Razavi, P., & Narasimhan, K. (2024).** *tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains.* arXiv:2406.12045.
+- **Li, E., & Waldo, J. (2024).** *WebSuite: Systematically Evaluating Why Web Agents Fail.* arXiv:2406.01623.
+- **Yuan, P., Yin, Y., Cai, Y., & Wei, Z. (2026).** *WebForge: Breaking the Realism-Reproducibility-Scalability Trilemma in Browser Agent Benchmark.* arXiv:2604.10988.
+- **Rabanser, S., Kapoor, S., Kirgis, P., Liu, K., Utpala, S., & Narayanan, A. (2026).** *Towards a Science of AI Agent Reliability.* arXiv:2602.16666.
+- **Gupta, A. (2026).** *ReliabilityBench: Evaluating LLM Agent Reliability Under Production-Like Stress Conditions.* arXiv:2601.06112.
+- **Khanal, A., Tao, Y., & Zhou, J. (2026).** *Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents.* arXiv:2603.29231.
+- **Lee, W. Y. (2026).** *Capable but Unreliable: Canonical Path Deviation as a Causal Mechanism of Agent Failure in Long-Horizon Tasks.* arXiv:2602.19008.
+- **Pan, M. Z., Arabzadeh, N., Cogo, R., Zhu, Y., Xiong, A., Agrawal, L. A., et al. (2026).** *Measuring Agents in Production.* arXiv:2512.04123.
+- **Kartik, N. V. J. K., Sapra, G., Hada, R., & Pareek, N. (2025).** *AgentCompass: Towards Reliable Evaluation of Agentic Workflows in Production.* arXiv:2509.14647.
+- **Liu, G., Christian, B., Dumbalska, T., Bakker, M. A., & Dubey, R. (2026).** *AI Assistance Reduces Persistence and Hurts Independent Performance.* arXiv:2604.04721.
+- **Shen, J. H., & Tamkin, A. (2026).** *How AI Impacts Skill Formation.* arXiv:2601.20245.
+- **Sankaranarayanan, S. (2026).** *Mitigating "Epistemic Debt" in Generative AI-Scaffolded Novice Programming using Metacognitive Scripts.* arXiv:2602.20206.
+- **Siddique, U. (2026).** *The Competence Shadow: Theory and Bounds of AI Assistance in Safety Engineering.* arXiv:2603.25197.
+- **Gordon, A. D., Negreanu, C., Cambronero, J., Chakravarthy, R., Drosos, I., Fang, H., Mitra, B., Richardson, H., Sarkar, A., Simmons, S., Williams, J., & Zorn, B. (2023).** *Co-audit: Tools to Help Humans Double-Check AI-Generated Content.* arXiv:2310.01297.
+- **Ghosh, A., Sarkar, A., Lindley, S., & Poelitz, C. (2026).** *An Experimental Comparison of Cognitive Forcing Functions for Execution Plans in AI-Assisted Writing.* arXiv:2601.18033.
+- **Le, T., Miller, T., Sonenberg, L., Singh, R., & Soyer, H. P. (2025).** *From Evidence to Decision: Exploring Evaluative AI.* arXiv:2402.01292.
+- **Ibrahim, L., Collins, K. M., Kim, S. S. Y., Reuel, A., Lamparth, M., Feng, K., et al. (2025).** *Measuring and Mitigating Overreliance is Necessary for Building Human-Compatible AI.* arXiv:2509.08010.
+- **Chen, C., Liu, H., Yang, J., Mervak, B. M., Kalaycioglu, B., Lee, G., et al. (2025).** *Can Domain Experts Rely on AI Appropriately? A Case Study on AI-Assisted Prostate Cancer MRI Diagnosis.* arXiv:2502.03482.
+- **Rosbach, E., Ammeling, J., Ganz, J., Bertram, C. A., Conrad, T., Riener, A., & Aubreville, M. (2026).** *Stuck on Suggestions: Automation Bias, the Anchoring Effect, and the Factors That Shape Them in Computational Pathology.* MELBA 2026. https://doi.org/10.59275/j.melba.2026-87b1.
