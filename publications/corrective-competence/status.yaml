@@ -1,6 +1,6 @@
 kind: leaf
 publication: corrective-competence
-revision: 2
+revision: 3
 config:
   markdown_path: publications/corrective-competence/corrective-competence.md
   evidence_path: publications/corrective-competence/papers
