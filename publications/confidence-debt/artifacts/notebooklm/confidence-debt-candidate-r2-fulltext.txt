@@ -1,0 +1,122 @@
+Confidence Debt
+What your AI workflow borrows when the output moves faster than the evidence
+The Polished Version Wins
+The summary said every obligation was properly mapped.
+In eip-verify, a verification project built to test whether AI could reliably trace Ethereum protocol requirements to actual implementation code (Lambropoulos, 2025), one run family produced a polished report alongside its row-level evidence. The report was structured, confident, and easy to forward. The spreadsheet underneath it was not. Spot-checks turned up client mappings that pointed to ABI helpers, test fixtures, and RPC glue rather than to the protocol logic the run was supposed to verify. In one model tier, thirteen of fifteen direct-adjudication entries required follow-up. The summary and the spreadsheet came from the same system, generated in the same session, delivered with the same tone of certainty.
+One of them was wrong about where the code actually lived. The other one was easier to read.
+The model's mistakes were ordinary. Every verification tool produces errors. What was not ordinary was the structural asymmetry that followed. Without an explicit rule for deciding which artifact to believe, the polished version would have propagated. It was faster to scan, simpler to present in a meeting, and more comfortable to treat as evidence. The raw data required someone to open a spreadsheet, trace a file path back to a repository, and check whether the location contained protocol logic or peripheral glue. In any workflow that rewards readability and penalizes friction, the confident version wins and the contradictions stay buried.
+The project was forced to invent adjudication rules after the fact. A working evidence hierarchy: raw artifacts outrank evaluation summaries, evaluation summaries outrank narrative readmes. A contradiction register, because once the same system produces incompatible claims, contradiction had to become a tracked object rather than an embarrassment. A scoring rubric that could distinguish mostly right from semantically disputed, because "looks plausible" was carrying more authority than it deserved. Eight contradictions surfaced across eighty-one scored mappings (Lambropoulos, 2025, contradiction register). Three public-facing claims were downgraded. The follow-up burden concentrated in one model tier, which meant model selection was doing governance work that the project had originally treated as a procurement question.
+Those results are inspectable. The scored dataset, the contradiction register, and the evidence ledger are pinned to commit 
+ca15d40
+ in a public repository (Lambropoulos, 2025, evidence artifacts). That matters because the project did not fix the problem by making the model smarter. It fixed the problem by making the errors findable, disputable, and removable before they could harden into claims that no one could trace back to their evidence. The model did not need a better personality. The workflow needed stronger rules about which artifact was allowed to settle a claim.
+What Confidence Debt Is
+What the project had surfaced, without naming it, was a pattern that extends beyond one pilot.
+A system incurs confidence debt when its output is trusted downstream before the evidence warrants that trust. The term parallels technical debt, which borrows development velocity against future maintenance cost, and epistemic debt, which borrows assisted output against retained understanding (Rich et al., 2026). Confidence debt borrows trust itself. The output looks authoritative enough to propagate, but the evidence behind it has not been adjudicated to the standard that the downstream consumer will assume. The cost arrives not when the output is generated but when someone needs to dispute, reverse, or repair a claim that was never properly examined. By that point the claim has already traveled. It has been forwarded, embedded in decisions, or used as the basis for further work. The distance between how far trust propagated and how far the evidence actually reached defines the size of the debt.
+Overconfidence is a property of the model. A model can be badly calibrated without anyone downstream being affected. Confidence debt is a property of the workflow. A perfectly calibrated model can still produce confidence debt if the workflow allows its outputs to travel further and faster than the evidence that should constrain them. The distinction matters because it shifts the intervention target from the model's internals to the pipeline's structure.
+And the debt compounds, because each downstream consumer inherits the upstream confidence without seeing what was compressed away. That compounding makes the pattern dangerous in a way that single-point fixes cannot address. It operates across the layers of the delegation stack: the artifacts a system produces, the evaluation scores those artifacts earn, and the human capacity to catch what went wrong once those scores justify deployment.
+How Confidence Gets Packaged
+The evaluation layer is where confidence debt gets formally packaged and exported. What arrives as a plausible artifact leaves as a portable number.
+A model that solves retail support tasks 61 percent of the time sounds close to useful. In τ-bench, that same result changes shape once you ask what happens over repeated runs (Yue et al., 2024). The best model reaches 61 percent on individual attempts, but the pass-to-the-eighth falls below 25 percent. The model did not lose capability between the first run and the eighth. What changed was the question. The topline score answered whether the model could do the task. The repeated-run result started answering whether the model could be trusted to do it reliably. Those are different questions carrying different operational weight, but the headline flattens them into one number.
+The field has improved benchmark realism faster than it has improved benchmark interpretation. Modern agent evaluations already rebuild real websites, localize failures, inject noise, and force agents to search large toolspaces. WebSuite raises the engineering value of evaluation by making failures attributable: a flat web score tells you less than learning that the agent breaks specifically on complex forms or ambiguous link selection (Liu et al., 2024). WebForge raises the environmental bar through noise injection and multidimensional difficulty control (Yuan et al., 2026). Read together, these papers are not making leaderboards more impressive. They are making topline scores less sufficient as summaries of what the benchmark actually found.
+The reliability literature explains why that insufficiency matters at the pipeline level rather than just the measurement level. Consistency, robustness, predictability, and safety are separable dimensions that a single capability score cannot represent (Dong et al., 2026). A system can score well on task completion while trailing badly on any of them. The central pattern is the one the evaluation community keeps rediscovering: accuracy rises while reliability lags behind.
+Here is the transfer mechanism. A pass rate becomes a headline. The headline enters a deployment argument. The deployment argument reaches a procurement meeting, a product roadmap, or a policy framework in a form that no longer carries the caveats the benchmark itself revealed. The score becomes the basis for deciding how much AI assistance to deploy and how much human oversight to allocate. If the score was over-read, every downstream trust decision inherits that over-reading. The artifact-layer debt, which started as a plausible summary outranking contradictory evidence, has now been formalized into a number, exported into a deployment decision, and used to calibrate how much human correction capacity the workflow retains. The debt is no longer local. It is structural.
+What Happens When the Debt Lands on People
+The consequence of that debt landing at the human layer is different from the consequence at the artifact or evaluation layer. At those earlier layers, the cost is misjudgment: a wrong claim survives, a score gets over-read. At the human layer, the cost is the quiet erosion of the capacity to catch misjudgments in the future.
+In a set of randomized trials, people spent roughly ten minutes using AI assistance on straightforward problems (Xiao et al., 2026). While the assistant was available, performance looked fine. Once it was removed, the same people solved fewer problems and gave up more often. The system had not failed in the usual sense. It had helped. The damage appeared in the residue it left behind: reduced persistence, weaker independent performance, and a measurable increase in surrendering tasks. Persistence matters because it sits upstream of correction. A person who stops working through a problem stops building the judgment that later oversight will need. The erosion is not about knowing less. It is about exercising less of the capacity that intervention requires.
+The mechanism becomes clearer once interaction pattern enters the picture. In a study of developers learning a new asynchronous Python library, AI assistance reduced conceptual understanding, code reading ability, and debugging performance (Tankelevitch et al., 2026). The meaningful distinction was not AI versus no AI. It was how the person engaged with the AI. Patterns that forced the developer to ask for explanations, work with concepts, and stay cognitively active preserved learning. Patterns that cast the model as a contractor and the developer as a reviewer of finished work produced the steepest skill erosion. The pedagogical version of this finding is epistemic debt: in a study of novice programmers, unrestricted AI assistance and scaffolded AI produced similar short-term output, but they diverged sharply in a subsequent maintenance task once the assistant was removed (Rich et al., 2026). Some kinds of friction were carrying competence-preserving load that the workflow had quietly stopped accounting for.
+The safety-engineering literature sharpens the compounding risk. The competence shadow describes a structural dynamic, not just a metaphor (Varanasi et al., 2026). When AI narrows the set of hazards, scenarios, or mitigations that get considered, downstream human review only inspects what survived that initial narrowing. The omission compounds. What disappears at the proposal stage cannot be recovered by careful inspection later, because it never reaches inspection. If the system proposes the initial search space, the human evaluates that reduced space, and a later review checks the outputs of that already-reduced process, the losses do not merely add up. They stack. The human is no longer correcting the whole problem space. They are correcting inside a machine-pruned version of it, and they may never see the boundary of what was pruned.
+The Cascade
+Each layer described so far is a recognized problem within its own research community. Confident AI artifacts are a known hazard in documentation and verification (Simhi et al., 2025). Over-read benchmark scores are an active topic in evaluation science. Human skill erosion under AI assistance is a growing concern across education, medicine, and software engineering. Separately, they are three well-documented within-layer problems. Together, they compose a pipeline.
+The composition works through a specific transfer mechanism at each boundary.
+At the artifact-to-evaluation boundary, a confident output becomes the object that evaluation scores. If the evaluation framework does not independently check the output against raw evidence, it inherits the artifact's confidence without adjudicating it. The score it produces reflects what the artifact claimed, not what the underlying evidence supports.
+At the evaluation-to-human boundary, the score becomes the deployment argument. The deployment argument determines how much AI assistance gets deployed and, in practice, how much independent human oversight the workflow retains. An over-read score produces over-confident deployment, and over-confident deployment hands the human an output whose provenance they were never asked to verify.
+At the human-to-pipeline boundary, the cycle closes. The human whose correction capacity has been thinned by repeated AI assistance is now asked to oversee the next round of outputs. Their ability to catch a confident-but-wrong artifact has been attenuated by the same pipeline that produced the artifact. Each pass through the loop degrades the correction capacity that was supposed to be the last safeguard.
+The automation-bias literature already describes this dynamic independently. Intermediate acceptance of AI output strengthens the user's psychological commitment to the system and makes later correction harder, not easier. In multi-stage workflows, a minor error accepted at an early stage compounds as it travels through subsequent stages, because each intermediate judgment reinforces rather than challenges the prior output. The compounding is not a theory about what could happen. It is a documented pattern in human-factors research that the confidence-debt frame connects to the specific mechanisms of artifact production, benchmark evaluation, and skill erosion.
+The eip-verify project illustrates the full cycle within a single case (Lambropoulos, 2025). A model produced a confident summary. No independent evaluation framework adjudicated the summary against the raw evidence. A reviewer would have consumed the polished output rather than tracing every mapping to source code, because that is what polished output is designed to encourage. If the project had not invented adjudication rules after the fact, the confident version would have propagated as proof. That is one project producing all three layers of the cascade: artifact confidence that outran the evidence, an evaluation gap where no benchmark challenged it, and a human-layer exposure where the reviewer's capacity to catch the error was pre-empted by the plausible output.
+Does Calibration Absorb the Problem?
+The strongest rival frame remains appropriate reliance. Calibration matters. Under-reliance and over-reliance are both real and both documented. In prostate cancer MRI diagnosis, radiologists under-relied on a stronger AI system, and targeted performance feedback did not straightforwardly solve the problem (Seyyed-Kalantari et al., 2025). In computational pathology, researchers can measure automation bias, anchoring effects, and confirmation bias amplified under time pressure. Those findings are important. They demonstrate that the reliance problem has more than one direction and more than one cause.
+The reason they do not absorb confidence debt is that they operate within a single layer. They describe how a person weights machine advice at the moment of decision. Confidence debt asks a prior question: what evidence actually reached that person, and what capacity do they still have to evaluate it? Better calibration at the artifact layer does not prevent an aggregate score from being over-read. Better uncertainty indicators at the evaluation layer do not restore correction capacity that was never exercised. Better interface friction at the human layer does not address the fact that the evidence arriving at the interface was already over-compressed before it got there. Each within-layer intervention is necessary. None of them addresses the cross-layer transfer.
+A more constructive alternative appears in hypothesis-driven decision support, which presents evidence for and against a candidate judgment rather than simply issuing a recommendation (Capel et al., 2025). The distinction is structural: recommendation-driven systems organize the human around reacting to the machine's answer, while hypothesis-driven systems preserve comparison, visibility into reasons, and room to reject the machine without abandoning the task. That design choice preserves more of the correction capacity that confidence debt erodes.
+What a Debt-Aware Workflow Preserves
+The discipline that follows is specific enough to audit.
+At the 
+artifact layer
+, the rule is evidence hierarchy. When a polished output contradicts messier but more granular evidence, the granular evidence wins. Track contradictions as first-class objects rather than absorbing them into narrative. Make the wrong answers findable and disputable before they harden into public claims.
+At the 
+evaluation layer
+, the rule is interpretive discipline. Read benchmark scores inside the boundary of what the evaluation design actually measured. A pass rate licenses claims about task completion under the benchmark's conditions. It does not license claims about reliability, robustness, or deployment readiness unless the benchmark specifically tested those dimensions. Do not let a topline number carry more operational confidence than the evaluation warrants.
+At the 
+human layer
+, the rule is correction-capacity preservation. Ask what the workflow preserves in the person, not only what it extracts from the model. Track whether the humans in the loop are building correction skills or spending them. Do not call a workflow safe to delegate through unless those humans retain enough independent judgment to detect, challenge, and repair errors when the model is wrong in ways that conceal their own wrongness.
+Limits
+This essay does not claim that AI assistance always produces confidence debt or that every domain requires identical safeguards. It does not claim that the three-layer cascade has been causally demonstrated through a single controlled study spanning artifacts, evaluation, and human oversight in one experiment. It claims something more specific: the structural conditions for cross-layer compounding exist, one worked case illustrates the full cycle, the transfer mechanisms at each layer boundary are concrete and documented, and converging evidence from evaluation science, behavioral research, safety engineering, and human-factors research supports the pattern from independent directions. The compounding thesis is a structural inference from that convergence, not a proven causal chain. It is enough to change how workflows are designed. It is not yet enough to certify a universal law.
+Conclusion
+Confidence debt accrues whenever a system's output moves downstream before the evidence catches up. It compounds because each layer of the delegation stack inherits the upstream confidence without seeing what was compressed away. And it comes due at the moment that matters most: when someone needs to push back against a conclusion the entire pipeline has already accepted, and discovers that the capacity to push back has been quietly spent.
+References
+Lambropoulos, P. (2025a).
+ 
+eip-verify: AI-Assisted Verification of Ethereum Protocol Implementations.
+ 
+Project repository
+https://github.com/petroslamb/ethereum-protocol-verification
+. The verification framework, run architecture, and model-comparison infrastructure behind the opening case.
+Lambropoulos, P. (2025b).
+ 
+eip-verify evidence artifacts.
+ Commit-pinned to 
+: 
+ (81 mappings, 47 direct-adjudication rows), 
+ (five-dimension quality assessment), 
+ (8 tracked contradictions, CTR-001 through CTR-008), 
+ (claim-level tracking with counterevidence).
+Lambropoulos, P. (2025c).
+ 
+The Five-Component Pattern for AI Evidence Governance.
+ 
+Publication index
+https://github.com/petroslamb/ethereum-protocol-verification/blob/main/publications/README.md
+. Evidence hierarchy, scoring rubric, contradiction register, claim ledger, and release gating extracted from the eip-verify project into a reusable governance pattern.
+Simhi, A., et al. (2025).
+ 
+Trust Me, I'm Wrong: LLMs Hallucinate with Certainty Despite Knowing the Answer.
+ Confidence survives even when the underlying answer is unstable, demonstrating that model certainty and model correctness are decoupled properties.
+Yue, Y., et al. (2024).
+ 
+τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains.
+ The repeated-run result that shows how a single pass rate compresses away reliability information the benchmark itself revealed.
+Liu, Z., et al. (2024).
+ 
+WebSuite: Systematically Evaluating Why Web Agents Fail.
+ Failure attribution and action-level diagnosis inside web-agent evaluation, making evaluation useful for engineering rather than just ranking.
+Yuan, B., et al. (2026).
+ 
+WebForge: Breaking the Realism-Reproducibility-Scalability Trilemma in Browser Agent Benchmark.
+ Richer environments and multidimensional difficulty control that make topline scores less representative of the full evaluation surface.
+Dong, C., et al. (2026).
+ 
+Towards a Science of AI Agent Reliability.
+ Consistency, robustness, predictability, and safety as separable reliability dimensions that a single capability score cannot represent.
+Xiao, Y., et al. (2026).
+ 
+AI Assistance Reduces Persistence and Hurts Independent Performance.
+ Causal evidence from randomized trials that short AI exposure degrades later unassisted performance and increases task abandonment.
+Tankelevitch, L., et al. (2026).
+ 
+How AI Impacts Skill Formation.
+ Interaction pattern determines whether AI assistance preserves or erodes conceptual understanding and debugging ability, with contractor-style usage producing the steepest skill loss.
+Rich, B., et al. (2026).
+ 
+Mitigating "Epistemic Debt" in Generative AI-Scaffolded Novice Programming using Metacognitive Scripts.
+ Unrestricted and scaffolded AI assistance diverge sharply on later independent maintenance performance, demonstrating that some friction carries competence-preserving load.
+Varanasi, S., et al. (2026).
+ 
+The Competence Shadow: Theory and Bounds of AI Assistance in Safety Engineering.
+ Formal compounding model for hidden competence loss inside machine-pruned search spaces where omissions stack across review stages.
+Seyyed-Kalantari, L., et al. (2025).
+ 
+Can Domain Experts Rely on AI Appropriately? A Case Study on AI-Assisted Prostate Cancer MRI Diagnosis.
+ Expert under-reliance on a stronger AI system and the irreducible complexity of reliance calibration under clinical conditions.
+Capel, L., et al. (2025).
+ 
+From Evidence to Decision: Exploring Evaluative AI.
+ Hypothesis-driven decision support as a structural alternative to recommendation-driven systems, preserving the human's capacity for comparison and rejection.

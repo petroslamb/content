@@ -1,0 +1,22 @@
+{
+  "clips": [
+    {
+      "slug": "charismatic-coworker-hook",
+      "title": "The Charismatic Co-worker: Why we trust the polish over the proof.",
+      "start": "00:00:00.000",
+      "end": "00:00:59.000"
+    },
+    {
+      "slug": "defining-confidence-debt",
+      "title": "Defining Confidence Debt: When AI output outruns its evidence.",
+      "start": "00:04:43.000",
+      "end": "00:05:40.000"
+    },
+    {
+      "slug": "contagion-path",
+      "title": "The Contagion Path: How unverified AI trust spreads through an organization.",
+      "start": "00:02:21.000",
+      "end": "00:03:20.000"
+    }
+  ]
+}

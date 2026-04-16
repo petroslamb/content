@@ -1,0 +1,107 @@
+{
+  "notebook_id": "ccf6f7d2-9094-4e16-94e8-5b974b361882",
+  "notebook_title": "Confidence Debt",
+  "artifacts": [
+    {
+      "index": 1,
+      "id": "f195a824-7927-411d-891f-5a30779548af",
+      "title": "Confidence Debt",
+      "type": "Video",
+      "type_id": "video",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T21:53:33"
+    },
+    {
+      "index": 2,
+      "id": "eff9670b-c926-4b1b-9c61-b62a57f03dfd",
+      "title": "Study Guide: NIST Generative AI Risk Management Framework (AI 600-1)",
+      "type": "Study Guide",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T22:09:37"
+    },
+    {
+      "index": 3,
+      "id": "201ed716-d315-4493-afcd-46bf164fd227",
+      "title": "Briefing Document: Generative AI Risk Management and Expert Knowledge Integration",
+      "type": "Briefing Doc",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T22:09:27"
+    },
+    {
+      "index": 4,
+      "id": "5ffcb8bb-3548-4e27-b44a-b9b5274ac82f",
+      "title": "NIST AI 600-1 Study Guide: Generative AI Risk Management",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T22:09:01"
+    },
+    {
+      "index": 5,
+      "id": "26fe9d37-eac9-4ddd-8471-889754d595ba",
+      "title": "Artificial Intelligence Risk Management Framework: Generative AI Profile Briefing",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T22:08:53"
+    },
+    {
+      "index": 6,
+      "id": "2b828da8-2337-4f96-bba1-193898bffa17",
+      "title": "The Hidden Cost of Confidence Debt",
+      "type": "Audio",
+      "type_id": "audio",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T21:53:13"
+    },
+    {
+      "index": 7,
+      "id": "93ba5dca-6aff-4a53-85e9-f70a28967253",
+      "title": "Unmasking Confidence Debt",
+      "type": "Slide Deck",
+      "type_id": "slide_deck",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T21:53:26"
+    },
+    {
+      "index": 8,
+      "id": "b88e2eee-2dd7-4db3-be1e-cb656552f494",
+      "title": "AI Flashcards",
+      "type": "Flashcards",
+      "type_id": "flashcards",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T21:54:01"
+    },
+    {
+      "index": 9,
+      "id": "0fa7a617-1e61-4233-8530-e2bbad736bb2",
+      "title": "AI Quiz",
+      "type": "Quiz",
+      "type_id": "quiz",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T21:54:07"
+    },
+    {
+      "index": 10,
+      "id": "b2365f63-1d17-4a6a-bf8f-a7d2b01c0f5a",
+      "title": "NIST Generative AI Risk Management Framework",
+      "type": "Mind Map",
+      "type_id": "mind_map",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-04-16T22:08:51"
+    }
+  ],
+  "count": 10
+}

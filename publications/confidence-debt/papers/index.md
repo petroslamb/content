@@ -1,36 +1,78 @@
-# Papers Index
+# Confidence Debt Papers Index
 
-This package inherits evidence from three donor packages. Papers will be intaken locally once the thesis stress-test and evidence fusion gates clear. Until then, this index tracks the combined evidence ledger by donor origin.
+This index is the package-local source inventory. It answers what sources are available and where they live locally. It does not decide what claims those sources authorize; that job belongs to [`../confidence-debt-evidence-authorization-ledger.md`](../confidence-debt-evidence-authorization-ledger.md).
 
-## Inherited From evidence-governance
+## First-Party Evidence
 
-- First-party: `eip-verify` project artifacts (81 scored rows, 47 direct-adjudication rows, 8 contradictions, 3 downgraded claims)
-- `Simhi et al.` Trust Me, I'm Wrong: LLMs Hallucinate with Certainty Despite Knowing the Answer
-- `Ji et al.` MedRAGChecker: Claim-Level Verification for Biomedical Retrieval-Augmented Generation
-- `Sackett et al.` Evidence Based Medicine: What It Is and What It Isn't
+| Source | Local / External Path | Relevance |
+| :--- | :--- | :--- |
+| eip-verify evidence artifacts | External commit-pinned artifacts in the eip-verify / eth-llm evidence repositories | Opening case: polished summary contradicted row-level evidence; supports evidence hierarchy, contradiction register, claim ledger, and model-tier follow-up burden. |
 
-## Inherited From clean-interface-illusion
+## Artifact Gate: Claim Auditability
 
-- `2406.01623` WebSuite
-- `2412.14161` TheAgentCompany
-- `2504.11543` REAL
-- `2508.01780` LiveMCPBench
-- `2602.02760` From Task Solving to Robust Real-World Adaptation in LLM Agents
-- `2602.16666` Towards a Science of AI Agent Reliability
-- `2604.10988` WebForge
-- `2406.12045` tau-bench
+| Source | PDF | Markdown | Relevance |
+| :--- | :--- | :--- | :--- |
+| From Fluent to Verifiable: Claim-Level Auditability for Deep Research Agents | [`from_fluent_to_verifiable.pdf`](from_fluent_to_verifiable.pdf) | [`markdown/from_fluent_to_verifiable.md`](markdown/from_fluent_to_verifiable.md) | Anchors claim-level auditability: provenance coverage, provenance soundness, contradiction transparency, audit effort. |
+| PaperTrail: A Claim-Evidence Interface for Grounding Provenance in LLM-based Scholarly Q&A | [`2602.21045-papertrail-claim-evidence-interface.pdf`](2602.21045-papertrail-claim-evidence-interface.pdf) | [`markdown/2602.21045-papertrail-claim-evidence-interface.md`](markdown/2602.21045-papertrail-claim-evidence-interface.md) | Supports claim-evidence mapping, supported/unsupported/omitted claim surfacing, and the trust-behavior gap. |
+| AI-Assisted Engineering Should Track the Epistemic Status and Temporal Validity of Architectural Decisions | [`2601.21116-epistemic-status-temporal-validity-decisions.pdf`](2601.21116-epistemic-status-temporal-validity-decisions.pdf) | [`markdown/2601.21116-epistemic-status-temporal-validity-decisions.md`](markdown/2601.21116-epistemic-status-temporal-validity-decisions.md) | Supports epistemic status, evidence expiry, and temporal validity for promoted decisions. |
+| Compliance-by-Construction Argument Graphs | [`2604.04103-compliance-by-construction-argument-graphs.pdf`](2604.04103-compliance-by-construction-argument-graphs.pdf) | [`markdown/2604.04103-compliance-by-construction-argument-graphs.md`](markdown/2604.04103-compliance-by-construction-argument-graphs.md) | Supports evidence-linked formal argument records and deterministic validation before claims enter official decision records. |
+| Claim Verification in the Age of Large Language Models: A Survey | Not yet intaken | Not yet intaken | Background survey for claim-verification pipelines; reference-only unless the artifact gate needs broader field context. |
+| Trust Me, I'm Wrong: LLMs Hallucinate with Certainty Despite Knowing the Answer | [`2502.11210-simhi-trust-me-im-wrong.pdf`](2502.11210-simhi-trust-me-im-wrong.pdf); [`trust_me_im_wrong.pdf`](trust_me_im_wrong.pdf) | [`markdown/trust_me_im_wrong.md`](markdown/trust_me_im_wrong.md) | Supports confidence/correctness decoupling; optional once the eip-verify case carries the opening. |
+| MedRAGChecker: Claim-Level Verification for Biomedical Retrieval-Augmented Generation | [`2601.06519-ji-medragchecker.pdf`](2601.06519-ji-medragchecker.pdf); [`medragchecker.pdf`](medragchecker.pdf) | [`markdown/medragchecker.md`](markdown/medragchecker.md) | Optional supporting context for claim-level verification; not central to R3 unless artifact gate needs more examples. |
+| Evidence-Bound Autonomous Research | [`evidence_bound_autonomous_research.pdf`](evidence_bound_autonomous_research.pdf) | [`markdown/evidence_bound_autonomous_research.md`](markdown/evidence_bound_autonomous_research.md) | Optional adjacent source for evidence-bound generation and gates. |
 
-## Inherited From corrective-competence
+## Evaluation Gate: Reliability Release
 
-- `2604.04721` AI Assistance Reduces Persistence and Hurts Independent Performance
-- `2601.20245` How AI Impacts Skill Formation
-- `2602.20206` Mitigating "Epistemic Debt"
-- `2603.25197` The Competence Shadow
-- `2502.03482` Can Domain Experts Rely on AI Appropriately?
-- `2603.11821` Stuck on Suggestions
-- `2411.01007` When Two Wrongs Don't Make a Right
-- `2402.01292` From Evidence to Decision: Exploring Evaluative AI
+| Source | PDF | Markdown | Relevance |
+| :--- | :--- | :--- | :--- |
+| tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains | [`2406.12045-tau-bench.pdf`](2406.12045-tau-bench.pdf) | [`markdown/2406.12045-tau-bench.md`](markdown/2406.12045-tau-bench.md) | Repeated-run opener: pass rate compresses away reliability information. |
+| WebSuite: Systematically Evaluating Why Web Agents Fail | [`2406.01623_websuite.pdf`](2406.01623_websuite.pdf) | [`markdown/2406.01623_websuite.md`](markdown/2406.01623_websuite.md) | Failure attribution and localizable agent failure. |
+| WebForge: Breaking the Realism-Reproducibility-Scalability Trilemma in Browser Agent Benchmark | [`2604.10988_webforge.pdf`](2604.10988_webforge.pdf) | [`markdown/2604.10988_webforge.md`](markdown/2604.10988_webforge.md) | Richer evaluation environments and multidimensional difficulty control. |
+| Towards a Science of AI Agent Reliability | [`2602.16666_agent_reliability_science.pdf`](2602.16666_agent_reliability_science.pdf) | [`markdown/2602.16666_agent_reliability_science.md`](markdown/2602.16666_agent_reliability_science.md) | Separates consistency, robustness, predictability, safety, and other reliability dimensions from capability. |
+| ReliabilityBench: Evaluating LLM Agent Reliability Under Production-Like Stress Conditions | [`2601.06112-reliabilitybench-production-stress.pdf`](2601.06112-reliabilitybench-production-stress.pdf) | [`markdown/2601.06112-reliabilitybench-production-stress.md`](markdown/2601.06112-reliabilitybench-production-stress.md) | Main actionability source for reliability release: `R(k, epsilon, lambda)`, perturbation robustness, fault tolerance. |
+| Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents | [`2603.29231-beyond-pass-at-1-long-horizon-reliability.pdf`](2603.29231-beyond-pass-at-1-long-horizon-reliability.pdf) | [`markdown/2603.29231-beyond-pass-at-1-long-horizon-reliability.md`](markdown/2603.29231-beyond-pass-at-1-long-horizon-reliability.md) | Adds long-horizon reliability decay, variance amplification, graceful degradation, meltdown onset. |
+| Capable but Unreliable: Canonical Path Deviation as a Causal Mechanism of Agent Failure in Long-Horizon Tasks | [`2602.19008-canonical-path-deviation-agent-failure.pdf`](2602.19008-canonical-path-deviation-agent-failure.pdf) | [`markdown/2602.19008-canonical-path-deviation-agent-failure.md`](markdown/2602.19008-canonical-path-deviation-agent-failure.md) | Mechanism for capable-but-unreliable agents: drift from canonical successful paths. |
+| Measuring Agents in Production | [`2512.04123-measuring-agents-in-production.pdf`](2512.04123-measuring-agents-in-production.pdf) | [`markdown/2512.04123-measuring-agents-in-production.md`](markdown/2512.04123-measuring-agents-in-production.md) | Bridges evaluation into production practice: bounded autonomy, structured workflows, human oversight. |
+| AgentCompass: Towards Reliable Evaluation of Agentic Workflows in Production | [`2509.14647-agentcompass-production-workflow-evaluation.pdf`](2509.14647-agentcompass-production-workflow-evaluation.pdf) | [`markdown/2509.14647-agentcompass-production-workflow-evaluation.md`](markdown/2509.14647-agentcompass-production-workflow-evaluation.md) | Supports production trace monitoring, error taxonomy, localization, and fix recipes. |
+| Runtime Governance for Policy-Constrained Execution | [`2604.07833-runtime-governance-policy-constrained-execution.pdf`](2604.07833-runtime-governance-policy-constrained-execution.pdf) | [`markdown/2604.07833-runtime-governance-policy-constrained-execution.md`](markdown/2604.07833-runtime-governance-policy-constrained-execution.md) | Optional support for runtime policy checks, rollback handling, human override, and governed execution. |
+| Trustworthy Agentic AI Requires Deterministic Architectural Boundaries | [`2602.09947-deterministic-architectural-boundaries-agentic-ai.pdf`](2602.09947-deterministic-architectural-boundaries-agentic-ai.pdf) | [`markdown/2602.09947-deterministic-architectural-boundaries-agentic-ai.md`](markdown/2602.09947-deterministic-architectural-boundaries-agentic-ai.md) | Optional support for deterministic control planes and action governance. |
+| COCO: Cognitive Operating System with Continuous Oversight for Multi-Agent Workflow Reliability | [`2508.13815-coco-continuous-oversight-multi-agent-reliability.pdf`](2508.13815-coco-continuous-oversight-multi-agent-reliability.pdf) | [`markdown/2508.13815-coco-continuous-oversight-multi-agent-reliability.md`](markdown/2508.13815-coco-continuous-oversight-multi-agent-reliability.md) | Optional support for continuous oversight, rollback, and cross-validation in multi-agent workflows. |
+| TheAgentCompany | [`2412.14161_theagentcompany.pdf`](2412.14161_theagentcompany.pdf) | [`markdown/2412.14161_theagentcompany.md`](markdown/2412.14161_theagentcompany.md) | Supporting bounded-usefulness evidence; likely reference-only after ReliabilityBench and production sources. |
+| REAL | Not yet intaken | Not yet intaken | Previously identified supporting source for bounded usefulness; cuttable unless evaluation section needs breadth. |
+| LiveMCPBench | [`2508.01780_livemcpbench.pdf`](2508.01780_livemcpbench.pdf) | [`markdown/2508.01780_livemcpbench.md`](markdown/2508.01780_livemcpbench.md) | Supporting tool-retrieval-at-scale source; cuttable in R3. |
+| From Task Solving to Robust Real-World Adaptation in LLM Agents | [`2602.02760_robust_real_world_adaptation.pdf`](2602.02760_robust_real_world_adaptation.pdf) | [`markdown/2602.02760_robust_real_world_adaptation.md`](markdown/2602.02760_robust_real_world_adaptation.md) | Supporting adaptation framing; likely reference-only. |
 
-## New Research Needed
+## Human Gate: Co-Audit and Correction Capacity
 
-Papers that demonstrate cross-layer interaction (confidence at one layer degrading oversight at another) are the priority intake target. Without at least one such paper, the compounding thesis remains an editorial inference.
+| Source | PDF | Markdown | Relevance |
+| :--- | :--- | :--- | :--- |
+| AI Assistance Reduces Persistence and Hurts Independent Performance | [`2604.04721-ai-assistance-persistence-independent-performance.pdf`](2604.04721-ai-assistance-persistence-independent-performance.pdf) | [`markdown/2604.04721-ai-assistance-persistence-independent-performance.md`](markdown/2604.04721-ai-assistance-persistence-independent-performance.md) | Human-layer opener: assistance can reduce later unassisted performance and persistence. |
+| How AI Impacts Skill Formation | [`2601.20245-how-ai-impacts-skill-formation.pdf`](2601.20245-how-ai-impacts-skill-formation.pdf) | [`markdown/2601.20245-how-ai-impacts-skill-formation.md`](markdown/2601.20245-how-ai-impacts-skill-formation.md) | Interaction pattern determines whether AI assistance preserves or erodes conceptual understanding and debugging ability. |
+| Mitigating Epistemic Debt in Generative AI-Scaffolded Novice Programming using Metacognitive Scripts | [`2602.20206-epistemic-debt-metacognitive-scripts.pdf`](2602.20206-epistemic-debt-metacognitive-scripts.pdf) | [`markdown/2602.20206-epistemic-debt-metacognitive-scripts.md`](markdown/2602.20206-epistemic-debt-metacognitive-scripts.md) | Shows scaffolded and unrestricted AI diverge on later independent maintenance tasks. |
+| The Competence Shadow | [`2603.25197-competence-shadow-safety-engineering.pdf`](2603.25197-competence-shadow-safety-engineering.pdf) | [`markdown/2603.25197-competence-shadow-safety-engineering.md`](markdown/2603.25197-competence-shadow-safety-engineering.md) | Formal compounding argument for machine-pruned search spaces and hidden competence loss. |
+| Co-audit: tools to help humans double-check AI-generated content | [`2310.01297-co-audit-double-check-ai-content.pdf`](2310.01297-co-audit-double-check-ai-content.pdf) | [`markdown/2310.01297-co-audit-double-check-ai-content.md`](markdown/2310.01297-co-audit-double-check-ai-content.md) | Names co-audit as tool-assisted human audit of AI outputs. |
+| Cognitive Forcing Functions for Execution Plans in AI-Assisted Writing | [`2601.18033-cognitive-forcing-functions-execution-plans.pdf`](2601.18033-cognitive-forcing-functions-execution-plans.pdf) | [`markdown/2601.18033-cognitive-forcing-functions-execution-plans.md`](markdown/2601.18033-cognitive-forcing-functions-execution-plans.md) | Concrete co-audit design: assumption-focused prompts can reduce overreliance without raising measured cognitive load. |
+| From Evidence to Decision: Exploring Evaluative AI | [`2402.01292-evaluative-ai-evidence-to-decision.pdf`](2402.01292-evaluative-ai-evidence-to-decision.pdf) | [`markdown/2402.01292-evaluative-ai-evidence-to-decision.md`](markdown/2402.01292-evaluative-ai-evidence-to-decision.md) | Hypothesis-driven evidence for and against candidate judgments; alternative to recommendation-first interfaces. |
+| Measuring and Mitigating Overreliance is Necessary for Building Human-Compatible AI | [`2509.08010-measuring-mitigating-overreliance-human-compatible-ai.pdf`](2509.08010-measuring-mitigating-overreliance-human-compatible-ai.pdf) | [`markdown/2509.08010-measuring-mitigating-overreliance-human-compatible-ai.md`](markdown/2509.08010-measuring-mitigating-overreliance-human-compatible-ai.md) | Frames overreliance as a deployment measurement and mitigation problem; hinge source. |
+| A Taxonomy of Questions for Critical Reflection in Machine-Assisted Decision-Making | [`2504.12830-critical-reflection-question-taxonomy.pdf`](2504.12830-critical-reflection-question-taxonomy.pdf) | [`markdown/2504.12830-critical-reflection-question-taxonomy.md`](markdown/2504.12830-critical-reflection-question-taxonomy.md) | Optional support for targeted reviewer prompts and reflection questions. |
+| From Binary Groundedness to Support Relations | [`2604.08082-reader-centred-support-relations-ai-output.pdf`](2604.08082-reader-centred-support-relations-ai-output.pdf) | [`markdown/2604.08082-reader-centred-support-relations-ai-output.md`](markdown/2604.08082-reader-centred-support-relations-ai-output.md) | Optional support for showing how claims are supported, not just whether they are grounded. |
+| Stuck on Suggestions | [`2603.11821-stuck-on-suggestions-automation-bias-pathology.pdf`](2603.11821-stuck-on-suggestions-automation-bias-pathology.pdf) | [`markdown/2603.11821-stuck-on-suggestions-automation-bias-pathology.md`](markdown/2603.11821-stuck-on-suggestions-automation-bias-pathology.md) | Rival-hinge support for automation bias and anchoring. |
+| When Two Wrongs Don't Make a Right | [`2411.01007-confirmation-bias-time-pressure-pathology.pdf`](2411.01007-confirmation-bias-time-pressure-pathology.pdf) | [`markdown/2411.01007-confirmation-bias-time-pressure-pathology.md`](markdown/2411.01007-confirmation-bias-time-pressure-pathology.md) | Rival-hinge support for confirmation bias and time pressure. |
+| Can Domain Experts Rely on AI Appropriately? | [`2502.03482-domain-experts-ai-prostate-mri.pdf`](2502.03482-domain-experts-ai-prostate-mri.pdf) | [`markdown/2502.03482-domain-experts-ai-prostate-mri.md`](markdown/2502.03482-domain-experts-ai-prostate-mri.md) | Shows reliance failure cuts both ways, including under-reliance on stronger AI. |
+
+## Reference-Only Governance and Background
+
+| Source | PDF | Markdown | Relevance |
+| :--- | :--- | :--- | :--- |
+| NIST AI RMF 1.0 | [`nist_ai_rmf_1.0.pdf`](nist_ai_rmf_1.0.pdf) | [`markdown/nist_ai_rmf_1.0.md`](markdown/nist_ai_rmf_1.0.md) | Background governance reference. |
+| NIST AI RMF GenAI | [`nist_ai_rmf_genai.pdf`](nist_ai_rmf_genai.pdf) | [`markdown/nist_ai_rmf_genai.md`](markdown/nist_ai_rmf_genai.md) | Background governance reference. |
+| SOPBench | [`sopbench.pdf`](sopbench.pdf) | [`markdown/sopbench.md`](markdown/sopbench.md) | Optional procedural compliance support. |
+| Rethinking All Evidence | [`rethinking_all_evidence.pdf`](rethinking_all_evidence.pdf) | [`markdown/rethinking_all_evidence.md`](markdown/rethinking_all_evidence.md) | Optional evidence-conflict support. |
+| Med-R2 | [`med_r2.pdf`](med_r2.pdf) | [`markdown/med_r2.md`](markdown/med_r2.md) | Optional evidence hierarchy / medical reasoning support. |
+
+## Open Evidence Gaps
+
+- End-to-end studies where artifact confidence, evaluation interpretation, and human oversight interact in one deployment pipeline.
+- Field studies of claim-level auditability or provenance tools inside production workflows.
+- Large-scale co-audit studies that measure behavior change, not only subjective trust.
+- Runtime monitoring or rollback studies where reliability gates control promotion, rollback, or escalation.

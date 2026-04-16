@@ -1,0 +1,91 @@
+{
+  "audio": "publications/confidence-debt/artifacts/notebooklm/confidence-debt-deep-dive.mp3",
+  "slides_dir": "publications/confidence-debt/artifacts/slides",
+  "segments": [
+    {
+      "image": "Comparison_Of_AI_Debts.png",
+      "start": "00:00:00.000",
+      "note": ""
+    },
+    {
+      "image": "Confidence_Debt_Contagion_Path.png",
+      "start": "00:02:21.556",
+      "note": ""
+    },
+    {
+      "image": "Confidence_Debt_Definition_Graph.png",
+      "start": "00:04:43.111",
+      "note": ""
+    },
+    {
+      "image": "Confidence_Debt_EIP_Verify_Pilot.png",
+      "start": "00:07:04.667",
+      "note": ""
+    },
+    {
+      "image": "Confidence_Debt_Evidence_Lag.png",
+      "start": "00:09:26.223",
+      "note": ""
+    },
+    {
+      "image": "Confidence_Debt_Title_Slide.png",
+      "start": "00:11:47.778",
+      "note": ""
+    },
+    {
+      "image": "slide_007.png",
+      "start": "00:14:09.334",
+      "note": ""
+    },
+    {
+      "image": "slide_008.png",
+      "start": "00:16:30.890",
+      "note": ""
+    },
+    {
+      "image": "slide_009.png",
+      "start": "00:18:52.445",
+      "note": ""
+    },
+    {
+      "image": "slide_010.png",
+      "start": "00:21:14.001",
+      "note": ""
+    },
+    {
+      "image": "slide_011.png",
+      "start": "00:23:35.557",
+      "note": ""
+    },
+    {
+      "image": "slide_012.png",
+      "start": "00:25:57.112",
+      "note": ""
+    },
+    {
+      "image": "slide_013.png",
+      "start": "00:28:18.668",
+      "note": ""
+    },
+    {
+      "image": "slide_014.png",
+      "start": "00:30:40.224",
+      "note": ""
+    },
+    {
+      "image": "slide_015.png",
+      "start": "00:33:01.779",
+      "note": ""
+    },
+    {
+      "image": "slide_016.png",
+      "start": "00:35:23.335",
+      "note": ""
+    },
+    {
+      "image": "slide_017.png",
+      "start": "00:37:44.891",
+      "note": ""
+    }
+  ]
+}
