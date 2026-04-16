@@ -6,6 +6,8 @@ Confident AI output propagates faster than the evidence that should constrain it
 
 The term for this is confidence debt. It parallels technical debt (borrowed velocity, deferred structural cost) and epistemic debt (borrowed output, deferred understanding). Confidence debt is borrowed trust: the system produces an output confident enough to move downstream before the evidence warrants that confidence. The cost arrives later, when someone needs to dispute, reverse, or repair a claim that was never properly adjudicated in the first place.
 
+The action thesis is now part of the frame, not an appendix. Confidence debt is controlled by three gates: claim auditability before trust, reliability release gates before deployment, and co-audit software before human acceptance. The essay should present this as a defensible operating doctrine assembled from adjacent literatures, not as a fully validated end-to-end system.
+
 ## Why This Frame Could Work
 
 Each donor essay independently identified the same structural failure but at a different altitude:
@@ -33,6 +35,7 @@ This package targets 9+ publication power against the top archive cluster (The T
 3. The coined term (confidence debt) must travel: a reader should be able to carry it out of the essay and use it in conversation without needing the essay as a reference.
 4. The compounding argument in the structural turn must be evidentially supported, not merely asserted.
 5. The ending must give the reader a usable rule, not a governance slogan.
+6. The usable rule must resolve into the three-gate doctrine: claim auditability, reliability release, and co-audit. If the ending only says "be careful," "add oversight," or "keep humans in the loop," it fails.
 
 If the candidate does not clear the north-star gate, the package pivots to publishing the strongest single donor leaf (clean-interface-illusion r3, the current high-water mark at 8.6) and treating the combined thesis as a future project.
 
@@ -74,7 +77,13 @@ Check 3: evidence-authority test. The top archive cluster has evidence that read
 
 Check 4: ceiling test. Can this blueprint produce a 9+ essay, or is the ceiling already visible? Look for the same patterns that capped the donors: evidence-scope mismatch (corrective-competence), frame narrowness (clean-interface-illusion), explanatory density displacing narrative force (evidence-governance). If any of those failure modes are architecturally baked into the spine, diagnose before writing.
 
-Pass condition: all four checks clear. If any check fails, revise the blueprint or narrow the thesis before opening a candidate. Do not write prose into a visible ceiling.
+Check 5: doctrine test. Does the blueprint give a builder or reviewer a better operating object than the donor essays did? The required object is a three-gate deployment doctrine:
+
+- artifact gate: a claim cannot be promoted unless its evidence state, contradiction state, and expiry condition are visible
+- evaluation gate: a benchmark score cannot become a deployment claim unless the system's reliability envelope has been measured
+- human gate: the reviewer should not receive only the AI answer; they should receive an audit workspace that makes structured correction easier than passive acceptance
+
+Pass condition: all five checks clear. If any check fails, revise the blueprint or narrow the thesis before opening a candidate. Do not write prose into a visible ceiling.
 
 ## Governing Term
 
@@ -92,6 +101,76 @@ Internal support terms (use only when the argument needs them):
 - `corrective competence` for the human-layer erosion specifically
 - `evidence hierarchy` for the artifact-layer adjudication mechanism specifically
 - `narrative inflation` for the evaluation-layer over-reading specifically
+- `claim auditability` for the artifact-layer control surface
+- `reliability release gate` for the evaluation-to-deployment control surface
+- `co-audit layer` for the human-layer software support surface
+
+## Actionability Doctrine
+
+The north-star essay needs one reusable doctrine, not three separate checklists. The doctrine:
+
+> Confidence debt is controlled by claim auditability before trust, reliability release gates before deployment, and co-audit software before human acceptance.
+
+### Gate 1: Claim Auditability
+
+Question: What artifact is allowed to settle this claim?
+
+Rule: A claim cannot be promoted unless its evidence state, contradiction state, and expiry condition are visible.
+
+What is paper-backed:
+
+- Claim-level auditability is a measurable design target: provenance coverage, provenance soundness, contradiction transparency, and audit effort (From Fluent to Verifiable / AAR).
+- Claim-evidence interfaces can expose supported, unsupported, and omitted claims (PaperTrail).
+- AI-assisted engineering decisions need epistemic status and temporal validity, not just static rationale (First Principles Framework).
+- Evidence-linked argument graphs and deterministic validation kernels are plausible certification-grade structures for preventing unsupported claims from entering official decision records.
+
+What remains synthesis:
+
+- The eip-verify evidence-governance pattern is a proposed operating pattern, not proof that this exact artifact gate is complete.
+- The essay should present evidence hierarchy, contradiction registers, and claim ledgers as one defensible instantiation of claim auditability.
+
+### Gate 2: Reliability Release
+
+Question: What kind of deployment trust does this score actually license?
+
+Rule: A benchmark score becomes deployment evidence only inside the reliability envelope where repeated-run stability, perturbation robustness, fault tolerance, task-horizon decay, and trace-level failure modes have been measured.
+
+What is paper-backed:
+
+- ReliabilityBench gives a production-like reliability surface `R(k, epsilon, lambda)`: repeated-run consistency, robustness to task perturbations, and fault tolerance under failures such as timeouts, rate limits, partial responses, and schema drift.
+- Long-horizon reliability work adds reliability decay curves, variance amplification, graceful degradation, and meltdown onset.
+- Canonical path deviation gives a mechanism for capable-but-unreliable agents: runs can drift away from successful tool-use paths and require mid-trajectory intervention.
+- Production-agent studies favor bounded autonomy, structured workflows, and human oversight over unconstrained agentic cleverness.
+- AgentCompass-style trace monitoring, error taxonomy, localization, and fix recipes support post-deployment diagnosis.
+- Runtime governance, deterministic control planes, rollback handling, and capability admission are adjacent support for treating deployment as a governed execution problem rather than a benchmark handoff.
+
+What remains synthesis:
+
+- The essay can require teams to define release thresholds, but it should not invent universal numeric cutoffs.
+- The release gate is our integration of reliability metrics, production measurement, and runtime governance.
+
+### Gate 3: Co-Audit
+
+Question: What software helps the human see what the AI answer hides?
+
+Rule: The human should not receive only the AI answer. They should receive an audit workspace that makes structured correction easier than passive acceptance.
+
+What is paper-backed:
+
+- Co-audit tools are a named category: software that helps humans double-check AI-generated content after generation.
+- Plan-focused cognitive forcing functions can reduce overreliance without increasing cognitive load, especially assumption-focused prompts.
+- Evaluative AI supports hypothesis-driven decision support, showing evidence for and against candidate judgments rather than only issuing recommendations.
+- PaperTrail shows that evidence displays can reduce subjective trust, but also exposes a trust-behavior gap: showing evidence does not automatically change reviewer behavior.
+- Critical-reflection question taxonomies and scaffolded cognitive friction support the idea that reviewer prompts should be targeted, not generic.
+
+What remains synthesis:
+
+- A complete co-audit workspace for confidence debt should combine claim-evidence maps, unsupported/omitted/contradicted claim markers, assumption probes, counter-hypothesis views, contradiction queues, reviewer action logs, and overreliance telemetry.
+- That integrated interface has not been validated as a single package. The essay should frame it as the human-layer control implied by the literature, not as a solved product.
+
+### Doctrine Boundary
+
+The three gates are not proof that confidence debt has been solved. They are the essay's operating contribution: a way to make the abstract debt visible at the point where it is incurred.
 
 ## Opening Choice
 
@@ -132,13 +211,15 @@ Job:
 
 Job:
 
-- Show that benchmark scores are a primary source of confidence debt. The field improved benchmark realism faster than it improved benchmark interpretation.
+- Show that benchmark scores are a primary source of confidence debt when they become deployment claims without a reliability release gate.
 - Use the tau-bench repeated-run result to show how a single score compresses away reliability information the benchmark itself revealed.
 - Use WebSuite and WebForge together to show that topline scores become less sufficient as evaluation surfaces become richer.
-- Use TheAgentCompany and REAL to show that bounded usefulness gets reported in deployment-ready language.
-- Land the layer-specific rule: a benchmark score should license only the confidence its design actually measured.
+- Use ReliabilityBench and long-horizon reliability work to specify what a deployment-facing gate must measure: consistency, robustness, fault tolerance, reliability decay, variance amplification, graceful degradation, and meltdown onset.
+- Use canonical path deviation to make reliability concrete: capable agents can fail by drifting away from successful action paths, not just by lacking capability.
+- Use production-agent studies, AgentCompass, and runtime governance work to bridge pre-deployment evaluation into post-deployment monitoring, bounded autonomy, trace diagnostics, rollback, and fix recipes.
+- Land the layer-specific rule: a benchmark score becomes deployment evidence only inside the reliability envelope the evaluation actually measured.
 
-Evidence: tau-bench, WebSuite, WebForge, LiveMCPBench, TheAgentCompany, REAL, Towards a Science of AI Agent Reliability, From Task Solving to Robust Real-World Adaptation.
+Evidence: tau-bench, WebSuite, WebForge, ReliabilityBench, Beyond pass@1 / long-horizon reliability, Canonical Path Deviation, Measuring Agents in Production, AgentCompass, Runtime Governance for Policy-Constrained Execution, Trustworthy Agentic AI Requires Deterministic Architectural Boundaries, COCO.
 
 ### Section 4. The Human Layer
 
@@ -149,8 +230,10 @@ Job:
 - Use skill-formation evidence (developer study) to show how interaction pattern determines whether assistance preserves or erodes competence.
 - Use the competence-shadow argument to show the compounding mechanism: the human only inspects what survived the machine's initial narrowing, so omissions stack.
 - Use epistemic debt to show that some friction was carrying competence-preserving load.
+- Turn the section toward software: the answer is not "try harder." The human needs a co-audit layer that surfaces claims, assumptions, omissions, contradictions, and counter-hypotheses before acceptance.
+- Use PaperTrail's trust-behavior gap as the warning: evidence displays can lower subjective trust without changing behavior. The audit workspace has to require reviewer action, not merely show provenance.
 
-Evidence: AI Assistance Reduces Persistence, How AI Impacts Skill Formation, Mitigating Epistemic Debt, The Competence Shadow.
+Evidence: AI Assistance Reduces Persistence, How AI Impacts Skill Formation, Mitigating Epistemic Debt, The Competence Shadow, Co-audit, Cognitive Forcing Functions for Execution Plans, From Evidence to Decision, PaperTrail, Measuring and Mitigating Overreliance, Taxonomy of Questions for Critical Reflection, Scaffolded Cognitive Friction.
 
 ### Section 5. The Compounding Turn
 
@@ -179,10 +262,11 @@ Evidence: Can Domain Experts Rely on AI, Stuck on Suggestions, When Two Wrongs D
 Job:
 
 - End on a concrete delegation rule, not a governance slogan.
-- Specify what a confidence-debt-aware workflow must preserve at each layer:
-  - Artifact layer: evidence hierarchies and adjudication rules that prevent polished output from outranking messy but stronger evidence.
-  - Evaluation layer: benchmark-reading discipline that licenses only the confidence the benchmark design actually measured.
-  - Human layer: preserved correction capacity. Do not call a workflow safe to delegate through unless the humans in it retain enough independent judgment to catch, challenge, and repair errors.
+- Specify the three gates:
+  - Claim auditability before trust: no promoted claim without visible evidence state, contradiction state, and expiry condition.
+  - Reliability release before deployment: no benchmark score becomes a deployment claim until the relevant reliability envelope has been measured and monitored.
+  - Co-audit before human acceptance: no high-stakes reviewer should receive only the AI answer when the workflow depends on that reviewer to catch machine-shaped errors.
+- Keep the doctrine compact. The essay is not a compliance manual, a benchmark proposal, or a product spec. The point is to give the reader a portable operating object.
 - Final sentence should carry the full weight of the essay. It should be memorable and portable. The best candidate so far is a fusion of the corrective-competence landing and the evidence-governance landing: trust becomes dangerous when the workflow allows confident output to propagate downstream while the capacity to dispute it degrades at every level.
 
 ## Pull Sheet
@@ -228,6 +312,9 @@ Default working title: Confidence Debt
 - This essay does not claim that the three layers have been proven to interact in every deployment. It claims that the structural conditions for compounding exist and that one worked case demonstrates the pattern.
 - This essay does not claim that confidence debt is a new coinage for the well-known concept of overconfidence. Confidence debt names a workflow-level propagation pattern, not an individual cognitive or model property.
 - This essay does not claim that friction or skepticism are inherently good. It claims that some friction is carrying load that the workflow still needs.
+- This essay does not claim that the three-gate doctrine has been validated as an end-to-end system. Claim auditability, reliability release gates, and co-audit software each have supporting literatures; their integration is the essay's synthesis.
+- This essay does not prescribe universal deployment thresholds. Reliability thresholds, bounded-autonomy limits, rollback criteria, and co-audit prompts must be domain-specific.
+- This essay does not claim that provenance displays alone fix overreliance. The trust-behavior gap means the human-layer control has to shape reviewer action, not merely display evidence.
 
 ## Cut Order
 
@@ -254,7 +341,7 @@ Abort or reset the draft if any of these happen:
 
 ## Evidence Gap and Research Gate
 
-The single most important missing piece is evidence that confidence at one layer degrades oversight at another layer. The current evidence shows each layer independently. The compounding argument stitches them together with structural logic.
+The single most important missing piece remains evidence that confidence at one layer degrades oversight at another layer. The current evidence shows each layer independently, plus several adjacent mechanisms for governing each layer. The compounding argument stitches them together with structural logic.
 
 Priority research targets:
 
@@ -262,6 +349,9 @@ Priority research targets:
 - Papers on how benchmark scores propagate into procurement, deployment, or trust decisions downstream.
 - Papers on how AI-generated documentation or summaries affect downstream review quality.
 - Any case study showing that an over-confident artifact at one stage of a pipeline degraded human correction at a later stage.
+- Field studies of claim-level auditability or provenance tools inside real production pipelines.
+- Large-scale user studies of co-audit interfaces, especially whether evidence displays plus forced reviewer actions change behavior rather than only lowering subjective trust.
+- Runtime monitoring or rollback studies for deployed agentic workflows, especially where reliability gates control promotion or rollback.
 
 If this research pass comes back empty, the compounding argument must be presented as a structural inference from converging evidence, not as a demonstrated causal chain. The essay can still work at that level of honesty. It becomes harder to reach 9+ without the stronger version.
 

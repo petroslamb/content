@@ -1,0 +1,164 @@
+{
+  "audio": "publications/confidence-debt/artifacts/notebooklm/confidence-debt-deep-dive.mp3",
+  "slides_dir": "publications/confidence-debt/artifacts/slides",
+  "transcript": "publications/confidence-debt/artifacts/notebooklm/confidence-debt-deep-dive-transcript.txt",
+  "segments": [
+    {
+      "image": "Comparison_Of_AI_Debts.png",
+      "start": "00:39:33.397",
+      "match_score": 0.1703,
+      "ocr_excerpt": "The Three Debts of Al Development Technical Debt Epistemic Debt Confidence Debt Hees Development velocity Assisted output Downstream Trust borrowed? Where does jeee ho. Freeda? Developer's Mind Deployment Pipeline When is the = ture maintenance Abstraction Reversal of hardened, c",
+      "matched_paragraphs": [
+        "So as you go back to your desk or your clinic or your development environment today, look closely at your own workflows. Look at the tools you rely on and ask yourself, am I buying velocity today with a confidence debt I'll be forced to pay tomorrow?",
+        "Because the bill will come due.",
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "Confidence_Debt_Contagion_Path.png",
+      "start": "00:39:33.397",
+      "match_score": 0.0783,
+      "ocr_excerpt": "The Contagion Path Core Concept: \u201cEe The Mechanism: Confidence Debt does not exist in a vacuum. It is formally Each downstream consumer inherits the upstream | packaged and exported across the delegation stack. confidence without seeing what was compressed away. Ai NotebookLM",
+      "matched_paragraphs": [
+        "So as you go back to your desk or your clinic or your development environment today, look closely at your own workflows. Look at the tools you rely on and ask yourself, am I buying velocity today with a confidence debt I'll be forced to pay tomorrow?"
+      ]
+    },
+    {
+      "image": "Confidence_Debt_Definition_Graph.png",
+      "start": "00:39:33.397",
+      "match_score": 0.0542,
+      "ocr_excerpt": "Defining Confidence Debt: The Output Outran the Evidence Magnitude 100 60-\u2014-\u2014 mS ne 40} 20 Evidence Reach Propagated Trust Distance down the deployment pipeline (Artifact -> Evaluation -> Human -> Deployment) Defining Confidence Debt Definition: What an Al workflow borrows when t",
+      "matched_paragraphs": [
+        "So as you go back to your desk or your clinic or your development environment today, look closely at your own workflows. Look at the tools you rely on and ask yourself, am I buying velocity today with a confidence debt I'll be forced to pay tomorrow?",
+        "Because the bill will come due.",
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "Confidence_Debt_EIP_Verify_Pilot.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0111,
+      "ocr_excerpt": "The eip-verify Pilot: A Flawless Illusion Column 2 (In a stark box with an Audit Coral border): Column 1 a Context: A verification project The Danger: tested whether Al could Execution Complete: The polished summary and the trace Ethereum protocol All Eth ppt flawed spreadsheet w",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "Confidence_Debt_Evidence_Lag.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0253,
+      "ocr_excerpt": "The Output Outran the Evidence Data Point: In one model tier, 13 of 15 direct-adjudication entries required manual follow-up. \u00a2 The Core Issue: The model did not need a better personality or more polite alignment. It produced an output that was structurally designed to be forward",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "Confidence_Debt_Title_Slide.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0,
+      "ocr_excerpt": "The Anatomy of an Illusion Unmasking Confidence Debt in High-Stakes Al Deployments TIMESTAMP 2024-10-27110:30:152 2024-10-27T10;30:182 2024-10-2/110:30:182 2024-10-27710:30: 212 2024-10-277T10: 30: 232 -10-27T10:30:342 4-10-27710:30:372 Q24-10-271710:30:402 2024-10-27T10: 30: 402",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_007.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0507,
+      "ocr_excerpt": "Gate 1: Artifact -> Evaluation Gate Raw Run IDs ae a a ae Hae ment EGEaan The Transformation: Granular evidence is 7 shrink-wrapped into a polished summary. | Ai NotebookLM",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_008.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0,
+      "ocr_excerpt": "Gate 2: Evaluation -> Human | The Transformation: Contextual pass-rates are flattened into a _ single Topline Score. The Proof (tau-bench): _ | Amodel solves retail support tasks at 61% P| accuracy on individual attempts. But over _ repeated runs (pass-to-the-eighth), reliability",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_009.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0244,
+      "ocr_excerpt": "Gate 3: Human -> Pipeline Correction Capacity _ \u2014 The Transformation: E [ | J &. Independent judgment erodes into Automation Bias. \"Confidence Asymmetry (Ngisagree): ~ When human judgment stands against _ the implicit judgment of a system that has processed vast safety analyses, ",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_010.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0,
+      "ocr_excerpt": "The Multiplier Effect Over-confident Deployment -> Exhausted Correction \u2018 Capacity The Illusion of Human-in-the-Loop Over-read Score -> Over-confident Deployment The Insight: Interventions at a single layer are mathematically insufficient to stop the debt. Better UI friction does",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_011.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0,
+      "ocr_excerpt": "Shifting the Architectural Mindset i | Recommendation-Driven | Hypothesis-Driven / Debt-Aware Workflows (Old) Workflows \u2014 Evidence-bound hepystern Output | Definitive Answer candidate \u2014 |e) Reviewer / Adjudicator / as fae Human Role Approver Investigator \u201cA Explicit Highlighting ",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_012.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0641,
+      "ocr_excerpt": "__ Artifact Discipline: The Evidence Hierarchy POU The Rule: Track contradictions as first-class objects rather than absorbing them into narrative. ~\\ \u201c> = A The Action: Make wrong yy Se \u00bb answers findable and disputable before they harden into public claims. When the top contrad",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_013.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0,
+      "ocr_excerpt": "~\u2019 under Benchmark Evaluation Discipline: Bounding the Score ~ Task Completion Conditions inside the boundary of what the evaluation design actually measured. The Rule: Read benchmark scores strictly i Veployment The Action: Do not let a topline number Carry more operational conf",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_014.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0205,
+      "ocr_excerpt": "Capability ~ _ Human Discipline: Correction-Capacity Preservation ; Ou The Rule: Meaningful oversight iS a Capability condition, not a Al-Augmented UI checkbox. Performance = 4 The Action: Do not call a workflow safe to delegate = through unless operators retain & oe vognitive In",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_015.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0156,
+      "ocr_excerpt": "The Proof: EviBound Governance Phase 4 Approval Gate Phase 6 (Validating the contract before execution) Verification Gate (Querying MLflow API after execution to prove artifacts exist) ae Run ID eam ueeS: ae Start_run eee) Queryable & Verified optional metrics) Contract? Executio",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_016.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0213,
+      "ocr_excerpt": "_ Architectural Enforcement Beats Model Scale 100% : 75% \u2018 90% 25% 0% Only 8.3% Execution Overhead Baseline A (Prompt-Level Only) Baseline B (Verification-Only) EviBound (Dual Gates) | \u2014 100% Hallucination > 25% Hallucination \u2014 0% Hallucination %, (8/8 claims false) (2/8 slip thr",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    },
+    {
+      "image": "slide_017.png",
+      "start": "00:39:49.477",
+      "match_score": 0.0,
+      "ocr_excerpt": "The Ledger Must Balance Core Takeaway 1: Core Takeaway 2: Stop The New Law of Deployment: If the output Confidence Debt is the trying to fix the model's travels further and faster than the evidence, silent killer of personality. Fix the you are operating in debt. Bind the evidenc",
+      "matched_paragraphs": [
+        "When the landscape gets murky, you don't want to blindly trust the charismatic coworker who claims they have all the answers. You want the raw data. You want the of discovery and most importantly you want to keep your own mind sharp. Thank you for joining us on this deep dive. We'll catch you next time."
+      ]
+    }
+  ]
+}

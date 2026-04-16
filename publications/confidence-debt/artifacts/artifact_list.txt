@@ -1,0 +1,51 @@
+               Artifacts in ccf6f7d2-9094-4e16-94e8-5b974b361882                
+┏━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ ID             ┃ Title          ┃ Type          ┃ Created        ┃ Status    ┃
+┡━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ f195a824-7927… │ Confidence     │ 🎬 Video      │ 2026-04-16     │ completed │
+│                │ Debt           │               │ 21:53          │           │
+│ eff9670b-c926… │ Study Guide:   │ 📚 Study      │ 2026-04-16     │ completed │
+│                │ NIST           │ Guide         │ 22:09          │           │
+│                │ Generative AI  │               │                │           │
+│                │ Risk           │               │                │           │
+│                │ Management     │               │                │           │
+│                │ Framework (AI  │               │                │           │
+│                │ 600-1)         │               │                │           │
+│ 201ed716-d315… │ Briefing       │ 📋 Briefing   │ 2026-04-16     │ completed │
+│                │ Document:      │ Doc           │ 22:09          │           │
+│                │ Generative AI  │               │                │           │
+│                │ Risk           │               │                │           │
+│                │ Management and │               │                │           │
+│                │ Expert         │               │                │           │
+│                │ Knowledge      │               │                │           │
+│                │ Integration    │               │                │           │
+│ 5ffcb8bb-3548… │ NIST AI 600-1  │ 📄 Report     │ 2026-04-16     │ completed │
+│                │ Study Guide:   │               │ 22:09          │           │
+│                │ Generative AI  │               │                │           │
+│                │ Risk           │               │                │           │
+│                │ Management     │               │                │           │
+│ 26fe9d37-eac9… │ Artificial     │ 📄 Report     │ 2026-04-16     │ completed │
+│                │ Intelligence   │               │ 22:08          │           │
+│                │ Risk           │               │                │           │
+│                │ Management     │               │                │           │
+│                │ Framework:     │               │                │           │
+│                │ Generative AI  │               │                │           │
+│                │ Profile        │               │                │           │
+│                │ Briefing       │               │                │           │
+│ 2b828da8-2337… │ The Hidden     │ 🎧 Audio      │ 2026-04-16     │ completed │
+│                │ Cost of        │               │ 21:53          │           │
+│                │ Confidence     │               │                │           │
+│                │ Debt           │               │                │           │
+│ 93ba5dca-6aff… │ Unmasking      │ 📊 Slide Deck │ 2026-04-16     │ completed │
+│                │ Confidence     │               │ 21:53          │           │
+│                │ Debt           │               │                │           │
+│ b88e2eee-2dd7… │ AI Flashcards  │ 🃏 Flashcards │ 2026-04-16     │ completed │
+│                │                │               │ 21:54          │           │
+│ 0fa7a617-1e61… │ AI Quiz        │ 📝 Quiz       │ 2026-04-16     │ completed │
+│                │                │               │ 21:54          │           │
+│ b2365f63-1d17… │ NIST           │ 🧠 Mind Map   │ 2026-04-16     │ completed │
+│                │ Generative AI  │               │ 22:08          │           │
+│                │ Risk           │               │                │           │
+│                │ Management     │               │                │           │
+│                │ Framework      │               │                │           │
+└────────────────┴────────────────┴───────────────┴────────────────┴───────────┘

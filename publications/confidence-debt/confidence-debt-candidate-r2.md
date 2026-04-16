@@ -2,6 +2,8 @@
 
 *What your AI workflow borrows when the output moves faster than the evidence*
 
+![Confidence Debt: The Anatomy of an Illusion](artifacts/slides/Confidence_Debt_Title_Slide.png)
+
 ## The Polished Version Wins
 
 The summary said every obligation was properly mapped.
@@ -14,6 +16,8 @@ The model's mistakes were ordinary. Every verification tool produces errors. Wha
 
 The project was forced to invent adjudication rules after the fact. A working evidence hierarchy: raw artifacts outrank evaluation summaries, evaluation summaries outrank narrative readmes. A contradiction register, because once the same system produces incompatible claims, contradiction had to become a tracked object rather than an embarrassment. A scoring rubric that could distinguish mostly right from semantically disputed, because "looks plausible" was carrying more authority than it deserved. Eight contradictions surfaced across eighty-one scored mappings (Lambropoulos, 2025, contradiction register). Three public-facing claims were downgraded. The follow-up burden concentrated in one model tier, which meant model selection was doing governance work that the project had originally treated as a procurement question.
 
+![The eip-verify Pilot: A Flawless Illusion](artifacts/slides/Confidence_Debt_EIP_Verify_Pilot.png)
+
 Those results are inspectable. The scored dataset, the contradiction register, and the evidence ledger are pinned to commit `ca15d40` in a public repository (Lambropoulos, 2025, evidence artifacts). That matters because the project did not fix the problem by making the model smarter. It fixed the problem by making the errors findable, disputable, and removable before they could harden into claims that no one could trace back to their evidence. The model did not need a better personality. The workflow needed stronger rules about which artifact was allowed to settle a claim.
 
 ## What Confidence Debt Is
@@ -22,9 +26,13 @@ What the project had surfaced, without naming it, was a pattern that extends bey
 
 A system incurs confidence debt when its output is trusted downstream before the evidence warrants that trust. The term parallels technical debt, which borrows development velocity against future maintenance cost, and epistemic debt, which borrows assisted output against retained understanding (Rich et al., 2026). Confidence debt borrows trust itself. The output looks authoritative enough to propagate, but the evidence behind it has not been adjudicated to the standard that the downstream consumer will assume. The cost arrives not when the output is generated but when someone needs to dispute, reverse, or repair a claim that was never properly examined. By that point the claim has already traveled. It has been forwarded, embedded in decisions, or used as the basis for further work. The distance between how far trust propagated and how far the evidence actually reached defines the size of the debt.
 
+![Defining Confidence Debt: The Output Outran the Evidence](artifacts/slides/Confidence_Debt_Definition_Graph.png)
+
 Overconfidence is a property of the model. A model can be badly calibrated without anyone downstream being affected. Confidence debt is a property of the workflow. A perfectly calibrated model can still produce confidence debt if the workflow allows its outputs to travel further and faster than the evidence that should constrain them. The distinction matters because it shifts the intervention target from the model's internals to the pipeline's structure.
 
 And the debt compounds, because each downstream consumer inherits the upstream confidence without seeing what was compressed away. That compounding makes the pattern dangerous in a way that single-point fixes cannot address. It operates across the layers of the delegation stack: the artifacts a system produces, the evaluation scores those artifacts earn, and the human capacity to catch what went wrong once those scores justify deployment.
+
+![The Three Debts of AI Development: Technical, Epistemic, and Confidence Dept](artifacts/slides/Comparison_Of_AI_Debts.png)
 
 ## How Confidence Gets Packaged
 
@@ -49,6 +57,8 @@ The mechanism becomes clearer once interaction pattern enters the picture. In a 
 The safety-engineering literature sharpens the compounding risk. The competence shadow describes a structural dynamic, not just a metaphor (Varanasi et al., 2026). When AI narrows the set of hazards, scenarios, or mitigations that get considered, downstream human review only inspects what survived that initial narrowing. The omission compounds. What disappears at the proposal stage cannot be recovered by careful inspection later, because it never reaches inspection. If the system proposes the initial search space, the human evaluates that reduced space, and a later review checks the outputs of that already-reduced process, the losses do not merely add up. They stack. The human is no longer correcting the whole problem space. They are correcting inside a machine-pruned version of it, and they may never see the boundary of what was pruned.
 
 ## The Cascade
+
+![The Contagion Path: Cross-Boundary Transfer Mechanisms](artifacts/slides/Confidence_Debt_Contagion_Path.png)
 
 Each layer described so far is a recognized problem within its own research community. Confident AI artifacts are a known hazard in documentation and verification (Simhi et al., 2025). Over-read benchmark scores are an active topic in evaluation science. Human skill erosion under AI assistance is a growing concern across education, medicine, and software engineering. Separately, they are three well-documented within-layer problems. Together, they compose a pipeline.
 
