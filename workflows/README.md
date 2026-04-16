@@ -12,6 +12,7 @@ The current defaults in this directory were tightened against recurring March-Ap
 | :--- | :--- | :--- |
 | [`paper-intake/README.md`](paper-intake/README.md) | promoting already-selected papers into the package evidence surface, converting PDFs to markdown, and maintaining the paper index | [`skills/markitdown-paper-intake/`](skills/markitdown-paper-intake/) |
 | [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | discovering papers, refining a shortlist, and pressure-testing active claims against anchor papers before intake | [`skills/alphaxiv/`](skills/alphaxiv/) |
+| [`evidence-authorization/README.md`](evidence-authorization/README.md) | creating a claim-permission layer between a package source index and a blueprint when evidence-sensitive rewrites risk overclaiming | package-local source index plus blueprint/review artifacts |
 | [`essay-iteration/README.md`](essay-iteration/README.md) | hardening blueprints, running review and rewrite cycles, and maintaining live-draft/archive discipline | package-local docs plus review artifacts |
 | [`post-ceiling-pivot/README.md`](post-ceiling-pivot/README.md) | **experimental**: a flagship essay has clearly capped out and the package needs a research-grounded pivot before opening a new flagship object | package-local stop-gate findings plus [`alphaxiv-research/README.md`](alphaxiv-research/README.md) |
 | [`notebooklm-artifacts/README.md`](notebooklm-artifacts/README.md) | generating audio, slide, and video artifacts and downloading them into package artifacts | [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/), [`skills/pdf-slides-to-substack-images/`](skills/pdf-slides-to-substack-images/) |
@@ -45,7 +46,7 @@ The lifecycle stage ids remain unchanged for runner compatibility. The working t
 
 1. **discovery**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) to find and inspect candidate papers before they are admitted into a package
 2. **validation**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) in narrow claim-testing mode against the active anchor papers and package evidence surface
-3. **blueprint hardening**: use [`essay-iteration/README.md`](essay-iteration/README.md) as the governing process surface, with targeted help from [`alphaxiv-research/README.md`](alphaxiv-research/README.md) and [`paper-intake/README.md`](paper-intake/README.md) when evidence needs to be tightened. After a blocking high-bar review, this is the mandatory next step and must either set an outstanding-governing rewrite direction or record an explicit impossibility finding
+3. **blueprint hardening**: use [`essay-iteration/README.md`](essay-iteration/README.md) as the governing process surface, with targeted help from [`alphaxiv-research/README.md`](alphaxiv-research/README.md), [`paper-intake/README.md`](paper-intake/README.md), and [`evidence-authorization/README.md`](evidence-authorization/README.md) when evidence needs to be tightened. After a blocking high-bar review, this is the mandatory next step and must either set an outstanding-governing rewrite direction or record an explicit impossibility finding
 4. **external blueprint review**: optionally use [`essay-iteration/README.md`](essay-iteration/README.md) for an advisory outside review of the hardened blueprint before the prewrite gate. The writer adjudicates the findings and integrates only what materially improves the governing surface
 5. **essay prewrite gate**: use [`essay-iteration/README.md`](essay-iteration/README.md) to decide whether an outstanding essay is actually writable before prose drafting begins. This step must either produce an essay-governing prewrite surface or an explicit blocker
 6. **draft iteration**: use [`essay-iteration/README.md`](essay-iteration/README.md) to seed the package-local essay packet, produce bounded rewrite candidates beside the live draft, and compare before promotion
@@ -70,7 +71,7 @@ The runner still uses the stage sequence:
 
 For real end-to-end work, treat those flat stage ids as a compatibility layer over a more useful hierarchy:
 
-1. **Evidence shaping**: `paper_intake`, `research`
+1. **Evidence shaping**: `paper_intake`, `research`, evidence authorization when a claim-permission layer is needed
 2. **Draft governance and rewrite**: `essay_iteration`
 3. **Package media production**: `notebooklm_artifacts`, `article_polish`, `youtube_production`
 4. **Publication and outward release**: `substack_publishing`, `archive_sync`, `distribution`
@@ -109,6 +110,7 @@ Use these surfaces differently:
 | :--- | :--- | :--- |
 | [`paper-intake/README.md`](paper-intake/README.md) | local evidence storage, PDF download destination, markdown conversion, and `papers/index.md` maintenance once a paper is clearly in scope | broad discovery, loose literature browsing, or framing debates before the paper is selected |
 | [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | broad discovery, shortlist refinement, and narrow claim pressure-testing against exact anchor papers | acting as the package’s long-term evidence store or replacing the package blueprint |
+| [`evidence-authorization/README.md`](evidence-authorization/README.md) | mapping sources to the claims they are allowed to license, naming synthesis boundaries, forbidden claims, and source burdens | storing papers, discovering new papers, or replacing the blueprint |
 | [`essay-iteration/README.md`](essay-iteration/README.md) | rewrite-governing blueprints, bounded draft cycles, brutal review artifacts, cold replacement reviews, and the compare-before-promotion loop | paper retrieval or package evidence storage |
 
 Blueprint hardening is therefore a named cross-cutting mode rather than a separate top-level workflow. It spans essay iteration, targeted alphaXiv validation, and selective paper intake when the claim set actually changes.
@@ -116,10 +118,11 @@ Blueprint hardening is therefore a named cross-cutting mode rather than a separa
 For evidence-sensitive rewrites, the default order is therefore:
 
 1. paper intake
-2. blueprint hardening
-3. optional external blueprint review with writer adjudication
-4. essay prewrite gate
-5. bounded article rewrite
+2. evidence authorization when the claim set is large, synthetic, or contested
+3. blueprint hardening
+4. optional external blueprint review with writer adjudication
+5. essay prewrite gate
+6. bounded article rewrite
 
 After a blocking high-bar review, return to step 2 rather than generating another loose rewrite candidate.
 
