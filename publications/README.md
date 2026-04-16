@@ -26,7 +26,8 @@ Workflow/framework packages stay at the repository root and are documented elsew
 | [`autonomy-tax/`](autonomy-tax/README.md) | Single-publication | Published | Three-piece publication package; nested git repo preserved for heavy evidence/history |
 | [`binding-gap/`](binding-gap/README.md) | Single-publication | Active | Canonical live binding-gap essay plus companion and artifact pipeline |
 | [`clean-interface-illusion/`](clean-interface-illusion/README.md) | Single-publication | Active donor / capped flagship | Post-ceiling donor package, pivot record, and workflow extraction leaf |
-| [`corrective-competence/`](corrective-competence/README.md) | Single-publication | Active unpublished flagship | Cleared successor package focused on corrective competence and the capability-comprehension gap |
+| [`confidence-debt/`](confidence-debt/README.md) | Umbrella | Active unpublished flagship | North-star synthesis attempt fusing evidence-governance, clean-interface-illusion, and corrective-competence donors |
+| [`corrective-competence/`](corrective-competence/README.md) | Single-publication | Active donor / capped flagship | Cleared successor package, now donor to confidence-debt |
 | [`evidence-governance/`](evidence-governance/README.md) | Umbrella | Active unpublished umbrella | Three draft leaves plus shared governance-pattern research and external proof repo |
 | [`illusion-of-swarm/`](illusion-of-swarm/README.md) | Single-publication | Published | alphaXiv-driven research package behind *The Illusion of the Swarm* |
 | [`moltbook-phenomenon/`](moltbook-phenomenon/README.md) | Single-publication | Published | Essay, background analysis, slides, and distribution assets |

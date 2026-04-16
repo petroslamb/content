@@ -15,9 +15,10 @@ expected_outputs:
   - grounding review and blocker record
   - one active next-pivot candidate surface
   - candidate-specific research delta
+  - north-star viability gate for any candidate being considered for clearance
   - explicit pivot decision: blocked, provisional, clear lead, or pivot cleared
 done_when:
-  - one candidate is explicitly cleared for a new flagship attempt or the package explicitly blocks the whole pivot search and records why
+  - one candidate clears both research grounding and north-star viability, or the package explicitly blocks the whole pivot search and records why
 approval_gate: required_for_pivot_clearance
 ---
 
@@ -64,16 +65,18 @@ Do **not** use it for:
 
 A pivot is not real because it sounds larger.
 
-A pivot becomes real only when it clears a research-grounding gate.
+A pivot becomes real only when it clears both a research-grounding gate and a north-star viability gate.
 
 That means:
 
 1. search first
 2. paper-level inspection second
 3. assistant comparison and pressure-testing third
-4. new flagship drafting only after explicit clearance
+4. north-star viability check before clearance
+5. new flagship drafting only after explicit clearance
 
 This workflow treats **candidate discovery** and **candidate clearance** as separate stages.
+It also treats **research-grounded** and **north-star viable** as different claims.
 
 ## Status Vocabulary
 
@@ -85,10 +88,13 @@ Use these states explicitly in the package artifacts:
   A candidate that is still alive but not yet clearly ahead.
 - `clear_lead_candidate`
   The strongest current candidate in the package, still not yet cleared.
+- `research_grounded_but_not_north_star_viable`
+  A candidate whose evidence seam is real and essay-capable, but whose field-reordering move, evidence aperture, or doctrine is not strong enough for a top-cluster attempt.
 - `pivot_cleared_for_north_star_attempt`
-  Strong enough to initialize a new flagship object or sibling package.
+  Strong enough to initialize a new flagship object or sibling package because it has cleared both research grounding and north-star viability.
 
 Do not skip from “interesting idea” to `pivot_cleared_for_north_star_attempt` without a grounding review.
+Do not skip from `research_grounded` to `pivot_cleared_for_north_star_attempt` without the north-star viability gate.
 
 ## Required Artifact Set
 
@@ -106,9 +112,11 @@ The recurring strong artifact set is:
    Keep one active candidate surface without pretending it is cleared.
 6. `candidate-specific research delta`
    Define the exact gaps the next research pass must close.
-7. `pivot decision`
+7. `north-star viability gate`
+   Decide whether the candidate has enough field-reordering force, scale-matched evidence, and doctrine to plausibly beat the top archive cluster.
+8. `pivot decision`
    Record whether the package should keep searching, clear a pivot, or stop.
-8. `process capture`
+9. `process capture`
    Preserve what the package actually did so the workflow can later be revised.
 
 These do not need to be identical filenames across packages, but the functions should all exist.
@@ -246,7 +254,42 @@ Ask one strict question:
 
 - is this now a real flagship pivot, or only the best remaining candidate?
 
-This is the point where a candidate can finally move from `clear_lead_candidate` to `pivot_cleared_for_north_star_attempt`.
+This is the point where a candidate can move from `clear_lead_candidate` to either:
+
+- `research_grounded_but_not_north_star_viable`
+- `pivot_cleared_for_north_star_attempt`
+
+The full-package clearance pass must include the north-star viability gate below before the final status is assigned.
+
+### North-Star Viability Gate
+
+Use this gate after the candidate is research-grounded and before opening a successor flagship package.
+
+The goal is to prevent a recurring failure mode:
+
+- the candidate is real
+- the papers support it
+- the essay can be strong
+- but the resulting draft caps below north star because the idea lacks field-reordering force or the evidence cannot support the largest intended landing
+
+Answer these questions explicitly:
+
+1. **Field-reordering move**
+   What does the essay make newly visible about the field? A summary of papers is not enough.
+2. **False proxy or public enemy**
+   What mistaken substitute does the essay kill or demote? Examples: benchmark score, raw capability, trust calibration, clean-interface success, or another widely overread proxy.
+3. **Portable governing term**
+   What phrase can carry the essay after reading? It must be precise enough to survive critique and broad enough to travel.
+4. **Scale-matched evidence**
+   Does the evidence support the essay's largest intended landing? If the ending wants high-stakes governance, the evidence cannot be mostly short lab tasks, toy settings, or theory.
+5. **Doctrine with consequence**
+   What does the essay force builders, operators, or readers to do differently tomorrow? If the ending is only "be careful," the candidate is not north-star viable.
+6. **Largest-claim evidence check**
+   Name the essay's biggest intended claim and the exact evidence that licenses it. If that evidence is missing, block or narrow.
+
+Pass this gate only when the candidate is not merely research-supported, but structurally likely to produce a top-cluster essay.
+
+Fail this gate with `research_grounded_but_not_north_star_viable` when the candidate is promising and evidence-backed but likely to cap below the archive's north-star bar unless it is narrowed or receives materially stronger evidence.
 
 ## Negative Evidence Rules
 
@@ -280,6 +323,17 @@ Do not treat failed searches as nothing. Treat them as evidence about what the c
 - the candidate survives a full-package clearance pass
 - the strongest rival frame no longer looks stronger
 - the remaining issues are blueprint risks, not candidate-selection blockers
+- the north-star viability gate passes
+- the largest intended landing has scale-matched evidence
+
+### Mark `research_grounded_but_not_north_star_viable` when:
+
+- the candidate is supported by the literature and can likely produce a strong essay
+- the field-reordering move is not large or surprising enough
+- the false proxy or public enemy is weak or diffuse
+- the governing term is useful but not yet archive-top-cluster strong
+- the largest intended landing outruns the evidence
+- the doctrine is correct but not consequential enough to change behavior
 
 ## Interaction With Existing Workflows
 
@@ -305,8 +359,10 @@ The extracted rollout showed a repeatable pattern:
 6. adjacent workflow seam that improved the picture but did not replace the winner
 7. behavioral-proxy pass that stabilized the ranking
 8. full-package clearance pass that finally cleared the pivot
+9. a later successor package showed that this clearance was still too permissive because research-grounded did not guarantee north-star viability
 
 That is exactly why this workflow exists separately from ordinary draft iteration.
+It is also why the north-star viability gate is now required before future pivot clearance.
 
 ## Current Promotion Read
 
