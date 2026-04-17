@@ -3,7 +3,7 @@ publication: the-five-component-pattern-for-ai
 parent_package: evidence-governance
 revision: 1
 config:
-  markdown_path: publications/evidence-governance/the-five-component-pattern-for-ai/the-five-component-pattern-for-ai.md
+  markdown_path: publications/evidence-governance/archive/the-five-component-pattern-for-ai/the-five-component-pattern-for-ai.md
   substack_post_id: 188383436
   substack_slug: the-five-component-pattern-for-ai
   substack_url: https://lambpetros.substack.com
