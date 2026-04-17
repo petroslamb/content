@@ -184,6 +184,8 @@ def render_video(cues_path: Path, output_path: Path, fps: int, width: int, heigh
                     str(concat_path),
                     "-i",
                     str(audio_path),
+                    "-t",
+                    f"{audio_duration:.3f}",
                     "-vf",
                     "format=yuv420p",
                     "-r",

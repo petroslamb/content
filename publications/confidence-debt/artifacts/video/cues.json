@@ -3,140 +3,262 @@
   "slides_dir": ".",
   "segments": [
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-001.png",
-      "start": "00:00:00.000"
+      "image": "rooted_layers_open_16x9.png",
+      "image_path": "publications/confidence-debt/artifacts/video/bookends/rooted_layers_open_16x9.png",
+      "start": "00:00:00.000",
+      "note": "Opening rooted-layers mark, wrapped to 16:9 from the project-root RootedLayers.png."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-001.png",
-      "start": "00:00:41.680"
+      "image": "slide-001.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-001.png",
+      "start": "00:00:16.000",
+      "note": "Title frame while the 4:45 p.m. setup establishes the confidence/evidence gap."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-002.png",
-      "start": "00:01:23.360"
+      "image": "slide-002.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-002.png",
+      "start": "00:00:59.520",
+      "note": "Polished summary visual at the first description of a flawless, finished-looking AI report."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-002.png",
-      "start": "00:04:14.180"
+      "image": "slide-001.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-001.png",
+      "start": "00:02:49.840",
+      "note": "Support title variant as the hosts name borrowed trust after the reviewer forwards without checking evidence."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-003.png",
-      "start": "00:07:05.000"
+      "image": "slide-004.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-004.png",
+      "start": "00:04:28.720",
+      "note": "Formal confidence-debt definition: output trust moves downstream faster than warranted evidence."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-003.png",
-      "start": "00:11:08.940"
+      "image": "slide-003.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-003.png",
+      "start": "00:06:07.680",
+      "note": "EIP-verify incident begins; show artifact asymmetry as the technical case opens."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-004.png",
-      "start": "00:15:12.880"
+      "image": "slide-002.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-002.png",
+      "start": "00:07:56.720",
+      "note": "Two generated artifacts: polished summary versus raw row-level evidence."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-004.png",
-      "start": "00:15:23.940"
+      "image": "slide-005.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-005.png",
+      "start": "00:09:56.880",
+      "note": "Legibility outranks accuracy as the narration explains ABI helpers, test fixtures, and RPC glue."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-005.png",
-      "start": "00:15:35.000"
+      "image": "slide-003.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-003.png",
+      "start": "00:11:43.600",
+      "note": "Return to the artifact matrix for the 13-of-15 and contradiction statistics."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-005.png",
-      "start": "00:19:01.420"
+      "image": "slide-005.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-005.png",
+      "start": "00:13:15.040",
+      "note": "Compression funnel when the wrong usable artifact travels downstream and messy evidence is ignored."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-006.png",
-      "start": "00:22:27.840"
+      "image": "slide-003.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-003.png",
+      "start": "00:14:23.600",
+      "note": "Debt taxonomy contrast: technical debt, epistemic debt, and confidence debt."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-006.png",
-      "start": "00:24:39.360"
+      "image": "slide-004.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-004.png",
+      "start": "00:15:01.600",
+      "note": "Return to the trust/evidence graph for the precise borrowing-trust definition."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-008.png",
-      "start": "00:26:50.880"
+      "image": "slide-007.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-007.png",
+      "start": "00:16:00.639",
+      "note": "Gate 1 opens: raw artifacts outrank summaries and claims need audit state."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-008.png",
-      "start": "00:29:42.399"
+      "image": "slide-006.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-006.png",
+      "start": "00:17:20.880",
+      "note": "Contradiction register and approve-blocking workflow at the artifact layer."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-009.png",
-      "start": "00:32:33.919"
+      "image": "slide-007.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-007.png",
+      "start": "00:18:56.000",
+      "note": "Claim-auditability metrics: provenance coverage, soundness, contradiction transparency, audit effort."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-009.png",
-      "start": "00:38:11.959"
+      "image": "slide-012.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-012.png",
+      "start": "00:20:38.240",
+      "note": "Paper Trail and passive transparency discussion."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-011.png",
-      "start": "00:43:50.000"
+      "image": "slide-006.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-006.png",
+      "start": "00:22:14.880",
+      "note": "Nutrition-label analogy: transparency informs without impeding."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-011.png",
-      "start": "00:44:15.640"
+      "image": "slide-007.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-007.png",
+      "start": "00:23:56.159",
+      "note": "Dead approve button / forced adjudication / temporal validity before Gate 1 can clear."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-012.png",
-      "start": "00:44:41.280"
+      "image": "slide-004.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-004.png",
+      "start": "00:25:27.360",
+      "note": "Compression transfer point as the argument moves from auditable claims to management dashboards."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-012.png",
-      "start": "00:45:23.400"
+      "image": "slide-008.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-008.png",
+      "start": "00:26:13.679",
+      "note": "Gate 2: single-number dashboard trap and reliability release."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-007.png",
-      "start": "00:46:05.520"
+      "image": "slide-007.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-007.png",
+      "start": "00:27:27.520",
+      "note": "Pass@1 versus Pass@8 collapse in retail-support agent evaluation."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-007.png",
-      "start": "00:46:22.520"
+      "image": "slide-010.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-010.png",
+      "start": "00:29:50.320",
+      "note": "ReliabilityBench envelope replaces flat percentages."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-010.png",
-      "start": "00:46:39.520"
+      "image": "slide-008.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-008.png",
+      "start": "00:30:54.960",
+      "note": "Measured deployment envelope while k, epsilon, and lambda are explained."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-010.png",
-      "start": "00:47:24.640"
+      "image": "slide-009.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-009.png",
+      "start": "00:32:36.399",
+      "note": "Car-alignment analogy for long-horizon trajectory drift."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-014.png",
-      "start": "00:48:09.760"
+      "image": "slide-009.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-009.png",
+      "start": "00:34:00.000",
+      "note": "Previous drift visual carries the discussion into bounded autonomy."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-014.png",
-      "start": "00:49:58.960"
+      "image": "slide-011.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-011.png",
+      "start": "00:36:01.119",
+      "note": "Gate 3 begins: frictionless automation hollows human correction capacity."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-016.png",
-      "start": "00:51:48.160"
+      "image": "slide-010.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-010.png",
+      "start": "00:36:57.920",
+      "note": "Engaged-friction versus passive-review study split."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-016.png",
-      "start": "00:51:59.080"
+      "image": "slide-011.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-011.png",
+      "start": "00:38:39.280",
+      "note": "Contractor-style AI use forfeits the friction needed to debug later."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-013.png",
-      "start": "00:52:10.000"
+      "image": "slide-012.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-012.png",
+      "start": "00:39:44.640",
+      "note": "Competence shadow and keyhole effect."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-013.png",
-      "start": "00:52:52.320"
+      "image": "slide-011.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-011.png",
+      "start": "00:40:27.440",
+      "note": "Previous keyhole/tiger visual reinforces what curated AI summaries hide."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-015.png",
-      "start": "00:53:34.640"
+      "image": "slide-013.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-013.png",
+      "start": "00:42:40.640",
+      "note": "Co-audit interface as the structural fix at the human layer."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-015.png",
-      "start": "00:53:57.840"
+      "image": "slide-013.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-013.png",
+      "start": "00:43:02.079",
+      "note": "Forced adjudication UI and cognitive forcing functions."
     },
     {
-      "image": "publications/confidence-debt/artifacts/latest/slides/slide-017.png",
-      "start": "00:54:21.040"
+      "image": "slide-013.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-013.png",
+      "start": "00:44:13.440",
+      "note": "Hypothesis-driven interfaces drag counter-evidence next to claims."
     },
     {
-      "image": "publications/confidence-debt/artifacts/previous/slides/slide-017.png",
-      "start": "00:54:26.340"
+      "image": "slide-015.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-015.png",
+      "start": "00:45:02.640",
+      "note": "Downstream cascade: isolated failures finance each other."
+    },
+    {
+      "image": "slide-014.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-014.png",
+      "start": "00:45:25.119",
+      "note": "Fintech cascade layer diagram while step one, two, and three unfold."
+    },
+    {
+      "image": "slide-015.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-015.png",
+      "start": "00:46:46.800",
+      "note": "Cascade repeat as step three moves to the human reviewer and system crash."
+    },
+    {
+      "image": "slide-014.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-014.png",
+      "start": "00:47:56.720",
+      "note": "Appropriate reliance critique and why confidence debt is structural."
+    },
+    {
+      "image": "slide-015.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-015.png",
+      "start": "00:49:32.079",
+      "note": "Micro point-of-decision calibration versus macro workflow pipeline failure."
+    },
+    {
+      "image": "slide-016.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-016.png",
+      "start": "00:51:20.000",
+      "note": "Three gates synthesis before the non-negotiable rules are listed."
+    },
+    {
+      "image": "slide-016.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-016.png",
+      "start": "00:52:25.599",
+      "note": "Three rules for surviving generative workflows, aligned with rule three."
+    },
+    {
+      "image": "slide-017.png",
+      "image_path": "publications/confidence-debt/artifacts/latest/slides/slide-017.png",
+      "start": "00:53:02.079",
+      "note": "Doctrine of friction as the final paradox begins."
+    },
+    {
+      "image": "slide-017.png",
+      "image_path": "publications/confidence-debt/artifacts/previous/slides/slide-017.png",
+      "start": "00:53:40.000",
+      "note": "Friction is a vital reliability feature during the closing challenge."
+    },
+    {
+      "image": "rooted_layers_close_16x9.png",
+      "image_path": "publications/confidence-debt/artifacts/video/bookends/rooted_layers_close_16x9.png",
+      "start": "00:54:08.880",
+      "note": "Closing rooted-layers mark, wrapped to 16:9 from the project-root RootedLayers_inverted.png."
     }
   ]
 }

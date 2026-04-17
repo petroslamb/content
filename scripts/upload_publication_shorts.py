@@ -113,12 +113,9 @@ def main():
         ]
         if item["summary"]:
             description_lines.extend([item["summary"], ""])
-        description_lines.extend(
-            [
-                f"Original essay: {args.essay_url}",
-                f"Full visual deep dive: {args.full_video_url}",
-            ]
-        )
+        if args.essay_url.lower() not in {"none", "skip", "omit"}:
+            description_lines.append(f"Original essay: {args.essay_url}")
+        description_lines.append(f"Full visual deep dive: {args.full_video_url}")
         if args.tldr_url:
             description_lines.append(f"TL;DR video: {args.tldr_url}")
         description_lines.extend(
