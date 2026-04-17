@@ -121,6 +121,7 @@ Tracked workflows:
 | `render_publication_video.py` | Thin convenience wrapper that renders one package's final publication video from its prepared cues. | package-level final render | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `create_publication_shorts_from_longform.py` | Slices a verified long-form MP4 into named short clips from a manifest and renders portrait Shorts variants. | package-level Shorts derivation from one long-form video | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `convert_landscape_videos_to_portrait.py` | Converts landscape MP4 clips into portrait `9:16` versions by centering the original frame over a blurred vertical background, keeping output in a standard `H.264`/`AAC` web-delivery envelope. | prep horizontal clips for Shorts-style upload | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
+| `probe_shorts_media.py` | Probes portrait Shorts masters for dimensions, audio, duration, and JSON-reportable preflight status. | verify Shorts media before upload | [`youtube-data-api`](../workflows/skills/youtube-data-api/SKILL.md) |
 | `scrape_youtube_watch_transcript.py` | Scrapes the visible watch-page transcript panel into JSON when you need a browser fallback for transcript inspection. | transcript fallback or debugging | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 
 ## Thin Operational Wrappers
@@ -131,7 +132,8 @@ These scripts are thin wrappers around workflow or skill behavior. They remain g
 | :--- | :--- | :--- |
 | `list_youtube_videos.py` | Lists videos from the authenticated YouTube channel. | Thin wrapper around the YouTube skill script layer. Use [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) for the canonical process. |
 | `upload_publication_tldrs.py` | Uploads TL;DR video variants from one package into a playlist. | Thin publication wrapper around the YouTube API helper stack; package selection is an argument. |
-| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package, adds them to a Shorts playlist, links them back to the main long-form video, and can schedule release times from a manifest. | Thin publication wrapper around the YouTube API helper stack; package selection is an argument. Defaults to dry-run. |
+| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package, adds them to a Shorts playlist, links them back to the main long-form video, can schedule release times from a manifest, and writes an upload/readback report. | Thin publication wrapper around the YouTube API helper stack; package selection is an argument. Defaults to dry-run and preflights local media. |
+| `upload_ad_hoc_shorts.py` | Uploads arbitrary local portrait clips, or converts landscape clips first, then links them to a long-form video and writes an upload/readback report. | Use for downloaded or manually edited clips outside a package's canonical Shorts folder. Defaults to dry-run and preflights local media. |
 
 ## Related Skill Split
 

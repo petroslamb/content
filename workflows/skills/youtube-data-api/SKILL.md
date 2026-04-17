@@ -98,9 +98,25 @@ Use this after the portrait Shorts masters already exist inside a package. Keep 
   --apply
 ```
 
-This wrapper is dry-run by default. It uploads all portrait Shorts in the package folder, adds them to the target playlist, and attempts to set the long-form upload as the Shorts related video.
+This wrapper is dry-run by default. It preflights every local portrait clip for `1080x1920`, audio, and a default maximum duration of `180` seconds; uploads all portrait Shorts in the package folder; adds them to the target playlist; attempts to set the long-form upload as the Shorts related video; then writes a structured upload report with local probe data, playlist item IDs, public URLs, and YouTube readback status.
+
+Use `--essay-url none`, `--essay-url skip`, or `--essay-url omit` when there is no canonical essay URL and the description should omit the `Original essay` line.
 
 If a package has `artifacts/video/shorts/shorts_manifest.json`, pass `--manifest` so the wrapper uses explicit titles, summaries, and optional `publishAt` schedule times instead of inferring everything from filenames.
+
+For one-off downloaded or locally edited clips that are not in the canonical package Shorts folder, use the ad hoc wrapper instead of pasting custom upload code:
+
+```bash
+.venv/bin/python scripts/upload_ad_hoc_shorts.py \
+  <portrait-mp4-or-directory> \
+  --main-video-id <LONGFORM_VIDEO_ID> \
+  --playlist-id <SHORTS_PLAYLIST_ID> \
+  --full-video-url <longform-youtube-url> \
+  --report-file <path/to/upload_report.json> \
+  --apply
+```
+
+When the inputs are still landscape clips, add `--convert-from-landscape --work-dir <portrait-output-dir>` so the script first renders `1080x1920` portrait masters using the repo's blurred-background conversion.
 
 ### Operating Agents Uploads, Ordering, And Replacements
 
