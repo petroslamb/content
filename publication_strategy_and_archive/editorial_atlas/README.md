@@ -1,7 +1,7 @@
 # Editorial Atlas
 
 Editorial instrumentation for the published essay corpus in
-[`publication_strategy_and_archive/substack_archive/`](../publication_strategy_and_archive/substack_archive/).
+[`../substack_archive/`](../substack_archive/).
 
 This package is intentionally independent of the tracked workflow docs. It is
 not a publishing workflow, intake workflow, or review workflow. It is an
@@ -21,12 +21,10 @@ resist.
 
 - [`process.md`](process.md): scoring method, section slots, and usage notes
 - [`rubric.md`](rubric.md): reusable scoring rubric for future essay passes
-- [`rubric_assessments.yaml`](rubric_assessments.yaml): canonical rubric-input source for the scored corpus
-- [`corpus_inventory.md`](corpus_inventory.md): inventory of all archive essays
-- [`essay_atlas.md`](essay_atlas.md): whole-essay scoring pass across the corpus
-- [`attractor_cards.md`](attractor_cards.md): short reusable profile cards for
-  every archive essay
-- [`section_atlas.md`](section_atlas.md): section-level scoring pass
+- `rubric_assessments_*.yaml`: model-specific rubric-input sources for the scored corpus
+- [`rubric_assessments_template.yaml`](rubric_assessments_template.yaml): safe blank scoring template for zero-knowledge passes
+- [`rubric.md`](rubric.md): reusable scoring rubric for future essay passes
+- [`process.md`](process.md): scoring method, section slots, and usage notes
 - [`move_library.md`](move_library.md): reverse-engineered editorial moves from
   the archive
 - [`draft_pull_sheet_template.md`](draft_pull_sheet_template.md): reusable
@@ -38,8 +36,8 @@ resist.
 
 ## Data Contract
 
-`rubric_assessments.yaml` is now the editable scoring source. It stores the
-rubric inputs needed to derive:
+The editable scoring sources are the model-specific `rubric_assessments_*.yaml`
+files. Each stores the rubric inputs needed to derive:
 
 - direct whole-essay dimensions
 - traction subdimensions
@@ -48,7 +46,8 @@ rubric inputs needed to derive:
 - explicit corpus exclusions
 - draft routing objects
 
-`atlas_data.json` is the generated mirror-facing artifact. Regenerate it with:
+`atlas_data.json` is the generated mirror-facing artifact across all complete
+model-specific assessment files. Regenerate it with:
 
 ```bash
 npm run sync:editorial-atlas

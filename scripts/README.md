@@ -10,6 +10,23 @@ This directory holds the tracked repo-level automation code. These scripts are t
 - Treat `archive_utils.py` as a support module, not a user-facing entrypoint.
 - Treat `stitch_binding_gap_slides.py` as a package-specific utility, not a general repo workflow.
 
+## Script Scope Policy
+
+The default rule is: root-level scripts should be generic repo automation. A script may show a package name in CLI help text as an example when it still accepts `--package` or another generic selector. A script becomes a Phase 1 exception when it hardcodes one package, one series, or one migration context into its behavior.
+
+Documented exceptions:
+
+| Script | Status | Why It Exists | Target Disposition |
+| :--- | :--- | :--- | :--- |
+| `stitch_binding_gap_slides.py` | open exception | Local utility for paired Binding Gap slide-review images. | Move under the Binding Gap package, generalize into a slide-stitching helper, or keep only with an explicit accepted exception. |
+| `sync_operating_agents_substack.py` | accepted series exception for now | Operating Agents has a multi-post Substack sync contract that is not the same as one generic article publish. | Keep tied to the Operating Agents skill/workflow or move into a series-specific adapter before strict Phase 1 closure. |
+| `update_initial_status.py` | historical bootstrap exception | One-time backfill helper from the early lifecycle migration; hardcoded package lists preserve migration history. | Keep as historical maintenance only; do not use as a current workflow entrypoint. |
+
+Non-exceptions:
+
+- `check_repo_links.py` can name legacy paths because its job is to detect migration residue.
+- Generic package scripts such as `render_publication_video.py`, `upload_publication_tldrs.py`, and `upload_publication_shorts.py` can mention example package names if the actual package remains a CLI argument.
+
 ## Lifecycle / Status Automation
 
 These scripts keep the publication lifecycle contracts, manifests, and refinement cycles coherent. They are the automation layer behind the tracked stage ids, but they do not replace the workflow docs that define how the work should actually be done.
@@ -51,7 +68,7 @@ Tracked workflow:
 | Script | Role | Normal Entry Point | Related Skill |
 | :--- | :--- | :--- | :--- |
 | `sync_substack_archive.py` | Canonical archive refresh: discovers public posts, localizes assets, writes markdown and HTML snapshots, updates `metadata.json`, and regenerates the root README publication table. | `npm run sync:substack` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
-| `generate_editorial_atlas.py` | Generates `publication_strategy_and_archive/editorial_atlas/atlas_data.json` from `publication_strategy_and_archive/editorial_atlas/rubric_assessments.yaml` and can verify that the checked-in atlas still matches the rubric source. | `npm run sync:editorial-atlas` | none |
+| `generate_editorial_atlas.py` | Generates `publication_strategy_and_archive/editorial_atlas/atlas_data.json` from complete model-specific `publication_strategy_and_archive/editorial_atlas/rubric_assessments_*.yaml` files and can verify that the checked-in atlas still matches the rubric sources. | `npm run sync:editorial-atlas` | none |
 | `editorial_atlas_utils.py` | Shared rubric-source validation and atlas derivation helpers used by the generator and mirror checks. | imported by other scripts | none |
 | `archive_utils.py` | Shared paths and helpers for the archive manifest, `post_map.yaml`, and README table generation. | imported by other scripts | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |
 | `check_mirror.py` | Structural validation for the archive, editorial atlas, and built mirror output. Checks metadata keys, rubric-derived atlas generation, archive files, asset references, generated README section, and built internal links. | `npm run check:mirror` | [`substack-archive-sync`](../workflows/skills/substack-archive-sync/SKILL.md) |

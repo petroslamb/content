@@ -15,11 +15,11 @@ evidence_anchor_paths: []
 
 ## Findings
 
-- `P1`: The dominant blocker from `r1` is materially fixed. The explicit invariant at [corrective-competence-candidate-r2.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r2.md:9) now states what actually travels across domains and what does not.
-- `P1`: The competence-shadow move at [corrective-competence-candidate-r2.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r2.md:17) and [corrective-competence-candidate-r2.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r2.md:19) is no longer just vocabulary. It now does structural work in the essay.
+- `P1`: The dominant blocker from `r1` is materially fixed. The explicit invariant at `corrective-competence-candidate-r2.md:9` now states what actually travels across domains and what does not.
+- `P1`: The competence-shadow move at `corrective-competence-candidate-r2.md:17` and `corrective-competence-candidate-r2.md:19` is no longer just vocabulary. It now does structural work in the essay.
 - `P1`: `r2` is stronger than `r1` because it is both tighter and more honest. The synthesis now feels defended rather than merely asserted.
 - `P2`: The remaining gap is no longer evidence governance. It is late-stage force. The draft proves its claim clearly, but it still does not produce the fully unforgettable landing or wider field-reordering feeling of the top archive cluster.
-- `P2`: The ending at [corrective-competence-candidate-r2.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r2.md:25) and [corrective-competence-candidate-r2.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r2.md:27) is correct, but it still resolves more like a strong doctrine essay than a last-tier flagship object.
+- `P2`: The ending at `corrective-competence-candidate-r2.md:25` and `corrective-competence-candidate-r2.md:27` is correct, but it still resolves more like a strong doctrine essay than a last-tier flagship object.
 
 ## Prioritized Issues
 

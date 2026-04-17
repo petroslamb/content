@@ -7,9 +7,8 @@ drift from essay to essay or from one pass to the next.
 Use this file together with:
 
 - [`process.md`](process.md) for the package model
-- [`essay_atlas.md`](essay_atlas.md) for existing whole-essay scores
-- [`section_atlas.md`](section_atlas.md) for section-level comparisons
-- [`atlas_data.json`](atlas_data.json) for the canonical machine-readable schema
+- `rubric_assessments_*.yaml` for existing model-specific whole-essay and section-slot scores
+- [`atlas_data.json`](atlas_data.json) for the canonical machine-readable schema consumed by the mirror
 
 ## Core Rule
 

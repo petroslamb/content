@@ -28,6 +28,7 @@ These support real-trace reconstruction and proof work. They are optional suppor
 - `memory-record-template.md`
 - `tool-contract-template.md`
 - `artifact-handoff-template.md`
+- `harness-proof-run-template.md`
 
 These support implementation, but they are not the framework itself.
 
@@ -40,5 +41,6 @@ Then:
 - use the six direct templates when a run actually needs an explicit review packet
 - use the raw-artifact support templates when you are reconstructing a run from real traces or assembling proof material
 - use the adjacent patterns only when a system needs extra contracts for memory, tools, or handoffs
+- use `harness-proof-run-template.md` when the repo itself is testing whether Codex or a similar harness can operate from the tracked contract and workflow surface
 
 If a run is low-risk and reconstructable from ordinary logs, you do not need to force these templates onto it.
