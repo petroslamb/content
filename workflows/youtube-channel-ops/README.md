@@ -111,7 +111,9 @@ Use the package wrapper for this path:
   --apply
 ```
 
-This script is dry-run by default. It uploads every `*.mp4` in `artifacts/video/shorts/portrait/`, adds them to the target playlist, and attempts to set the long-form video as the Shorts related video through the API.
+This script is dry-run by default. It preflights every local clip for `1080x1920`, audio, and YouTube-safe duration; uploads every `*.mp4` in `artifacts/video/shorts/portrait/`; adds them to the target playlist; attempts to set the long-form video as the Shorts related video through the API; and writes an upload report with playlist item IDs, public URLs, related-video update results, local probe data, and YouTube readback status.
+
+If there is no canonical essay URL, pass `--essay-url none`, `--essay-url skip`, or `--essay-url omit`. The uploader will leave the `Original essay` line out of the description rather than publishing a placeholder.
 
 If the package has a `shorts_manifest.json`, pass it so the upload uses:
 
@@ -134,6 +136,20 @@ If the package has a `shorts_manifest.json`, pass it so the upload uses:
 For scheduled release, set explicit UTC `publish_at` values in the manifest. A practical default is `2` to `3` Shorts per day at fixed local times rather than dumping the batch all at once.
 
 Do not merge this with Shorts creation logic in the same workflow surface. Keep `clip selection -> portrait conversion/render` as the upstream phase, and treat upload-plus-linking as the downstream phase that can be frozen and reused independently.
+
+For ad hoc clips that arrive outside the package folder, use the local clip wrapper:
+
+```bash
+.venv/bin/python scripts/upload_ad_hoc_shorts.py \
+  <mp4-file-or-directory> \
+  --main-video-id <LONGFORM_VIDEO_ID> \
+  --playlist-id <SHORTS_PLAYLIST_ID> \
+  --full-video-url <longform-youtube-url> \
+  --report-file <path/to/upload_report.json> \
+  --apply
+```
+
+If those inputs are still landscape, add `--convert-from-landscape --work-dir <portrait-output-dir>` to produce portrait masters before upload. The same preflight and report behavior applies.
 
 ### 6. Branch To The Correct Next Workflow
 

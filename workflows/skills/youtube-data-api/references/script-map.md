@@ -62,10 +62,25 @@ Use this file when deciding which local YouTube script to run and how risky it i
 ### `scripts/upload_publication_shorts.py`
 
 - Purpose: upload all portrait Shorts variants from one publication package, add them to a target Shorts playlist, and set the related-video field to the canonical long-form upload when the API allows it.
-- Key args: `--package`, `--main-video-id`, `--playlist-id`, `--essay-url`, `--full-video-url`, optional `--tldr-url`, optional `--manifest`, optional `--privacy`, optional `--apply`.
+- Key args: `--package`, `--main-video-id`, `--playlist-id`, `--essay-url`, `--full-video-url`, optional `--tldr-url`, optional `--manifest`, optional `--privacy`, optional `--report-file`, optional `--max-duration`, optional `--skip-probe`, optional `--apply`.
 - Safe mode: default behavior is dry-run.
 - Risk: uploads videos, writes playlist entries, and updates video status only when `--apply` is present.
 - Scheduling: if a manifest carries `publish_at`, the script uploads the Short as `private`, sets `publishAt`, and keeps the related-video linkage intact.
+- Reporting: when run with `--apply`, writes a JSON report containing local media probe data, upload IDs, playlist item IDs, related-video update results, and YouTube readback status.
+- Description omission: pass `--essay-url none`, `--essay-url skip`, or `--essay-url omit` to leave the `Original essay` line out.
+
+### `scripts/upload_ad_hoc_shorts.py`
+
+- Purpose: upload arbitrary local portrait MP4s, or convert landscape MP4s to portrait first, then publish them as Shorts linked to a long-form video.
+- Key args: input files/directories, `--main-video-id`, `--playlist-id`, `--full-video-url`, `--report-file`, optional `--manifest`, optional `--convert-from-landscape`, optional `--work-dir`, optional `--privacy`, optional `--essay-url`, optional `--tldr-url`, optional `--tag`, optional `--max-duration`, optional `--skip-probe`, optional `--apply`.
+- Safe mode: default behavior is dry-run, except `--convert-from-landscape` performs local conversion before printing the upload plan.
+- Risk: uploads videos, writes playlist entries, and updates video status only when `--apply` is present.
+
+### `scripts/probe_shorts_media.py`
+
+- Purpose: preflight portrait Shorts masters before upload.
+- Key args: input files/directories, optional `--width`, optional `--height`, optional `--max-duration`, optional `--allow-missing-audio`, optional `--json`.
+- Risk: read-only local media inspection.
 
 ### `upload_operating_agents_tldrs.py`
 
