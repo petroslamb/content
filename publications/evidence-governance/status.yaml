@@ -3,6 +3,7 @@ publication: evidence-governance
 revision: 3
 config:
   default_leaf_package: evidence-governance/your-ai-is-confidently-wrong-and
+  evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
   shared_evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
   leaf_packages:
   - evidence-governance/your-ai-is-confidently-wrong-and

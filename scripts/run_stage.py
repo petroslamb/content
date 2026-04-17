@@ -137,6 +137,10 @@ def log_run(
     commands: list[str],
     workflow_doc: str,
     status_path: str,
+    resolution: dict | None = None,
+    stage_state_before: dict | None = None,
+    stage_state_after: dict | None = None,
+    dependency_warnings: list[str] | None = None,
 ) -> str:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     package_id = package_key.replace("/", "__")
@@ -145,17 +149,78 @@ def log_run(
     log_path = log_dir / f"{timestamp}_{package_id}_{stage}_{action}.json"
 
     output_limit = 6000
+    output_excerpt = output[-output_limit:]
+    approval_gate = (resolution or {}).get("approval_gate", "unknown")
+    requires_approval = bool((resolution or {}).get("requires_approval", False))
+    approval_status = "not_required" if not requires_approval else "not_recorded_in_log"
+    command_check = "pass" if success else "fail"
     payload = {
         "kind": "lifecycle_stage_run",
+        "schema_version": 2,
         "timestamp": timestamp,
+        "run_id": f"{timestamp}_{package_id}_{stage}_{action}",
         "package": package_key,
         "stage": stage,
         "action": action,
         "success": success,
+        "boundary": {
+            "type": "explicit non-approval reason",
+            "reason": "Local lifecycle-stage operation. The log records repo-state work, not an external publish or channel mutation.",
+            "external_side_effect": False,
+            "approval_gate": approval_gate,
+            "approval_required": requires_approval,
+            "approval_status": approval_status,
+        },
+        "task": {
+            "objective": f"Run lifecycle action '{action}' for package '{package_key}' stage '{stage}'.",
+            "stop_condition": "Command finished and a lifecycle log was written.",
+            "non_goals": [
+                "Do not treat this routine log as retained proof.",
+                "Do not claim external publication or channel mutation from this log alone.",
+            ],
+        },
+        "execution": {
+            "commands": commands,
+            "output_excerpt": output_excerpt,
+            "output_truncated": len(output) > output_limit,
+            "state_before": stage_state_before or {},
+            "state_after": stage_state_after or {},
+            "dependency_warnings": dependency_warnings or [],
+        },
+        "evidence": {
+            "workflow_doc": workflow_doc,
+            "status_path": status_path,
+            "required_context": (resolution or {}).get("required_context", []),
+            "expected_outputs": (resolution or {}).get("expected_outputs", []),
+            "done_when": (resolution or {}).get("done_when", []),
+        },
+        "verification": {
+            "checks": [
+                {
+                    "name": "command_exit_status",
+                    "result": command_check,
+                    "notes": "For mark-only actions, this is the local status update result.",
+                },
+                {
+                    "name": "lifecycle_log_written",
+                    "result": "pass",
+                    "notes": repo_relpath(log_path),
+                },
+            ],
+            "residual_risk": "This lightweight log preserves the operational boundary. Promote to a full Reviewable Runs packet only when the run crosses a stronger review or proof boundary.",
+        },
+        "failure_or_risk": {
+            "actual_failure": None if success else "Lifecycle action failed; inspect output_excerpt.",
+            "possible_failures": [
+                "Stage marked done without enough human review.",
+                "External system state assumed from local state.",
+                "Routine log mistaken for retained proof artifact.",
+            ],
+        },
         "workflow_doc": workflow_doc,
         "status_path": status_path,
         "commands": commands,
-        "output_excerpt": output[-output_limit:],
+        "output_excerpt": output_excerpt,
         "output_truncated": len(output) > output_limit,
     }
     log_path.write_text(json.dumps(payload, indent=2) + "\n")
@@ -348,6 +413,7 @@ def main() -> None:
                 print(message["error"])
             sys.exit(1)
 
+        stage_state_before = dict(stage_data)
         outputs = []
         success = True
         for command in commands:
@@ -380,6 +446,10 @@ def main() -> None:
             commands,
             resolution["workflow_doc"],
             repo_relpath(manifest_ref.status_path),
+            resolution=resolution,
+            stage_state_before=stage_state_before,
+            stage_state_after=dict(stage_data),
+            dependency_warnings=dependency_warnings,
         )
         payload = {
             **resolution,
@@ -408,6 +478,7 @@ def main() -> None:
             else:
                 print(block_message)
             return
+        stage_state_before = dict(stage_data)
         stage_data["done"] = True
         stage_data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
         save_status(manifest_ref.package_path, status_data)
@@ -421,6 +492,10 @@ def main() -> None:
             [],
             resolution["workflow_doc"],
             repo_relpath(manifest_ref.status_path),
+            resolution=resolution,
+            stage_state_before=stage_state_before,
+            stage_state_after=dict(stage_data),
+            dependency_warnings=dependency_warnings,
         )
         payload = {**resolution, "action": "mark-done", "success": True, "log_path": log_path, "message": message}
         if args.format == "json":
@@ -437,6 +512,7 @@ def main() -> None:
         else:
             print(block_message)
         return
+    stage_state_before = dict(stage_data)
     stage_data["done"] = False
     stage_data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
     save_status(manifest_ref.package_path, status_data)
@@ -450,6 +526,10 @@ def main() -> None:
         [],
         resolution["workflow_doc"],
         repo_relpath(manifest_ref.status_path),
+        resolution=resolution,
+        stage_state_before=stage_state_before,
+        stage_state_after=dict(stage_data),
+        dependency_warnings=dependency_warnings,
     )
     payload = {**resolution, "action": "mark-undone", "success": True, "log_path": log_path, "message": message}
     if args.format == "json":

@@ -29,5 +29,6 @@ stages:
     last_updated: null
 config:
   markdown_path: publications/orchestration-paradigm/the-orchestration-paradigm-series/the-orchestration-paradigm-series.md
+  evidence_path: publications/orchestration-paradigm/ToolOrchestra_Parts/papers
   substack_slug: the-orchestration-paradigm-series
   substack_url: https://lambpetros.substack.com

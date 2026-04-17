@@ -58,6 +58,7 @@ Stable entrypoints:
 - `npm run stage:run -- --package <package> --stage <stage> --format json`
 - `npm run package:init -- --idea "..." --format json`
 - `npm run check:harness`
+- `npm run check:reviewable-runs`
 
 These surfaces do not replace the workflow docs. They make the existing lifecycle legible to an external harness without relying on a long custom prompt.
 
