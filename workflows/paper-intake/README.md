@@ -44,6 +44,8 @@ papers/markdown/
 papers/index.md
 ```
 
+If a PDF download, conversion, or file move fails with `Operation not permitted` or a sandbox denial, stop and hand the user the exact command and target path. Do not write a paper-index entry for a source that has not actually landed in the package evidence surface.
+
 Recommended meanings:
 
 - `papers/`: original PDFs and other paper-source files

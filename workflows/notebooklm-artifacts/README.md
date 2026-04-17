@@ -37,6 +37,7 @@ The normal destination is the package or topic `artifacts/` folder.
 - Keep one canonical artifact home. If NotebookLM first writes into an essay-scoped subfolder but the package expects package-level `artifacts/`, consolidate into the expected home and remove duplicates.
 - Treat NotebookLM outputs as raw artifacts until the article-polish workflow selects, names, and places them. Do not delete semantically named article images or remove markdown image embeds during artifact generation.
 - Moving labels such as `artifacts/latest/` and `artifacts/previous/` are acceptable for raw downloaded bundles, but they are not stable publication targets. Article embeds should point to semantically named assets chosen during polish.
+- If NotebookLM auth, browser state, source upload, or transcript export fails with a sandbox or permission error, stop the operation and hand the user the exact command plus expected output path. Do not replace the missing audio, slide deck, video, or transcript with a partial terminal capture.
 
 ## Canonical Flow
 
@@ -102,6 +103,16 @@ Operationally, the recurring successful path has been:
 - `source fulltext -o <transcript.txt>`
 
 Use the CLI output flag for full transcripts. Redirecting terminal output can capture only the preview text plus a message such as `use -o to save full content`, leaving a file that looks like a transcript but contains only the first page.
+
+If transcript recovery is blocked by `Operation not permitted`, browser auth, or inaccessible `.notebooklm` state, hand off the exact command:
+
+```bash
+cd /Users/petros/Projects/content
+.venv/bin/notebooklm source fulltext -n <NOTEBOOK_ID> <SOURCE_ID> -o publications/<package>/artifacts/<transcript>.txt
+wc -c publications/<package>/artifacts/<transcript>.txt
+```
+
+Continue only after the output file is present and its size is consistent with the source character count reported by NotebookLM.
 
 ## Related Skill Bundles
 
