@@ -74,6 +74,8 @@ Use:
 
 Treat this as persistent setup for the assistant, not something to rerun before every command.
 
+If browser auth or assistant access fails with `Operation not permitted`, a sandbox denial, or an inaccessible browser profile, stop and ask the user to run the exact auth command in a normal terminal. Do not substitute generic web search for alphaXiv assistant validation unless the user explicitly accepts that weaker fallback.
+
 If assistant chats start feeling slow or overloaded, start a fresh assistant session and carry forward only the minimal recap or paper IDs you still need. Do not keep extending one long chat by default.
 
 ## Evidence-Backed Defaults

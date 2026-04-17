@@ -40,6 +40,28 @@ Use the layers like this:
 
 That separation matters. Workflow docs explain the process. Skills and scripts execute the process. Reviewable Runs records what happened. Those are different layers and should not collapse into one another.
 
+## Sandbox And Permission Failures
+
+Some agents run inside stricter filesystem, browser, or macOS permission boundaries than the terminal user. If a command fails with `Operation not permitted`, `permission denied`, sandbox denial, browser-auth failure, or an inaccessible hidden/cache directory, do not keep retrying the same command and do not invent the missing artifact.
+
+Use this escalation pattern:
+
+1. record the exact command, working directory, target path, and error
+2. classify the blocked action as one of: repo file read/write, hidden auth state, browser/OAuth step, network download, media render, or channel mutation
+3. ask for the narrow permission needed, or hand the user the exact command to run locally
+4. state the expected output path and the verification command
+5. continue only after the expected file or state exists and passes verification
+
+For weaker agents, a sandbox failure is a stop condition for that operation, not a reason to produce a substitute. The correct fallback is a user-exec handoff such as:
+
+```bash
+cd /Users/petros/Projects/content
+<exact command>
+<verification command>
+```
+
+Auth-heavy and filesystem-sensitive steps should fail closed. This includes NotebookLM login and source export, alphaXiv browser auth, YouTube temporary uploads or caption downloads, writes into hidden folders such as `.youtube/` or `.notebooklm/`, and any operation that touches `~/Library`, `~/.gemini`, or other tool cache homes.
+
 ## Canonical Article Lifecycle
 
 The lifecycle stage ids remain unchanged for runner compatibility. The working taxonomy for article development is:

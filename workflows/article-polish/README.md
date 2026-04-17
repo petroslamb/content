@@ -47,6 +47,8 @@ rg -n '!\[[^]]*\]\(' publications/<package>/<draft>.md
 git diff --name-status -- publications/<package>/
 ```
 
+If image extraction, transcript recovery, or local media inspection fails because of sandbox permissions, stop that subtask and request a narrow user-exec handoff. Do not compensate by removing image embeds, using partial transcript previews, or pointing the article at unstable raw paths.
+
 ## Outputs
 
 When this workflow is done, the package should have:

@@ -32,6 +32,7 @@ Use this workflow before mutating the channel. It is the local production layer 
 - **5 fps for slide-only videos** — dramatically smaller file with zero quality loss for static images.
 - **Render uses `-preset medium` / `crf 23`** (script defaults). Don't adjust these for slideshows.
 - The script encodes at 1920×1080 with 192kbps AAC audio. Audio typically dominates output size on long narrations.
+- If caption recovery, temporary upload, local render, or Shorts slicing fails because of sandbox or filesystem permissions, stop that operation and ask for the narrow permission or user execution of the exact command. Do not proceed from missing captions, zero-byte media, or guessed timings.
 
 ## Canonical Flow
 
@@ -40,6 +41,8 @@ Use this workflow before mutating the channel. It is the local production layer 
 Download auto-captions from YouTube Data API (preferred) or fall back to `yt-dlp` / watch-page scraping. Zero-byte files are not valid; recover a real SRT before proceeding.
 
 If you only have local audio and no managed YouTube video yet, use the temporary-upload path from [`../youtube-channel-ops/README.md`](../youtube-channel-ops/README.md): upload an unlisted still-image video, wait for automatic captions, download the `.srt`, then delete the temporary upload.
+
+If the temporary-upload path is blocked by OAuth, browser, or sandbox permissions, hand the user the exact recovery command and the expected `.srt` path. Continue only after the `.srt` exists and is non-empty.
 
 ### Phase 2 — Build the cue sheet
 
