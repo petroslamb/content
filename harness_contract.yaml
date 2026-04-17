@@ -170,7 +170,7 @@ lifecycle:
         - semantically named kept images in the artifact surface
         - publication-ready references and repo links
       done_when:
-        - the draft is publication-ready and ready to hand off to Substack publishing
+        - the draft is publication-ready and ready to hand off to the release gate
       launch_templates: []
       packet_templates: []
       validator_commands: []
@@ -186,6 +186,7 @@ lifecycle:
         - config.markdown_path
         - config.substack_url
         - config.substack_post_id
+        - release gate verdict or explicit publication approval
         - existing Substack draft or publish target
       expected_outputs:
         - synced Substack draft or published post

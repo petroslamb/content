@@ -1,5 +1,6 @@
 ---
 workflow_id: evidence_authorization
+workflow_group: evidence
 runner_mode: guided
 default_skill: null
 launch_templates: []

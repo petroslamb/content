@@ -1,5 +1,6 @@
 ---
 workflow_id: paper_intake
+workflow_group: evidence
 runner_mode: guided
 default_skill: markitdown-paper-intake
 launch_templates: []

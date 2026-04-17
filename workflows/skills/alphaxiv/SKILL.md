@@ -5,7 +5,7 @@ description: Use when the user wants to work with the alphaXiv CLI to search for
 <!-- alphaxiv-py v0.4.2 -->
 # alphaXiv CLI
 
-Use this skill when the user wants to use the alphaXiv CLI to find papers, inspect one paper, build a shortlist, validate blueprint claims against anchor papers, or use the authenticated assistant from the terminal.
+Use this skill when the user wants to use the alphaXiv CLI to map topic vocabulary, find papers, inspect one paper, build a shortlist, validate blueprint claims against anchor papers, or use the authenticated assistant from the terminal.
 
 This skill is CLI-only. Do not switch to Python SDK guidance unless the user explicitly asks for Python usage instead of terminal usage.
 
@@ -85,6 +85,7 @@ every assistant command.
 Read only the reference file you need:
 
 - `../../../workflows/alphaxiv-research/README.md`: tracked canonical research workflow for discovery, validation, shortlist building, and assistant use.
+- `../../../workflows/topic-discovery/README.md`: pre-package editorial workflow for turning a broad idea or research seam into a topic map, candidate slate, and package-init or parking decision.
 - `references/workflows.md`: task workflows that combine commands into research tasks.
 - `references/command-map.md`: concise command-family map, auth requirements, mutation notes, and nearby-command disambiguation.
 - `references/rollout-lessons.md`: browser-auth persistence, assistant overload mitigation, validation-mode lessons, and feed-filter discovery patterns recovered from real usage.

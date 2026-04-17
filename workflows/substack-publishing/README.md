@@ -1,5 +1,6 @@
 ---
 workflow_id: substack_publishing
+workflow_group: release
 runner_mode: hybrid
 launch_mode: external_mutation
 default_skill: null
@@ -9,6 +10,7 @@ required_context:
   - config.markdown_path
   - config.substack_url
   - config.substack_post_id
+  - release gate verdict or explicit publication approval
   - existing Substack draft or publish target
 expected_outputs:
   - synced Substack draft or published post
@@ -30,6 +32,7 @@ Use this when an article is ready enough to become a public post and the package
 - final or near-final references
 - any relevant media placements with stable filenames and deliberate insertion points
 - completed polish work from [`../article-polish/README.md`](../article-polish/README.md)
+- a release-ready verdict from [`../release-gate/README.md`](../release-gate/README.md), or explicit user approval to proceed despite a known blocker
 
 ## Canonical Publishing Expectations
 
@@ -56,9 +59,10 @@ If a draft still reads like repo documentation rather than a public essay, simpl
    - final image naming
    - intentional image placement
    - any transcript-driven rehumanization pass
-3. insert the `Video TL;DR` block if a video artifact exists and the post format supports it
-4. publish with `python-substack` or a package-specific publishing helper
-5. refresh the tracked public archive if the post is part of the Substack archive system
+3. run or inspect the release gate verdict before any external mutation
+4. insert the `Video TL;DR` block if a video artifact exists and the post format supports it
+5. publish with `python-substack` or a package-specific publishing helper
+6. refresh the tracked public archive if the post is part of the Substack archive system
 
 ## Existing-Draft API Sync
 
@@ -111,4 +115,5 @@ If the published post belongs in the repo’s tracked public archive:
 - [`../essay-iteration/README.md`](../essay-iteration/README.md)
 - [`../notebooklm-artifacts/README.md`](../notebooklm-artifacts/README.md)
 - [`../article-polish/README.md`](../article-polish/README.md)
+- [`../release-gate/README.md`](../release-gate/README.md)
 - [`../../publication_strategy_and_archive/README.md`](../../publication_strategy_and_archive/README.md)

@@ -1,5 +1,6 @@
 ---
 workflow_id: archive_sync
+workflow_group: release
 runner_mode: scripted
 launch_mode: local_mutation
 default_skill: substack-archive-sync

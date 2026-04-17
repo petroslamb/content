@@ -1,5 +1,6 @@
 ---
 workflow_id: article_polish
+workflow_group: release
 runner_mode: guided
 default_skill: null
 launch_templates: []
@@ -12,13 +13,13 @@ expected_outputs:
   - semantically named kept images in the artifact surface
   - publication-ready references and repo links
 done_when:
-  - the draft is publication-ready and ready to hand off to Substack publishing
+  - the draft is publication-ready and ready to hand off to the release gate
 approval_gate: required_before_publish
 ---
 
 # Article Polish
 
-This is the canonical tracked workflow for the editorial stage between NotebookLM artifact generation and final Substack publication.
+This is the canonical tracked workflow for the editorial stage between NotebookLM artifact generation and the final release gate.
 
 Use it when the essay is already structurally sound and the remaining work is about presentation quality, media placement, pedagogical clarity, and final reference discipline.
 
@@ -58,6 +59,7 @@ When this workflow is done, the package should have:
 - intentional image placements in the essay markdown
 - a transcript-informed editorial pass where useful
 - publication-ready references, appendices, and repo links
+- a draft ready for [`../release-gate/README.md`](../release-gate/README.md)
 
 ## Canonical Flow
 
@@ -206,7 +208,7 @@ The transcript is a corrective when the review loop has made the essay too dry, 
 
 ## Stage 4: Final Editorial Pass
 
-Before handing off to Substack publishing, reread the essay as one package rather than as isolated sections.
+Before handing off to the release gate, reread the essay as one package rather than as isolated sections.
 
 Check for:
 
@@ -241,7 +243,7 @@ This workflow is complete when:
 - image filenames are understandable out of context
 - the transcript round-trip improved clarity or warmth without weakening claims
 - references and repo links are publication-ready
-- the draft is ready to hand off into [`../substack-publishing/README.md`](../substack-publishing/README.md)
+- the draft is ready to hand off into [`../release-gate/README.md`](../release-gate/README.md)
 
 ## Worked Examples
 
@@ -280,5 +282,6 @@ The lesson from those rewrites is that the transcript should often supply sequen
 ## Related Docs
 
 - [`../notebooklm-artifacts/README.md`](../notebooklm-artifacts/README.md)
+- [`../release-gate/README.md`](../release-gate/README.md)
 - [`../substack-publishing/README.md`](../substack-publishing/README.md)
 - [`../../scripts/README.md`](../../scripts/README.md)

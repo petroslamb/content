@@ -1,5 +1,6 @@
 ---
 workflow_id: distribution
+workflow_group: distribution
 runner_mode: guided
 default_skill: null
 launch_templates: []

@@ -26,6 +26,8 @@ Use this file when the user is hitting auth friction, assistant-quality problems
 
 - When recency or ranking matters, prefer `feed filters search` plus `feed list` rather than guessing topic slugs or relying on generic keyword search.
 - Real usage confirmed that topic and organization discovery are part of the workflow, not just optional extras.
+- The strongest topic-selection rollouts used alphaXiv as retrieval infrastructure, not as the editorial decision layer. They first mapped topic vocabulary, then compared ranked feeds, then inspected papers, then used the assistant for shortlist comparison.
+- For pre-package essay-topic decisions, follow `workflows/topic-discovery/README.md` and use this alphaXiv skill only for the command execution and assistant comparison steps.
 
 Example:
 

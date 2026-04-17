@@ -1,5 +1,6 @@
 ---
 workflow_id: notebooklm_artifacts
+workflow_group: artifacts
 runner_mode: guided
 default_skill: notebooklm-artifact-bundle
 launch_templates: []
