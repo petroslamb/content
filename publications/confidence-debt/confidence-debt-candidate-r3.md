@@ -18,7 +18,6 @@ The project had to invent governance after the fact. Raw artifacts outranked sum
 
 That repair left the model's capabilities unchanged. The workflow became less willing to accept borrowed trust.
 
-![The eip-verify case: when the polished version outruns the truth.](assets/r3-slides/eip-verify-case.png)
 
 ## What Confidence Debt Is
 
@@ -34,7 +33,6 @@ Modern AI release practice rarely asks anyone to trust a model blindly. It offer
 
 Each move is rational. Raw traces are unreadable. Decisions need compression. Organizations need accountable checkpoints. Confidence debt begins when those checkpoints are treated as settlement rather than transfer. The artifact loses claim-level support. The score loses its measured envelope. The approval loses the evidence needed to dispute the answer. The same artifacts that make AI deployment governable can become the surfaces through which confidence debt moves.
 
-![The Compounding Cascade: how debt propagates across transfer points.](assets/r3-slides/confidence-cascade.png)
 
 ## The First Gate: Claim Auditability
 
@@ -52,7 +50,6 @@ For eip-verify, the polished report could not overrule the row-level artifact. F
 
 This is the first gate for paying down confidence debt. Before trust moves, the claim has to become inspectable.
 
-![Gate 1: Claim Auditability. Tracing claims to contradiction-transparent evidence.](assets/r3-slides/gate-1-auditability.png)
 
 ## The Second Gate: Reliability Release
 
@@ -74,7 +71,6 @@ Production-agent studies point in the same direction. Pan et al. (2026) find tha
 
 The second gate is therefore a reliability release gate. A score can support deployment only inside the reliability envelope that has actually been measured and monitored.
 
-![Gate 2: Reliability Release. Bounding deployment inside the measured envelope.](assets/r3-slides/gate-2-reliability.png)
 
 ## The Third Gate: Co-Audit
 
@@ -100,7 +96,6 @@ For confidence debt, a co-audit workspace should expose the AI answer as somethi
 
 That full workspace is an invention assembled from adjacent findings, not a validated product category with settled evidence. The humility matters. PaperTrail shows that evidence displays alone can lower trust without changing behavior. Co-audit has its own failure modes: overload, under-reliance, over-reliance, responsibility blur, and attackers who target the audit layer itself. But those caveats do not weaken the human gate. They clarify it. The human layer needs software that changes review behavior, not copy that reminds the reviewer to be careful.
 
-![Gate 3: Co-Audit. From passive review to structured machine-assisted dispute.](assets/r3-slides/gate-3-co-audit.png)
 
 ## The Cascade
 
@@ -156,7 +151,6 @@ The human gate asks what software helps the reviewer see what the AI answer hide
 
 The doctrine should read less like a compliance checklist than a locator for borrowed trust. If the claim cannot be audited, the debt is at the artifact layer. If the score has outrun its reliability envelope, the debt is at the evaluation layer. If the reviewer is being asked to approve an answer without structured correction support, the debt is at the human layer.
 
-![The Three-Gate Doctrine: A unified framework for paying down confidence debt.](assets/r3-slides/doctrine-summary.png)
 
 ## Conclusion
 
