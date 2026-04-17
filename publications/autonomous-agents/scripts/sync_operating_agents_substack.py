@@ -16,7 +16,7 @@ import substack
 from substack.exceptions import SubstackAPIException
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 GITHUB_BLOB_ROOT = "https://github.com/petroslamb/content/blob/main"
 COOKIE_PATH = Path("/tmp/substack_cookie_string.txt")
 PUBLICATION_URL = "https://lambpetros.substack.com"

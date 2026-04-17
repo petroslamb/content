@@ -17,7 +17,6 @@ Single-publication package for the active binding-gap essay and the earlier stru
 - Blueprint / plan: [`binding_gap_blueprint.md`](binding_gap_blueprint.md)
 - Distribution map (all platforms): [`distribution.md`](distribution.md)
 - Earlier thesis line: [`Structural_Recoverability.md`](Structural_Recoverability.md), [`Recoverable_but_Not_Expressed_v2.md`](Recoverable_but_Not_Expressed_v2.md)
-- Package-specific utility: [`../../scripts/stitch_binding_gap_slides.py`](../../scripts/stitch_binding_gap_slides.py)
 
 ## Papers, Artifacts, And Archive
 

@@ -40,24 +40,24 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
 | :--- | :---: | :--- | :--- |
 | Describe the status of every publication in one command | `DONE` | `scripts/check_status.py`; `npm run status`; package `status.yaml` manifests | Keep manifests current as packages move or split |
 | Let another agent or future operator pick up a half-finished package and know where it is | `PARTIAL` | Package READMEs, `status.yaml`, workflow docs, `scripts/next_action.py`, harness contract | Run a package coverage audit and fix packages that lack strong README/status/local artifact orientation |
-| Zero scripts that mention a specific essay name | `OPEN` | `scripts/README.md` explicitly documents `stitch_binding_gap_slides.py` as package-specific; `sync_operating_agents_substack.py` is series-specific | Either generalize, move into package-local/skill-specific surfaces, or document them as named exceptions to the Phase 1 gate |
+| Zero scripts that mention a specific essay name | `DONE` | The hard package-specific root scripts were removed or moved out of root `scripts/`; remaining package names in root scripts are examples, migration checks, or generic package arguments | Keep this gate green when adding future automation |
 
 ### Milestones
 
 | Milestone | Status | Evidence | Remaining Work |
 | :--- | :---: | :--- | :--- |
-| M1.1 Kill the root scripts | `PARTIAL` | Root ad hoc scripts were moved under `scripts/`; root still has no intended loose publication automation scripts | Decide whether package-specific utilities in `scripts/` are accepted exceptions or should move/generalize |
+| M1.1 Kill the root scripts | `DONE` | Root ad hoc scripts were moved, removed, or moved under their owning umbrella package; `scripts/README.md` now states that no package-specific root-script exceptions remain | Keep package-specific utilities package-local unless they are generalized |
 | M1.2 Publication lifecycle manifest | `DONE` | `status.yaml` layer; `scripts/check_status.py`; `npm run status` | Keep manifests synchronized when package taxonomy changes |
 | M1.3 Generic `run` interface | `DONE` | `scripts/run_stage.py`; `npm run stage:resolve`; `npm run stage:run` | Continue improving guided-stage launch packs rather than pretending all stages are fully automated |
 | M1.4 Reviewable Runs integration | `PARTIAL` | `run_stage.py` writes lightweight run logs; `reviewable-runs/logs/` is the routine trace surface | Original proof-pair standard is not automatic for every stage; decide which runs deserve retained proof packets |
 
 ### Phase 1 Open Items
 
-1. Classify or eliminate package-specific script exceptions. `PARTIAL`: classification now lives in `scripts/README.md`; elimination or accepted-exception decisions remain.
-   - Known hard exception: `scripts/stitch_binding_gap_slides.py`.
-   - Known series-specific exception: `scripts/sync_operating_agents_substack.py`.
-   - Known historical bootstrap exception: `scripts/update_initial_status.py`.
-   - Generic wrappers with package examples in help text are acceptable if they take `--package`.
+1. Classify or eliminate package-specific script exceptions. `DONE`.
+   - `scripts/stitch_binding_gap_slides.py` was removed.
+   - `scripts/sync_operating_agents_substack.py` was moved to `publications/autonomous-agents/scripts/`.
+   - `scripts/update_initial_status.py` was removed.
+   - Generic wrappers with package examples in help text remain acceptable if they take `--package`.
 
 2. Run a publication package orientation audit.
    - Confirm every active leaf package has a useful README, `status.yaml`, live draft pointer, artifact surface, and evidence surface where applicable.
@@ -129,10 +129,9 @@ The repo now has the main Phase 1.5 machinery: a machine-readable contract, poli
 
 ## Recommended Next Actions
 
-1. Close the strict Phase 1 script exception question.
-   - Either move/generalize `stitch_binding_gap_slides.py`, or record it as an intentional exception.
-   - Decide whether `sync_operating_agents_substack.py` is an accepted series exception or should become a skill-local script.
-   - Decide whether historical migration helpers stay in `scripts/` or move into an archive/maintenance surface.
+1. Keep the strict Phase 1 script exception question closed.
+   - New package-specific utilities should live inside the owning package or be generalized before entering root `scripts/`.
+   - Series adapters should live under the owning umbrella package or skill bundle.
 
 2. Use the proof-run template under `reviewable-runs/templates/harness-proof-run-template.md`.
    - This is now the missing measurement step between "the harness exists" and "Phase 1.5 is proven."

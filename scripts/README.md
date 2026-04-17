@@ -8,19 +8,20 @@ This directory holds the tracked repo-level automation code. These scripts are t
 - Treat blueprint hardening and alphaXiv validation as workflow-and-skill processes, not root-script entrypoints. They currently have no dedicated root script by design because they depend on judgment and evidence review rather than fixed automation.
 - Use `npm run ...` entry points when they exist instead of calling lower-level scripts by habit.
 - Treat `archive_utils.py` as a support module, not a user-facing entrypoint.
-- Treat `stitch_binding_gap_slides.py` as a package-specific utility, not a general repo workflow.
 
 ## Script Scope Policy
 
 The default rule is: root-level scripts should be generic repo automation. A script may show a package name in CLI help text as an example when it still accepts `--package` or another generic selector. A script becomes a Phase 1 exception when it hardcodes one package, one series, or one migration context into its behavior.
 
-Documented exceptions:
+Current root-script status: no accepted package-specific root-script exceptions.
 
-| Script | Status | Why It Exists | Target Disposition |
-| :--- | :--- | :--- | :--- |
-| `stitch_binding_gap_slides.py` | open exception | Local utility for paired Binding Gap slide-review images. | Move under the Binding Gap package, generalize into a slide-stitching helper, or keep only with an explicit accepted exception. |
-| `sync_operating_agents_substack.py` | accepted series exception for now | Operating Agents has a multi-post Substack sync contract that is not the same as one generic article publish. | Keep tied to the Operating Agents skill/workflow or move into a series-specific adapter before strict Phase 1 closure. |
-| `update_initial_status.py` | historical bootstrap exception | One-time backfill helper from the early lifecycle migration; hardcoded package lists preserve migration history. | Keep as historical maintenance only; do not use as a current workflow entrypoint. |
+Retired or moved exceptions:
+
+| Script | Decision | Current Location |
+| :--- | :--- | :--- |
+| `stitch_binding_gap_slides.py` | Removed. The one-off Binding Gap slide utility was not a root workflow. | Retired. |
+| `sync_operating_agents_substack.py` | Moved to the Operating Agents umbrella package because it is a series adapter, not root automation. | [`../publications/autonomous-agents/scripts/sync_operating_agents_substack.py`](../publications/autonomous-agents/scripts/sync_operating_agents_substack.py) |
+| `update_initial_status.py` | Removed. Historical lifecycle bootstrap is no longer a day-to-day command. | Retired. |
 
 Non-exceptions:
 
@@ -55,7 +56,6 @@ Tracked docs:
 | `sync_from_archive.py` | Copies a published archive snapshot back into a package, updates `status.yaml` with the resolved markdown path and slug, and backfills referenced archive assets into the package-local `assets/` folder. | `.venv/bin/python scripts/sync_from_archive.py --package <package>` | Used directly and by `start_refinement.py`. |
 | `import_substack_draft_to_archive.py` | Manual-import helper for unpublished Substack drafts: fetches draft metadata, writes a tracked markdown and HTML snapshot into `publication_strategy_and_archive/substack_archive/`, localizes any referenced local assets, and updates `metadata.json`. | `.venv/bin/python scripts/import_substack_draft_to_archive.py --post-id <id> --markdown <path>` | Use when a draft exists on Substack but is intentionally not yet in the public archive. |
 | `audit_package.py` | Runs an advisory structural and evidence-drift audit for one package. | `.venv/bin/python scripts/audit_package.py --package <package>` | Used directly and by `run_stage.py` during stage resolution. |
-| `update_initial_status.py` | Historical batch bootstrap helper for early lifecycle manifests. | `.venv/bin/python scripts/update_initial_status.py` | Keep for backfill history; not the normal day-to-day entrypoint. |
 
 ## Publication / Archive Automation
 
@@ -85,7 +85,7 @@ Tracked workflow:
 
 | Script | Role | Normal Entry Point | Related Skill |
 | :--- | :--- | :--- | :--- |
-| `sync_operating_agents_substack.py` | Republishes the preface and six essay posts, preserves the embedded video block, rewrites published essay links to Substack URLs, and retries on Substack rate limits. | `.venv/bin/python scripts/sync_operating_agents_substack.py` | [`operating-agents-substack-sync`](../workflows/skills/operating-agents-substack-sync/SKILL.md) |
+| `../publications/autonomous-agents/scripts/sync_operating_agents_substack.py` | Republishes the preface and six essay posts, preserves the embedded video block, rewrites published essay links to Substack URLs, and retries on Substack rate limits. | `.venv/bin/python publications/autonomous-agents/scripts/sync_operating_agents_substack.py` | [`operating-agents-substack-sync`](../workflows/skills/operating-agents-substack-sync/SKILL.md) |
 
 ### Generic Substack Draft Sync
 
@@ -122,16 +122,15 @@ Tracked workflows:
 | `convert_landscape_videos_to_portrait.py` | Converts landscape MP4 clips into portrait `9:16` versions by centering the original frame over a blurred vertical background, keeping output in a standard `H.264`/`AAC` web-delivery envelope. | prep horizontal clips for Shorts-style upload | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `scrape_youtube_watch_transcript.py` | Scrapes the visible watch-page transcript panel into JSON when you need a browser fallback for transcript inspection. | transcript fallback or debugging | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 
-## Package-Specific Utilities
+## Thin Operational Wrappers
 
-These scripts are thin wrappers or local helpers. They are useful, but they are not the canonical repo workflow surface.
+These scripts are thin wrappers around workflow or skill behavior. They remain generic enough for the root script surface.
 
 | Script | Role | Notes |
 | :--- | :--- | :--- |
-| `stitch_binding_gap_slides.py` | Stitches paired presenter and detailed binding-gap slides into comparison images. | Tied to `publications/binding-gap/` assets. Useful as a richer review or render surface after OCR-first cue drafting. |
 | `list_youtube_videos.py` | Lists videos from the authenticated YouTube channel. | Thin wrapper around the YouTube skill script layer. Use [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) for the canonical process. |
-| `upload_publication_tldrs.py` | Uploads TL;DR video variants from one package into a playlist. | Thin publication-specific wrapper around the YouTube API helper stack. |
-| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package, adds them to a Shorts playlist, links them back to the main long-form video, and can schedule release times from a manifest. | Thin publication-specific wrapper around the YouTube API helper stack. Defaults to dry-run. |
+| `upload_publication_tldrs.py` | Uploads TL;DR video variants from one package into a playlist. | Thin publication wrapper around the YouTube API helper stack; package selection is an argument. |
+| `upload_publication_shorts.py` | Uploads portrait Shorts variants for one package, adds them to a Shorts playlist, links them back to the main long-form video, and can schedule release times from a manifest. | Thin publication wrapper around the YouTube API helper stack; package selection is an argument. Defaults to dry-run. |
 
 ## Related Skill Split
 
@@ -150,7 +149,7 @@ npm run sync:substack
 npm run sync:editorial-atlas
 npm run check:mirror
 npm run check:repo-links
-PYTHONUNBUFFERED=1 .venv/bin/python scripts/sync_operating_agents_substack.py
+PYTHONUNBUFFERED=1 .venv/bin/python publications/autonomous-agents/scripts/sync_operating_agents_substack.py
 ```
 
 For YouTube production work, start with [`../workflows/youtube-production/README.md`](../workflows/youtube-production/README.md) before calling the lower-level scripts directly.

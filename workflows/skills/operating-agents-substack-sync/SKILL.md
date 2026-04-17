@@ -11,7 +11,7 @@ Use this skill only when the user wants live Substack posts changed. This is the
 
 1. Run from the repo root with `.venv/bin/python`.
 2. Require `/tmp/substack_cookie_string.txt` before attempting a live sync.
-3. Treat `scripts/sync_operating_agents_substack.py` as a mutating whole-series sync. It currently republishes every post in `POST_SPECS`.
+3. Treat `publications/autonomous-agents/scripts/sync_operating_agents_substack.py` as a mutating whole-series sync. It currently republishes every post in `POST_SPECS`.
 4. Preserve the existing `Video TL;DR` embed block. The sync script is designed to keep that node when republishing.
 5. After a live sync, rerun `npm run sync:substack` so the tracked archive snapshots match the live posts.
 6. Prefer Substack URLs for already-published essays, not GitHub blob links.
@@ -21,7 +21,7 @@ Use this skill only when the user wants live Substack posts changed. This is the
 Run the live republish from the repo root:
 
 ```bash
-PYTHONUNBUFFERED=1 .venv/bin/python scripts/sync_operating_agents_substack.py
+PYTHONUNBUFFERED=1 .venv/bin/python publications/autonomous-agents/scripts/sync_operating_agents_substack.py
 ```
 
 Then refresh the tracked public archive:
