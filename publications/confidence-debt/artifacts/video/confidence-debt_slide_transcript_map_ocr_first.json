@@ -1,0 +1,211 @@
+{
+  "captions": "publications/confidence-debt/artifacts/video/confidence-debt_auto_captions.srt",
+  "slides_dir": "publications/confidence-debt/artifacts/latest/slides",
+  "support_slides_dirs": [
+    "publications/confidence-debt/artifacts/previous/slides"
+  ],
+  "segments": [
+    {
+      "image": "slide-001.png",
+      "start": "00:50:21.440",
+      "caption_start_index": 1563,
+      "caption_end_index": 1569,
+      "match_score": 0.273,
+      "ocr_excerpt": "ROOTED LAYERS / RESEARCH BRIEF / V.3 Confidence Debt an @ UNEARNED TRUST q BREAKAWAY | : What your Al workflow borrows when cea output moves faster than evidence. VERIFIED EVIDENCE |> & REALITY GAP (UNVERIFIED) STATUS: SYSTEMIC VULNERABILITY A) NotebookLM Rooted Layers Research C",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "of the user. Confidence debt is about",
+        "the architecture of the system. It is",
+        "about the speed of trust versus the",
+        "speed of evidence.",
+        "The speed of trust versus the speed of",
+        "evidence. That phrasing perfectly",
+        "encapsulates the danger. Confidence debt"
+      ]
+    },
+    {
+      "image": "slide-002.png",
+      "start": "00:50:35.520",
+      "caption_start_index": 1570,
+      "caption_end_index": 1570,
+      "match_score": 0.2051,
+      "ocr_excerpt": "We are biologically wired to equate a finished aesthetic with truth. When an AI generates a pristine summary in 3 seconds, human reviewers hallucinate that the rigorous analytical work underneath it is equally pristine. Trust is borrowed against unverified evidence. The 4:45 PM P",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "is structural. It's not just a"
+      ]
+    },
+    {
+      "image": "slide-003.png",
+      "start": "00:53:34.640",
+      "caption_start_index": 1660,
+      "caption_end_index": 1660,
+      "match_score": 0.2175,
+      "ocr_excerpt": "The eip-verify incident reveals the artifact asymmetry. The distinctive structural failure was not that the AI made a mistake. It was that the wrong artifact was the highly usable one. Corporate momentum always moves the polished illusion downstream. The Artifact Asymmetry Matrix",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "confidence debt requires us to"
+      ]
+    },
+    {
+      "image": "slide-004.png",
+      "start": "00:53:45.359",
+      "caption_start_index": 1666,
+      "caption_end_index": 1666,
+      "match_score": 0.1208,
+      "ocr_excerpt": "| | a Trust accelerates. Evidence flatlines. Confidence debt occurs when an AI system's output is trusted downstream before the evidence actually warrants that trust. It is the literal physical distance between how far a claim traveled and how far the receipts reached. The Veloci",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "agent, and harder to trust an output. It"
+      ]
+    },
+    {
+      "image": "slide-005.png",
+      "start": "00:53:52.640",
+      "caption_start_index": 1669,
+      "caption_end_index": 1669,
+      "match_score": 0.0755,
+      "ocr_excerpt": "Compression creates the debt by efficiently preserving the conclusion while annihilating the means to challenge it. Every workflow transfer point leaves evidence behind. Raw Data nN ia Rich context, anomalies, and contradictions. The AI Summary Nuance stripped, texture smoothed. ",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "verifiable reliability and frictionless"
+      ]
+    },
+    {
+      "image": "slide-006.png",
+      "start": "00:54:18.400",
+      "caption_start_index": 1681,
+      "caption_end_index": 1681,
+      "match_score": 0.0731,
+      "ocr_excerpt": "al, Passive transparency operates like a nutritional label: it informs without impeding. Merely showing a user the AI's \u201creceipts\u201d makes them suspicious, but it does not reliably trigger them to do the hard work of correcting the errors. Transparency does not equal friction. The ",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "and invite the friction back in."
+      ]
+    },
+    {
+      "image": "slide-007.png",
+      "start": "00:54:19.920",
+      "caption_start_index": 1682,
+      "caption_end_index": 1682,
+      "match_score": 0.0754,
+      "ocr_excerpt": "an | Gate 1: Claim Auditability Gate 1 dictates that a claim cannot be promoted merely because it reads well. Unbreakable workflow rules must attach an epistemic status to every output. If the polished summary conflicts with the raw data, the workflow must structurally force adju",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "Force yourself to look at the"
+      ]
+    },
+    {
+      "image": "slide-008.png",
+      "start": "00:54:21.040",
+      "caption_start_index": 1683,
+      "caption_end_index": 1683,
+      "match_score": 0.0,
+      "ocr_excerpt": "The single-number dashboard trap masks the collapse of operational stability. Converting a clean, one-shot lab score into a deployment argument for a long-horizon production environment is a massive, immediate injection of confidence debt. 61% < 25% Pass@1 (Lab Capability) Pass*8",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "spreadsheet. Stop the cascade before it"
+      ]
+    },
+    {
+      "image": "slide-009.png",
+      "start": "00:54:22.800",
+      "caption_start_index": 1684,
+      "caption_end_index": 1684,
+      "match_score": 0.0,
+      "ocr_excerpt": "| | Long-horizon tasks expose canonical path deviation Like driving a car with a 1-degree alignment issue. Over a 1-mile trip (Pass@1), it seems perfectly reliable. Over a 500-mile trip (Pass*8), the uncorrected drift puts you in a ditch. The AI Agent Canonical Successful Path | ",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "starts."
+      ]
+    },
+    {
+      "image": "slide-010.png",
+      "start": "00:54:23.359",
+      "caption_start_index": 1685,
+      "caption_end_index": 1685,
+      "match_score": 0.0,
+      "ocr_excerpt": "Deployment confidence belongs to a multidimensional envelope, not a leaderboard cell. Release reliability before deployment. A benchmark score only supports deployment inside the exact specific operational envelope that was physically measured and monitored. R(k, \u20ac, A) k k: Repea",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "Thank you so much for joining us on this"
+      ]
+    },
+    {
+      "image": "slide-011.png",
+      "start": "00:54:25.040",
+      "caption_start_index": 1686,
+      "caption_end_index": 1686,
+      "match_score": 0.0,
+      "ocr_excerpt": "Frictionless automation hollows out human correction capacity. When the human prompt shifts from \u201cexplain this to me\u201d to \u201cbuild this for me,\u201d they forfeit the cognitive friction required to actually validate and debug the system three weeks later. Group A: Engaged Friction Short-",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "journey today. Keep questioning the"
+      ]
+    },
+    {
+      "image": "slide-012.png",
+      "start": "00:54:27.119",
+      "caption_start_index": 1687,
+      "caption_end_index": 1687,
+      "match_score": 0.0,
+      "ocr_excerpt": "\u2018The Competence Shadow renders the \u201chuman-in-the-loop\u201d a placebo. When Al prunes a massive problem space into a curated list, the human reviewer is blinded. No matter how diligently you review the illuminated keyhole, you cannot catch the fatal hazard the Al quietly omitted from ",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "polish surface. demand the receipts and"
+      ]
+    },
+    {
+      "image": "slide-013.png",
+      "start": "00:54:29.599",
+      "caption_start_index": 1688,
+      "caption_end_index": 1688,
+      "match_score": 0.0,
+      "ocr_excerpt": "Gate 3: The Co-Audit Interface The human layer requires structured forcing functions, not recommendation-first chats. Co-audit before human acceptance. The software must drag counter-evidence into the light and physically force the human into a structured correction process. Eval",
+      "ocr_source_count": 2,
+      "matched_captions": [
+        "as always keep diving Keep."
+      ]
+    },
+    {
+      "image": "slide-014.png",
+      "start": "00:00:00.000",
+      "caption_start_index": 1689,
+      "caption_end_index": 1689,
+      "match_score": -1.0,
+      "ocr_excerpt": "~ ht A perfectly calibrated expert will still fail if the workflow feeds them corrupted evidence. Appropriate reliance solves the final click. Confidence debt solves the pipeline that generated the option. Appropriate Reliance Confidence Debt Scope: Micro / Moment of Decision Pri",
+      "ocr_source_count": 2,
+      "matched_captions": []
+    },
+    {
+      "image": "slide-015.png",
+      "start": "00:00:00.000",
+      "caption_start_index": 1690,
+      "caption_end_index": 1690,
+      "match_score": -1.0,
+      "ocr_excerpt": "The silent disaster of the downstream cascade. Isolated errors don't cause catastrophes. Confidence debt appears when the corporate workflow is architected to let each isolated failure actively finance the next, until trust explodes. Step 1: The Artifact Layer \u00bb coms + \u2014 A lying ",
+      "ocr_source_count": 2,
+      "matched_captions": []
+    },
+    {
+      "image": "slide-016.png",
+      "start": "00:00:00.000",
+      "caption_start_index": 1691,
+      "caption_end_index": 1691,
+      "match_score": -1.0,
+      "ocr_excerpt": "The Three Gates: An architecture for paying down borrowed trust. A high-stakes corporate workflow must mathematically secure the pipeline, not just prompt the model. R S| = Sy [ss , uy LU My sy Deployment / Verified Trust Node 1: The Artifact Node 2: The Evaluation Node 3: The Hu",
+      "ocr_source_count": 2,
+      "matched_captions": []
+    },
+    {
+      "image": "slide-017.png",
+      "start": "00:00:00.000",
+      "caption_start_index": 1692,
+      "caption_end_index": 1692,
+      "match_score": -1.0,
+      "ocr_excerpt": "The Doctrine of Friction. The tech industry sells the illusion of seamless, zero-effort automation. But survival in the age of generative workflows requires us to intentionally design friction back into our systems. lt must be slightly harder to approve, harder to deploy, and sig",
+      "ocr_source_count": 2,
+      "matched_captions": []
+    }
+  ]
+}
