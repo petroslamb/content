@@ -35,6 +35,19 @@ If the user wants to constrain generation to one source, add `-s SOURCE_ID` to e
 - Poll only non-completed task IDs.
 - Return current status if long-running jobs stop changing rather than spinning indefinitely.
 
+## Preserve The Editorial Boundary
+
+Downloading artifacts is not article polish. Raw outputs can be placed in `artifacts/latest/`, `artifacts/previous/`, or the package's declared artifact home, but publishable article images and markdown embeds are owned by the article-polish workflow.
+
+Before committing a bundle refresh, run a quick continuity check:
+
+```bash
+git diff --name-status -- publications/<package>/
+git diff -- publications/<package>/<draft>.md | rg '^-!\['
+```
+
+If deleted image files or removed embeds appear, stop unless the user explicitly requested that editorial change.
+
 ## Upload Generated Audio Back For Transcript Recovery
 
 This is a reusable flow recovered from real repo usage.

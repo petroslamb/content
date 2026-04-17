@@ -39,6 +39,7 @@ Change DPI or centralize outputs:
 - Name slides as `slide-001.png`, `slide-002.png`, and so on.
 - Keep numbering zero-padded with a minimum width of 3 digits.
 - Report, for each PDF, the source path, page count, PNG count, output folder, sample dimensions, and any failed pages.
+- Treat the exported slide folder as a raw source surface. Do not replace semantically named article images or edit markdown embeds from this skill.
 
 ## Verification
 

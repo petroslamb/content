@@ -15,6 +15,8 @@ Use the repo-local NotebookLM workflow in `.venv/bin/notebooklm`. This skill is 
 4. Submit the standard bundle first, then poll in batches instead of serially waiting on each task.
 5. Reuse the established prompt texts for audio, slide deck, and video unless the user explicitly asks for a different tone.
 6. When the user wants a transcript of generated audio, upload the MP3 back as a source, wait until it is ready, then export the indexed full text.
+7. Treat downloaded NotebookLM media as raw artifacts. Do not delete semantically named article images or remove markdown image embeds while generating or refreshing the bundle.
+8. Before committing an artifact refresh, inspect `git diff --name-status` for deleted assets and `git diff -- <draft> | rg '^-!\['` for removed image embeds.
 
 ## Standard Bundle
 
