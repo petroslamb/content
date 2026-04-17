@@ -72,6 +72,14 @@ If rendering is interrupted or crashes mid-write, the output is truncated (missi
 
 After rendering, verify that the output duration matches the narration closely. If the video stream overruns the audio despite `-shortest`, trim the container back to the audio duration before treating the MP4 as publishable.
 
+Also check for failed byproducts before handoff:
+
+```bash
+find publications/<package>/artifacts/video -type f -size 0
+```
+
+Zero-byte audio slices, SRTs, or MP4s are failed generation traces. Do not keep them in the reviewed video bundle.
+
 ### Phase 4 — Hand off
 
 Once the MP4 is verified, switch to the channel workflows for auth checks, playlist updates, and upload.
@@ -109,7 +117,8 @@ This produces:
 - `artifacts/video/shorts/landscape/*.mp4`
 - `artifacts/video/shorts/portrait/*_portrait.mp4`
 
-4. Hand the finished portrait clips to the channel workflow for upload, playlist placement, related-video linkage, and optional scheduled release.
+4. Verify that no zero-byte intermediate or output files remain in `artifacts/video/shorts/`.
+5. Hand the finished portrait clips to the channel workflow for upload, playlist placement, related-video linkage, and optional scheduled release.
 
 ## Cue Sheet Structure
 

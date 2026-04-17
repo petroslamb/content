@@ -44,9 +44,11 @@ Before committing a bundle refresh, run a quick continuity check:
 ```bash
 git diff --name-status -- publications/<package>/
 git diff -- publications/<package>/<draft>.md | rg '^-!\['
+find publications/<package>/artifacts publications/<package>/archive -type f -size 0 2>/dev/null
+git status --ignored --short publications/<package>/ | rg 'Library/|__pycache__|\.pyc' || true
 ```
 
-If deleted image files or removed embeds appear, stop unless the user explicitly requested that editorial change.
+If deleted image files, removed embeds, zero-byte outputs, or stray cache trees appear, stop unless the user explicitly requested that editorial change and the artifacts have been verified.
 
 ## Upload Generated Audio Back For Transcript Recovery
 
@@ -62,8 +64,10 @@ Commands:
 ```bash
 .venv/bin/notebooklm source add -n NOTEBOOK_ID --type file --mime-type audio/mpeg --json /path/to/audio.mp3
 .venv/bin/notebooklm source wait -n NOTEBOOK_ID --json SOURCE_ID
-.venv/bin/notebooklm source fulltext -n NOTEBOOK_ID SOURCE_ID > /path/to/transcript.txt
+.venv/bin/notebooklm source fulltext -n NOTEBOOK_ID SOURCE_ID -o /path/to/transcript.txt
 ```
+
+Use `-o` for full transcripts. The terminal output can be a preview that ends with a message telling the caller to use `-o`; redirecting that preview creates a misleading partial transcript.
 
 ## Failure Modes
 

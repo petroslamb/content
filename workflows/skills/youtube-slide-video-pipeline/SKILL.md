@@ -19,7 +19,8 @@ Use this skill for the local production stage before YouTube channel writes. Use
 8. Correct slide timing matters more than uniform spacing. Even spacing is a scaffold, not a final cue plan.
 9. If the MP4 is headed for Substack, prefer standard web-delivery: `1080p` or `1440p`, `H.264`, bitrate no higher than ~8 Mbps, **5 fps for slide-only videos**, and `AAC` audio.
 10. Render uses script defaults: `-preset medium`, `crf 23`, 1920×1080, 192kbps AAC. Don't adjust these for slideshows.
-9. Verify final MP4 duration against the narration. If the container overruns the audio, trim it back before promotion.
+11. Verify final MP4 duration against the narration. If the container overruns the audio, trim it back before promotion.
+12. Before handoff, check for zero-byte render byproducts. Empty audio slices, SRTs, or MP4s are failed generation traces, not artifacts.
 
 ## Core Paths
 
