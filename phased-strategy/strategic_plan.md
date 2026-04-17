@@ -23,14 +23,17 @@ What is already true:
 - `scripts/check_status.py` gives one-command lifecycle visibility
 - `scripts/run_stage.py` exists and resolves stage contracts from workflow docs
 - workflow docs already carry machine-readable frontmatter such as `runner_mode`, `approval_gate`, `required_context`, and `done_when`
+- root scripts contain no accepted package-specific exceptions
+- publication package orientation has an audit trail
+- `run_stage.py` and harness launch packs write v2 lightweight reviewable run logs
 
 What is not yet true:
 
 - the full lifecycle is not agent-executable end to end, because many core stages are still `guided`
-- the repo does not yet expose a harness-facing capability layer for Codex or similar agents to discover, plan, and run work with minimal custom prompting
-- the run logging is operationally useful, but it is not yet the full retained proof surface originally imagined in Phase 1
+- the harness-facing capability layer is not yet proven across measured runs with minimal custom prompting
+- the repo has operational run logging, but it does not yet have the formal three-run proof set needed to call Phase 1.5 closed
 
-So the honest read is: **Phase 1 is substantially met as internal repo normalization, but not yet met as independent harness execution.** That makes the right next move a bridging phase, not a jump straight to a standalone agentic platform.
+So the honest read is: **Phase 1 is closed as internal repo normalization.** Independent harness execution is the Phase 1.5 proof gap, and operator-shell support belongs to Phase 1.6. That makes the right next move proof-run evidence, not a jump straight to a standalone agentic platform.
 
 ---
 
@@ -71,9 +74,9 @@ Write a single `scripts/run_stage.py --package <name> --stage <stage>` dispatche
 **Deliverable**: You can say `python scripts/run_stage.py --package illusion-of-swarm --stage notebooklm_artifacts` and it executes without instructions.
 
 #### M1.4 — Reviewable Runs Integration
-Every `run_stage.py` execution should write a lightweight run record to `reviewable-runs/examples/proofs/` using your existing framework. This transforms the "Reviewable Runs" concept package into live operational infrastructure.
+Every `run_stage.py` execution should write a lightweight run record to `reviewable-runs/logs/` using the current v2 schema. Strong retained proof examples can be promoted selectively to `reviewable-runs/examples/proofs/`. This transforms the "Reviewable Runs" concept package into live operational infrastructure without forcing every routine run to become a heavy proof packet.
 
-**Deliverable**: Every automated stage produces a `task_spec.md` + `execution_trace.md` pair automatically. The framework is no longer just a publication — it's the audit log.
+**Deliverable**: Every guided or automated stage produces a compact log with boundary, task, execution, evidence, verification, and failure/risk fields. Formal proof packets are retained for measured autonomy runs.
 
 ---
 
@@ -86,9 +89,11 @@ Every `run_stage.py` execution should write a lightweight run record to `reviewa
 
 ### Phase 1 Verdict
 
-**Mostly achieved.**
+**Closed as of 2026-04-17.**
 
-The repo now behaves like a structured operating environment rather than a pile of scripts. The remaining gap is not basic cleanup. The remaining gap is that a general-purpose agent harness still needs repo-specific guidance from you to operate reliably across the lifecycle.
+The repo now behaves like a structured operating environment rather than a pile of scripts. The clean-machine gates are closed: one-command status visibility, package orientation, root-script hygiene, generic stage dispatch, and reviewable lightweight run logs are in place.
+
+The remaining gap is not Phase 1 cleanup. The remaining gap is that a general-purpose agent harness still needs proof-run evidence before we can claim reliable autonomy across the lifecycle.
 
 That means the next honest phase is not "build the full local dashboard and agentic platform." It is: **make this repo legible and executable to external agent harnesses.**
 

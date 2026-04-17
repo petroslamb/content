@@ -20,11 +20,11 @@ Use this layer differently from the workflow layer:
 
 As of 2026-04-17:
 
-- Phase 1 is mostly closed as repo normalization.
-- Phase 1 is not strictly closed under its original "zero package-specific scripts" wording.
+- Phase 1 is closed as the Clean Machine phase: repo normalization, one-command lifecycle visibility, package orientation, root-script hygiene, generic stage dispatch, and v2 reviewable run logs are in place.
+- The original "start-to-finish by an agent" ambition is now treated as Phase 1.5/1.6 autonomy proof work, not as a remaining Phase 1 blocker.
 - Phase 1.5 is substantially built as a harness-facing surface.
 - Phase 1.5 is not gate-cleared until proof runs show that a harness can operate with minimal prompt glue across real work.
-- Phase 1.6 should remain a next layer, not a substitute for closing the proof-run gap.
+- Phase 1.6 should remain the operator-shell layer that follows the Phase 1.5 proof-run gap.
 
 ## When To Update This Folder
 
