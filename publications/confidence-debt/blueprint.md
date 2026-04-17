@@ -8,6 +8,16 @@ The term for this is confidence debt. It parallels technical debt (borrowed velo
 
 The action thesis is now part of the frame, not an appendix. Confidence debt is controlled by three gates: claim auditability before trust, reliability release gates before deployment, and co-audit software before human acceptance. The essay should present this as a defensible operating doctrine assembled from adjacent literatures, not as a fully validated end-to-end system.
 
+## Debate Bridge: The Responsible Shipping Stack
+
+The debate-energy bottleneck is not solved by making the essay louder. It is solved by giving the argument a real target. The target is responsible-looking deployment practice: the sequence by which teams package AI behavior into reviewable artifacts, support those artifacts with evaluation evidence, constrain release through bounded autonomy or monitoring, and place a human somewhere in the approval or escalation path.
+
+The shipping-practice warrant ledger supports this as documented practice, not as a universal law. Measuring Agents in Production shows deployed agent teams relying on bounded autonomy, structured workflows, human-in-the-loop evaluation, A/B testing, user feedback, and production monitoring. Fabric shows governance enacted through workflow diagrams, human oversight levels, institutional oversight, thresholds, policies, standards, regulation, and signoff. EDDOps, Eval Factsheets, Audit Cards, and NIST show why evaluation and documentation need context before they can carry deployment trust.
+
+The sharper essay claim is therefore not "teams ship recklessly." It is: the same artifacts that make AI deployment governable can also become the surfaces through which confidence debt moves. That claim is dangerous because it attacks the normal safety stack without treating builders as fools. Each element remains rational. Raw traces are unreadable. Decisions need compression. Organizations need accountable checkpoints. Confidence debt begins when those checkpoints are treated as settlement rather than transfer.
+
+If R3 is edited again, this should be a surgical bridge after the definition section, not a full R4 rewrite. The caveat must stay visible: the practice evidence documents the stack, while the trust-transfer mechanism remains the essay's synthesis from converging evidence.
+
 ## Why This Frame Could Work
 
 Each donor essay independently identified the same structural failure but at a different altitude:

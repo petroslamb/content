@@ -1,0 +1,74 @@
+{
+  "audio": "publications/confidence-debt/artifacts/notebooklm/confidence-debt-audio-r3.wav",
+  "slides_dir": "publications/confidence-debt/artifacts/slides/confidence-debt-slides-r3/",
+  "segments": [
+    {
+      "start": "00:00:00.000",
+      "image": "slide-001.png"
+    },
+    {
+      "start": "00:02:21.552",
+      "image": "slide-002.png"
+    },
+    {
+      "start": "00:04:43.105",
+      "image": "slide-003.png"
+    },
+    {
+      "start": "00:07:04.658",
+      "image": "slide-004.png"
+    },
+    {
+      "start": "00:09:26.211",
+      "image": "slide-005.png"
+    },
+    {
+      "start": "00:11:47.764",
+      "image": "slide-006.png"
+    },
+    {
+      "start": "00:14:09.317",
+      "image": "slide-007.png"
+    },
+    {
+      "start": "00:16:30.870",
+      "image": "slide-008.png"
+    },
+    {
+      "start": "00:18:52.423",
+      "image": "slide-009.png"
+    },
+    {
+      "start": "00:21:13.976",
+      "image": "slide-010.png"
+    },
+    {
+      "start": "00:23:35.529",
+      "image": "slide-011.png"
+    },
+    {
+      "start": "00:25:57.082",
+      "image": "slide-012.png"
+    },
+    {
+      "start": "00:28:18.635",
+      "image": "slide-013.png"
+    },
+    {
+      "start": "00:30:40.188",
+      "image": "slide-014.png"
+    },
+    {
+      "start": "00:33:01.741",
+      "image": "slide-015.png"
+    },
+    {
+      "start": "00:35:23.294",
+      "image": "slide-016.png"
+    },
+    {
+      "start": "00:37:44.847",
+      "image": "slide-017.png"
+    }
+  ]
+}
