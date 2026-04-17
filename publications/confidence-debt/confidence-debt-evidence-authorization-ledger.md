@@ -39,6 +39,7 @@ Use these labels consistently:
 | C13 | Hypothesis-driven decision support is a constructive alternative to recommendation-first support. | From Evidence to Decision | Direct/Hinge | Interfaces should show evidence for and against candidate judgments rather than only issuing recommendations. | Evidence is from specific decision-support domains. | Rival hinge and co-audit |
 | C14 | The three-gate doctrine is the essay's operating synthesis. | C3, C6, C11 | Synthesis | Confidence debt is controlled by claim auditability before trust, reliability release gates before deployment, and co-audit software before human acceptance. | Not validated end to end. Present as doctrine assembled from adjacent literatures. | Ending doctrine |
 | C15 | Cross-layer compounding remains the central evidence risk. | eip-verify micro-case; Competence Shadow; automation-bias literature; C3/C6/C11 | Synthesis | The structural conditions for cross-layer compounding exist, and one worked case illustrates the pattern. | Do not claim a complete causal chain has been proven across artifacts, evaluation, and human oversight. | Cascade section and limits |
+| C16 | Responsible-looking deployment controls can become confidence-debt transfer points. | Measuring Agents in Production; Documenting Deployment with Fabric; Evaluation-Driven Development and Operations; Eval Factsheets; Audit Cards; NIST AI RMF / GenAI | Synthesis with direct practice components | Documented deployment practice often compresses readiness into artifacts, evaluation evidence, bounded execution, and human review; confidence debt begins when those controls transfer trust beyond the evidence limits they preserve. | The sources document practices and documentation gaps. They do not directly measure trust transfer as a causal outcome. | Debate bridge and early thesis sharpening |
 
 ## Source Burden
 
@@ -57,6 +58,10 @@ Use these labels consistently:
 | Beyond pass@1 / long-horizon reliability | Add long-horizon decay, variance, graceful degradation, meltdown. | Body or hinge | Yes | Use selectively to avoid metric sprawl. |
 | Canonical Path Deviation | Explain capable-but-unreliable trajectory failure. | Body or hinge | Yes | Gives the evaluation gate a mechanism. |
 | Measuring Agents in Production | Ground production practice: bounded autonomy, structured workflows, oversight. | Hinge | Yes | Bridges evaluation to deployment. |
+| Documenting Deployment with Fabric | Ground real-world AI governance patterns: workflow diagrams, oversight levels, thresholds, policies, standards, regulation, and signoff. | Hinge | Optional/bridge | Use for the responsible-shipping-stack bridge, not as evidence that governance mechanisms are effective. |
+| Evaluation-Driven Development and Operations | Support evaluation as lifecycle governance rather than a terminal checkpoint. | Hinge | Optional/bridge | Good for the claim that eval results must remain connected to operational evidence. |
+| Eval Factsheets | Support evaluation documentation limits: assumptions, validity conditions, judge selection, contamination checks, statistical validation. | Hinge | Optional/bridge | Use if sharpening the score/dashboard critique. |
+| Audit Cards | Support evaluation reporting context and decision-making interpretation. | Hinge | Optional/bridge | Already local; useful for documentation-as-governance surface. |
 | AgentCompass | Support trace monitoring, error taxonomy, localization, fix recipes. | Hinge | Yes | Supports post-deployment actionability. |
 | Runtime Governance / deterministic boundaries / COCO | Support governed execution, rollback, control planes. | Reference or hinge | Optional | Useful for blueprint; may overload the essay body. |
 | AI Assistance Reduces Persistence | Open human layer with causal evidence. | Body | Yes | Keep as vivid human-layer turn. |
@@ -80,6 +85,12 @@ Actionability-pass sources now intaken and converted include:
 - reliability release gate: ReliabilityBench, Beyond pass@1, Canonical Path Deviation, Measuring Agents in Production, AgentCompass, runtime governance, deterministic boundaries, COCO
 - co-audit gate: Co-audit, Cognitive Forcing Functions, Measuring and Mitigating Overreliance, Critical Reflection Taxonomy, Support Relations
 
+Debate-bridge sources now intaken and converted include:
+
+- shipping-practice bridge: Documenting Deployment with Fabric, Evaluation-Driven Development and Operations, Eval Factsheets
+
+The shipping-practice bridge is formalized in [`confidence-debt-shipping-practice-warrant-ledger.md`](confidence-debt-shipping-practice-warrant-ledger.md). Use it only to support the claim that responsible-looking deployment practice has real transfer tokens: artifacts, evaluation evidence, bounded execution, monitoring, and human approval. It does not authorize claiming a measured causal chain from those tokens to failure.
+
 The main known gap is no longer local availability of the evidence. The gap is epistemic: the three-gate stack remains an argued synthesis rather than an end-to-end validated deployment system.
 
 ## Synthesis Boundary
@@ -102,6 +113,7 @@ The main known gap is no longer local availability of the evidence. The gap is e
 - Do not imply that provenance displays alone fix overreliance.
 - Do not imply that co-audit interfaces reliably change behavior at production scale unless a stronger field study is added.
 - Do not treat the first-party eip-verify case as cross-domain proof. It is an inspectable worked case.
+- Do not claim the artifact-score-approval stack is universal across all AI deployment or that teams knowingly launder confidence.
 - Do not cite every relevant paper in the body. Sources must do body work, hinge work, or stay in references.
 
 ## Blueprint Instructions

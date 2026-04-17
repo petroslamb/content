@@ -18,6 +18,8 @@ The project had to invent governance after the fact. Raw artifacts outranked sum
 
 That repair left the model's capabilities unchanged. The workflow became less willing to accept borrowed trust.
 
+![The eip-verify case: when the polished version outruns the truth.](assets/r3-slides/eip-verify-case.png)
+
 ## What Confidence Debt Is
 
 A system incurs confidence debt when its output is trusted downstream before the evidence warrants that trust.
@@ -28,7 +30,11 @@ This is why the frame cannot live inside model psychology alone. Model overconfi
 
 The debt compounds because each downstream layer receives the confidence without receiving the compression that created it. A claim loses its evidence texture when it becomes a summary. A summary loses its caveats when it becomes a score. A score loses its boundary conditions when it becomes a deployment argument. By the time a human is asked to approve the result, the workflow may have preserved the conclusion and stripped away the means of challenging it.
 
-The ordinary practice this challenges is familiar: treating a polished answer, a green evaluation dashboard, or a human approval as if confidence had been paid for once and could now be reused everywhere. Confidence debt says those are transfer points, not settlement points. Each one can move trust forward while leaving the evidence behind.
+Modern AI release practice rarely asks anyone to trust a model blindly. It offers a more respectable sequence. Pan et al. (2026) show production-agent teams relying on bounded autonomy, structured workflows, human-in-the-loop evaluation, A/B testing, user feedback, and monitoring; Jorgensen et al. (2025) show governance enacted through workflow diagrams, thresholds, policies, standards, regulation, and signoff. Xia et al. (2025) reframe evaluation as lifecycle governance rather than a terminal checkpoint, while Bordes et al. (2025) and Staufer et al. (2025) make the documentation warning explicit at the score layer: assumptions, validity conditions, judge choices, contamination checks, and statistical procedures need to travel with the result before it becomes decision evidence.
+
+Each move is rational. Raw traces are unreadable. Decisions need compression. Organizations need accountable checkpoints. Confidence debt begins when those checkpoints are treated as settlement rather than transfer. The artifact loses claim-level support. The score loses its measured envelope. The approval loses the evidence needed to dispute the answer. The same artifacts that make AI deployment governable can become the surfaces through which confidence debt moves.
+
+![The Compounding Cascade: how debt propagates across transfer points.](assets/r3-slides/confidence-cascade.png)
 
 ## The First Gate: Claim Auditability
 
@@ -45,6 +51,8 @@ The common rule is simple: a claim cannot be promoted merely because it reads we
 For eip-verify, the polished report could not overrule the row-level artifact. For a research assistant, a generated answer cannot merely cite a paper while hiding whether the paper supports the sentence. For an internal decision record, a recommendation cannot enter organizational memory without retaining the support relations and counterevidence that make the decision contestable later.
 
 This is the first gate for paying down confidence debt. Before trust moves, the claim has to become inspectable.
+
+![Gate 1: Claim Auditability. Tracing claims to contradiction-transparent evidence.](assets/r3-slides/gate-1-auditability.png)
 
 ## The Second Gate: Reliability Release
 
@@ -65,6 +73,8 @@ This changes what an actionable evaluation plan looks like. Rerunning a benchmar
 Production-agent studies point in the same direction. Pan et al. (2026) find that teams deploying agents tend to favor bounded autonomy, structured workflows, internal pilots, human oversight, and monitoring. AgentCompass-style trace analysis adds the post-deployment repair surface by making failures localizable and reusable across runs. The common instinct is to treat deployment as governed execution, not as the moment a benchmark score gets handed to users.
 
 The second gate is therefore a reliability release gate. A score can support deployment only inside the reliability envelope that has actually been measured and monitored.
+
+![Gate 2: Reliability Release. Bounding deployment inside the measured envelope.](assets/r3-slides/gate-2-reliability.png)
 
 ## The Third Gate: Co-Audit
 
@@ -89,6 +99,8 @@ Evaluative AI adds another useful pattern: show evidence for and against candida
 For confidence debt, a co-audit workspace should expose the AI answer as something to be worked against, not merely consumed. It should extract claims, mark unsupported and contradicted claims, show omissions, surface assumptions, offer counter-hypotheses, and require reviewer action before acceptance. It should distinguish "accepted because supported" from "accepted despite unresolved uncertainty." It should make structured correction easier than passive acceptance.
 
 That full workspace is an invention assembled from adjacent findings, not a validated product category with settled evidence. The humility matters. PaperTrail shows that evidence displays alone can lower trust without changing behavior. Co-audit has its own failure modes: overload, under-reliance, over-reliance, responsibility blur, and attackers who target the audit layer itself. But those caveats do not weaken the human gate. They clarify it. The human layer needs software that changes review behavior, not copy that reminds the reviewer to be careful.
+
+![Gate 3: Co-Audit. From passive review to structured machine-assisted dispute.](assets/r3-slides/gate-3-co-audit.png)
 
 ## The Cascade
 
@@ -144,6 +156,8 @@ The human gate asks what software helps the reviewer see what the AI answer hide
 
 The doctrine should read less like a compliance checklist than a locator for borrowed trust. If the claim cannot be audited, the debt is at the artifact layer. If the score has outrun its reliability envelope, the debt is at the evaluation layer. If the reviewer is being asked to approve an answer without structured correction support, the debt is at the human layer.
 
+![The Three-Gate Doctrine: A unified framework for paying down confidence debt.](assets/r3-slides/doctrine-summary.png)
+
 ## Conclusion
 
 Confidence debt accrues when output moves faster than evidence. It compounds when each layer of the workflow inherits confidence without inheriting the means to dispute it. The polished summary, the benchmark score, and the human approval can all look reasonable in isolation while together forming a pipeline that borrows trust at every step.
@@ -166,6 +180,10 @@ The repair is a stricter contract for delegation, not generalized skepticism. Ma
 - **Khanal, A., Tao, Y., & Zhou, J. (2026).** *Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents.* arXiv:2603.29231.
 - **Lee, W. Y. (2026).** *Capable but Unreliable: Canonical Path Deviation as a Causal Mechanism of Agent Failure in Long-Horizon Tasks.* arXiv:2602.19008.
 - **Pan, M. Z., Arabzadeh, N., Cogo, R., Zhu, Y., Xiong, A., Agrawal, L. A., et al. (2026).** *Measuring Agents in Production.* arXiv:2512.04123.
+- **Jorgensen, M., Brogle, K., Collins, K. M., Ibrahim, L., Shah, A., Ivanovic, P., et al. (2025).** *Documenting Deployment with Fabric: A Repository of Real-World AI Governance.* arXiv:2508.14119.
+- **Xia, B., Lu, Q., Zhu, L., Xing, Z., Zhao, D., & Zhang, H. (2025).** *Evaluation-Driven Development and Operations of LLM Agents: A Process Model and Reference Architecture.* arXiv:2411.13768.
+- **Bordes, F., Ross, C., Kao, J. T., Spiliopoulou, E., & Williams, A. (2025).** *Eval Factsheets: A Structured Framework for Documenting AI Evaluations.* arXiv:2512.04062.
+- **Staufer, L., Yang, M., Reuel, A., & Casper, S. (2025).** *Audit Cards: Contextualizing AI Evaluations.* arXiv:2504.13839.
 - **Kartik, N. V. J. K., Sapra, G., Hada, R., & Pareek, N. (2025).** *AgentCompass: Towards Reliable Evaluation of Agentic Workflows in Production.* arXiv:2509.14647.
 - **Liu, G., Christian, B., Dumbalska, T., Bakker, M. A., & Dubey, R. (2026).** *AI Assistance Reduces Persistence and Hurts Independent Performance.* arXiv:2604.04721.
 - **Shen, J. H., & Tamkin, A. (2026).** *How AI Impacts Skill Formation.* arXiv:2601.20245.

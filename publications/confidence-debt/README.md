@@ -25,6 +25,7 @@ This package inherits evidence, assets, and provenance from three capped donor l
 - Evidence surface: [`papers/`](papers/)
 - Evidence index: [`papers/index.md`](papers/index.md)
 - Evidence authorization ledger: [`confidence-debt-evidence-authorization-ledger.md`](confidence-debt-evidence-authorization-ledger.md)
+- Shipping-practice warrant ledger: [`confidence-debt-shipping-practice-warrant-ledger.md`](confidence-debt-shipping-practice-warrant-ledger.md)
 - Artifact surface: [`artifacts/`](artifacts/)
 - Archive surface: [`archive/`](archive/)
 
@@ -33,6 +34,7 @@ This package inherits evidence, assets, and provenance from three capped donor l
 - Treat [`confidence-debt.md`](confidence-debt.md) as the canonical live draft surface.
 - Treat [`blueprint.md`](blueprint.md) as the governing surface until the thesis stress-test gate clears.
 - Use [`confidence-debt-evidence-authorization-ledger.md`](confidence-debt-evidence-authorization-ledger.md) between paper intake and blueprint changes when deciding what the evidence is allowed to license.
+- Use [`confidence-debt-shipping-practice-warrant-ledger.md`](confidence-debt-shipping-practice-warrant-ledger.md) when testing whether a sharper attack on responsible deployment practice is earned.
 - Treat donor packages as provenance and evidence sources, not as active flagship frames.
 - Do not open a bounded candidate until both the thesis stress-test gate and the evidence fusion gate clear.
 - The combined evidence set spans first-party project data, third-party benchmark papers, and third-party behavioral studies. Any section that cannot be supported by its assigned evidence type should be cut or restructured, not patched with rhetorical force.
