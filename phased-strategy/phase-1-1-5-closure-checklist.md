@@ -59,9 +59,9 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
    - `scripts/update_initial_status.py` was removed.
    - Generic wrappers with package examples in help text remain acceptable if they take `--package`.
 
-2. Run a publication package orientation audit.
+2. Run a publication package orientation audit. `DONE`; see `phased-strategy/publication-package-orientation-audit-2026-04-17.md`.
    - Confirm every active leaf package has a useful README, `status.yaml`, live draft pointer, artifact surface, and evidence surface where applicable.
-   - Record exceptions instead of silently treating transitional packages as complete.
+   - Record exceptions instead of silently treating transitional packages as complete. Follow-up remains for old umbrella-package classification and evidence-drift backfill.
 
 3. Decide the retained-proof boundary.
    - Routine stage logs belong in `reviewable-runs/logs/`.

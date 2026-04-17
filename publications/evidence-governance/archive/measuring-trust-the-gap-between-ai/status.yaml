@@ -3,7 +3,7 @@ publication: measuring-trust-the-gap-between-ai
 parent_package: evidence-governance
 revision: 1
 config:
-  markdown_path: publications/evidence-governance/measuring-trust-the-gap-between-ai/measuring-trust-the-gap-between-ai.md
+  markdown_path: publications/evidence-governance/archive/measuring-trust-the-gap-between-ai/measuring-trust-the-gap-between-ai.md
   substack_post_id: 188379733
   substack_slug: measuring-trust-the-gap-between-ai
   substack_url: https://lambpetros.substack.com
