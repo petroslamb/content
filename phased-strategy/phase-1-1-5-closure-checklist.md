@@ -21,7 +21,7 @@ Status legend:
 | Harness check | `npm run check:harness` passes as of the latest workflow refactor |
 | Reviewable run log check | `npm run check:reviewable-runs` validates v2 lightweight lifecycle logs and launch packs |
 | Repo-link check | `npm run check:repo-links` passes |
-| Strategic read | Phase 1 is mostly normalized; Phase 1.5 is built but not proof-run cleared |
+| Strategic read | Phase 1 is closed; Phase 1.5 is built but not proof-run cleared |
 
 ## Phase 1 - The Clean Machine
 
@@ -31,9 +31,11 @@ Goal from the strategy document:
 
 ### Summary Verdict
 
-`PARTIAL`, with an important distinction.
+`DONE`, under clarified Phase 1 scope.
 
-Phase 1 is mostly closed as internal repo normalization. The repo has moved from scattered tools into a structured operating environment with package manifests, lifecycle scripts, workflow docs, and a harness-facing command surface. It is not strictly closed under the original wording because package-specific script exceptions still exist and many lifecycle stages remain guided rather than independently executable.
+Phase 1 is closed as internal repo normalization. The repo has moved from scattered tools into a structured operating environment with package manifests, lifecycle scripts, workflow docs, root-script hygiene, package-orientation checks, and a harness-facing command surface.
+
+The original strategy sentence "any article can be run start-to-finish by an agent" is now interpreted as the next autonomy proof layer. It is not a remaining Phase 1 blocker. It belongs to Phase 1.5 proof runs and, where operator-shell support is required, Phase 1.6.
 
 ### Gate Criteria
 
@@ -52,7 +54,7 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
 | M1.3 Generic `run` interface | `DONE` | `scripts/run_stage.py`; `npm run stage:resolve`; `npm run stage:run` | Continue improving guided-stage launch packs rather than pretending all stages are fully automated |
 | M1.4 Reviewable Runs integration | `DONE` | `run_stage.py` writes v2 lightweight logs; harness launch packs use v2 schema; `npm run check:reviewable-runs` validates the current log layer | Full proof packets remain selective retained artifacts, not automatic paperwork for every routine run |
 
-### Phase 1 Open Items
+### Phase 1 Closure Items
 
 1. Classify or eliminate package-specific script exceptions. `DONE`.
    - `scripts/stitch_binding_gap_slides.py` was removed.
@@ -130,7 +132,7 @@ The repo now has the main Phase 1.5 machinery: a machine-readable contract, poli
 
 ## Recommended Next Actions
 
-1. Keep the strict Phase 1 script exception question closed.
+1. Keep Phase 1 closed.
    - New package-specific utilities should live inside the owning package or be generalized before entering root `scripts/`.
    - Series adapters should live under the owning umbrella package or skill bundle.
 
