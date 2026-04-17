@@ -29,5 +29,6 @@ stages:
     last_updated: null
 config:
   markdown_path: publications/autonomous-agents/the-agent-revolution/the-agent-revolution.md
+  evidence_path: publications/autonomous-agents/reference/papers
   substack_slug: the-agent-revolution
   substack_url: https://lambpetros.substack.com

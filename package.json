@@ -10,6 +10,7 @@
     "dev:mirror": "eleventy --serve",
     "check:mirror": "npm run build:mirror && .venv/bin/python scripts/check_mirror.py && .venv/bin/python scripts/e2e_mirror_smoke.py",
     "check:harness": ".venv/bin/python scripts/check_harness.py",
+    "check:reviewable-runs": ".venv/bin/python scripts/check_reviewable_run_logs.py",
     "check:essay-iteration": ".venv/bin/python scripts/check_essay_iteration_packet.py",
     "status": ".venv/bin/python scripts/check_status.py",
     "run": ".venv/bin/python scripts/run_stage.py",

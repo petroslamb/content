@@ -639,11 +639,29 @@ def emit_launch_pack(resolution: dict) -> Path:
     log_path = LOGS_DIR / f"{timestamp}_{package_id}_{resolution['stage']}_launch-pack.json"
     payload = {
         "kind": "harness_launch_pack",
+        "schema_version": 2,
         "timestamp": timestamp,
+        "run_id": f"{timestamp}_{package_id}_{resolution['stage']}_launch-pack",
         "task_brief": (
             f"Advance package '{resolution['package']}' through the "
             f"'{resolution['stage']}' stage using '{resolution['workflow_doc']}'."
         ),
+        "boundary": {
+            "type": "handoff",
+            "reason": "Launch pack prepares a bounded guided run; it does not execute the stage.",
+            "external_side_effect": False,
+            "approval_gate": resolution["approval_gate"],
+            "approval_required": resolution["requires_approval"],
+            "approval_status": "pending_if_stage_executes" if resolution["requires_approval"] else "not_required",
+        },
+        "task": {
+            "objective": f"Prepare a bounded launch packet for package '{resolution['package']}' stage '{resolution['stage']}'.",
+            "stop_condition": "Launch pack written to reviewable-runs/logs/.",
+            "non_goals": [
+                "Do not claim the stage was executed.",
+                "Do not treat this launch pack as approval for external mutation.",
+            ],
+        },
         "package": resolution["package"],
         "stage": resolution["stage"],
         "workflow_doc": resolution["workflow_doc"],
@@ -662,6 +680,16 @@ def emit_launch_pack(resolution: dict) -> Path:
         "judgment_policy": resolution["judgment_policy"],
         "prohibited_moves": resolution["prohibited_moves"],
         "blocking_issues": resolution["blocking_issues"],
+        "verification": {
+            "checks": [
+                {
+                    "name": "launch_pack_written",
+                    "result": "pass",
+                    "notes": repo_relpath(log_path),
+                }
+            ],
+            "residual_risk": "The launch pack is only an entry packet for guided work. Review the final run separately.",
+        },
     }
     log_path.write_text(json.dumps(payload, indent=2) + "\n")
     return log_path

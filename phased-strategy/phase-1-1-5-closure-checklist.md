@@ -15,10 +15,11 @@ Status legend:
 | :--- | :--- |
 | Workflow docs | 16 canonical workflow/operations docs, plus the workflow and skills indexes |
 | Skill bundles | 10 tracked repo-local skills under `workflows/skills/` |
-| Root scripts | 40 tracked script files under `scripts/` |
+| Root scripts | Root scripts contain no package-specific exceptions; package/series adapters live under owning packages or skills |
 | Harness contract | `harness_contract.yaml` present |
 | Harness policy | `harness_policy.yaml` present |
 | Harness check | `npm run check:harness` passes as of the latest workflow refactor |
+| Reviewable run log check | `npm run check:reviewable-runs` validates v2 lightweight lifecycle logs and launch packs |
 | Repo-link check | `npm run check:repo-links` passes |
 | Strategic read | Phase 1 is mostly normalized; Phase 1.5 is built but not proof-run cleared |
 
@@ -39,7 +40,7 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
 | Gate | Status | Evidence | Remaining Work |
 | :--- | :---: | :--- | :--- |
 | Describe the status of every publication in one command | `DONE` | `scripts/check_status.py`; `npm run status`; package `status.yaml` manifests | Keep manifests current as packages move or split |
-| Let another agent or future operator pick up a half-finished package and know where it is | `PARTIAL` | Package READMEs, `status.yaml`, workflow docs, `scripts/next_action.py`, harness contract | Run a package coverage audit and fix packages that lack strong README/status/local artifact orientation |
+| Let another agent or future operator pick up a half-finished package and know where it is | `DONE` | Package READMEs, `status.yaml`, workflow docs, `scripts/next_action.py`, harness contract, and `publication-package-orientation-audit-2026-04-17.md` | Keep package orientation green as older packages move or split |
 | Zero scripts that mention a specific essay name | `DONE` | The hard package-specific root scripts were removed or moved out of root `scripts/`; remaining package names in root scripts are examples, migration checks, or generic package arguments | Keep this gate green when adding future automation |
 
 ### Milestones
@@ -49,7 +50,7 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
 | M1.1 Kill the root scripts | `DONE` | Root ad hoc scripts were moved, removed, or moved under their owning umbrella package; `scripts/README.md` now states that no package-specific root-script exceptions remain | Keep package-specific utilities package-local unless they are generalized |
 | M1.2 Publication lifecycle manifest | `DONE` | `status.yaml` layer; `scripts/check_status.py`; `npm run status` | Keep manifests synchronized when package taxonomy changes |
 | M1.3 Generic `run` interface | `DONE` | `scripts/run_stage.py`; `npm run stage:resolve`; `npm run stage:run` | Continue improving guided-stage launch packs rather than pretending all stages are fully automated |
-| M1.4 Reviewable Runs integration | `PARTIAL` | `run_stage.py` writes lightweight run logs; `reviewable-runs/logs/` is the routine trace surface | Original proof-pair standard is not automatic for every stage; decide which runs deserve retained proof packets |
+| M1.4 Reviewable Runs integration | `DONE` | `run_stage.py` writes v2 lightweight logs; harness launch packs use v2 schema; `npm run check:reviewable-runs` validates the current log layer | Full proof packets remain selective retained artifacts, not automatic paperwork for every routine run |
 
 ### Phase 1 Open Items
 
@@ -61,12 +62,12 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
 
 2. Run a publication package orientation audit. `DONE`; see `phased-strategy/publication-package-orientation-audit-2026-04-17.md`.
    - Confirm every active leaf package has a useful README, `status.yaml`, live draft pointer, artifact surface, and evidence surface where applicable.
-   - Record exceptions instead of silently treating transitional packages as complete. Follow-up remains for old umbrella-package classification and evidence-drift backfill.
+   - Old umbrella packages were normalized with configured evidence paths and top-level artifact/archive orientation surfaces.
 
-3. Decide the retained-proof boundary.
+3. Decide the retained-proof boundary. `DONE`.
    - Routine stage logs belong in `reviewable-runs/logs/`.
    - Strong retained proof examples belong in `reviewable-runs/examples/proofs/`.
-   - The original Phase 1 wording expected automatic proof pairs for every run; current implementation is lighter and should be either accepted or tightened.
+   - The original Phase 1 wording expected automatic proof pairs for every run; the accepted standard is now tighter v2 lightweight logs plus selective retained proof packets.
 
 4. Resolve or classify repo-link check failures. `DONE`.
    - `npm run check:repo-links` now passes.

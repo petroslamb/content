@@ -26,7 +26,12 @@ def resolve_evidence_root(package_path: Path, status_data: dict) -> tuple[Path |
     evidence_path = config.get("evidence_path")
     if evidence_path:
         resolved = (REPO_ROOT / evidence_path).resolve()
-        return resolved, f"Shared evidence path: {evidence_path}"
+        return resolved, f"Configured evidence path: {evidence_path}"
+
+    shared_evidence_path = config.get("shared_evidence_path")
+    if shared_evidence_path:
+        resolved = (REPO_ROOT / shared_evidence_path).resolve()
+        return resolved, f"Shared evidence path: {shared_evidence_path}"
 
     for dirname in ["sources", "papers"]:
         candidate = package_path / dirname
@@ -40,7 +45,36 @@ def count_local_sources(evidence_root: Path) -> int:
         candidate = evidence_root / dirname
         if candidate.exists():
             return len(list(candidate.glob("*.md")))
-    return 0
+    return len([path for path in evidence_root.rglob("*.md") if not any(part.startswith(".") for part in path.parts)])
+
+
+def audit_umbrella_config(package_path: Path, status_data: dict, report: dict) -> None:
+    config = status_data.get("config", {})
+    leaf_packages = config.get("leaf_packages") or []
+    default_leaf = config.get("default_leaf_package")
+
+    if not leaf_packages and not default_leaf:
+        report["checks"].append(
+            {
+                "status": "WARNING",
+                "message": "Umbrella manifest should name 'config.leaf_packages' or 'config.default_leaf_package'.",
+            }
+        )
+        return
+
+    if default_leaf:
+        leaf_path = REPO_ROOT / "publications" / default_leaf
+        if leaf_path.exists():
+            report["checks"].append({"status": "PASS", "message": f"Default leaf resolves: {default_leaf}"})
+        else:
+            report["checks"].append({"status": "FAIL", "message": f"Default leaf path is missing: {default_leaf}"})
+
+    for leaf in leaf_packages:
+        leaf_path = REPO_ROOT / "publications" / leaf
+        if leaf_path.exists():
+            report["checks"].append({"status": "PASS", "message": f"Leaf package resolves: {leaf}"})
+        else:
+            report["checks"].append({"status": "FAIL", "message": f"Leaf package path is missing: {leaf}"})
 
 
 def audit_package(package_arg: str) -> dict:
@@ -55,13 +89,20 @@ def audit_package(package_arg: str) -> dict:
     package_path = manifest_ref.package_path
     config = status_data.get("config", {})
     ignore = set(config.get("ignore_scaffold_audit", []))
+    package_kind = status_data.get("kind", "leaf")
 
     report = {
         "package": manifest_ref.package_key,
+        "kind": package_kind,
         "revision": status_data.get("revision", 1),
         "checks": [],
         "evidence_drift": [],
     }
+
+    if (package_path / "README.md").exists():
+        report["checks"].append({"status": "PASS", "message": "Package README present."})
+    else:
+        report["checks"].append({"status": "WARNING", "message": "Missing package README."})
 
     evidence_root, evidence_label = resolve_evidence_root(package_path, status_data)
     if evidence_root:
@@ -83,6 +124,12 @@ def audit_package(package_arg: str) -> dict:
             report["checks"].append({"status": "PASS", "message": f"'{dirname}/' directory present."})
         else:
             report["checks"].append({"status": "WARNING", "message": f"Missing '{dirname}/' directory. ({description})"})
+
+    if package_kind == "umbrella":
+        audit_umbrella_config(package_path, status_data, report)
+        if not config.get("markdown_path"):
+            report["checks"].append({"status": "INFO", "message": "Umbrella manifest does not require 'config.markdown_path'."})
+            return report
 
     markdown_path_str = config.get("markdown_path")
     if not markdown_path_str:

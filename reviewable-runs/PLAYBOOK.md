@@ -175,7 +175,7 @@ For internal repository or editorial refactor runs, also prefer:
 
 Add the six review records only when the run needs a real review packet or proof artifact.
 
-Routine lifecycle or stage-run automation should default to the lightweight `logs/` layer first. Promote a run into `examples/proofs/` only after a real review decision that it adds retained proof value.
+Routine lifecycle or stage-run automation should default to the lightweight `logs/` layer first. New lifecycle logs should use the v2 minimum schema described in [`logs/README.md`](logs/README.md): task boundary, action trace, evidence surface, verification, approval/boundary, and failure/risk. Promote a run into `examples/proofs/` only after a real review decision that it adds retained proof value.
 
 ## When To Escalate To A Full Packet
 
