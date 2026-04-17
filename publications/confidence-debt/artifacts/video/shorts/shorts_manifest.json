@@ -1,0 +1,132 @@
+{
+  "clips": [
+    {
+      "slug": "polished-summary-trap",
+      "title": "The Polished Summary Trap",
+      "summary": "A finished-looking AI report can make unverified claims feel already checked.",
+      "start": "00:01:09.360",
+      "end": "00:02:00.240",
+      "publish_at": "2026-04-18T13:00:00Z"
+    },
+    {
+      "slug": "confidence-debt-definition",
+      "title": "What Confidence Debt Means",
+      "summary": "Confidence debt is what happens when trust moves downstream faster than evidence.",
+      "start": "00:04:26.639",
+      "end": "00:04:51.919",
+      "publish_at": "2026-04-18T17:00:00Z"
+    },
+    {
+      "slug": "wrong-artifact-travels",
+      "title": "The Wrong Artifact Travels",
+      "summary": "The dangerous artifact is often the one that is easiest to read, forward, and approve.",
+      "start": "00:13:25.760",
+      "end": "00:14:18.959",
+      "publish_at": "2026-04-19T13:00:00Z"
+    },
+    {
+      "slug": "transparency-is-not-friction",
+      "title": "Transparency Is Not Friction",
+      "summary": "Showing the warning label is not enough when the workflow still lets the mistake through.",
+      "start": "00:22:23.280",
+      "end": "00:23:16.559",
+      "publish_at": "2026-04-19T17:00:00Z"
+    },
+    {
+      "slug": "pass-one-dashboard-trap",
+      "title": "The Pass@1 Dashboard Trap",
+      "summary": "A one-shot benchmark score is not a deployment argument for repeated real-world work.",
+      "start": "00:27:46.320",
+      "end": "00:28:40.480",
+      "publish_at": "2026-04-20T13:00:00Z"
+    },
+    {
+      "slug": "friction-is-training-load",
+      "title": "Friction Is the Training Load",
+      "summary": "Removing all friction also removes the practice that keeps correction capacity alive.",
+      "start": "00:39:14.720",
+      "end": "00:39:57.760",
+      "publish_at": "2026-04-20T17:00:00Z"
+    },
+    {
+      "slug": "human-in-loop-liability-shield",
+      "title": "The Human-in-the-Loop Liability Shield",
+      "summary": "A tired reviewer staring at fluent AI output is not automatically a governance mechanism.",
+      "start": "00:41:50.800",
+      "end": "00:42:38.880",
+      "publish_at": "2026-04-21T13:00:00Z"
+    },
+    {
+      "slug": "doctrine-of-friction",
+      "title": "The Doctrine of Friction",
+      "summary": "The fix is not less AI. It is enforced evidence, reliability, and correction practice.",
+      "start": "00:53:04.480",
+      "end": "00:53:58.319",
+      "publish_at": "2026-04-21T17:00:00Z"
+    },
+    {
+      "slug": "thursday-danger-zone",
+      "title": "Thursday at 4:45 Is the Danger Zone",
+      "summary": "Confidence debt often starts when fatigue meets a polished AI artifact.",
+      "start": "00:00:06.640",
+      "end": "00:00:49.920",
+      "publish_at": "2026-04-22T13:00:00Z"
+    },
+    {
+      "slug": "endorsed-without-verifying",
+      "title": "You Endorsed What You Did Not Verify",
+      "summary": "The panic arrives when you realize the confidence you forwarded was never earned.",
+      "start": "00:03:03.920",
+      "end": "00:03:48.959",
+      "publish_at": "2026-04-22T17:00:00Z"
+    },
+    {
+      "slug": "beautiful-report-was-lying",
+      "title": "The Beautiful Report Was Lying",
+      "summary": "The clean summary was not merely imperfect. Its core mapping was hallucinated.",
+      "start": "00:09:38.000",
+      "end": "00:10:34.640",
+      "publish_at": "2026-04-23T13:00:00Z"
+    },
+    {
+      "slug": "borrowing-trust-from-formatting",
+      "title": "Borrowing Trust From Formatting",
+      "summary": "A document can imply that verification happened even when no one actually paid that cost.",
+      "start": "00:15:12.880",
+      "end": "00:15:52.399",
+      "publish_at": "2026-04-23T17:00:00Z"
+    },
+    {
+      "slug": "generation-is-not-bottleneck",
+      "title": "Generation Is Not the Bottleneck",
+      "summary": "When AI can generate fluent reports cheaply, the hard problem becomes tracing evidence.",
+      "start": "00:18:19.440",
+      "end": "00:18:55.120",
+      "publish_at": "2026-04-24T13:00:00Z"
+    },
+    {
+      "slug": "expired-confidence",
+      "title": "Expired Confidence Is Still Dangerous",
+      "summary": "A summary can keep looking true after the evidence underneath it has expired.",
+      "start": "00:24:36.799",
+      "end": "00:25:22.880",
+      "publish_at": "2026-04-24T17:00:00Z"
+    },
+    {
+      "slug": "agents-drift-into-ditch",
+      "title": "AI Agents Drift Into the Ditch",
+      "summary": "Small errors can compound across a long task until correction capacity is exceeded.",
+      "start": "00:33:46.640",
+      "end": "00:34:30.079",
+      "publish_at": "2026-04-25T13:00:00Z"
+    },
+    {
+      "slug": "confidence-debt-cascade",
+      "title": "Confidence Debt Compounds Into a Cascade",
+      "summary": "Artifact trust, dashboard scores, and passive review can finance each other into failure.",
+      "start": "00:45:14.640",
+      "end": "00:46:07.920",
+      "publish_at": "2026-04-25T17:00:00Z"
+    }
+  ]
+}

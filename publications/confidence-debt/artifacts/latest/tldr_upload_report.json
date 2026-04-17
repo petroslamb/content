@@ -1,0 +1,21 @@
+{
+  "source_file": "publications/confidence-debt/artifacts/latest/video.mp4",
+  "title": "Confidence Debt: Explainer TL;DR",
+  "video_id": "cerMkPv6YZw",
+  "url": "https://www.youtube.com/watch?v=cerMkPv6YZw",
+  "playlist_id": "PL8lPx5mgRhhan7OgyGo3Ostthkbr0v6n6",
+  "playlist_title": "Rooted Layers Summaries",
+  "playlist_item_id": "UEw4bFB4NW1nUmhoYW43T2d5R28zT3N0dGhrYnIwdjZuNi5GM0Q3M0MzMzY5NTJFNTdE",
+  "playlist_position_at_verification": 0,
+  "longform_video_id": "_FE96jVDsJM",
+  "longform_url": "https://www.youtube.com/watch?v=_FE96jVDsJM",
+  "privacy_status": "public",
+  "duration": "PT9M20S",
+  "upload_status_at_verification": "uploaded",
+  "verified_at_utc": "2026-04-17T20:48:00Z",
+  "notes": [
+    "Initial playlist insert with explicit position failed because the playlist requires manual sorting for position writes.",
+    "Retried without explicit position; YouTube inserted the TL;DR at position 0.",
+    "Description references the longform video."
+  ]
+}

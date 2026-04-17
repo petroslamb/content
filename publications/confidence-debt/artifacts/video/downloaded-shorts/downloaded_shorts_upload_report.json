@@ -1,0 +1,86 @@
+{
+  "created_at": "2026-04-17T21:06:00Z",
+  "source": {
+    "directory": "/Users/petros/Downloads",
+    "note": "Four recent downloaded 16:9 clips were copied into the repository, converted to 1080x1920 portrait masters, and uploaded as immediate public Shorts."
+  },
+  "conversion": {
+    "format": "1080x1920 portrait",
+    "method": "Centered original 16:9 frame over blurred vertical background fill",
+    "output_directory": "publications/confidence-debt/artifacts/video/downloaded-shorts/portrait",
+    "verified": {
+      "width": 1080,
+      "height": 1920,
+      "frame_rate": "24/1",
+      "audio_codec": "aac"
+    }
+  },
+  "youtube": {
+    "channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+    "playlist": {
+      "title": "AI Architecture Snippets & AI Research Shorts",
+      "id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd"
+    },
+    "related_longform": {
+      "title": "Confidence Debt",
+      "id": "_FE96jVDsJM",
+      "url": "https://www.youtube.com/watch?v=_FE96jVDsJM"
+    },
+    "privacy_status": "public",
+    "related_video_update": "All four videos returned success when setting relatedVideoIds to _FE96jVDsJM."
+  },
+  "items": [
+    {
+      "source_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/source/01-make-the-button-dead.mp4",
+      "portrait_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/portrait/01-make-the-button-dead_portrait.mp4",
+      "title": "Make the Button Dead #shorts",
+      "summary": "A warning label is not enough. If evidence has not been checked, the approval button needs to stop the workflow.",
+      "youtube_id": "ARgPXek0LqU",
+      "url": "https://www.youtube.com/watch?v=ARgPXek0LqU",
+      "duration": "PT49S",
+      "upload_status": "processed",
+      "definition": "hd",
+      "playlist_position": 3,
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC44MkM2RjVEQkQ5N0I2MjVE"
+    },
+    {
+      "source_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/source/02-the-asymmetry-of-truth-vs.mp4",
+      "portrait_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/portrait/02-the-asymmetry-of-truth-vs_portrait.mp4",
+      "title": "The Asymmetry of Truth vs. Polish #shorts",
+      "summary": "Confidence debt grows when the clean artifact is easier to trust than the messy evidence underneath it.",
+      "youtube_id": "dRFeHvAF8TU",
+      "url": "https://www.youtube.com/watch?v=dRFeHvAF8TU",
+      "duration": "PT2M2S",
+      "upload_status": "processed",
+      "definition": "hd",
+      "playlist_position": 2,
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC40NzE2MTY1QTM3RUI3QkU3"
+    },
+    {
+      "source_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/source/03-how-aesthetic-trust-wrecks-reputations.mp4",
+      "portrait_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/portrait/03-how-aesthetic-trust-wrecks-reputations_portrait.mp4",
+      "title": "How Aesthetic Trust Wrecks Reputations #shorts",
+      "summary": "The danger is not just a bad answer. It is forwarding confidence you never actually earned.",
+      "youtube_id": "Yp0-c_Y6CAo",
+      "url": "https://www.youtube.com/watch?v=Yp0-c_Y6CAo",
+      "duration": "PT58S",
+      "upload_status": "processed",
+      "definition": "hd",
+      "playlist_position": 1,
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EMzJDRTUwQjBEOUVFQzAw"
+    },
+    {
+      "source_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/source/04-how-confidence-debt-ruins-fintech.mp4",
+      "portrait_file": "publications/confidence-debt/artifacts/video/downloaded-shorts/portrait/04-how-confidence-debt-ruins-fintech_portrait.mp4",
+      "title": "How Confidence Debt Ruins Fintech #shorts",
+      "summary": "In a fintech workflow, artifact trust, dashboard scores, and passive review can compound into a governance failure.",
+      "youtube_id": "d7J7h0G1pNA",
+      "url": "https://www.youtube.com/watch?v=d7J7h0G1pNA",
+      "duration": "PT1M50S",
+      "upload_status": "processed",
+      "definition": "hd",
+      "playlist_position": 0,
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CMUM0NzY5NzdEQzlGRjAx"
+    }
+  ]
+}
