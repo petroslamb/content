@@ -35,6 +35,8 @@ The normal destination is the package or topic `artifacts/` folder.
 - Wait for notebook sources to become ready before generating artifacts.
 - Artifact generation is asynchronous. Expect task IDs, poll status, and do not assume audio, slides, or video are immediately done just because smaller artifacts finished first.
 - Keep one canonical artifact home. If NotebookLM first writes into an essay-scoped subfolder but the package expects package-level `artifacts/`, consolidate into the expected home and remove duplicates.
+- Treat NotebookLM outputs as raw artifacts until the article-polish workflow selects, names, and places them. Do not delete semantically named article images or remove markdown image embeds during artifact generation.
+- Moving labels such as `artifacts/latest/` and `artifacts/previous/` are acceptable for raw downloaded bundles, but they are not stable publication targets. Article embeds should point to semantically named assets chosen during polish.
 
 ## Canonical Flow
 
@@ -57,6 +59,29 @@ Default placement:
 - topic-based umbrella package: topic-level `artifacts/`
 
 If a package already uses a stronger established artifact convention, preserve it. Avoid duplicate artifact trees unless there is a strong reason to keep both.
+
+## Raw Artifact Boundary
+
+Artifact generation ends when the raw bundle is present and inspectable. It does not authorize editorial cleanup.
+
+Keep these surfaces distinct:
+
+| Surface | Owns | Do Not Use For |
+| :--- | :--- | :--- |
+| raw bundle | downloaded NotebookLM audio, slide PDF, video, extracted page PNGs | deciding which images belong in the essay |
+| publishable image set | semantically named images selected for the article | storing every extracted slide by default |
+| live draft | image placements and editorial prose | proving artifact generation completed |
+
+The confidence-debt artifact pass exposed the failure mode this boundary prevents: a raw artifact refresh deleted the semantically named `assets/r3-slides/` images and removed the markdown embeds. That may be acceptable only as an explicit editorial decision inside article polish. It is not a normal NotebookLM artifact-generation move.
+
+Before committing an artifact-generation pass, inspect the diff for accidental editorial changes:
+
+```bash
+git diff --name-status -- publications/<package>/
+git diff -- publications/<package>/<draft>.md | rg '^-!\['
+```
+
+If the second command prints removed image embeds, stop and hand off to article polish or ask for review. Do not hide the change inside an artifact commit.
 
 The binding-gap package is the clearest repo-local example of this rule:
 

@@ -46,6 +46,17 @@ Point to the package source inventory rather than duplicating path tables here.
 | :--- | :--- | :--- | :--- |
 | <synthesis> | <component findings> | <gap> | <wording that preserves epistemic status> |
 
+## Hinge Warrant Ledger
+
+Use this section only when one bridge claim is doing disproportionate work. Otherwise write `Not needed.`
+
+- Hinge claim: `<the contested bridge in one sentence>`
+- Why it matters: `<what this would unlock in the blueprint or draft>`
+- Source warrants: `<which sources support which component parts>`
+- Safe wording: `<the strongest body-ready sentence the evidence permits>`
+- Forbidden wording: `<the tempting stronger claims the evidence does not permit>`
+- Blueprint instruction: `<where the bridge may enter, or why it must stay out>`
+
 ## Forbidden Claims
 
 - Do not claim `<overreach>`.

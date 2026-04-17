@@ -42,6 +42,7 @@ Use it when:
 
 - multiple sources support nearby but distinct claims
 - a coined frame depends on synthesis rather than one decisive source
+- a high-bar review says the draft is precise but lacks a dangerous or actionable target, and the next move would require evidence for a new argumentative bridge
 - the package has many papers and the draft risks becoming a citation parade
 - a review says the problem is evidence authority, evidence scope, actionability, or proof boundary
 - you need to state what the essay cannot claim before rewriting
@@ -65,6 +66,25 @@ claims-evidence-ledger.md
 
 Keep it beside the blueprint or active package root, not inside `papers/`. The paper index owns source paths. The ledger owns claim permission.
 
+## Hinge Warrant Ledger
+
+Sometimes the useful output is narrower than a full evidence authorization ledger. Use a package-local hinge warrant ledger when one proposed bridge claim is doing disproportionate work, especially after an external review says the essay needs a sharper target, more actionability, or a more provocative antagonist.
+
+A warrant ledger answers one question:
+
+> What is the strongest version of this bridge claim that the evidence safely licenses?
+
+This is the pattern that proved useful in the confidence-debt work. The paper index named the deployment and evaluation sources. The evidence authorization ledger mapped the essay's broader claims. The narrower warrant ledger tested the dangerous bridge: responsible-looking AI deployment practice can itself become a trust-transfer surface. That ledger made the claim usable by separating the supported synthesis from forbidden overclaims such as "teams knowingly launder confidence" or "artifact-score-approval workflows are proven to cause downstream failures."
+
+Use a warrant ledger when:
+
+- the draft needs to attack a real practice, not just describe an abstract problem
+- a single bridge claim would materially raise debate energy or actionability
+- the evidence supports the components but not a direct causal proof
+- a full new draft would be premature until the bridge claim is authorized
+
+Do not use it as a substitute for intake or as a way to make weak evidence sound stronger. If the warrant ledger cannot state a safe bridge claim, the rewrite should not proceed from that bridge.
+
 ## Required Sections
 
 A useful ledger has these sections:
@@ -80,6 +100,15 @@ A useful ledger has these sections:
 
 Use [`templates/evidence_authorization_ledger_template.md`](templates/evidence_authorization_ledger_template.md) as the starting shape.
 
+A useful hinge warrant ledger can be shorter, but it must still include:
+
+1. **Hinge Claim**: the contested bridge in one sentence.
+2. **Why It Matters**: what the claim would unlock in the blueprint or draft.
+3. **Source Warrants**: which sources support which component parts.
+4. **Safe Wording**: the strongest body-ready sentence the evidence permits.
+5. **Forbidden Wording**: the tempting claims the evidence does not permit.
+6. **Blueprint Instruction**: where the bridge may enter the essay, or why it must stay out.
+
 ## Working Flow
 
 1. Read the package README, source index, active blueprint or draft, and the review that triggered the ledger.
@@ -91,6 +120,15 @@ Use [`templates/evidence_authorization_ledger_template.md`](templates/evidence_a
 7. Write the synthesis boundary. This is where high-level frames are allowed to exist, but only with their epistemic status labeled.
 8. Add forbidden claims before drafting. The ledger should stop the next writer from overclaiming.
 9. Feed the ledger back into the blueprint or prewrite gate before opening a new candidate.
+
+For a hinge warrant ledger, keep the flow tighter:
+
+1. Write the proposed bridge claim before rereading sources.
+2. Reopen only the exact anchor papers or artifacts that would have to support it.
+3. Split the claim into component findings, synthesis, and speculation.
+4. Write the safe sentence and the forbidden stronger sentence side by side.
+5. Update the blueprint only if the safe sentence changes the essay's target or actionability.
+6. Do not open a new candidate merely because the ledger is cleaner; open one only if the authorized bridge materially changes the draft.
 
 ## Evidence Labels
 
@@ -121,6 +159,13 @@ The ledger is too weak when:
 - every source appears mandatory
 - synthesis boundaries are missing or apologetic
 - the draft could still claim the same unsupported thing after reading the ledger
+
+A hinge warrant ledger is too weak when:
+
+- it proves only that sources are thematically nearby
+- it cannot name the exact bridge sentence the draft may use
+- it avoids forbidden wording because the limits are uncomfortable
+- it would not change the blueprint, section burden, or cut order
 
 ## Related Workflows
 

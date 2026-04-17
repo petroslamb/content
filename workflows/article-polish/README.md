@@ -40,6 +40,13 @@ Before starting this workflow, the package should already have:
 - the slide deck PDF in the package artifact surface
 - the package’s current references and supporting links
 
+Before changing image paths, also inspect the current markdown and git diff. This catches the common failure where a raw artifact refresh accidentally deletes publishable images or removes embeds from the essay:
+
+```bash
+rg -n '!\[[^]]*\]\(' publications/<package>/<draft>.md
+git diff --name-status -- publications/<package>/
+```
+
 ## Outputs
 
 When this workflow is done, the package should have:
@@ -64,6 +71,16 @@ When this workflow is done, the package should have:
 ## Stage 1: Image Selection And Naming
 
 Do not treat every extracted slide as a publishable image. Reduce the deck to the visuals that materially improve comprehension.
+
+Raw slide exports are not the same thing as article assets. A folder such as `artifacts/latest/slides/` or `artifacts/previous/slides/` is a generated source surface. The article image set should use stable, semantically named files under the package's declared publishable asset surface.
+
+Before deleting or renaming any existing image file:
+
+- check whether a markdown draft references it
+- check whether it is part of a prior reviewed article-image set
+- preserve it unless the current polish pass intentionally removes that visual from the essay
+
+Never remove image embeds from the draft just to make a raw artifact refresh look clean. Removing an image is an editorial decision. It should happen because the visual no longer helps the essay, not because a new deck produced different filenames.
 
 Prefer images that:
 
@@ -190,6 +207,7 @@ Before handing off to Substack publishing, reread the essay as one package rathe
 Check for:
 
 - image names and placements that still make sense after the last rewrite
+- no accidental deletion of previously placed images; removed embeds should have an editorial reason
 - visual spacing that still gives the prose room to breathe between diagrams
 - references that are complete, precise, and consistently formatted
 - short orientation blurbs only where they genuinely help
@@ -202,6 +220,7 @@ Check for:
 Before publishing:
 
 - make the reference section precise and complete
+- for newly added sources doing body work, add a short contribution note either in the reference entry or the surrounding prose so a future editor can tell why the citation is present
 - add short orientation text for references when it materially helps the reader
 - keep appendices only when they genuinely help understanding
 - link back to the repo when companions, datasets, or overflow material live here and do not belong in the main body
