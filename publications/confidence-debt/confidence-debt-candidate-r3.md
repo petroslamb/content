@@ -4,6 +4,8 @@
 
 ## The Polished Version Wins
 
+![Confidence Debt: What your AI workflow borrows when output moves faster than evidence.](artifacts/latest/slides/slide-001.png)
+
 The summary said every obligation was properly mapped.
 
 In eip-verify, a verification project built to test whether AI could trace Ethereum protocol requirements to implementation code, one run family produced two artifacts that should have agreed with each other. The first was a polished report. It was organized, confident, and ready to forward. The second was the row-level evidence underneath it. That file was harder to read. It required opening mappings, checking repository paths, and deciding whether a cited location actually contained protocol logic or only surrounding machinery.
@@ -21,6 +23,8 @@ That repair left the model's capabilities unchanged. The workflow became less wi
 
 ## What Confidence Debt Is
 
+![Compression creates the debt by efficiently preserving the conclusion while annihilating the means to challenge it.](artifacts/latest/slides/slide-005.png)
+
 A system incurs confidence debt when its output is trusted downstream before the evidence warrants that trust.
 
 The term borrows from technical debt, where speed is purchased by deferring structural cost, and from epistemic debt, where assisted output is purchased by deferring understanding. Confidence debt borrows trust itself. The output is legible enough, fluent enough, or scored highly enough to move. The evidence behind it has not been adjudicated to the standard that downstream use will imply. The cost appears later, when someone needs to dispute, reverse, or repair a claim that has already traveled farther than its support.
@@ -35,6 +39,8 @@ Each move is rational. Raw traces are unreadable. Decisions need compression. Or
 
 
 ## The First Gate: Claim Auditability
+
+![Gate 1: Claim Auditability. Tracing claims to contradiction-transparent evidence.](artifacts/latest/slides/slide-007.png)
 
 The first repair is artifact-level. A workflow has to decide what kind of object is allowed to settle a claim.
 
@@ -52,6 +58,8 @@ This is the first gate for paying down confidence debt. Before trust moves, the 
 
 
 ## The Second Gate: Reliability Release
+
+![Gate 2: Reliability Release. Bounding deployment inside the measured envelope.](artifacts/latest/slides/slide-010.png)
 
 The evaluation layer packages confidence into numbers. That makes it useful, and dangerous.
 
@@ -73,6 +81,8 @@ The second gate is therefore a reliability release gate. A score can support dep
 
 
 ## The Third Gate: Co-Audit
+
+![Gate 3: The Co-Audit Interface. Structured forcing functions for human oversight.](artifacts/latest/slides/slide-013.png)
 
 The human layer is where confidence debt becomes hardest to recover. Earlier layers can be repaired by better artifacts or stronger evaluations. Human correction capacity is slower to rebuild once the workflow stops exercising it.
 
@@ -153,6 +163,8 @@ The doctrine should read less like a compliance checklist than a locator for bor
 
 
 ## Conclusion
+
+![The Three Gates: An architecture for paying down borrowed trust.](artifacts/latest/slides/slide-016.png)
 
 Confidence debt accrues when output moves faster than evidence. It compounds when each layer of the workflow inherits confidence without inheriting the means to dispute it. The polished summary, the benchmark score, and the human approval can all look reasonable in isolation while together forming a pipeline that borrows trust at every step.
 

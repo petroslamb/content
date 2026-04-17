@@ -29,6 +29,7 @@ That lifecycle does not force one rigid folder shape on every package. The repo 
 | Surface | Role | Start Here |
 | :--- | :--- | :--- |
 | `publications/` | Canonical essay and publication packages | [`publications/README.md`](publications/README.md) |
+| `phased-strategy/` | Phase roadmap, closure gates, and productization strategy | [`phased-strategy/README.md`](phased-strategy/README.md) |
 | `workflows/` | Canonical tracked playbooks | [`workflows/README.md`](workflows/README.md) |
 | `scripts/` | Tracked repo automation | [`scripts/README.md`](scripts/README.md) |
 | `publication_strategy_and_archive/` | Substack archive, mirror, publication map, and editorial atlas | [`publication_strategy_and_archive/README.md`](publication_strategy_and_archive/README.md) |

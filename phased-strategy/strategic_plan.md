@@ -456,7 +456,7 @@ Your wedge is the **"Reviewable Runs" framework** — the idea that an agent sho
 ### Milestones
 
 #### M4.1 — Pricing Architecture
-Three tiers that match your three user archetypes (from `future_publication_strategy.md`):
+Three tiers that match your three user archetypes (from `../publication_strategy_and_archive/future_publication_strategy.md`):
 
 | Tier | Price | Target | What They Get |
 | :--- | :--- | :--- | :--- |
@@ -486,7 +486,7 @@ You own this data. No competitor has 18+ months of real agentic content producti
 #### M4.4 — The Exit or Sustain Decision
 At this point, the business is making revenue and has defensible moat. Three realistic futures:
 
-1. **Sustain as an indie product** (~$500K ARR, owner-operated, low stress — aligns with Option 1/2 from your `future_publication_strategy.md`)
+1. **Sustain as an indie product** (~$500K ARR, owner-operated, low stress — aligns with Option 1/2 from your `../publication_strategy_and_archive/future_publication_strategy.md`)
 2. **Raise a seed round** and go full platform (aligns with Option 3 — requires hiring)
 3. **Acquisition target** by an existing media/publishing tools company (Ghost, Beehiiv, Substack itself) — the platform's infrastructure is directly acqui-hireable
 
