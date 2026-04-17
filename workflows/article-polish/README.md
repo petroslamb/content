@@ -64,7 +64,7 @@ When this workflow is done, the package should have:
 3. review the images, shortlist the ones that actually help the reader, and name them intentionally
 4. insert the images into the essay where they clarify the text rather than decorate it
 5. if the podcast artifact is useful as a teaching surface, upload it back into NotebookLM as a source
-6. wait for the source to finish processing and export the transcript from the source, not from the audio artifact
+6. wait for the source to finish processing and export the transcript from the source with the CLI `-o` flag, not by redirecting terminal preview text
 7. use the transcript to do a “rehumanization” pass when the current essay is correct but dry
 8. finalize references, short orientation blurbs, appendices, and any repo companion links
 
@@ -183,6 +183,8 @@ The safest sequence is:
 3. extract the useful teaching move, not the spoken wording wholesale
 4. rewrite the essay paragraph so it keeps the reviewed claim but improves rhythm, accessibility, or explanation
 5. stop if the prose starts sounding improvised, repetitive, or less defensible
+
+Before using a recovered transcript, verify it is complete. A partial NotebookLM preview often contains a header with a large character count and then a line telling the caller to use `-o` to save full content. That file is not an editorial source; re-export it with `source fulltext -o`.
 
 Good transcript-derived improvements:
 

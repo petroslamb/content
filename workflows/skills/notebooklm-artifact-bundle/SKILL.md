@@ -17,6 +17,7 @@ Use the repo-local NotebookLM workflow in `.venv/bin/notebooklm`. This skill is 
 6. When the user wants a transcript of generated audio, upload the MP3 back as a source, wait until it is ready, then export the indexed full text.
 7. Treat downloaded NotebookLM media as raw artifacts. Do not delete semantically named article images or remove markdown image embeds while generating or refreshing the bundle.
 8. Before committing an artifact refresh, inspect `git diff --name-status` for deleted assets and `git diff -- <draft> | rg '^-!\['` for removed image embeds.
+9. For `source fulltext`, save with `-o <path>` instead of shell redirection. The terminal view can be a preview and may not contain the full transcript.
 
 ## Standard Bundle
 

@@ -140,6 +140,14 @@ Final render:
 
 Render uses the script defaults for slide videos: `libx264`, `-preset medium`, `crf 23`, `1920x1080`, and `192kbps AAC`.
 
+Before promotion, check for failed byproducts in the video artifact folder:
+
+```bash
+find <chapter-or-package>/artifacts/video -type f -size 0
+```
+
+Zero-byte files should be deleted or regenerated before handoff.
+
 ### 6. Optional Shorts Derivation From The Long-Form
 
 When the rendered long-form has strong stand-alone segments, derive Shorts from the verified MP4 plus its timed `.srt`:
@@ -155,6 +163,8 @@ When the rendered long-form has strong stand-alone segments, derive Shorts from 
 ```
 
 This writes both `landscape/` and `portrait/` outputs under `artifacts/video/shorts/`.
+
+After Shorts rendering, run the same zero-byte check on `artifacts/video/shorts/` before treating the clips as upload-ready.
 
 ## Output Naming
 

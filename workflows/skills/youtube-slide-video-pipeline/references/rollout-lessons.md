@@ -14,6 +14,7 @@ These constraints came from the Operating Agents YouTube production rollout.
 - Verify final MP4 duration against the audio. If the container overruns, trim it back to the narration length before promotion.
 - When deriving Shorts from a long-form slide video, use the timed `.srt` to pick segments with one clear payoff. Shorts are not chapter fragments by default; they need a self-contained idea.
 - For slide-video Shorts, slicing the verified long-form master is safer than recreating visuals from scratch because the timing, slides, and narration are already aligned.
+- Zero-byte media byproducts are failure evidence. Do not retain empty audio slices or clips in a reviewed artifact bundle.
 
 ## API Limits And Fallbacks
 

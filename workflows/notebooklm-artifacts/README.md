@@ -79,9 +79,11 @@ Before committing an artifact-generation pass, inspect the diff for accidental e
 ```bash
 git diff --name-status -- publications/<package>/
 git diff -- publications/<package>/<draft>.md | rg '^-!\['
+find publications/<package>/artifacts publications/<package>/archive -type f -size 0 2>/dev/null
+git status --ignored --short publications/<package>/ | rg 'Library/|__pycache__|\.pyc' || true
 ```
 
-If the second command prints removed image embeds, stop and hand off to article polish or ask for review. Do not hide the change inside an artifact commit.
+If the second command prints removed image embeds, stop and hand off to article polish or ask for review. If the size or ignored-cache checks print anything, inspect before committing; zero-byte media and stray cache trees are almost always failed generation traces, not useful artifacts. Do not hide these changes inside an artifact commit.
 
 The binding-gap package is the clearest repo-local example of this rule:
 
@@ -97,7 +99,9 @@ Operationally, the recurring successful path has been:
 
 - `source add --type file --mime-type audio/mpeg`
 - `source wait`
-- `source fulltext`
+- `source fulltext -o <transcript.txt>`
+
+Use the CLI output flag for full transcripts. Redirecting terminal output can capture only the preview text plus a message such as `use -o to save full content`, leaving a file that looks like a transcript but contains only the first page.
 
 ## Related Skill Bundles
 
