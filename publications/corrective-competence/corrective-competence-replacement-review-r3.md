@@ -15,9 +15,9 @@ evidence_anchor_paths: []
 
 ## Findings
 
-- `P1`: The opener at [corrective-competence-candidate-r3.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r3.md:3) is the strongest opening in the package so far. The disappearance of the assistant is more memorable than the `r2` setup.
-- `P1`: The middle at [corrective-competence-candidate-r3.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r3.md:11) through [corrective-competence-candidate-r3.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r3.md:25) remains the best-governed version of the argument. The cross-domain invariant and competence-shadow turn still hold better than in `r1`.
-- `P1`: The ending at [corrective-competence-candidate-r3.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r3.md:27) through [corrective-competence-candidate-r3.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r3.md:31) is more memorable than `r2`, especially the claim that the person in the loop is not a checkpoint but a competence.
+- `P1`: The opener at `corrective-competence-candidate-r3.md:3` is the strongest opening in the package so far. The disappearance of the assistant is more memorable than the `r2` setup.
+- `P1`: The middle at `corrective-competence-candidate-r3.md:11` through `corrective-competence-candidate-r3.md:25` remains the best-governed version of the argument. The cross-domain invariant and competence-shadow turn still hold better than in `r1`.
+- `P1`: The ending at `corrective-competence-candidate-r3.md:27` through `corrective-competence-candidate-r3.md:31` is more memorable than `r2`, especially the claim that the person in the loop is not a checkpoint but a competence.
 - `P1`: The stronger landing also exposes the limit. The more the essay reaches toward high-consequence delegation, the more visible the evidence gap becomes between short experimental assistance, coding-learning studies, expert medical decision studies, and safety-engineering theory.
 - `P2`: The appropriate-reliance literature is still treated mostly as a rival surface, even though it likely contains some of the concrete mechanisms that a fully mature version of this essay would need.
 

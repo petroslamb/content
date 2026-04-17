@@ -19,7 +19,7 @@ Status legend:
 | Harness contract | `harness_contract.yaml` present |
 | Harness policy | `harness_policy.yaml` present |
 | Harness check | `npm run check:harness` passes as of the latest workflow refactor |
-| Repo-link check | `npm run check:repo-links` still reports pre-existing non-workflow link issues |
+| Repo-link check | `npm run check:repo-links` passes |
 | Strategic read | Phase 1 is mostly normalized; Phase 1.5 is built but not proof-run cleared |
 
 ## Phase 1 - The Clean Machine
@@ -53,9 +53,10 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
 
 ### Phase 1 Open Items
 
-1. Classify or eliminate package-specific script exceptions.
+1. Classify or eliminate package-specific script exceptions. `PARTIAL`: classification now lives in `scripts/README.md`; elimination or accepted-exception decisions remain.
    - Known hard exception: `scripts/stitch_binding_gap_slides.py`.
    - Known series-specific exception: `scripts/sync_operating_agents_substack.py`.
+   - Known historical bootstrap exception: `scripts/update_initial_status.py`.
    - Generic wrappers with package examples in help text are acceptable if they take `--package`.
 
 2. Run a publication package orientation audit.
@@ -67,9 +68,9 @@ Phase 1 is mostly closed as internal repo normalization. The repo has moved from
    - Strong retained proof examples belong in `reviewable-runs/examples/proofs/`.
    - The original Phase 1 wording expected automatic proof pairs for every run; current implementation is lighter and should be either accepted or tightened.
 
-4. Resolve or classify repo-link check failures.
-   - `npm run check:repo-links` still reports pre-existing non-workflow issues.
-   - This is not a blocker for the workflow refactor, but it is a blocker for calling the repo fully clean.
+4. Resolve or classify repo-link check failures. `DONE`.
+   - `npm run check:repo-links` now passes.
+   - The stale relative links and absolute local paths were cleaned up during the Phase 1/1.5 closure pass.
 
 ## Phase 1.5 - Harness-Native Autonomy
 
@@ -110,7 +111,7 @@ The repo now has the main Phase 1.5 machinery: a machine-readable contract, poli
    - Polish/publish continuation: article polish to release gate to Substack publishing decision without accidental external mutation.
    - Media/distribution: NotebookLM or YouTube production with explicit auth/sandbox handoff handling.
 
-2. Create a proof-run evaluation template.
+2. Create a proof-run evaluation template. `DONE` as of `reviewable-runs/templates/harness-proof-run-template.md`.
    - Track prompt glue, manual interventions, repo-discovery failures, approval-boundary behavior, command-surface usage, and final outcome.
    - Store routine logs under `reviewable-runs/logs/` and only promote strong examples to `reviewable-runs/examples/proofs/`.
 
@@ -131,15 +132,16 @@ The repo now has the main Phase 1.5 machinery: a machine-readable contract, poli
 1. Close the strict Phase 1 script exception question.
    - Either move/generalize `stitch_binding_gap_slides.py`, or record it as an intentional exception.
    - Decide whether `sync_operating_agents_substack.py` is an accepted series exception or should become a skill-local script.
+   - Decide whether historical migration helpers stay in `scripts/` or move into an archive/maintenance surface.
 
-2. Add a proof-run template under `reviewable-runs/`.
-   - This is the missing layer between "the harness exists" and "Phase 1.5 is proven."
+2. Use the proof-run template under `reviewable-runs/templates/harness-proof-run-template.md`.
+   - This is now the missing measurement step between "the harness exists" and "Phase 1.5 is proven."
 
 3. Run the three Phase 1.5 proof runs.
    - Do not score Phase 1.5 as closed until these are done.
 
-4. Run `npm run check:repo-links` and fix or classify the remaining failures.
-   - This is repo hygiene, not a workflow-design blocker, but it affects the claim that the machine is clean.
+4. Keep `npm run check:repo-links` green as package moves continue.
+   - The current failure set is closed; future package migrations should run the check before commit.
 
 5. After proof runs, decide whether Phase 1.6 starts.
    - If the main failure is prompt glue, generate skill docs and named operator commands.

@@ -108,8 +108,8 @@ ending, some by the middle, some by series scaffolding.
 
 ### For a New Draft
 
-1. Read [`essay_atlas.md`](essay_atlas.md) to identify likely pull essays
-2. Read the relevant rows in [`section_atlas.md`](section_atlas.md)
+1. Read the relevant model-specific `rubric_assessments_*.yaml` file to identify likely pull essays
+2. Use [`atlas_data.json`](atlas_data.json) when you need the generated mirror-facing view of those scores
 3. Use [`draft_pull_sheet_template.md`](draft_pull_sheet_template.md) before or
    during revision
 4. Borrow one or two strengths intentionally rather than imitating a whole essay

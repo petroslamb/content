@@ -15,11 +15,11 @@ evidence_anchor_paths: []
 
 ## Findings
 
-- `P1`: The opening at [corrective-competence-candidate-r1.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r1.md:3) is strong enough to carry a flagship attempt. It starts from one remembered anomaly and reaches the thesis quickly without benchmark detours.
-- `P1`: The middle at [corrective-competence-candidate-r1.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r1.md:11) and [corrective-competence-candidate-r1.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r1.md:15) successfully braids the skill-formation, epistemic-debt, and competence-shadow seams into one argument about degraded oversight.
+- `P1`: The opening at `corrective-competence-candidate-r1.md:3` is strong enough to carry a flagship attempt. It starts from one remembered anomaly and reaches the thesis quickly without benchmark detours.
+- `P1`: The middle at `corrective-competence-candidate-r1.md:11` and `corrective-competence-candidate-r1.md:15` successfully braids the skill-formation, epistemic-debt, and competence-shadow seams into one argument about degraded oversight.
 - `P1`: The main weakness is not prose weakness. It is that the draft telescopes novice learning studies, expert diagnostic studies, and safety-engineering theory into one construct without explicitly defending which mechanisms travel across domains.
-- `P2`: The competence-shadow paper is currently used mostly for vocabulary at [corrective-competence-candidate-r1.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r1.md:15). The draft does not yet exploit the paper's formal payload strongly enough.
-- `P2`: The ending at [corrective-competence-candidate-r1.md](/Users/petros/Projects/content/publications/corrective-competence/corrective-competence-candidate-r1.md:23) is clear and operational, but it resolves the essay more neatly than the domain heterogeneity currently warrants.
+- `P2`: The competence-shadow paper is currently used mostly for vocabulary at `corrective-competence-candidate-r1.md:15`. The draft does not yet exploit the paper's formal payload strongly enough.
+- `P2`: The ending at `corrective-competence-candidate-r1.md:23` is clear and operational, but it resolves the essay more neatly than the domain heterogeneity currently warrants.
 
 ## Prioritized Issues
 
