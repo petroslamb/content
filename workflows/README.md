@@ -8,21 +8,26 @@ The current defaults in this directory were tightened against recurring March-Ap
 
 ## Current Workflow Map
 
-| Workflow | Use When | Related Skill Bundle |
-| :--- | :--- | :--- |
-| [`paper-intake/README.md`](paper-intake/README.md) | promoting already-selected papers into the package evidence surface, converting PDFs to markdown, and maintaining the paper index | [`skills/markitdown-paper-intake/`](skills/markitdown-paper-intake/) |
-| [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | discovering papers, refining a shortlist, and pressure-testing active claims against anchor papers before intake | [`skills/alphaxiv/`](skills/alphaxiv/) |
-| [`evidence-authorization/README.md`](evidence-authorization/README.md) | creating a claim-permission layer between a package source index and a blueprint when evidence-sensitive rewrites risk overclaiming | package-local source index plus blueprint/review artifacts |
-| [`essay-iteration/README.md`](essay-iteration/README.md) | hardening blueprints, running review and rewrite cycles, and maintaining live-draft/archive discipline | package-local docs plus review artifacts |
-| [`post-ceiling-pivot/README.md`](post-ceiling-pivot/README.md) | **experimental**: a flagship essay has clearly capped out and the package needs a research-grounded pivot before opening a new flagship object | package-local stop-gate findings plus [`alphaxiv-research/README.md`](alphaxiv-research/README.md) |
-| [`notebooklm-artifacts/README.md`](notebooklm-artifacts/README.md) | generating audio, slide, and video artifacts and downloading them into package artifacts | [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/), [`skills/pdf-slides-to-substack-images/`](skills/pdf-slides-to-substack-images/) |
-| [`article-polish/README.md`](article-polish/README.md) | naming and placing images, transcript round-trips, rehumanizing the draft, and final reference cleanup before publication | package-local docs plus NotebookLM/PDF helpers |
-| [`substack-publishing/README.md`](substack-publishing/README.md) | preparing and publishing essays to Substack and syncing their public presentation | package-local docs plus Substack helpers |
-| [`substack-archive-sync/README.md`](substack-archive-sync/README.md) | refreshing the tracked public archive, validating the mirror, and using the manual-import fallback | [`skills/substack-archive-sync/`](skills/substack-archive-sync/) |
-| [`youtube-production/README.md`](youtube-production/README.md) | turning slide decks, transcripts, captions, and audio into a verified MP4 before upload | [`skills/youtube-slide-video-pipeline/`](skills/youtube-slide-video-pipeline/) |
-| [`distribution/README.md`](distribution/README.md) | handling post-publication distribution work for the channels that matter to a package | package-local `distribution/` or `socials/` surfaces |
-| [`youtube-channel-ops/README.md`](youtube-channel-ops/README.md) | authenticated YouTube channel work such as OAuth checks, caption recovery, playlist diagnostics, and Shorts maintenance | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/youtube-shorts-maintenance/`](skills/youtube-shorts-maintenance/) |
-| [`youtube-series-operating-agents/README.md`](youtube-series-operating-agents/README.md) | the Operating Agents YouTube series layer: TL;DR uploads, cross-links, playlist order, and replacement uploads | [`skills/youtube-operating-agents/`](skills/youtube-operating-agents/), [`skills/youtube-data-api/`](skills/youtube-data-api/) |
+Read the workflow layer by group first, then by individual doc. The `workflow_group` frontmatter uses this taxonomy.
+
+| Group | Workflow | Use When | Related Skill Bundle |
+| :--- | :--- | :--- | :--- |
+| package | [`package-normalization/README.md`](package-normalization/README.md) | normalizing package shape, manifests, evidence paths, artifact homes, and scaffold expectations | none |
+| portfolio | [`topic-discovery/README.md`](topic-discovery/README.md) | deciding whether a broad idea, archive gap, research seam, or capped-essay successor deserves a package, pivot pass, or no further work | [`skills/alphaxiv/`](skills/alphaxiv/) as the execution layer |
+| evidence | [`paper-intake/README.md`](paper-intake/README.md) | promoting already-selected papers into the package evidence surface, converting PDFs to markdown, and maintaining the paper index | [`skills/markitdown-paper-intake/`](skills/markitdown-paper-intake/) |
+| evidence | [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | discovering papers, refining a shortlist, and pressure-testing active claims against anchor papers before intake | [`skills/alphaxiv/`](skills/alphaxiv/) |
+| evidence | [`evidence-authorization/README.md`](evidence-authorization/README.md) | creating a claim-permission layer between a package source index and a blueprint when evidence-sensitive rewrites risk overclaiming | package-local source index plus blueprint/review artifacts |
+| editorial | [`essay-iteration/README.md`](essay-iteration/README.md) | hardening blueprints, running review and rewrite cycles, and maintaining live-draft/archive discipline | package-local docs plus review artifacts |
+| editorial | [`post-ceiling-pivot/README.md`](post-ceiling-pivot/README.md) | **experimental**: a flagship essay has clearly capped out and the package needs a research-grounded pivot before opening a new flagship object | package-local stop-gate findings plus [`alphaxiv-research/README.md`](alphaxiv-research/README.md) |
+| artifacts | [`notebooklm-artifacts/README.md`](notebooklm-artifacts/README.md) | generating audio, slide, and video artifacts and downloading them into package artifacts | [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/), [`skills/pdf-slides-to-substack-images/`](skills/pdf-slides-to-substack-images/) |
+| artifacts | [`youtube-production/README.md`](youtube-production/README.md) | turning slide decks, transcripts, captions, and audio into a verified MP4 before upload | [`skills/youtube-slide-video-pipeline/`](skills/youtube-slide-video-pipeline/) |
+| release | [`article-polish/README.md`](article-polish/README.md) | naming and placing images, transcript round-trips, rehumanizing the draft, and final reference cleanup before the release gate | package-local docs plus NotebookLM/PDF helpers |
+| release | [`release-gate/README.md`](release-gate/README.md) | checking draft integrity, evidence, references, media paths, Substack targets, and approval boundaries before external mutation | package-local release checklist |
+| release | [`substack-publishing/README.md`](substack-publishing/README.md) | preparing and publishing essays to Substack and syncing their public presentation after release approval | package-local docs plus Substack helpers |
+| release | [`substack-archive-sync/README.md`](substack-archive-sync/README.md) | refreshing the tracked public archive, validating the mirror, and using the manual-import fallback | [`skills/substack-archive-sync/`](skills/substack-archive-sync/) |
+| distribution | [`distribution/README.md`](distribution/README.md) | handling post-publication distribution work for the channels that matter to a package | package-local `distribution/` or `socials/` surfaces |
+| operations | [`youtube-channel-ops/README.md`](youtube-channel-ops/README.md) | authenticated YouTube channel work such as OAuth checks, caption recovery, playlist diagnostics, and Shorts maintenance | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/youtube-shorts-maintenance/`](skills/youtube-shorts-maintenance/) |
+| operations | [`youtube-series-operating-agents/README.md`](youtube-series-operating-agents/README.md) | the Operating Agents YouTube series layer: TL;DR uploads, cross-links, playlist order, and replacement uploads | [`skills/youtube-operating-agents/`](skills/youtube-operating-agents/), [`skills/youtube-data-api/`](skills/youtube-data-api/) |
 
 ## Working Hierarchy
 
@@ -64,15 +69,18 @@ Auth-heavy and filesystem-sensitive steps should fail closed. This includes Note
 
 ## Canonical Article Lifecycle
 
-The lifecycle stage ids remain unchanged for runner compatibility. The working taxonomy for article development is:
+The lifecycle stage ids remain unchanged for runner compatibility. Before a package exists, or before a capped package earns a successor object, use [`topic-discovery/README.md`](topic-discovery/README.md) as the optional front door.
 
-1. **discovery**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) to find and inspect candidate papers before they are admitted into a package
-2. **validation**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) in narrow claim-testing mode against the active anchor papers and package evidence surface
-3. **blueprint hardening**: use [`essay-iteration/README.md`](essay-iteration/README.md) as the governing process surface, with targeted help from [`alphaxiv-research/README.md`](alphaxiv-research/README.md), [`paper-intake/README.md`](paper-intake/README.md), and [`evidence-authorization/README.md`](evidence-authorization/README.md) when evidence needs to be tightened. After a blocking high-bar review, this is the mandatory next step and must either set an outstanding-governing rewrite direction or record an explicit impossibility finding
-4. **external blueprint review**: optionally use [`essay-iteration/README.md`](essay-iteration/README.md) for an advisory outside review of the hardened blueprint before the prewrite gate. The writer adjudicates the findings and integrates only what materially improves the governing surface
-5. **essay prewrite gate**: use [`essay-iteration/README.md`](essay-iteration/README.md) to decide whether an outstanding essay is actually writable before prose drafting begins. This step must either produce an essay-governing prewrite surface or an explicit blocker
-6. **draft iteration**: use [`essay-iteration/README.md`](essay-iteration/README.md) to seed the package-local essay packet, produce bounded rewrite candidates beside the live draft, and compare before promotion
-7. **production and publishing**: use NotebookLM, polish, publishing, archive-sync, distribution, and video workflows once the live draft is ready for outward-facing work
+The working taxonomy for article development is:
+
+1. **topic discovery**: use [`topic-discovery/README.md`](topic-discovery/README.md) when the repo is still deciding what essay object should exist, which research seam matters, or whether a capped donor package has a real successor
+2. **research discovery**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) to find and inspect candidate papers before they are admitted into a package
+3. **validation**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) in narrow claim-testing mode against the active anchor papers and package evidence surface
+4. **blueprint hardening**: use [`essay-iteration/README.md`](essay-iteration/README.md) as the governing process surface, with targeted help from [`alphaxiv-research/README.md`](alphaxiv-research/README.md), [`paper-intake/README.md`](paper-intake/README.md), and [`evidence-authorization/README.md`](evidence-authorization/README.md) when evidence needs to be tightened. After a blocking high-bar review, this is the mandatory next step and must either set an outstanding-governing rewrite direction or record an explicit impossibility finding
+5. **external blueprint review**: optionally use [`essay-iteration/README.md`](essay-iteration/README.md) for an advisory outside review of the hardened blueprint before the prewrite gate. The writer adjudicates the findings and integrates only what materially improves the governing surface
+6. **essay prewrite gate**: use [`essay-iteration/README.md`](essay-iteration/README.md) to decide whether an outstanding essay is actually writable before prose drafting begins. This step must either produce an essay-governing prewrite surface or an explicit blocker
+7. **draft iteration**: use [`essay-iteration/README.md`](essay-iteration/README.md) to seed the package-local essay packet, produce bounded rewrite candidates beside the live draft, and compare before promotion
+8. **production and release**: use NotebookLM, polish, release-gate, publishing, archive-sync, distribution, and video workflows once the live draft is ready for outward-facing work
 
 Optional post-publication follow-through can continue with:
 
@@ -93,10 +101,11 @@ The runner still uses the stage sequence:
 
 For real end-to-end work, treat those flat stage ids as a compatibility layer over a more useful hierarchy:
 
-1. **Evidence shaping**: `paper_intake`, `research`, evidence authorization when a claim-permission layer is needed
-2. **Draft governance and rewrite**: `essay_iteration`
-3. **Package media production**: `notebooklm_artifacts`, `article_polish`, `youtube_production`
-4. **Publication and outward release**: `substack_publishing`, `archive_sync`, `distribution`
+1. **Portfolio and topic selection**: topic discovery before package init, or post-ceiling pivot when a capped package needs a successor object
+2. **Evidence shaping**: `paper_intake`, `research`, evidence authorization when a claim-permission layer is needed
+3. **Draft governance and rewrite**: `essay_iteration`
+4. **Package media production**: `notebooklm_artifacts`, `article_polish`, `youtube_production`
+5. **Publication and outward release**: release gate, `substack_publishing`, `archive_sync`, `distribution`
 
 Two adjacent operational surfaces often appear during a real rollout but are not default `status.yaml` stages:
 
@@ -130,10 +139,13 @@ Use these surfaces differently:
 
 | Surface | Use It For | Do Not Use It For |
 | :--- | :--- | :--- |
+| [`topic-discovery/README.md`](topic-discovery/README.md) | deciding whether a broad idea, research seam, archive gap, or capped-essay successor should become a package, pivot pass, or parked idea | storing papers, replacing package-local research, or drafting before the handoff decision is explicit |
+| [`package-normalization/README.md`](package-normalization/README.md) | checking or repairing package shape, status manifests, canonical draft pointers, evidence paths, artifact homes, and archive expectations | rewriting an essay or deciding whether an argument is publication-worthy |
 | [`paper-intake/README.md`](paper-intake/README.md) | local evidence storage, PDF download destination, markdown conversion, and `papers/index.md` maintenance once a paper is clearly in scope | broad discovery, loose literature browsing, or framing debates before the paper is selected |
 | [`alphaxiv-research/README.md`](alphaxiv-research/README.md) | broad discovery, shortlist refinement, and narrow claim pressure-testing against exact anchor papers | acting as the package’s long-term evidence store or replacing the package blueprint |
 | [`evidence-authorization/README.md`](evidence-authorization/README.md) | mapping sources to the claims they are allowed to license, naming synthesis boundaries, forbidden claims, and source burdens | storing papers, discovering new papers, or replacing the blueprint |
 | [`essay-iteration/README.md`](essay-iteration/README.md) | rewrite-governing blueprints, bounded draft cycles, brutal review artifacts, cold replacement reviews, and the compare-before-promotion loop | paper retrieval or package evidence storage |
+| [`release-gate/README.md`](release-gate/README.md) | final publish-readiness checks for draft target, references, media paths, Substack targets, approval boundaries, and archive follow-through | improving prose, discovering sources, or bypassing required external-mutation approval |
 
 Blueprint hardening is therefore a named cross-cutting mode rather than a separate top-level workflow. It spans essay iteration, targeted alphaXiv validation, and selective paper intake when the claim set actually changes.
 

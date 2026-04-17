@@ -1,5 +1,6 @@
 ---
 workflow_id: research
+workflow_group: evidence
 runner_mode: guided
 default_skill: alphaxiv
 launch_templates: []
@@ -19,10 +20,13 @@ approval_gate: none
 
 This is the canonical tracked workflow for paper discovery and source discussion using `alphaxiv-py`.
 
+If the task is deciding whether a broad idea, archive gap, or research seam should become an essay package, start with [`../topic-discovery/README.md`](../topic-discovery/README.md). This workflow remains the alphaXiv execution layer: retrieval, inspection, shortlist refinement, and assistant-backed comparison after retrieval.
+
 ## Purpose
 
 Use alphaXiv to:
 
+- execute topic-discovery searches after the editorial decision question is stated
 - discover papers
 - inspect one paper in detail
 - build a shortlist
@@ -135,6 +139,8 @@ This is the default way to test whether a top-level synthesis should survive. Do
 
 alphaXiv is the preferred discovery and paper-discussion layer when you are still deciding what belongs in a package’s `papers/` directory.
 
+When the package does not exist yet, use the topic-discovery workflow first to decide whether the result should be `package_init_ready`, `research_delta_needed`, `post_ceiling_pivot`, `parked`, or `blocked`.
+
 Once a paper is selected:
 
 1. save the PDF into the package
@@ -144,5 +150,6 @@ Once a paper is selected:
 ## Related Docs And Skill Bundle
 
 - [`../paper-intake/README.md`](../paper-intake/README.md)
+- [`../topic-discovery/README.md`](../topic-discovery/README.md)
 - [`../essay-iteration/README.md`](../essay-iteration/README.md)
 - [`../skills/alphaxiv/`](../skills/alphaxiv/)

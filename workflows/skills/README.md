@@ -9,7 +9,7 @@ The live discovery path remains `.agents/skills/`, but that tree is now a symlin
 ### Intake / discovery
 
 - [`markitdown-paper-intake/`](markitdown-paper-intake/) for package paper intake, PDF-to-markdown conversion, and paper-index maintenance
-- [`alphaxiv/`](alphaxiv/) for broad paper discovery, exact-paper inspection, and shortlist refinement before a paper enters the package evidence surface
+- [`alphaxiv/`](alphaxiv/) for topic-discovery execution, broad paper discovery, exact-paper inspection, and shortlist refinement before a paper enters the package evidence surface
 
 ### Validation / hardening
 
@@ -31,8 +31,10 @@ The live discovery path remains `.agents/skills/`, but that tree is now a symlin
 Use the workflow docs under [`../`](../) as the canonical process layer:
 
 - paper intake and local evidence storage -> [`../paper-intake/README.md`](../paper-intake/README.md)
+- pre-package topic discovery and essay-object selection -> [`../topic-discovery/README.md`](../topic-discovery/README.md)
 - alphaXiv discovery and claim pressure-testing -> [`../alphaxiv-research/README.md`](../alphaxiv-research/README.md)
 - blueprint hardening and bounded rewrite cycles -> [`../essay-iteration/README.md`](../essay-iteration/README.md)
+- release readiness before external mutation -> [`../release-gate/README.md`](../release-gate/README.md)
 - archive and mirror work -> [`../substack-archive-sync/README.md`](../substack-archive-sync/README.md)
 - local slide/audio/transcript render work -> [`../youtube-production/README.md`](../youtube-production/README.md)
 - general authenticated YouTube channel work -> [`../youtube-channel-ops/README.md`](../youtube-channel-ops/README.md)

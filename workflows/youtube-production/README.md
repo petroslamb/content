@@ -1,5 +1,6 @@
 ---
 workflow_id: youtube_production
+workflow_group: artifacts
 runner_mode: guided
 default_skill: youtube-slide-video-pipeline
 launch_templates: []

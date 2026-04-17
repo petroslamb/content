@@ -1,5 +1,6 @@
 ---
 workflow_id: essay_iteration
+workflow_group: editorial
 runner_mode: hybrid
 launch_mode: scaffold_only
 default_skill: null

@@ -1,3 +1,11 @@
+---
+workflow_id: youtube_series_operating_agents
+workflow_group: operations
+runner_mode: guided
+default_skill: youtube-operating-agents
+approval_gate: required_before_channel_mutation
+---
+
 # YouTube Series: Operating Agents
 
 This is the tracked canonical workflow for the Operating Agents YouTube series: TL;DR uploads, description cross-links, playlist order, and full-course replacement uploads tied to the local metadata file.

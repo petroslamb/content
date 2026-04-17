@@ -1,3 +1,11 @@
+---
+workflow_id: package_normalization
+workflow_group: package
+runner_mode: guided
+default_skill: null
+approval_gate: none
+---
+
 # Package Normalization: The Scaffold Workflow
 
 To maintain a high-fidelity "Content Factory" where research, prose, and multimedia can be iteratively refined, every publication package should adhere to a canonical structural "Scaffold".

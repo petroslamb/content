@@ -1,5 +1,6 @@
 ---
 workflow_id: post_ceiling_pivot
+workflow_group: editorial
 runner_mode: guided
 default_skill: alphaxiv
 launch_templates: []

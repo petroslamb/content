@@ -1,3 +1,11 @@
+---
+workflow_id: youtube_channel_ops
+workflow_group: operations
+runner_mode: guided
+default_skill: youtube-data-api
+approval_gate: required_before_channel_mutation
+---
+
 # YouTube Channel Ops
 
 This is the tracked canonical workflow for authenticated YouTube channel operations in this repo: OAuth verification, managed caption recovery, playlist diagnostics, and Shorts maintenance.

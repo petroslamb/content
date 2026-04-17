@@ -8,13 +8,15 @@ The root is meant to stay navigable. Root docs orient you. Package `README.md` f
 
 The repo is organized around one main lifecycle:
 
+0. discover and clear potential essay topics before package initialization when the topic is not yet settled
 1. intake papers and convert them into usable markdown
 2. research and shortlist sources
 3. draft and iterate essays with review artifacts
 4. generate NotebookLM artifacts
 5. polish the article with images, transcript insights, and references
-6. publish to Substack
-7. sync the public archive and mirror
+6. run the release gate before external publication or sync
+7. publish to Substack
+8. sync the public archive and mirror
 
 That lifecycle does not force one rigid folder shape on every package. The repo uses three package classes:
 
@@ -57,6 +59,8 @@ Stable entrypoints:
 - `npm run check:harness`
 
 These surfaces do not replace the workflow docs. They make the existing lifecycle legible to an external harness without relying on a long custom prompt.
+
+When the essay object itself is still undecided, use [`workflows/topic-discovery/README.md`](workflows/topic-discovery/README.md) before `package:init`. Topic discovery is a pre-package decision layer, not a `status.yaml` lifecycle stage yet.
 
 ## Canonical Vocabulary
 
@@ -130,11 +134,14 @@ Published posts may map to umbrella packages or nested subpackages rather than o
 
 Tracked workflow docs live in [`workflows/`](workflows/README.md). The current article-development canon is:
 
+- [`workflows/topic-discovery/README.md`](workflows/topic-discovery/README.md)
+- [`workflows/package-normalization/README.md`](workflows/package-normalization/README.md)
 - [`workflows/paper-intake/README.md`](workflows/paper-intake/README.md)
 - [`workflows/alphaxiv-research/README.md`](workflows/alphaxiv-research/README.md)
 - [`workflows/essay-iteration/README.md`](workflows/essay-iteration/README.md)
 - [`workflows/notebooklm-artifacts/README.md`](workflows/notebooklm-artifacts/README.md)
 - [`workflows/article-polish/README.md`](workflows/article-polish/README.md)
+- [`workflows/release-gate/README.md`](workflows/release-gate/README.md)
 - [`workflows/substack-publishing/README.md`](workflows/substack-publishing/README.md)
 - [`workflows/substack-archive-sync/README.md`](workflows/substack-archive-sync/README.md)
 
