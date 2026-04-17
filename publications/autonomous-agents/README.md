@@ -37,6 +37,7 @@ If you are reading the public course essays:
 - [`core/`](core/) is the architecture and method layer.
 - [`reference/`](reference/) is the literature and source-audit layer.
 - [`implementation/use-cases/`](implementation/use-cases/) is the reference-architecture layer.
+- [`scripts/`](scripts/) is the umbrella-local automation layer for series-specific operations such as Operating Agents Substack sync.
 - [`notes/`](notes/) is exploratory material that should not define the default reading path.
 
 ## Papers, Artifacts, And Archive

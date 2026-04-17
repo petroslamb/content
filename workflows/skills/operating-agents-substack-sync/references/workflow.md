@@ -10,7 +10,7 @@ Use this file for the repo-specific Substack publishing path for the Operating A
 
 ## Source Set
 
-`scripts/sync_operating_agents_substack.py` republishes the markdown listed in its `POST_SPECS` table:
+`publications/autonomous-agents/scripts/sync_operating_agents_substack.py` republishes the markdown listed in its `POST_SPECS` table:
 
 - `operating-agents-preface-a-field`
 - `operating-agents-i-when-language`
@@ -25,7 +25,7 @@ Use this file for the repo-specific Substack publishing path for the Operating A
 Run the live sync:
 
 ```bash
-PYTHONUNBUFFERED=1 .venv/bin/python scripts/sync_operating_agents_substack.py
+PYTHONUNBUFFERED=1 .venv/bin/python publications/autonomous-agents/scripts/sync_operating_agents_substack.py
 ```
 
 Then refresh the tracked public archive so repo snapshots match the live posts:
