@@ -1,0 +1,142 @@
+{
+  "audio": "publications/confidence-debt/artifacts/latest/audio.mp3",
+  "slides_dir": ".",
+  "segments": [
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-001.png",
+      "start": "00:00:00.000"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-001.png",
+      "start": "00:00:41.680"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-002.png",
+      "start": "00:01:23.360"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-002.png",
+      "start": "00:04:14.180"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-003.png",
+      "start": "00:07:05.000"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-003.png",
+      "start": "00:11:08.940"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-004.png",
+      "start": "00:15:12.880"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-004.png",
+      "start": "00:15:23.940"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-005.png",
+      "start": "00:15:35.000"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-005.png",
+      "start": "00:19:01.420"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-006.png",
+      "start": "00:22:27.840"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-006.png",
+      "start": "00:24:39.360"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-008.png",
+      "start": "00:26:50.880"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-008.png",
+      "start": "00:29:42.399"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-009.png",
+      "start": "00:32:33.919"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-009.png",
+      "start": "00:38:11.959"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-011.png",
+      "start": "00:43:50.000"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-011.png",
+      "start": "00:44:15.640"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-012.png",
+      "start": "00:44:41.280"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-012.png",
+      "start": "00:45:23.400"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-007.png",
+      "start": "00:46:05.520"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-007.png",
+      "start": "00:46:22.520"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-010.png",
+      "start": "00:46:39.520"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-010.png",
+      "start": "00:47:24.640"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-014.png",
+      "start": "00:48:09.760"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-014.png",
+      "start": "00:49:58.960"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-016.png",
+      "start": "00:51:48.160"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-016.png",
+      "start": "00:51:59.080"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-013.png",
+      "start": "00:52:10.000"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-013.png",
+      "start": "00:52:52.320"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-015.png",
+      "start": "00:53:34.640"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-015.png",
+      "start": "00:53:57.840"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/latest/slides/slide-017.png",
+      "start": "00:54:21.040"
+    },
+    {
+      "image": "publications/confidence-debt/artifacts/previous/slides/slide-017.png",
+      "start": "00:54:26.340"
+    }
+  ]
+}
