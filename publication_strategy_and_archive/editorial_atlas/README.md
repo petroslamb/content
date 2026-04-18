@@ -11,7 +11,9 @@ resist.
 
 ## Corpus
 
-- Scope: the 20 published markdown essays in `substack_archive/`
+- Scope: the published markdown essays in `substack_archive/`; the canonical
+  GPT-5.4 xhigh pass currently scores 22 essays, while older model passes may
+  explicitly exclude newly published essays until rescored
 - Status: first-pass qualitative scoring, manually judged from the published
   surfaces
 - Excluded for now: live drafts outside the archive, including promoted rewrites
