@@ -16,7 +16,9 @@ three practical tasks:
 The source corpus is the published markdown layer under
 [`../publication_strategy_and_archive/substack_archive/`](../publication_strategy_and_archive/substack_archive/).
 
-The current pass covers all 20 archive essays.
+The canonical GPT-5.4 xhigh pass currently covers all 22 archive essays. Older
+model-specific passes can explicitly exclude newly published essays until they
+receive their own scoring pass.
 
 ## Method
 

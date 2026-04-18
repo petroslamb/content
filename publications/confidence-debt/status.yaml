@@ -31,11 +31,11 @@ stages:
     done: false
     last_updated: null
   substack_publishing:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-17'
   archive_sync:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-18'
   youtube_production:
     done: false
     last_updated: null

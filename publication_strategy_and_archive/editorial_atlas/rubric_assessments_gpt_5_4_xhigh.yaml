@@ -1078,6 +1078,58 @@ essays:
     opening_anchor: null
     middle_anchor: null
     ending_anchor: null
+- title: Confidence Debt
+  rubric_status: audited
+  short_label: Confidence Debt
+  words: 4236
+  identity: flagship governance synthesis / operating doctrine
+  signature: first-party anomaly opener + three-gate trust-transfer doctrine
+  overpull_risk: can overextend from convergent evidence into an unproven end-to-end deployment claim
+  confidence: high
+  moves:
+  - failure_or_anomaly_cold_open
+  - coined_frame_with_borders
+  - practical_heuristic_section
+  - doctrine_ending
+  direct_scores:
+    debate: 8
+    precision: 9
+    synthesis: 9
+    utility: 9
+  traction_subscores:
+    hook_strength: 9
+    thesis_compression: 9
+    frame_portability: 9
+    audience_breadth: 8
+    debate_energy: 8
+    public_packaging: 9
+  traction_override:
+    delta: 0
+    reason: null
+  craft_subscores:
+    sentence_rhythm: 9
+    paragraph_control: 8
+    structural_pacing: 9
+    evidence_integration: 9
+    ending_strength: 9
+  craft_override:
+    delta: 0
+    reason: null
+  publication_power_override:
+    delta: 0
+    reason: null
+  section_scores:
+    opening: 9
+    thesis_lock: 9
+    development: 9
+    borders: 9
+    ending: 9
+    reference_handling: 9
+  rationale:
+    whole_essay_note: Confidence Debt is a flagship synthesis object that turns AI trust failures into a portable workflow-level frame. Its main strength is connecting artifact compression, evaluation over-reading, and human correction capacity into one operating doctrine without pretending the full cascade has been proven by a single field study. The score is high because the essay is both conceptually portable and operationally usable; its remaining ceiling is the acknowledged end-to-end proof gap.
+    opening_anchor: 'Lines 12-24: the eip-verify opener makes the asymmetry concrete by contrasting the polished report with row-level evidence, then names the governance repair without leaning on abstraction.'
+    middle_anchor: 'Lines 42-128: the three-gate architecture moves from claim auditability to reliability release to co-audit, then the cascade section states exactly how confidence transfers across layers.'
+    ending_anchor: 'Lines 148-176: the doctrine section compresses the repair into claim, score, and answer contracts, and the conclusion lands the borrowed-trust thesis without inflating it into generic skepticism.'
 drafts:
 - id: architecture-and-agent-memory
   title: Architecture and Agent Memory

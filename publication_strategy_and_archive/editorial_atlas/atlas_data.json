@@ -2801,6 +2801,37 @@
           "thesis_lock": 9,
           "borders": 10,
           "reference_handling": 9
+        },
+        {
+          "file": "2026-04-17_confidence-debt.md",
+          "title": "Confidence Debt",
+          "date": "2026-04-17",
+          "words": 4236,
+          "traction": 9,
+          "craft": 9,
+          "publication_power": 9,
+          "opening": 9,
+          "development": 9,
+          "ending": 9,
+          "evidence": 9,
+          "identity": "flagship governance synthesis / operating doctrine",
+          "signature": "first-party anomaly opener + three-gate trust-transfer doctrine",
+          "overpull_risk": "can overextend from convergent evidence into an unproven end-to-end deployment claim",
+          "confidence": "high",
+          "debate": 8,
+          "precision": 9,
+          "synthesis": 9,
+          "utility": 9,
+          "moves": [
+            "failure_or_anomaly_cold_open",
+            "coined_frame_with_borders",
+            "practical_heuristic_section",
+            "doctrine_ending"
+          ],
+          "short_label": "Confidence Debt",
+          "thesis_lock": 9,
+          "borders": 9,
+          "reference_handling": 9
         }
       ],
       "drafts": [
@@ -2871,6 +2902,10 @@
           "identity": "flagship contrarian thesis essay"
         },
         {
+          "title": "Confidence Debt",
+          "identity": "flagship governance synthesis / operating doctrine"
+        },
+        {
           "title": "The Autonomy Tax",
           "identity": "public framework / operator essay"
         },
@@ -2885,14 +2920,10 @@
         {
           "title": "The Moltbook Phenomenon",
           "identity": "topical narrative intervention"
-        },
-        {
-          "title": "The Illusion of the Swarm",
-          "identity": "balanced synthesis / builder essay"
         }
       ],
       "stats": {
-        "totalEssays": 21,
+        "totalEssays": 22,
         "topPower": 10,
         "topTraction": 9,
         "topCraft": 9

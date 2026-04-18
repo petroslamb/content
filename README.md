@@ -103,6 +103,7 @@ The published archive is tracked centrally in `publication_strategy_and_archive/
 <!-- GENERATED_PUBLICATION_MAP:START -->
 | Substack Publication | Repository Folder |
 | :--- | :--- |
+| **Confidence Debt** | `publications/confidence-debt/` |
 | **The Binding Gap** | `publications/binding-gap/` |
 | **The Illusion of the Swarm** | `publications/illusion-of-swarm/` |
 | **The Moltbook Phenomenon** | `publications/moltbook-phenomenon/` |

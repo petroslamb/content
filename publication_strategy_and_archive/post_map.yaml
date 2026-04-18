@@ -1,4 +1,14 @@
 posts:
+  confidence-debt:
+    title: Confidence Debt
+    research_folder: publications/confidence-debt
+    summary: A flagship synthesis on how AI workflows borrow trust when polished artifacts, evaluation scores, and human approvals move faster than their evidence.
+    tags:
+      - governance
+      - evaluation
+      - trust
+    featured: true
+    status: published
   the-binding-gap:
     title: The Binding Gap
     research_folder: publications/binding-gap

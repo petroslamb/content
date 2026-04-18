@@ -10,6 +10,8 @@ corpus:
   exclusions:
   - title: Welcome
     reason: Permanent exclusion. Housekeeping launch note rather than an essay object for atlas scoring.
+  - title: Confidence Debt
+    reason: Pending model-specific scoring pass; do not reuse GPT-5.4 xhigh marks for this model.
 essays:
 - title: 'Neural Architecture Design as a Reusable Scaffold: A History Review'
   rubric_status: audited
