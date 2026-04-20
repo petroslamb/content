@@ -117,7 +117,7 @@ The published archive is tracked centrally in `publication_strategy_and_archive/
 | **The Hardware Friction Map** | `publications/hardware-friction/` |
 | **What Actually Works: The Hardware Compatibility Filter in Neural Architecture (2023–2025)** | `publications/hardware-friction/` |
 | **Autonomous AI Agents: Core Foundations and Recent Breakthroughs** | `publications/autonomous-agents/` |
-| **Neural Architecture Design as a Compositional Language** | `publications/neural-architectures/` |
+| **Neural Architecture Design as a Compositional Language** | `publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/` |
 | **Operating Agents: Preface** | `publications/autonomous-agents/essays/launch-note/` |
 | **Operating Agents I: Action Systems and Tool Use** | `publications/autonomous-agents/essays/action/` |
 | **Operating Agents II: Memory Systems and Authority** | `publications/autonomous-agents/essays/memory/` |
@@ -125,8 +125,8 @@ The published archive is tracked centrally in `publication_strategy_and_archive/
 | **Operating Agents IV: Multi-Agent Boundaries and Handoffs** | `publications/autonomous-agents/essays/multi-agent/` |
 | **Operating Agents V: Trust Boundaries and Agent Safety** | `publications/autonomous-agents/essays/safety/` |
 | **Operating Agents Bonus: Workflow Optimization and Evaluation** | `publications/autonomous-agents/essays/optimization/` |
-| **Measuring Trust: The Gap Between AI Auditing and Correctness** | `publications/evidence-governance/measuring-trust-the-gap-between-ai/` |
-| **The Five-Component Pattern for AI Evidence Governance** | `publications/evidence-governance/the-five-component-pattern-for-ai/` |
+| **Measuring Trust: The Gap Between AI Auditing and Correctness** | `publications/evidence-governance/archive/measuring-trust-the-gap-between-ai/` |
+| **The Five-Component Pattern for AI Evidence Governance** | `publications/evidence-governance/archive/the-five-component-pattern-for-ai/` |
 | **Your AI Is Confidently Wrong — And You Have No Rule for What to Do About It** | `publications/evidence-governance/your-ai-is-confidently-wrong-and/` |
 | **Welcome** | *(N/A / Root)* |
 <!-- GENERATED_PUBLICATION_MAP:END -->

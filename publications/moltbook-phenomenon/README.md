@@ -21,6 +21,7 @@ Single-publication package behind the published Rooted Layers essay *The Moltboo
 - Converted paper markdown belongs in [`papers/markdown/`](papers/markdown/).
 - The package paper index lives in [`papers/index.md`](papers/index.md).
 - Media artifacts live in [`artifacts/`](artifacts/) and the slide-image surface in [`slides/`](slides/).
+- NotebookLM notebook mapping lives in [`status.yaml`](status.yaml) and is indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 - Retired or superseded essay variants belong in [`archive/`](archive/).
 - Channel-specific distribution material lives in [`distribution/`](distribution/).
 

@@ -153,7 +153,7 @@ posts:
     status: published
   neural-architecture-design-as-a-compositional-32e:
     title: Neural Architecture Design as a Compositional Language
-    research_folder: publications/neural-architectures
+    research_folder: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e
     summary: The inaugural Rooted Layers essay on architecture design as a compositional system rather than a loose collection of model families.
     tags:
       - neural-architectures
@@ -254,7 +254,7 @@ posts:
     series_order: 6
   measuring-trust-the-gap-between-ai:
     title: "Measuring Trust: The Gap Between AI Auditing and Correctness"
-    research_folder: publications/evidence-governance/measuring-trust-the-gap-between-ai
+    research_folder: publications/evidence-governance/archive/measuring-trust-the-gap-between-ai
     summary: The earlier evidence-governance essay on the gap between inspectability and actual correctness in AI auditing workflows.
     tags:
       - governance
@@ -267,7 +267,7 @@ posts:
     series_order: 1
   the-five-component-pattern-for-ai:
     title: The Five-Component Pattern for AI Evidence Governance
-    research_folder: publications/evidence-governance/the-five-component-pattern-for-ai
+    research_folder: publications/evidence-governance/archive/the-five-component-pattern-for-ai
     summary: The companion essay formalizing the five-component evidence-governance pattern for high-stakes LLM workflows.
     tags:
       - governance
@@ -300,3 +300,6 @@ posts:
       - publication
     featured: false
     status: published
+    notebooklm:
+      no_notebook_found: true
+      reason: Welcome post does not have an essay-specific NotebookLM notebook.

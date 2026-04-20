@@ -24,6 +24,7 @@ Single-publication package for the active binding-gap essay and the earlier stru
 - Converted paper markdown lives in [`papers/markdown/`](papers/markdown/).
 - The package paper index lives in [`papers/index.md`](papers/index.md).
 - NotebookLM and publishing artifacts live in [`artifacts/audio/`](artifacts/audio/), [`artifacts/slides/`](artifacts/slides/), and [`artifacts/video/`](artifacts/video/).
+- The source NotebookLM notebook is tracked in [`status.yaml`](status.yaml) and indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 - Historical drafts, earlier conceptual frames, and retired support files live in [`archive/`](archive/).
 
 ## Working Guidance

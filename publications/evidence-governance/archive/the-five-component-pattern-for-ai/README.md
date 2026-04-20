@@ -13,6 +13,7 @@ Single-publication leaf under [`../README.md`](../README.md) for the companion l
 
 - Live draft: [`the-five-component-pattern-for-ai.md`](the-five-component-pattern-for-ai.md)
 - Shared research surface: [`../../evidence_governance_pattern/README.md`](../../evidence_governance_pattern/README.md)
+- NotebookLM notebook mapping: [`status.yaml`](status.yaml), indexed in [`../../../notebooklm-notebooks.md`](../../../notebooklm-notebooks.md)
 - Umbrella context: [`../README.md`](../README.md)
 
 ## Working Guidance

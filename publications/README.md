@@ -9,6 +9,7 @@ Most content work should start here. The package `README.md` files under this di
 - paper intake and source layers
 - artifacts and archive history
 - publication mapping back to Substack
+- NotebookLM notebook mapping through [`notebooklm-notebooks.md`](notebooklm-notebooks.md)
 
 ## Package Classes
 
@@ -20,6 +21,8 @@ Two content-package classes live here:
 Workflow/framework packages stay at the repository root and are documented elsewhere.
 
 ## Current Package Map
+
+NotebookLM notebook links for the publication corpus are indexed in [`notebooklm-notebooks.md`](notebooklm-notebooks.md). The durable machine-readable fields live in the relevant package or leaf `status.yaml` files.
 
 | Folder | Archetype | Status | Notes |
 | :--- | :--- | :--- | :--- |
@@ -51,6 +54,7 @@ When a package is single-publication, the default target shape is:
 - `artifacts/`
 - `archive/`
 - optional `distribution/`, `socials/`, or local `scripts/`
+- NotebookLM fields in `status.yaml` when the essay has an associated notebook
 
 Packages do not need to become identical. Stronger local variants such as `sources/`, `visuals/`, or topic-specific evidence trees can stay when they are more meaningful than the generic layout. The package README must map those variants back to the canonical vocabulary.
 
@@ -62,6 +66,7 @@ When a package is an umbrella, it should expose:
 - one clear subpackage map
 - the live publication surfaces or nested subpackage READMEs
 - the shared source or paper layer where relevant
+- `config.notebooklm_posts` in `status.yaml` when multiple posts share one umbrella folder
 
 Umbrella packages should not pretend to be single-publication packages when their real structure is course-, series-, or dataset-shaped.
 

@@ -47,6 +47,7 @@ Those should only be marked done when the external work actually happens.
 - `status.yaml`: leaf lifecycle manifest for the runner
 - `artifacts/`: local assets tied specifically to this slug package
 - `archive/`: prior snapshots or staged rewrite history for this leaf package
+- NotebookLM notebook mapping: [`status.yaml`](status.yaml), indexed in [`../../notebooklm-notebooks.md`](../../notebooklm-notebooks.md)
 - Canonical local video artifact: [`artifacts/video/neural-architecture-design-as-a-compositional-32e_slides_video_final.mp4`](artifacts/video/neural-architecture-design-as-a-compositional-32e_slides_video_final.mp4)
 
 ## Boundary Map

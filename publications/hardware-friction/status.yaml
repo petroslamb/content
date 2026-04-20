@@ -32,3 +32,22 @@ config:
   evidence_path: publications/hardware-friction/research_artifacts
   substack_slug: what-actually-works-the-hardware
   substack_url: https://lambpetros.substack.com
+  notebooklm_posts:
+    the-hardware-friction-map:
+      primary:
+        id: 02eb281e-2fe7-459b-8b0e-57cbe2738337
+        title: The Hardware Friction Map for Neural Architecture
+        url: https://notebooklm.google.com/notebook/02eb281e-2fe7-459b-8b0e-57cbe2738337
+        reason: Matched by notebook title and full audio, slide, video, and infographic artifact set.
+      related: []
+    what-actually-works-the-hardware:
+      primary:
+        id: 3be56bf2-410a-40ce-85e2-d6c7a16162ca
+        title: The Hardware Compatibility Filter for LLM Success
+        url: https://notebooklm.google.com/notebook/3be56bf2-410a-40ce-85e2-d6c7a16162ca
+        reason: Matched by source title and Hardware Compatibility Filter artifacts.
+      related:
+        - id: 02eb281e-2fe7-459b-8b0e-57cbe2738337
+          title: The Hardware Friction Map for Neural Architecture
+          url: https://notebooklm.google.com/notebook/02eb281e-2fe7-459b-8b0e-57cbe2738337
+          reason: Shorter sibling hardware-friction publication notebook.

@@ -28,6 +28,7 @@ Umbrella package for the hardware-friction line of work. It combines the long qu
 
 - Distribution assets for the essay line live in [`essay_sections/distribution/`](essay_sections/distribution/).
 - Critiques and stress-test material live under both [`essay_sections/critiques/`](essay_sections/critiques/) and [`hardware_friction_scorecard/critiques/`](hardware_friction_scorecard/critiques/).
+- NotebookLM notebook mappings for the hardware posts live in [`status.yaml`](status.yaml) and are indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 - This package uses domain-specific history layers rather than one top-level `archive/`.
 
 ## Working Guidance

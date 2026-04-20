@@ -1,0 +1,39 @@
+kind: leaf
+publication: operating-agents-bonus-the-workflow
+parent_package: autonomous-agents
+revision: 1
+config:
+  markdown_path: publications/autonomous-agents/essays/optimization/06-workflow-optimization-and-evaluation.md
+  substack_slug: operating-agents-bonus-the-workflow
+  substack_url: https://lambpetros.substack.com
+  notebooklm_notebook_id: 2e2e9acb-e27c-4ac3-966c-b21e710df9ee
+  notebooklm_notebook_title: "Chapters 9 and 11 Blueprint: Optimization and Self-Improvement"
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/2e2e9acb-e27c-4ac3-966c-b21e710df9ee
+stages:
+  paper_intake:
+    done: true
+    last_updated: '2026-04-07'
+  research:
+    done: true
+    last_updated: '2026-04-07'
+  essay_iteration:
+    done: true
+    last_updated: '2026-04-07'
+  notebooklm_artifacts:
+    done: true
+    last_updated: '2026-04-07'
+  article_polish:
+    done: true
+    last_updated: '2026-04-07'
+  substack_publishing:
+    done: true
+    last_updated: '2026-04-07'
+  archive_sync:
+    done: true
+    last_updated: '2026-04-07'
+  youtube_production:
+    done: true
+    last_updated: '2026-04-07'
+  distribution:
+    done: false
+    last_updated: null

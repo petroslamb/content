@@ -18,6 +18,7 @@ Single-publication leaf under [`../README.md`](../README.md) for the flagship le
 - Active Atlas scorecard: [`your-ai-is-confidently-wrong-and-atlas-scorecard-r4.md`](your-ai-is-confidently-wrong-and-atlas-scorecard-r4.md)
 - Historical essay-iteration packet artifacts: [`archive/essay-iteration/r3/`](archive/essay-iteration/r3/)
 - Shared research surface: [`../evidence_governance_pattern/README.md`](../evidence_governance_pattern/README.md)
+- NotebookLM notebook mapping: [`status.yaml`](status.yaml), indexed in [`../../notebooklm-notebooks.md`](../../notebooklm-notebooks.md)
 - Umbrella context: [`../README.md`](../README.md)
 
 ## Working Guidance

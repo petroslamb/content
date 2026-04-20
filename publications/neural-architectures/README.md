@@ -22,3 +22,4 @@ Umbrella package for the neural-architecture essay line of the publication. It i
 - This umbrella package does not keep one umbrella-level `archive/` manifest or run state. Runnable lifecycle state should live in the relevant leaf package.
 - The multimodal note’s local media artifacts currently sit beside the essay as [`Multimodal Reasoning with Integrated Transformers.mp3`](<Multimodal Reasoning with Integrated Transformers.mp3>) and [`Multimodal Reasoning with Integrated Transformers.srt`](<Multimodal Reasoning with Integrated Transformers.srt>).
 - Some upstream source material for *The Transformer Attractor* still lives in the sibling umbrella package [`../hardware-friction/README.md`](../hardware-friction/README.md).
+- NotebookLM notebook mappings live in the umbrella and leaf `status.yaml` files and are indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).

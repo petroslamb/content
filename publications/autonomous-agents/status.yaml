@@ -32,3 +32,15 @@ config:
   evidence_path: publications/autonomous-agents/reference/papers
   substack_slug: the-agent-revolution
   substack_url: https://lambpetros.substack.com
+  notebooklm_notebook_id: cc1c6170-b7d5-426a-bee4-a4acc2f5a60c
+  notebooklm_notebook_title: Advances and Challenges in Foundation Agents
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/cc1c6170-b7d5-426a-bee4-a4acc2f5a60c
+  notebooklm_related_notebooks:
+    - id: 34e53c59-1823-4175-8475-0f555a38a194
+      title: "The Agent Revolution: Reasoning, Collaboration, and Autonomy"
+      url: https://notebooklm.google.com/notebook/34e53c59-1823-4175-8475-0f555a38a194
+      reason: Earlier agent-revolution notebook with adjacent source material.
+    - id: 90a4bd21-7d2b-4134-af22-108f81fea272
+      title: Architecting Level 3 Autonomous Enterprise Agent Systems
+      url: https://notebooklm.google.com/notebook/90a4bd21-7d2b-4134-af22-108f81fea272
+      reason: Related enterprise-agent autonomy notebook.

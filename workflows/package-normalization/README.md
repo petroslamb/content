@@ -39,6 +39,7 @@ config:
   markdown_path: "publications/my-package/my-essay.md"
   substack_slug: "my-essay-slug"
   evidence_path: "publications/my-package/papers" # optional when the leaf reuses a shared source tree
+  notebooklm_notebook_id: "00000000-0000-0000-0000-000000000000" # optional when a NotebookLM notebook exists
   # Optional: ignore_scaffold_audit: ["artifacts", "archive"]
 ```
 

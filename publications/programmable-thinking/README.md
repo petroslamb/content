@@ -22,6 +22,7 @@ Single-publication package behind the published Rooted Layers essay *When the LL
 - Converted paper markdown lives in [`papers/markdown/`](papers/markdown/).
 - The package paper index lives in [`papers/index.md`](papers/index.md).
 - Visual and slide artifacts live in [`visuals/`](visuals/) and [`artifacts/`](artifacts/).
+- NotebookLM notebook mapping lives in [`status.yaml`](status.yaml) and is indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 - Retired or superseded package material belongs in [`archive/`](archive/).
 - Platform-specific distribution variants remain at the package root because they are part of the publication surface.
 

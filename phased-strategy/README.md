@@ -15,6 +15,8 @@ Use this layer differently from the workflow layer:
 | :--- | :--- |
 | [`strategic_plan.md`](strategic_plan.md) | The canonical phase roadmap from clean internal automation through harness-native autonomy, operator shell, platform, and SaaS product. |
 | [`phase-1-1-5-closure-checklist.md`](phase-1-1-5-closure-checklist.md) | Current closure checklist for Phase 1 and Phase 1.5, including what is done, what is partial, and what remains open. |
+| [`workflow-system-icm-research-memo-2026-04-20.md`](workflow-system-icm-research-memo-2026-04-20.md) | Research and brainstorming memo connecting the ICM paper, alphaXiv workflow-system literature, `illusion-of-swarm`, and the repo's harness/skills direction. |
+| [`papers/index.md`](papers/index.md) | Local evidence index for strategy papers and converted markdown. |
 
 ## Current Read
 

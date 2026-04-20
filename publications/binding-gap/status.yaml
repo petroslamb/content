@@ -4,6 +4,9 @@ config:
   substack_url: https://lambpetros.substack.com
   markdown_path: publications/binding-gap/the-binding-gap.md
   substack_slug: the-binding-gap
+  notebooklm_notebook_id: 44486736-92ff-4243-9b6e-aea65baa3fce
+  notebooklm_notebook_title: The Binding Gap
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/44486736-92ff-4243-9b6e-aea65baa3fce
 stages:
   paper_intake:
     done: true

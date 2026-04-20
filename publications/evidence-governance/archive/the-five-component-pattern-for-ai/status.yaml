@@ -8,6 +8,9 @@ config:
   substack_slug: the-five-component-pattern-for-ai
   substack_url: https://lambpetros.substack.com
   evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
+  notebooklm_notebook_id: 703b6092-6041-4088-b097-cefab74cf798
+  notebooklm_notebook_title: The Five-Component Pattern for AI Evidence Governance
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/703b6092-6041-4088-b097-cefab74cf798
 stages:
   paper_intake:
     done: true
