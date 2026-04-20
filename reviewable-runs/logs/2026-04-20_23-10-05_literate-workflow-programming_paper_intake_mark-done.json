@@ -1,0 +1,100 @@
+{
+  "kind": "lifecycle_stage_run",
+  "schema_version": 2,
+  "timestamp": "2026-04-20_23-10-05",
+  "run_id": "2026-04-20_23-10-05_literate-workflow-programming_paper_intake_mark-done",
+  "package": "literate-workflow-programming",
+  "stage": "paper_intake",
+  "action": "mark-done",
+  "success": true,
+  "boundary": {
+    "type": "explicit non-approval reason",
+    "reason": "Local lifecycle-stage operation. The log records repo-state work, not an external publish or channel mutation.",
+    "external_side_effect": false,
+    "approval_gate": "none",
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Run lifecycle action 'mark-done' for package 'literate-workflow-programming' stage 'paper_intake'.",
+    "stop_condition": "Command finished and a lifecycle log was written.",
+    "non_goals": [
+      "Do not treat this routine log as retained proof.",
+      "Do not claim external publication or channel mutation from this log alone."
+    ]
+  },
+  "execution": {
+    "commands": [],
+    "output_excerpt": "Stage 'paper_intake' marked done for 'literate-workflow-programming'.",
+    "output_truncated": false,
+    "state_before": {
+      "done": false,
+      "last_updated": null
+    },
+    "state_after": {
+      "done": true,
+      "last_updated": "2026-04-20"
+    },
+    "dependency_warnings": []
+  },
+  "evidence": {
+    "workflow_doc": "workflows/paper-intake/README.md",
+    "status_path": "publications/literate-workflow-programming/status.yaml",
+    "required_context": [
+      {
+        "name": "package README or leaf README",
+        "status": "resolved",
+        "blocking": false,
+        "value": "publications/literate-workflow-programming/README.md"
+      },
+      {
+        "name": "target evidence surface or source index",
+        "status": "resolved",
+        "blocking": false,
+        "value": "publications/literate-workflow-programming/papers/index.md"
+      },
+      {
+        "name": "paper files or source URLs to intake",
+        "status": "resolved",
+        "blocking": false,
+        "value": "publications/literate-workflow-programming/papers"
+      }
+    ],
+    "expected_outputs": [
+      "original paper files placed in the package evidence surface",
+      "converted markdown in the evidence markdown directory when needed",
+      "updated paper or source index"
+    ],
+    "done_when": [
+      "selected papers are stored locally and the package evidence index is current"
+    ]
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "command_exit_status",
+        "result": "pass",
+        "notes": "For mark-only actions, this is the local status update result."
+      },
+      {
+        "name": "lifecycle_log_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-20_23-10-05_literate-workflow-programming_paper_intake_mark-done.json"
+      }
+    ],
+    "residual_risk": "This lightweight log preserves the operational boundary. Promote to a full Reviewable Runs packet only when the run crosses a stronger review or proof boundary."
+  },
+  "failure_or_risk": {
+    "actual_failure": null,
+    "possible_failures": [
+      "Stage marked done without enough human review.",
+      "External system state assumed from local state.",
+      "Routine log mistaken for retained proof artifact."
+    ]
+  },
+  "workflow_doc": "workflows/paper-intake/README.md",
+  "status_path": "publications/literate-workflow-programming/status.yaml",
+  "commands": [],
+  "output_excerpt": "Stage 'paper_intake' marked done for 'literate-workflow-programming'.",
+  "output_truncated": false
+}

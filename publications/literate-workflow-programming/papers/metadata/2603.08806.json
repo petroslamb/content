@@ -1,0 +1,57 @@
+{
+  "requested_id": "2603.08806",
+  "resolved": {
+    "preferred_id": "2603.08806v1",
+    "input_id": "2603.08806",
+    "title": "Test-Driven AI Agent Definition (TDAD): Compiling Tool-Using Agents from Behavioral Specifications",
+    "versionless_id": "2603.08806",
+    "canonical_id": "2603.08806v1",
+    "version_id": "019cdaf2-ed28-7dc1-97f0-6903fdce0fba",
+    "group_id": "019cdaf2-ed14-72eb-a2e1-a6b6c6627e4c"
+  },
+  "title": "Test-Driven AI Agent Definition (TDAD): Compiling Tool-Using Agents from Behavioral Specifications",
+  "abstract": "We present Test-Driven AI Agent Definition (TDAD), a methodology that treats agent prompts as compiled artifacts: engineers provide behavioral specifications, a coding agent converts them into executable tests, and a second coding agent iteratively refines the prompt until tests pass. Deploying tool-using LLM agents in production requires measurable behavioral compliance that current development practices cannot provide. Small prompt changes cause silent regressions, tool misuse goes undetected, and policy violations emerge only after deployment. To mitigate specification gaming, TDAD introduces three mechanisms: (1) visible/hidden test splits that withhold evaluation tests during compilation, (2) semantic mutation testing via a post-compilation agent that generates plausible faulty prompt variants, with the harness measuring whether the test suite detects them, and (3) spec evolution scenarios that quantify regression safety when requirements change. We evaluate TDAD on SpecSuite-Core, a benchmark of four deeply-specified agents spanning policy compliance, grounded analytics, runbook adherence, and deterministic enforcement. Across 24 independent trials, TDAD achieves 92% v1 compilation success with 97% mean hidden pass rate; evolved specifications compile at 58%, with most failed runs passing all visible tests except 1-2, and show 86-100% mutation scores, 78% v2 hidden pass rate, and 97% regression safety scores. The implementation is available as an open benchmark at this https URL.",
+  "publication_date": "2026-03-09T18:04:54",
+  "authors": [
+    {
+      "id": "019cdaf2-ed22-7a69-b3b1-c2b1f29be181",
+      "full_name": "Tzafrir Rehan",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.SE",
+    "instruction-tuning",
+    "ml-systems",
+    "model-observability",
+    "reasoning-verification",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.08806v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.08806"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 11,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 11,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 3,
+      "last30Days": 40,
+      "last90Days": 53,
+      "all": 53
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

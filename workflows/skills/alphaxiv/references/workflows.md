@@ -175,6 +175,12 @@ Common mistakes:
 - Treating a persuasive answer as evidence instead of feeding it back into the blueprint as a framing decision.
 - Keeping the old top-level metaphor just because the newer one feels less elegant.
 
+Tracking rule:
+
+- If the assistant changes the package thesis, vocabulary, claim boundary, paper queue, or implementation experiment, add the session to the package assistant-discussion index and write a compact extraction note.
+- Use the canonical workflow template at `workflows/alphaxiv-research/templates/assistant-discussion-extraction.md`.
+- Do not paste raw transcripts into package research notes unless the exact exchange is needed as an artifact.
+
 ## Use the assistant after retrieval
 
 Goal:
@@ -208,6 +214,12 @@ Long-session note:
 - If latency starts climbing, start a fresh chat with `assistant start` and restate only the
   context, recap, or paper ids you still need.
 - Keep the older thread available through `assistant history` or `assistant list`.
+
+Discussion tracking:
+
+- Use `alphaxiv assistant list --json --limit 100` to recover session ids when needed.
+- Use `alphaxiv assistant history <session-id>` to distill the session into a package-local extraction note.
+- The extraction note, not the raw transcript, is the durable package artifact.
 
 Common mistakes:
 

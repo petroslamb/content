@@ -79,6 +79,7 @@ every assistant command.
 7. When the task is blueprint or draft validation rather than paper discovery, stay narrow: reopen the exact anchor papers, inspect them with deterministic commands, and use the assistant only to pressure-test whether the current wording or synthesis is defensible.
 8. In validation mode, do not reopen broad search unless the existing anchor set clearly fails to support the active claims.
 9. In article-development work, this validation mode is often the highest-value use of alphaXiv. Do not default to broad discovery when the real problem is an overclaimed blueprint.
+10. When an assistant session materially changes a package thesis, vocabulary, claim boundary, paper queue, or workflow-design decision, track it in the package's assistant-discussion index and create a compact extraction note. Use the workflow guidance in `../../../workflows/alphaxiv-research/README.md` rather than pasting raw transcripts into the package.
 
 ## Reference map
 

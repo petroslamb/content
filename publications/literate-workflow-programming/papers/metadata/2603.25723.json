@@ -1,0 +1,81 @@
+{
+  "requested_id": "2603.25723",
+  "resolved": {
+    "preferred_id": "2603.25723v1",
+    "input_id": "2603.25723",
+    "title": "Natural-Language Agent Harnesses",
+    "versionless_id": "2603.25723",
+    "canonical_id": "2603.25723v1",
+    "version_id": "019d2d38-a51f-76b9-b0e5-05f894f1271e",
+    "group_id": "019d2d38-a4ee-76dc-969f-29e2f1374a1e"
+  },
+  "title": "Natural-Language Agent Harnesses",
+  "abstract": "Agent performance increasingly depends on \\emph{harness engineering}, yet harness design is usually buried in controller code and runtime-specific conventions, making it hard to transfer, compare, and study as a scientific object. We ask whether the high-level control logic of an agent harness can instead be externalized as a portable executable artifact. We introduce \\textbf{Natural-Language Agent Harnesses} (NLAHs), which express harness behavior in editable natural language, and \\textbf{Intelligent Harness Runtime} (IHR), a shared runtime that executes these harnesses through explicit contracts, durable artifacts, and lightweight adapters. Across coding and computer-use benchmarks, we conduct controlled evaluations of operational viability, module ablation, and code-to-text harness migration.",
+  "publication_date": "2026-03-26T17:58:15",
+  "authors": [
+    {
+      "id": "019bf825-840d-74cf-83b3-83131ff69144",
+      "full_name": "Linyue Pan",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7994-bae1-5b3b30647450",
+      "full_name": "Lexiao Zou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-ae64-7ef1-8102-a21c925e11a5",
+      "full_name": "Shuo Guo",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-66b0-7799-9d46-1c47c189ffe8",
+      "full_name": "Jingchen Ni",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e842-7977-83ed-2e4b9649b0d2",
+      "full_name": "Hai-Tao Zheng",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.CL",
+    "human-ai-interaction",
+    "instruction-tuning",
+    "ml-systems",
+    "reasoning",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.25723v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.25723"
+  },
+  "metrics": {
+    "questions_count": 1,
+    "upvotes_count": 223,
+    "downvotes_count": 0,
+    "total_votes": 70,
+    "public_total_votes": 223,
+    "visits": {
+      "last24Hours": 20,
+      "last7Days": 171,
+      "last30Days": 4250,
+      "last90Days": 4250,
+      "all": 4250
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

@@ -1,0 +1,57 @@
+{
+  "requested_id": "2603.00822",
+  "resolved": {
+    "preferred_id": "2603.00822v1",
+    "input_id": "2603.00822",
+    "title": "ContextCov: Deriving and Enforcing Executable Constraints from Agent Instruction Files",
+    "versionless_id": "2603.00822",
+    "canonical_id": "2603.00822v1",
+    "version_id": "019cb248-7e73-7ab4-94fc-ffd8e2a004f6",
+    "group_id": "019cb248-7e65-7d8f-8518-b293799facca"
+  },
+  "title": "ContextCov: Deriving and Enforcing Executable Constraints from Agent Instruction Files",
+  "abstract": "As Large Language Model (LLM) agents increasingly execute complex, autonomous software engineering tasks, developers rely on natural language Agent Instructions (e.g., this http URL) to enforce project-specific coding conventions, tooling, and architectural boundaries. However, these instructions are passive text. Agents frequently deviate from them due to context limitations or conflicting legacy code, a phenomenon we term Context Drift. Because agents operate without real-time human supervision, these silent violations rapidly compound into technical debt.\nTo bridge this gap, we introduce ContextCov, a framework that transforms passive Agent Instructions into active, executable guardrails. ContextCov extracts natural language constraints and synthesizes enforcement checks across three domains: static AST analysis for code patterns, runtime shell shims that intercept prohibited commands, and architectural validators for structural and semantic constraints. Evaluations on 723 open-source repositories demonstrate that ContextCov successfully extracts over 46,000 executable checks with 99.997% syntax validity, providing a necessary automated compliance layer for safe, agent-driven development. Source code and evaluation results are available at this https URL.",
+  "publication_date": "2026-02-28T21:56:47",
+  "authors": [
+    {
+      "id": "01985c81-e0ec-7969-acee-86dc32a116c5",
+      "full_name": "Reshabh K Sharma",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.SE",
+    "human-ai-interaction",
+    "information-extraction",
+    "ml-systems",
+    "model-observability",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.00822v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.00822"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 2,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 2,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 0,
+      "last30Days": 1,
+      "last90Days": 13,
+      "all": 13
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}
