@@ -15,8 +15,18 @@ Use this layer differently from the workflow layer:
 | :--- | :--- |
 | [`strategic_plan.md`](strategic_plan.md) | The canonical phase roadmap from clean internal automation through harness-native autonomy, operator shell, platform, and SaaS product. |
 | [`phase-1-1-5-closure-checklist.md`](phase-1-1-5-closure-checklist.md) | Current closure checklist for Phase 1 and Phase 1.5, including what is done, what is partial, and what remains open. |
-| [`workflow-system-icm-research-memo-2026-04-20.md`](workflow-system-icm-research-memo-2026-04-20.md) | Research and brainstorming memo connecting the ICM paper, alphaXiv workflow-system literature, `illusion-of-swarm`, and the repo's harness/skills direction. |
-| [`papers/index.md`](papers/index.md) | Local evidence index for strategy papers and converted markdown. |
+
+## Research Dependencies
+
+Workflow-system research that might later affect this strategy now lives in [`../publications/literate-workflow-programming/`](../publications/literate-workflow-programming/).
+
+Use that publication package for:
+
+- paper intake and alphaXiv literature work
+- research notes on markdown workflow languages, imports, skills, and compiler analogies
+- draft claims about whether the repo should adopt those ideas
+
+Extract findings back into this folder only when they change a phase gate, proof-run requirement, or product-readiness read.
 
 ## Current Read
 
