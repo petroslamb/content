@@ -46,6 +46,7 @@ If you are reading the public course essays:
 - The literature map lives in [`reference/source-index.md`](reference/source-index.md).
 - Course artifacts and local archives live inside topic folders under [`essays/`](essays/), usually as `artifacts/` and `archive/`.
 - This umbrella package intentionally keeps a stronger source layout than the generic single-publication `papers/markdown/` pattern.
+- NotebookLM notebook mappings live in package and topic `status.yaml` files and are indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 
 ## Working Rules
 

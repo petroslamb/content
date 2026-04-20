@@ -1,0 +1,39 @@
+kind: leaf
+publication: operating-agents-i-when-language
+parent_package: autonomous-agents
+revision: 1
+config:
+  markdown_path: publications/autonomous-agents/essays/action/01-action-tool-use.md
+  substack_slug: operating-agents-i-when-language
+  substack_url: https://lambpetros.substack.com
+  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
+  notebooklm_notebook_title: "Chapter 8 Blueprint: Action Systems and Tool Use"
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+stages:
+  paper_intake:
+    done: true
+    last_updated: '2026-04-07'
+  research:
+    done: true
+    last_updated: '2026-04-07'
+  essay_iteration:
+    done: true
+    last_updated: '2026-04-07'
+  notebooklm_artifacts:
+    done: true
+    last_updated: '2026-04-07'
+  article_polish:
+    done: true
+    last_updated: '2026-04-07'
+  substack_publishing:
+    done: true
+    last_updated: '2026-04-07'
+  archive_sync:
+    done: true
+    last_updated: '2026-04-07'
+  youtube_production:
+    done: true
+    last_updated: '2026-04-07'
+  distribution:
+    done: false
+    last_updated: null

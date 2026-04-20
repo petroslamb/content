@@ -29,6 +29,7 @@ This package is not one essay folder. It combines the published series surface, 
 - The ToolOrchestra paper surface lives under [`ToolOrchestra_Parts/papers/`](ToolOrchestra_Parts/papers/).
 - Package-level media artifacts live in [`assets/`](assets/).
 - Promotional and publication-adjacent material lives under [`ToolOrchestra_Parts/promoting_ideas/`](ToolOrchestra_Parts/promoting_ideas/) and [`ToolOrchestra_Parts/substack_posts/`](ToolOrchestra_Parts/substack_posts/).
+- NotebookLM notebook mappings for the series issues live in [`status.yaml`](status.yaml) and are indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 - Historical and exploratory material stays distributed across the package rather than being forced into one top-level `archive/`.
 
 ## Working Guidance

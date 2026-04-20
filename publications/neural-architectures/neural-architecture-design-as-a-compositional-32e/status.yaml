@@ -36,3 +36,6 @@ config:
   substack_slug: neural-architecture-design-as-a-compositional-32e
   substack_post_id: 180114871
   substack_url: https://lambpetros.substack.com
+  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
+  notebooklm_notebook_title: Neural Architecture Design as a Reusable Scaffold
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED

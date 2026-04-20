@@ -22,6 +22,7 @@ Umbrella package for the evidence-governance essay line. Following a consolidati
 - The current paper surface lives in [`evidence_governance_pattern/papers/`](evidence_governance_pattern/papers/).
 - Supporting research synthesis and bibliography live in [`evidence_governance_pattern/`](evidence_governance_pattern/).
 - Package-level shared artifacts live across [`visuals/`](visuals/), [`assets/`](assets/), and the package-root audio/video files.
+- Leaf NotebookLM notebook mappings live in each leaf `status.yaml` and are indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 - Retired or superseded publication surfaces (including the previous three-leaf split) are preserved in [`archive/`](archive/).
 
 ## External Companion Repo

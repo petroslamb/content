@@ -32,3 +32,32 @@ config:
   evidence_path: publications/orchestration-paradigm/ToolOrchestra_Parts/papers
   substack_slug: the-orchestration-paradigm-series
   substack_url: https://lambpetros.substack.com
+  notebooklm_posts:
+    the-orchestration-paradigm-series:
+      primary:
+        id: a9ac7ec8-6ef5-4d78-87cd-286108db6ac4
+        title: "The Orchestration Paradigm: Reinforcement Learning for AI Tool Routing"
+        url: https://notebooklm.google.com/notebook/REDACTED
+        reason: Series issue 1 notebook with matching source and artifact set.
+      related: []
+    the-orchestration-paradigm-issue:
+      primary:
+        id: 6a88af78-006e-458a-8109-b822c55e6a35
+        title: "The Factory: Engineering the LLM Orchestration Pipeline"
+        url: https://notebooklm.google.com/notebook/REDACTED
+        reason: Series issue 2 notebook with matching factory source and artifacts.
+      related: []
+    the-orchestration-paradigm-issue-cf4:
+      primary:
+        id: 963f3bba-9c7c-4e5a-aa1a-e7e681f118b5
+        title: "Orchestration Behavior: Emergent State Machines and Alignment Traps"
+        url: https://notebooklm.google.com/notebook/REDACTED
+        reason: Series issue 3 notebook with matching behavior source and artifacts.
+      related: []
+    the-orchestration-paradigm-issue-397:
+      primary:
+        id: 64889a43-abbd-40ce-aa19-438f3b6b728b
+        title: "Agentic AI: The Orchestration Paradigm and Production Reality"
+        url: https://notebooklm.google.com/notebook/REDACTED
+        reason: Series issue 4 notebook with matching production-reality source and artifacts.
+      related: []

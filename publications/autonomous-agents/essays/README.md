@@ -22,6 +22,7 @@ The purpose of *Operating Agents* is to teach how modern agent systems are desig
 - [`multi-agent/`](multi-agent/) holds the handoffs and boundary-design chapter.
 - [`safety/`](safety/) holds the trust-boundary and attack-surface chapter.
 - [`optimization/`](optimization/) holds the optimization and evaluation bonus chapter.
+- Topic-level NotebookLM notebook mappings live in each topic `status.yaml` and are indexed in [`../../notebooklm-notebooks.md`](../../notebooklm-notebooks.md).
 
 ## Canonical Topic Layout
 
@@ -31,6 +32,7 @@ Each topic folder should contain:
 - one canonical live `companion.md`
 - `artifacts/` when presentation media exists
 - a local `archive/` for prior drafts, retired companions, and historical support files
+- `status.yaml` with NotebookLM fields when the topic has a notebook
 
 The package standard is stable live chapter plus local archive history, not version-only sprawl.
 

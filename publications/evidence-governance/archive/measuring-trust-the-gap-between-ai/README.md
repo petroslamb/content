@@ -13,6 +13,7 @@ Single-publication leaf under [`../README.md`](../README.md) for the trust-gap l
 
 - Live draft: [`measuring-trust-the-gap-between-ai.md`](measuring-trust-the-gap-between-ai.md)
 - Shared research surface: [`../../evidence_governance_pattern/README.md`](../../evidence_governance_pattern/README.md)
+- NotebookLM notebook mapping: [`status.yaml`](status.yaml), indexed in [`../../../notebooklm-notebooks.md`](../../../notebooklm-notebooks.md)
 - Umbrella context: [`../README.md`](../README.md)
 
 ## Working Guidance

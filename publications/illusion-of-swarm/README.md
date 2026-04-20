@@ -23,6 +23,7 @@ Single-publication package behind the published Rooted Layers essay *The Illusio
 - The package paper index lives in [`papers/index.md`](papers/index.md).
 - Deterministic alphaXiv workflow outputs and related research traces live in [`artifacts/`](artifacts/).
 - Media artifacts live in [`assets/`](assets/).
+- NotebookLM notebook mapping lives in [`status.yaml`](status.yaml) and is indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md).
 - Retired draft history now belongs in [`archive/`](archive/).
 - Channel-specific distribution material lives in [`distribution/`](distribution/).
 

@@ -4,6 +4,9 @@ revision: 0
 config:
   markdown_path: publications/confidence-debt/confidence-debt.md
   evidence_path: publications/confidence-debt/papers
+  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
+  notebooklm_notebook_title: Confidence Debt r3 - Final
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
 donors:
   - publications/evidence-governance
   - publications/clean-interface-illusion

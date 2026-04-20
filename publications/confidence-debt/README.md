@@ -27,6 +27,7 @@ This package inherits evidence, assets, and provenance from three capped donor l
 - Evidence authorization ledger: [`confidence-debt-evidence-authorization-ledger.md`](confidence-debt-evidence-authorization-ledger.md)
 - Shipping-practice warrant ledger: [`confidence-debt-shipping-practice-warrant-ledger.md`](confidence-debt-shipping-practice-warrant-ledger.md)
 - Artifact surface: [`artifacts/`](artifacts/)
+- NotebookLM notebook mapping: [`status.yaml`](status.yaml), indexed in [`../notebooklm-notebooks.md`](../notebooklm-notebooks.md)
 - Archive surface: [`archive/`](archive/)
 
 ## Working Guidance
