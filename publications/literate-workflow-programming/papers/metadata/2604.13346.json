@@ -1,0 +1,110 @@
+{
+  "requested_id": "2604.13346",
+  "resolved": {
+    "preferred_id": "2604.13346v1",
+    "input_id": "2604.13346",
+    "title": "AgentSPEX: An Agent SPecification and EXecution Language",
+    "versionless_id": "2604.13346",
+    "canonical_id": "2604.13346v1",
+    "version_id": "019d9414-24c9-750e-963c-8b2397a03c9f",
+    "group_id": "019d9414-2478-79ec-97ae-787a70c1f7d7"
+  },
+  "title": "AgentSPEX: An Agent SPecification and EXecution Language",
+  "abstract": "Language-model agent systems commonly rely on reactive prompting, in which a single instruction guides the model through an open-ended sequence of reasoning and tool-use steps, leaving control flow and intermediate state implicit and making agent behavior potentially difficult to control. Orchestration frameworks such as LangGraph, DSPy, and CrewAI impose greater structure through explicit workflow definitions, but tightly couple workflow logic with Python, making agents difficult to maintain and modify. In this paper, we introduce AgentSPEX, an Agent SPecification and EXecution Language for specifying LLM-agent workflows with explicit control flow and modular structure, along with a customizable agent harness. AgentSPEX supports typed steps, branching and loops, parallel execution, reusable submodules, and explicit state management, and these workflows execute within an agent harness that provides tool access, a sandboxed virtual environment, and support for checkpointing, verification, and logging. Furthermore, we provide a visual editor with synchronized graph and workflow views for authoring and inspection. We include ready-to-use agents for deep research and scientific research, and we evaluate AgentSPEX on 7 benchmarks. Finally, we show through a user study that AgentSPEX provides a more interpretable and accessible workflow-authoring paradigm than a popular existing agent framework.",
+  "publication_date": "2026-04-14T23:16:25",
+  "authors": [
+    {
+      "id": "01985c82-0fce-7734-9748-71dd496836c5",
+      "full_name": "Pengcheng Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-a76e-758f-b272-8c27d3b8b1ae",
+      "full_name": "Jerry Huang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3a9a-7f47-853b-c49475faeac3",
+      "full_name": "Jiarui Yao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-0fce-7fd6-aa9e-a560f20a1728",
+      "full_name": "Rui Pan",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-6049-7656-936c-db1759f0abda",
+      "full_name": "Peizhi Niu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c85-f2c0-73c1-a9b5-2ec2fad4b063",
+      "full_name": "Yaowenqi Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-612b-72eb-b6f3-07d7f631f37c",
+      "full_name": "Ruida Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-0411-7cc7-94b0-21515c7cc335",
+      "full_name": "Renhao Lu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-db50-7486-92ce-acd58904a40a",
+      "full_name": "Yuwei Guo",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-eea8-72c2-b0dc-c64f60cfce1e",
+      "full_name": "Tong Zhang",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.CL",
+    "human-ai-interaction",
+    "ml-systems",
+    "model-observability",
+    "reasoning",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2604.13346v1.pdf",
+    "source_url": "https://arxiv.org/abs/2604.13346"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 0,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 0,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 0,
+      "last30Days": 0,
+      "last90Days": 0,
+      "all": 0
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

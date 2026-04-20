@@ -53,6 +53,7 @@ The repo now exposes a tracked harness-facing surface for Codex-style operation:
 
 Stable entrypoints:
 
+- `npm run check`
 - `npm run stage:next -- --package <package> --format json`
 - `npm run stage:resolve -- --package <package> --stage <stage> --format json`
 - `npm run stage:run -- --package <package> --stage <stage> --format json`
@@ -61,6 +62,8 @@ Stable entrypoints:
 - `npm run check:reviewable-runs`
 
 These surfaces do not replace the workflow docs. They make the existing lifecycle legible to an external harness without relying on a long custom prompt.
+
+Use `npm run check` as the lightweight pre-review validation bundle. It runs the harness contract check, Reviewable Runs log check, repo-link check, and alphaXiv discussion tracking check. It intentionally does not build the public mirror or perform external sync work.
 
 When the essay object itself is still undecided, use [`workflows/topic-discovery/README.md`](workflows/topic-discovery/README.md) before `package:init`. Topic discovery is a pre-package decision layer, not a `status.yaml` lifecycle stage yet.
 

@@ -9,7 +9,7 @@ The live discovery path remains `.agents/skills/`, but that tree is now a symlin
 ### Intake / discovery
 
 - [`markitdown-paper-intake/`](markitdown-paper-intake/) for package paper intake, PDF-to-markdown conversion, and paper-index maintenance
-- [`alphaxiv/`](alphaxiv/) for topic-discovery execution, broad paper discovery, exact-paper inspection, and shortlist refinement before a paper enters the package evidence surface
+- [`alphaxiv/`](alphaxiv/) for topic-discovery execution, broad paper discovery, exact-paper inspection, assistant-discussion tracking, and shortlist refinement before a paper enters the package evidence surface
 
 ### Validation / hardening
 

@@ -33,6 +33,7 @@ HARNESS_POLICY_PATH = REPO_ROOT / "harness_policy.yaml"
 LOGS_DIR = REPO_ROOT / "reviewable-runs" / "logs"
 
 REQUIRED_NPM_SCRIPTS = {
+    "check",
     "check:essay-iteration",
     "stage:next",
     "stage:resolve",

@@ -1,0 +1,73 @@
+# Literate Workflow Programming
+
+Research-first publication package for the emerging argument that markdown workflow docs, skills, indexes, imports, package state, validators, and reviewable-run logs are becoming a programming substrate for agent workflows.
+
+Research direction: Determine whether markdown workflow docs, skills, indexes, imports, package state, validators, and reviewable-run logs form a real literate programming substrate for agent workflows, or only a useful metaphor for context engineering.
+
+## Package Status
+
+- Archetype: Single-publication research package
+- Status: Active / unpublished
+- Current stage: research and paper intake
+- Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
+
+## Orientation
+
+- Live draft / working thesis: [`literate-workflow-programming.md`](literate-workflow-programming.md)
+- Research notes: [`research-notes/`](research-notes/)
+- alphaXiv discussion index: [`research-notes/alphaxiv-discussions/`](research-notes/alphaxiv-discussions/)
+- Anchor note: [`research-notes/2026-04-20-icm-and-markdown-workflows.md`](research-notes/2026-04-20-icm-and-markdown-workflows.md)
+- Markdown-language note: [`research-notes/2026-04-20-markdown-workflow-language.md`](research-notes/2026-04-20-markdown-workflow-language.md)
+- P0 intake synthesis: [`research-notes/2026-04-20-p0-intake-synthesis.md`](research-notes/2026-04-20-p0-intake-synthesis.md)
+- Spec-diff experiment: [`research-notes/2026-04-20-spec-diff-experiment.md`](research-notes/2026-04-20-spec-diff-experiment.md)
+- Claim ledger: [`claim-ledger.md`](claim-ledger.md)
+- Paper index: [`papers/index.md`](papers/index.md)
+- Converted paper markdown: [`papers/markdown/`](papers/markdown/)
+- Artifacts: [`artifacts/`](artifacts/)
+- Archive: [`archive/`](archive/)
+
+## Current Research Question
+
+Is markdown becoming a source language for agent workflows, or is that only a convenient metaphor?
+
+The package should keep the distinction honest:
+
+- `phased-strategy/` owns the phase and product-readiness implications.
+- `workflows/` owns operational playbooks.
+- `reviewable-runs/` owns execution trace and proof infrastructure.
+- This package owns the research argument, paper library, competing terminology, and eventual essay.
+
+## Working Frame
+
+The live hypothesis is that agent workflow systems are converging on a literate programming pattern:
+
+- markdown files act as human-readable source
+- indexes act as routing tables or symbol tables
+- imports declare context dependencies
+- workflow docs act like function signatures or stage contracts
+- skills act like reusable functions or capabilities
+- package folders act like stateful objects
+- validators act like tests or type checks
+- reviewable-run logs act like execution traces and future source maps
+
+This package exists to test that frame against the literature before the repo imports any of it back into the workflow system.
+
+## Current Read
+
+The first P0 intake narrows the claim. The strongest paper-backed formulation is that structured natural-language workflow specifications can become source artifacts when a runtime can interpret them, validators can check them, and reviewable traces can map behavior back to their clauses.
+
+This keeps a useful hierarchy:
+
+- specifications and stage contracts are source
+- indexes and imports are dependency surfaces
+- validators are tests
+- reviewable-run logs are traces and source maps
+- skills need capability binding or compilation before they can be called portable runtime substrate
+
+## Working Guidance
+
+- Keep research claims here until they are ready to become repo strategy or workflow changes.
+- Keep `papers/index.md` current before downloading or converting large batches.
+- Keep alphaXiv assistant sessions in `research-notes/alphaxiv-discussions/` when they shape claims, vocabulary, or paper intake.
+- Prefer deliberate paper intake batches over opportunistic download sprawl.
+- When a finding becomes operationally relevant, extract it back into `phased-strategy/`, `workflows/`, or `reviewable-runs/` with a clear pointer to the source note.

@@ -12,6 +12,9 @@ paths:
   workflows_dir: workflows
   logs_dir: reviewable-runs/logs
 interfaces:
+  check:
+    entrypoint: npm run check
+    script: npm run check:harness && npm run check:reviewable-runs && npm run check:repo-links && npm run check:alphaxiv-discussions
   check:essay-iteration:
     entrypoint: npm run check:essay-iteration
     script: .venv/bin/python scripts/check_essay_iteration_packet.py
@@ -92,9 +95,10 @@ lifecycle:
         - package evidence surface for shortlisted papers
       expected_outputs:
         - shortlist of candidate papers with rationale
+        - tracked assistant discussion notes when alphaXiv assistant materially shapes the work
         - selected papers ready to move into paper intake
       done_when:
-        - the shortlist is grounded enough to drive package-local paper intake or source discussion
+        - the shortlist is grounded enough to drive package-local paper intake or source discussion, and any important assistant discussion has a package-local extraction note
       launch_templates: []
       packet_templates: []
       validator_commands: []

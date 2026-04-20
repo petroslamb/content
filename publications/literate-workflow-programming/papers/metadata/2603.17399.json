@@ -1,0 +1,56 @@
+{
+  "requested_id": "2603.17399",
+  "resolved": {
+    "preferred_id": "2603.17399v1",
+    "input_id": "2603.17399",
+    "title": "Bootstrapping Coding Agents: The Specification Is the Program",
+    "versionless_id": "2603.17399",
+    "canonical_id": "2603.17399v1",
+    "version_id": "019d0495-2ab3-7acc-871e-ad1ae0668818",
+    "group_id": "019d0495-2a8c-7a72-9a22-42d605cc3425"
+  },
+  "title": "Bootstrapping Coding Agents: The Specification Is the Program",
+  "abstract": "A coding agent can bootstrap itself. Starting from a 926-word specification and a first implementation produced by an existing agent (Claude Code), a newly generated agent re-implements the same specification correctly from scratch. This reproduces, in the domain of AI coding agents, the classical bootstrap sequence known from compiler construction, and instantiates the meta-circular property known from Lisp. The result carries a practical implication: the specification, not the implementation, is the stable artifact of record. Improving an agent means improving its specification; the implementation is, in principle, regenerable at any time.",
+  "publication_date": "2026-03-18T06:21:06",
+  "authors": [
+    {
+      "id": "01985c81-e911-7b16-9861-3c038770b1da",
+      "full_name": "Martin Monperrus",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.LG",
+    "cs.SE",
+    "instruction-tuning",
+    "reasoning",
+    "text-generation",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.17399v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.17399"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 10,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 10,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 2,
+      "last30Days": 31,
+      "last90Days": 31,
+      "all": 31
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

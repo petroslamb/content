@@ -13,10 +13,11 @@ required_context:
 expected_outputs:
   - topic vocabulary map for the research surface
   - ranked candidate paper pool with exclusions and near-misses
+  - tracked assistant discussion notes when assistant comparison shapes the topic decision
   - candidate essay slate with evidence deltas and kill criteria
   - handoff decision to package initialization, post-ceiling pivot, narrower research, or parking
 done_when:
-  - the repo has an explicit decision about whether the topic deserves a package, pivot pass, or no further work
+  - the repo has an explicit decision about whether the topic deserves a package, pivot pass, or no further work, and any material assistant discussion is recoverable from the discovery packet or successor package
 approval_gate: required_before_package_init
 ---
 
@@ -84,7 +85,8 @@ That run used a repeatable pattern:
 3. use multiple ranking proxies such as hot, likes, and GitHub stars
 4. inspect candidate papers one by one
 5. ask the assistant to compare an already-inspected shortlist
-6. preserve near-misses so the decision is not rediscovered later
+6. track material assistant sessions before they disappear into remote history
+7. preserve near-misses so the decision is not rediscovered later
 
 ### Post-Ceiling Topic Discovery
 
@@ -204,6 +206,23 @@ Find me a great topic.
 
 Ask fresh, short comparison questions. If a session gets slow or unfocused, start a new one and carry forward only the paper IDs and decision question.
 
+### 5.5 Track Material Assistant Discussions
+
+If an assistant session changes the topic decision, candidate ranking, vocabulary, or package handoff, record it before moving on.
+
+When no package exists yet, put the session id, title, date, and compact extraction in the topic-discovery packet or in the `*-assistant-synthesis.md` file. When the topic becomes a package, copy or move the distilled session into the successor package's `research-notes/alphaxiv-discussions/` index.
+
+Do not track every assistant chat. Track sessions that changed the decision or produced a useful contradiction.
+
+Useful commands:
+
+```bash
+.venv/bin/alphaxiv assistant list --json --limit 100
+.venv/bin/alphaxiv assistant history <session-id>
+```
+
+For the package-local extraction shape, use [`../alphaxiv-research/templates/assistant-discussion-extraction.md`](../alphaxiv-research/templates/assistant-discussion-extraction.md).
+
 ### 6. Produce An Essay-Object Slate
 
 Topic discovery should not stop at a paper list. Convert the paper pool into candidate essay objects.
@@ -265,6 +284,8 @@ For a serious greenfield pass, use the recovered `illusion-of-swarm` pattern:
 04-assistant-synthesis.md
 05-final-shortlist.md
 ```
+
+If the assistant synthesis materially changes the decision, `04-assistant-synthesis.md` should include the alphaXiv session id and a compact extraction. If the pass initializes a package, add the distilled session to the package-local `research-notes/alphaxiv-discussions/` index.
 
 For a post-ceiling pass, use the artifact set in [`../post-ceiling-pivot/README.md`](../post-ceiling-pivot/README.md).
 

@@ -1,0 +1,89 @@
+{
+  "kind": "harness_launch_pack",
+  "schema_version": 2,
+  "timestamp": "2026-04-20_23-10-16",
+  "run_id": "2026-04-20_23-10-16_literate-workflow-programming_research_launch-pack",
+  "task_brief": "Advance package 'literate-workflow-programming' through the 'research' stage using 'workflows/alphaxiv-research/README.md'.",
+  "boundary": {
+    "type": "handoff",
+    "reason": "Launch pack prepares a bounded guided run; it does not execute the stage.",
+    "external_side_effect": false,
+    "approval_gate": "none",
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Prepare a bounded launch packet for package 'literate-workflow-programming' stage 'research'.",
+    "stop_condition": "Launch pack written to reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not claim the stage was executed.",
+      "Do not treat this launch pack as approval for external mutation."
+    ]
+  },
+  "package": "literate-workflow-programming",
+  "stage": "research",
+  "workflow_doc": "workflows/alphaxiv-research/README.md",
+  "runner_mode": "guided",
+  "launch_mode": "none",
+  "approval_gate": "none",
+  "required_context": [
+    {
+      "name": "package README or leaf README",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/literate-workflow-programming/README.md"
+    },
+    {
+      "name": "current research question or thesis direction",
+      "status": "resolved",
+      "blocking": false,
+      "value": "Determine whether markdown workflow docs, skills, indexes, imports, package state, validators, and reviewable-run logs form a real literate programming substrate for agent workflows, or only a useful metaphor for context engineering."
+    },
+    {
+      "name": "package evidence surface for shortlisted papers",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/literate-workflow-programming/papers"
+    }
+  ],
+  "suggested_commands": [
+    "npm run stage:resolve -- --package literate-workflow-programming --stage research --format json",
+    "npm run stage:resolve -- --package literate-workflow-programming --stage research --emit-launch-pack --format json"
+  ],
+  "suggested_skill": "alphaxiv",
+  "package_context_paths": {
+    "live_draft_path": "publications/literate-workflow-programming/literate-workflow-programming.md",
+    "leaf_readme_path": "publications/literate-workflow-programming/README.md",
+    "parent_package_path": null,
+    "parent_package_readme_path": null,
+    "companion_path": null,
+    "nearest_blueprint_path": null,
+    "review_artifact_paths": [],
+    "evidence_surface_path": "publications/literate-workflow-programming/papers"
+  },
+  "packet_paths": {},
+  "expected_outputs": [
+    "shortlist of candidate papers with rationale",
+    "selected papers ready to move into paper intake"
+  ],
+  "done_when": [
+    "the shortlist is grounded enough to drive package-local paper intake or source discussion"
+  ],
+  "packet_templates": [],
+  "validator_commands": [],
+  "judgment_policy": "unrestricted",
+  "prohibited_moves": [],
+  "blocking_issues": [
+    "Runner mode 'guided' with launch_mode 'none' is not directly executable in Phase 1.5; resolve it or emit a launch pack."
+  ],
+  "verification": {
+    "checks": [
+      {
+        "name": "launch_pack_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-20_23-10-16_literate-workflow-programming_research_launch-pack.json"
+      }
+    ],
+    "residual_risk": "The launch pack is only an entry packet for guided work. Review the final run separately."
+  }
+}
