@@ -4,6 +4,8 @@
 .*
 **/.*
 !.gitignore
+!.gitattributes
+!.gitmodules
 !.github/
 !.github/**
 
@@ -49,24 +51,5 @@ publications/autonomous-agents/essays/*/artifacts/video/*Timed Slides.mp4
 *.m4a
 *.aac
 
-# Whitelist: Course Blueprints (visual anchors for the series)
-!*Blueprint.mp4
-!*Blueprint.mp3
-
-# Whitelist: Load-bearing Reader Assets
-!publications/binding-gap/artifacts/video/The_Binding_Gap_explainer.mp4
-
 # Whitelist: Active Notebook Sources (Small seed papers)
 !publications/orchestration-paradigm/**/notebook_sources/**/*.pdf
-!publications/orchestration-paradigm/**/papers/pdf/**/*.pdf
-
-# Whitelist: Autonomy-Tax Gap (PDFs with no full-text conversion yet)
-!publications/autonomy-tax/sources/raw/073*.pdf
-!publications/autonomy-tax/sources/raw/074*.pdf
-!publications/autonomy-tax/sources/raw/075*.pdf
-!publications/autonomy-tax/sources/raw/076*.pdf
-!publications/autonomy-tax/sources/raw/077*.pdf
-!publications/autonomy-tax/sources/raw/078*.pdf
-!publications/autonomy-tax/sources/raw/079*.pdf
-!publications/autonomy-tax/sources/raw/080*.pdf
-!publications/autonomy-tax/sources/raw/081*.pdf
