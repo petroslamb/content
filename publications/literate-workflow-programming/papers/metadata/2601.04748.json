@@ -1,0 +1,69 @@
+{
+  "requested_id": "2601.04748",
+  "resolved": {
+    "preferred_id": "2601.04748v2",
+    "input_id": "2601.04748",
+    "title": "When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail",
+    "versionless_id": "2601.04748",
+    "canonical_id": "2601.04748v2",
+    "version_id": "019bea07-b4b5-726d-a485-f7184518af2a",
+    "group_id": "019ba09f-2c01-7cf2-89aa-e8bc715535ae"
+  },
+  "title": "When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail",
+  "abstract": "Multi-agent AI systems have proven effective for complex reasoning. These systems are compounded by specialized agents, which collaborate through explicit communication, but incur substantial computational overhead. A natural question arises: can we achieve similar modularity benefits with a single agent that selects from a library of skills? We explore this question by viewing skills as internalized agent behaviors. From this perspective, a multi-agent system can be compiled into an equivalent single-agent system, trading inter-agent communication for skill selection. Our preliminary experiments suggest this approach can substantially reduce token usage and latency while maintaining competitive accuracy on reasoning benchmarks. However, this efficiency raises a deeper question that has received little attention: how does skill selection scale as libraries grow?\nDrawing on principles from cognitive science, we propose that LLM skill selection exhibits bounded capacity analogous to human decision-making. We investigate the scaling behavior of skill selection and observe a striking pattern. Rather than degrading gradually, selection accuracy remains stable up to a critical library size, then drops sharply, indicating a phase transition reminiscent of capacity limits in human cognition. Furthermore, we find evidence that semantic confusability among similar skills, rather than library size alone, plays a central role in this degradation. This perspective suggests that hierarchical organization, which has long helped humans manage complex choices, may similarly benefit AI systems. Our initial results with hierarchical routing support this hypothesis. This work opens new questions about the fundamental limits of semantic-based skill selection in LLMs and offers a cognitive-grounded framework and practical guidelines for designing scalable skill-based agents.",
+  "publication_date": "2026-01-14T07:18:10",
+  "authors": [
+    {
+      "id": "01985c81-e0ec-7e9e-834c-f7ec30f6d001",
+      "full_name": "Xiaoxiao Li",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.MA",
+    "human-ai-interaction",
+    "inference-optimization",
+    "model-interpretation",
+    "multi-agent-learning",
+    "reasoning",
+    "tool-use",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2601.04748v2.pdf",
+    "source_url": "https://arxiv.org/abs/2601.04748"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 50,
+    "downvotes_count": 0,
+    "total_votes": 9,
+    "public_total_votes": 50,
+    "visits": {
+      "last24Hours": 3,
+      "last7Days": 20,
+      "last30Days": 107,
+      "last90Days": 457,
+      "all": 717
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7f66-890f-bf7052c38b4e",
+      "name": "University of British Columbia",
+      "image": "images/organizations/university-of-british-columbia.png"
+    },
+    {
+      "id": "01985c36-cf11-7365-93b1-9aa2c307e3b0",
+      "name": "Vector Institute",
+      "image": null
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

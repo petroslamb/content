@@ -1,0 +1,63 @@
+{
+  "requested_id": "2512.18940",
+  "resolved": {
+    "preferred_id": "2512.18940v1",
+    "input_id": "2512.18940",
+    "title": "FASTRIC: Prompt Specification Language for Verifiable LLM Interactions",
+    "versionless_id": "2512.18940",
+    "canonical_id": "2512.18940v1",
+    "version_id": "019b493b-537c-7fa5-b507-803835042c18",
+    "group_id": "019b493b-5355-758b-a445-6103efa3aaca"
+  },
+  "title": "FASTRIC: Prompt Specification Language for Verifiable LLM Interactions",
+  "abstract": "Large Language Models (LLMs) execute complex multi-turn interaction protocols but lack formal specifications to verify execution against designer intent. We introduce FASTRIC, a Prompt Specification Language that makes implicit Finite State Machines (FSMs) explicit in natural language prompts, enabling conformance verification through execution trace analysis. The LLM serves as intelligent execution agent: interpreting designer-encoded FSMs to execute specified behavioral roles. Unlike symbolic specification languages requiring parsers and compilers, FASTRIC leverages LLMs as unified infrastructure-simultaneously parser, interpreter, runtime environment, and development assistant. FASTRIC guides designers to articulate seven FSM elements (Final States, Agents, States, Triggers, Roles, Initial State, Constraints) structuring multi-turn interactions. Specification formality-ranging from implicit descriptions that frontier models infer to explicit step-by-step instructions for weaker models-serves as a design parameter. We introduce procedural conformance as verification metric measuring execution adherence to FSM specifications. Testing a 3-state kindergarten tutoring FSM across four formality levels and three model scales (14.7B, 685B, 1T+ parameters) reveals optimal specification formality is a function of model capacity. DeepSeek-V3.2 (685B) achieves perfect conformance (1.00) at L2-L4; ChatGPT-5 (~1T) peaks at L3 (0.90) before collapsing at L4 (0.39); Phi4 (14.7B) shows no stable optimum with high variance (SD=0.16-0.36). These findings reveal model-specific formality ranges-\"Goldilocks zones\"-where specifications provide sufficient structure without over-constraint, establishing Prompt Specification Engineering for creating verifiable interaction protocols, transforming multi-turn interaction design from heuristic art to systematic engineering with measurable procedural guarantees.",
+  "publication_date": "2025-12-22T01:19:50",
+  "authors": [
+    {
+      "id": "01985c82-ae64-7a9c-b23b-c9d527bff63e",
+      "full_name": "Wen-Long Jin",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "conversational-ai",
+    "cs.CL",
+    "cs.SE",
+    "human-ai-interaction",
+    "ml-systems",
+    "model-observability",
+    "reasoning-verification"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2512.18940v1.pdf",
+    "source_url": "https://arxiv.org/abs/2512.18940"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 3,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 3,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 0,
+      "last30Days": 1,
+      "last90Days": 2,
+      "all": 20
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7925-8300-5269bf9349dc",
+      "name": "University of California, Irvine",
+      "image": "images/organizations/university-of-california-irvine.jpeg"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

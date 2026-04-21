@@ -23,6 +23,7 @@ Research direction: Determine whether markdown workflow docs, skills, indexes, i
 - Claim ledger: [`claim-ledger.md`](claim-ledger.md)
 - Paper index: [`papers/index.md`](papers/index.md)
 - Converted paper markdown: [`papers/markdown/`](papers/markdown/)
+- Package-local spec-diff prototype: [`scripts/spec_diff_paper_intake.py`](scripts/spec_diff_paper_intake.py)
 - Artifacts: [`artifacts/`](artifacts/)
 - Archive: [`archive/`](archive/)
 
@@ -63,6 +64,8 @@ This keeps a useful hierarchy:
 - validators are tests
 - reviewable-run logs are traces and source maps
 - skills need capability binding or compilation before they can be called portable runtime substrate
+
+The P1 intake extends the evidence surface toward portable agent specifications, prompt specification languages, least-privilege context/tool policy, and the semantic limits of large skill libraries. It also gave the package-local `spec-diff` prototype a fresh test: the validator caught pre-index intake drift and then verified the repaired paper index.
 
 ## Working Guidance
 
