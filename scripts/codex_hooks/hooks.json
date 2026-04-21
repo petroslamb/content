@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/env python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/stop_lifecycle_check.py\"",
+            "statusMessage": "Checking lifecycle guardrails",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

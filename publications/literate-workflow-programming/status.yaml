@@ -4,16 +4,17 @@ revision: 1
 config:
   markdown_path: publications/literate-workflow-programming/literate-workflow-programming.md
   evidence_path: publications/literate-workflow-programming/papers
+  blueprint_path: literate-workflow-programming.md
 stages:
   paper_intake:
     done: true
     last_updated: '2026-04-21'
   research:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-21'
   essay_iteration:
     done: false
-    last_updated: null
+    last_updated: '2026-04-21'
   notebooklm_artifacts:
     done: false
     last_updated: null

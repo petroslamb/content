@@ -12,6 +12,7 @@
     "check:harness": ".venv/bin/python scripts/check_harness.py",
     "check:reviewable-runs": ".venv/bin/python scripts/check_reviewable_run_logs.py",
     "check:essay-iteration": ".venv/bin/python scripts/check_essay_iteration_packet.py",
+    "check:package-lifecycle": ".venv/bin/python scripts/check_package_lifecycle.py",
     "check:notebooklm-registry": ".venv/bin/python scripts/check_notebooklm_registry.py",
     "check:alphaxiv-discussions": ".venv/bin/python scripts/check_alphaxiv_discussions.py",
     "check": "npm run check:harness && npm run check:reviewable-runs && npm run check:repo-links && npm run check:alphaxiv-discussions",

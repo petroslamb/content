@@ -239,6 +239,12 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
     print(f"Approval Gate: {resolution['approval_gate']}")
     print(f"Requires Approval: {resolution['requires_approval']}")
     print(f"Can Execute: {resolution['can_execute']}")
+    governing_brief = resolution.get("package_context_paths", {}).get("governing_brief_path")
+    if governing_brief:
+        print(f"Governing Brief: {governing_brief}")
+    lifecycle_report = resolution.get("lifecycle_report", {})
+    if lifecycle_report.get("warning_count"):
+        print(f"Lifecycle Warnings: {lifecycle_report['warning_count']}")
 
     if dependency_warnings:
         print("\nDependency Warnings:")

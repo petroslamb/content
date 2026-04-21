@@ -19,7 +19,7 @@ required_context:
   - leaf package README
   - parent umbrella README when present
   - companion when present
-  - nearest blueprint when present
+  - governing brief from config.blueprint_path or fallback blueprint
   - nearest review artifacts when present
   - target evidence surface or source index
 expected_outputs:
@@ -64,6 +64,10 @@ The intended sequence is:
 
 The scaffold step is allowed without promotion approval because it only creates or refreshes the working packet. It does not authorize replacement of the live draft and it does not mark the stage done automatically.
 
+Entering `essay_iteration` does not require that every possible adjacent paper already be intaken. If the current evidence set is sufficient to govern a bounded draft candidate, and any remaining research is conditional or non-blocking, the package should leave `research` and carry those evidence triggers inside the packet.
+
+Before running the stage, treat `status.yaml` as the routing surface. Load the package `README.md` next, then the governing brief named by `config.blueprint_path`. Only fall back to the nearest legacy blueprint/plan file when the manifest has not been migrated yet.
+
 ## Packet Manifest
 
 The package-local essay-iteration packet is the canonical machine-readable contract for weaker models. It should be sufficient, together with the leaf package itself, for a weaker model to work without a custom rescue prompt.
@@ -73,7 +77,8 @@ The packet manifest must name:
 - the live draft
 - the leaf README
 - the parent umbrella README when present
-- the nearest companion, blueprint, and review artifacts
+- the nearest companion and review artifacts
+- the governing brief path
 - the evidence surface or source index
 - the generated packet file targets
 - the validator command
@@ -145,6 +150,7 @@ Use the blueprint only after the main cold read if blueprint alignment needs com
 - When a major rewrite is needed, prefer a clearly named bounded candidate such as `-v2.md` or `-revision-2.md` before promoting it into the stable live path. Do not overwrite the live draft first and decide later what changed.
 - If the blueprint already exists, use it as the preparation surface instead of creating a separate memo by default. Add a new memo only when the blueprint cannot absorb the needed evidence validation cleanly.
 - For evidence-sensitive rewrites, do not draft against alphaXiv-only context if the missing papers are already known. Intake first, then harden the blueprint, then draft the article.
+- Do not keep a package stranded in `research` just because selective P2b or gap-closing intake might still help later. Once the current evidence set is sufficient to govern the candidate, move to `essay_iteration` and carry any remaining research as explicit conditional triggers.
 - A new candidate is justified only when the authorized evidence changes the essay's object, section burden, or reader action. If the research pass only produces better explanation of the existing frame, patch the existing draft surgically.
 - When a hardened blueprint is aiming at the outstanding bar, an external AI review of the blueprint can be useful before the essay prewrite gate, but that review is advisory. The writer remains responsible for adjudicating which findings matter, which are misreads, and which proposed fixes would actually improve the governing surface.
 - Before writing a high-bar bounded draft, run an essay prewrite gate. Either produce an essay-governing prewrite surface strong enough to support an outstanding draft, or conclude explicitly that the essay is not yet writable at that bar.

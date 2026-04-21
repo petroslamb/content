@@ -177,6 +177,14 @@ def validate_packet(packet: dict) -> list[str]:
     if live_draft_path == candidate_path:
         errors.append("Candidate path must differ from the live draft path.")
 
+    governing_brief_relpath = packet.get("input_paths", {}).get("governing_brief_path")
+    if not governing_brief_relpath:
+        errors.append("Packet manifest is missing input_paths.governing_brief_path.")
+    else:
+        governing_brief_path = (REPO_ROOT / governing_brief_relpath).resolve()
+        if not governing_brief_path.exists():
+            errors.append(f"Governing brief does not exist: {governing_brief_path}")
+
     blueprint_text = resolved_outputs["blueprint"].read_text()
     validate_required_headings(blueprint_text, BLUEPRINT_HEADINGS, "Blueprint", errors)
 
