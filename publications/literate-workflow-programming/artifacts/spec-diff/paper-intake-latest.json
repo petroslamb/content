@@ -1,0 +1,28 @@
+{
+  "kind": "spec_diff_report",
+  "version": 1,
+  "generated_at": "2026-04-21T17:33:06",
+  "package": "literate-workflow-programming",
+  "stage": "paper_intake",
+  "source": {
+    "workflow_doc": "workflows/paper-intake/README.md",
+    "package_status": "publications/literate-workflow-programming/status.yaml",
+    "paper_index": "publications/literate-workflow-programming/papers/index.md"
+  },
+  "expected_state": {
+    "evidence_surface": "publications/literate-workflow-programming/papers",
+    "local_pdf_count": 13,
+    "local_markdown_count": 13,
+    "local_metadata_count": 12,
+    "indexed_local_paper_count": 13,
+    "queued_paper_count": 11,
+    "ignored_pdf_count": 13,
+    "ignored_pdfs_are_local_evidence": true
+  },
+  "findings": [],
+  "summary": {
+    "blocking": 0,
+    "warnings": 0,
+    "status": "pass"
+  }
+}

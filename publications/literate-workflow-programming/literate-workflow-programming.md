@@ -67,11 +67,32 @@ The initial paper batch points toward a source/runtime/debugging stack:
 
 The package should therefore prototype `spec-diff`: compare expected workflow state from a stage contract against actual run artifacts, then report semantic drift as source-linked findings. The first design note is [`research-notes/2026-04-20-spec-diff-experiment.md`](research-notes/2026-04-20-spec-diff-experiment.md).
 
+## P1 Lead Decision
+
+The P1 batch decides the lead frame:
+
+Agent workflow specs become meaningful source only when coupled to validation gates, policy enforcement, and semantic debugging traces.
+
+Agent Spec and the declarative workflow DSL strengthen the visible specification layer. FASTRIC adds prompt-protocol conformance and trace analysis. ALARA and Progent add the enforcement layer, showing why context and tool policy must be parsed and enforced rather than merely described. Single-Agent With Skills connects this package back to `illusion-of-swarm` by treating skills as internalized behaviors while exposing semantic-selection limits.
+
+The article should therefore treat specification languages as the visible surface, validation as the hinge, and `spec-diff` as the repo-native proof that source-linked drift can be detected in a publication package. The P1 synthesis note is [`research-notes/2026-04-21-p1-synthesis-validation-gates.md`](research-notes/2026-04-21-p1-synthesis-validation-gates.md).
+
+## Second-Package Proof Threshold
+
+The first external `spec-diff` proof candidate ran against `publications/illusion-of-swarm/` on 2026-04-21. It found evidence-orientation drift in a package with different storage conventions, repaired only `papers/index.md`, and passed after repair.
+
+This meets the second-package threshold as a candidate, not as a retained repo-wide proof. The next promotion decision should ask whether package-local validators should become a proof-run requirement. It should not assume a shared root command or update `phased-strategy/` until that decision is made explicitly.
+
+## Adjacent Package Transfer
+
+`publications/confidence-debt/` and the external `eth-llm` contradiction-ledger artifacts add a useful mechanism without changing this essay's subject. Confidence Debt is about trust outrunning evidence. This package is about workflow specs becoming source. The shared mechanism is claim state: promoted claims need evidence state, contradiction state, validation state, and trace state.
+
+The cross-read note is [`research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md`](research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md).
+
 ## Next Research Tasks
 
-1. Sketch the `spec-diff` experiment for one real workflow.
-2. Extract exact P0 claims into the claim ledger as the papers are read in detail.
-3. Separate existing terms: context engineering, natural-language harness, agent specification language, prompt specification language, skills-as-code, and literate programming for agents.
-4. Decide whether `imports` should stay advisory links, become declared dependencies, or eventually compile into context packets.
-5. Intake P1 only after the next literature question is sharpened by the experiment.
-6. Identify what should be extracted back into `phased-strategy/` only after the evidence is strong.
+1. Draft from the chosen lead frame: meaningful workflow source requires specification, validation gates, policy enforcement, and semantic debugging traces.
+2. Separate existing terms: context engineering, natural-language harness, agent specification language, prompt specification language, skills-as-code, and literate programming for agents.
+3. Keep `imports`, package-as-object semantics, full contradiction-ledger machinery, and repo-wide validator promotion parked until there is stronger local proof.
+4. Decide whether the `illusion-of-swarm` result and contradiction-ledger transfer justify a promotion memo for package-local validators before touching `phased-strategy/`.
+5. Use P2 papers for context-file limits, terminal-native harnesses, and observability rather than reopening the lead frame unless they directly break it.

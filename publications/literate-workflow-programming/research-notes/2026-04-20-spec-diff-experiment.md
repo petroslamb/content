@@ -4,6 +4,11 @@ Date: 2026-04-20
 
 Status: research design note, not an accepted workflow change
 
+Prototype:
+
+- Script: [`../scripts/spec_diff_paper_intake.py`](../scripts/spec_diff_paper_intake.py)
+- Latest artifact: [`../artifacts/spec-diff/paper-intake-latest.json`](../artifacts/spec-diff/paper-intake-latest.json)
+
 ## Purpose
 
 Test whether this repo's workflow docs, package status, paper indexes, validators, and reviewable-run logs can behave like a source-and-trace system rather than loose operational prose.
@@ -127,6 +132,113 @@ This experiment is worth extracting back into the workflow system if it can:
 3. stay lightweight enough to run as a validation command,
 4. produce a reviewable-run trace that is more useful than an execution receipt.
 
+## First Prototype Result
+
+The first run produced a useful warning that the standard `npm run check` bundle did not catch: local PDFs were intentionally present but gitignored, while `papers/index.md` did not explicitly tell reviewers that the `Local PDF` links refer to ignored local evidence rather than tracked files.
+
+That drift was fixed by adding a conversion note to `papers/index.md`:
+
+> Local PDFs are intentionally gitignored third-party evidence. Treat the `Local PDF` links above as local evidence pointers, not as expected tracked files.
+
+After the fix, the prototype report passes:
+
+- 7 indexed local papers
+- 7 local PDFs
+- 7 converted markdown files
+- 6 metadata files
+- 0 blocking findings
+- 0 warnings
+
+This is a small but real result: `spec-diff` caught a reviewer-facing semantic mismatch, not a missing file or broken link.
+
+## Reviewable Runs Wrapper Result
+
+On 2026-04-21, this experiment was wrapped in a lightweight Phase 1.5 proof-run candidate: [`../../../reviewable-runs/logs/2026-04-21_literate-workflow-programming_spec-diff-proof-candidate.md`](../../../reviewable-runs/logs/2026-04-21_literate-workflow-programming_spec-diff-proof-candidate.md).
+
+The wrapper added value, but mainly by limiting the claim:
+
+- it made the prompt-glue and approval boundary explicit,
+- it confirmed that the package next-action resolver correctly points to `research`,
+- it exposed that guided stages with `launch_mode: none` are still not directly executable proof runs,
+- it showed that this run should not be promoted as retained proof because the useful `spec-diff` finding happened during prototype creation, before the wrapper.
+
+The next useful test is not another wrapper over the same artifact. It is a fresh `spec-diff` run during P1 intake or against a different package with known evidence drift.
+
+## P1 Intake Result
+
+The 2026-04-21 P1 intake gave the experiment a real second test. Six queued P1 papers were downloaded, converted, and stored locally before the index was updated:
+
+- Open Agent Specification
+- A Declarative Language for Building And Orchestrating LLM-Powered Agent Workflows
+- FASTRIC
+- ALARA for Agents
+- Progent
+- When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail
+
+The pre-index `spec-diff` report found 24 warnings: six local PDFs were not indexed, six markdown files were not indexed, six metadata files were not indexed, and the six papers still appeared in the intake queue. The report is retained at [`../artifacts/spec-diff/paper-intake-p1-preindex.json`](../artifacts/spec-diff/paper-intake-p1-preindex.json).
+
+That run also found a prototype bug: version normalization only handled `v1` through `v3`, so `2510.04173v4` initially avoided the queued-paper check. The prototype now strips arbitrary numeric version suffixes.
+
+After the index and `status.yaml` were updated, the latest report passed:
+
+- 13 indexed local papers
+- 13 local PDFs
+- 13 converted markdown files
+- 12 metadata files
+- 11 queued papers
+- 0 blocking findings
+- 0 warnings
+
+This is a stronger result than the first wrapper. `spec-diff` caught ordinary intake drift while work was in progress, then verified that the package returned to a consistent declared state.
+
+## Second-Package Result
+
+On 2026-04-21, the experiment was tested outside this package with `publications/illusion-of-swarm/`.
+
+That package was a useful second target because its paper evidence predates the current `papers/markdown/` convention. It had a published essay, a `paper_intake.done: true` lifecycle state, root-level text captures, a few PDFs and root markdown files, alphaXiv artifacts, and a thin generic `papers/index.md`.
+
+The first retained `illusion-of-swarm` report found 19 warnings:
+
+- the paper index was too thin for a done evidence surface,
+- mixed local evidence conventions were not called out,
+- 12 local paper evidence files were not represented in the index,
+- 5 draft-cited arXiv IDs had no local paper file or alphaXiv artifact record.
+
+The run also exposed a validator assumption before the retained report was finalized: scanning too much paper text made reference-list arXiv IDs look like local evidence. The second-package validator now treats only file names and header-area IDs as local paper identity, while alphaXiv artifact support comes from artifact filenames.
+
+The repair stayed inside the planned boundary. Only `publications/illusion-of-swarm/papers/index.md` changed. It now enumerates the existing local evidence, names the mixed storage convention, and classifies the five unresolved draft-citation gaps without downloading papers or changing the published essay.
+
+The latest `illusion-of-swarm` report passes:
+
+- 12 local evidence files
+- 13 cited arXiv IDs in the canonical draft
+- 8 artifact-supported arXiv IDs
+- 5 classified gaps
+- 0 blocking findings
+- 0 warnings
+
+The Reviewable Runs record is [`../../../reviewable-runs/logs/2026-04-21_illusion-of-swarm_spec-diff-proof-candidate.md`](../../../reviewable-runs/logs/2026-04-21_illusion-of-swarm_spec-diff-proof-candidate.md).
+
+This meets the requested second-package threshold as a proof candidate. It should not be promoted to a root validator or retained proof yet. The evidence says the pattern is worth a promotion decision, not that the repo-wide interface is ready.
+
+## Adjacent Governance Transfer
+
+The Confidence Debt package and the external `eth-llm` contradiction-ledger artifacts add one useful future direction without changing the current prototype scope. Confidence Debt's artifact gate asks promoted claims to carry evidence state, contradiction state, and expiry condition. The `eth-llm` governance-core protocol turns that into operating artifacts: authority order, claim ledgers, contradiction registers, evidence maps, scores, and final contradiction rollups.
+
+For this experiment, the important transfer is narrow: `spec-diff` should eventually be able to report contradiction state, not only evidence-surface drift. The current validators already have a primitive version of this in `illusion-of-swarm`: cited papers with no local evidence were classified as gaps instead of silently treated as missing markdown. A richer manifest could make this explicit:
+
+```json
+{
+  "authority_order": ["workflow_doc", "status_yaml", "paper_index", "run_trace"],
+  "claim_state": "supported | contested | inference | parked | blocked",
+  "contradiction_state": "none | classified | unresolved | resolved | blocking",
+  "validation_state": "pass | warning | fail | skipped | out_of_scope",
+  "trace_state": "reviewable-run or report id"
+}
+```
+
+Do not implement this in the package-local validator yet. Keep it as a design pressure for the promotion memo.
+
 ## Open Design Questions
 
 - Should the manifest be generated from `run_stage.py`, a separate `spec_diff.py`, or a workflow-specific validator?
@@ -134,3 +246,4 @@ This experiment is worth extracting back into the workflow system if it can:
 - Should ignored files such as PDFs be first-class local evidence in the manifest?
 - Should source clauses use markdown headings, line numbers, or stable semantic anchors?
 - Should imports be modeled as file dependencies, context layers, or capability bindings?
+- Should future reports model `authority_order` and `contradiction_state`, or should those live in a separate claim-audit artifact?

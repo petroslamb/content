@@ -1,0 +1,168 @@
+{
+  "requested_id": "2510.04173",
+  "resolved": {
+    "preferred_id": "2510.04173v4",
+    "input_id": "2510.04173",
+    "title": "Open Agent Specification (Agent Spec): A Unified Representation for AI Agents",
+    "versionless_id": "2510.04173",
+    "canonical_id": "2510.04173v4",
+    "version_id": "019a7b25-c07b-7ee4-a476-bf69f0fc8b28",
+    "group_id": "0199bcde-c165-7e73-8747-20fd0f27754c"
+  },
+  "title": "Open Agent Specification (Agent Spec): A Unified Representation for AI Agents",
+  "abstract": "The proliferation of agent frameworks has led to fragmentation in how agents are defined, executed, and evaluated. Existing systems differ in their abstractions, data flow semantics, and tool integrations, making it difficult to share or reproduce workflows. We introduce Open Agent Specification (Agent Spec), a declarative language that defines AI agents and agentic workflows in a way that is compatible across frameworks, promoting reusability, portability and interoperability of AI agents. Agent Spec defines a common set of components, control and data flow semantics, and schemas that allow an agent to be defined once and executed across different runtimes. Agent Spec also introduces a standardized Evaluation harness to assess agent behavior and agentic workflows across runtimes - analogous to how HELM and related harnesses standardized LLM evaluation - so that performance, robustness, and efficiency can be compared consistently across frameworks. We demonstrate this using four distinct runtimes (LangGraph, CrewAI, AutoGen, and WayFlow) evaluated over three different benchmarks (SimpleQA Verified, $\\tau^2$-Bench and BIRD-SQL). We provide accompanying toolsets: a Python SDK (PyAgentSpec), a reference runtime (WayFlow), and adapters for popular frameworks (e.g., LangGraph, AutoGen, CrewAI). Agent Spec bridges the gap between model-centric and agent-centric standardization & evaluation, laying the groundwork for reliable, reusable, and portable agentic systems.",
+  "publication_date": "2025-11-07T14:02:33",
+  "authors": [
+    {
+      "id": "019a7b25-c050-7c1d-8bf5-6f05d71e153d",
+      "full_name": "Soufiane Amini",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-6f05-7a92-af76-126031dcbfea",
+      "full_name": "Yassine Benajiba",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c85-9f1e-7138-aa81-cacfd708fd0c",
+      "full_name": "Cesare Bernardis",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-cac6-7b51-9b8a-aa15f308dd6e",
+      "full_name": "Paul Cayet",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-2800-75f9-996b-da050245d154",
+      "full_name": "Hassan Chafi",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-e469-7a3f-b459-50f8136eef7c",
+      "full_name": "Abderrahim Fathan",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c85-75ad-7213-a0c4-0aa408ec9db7",
+      "full_name": "Louis Faucon",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-cac6-7f6a-8142-4268c148d4f1",
+      "full_name": "Damien Hilloulin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-cac6-78b1-b2b9-d19019114992",
+      "full_name": "Sungpack Hong",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "0199bcde-c1ca-77b6-adc6-805e65815b56",
+      "full_name": "Ingo Kossyk",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-2cb3-725e-b7d2-80a152fa7910",
+      "full_name": "Tran Minh Son Le",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-e468-72cb-b355-79f032ef67b7",
+      "full_name": "Rhicheek Patra",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-8327-7850-b37e-d7cdbd81332e",
+      "full_name": "Sujith Ravi",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-2f05-7bb8-92a3-1ae1e82ded30",
+      "full_name": "Jonas Schweizer",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01999bca-2adb-7f21-a79c-0fb5d5f5b643",
+      "full_name": "Jyotika Singh",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "0199bcde-c1dc-7397-83d2-972ea78255e1",
+      "full_name": "Shailender Singh",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-d6a5-77ed-b229-1b5150c12802",
+      "full_name": "Weiyi Sun",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-b663-7545-b8c8-78a2bedbb6a9",
+      "full_name": "Kartik Talamadupula",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-c72d-75cd-ba63-150149f326be",
+      "full_name": "Jerry Xu",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "ml-systems",
+    "model-deployment-systems",
+    "model-observability"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2510.04173v4.pdf",
+    "source_url": "https://arxiv.org/abs/2510.04173"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 1,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 1,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 5,
+      "last30Days": 20,
+      "last90Days": 50,
+      "all": 103
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-e730-7029-b9bd-11680054a636",
+      "name": "Oracle Corporation",
+      "image": null
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}
