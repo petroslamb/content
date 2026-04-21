@@ -14,13 +14,17 @@ paths:
 interfaces:
   check:
     entrypoint: npm run check
-    script: npm run check:harness && npm run check:reviewable-runs && npm run check:repo-links && npm run check:alphaxiv-discussions
+    script: npm run check:harness && npm run check:reviewable-runs && npm run check:repo-links
+      && npm run check:alphaxiv-discussions
   check:essay-iteration:
     entrypoint: npm run check:essay-iteration
     script: .venv/bin/python scripts/check_essay_iteration_packet.py
   check:harness:
     entrypoint: npm run check:harness
     script: .venv/bin/python scripts/check_harness.py
+  check:package-lifecycle:
+    entrypoint: npm run check:package-lifecycle
+    script: .venv/bin/python scripts/check_package_lifecycle.py
   package:init:
     entrypoint: npm run package:init
     script: .venv/bin/python scripts/init_package.py
@@ -42,25 +46,25 @@ interfaces:
 package_init:
   default_first_stage: research
   scaffold:
-    - README.md
-    - <slug>.md
-    - status.yaml
-    - papers/
-    - papers/markdown/
-    - papers/index.md
-    - artifacts/
-    - archive/
+  - README.md
+  - <slug>.md
+  - status.yaml
+  - papers/
+  - papers/markdown/
+  - papers/index.md
+  - artifacts/
+  - archive/
 lifecycle:
   stage_order:
-    - paper_intake
-    - research
-    - essay_iteration
-    - notebooklm_artifacts
-    - article_polish
-    - substack_publishing
-    - archive_sync
-    - youtube_production
-    - distribution
+  - paper_intake
+  - research
+  - essay_iteration
+  - notebooklm_artifacts
+  - article_polish
+  - substack_publishing
+  - archive_sync
+  - youtube_production
+  - distribution
   stages:
     paper_intake:
       workflow_doc: workflows/paper-intake/README.md
@@ -69,20 +73,20 @@ lifecycle:
       default_skill: markitdown-paper-intake
       approval_gate: none
       required_context:
-        - package README or leaf README
-        - target evidence surface or source index
-        - paper files or source URLs to intake
+      - package README or leaf README
+      - target evidence surface or source index
+      - paper files or source URLs to intake
       expected_outputs:
-        - original paper files placed in the package evidence surface
-        - converted markdown in the evidence markdown directory when needed
-        - updated paper or source index
+      - original paper files placed in the package evidence surface
+      - converted markdown in the evidence markdown directory when needed
+      - updated paper or source index
       done_when:
-        - selected papers are stored locally and the package evidence index is current
+      - selected papers are stored locally and the package evidence index is current
       launch_templates: []
-      packet_templates: []
-      validator_commands: []
+      packet_templates: &id001 []
+      validator_commands: &id002 []
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: &id003 []
     research:
       workflow_doc: workflows/alphaxiv-research/README.md
       runner_mode: guided
@@ -90,20 +94,26 @@ lifecycle:
       default_skill: alphaxiv
       approval_gate: none
       required_context:
-        - package README or leaf README
-        - current research question or thesis direction
-        - package evidence surface for shortlisted papers
+      - package README or leaf README
+      - current research question or thesis direction
+      - package evidence surface for shortlisted papers
       expected_outputs:
-        - shortlist of candidate papers with rationale
-        - tracked assistant discussion notes when alphaXiv assistant materially shapes the work
-        - selected papers ready to move into paper intake
+      - shortlist of candidate papers with rationale
+      - tracked assistant discussion notes when alphaXiv assistant materially shapes
+        the work
+      - selected papers ready to move into paper intake
       done_when:
-        - the shortlist is grounded enough to drive package-local paper intake or source discussion, and any important assistant discussion has a package-local extraction note
+      - the shortlist is grounded enough to drive package-local paper intake or source
+        discussion, and any important assistant discussion has a package-local extraction
+        note
+      - or the package already has a sufficient local evidence set and claim-control
+        surface to govern essay_iteration, even if narrower conditional follow-on
+        research remains queued
       launch_templates: []
-      packet_templates: []
-      validator_commands: []
+      packet_templates: *id001
+      validator_commands: *id002
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: *id003
     essay_iteration:
       workflow_doc: workflows/essay-iteration/README.md
       runner_mode: hybrid
@@ -111,34 +121,35 @@ lifecycle:
       default_skill: null
       approval_gate: required_for_major_rewrite
       required_context:
-        - canonical live draft
-        - leaf package README
-        - parent umbrella README when present
-        - companion when present
-        - nearest blueprint when present
-        - nearest review artifacts when present
-        - target evidence surface or source index
+      - canonical live draft
+      - leaf package README
+      - parent umbrella README when present
+      - companion when present
+      - governing brief from config.blueprint_path or fallback blueprint
+      - nearest review artifacts when present
+      - target evidence surface or source index
       expected_outputs:
-        - essay-iteration packet manifest beside the live draft
-        - bounded rewrite candidate and structured review artifacts within the packet
+      - essay-iteration packet manifest beside the live draft
+      - bounded rewrite candidate and structured review artifacts within the packet
       done_when:
-        - a validated packet exists beside the live draft and the current direction is explicit enough for human review or the next lifecycle handoff
+      - a validated packet exists beside the live draft and the current direction
+        is explicit enough for human review or the next lifecycle handoff
       launch_templates:
-        - .venv/bin/python scripts/init_essay_iteration_packet.py --package {package_key}
+      - .venv/bin/python scripts/init_essay_iteration_packet.py --package {package_key}
       packet_templates:
-        - workflows/essay-iteration/templates/hardened_blueprint_template.md
-        - workflows/essay-iteration/templates/candidate_template.md
-        - workflows/essay-iteration/templates/cold_replacement_review_template.md
-        - workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md
-        - workflows/essay-iteration/templates/promotion_decision_template.md
+      - workflows/essay-iteration/templates/hardened_blueprint_template.md
+      - workflows/essay-iteration/templates/candidate_template.md
+      - workflows/essay-iteration/templates/cold_replacement_review_template.md
+      - workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md
+      - workflows/essay-iteration/templates/promotion_decision_template.md
       validator_commands:
-        - npm run check:essay-iteration -- --package {package_key}
+      - npm run check:essay-iteration -- --package {package_key}
       judgment_policy: draft_only
       prohibited_moves:
-        - Do not overwrite the current live draft before a replacement verdict exists.
-        - Do not archive adjacent leaves before the promotion decision is explicit.
-        - Do not mark the stage done from a weak-model run without human review.
-        - Do not claim Publication Power 9 or above under the draft-only policy.
+      - Do not overwrite the current live draft before a replacement verdict exists.
+      - Do not archive adjacent leaves before the promotion decision is explicit.
+      - Do not mark the stage done from a weak-model run without human review.
+      - Do not claim Publication Power 9 or above under the draft-only policy.
     notebooklm_artifacts:
       workflow_doc: workflows/notebooklm-artifacts/README.md
       runner_mode: guided
@@ -146,19 +157,20 @@ lifecycle:
       default_skill: notebooklm-artifact-bundle
       approval_gate: none
       required_context:
-        - canonical live draft
-        - target NotebookLM notebook id or exact title
-        - destination artifacts directory
+      - canonical live draft
+      - target NotebookLM notebook id or exact title
+      - destination artifacts directory
       expected_outputs:
-        - downloaded artifact bundle in the package artifact surface
-        - task or transcript references needed for later polish
+      - downloaded artifact bundle in the package artifact surface
+      - task or transcript references needed for later polish
       done_when:
-        - the required NotebookLM artifacts are downloaded into the canonical artifact home
+      - the required NotebookLM artifacts are downloaded into the canonical artifact
+        home
       launch_templates: []
-      packet_templates: []
-      validator_commands: []
+      packet_templates: *id001
+      validator_commands: *id002
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: *id003
     article_polish:
       workflow_doc: workflows/article-polish/README.md
       runner_mode: guided
@@ -166,20 +178,20 @@ lifecycle:
       default_skill: null
       approval_gate: required_before_publish
       required_context:
-        - canonical live draft
-        - package artifact surface with NotebookLM or local media outputs
-        - current references and supporting links
+      - canonical live draft
+      - package artifact surface with NotebookLM or local media outputs
+      - current references and supporting links
       expected_outputs:
-        - polished live draft with intentional media placement
-        - semantically named kept images in the artifact surface
-        - publication-ready references and repo links
+      - polished live draft with intentional media placement
+      - semantically named kept images in the artifact surface
+      - publication-ready references and repo links
       done_when:
-        - the draft is publication-ready and ready to hand off to the release gate
+      - the draft is publication-ready and ready to hand off to the release gate
       launch_templates: []
-      packet_templates: []
-      validator_commands: []
+      packet_templates: *id001
+      validator_commands: *id002
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: *id003
     substack_publishing:
       workflow_doc: workflows/substack-publishing/README.md
       runner_mode: hybrid
@@ -187,22 +199,23 @@ lifecycle:
       default_skill: null
       approval_gate: required_before_live_publish
       required_context:
-        - config.markdown_path
-        - config.substack_url
-        - config.substack_post_id
-        - release gate verdict or explicit publication approval
-        - existing Substack draft or publish target
+      - config.markdown_path
+      - config.substack_url
+      - config.substack_post_id
+      - release gate verdict or explicit publication approval
+      - existing Substack draft or publish target
       expected_outputs:
-        - synced Substack draft or published post
-        - publication-ready markdown rendered in the target Substack post
+      - synced Substack draft or published post
+      - publication-ready markdown rendered in the target Substack post
       done_when:
-        - the synced post has been reviewed and explicitly approved as complete
+      - the synced post has been reviewed and explicitly approved as complete
       launch_templates:
-        - .venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path}
-      packet_templates: []
-      validator_commands: []
+      - .venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url
+        {substack_url} --post-id {substack_post_id} --markdown {markdown_path}
+      packet_templates: *id001
+      validator_commands: *id002
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: *id003
     archive_sync:
       workflow_doc: workflows/substack-archive-sync/README.md
       runner_mode: scripted
@@ -210,20 +223,21 @@ lifecycle:
       default_skill: substack-archive-sync
       approval_gate: none
       required_context:
-        - repo root environment with archive scripts available
-        - up-to-date publication metadata or recently published post
+      - repo root environment with archive scripts available
+      - up-to-date publication metadata or recently published post
       expected_outputs:
-        - refreshed tracked public archive
-        - updated archive metadata and README publication map
+      - refreshed tracked public archive
+      - updated archive metadata and README publication map
       done_when:
-        - the archive refresh completes successfully and the mirror validation pass is clean
+      - the archive refresh completes successfully and the mirror validation pass
+        is clean
       launch_templates:
-        - .venv/bin/python scripts/sync_substack_archive.py
-        - npm run check:mirror
-      packet_templates: []
-      validator_commands: []
+      - .venv/bin/python scripts/sync_substack_archive.py
+      - npm run check:mirror
+      packet_templates: *id001
+      validator_commands: *id002
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: *id003
     youtube_production:
       workflow_doc: workflows/youtube-production/README.md
       runner_mode: guided
@@ -231,19 +245,20 @@ lifecycle:
       default_skill: youtube-slide-video-pipeline
       approval_gate: required_before_channel_mutation
       required_context:
-        - canonical audio narration
-        - slide images or PDFs
-        - timed captions or transcript inputs
+      - canonical audio narration
+      - slide images or PDFs
+      - timed captions or transcript inputs
       expected_outputs:
-        - reviewed cue sheet
-        - verified MP4 in the package video artifact surface
+      - reviewed cue sheet
+      - verified MP4 in the package video artifact surface
       done_when:
-        - the local MP4 render is verified and ready for channel-side upload or replacement work
+      - the local MP4 render is verified and ready for channel-side upload or replacement
+        work
       launch_templates: []
-      packet_templates: []
-      validator_commands: []
+      packet_templates: *id001
+      validator_commands: *id002
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: *id003
     distribution:
       workflow_doc: workflows/distribution/README.md
       runner_mode: guided
@@ -251,16 +266,17 @@ lifecycle:
       default_skill: null
       approval_gate: required_before_external_posting
       required_context:
-        - published canonical post URL
-        - package or publication distribution plan when present
-        - any required platform-specific copy or media assets
+      - published canonical post URL
+      - package or publication distribution plan when present
+      - any required platform-specific copy or media assets
       expected_outputs:
-        - finalized distribution copy or posting plan for the target channels
-        - recorded follow-through on the channels that matter for the package
+      - finalized distribution copy or posting plan for the target channels
+      - recorded follow-through on the channels that matter for the package
       done_when:
-        - the planned post-publication distribution work is complete or explicitly deferred with notes
+      - the planned post-publication distribution work is complete or explicitly deferred
+        with notes
       launch_templates: []
-      packet_templates: []
-      validator_commands: []
+      packet_templates: *id001
+      validator_commands: *id002
       judgment_policy: unrestricted
-      prohibited_moves: []
+      prohibited_moves: *id003

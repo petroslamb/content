@@ -8,7 +8,7 @@ Research direction: Determine whether markdown workflow docs, skills, indexes, i
 
 - Archetype: Single-publication research package
 - Status: Active / unpublished
-- Current stage: research and paper intake
+- Current stage: essay_iteration
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
 
 ## Orientation

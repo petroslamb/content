@@ -17,6 +17,7 @@ from essay_iteration_support import (
     describe_packet_paths,
     resolve_companion_path,
     resolve_evidence_surface as resolve_essay_evidence_surface,
+    resolve_governing_brief_path,
     resolve_leaf_readme,
     resolve_live_draft,
     resolve_nearest_blueprint_path,
@@ -25,6 +26,7 @@ from essay_iteration_support import (
     resolve_review_artifact_paths,
 )
 from lifecycle import PUBLICATIONS_DIR, REPO_ROOT, STAGES, load_status_ref, load_workflow_contract
+from package_lifecycle import inspect_package_lifecycle
 
 
 PACKAGE_JSON_PATH = REPO_ROOT / "package.json"
@@ -35,6 +37,7 @@ LOGS_DIR = REPO_ROOT / "reviewable-runs" / "logs"
 REQUIRED_NPM_SCRIPTS = {
     "check",
     "check:essay-iteration",
+    "check:package-lifecycle",
     "stage:next",
     "stage:resolve",
     "stage:run",
@@ -358,6 +361,12 @@ def resolve_context_item(item: str, package_path: Path, status_data: dict) -> di
             return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(blueprint)}
         return {"name": item, "status": "advisory", "blocking": False}
 
+    if item == "governing brief from config.blueprint_path or fallback blueprint":
+        governing_brief = resolve_governing_brief_path(package_path, status_data)
+        if governing_brief:
+            return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(governing_brief)}
+        return {"name": item, "status": "missing", "blocking": True}
+
     if item == "nearest review artifacts when present":
         review_artifacts = resolve_review_artifact_paths(package_path, status_data)
         if review_artifacts:
@@ -564,6 +573,7 @@ def build_package_context_paths(package_path: Path, status_data: dict) -> dict:
     parent_path = resolve_parent_package_path(package_path, status_data)
     parent_readme = resolve_parent_package_readme(package_path, status_data)
     companion = resolve_companion_path(package_path)
+    governing_brief = resolve_governing_brief_path(package_path, status_data)
     blueprint = resolve_nearest_blueprint_path(package_path, status_data)
     review_artifacts = resolve_review_artifact_paths(package_path, status_data)
     evidence_surface = resolve_essay_evidence_surface(package_path, status_data)
@@ -574,6 +584,7 @@ def build_package_context_paths(package_path: Path, status_data: dict) -> dict:
         "parent_package_path": repo_relpath(parent_path),
         "parent_package_readme_path": repo_relpath(parent_readme),
         "companion_path": repo_relpath(companion),
+        "governing_brief_path": repo_relpath(governing_brief),
         "nearest_blueprint_path": repo_relpath(blueprint),
         "review_artifact_paths": [repo_relpath(path) for path in review_artifacts],
         "evidence_surface_path": repo_relpath(evidence_surface),
@@ -596,6 +607,13 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         required_context,
         policy,
     )
+    lifecycle_report = inspect_package_lifecycle(manifest_ref.package_key)
+    if stage == "essay_iteration":
+        for issue in lifecycle_report["issues"]:
+            if issue["blocking"]:
+                blocking_issues.append(issue["message"])
+        if any(issue["blocking"] for issue in lifecycle_report["issues"]):
+            can_execute = False
     package_context_paths = build_package_context_paths(manifest_ref.package_path, status_data)
     packet_paths = {}
     if stage == "essay_iteration":
@@ -626,6 +644,7 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "expected_outputs": metadata["expected_outputs"],
         "done_when": metadata["done_when"],
         "package_audit": audit_package(manifest_ref.package_key),
+        "lifecycle_report": lifecycle_report,
         "auto_mark_done_allowed": auto_mark_done_allowed(stage, metadata, policy),
         "current_state": status_data.get("stages", {}).get(stage, {"done": False, "last_updated": None}),
         "package_context_paths": package_context_paths,
