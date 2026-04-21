@@ -1,0 +1,103 @@
+{
+  "requested_id": "2504.11703",
+  "resolved": {
+    "preferred_id": "2504.11703v2",
+    "input_id": "2504.11703",
+    "title": "Progent: Programmable Privilege Control for LLM Agents",
+    "versionless_id": "2504.11703",
+    "canonical_id": "2504.11703v2",
+    "version_id": "01990f19-a693-7597-ad4d-5b804db8acea",
+    "group_id": "01963c51-dc80-7bdf-bbe7-6015929bf43e"
+  },
+  "title": "Progent: Programmable Privilege Control for LLM Agents",
+  "abstract": "LLM agents utilize Large Language Models as central components with diverse tools to complete various user tasks, but face significant security risks when interacting with external environments. Attackers can exploit these agents through various vectors, including indirect prompt injection, memory/knowledge base poisoning, and malicious tools, tricking agents into performing dangerous actions such as unauthorized financial transactions or data leakage. The core problem that enables attacks to succeed lies in over-privileged tool access. We introduce Progent, the first privilege control framework to secure LLM agents. Progent enforces security at the tool level by restricting agents to performing tool calls necessary for user tasks while blocking potentially malicious ones. Progent features a domain-specific language that allows for expressing fine-grained policies for controlling tool privileges, flexible fallback actions when calls are blocked, and dynamic policy updates to adapt to changing agent states. The framework operates deterministically at runtime, providing provable security guarantees. Thanks to our modular design, integrating Progent does not alter agent internals and only requires minimal changes to the existing agent implementation, enhancing its practicality and potential for widespread adoption. Our extensive evaluation across various agent use cases, using benchmarks like AgentDojo, ASB, and AgentPoison, demonstrates that Progent reduces attack success rates to 0%, while preserving agent utility and speed. Additionally, we show that LLMs can automatically generate effective policies, highlighting their potential for automating the process of writing Progent's security policies.",
+  "publication_date": "2025-08-30T06:42:59",
+  "authors": [
+    {
+      "id": "01985c83-e58c-7c51-933c-8e701eb50028",
+      "full_name": "Tianneng Shi",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e41b-720c-9594-d99ba1f54628",
+      "full_name": "Jingxuan He",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-937b-7a5b-a308-188c27a96cdb",
+      "full_name": "Zhun Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e01e-71ee-a8f0-87a809626fb7",
+      "full_name": "Hongwei Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-e58c-778b-9dfd-8ad69a23f3f5",
+      "full_name": "Linyu Wu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ef78-7258-ad44-e66954376bc0",
+      "full_name": "Wenbo Guo",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d857-76a1-b036-08877fdd78fa",
+      "full_name": "Dawn Song",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "ai-for-cybersecurity",
+    "Computer Science",
+    "cs.AI",
+    "cs.CR",
+    "cybersecurity",
+    "network-security",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2504.11703v2.pdf",
+    "source_url": "https://arxiv.org/abs/2504.11703"
+  },
+  "metrics": {
+    "questions_count": 1,
+    "upvotes_count": 74,
+    "downvotes_count": 0,
+    "total_votes": 2,
+    "public_total_votes": 74,
+    "visits": {
+      "last24Hours": 2,
+      "last7Days": 11,
+      "last30Days": 59,
+      "last90Days": 148,
+      "all": 808
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7609-a14a-674af7df1731",
+      "name": "UC Berkeley",
+      "image": "images/organizations/berkeley.png"
+    },
+    {
+      "id": "01985c36-cf11-725c-a40e-cfb994a4fbbc",
+      "name": "UC Santa Barbara",
+      "image": null
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

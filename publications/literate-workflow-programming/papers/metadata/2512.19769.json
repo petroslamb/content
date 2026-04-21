@@ -1,0 +1,56 @@
+{
+  "requested_id": "2512.19769",
+  "resolved": {
+    "preferred_id": "2512.19769v1",
+    "input_id": "2512.19769",
+    "title": "A Declarative Language for Building And Orchestrating LLM-Powered Agent Workflows",
+    "versionless_id": "2512.19769",
+    "canonical_id": "2512.19769v1",
+    "version_id": "019b4e27-3b08-7d06-99d6-269eae8d209f",
+    "group_id": "019b4e27-3af9-7e0e-bcdc-09f2321b3be4"
+  },
+  "title": "A Declarative Language for Building And Orchestrating LLM-Powered Agent Workflows",
+  "abstract": "Building deployment-ready LLM agents requires complex orchestration of tools, data sources, and control flow logic, yet existing systems tightly couple agent logic to specific programming languages and deployment models. We present a declarative system that separates agent workflow specification from implementation, enabling the same pipeline definition to execute across multiple backend languages (Java, Python, Go) and deployment environments (cloud-native, on-premises).\nOur key insight is that most agent workflows consist of common patterns -- data serialization, filtering, RAG retrieval, API orchestration -- that can be expressed through a unified DSL rather than imperative code. This approach transforms agent development from application programming to configuration, where adding new tools or fine-tuning agent behaviors requires only pipeline specification changes, not code deployment. Our system natively supports A/B testing of agent strategies, allowing multiple pipeline variants to run on the same backend infrastructure with automatic metric collection and comparison.\nWe evaluate our approach on real-world e-commerce workflows at PayPal, processing millions of daily interactions. Our results demonstrate 60% reduction in development time, and 3x improvement in deployment velocity compared to imperative implementations. The language's declarative approach enables non-engineers to modify agent behaviors safely, while maintaining sub-100ms orchestration overhead. We show that complex workflows involving product search, personalization, and cart management can be expressed in under 50 lines of DSL compared to 500+ lines of imperative code.",
+  "publication_date": "2025-12-22T05:03:37",
+  "authors": [
+    {
+      "id": "019b4e27-3b02-77e1-a6b4-e3e301da9c35",
+      "full_name": "Ivan Daunis",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.PL",
+    "cs.SE",
+    "ml-systems",
+    "model-deployment-systems",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2512.19769v1.pdf",
+    "source_url": "https://arxiv.org/abs/2512.19769"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 3,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 3,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 1,
+      "last30Days": 1,
+      "last90Days": 10,
+      "all": 31
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

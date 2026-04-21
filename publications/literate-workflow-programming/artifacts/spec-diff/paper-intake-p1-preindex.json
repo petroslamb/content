@@ -1,0 +1,197 @@
+{
+  "kind": "spec_diff_report",
+  "version": 1,
+  "generated_at": "2026-04-21T17:31:49",
+  "package": "literate-workflow-programming",
+  "stage": "paper_intake",
+  "source": {
+    "workflow_doc": "workflows/paper-intake/README.md",
+    "package_status": "publications/literate-workflow-programming/status.yaml",
+    "paper_index": "publications/literate-workflow-programming/papers/index.md"
+  },
+  "expected_state": {
+    "evidence_surface": "publications/literate-workflow-programming/papers",
+    "local_pdf_count": 13,
+    "local_markdown_count": 13,
+    "local_metadata_count": 12,
+    "indexed_local_paper_count": 7,
+    "queued_paper_count": 17,
+    "ignored_pdf_count": 13,
+    "ignored_pdfs_are_local_evidence": true
+  },
+  "findings": [
+    {
+      "finding": "local_pdf_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/*.pdf",
+      "expected": "2504.11703v2.pdf listed under Locally Intaken",
+      "observed": "local PDF exists without an index entry"
+    },
+    {
+      "finding": "local_pdf_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/*.pdf",
+      "expected": "2510.04173v4.pdf listed under Locally Intaken",
+      "observed": "local PDF exists without an index entry"
+    },
+    {
+      "finding": "local_pdf_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/*.pdf",
+      "expected": "2512.18940.pdf listed under Locally Intaken",
+      "observed": "local PDF exists without an index entry"
+    },
+    {
+      "finding": "local_pdf_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/*.pdf",
+      "expected": "2512.19769.pdf listed under Locally Intaken",
+      "observed": "local PDF exists without an index entry"
+    },
+    {
+      "finding": "local_pdf_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/*.pdf",
+      "expected": "2601.04748v2.pdf listed under Locally Intaken",
+      "observed": "local PDF exists without an index entry"
+    },
+    {
+      "finding": "local_pdf_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/*.pdf",
+      "expected": "2603.20380.pdf listed under Locally Intaken",
+      "observed": "local PDF exists without an index entry"
+    },
+    {
+      "finding": "local_markdown_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/markdown/*.md",
+      "expected": "markdown/2504.11703v2.md listed under Locally Intaken",
+      "observed": "local markdown exists without an index entry"
+    },
+    {
+      "finding": "local_markdown_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/markdown/*.md",
+      "expected": "markdown/2510.04173v4.md listed under Locally Intaken",
+      "observed": "local markdown exists without an index entry"
+    },
+    {
+      "finding": "local_markdown_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/markdown/*.md",
+      "expected": "markdown/2512.18940.md listed under Locally Intaken",
+      "observed": "local markdown exists without an index entry"
+    },
+    {
+      "finding": "local_markdown_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/markdown/*.md",
+      "expected": "markdown/2512.19769.md listed under Locally Intaken",
+      "observed": "local markdown exists without an index entry"
+    },
+    {
+      "finding": "local_markdown_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/markdown/*.md",
+      "expected": "markdown/2601.04748v2.md listed under Locally Intaken",
+      "observed": "local markdown exists without an index entry"
+    },
+    {
+      "finding": "local_markdown_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/markdown/*.md",
+      "expected": "markdown/2603.20380.md listed under Locally Intaken",
+      "observed": "local markdown exists without an index entry"
+    },
+    {
+      "finding": "local_metadata_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/metadata/*.json",
+      "expected": "metadata/2504.11703.json linked from Locally Intaken",
+      "observed": "local metadata exists without an index entry"
+    },
+    {
+      "finding": "local_metadata_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/metadata/*.json",
+      "expected": "metadata/2510.04173.json linked from Locally Intaken",
+      "observed": "local metadata exists without an index entry"
+    },
+    {
+      "finding": "local_metadata_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/metadata/*.json",
+      "expected": "metadata/2512.18940.json linked from Locally Intaken",
+      "observed": "local metadata exists without an index entry"
+    },
+    {
+      "finding": "local_metadata_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/metadata/*.json",
+      "expected": "metadata/2512.19769.json linked from Locally Intaken",
+      "observed": "local metadata exists without an index entry"
+    },
+    {
+      "finding": "local_metadata_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/metadata/*.json",
+      "expected": "metadata/2601.04748.json linked from Locally Intaken",
+      "observed": "local metadata exists without an index entry"
+    },
+    {
+      "finding": "local_metadata_not_indexed",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/metadata/*.json",
+      "expected": "metadata/2603.20380.json linked from Locally Intaken",
+      "observed": "local metadata exists without an index entry"
+    },
+    {
+      "finding": "queued_paper_has_local_pdf",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/index.md: Intake Queue",
+      "expected": "2504.11703 either queued or locally intaken, not both",
+      "observed": "local PDF exists while paper remains queued"
+    },
+    {
+      "finding": "queued_paper_has_local_pdf",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/index.md: Intake Queue",
+      "expected": "2510.04173 either queued or locally intaken, not both",
+      "observed": "local PDF exists while paper remains queued"
+    },
+    {
+      "finding": "queued_paper_has_local_pdf",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/index.md: Intake Queue",
+      "expected": "2512.18940 either queued or locally intaken, not both",
+      "observed": "local PDF exists while paper remains queued"
+    },
+    {
+      "finding": "queued_paper_has_local_pdf",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/index.md: Intake Queue",
+      "expected": "2512.19769 either queued or locally intaken, not both",
+      "observed": "local PDF exists while paper remains queued"
+    },
+    {
+      "finding": "queued_paper_has_local_pdf",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/index.md: Intake Queue",
+      "expected": "2601.04748 either queued or locally intaken, not both",
+      "observed": "local PDF exists while paper remains queued"
+    },
+    {
+      "finding": "queued_paper_has_local_pdf",
+      "severity": "warning",
+      "source_clause": "publications/literate-workflow-programming/papers/index.md: Intake Queue",
+      "expected": "2603.20380 either queued or locally intaken, not both",
+      "observed": "local PDF exists while paper remains queued"
+    }
+  ],
+  "summary": {
+    "blocking": 0,
+    "warnings": 24,
+    "status": "pass_with_warnings"
+  }
+}

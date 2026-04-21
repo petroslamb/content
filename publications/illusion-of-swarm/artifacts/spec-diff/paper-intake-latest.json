@@ -1,0 +1,143 @@
+{
+  "kind": "spec_diff_report",
+  "version": 1,
+  "generated_at": "2026-04-21T17:54:29",
+  "package": "illusion-of-swarm",
+  "stage": "paper_intake",
+  "source": {
+    "package_status": "publications/illusion-of-swarm/status.yaml",
+    "paper_index": "publications/illusion-of-swarm/papers/index.md",
+    "canonical_draft": "publications/illusion-of-swarm/the-illusion-of-the-swarm.md",
+    "evidence_surface": "publications/illusion-of-swarm/papers",
+    "artifact_surface": "publications/illusion-of-swarm/artifacts"
+  },
+  "expected_state": {
+    "paper_intake_done": true,
+    "local_evidence_file_count": 12,
+    "local_evidence_kinds": [
+      "captured_text",
+      "root_markdown",
+      "source_pdf"
+    ],
+    "cited_arxiv_count": 13,
+    "local_supported_arxiv_ids": [
+      "2601.01885",
+      "2601.04748",
+      "2601.14192",
+      "2602.01848",
+      "2602.11865",
+      "2602.15382",
+      "2602.23008",
+      "2603.00349"
+    ],
+    "artifact_supported_arxiv_ids": [
+      "2601.01885",
+      "2601.04748",
+      "2601.14192",
+      "2602.01848",
+      "2602.11865",
+      "2602.15382",
+      "2602.23008",
+      "2603.00349"
+    ],
+    "classified_gap_arxiv_ids": [
+      "2503.01935",
+      "2511.20639",
+      "2512.08296",
+      "2602.03955",
+      "2602.19672"
+    ],
+    "evidence_files": [
+      {
+        "path": "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2601.01885"
+        ]
+      },
+      {
+        "path": "EmCoop: A Framework and Benchmark for Embodied Cooperation Among LLM Agents.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2603.00349"
+        ]
+      },
+      {
+        "path": "Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2602.23008"
+        ]
+      },
+      {
+        "path": "Intelligent AI Delegation.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2602.11865"
+        ]
+      },
+      {
+        "path": "ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems.md",
+        "kind": "root_markdown",
+        "arxiv_ids": [
+          "2602.01848"
+        ]
+      },
+      {
+        "path": "ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems.pdf",
+        "kind": "source_pdf",
+        "arxiv_ids": [
+          "2602.01848"
+        ]
+      },
+      {
+        "path": "ROMA: Recursive Open Meta-Agent Framework for Long-Horizon Multi-Agent Systems.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2602.01848"
+        ]
+      },
+      {
+        "path": "The Vision Wormhole: Latent-Space Communication in Heterogeneous Multi-Agent Systems.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2602.15382"
+        ]
+      },
+      {
+        "path": "Toward Efficient Agents: Memory, Tool learning, and Planning.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2601.14192"
+        ]
+      },
+      {
+        "path": "When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail.md",
+        "kind": "root_markdown",
+        "arxiv_ids": [
+          "2601.04748"
+        ]
+      },
+      {
+        "path": "When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail.pdf",
+        "kind": "source_pdf",
+        "arxiv_ids": [
+          "2601.04748"
+        ]
+      },
+      {
+        "path": "When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail.txt",
+        "kind": "captured_text",
+        "arxiv_ids": [
+          "2601.04748"
+        ]
+      }
+    ]
+  },
+  "findings": [],
+  "summary": {
+    "blocking": 0,
+    "warnings": 0,
+    "status": "pass"
+  }
+}

@@ -41,8 +41,8 @@ What sounded plausible but should not be used yet?
 
 ## Where It Entered The Package
 
-- [`../some-research-note.md`](../some-research-note.md)
-- [`../../claim-ledger.md`](../../claim-ledger.md)
+- `../some-research-note.md`
+- `../../claim-ledger.md`
 
 ## Current Status
 
