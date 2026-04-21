@@ -1,0 +1,62 @@
+{
+  "requested_id": "2603.23806",
+  "resolved": {
+    "preferred_id": "2603.23806v1",
+    "input_id": "2603.23806",
+    "title": "Willful Disobedience: Automatically Detecting Failures in Agentic Traces",
+    "versionless_id": "2603.23806",
+    "canonical_id": "2603.23806v1",
+    "version_id": "019d27f6-6c32-7e93-95f6-338699414e7f",
+    "group_id": "019d27f6-6c10-7734-a4cf-25c633da49ad"
+  },
+  "title": "Willful Disobedience: Automatically Detecting Failures in Agentic Traces",
+  "abstract": "AI agents are increasingly embedded in real software systems, where they execute multi-step workflows through multi-turn dialogue, tool invocations, and intermediate decisions. These long execution histories, called agentic traces, make validation difficult. Outcome-only benchmarks can miss critical procedural failures, such as incorrect workflow routing, unsafe tool usage, or violations of prompt-specified rules. This paper presents AgentPex, an AI-powered tool designed to systematically evaluate agentic traces. AgentPex extracts behavioral rules from agent prompts and system instructions, then uses these specifications to automatically evaluate traces for compliance. We evaluate AgentPex on 424 traces from {\\tau}2-bench across models in telecom, retail, and airline customer service. Our results show that AgentPex distinguishes agent behavior across models and surfaces specification violations that are not captured by outcome-only scoring. It also provides fine-grained analysis by domain and metric, enabling developers to understand agent strengths and weaknesses at scale.",
+  "publication_date": "2026-03-25T00:33:39",
+  "authors": [
+    {
+      "id": "01985c81-e0ec-7969-acee-86dc32a116c5",
+      "full_name": "Reshabh K Sharma",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-1c6a-7816-9001-32fae00c7c5b",
+      "full_name": "Shraddha Barke",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-250e-786c-8074-0aa9bf6ba50b",
+      "full_name": "Benjamin Zorn",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "Computer Science",
+    "cs.AI",
+    "cs.SE"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.23806v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.23806"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 0,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 0,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 2,
+      "last30Days": 16,
+      "last90Days": 16,
+      "all": 16
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

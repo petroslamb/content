@@ -121,16 +121,45 @@ This index tracks papers for the `literate-workflow-programming/` research packa
 - Metadata: [`metadata/2601.04748.json`](metadata/2601.04748.json)
 - Relevance: Bridges this package to the `illusion-of-swarm` frame by showing why skill libraries can replace multi-agent coordination until semantic routing and skill selection hit capacity limits.
 
+### Willful Disobedience: Automatically Detecting Failures in Agentic Traces
+
+- arXiv: [`2603.23806v1`](https://arxiv.org/abs/2603.23806)
+- Authors: Reshabh K Sharma, Shraddha Barke, Benjamin Zorn
+- Local PDF: [`2603.23806.pdf`](2603.23806.pdf)
+- Local markdown: [`markdown/2603.23806.md`](markdown/2603.23806.md)
+- Metadata: [`metadata/2603.23806.json`](metadata/2603.23806.json)
+- Relevance: Direct trace-compliance anchor. AgentPex extracts explicit behavioral rules from prompts and system instructions, then evaluates traces for procedural violations that outcome-only scoring misses. It strengthens the trace layer while keeping prompts/specs primary.
+
+### AgentFixer: From Failure Detection to Fix Recommendations in LLM Agentic Systems
+
+- arXiv: [`2603.29848v1`](https://arxiv.org/abs/2603.29848)
+- Authors: Hadar Mulian, Sergey Zeltyn, Ido Levy, Liane Galanti, Avi Yaeli, Segev Shlomov
+- Local PDF: [`2603.29848.pdf`](2603.29848.pdf)
+- Local markdown: [`markdown/2603.29848.md`](markdown/2603.29848.md)
+- Metadata: [`metadata/2603.29848.json`](metadata/2603.29848.json)
+- Relevance: Strongest local anchor for validation as lifecycle infrastructure: prompt analysis, input/output validation, cross-stage consistency checks, root-cause analysis, trace comparison, and validation-driven refinement.
+
+### From Fluent to Verifiable: Claim-Level Auditability for Deep Research Agents
+
+- arXiv: [`2602.13855v1`](https://arxiv.org/abs/2602.13855)
+- Authors: Razeen A Rasheed, Somnath Banerjee, Animesh Mukherjee, Rima Hazra
+- Local PDF: [`2602.13855.pdf`](2602.13855.pdf)
+- Local markdown: [`markdown/2602.13855.md`](markdown/2602.13855.md)
+- Metadata: [`metadata/2602.13855.json`](metadata/2602.13855.json)
+- Relevance: Strongest local anchor for claim-level provenance: provenance coverage, provenance soundness, contradiction transparency, audit effort, and protocolized validation during synthesis. It makes contradiction state a paper-backed provenance requirement instead of only a transferred workflow idea.
+
 ## Conversion Notes
 
 - The P0 batch was downloaded through alphaXiv PDF resolution on 2026-04-20 and converted with the repo-local `markitdown` binary.
 - The P1 batch was downloaded through alphaXiv PDF resolution on 2026-04-21 and converted with the repo-local `markitdown` binary.
+- The P2a trace/provenance batch was downloaded through alphaXiv PDF resolution on 2026-04-21 and converted with the repo-local `markitdown` binary.
 - Local PDFs are intentionally gitignored third-party evidence. Treat the `Local PDF` links above as local evidence pointers, not as expected tracked files.
 - `2603.25723`, `2603.08806`, and `2603.00822` contain table-like first-page extraction noise, but their body text is usable.
 - `2604.13346` and `2603.17399` contain vertical arXiv-header noise at the top, but section text is usable.
 - `2604.03088` converted cleanly enough for research use, with minor font warnings during conversion.
 - `2510.04173v4` and `2504.11703v2` contain compressed spacing in portions of the converted text, but section structure and body text remain usable.
 - `2512.19769`, `2512.18940`, `2603.20380`, and `2601.04748v2` contain first-page arXiv/header extraction noise, but the main body text is usable.
+- `2603.23806`, `2603.29848`, and `2602.13855` contain first-page arXiv/header extraction noise, but the main body text is usable.
 
 ## Intake Queue
 
@@ -148,6 +177,11 @@ These papers are indexed for deliberate download and conversion later. They are 
 | P2 | [`2602.11988`](https://arxiv.org/abs/2602.11988) | Evaluating AGENTS.md | Contradictory pressure against bloated repository-level context files. |
 | P2 | [`2601.20404`](https://arxiv.org/abs/2601.20404) | On the Impact of AGENTS.md Files on the Efficiency of AI Coding Agents | Counterpoint to `2602.11988`: context files can improve runtime and token use in some PR workflows. |
 | P2 | [`2511.12884`](https://arxiv.org/abs/2511.12884) | Agent READMEs | Empirical view of agent context files as evolving configuration code. |
+| P2b | [`2603.08993`](https://arxiv.org/abs/2603.08993) | Arbiter: Detecting Interference in LLM Agent System Prompts | Detects contradictions, redundancies, and ambiguities in system prompts; relevant to prompt/control-surface contradiction checks. |
+| P2b | [`2604.13108`](https://arxiv.org/abs/2604.13108) | Formal Architecture Descriptors as Navigation Primitives for AI Coding Agents | Architecture descriptors reduce codebase navigation overhead; useful for source-map and namespace claims. |
+| P2b | [`2602.12670`](https://arxiv.org/abs/2602.12670) | SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks | Measures skill usefulness across tasks and model-agent configurations; balances SkVM's portability caveat. |
+| P2b | [`2604.01687`](https://arxiv.org/abs/2604.01687) | CoEvoSkills: Self-Evolving Agent Skills via Co-Evolutionary Verification | Verified skill evolution; complicates any simple claim that human-authored markdown skills are the natural endpoint. |
+| P2b | [`2411.13768`](https://arxiv.org/abs/2411.13768) | Evaluation-Driven Development and Operations of LLM Agents | Continuous evaluation process and reference architecture for agent systems; supports validation as lifecycle infrastructure. |
 | P3 | [`2508.11126`](https://arxiv.org/abs/2508.11126) | AI Agentic Programming | Survey context for planning, context management, tool integration, monitoring, and benchmarks in agentic programming. |
 
 ## Current Reading Order
@@ -156,5 +190,7 @@ These papers are indexed for deliberate download and conversion later. They are 
 2. `2603.17399`, `2603.08806`, and `2604.13346` for specification-as-program and language/runtime framing.
 3. `2603.00822`, `2603.20380`, and `2504.11703` for the enforcement layer.
 4. `2604.03088` and `2601.04748` for skills-as-code and the semantic-overload limit.
-5. `2602.11988`, `2601.20404`, and `2511.12884` for context-file evidence and failure modes.
-6. `2505.20127` and `2508.02736` for observability and source-map directions.
+5. `2602.11988`, `2601.20404`, and `2511.12884` for context-file metric splits and failure modes.
+6. `2411.13768`, `2505.20127`, `2508.02736`, and `2603.08993` only if the draft needs a deeper validation/observability/contradiction-check stack after the P2a local intake.
+7. `2604.13108`, `2512.05470`, `2602.20478`, and `2604.08224` only if the draft needs stronger namespace/context-architecture support.
+8. `2602.12670` and `2604.01687` only if the skills section needs stronger evidence.
