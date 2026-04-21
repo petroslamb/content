@@ -89,10 +89,16 @@ This meets the second-package threshold as a candidate, not as a retained repo-w
 
 The cross-read note is [`research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md`](research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md).
 
+## Claim-State Draft Gate
+
+The next drafting pass should admit claims only after they have three statuses: ledger status in [`claim-ledger.md`](claim-ledger.md), contradiction status in [`contradiction-register.md`](contradiction-register.md), and rubric status in [`claim-scorecard.md`](claim-scorecard.md).
+
+This keeps the article focused on the chosen lead while still importing the useful mechanism from Confidence Debt. The claim ledger owns evidence state. The contradiction register owns tension state. The scorecard owns article-readiness state.
+
 ## Next Research Tasks
 
-1. Draft from the chosen lead frame: meaningful workflow source requires specification, validation gates, policy enforcement, and semantic debugging traces.
+1. Draft from the chosen lead frame only after each body claim has ledger status, contradiction status, and rubric status.
 2. Separate existing terms: context engineering, natural-language harness, agent specification language, prompt specification language, skills-as-code, and literate programming for agents.
-3. Keep `imports`, package-as-object semantics, full contradiction-ledger machinery, and repo-wide validator promotion parked until there is stronger local proof.
+3. Keep `imports`, package-as-object semantics, full Evidence Governance contradiction-ledger machinery beyond this curated register, and repo-wide validator promotion parked until there is stronger local proof.
 4. Decide whether the `illusion-of-swarm` result and contradiction-ledger transfer justify a promotion memo for package-local validators before touching `phased-strategy/`.
 5. Use P2 papers for context-file limits, terminal-native harnesses, and observability rather than reopening the lead frame unless they directly break it.
