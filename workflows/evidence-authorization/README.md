@@ -86,6 +86,55 @@ Use a warrant ledger when:
 
 Do not use it as a substitute for intake or as a way to make weak evidence sound stronger. If the warrant ledger cannot state a safe bridge claim, the rewrite should not proceed from that bridge.
 
+## Claim-State Authorization
+
+Claim-State Authorization is an optional advanced mode of this same workflow. Keep `workflow_id: evidence_authorization`; do not create a new lifecycle stage, root command, or separate workflow.
+
+Use this mode when a package already has researched claims and the hard question is no longer only "what claims does the evidence authorize?" The harder question is:
+
+> What is each claim's current state across evidence, contradiction, validation, and draft readiness?
+
+This mode is more complex than the normal evidence authorization ledger and lighter than the full Evidence Governance pattern in [`../../publications/evidence-governance/README.md`](../../publications/evidence-governance/README.md). It imports a narrow claim-state mechanism without asking every publication package to adopt a full governance protocol.
+
+Use Claim-State Authorization when:
+
+- papers, local proof, repo practice, and article framing create real tensions rather than generic objections
+- the package already has a claim ledger or evidence authorization ledger
+- a future draft needs to know not only whether a claim is supported, but whether it is contested, validated, parked, or article-ready
+- local proof artifacts such as validators, reports, traces, or reviewable runs affect claim permission
+- the team needs a curated contradiction surface before drafting
+
+Do not use it when:
+
+- the package still needs basic paper intake
+- the current problem is ordinary citation placement
+- there are no meaningful tensions between sources, proof, practice, and framing
+- a lightweight hinge warrant ledger would answer the question
+
+The outputs are:
+
+| Output | Job |
+| :--- | :--- |
+| claim ledger | Evidence-state surface. It records researched claims, support levels, authorized wording, caveats, and parked claims. |
+| contradiction register | Tension-state surface. It records high-value contradictions or frame tensions with an authority rule and draft instruction. |
+| scoring rubric | Readiness-state rule. It defines how to score each claim across paper support, local proof, enforcement, contradiction handling, and article role. |
+| claim scorecard | Draft-gate surface. It applies the rubric to current top claims and names the next action. |
+
+Use these templates when starting the variant:
+
+- [`templates/claim_state_authorization_template.md`](templates/claim_state_authorization_template.md)
+- [`templates/contradiction_register_template.md`](templates/contradiction_register_template.md)
+- [`templates/claim_scoring_rubric_template.md`](templates/claim_scoring_rubric_template.md)
+- [`templates/claim_scorecard_template.md`](templates/claim_scorecard_template.md)
+
+The variant works best with a small contradiction register. Curate tensions that would change the article, proof plan, or claim permission. Do not let the register become a dumping ground for every possible objection.
+
+For this mode, draft admission requires three states beside the claim:
+
+1. Ledger status: what evidence authorizes the claim and what caveat travels with it.
+2. Contradiction status: whether known tensions are resolved, open, parked, or blocking.
+3. Rubric status: whether the claim is article-ready, usable with caveat, parked, or blocked.
+
 ## Required Sections
 
 A useful ledger has these sections:
