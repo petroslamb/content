@@ -1,0 +1,88 @@
+{
+  "requested_id": "2603.29848",
+  "resolved": {
+    "preferred_id": "2603.29848v1",
+    "input_id": "2603.29848",
+    "title": "AgentFixer: From Failure Detection to Fix Recommendations in LLM Agentic Systems",
+    "versionless_id": "2603.29848",
+    "canonical_id": "2603.29848v1",
+    "version_id": "019d47a1-525c-7540-89b4-12e87851857c",
+    "group_id": "019d47a1-523f-7689-b1f1-e997c4b74550"
+  },
+  "title": "AgentFixer: From Failure Detection to Fix Recommendations in LLM Agentic Systems",
+  "abstract": "We introduce a comprehensive validation framework for LLM-based agentic systems that provides systematic diagnosis and improvement of reliability failures. The framework includes fifteen failure-detection tools and two root-cause analysis modules that jointly uncover weaknesses across input handling, prompt design, and output generation. It integrates lightweight rule-based checks with LLM-as-a-judge assessments to support structured incident detection, classification, and repair. We applied the framework to IBM CUGA, evaluating its performance on the AppWorld and WebArena benchmarks. The analysis revealed recurrent planner misalignments, schema violations, brittle prompt dependencies, and more. Based on these insights, we refined both prompting and coding strategies, maintaining CUGA's benchmark results while enabling mid-sized models such as Llama 4 and Mistral Medium to achieve notable accuracy gains, substantially narrowing the gap with frontier models. Beyond quantitative validation, we conducted an exploratory study that fed the framework's diagnostic outputs and agent description into an LLM for self-reflection and prioritization. This interactive analysis produced actionable insights on recurring failure patterns and focus areas for improvement, demonstrating how validation itself can evolve into an agentic, dialogue-driven process. These results show a path toward scalable, quality assurance, and adaptive validation in production agentic systems, offering a foundation for more robust, interpretable, and self-improving agentic architectures.",
+  "publication_date": "2026-02-18T14:55:35",
+  "authors": [
+    {
+      "id": "01985c84-7b3d-7b02-9572-efd03e55832e",
+      "full_name": "Hadar Mulian",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-4b27-7421-afe4-4017879aaeb3",
+      "full_name": "Sergey Zeltyn",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-580d-73a3-bf44-0770e953242f",
+      "full_name": "Ido Levy",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-9a89-7d16-adda-9effa6d25989",
+      "full_name": "Liane Galanti",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-ab4a-7c73-97e6-49929a2143f6",
+      "full_name": "Avi Yaeli",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-ab4a-7cfe-b0e1-598b58efea42",
+      "full_name": "Segev Shlomov",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.MA",
+    "explainable-ai",
+    "fine-tuning",
+    "ml-systems",
+    "model-observability",
+    "reasoning",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.29848v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.29848"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 0,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 0,
+    "visits": {
+      "last24Hours": 3,
+      "last7Days": 12,
+      "last30Days": 27,
+      "last90Days": 27,
+      "all": 27
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}
