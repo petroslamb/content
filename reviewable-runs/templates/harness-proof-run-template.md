@@ -35,6 +35,7 @@ List only the tracked surfaces the harness was allowed or expected to discover f
 - `harness_contract.yaml`:
 - `harness_policy.yaml`:
 - Package README / `status.yaml`:
+- Governing brief (`config.blueprint_path` or legacy fallback):
 - Workflow docs:
 - Skills:
 - Scripts / npm entrypoints:
@@ -76,6 +77,30 @@ Suggested closure rating:
 - `PARTIAL`: useful run, but one or two repair prompts or repo-discovery failures were needed
 - `FAIL`: harness could not operate from the tracked contract or crossed a boundary incorrectly
 
+## Manifest-First Routing Check
+
+Measure whether the harness followed the repo's intended package routing order instead of inferring state from prose or memory.
+
+| Check | Result | Notes |
+| :--- | :---: | :--- |
+| Read `status.yaml` before making stage claims | | |
+| Used package README as local map rather than source of truth | | |
+| Resolved governing brief correctly | | |
+| Used the matching workflow doc for the claimed next step | | |
+| Treated packet/review artifacts as stage-specific surfaces rather than generic always-load context | | |
+
+## Context And Routing Friction
+
+Record whether the run stayed inside stage-scoped context or drifted into prompt bloat and namespace confusion.
+
+| Signal | Result | Notes |
+| :--- | :---: | :--- |
+| Unnecessary context loaded | | |
+| Wrong package or stage inferred | | |
+| Workflow namespace confusion | | |
+| Prompt glue needed because tracked routing surfaces were unclear | | |
+| Hook or checker caught a routing mistake | | |
+
 ## Execution Summary
 
 Write a short factual trace of what happened.
@@ -91,6 +116,18 @@ List the source files, package state, workflow docs, external outputs, or platfo
 | Evidence | Why It Mattered | Freshness / Provenance |
 | :--- | :--- | :--- |
 | | | |
+
+## Source / Trace Discipline
+
+Use this section when the run touches validators, logs, or reviewable traces.
+
+| Check | Result | Notes |
+| :--- | :---: | :--- |
+| Source artifact stayed primary | | |
+| Logs/traces treated as derivative debugging surfaces | | |
+| Validator findings were linked back to source state or stage contract | | |
+| Run avoided claiming broad conformance from a bounded drift check | | |
+| Provenance gap was identified honestly when present | | |
 
 ## Verification
 
@@ -111,6 +148,7 @@ Name the checks run and their results.
 - If approval was not required, why not?
 - Did the harness stop at the correct boundary?
 - If blocked by sandbox/auth/network, did it ask for narrow permission or provide exact user-exec commands?
+- If lifecycle state was ambiguous or wrong, did a checker or hook force a correction before finalizing?
 
 ## Failure Or Friction Review
 
@@ -119,6 +157,13 @@ Classify every material problem.
 | Problem | Class | Corrective Direction |
 | :--- | :--- | :--- |
 | | `workflow-doc gap`, `contract gap`, `policy gap`, `skill gap`, `script gap`, `sandbox/auth`, `model discipline`, or `package-local gap` | |
+
+Recommended problem classes for the current phase:
+
+- `routing gap`: wrong stage, wrong package, wrong governing brief, or wrong workflow doc chosen
+- `source-trace confusion`: logs, traces, or validator outputs treated as primary source artifacts
+- `context overload`: too much passive context loaded or unclear namespace boundaries
+- `validation gap`: validator/checker/hook missing or too weak to catch a material mistake
 
 ## Phase 1.5 Gate Answers
 
@@ -135,3 +180,12 @@ Classify every material problem.
 - If not promoted, where does the routine record live?
 - Required workflow/script/skill hardening:
 - Next proof run to attempt:
+
+## Best-Fit Use Cases
+
+Use this template especially for:
+
+- research-to-intake or research-to-essay-iteration handoffs
+- stage-resolution tests where the package has multiple plausible next moves
+- runs that exercise lifecycle checkers, packet scaffolds, or Stop-hook corrections
+- bounded validator experiments where source/trace hierarchy must remain explicit
