@@ -1,0 +1,76 @@
+{
+  "requested_id": "2602.13855",
+  "resolved": {
+    "preferred_id": "2602.13855v1",
+    "input_id": "2602.13855",
+    "title": "From Fluent to Verifiable: Claim-Level Auditability for Deep Research Agents",
+    "versionless_id": "2602.13855",
+    "canonical_id": "2602.13855v1",
+    "version_id": "019c6a30-09cb-7462-86ee-2987f8b1c491",
+    "group_id": "019c6a30-09bd-7e3c-8c39-8981204afca4"
+  },
+  "title": "From Fluent to Verifiable: Claim-Level Auditability for Deep Research Agents",
+  "abstract": "A deep research agent produces a fluent scientific report in minutes; a careful reader then tries to verify the main claims and discovers the real cost is not reading, but tracing: which sentence is supported by which passage, what was ignored, and where evidence conflicts. We argue that as research generation becomes cheap, auditability becomes the bottleneck, and the dominant risk shifts from isolated factual errors to scientifically styled outputs whose claim-evidence links are weak, missing, or misleading. This perspective proposes claim-level auditability as a first-class design and evaluation target for deep research agents, distills recurring long-horizon failure modes (objective drift, transient constraints, and unverifiable inference), and introduces the Auditable Autonomous Research (AAR) standard, a compact measurement framework that makes auditability testable via provenance coverage, provenance soundness, contradiction transparency, and audit effort. We then argue for semantic provenance with protocolized validation: persistent, queryable provenance graphs that encode claim--evidence relations (including conflicts) and integrate continuous validation during synthesis rather than after publication, with practical instrumentation patterns to support deployment at scale.",
+  "publication_date": "2026-02-14T19:39:15",
+  "authors": [
+    {
+      "id": "019c6a30-09c5-7183-adb6-208cd8fe4cab",
+      "full_name": "Razeen A Rasheed",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e287-7cc1-9cfb-8b075250982f",
+      "full_name": "Somnath Banerjee",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-00f0-79b1-9251-6cea9fbfa7d4",
+      "full_name": "Animesh Mukherjee",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e287-7c89-86ed-714681bb7b04",
+      "full_name": "Rima Hazra",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.IR",
+    "cs.MA",
+    "explainable-ai",
+    "generative-models",
+    "information-extraction",
+    "ml-systems",
+    "reasoning",
+    "reasoning-verification"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2602.13855v1.pdf",
+    "source_url": "https://arxiv.org/abs/2602.13855"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 9,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 9,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 0,
+      "last30Days": 32,
+      "last90Days": 69,
+      "all": 69
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}
