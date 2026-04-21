@@ -51,6 +51,18 @@ This keeps the article on the strongest paper-backed ground. The specification l
 
 Adjacent transfer: Confidence Debt and the `eth-llm` contradiction register add one mechanism to this frame. A source-linked trace is more useful when it preserves contradiction state, not only file presence or stage status. See [`research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md`](research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md).
 
+## Claim-State Authorization
+
+This package uses the optional Claim-State Authorization variant of the evidence authorization workflow.
+
+The ledger remains the evidence-state surface. The other claim-state surfaces are:
+
+- [`contradiction-register.md`](contradiction-register.md): curated tensions, authority rules, and draft instructions.
+- [`claim-scoring-rubric.md`](claim-scoring-rubric.md): scoring rule for article and proof readiness.
+- [`claim-scorecard.md`](claim-scorecard.md): current top-claim draft gate.
+
+Before a claim enters the article body, it should have ledger status, contradiction status, and rubric status. The scorecard can downgrade a researched claim when the contradiction state or proof state is still too weak.
+
 ## Current Essay-Safe Claims
 
 Use these as the highest-confidence claims in the next draft:
@@ -67,5 +79,5 @@ Use these as the highest-confidence claims in the next draft:
 - Markdown imports as a compiler feature. P0 supports context layers and reusable submodules, but not a general markdown import system.
 - Package folders as objects. This remains a useful repo metaphor, but the P0 papers support runtime state more directly than package-as-object semantics.
 - Repo-wide validator promotion. Keep `spec-diff` package-local until it has passed at least one proof candidate outside `literate-workflow-programming`.
-- Full contradiction-ledger machinery. The mechanism is relevant, but the current article should not require every publication package to adopt governance-core style contradiction registers.
+- Full Evidence Governance contradiction-ledger machinery beyond this curated claim-state register. The mechanism is relevant, but the current article should not require every publication package to adopt governance-core style contradiction registers.
 - Literate programming as a settled category. The phrase is usable as the essay frame only if the argument keeps the narrower source/runtime/debugging stack visible.
