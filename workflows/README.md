@@ -37,7 +37,7 @@ Use the layers like this:
 
 | Layer | Main Question | Canonical Surface |
 | :--- | :--- | :--- |
-| package context | what publication object am I actually changing? | package `README.md`, leaf `README.md`, and `status.yaml` |
+| package context | what publication object am I actually changing? | `status.yaml` first, then package `README.md` / leaf `README.md`, then the governing brief named by `config.blueprint_path` when present |
 | lifecycle workflow | what kind of work am I doing right now? | the relevant tracked workflow doc in this directory |
 | execution help | which commands, helper scripts, or repo-local skills actually perform it? | [`skills/`](skills/README.md) and [`../scripts/README.md`](../scripts/README.md) |
 | routine run record | what happened in this bounded operational run? | [`../reviewable-runs/logs/README.md`](../reviewable-runs/logs/README.md) |
@@ -129,6 +129,20 @@ For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 
 If that cycle ends in an explicit frame ceiling rather than a rewrite path, do not keep iterating locally by default. Use the experimental [`post-ceiling-pivot/README.md`](post-ceiling-pivot/README.md) workflow to decide whether a real new flagship object exists before drafting again.
 
+The handoff between `research` and `essay_iteration` should be interpreted strictly:
+
+- close `research` when the package has enough local evidence and claim governance to support a bounded draft candidate
+- do not keep `research` open just because narrower conditional follow-on reading might still improve a later section
+- carry those conditional triggers into `essay_iteration` instead of using them as a stage blocker
+
+For package-stage decisions, read the package surfaces in this order:
+
+1. `status.yaml`
+2. package `README.md`
+3. the workflow doc for the target stage
+4. the governing brief named by `config.blueprint_path` when present
+5. packet or review artifacts only when the stage actually needs them
+
 That lifecycle is the cross-package default. Package READMEs can add local surfaces or exceptions, but they should not redefine the shared process when a tracked workflow already exists here.
 
 For `essay_iteration`, `stage:run` now means “seed or refresh the package-local packet scaffold.” It does not mean “complete the rewrite stage automatically.” Promotion, stage completion, and top-tier score claims remain gated behind stronger review or human approval.
@@ -163,9 +177,11 @@ After a blocking high-bar review, return to step 2 rather than generating anothe
 ## How To Use This Layer
 
 1. Start with the relevant package `README.md`.
-2. Open the matching workflow doc here.
-3. Use the tracked skill bundle in [`skills/`](skills/README.md) only after the tracked workflow is clear.
-4. Use [`../scripts/README.md`](../scripts/README.md) when a workflow depends on tracked repo scripts.
+2. Read that package's `status.yaml` before inferring the current stage from prose.
+3. Open the matching workflow doc here.
+4. Load the governing brief from `config.blueprint_path` when the manifest names one.
+5. Use the tracked skill bundle in [`skills/`](skills/README.md) only after the tracked workflow is clear.
+6. Use [`../scripts/README.md`](../scripts/README.md) when a workflow depends on tracked repo scripts.
 
 ## Skill Bundles
 
@@ -178,3 +194,13 @@ Skill bundles should stay thinner than these workflow docs. They can:
 - store local-only helper logic
 
 They should not become the only place where a shared repo process is documented.
+
+## Local Codex Hook Mirror
+
+The repo also supports a local `.codex/` mirror for lightweight assistive hooks. Keep the same source/mirror rule used for skills:
+
+- tracked docs and scripts remain canonical
+- `.codex/` stays local-only and gitignored
+- use [`../scripts/install_codex_stop_hook.py`](../scripts/install_codex_stop_hook.py) to mirror the tracked Stop-hook assets into `.codex/`
+
+The hook is a backstop, not a source of truth. Lifecycle correctness still belongs to `status.yaml`, workflow docs, and tracked checkers.

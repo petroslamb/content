@@ -14,6 +14,7 @@ expected_outputs:
   - selected papers ready to move into paper intake
 done_when:
   - the shortlist is grounded enough to drive package-local paper intake or source discussion, and any important assistant discussion has a package-local extraction note
+  - or the package already has a sufficient local evidence set and claim-control surface to govern essay_iteration, even if narrower conditional follow-on research remains queued
 approval_gate: none
 ---
 
@@ -194,6 +195,24 @@ Once a paper is selected:
 1. save the PDF into the package
 2. convert it using the paper-intake workflow
 3. update the package paper index or source index
+
+## Research Handoff To Essay Iteration
+
+The recurring April 2026 seam was this: a package could be obviously ready to draft while `status.yaml` still remained stranded in `research` because some P2b or gap-closing work was still conditionally queued.
+
+The handoff rule is now:
+
+- close `research` once the current local evidence set is strong enough to govern `essay_iteration`
+- make sure the package can point to one governing brief through `status.yaml` before calling the package draft-ready
+- move conditional follow-on research into the essay packet as explicit triggers, not as a reason to keep the package in `research`
+- keep a package in `research` only when the current local evidence is still too weak, unstable, or under-authorized to support a bounded draft candidate
+
+Practical test:
+
+- if the package has its active claim set, evidence surface, and drafting boundaries clearly enough to seed `essay_iteration`, `research` is done
+- if further research is only conditional on draft pressure or a specific surviving claim, it is not stage-blocking research
+
+This keeps the stage model honest: `research` owns anchor formation and claim pressure. `essay_iteration` owns bounded drafting with conditional evidence triggers when needed.
 
 ## Related Docs And Skill Bundle
 

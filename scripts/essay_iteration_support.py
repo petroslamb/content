@@ -314,6 +314,20 @@ def resolve_nearest_blueprint_path(package_path: Path, status_data: dict) -> Pat
     return None
 
 
+def resolve_governing_brief_path(package_path: Path, status_data: dict) -> Path | None:
+    config = status_data.get("config", {})
+    configured = config.get("blueprint_path")
+    if isinstance(configured, str) and configured.strip():
+        candidate = (package_path / configured.strip()).resolve()
+        try:
+            candidate.relative_to(package_path.resolve())
+        except ValueError:
+            candidate = None
+        if candidate is not None and candidate.exists():
+            return candidate
+    return resolve_nearest_blueprint_path(package_path, status_data)
+
+
 def resolve_review_artifact_paths(package_path: Path, status_data: dict) -> list[Path]:
     matches: list[Path] = []
     seen: set[Path] = set()

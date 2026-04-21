@@ -33,6 +33,7 @@ from essay_iteration_support import (
     repo_relpath,
     resolve_companion_path,
     resolve_evidence_surface,
+    resolve_governing_brief_path,
     resolve_leaf_readme,
     resolve_live_draft,
     resolve_nearest_blueprint_path,
@@ -92,9 +93,25 @@ def build_packet_manifest(
     leaf_readme = resolve_leaf_readme(package_path)
     parent_readme = resolve_parent_package_readme(package_path, status_data)
     companion = resolve_companion_path(package_path)
+    configured_blueprint_value = status_data.get("config", {}).get("blueprint_path")
+    configured_blueprint = None
+    if isinstance(configured_blueprint_value, str) and configured_blueprint_value.strip():
+        candidate = (package_path / configured_blueprint_value.strip()).resolve()
+        try:
+            candidate.relative_to(package_path.resolve())
+        except ValueError:
+            candidate = None
+        if candidate is not None and candidate.exists():
+            configured_blueprint = candidate
+    governing_brief = resolve_governing_brief_path(package_path, status_data)
     nearest_blueprint = resolve_nearest_blueprint_path(package_path, status_data)
     review_artifacts = resolve_review_artifact_paths(package_path, status_data)
     evidence_surface = resolve_evidence_surface(package_path, status_data)
+    if governing_brief is None:
+        raise FileNotFoundError(
+            f"Package '{package_key}' is missing a governing brief. "
+            "Resolve config.blueprint_path or add a legacy blueprint/plan file."
+        )
 
     packet_template_paths = {
         PACKET_TEMPLATE_TARGETS[Path(template).name]: repo_relpath((REPO_ROOT / template).resolve())
@@ -102,7 +119,7 @@ def build_packet_manifest(
         if Path(template).name in PACKET_TEMPLATE_TARGETS
     }
 
-    return {
+    manifest = {
         "kind": "essay_iteration_packet",
         "package": package_key,
         "revision": revision,
@@ -124,7 +141,7 @@ def build_packet_manifest(
             "leaf_readme_path": repo_relpath(leaf_readme),
             "parent_package_readme_path": repo_relpath(parent_readme),
             "companion_path": repo_relpath(companion),
-            "nearest_blueprint_path": repo_relpath(nearest_blueprint),
+            "governing_brief_path": repo_relpath(governing_brief),
             "review_artifact_paths": [repo_relpath(path) for path in review_artifacts],
             "evidence_surface_path": repo_relpath(evidence_surface),
             "voice_rules_path": repo_relpath(VOICE_RULES_PATH),
@@ -157,6 +174,13 @@ def build_packet_manifest(
             },
         },
     }
+
+    if nearest_blueprint and nearest_blueprint == governing_brief and configured_blueprint is None:
+        manifest["input_paths"]["nearest_blueprint_path"] = repo_relpath(nearest_blueprint)
+
+    return manifest
+
+    return manifest
 
 
 def main() -> None:

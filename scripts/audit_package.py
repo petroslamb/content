@@ -11,6 +11,7 @@ import re
 from pathlib import Path
 
 from lifecycle import REPO_ROOT, load_status_ref, resolve_package_path
+from package_lifecycle import inspect_package_lifecycle
 
 
 def scan_for_urls(markdown_path: Path) -> set[str]:
@@ -103,6 +104,10 @@ def audit_package(package_arg: str) -> dict:
         report["checks"].append({"status": "PASS", "message": "Package README present."})
     else:
         report["checks"].append({"status": "WARNING", "message": "Missing package README."})
+
+    lifecycle_report = inspect_package_lifecycle(manifest_ref.package_key)
+    for issue in lifecycle_report["issues"]:
+        report["checks"].append({"status": "WARNING", "message": issue["message"]})
 
     evidence_root, evidence_label = resolve_evidence_root(package_path, status_data)
     if evidence_root:
