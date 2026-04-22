@@ -14,6 +14,7 @@ Research direction: Determine whether markdown workflow docs, skills, indexes, i
 ## Orientation
 
 - Live draft / working thesis: [`literate-workflow-programming.md`](literate-workflow-programming.md)
+- Research-exit gate: [`literate-workflow-programming-research-exit-gate-r1.md`](literate-workflow-programming-research-exit-gate-r1.md)
 - Research notes: [`research-notes/`](research-notes/)
 - alphaXiv discussion index: [`research-notes/alphaxiv-discussions/`](research-notes/alphaxiv-discussions/)
 - Anchor note: [`research-notes/2026-04-20-icm-and-markdown-workflows.md`](research-notes/2026-04-20-icm-and-markdown-workflows.md)
@@ -70,6 +71,7 @@ The P1 intake extends the evidence surface toward portable agent specifications,
 ## Working Guidance
 
 - Keep research claims here until they are ready to become repo strategy or workflow changes.
+- Treat [`literate-workflow-programming-research-exit-gate-r1.md`](literate-workflow-programming-research-exit-gate-r1.md) as the canonical record of why the package was allowed to leave `research`.
 - Keep `papers/index.md` current before downloading or converting large batches.
 - Keep alphaXiv assistant sessions in `research-notes/alphaxiv-discussions/` when they shape claims, vocabulary, or paper intake.
 - Prefer deliberate paper intake batches over opportunistic download sprawl.

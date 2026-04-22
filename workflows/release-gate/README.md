@@ -1,5 +1,7 @@
 ---
 workflow_id: release_gate
+workflow_kind: module
+stability: canonical
 workflow_group: release
 runner_mode: guided
 default_skill: null

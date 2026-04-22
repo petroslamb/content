@@ -1,9 +1,16 @@
 ---
 workflow_id: research
+workflow_kind: stage
+stage_binding: research
+stability: canonical
 workflow_group: evidence
 runner_mode: guided
 default_skill: alphaxiv
 launch_templates: []
+packet_templates:
+  - "workflows/alphaxiv-research/templates/research_exit_gate_template.md"
+validator_commands:
+  - ".venv/bin/python scripts/check_research_exit_gate.py --package {package_key}"
 required_context:
   - package README or leaf README
   - current research question or thesis direction
@@ -213,6 +220,17 @@ Practical test:
 - if further research is only conditional on draft pressure or a specific surviving claim, it is not stage-blocking research
 
 This keeps the stage model honest: `research` owns anchor formation and claim pressure. `essay_iteration` owns bounded drafting with conditional evidence triggers when needed.
+
+The canonical machine-checkable surface for that handoff is now the package-local research-exit gate:
+
+- [`templates/research_exit_gate_template.md`](templates/research_exit_gate_template.md)
+
+Use it to record:
+
+- the governing blueprint or brief that will control drafting
+- whether the local evidence surface is already sufficient
+- whether a claim-boundary surface is required and satisfied
+- whether the package is actually ready to enter `essay_iteration`
 
 ## Related Docs And Skill Bundle
 

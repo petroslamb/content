@@ -1,8 +1,20 @@
 ---
 workflow_id: youtube_series_operating_agents
+workflow_kind: module
+stability: canonical
 workflow_group: operations
 runner_mode: guided
 default_skill: youtube-operating-agents
+launch_templates: []
+required_context:
+  - Operating Agents metadata file or exact chapter/video target
+  - verified local production artifacts when the task touches a full-video upload or replacement
+  - authenticated YouTube channel access
+expected_outputs:
+  - bounded Operating Agents channel mutation or verified no-op decision
+  - local record of the exact chapter/video target, links, or playlist state changed
+done_when:
+  - the requested series-specific upload, cross-link, playlist, or replacement task is complete, or the exact blocker is recorded
 approval_gate: required_before_channel_mutation
 ---
 

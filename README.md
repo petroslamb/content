@@ -54,14 +54,27 @@ The repo now exposes a tracked harness-facing surface for Codex-style operation:
 Stable entrypoints:
 
 - `npm run check`
+- `npm run workflow:resolve -- --workflow <workflow_id> --format json`
+- `npm run workflow:run -- --workflow <workflow_id> --format json`
+- `npm run gate:check -- --gate <gate_id> --format json`
 - `npm run stage:next -- --package <package> --format json`
 - `npm run stage:resolve -- --package <package> --stage <stage> --format json`
 - `npm run stage:run -- --package <package> --stage <stage> --format json`
 - `npm run package:init -- --idea "..." --format json`
+- `npm run package:init -- --from-topic-packet <packet> --format json`
 - `npm run check:harness`
+- `npm run check:workflow-model`
 - `npm run check:reviewable-runs`
 
 These surfaces do not replace the workflow docs. They make the existing lifecycle legible to an external harness without relying on a long custom prompt.
+
+The repo now distinguishes:
+
+- stages as the default lifecycle path
+- workflows as reusable runnable parts
+- gates as machine-checkable movement rules
+- overlays as explicit experimental branches
+- reviewable runs as the retained proof and evaluation layer
 
 Use `npm run check` as the lightweight pre-review validation bundle. It runs the harness contract check, Reviewable Runs log check, repo-link check, and alphaXiv discussion tracking check. It intentionally does not build the public mirror or perform external sync work.
 

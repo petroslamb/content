@@ -1,5 +1,8 @@
 ---
 workflow_id: article_polish
+workflow_kind: stage
+stage_binding: article_polish
+stability: canonical
 workflow_group: release
 runner_mode: guided
 default_skill: null

@@ -1,5 +1,8 @@
 ---
 workflow_id: distribution
+workflow_kind: stage
+stage_binding: distribution
+stability: canonical
 workflow_group: distribution
 runner_mode: guided
 default_skill: null

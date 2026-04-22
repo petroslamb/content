@@ -6,6 +6,19 @@ Use package READMEs to understand local structure. Use the workflow docs here to
 
 The current defaults in this directory were tightened against recurring March-April 2026 rollout patterns. When the idealized process diverged from what actually worked in the rollouts, the workflow docs were rewritten toward the observed practice.
 
+## Taxonomy
+
+The repo now treats these as separate things:
+
+- **stage**: the default lifecycle layer exposed through `status.yaml` and `stage:*`
+- **workflow module**: a reusable runnable process that can be called directly from the middle
+- **gate**: a machine-checkable movement decision such as `research_exit` or `essay_prewrite`
+- **overlay**: an explicit experimental branch such as `post_ceiling_pivot`
+- **validator / evaluation**: a check or proof tool such as `spec-diff`, packet validators, or workflow-model fixtures
+- **reviewable run**: the retained run/proof record layer under [`../reviewable-runs/`](../reviewable-runs/README.md)
+
+Keep the lifecycle simple and put the bar in gates. The runner stage ids remain unchanged for compatibility, but the repo is no longer modeled as stage-only execution.
+
 ## Current Workflow Map
 
 Read the workflow layer by group first, then by individual doc. The `workflow_group` frontmatter uses this taxonomy.
@@ -107,6 +120,14 @@ For real end-to-end work, treat those flat stage ids as a compatibility layer ov
 3. **Draft governance and rewrite**: `essay_iteration`
 4. **Package media production**: `notebooklm_artifacts`, `article_polish`, `youtube_production`
 5. **Publication and outward release**: release gate, `substack_publishing`, `archive_sync`, `distribution`
+
+The modular command surfaces map onto that hierarchy like this:
+
+- `stage:*` keeps the default orchestrated path
+- `workflow:*` runs or resolves a reusable workflow directly
+- `gate:check` evaluates a movement decision without mutating package state
+
+The default profiles are tracked in [`../pipeline_profiles.yaml`](../pipeline_profiles.yaml). The gates themselves are tracked in [`../gate_contracts.yaml`](../gate_contracts.yaml).
 
 Two adjacent operational surfaces often appear during a real rollout but are not default `status.yaml` stages:
 
