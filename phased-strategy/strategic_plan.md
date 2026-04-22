@@ -338,59 +338,124 @@ If you pursue it, start with the smallest useful layer:
 
 **Goal**: The agent runs the lifecycle. You review outcomes, not steps. Human-in-the-loop only at creative and quality gates.
 
-This phase converts documentation-as-workflows into executable workflows with real agent orchestration. You start using the tools you've built about agents to *build agents*.
+This phase converts workflow specifications into a local execution platform with explicit contracts, validation, traces, and review gates. The platform should treat specs as the visible source surface, validation as lifecycle infrastructure, and traces as derivative debugging records rather than the source of truth.
+
+Phase 1.6 remains the operator-shell phase. It is not a blanket blocker for Phase 2. Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
+
+The strongest ideas promoted into this phase from `literate-workflow-programming` are:
+
+- manifest-first routing
+- workflow specs as source-like surfaces only when attached to runtime, validation, and policy
+- source/trace separation
+- bounded drift detection and trace evaluation
+- lightweight contradiction/provenance state for promoted outputs
+- workflow-as-namespace as a routing idea
+- skills as bound, verified capabilities rather than raw portable markdown
+
+This phase still keeps these ideas parked:
+
+- markdown import semantics as compiler behavior
+- package-as-object semantics
+- full semantic provenance graphs
+- repo-wide validator promotion as doctrine
+
+Detailed planning for this phase now lives under [`phase-2/`](phase-2/README.md):
+
+- [`phase-2/milestones.md`](phase-2/milestones.md)
+- [`phase-2/architecture.md`](phase-2/architecture.md)
+- [`phase-2/workflow-yaml-schema.md`](phase-2/workflow-yaml-schema.md)
+- [`phase-2/review-gate-protocol.md`](phase-2/review-gate-protocol.md)
+- [`phase-2/dashboard-v0.md`](phase-2/dashboard-v0.md)
+- [`phase-2/open-questions.md`](phase-2/open-questions.md)
 
 ### Milestones
 
-#### M2.1 — The `content-agent` CLI
-Build a proper Python package (not a loose script) named `content-agent`. It wraps all existing scripts with a clean API surface:
+#### M2.1 — Executable Workflow Contract
+Make `workflow.yaml` the primary machine contract for platform-targeted workflows. It should define:
+
+- ordered steps
+- required context
+- allowed tools and paths
+- outputs
+- verification hooks
+- approval gates
+- trace requirements
+
+The workflow README remains the human explanation surface. Drift between prose and machine contract should be controlled by checks, not by treating prose as machine truth.
+
+**Deliverable**: target workflows have authored `workflow.yaml` contracts that the runtime can interpret directly.
+
+#### M2.2 — Enforcement And Validation Layer
+Turn the contract into a runtime boundary. The platform should be able to deny or surface:
+
+- undeclared context
+- undeclared tools
+- undeclared paths
+
+It should also support per-stage validation hooks and bounded source-linked drift checks where they add real value.
+
+**Deliverable**: stage execution is attached to explicit validation and denial behavior rather than advisory prose.
+
+#### M2.3 — Trace And Provenance Minimums
+Add the minimum trace structure needed for semantic debugging. At minimum, run paths should be able to record:
+
+- context file paths and hashes
+- workflow version or hash
+- parent artifact ids
+- validation results
+- gate ids
+
+Promoted outputs should also carry a small state vocabulary:
+
+- `authority_order`
+- `claim_state`
+- `contradiction_state`
+- `validation_state`
+- `trace_state`
+
+**Deliverable**: traces are rich enough to support source-linked debugging without pretending to be full semantic provenance graphs.
+
+#### M2.4 — Gate Runtime And The `content-agent` CLI
+Build a proper Python package (not a loose script) named `content-agent`, but keep it thin first. It should wrap the stable lifecycle machinery and gate runtime instead of becoming a second orchestration language.
 
 ```
-content-agent run --package binding-gap --stage polish
 content-agent status
+content-agent next --package binding-gap
+content-agent run --package binding-gap --stage article_polish
+content-agent review --gate <gate-id> --approve
 content-agent init --package new-essay-name
-content-agent publish --package binding-gap
 ```
 
-This CLI becomes the **single interface** you and any future tool, agent, or integration communicates through.
+Pending review state should live in file-backed gate artifacts under `reviewable-runs/gates/`, not in terminal babysitting prompts.
 
-#### M2.2 — Agent-Runnable Workflow Definitions
-Convert each `workflows/*/README.md` human playbook into a machine-readable `workflow.yaml` alongside the doc. A `workflow.yaml` defines:
-- steps (ordered)
-- required tools/scripts for each step
-- human approval gates (which steps require user sign-off)
-- automated verification (what does "done" look like?)
+**Deliverable**: `content-agent` can `status`, `next`, `run`, `review`, and `init` against the stable contract.
 
-**Deliverable**: `content-agent run` executes all non-gated steps autonomously and pauses at gate points.
+#### M2.5 — The Local Cockpit (v0)
+Add a thin local cockpit that reads filesystem-backed truth and shows:
 
-#### M2.3 — The Review Gate Protocol
-Define the human-in-the-loop contract explicitly. Two classes:
-- **Auto-run gates**: Script runs, output stored, stage marked done. (e.g., paper conversion, archive sync)
-- **Human review gates**: Agent runs the work, presents a diff/preview, waits for approval. (e.g., essay draft review, cue sheet alignment, Substack publish)
+- package state
+- pending review gates
+- recent runs
 
-The "waiting" mechanism should be a local web dashboard (a minimal Next.js/Flask app showing pending reviews), not a terminal prompt you have to babysit.
+This is not a SaaS and not a second control plane. It is a local reader/approver over the gate and trace artifacts.
 
-#### M2.4 — The Local Dashboard (v0)
-A minimal web UI at `localhost:3001` that shows:
-- Publication fleet status (lifecycle stage per essay)
-- Pending human-review gates
-- Last 5 run records from reviewable-runs
+#### M2.6 — Editorial Automation
+At the Article Polish stage, the platform should be able to produce structured editorial reports against `voice_consistency_guide.md` and related constraints. It may also suggest source-level improvements from repeated correction patterns.
 
-This is **not** a SaaS yet. This is your own cockpit. It runs locally, talks to the local filesystem.
+These outputs should remain reports and suggestions, not autonomous rewrite authority.
 
-#### M2.5 — Voice + Style Automation
-AutoCheck: On every essay at the Article Polish stage, the agent must automatically score the draft against `voice_consistency_guide.md` and produce a structured violation report (ban list violations, rhythm deviations). No more manual audits.
-
-**Deliverable**: `content-agent run --stage voice_check` produces a machine-readable compliance report.
+**Deliverable**: editorial automation produces machine-readable reports without collapsing human review boundaries.
 
 ---
 
 ### Phase 2 Gate Criteria
 > [!IMPORTANT]
 > **Do not enter Phase 3 until you can honestly answer YES to all of these:**
-> 1. Can you go from "I have an idea and a title" to "draft ready for final review" without touching a command line?
-> 2. Are pending reviews visible in a dashboard — not buried in terminal logs?
-> 3. Has the agent successfully completed at least 3 full essay lifecycles, start to finish, with no process errors?
+> 1. Do the platform-targeted lifecycle stages have stable `workflow.yaml` contracts with explicit verification, approval gates, and trace requirements?
+> 2. Can the runtime deny or surface undeclared context, tools, and paths instead of relying on prose discipline alone?
+> 3. Are pending review gates visible and resumable outside terminal logs?
+> 4. Are traces rich enough to support source-linked debugging without pretending to be the source of truth?
+> 5. Has the platform completed at least 3 full essay lifecycles end to end without falling back to legacy direct-script operation?
 
 ---
 
