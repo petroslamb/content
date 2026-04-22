@@ -19,8 +19,8 @@ stages:
     done: true
     last_updated: '2026-04-09'
   substack_publishing:
-    done: false
-    last_updated: '2026-04-07'
+    done: true
+    last_updated: '2025-11-27'
   archive_sync:
     done: false
     last_updated: '2026-04-07'
@@ -33,6 +33,7 @@ stages:
 config:
   markdown_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
   evidence_path: publications/neural-architectures/papers
+  blueprint_path: blueprint.md
   substack_slug: neural-architecture-design-as-a-compositional-32e
   substack_post_id: 180114871
   substack_url: https://lambpetros.substack.com
