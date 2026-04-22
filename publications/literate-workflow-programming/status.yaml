@@ -1,10 +1,14 @@
-kind: leaf
+kind: umbrella
 publication: literate-workflow-programming
 revision: 3
 config:
-  markdown_path: publications/literate-workflow-programming/literate-workflow-programming.md
+  default_leaf_package: literate-workflow-programming/validation-lifecycle-infrastructure
   evidence_path: publications/literate-workflow-programming/papers
-  blueprint_path: literate-workflow-programming.md
+  shared_evidence_path: publications/literate-workflow-programming/papers
+  blueprint_path: umbrella-brief.md
+  leaf_packages:
+    - literate-workflow-programming/literate-workflow-programming-flagship
+    - literate-workflow-programming/validation-lifecycle-infrastructure
 stages:
   paper_intake:
     done: true
@@ -13,7 +17,7 @@ stages:
     done: true
     last_updated: '2026-04-21'
   essay_iteration:
-    done: false
+    done: true
     last_updated: '2026-04-22'
   notebooklm_artifacts:
     done: false

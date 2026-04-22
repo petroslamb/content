@@ -5,40 +5,34 @@ topic_packets:
     expected_decision: package_init_ready
 route_checks:
   - package: literate-workflow-programming
-    stage: essay_iteration
-    expected_pipeline_profile: post_ceiling_successor
-    expected_effective_workflow: post_ceiling_pivot
-    expected_effective_next_action: hold_for_narrower_doctrine_write_or_later_larger_successor
+    stage: notebooklm_artifacts
+    expected_pipeline_profile: article_default
+    expected_effective_workflow: notebooklm_artifacts
     expected_effective_can_execute: false
-    expected_packet_phase: ready_for_human_review
-    expected_recommended_workflow: post_ceiling_pivot
-    expected_overlay_candidate: post_ceiling_pivot
-    expected_active_overlay: post_ceiling_pivot
-    expected_overlay_phase: post_block_route_settled
-    expected_next_overlay_action: hold_for_narrower_doctrine_write_or_later_larger_successor
-    expected_overlay_route: keep_as_strong_narrower_doctrine_object
-    expected_overlay_validator_substring: pivot_north_star_viability
-    expected_gate:
-      gate_id: replacement_north_star
-      status: blocked
-      decision: object_ceiling
+    expected_recommended_workflow: notebooklm_artifacts
 workflow_resolution_checks:
+  - workflow: post_ceiling_pivot
+    package: clean-interface-illusion
+    expected_can_execute: false
+    expected_overlay_phase: upgrade_to_umbrella
+    expected_next_overlay_action: upgrade_to_umbrella_and_create_donor_leaf
+    expected_active_overlay_root: publications/clean-interface-illusion
+    expected_validator_substring: check:package-lifecycle
+    expected_recommended_gates:
+      - pivot_research_grounding
+      - pivot_north_star_viability
   - workflow: post_ceiling_pivot
     package: literate-workflow-programming
     expected_can_execute: false
     expected_overlay_phase: post_block_route_settled
     expected_next_overlay_action: hold_for_narrower_doctrine_write_or_later_larger_successor
     expected_overlay_route: keep_as_strong_narrower_doctrine_object
-    expected_active_overlay_root: publications/literate-workflow-programming/pivot/active
+    expected_active_overlay_root: publications/literate-workflow-programming
     expected_validator_substring: pivot_north_star_viability
     expected_recommended_gates:
       - pivot_research_grounding
       - pivot_north_star_viability
 gate_checks:
-  - gate: research_exit
-    package: literate-workflow-programming
-    expected_status: pass
-    expected_decision: ready_for_essay_iteration
   - gate: research_exit
     package: clean-interface-illusion
     expected_status: pass

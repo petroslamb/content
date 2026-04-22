@@ -41,22 +41,24 @@ gates:
     recommended_validator: "npm run check:essay-iteration -- --package <package>"
     proof_mode: packet_review
   pivot_research_grounding:
-    description: Decide whether a post-ceiling pivot candidate is grounded enough to be a real successor object.
+    description: Decide whether a post-ceiling pivot candidate is grounded enough to justify a real second publication object under an umbrella package.
     scope: package
     required_artifacts:
       - ceiling report or legacy donor-report pair
       - pivot grounding review
       - pivot decision or live candidate status
+      - umbrella upgrade when the donor package is no longer single-publication
     recommended_workflow: post_ceiling_pivot
     recommended_validator: "npm run gate:check -- --gate pivot_research_grounding --package <package>"
     proof_mode: overlay_gate
   pivot_north_star_viability:
-    description: Decide whether a grounded pivot candidate is strong enough to open a successor flagship object or sibling package.
+    description: Decide whether a grounded pivot candidate is strong enough to open a successor flagship leaf or whether a narrower leaf is the right route.
     scope: package
     required_artifacts:
       - pivot grounding review
       - pivot north-star viability gate
       - pivot decision
+      - successor or narrowed leaf initialization when the second object is adopted
     recommended_workflow: post_ceiling_pivot
     recommended_validator: "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
     proof_mode: overlay_gate
