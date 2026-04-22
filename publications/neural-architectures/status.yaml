@@ -3,10 +3,13 @@ publication: neural-architectures
 revision: 1
 config:
   default_leaf_package: neural-architectures/neural-architecture-design-as-a-compositional-32e
+  leaf_packages:
+    - neural-architectures/neural-architecture-design-as-a-compositional-32e
   blueprint_path: umbrella-governing-brief.md
   markdown_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
   artifacts_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts
   evidence_path: publications/neural-architectures/papers
+  shared_evidence_path: publications/neural-architectures/papers
   notebooklm_posts:
     the-transformer-attractor:
       primary:
@@ -46,8 +49,8 @@ stages:
     done: true
     last_updated: '2026-04-07'
   youtube_production:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'
   distribution:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'

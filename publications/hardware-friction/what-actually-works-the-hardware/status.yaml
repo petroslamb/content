@@ -1,0 +1,38 @@
+kind: leaf
+publication: what-actually-works-the-hardware
+parent_package: hardware-friction
+revision: 1
+config:
+  markdown_path: publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md
+  blueprint_path: blueprint.md
+  evidence_path: publications/hardware-friction/research_artifacts
+  substack_slug: what-actually-works-the-hardware
+  substack_url: https://lambpetros.substack.com
+stages:
+  paper_intake:
+    done: true
+    last_updated: '2026-04-07'
+  research:
+    done: true
+    last_updated: '2026-04-07'
+  essay_iteration:
+    done: true
+    last_updated: '2026-04-07'
+  notebooklm_artifacts:
+    done: true
+    last_updated: '2026-04-07'
+  article_polish:
+    done: true
+    last_updated: '2026-04-07'
+  substack_publishing:
+    done: true
+    last_updated: '2026-04-07'
+  archive_sync:
+    done: true
+    last_updated: '2026-04-07'
+  youtube_production:
+    done: true
+    last_updated: '2026-04-23'
+  distribution:
+    done: true
+    last_updated: '2026-04-23'

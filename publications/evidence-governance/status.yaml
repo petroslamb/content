@@ -1,8 +1,10 @@
 kind: umbrella
 publication: evidence-governance
-revision: 3
+revision: 4
 config:
   default_leaf_package: evidence-governance/your-ai-is-confidently-wrong-and
+  markdown_path: publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md
+  blueprint_path: umbrella-governing-brief.md
   evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
   shared_evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
   leaf_packages:

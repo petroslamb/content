@@ -22,14 +22,14 @@ stages:
     done: true
     last_updated: '2025-11-27'
   archive_sync:
-    done: false
-    last_updated: '2026-04-07'
+    done: true
+    last_updated: '2026-04-23'
   youtube_production:
     done: true
     last_updated: '2026-04-09'
   distribution:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'
 config:
   markdown_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
   evidence_path: publications/neural-architectures/papers

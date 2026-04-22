@@ -1,4 +1,6 @@
+kind: umbrella
 publication: orchestration-paradigm
+revision: 1
 stages:
   paper_intake:
     done: true
@@ -22,14 +24,19 @@ stages:
     done: true
     last_updated: '2026-04-07'
   youtube_production:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'
   distribution:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'
 config:
+  default_leaf_package: orchestration-paradigm/the-orchestration-paradigm-series
+  leaf_packages:
+    - orchestration-paradigm/the-orchestration-paradigm-series
   markdown_path: publications/orchestration-paradigm/the-orchestration-paradigm-series/the-orchestration-paradigm-series.md
+  blueprint_path: umbrella-governing-brief.md
   evidence_path: publications/orchestration-paradigm/ToolOrchestra_Parts/papers
+  shared_evidence_path: publications/orchestration-paradigm/ToolOrchestra_Parts/papers
   substack_slug: the-orchestration-paradigm-series
   substack_url: https://lambpetros.substack.com
   notebooklm_posts:
