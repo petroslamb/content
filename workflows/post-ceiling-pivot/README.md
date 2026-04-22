@@ -9,6 +9,8 @@ launch_templates: []
 packet_templates:
   - "workflows/post-ceiling-pivot/templates/post_ceiling_reframe_template.md"
   - "workflows/post-ceiling-pivot/templates/pivot_grounding_review_template.md"
+  - "workflows/post-ceiling-pivot/templates/pivot_consequence_pressure_template.md"
+  - "workflows/post-ceiling-pivot/templates/pivot_comparative_rerank_template.md"
   - "workflows/post-ceiling-pivot/templates/pivot_north_star_viability_template.md"
   - "workflows/post-ceiling-pivot/templates/pivot_decision_template.md"
 required_context:
@@ -134,9 +136,13 @@ The recurring strong artifact set is:
    Keep one active candidate surface without pretending it is cleared.
 6. `candidate-specific research delta`
    Define the exact gaps the next research pass must close.
-7. `north-star viability gate`
+7. `consequence pressure`
+   Sharpen the public enemy and consequence surface when a grounded candidate still feels too small.
+8. `comparative rerank`
+   Re-rank the main candidate, strongest adjacent seam, and wrapper rivals after new pressure changes the evidence picture.
+9. `north-star viability gate`
    Decide whether the candidate has enough field-reordering force, scale-matched evidence, and doctrine to plausibly beat the top archive cluster.
-8. `pivot decision`
+10. `pivot decision`
    Record whether the package should keep searching, clear a pivot, or stop.
 
 Legacy compatibility:
@@ -148,6 +154,29 @@ Legacy compatibility:
 For new packages, do not generate that pair as a second canonical layer. Use the single `ceiling report`.
 
 These do not need to be identical filenames across packages, but the functions should all exist.
+
+## Overlay Substeps
+
+The active overlay should resolve to one next bounded action rather than a general mood.
+
+Use these substeps:
+
+- `build_pivot_slate`
+- `ground_candidates`
+- `select_live_candidate`
+- `write_research_delta`
+- `run_consequence_pressure`
+- `run_comparative_rerank`
+- `run_north_star_viability`
+- `decide_post_block_route`
+- `initialize_successor_package`
+
+For a grounded candidate that is still north-star blocked, the normal loop is:
+
+1. consequence pressure
+2. comparative rerank
+3. restated north-star judgment
+4. decision to narrow, keep as doctrine piece, or search for a materially larger successor
 
 ## Working Sequence
 
@@ -289,6 +318,29 @@ This is the point where a candidate can move from `clear_lead_candidate` to eith
 
 - `research_grounded_but_not_north_star_viable`
 - `pivot_cleared_for_north_star_attempt`
+
+### Consequence Pressure
+
+Use this after a candidate is grounded but still feels too small or too procedural.
+
+The job is to answer:
+
+- what is the real public enemy?
+- what breaks if the candidate is ignored?
+- does the consequence surface escape the package's local workflow idiom?
+
+This is not another broad search pass. It is a pressure pass on enemy, stakes, and consequence.
+
+### Comparative Rerank
+
+After consequence pressure or any other material evidence change, rerank the live candidates explicitly.
+
+Keep the rerank separate from the decision note so the package preserves:
+
+- current main candidate
+- strongest adjacent seam
+- strongest narrower writeable synthesis
+- strongest wrapper or blocked rival
 
 The full-package clearance pass must include the north-star viability gate below before the final status is assigned.
 

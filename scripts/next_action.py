@@ -36,6 +36,11 @@ def build_next_action(package_arg: str) -> dict:
         "recommended_workflows": [],
         "gate_statuses": {},
         "overlay_candidates": [],
+        "active_overlay": None,
+        "overlay_phase": None,
+        "next_overlay_action": None,
+        "overlay_recommended_validator": None,
+        "active_overlay_root": None,
     }
     if next_stage is None:
         return base
@@ -58,6 +63,11 @@ def build_next_action(package_arg: str) -> dict:
         "recommended_workflows": resolution.get("recommended_workflows", []),
         "gate_statuses": resolution.get("gate_statuses", {}),
         "overlay_candidates": resolution.get("overlay_candidates", []),
+        "active_overlay": resolution.get("active_overlay"),
+        "overlay_phase": resolution.get("overlay_phase"),
+        "next_overlay_action": resolution.get("next_overlay_action"),
+        "overlay_recommended_validator": resolution.get("overlay_recommended_validator"),
+        "active_overlay_root": resolution.get("active_overlay_root"),
     }
 
 
@@ -88,6 +98,13 @@ def print_text(payload: dict) -> None:
         print("\nOverlay Candidates:")
         for workflow_id in payload["overlay_candidates"]:
             print(f"  - {workflow_id}")
+
+    if payload.get("active_overlay"):
+        print(f"\nActive Overlay: {payload['active_overlay']}")
+        print(f"Overlay Root: {payload.get('active_overlay_root')}")
+        print(f"Overlay Phase: {payload.get('overlay_phase')}")
+        print(f"Next Overlay Action: {payload.get('next_overlay_action')}")
+        print(f"Overlay Validator: {payload.get('overlay_recommended_validator')}")
 
     if payload.get("gate_statuses"):
         print("\nGate Statuses:")

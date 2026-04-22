@@ -44,6 +44,11 @@ def print_workflow_resolution(resolution: dict, launch_pack_path: str | None) ->
     print(f"Requires Approval: {resolution['requires_approval']}")
     print(f"Can Execute: {resolution['can_execute']}")
     print(f"Recommended Gates: {', '.join(resolution['recommended_gates']) or 'none'}")
+    if resolution.get("overlay_phase"):
+        print(f"Overlay Phase: {resolution.get('overlay_phase')}")
+        print(f"Next Overlay Action: {resolution.get('next_overlay_action')}")
+        print(f"Overlay Validator: {resolution.get('recommended_validator')}")
+        print(f"Active Overlay Root: {resolution.get('active_overlay_root')}")
     if launch_pack_path:
         print(f"Launch Pack: {launch_pack_path}")
 

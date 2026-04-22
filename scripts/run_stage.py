@@ -267,6 +267,14 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
         for workflow_id in resolution["overlay_candidates"]:
             print(f"  - {workflow_id}")
 
+    if resolution.get("active_overlay"):
+        print("\nActive Overlay:")
+        print(f"  - workflow: {resolution['active_overlay']}")
+        print(f"  - root: {resolution.get('active_overlay_root')}")
+        print(f"  - phase: {resolution.get('overlay_phase')}")
+        print(f"  - next action: {resolution.get('next_overlay_action')}")
+        print(f"  - recommended validator: {resolution.get('overlay_recommended_validator')}")
+
     if resolution.get("gate_statuses"):
         print("\nGate Statuses:")
         for gate_id, gate_status in resolution["gate_statuses"].items():
