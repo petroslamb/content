@@ -10,7 +10,7 @@
       "Do not treat this manifest as full semantic provenance graphs.",
       "Do not treat this manifest as proof of broad behavioral conformance.",
       "Do not use this manifest to justify repo-wide validator promotion.",
-      "Do not use this manifest as proof that the package is ready for essay-body drafting."
+      "Do not use this manifest as the authorization surface for essay drafting."
     ]
   },
   "authority_order": [
@@ -25,9 +25,17 @@
     "claim_scorecard": "publications/literate-workflow-programming/claim-scorecard.md",
     "contradiction_register": "publications/literate-workflow-programming/contradiction-register.md",
     "governing_brief": "publications/literate-workflow-programming/literate-workflow-programming.md",
+    "status": "publications/literate-workflow-programming/status.yaml",
+    "prewrite_gate": "publications/literate-workflow-programming/literate-workflow-programming-prewrite-gate-r1.md",
     "proof_note": "publications/literate-workflow-programming/research-notes/2026-04-22-claim-provenance-proof-note.md",
     "p2a_note": "publications/literate-workflow-programming/research-notes/2026-04-21-p2a-local-intake-trace-provenance.md",
     "transfer_note": "publications/literate-workflow-programming/research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md"
+  },
+  "contract_check": {
+    "stage": "essay_iteration",
+    "writability_verdict": "writable",
+    "candidate_authorized": true,
+    "note": "The package-level drafting authorization lives in the packet and prewrite gate, not in this manifest."
   },
   "claims": [
     {
