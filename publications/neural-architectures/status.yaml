@@ -3,6 +3,7 @@ publication: neural-architectures
 revision: 1
 config:
   default_leaf_package: neural-architectures/neural-architecture-design-as-a-compositional-32e
+  blueprint_path: umbrella-governing-brief.md
   evidence_path: publications/neural-architectures/papers
   notebooklm_posts:
     the-transformer-attractor:
