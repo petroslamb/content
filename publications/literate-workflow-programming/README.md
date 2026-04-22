@@ -7,14 +7,17 @@ Research direction: Determine whether markdown workflow docs, skills, indexes, i
 ## Package Status
 
 - Archetype: Single-publication research package
-- Status: Active / unpublished
+- Status: Active / capped flagship attempt
 - Current stage: essay_iteration
+- Current route: `post_ceiling_pivot` recommended from the stop-gated packet
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
 
 ## Orientation
 
 - Live draft / working thesis: [`literate-workflow-programming.md`](literate-workflow-programming.md)
 - Research-exit gate: [`literate-workflow-programming-research-exit-gate-r1.md`](literate-workflow-programming-research-exit-gate-r1.md)
+- Canonical donor report: [`literate-workflow-programming-ceiling-report-r3.md`](literate-workflow-programming-ceiling-report-r3.md)
+- Legacy stop notes: [`literate-workflow-programming-post-ceiling-reframe.md`](literate-workflow-programming-post-ceiling-reframe.md), [`literate-workflow-programming-process-capture.md`](literate-workflow-programming-process-capture.md)
 - Research notes: [`research-notes/`](research-notes/)
 - alphaXiv discussion index: [`research-notes/alphaxiv-discussions/`](research-notes/alphaxiv-discussions/)
 - Anchor note: [`research-notes/2026-04-20-icm-and-markdown-workflows.md`](research-notes/2026-04-20-icm-and-markdown-workflows.md)
@@ -72,6 +75,9 @@ The P1 intake extends the evidence surface toward portable agent specifications,
 
 - Keep research claims here until they are ready to become repo strategy or workflow changes.
 - Treat [`literate-workflow-programming-research-exit-gate-r1.md`](literate-workflow-programming-research-exit-gate-r1.md) as the canonical record of why the package was allowed to leave `research`.
+- Treat the `r3` packet as the proof surface for the stop gate, not as a prelude to `r4`.
+- Treat [`literate-workflow-programming-ceiling-report-r3.md`](literate-workflow-programming-ceiling-report-r3.md) as the canonical donor report for this capped flagship attempt.
+- Treat [`literate-workflow-programming-post-ceiling-reframe.md`](literate-workflow-programming-post-ceiling-reframe.md) and [`literate-workflow-programming-process-capture.md`](literate-workflow-programming-process-capture.md) as historical working notes, not as the primary handoff surface.
 - Keep `papers/index.md` current before downloading or converting large batches.
 - Keep alphaXiv assistant sessions in `research-notes/alphaxiv-discussions/` when they shape claims, vocabulary, or paper intake.
 - Prefer deliberate paper intake batches over opportunistic download sprawl.

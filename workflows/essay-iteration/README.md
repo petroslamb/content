@@ -16,6 +16,7 @@ packet_templates:
   - "workflows/essay-iteration/templates/cold_replacement_review_template.md"
   - "workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md"
   - "workflows/essay-iteration/templates/promotion_decision_template.md"
+  - "workflows/essay-iteration/templates/ceiling_report_template.md"
 validator_commands:
   - "npm run check:essay-prewrite -- --package {package_key}"
   - "npm run check:essay-iteration -- --package {package_key}"
@@ -31,8 +32,9 @@ expected_outputs:
   - essay-iteration packet manifest beside the live draft
   - essay-governing prewrite gate beside the live draft
   - bounded rewrite candidate and structured review artifacts within the packet
+  - stop-fired donor report when a flagship object is judged capped
 done_when:
-  - a validated packet exists beside the live draft, the prewrite gate is explicit, and the current direction is clear enough for human review or the next lifecycle handoff
+  - a validated packet exists beside the live draft, the prewrite gate is explicit, and any stop-fired packet has a completed ceiling report before the next lifecycle handoff
 approval_gate: required_for_major_rewrite
 judgment_policy: draft_only
 prohibited_moves:
@@ -395,6 +397,12 @@ The stop rule is hard:
 2. if the next candidate is still below north star and the `dominant_blocker_slug` is unchanged, the stop gate fires
 3. once the stop gate fires, do not write another blind local flagship pass from the same frame
 
+Once the stop gate fires, the packet must also produce one canonical donor report:
+
+- `*-ceiling-report-r<revision>.md`
+
+That file is the required handoff object between `essay_iteration` and any later pivot search. It should unify the verdict, chronology, blocker persistence, effort audit, reusable assets, and next route into one inspectable surface.
+
 Allowed outcomes after the stop gate fires:
 
 - publish the current candidate as a strong non-flagship piece
@@ -419,8 +427,9 @@ The escalation headings inside the packet are required only when this mode is ac
 11. if the draft is close, apply bounded fixes first; otherwise produce a clearly bounded candidate
 12. run a cold replacement review before promotion when the candidate is a serious replacement contender
 13. if north-star escalation mode is active, compare the new candidate against the prior `dominant_blocker_slug` and stop when the same blocker persists
-14. compare, choose, and only then promote or archive
-15. archive superseded versions, local review files, and retired companions once they are no longer the active surface
+14. if the stop gate fires, write the ceiling report before handing the package into any pivot workflow
+15. compare, choose, and only then promote, pivot, shelve, or archive
+16. archive superseded versions, local review files, and retired companions once they are no longer the active surface
 
 ## Refinement Defaults
 

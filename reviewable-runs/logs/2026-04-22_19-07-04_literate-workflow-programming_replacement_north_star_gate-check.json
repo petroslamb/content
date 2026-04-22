@@ -1,0 +1,47 @@
+{
+  "kind": "gate_check",
+  "schema_version": 2,
+  "timestamp": "2026-04-22_19-07-04",
+  "run_id": "2026-04-22_19-07-04_literate-workflow-programming_replacement_north_star_gate-check",
+  "package": "literate-workflow-programming",
+  "gate_id": "replacement_north_star",
+  "packet_path": null,
+  "boundary": {
+    "type": "gate evaluation",
+    "reason": "Gate checks record movement decisions without mutating package state by themselves.",
+    "external_side_effect": false,
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Evaluate gate 'replacement_north_star'.",
+    "stop_condition": "Gate result recorded in reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not mutate lifecycle state from the gate check alone."
+    ]
+  },
+  "decision": "object_ceiling_report_missing",
+  "status": "blocked",
+  "required_artifacts": [
+    "replacement review",
+    "promotion decision",
+    "current packet manifest",
+    "ceiling report when the stop gate fires"
+  ],
+  "missing_artifacts": [
+    "ceiling report"
+  ],
+  "recommended_workflow": "essay_iteration",
+  "recommended_validator": "npm run check:essay-iteration -- --package <package>",
+  "proof_mode": "packet_review",
+  "verification": {
+    "checks": [
+      {
+        "name": "gate_check_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-22_19-07-04_literate-workflow-programming_replacement_north_star_gate-check.json"
+      }
+    ],
+    "residual_risk": "Gate checks capture the current bounded decision, but the underlying artifacts still need normal human review when the stakes are high."
+  }
+}

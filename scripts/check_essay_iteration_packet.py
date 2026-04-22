@@ -17,6 +17,11 @@ from essay_iteration_support import (
     BLUEPRINT_HEADINGS,
     CANDIDATE_LIMITS_HEADINGS,
     CANDIDATE_REFERENCES_HEADINGS,
+    CEILING_REPORT_BODY_HEADINGS,
+    CEILING_REPORT_EFFORT_VERDICTS,
+    CEILING_REPORT_FRONTMATTER_FIELDS,
+    CEILING_REPORT_NEXT_ROUTES,
+    CEILING_REPORT_VERDICTS,
     DECISION_BODY_HEADINGS,
     DECISION_FRONTMATTER_FIELDS,
     ESCALATION_BLUEPRINT_HEADINGS,
@@ -25,6 +30,7 @@ from essay_iteration_support import (
     ESCALATION_REVIEW_BODY_HEADINGS,
     ESCALATION_REVIEW_FRONTMATTER_FIELDS,
     ESCALATION_STOP_GATE_STATUSES,
+    NORTH_STAR_ESCALATION_SCHEMA_VERSION,
     PACKET_SCHEMA_VERSION,
     PASSAGE_ANCHOR_FIELDS,
     PREWRITE_BODY_HEADINGS,
@@ -47,6 +53,7 @@ PREWRITE_REQUIRED_PACKET_OUTPUTS = {
     "manifest",
     "blueprint",
     "prewrite_gate",
+    "ceiling_report",
 }
 
 FULL_REQUIRED_PACKET_OUTPUTS = {
@@ -57,6 +64,7 @@ FULL_REQUIRED_PACKET_OUTPUTS = {
     "replacement_review",
     "atlas_scorecard",
     "decision",
+    "ceiling_report",
 }
 
 
@@ -200,6 +208,94 @@ def validate_prewrite_gate(frontmatter: dict, body: str, errors: list[str]) -> N
         errors.append("Prewrite gate frontmatter field 'dominant_blocker_slug' must be kebab-case when filled in.")
 
 
+def stop_iteration_triggered(review_frontmatter: dict, decision_frontmatter: dict) -> bool:
+    if review_frontmatter.get("north_star_verdict") != "below_north_star":
+        return False
+    return (
+        review_frontmatter.get("continue_iteration") is False
+        or decision_frontmatter.get("rewrite_mode") == "stop_flagship_iteration"
+        or decision_frontmatter.get("stop_gate_status") == "fired"
+    )
+
+
+def validate_ceiling_report(
+    packet: dict,
+    review_frontmatter: dict,
+    ceiling_report_path: Path,
+    errors: list[str],
+) -> None:
+    frontmatter, body = parse_markdown_frontmatter(ceiling_report_path)
+    validate_required_fields(frontmatter, CEILING_REPORT_FRONTMATTER_FIELDS, "Ceiling report", errors)
+    validate_required_headings(body, CEILING_REPORT_BODY_HEADINGS, "Ceiling report", errors)
+
+    verdict = frontmatter.get("ceiling_verdict")
+    if verdict not in CEILING_REPORT_VERDICTS:
+        errors.append(
+            "Ceiling report frontmatter field 'ceiling_verdict' must be one of: "
+            + ", ".join(sorted(CEILING_REPORT_VERDICTS))
+            + "."
+        )
+
+    effort_verdict = frontmatter.get("effort_verdict")
+    if effort_verdict not in CEILING_REPORT_EFFORT_VERDICTS:
+        errors.append(
+            "Ceiling report frontmatter field 'effort_verdict' must be one of: "
+            + ", ".join(sorted(CEILING_REPORT_EFFORT_VERDICTS))
+            + "."
+        )
+
+    next_route = frontmatter.get("next_route")
+    if next_route not in CEILING_REPORT_NEXT_ROUTES:
+        errors.append(
+            "Ceiling report frontmatter field 'next_route' must be one of: "
+            + ", ".join(sorted(CEILING_REPORT_NEXT_ROUTES))
+            + "."
+        )
+
+    dominant_blocker_slug = frontmatter.get("dominant_blocker_slug")
+    if not valid_dominant_blocker_slug(dominant_blocker_slug):
+        errors.append("Ceiling report frontmatter field 'dominant_blocker_slug' must be a non-empty kebab-case slug.")
+    elif dominant_blocker_slug != review_frontmatter.get("dominant_blocker_slug"):
+        errors.append(
+            "Ceiling report frontmatter field 'dominant_blocker_slug' must match the terminal replacement review."
+        )
+
+    for field in [
+        "live_draft_path",
+        "terminal_candidate_path",
+        "terminal_replacement_review_path",
+        "terminal_decision_path",
+    ]:
+        value = frontmatter.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"Ceiling report frontmatter field '{field}' must be filled in.")
+            continue
+        resolved = (REPO_ROOT / value).resolve()
+        if not resolved.exists():
+            errors.append(f"Ceiling report frontmatter path '{field}' does not exist: {resolved}")
+
+    if isinstance(frontmatter.get("terminal_candidate_path"), str) and frontmatter.get("terminal_candidate_path") != packet.get(
+        "candidate_path"
+    ):
+        errors.append("Ceiling report terminal_candidate_path must match the packet candidate_path.")
+
+    output_paths = packet.get("output_paths", {})
+    if isinstance(frontmatter.get("terminal_replacement_review_path"), str) and frontmatter.get(
+        "terminal_replacement_review_path"
+    ) != output_paths.get("replacement_review"):
+        errors.append("Ceiling report terminal_replacement_review_path must match the packet replacement_review path.")
+    if isinstance(frontmatter.get("terminal_decision_path"), str) and frontmatter.get("terminal_decision_path") != output_paths.get(
+        "decision"
+    ):
+        errors.append("Ceiling report terminal_decision_path must match the packet decision path.")
+
+    if verdict == "object_ceiling":
+        if effort_verdict == "pending":
+            errors.append("Ceiling report verdict 'object_ceiling' requires a settled effort_verdict.")
+        if next_route == "pending":
+            errors.append("Ceiling report verdict 'object_ceiling' requires a settled next_route.")
+
+
 def validate_packet(packet: dict, phase: str = "full") -> list[str]:
     errors: list[str] = []
     schema_version = packet_schema_version(packet)
@@ -211,7 +307,12 @@ def validate_packet(packet: dict, phase: str = "full") -> list[str]:
             errors.append(
                 "Packet manifest does not include output_paths.prewrite_gate. Refresh the essay-iteration packet scaffold to schema v3."
             )
+        if "ceiling_report" in missing_outputs:
+            errors.append(
+                "Packet manifest does not include output_paths.ceiling_report. Refresh the essay-iteration packet scaffold to schema v4."
+            )
         other_missing = [name for name in missing_outputs if name != "prewrite_gate"]
+        other_missing = [name for name in other_missing if name != "ceiling_report"]
         if other_missing:
             errors.append(f"Packet manifest is missing output paths: {', '.join(other_missing)}")
         return errors
@@ -282,11 +383,11 @@ def validate_packet(packet: dict, phase: str = "full") -> list[str]:
     validate_required_headings(decision_body, DECISION_BODY_HEADINGS, "Decision", errors)
 
     escalation_active = escalation_mode_active(packet, review_frontmatter, decision_frontmatter)
-    if schema_version >= PACKET_SCHEMA_VERSION:
+    if schema_version >= NORTH_STAR_ESCALATION_SCHEMA_VERSION:
         conditional_sections = packet.get("required_sections", {}).get("conditional_escalation_sections")
         if not isinstance(conditional_sections, dict):
             errors.append(
-                "Packet manifest is missing required_sections.conditional_escalation_sections for schema v3 packets."
+                "Packet manifest is missing required_sections.conditional_escalation_sections for escalation-capable packets."
             )
 
         validate_required_fields(
@@ -356,7 +457,7 @@ def validate_packet(packet: dict, phase: str = "full") -> list[str]:
             prior_packet = load_prior_packet(packet, packet.get("revision", 1))
             prior_escalation_active = False
             same_dominant_blocker = False
-            if prior_packet is not None and packet_schema_version(prior_packet) >= PACKET_SCHEMA_VERSION:
+            if prior_packet is not None and packet_schema_version(prior_packet) >= NORTH_STAR_ESCALATION_SCHEMA_VERSION:
                 prior_review_frontmatter = load_prior_packet_frontmatter(prior_packet, "replacement_review")
                 prior_decision_frontmatter = load_prior_packet_frontmatter(prior_packet, "decision")
                 if prior_review_frontmatter and prior_decision_frontmatter:
@@ -401,6 +502,20 @@ def validate_packet(packet: dict, phase: str = "full") -> list[str]:
             errors.append(
                 "Decision escalation field 'stop_gate_status' must be 'inactive' when escalation mode is not active."
             )
+
+    if stop_iteration_triggered(review_frontmatter, decision_frontmatter):
+        ceiling_report_relpath = output_paths.get("ceiling_report")
+        if not isinstance(ceiling_report_relpath, str):
+            errors.append("Stop-fired essay packets require output_paths.ceiling_report in the packet manifest.")
+        else:
+            ceiling_report_path = (REPO_ROOT / ceiling_report_relpath).resolve()
+            if not ceiling_report_path.exists():
+                errors.append("Stop-fired essay packets require a completed ceiling-report artifact.")
+            else:
+                try:
+                    validate_ceiling_report(packet, review_frontmatter, ceiling_report_path, errors)
+                except Exception as exc:
+                    errors.append(f"Ceiling report is invalid: {exc}")
 
     judgment_policy = packet.get("judgment_policy", "unrestricted")
     publication_power = parse_publication_power(scorecard_frontmatter.get("publication_power"))

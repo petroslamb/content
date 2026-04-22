@@ -15,6 +15,8 @@ from essay_iteration_support import (
     BLUEPRINT_HEADINGS,
     CANDIDATE_LIMITS_HEADINGS,
     CANDIDATE_REFERENCES_HEADINGS,
+    CEILING_REPORT_BODY_HEADINGS,
+    CEILING_REPORT_FRONTMATTER_FIELDS,
     DECISION_BODY_HEADINGS,
     DECISION_FRONTMATTER_FIELDS,
     ESCALATION_BLUEPRINT_HEADINGS,
@@ -22,6 +24,7 @@ from essay_iteration_support import (
     ESCALATION_DECISION_FRONTMATTER_FIELDS,
     ESCALATION_REVIEW_BODY_HEADINGS,
     ESCALATION_REVIEW_FRONTMATTER_FIELDS,
+    NORTH_STAR_ESCALATION_SCHEMA_VERSION,
     PACKET_TEMPLATE_TARGETS,
     PACKET_SCHEMA_VERSION,
     PASSAGE_ANCHOR_FIELDS,
@@ -160,13 +163,15 @@ def build_packet_manifest(
             "scorecard_body_headings": SCORECARD_BODY_HEADINGS,
             "decision_frontmatter_fields": DECISION_FRONTMATTER_FIELDS,
             "decision_body_headings": DECISION_BODY_HEADINGS,
+            "ceiling_report_frontmatter_fields": CEILING_REPORT_FRONTMATTER_FIELDS,
+            "ceiling_report_body_headings": CEILING_REPORT_BODY_HEADINGS,
             "candidate_limits_headings": CANDIDATE_LIMITS_HEADINGS,
             "candidate_references_headings": CANDIDATE_REFERENCES_HEADINGS,
             "archive_anchor_fields": ARCHIVE_ANCHOR_FIELDS,
             "passage_anchor_fields": PASSAGE_ANCHOR_FIELDS,
             "conditional_escalation_sections": {
                 "trigger": {
-                    "packet_schema_version_at_least": PACKET_SCHEMA_VERSION,
+                    "packet_schema_version_at_least": NORTH_STAR_ESCALATION_SCHEMA_VERSION,
                     "north_star_verdict": "below_north_star",
                     "recommendation": "revise_candidate",
                 },
@@ -212,6 +217,8 @@ def main() -> None:
         "judgment_policy": packet_manifest["judgment_policy"],
         "live_draft_path": packet_manifest["live_draft_path"],
         "candidate_path": packet_manifest["output_paths"]["candidate"],
+        "replacement_review_path": packet_manifest["output_paths"]["replacement_review"],
+        "decision_path": packet_manifest["output_paths"]["decision"],
         "packet_manifest_path": packet_manifest["packet_manifest_path"],
     }
 

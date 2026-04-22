@@ -3,8 +3,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import re
+from pathlib import Path
 
 
 RESEARCH_EXIT_FRONTMATTER_FIELDS = [
@@ -46,6 +46,32 @@ DOMINANT_BLOCKER_SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 def build_research_exit_gate_path(package_path: Path, revision: int) -> Path:
     return package_path / f"{package_path.name}-research-exit-gate-r{revision}.md"
+
+
+def resolve_research_exit_gate_path(package_path: Path, revision: int) -> Path | None:
+    exact = build_research_exit_gate_path(package_path, revision)
+    if exact.exists():
+        return exact
+
+    prefix = f"{package_path.name}-research-exit-gate-r"
+    candidates: list[tuple[int, Path]] = []
+    for path in package_path.glob(f"{package_path.name}-research-exit-gate-r*.md"):
+        stem = path.stem
+        if not stem.startswith(prefix):
+            continue
+        revision_text = stem[len(prefix) :]
+        try:
+            candidate_revision = int(revision_text)
+        except ValueError:
+            continue
+        if candidate_revision <= revision:
+            candidates.append((candidate_revision, path))
+
+    if not candidates:
+        return None
+
+    candidates.sort(key=lambda item: item[0], reverse=True)
+    return candidates[0][1]
 
 
 def valid_blocker_slug(value: object) -> bool:

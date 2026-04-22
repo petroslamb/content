@@ -1,6 +1,6 @@
 kind: leaf
 publication: literate-workflow-programming
-revision: 1
+revision: 3
 config:
   markdown_path: publications/literate-workflow-programming/literate-workflow-programming.md
   evidence_path: publications/literate-workflow-programming/papers
@@ -14,7 +14,7 @@ stages:
     last_updated: '2026-04-21'
   essay_iteration:
     done: false
-    last_updated: '2026-04-21'
+    last_updated: '2026-04-22'
   notebooklm_artifacts:
     done: false
     last_updated: null

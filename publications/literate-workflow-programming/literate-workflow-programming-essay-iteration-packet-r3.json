@@ -1,0 +1,237 @@
+{
+  "kind": "essay_iteration_packet",
+  "package": "literate-workflow-programming",
+  "revision": 3,
+  "packet_schema_version": 4,
+  "workflow_doc": "workflows/essay-iteration/README.md",
+  "judgment_policy": "draft_only",
+  "live_draft_path": "publications/literate-workflow-programming/literate-workflow-programming.md",
+  "candidate_path": "publications/literate-workflow-programming/literate-workflow-programming-candidate-r3.md",
+  "packet_manifest_path": "publications/literate-workflow-programming/literate-workflow-programming-essay-iteration-packet-r3.json",
+  "validator_commands": [
+    "npm run check:essay-prewrite -- --package literate-workflow-programming",
+    "npm run check:essay-iteration -- --package literate-workflow-programming"
+  ],
+  "prohibited_moves": [
+    "Do not overwrite the current live draft before a replacement verdict exists.",
+    "Do not archive adjacent leaves before the promotion decision is explicit.",
+    "Do not mark the stage done from a weak-model run without human review.",
+    "Do not claim Publication Power 9 or above under the draft-only policy."
+  ],
+  "archive_anchor_requirements": [
+    "one nearby archive anchor",
+    "one stronger archive anchor",
+    "one weaker archive anchor"
+  ],
+  "input_paths": {
+    "live_draft_path": "publications/literate-workflow-programming/literate-workflow-programming.md",
+    "leaf_readme_path": "publications/literate-workflow-programming/README.md",
+    "parent_package_readme_path": null,
+    "companion_path": null,
+    "governing_brief_path": "publications/literate-workflow-programming/literate-workflow-programming.md",
+    "review_artifact_paths": [
+      "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r3.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r3.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r2.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r2.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r1.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r1.md",
+      "publications/literate-workflow-programming/claim-scoring-rubric.md",
+      "publications/literate-workflow-programming/claim-scorecard.md"
+    ],
+    "evidence_surface_path": "publications/literate-workflow-programming/papers",
+    "voice_rules_path": "workflows/essay-iteration/voice_rules.yaml"
+  },
+  "output_paths": {
+    "manifest": "publications/literate-workflow-programming/literate-workflow-programming-essay-iteration-packet-r3.json",
+    "blueprint": "publications/literate-workflow-programming/literate-workflow-programming-blueprint-r3.md",
+    "prewrite_gate": "publications/literate-workflow-programming/literate-workflow-programming-prewrite-gate-r3.md",
+    "candidate": "publications/literate-workflow-programming/literate-workflow-programming-candidate-r3.md",
+    "replacement_review": "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r3.md",
+    "atlas_scorecard": "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r3.md",
+    "decision": "publications/literate-workflow-programming/literate-workflow-programming-decision-r3.md",
+    "ceiling_report": "publications/literate-workflow-programming/literate-workflow-programming-ceiling-report-r3.md"
+  },
+  "packet_templates": {
+    "blueprint": "workflows/essay-iteration/templates/hardened_blueprint_template.md",
+    "prewrite_gate": "workflows/essay-iteration/templates/prewrite_gate_template.md",
+    "candidate": "workflows/essay-iteration/templates/candidate_template.md",
+    "replacement_review": "workflows/essay-iteration/templates/cold_replacement_review_template.md",
+    "atlas_scorecard": "workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md",
+    "decision": "workflows/essay-iteration/templates/promotion_decision_template.md",
+    "ceiling_report": "workflows/essay-iteration/templates/ceiling_report_template.md"
+  },
+  "required_sections": {
+    "blueprint_headings": [
+      "## Promise",
+      "## Spine",
+      "## Paragraph burden",
+      "## Evidence burden",
+      "## Cut order",
+      "## Failure triggers"
+    ],
+    "prewrite_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "judgment_policy",
+      "live_draft_path",
+      "candidate_path",
+      "writability_verdict",
+      "candidate_authorized",
+      "dominant_blocker_slug",
+      "supporting_artifact_paths"
+    ],
+    "prewrite_body_headings": [
+      "## Promise",
+      "## Spine",
+      "## Paragraph burden",
+      "## Evidence burden",
+      "## Cut order",
+      "## Failure triggers",
+      "## Claim-State Gate",
+      "## Writability Verdict",
+      "## Required Follow-Through"
+    ],
+    "review_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "judgment_policy",
+      "live_draft_path",
+      "candidate_path",
+      "replacement_verdict",
+      "north_star_verdict"
+    ],
+    "review_body_headings": [
+      "## Findings",
+      "## Prioritized Issues",
+      "## Scorecard",
+      "## Replacement Verdict",
+      "## North-Star Verdict",
+      "## Main Blockers"
+    ],
+    "scorecard_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "judgment_policy",
+      "candidate_path",
+      "opening_anchor",
+      "middle_anchor",
+      "ending_anchor",
+      "nearby_archive_anchor",
+      "stronger_archive_anchor",
+      "weaker_archive_anchor",
+      "traction",
+      "craft",
+      "publication_power",
+      "next_score_blocker"
+    ],
+    "scorecard_body_headings": [
+      "## Whole-Draft Rationale",
+      "## Opening Anchor",
+      "## Middle Anchor",
+      "## Ending Anchor",
+      "## Archive Anchors",
+      "## Direct Dimensions",
+      "## Traction",
+      "## Craft",
+      "## Publication Power",
+      "## Next-score Blocker"
+    ],
+    "decision_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "judgment_policy",
+      "live_draft_path",
+      "candidate_path",
+      "recommendation",
+      "promotion_allowed",
+      "requires_human_approval"
+    ],
+    "decision_body_headings": [
+      "## Recommendation",
+      "## Promotion Gate",
+      "## Required Follow-Through"
+    ],
+    "ceiling_report_frontmatter_fields": [
+      "kind",
+      "package",
+      "revision",
+      "live_draft_path",
+      "terminal_candidate_path",
+      "terminal_replacement_review_path",
+      "terminal_decision_path",
+      "dominant_blocker_slug",
+      "ceiling_verdict",
+      "effort_verdict",
+      "next_route"
+    ],
+    "ceiling_report_body_headings": [
+      "## Verdict",
+      "## Iteration Chronology",
+      "## Blocker Timeline",
+      "## Effort Audit",
+      "## What Survived",
+      "## What Did Not Survive",
+      "## Lessons Learned",
+      "## Next Route"
+    ],
+    "candidate_limits_headings": [
+      "## Limits",
+      "## Borders",
+      "## What This Will Not Fix",
+      "## What This Essay Will Not Claim"
+    ],
+    "candidate_references_headings": [
+      "## References",
+      "## Endmatter",
+      "## Sources",
+      "## Further Reading"
+    ],
+    "archive_anchor_fields": [
+      "nearby_archive_anchor",
+      "stronger_archive_anchor",
+      "weaker_archive_anchor"
+    ],
+    "passage_anchor_fields": [
+      "opening_anchor",
+      "middle_anchor",
+      "ending_anchor"
+    ],
+    "conditional_escalation_sections": {
+      "trigger": {
+        "packet_schema_version_at_least": 2,
+        "north_star_verdict": "below_north_star",
+        "recommendation": "revise_candidate"
+      },
+      "blueprint_headings": [
+        "## Opening Lab",
+        "## Object Decision",
+        "## Body / Support / Footnote Ledger",
+        "## Second-Pass Bet"
+      ],
+      "review_frontmatter_fields": [
+        "dominant_blocker_slug",
+        "continue_iteration"
+      ],
+      "review_body_headings": [
+        "## Dominant Blocker",
+        "## North-Star Delta",
+        "## Continue Or Stop",
+        "## If Continue, What Gets Cut"
+      ],
+      "decision_frontmatter_fields": [
+        "rewrite_mode",
+        "stop_gate_status"
+      ],
+      "decision_body_headings": [
+        "## Escalation Decision",
+        "## Rewrite Mode",
+        "## Stop Gate For Next Pass"
+      ]
+    }
+  }
+}

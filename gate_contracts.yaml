@@ -36,6 +36,7 @@ gates:
       - replacement review
       - promotion decision
       - current packet manifest
+      - ceiling report when the stop gate fires
     recommended_workflow: essay_iteration
     recommended_validator: "npm run check:essay-iteration -- --package <package>"
     proof_mode: packet_review
@@ -43,7 +44,7 @@ gates:
     description: Decide whether a post-ceiling pivot candidate is grounded enough to be a real successor object.
     scope: package
     required_artifacts:
-      - post-ceiling reframe
+      - ceiling report or legacy donor-report pair
       - pivot grounding review
       - pivot decision or live candidate status
     recommended_workflow: post_ceiling_pivot

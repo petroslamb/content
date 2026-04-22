@@ -6,16 +6,9 @@ topic_packets:
 route_checks:
   - package: literate-workflow-programming
     stage: essay_iteration
-    expected_pipeline_profile: article_default
-    expected_packet_phase: draft_candidate
-    expected_recommended_workflow: essay_iteration
-    expected_gate:
-      gate_id: essay_prewrite
-      status: pass
-      decision: writable
-  - package: clean-interface-illusion
-    stage: essay_iteration
     expected_pipeline_profile: post_ceiling_successor
+    expected_packet_phase: ready_for_human_review
+    expected_recommended_workflow: post_ceiling_pivot
     expected_overlay_candidate: post_ceiling_pivot
     expected_gate:
       gate_id: replacement_north_star
@@ -56,8 +49,16 @@ retained_examples:
       kind: workflow_run
     - path: reviewable-runs/logs/2026-04-22_17-27-13_clean-interface-illusion_essay_iteration_launch-pack.json
       kind: harness_launch_pack
+    - path: reviewable-runs/logs/2026-04-22_19-07-04_literate-workflow-programming_replacement_north_star_gate-check.json
+      kind: gate_check
+    - path: reviewable-runs/logs/2026-04-22_19-07-57_literate-workflow-programming_replacement_north_star_gate-check.json
+      kind: gate_check
+    - path: reviewable-runs/logs/2026-04-22_19-08-10_clean-interface-illusion_pivot_research_grounding_gate-check.json
+      kind: gate_check
   artifacts:
     - path: publications/clean-interface-illusion/clean-interface-illusion-pivot-decision.md
       label: pivot-clearance decision
     - path: publications/clean-interface-illusion/clean-interface-illusion-pivot-north-star-viability.md
       label: pivot north-star viability artifact
+    - path: publications/literate-workflow-programming/literate-workflow-programming-ceiling-report-r3.md
+      label: canonical ceiling report
