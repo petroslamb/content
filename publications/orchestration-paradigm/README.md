@@ -13,6 +13,8 @@ This package is not one essay folder. It combines the published series surface, 
 
 ## Orientation
 
+- Umbrella governing brief: [`umbrella-governing-brief.md`](umbrella-governing-brief.md)
+- Canonical published leaf: [`the-orchestration-paradigm-series/README.md`](the-orchestration-paradigm-series/README.md)
 - Published series subpackage: [`ToolOrchestra_Parts/README.md`](ToolOrchestra_Parts/README.md)
 - Standalone research essay surface: [`The Agent Revolution.md`](<The Agent Revolution.md>)
 - Framework notes and adjacent analysis: `Agent Stack - *.md`, [`ToolOrchestra.md`](ToolOrchestra.md), and the related deep-dive research files at the package root

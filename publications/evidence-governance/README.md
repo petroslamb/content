@@ -11,6 +11,7 @@ Umbrella package for the evidence-governance essay line. Following a consolidati
 
 ## Orientation
 
+- **Umbrella governing brief**: [`umbrella-governing-brief.md`](umbrella-governing-brief.md)
 - **Flagship leaf**: [`your-ai-is-confidently-wrong-and/README.md`](your-ai-is-confidently-wrong-and/README.md)
 - **Technical Companion**: [`your-ai-is-confidently-wrong-and/companion.md`](your-ai-is-confidently-wrong-and/companion.md)
 - **Shared research surface**: [`evidence_governance_pattern/README.md`](evidence_governance_pattern/README.md)

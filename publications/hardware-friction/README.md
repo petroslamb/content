@@ -12,6 +12,8 @@ Umbrella package for the hardware-friction line of work. It combines the long qu
 
 ## Orientation
 
+- Umbrella governing brief: [`umbrella-governing-brief.md`](umbrella-governing-brief.md)
+- Canonical long-form leaf: [`what-actually-works-the-hardware/README.md`](what-actually-works-the-hardware/README.md)
 - Canonical long-form article: [`long_article_sections/What_Actually_Works_2023_2025.md`](long_article_sections/What_Actually_Works_2023_2025.md)
 - Canonical shorter publication draft: [`essay_sections/The_Hardware_Friction_Map_Essay_substack.md`](essay_sections/The_Hardware_Friction_Map_Essay_substack.md)
 - Scorecard methodology: [`hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md`](hardware_friction_scorecard/Hardware_Friction_Scorecard_v2.md)

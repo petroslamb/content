@@ -1,4 +1,6 @@
+kind: umbrella
 publication: autonomous-agents
+revision: 1
 stages:
   paper_intake:
     done: true
@@ -25,11 +27,16 @@ stages:
     done: true
     last_updated: '2026-04-07'
   distribution:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'
 config:
+  default_leaf_package: autonomous-agents/the-agent-revolution
+  leaf_packages:
+    - autonomous-agents/the-agent-revolution
   markdown_path: publications/autonomous-agents/the-agent-revolution/the-agent-revolution.md
+  blueprint_path: umbrella-governing-brief.md
   evidence_path: publications/autonomous-agents/reference/papers
+  shared_evidence_path: publications/autonomous-agents/reference/papers
   substack_slug: the-agent-revolution
   substack_url: https://lambpetros.substack.com
   notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
