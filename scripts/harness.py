@@ -1982,6 +1982,55 @@ def build_overlay_candidates(stage: str, gate_statuses: dict[str, dict]) -> list
             overlays.append("post_ceiling_pivot")
     return overlays
 
+
+def build_effective_route_summary(
+    package_path: Path,
+    status_data: dict,
+    stage: str,
+    stage_metadata: dict,
+    policy: dict,
+    can_execute: bool,
+    requires_approval: bool,
+    active_overlay: str | None,
+    overlay_progress: dict,
+    packet_progress: dict,
+) -> dict:
+    if not active_overlay:
+        return {
+            "effective_workflow": stage,
+            "effective_workflow_kind": stage_metadata["workflow_kind"],
+            "effective_workflow_doc": repo_relpath(load_workflow_contract(stage)["path"]),
+            "effective_next_action": packet_progress.get("next_packet_action"),
+            "effective_route": overlay_progress.get("overlay_route"),
+            "effective_can_execute": can_execute,
+            "effective_requires_approval": requires_approval,
+            "effective_approval_gate": stage_metadata["approval_gate"],
+        }
+
+    overlay_contract = load_workflow_contract(active_overlay)
+    overlay_metadata = overlay_contract["metadata"]
+    overlay_required_context = resolve_required_context(
+        package_path,
+        status_data,
+        overlay_metadata["required_context"],
+    )
+    overlay_requires_approval, overlay_can_execute, _ = compute_workflow_capabilities(
+        active_overlay,
+        overlay_metadata,
+        overlay_required_context,
+        policy,
+    )
+    return {
+        "effective_workflow": active_overlay,
+        "effective_workflow_kind": overlay_metadata["workflow_kind"],
+        "effective_workflow_doc": repo_relpath(overlay_contract["path"]),
+        "effective_next_action": overlay_progress.get("next_overlay_action"),
+        "effective_route": overlay_progress.get("overlay_route"),
+        "effective_can_execute": overlay_can_execute,
+        "effective_requires_approval": overlay_requires_approval,
+        "effective_approval_gate": overlay_metadata["approval_gate"],
+    }
+
 def build_stage_resolution(package_arg: str, stage: str) -> dict:
     manifest_ref, status_data = load_status_ref(package_arg)
     workflow_contract = load_workflow_contract(stage)
@@ -2061,6 +2110,18 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
             manifest_ref.package_path,
             status_data,
         )
+    effective_route = build_effective_route_summary(
+        manifest_ref.package_path,
+        status_data,
+        stage,
+        metadata,
+        policy,
+        can_execute,
+        requires_approval,
+        active_overlay,
+        overlay_progress,
+        packet_progress,
+    )
 
     result = {
         "package": manifest_ref.package_key,
@@ -2099,6 +2160,7 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "packet_paths": packet_paths,
         **packet_progress,
         **overlay_progress,
+        **effective_route,
     }
     if active_overlay:
         overlay_commands = build_workflow_suggested_commands(

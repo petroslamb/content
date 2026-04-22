@@ -240,6 +240,15 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
     print(f"Requires Approval: {resolution['requires_approval']}")
     print(f"Can Execute: {resolution['can_execute']}")
     print(f"Pipeline Profile: {resolution.get('pipeline_profile')}")
+    if resolution.get("effective_workflow"):
+        print(f"Effective Workflow: {resolution.get('effective_workflow')}")
+        print(f"Effective Workflow Kind: {resolution.get('effective_workflow_kind')}")
+        print(f"Effective Approval Gate: {resolution.get('effective_approval_gate')}")
+        print(f"Effective Requires Approval: {resolution.get('effective_requires_approval')}")
+        print(f"Effective Can Execute: {resolution.get('effective_can_execute')}")
+        print(f"Effective Next Action: {resolution.get('effective_next_action')}")
+        if resolution.get("effective_route"):
+            print(f"Effective Route: {resolution.get('effective_route')}")
     governing_brief = resolution.get("package_context_paths", {}).get("governing_brief_path")
     if governing_brief:
         print(f"Governing Brief: {governing_brief}")
