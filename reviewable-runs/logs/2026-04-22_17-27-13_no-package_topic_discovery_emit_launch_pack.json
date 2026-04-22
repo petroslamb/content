@@ -1,0 +1,84 @@
+{
+  "kind": "workflow_run",
+  "schema_version": 2,
+  "timestamp": "2026-04-22_17-27-13",
+  "run_id": "2026-04-22_17-27-13_no-package_topic_discovery_emit_launch_pack",
+  "package": null,
+  "workflow_id": "topic_discovery",
+  "workflow_kind": "module",
+  "action": "emit_launch_pack",
+  "success": true,
+  "boundary": {
+    "type": "local workflow operation",
+    "reason": "Workflow execution stays inside the local repo contract unless the approval gate explicitly authorizes something stronger.",
+    "external_side_effect": false,
+    "approval_gate": "required_before_package_init",
+    "approval_required": true,
+    "approval_status": "not_recorded_in_log"
+  },
+  "task": {
+    "objective": "Run workflow 'topic_discovery'.",
+    "stop_condition": "Workflow command finished and a run log was written.",
+    "non_goals": [
+      "Do not treat this routine workflow log as retained proof by itself."
+    ]
+  },
+  "execution": {
+    "commands": [],
+    "output_excerpt": "Launch pack written to reviewable-runs/logs/2026-04-22_17-27-13_no-package_topic_discovery_workflow-launch-pack.json",
+    "output_truncated": false
+  },
+  "evidence": {
+    "workflow_doc": "workflows/topic-discovery/README.md",
+    "required_context": [
+      {
+        "name": "seed question, archive gap, external trigger, review finding, or broad domain to investigate",
+        "status": "open",
+        "blocking": false
+      },
+      {
+        "name": "relevant prior essays or archive cluster when the topic should build on existing work",
+        "status": "open",
+        "blocking": false
+      },
+      {
+        "name": "target publication ambition, such as quick note, strong synthesis, or north-star flagship",
+        "status": "open",
+        "blocking": false
+      }
+    ],
+    "expected_outputs": [
+      "topic vocabulary map for the research surface",
+      "ranked candidate paper pool with exclusions and near-misses",
+      "tracked assistant discussion notes when assistant comparison shapes the topic decision",
+      "candidate essay slate with evidence deltas and kill criteria",
+      "handoff decision to package initialization, post-ceiling pivot, narrower research, or parking"
+    ],
+    "recommended_gates": [
+      "topic_viability"
+    ]
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "command_exit_status",
+        "result": "pass",
+        "notes": "Workflow command or launch-pack emission result."
+      },
+      {
+        "name": "workflow_log_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-22_17-27-13_no-package_topic_discovery_emit_launch_pack.json"
+      }
+    ],
+    "residual_risk": "This is a bounded workflow run log. Preserve a stronger proof packet separately if the run becomes decision-critical."
+  },
+  "failure_or_risk": {
+    "actual_failure": null,
+    "possible_failures": [
+      "A guided workflow was mistaken for hidden execution.",
+      "A local workflow log was mistaken for approval to mutate an external system."
+    ]
+  },
+  "workflow_doc": "workflows/topic-discovery/README.md"
+}

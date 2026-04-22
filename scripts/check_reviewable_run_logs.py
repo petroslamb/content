@@ -17,14 +17,14 @@ REQUIRED_V2_COMMON = {
     "schema_version",
     "timestamp",
     "run_id",
-    "package",
-    "stage",
     "boundary",
     "task",
     "verification",
 }
 
 REQUIRED_LIFECYCLE = REQUIRED_V2_COMMON | {
+    "package",
+    "stage",
     "action",
     "success",
     "execution",
@@ -35,6 +35,8 @@ REQUIRED_LIFECYCLE = REQUIRED_V2_COMMON | {
 }
 
 REQUIRED_LAUNCH_PACK = REQUIRED_V2_COMMON | {
+    "package",
+    "stage",
     "task_brief",
     "workflow_doc",
     "required_context",
@@ -42,6 +44,42 @@ REQUIRED_LAUNCH_PACK = REQUIRED_V2_COMMON | {
     "expected_outputs",
     "done_when",
     "blocking_issues",
+}
+
+REQUIRED_WORKFLOW_LAUNCH_PACK = REQUIRED_V2_COMMON | {
+    "package",
+    "workflow_id",
+    "workflow_kind",
+    "workflow_doc",
+    "required_context",
+    "suggested_commands",
+    "expected_outputs",
+    "blocking_issues",
+    "recommended_gates",
+}
+
+REQUIRED_WORKFLOW_RUN = REQUIRED_V2_COMMON | {
+    "package",
+    "workflow_id",
+    "workflow_kind",
+    "action",
+    "success",
+    "execution",
+    "evidence",
+    "failure_or_risk",
+    "workflow_doc",
+}
+
+REQUIRED_GATE_CHECK = REQUIRED_V2_COMMON | {
+    "package",
+    "gate_id",
+    "decision",
+    "status",
+    "required_artifacts",
+    "missing_artifacts",
+    "recommended_workflow",
+    "recommended_validator",
+    "proof_mode",
 }
 
 
@@ -58,7 +96,16 @@ def require_list(value: Any, context: str, errors: list[str]) -> None:
 def validate_v2(path: Path, data: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     kind = data.get("kind")
-    required = REQUIRED_LAUNCH_PACK if kind == "harness_launch_pack" else REQUIRED_LIFECYCLE
+    if kind == "harness_launch_pack":
+        required = REQUIRED_LAUNCH_PACK
+    elif kind == "workflow_launch_pack":
+        required = REQUIRED_WORKFLOW_LAUNCH_PACK
+    elif kind == "workflow_run":
+        required = REQUIRED_WORKFLOW_RUN
+    elif kind == "gate_check":
+        required = REQUIRED_GATE_CHECK
+    else:
+        required = REQUIRED_LIFECYCLE
     missing = sorted(required - data.keys())
     if missing:
         errors.append(f"missing required keys: {', '.join(missing)}")
@@ -86,7 +133,7 @@ def validate_v2(path: Path, data: dict[str, Any]) -> list[str]:
         if "residual_risk" not in verification:
             errors.append("verification missing residual_risk")
 
-    if kind == "lifecycle_stage_run":
+    if kind in {"lifecycle_stage_run", "workflow_run"}:
         require_mapping(data.get("execution"), "execution", errors)
         require_mapping(data.get("evidence"), "evidence", errors)
         require_mapping(data.get("failure_or_risk"), "failure_or_risk", errors)

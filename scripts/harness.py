@@ -13,6 +13,7 @@ from pathlib import Path
 import yaml
 
 from audit_package import audit_package, resolve_evidence_root
+from check_research_exit_gate import validate_research_exit_gate
 from essay_iteration_support import (
     ARCHIVE_ANCHOR_FIELDS,
     BLUEPRINT_HEADINGS,
@@ -35,8 +36,19 @@ from essay_iteration_support import (
     resolve_parent_package_readme,
     resolve_review_artifact_paths,
 )
-from lifecycle import PUBLICATIONS_DIR, REPO_ROOT, STAGES, load_status_ref, load_workflow_contract, split_frontmatter
+from lifecycle import (
+    PUBLICATIONS_DIR,
+    REPO_ROOT,
+    STAGES,
+    load_all_workflow_contracts,
+    load_gate_contracts,
+    load_pipeline_profiles,
+    load_status_ref,
+    load_workflow_contract,
+    split_frontmatter,
+)
 from package_lifecycle import inspect_package_lifecycle
+from research_exit_support import build_research_exit_gate_path
 
 
 PACKAGE_JSON_PATH = REPO_ROOT / "package.json"
@@ -49,10 +61,14 @@ REQUIRED_NPM_SCRIPTS = {
     "check:essay-prewrite",
     "check:essay-iteration",
     "check:package-lifecycle",
+    "check:workflow-model",
+    "gate:check",
     "stage:next",
     "stage:resolve",
     "stage:run",
     "package:init",
+    "workflow:resolve",
+    "workflow:run",
     "check:harness",
 }
 
@@ -73,6 +89,38 @@ PATH_LIKE_SUFFIXES = (
     ".txt",
     ".html",
     ".csv",
+)
+
+CLAIM_BOUNDARY_PATTERNS = (
+    "*claim*authorization*.md",
+    "*claim*state*.md",
+    "*evidence*authorization*.md",
+    "*contradiction*register*.md",
+    "*provenance*.md",
+    "*provenance*.json",
+    "*ledger*.md",
+)
+
+RELEASE_GATE_PATTERNS = (
+    "*release-gate*.md",
+    "release-gate.md",
+    "*publication-readiness*.md",
+)
+
+PIVOT_REFRAME_PATTERNS = (
+    "*post-ceiling-reframe*.md",
+)
+
+PIVOT_GROUNDING_PATTERNS = (
+    "*pivot-grounding-review*.md",
+)
+
+PIVOT_DECISION_PATTERNS = (
+    "*pivot-decision*.md",
+)
+
+PIVOT_NORTH_STAR_PATTERNS = (
+    "*pivot-north-star-viability*.md",
 )
 
 
@@ -141,12 +189,14 @@ def validate_harness_policy(policy: dict) -> list[str]:
 
 def build_harness_contract() -> dict:
     scripts = load_package_scripts()
-    stage_contracts = {}
-    for stage in STAGES:
-        workflow_contract = load_workflow_contract(stage)
+    workflow_contracts = {}
+    for workflow_id, workflow_contract in load_all_workflow_contracts().items():
         metadata = workflow_contract["metadata"]
-        stage_contracts[stage] = {
+        workflow_contracts[workflow_id] = {
             "workflow_doc": repo_relpath(workflow_contract["path"]),
+            "workflow_kind": metadata["workflow_kind"],
+            "stage_binding": metadata.get("stage_binding"),
+            "stability": metadata["stability"],
             "runner_mode": metadata["runner_mode"],
             "launch_mode": metadata["launch_mode"],
             "default_skill": metadata["default_skill"],
@@ -160,6 +210,7 @@ def build_harness_contract() -> dict:
             "judgment_policy": metadata["judgment_policy"],
             "prohibited_moves": metadata["prohibited_moves"],
         }
+    stage_contracts = {stage: workflow_contracts[stage] for stage in STAGES}
 
     command_surface = {}
     for name in sorted(REQUIRED_NPM_SCRIPTS | {"status", "run"}):
@@ -169,13 +220,15 @@ def build_harness_contract() -> dict:
         }
 
     return {
-        "version": 1,
+        "version": 2,
         "harness_target": "codex",
         "autonomy_scope": "local-first",
         "policy_file": "harness_policy.yaml",
         "sources_of_truth": {
             "lifecycle": "scripts/lifecycle.py",
             "workflow_frontmatter": "workflows/*/README.md",
+            "gate_contracts": "gate_contracts.yaml",
+            "pipeline_profiles": "pipeline_profiles.yaml",
             "package_state": "publications/**/status.yaml",
             "npm_scripts": "package.json",
         },
@@ -187,6 +240,15 @@ def build_harness_contract() -> dict:
         "interfaces": command_surface,
         "package_init": {
             "default_first_stage": "research",
+            "accepted_inputs": [
+                "--idea",
+                "--slug",
+                "--from-topic-packet",
+            ],
+            "status_config_fields": [
+                "markdown_path",
+                "discovery_packet_path",
+            ],
             "scaffold": [
                 "README.md",
                 "<slug>.md",
@@ -202,6 +264,9 @@ def build_harness_contract() -> dict:
             "stage_order": STAGES,
             "stages": stage_contracts,
         },
+        "workflows": workflow_contracts,
+        "gates": load_gate_contracts(),
+        "pipeline_profiles": load_pipeline_profiles(),
     }
 
 
@@ -513,19 +578,25 @@ def resolve_required_context(package_path: Path, status_data: dict, required_con
     return [resolve_context_item(item, package_path, status_data) for item in required_context]
 
 
-def stage_requires_approval(stage: str, metadata: dict, policy: dict) -> bool:
+def workflow_requires_approval(workflow_id: str, metadata: dict, policy: dict) -> bool:
     if metadata.get("approval_gate") != "none":
         return True
     approval_stages = policy.get("approval_required", {}).get("stages", [])
-    return stage in approval_stages
+    stage_binding = metadata.get("stage_binding")
+    return stage_binding in approval_stages or workflow_id in approval_stages
 
 
-def compute_stage_capabilities(stage: str, metadata: dict, required_context: list[dict], policy: dict) -> tuple[bool, bool, list[str]]:
+def compute_workflow_capabilities(
+    workflow_id: str,
+    metadata: dict,
+    required_context: list[dict],
+    policy: dict,
+) -> tuple[bool, bool, list[str]]:
     blocking_issues = []
     missing_context = [item["name"] for item in required_context if item["status"] == "missing" and item.get("blocking")]
     blocking_issues.extend(f"Missing required context: {item}" for item in missing_context)
 
-    requires_approval = stage_requires_approval(stage, metadata, policy)
+    requires_approval = workflow_requires_approval(workflow_id, metadata, policy)
     scaffold_only_execute = (
         metadata["runner_mode"] == "hybrid" and metadata["launch_mode"] == "scaffold_only"
     )
@@ -538,9 +609,9 @@ def compute_stage_capabilities(stage: str, metadata: dict, required_context: lis
 
     approval_blocks_execute = requires_approval and not scaffold_only_execute
 
-    if stage in policy.get("approval_required", {}).get("stages", []) and approval_blocks_execute:
+    if metadata.get("stage_binding") in policy.get("approval_required", {}).get("stages", []) and approval_blocks_execute:
         blocking_issues.append(
-            f"Policy requires explicit approval before unattended execution of '{stage}'."
+            f"Policy requires explicit approval before unattended execution of '{workflow_id}'."
         )
 
     can_execute = (
@@ -549,6 +620,10 @@ def compute_stage_capabilities(stage: str, metadata: dict, required_context: lis
         and not approval_blocks_execute
     )
     return requires_approval, can_execute, blocking_issues
+
+
+def compute_stage_capabilities(stage: str, metadata: dict, required_context: list[dict], policy: dict) -> tuple[bool, bool, list[str]]:
+    return compute_workflow_capabilities(stage, metadata, required_context, policy)
 
 
 def auto_mark_done_allowed(stage: str, metadata: dict, policy: dict) -> bool:
@@ -570,6 +645,49 @@ def build_stage_suggested_commands(package_key: str, stage: str, can_execute: bo
             f"npm run stage:resolve -- --package {package_key} --stage {stage} --emit-launch-pack --format json"
         )
     return commands
+
+
+def workflow_recommended_gates(workflow_id: str) -> list[str]:
+    mapping = {
+        "topic_discovery": ["topic_viability"],
+        "research": ["research_exit"],
+        "essay_iteration": ["essay_prewrite", "replacement_north_star"],
+        "post_ceiling_pivot": ["pivot_research_grounding", "pivot_north_star_viability"],
+        "release_gate": ["release_readiness"],
+        "article_polish": ["release_readiness"],
+        "substack_publishing": ["release_readiness"],
+        "distribution": ["release_readiness"],
+    }
+    return mapping.get(workflow_id, [])
+
+
+def build_workflow_suggested_commands(
+    workflow_id: str,
+    can_execute: bool,
+    package_key: str | None = None,
+    packet_path: Path | None = None,
+) -> list[str]:
+    suffix = []
+    if package_key:
+        suffix.extend(["--package", package_key])
+    if packet_path:
+        suffix.extend(["--packet", repo_relpath(packet_path)])
+    suffix_args = " " + " ".join(suffix) if suffix else ""
+    commands = [
+        f"npm run workflow:resolve -- --workflow {workflow_id}{suffix_args} --format json",
+    ]
+    commands.append(
+        f"npm run workflow:run -- --workflow {workflow_id}{suffix_args} --format json"
+    )
+    if not can_execute:
+        commands.append(
+            f"npm run workflow:run -- --workflow {workflow_id}{suffix_args} --emit-launch-pack --format json"
+        )
+    return commands
+
+
+def open_required_context(required_context: list[str]) -> list[dict]:
+    return [{"name": item, "status": "open", "blocking": False} for item in required_context]
 
 
 def build_resolution_args(package_key: str, status_data: dict) -> dict:
@@ -621,6 +739,127 @@ def build_package_context_paths(package_path: Path, status_data: dict) -> dict:
         "nearest_blueprint_path": repo_relpath(blueprint),
         "review_artifact_paths": [repo_relpath(path) for path in review_artifacts],
         "evidence_surface_path": repo_relpath(evidence_surface),
+    }
+
+
+def find_package_artifact(package_path: Path, patterns: tuple[str, ...]) -> Path | None:
+    for pattern in patterns:
+        for candidate in sorted(package_path.glob(pattern)):
+            if candidate.is_file():
+                return candidate
+    return None
+
+
+def find_package_artifacts(package_path: Path, patterns: tuple[str, ...]) -> list[Path]:
+    matches: list[Path] = []
+    for pattern in patterns:
+        for candidate in sorted(package_path.glob(pattern)):
+            if candidate.is_file() and candidate not in matches:
+                matches.append(candidate)
+    return matches
+
+
+def count_local_markdown_papers(package_path: Path) -> int:
+    markdown_dir = package_path / "papers" / "markdown"
+    if not markdown_dir.exists():
+        return 0
+    return sum(1 for candidate in markdown_dir.rglob("*.md") if candidate.is_file())
+
+
+def claim_boundary_surface_paths(package_path: Path) -> list[Path]:
+    return find_package_artifacts(package_path, CLAIM_BOUNDARY_PATTERNS)
+
+
+def claim_boundary_surface_required(package_path: Path, status_data: dict) -> bool:
+    if claim_boundary_surface_paths(package_path):
+        return True
+    if resolve_review_artifact_paths(package_path, status_data):
+        return True
+    return count_local_markdown_papers(package_path) >= 5
+
+
+def extract_markdown_section(text: str, heading: str) -> str | None:
+    lines = text.splitlines()
+    needle = heading.strip()
+    start = None
+    for idx, line in enumerate(lines):
+        if line.strip() == needle:
+            start = idx + 1
+            break
+    if start is None:
+        return None
+
+    end = len(lines)
+    for idx in range(start, len(lines)):
+        if idx != start and lines[idx].startswith("## "):
+            end = idx
+            break
+    return "\n".join(lines[start:end]).strip()
+
+
+def _extract_label_value(section_text: str, label: str) -> str | None:
+    pattern = re.compile(rf"^\s*(?:[-*]\s*)?{re.escape(label)}:\s*(.*)$", re.MULTILINE)
+    match = pattern.search(section_text)
+    if not match:
+        return None
+    value = match.group(1).strip()
+    if value:
+        return value
+
+    lines = section_text.splitlines()
+    for idx, line in enumerate(lines):
+        if re.match(rf"^\s*(?:[-*]\s*)?{re.escape(label)}:\s*$", line):
+            for follow in lines[idx + 1 :]:
+                stripped = follow.strip()
+                if not stripped:
+                    continue
+                if stripped.startswith("- "):
+                    return stripped[2:].strip()
+                if ":" in stripped and not stripped.startswith("`"):
+                    break
+                return stripped
+    return None
+
+
+def _extract_label_list(section_text: str, label: str) -> list[str]:
+    lines = section_text.splitlines()
+    for idx, line in enumerate(lines):
+        if re.match(rf"^\s*(?:[-*]\s*)?{re.escape(label)}:\s*$", line):
+            items: list[str] = []
+            for follow in lines[idx + 1 :]:
+                stripped = follow.strip()
+                if not stripped:
+                    if items:
+                        break
+                    continue
+                if stripped.startswith("- "):
+                    if stripped.endswith(":") and items:
+                        break
+                    items.append(stripped[2:].strip())
+                    continue
+                if ":" in stripped and items:
+                    break
+                if ":" in stripped and not items:
+                    break
+                if items:
+                    break
+            return items
+    return []
+
+
+def parse_topic_packet(packet_path: Path) -> dict:
+    text = packet_path.read_text()
+    handoff_section = extract_markdown_section(text, "## 06. Handoff Decision") or ""
+    return {
+        "packet_path": repo_relpath(packet_path),
+        "decision": _extract_label_value(handoff_section, "Decision"),
+        "rationale": _extract_label_value(handoff_section, "Rationale"),
+        "proposed_slug": _extract_label_value(handoff_section, "Proposed slug"),
+        "one_sentence_promise": _extract_label_value(handoff_section, "One-sentence promise"),
+        "first_research_question": _extract_label_value(handoff_section, "First research question"),
+        "expected_evidence_surface": _extract_label_value(handoff_section, "Expected evidence surface"),
+        "initial_paper_shortlist": _extract_label_list(handoff_section, "Initial paper shortlist"),
+        "near_misses_and_blocked_framings": _extract_label_list(handoff_section, "Near-misses and blocked framings"),
     }
 
 
@@ -905,6 +1144,490 @@ def resolve_essay_iteration_progress(package_key: str, package_path: Path, statu
     }
 
 
+def base_gate_payload(gate_id: str) -> dict:
+    contract = load_gate_contracts()[gate_id]
+    return {
+        "gate_id": gate_id,
+        "status": "blocked",
+        "blocking": True,
+        "decision": "unresolved",
+        "required_artifacts": contract["required_artifacts"],
+        "missing_artifacts": [],
+        "recommended_workflow": contract["recommended_workflow"],
+        "recommended_validator": contract["recommended_validator"],
+        "proof_mode": contract["proof_mode"],
+        "details": {},
+    }
+
+
+def evaluate_topic_viability_gate(packet_path: Path | None) -> dict:
+    payload = base_gate_payload("topic_viability")
+    if packet_path is None:
+        payload["decision"] = "missing_topic_packet"
+        payload["missing_artifacts"] = ["topic-discovery packet"]
+        return payload
+    if not packet_path.exists():
+        payload["decision"] = "missing_topic_packet"
+        payload["missing_artifacts"] = [repo_relpath(packet_path)]
+        return payload
+
+    parsed = parse_topic_packet(packet_path)
+    decision = parsed.get("decision")
+    payload["details"] = parsed
+    if decision != "package_init_ready":
+        payload["decision"] = decision or "missing_handoff_decision"
+        if decision == "post_ceiling_pivot":
+            payload["recommended_workflow"] = "post_ceiling_pivot"
+        return payload
+
+    missing = [
+        name
+        for name in ["proposed_slug", "one_sentence_promise", "first_research_question"]
+        if not parsed.get(name)
+    ]
+    if missing:
+        payload["decision"] = "package_init_ready_missing_handoff_fields"
+        payload["missing_artifacts"] = missing
+        return payload
+
+    payload["status"] = "pass"
+    payload["blocking"] = False
+    payload["decision"] = "package_init_ready"
+    payload["recommended_workflow"] = "research"
+    return payload
+
+
+def evaluate_research_exit_gate(package_key: str, package_path: Path, status_data: dict) -> dict:
+    payload = base_gate_payload("research_exit")
+    payload["details"] = {
+        "research_exit_gate_path": repo_relpath(
+            build_research_exit_gate_path(package_path, status_data.get("revision", 1))
+        ),
+        "governing_brief_path": repo_relpath(resolve_governing_brief_path(package_path, status_data)),
+        "evidence_surface_path": repo_relpath(resolve_essay_evidence_surface(package_path, status_data)),
+        "claim_boundary_paths": [repo_relpath(path) for path in claim_boundary_surface_paths(package_path)],
+    }
+
+    missing_artifacts: list[str] = []
+    if resolve_governing_brief_path(package_path, status_data) is None:
+        missing_artifacts.append("governing blueprint or brief")
+    if resolve_essay_evidence_surface(package_path, status_data) is None:
+        missing_artifacts.append("local evidence surface")
+
+    gate_errors, gate_path = validate_research_exit_gate(package_key)
+    if gate_path is not None and not gate_path.exists():
+        missing_artifacts.append("research-exit gate artifact")
+
+    boundary_required = claim_boundary_surface_required(package_path, status_data)
+    boundary_paths = claim_boundary_surface_paths(package_path)
+    if boundary_required and not boundary_paths:
+        missing_artifacts.append("claim-boundary surface")
+
+    payload["missing_artifacts"] = missing_artifacts
+    if gate_errors:
+        payload["decision"] = "research_exit_blocked"
+        payload["details"]["errors"] = gate_errors
+        if "local evidence surface" in missing_artifacts or has_intake_candidates(package_path):
+            payload["recommended_workflow"] = "paper_intake"
+        elif "claim-boundary surface" in missing_artifacts:
+            payload["recommended_workflow"] = "evidence_authorization"
+        else:
+            payload["recommended_workflow"] = "research"
+        return payload
+
+    payload["status"] = "pass"
+    payload["blocking"] = False
+    payload["decision"] = "ready_for_essay_iteration"
+    payload["recommended_workflow"] = "essay_iteration"
+    return payload
+
+
+def evaluate_essay_prewrite_gate(package_key: str, package_path: Path, status_data: dict) -> dict:
+    payload = base_gate_payload("essay_prewrite")
+    progress = resolve_essay_iteration_progress(package_key, package_path, status_data)
+    payload["details"] = progress
+    phase = progress.get("packet_phase")
+    decision = progress.get("next_packet_action")
+    if phase in {"draft_candidate", "review_candidate", "score_candidate", "fill_decision", "ready_for_human_review"}:
+        payload["status"] = "pass"
+        payload["blocking"] = False
+        payload["decision"] = "writable"
+        return payload
+    if phase == "resolve_prewrite_blocker":
+        payload["decision"] = "not_yet_writable"
+    else:
+        payload["decision"] = decision or "run_prewrite_gate"
+    if phase == "seed_packet":
+        payload["missing_artifacts"] = ["essay-iteration packet manifest"]
+    elif phase == "harden_blueprint":
+        payload["missing_artifacts"] = ["hardened blueprint"]
+    else:
+        payload["missing_artifacts"] = ["essay prewrite gate"]
+    return payload
+
+
+def evaluate_replacement_north_star_gate(package_key: str, package_path: Path, status_data: dict) -> dict:
+    payload = base_gate_payload("replacement_north_star")
+    live_draft = resolve_markdown_path(package_path, status_data)
+    revision = status_data.get("revision")
+    if live_draft is None or not isinstance(revision, int):
+        payload["decision"] = "missing_packet_context"
+        payload["missing_artifacts"] = ["essay-iteration packet manifest"]
+        return payload
+
+    packet_paths = build_packet_paths(live_draft, revision)
+    manifest_path = packet_paths["manifest"]
+    if not manifest_path.exists():
+        payload["decision"] = "missing_packet_manifest"
+        payload["missing_artifacts"] = ["essay-iteration packet manifest"]
+        return payload
+
+    try:
+        packet = json.loads(manifest_path.read_text())
+    except json.JSONDecodeError:
+        payload["decision"] = "invalid_packet_manifest"
+        payload["missing_artifacts"] = [repo_relpath(manifest_path)]
+        return payload
+
+    review_path = packet_paths["replacement_review"]
+    decision_path = packet_paths["decision"]
+    if not review_path.exists():
+        payload["decision"] = "missing_replacement_review"
+        payload["missing_artifacts"] = ["replacement review"]
+        return payload
+    if not decision_path.exists():
+        payload["decision"] = "missing_promotion_decision"
+        payload["missing_artifacts"] = ["promotion decision"]
+        return payload
+
+    try:
+        review_frontmatter, review_body = parse_markdown_packet_file(review_path)
+        decision_frontmatter, decision_body = parse_markdown_packet_file(decision_path)
+    except Exception as exc:
+        payload["decision"] = "invalid_review_packet"
+        payload["details"] = {"error": str(exc)}
+        return payload
+
+    north_star_verdict = review_frontmatter.get("north_star_verdict")
+    payload["details"] = {
+        "north_star_verdict": north_star_verdict,
+        "replacement_verdict": review_frontmatter.get("replacement_verdict"),
+        "continue_iteration": review_frontmatter.get("continue_iteration"),
+        "rewrite_mode": decision_frontmatter.get("rewrite_mode"),
+        "stop_gate_status": decision_frontmatter.get("stop_gate_status"),
+        "packet_manifest_path": repo_relpath(manifest_path),
+    }
+
+    if north_star_verdict in {None, "", "pending"}:
+        payload["decision"] = "pending_review"
+        return payload
+
+    if north_star_verdict not in {"below_north_star"}:
+        payload["status"] = "pass"
+        payload["blocking"] = False
+        payload["decision"] = "clears_north_star"
+        return payload
+
+    stop_iteration = (
+        review_frontmatter.get("continue_iteration") is False
+        or decision_frontmatter.get("rewrite_mode") == "stop_flagship_iteration"
+        or decision_frontmatter.get("stop_gate_status") == "fired"
+        or "stop_flagship_iteration" in decision_body
+        or "stop flagship iteration" in decision_body.lower()
+        or "stop flagship iteration" in review_body.lower()
+    )
+    if stop_iteration:
+        payload["decision"] = "object_ceiling"
+        payload["recommended_workflow"] = "post_ceiling_pivot"
+        payload["details"]["overlay_candidate"] = "post_ceiling_pivot"
+        return payload
+
+    payload["decision"] = "revise_same_object"
+    payload["recommended_workflow"] = "essay_iteration"
+    return payload
+
+
+def parse_release_gate_verdict(path: Path) -> str | None:
+    verdict = None
+    for line in path.read_text().splitlines():
+        if line.strip().startswith("Verdict:"):
+            verdict = line.split(":", 1)[1].strip()
+            if verdict:
+                return verdict
+    return verdict
+
+
+def evaluate_release_readiness_gate(package_path: Path, status_data: dict) -> dict:
+    payload = base_gate_payload("release_readiness")
+    artifact = find_package_artifact(package_path, RELEASE_GATE_PATTERNS)
+    payload["details"] = {
+        "release_gate_path": repo_relpath(artifact),
+        "live_draft_path": repo_relpath(resolve_markdown_path(package_path, status_data)),
+    }
+    if resolve_markdown_path(package_path, status_data) is None:
+        payload["missing_artifacts"].append("canonical live draft")
+    if artifact is None:
+        payload["decision"] = "missing_release_gate"
+        payload["missing_artifacts"].append("release-gate checklist or decision note")
+        return payload
+
+    verdict = parse_release_gate_verdict(artifact)
+    payload["details"]["release_verdict"] = verdict
+    if verdict == "release_ready":
+        payload["status"] = "pass"
+        payload["blocking"] = False
+        payload["decision"] = "release_ready"
+        return payload
+    if verdict == "release_ready_after_minor_fixes":
+        payload["decision"] = "minor_fixes_remaining"
+    else:
+        payload["decision"] = "release_blocked"
+    payload["recommended_workflow"] = "release_gate"
+    return payload
+
+
+def parse_pivot_grounding_verdict(path: Path) -> str | None:
+    section = extract_markdown_section(path.read_text(), "## Grounding Verdict")
+    if not section:
+        return None
+    for line in section.splitlines():
+        stripped = line.strip().strip("`")
+        if stripped:
+            return stripped
+    return None
+
+
+def parse_pivot_north_star_verdict(path: Path) -> str | None:
+    section = extract_markdown_section(path.read_text(), "## North-Star Verdict")
+    if not section:
+        return None
+    for line in section.splitlines():
+        stripped = line.strip().strip("`")
+        if stripped:
+            return stripped
+    return None
+
+
+def evaluate_pivot_research_grounding_gate(package_path: Path) -> dict:
+    payload = base_gate_payload("pivot_research_grounding")
+    reframe_path = find_package_artifact(package_path, PIVOT_REFRAME_PATTERNS)
+    grounding_path = find_package_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
+    decision_path = find_package_artifact(package_path, PIVOT_DECISION_PATTERNS)
+    payload["details"] = {
+        "reframe_path": repo_relpath(reframe_path),
+        "grounding_review_path": repo_relpath(grounding_path),
+        "pivot_decision_path": repo_relpath(decision_path),
+    }
+    if reframe_path is None:
+        payload["missing_artifacts"].append("post-ceiling reframe")
+    if grounding_path is None:
+        payload["missing_artifacts"].append("pivot grounding review")
+    if decision_path is None:
+        payload["missing_artifacts"].append("pivot decision or live candidate status")
+    if payload["missing_artifacts"]:
+        payload["decision"] = "missing_pivot_artifacts"
+        return payload
+
+    verdict = parse_pivot_grounding_verdict(grounding_path)
+    payload["details"]["grounding_verdict"] = verdict
+    if verdict in {"research_grounded_but_not_north_star_viable", "pivot_cleared_for_north_star_attempt"}:
+        payload["status"] = "pass"
+        payload["blocking"] = False
+        payload["decision"] = verdict
+        return payload
+
+    payload["decision"] = verdict or "grounding_not_cleared"
+    return payload
+
+
+def evaluate_pivot_north_star_viability_gate(package_path: Path) -> dict:
+    payload = base_gate_payload("pivot_north_star_viability")
+    grounding_path = find_package_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
+    decision_path = find_package_artifact(package_path, PIVOT_DECISION_PATTERNS)
+    north_star_path = find_package_artifact(package_path, PIVOT_NORTH_STAR_PATTERNS)
+    payload["details"] = {
+        "grounding_review_path": repo_relpath(grounding_path),
+        "pivot_decision_path": repo_relpath(decision_path),
+        "north_star_viability_path": repo_relpath(north_star_path),
+    }
+    if grounding_path is None:
+        payload["missing_artifacts"].append("pivot grounding review")
+    if decision_path is None:
+        payload["missing_artifacts"].append("pivot decision")
+    if north_star_path is None:
+        payload["missing_artifacts"].append("pivot north-star viability gate")
+    if payload["missing_artifacts"]:
+        payload["decision"] = "missing_pivot_artifacts"
+        return payload
+
+    grounding_verdict = parse_pivot_grounding_verdict(grounding_path)
+    payload["details"]["grounding_verdict"] = grounding_verdict
+    viability_verdict = parse_pivot_north_star_verdict(north_star_path) if north_star_path else None
+    payload["details"]["north_star_verdict"] = viability_verdict
+
+    decision_text = decision_path.read_text()
+    decision_clears = (
+        "pivot_cleared_for_north_star_attempt" in decision_text
+        or "go_for_pivot" in decision_text
+        or "cleared pivot" in decision_text.lower()
+    )
+
+    if grounding_verdict not in {
+        "research_grounded_but_not_north_star_viable",
+        "pivot_cleared_for_north_star_attempt",
+    }:
+        payload["decision"] = "grounding_not_cleared"
+        return payload
+
+    if viability_verdict == "north_star_viable" and decision_clears:
+        payload["status"] = "pass"
+        payload["blocking"] = False
+        payload["decision"] = "north_star_viable"
+        return payload
+
+    if viability_verdict == "north_star_viable":
+        payload["decision"] = "north_star_viable_pending_pivot_decision"
+        return payload
+
+    if viability_verdict == "not_north_star_viable" or grounding_verdict == "research_grounded_but_not_north_star_viable":
+        payload["decision"] = "research_grounded_but_not_north_star_viable"
+    else:
+        payload["decision"] = "north_star_viability_not_cleared"
+    return payload
+
+
+def evaluate_gate(gate_id: str, package_arg: str | None = None, packet_path: Path | None = None) -> dict:
+    if gate_id == "topic_viability":
+        return evaluate_topic_viability_gate(packet_path)
+
+    if package_arg is None:
+        raise ValueError(f"Gate '{gate_id}' requires --package.")
+    manifest_ref, status_data = load_status_ref(package_arg)
+    package_path = manifest_ref.package_path
+
+    if gate_id == "research_exit":
+        return evaluate_research_exit_gate(manifest_ref.package_key, package_path, status_data)
+    if gate_id == "essay_prewrite":
+        return evaluate_essay_prewrite_gate(manifest_ref.package_key, package_path, status_data)
+    if gate_id == "replacement_north_star":
+        return evaluate_replacement_north_star_gate(manifest_ref.package_key, package_path, status_data)
+    if gate_id == "pivot_research_grounding":
+        return evaluate_pivot_research_grounding_gate(package_path)
+    if gate_id == "pivot_north_star_viability":
+        return evaluate_pivot_north_star_viability_gate(package_path)
+    if gate_id == "release_readiness":
+        return evaluate_release_readiness_gate(package_path, status_data)
+    raise KeyError(f"Unknown gate '{gate_id}'")
+
+
+def determine_pipeline_profile(
+    package_path: Path,
+    status_data: dict,
+    stage: str,
+    gate_statuses: dict[str, dict] | None = None,
+) -> str:
+    profiles = load_pipeline_profiles()
+    gate_statuses = gate_statuses or {}
+    north_star_gate = gate_statuses.get("replacement_north_star", {})
+    if north_star_gate.get("decision") == "object_ceiling":
+        profile_id = "post_ceiling_successor"
+    else:
+        active_stage = next_stage_for_package(package_path, status_data)
+        if active_stage == stage:
+            profile_id = "article_default"
+        else:
+            profile_id = "midstream_revision"
+    if profile_id not in profiles:
+        raise ValueError(f"Pipeline profile '{profile_id}' is not defined.")
+    return profile_id
+
+
+def stage_gate_ids(stage: str) -> list[str]:
+    if stage == "research":
+        return ["research_exit"]
+    if stage == "essay_iteration":
+        return ["essay_prewrite", "replacement_north_star"]
+    if stage in {"article_polish", "substack_publishing", "distribution"}:
+        return ["release_readiness"]
+    return []
+
+
+def build_stage_gate_statuses(package_key: str, stage: str) -> dict[str, dict]:
+    statuses = {}
+    for gate_id in stage_gate_ids(stage):
+        statuses[gate_id] = evaluate_gate(gate_id, package_arg=package_key)
+    return statuses
+
+
+def build_stage_recommended_workflows(
+    package_path: Path,
+    status_data: dict,
+    stage: str,
+    gate_statuses: dict[str, dict],
+    pipeline_profile: str,
+) -> list[str]:
+    profile = load_pipeline_profiles()[pipeline_profile]
+    fallback_routes = profile.get("fallback_routes", {})
+    recommended: list[str] = []
+
+    def push(workflow_id: str | None) -> None:
+        if not workflow_id:
+            return
+        if workflow_id not in recommended:
+            recommended.append(workflow_id)
+
+    if stage == "research":
+        push("research")
+        gate = gate_statuses.get("research_exit")
+        if gate:
+            if gate.get("blocking"):
+                push(fallback_routes.get("research_exit"))
+            push(gate.get("recommended_workflow"))
+        if has_intake_candidates(package_path):
+            push("paper_intake")
+        if (
+            gate
+            and "claim-boundary surface" in gate.get("missing_artifacts", [])
+        ):
+            push("evidence_authorization")
+        return recommended
+
+    if stage == "essay_iteration":
+        push("essay_iteration")
+        prewrite = gate_statuses.get("essay_prewrite")
+        north_star = gate_statuses.get("replacement_north_star")
+        if prewrite and prewrite.get("decision") == "not_yet_writable":
+            if prewrite.get("blocking"):
+                push(fallback_routes.get("essay_prewrite"))
+            if claim_boundary_surface_required(package_path, status_data) and not claim_boundary_surface_paths(package_path):
+                push("evidence_authorization")
+        if north_star:
+            if north_star.get("blocking"):
+                push(fallback_routes.get("replacement_north_star"))
+            push(north_star.get("recommended_workflow"))
+        return recommended
+
+    if stage in {"article_polish", "substack_publishing", "distribution"}:
+        push("article_polish" if stage == "article_polish" else stage)
+        release_gate = gate_statuses.get("release_readiness")
+        if release_gate:
+            if release_gate.get("blocking"):
+                push(fallback_routes.get("release_readiness"))
+            push(release_gate.get("recommended_workflow"))
+        return recommended
+
+    push(stage)
+    return recommended
+
+
+def build_overlay_candidates(stage: str, gate_statuses: dict[str, dict]) -> list[str]:
+    overlays: list[str] = []
+    if stage == "essay_iteration":
+        north_star = gate_statuses.get("replacement_north_star")
+        if north_star and north_star.get("decision") == "object_ceiling":
+            overlays.append("post_ceiling_pivot")
+    return overlays
+
 def build_stage_resolution(package_arg: str, stage: str) -> dict:
     manifest_ref, status_data = load_status_ref(package_arg)
     workflow_contract = load_workflow_contract(stage)
@@ -928,6 +1651,26 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
                 blocking_issues.append(issue["message"])
         if any(issue["blocking"] for issue in lifecycle_report["issues"]):
             can_execute = False
+    gate_statuses = build_stage_gate_statuses(manifest_ref.package_key, stage)
+    for gate_id, gate_status in gate_statuses.items():
+        if gate_status.get("blocking"):
+            blocking_issues.append(
+                f"Gate '{gate_id}' is blocked: {gate_status.get('decision')}."
+            )
+    pipeline_profile = determine_pipeline_profile(
+        manifest_ref.package_path,
+        status_data,
+        stage,
+        gate_statuses,
+    )
+    recommended_workflows = build_stage_recommended_workflows(
+        manifest_ref.package_path,
+        status_data,
+        stage,
+        gate_statuses,
+        pipeline_profile,
+    )
+    overlay_candidates = build_overlay_candidates(stage, gate_statuses)
     package_context_paths = build_package_context_paths(manifest_ref.package_path, status_data)
     packet_paths = {}
     packet_progress = {
@@ -959,6 +1702,9 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "suggested_commands": build_stage_suggested_commands(manifest_ref.package_key, stage, can_execute),
         "log_target": "reviewable-runs/logs/",
         "workflow_doc": repo_relpath(workflow_contract["path"]),
+        "workflow_kind": metadata["workflow_kind"],
+        "stage_binding": metadata.get("stage_binding"),
+        "stability": metadata["stability"],
         "default_skill": metadata["default_skill"],
         "launch_templates": metadata["launch_templates"],
         "packet_templates": resolve_packet_template_paths(metadata["packet_templates"]),
@@ -972,8 +1718,101 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "auto_mark_done_allowed": auto_mark_done_allowed(stage, metadata, policy),
         "current_state": status_data.get("stages", {}).get(stage, {"done": False, "last_updated": None}),
         "package_context_paths": package_context_paths,
+        "pipeline_profile": pipeline_profile,
+        "recommended_workflows": recommended_workflows,
+        "gate_statuses": gate_statuses,
+        "overlay_candidates": overlay_candidates,
         "packet_paths": packet_paths,
         **packet_progress,
+    }
+
+
+def build_workflow_resolution(
+    workflow_id: str,
+    package_arg: str | None = None,
+    packet_path: Path | None = None,
+) -> dict:
+    workflow_contract = load_workflow_contract(workflow_id)
+    metadata = workflow_contract["metadata"]
+    policy = load_harness_policy()
+
+    manifest_ref = None
+    status_data = None
+    package_context_paths = {}
+    blocking_issues: list[str] = []
+
+    if package_arg is not None:
+        manifest_ref, status_data = load_status_ref(package_arg)
+        required_context = resolve_required_context(
+            manifest_ref.package_path,
+            status_data,
+            metadata["required_context"],
+        )
+        package_context_paths = build_package_context_paths(manifest_ref.package_path, status_data)
+    elif workflow_id == "topic_discovery":
+        required_context = open_required_context(metadata["required_context"])
+    else:
+        raise ValueError(f"Workflow '{workflow_id}' requires --package.")
+
+    requires_approval, can_execute, capability_blockers = compute_workflow_capabilities(
+        workflow_id,
+        metadata,
+        required_context,
+        policy,
+    )
+    blocking_issues.extend(capability_blockers)
+
+    recommended_gates = workflow_recommended_gates(workflow_id)
+    suggested_commands = build_workflow_suggested_commands(
+        workflow_id,
+        can_execute,
+        package_key=manifest_ref.package_key if manifest_ref else None,
+        packet_path=packet_path,
+    )
+    if manifest_ref is not None:
+        for gate_id in recommended_gates:
+            suggested_commands.append(
+                f"npm run gate:check -- --gate {gate_id} --package {manifest_ref.package_key} --format json"
+            )
+    elif packet_path is not None and "topic_viability" in recommended_gates:
+        suggested_commands.append(
+            f"npm run gate:check -- --gate topic_viability --packet {repo_relpath(packet_path)} --format json"
+        )
+
+    packet_details = parse_topic_packet(packet_path) if packet_path and packet_path.exists() else None
+    return {
+        "workflow_id": workflow_id,
+        "workflow_doc": repo_relpath(workflow_contract["path"]),
+        "workflow_kind": metadata["workflow_kind"],
+        "stage_binding": metadata.get("stage_binding"),
+        "stability": metadata["stability"],
+        "package": manifest_ref.package_key if manifest_ref else None,
+        "approval_gate": metadata["approval_gate"],
+        "requires_approval": requires_approval,
+        "can_execute": can_execute,
+        "blocking_issues": blocking_issues,
+        "required_context": required_context,
+        "expected_outputs": metadata["expected_outputs"],
+        "validator_commands": render_command_templates(
+            metadata["validator_commands"],
+            manifest_ref.package_key,
+            status_data,
+        )
+        if manifest_ref and status_data
+        else metadata["validator_commands"],
+        "launch_templates": render_command_templates(
+            metadata["launch_templates"],
+            manifest_ref.package_key,
+            status_data,
+        )
+        if manifest_ref and status_data
+        else metadata["launch_templates"],
+        "packet_templates": resolve_packet_template_paths(metadata["packet_templates"]),
+        "suggested_commands": suggested_commands,
+        "recommended_gates": recommended_gates,
+        "package_context_paths": package_context_paths,
+        "topic_packet_details": packet_details,
+        "log_target": "reviewable-runs/logs/",
     }
 
 
@@ -1040,6 +1879,176 @@ def emit_launch_pack(resolution: dict) -> Path:
     return log_path
 
 
+def emit_workflow_launch_pack(resolution: dict) -> Path:
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    package_id = (resolution.get("package") or "no-package").replace("/", "__")
+    workflow_id = resolution["workflow_id"]
+    log_path = LOGS_DIR / f"{timestamp}_{package_id}_{workflow_id}_workflow-launch-pack.json"
+    payload = {
+        "kind": "workflow_launch_pack",
+        "schema_version": 2,
+        "timestamp": timestamp,
+        "run_id": f"{timestamp}_{package_id}_{workflow_id}_workflow-launch-pack",
+        "package": resolution.get("package"),
+        "workflow_id": workflow_id,
+        "workflow_kind": resolution["workflow_kind"],
+        "workflow_doc": resolution["workflow_doc"],
+        "boundary": {
+            "type": "handoff",
+            "reason": "Workflow launch pack prepares a bounded workflow run; it does not claim the workflow completed.",
+            "external_side_effect": False,
+            "approval_gate": resolution["approval_gate"],
+            "approval_required": resolution["requires_approval"],
+            "approval_status": "pending_if_workflow_executes" if resolution["requires_approval"] else "not_required",
+        },
+        "task": {
+            "objective": f"Prepare a bounded launch packet for workflow '{workflow_id}'.",
+            "stop_condition": "Workflow launch pack written to reviewable-runs/logs/.",
+            "non_goals": [
+                "Do not claim the workflow completed.",
+                "Do not treat this launch pack as approval for external mutation.",
+            ],
+        },
+        "required_context": resolution["required_context"],
+        "suggested_commands": resolution["suggested_commands"],
+        "expected_outputs": resolution["expected_outputs"],
+        "blocking_issues": resolution["blocking_issues"],
+        "recommended_gates": resolution["recommended_gates"],
+        "verification": {
+            "checks": [
+                {
+                    "name": "workflow_launch_pack_written",
+                    "result": "pass",
+                    "notes": repo_relpath(log_path),
+                }
+            ],
+            "residual_risk": "This log is only a workflow launch packet. Review the resulting run or gate decision separately.",
+        },
+    }
+    log_path.write_text(json.dumps(payload, indent=2) + "\n")
+    return log_path
+
+
+def log_workflow_run(resolution: dict, action: str, success: bool, output: str, commands: list[str]) -> str:
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    package_id = (resolution.get("package") or "no-package").replace("/", "__")
+    workflow_id = resolution["workflow_id"]
+    log_path = LOGS_DIR / f"{timestamp}_{package_id}_{workflow_id}_{action}.json"
+    output_limit = 6000
+    payload = {
+        "kind": "workflow_run",
+        "schema_version": 2,
+        "timestamp": timestamp,
+        "run_id": f"{timestamp}_{package_id}_{workflow_id}_{action}",
+        "package": resolution.get("package"),
+        "workflow_id": workflow_id,
+        "workflow_kind": resolution["workflow_kind"],
+        "action": action,
+        "success": success,
+        "boundary": {
+            "type": "local workflow operation",
+            "reason": "Workflow execution stays inside the local repo contract unless the approval gate explicitly authorizes something stronger.",
+            "external_side_effect": False,
+            "approval_gate": resolution["approval_gate"],
+            "approval_required": resolution["requires_approval"],
+            "approval_status": "not_recorded_in_log" if resolution["requires_approval"] else "not_required",
+        },
+        "task": {
+            "objective": f"Run workflow '{workflow_id}'.",
+            "stop_condition": "Workflow command finished and a run log was written.",
+            "non_goals": [
+                "Do not treat this routine workflow log as retained proof by itself.",
+            ],
+        },
+        "execution": {
+            "commands": commands,
+            "output_excerpt": output[-output_limit:],
+            "output_truncated": len(output) > output_limit,
+        },
+        "evidence": {
+            "workflow_doc": resolution["workflow_doc"],
+            "required_context": resolution["required_context"],
+            "expected_outputs": resolution["expected_outputs"],
+            "recommended_gates": resolution["recommended_gates"],
+        },
+        "verification": {
+            "checks": [
+                {
+                    "name": "command_exit_status",
+                    "result": "pass" if success else "fail",
+                    "notes": "Workflow command or launch-pack emission result.",
+                },
+                {
+                    "name": "workflow_log_written",
+                    "result": "pass",
+                    "notes": repo_relpath(log_path),
+                },
+            ],
+            "residual_risk": "This is a bounded workflow run log. Preserve a stronger proof packet separately if the run becomes decision-critical.",
+        },
+        "failure_or_risk": {
+            "actual_failure": None if success else "Workflow command failed; inspect output_excerpt.",
+            "possible_failures": [
+                "A guided workflow was mistaken for hidden execution.",
+                "A local workflow log was mistaken for approval to mutate an external system.",
+            ],
+        },
+        "workflow_doc": resolution["workflow_doc"],
+    }
+    log_path.write_text(json.dumps(payload, indent=2) + "\n")
+    return repo_relpath(log_path)
+
+
+def log_gate_check(gate_result: dict, package: str | None, packet_path: Path | None) -> str:
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    package_id = (package or "no-package").replace("/", "__")
+    gate_id = gate_result["gate_id"]
+    log_path = LOGS_DIR / f"{timestamp}_{package_id}_{gate_id}_gate-check.json"
+    payload = {
+        "kind": "gate_check",
+        "schema_version": 2,
+        "timestamp": timestamp,
+        "run_id": f"{timestamp}_{package_id}_{gate_id}_gate-check",
+        "package": package,
+        "gate_id": gate_id,
+        "packet_path": repo_relpath(packet_path),
+        "boundary": {
+            "type": "gate evaluation",
+            "reason": "Gate checks record movement decisions without mutating package state by themselves.",
+            "external_side_effect": False,
+            "approval_required": False,
+            "approval_status": "not_required",
+        },
+        "task": {
+            "objective": f"Evaluate gate '{gate_id}'.",
+            "stop_condition": "Gate result recorded in reviewable-runs/logs/.",
+            "non_goals": [
+                "Do not mutate lifecycle state from the gate check alone.",
+            ],
+        },
+        "decision": gate_result["decision"],
+        "status": gate_result["status"],
+        "required_artifacts": gate_result["required_artifacts"],
+        "missing_artifacts": gate_result["missing_artifacts"],
+        "recommended_workflow": gate_result["recommended_workflow"],
+        "recommended_validator": gate_result["recommended_validator"],
+        "proof_mode": gate_result["proof_mode"],
+        "verification": {
+            "checks": [
+                {
+                    "name": "gate_check_written",
+                    "result": "pass",
+                    "notes": repo_relpath(log_path),
+                }
+            ],
+            "residual_risk": "Gate checks capture the current bounded decision, but the underlying artifacts still need normal human review when the stakes are high.",
+        },
+    }
+    log_path.write_text(json.dumps(payload, indent=2) + "\n")
+    return repo_relpath(log_path)
+
+
 def slugify_idea(idea: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", idea.lower()).strip("-")
     slug = re.sub(r"-{2,}", "-", slug)
@@ -1052,21 +2061,45 @@ def title_from_slug(slug: str) -> str:
     return slug.replace("-", " ").title()
 
 
-def init_package_manifest(package_path: Path, markdown_relpath: str) -> dict:
+def init_package_manifest(
+    package_path: Path,
+    markdown_relpath: str,
+    discovery_packet_path: Path | None = None,
+) -> dict:
     stages = {stage: {"done": False, "last_updated": None} for stage in STAGES}
+    config = {
+        "markdown_path": markdown_relpath,
+    }
+    if discovery_packet_path is not None:
+        config["discovery_packet_path"] = repo_relpath(discovery_packet_path)
     return {
         "kind": "leaf",
         "publication": package_path.name,
         "revision": 1,
-        "config": {
-            "markdown_path": markdown_relpath,
-        },
+        "config": config,
         "stages": stages,
     }
 
 
-def initialize_package(idea: str, slug: str | None = None) -> dict:
-    package_slug = slug or slugify_idea(idea)
+def initialize_package(
+    idea: str | None,
+    slug: str | None = None,
+    topic_packet_path: Path | None = None,
+) -> dict:
+    packet = None
+    if topic_packet_path is not None:
+        packet = parse_topic_packet(topic_packet_path)
+        if packet.get("decision") != "package_init_ready":
+            raise ValueError(
+                "Topic packet must resolve to Decision: package_init_ready before package:init --from-topic-packet."
+            )
+
+    effective_idea = (idea or packet.get("one_sentence_promise") if packet else None) or ""
+    effective_idea = effective_idea.strip()
+    if not effective_idea:
+        raise ValueError("initialize_package requires --idea or a topic packet with a one-sentence promise.")
+
+    package_slug = slug or (packet.get("proposed_slug") if packet else None) or slugify_idea(effective_idea)
     package_path = PUBLICATIONS_DIR / package_slug
     if package_path.exists():
         raise FileExistsError(f"Package already exists: publications/{package_slug}")
@@ -1082,7 +2115,7 @@ def initialize_package(idea: str, slug: str | None = None) -> dict:
     readme_lines = [
         f"# {title}",
         "",
-        f"Current idea: {idea.strip()}",
+        f"Current idea: {effective_idea}",
         "",
         "This package was initialized for the Phase 1.5 harness flow.",
         "",
@@ -1094,6 +2127,27 @@ def initialize_package(idea: str, slug: str | None = None) -> dict:
         "- archive: `archive/`",
         "",
     ]
+    if packet is not None:
+        readme_lines.extend(
+            [
+                "## Discovery Handoff",
+                "",
+                f"- discovery packet: `{repo_relpath(topic_packet_path)}`",
+                f"- one-sentence promise: {packet.get('one_sentence_promise') or effective_idea}",
+                f"- first research question: {packet.get('first_research_question') or 'TBD'}",
+            ]
+        )
+        shortlist = packet.get("initial_paper_shortlist") or []
+        if shortlist:
+            readme_lines.extend(["- initial paper shortlist:"])
+            for item in shortlist:
+                readme_lines.append(f"  - {item}")
+        blocked = packet.get("near_misses_and_blocked_framings") or []
+        if blocked:
+            readme_lines.extend(["- near-misses and blocked framings:"])
+            for item in blocked:
+                readme_lines.append(f"  - {item}")
+        readme_lines.append("")
     (package_path / "README.md").write_text("\n".join(readme_lines))
 
     draft_lines = [
@@ -1103,9 +2157,18 @@ def initialize_package(idea: str, slug: str | None = None) -> dict:
         "",
         "## Working Thesis",
         "",
-        idea.strip(),
+        packet.get("one_sentence_promise") if packet else effective_idea,
         "",
     ]
+    if packet is not None:
+        draft_lines.extend(
+            [
+                "## First Research Question",
+                "",
+                packet.get("first_research_question") or "TBD",
+                "",
+            ]
+        )
     (package_path / markdown_name).write_text("\n".join(draft_lines))
 
     (package_path / "papers" / "index.md").write_text(
@@ -1119,7 +2182,7 @@ def initialize_package(idea: str, slug: str | None = None) -> dict:
         )
     )
 
-    status = init_package_manifest(package_path, markdown_relpath)
+    status = init_package_manifest(package_path, markdown_relpath, discovery_packet_path=topic_packet_path)
     (package_path / "status.yaml").write_text(
         yaml.safe_dump(status, default_flow_style=False, sort_keys=False)
     )

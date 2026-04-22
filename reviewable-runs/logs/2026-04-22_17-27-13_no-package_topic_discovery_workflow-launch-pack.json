@@ -1,0 +1,72 @@
+{
+  "kind": "workflow_launch_pack",
+  "schema_version": 2,
+  "timestamp": "2026-04-22_17-27-13",
+  "run_id": "2026-04-22_17-27-13_no-package_topic_discovery_workflow-launch-pack",
+  "package": null,
+  "workflow_id": "topic_discovery",
+  "workflow_kind": "module",
+  "workflow_doc": "workflows/topic-discovery/README.md",
+  "boundary": {
+    "type": "handoff",
+    "reason": "Workflow launch pack prepares a bounded workflow run; it does not claim the workflow completed.",
+    "external_side_effect": false,
+    "approval_gate": "required_before_package_init",
+    "approval_required": true,
+    "approval_status": "pending_if_workflow_executes"
+  },
+  "task": {
+    "objective": "Prepare a bounded launch packet for workflow 'topic_discovery'.",
+    "stop_condition": "Workflow launch pack written to reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not claim the workflow completed.",
+      "Do not treat this launch pack as approval for external mutation."
+    ]
+  },
+  "required_context": [
+    {
+      "name": "seed question, archive gap, external trigger, review finding, or broad domain to investigate",
+      "status": "open",
+      "blocking": false
+    },
+    {
+      "name": "relevant prior essays or archive cluster when the topic should build on existing work",
+      "status": "open",
+      "blocking": false
+    },
+    {
+      "name": "target publication ambition, such as quick note, strong synthesis, or north-star flagship",
+      "status": "open",
+      "blocking": false
+    }
+  ],
+  "suggested_commands": [
+    "npm run workflow:resolve -- --workflow topic_discovery --packet scripts/fixtures/workflow-model/topic-packet-package-init-ready.md --format json",
+    "npm run workflow:run -- --workflow topic_discovery --packet scripts/fixtures/workflow-model/topic-packet-package-init-ready.md --format json",
+    "npm run workflow:run -- --workflow topic_discovery --packet scripts/fixtures/workflow-model/topic-packet-package-init-ready.md --emit-launch-pack --format json",
+    "npm run gate:check -- --gate topic_viability --packet scripts/fixtures/workflow-model/topic-packet-package-init-ready.md --format json"
+  ],
+  "expected_outputs": [
+    "topic vocabulary map for the research surface",
+    "ranked candidate paper pool with exclusions and near-misses",
+    "tracked assistant discussion notes when assistant comparison shapes the topic decision",
+    "candidate essay slate with evidence deltas and kill criteria",
+    "handoff decision to package initialization, post-ceiling pivot, narrower research, or parking"
+  ],
+  "blocking_issues": [
+    "Runner mode 'guided' with launch_mode 'none' is not directly executable in Phase 1.5; resolve it or emit a launch pack."
+  ],
+  "recommended_gates": [
+    "topic_viability"
+  ],
+  "verification": {
+    "checks": [
+      {
+        "name": "workflow_launch_pack_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-22_17-27-13_no-package_topic_discovery_workflow-launch-pack.json"
+      }
+    ],
+    "residual_risk": "This log is only a workflow launch packet. Review the resulting run or gate decision separately."
+  }
+}

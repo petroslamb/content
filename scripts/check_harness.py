@@ -62,6 +62,8 @@ def main() -> None:
         "validated_files": [
             "harness_contract.yaml",
             "harness_policy.yaml",
+            "gate_contracts.yaml",
+            "pipeline_profiles.yaml",
             "package.json",
         ],
     }

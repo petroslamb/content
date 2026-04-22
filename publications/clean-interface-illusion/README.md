@@ -13,6 +13,7 @@ Research direction: Preserve the capped `clean-interface-illusion` essay as a do
 ## Orientation
 
 - Live draft: [`clean-interface-illusion.md`](clean-interface-illusion.md)
+- Research-exit gate: [`clean-interface-illusion-research-exit-gate-r3.md`](clean-interface-illusion-research-exit-gate-r3.md)
 - Active blueprint: [`blueprint.md`](blueprint.md)
 - Cleared successor package: [`../corrective-competence/README.md`](../corrective-competence/README.md)
 - Evidence surface: [`papers/`](papers/)
@@ -24,6 +25,8 @@ Research direction: Preserve the capped `clean-interface-illusion` essay as a do
 - Pivot slate: [`clean-interface-illusion-pivot-slate.md`](clean-interface-illusion-pivot-slate.md)
 - Pivot decision: [`clean-interface-illusion-pivot-decision.md`](clean-interface-illusion-pivot-decision.md)
 - Pivot grounding review: [`clean-interface-illusion-pivot-grounding-review.md`](clean-interface-illusion-pivot-grounding-review.md)
+- Pivot north-star viability: [`clean-interface-illusion-pivot-north-star-viability.md`](clean-interface-illusion-pivot-north-star-viability.md)
+- Claim-state surface: [`clean-interface-illusion-claim-state.md`](clean-interface-illusion-claim-state.md)
 - Pivot blocker: [`clean-interface-illusion-pivot-blocker.md`](clean-interface-illusion-pivot-blocker.md)
 - Next pivot candidate: [`clean-interface-illusion-next-pivot-candidate.md`](clean-interface-illusion-next-pivot-candidate.md)
 - Targeted research delta: [`clean-interface-illusion-capability-not-delegation-research-delta.md`](clean-interface-illusion-capability-not-delegation-research-delta.md)
@@ -34,7 +37,9 @@ Research direction: Preserve the capped `clean-interface-illusion` essay as a do
 ## Working Guidance
 
 - Treat [`clean-interface-illusion.md`](clean-interface-illusion.md) as the canonical live draft surface.
+- Treat [`clean-interface-illusion-research-exit-gate-r3.md`](clean-interface-illusion-research-exit-gate-r3.md) as the historical handoff record showing why the donor object was allowed into `essay_iteration`.
 - Treat [`blueprint.md`](blueprint.md) as the governing rewrite surface until the evidence set changes materially.
+- Treat [`clean-interface-illusion-claim-state.md`](clean-interface-illusion-claim-state.md) as the donor-package boundary surface under the modular workflow model.
 - Keep alphaXiv discovery and validation results out of prose memory and move only selected papers into [`papers/`](papers/) through the tracked paper-intake workflow.
 - Use essay-iteration packet artifacts for bounded candidates, reviews, and scorecards rather than overwriting the live draft first.
 - Treat the `r3` packet as the proof surface for the stop gate, not as a prelude to `r4`.

@@ -1,9 +1,16 @@
 ---
 workflow_id: post_ceiling_pivot
+workflow_kind: overlay
+stability: experimental
 workflow_group: editorial
 runner_mode: guided
 default_skill: alphaxiv
 launch_templates: []
+packet_templates:
+  - "workflows/post-ceiling-pivot/templates/post_ceiling_reframe_template.md"
+  - "workflows/post-ceiling-pivot/templates/pivot_grounding_review_template.md"
+  - "workflows/post-ceiling-pivot/templates/pivot_north_star_viability_template.md"
+  - "workflows/post-ceiling-pivot/templates/pivot_decision_template.md"
 required_context:
   - leaf package README
   - latest stop-gate or replacement-review finding from the capped essay

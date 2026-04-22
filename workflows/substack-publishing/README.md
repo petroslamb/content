@@ -1,5 +1,8 @@
 ---
 workflow_id: substack_publishing
+workflow_kind: stage
+stage_binding: substack_publishing
+stability: canonical
 workflow_group: release
 runner_mode: hybrid
 launch_mode: external_mutation

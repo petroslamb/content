@@ -3,6 +3,7 @@ publication: clean-interface-illusion
 revision: 3
 config:
   markdown_path: publications/clean-interface-illusion/clean-interface-illusion.md
+  blueprint_path: blueprint.md
   evidence_path: publications/clean-interface-illusion/papers
 stages:
   paper_intake:
