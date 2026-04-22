@@ -127,12 +127,37 @@ PIVOT_GROUNDING_PATTERNS = (
     "*pivot-grounding-review*.md",
 )
 
+PIVOT_SLATE_PATTERNS = (
+    "*pivot-slate*.md",
+)
+
+PIVOT_NEXT_CANDIDATE_PATTERNS = (
+    "*next-pivot-candidate*.md",
+)
+
+PIVOT_RESEARCH_DELTA_PATTERNS = (
+    "*research-delta*.md",
+)
+
+PIVOT_CONSEQUENCE_PATTERNS = (
+    "*consequence-pass*.md",
+    "*consequence-pressure*.md",
+)
+
+PIVOT_COMPARATIVE_RERANK_PATTERNS = (
+    "*comparative-rerank*.md",
+)
+
 PIVOT_DECISION_PATTERNS = (
     "*pivot-decision*.md",
 )
 
 PIVOT_NORTH_STAR_PATTERNS = (
     "*pivot-north-star-viability*.md",
+)
+
+PIVOT_BLOCKER_PATTERNS = (
+    "*pivot-blocker*.md",
 )
 
 
@@ -986,6 +1011,128 @@ def resolve_pivot_donor_report(package_path: Path) -> dict:
         "reframe_path": reframe_path,
         "process_capture_path": process_capture_path,
     }
+
+
+def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
+    pivot_root = package_path / "pivot" / "active"
+    if not pivot_root.exists():
+        pivot_root = package_path / "pivot" if (package_path / "pivot").exists() else package_path
+
+    slate_path = find_active_pivot_artifact(package_path, PIVOT_SLATE_PATTERNS)
+    grounding_path = find_active_pivot_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
+    next_candidate_path = find_active_pivot_artifact(package_path, PIVOT_NEXT_CANDIDATE_PATTERNS)
+    research_delta_path = find_active_pivot_artifact(package_path, PIVOT_RESEARCH_DELTA_PATTERNS)
+    consequence_path = find_active_pivot_artifact(package_path, PIVOT_CONSEQUENCE_PATTERNS)
+    comparative_rerank_path = find_active_pivot_artifact(package_path, PIVOT_COMPARATIVE_RERANK_PATTERNS)
+    north_star_path = find_active_pivot_artifact(package_path, PIVOT_NORTH_STAR_PATTERNS)
+    decision_path = find_active_pivot_artifact(package_path, PIVOT_DECISION_PATTERNS)
+    blocker_path = find_active_pivot_artifact(package_path, PIVOT_BLOCKER_PATTERNS)
+
+    progress = {
+        "active_overlay_root": repo_relpath(pivot_root),
+        "overlay_phase": None,
+        "next_overlay_action": None,
+        "recommended_validator": None,
+        "pivot_slate_path": repo_relpath(slate_path),
+        "grounding_review_path": repo_relpath(grounding_path),
+        "next_candidate_path": repo_relpath(next_candidate_path),
+        "research_delta_path": repo_relpath(research_delta_path),
+        "consequence_pressure_path": repo_relpath(consequence_path),
+        "comparative_rerank_path": repo_relpath(comparative_rerank_path),
+        "north_star_viability_path": repo_relpath(north_star_path),
+        "pivot_decision_path": repo_relpath(decision_path),
+        "pivot_blocker_path": repo_relpath(blocker_path),
+    }
+
+    if slate_path is None:
+        progress["overlay_phase"] = "build_pivot_slate"
+        progress["next_overlay_action"] = "write_pivot_slate"
+        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        return progress
+
+    if grounding_path is None:
+        progress["overlay_phase"] = "ground_candidates"
+        progress["next_overlay_action"] = "write_pivot_grounding_review"
+        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        return progress
+
+    grounding_verdict = parse_pivot_grounding_verdict(grounding_path)
+    progress["grounding_verdict"] = grounding_verdict
+
+    if next_candidate_path is None:
+        progress["overlay_phase"] = "select_live_candidate"
+        progress["next_overlay_action"] = "write_next_pivot_candidate"
+        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        return progress
+
+    if grounding_verdict in {"blocked_hypothesis", "provisional_candidate"}:
+        if research_delta_path is None:
+            progress["overlay_phase"] = "write_research_delta"
+            progress["next_overlay_action"] = "write_candidate_research_delta"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+            return progress
+        progress["overlay_phase"] = "write_research_delta"
+        progress["next_overlay_action"] = "continue_candidate_research"
+        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        return progress
+
+    if grounding_verdict == "clear_lead_candidate":
+        if research_delta_path is None:
+            progress["overlay_phase"] = "write_research_delta"
+            progress["next_overlay_action"] = "write_candidate_research_delta"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+            return progress
+        if north_star_path is None:
+            progress["overlay_phase"] = "run_north_star_viability"
+            progress["next_overlay_action"] = "write_north_star_viability"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+
+    if grounding_verdict == "research_grounded_but_not_north_star_viable":
+        north_star_verdict = parse_pivot_north_star_verdict(north_star_path) if north_star_path else None
+        progress["north_star_verdict"] = north_star_verdict
+        if north_star_path is None:
+            progress["overlay_phase"] = "run_north_star_viability"
+            progress["next_overlay_action"] = "write_north_star_viability"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        if consequence_path is None:
+            progress["overlay_phase"] = "run_consequence_pressure"
+            progress["next_overlay_action"] = "write_consequence_pressure"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        if comparative_rerank_path is None:
+            progress["overlay_phase"] = "run_comparative_rerank"
+            progress["next_overlay_action"] = "write_comparative_rerank"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        progress["overlay_phase"] = "decide_post_block_route"
+        progress["next_overlay_action"] = "decide_narrow_or_restart_pivot_search"
+        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+        return progress
+
+    if grounding_verdict == "pivot_cleared_for_north_star_attempt":
+        north_star_verdict = parse_pivot_north_star_verdict(north_star_path) if north_star_path else None
+        progress["north_star_verdict"] = north_star_verdict
+        if north_star_path is None:
+            progress["overlay_phase"] = "run_north_star_viability"
+            progress["next_overlay_action"] = "write_north_star_viability"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        if north_star_verdict == "north_star_viable":
+            progress["overlay_phase"] = "initialize_successor_package"
+            progress["next_overlay_action"] = "initialize_successor_package"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        progress["overlay_phase"] = "run_north_star_viability"
+        progress["next_overlay_action"] = "resolve_north_star_viability_gap"
+        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+        return progress
+
+    progress["overlay_phase"] = "ground_candidates"
+    progress["next_overlay_action"] = "resolve_pivot_state"
+    progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+    return progress
 
 
 def resolve_essay_iteration_progress(package_key: str, package_path: Path, status_data: dict) -> dict:
@@ -1854,6 +2001,24 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         pipeline_profile,
     )
     overlay_candidates = build_overlay_candidates(stage, gate_statuses)
+    active_overlay = None
+    overlay_progress = {
+        "active_overlay": None,
+        "overlay_phase": None,
+        "next_overlay_action": None,
+        "overlay_recommended_validator": None,
+        "active_overlay_root": None,
+    }
+    if "post_ceiling_pivot" in overlay_candidates:
+        active_overlay = "post_ceiling_pivot"
+        resolved_overlay = resolve_post_ceiling_pivot_progress(manifest_ref.package_path)
+        overlay_progress = {
+            "active_overlay": active_overlay,
+            "overlay_phase": resolved_overlay.get("overlay_phase"),
+            "next_overlay_action": resolved_overlay.get("next_overlay_action"),
+            "overlay_recommended_validator": resolved_overlay.get("recommended_validator"),
+            "active_overlay_root": resolved_overlay.get("active_overlay_root"),
+        }
     package_context_paths = build_package_context_paths(manifest_ref.package_path, status_data)
     packet_paths = {}
     packet_progress = {
@@ -1871,7 +2036,7 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
             status_data,
         )
 
-    return {
+    result = {
         "package": manifest_ref.package_key,
         "revision": status_data.get("revision", 1),
         "stage": stage,
@@ -1907,7 +2072,18 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "overlay_candidates": overlay_candidates,
         "packet_paths": packet_paths,
         **packet_progress,
+        **overlay_progress,
     }
+    if active_overlay:
+        overlay_commands = build_workflow_suggested_commands(
+            active_overlay,
+            False,
+            package_key=manifest_ref.package_key,
+        )
+        for command in overlay_commands:
+            if command not in result["suggested_commands"]:
+                result["suggested_commands"].append(command)
+    return result
 
 
 def build_workflow_resolution(
@@ -1963,6 +2139,20 @@ def build_workflow_resolution(
         )
 
     packet_details = parse_topic_packet(packet_path) if packet_path and packet_path.exists() else None
+    overlay_progress = {
+        "overlay_phase": None,
+        "next_overlay_action": None,
+        "recommended_validator": None,
+        "active_overlay_root": None,
+    }
+    if workflow_id == "post_ceiling_pivot" and manifest_ref is not None:
+        resolved_overlay = resolve_post_ceiling_pivot_progress(manifest_ref.package_path)
+        overlay_progress = {
+            "overlay_phase": resolved_overlay.get("overlay_phase"),
+            "next_overlay_action": resolved_overlay.get("next_overlay_action"),
+            "recommended_validator": resolved_overlay.get("recommended_validator"),
+            "active_overlay_root": resolved_overlay.get("active_overlay_root"),
+        }
     return {
         "workflow_id": workflow_id,
         "workflow_doc": repo_relpath(workflow_contract["path"]),
@@ -1996,6 +2186,7 @@ def build_workflow_resolution(
         "package_context_paths": package_context_paths,
         "topic_packet_details": packet_details,
         "log_target": "reviewable-runs/logs/",
+        **overlay_progress,
     }
 
 

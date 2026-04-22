@@ -10,10 +10,25 @@ route_checks:
     expected_packet_phase: ready_for_human_review
     expected_recommended_workflow: post_ceiling_pivot
     expected_overlay_candidate: post_ceiling_pivot
+    expected_active_overlay: post_ceiling_pivot
+    expected_overlay_phase: decide_post_block_route
+    expected_next_overlay_action: decide_narrow_or_restart_pivot_search
+    expected_overlay_validator_substring: pivot_north_star_viability
     expected_gate:
       gate_id: replacement_north_star
       status: blocked
       decision: object_ceiling
+workflow_resolution_checks:
+  - workflow: post_ceiling_pivot
+    package: literate-workflow-programming
+    expected_can_execute: false
+    expected_overlay_phase: decide_post_block_route
+    expected_next_overlay_action: decide_narrow_or_restart_pivot_search
+    expected_active_overlay_root: publications/literate-workflow-programming/pivot/active
+    expected_validator_substring: pivot_north_star_viability
+    expected_recommended_gates:
+      - pivot_research_grounding
+      - pivot_north_star_viability
 gate_checks:
   - gate: research_exit
     package: literate-workflow-programming

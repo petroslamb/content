@@ -427,6 +427,8 @@ workflows:
     packet_templates:
     - workflows/post-ceiling-pivot/templates/post_ceiling_reframe_template.md
     - workflows/post-ceiling-pivot/templates/pivot_grounding_review_template.md
+    - workflows/post-ceiling-pivot/templates/pivot_consequence_pressure_template.md
+    - workflows/post-ceiling-pivot/templates/pivot_comparative_rerank_template.md
     - workflows/post-ceiling-pivot/templates/pivot_north_star_viability_template.md
     - workflows/post-ceiling-pivot/templates/pivot_decision_template.md
     validator_commands: *id003
