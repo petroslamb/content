@@ -15,6 +15,7 @@ Use this layer differently from the workflow layer:
 | :--- | :--- |
 | [`strategic_plan.md`](strategic_plan.md) | The canonical phase roadmap from clean internal automation through harness-native autonomy, operator shell, platform, and SaaS product. |
 | [`phase-1-1-5-closure-checklist.md`](phase-1-1-5-closure-checklist.md) | Current closure checklist for Phase 1 and Phase 1.5, including what is done, what is partial, and what remains open. |
+| [`phase-1-6-operator-shell-brainstorm-2026-04-23.md`](phase-1-6-operator-shell-brainstorm-2026-04-23.md) | Brainstorm-first execution plan for the Phase 1.6 operator shell, including option space, convergence choices, and a recommended thin-slice build order. |
 | [`phase-2/README.md`](phase-2/README.md) | Phase 2 planning index for the local execution platform: executable workflow contracts, validation, traces, gates, CLI, cockpit, and open questions. |
 
 ## Research Dependencies
