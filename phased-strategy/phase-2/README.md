@@ -17,6 +17,7 @@ Use this folder for Phase 2 planning only. Promote decisions into implementation
 - Phase 2 is planned, not started.
 - Phase 1.6 still exists as a separate roadmap phase, but Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
 - This folder now treats Phase 2 as contract-first, validation-first, and trace-first rather than CLI-first.
+- Umbrella and leaf package normalization is now mostly done. Phase 2 should treat the current package model as a consumed contract surface, not as new migration work.
 
 ## What Phase 2 Promotes From `literate-workflow-programming`
 
@@ -38,6 +39,16 @@ Keep these parked:
 - full semantic provenance graphs
 - repo-wide validator promotion as doctrine
 - any claim that logs are the source of truth
+
+## Current Fixture Baseline
+
+Phase 2 should use the normalized package classes already present in the repo as real fixtures:
+
+- active umbrella with active flagship leaf: [`../../publications/evidence-governance/`](../../publications/evidence-governance/README.md)
+- umbrella with stopped successor-search overlay: [`../../publications/literate-workflow-programming/`](../../publications/literate-workflow-programming/README.md)
+- settled published umbrellas: [`../../publications/autonomous-agents/`](../../publications/autonomous-agents/README.md), [`../../publications/hardware-friction/`](../../publications/hardware-friction/README.md), [`../../publications/orchestration-paradigm/`](../../publications/orchestration-paradigm/README.md), and [`../../publications/neural-architectures/`](../../publications/neural-architectures/README.md)
+
+Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whether umbrella roots and leaves need separate manifests or whether umbrella roots may resolve through `umbrella_route`; those semantics are already part of the repo contract.
 
 ## Subphase Map
 

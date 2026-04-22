@@ -25,6 +25,7 @@ These decisions are closed for Phase 2 planning:
 - `content-agent` is **thin first** and wraps stable stage-resolution and run machinery
 - pending review state lives in a central file-backed gate store under `reviewable-runs/gates/`
 - the cockpit is a thin reader/approver over filesystem-backed truth, not a second system of record
+- umbrella and leaf package semantics are consumed from current `status.yaml` manifests rather than redesigned inside Phase 2
 
 ## Source Of Truth
 
@@ -36,6 +37,14 @@ Phase 2 should keep truth file-backed:
 - workflow READMEs for human guidance
 - `reviewable-runs/logs/` for run records
 - `reviewable-runs/gates/` for pending and resolved review gates
+
+For package manifests specifically:
+
+- umbrella roots may be settled and therefore have no active lifecycle stage
+- umbrella roots may instead expose an umbrella-level route through `umbrella_route`
+- leaf packages remain the primary lifecycle-bearing publication objects once a concrete publication path exists
+
+Phase 2 should read those distinctions from the tracked manifests rather than infer them from README prose or rebuild them in a separate index.
 
 Local indexes or caches are allowed only when they are rebuildable from those files.
 
@@ -87,6 +96,11 @@ The platform should treat these as first-class objects:
 - `promoted_output_state`
 
 Each object should map back to a tracked or rebuildable file-backed artifact.
+
+For `package`, the minimum runtime distinction is now explicit:
+
+- `kind: leaf` means the package itself owns lifecycle progression
+- `kind: umbrella` means the runtime must first resolve either an active leaf or an `umbrella_route` before assuming a normal stage path
 
 ## Control Loop
 
