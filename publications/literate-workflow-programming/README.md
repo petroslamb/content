@@ -13,6 +13,8 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Status: Active unpublished umbrella
 - Donor flagship leaf: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
 - Active overlay: `post_ceiling_pivot`
+- Active successor candidate: none
+- Latest rejected larger candidate: `The Real System Lives In The Contract Layer`
 - Umbrella route manifest: [`status.yaml`](status.yaml)
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
 
@@ -43,13 +45,14 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Research-exit gate: [`literate-workflow-programming-research-exit-gate-r1.md`](literate-workflow-programming-research-exit-gate-r1.md)
 - Canonical donor report: [`literate-workflow-programming-ceiling-report-r3.md`](literate-workflow-programming-ceiling-report-r3.md)
 - Legacy pivot workspace: [`pivot/README.md`](pivot/README.md)
-- Legacy pivot slate: [`pivot/active/literate-workflow-programming-pivot-slate.md`](pivot/active/literate-workflow-programming-pivot-slate.md)
-- Legacy pivot grounding review: [`pivot/active/literate-workflow-programming-pivot-grounding-review.md`](pivot/active/literate-workflow-programming-pivot-grounding-review.md)
-- Legacy pivot north-star viability: [`pivot/active/literate-workflow-programming-pivot-north-star-viability.md`](pivot/active/literate-workflow-programming-pivot-north-star-viability.md)
-- Legacy pivot decision: [`pivot/active/literate-workflow-programming-pivot-decision.md`](pivot/active/literate-workflow-programming-pivot-decision.md)
-- Legacy research delta: [`pivot/active/literate-workflow-programming-validation-is-lifecycle-infrastructure-research-delta.md`](pivot/active/literate-workflow-programming-validation-is-lifecycle-infrastructure-research-delta.md)
-- Legacy consequence pass: [`pivot/active/literate-workflow-programming-validation-lifecycle-consequence-pass.md`](pivot/active/literate-workflow-programming-validation-lifecycle-consequence-pass.md)
-- Legacy pivot blocker: [`pivot/active/literate-workflow-programming-pivot-blocker.md`](pivot/active/literate-workflow-programming-pivot-blocker.md)
+- Active pivot slate: [`pivot/active/literate-workflow-programming-pivot-slate.md`](pivot/active/literate-workflow-programming-pivot-slate.md)
+- Active pivot grounding review: [`pivot/active/literate-workflow-programming-pivot-grounding-review.md`](pivot/active/literate-workflow-programming-pivot-grounding-review.md)
+- Active pivot consequence pressure: [`pivot/active/literate-workflow-programming-pivot-consequence-pressure.md`](pivot/active/literate-workflow-programming-pivot-consequence-pressure.md)
+- Active pivot comparative rerank: [`pivot/active/literate-workflow-programming-pivot-comparative-rerank.md`](pivot/active/literate-workflow-programming-pivot-comparative-rerank.md)
+- Active pivot north-star viability: [`pivot/active/literate-workflow-programming-pivot-north-star-viability.md`](pivot/active/literate-workflow-programming-pivot-north-star-viability.md)
+- Active pivot decision: [`pivot/active/literate-workflow-programming-pivot-decision.md`](pivot/active/literate-workflow-programming-pivot-decision.md)
+- Active pivot blocker: [`pivot/active/literate-workflow-programming-pivot-blocker.md`](pivot/active/literate-workflow-programming-pivot-blocker.md)
+- Archived validation-doctrine attempt: [`pivot/archive/validation-doctrine-attempt-2026-04-23/`](pivot/archive/validation-doctrine-attempt-2026-04-23)
 
 ## Shared Working Frame
 
@@ -61,12 +64,12 @@ The current umbrella state is:
 
 - the flagship donor tested the largest version of the frame and hit a ceiling
 - the doctrine experiment was preserved as a historical side branch, not accepted as the pivot answer
-- the active workflow question is whether this research base contains a real new flagship successor
+- the restarted larger-successor search tested `The Real System Lives In The Contract Layer` and stopped without a cleared successor
 
 ## Working Guidance
 
 - Use the umbrella root for shared paper intake, shared research notes, contradiction work, and donor-history inspection.
 - Use [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md) when the task is specifically about the capped flagship packet, donor report, or pivot handoff.
 - Use [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md) only when the task is specifically about that rejected narrower branch as historical context.
-- Treat the root-level flagship packet and legacy `pivot/` files as donor history plus active successor-search surfaces, not as overwritten donor material.
+- Treat the root-level flagship packet and legacy `pivot/` files as donor history plus stopped successor-search surfaces, not as overwritten donor material.
 - Keep shared evidence here unless one leaf later develops a truly separate evidence tree.
