@@ -11,6 +11,7 @@ Umbrella package for the neural-architecture essay line of the publication. It i
 
 ## Orientation
 
+- Package governing brief: [`umbrella-governing-brief.md`](umbrella-governing-brief.md)
 - Published legacy essay surface: [`Neural Architecture Design as a Compositional Language.md`](<Neural Architecture Design as a Compositional Language.md>)
 - Runnable leaf package for the promoted scaffold essay: [`neural-architecture-design-as-a-compositional-32e/README.md`](neural-architecture-design-as-a-compositional-32e/README.md)
 - Adjacent live working files: [`The Next Frontier in AI PART 1.md`](<The Next Frontier in AI PART 1.md>), [`The Next Frontier in AI PART 2.md`](<The Next Frontier in AI PART 2.md>), [`Multimodal Reasoning with Integrated Transformers.md`](<Multimodal Reasoning with Integrated Transformers.md>)
