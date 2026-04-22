@@ -1,6 +1,6 @@
 # Pivot Workspace
 
-This folder holds successor-search artifacts after the flagship stop gate fires.
+This folder holds legacy and transitional successor-search artifacts after the flagship stop gate fires.
 
 ## Layout
 
@@ -12,6 +12,9 @@ This folder holds successor-search artifacts after the flagship stop gate fires.
 ## Rule
 
 Only one pivot workspace should be active at a time.
+
+This is not the canonical long-term home for a surviving second object.
+Under the current workflow, a real pivot outcome upgrades the package into an umbrella and creates a successor flagship leaf. This folder remains useful for search notes, blocker records, and historical transition artifacts while the search is still open.
 
 If the package changes pivot direction materially:
 

@@ -1,9 +1,9 @@
 # Literate Workflow Programming
 
-Umbrella package for the literate-workflow-programming research line. The package now holds two publication objects that share one research and evidence tree:
+Umbrella package for the literate-workflow-programming research line. The package now holds one capped donor leaf plus an open successor search that share one research and evidence tree:
 
 - the capped flagship donor attempt `Literate Workflow Programming`
-- the narrowed doctrine leaf `Validation Is Lifecycle Infrastructure`
+- the open post-ceiling search for a new flagship successor
 
 The shared paper library, research notes, contradiction surfaces, and pivot record stay at the umbrella root so the two objects can reuse one evidence base without forked intake.
 
@@ -11,16 +11,20 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 
 - Archetype: Umbrella package
 - Status: Active unpublished umbrella
-- Default active leaf: [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md)
 - Donor flagship leaf: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
+- Active overlay: `post_ceiling_pivot`
+- Umbrella route manifest: [`status.yaml`](status.yaml)
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
 
 ## Leaf Map
 
 - **Flagship donor leaf**: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
   Uses the capped `r1 -> r3` flagship attempt and the stop-gated donor report.
-- **Narrowed doctrine leaf**: [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md)
-  Uses the same research base for the bounded doctrine object *Validation Is Lifecycle Infrastructure*.
+
+## Historical Exploratory Branch
+
+- [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md)
+  Preserved as the earlier narrower-doctrine experiment. It is no longer the active post-ceiling route and does not count as the current pivot answer.
 
 ## Shared Research Surface
 
@@ -53,15 +57,16 @@ The umbrella keeps the original research question open at the package level:
 
 Is markdown becoming a source language for agent workflows, or is that only a convenient metaphor?
 
-The answer now branches into two publication objects:
+The current umbrella state is:
 
 - the flagship donor tested the largest version of the frame and hit a ceiling
-- the doctrine leaf keeps the strongest narrower claim without pretending it replaced the flagship object
+- the doctrine experiment was preserved as a historical side branch, not accepted as the pivot answer
+- the active workflow question is whether this research base contains a real new flagship successor
 
 ## Working Guidance
 
 - Use the umbrella root for shared paper intake, shared research notes, contradiction work, and donor-history inspection.
 - Use [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md) when the task is specifically about the capped flagship packet, donor report, or pivot handoff.
-- Use [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md) when the task is specifically about the narrowed doctrine object.
-- Treat the root-level flagship packet and legacy `pivot/` files as donor history, not as overwritten or superseded doctrine surfaces.
+- Use [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md) only when the task is specifically about that rejected narrower branch as historical context.
+- Treat the root-level flagship packet and legacy `pivot/` files as donor history plus active successor-search surfaces, not as overwritten donor material.
 - Keep shared evidence here unless one leaf later develops a truly separate evidence tree.

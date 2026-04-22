@@ -33,7 +33,7 @@ NotebookLM notebook links for the publication corpus are indexed in [`notebooklm
 | [`corrective-competence/`](corrective-competence/README.md) | Single-publication | Active donor / capped flagship | Cleared successor package, now donor to confidence-debt |
 | [`evidence-governance/`](evidence-governance/README.md) | Umbrella | Active unpublished umbrella | Three draft leaves plus shared governance-pattern research and external proof repo |
 | [`illusion-of-swarm/`](illusion-of-swarm/README.md) | Single-publication | Published | alphaXiv-driven research package behind *The Illusion of the Swarm* |
-| [`literate-workflow-programming/`](literate-workflow-programming/README.md) | Umbrella | Active unpublished umbrella | Shared research line with a capped flagship donor leaf and a narrowed doctrine leaf |
+| [`literate-workflow-programming/`](literate-workflow-programming/README.md) | Umbrella | Active unpublished umbrella | Shared research line with a capped flagship donor leaf and an active successor search |
 | [`moltbook-phenomenon/`](moltbook-phenomenon/README.md) | Single-publication | Published | Essay, background analysis, slides, and distribution assets |
 | [`programmable-thinking/`](programmable-thinking/README.md) | Single-publication | Published | RLM/Jupyter publication package with companion paper and visuals |
 | [`autonomous-agents/`](autonomous-agents/README.md) | Umbrella | Published umbrella / active course | Foundation-agent manual plus the Operating Agents course |
@@ -70,6 +70,14 @@ When a package is an umbrella, it should expose:
 - `config.notebooklm_posts` in `status.yaml` when multiple posts share one umbrella folder
 
 Umbrella packages should not pretend to be single-publication packages when their real structure is course-, series-, or dataset-shaped.
+
+Their root `status.yaml` remains canonical, but it should describe umbrella state:
+
+- shared evidence ownership
+- donor and successor leaf map
+- active umbrella route or overlay when the package is between leaf objects
+
+Do not force umbrella roots to carry the full downstream publication-stage semantics of a leaf package.
 
 ## Working Rule
 

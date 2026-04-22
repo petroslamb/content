@@ -43,6 +43,7 @@ from lifecycle import (
     PUBLICATIONS_DIR,
     REPO_ROOT,
     STAGES,
+    active_umbrella_route,
     load_all_workflow_contracts,
     load_gate_contracts,
     load_pipeline_profiles,
@@ -452,6 +453,8 @@ def is_idea_only_package(package_path: Path, status_data: dict) -> bool:
 
 
 def next_stage_for_package(package_path: Path, status_data: dict) -> str | None:
+    if active_umbrella_route(status_data):
+        return None
     if is_idea_only_package(package_path, status_data):
         return "research"
     for stage in STAGES:
@@ -1038,6 +1041,41 @@ def resolve_pivot_donor_report(package_path: Path) -> dict:
     }
 
 
+def package_has_active_post_ceiling_pivot(package_path: Path) -> bool:
+    donor_report = resolve_pivot_donor_report(package_path)
+    active_overlay_artifacts = any(
+        find_active_pivot_artifact(package_path, patterns) is not None
+        for patterns in (
+            PIVOT_SLATE_PATTERNS,
+            PIVOT_GROUNDING_PATTERNS,
+            PIVOT_NEXT_CANDIDATE_PATTERNS,
+            PIVOT_RESEARCH_DELTA_PATTERNS,
+            PIVOT_CONSEQUENCE_PATTERNS,
+            PIVOT_COMPARATIVE_RERANK_PATTERNS,
+            PIVOT_NORTH_STAR_PATTERNS,
+            PIVOT_DECISION_PATTERNS,
+            PIVOT_BLOCKER_PATTERNS,
+        )
+    )
+    if donor_report["mode"] == "ceiling_report":
+        ceiling_path = donor_report["ceiling_report_path"]
+        if ceiling_path is None:
+            return False
+        try:
+            ceiling_frontmatter, _ = parse_markdown_packet_file(ceiling_path)
+        except Exception:
+            return False
+        return (
+            ceiling_frontmatter.get("ceiling_verdict") == "object_ceiling"
+            and ceiling_frontmatter.get("next_route") == "post_ceiling_pivot"
+        )
+    return (
+        donor_report["reframe_path"] is not None
+        and donor_report["process_capture_path"] is not None
+        and active_overlay_artifacts
+    )
+
+
 def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
     overlay_root = package_path
     status_kind = package_kind(package_path)
@@ -1146,23 +1184,18 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
             progress["next_overlay_action"] = "write_comparative_rerank"
             progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
             return progress
-        if post_block_route == "keep_as_strong_narrower_doctrine_object":
-            if len(leaf_packages) < 2:
-                progress["overlay_phase"] = "initialize_narrower_leaf"
-                progress["next_overlay_action"] = "initialize_narrower_doctrine_leaf"
-                progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <package>"
-                return progress
-            progress["overlay_phase"] = "post_block_route_settled"
-            progress["next_overlay_action"] = "hold_for_narrower_doctrine_write_or_later_larger_successor"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
-            return progress
-        if post_block_route == "restart_pivot_search_later":
-            progress["overlay_phase"] = "post_block_route_settled"
-            progress["next_overlay_action"] = "await_materially_larger_successor_seam_before_restarting_pivot_search"
+        if post_block_route == "restart_pivot_search_now":
+            progress["overlay_phase"] = "build_pivot_slate"
+            progress["next_overlay_action"] = "rewrite_pivot_slate_for_materially_larger_successor_search"
             progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
             return progress
-        progress["overlay_phase"] = "decide_post_block_route"
-        progress["next_overlay_action"] = "decide_narrow_or_restart_pivot_search"
+        if post_block_route == "no_successor":
+            progress["overlay_phase"] = "pivot_search_stopped"
+            progress["next_overlay_action"] = "stop_without_successor"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        progress["overlay_phase"] = "decide_post_block_outcome"
+        progress["next_overlay_action"] = "decide_restart_or_stop_without_successor"
         progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
         return progress
 
@@ -1180,9 +1213,9 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
                 progress["next_overlay_action"] = "initialize_successor_leaf"
                 progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <package>"
                 return progress
-            progress["overlay_phase"] = "successor_leaf_ready"
-            progress["next_overlay_action"] = "handoff_to_successor_leaf_for_flagship_iteration"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            progress["overlay_phase"] = "successor_leaf_research_handoff"
+            progress["next_overlay_action"] = "handoff_to_successor_leaf_for_research_expansion"
+            progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <successor-leaf>"
             return progress
         progress["overlay_phase"] = "run_north_star_viability"
         progress["next_overlay_action"] = "resolve_north_star_viability_gap"
@@ -1922,6 +1955,11 @@ def determine_pipeline_profile(
 ) -> str:
     profiles = load_pipeline_profiles()
     gate_statuses = gate_statuses or {}
+    if package_has_active_post_ceiling_pivot(package_path):
+        profile_id = "post_ceiling_successor"
+        if profile_id not in profiles:
+            raise ValueError(f"Pipeline profile '{profile_id}' is not defined.")
+        return profile_id
     north_star_gate = gate_statuses.get("replacement_north_star", {})
     if (
         north_star_gate.get("decision") == "object_ceiling"
@@ -2017,7 +2055,7 @@ def build_stage_recommended_workflows(
     return recommended
 
 
-def build_overlay_candidates(stage: str, gate_statuses: dict[str, dict]) -> list[str]:
+def build_overlay_candidates(package_path: Path, stage: str, gate_statuses: dict[str, dict]) -> list[str]:
     overlays: list[str] = []
     if stage == "essay_iteration":
         north_star = gate_statuses.get("replacement_north_star")
@@ -2027,6 +2065,8 @@ def build_overlay_candidates(stage: str, gate_statuses: dict[str, dict]) -> list
             and north_star.get("details", {}).get("next_route") == "post_ceiling_pivot"
         ):
             overlays.append("post_ceiling_pivot")
+    if package_has_active_post_ceiling_pivot(package_path) and "post_ceiling_pivot" not in overlays:
+        overlays.append("post_ceiling_pivot")
     return overlays
 
 
@@ -2120,7 +2160,7 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         gate_statuses,
         pipeline_profile,
     )
-    overlay_candidates = build_overlay_candidates(stage, gate_statuses)
+    overlay_candidates = build_overlay_candidates(manifest_ref.package_path, stage, gate_statuses)
     active_overlay = None
     overlay_progress = {
         "active_overlay": None,
@@ -2141,6 +2181,31 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
             "overlay_recommended_validator": resolved_overlay.get("recommended_validator"),
             "active_overlay_root": resolved_overlay.get("active_overlay_root"),
         }
+        if active_overlay not in recommended_workflows:
+            recommended_workflows.insert(0, active_overlay)
+        overlay_contract = load_workflow_contract(active_overlay)
+        overlay_metadata = overlay_contract["metadata"]
+        overlay_required_context = resolve_required_context(
+            manifest_ref.package_path,
+            status_data,
+            overlay_metadata["required_context"],
+        )
+        (
+            overlay_requires_approval,
+            overlay_can_execute,
+            overlay_blocking_issues,
+        ) = compute_workflow_capabilities(
+            active_overlay,
+            overlay_metadata,
+            overlay_required_context,
+            policy,
+        )
+        required_context = overlay_required_context
+        requires_approval = overlay_requires_approval
+        can_execute = overlay_can_execute
+        blocking_issues = overlay_blocking_issues
+        metadata = overlay_metadata
+        recommended_workflows = [active_overlay]
     package_context_paths = build_package_context_paths(manifest_ref.package_path, status_data)
     packet_paths = {}
     packet_progress = {
@@ -2294,6 +2359,7 @@ def build_workflow_resolution(
         "workflow_id": workflow_id,
         "workflow_doc": repo_relpath(workflow_contract["path"]),
         "workflow_kind": metadata["workflow_kind"],
+        "runner_mode": metadata["runner_mode"],
         "stage_binding": metadata.get("stage_binding"),
         "stability": metadata["stability"],
         "package": manifest_ref.package_key if manifest_ref else None,

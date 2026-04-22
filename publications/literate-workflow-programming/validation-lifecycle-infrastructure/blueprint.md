@@ -1,6 +1,6 @@
 # Validation Is Lifecycle Infrastructure Leaf Brief
 
-This leaf owns the narrowed doctrine object that survived the post-ceiling pivot search.
+This branch records the narrowed doctrine object that was explored during post-ceiling search and later rejected as the active pivot answer.
 
 Canonical writing surfaces remain at the umbrella root for continuity with the donor workflow:
 
@@ -11,6 +11,6 @@ Canonical writing surfaces remain at the umbrella root for continuity with the d
 
 Current rule:
 
-- treat the doctrine object as a strong bounded companion/non-flagship piece
-- do not reopen the flagship frame from this leaf
-- use the shared umbrella evidence tree unless this leaf develops a truly independent research base
+- treat the doctrine object as historical exploratory work, not as the active successor route
+- do not reopen the flagship frame from this branch
+- use the shared umbrella evidence tree only for transfer or comparison work
