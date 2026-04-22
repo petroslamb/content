@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-22T16:30:55.404819+00:00",
+  "workflow": "ad_hoc_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "wiic78FUJzU",
+    "url": "https://www.youtube.com/watch?v=wiic78FUJzU"
+  },
+  "related_longform": {
+    "id": "wiic78FUJzU",
+    "url": "https://www.youtube.com/watch?v=wiic78FUJzU"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=wiic78FUJzU"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=cBrtKPp4kqw"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/portrait/01-not-hallucination-wiring-failure_portrait.mp4",
+      "title": "This Is Not Hallucination. It's a Wiring Failure. #shorts",
+      "summary": "The model keeps the ingredients but drops the exact attachments, so the failure stays fluent while the internal wiring is already broken.",
+      "publish_at": "2026-04-30T15:00:00Z",
+      "video_id": "qVirsjAHqic",
+      "url": "https://www.youtube.com/watch?v=qVirsjAHqic",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EMUJFNzRCNDRFQjE5RjM4"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "wiic78FUJzU"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/portrait/01-not-hallucination-wiring-failure_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 67.583333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 67.522993
+        },
+        "format_duration": 67.583333,
+        "duration": 67.583333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "This Is Not Hallucination. It's a Wiring Failure. #shorts",
+        "published_at": "2026-04-22T16:30:41Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EMUJFNzRCNDRFQjE5RjM4",
+        "position": 96,
+        "title": "This Is Not Hallucination. It's a Wiring Failure. #shorts"
+      }
+    },
+    {
+      "video_path": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/portrait/02-ai-fails-scientific-evidence-extraction_portrait.mp4",
+      "title": "Why AI Fails at Scientific Evidence Extraction #shorts",
+      "summary": "The model recognizes the variables and numbers, then binds them to the wrong comparison once structural density rises.",
+      "publish_at": "2026-05-02T15:00:00Z",
+      "video_id": "Qpp2DmnPsw8",
+      "url": "https://www.youtube.com/watch?v=Qpp2DmnPsw8",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC43ODA2MDVCQzY5QzZDMjUw"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "wiic78FUJzU"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/portrait/02-ai-fails-scientific-evidence-extraction_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 78.166667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 78.088005
+        },
+        "format_duration": 78.166667,
+        "duration": 78.166667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why AI Fails at Scientific Evidence Extraction #shorts",
+        "published_at": "2026-04-22T16:30:48Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC43ODA2MDVCQzY5QzZDMjUw",
+        "position": 99,
+        "title": "Why AI Fails at Scientific Evidence Extraction #shorts"
+      }
+    }
+  ]
+}

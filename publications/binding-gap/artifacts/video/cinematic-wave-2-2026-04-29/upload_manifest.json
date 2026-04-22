@@ -1,0 +1,16 @@
+{
+  "clips": [
+    {
+      "file": "01-not-hallucination-wiring-failure_portrait.mp4",
+      "title": "This Is Not Hallucination. It's a Wiring Failure.",
+      "summary": "The model keeps the ingredients but drops the exact attachments, so the failure stays fluent while the internal wiring is already broken.",
+      "publish_at": "2026-04-30T15:00:00Z"
+    },
+    {
+      "file": "02-ai-fails-scientific-evidence-extraction_portrait.mp4",
+      "title": "Why AI Fails at Scientific Evidence Extraction",
+      "summary": "The model recognizes the variables and numbers, then binds them to the wrong comparison once structural density rises.",
+      "publish_at": "2026-05-02T15:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "source_video": "publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/confidence_debt_cinematic.mp4",
+  "related_video_id": "hNVBrptmRVs",
+  "essay_url": "https://lambpetros.substack.com/p/confidence-debt",
+  "full_video_url": "https://www.youtube.com/watch?v=hNVBrptmRVs",
+  "secondary_video_url": "https://www.youtube.com/watch?v=_FE96jVDsJM",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "polished-ai-report-beat-evidence",
+      "title": "The Polished AI Report Beat the Evidence",
+      "summary": "Once a fluent summary outranks the raw spreadsheet, trust moves downstream faster than the proof can catch up.",
+      "start": "00:00:40.960",
+      "end": "00:01:11.200",
+      "publish_at": "2026-04-30T11:00:00Z"
+    },
+    {
+      "slug": "readable-ai-summaries-delete-proof-trail",
+      "title": "Readable AI Summaries Delete the Proof Trail",
+      "summary": "Compression makes AI output legible by stripping away the caveats and source paths that engineers later need to challenge it.",
+      "start": "00:02:16.400",
+      "end": "00:03:31.840",
+      "publish_at": "2026-05-02T11:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "created_at": "2026-04-22T16:30:56.076272+00:00",
+  "workflow": "ad_hoc_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "0TpfmqhoB6s",
+    "url": "https://www.youtube.com/watch?v=0TpfmqhoB6s"
+  },
+  "related_longform": {
+    "id": "0TpfmqhoB6s",
+    "url": "https://www.youtube.com/watch?v=0TpfmqhoB6s"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=0TpfmqhoB6s"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=-2CM4JYfQAs"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/cinematic-wave-2-2026-04-29/portrait/01-56-layers-broke-old-design-playbook_portrait.mp4",
+      "title": "56 Layers Broke the Old AI Design Playbook #shorts",
+      "summary": "Stacking more handcrafted layers stopped working because each layer kept rewriting the signal from scratch until training collapsed.",
+      "publish_at": "2026-04-29T15:00:00Z",
+      "video_id": "aAyYfHdbbXI",
+      "url": "https://www.youtube.com/watch?v=aAyYfHdbbXI",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC44QjNCNkRENjNFQTBEMUND"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "0TpfmqhoB6s"
+        ]
+      },
+      "probe": {
+        "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/cinematic-wave-2-2026-04-29/portrait/01-56-layers-broke-old-design-playbook_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 76.875
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 76.810998
+        },
+        "format_duration": 76.875,
+        "duration": 76.875
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "56 Layers Broke the Old AI Design Playbook #shorts",
+        "published_at": "2026-04-22T16:30:41Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC44QjNCNkRENjNFQTBEMUND",
+        "position": 97,
+        "title": "56 Layers Broke the Old AI Design Playbook #shorts"
+      }
+    },
+    {
+      "video_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/cinematic-wave-2-2026-04-29/portrait/02-same-ai-block-learned-syntax-structure-meaning_portrait.mp4",
+      "title": "The Same AI Block Learned Syntax, Structure, and Meaning #shorts",
+      "summary": "BERT-style probing showed that identical layers can self-specialize, recreating the old hand-built stack without being explicitly designed that way.",
+      "publish_at": "2026-05-01T15:00:00Z",
+      "video_id": "y9oELlYjI3g",
+      "url": "https://www.youtube.com/watch?v=y9oELlYjI3g",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4yOTZGRTNEQ0ZGNUM5RDgw"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "0TpfmqhoB6s"
+        ]
+      },
+      "probe": {
+        "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/cinematic-wave-2-2026-04-29/portrait/02-same-ai-block-learned-syntax-structure-meaning_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 49.541667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 49.458005
+        },
+        "format_duration": 49.541667,
+        "duration": 49.541667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The Same AI Block Learned Syntax, Structure, and Meaning #shorts",
+        "published_at": "2026-04-22T16:30:48Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4yOTZGRTNEQ0ZGNUM5RDgw",
+        "position": 102
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "clips": [
+    {
+      "file": "01-56-layers-broke-old-design-playbook_portrait.mp4",
+      "title": "56 Layers Broke the Old AI Design Playbook",
+      "summary": "Stacking more handcrafted layers stopped working because each layer kept rewriting the signal from scratch until training collapsed.",
+      "publish_at": "2026-04-29T15:00:00Z"
+    },
+    {
+      "file": "02-same-ai-block-learned-syntax-structure-meaning_portrait.mp4",
+      "title": "The Same AI Block Learned Syntax, Structure, and Meaning",
+      "summary": "BERT-style probing showed that identical layers can self-specialize, recreating the old hand-built stack without being explicitly designed that way.",
+      "publish_at": "2026-05-01T15:00:00Z"
+    }
+  ]
+}

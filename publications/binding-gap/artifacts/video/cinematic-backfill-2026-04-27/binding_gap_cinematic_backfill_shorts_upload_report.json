@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-22T16:04:08.710264+00:00",
+  "workflow": "ad_hoc_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "wiic78FUJzU",
+    "url": "https://www.youtube.com/watch?v=wiic78FUJzU"
+  },
+  "related_longform": {
+    "id": "wiic78FUJzU",
+    "url": "https://www.youtube.com/watch?v=wiic78FUJzU"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=wiic78FUJzU"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=cBrtKPp4kqw"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/binding-gap/artifacts/video/cinematic-backfill-2026-04-27/portrait/01-ai-forgets-who-did-what_portrait.mp4",
+      "title": "Why AI Forgets Who Did What #shorts",
+      "summary": "The binding gap appears when the model retains the facts but loses the exact role assignments that make them usable.",
+      "publish_at": "2026-04-27T15:00:00Z",
+      "video_id": "T5sxICFcgNE",
+      "url": "https://www.youtube.com/watch?v=T5sxICFcgNE",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ERENFNTk4Q0Q2MTZDMTA5"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "wiic78FUJzU"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/cinematic-backfill-2026-04-27/portrait/01-ai-forgets-who-did-what_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 42.375
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 42.26
+        },
+        "format_duration": 42.375,
+        "duration": 42.375
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why AI Forgets Who Did What #shorts",
+        "published_at": "2026-04-22T16:03:55Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ERENFNTk4Q0Q2MTZDMTA5",
+        "position": 91,
+        "title": "Why AI Forgets Who Did What #shorts"
+      }
+    },
+    {
+      "video_path": "publications/binding-gap/artifacts/video/cinematic-backfill-2026-04-27/portrait/02-benchmarks-miss-structural-failure_portrait.mp4",
+      "title": "Why Benchmarks Miss Structural Failure #shorts",
+      "summary": "Generic benchmark wins can hide a model whose role binding is already unstable on extraction and attribution work.",
+      "publish_at": "2026-04-28T15:00:00Z",
+      "video_id": "HgLAgII0mtU",
+      "url": "https://www.youtube.com/watch?v=HgLAgII0mtU",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41RDUzRjJFQ0Y0MUI3NzU1"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "wiic78FUJzU"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/cinematic-backfill-2026-04-27/portrait/02-benchmarks-miss-structural-failure_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 49.125
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 49.04
+        },
+        "format_duration": 49.125,
+        "duration": 49.125
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why Benchmarks Miss Structural Failure #shorts",
+        "published_at": "2026-04-22T16:04:01Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41RDUzRjJFQ0Y0MUI3NzU1",
+        "position": 92,
+        "title": "Why Benchmarks Miss Structural Failure #shorts"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "source_video": "publications/binding-gap/artifacts/video/The_Binding_Gap_cinematic.mp4",
+  "related_video_id": "wiic78FUJzU",
+  "essay_url": "https://lambpetros.substack.com/p/the-binding-gap",
+  "full_video_url": "https://www.youtube.com/watch?v=wiic78FUJzU",
+  "secondary_video_url": "https://www.youtube.com/watch?v=cBrtKPp4kqw",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "not-hallucination-wiring-failure",
+      "title": "This Is Not Hallucination. It's a Wiring Failure.",
+      "summary": "The model keeps the ingredients but drops the exact attachments, so the failure stays fluent while the internal wiring is already broken.",
+      "start": "00:00:19.520",
+      "end": "00:01:27.039",
+      "publish_at": "2026-04-30T15:00:00Z"
+    },
+    {
+      "slug": "ai-fails-scientific-evidence-extraction",
+      "title": "Why AI Fails at Scientific Evidence Extraction",
+      "summary": "The model recognizes the variables and numbers, then binds them to the wrong comparison once structural density rises.",
+      "start": "00:04:20.000",
+      "end": "00:05:38.080",
+      "publish_at": "2026-05-02T15:00:00Z"
+    }
+  ]
+}
