@@ -10,7 +10,7 @@ from pathlib import Path
 
 import yaml
 
-from harness import build_stage_resolution, evaluate_gate
+from harness import build_stage_resolution, build_workflow_resolution, evaluate_gate
 from lifecycle import (
     REPO_ROOT,
     STAGES,
@@ -82,6 +82,23 @@ def check_route_fixtures(fixtures: dict, errors: list[str]) -> None:
             errors.append(
                 f"{fixture['package']} stage {fixture['stage']} is missing overlay candidate {fixture['expected_overlay_candidate']}."
             )
+        if fixture.get("expected_active_overlay") and resolution.get("active_overlay") != fixture["expected_active_overlay"]:
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected active_overlay {fixture['expected_active_overlay']}, got {resolution.get('active_overlay')}."
+            )
+        if fixture.get("expected_overlay_phase") and resolution.get("overlay_phase") != fixture["expected_overlay_phase"]:
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected overlay_phase {fixture['expected_overlay_phase']}, got {resolution.get('overlay_phase')}."
+            )
+        if fixture.get("expected_next_overlay_action") and resolution.get("next_overlay_action") != fixture["expected_next_overlay_action"]:
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected next_overlay_action {fixture['expected_next_overlay_action']}, got {resolution.get('next_overlay_action')}."
+            )
+        expected_overlay_validator = fixture.get("expected_overlay_validator_substring")
+        if expected_overlay_validator and expected_overlay_validator not in (resolution.get("overlay_recommended_validator") or ""):
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected overlay validator containing {expected_overlay_validator}, got {resolution.get('overlay_recommended_validator')}."
+            )
         expected_gate = fixture.get("expected_gate")
         if expected_gate:
             gate_status = resolution.get("gate_statuses", {}).get(expected_gate["gate_id"])
@@ -94,6 +111,45 @@ def check_route_fixtures(fixtures: dict, errors: list[str]) -> None:
                 errors.append(
                     f"{fixture['package']} stage {fixture['stage']} gate {expected_gate['gate_id']} expected {expected_gate['status']}/{expected_gate['decision']}, got {gate_status['status']}/{gate_status['decision']}."
                 )
+
+
+def check_workflow_resolution_fixtures(fixtures: dict, errors: list[str]) -> None:
+    for fixture in fixtures.get("workflow_resolution_checks", []):
+        packet_path = None
+        if fixture.get("packet"):
+            packet_path = (REPO_ROOT / fixture["packet"]).resolve()
+        resolution = build_workflow_resolution(
+            fixture["workflow"],
+            package_arg=fixture.get("package"),
+            packet_path=packet_path,
+        )
+        if fixture.get("expected_can_execute") is not None and resolution.get("can_execute") != fixture["expected_can_execute"]:
+            errors.append(
+                f"Workflow {fixture['workflow']} expected can_execute {fixture['expected_can_execute']}, got {resolution.get('can_execute')}."
+            )
+        if fixture.get("expected_overlay_phase") and resolution.get("overlay_phase") != fixture["expected_overlay_phase"]:
+            errors.append(
+                f"Workflow {fixture['workflow']} expected overlay_phase {fixture['expected_overlay_phase']}, got {resolution.get('overlay_phase')}."
+            )
+        if fixture.get("expected_next_overlay_action") and resolution.get("next_overlay_action") != fixture["expected_next_overlay_action"]:
+            errors.append(
+                f"Workflow {fixture['workflow']} expected next_overlay_action {fixture['expected_next_overlay_action']}, got {resolution.get('next_overlay_action')}."
+            )
+        if fixture.get("expected_active_overlay_root") and resolution.get("active_overlay_root") != fixture["expected_active_overlay_root"]:
+            errors.append(
+                f"Workflow {fixture['workflow']} expected active_overlay_root {fixture['expected_active_overlay_root']}, got {resolution.get('active_overlay_root')}."
+            )
+        expected_validator = fixture.get("expected_validator_substring")
+        if expected_validator and expected_validator not in (resolution.get("recommended_validator") or ""):
+            errors.append(
+                f"Workflow {fixture['workflow']} expected validator containing {expected_validator}, got {resolution.get('recommended_validator')}."
+            )
+        expected_gates = fixture.get("expected_recommended_gates", [])
+        missing_gates = [gate_id for gate_id in expected_gates if gate_id not in resolution.get("recommended_gates", [])]
+        if missing_gates:
+            errors.append(
+                f"Workflow {fixture['workflow']} is missing recommended gates: {', '.join(missing_gates)}."
+            )
 
 
 def check_gate_fixtures(fixtures: dict, errors: list[str]) -> None:
@@ -169,6 +225,7 @@ def main() -> None:
         check_contracts(errors)
         check_topic_packets(fixtures, errors)
         check_route_fixtures(fixtures, errors)
+        check_workflow_resolution_fixtures(fixtures, errors)
         check_gate_fixtures(fixtures, errors)
         check_validator_coverage(fixtures, errors)
         check_run_record_completeness(fixtures, errors)
