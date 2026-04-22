@@ -1,0 +1,44 @@
+{
+  "kind": "gate_check",
+  "schema_version": 2,
+  "timestamp": "2026-04-22_19-47-13",
+  "run_id": "2026-04-22_19-47-13_literate-workflow-programming_pivot_research_grounding_gate-check",
+  "package": "literate-workflow-programming",
+  "gate_id": "pivot_research_grounding",
+  "packet_path": null,
+  "boundary": {
+    "type": "gate evaluation",
+    "reason": "Gate checks record movement decisions without mutating package state by themselves.",
+    "external_side_effect": false,
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Evaluate gate 'pivot_research_grounding'.",
+    "stop_condition": "Gate result recorded in reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not mutate lifecycle state from the gate check alone."
+    ]
+  },
+  "decision": "research_grounded_but_not_north_star_viable",
+  "status": "pass",
+  "required_artifacts": [
+    "ceiling report or legacy donor-report pair",
+    "pivot grounding review",
+    "pivot decision or live candidate status"
+  ],
+  "missing_artifacts": [],
+  "recommended_workflow": "post_ceiling_pivot",
+  "recommended_validator": "npm run gate:check -- --gate pivot_research_grounding --package <package>",
+  "proof_mode": "overlay_gate",
+  "verification": {
+    "checks": [
+      {
+        "name": "gate_check_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-22_19-47-13_literate-workflow-programming_pivot_research_grounding_gate-check.json"
+      }
+    ],
+    "residual_risk": "Gate checks capture the current bounded decision, but the underlying artifacts still need normal human review when the stakes are high."
+  }
+}
