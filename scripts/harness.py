@@ -771,6 +771,22 @@ def find_package_artifacts(package_path: Path, patterns: tuple[str, ...]) -> lis
     return matches
 
 
+def find_active_pivot_artifact(package_path: Path, patterns: tuple[str, ...]) -> Path | None:
+    search_roots = [
+        package_path / "pivot" / "active",
+        package_path / "pivot",
+        package_path,
+    ]
+    for search_root in search_roots:
+        if not search_root.exists():
+            continue
+        for pattern in patterns:
+            for candidate in sorted(search_root.glob(pattern)):
+                if candidate.is_file():
+                    return candidate
+    return None
+
+
 def count_local_markdown_papers(package_path: Path) -> int:
     markdown_dir = package_path / "papers" / "markdown"
     if not markdown_dir.exists():
@@ -1547,8 +1563,8 @@ def parse_pivot_north_star_verdict(path: Path) -> str | None:
 def evaluate_pivot_research_grounding_gate(package_path: Path) -> dict:
     payload = base_gate_payload("pivot_research_grounding")
     donor_report = resolve_pivot_donor_report(package_path)
-    grounding_path = find_package_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
-    decision_path = find_package_artifact(package_path, PIVOT_DECISION_PATTERNS)
+    grounding_path = find_active_pivot_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
+    decision_path = find_active_pivot_artifact(package_path, PIVOT_DECISION_PATTERNS)
     payload["details"] = {
         "donor_report_mode": donor_report["mode"],
         "ceiling_report_path": repo_relpath(donor_report["ceiling_report_path"]),
@@ -1602,9 +1618,9 @@ def evaluate_pivot_research_grounding_gate(package_path: Path) -> dict:
 
 def evaluate_pivot_north_star_viability_gate(package_path: Path) -> dict:
     payload = base_gate_payload("pivot_north_star_viability")
-    grounding_path = find_package_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
-    decision_path = find_package_artifact(package_path, PIVOT_DECISION_PATTERNS)
-    north_star_path = find_package_artifact(package_path, PIVOT_NORTH_STAR_PATTERNS)
+    grounding_path = find_active_pivot_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
+    decision_path = find_active_pivot_artifact(package_path, PIVOT_DECISION_PATTERNS)
+    north_star_path = find_active_pivot_artifact(package_path, PIVOT_NORTH_STAR_PATTERNS)
     payload["details"] = {
         "grounding_review_path": repo_relpath(grounding_path),
         "pivot_decision_path": repo_relpath(decision_path),
