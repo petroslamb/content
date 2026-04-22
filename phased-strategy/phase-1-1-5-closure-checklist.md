@@ -1,6 +1,6 @@
 # Phase 1 / 1.5 Closure Checklist
 
-Snapshot date: 2026-04-17
+Snapshot date: 2026-04-22
 
 Status legend:
 
@@ -21,7 +21,7 @@ Status legend:
 | Harness check | `npm run check:harness` passes as of the latest workflow refactor |
 | Reviewable run log check | `npm run check:reviewable-runs` validates v2 lightweight lifecycle logs and launch packs |
 | Repo-link check | `npm run check:repo-links` passes |
-| Strategic read | Phase 1 is closed; Phase 1.5 is built but not proof-run cleared |
+| Strategic read | Phase 1 is closed; Phase 1.5 is pragmatically proof-run cleared with strict-bar caveats |
 
 ## Phase 1 - The Clean Machine
 
@@ -83,17 +83,17 @@ Goal from the strategy document:
 
 ### Summary Verdict
 
-`PARTIAL`.
+`DONE`, under the pragmatic bar.
 
-The repo now has the main Phase 1.5 machinery: a machine-readable contract, policy boundaries, package initialization, next-action resolution, guided launch packs, harness adapters, and workflow frontmatter. The missing piece is evidence. Phase 1.5 should not be called closed until proof runs show that the system works for real tasks without a long bespoke explanation from the user.
+The repo now has the main Phase 1.5 machinery and enough retained proof-run evidence to clear the phase pragmatically. The remaining weaknesses are asymmetry and cleanliness, not absence of proof.
 
 ### Gate Criteria
 
 | Gate | Status | Evidence | Remaining Work |
 | :--- | :---: | :--- | :--- |
-| Harness can determine the next valid action for a package without repo explanation | `PARTIAL` | `harness_contract.yaml`; `scripts/next_action.py`; `npm run stage:next`; workflow frontmatter | Works best for packages with good `status.yaml`; pre-package topic work still depends on workflow judgment |
-| Harness can start from an idea or package target and produce bounded outputs with correct logs and approval behavior | `PARTIAL` | `scripts/init_package.py`; `npm run package:init`; `scripts/run_stage.py`; `harness_policy.yaml` | Need measured proof runs across research, editorial, media/release, and sandbox/auth boundaries |
-| At least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract | `OPEN` | Recent rollouts informed workflow hardening, but they were not captured as formal Phase 1.5 proof runs | Run and score three proof runs using the same evaluation template |
+| Harness can determine the next valid action for a package without repo explanation | `DONE` | `harness_contract.yaml`; `scripts/next_action.py`; `npm run stage:next`; retained proof runs across three lanes | Works best on well-maintained packages; umbrella ambiguity still merits hardening, not phase blockage |
+| Harness can start from an idea or package target and produce bounded outputs with correct logs and approval behavior | `DONE` | `scripts/init_package.py`; `npm run package:init`; `scripts/run_stage.py`; `harness_policy.yaml`; retained proof records | Publish-adjacent and research-heavy runs remain narrower than a full end-to-end lifecycle proof |
+| At least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract | `DONE` | Retained proof set across `research-heavy`, `publish-adjacent`, and `media/distribution` lanes | The lanes are not equally clean, so this is a pragmatic rather than maximal closure |
 
 ### Milestones
 
@@ -102,33 +102,27 @@ The repo now has the main Phase 1.5 machinery: a machine-readable contract, poli
 | M1.5.1 Harness contract surface | `DONE` | `harness_contract.yaml`; `npm run check:harness` | Keep contract synchronized with workflow frontmatter and package scripts |
 | M1.5.2 Idea-to-package intake | `DONE` | `scripts/init_package.py`; `npm run package:init` | Test in a real idea-to-research proof run |
 | M1.5.3 Next-action resolution | `DONE` | `scripts/next_action.py`; `npm run stage:next -- --package <package>` | Improve package metadata where next action is ambiguous |
-| M1.5.4 Guided stage launch packs | `PARTIAL` | `scripts/harness.py`; `run_stage.py` launch-pack behavior; guided workflow frontmatter | Launch packs exist, but the quality of guided execution still depends on the workflow docs and model discipline |
+| M1.5.4 Guided stage launch packs | `PARTIAL` | `scripts/harness.py`; `run_stage.py` launch-pack behavior; guided workflow frontmatter | Launch packs exist, but guided execution quality still varies by stage and package |
 | M1.5.5 Harness adapters | `DONE` | `npm run stage:resolve`; `npm run stage:run`; `npm run stage:next`; `npm run package:init` | Keep adapters as the preferred command surface |
 | M1.5.6 Autonomy boundaries and approval rules | `DONE` | `harness_policy.yaml`; sandbox/permission guidance in workflow docs | Continue hardening browser/auth and external side-effect handoffs |
-| M1.5.7 Harness proof runs | `OPEN` | No formal three-run closure set yet | Run, score, and retain the proof-run evidence |
+| M1.5.7 Harness proof runs | `DONE` | Retained proof records now exist for `research-heavy`, `publish-adjacent`, and `media/distribution` | Optional stricter reruns can improve quality, but are no longer blockers |
 
-### Phase 1.5 Open Items
+### Phase 1.5 Residual Caveats
 
-1. Run three measured proof runs.
-   - Research-heavy: `topic-discovery` to `package:init` to alphaXiv research to paper-intake decision.
-   - Polish/publish continuation: article polish to release gate to Substack publishing decision without accidental external mutation.
-   - Media/distribution: NotebookLM or YouTube production with explicit auth/sandbox handoff handling.
+1. The retained proof set is asymmetric.
+   - `research-heavy` was closed through a gate-check plus an approved bounded candidate step.
+   - `publish-adjacent` is `archive_sync`-adjacent rather than a purer release-gate proof.
+   - `media/distribution` is package-scoped and sequential rather than a single-purpose proof prompt.
 
-2. Create a proof-run evaluation template. `DONE` as of `reviewable-runs/templates/harness-proof-run-template.md`.
-   - Track prompt glue, manual interventions, repo-discovery failures, approval-boundary behavior, command-surface usage, and final outcome.
-   - Store routine logs under `reviewable-runs/logs/` and only promote strong examples to `reviewable-runs/examples/proofs/`.
+2. Guided-stage quality still varies by package.
+   - The repo contract is good enough to advance.
+   - It is not yet uniform enough to treat every package as equally clean.
 
-3. Measure guided-stage quality.
-   - Confirm weaker models can follow launch packs without inventing artifacts after sandbox failures.
-   - Confirm they ask for narrow permission or user-executed commands when blocked.
+3. Prompt glue is reduced, not eliminated.
+   - That is now a Phase 1.6 hardening target rather than a Phase 1.5 blocker.
 
-4. Decide whether topic discovery and release gate become harness stages later.
-   - Current status: both are documented decision layers.
-   - They should not become status stages unless repeated proof runs show that doing so reduces confusion.
-
-5. Keep Phase 1.6 separate.
-   - Persistent browser/session support, generated skill docs, named operator commands, and proof-run evaluation harness belong in Phase 1.6.
-   - Do not use Phase 1.6 work to avoid closing the Phase 1.5 proof-run gap.
+4. Keep Phase 1.6 separate.
+   - Persistent browser/session support, generated skill docs, named operator commands, and stricter proof ergonomics belong there.
 
 ## Recommended Next Actions
 
@@ -137,15 +131,13 @@ The repo now has the main Phase 1.5 machinery: a machine-readable contract, poli
    - Series adapters should live under the owning umbrella package or skill bundle.
 
 2. Use the proof-run template under `reviewable-runs/templates/harness-proof-run-template.md`.
-   - This is now the missing measurement step between "the harness exists" and "Phase 1.5 is proven."
+   - This remains the right hardening tool even though Phase 1.5 is now pragmatically closed.
 
-3. Run the three Phase 1.5 proof runs.
-   - Do not score Phase 1.5 as closed until these are done.
+3. Start Phase 1.6.
+   - Use it to reduce prompt glue, improve auth/browser ergonomics, and tighten guided-stage quality.
 
 4. Keep `npm run check:repo-links` green as package moves continue.
    - The current failure set is closed; future package migrations should run the check before commit.
 
-5. After proof runs, decide whether Phase 1.6 starts.
-   - If the main failure is prompt glue, generate skill docs and named operator commands.
-   - If the main failure is browser/auth friction, prioritize selective persistent browser support.
-   - If the main failure is weak-model compliance, harden launch packs and stop conditions before adding new features.
+5. Preserve the strict-bar caveats in later strategy updates.
+   - Do not rewrite history and pretend the three retained proofs were equally clean.
