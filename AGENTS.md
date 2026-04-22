@@ -57,6 +57,16 @@ For single-publication packages, prefer this paper-intake structure unless the p
 | inspect tracked automation | [`scripts/README.md`](scripts/README.md) | the specific script or workflow doc |
 | perform security research or red-teaming survey | [`publications/security-research/README.md`](publications/security-research/README.md) | its local research papers and surveys |
 
+## Stage Decision Checklist
+
+For package-stage decisions, use this order:
+
+1. read the package `status.yaml` first
+2. do not infer the lifecycle stage from research notes or the live brief alone
+3. read the package `README.md`
+4. load `config.blueprint_path` when the manifest names one
+5. if `essay_iteration` is active, seed or refresh the packet before making strong drafting-next-step claims
+
 ## Local Skills
 
 Tracked repo-local skills live under [`workflows/skills/README.md`](workflows/skills/README.md). The local `.agents/skills/` tree is a symlink mirror for Codex discovery and remains intentionally gitignored.
@@ -72,6 +82,8 @@ Key current local skills:
 - YouTube workflow skills
 
 Tracked docs remain canonical. Do not let the `.agents/skills/` mirror become the only place where a shared workflow is explained.
+
+The repo-local Codex hook mirror follows the same rule. Keep tracked hook docs and scripts canonical under [`scripts/`](scripts/README.md). Keep `.codex/` only as a local activation mirror.
 
 ## Writing Voice Policy
 
@@ -90,7 +102,6 @@ The guide defines voice, not format. Structure varies by article type.
 This repo intentionally keeps hidden folders local-only. The `.gitignore` rule should continue to ignore all dot folders and hidden files except `.github/`.
 
 - Do not force-add hidden folders such as `.agents/`, `.venv/`, `.youtube/`, `.claude/`, or similar when asked to "commit everything".
-- `AGENTS.md` is also local-only and should not be force-added.
 - If a user asks for a commit, stage the tracked, non-ignored subset unless they explicitly ask to change the ignore policy itself.
 
 ## Submodule Exceptions
