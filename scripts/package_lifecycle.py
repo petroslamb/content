@@ -159,6 +159,8 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
     packet_scaffold_exists = bool(packet_manifest_path and packet_manifest_path.exists())
     prewrite_gate_path: Path | None = None
     prewrite_gate_verdict: str | None = None
+    ceiling_report_path: Path | None = None
+    ceiling_report_verdict: str | None = None
     candidate_opened_before_prewrite_clearance = False
     issues: list[dict] = []
 
@@ -314,6 +316,64 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
                                 )
                             )
 
+                review_relpath = output_paths.get("replacement_review")
+                decision_relpath = output_paths.get("decision")
+                ceiling_report_relpath = output_paths.get("ceiling_report")
+                stop_gate_fired = False
+                if isinstance(review_relpath, str) and isinstance(decision_relpath, str):
+                    review_path = (Path(__file__).resolve().parents[1] / review_relpath).resolve()
+                    decision_path = (Path(__file__).resolve().parents[1] / decision_relpath).resolve()
+                    if review_path.exists() and decision_path.exists():
+                        try:
+                            review_frontmatter, _ = parse_markdown_frontmatter(review_path)
+                            decision_frontmatter, _ = parse_markdown_frontmatter(decision_path)
+                            stop_gate_fired = (
+                                review_frontmatter.get("north_star_verdict") == "below_north_star"
+                                and (
+                                    review_frontmatter.get("continue_iteration") is False
+                                    or decision_frontmatter.get("rewrite_mode") == "stop_flagship_iteration"
+                                    or decision_frontmatter.get("stop_gate_status") == "fired"
+                                )
+                            )
+                        except ValueError:
+                            stop_gate_fired = False
+
+                if stop_gate_fired:
+                    if schema_version < PACKET_SCHEMA_VERSION or not isinstance(ceiling_report_relpath, str):
+                        issues.append(
+                            _issue(
+                                "essay_iteration_ceiling_report_missing",
+                                "warning",
+                                "The stop gate fired, but the current packet has no canonical ceiling report. Refresh the packet scaffold to the current schema and fill the donor report before routing into pivot work.",
+                            )
+                        )
+                    else:
+                        ceiling_report_path = (Path(__file__).resolve().parents[1] / ceiling_report_relpath).resolve()
+                        if not ceiling_report_path.exists():
+                            issues.append(
+                                _issue(
+                                    "essay_iteration_ceiling_report_missing",
+                                    "warning",
+                                    "The stop gate fired, but the ceiling-report artifact is missing.",
+                                )
+                            )
+                        else:
+                            try:
+                                ceiling_report_frontmatter, _ = parse_markdown_frontmatter(ceiling_report_path)
+                                ceiling_report_verdict = ceiling_report_frontmatter.get("ceiling_verdict")
+                            except ValueError:
+                                ceiling_report_frontmatter = {}
+                                ceiling_report_verdict = None
+
+                            if ceiling_report_verdict in (None, "", "pending"):
+                                issues.append(
+                                    _issue(
+                                        "essay_iteration_ceiling_report_missing",
+                                        "warning",
+                                        "The stop gate fired, but the ceiling report is still unresolved or left at pending.",
+                                    )
+                                )
+
     if current_stage == "research" and packet_scaffold_exists:
         issues.append(
             _issue(
@@ -334,6 +394,8 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
         "packet_scaffold_exists": packet_scaffold_exists,
         "prewrite_gate_path": repo_relpath(prewrite_gate_path),
         "prewrite_gate_verdict": prewrite_gate_verdict,
+        "ceiling_report_path": repo_relpath(ceiling_report_path),
+        "ceiling_report_verdict": ceiling_report_verdict,
         "candidate_opened_before_prewrite_clearance": candidate_opened_before_prewrite_clearance,
         "issues": issues,
         "warning_count": len(issues),

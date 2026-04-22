@@ -14,11 +14,10 @@ packet_templates:
 required_context:
   - leaf package README
   - latest stop-gate or replacement-review finding from the capped essay
-  - latest post-ceiling reframe or equivalent frame-ceiling finding
+  - latest ceiling report or legacy donor-report pair from the capped essay
   - current pivot artifacts when they already exist
   - package evidence surface when local papers already anchor the failed object
 expected_outputs:
-  - explicit post-ceiling reframe
   - pivot slate with ranked candidate families
   - grounding review and blocker record
   - one active next-pivot candidate surface
@@ -108,8 +107,8 @@ Do not skip from `research_grounded` to `pivot_cleared_for_north_star_attempt` w
 
 The recurring strong artifact set is:
 
-1. `post-ceiling reframe`
-   Freeze the donor object and state what survives.
+1. `ceiling report`
+   Canonical donor report for new packages. This replaces separate reframe and process-capture requirements.
 2. `pivot slate`
    Rank several materially different candidate families before deep research.
 3. `pivot grounding review`
@@ -124,14 +123,20 @@ The recurring strong artifact set is:
    Decide whether the candidate has enough field-reordering force, scale-matched evidence, and doctrine to plausibly beat the top archive cluster.
 8. `pivot decision`
    Record whether the package should keep searching, clear a pivot, or stop.
-9. `process capture`
-   Preserve what the package actually did so the workflow can later be revised.
+
+Legacy compatibility:
+
+- older packages may still satisfy the donor-report requirement with the pair:
+  - `post-ceiling reframe`
+  - `process capture`
+
+For new packages, do not generate that pair as a second canonical layer. Use the single `ceiling report`.
 
 These do not need to be identical filenames across packages, but the functions should all exist.
 
 ## Working Sequence
 
-### 1. Post-Ceiling Reframe
+### 1. Ceiling Report Or Legacy Donor Report
 
 Start by freezing the donor object.
 
@@ -140,6 +145,9 @@ State:
 - why the old object capped out
 - what assets survive
 - what should not be tried again
+
+For new packages, that happens inside the `ceiling report`.
+For legacy packages, use the old `post-ceiling reframe` plus `process capture` pair.
 
 Typical surviving assets:
 
@@ -360,7 +368,7 @@ Use [`../paper-intake/README.md`](../paper-intake/README.md) only after a select
 The extracted rollout showed a repeatable pattern:
 
 1. capped donor essay
-2. post-ceiling reframe
+2. donor report freeze
 3. pivot slate
 4. blocked early candidates
 5. stronger winner candidate
@@ -371,6 +379,13 @@ The extracted rollout showed a repeatable pattern:
 
 That is exactly why this workflow exists separately from ordinary draft iteration.
 It is also why the north-star viability gate is now required before future pivot clearance.
+
+For the original rollout, donor report freeze meant the legacy pair:
+
+- `post-ceiling reframe`
+- `process capture`
+
+For new packages, use the single `ceiling report` instead.
 
 ## Current Promotion Read
 

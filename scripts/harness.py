@@ -17,7 +17,10 @@ from check_research_exit_gate import validate_research_exit_gate
 from essay_iteration_support import (
     ARCHIVE_ANCHOR_FIELDS,
     BLUEPRINT_HEADINGS,
+    CEILING_REPORT_BODY_HEADINGS,
+    CEILING_REPORT_FRONTMATTER_FIELDS,
     DECISION_REQUIRED_FOLLOW_THROUGH_PLACEHOLDER,
+    NORTH_STAR_ESCALATION_SCHEMA_VERSION,
     PACKET_SCHEMA_VERSION,
     PASSAGE_ANCHOR_FIELDS,
     PREWRITE_BODY_HEADINGS,
@@ -48,7 +51,7 @@ from lifecycle import (
     split_frontmatter,
 )
 from package_lifecycle import inspect_package_lifecycle
-from research_exit_support import build_research_exit_gate_path
+from research_exit_support import build_research_exit_gate_path, resolve_research_exit_gate_path
 
 
 PACKAGE_JSON_PATH = REPO_ROOT / "package.json"
@@ -109,6 +112,15 @@ RELEASE_GATE_PATTERNS = (
 
 PIVOT_REFRAME_PATTERNS = (
     "*post-ceiling-reframe*.md",
+)
+
+CEILING_REPORT_PATTERNS = (
+    "*ceiling-report-r*.md",
+    "*ceiling-report*.md",
+)
+
+PIVOT_PROCESS_CAPTURE_PATTERNS = (
+    "*process-capture*.md",
 )
 
 PIVOT_GROUNDING_PATTERNS = (
@@ -880,6 +892,86 @@ def has_required_fields(frontmatter: dict, fields: list[str]) -> bool:
     return all(field in frontmatter for field in fields)
 
 
+def stop_iteration_triggered(
+    review_frontmatter: dict,
+    decision_frontmatter: dict,
+    review_body: str = "",
+    decision_body: str = "",
+) -> bool:
+    if review_frontmatter.get("north_star_verdict") != "below_north_star":
+        return False
+    return (
+        review_frontmatter.get("continue_iteration") is False
+        or decision_frontmatter.get("rewrite_mode") == "stop_flagship_iteration"
+        or decision_frontmatter.get("stop_gate_status") == "fired"
+        or "stop_flagship_iteration" in decision_body
+        or "stop flagship iteration" in decision_body.lower()
+        or "stop flagship iteration" in review_body.lower()
+    )
+
+
+def ceiling_report_is_complete(packet: dict, review_frontmatter: dict) -> tuple[bool, Path | None, dict | None]:
+    output_paths = packet.get("output_paths", {})
+    relpath = output_paths.get("ceiling_report")
+    if not isinstance(relpath, str):
+        return False, None, None
+    path = (REPO_ROOT / relpath).resolve()
+    if not path.exists():
+        return False, path, None
+    try:
+        frontmatter, body = parse_markdown_packet_file(path)
+    except Exception:
+        return False, path, None
+
+    if not has_required_fields(frontmatter, CEILING_REPORT_FRONTMATTER_FIELDS):
+        return False, path, frontmatter
+    if not has_required_headings(body, CEILING_REPORT_BODY_HEADINGS):
+        return False, path, frontmatter
+
+    if frontmatter.get("ceiling_verdict") != "object_ceiling":
+        return False, path, frontmatter
+    if frontmatter.get("effort_verdict") in {None, "", "pending"}:
+        return False, path, frontmatter
+    if frontmatter.get("next_route") in {None, "", "pending"}:
+        return False, path, frontmatter
+    if frontmatter.get("dominant_blocker_slug") != review_frontmatter.get("dominant_blocker_slug"):
+        return False, path, frontmatter
+
+    expected_paths = {
+        "live_draft_path": packet.get("live_draft_path"),
+        "terminal_candidate_path": packet.get("candidate_path"),
+        "terminal_replacement_review_path": output_paths.get("replacement_review"),
+        "terminal_decision_path": output_paths.get("decision"),
+    }
+    for field, expected in expected_paths.items():
+        if not isinstance(expected, str) or frontmatter.get(field) != expected:
+            return False, path, frontmatter
+        resolved = (REPO_ROOT / expected).resolve()
+        if not resolved.exists():
+            return False, path, frontmatter
+
+    return True, path, frontmatter
+
+
+def resolve_pivot_donor_report(package_path: Path) -> dict:
+    ceiling_report_path = find_package_artifact(package_path, CEILING_REPORT_PATTERNS)
+    reframe_path = find_package_artifact(package_path, PIVOT_REFRAME_PATTERNS)
+    process_capture_path = find_package_artifact(package_path, PIVOT_PROCESS_CAPTURE_PATTERNS)
+    if ceiling_report_path is not None:
+        return {
+            "mode": "ceiling_report",
+            "ceiling_report_path": ceiling_report_path,
+            "reframe_path": None,
+            "process_capture_path": None,
+        }
+    return {
+        "mode": "legacy_pair",
+        "ceiling_report_path": None,
+        "reframe_path": reframe_path,
+        "process_capture_path": process_capture_path,
+    }
+
+
 def resolve_essay_iteration_progress(package_key: str, package_path: Path, status_data: dict) -> dict:
     validator_prewrite = f"npm run check:essay-prewrite -- --package {package_key}"
     validator_full = f"npm run check:essay-iteration -- --package {package_key}"
@@ -1050,7 +1142,7 @@ def resolve_essay_iteration_progress(package_key: str, package_path: Path, statu
 
     review_path = (REPO_ROOT / review_relpath).resolve()
     try:
-        review_frontmatter, _ = parse_markdown_packet_file(review_path)
+        review_frontmatter, review_body = parse_markdown_packet_file(review_path)
     except Exception:
         return {
             **defaults,
@@ -1126,9 +1218,37 @@ def resolve_essay_iteration_progress(package_key: str, package_path: Path, statu
             "recommended_validator": validator_full,
         }
 
+    if stop_iteration_triggered(review_frontmatter, decision_frontmatter, review_body, decision_body):
+        ceiling_report_ready, _, _ = ceiling_report_is_complete(packet, review_frontmatter)
+        if not ceiling_report_ready:
+            return {
+                **defaults,
+                "packet_phase": "write_ceiling_report",
+                "next_packet_action": "write_ceiling_report",
+                "recommended_validator": validator_full,
+            }
+
     from check_essay_iteration_packet import validate_packet
 
     if not validate_packet(packet, phase="full"):
+        recommendation = decision_frontmatter.get("recommendation")
+        north_star_verdict = review_frontmatter.get("north_star_verdict")
+        continue_iteration = review_frontmatter.get("continue_iteration")
+        rewrite_mode = decision_frontmatter.get("rewrite_mode")
+        stop_gate_status = decision_frontmatter.get("stop_gate_status")
+        stop_iteration = stop_iteration_triggered(review_frontmatter, decision_frontmatter, review_body, decision_body)
+
+        if recommendation == "revise_candidate" and not stop_iteration:
+            next_action = "write_next_candidate_revision"
+            if north_star_verdict == "below_north_star":
+                next_action = "harden_blueprint_then_write_next_candidate"
+            return {
+                **defaults,
+                "packet_phase": "draft_candidate",
+                "next_packet_action": next_action,
+                "recommended_validator": validator_full,
+            }
+
         return {
             **defaults,
             "packet_phase": "ready_for_human_review",
@@ -1198,10 +1318,12 @@ def evaluate_topic_viability_gate(packet_path: Path | None) -> dict:
 
 
 def evaluate_research_exit_gate(package_key: str, package_path: Path, status_data: dict) -> dict:
+    revision = status_data.get("revision", 1)
+    resolved_gate_path = resolve_research_exit_gate_path(package_path, revision if isinstance(revision, int) else 1)
     payload = base_gate_payload("research_exit")
     payload["details"] = {
         "research_exit_gate_path": repo_relpath(
-            build_research_exit_gate_path(package_path, status_data.get("revision", 1))
+            resolved_gate_path if resolved_gate_path is not None else build_research_exit_gate_path(package_path, revision if isinstance(revision, int) else 1)
         ),
         "governing_brief_path": repo_relpath(resolve_governing_brief_path(package_path, status_data)),
         "evidence_surface_path": repo_relpath(resolve_essay_evidence_surface(package_path, status_data)),
@@ -1248,7 +1370,14 @@ def evaluate_essay_prewrite_gate(package_key: str, package_path: Path, status_da
     payload["details"] = progress
     phase = progress.get("packet_phase")
     decision = progress.get("next_packet_action")
-    if phase in {"draft_candidate", "review_candidate", "score_candidate", "fill_decision", "ready_for_human_review"}:
+    if phase in {
+        "draft_candidate",
+        "review_candidate",
+        "score_candidate",
+        "fill_decision",
+        "write_ceiling_report",
+        "ready_for_human_review",
+    }:
         payload["status"] = "pass"
         payload["blocking"] = False
         payload["decision"] = "writable"
@@ -1328,18 +1457,25 @@ def evaluate_replacement_north_star_gate(package_key: str, package_path: Path, s
         payload["decision"] = "clears_north_star"
         return payload
 
-    stop_iteration = (
-        review_frontmatter.get("continue_iteration") is False
-        or decision_frontmatter.get("rewrite_mode") == "stop_flagship_iteration"
-        or decision_frontmatter.get("stop_gate_status") == "fired"
-        or "stop_flagship_iteration" in decision_body
-        or "stop flagship iteration" in decision_body.lower()
-        or "stop flagship iteration" in review_body.lower()
-    )
+    stop_iteration = stop_iteration_triggered(review_frontmatter, decision_frontmatter, review_body, decision_body)
     if stop_iteration:
+        ceiling_report_ready, ceiling_report_path, ceiling_report_frontmatter = ceiling_report_is_complete(packet, review_frontmatter)
+        payload["details"]["ceiling_report_path"] = repo_relpath(ceiling_report_path)
+        if ceiling_report_frontmatter is not None:
+            payload["details"]["ceiling_verdict"] = ceiling_report_frontmatter.get("ceiling_verdict")
+            payload["details"]["effort_verdict"] = ceiling_report_frontmatter.get("effort_verdict")
+            payload["details"]["next_route"] = ceiling_report_frontmatter.get("next_route")
+        if not ceiling_report_ready:
+            payload["decision"] = "object_ceiling_report_missing"
+            payload["recommended_workflow"] = "essay_iteration"
+            payload["missing_artifacts"] = ["ceiling report"]
+            return payload
         payload["decision"] = "object_ceiling"
-        payload["recommended_workflow"] = "post_ceiling_pivot"
-        payload["details"]["overlay_candidate"] = "post_ceiling_pivot"
+        if ceiling_report_frontmatter and ceiling_report_frontmatter.get("next_route") == "post_ceiling_pivot":
+            payload["recommended_workflow"] = "post_ceiling_pivot"
+            payload["details"]["overlay_candidate"] = "post_ceiling_pivot"
+        else:
+            payload["recommended_workflow"] = "essay_iteration"
         return payload
 
     payload["decision"] = "revise_same_object"
@@ -1410,16 +1546,40 @@ def parse_pivot_north_star_verdict(path: Path) -> str | None:
 
 def evaluate_pivot_research_grounding_gate(package_path: Path) -> dict:
     payload = base_gate_payload("pivot_research_grounding")
-    reframe_path = find_package_artifact(package_path, PIVOT_REFRAME_PATTERNS)
+    donor_report = resolve_pivot_donor_report(package_path)
     grounding_path = find_package_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
     decision_path = find_package_artifact(package_path, PIVOT_DECISION_PATTERNS)
     payload["details"] = {
-        "reframe_path": repo_relpath(reframe_path),
+        "donor_report_mode": donor_report["mode"],
+        "ceiling_report_path": repo_relpath(donor_report["ceiling_report_path"]),
+        "reframe_path": repo_relpath(donor_report["reframe_path"]),
+        "process_capture_path": repo_relpath(donor_report["process_capture_path"]),
         "grounding_review_path": repo_relpath(grounding_path),
         "pivot_decision_path": repo_relpath(decision_path),
     }
-    if reframe_path is None:
-        payload["missing_artifacts"].append("post-ceiling reframe")
+    if donor_report["mode"] == "ceiling_report":
+        if donor_report["ceiling_report_path"] is None:
+            payload["missing_artifacts"].append("ceiling report")
+        else:
+            try:
+                donor_frontmatter, _ = parse_markdown_packet_file(donor_report["ceiling_report_path"])
+            except Exception:
+                payload["decision"] = "invalid_ceiling_report"
+                return payload
+            payload["details"]["ceiling_verdict"] = donor_frontmatter.get("ceiling_verdict")
+            payload["details"]["next_route"] = donor_frontmatter.get("next_route")
+            if donor_frontmatter.get("ceiling_verdict") != "object_ceiling":
+                payload["decision"] = "ceiling_report_not_settled"
+                return payload
+            if donor_frontmatter.get("next_route") != "post_ceiling_pivot":
+                payload["decision"] = "ceiling_report_routes_elsewhere"
+                payload["recommended_workflow"] = "essay_iteration"
+                return payload
+    else:
+        if donor_report["reframe_path"] is None:
+            payload["missing_artifacts"].append("post-ceiling reframe")
+        if donor_report["process_capture_path"] is None:
+            payload["missing_artifacts"].append("process capture")
     if grounding_path is None:
         payload["missing_artifacts"].append("pivot grounding review")
     if decision_path is None:
@@ -1529,7 +1689,10 @@ def determine_pipeline_profile(
     profiles = load_pipeline_profiles()
     gate_statuses = gate_statuses or {}
     north_star_gate = gate_statuses.get("replacement_north_star", {})
-    if north_star_gate.get("decision") == "object_ceiling":
+    if (
+        north_star_gate.get("decision") == "object_ceiling"
+        and north_star_gate.get("details", {}).get("next_route") == "post_ceiling_pivot"
+    ):
         profile_id = "post_ceiling_successor"
     else:
         active_stage = next_stage_for_package(package_path, status_data)
@@ -1624,7 +1787,11 @@ def build_overlay_candidates(stage: str, gate_statuses: dict[str, dict]) -> list
     overlays: list[str] = []
     if stage == "essay_iteration":
         north_star = gate_statuses.get("replacement_north_star")
-        if north_star and north_star.get("decision") == "object_ceiling":
+        if (
+            north_star
+            and north_star.get("decision") == "object_ceiling"
+            and north_star.get("details", {}).get("next_route") == "post_ceiling_pivot"
+        ):
             overlays.append("post_ceiling_pivot")
     return overlays
 
