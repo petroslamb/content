@@ -70,6 +70,18 @@ def check_route_fixtures(fixtures: dict, errors: list[str]) -> None:
             errors.append(
                 f"{fixture['package']} stage {fixture['stage']} expected pipeline_profile {fixture['expected_pipeline_profile']}, got {resolution.get('pipeline_profile')}."
             )
+        if fixture.get("expected_effective_workflow") and resolution.get("effective_workflow") != fixture["expected_effective_workflow"]:
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected effective_workflow {fixture['expected_effective_workflow']}, got {resolution.get('effective_workflow')}."
+            )
+        if fixture.get("expected_effective_next_action") and resolution.get("effective_next_action") != fixture["expected_effective_next_action"]:
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected effective_next_action {fixture['expected_effective_next_action']}, got {resolution.get('effective_next_action')}."
+            )
+        if fixture.get("expected_effective_can_execute") is not None and resolution.get("effective_can_execute") != fixture["expected_effective_can_execute"]:
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected effective_can_execute {fixture['expected_effective_can_execute']}, got {resolution.get('effective_can_execute')}."
+            )
         if fixture.get("expected_packet_phase") and resolution.get("packet_phase") != fixture["expected_packet_phase"]:
             errors.append(
                 f"{fixture['package']} stage {fixture['stage']} expected packet_phase {fixture['expected_packet_phase']}, got {resolution.get('packet_phase')}."

@@ -36,6 +36,14 @@ def build_next_action(package_arg: str) -> dict:
         "recommended_workflows": [],
         "gate_statuses": {},
         "overlay_candidates": [],
+        "effective_workflow": None,
+        "effective_workflow_kind": None,
+        "effective_workflow_doc": None,
+        "effective_next_action": None,
+        "effective_route": None,
+        "effective_can_execute": False,
+        "effective_requires_approval": False,
+        "effective_approval_gate": None,
         "active_overlay": None,
         "overlay_phase": None,
         "next_overlay_action": None,
@@ -64,6 +72,14 @@ def build_next_action(package_arg: str) -> dict:
         "recommended_workflows": resolution.get("recommended_workflows", []),
         "gate_statuses": resolution.get("gate_statuses", {}),
         "overlay_candidates": resolution.get("overlay_candidates", []),
+        "effective_workflow": resolution.get("effective_workflow"),
+        "effective_workflow_kind": resolution.get("effective_workflow_kind"),
+        "effective_workflow_doc": resolution.get("effective_workflow_doc"),
+        "effective_next_action": resolution.get("effective_next_action"),
+        "effective_route": resolution.get("effective_route"),
+        "effective_can_execute": resolution.get("effective_can_execute"),
+        "effective_requires_approval": resolution.get("effective_requires_approval"),
+        "effective_approval_gate": resolution.get("effective_approval_gate"),
         "active_overlay": resolution.get("active_overlay"),
         "overlay_phase": resolution.get("overlay_phase"),
         "next_overlay_action": resolution.get("next_overlay_action"),
@@ -77,7 +93,7 @@ def print_text(payload: dict) -> None:
     print(f"PACKAGE: {payload['package']}")
     print(f"Revision: {payload['revision']}")
     print(f"All Stages Complete: {payload['all_stages_complete']}")
-    print(f"Next Stage: {payload['next_stage']}")
+    print(f"Compatibility Stage: {payload['next_stage']}")
     if payload["next_stage"] is None:
         return
     print(f"Runner Mode: {payload['runner_mode']}")
@@ -85,6 +101,15 @@ def print_text(payload: dict) -> None:
     print(f"Requires Approval: {payload['requires_approval']}")
     print(f"Can Execute: {payload['can_execute']}")
     print(f"Pipeline Profile: {payload.get('pipeline_profile')}")
+    if payload.get("effective_workflow"):
+        print(f"Effective Workflow: {payload.get('effective_workflow')}")
+        print(f"Effective Kind: {payload.get('effective_workflow_kind')}")
+        print(f"Effective Can Execute: {payload.get('effective_can_execute')}")
+        print(f"Effective Approval Gate: {payload.get('effective_approval_gate')}")
+        print(f"Effective Requires Approval: {payload.get('effective_requires_approval')}")
+        print(f"Effective Next Action: {payload.get('effective_next_action')}")
+        if payload.get("effective_route"):
+            print(f"Effective Route: {payload.get('effective_route')}")
 
     if payload.get("packet_phase"):
         print(f"Packet Phase: {payload['packet_phase']}")
