@@ -26,6 +26,8 @@ It came from a constrained donor rerank using tracked package state only:
 
 That matters because the current judgment is about successor shape, not about opening a new paper search without using the donor's own evidence hierarchy first.
 
+The later consequence pass and comparative rerank did not change the lead. They sharpened the public enemy and confirmed that the active candidate still outranks both the wrapper rival and the narrower provenance seam.
+
 ## Working Thesis
 
 Once workflow specs, policy surfaces, and evidence indexes start governing agent behavior, validation stops being terminal QA. It becomes the lifecycle infrastructure that keeps those source-like surfaces attached to reality.
@@ -37,6 +39,7 @@ Once workflow specs, policy surfaces, and evidence indexes start governing agent
 - It keeps the `spec-diff` proof central without asking one example to prove full conformance.
 - It lets the provenance gap act as the downstream demand rather than as one more stack layer to explain.
 - It uses the "wrong layer" accusation as a wrapper while grounding the real seam in paper-backed validation, enforcement, and debugging work.
+- The consequence pass gave it a sharper enemy than "terminal QA": the advisory-prose illusion around governed workflow surfaces.
 
 ## Why It Stayed Above The Wrapper Rival
 
@@ -51,6 +54,7 @@ It did not stay on top as a standalone pivot candidate because:
 ## Why It Stayed Above The Narrower Rivals
 
 - `Traces Are Not Provenance` is strong, but narrower and more inward-facing.
+- `Traces Are Not Provenance` remains the strongest adjacent seam and strongest narrower writeable synthesis.
 - `Workflow Is A Namespace` remains bounded to navigation and routing rather than a field-reordering flagship claim.
 - `Split And Promote` is still a valid package move, not the breakout object itself.
 
@@ -67,7 +71,7 @@ The seam is well-grounded as internal doctrine, but not yet clearly north-star v
 It is weaker at proving:
 
 - that this seam alone reorders the broader field
-- that the public enemy is sharper than "terminal QA"
+- that the sharpened public enemy is large enough to anchor a top-cluster flagship rather than a strong doctrine essay
 - that the operator consequence grows beyond "validate earlier and more often"
 
 ## Residual Gaps To Carry Into Research Delta

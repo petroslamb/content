@@ -60,7 +60,7 @@ It is not the successor argument itself.
 
 Do not open a sibling flagship package yet.
 
-Stay inside `post_ceiling_pivot` and treat `Validation Is Lifecycle Infrastructure` as the strongest grounded successor that still failed north-star viability. The next bounded move is a consequence-focused research pass, not another broad candidate hunt and not a new flagship draft.
+Stay inside `post_ceiling_pivot` and treat `Validation Is Lifecycle Infrastructure` as the strongest grounded successor that still failed north-star viability. The consequence-focused pass and the later comparative rerank both strengthened the candidate without clearing it. So the next bounded move is no longer broad candidate hunting. It is a decision about whether this object should remain a strong narrower doctrine piece or whether the package should search for a materially larger successor later.
 
 ## Gate For Package Split
 
