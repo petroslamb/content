@@ -798,9 +798,9 @@ def find_package_artifacts(package_path: Path, patterns: tuple[str, ...]) -> lis
 
 def find_active_pivot_artifact(package_path: Path, patterns: tuple[str, ...]) -> Path | None:
     search_roots = [
-        package_path / "pivot" / "active",
-        package_path / "pivot",
         package_path,
+        package_path / "pivot",
+        package_path / "pivot" / "active",
     ]
     for search_root in search_roots:
         if not search_root.exists():
@@ -810,6 +810,31 @@ def find_active_pivot_artifact(package_path: Path, patterns: tuple[str, ...]) ->
                 if candidate.is_file():
                     return candidate
     return None
+
+
+def load_local_status_data(package_path: Path) -> dict:
+    status_path = package_path / "status.yaml"
+    if not status_path.exists():
+        return {}
+    data = yaml.safe_load(status_path.read_text()) or {}
+    return data if isinstance(data, dict) else {}
+
+
+def package_kind(package_path: Path) -> str | None:
+    data = load_local_status_data(package_path)
+    kind = data.get("kind")
+    return kind if isinstance(kind, str) else None
+
+
+def configured_leaf_packages(package_path: Path) -> list[str]:
+    data = load_local_status_data(package_path)
+    config = data.get("config")
+    if not isinstance(config, dict):
+        return []
+    leaf_packages = config.get("leaf_packages")
+    if not isinstance(leaf_packages, list):
+        return []
+    return [item for item in leaf_packages if isinstance(item, str)]
 
 
 def count_local_markdown_papers(package_path: Path) -> int:
@@ -1014,9 +1039,9 @@ def resolve_pivot_donor_report(package_path: Path) -> dict:
 
 
 def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
-    pivot_root = package_path / "pivot" / "active"
-    if not pivot_root.exists():
-        pivot_root = package_path / "pivot" if (package_path / "pivot").exists() else package_path
+    overlay_root = package_path
+    status_kind = package_kind(package_path)
+    leaf_packages = configured_leaf_packages(package_path)
 
     slate_path = find_active_pivot_artifact(package_path, PIVOT_SLATE_PATTERNS)
     grounding_path = find_active_pivot_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
@@ -1029,7 +1054,7 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
     blocker_path = find_active_pivot_artifact(package_path, PIVOT_BLOCKER_PATTERNS)
 
     progress = {
-        "active_overlay_root": repo_relpath(pivot_root),
+        "active_overlay_root": repo_relpath(overlay_root),
         "overlay_phase": None,
         "next_overlay_action": None,
         "overlay_route": None,
@@ -1044,6 +1069,18 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
         "pivot_decision_path": repo_relpath(decision_path),
         "pivot_blocker_path": repo_relpath(blocker_path),
     }
+
+    if status_kind != "umbrella":
+        progress["overlay_phase"] = "upgrade_to_umbrella"
+        progress["next_overlay_action"] = "upgrade_to_umbrella_and_create_donor_leaf"
+        progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <package>"
+        return progress
+
+    if not leaf_packages:
+        progress["overlay_phase"] = "initialize_donor_leaf"
+        progress["next_overlay_action"] = "initialize_donor_leaf"
+        progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <package>"
+        return progress
 
     if slate_path is None:
         progress["overlay_phase"] = "build_pivot_slate"
@@ -1110,6 +1147,11 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
             progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
             return progress
         if post_block_route == "keep_as_strong_narrower_doctrine_object":
+            if len(leaf_packages) < 2:
+                progress["overlay_phase"] = "initialize_narrower_leaf"
+                progress["next_overlay_action"] = "initialize_narrower_doctrine_leaf"
+                progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <package>"
+                return progress
             progress["overlay_phase"] = "post_block_route_settled"
             progress["next_overlay_action"] = "hold_for_narrower_doctrine_write_or_later_larger_successor"
             progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
@@ -1133,8 +1175,13 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
             progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
             return progress
         if north_star_verdict == "north_star_viable":
-            progress["overlay_phase"] = "initialize_successor_package"
-            progress["next_overlay_action"] = "initialize_successor_package"
+            if len(leaf_packages) < 2:
+                progress["overlay_phase"] = "initialize_successor_leaf"
+                progress["next_overlay_action"] = "initialize_successor_leaf"
+                progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <package>"
+                return progress
+            progress["overlay_phase"] = "successor_leaf_ready"
+            progress["next_overlay_action"] = "handoff_to_successor_leaf_for_flagship_iteration"
             progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
             return progress
         progress["overlay_phase"] = "run_north_star_viability"

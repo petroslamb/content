@@ -408,12 +408,17 @@ workflows:
     default_skill: alphaxiv
     approval_gate: required_for_pivot_clearance
     required_context:
-    - leaf package README
+    - package README or donor leaf README
     - latest stop-gate or replacement-review finding from the capped essay
     - latest ceiling report or legacy donor-report pair from the capped essay
-    - current pivot artifacts when they already exist
+    - current overlay artifacts when they already exist
     - package evidence surface when local papers already anchor the failed object
+    - current package shape, including whether umbrella upgrade or leaf initialization
+      is still pending
     expected_outputs:
+    - umbrella upgrade when starting from a single-publication donor
+    - donor leaf plus successor or narrowed-doctrine leaf when a second object becomes
+      real
     - pivot slate with ranked candidate families
     - grounding review and blocker record
     - one active next-pivot candidate surface
@@ -421,8 +426,9 @@ workflows:
     - north-star viability gate for any candidate being considered for clearance
     - explicit pivot decision: blocked, provisional, clear lead, or pivot cleared
     done_when:
-    - one candidate clears both research grounding and north-star viability, or the
-      package explicitly blocks the whole pivot search and records why
+    - one candidate clears both research grounding and north-star viability and the
+      donor plus surviving object have distinct leaf identities, or the package explicitly
+      blocks the whole pivot search and records why
     launch_templates: []
     packet_templates:
     - workflows/post-ceiling-pivot/templates/post_ceiling_reframe_template.md
@@ -561,24 +567,26 @@ gates:
     proof_mode: packet_gate
   pivot_north_star_viability:
     description: Decide whether a grounded pivot candidate is strong enough to open
-      a successor flagship object or sibling package.
+      a successor flagship leaf or whether a narrower leaf is the right route.
     scope: package
     required_artifacts:
     - pivot grounding review
     - pivot north-star viability gate
     - pivot decision
+    - successor or narrowed leaf initialization when the second object is adopted
     recommended_workflow: post_ceiling_pivot
     recommended_validator: npm run gate:check -- --gate pivot_north_star_viability
       --package <package>
     proof_mode: overlay_gate
   pivot_research_grounding:
     description: Decide whether a post-ceiling pivot candidate is grounded enough
-      to be a real successor object.
+      to justify a real second publication object under an umbrella package.
     scope: package
     required_artifacts:
     - ceiling report or legacy donor-report pair
     - pivot grounding review
     - pivot decision or live candidate status
+    - umbrella upgrade when the donor package is no longer single-publication
     recommended_workflow: post_ceiling_pivot
     recommended_validator: npm run gate:check -- --gate pivot_research_grounding --package
       <package>

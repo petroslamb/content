@@ -14,12 +14,15 @@ packet_templates:
   - "workflows/post-ceiling-pivot/templates/pivot_north_star_viability_template.md"
   - "workflows/post-ceiling-pivot/templates/pivot_decision_template.md"
 required_context:
-  - leaf package README
+  - package README or donor leaf README
   - latest stop-gate or replacement-review finding from the capped essay
   - latest ceiling report or legacy donor-report pair from the capped essay
-  - current pivot artifacts when they already exist
+  - current overlay artifacts when they already exist
   - package evidence surface when local papers already anchor the failed object
+  - current package shape, including whether umbrella upgrade or leaf initialization is still pending
 expected_outputs:
+  - umbrella upgrade when starting from a single-publication donor
+  - donor leaf plus successor or narrowed-doctrine leaf when a second object becomes real
   - pivot slate with ranked candidate families
   - grounding review and blocker record
   - one active next-pivot candidate surface
@@ -27,7 +30,7 @@ expected_outputs:
   - north-star viability gate for any candidate being considered for clearance
   - explicit pivot decision: blocked, provisional, clear lead, or pivot cleared
 done_when:
-  - one candidate clears both research grounding and north-star viability, or the package explicitly blocks the whole pivot search and records why
+  - one candidate clears both research grounding and north-star viability and the donor plus surviving object have distinct leaf identities, or the package explicitly blocks the whole pivot search and records why
 approval_gate: required_for_pivot_clearance
 ---
 
@@ -40,7 +43,7 @@ It is not ordinary draft iteration. It is the repo process for:
 - freezing the donor object
 - searching for a better flagship object without drafting prematurely
 - separating candidate discovery from candidate clearance
-- deciding whether a new pivot is real enough to open a new flagship package or sibling object
+- deciding whether a new pivot is real enough to open a new flagship leaf or sibling object
 
 This workflow was extracted from the April 15, 2026 `clean-interface-illusion` rollout and should be treated as **experimental** until it succeeds cleanly on at least one more package.
 
@@ -82,25 +85,31 @@ That means:
 2. paper-level inspection second
 3. assistant comparison and pressure-testing third
 4. north-star viability check before clearance
-5. new flagship drafting only after explicit clearance
+5. new flagship drafting only after explicit clearance and leaf initialization
 
 This workflow treats **candidate discovery** and **candidate clearance** as separate stages.
 It also treats **research-grounded** and **north-star viable** as different claims.
 
 ## Filesystem Shape
 
-Keep the donor artifact split explicit:
+Treat a real post-ceiling search as an umbrella transition, not as a longer single-publication package.
 
-- the `ceiling report` stays at package root because it is the terminal artifact of `essay_iteration`
-- the active pivot-search workspace should live under `pivot/active/`
-- superseded pivot-search attempts should move to `pivot/archive/<pivot-id>/`
+The canonical shape is:
 
-This keeps the flagship iteration packet visible while preventing root-level mixing between:
+- the `ceiling report` stays at the umbrella root because it is the terminal artifact of `essay_iteration`
+- shared research, donor history, and overlay search artifacts stay at the umbrella root
+- the capped original essay becomes a donor leaf
+- any surviving second object becomes either:
+  - a successor leaf
+  - or a narrower-doctrine leaf
 
-- terminal essay-iteration artifacts
-- live pivot-search artifacts
+That keeps publication objects separate while preserving one shared evidence tree.
 
-For legacy packages, root-level pivot artifacts remain valid. For new packages, prefer `pivot/active/`.
+Legacy compatibility:
+
+- older packages may still keep pivot artifacts under `pivot/` or `pivot/active/`
+- root-level pivot artifacts also remain valid
+- for new packages, do not treat `pivot/active/` as the canonical long-term destination once a second object is real
 
 ## Status Vocabulary
 
@@ -115,7 +124,7 @@ Use these states explicitly in the package artifacts:
 - `research_grounded_but_not_north_star_viable`
   A candidate whose evidence seam is real and essay-capable, but whose field-reordering move, evidence aperture, or doctrine is not strong enough for a top-cluster attempt.
 - `pivot_cleared_for_north_star_attempt`
-  Strong enough to initialize a new flagship object or sibling package because it has cleared both research grounding and north-star viability.
+  Strong enough to initialize a new flagship leaf or sibling object because it has cleared both research grounding and north-star viability.
 
 Do not skip from “interesting idea” to `pivot_cleared_for_north_star_attempt` without a grounding review.
 Do not skip from `research_grounded` to `pivot_cleared_for_north_star_attempt` without the north-star viability gate.
@@ -144,6 +153,8 @@ The recurring strong artifact set is:
    Decide whether the candidate has enough field-reordering force, scale-matched evidence, and doctrine to plausibly beat the top archive cluster.
 10. `pivot decision`
    Record whether the package should keep searching, clear a pivot, or stop.
+11. `leaf initialization`
+   Once a second object is real, give it an explicit leaf identity instead of leaving it as a pivot-folder sidecar.
 
 For north-star-blocked grounded candidates, the pivot decision must also carry an explicit `post-block route`:
 
@@ -166,6 +177,8 @@ The active overlay should resolve to one next bounded action rather than a gener
 
 Use these substeps:
 
+- `upgrade_to_umbrella`
+- `initialize_donor_leaf`
 - `build_pivot_slate`
 - `ground_candidates`
 - `select_live_candidate`
@@ -174,8 +187,10 @@ Use these substeps:
 - `run_comparative_rerank`
 - `run_north_star_viability`
 - `decide_post_block_route`
+- `initialize_narrower_leaf`
 - `post_block_route_settled`
-- `initialize_successor_package`
+- `initialize_successor_leaf`
+- `successor_leaf_ready`
 
 For a grounded candidate that is still north-star blocked, the normal loop is:
 
@@ -208,7 +223,19 @@ Typical surviving assets:
 - doctrine consequence
 - evidence seam that remains strong
 
-### 2. Pivot Slate
+### 2. Umbrella Upgrade
+
+If the donor package is still a single-publication package, upgrade it before treating the post-ceiling route as a real second object.
+
+The upgrade should create:
+
+- one umbrella root README and status manifest
+- one donor leaf for the capped flagship object
+- shared root ownership for papers, research notes, contradiction surfaces, and donor history
+
+Do not leave a package carrying two real publication objects while still pretending to be single-publication.
+
+### 3. Pivot Slate
 
 Generate a small slate of candidates before deepening research.
 
@@ -232,7 +259,7 @@ The recurring useful axes are:
 
 Do not let the first attractive candidate monopolize the search.
 
-### 3. Grounding Rule
+### 4. Grounding Rule
 
 For each serious candidate, use alphaXiv in this order:
 
@@ -354,7 +381,7 @@ The full-package clearance pass must include the north-star viability gate below
 
 ### North-Star Viability Gate
 
-Use this gate after the candidate is research-grounded and before opening a successor flagship package.
+Use this gate after the candidate is research-grounded and before opening a successor flagship leaf.
 
 The goal is to prevent a recurring failure mode:
 
@@ -417,6 +444,18 @@ Do not treat failed searches as nothing. Treat them as evidence about what the c
 - the north-star viability gate passes
 - the largest intended landing has scale-matched evidence
 
+### Initialize A Narrower Leaf When:
+
+- the post-block route settles on `keep_as_strong_narrower_doctrine_object`
+- the package has not yet created a second leaf for that object
+- the object is strong enough to deserve its own bounded publication identity even though it is not a new flagship
+
+### Initialize A Successor Leaf When:
+
+- the candidate has cleared both grounding and north-star viability
+- the package has already upgraded to an umbrella
+- the surviving object needs its own leaf before a new flagship iteration begins
+
 ### Mark `research_grounded_but_not_north_star_viable` when:
 
 - the candidate is supported by the literature and can likely produce a strong essay
@@ -460,7 +499,7 @@ For the original rollout, donor report freeze meant the legacy pair:
 - `post-ceiling reframe`
 - `process capture`
 
-For new packages, use the single `ceiling report` instead.
+For new packages, use the single `ceiling report` instead, then upgrade into an umbrella when a second object becomes real.
 
 ## Current Promotion Read
 
