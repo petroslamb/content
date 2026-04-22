@@ -13,14 +13,14 @@ What is now true:
 - the repo has stronger manifest-first routing, lifecycle checks, governing-brief resolution, and a local Stop-hook backstop
 - the `research-heavy` proof lane has been exercised with real package-local work
 - a strong `publish-adjacent` bounded proof exists on a clean leaf package
-- operational `media/distribution` work clearly exists in the repo, including real YouTube upload reports and Shorts upload reports
+- the `media/distribution` lane now has package-scoped retained evidence from `confidence-debt`, including real YouTube upload reports, Shorts upload reports, and workflow hardening committed from the same session
 
 What is not yet true:
 
 - the proof set does not yet contain three equally strong, current-style measured Phase 1.5 proofs
 - the research-heavy proof still needed clarifying prompt glue
 - the publish-adjacent proof is good evidence, but it is `archive_sync`-adjacent rather than the stricter `article_polish` to release-gate to publish-decision lane named in the checklist
-- the media/distribution lane now has a reconstructable proof record, but it is still too glue-heavy to count as a clean retained proof
+- the research-heavy lane remains the weakest current proof and is now the main reason the phase is still not honest to close
 
 ## Evidence By Lane
 
@@ -28,7 +28,7 @@ What is not yet true:
 | :--- | :--- | :--- | :--- |
 | `research-heavy` | [`reviewable-runs/logs/2026-04-22_literate-workflow-programming_manifest-first-proof-run.md`](../reviewable-runs/logs/2026-04-22_literate-workflow-programming_manifest-first-proof-run.md), [`reviewable-runs/logs/2026-04-22_literate-workflow-programming_claim-provenance-step.md`](../reviewable-runs/logs/2026-04-22_literate-workflow-programming_claim-provenance-step.md) | Real package-local bounded work happened, and the run improved the proof template itself. | `PARTIAL` |
 | `publish-adjacent` | [`reviewable-runs/logs/2026-04-22_17-50-08_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_launch-pack.json`](../reviewable-runs/logs/2026-04-22_17-50-08_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_launch-pack.json), [`reviewable-runs/logs/2026-04-22_17-54-42_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_local-mirror-validation.json`](../reviewable-runs/logs/2026-04-22_17-54-42_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_local-mirror-validation.json) | Clean cold-start package targeting, correct next-stage resolution, correct bounded local validator step, no external mutation. | `PASS`, but narrower than the ideal checklist lane |
-| `media/distribution` | [`reviewable-runs/logs/2026-04-22_youtube-cinematic-pilot_media-distribution-retrospective.md`](../reviewable-runs/logs/2026-04-22_youtube-cinematic-pilot_media-distribution-retrospective.md), [`experiments/youtube-cinematic-pilot/metrics/pilot-run-2026-04-22.md`](../experiments/youtube-cinematic-pilot/metrics/pilot-run-2026-04-22.md), [`publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic_upload_report.json`](../publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic_upload_report.json), [`publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/cinematic_shorts_upload_report.json`](../publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/cinematic_shorts_upload_report.json), [`publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic_upload_report.json`](../publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic_upload_report.json) | Strong operational evidence and now a reconstructable measured record, but the run was experiment-heavy and required too much glue to count as a clean retained proof. | `PARTIAL` |
+| `media/distribution` | [`reviewable-runs/logs/2026-04-22_confidence-debt_media-distribution-retrospective.md`](../reviewable-runs/logs/2026-04-22_confidence-debt_media-distribution-retrospective.md), [`publications/confidence-debt/artifacts/video/shorts/shorts_upload_report.json`](../publications/confidence-debt/artifacts/video/shorts/shorts_upload_report.json), [`publications/confidence-debt/artifacts/latest/tldr_upload_report.json`](../publications/confidence-debt/artifacts/latest/tldr_upload_report.json), [`publications/confidence-debt/artifacts/video/downloaded-shorts/downloaded_shorts_upload_report.json`](../publications/confidence-debt/artifacts/video/downloaded-shorts/downloaded_shorts_upload_report.json) | Strong package-scoped operational evidence: rebuilt longform, TL;DR upload, `16` scheduled Shorts with readback, `4` downloaded portrait Shorts uploaded immediately, and workflow hardening committed from the same session. | `PASS`, but not proof-minimal |
 
 ## What This Session Actually Bought
 
@@ -62,7 +62,7 @@ The open gap is no longer “the repo is not operable.” The open gap is narrow
 
 - the **research-heavy** lane is useful but still prompt-fragile
 - the **publish-adjacent** lane is strong, but it is still an `archive_sync` proof rather than the checklist’s ideal pre-publish/publish-decision continuation
-- the **media/distribution** lane is now documented as a measured retrospective proof, but it is still experiment-heavy and not minimal-glue
+- the **media/distribution** lane is now covered well enough by `confidence-debt` that it is no longer the main blocker
 
 That means the repo has crossed from “the system might work” into “the system mostly works, but the proof set is not yet strong enough to certify the phase.”
 
@@ -74,11 +74,11 @@ Against [`phase-1-1-5-closure-checklist.md`](phase-1-1-5-closure-checklist.md):
 | :--- | :---: | :--- |
 | Harness can determine next valid action without repo explanation | `partial` | Good on clean packages; still some ambiguity in research-heavy framing and umbrella packages before recent fixes. |
 | Harness can produce bounded outputs with correct logs and approval behavior | `yes` | Proven repeatedly for local bounded steps. |
-| At least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract | `partial` | Three lanes now have measured evidence, but only one is close to clean minimal-glue proof quality. |
+| At least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract | `partial` | Three lanes now have retained evidence, but the research-heavy lane still does not clear the same bar as the other two. |
 
 ## Recommended Next Move
 
-Run **one cleaner media/distribution continuation proof**.
+Run **one stricter research-heavy rerun**.
 
 Preferred standard:
 
@@ -89,14 +89,14 @@ Preferred standard:
 - explicit glue score
 - explicit stop condition
 
-The retrospective reconstruction now exists, so the remaining ask is narrower:
+The media/distribution reconstruction now exists and the publish-adjacent lane is already strong, so the remaining ask is narrower:
 
-1. **Fresh cleaner proof run**
+1. **Fresh cleaner research-heavy proof run**
    - Best if we want a clean closure argument.
-   - Use one explicit media/distribution target and one bounded approved mutation.
+   - Use one explicit `research-heavy` package target and one bounded next-step continuation.
 
-2. **Keep the retrospective as supporting evidence**
-   - It proves the lane is operationally real.
-   - It does not by itself prove minimal-glue harness operability.
+2. **Or write the final strict closure note**
+   - The remaining weakness is concentrated rather than diffuse.
+   - If we accept lane asymmetry, the note should say that explicitly instead of pretending all three lanes are equally clean.
 
-Until that cleaner run exists, the correct phase label remains `PARTIAL`.
+Until that stricter research-heavy proof or explicit closure exception exists, the correct phase label remains `PARTIAL`.
