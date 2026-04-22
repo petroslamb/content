@@ -273,6 +273,8 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
         print(f"  - root: {resolution.get('active_overlay_root')}")
         print(f"  - phase: {resolution.get('overlay_phase')}")
         print(f"  - next action: {resolution.get('next_overlay_action')}")
+        if resolution.get("overlay_route"):
+            print(f"  - route: {resolution.get('overlay_route')}")
         print(f"  - recommended validator: {resolution.get('overlay_recommended_validator')}")
 
     if resolution.get("gate_statuses"):

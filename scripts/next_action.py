@@ -39,6 +39,7 @@ def build_next_action(package_arg: str) -> dict:
         "active_overlay": None,
         "overlay_phase": None,
         "next_overlay_action": None,
+        "overlay_route": None,
         "overlay_recommended_validator": None,
         "active_overlay_root": None,
     }
@@ -66,6 +67,7 @@ def build_next_action(package_arg: str) -> dict:
         "active_overlay": resolution.get("active_overlay"),
         "overlay_phase": resolution.get("overlay_phase"),
         "next_overlay_action": resolution.get("next_overlay_action"),
+        "overlay_route": resolution.get("overlay_route"),
         "overlay_recommended_validator": resolution.get("overlay_recommended_validator"),
         "active_overlay_root": resolution.get("active_overlay_root"),
     }
@@ -104,6 +106,8 @@ def print_text(payload: dict) -> None:
         print(f"Overlay Root: {payload.get('active_overlay_root')}")
         print(f"Overlay Phase: {payload.get('overlay_phase')}")
         print(f"Next Overlay Action: {payload.get('next_overlay_action')}")
+        if payload.get("overlay_route"):
+            print(f"Overlay Route: {payload.get('overlay_route')}")
         print(f"Overlay Validator: {payload.get('overlay_recommended_validator')}")
 
     if payload.get("gate_statuses"):

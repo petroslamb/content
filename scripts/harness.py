@@ -1032,6 +1032,7 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
         "active_overlay_root": repo_relpath(pivot_root),
         "overlay_phase": None,
         "next_overlay_action": None,
+        "overlay_route": None,
         "recommended_validator": None,
         "pivot_slate_path": repo_relpath(slate_path),
         "grounding_review_path": repo_relpath(grounding_path),
@@ -1090,7 +1091,9 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
 
     if grounding_verdict == "research_grounded_but_not_north_star_viable":
         north_star_verdict = parse_pivot_north_star_verdict(north_star_path) if north_star_path else None
+        post_block_route = parse_pivot_post_block_route(decision_path) if decision_path else None
         progress["north_star_verdict"] = north_star_verdict
+        progress["overlay_route"] = post_block_route
         if north_star_path is None:
             progress["overlay_phase"] = "run_north_star_viability"
             progress["next_overlay_action"] = "write_north_star_viability"
@@ -1105,6 +1108,16 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
             progress["overlay_phase"] = "run_comparative_rerank"
             progress["next_overlay_action"] = "write_comparative_rerank"
             progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        if post_block_route == "keep_as_strong_narrower_doctrine_object":
+            progress["overlay_phase"] = "post_block_route_settled"
+            progress["next_overlay_action"] = "hold_for_narrower_doctrine_write_or_later_larger_successor"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            return progress
+        if post_block_route == "restart_pivot_search_later":
+            progress["overlay_phase"] = "post_block_route_settled"
+            progress["next_overlay_action"] = "await_materially_larger_successor_seam_before_restarting_pivot_search"
+            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
             return progress
         progress["overlay_phase"] = "decide_post_block_route"
         progress["next_overlay_action"] = "decide_narrow_or_restart_pivot_search"
@@ -1707,6 +1720,17 @@ def parse_pivot_north_star_verdict(path: Path) -> str | None:
     return None
 
 
+def parse_pivot_post_block_route(path: Path) -> str | None:
+    section = extract_markdown_section(path.read_text(), "## Post-Block Route")
+    if not section:
+        return None
+    for line in section.splitlines():
+        stripped = line.strip().strip("`")
+        if stripped:
+            return stripped
+    return None
+
+
 def evaluate_pivot_research_grounding_gate(package_path: Path) -> dict:
     payload = base_gate_payload("pivot_research_grounding")
     donor_report = resolve_pivot_donor_report(package_path)
@@ -2006,6 +2030,7 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "active_overlay": None,
         "overlay_phase": None,
         "next_overlay_action": None,
+        "overlay_route": None,
         "overlay_recommended_validator": None,
         "active_overlay_root": None,
     }
@@ -2016,6 +2041,7 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
             "active_overlay": active_overlay,
             "overlay_phase": resolved_overlay.get("overlay_phase"),
             "next_overlay_action": resolved_overlay.get("next_overlay_action"),
+            "overlay_route": resolved_overlay.get("overlay_route"),
             "overlay_recommended_validator": resolved_overlay.get("recommended_validator"),
             "active_overlay_root": resolved_overlay.get("active_overlay_root"),
         }
@@ -2142,6 +2168,7 @@ def build_workflow_resolution(
     overlay_progress = {
         "overlay_phase": None,
         "next_overlay_action": None,
+        "overlay_route": None,
         "recommended_validator": None,
         "active_overlay_root": None,
     }
@@ -2150,6 +2177,7 @@ def build_workflow_resolution(
         overlay_progress = {
             "overlay_phase": resolved_overlay.get("overlay_phase"),
             "next_overlay_action": resolved_overlay.get("next_overlay_action"),
+            "overlay_route": resolved_overlay.get("overlay_route"),
             "recommended_validator": resolved_overlay.get("recommended_validator"),
             "active_overlay_root": resolved_overlay.get("active_overlay_root"),
         }

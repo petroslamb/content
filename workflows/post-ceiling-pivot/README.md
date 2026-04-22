@@ -145,6 +145,11 @@ The recurring strong artifact set is:
 10. `pivot decision`
    Record whether the package should keep searching, clear a pivot, or stop.
 
+For north-star-blocked grounded candidates, the pivot decision must also carry an explicit `post-block route`:
+
+- `keep_as_strong_narrower_doctrine_object`
+- `restart_pivot_search_later`
+
 Legacy compatibility:
 
 - older packages may still satisfy the donor-report requirement with the pair:
@@ -169,6 +174,7 @@ Use these substeps:
 - `run_comparative_rerank`
 - `run_north_star_viability`
 - `decide_post_block_route`
+- `post_block_route_settled`
 - `initialize_successor_package`
 
 For a grounded candidate that is still north-star blocked, the normal loop is:
@@ -177,6 +183,8 @@ For a grounded candidate that is still north-star blocked, the normal loop is:
 2. comparative rerank
 3. restated north-star judgment
 4. decision to narrow, keep as doctrine piece, or search for a materially larger successor
+
+Once that decision is made explicitly, the overlay should leave `decide_post_block_route` and resolve a settled route instead of asking the same question again.
 
 ## Working Sequence
 
