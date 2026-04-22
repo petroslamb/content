@@ -78,7 +78,7 @@ The working taxonomy for article development is:
 3. **validation**: use [`alphaxiv-research/README.md`](alphaxiv-research/README.md) in narrow claim-testing mode against the active anchor papers and package evidence surface
 4. **blueprint hardening**: use [`essay-iteration/README.md`](essay-iteration/README.md) as the governing process surface, with targeted help from [`alphaxiv-research/README.md`](alphaxiv-research/README.md), [`paper-intake/README.md`](paper-intake/README.md), and [`evidence-authorization/README.md`](evidence-authorization/README.md) when evidence needs to be tightened. After a blocking high-bar review, this is the mandatory next step and must either set an outstanding-governing rewrite direction or record an explicit impossibility finding
 5. **external blueprint review**: optionally use [`essay-iteration/README.md`](essay-iteration/README.md) for an advisory outside review of the hardened blueprint before the prewrite gate. The writer adjudicates the findings and integrates only what materially improves the governing surface
-6. **essay prewrite gate**: use [`essay-iteration/README.md`](essay-iteration/README.md) to decide whether an outstanding essay is actually writable before prose drafting begins. This step must either produce an essay-governing prewrite surface or an explicit blocker
+6. **essay prewrite gate**: use [`essay-iteration/README.md`](essay-iteration/README.md) to decide whether an outstanding essay is actually writable before prose drafting begins. This step must either produce an essay-governing prewrite surface or an explicit blocker. In the generic workflow it now lives inside the `essay_iteration` packet rather than as a new lifecycle stage
 7. **draft iteration**: use [`essay-iteration/README.md`](essay-iteration/README.md) to seed the package-local essay packet, produce bounded rewrite candidates beside the live draft, and compare before promotion
 8. **production and release**: use NotebookLM, polish, release-gate, publishing, archive-sync, distribution, and video workflows once the live draft is ready for outward-facing work
 
@@ -120,12 +120,13 @@ For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 2. harden the package blueprint if it is still fuzzy, under-evidenced, or outrunning the current anchor set
 3. optionally run an external blueprint review, but keep it advisory and adjudicate the fixes as the writer
 4. run the essay prewrite gate before drafting: either produce an essay-governing prewrite surface or conclude explicitly that the essay is not yet writable at the target bar
-5. use alphaXiv in targeted validation mode against the active anchor papers when needed
-6. run `stage:run` for `essay_iteration` to seed or refresh the package-local packet beside the stable live draft
-7. fill that packet with a bounded candidate, replacement review, scorecard, and decision artifact
-8. run the packet validator before claiming the packet is ready for review
-9. compare before promotion instead of overwriting first
-10. if that review does not clear promotion, return immediately to blueprint hardening at the same top bar: either produce an outstanding-governing blueprint or conclude explicitly that the current frame cannot reach that bar from the available evidence
+5. keep confidence-debt-style or package-local proof notes as optional support, but express the actual draft-authorization verdict through the packet's prewrite gate
+6. use alphaXiv in targeted validation mode against the active anchor papers when needed
+7. run `stage:run` for `essay_iteration` to seed or refresh the package-local packet beside the stable live draft
+8. fill that packet with a bounded candidate, replacement review, scorecard, and decision artifact
+9. run the packet validator before claiming the packet is ready for review
+10. compare before promotion instead of overwriting first
+11. if that review does not clear promotion, return immediately to blueprint hardening at the same top bar: either produce an outstanding-governing blueprint or conclude explicitly that the current frame cannot reach that bar from the available evidence
 
 If that cycle ends in an explicit frame ceiling rather than a rewrite path, do not keep iterating locally by default. Use the experimental [`post-ceiling-pivot/README.md`](post-ceiling-pivot/README.md) workflow to decide whether a real new flagship object exists before drafting again.
 

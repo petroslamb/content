@@ -25,6 +25,8 @@ from essay_iteration_support import (
     PACKET_TEMPLATE_TARGETS,
     PACKET_SCHEMA_VERSION,
     PASSAGE_ANCHOR_FIELDS,
+    PREWRITE_BODY_HEADINGS,
+    PREWRITE_FRONTMATTER_FIELDS,
     REVIEW_BODY_HEADINGS,
     REVIEW_FRONTMATTER_FIELDS,
     SCORECARD_BODY_HEADINGS,
@@ -150,6 +152,8 @@ def build_packet_manifest(
         "packet_templates": packet_template_paths,
         "required_sections": {
             "blueprint_headings": BLUEPRINT_HEADINGS,
+            "prewrite_frontmatter_fields": PREWRITE_FRONTMATTER_FIELDS,
+            "prewrite_body_headings": PREWRITE_BODY_HEADINGS,
             "review_frontmatter_fields": REVIEW_FRONTMATTER_FIELDS,
             "review_body_headings": REVIEW_BODY_HEADINGS,
             "scorecard_frontmatter_fields": SCORECARD_FRONTMATTER_FIELDS,
@@ -177,8 +181,6 @@ def build_packet_manifest(
 
     if nearest_blueprint and nearest_blueprint == governing_brief and configured_blueprint is None:
         manifest["input_paths"]["nearest_blueprint_path"] = repo_relpath(nearest_blueprint)
-
-    return manifest
 
     return manifest
 

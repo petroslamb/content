@@ -14,7 +14,17 @@ import yaml
 
 from audit_package import audit_package, resolve_evidence_root
 from essay_iteration_support import (
+    ARCHIVE_ANCHOR_FIELDS,
+    BLUEPRINT_HEADINGS,
+    DECISION_REQUIRED_FOLLOW_THROUGH_PLACEHOLDER,
+    PACKET_SCHEMA_VERSION,
+    PASSAGE_ANCHOR_FIELDS,
+    PREWRITE_BODY_HEADINGS,
+    PREWRITE_FRONTMATTER_FIELDS,
+    build_packet_paths,
+    candidate_text_looks_scaffold,
     describe_packet_paths,
+    packet_schema_version,
     resolve_companion_path,
     resolve_evidence_surface as resolve_essay_evidence_surface,
     resolve_governing_brief_path,
@@ -25,7 +35,7 @@ from essay_iteration_support import (
     resolve_parent_package_readme,
     resolve_review_artifact_paths,
 )
-from lifecycle import PUBLICATIONS_DIR, REPO_ROOT, STAGES, load_status_ref, load_workflow_contract
+from lifecycle import PUBLICATIONS_DIR, REPO_ROOT, STAGES, load_status_ref, load_workflow_contract, split_frontmatter
 from package_lifecycle import inspect_package_lifecycle
 
 
@@ -36,6 +46,7 @@ LOGS_DIR = REPO_ROOT / "reviewable-runs" / "logs"
 
 REQUIRED_NPM_SCRIPTS = {
     "check",
+    "check:essay-prewrite",
     "check:essay-iteration",
     "check:package-lifecycle",
     "stage:next",
@@ -591,6 +602,287 @@ def build_package_context_paths(package_path: Path, status_data: dict) -> dict:
     }
 
 
+def parse_markdown_packet_file(path: Path) -> tuple[dict, str]:
+    text = path.read_text()
+    frontmatter_text, body = split_frontmatter(text)
+    frontmatter = yaml.safe_load(frontmatter_text) or {}
+    if not isinstance(frontmatter, dict):
+        raise ValueError(f"Frontmatter in {path} must be a mapping.")
+    return frontmatter, body
+
+
+def has_required_headings(text: str, headings: list[str]) -> bool:
+    return all(heading in text for heading in headings)
+
+
+def has_required_fields(frontmatter: dict, fields: list[str]) -> bool:
+    return all(field in frontmatter for field in fields)
+
+
+def resolve_essay_iteration_progress(package_key: str, package_path: Path, status_data: dict) -> dict:
+    validator_prewrite = f"npm run check:essay-prewrite -- --package {package_key}"
+    validator_full = f"npm run check:essay-iteration -- --package {package_key}"
+    defaults = {
+        "packet_phase": None,
+        "next_packet_action": None,
+        "recommended_validator": None,
+    }
+
+    live_draft = resolve_markdown_path(package_path, status_data)
+    revision = status_data.get("revision")
+    if live_draft is None or not isinstance(revision, int):
+        return {
+            **defaults,
+            "packet_phase": "seed_packet",
+            "next_packet_action": "seed_or_refresh_packet",
+            "recommended_validator": validator_prewrite,
+        }
+
+    packet_paths = build_packet_paths(live_draft, revision)
+    manifest_path = packet_paths["manifest"]
+    if not manifest_path.exists():
+        return {
+            **defaults,
+            "packet_phase": "seed_packet",
+            "next_packet_action": "seed_or_refresh_packet",
+            "recommended_validator": validator_prewrite,
+        }
+
+    try:
+        packet = json.loads(manifest_path.read_text())
+    except json.JSONDecodeError:
+        return {
+            **defaults,
+            "packet_phase": "seed_packet",
+            "next_packet_action": "refresh_packet_scaffold",
+            "recommended_validator": validator_prewrite,
+        }
+
+    output_paths = packet.get("output_paths", {})
+    try:
+        schema_version = packet_schema_version(packet)
+    except ValueError:
+        schema_version = 0
+
+    if schema_version < PACKET_SCHEMA_VERSION or "prewrite_gate" not in output_paths:
+        return {
+            **defaults,
+            "packet_phase": "run_prewrite_gate",
+            "next_packet_action": "refresh_packet_scaffold_then_run_prewrite_gate",
+            "recommended_validator": validator_prewrite,
+        }
+
+    blueprint_relpath = output_paths.get("blueprint")
+    if not isinstance(blueprint_relpath, str):
+        return {
+            **defaults,
+            "packet_phase": "harden_blueprint",
+            "next_packet_action": "repair_packet_manifest_then_harden_blueprint",
+            "recommended_validator": validator_prewrite,
+        }
+
+    blueprint_path = (REPO_ROOT / blueprint_relpath).resolve()
+    if not blueprint_path.exists():
+        return {
+            **defaults,
+            "packet_phase": "harden_blueprint",
+            "next_packet_action": "write_or_refresh_blueprint",
+            "recommended_validator": validator_prewrite,
+        }
+
+    blueprint_text = blueprint_path.read_text()
+    if not has_required_headings(blueprint_text, BLUEPRINT_HEADINGS):
+        return {
+            **defaults,
+            "packet_phase": "harden_blueprint",
+            "next_packet_action": "complete_blueprint_contract",
+            "recommended_validator": validator_prewrite,
+        }
+
+    prewrite_relpath = output_paths.get("prewrite_gate")
+    if not isinstance(prewrite_relpath, str):
+        return {
+            **defaults,
+            "packet_phase": "run_prewrite_gate",
+            "next_packet_action": "refresh_packet_scaffold_then_run_prewrite_gate",
+            "recommended_validator": validator_prewrite,
+        }
+
+    prewrite_path = (REPO_ROOT / prewrite_relpath).resolve()
+    if not prewrite_path.exists():
+        return {
+            **defaults,
+            "packet_phase": "run_prewrite_gate",
+            "next_packet_action": "fill_prewrite_gate",
+            "recommended_validator": validator_prewrite,
+        }
+
+    try:
+        prewrite_frontmatter, prewrite_body = parse_markdown_packet_file(prewrite_path)
+    except Exception:
+        return {
+            **defaults,
+            "packet_phase": "run_prewrite_gate",
+            "next_packet_action": "repair_prewrite_gate",
+            "recommended_validator": validator_prewrite,
+        }
+
+    if not has_required_fields(prewrite_frontmatter, PREWRITE_FRONTMATTER_FIELDS) or not has_required_headings(
+        prewrite_body, PREWRITE_BODY_HEADINGS
+    ):
+        return {
+            **defaults,
+            "packet_phase": "run_prewrite_gate",
+            "next_packet_action": "complete_prewrite_gate",
+            "recommended_validator": validator_prewrite,
+        }
+
+    writability_verdict = prewrite_frontmatter.get("writability_verdict")
+    if writability_verdict == "pending":
+        return {
+            **defaults,
+            "packet_phase": "run_prewrite_gate",
+            "next_packet_action": "complete_prewrite_gate",
+            "recommended_validator": validator_prewrite,
+        }
+    if writability_verdict == "not_yet_writable":
+        return {
+            **defaults,
+            "packet_phase": "resolve_prewrite_blocker",
+            "next_packet_action": "resolve_dominant_prewrite_blocker",
+            "recommended_validator": validator_prewrite,
+        }
+    if writability_verdict != "writable" or prewrite_frontmatter.get("candidate_authorized") is not True:
+        return {
+            **defaults,
+            "packet_phase": "run_prewrite_gate",
+            "next_packet_action": "repair_prewrite_gate_verdict",
+            "recommended_validator": validator_prewrite,
+        }
+
+    candidate_relpath = packet.get("candidate_path")
+    if not isinstance(candidate_relpath, str):
+        return {
+            **defaults,
+            "packet_phase": "draft_candidate",
+            "next_packet_action": "repair_packet_manifest_then_write_bounded_candidate",
+            "recommended_validator": validator_full,
+        }
+
+    candidate_path = (REPO_ROOT / candidate_relpath).resolve()
+    if not candidate_path.exists() or candidate_text_looks_scaffold(candidate_path.read_text()):
+        return {
+            **defaults,
+            "packet_phase": "draft_candidate",
+            "next_packet_action": "write_bounded_candidate",
+            "recommended_validator": validator_full,
+        }
+
+    review_relpath = output_paths.get("replacement_review")
+    if not isinstance(review_relpath, str):
+        return {
+            **defaults,
+            "packet_phase": "review_candidate",
+            "next_packet_action": "repair_packet_manifest_then_fill_replacement_review",
+            "recommended_validator": validator_full,
+        }
+
+    review_path = (REPO_ROOT / review_relpath).resolve()
+    try:
+        review_frontmatter, _ = parse_markdown_packet_file(review_path)
+    except Exception:
+        return {
+            **defaults,
+            "packet_phase": "review_candidate",
+            "next_packet_action": "fill_replacement_review",
+            "recommended_validator": validator_full,
+        }
+
+    if review_frontmatter.get("replacement_verdict") == "pending" or review_frontmatter.get("north_star_verdict") == "pending":
+        return {
+            **defaults,
+            "packet_phase": "review_candidate",
+            "next_packet_action": "fill_replacement_review",
+            "recommended_validator": validator_full,
+        }
+
+    scorecard_relpath = output_paths.get("atlas_scorecard")
+    if not isinstance(scorecard_relpath, str):
+        return {
+            **defaults,
+            "packet_phase": "score_candidate",
+            "next_packet_action": "repair_packet_manifest_then_fill_scorecard",
+            "recommended_validator": validator_full,
+        }
+
+    scorecard_path = (REPO_ROOT / scorecard_relpath).resolve()
+    try:
+        scorecard_frontmatter, _ = parse_markdown_packet_file(scorecard_path)
+    except Exception:
+        return {
+            **defaults,
+            "packet_phase": "score_candidate",
+            "next_packet_action": "fill_scorecard",
+            "recommended_validator": validator_full,
+        }
+
+    if any(scorecard_frontmatter.get(field) in (None, "", []) for field in PASSAGE_ANCHOR_FIELDS + ARCHIVE_ANCHOR_FIELDS):
+        return {
+            **defaults,
+            "packet_phase": "score_candidate",
+            "next_packet_action": "fill_scorecard",
+            "recommended_validator": validator_full,
+        }
+
+    decision_relpath = output_paths.get("decision")
+    if not isinstance(decision_relpath, str):
+        return {
+            **defaults,
+            "packet_phase": "fill_decision",
+            "next_packet_action": "repair_packet_manifest_then_fill_decision",
+            "recommended_validator": validator_full,
+        }
+
+    decision_path = (REPO_ROOT / decision_relpath).resolve()
+    try:
+        decision_frontmatter, decision_body = parse_markdown_packet_file(decision_path)
+    except Exception:
+        return {
+            **defaults,
+            "packet_phase": "fill_decision",
+            "next_packet_action": "fill_decision",
+            "recommended_validator": validator_full,
+        }
+
+    if (
+        decision_body.find(DECISION_REQUIRED_FOLLOW_THROUGH_PLACEHOLDER) != -1
+        or decision_frontmatter.get("requires_human_approval") is not True
+    ):
+        return {
+            **defaults,
+            "packet_phase": "fill_decision",
+            "next_packet_action": "fill_decision",
+            "recommended_validator": validator_full,
+        }
+
+    from check_essay_iteration_packet import validate_packet
+
+    if not validate_packet(packet, phase="full"):
+        return {
+            **defaults,
+            "packet_phase": "ready_for_human_review",
+            "next_packet_action": "request_human_review",
+            "recommended_validator": validator_full,
+        }
+
+    return {
+        **defaults,
+        "packet_phase": "fill_decision",
+        "next_packet_action": "resolve_remaining_packet_validation_errors",
+        "recommended_validator": validator_full,
+    }
+
+
 def build_stage_resolution(package_arg: str, stage: str) -> dict:
     manifest_ref, status_data = load_status_ref(package_arg)
     workflow_contract = load_workflow_contract(stage)
@@ -616,10 +908,20 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
             can_execute = False
     package_context_paths = build_package_context_paths(manifest_ref.package_path, status_data)
     packet_paths = {}
+    packet_progress = {
+        "packet_phase": None,
+        "next_packet_action": None,
+        "recommended_validator": None,
+    }
     if stage == "essay_iteration":
         live_draft = resolve_markdown_path(manifest_ref.package_path, status_data)
         revision = status_data.get("revision")
         packet_paths = describe_packet_paths(live_draft, revision if isinstance(revision, int) else None)
+        packet_progress = resolve_essay_iteration_progress(
+            manifest_ref.package_key,
+            manifest_ref.package_path,
+            status_data,
+        )
 
     return {
         "package": manifest_ref.package_key,
@@ -649,6 +951,7 @@ def build_stage_resolution(package_arg: str, stage: str) -> dict:
         "current_state": status_data.get("stages", {}).get(stage, {"done": False, "last_updated": None}),
         "package_context_paths": package_context_paths,
         "packet_paths": packet_paths,
+        **packet_progress,
     }
 
 

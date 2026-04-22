@@ -299,6 +299,12 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
         for name, path in resolution["packet_paths"].items():
             print(f"  - {name}: {path}")
 
+    if resolution.get("packet_phase"):
+        print("\nPacket Progress:")
+        print(f"  - phase: {resolution['packet_phase']}")
+        print(f"  - next action: {resolution.get('next_packet_action')}")
+        print(f"  - recommended validator: {resolution.get('recommended_validator')}")
+
     print("\nSuggested Commands:")
     for command in resolution["suggested_commands"]:
         print(f"  - {command}")
