@@ -7,6 +7,9 @@ route_checks:
   - package: literate-workflow-programming
     stage: essay_iteration
     expected_pipeline_profile: post_ceiling_successor
+    expected_effective_workflow: post_ceiling_pivot
+    expected_effective_next_action: hold_for_narrower_doctrine_write_or_later_larger_successor
+    expected_effective_can_execute: false
     expected_packet_phase: ready_for_human_review
     expected_recommended_workflow: post_ceiling_pivot
     expected_overlay_candidate: post_ceiling_pivot
