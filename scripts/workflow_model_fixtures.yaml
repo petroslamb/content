@@ -50,6 +50,10 @@ gate_checks:
     package: clean-interface-illusion
     expected_status: pass
     expected_decision: north_star_viable
+  - gate: pivot_north_star_viability
+    package: literate-workflow-programming
+    expected_status: blocked
+    expected_decision: no_successor
   - gate: release_readiness
     package: literate-workflow-programming
     expected_status: blocked
