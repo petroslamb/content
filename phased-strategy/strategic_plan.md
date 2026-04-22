@@ -30,10 +30,10 @@ What is already true:
 What is not yet true:
 
 - the full lifecycle is not agent-executable end to end, because many core stages are still `guided`
-- the harness-facing capability layer is not yet proven across measured runs with minimal custom prompting
-- the repo has operational run logging, but it does not yet have the formal three-run proof set needed to call Phase 1.5 closed
+- the harness-facing capability layer is not yet proven to a maximal, proof-minimal standard across all lanes
+- the retained proof set is not perfectly symmetric or proof-minimal across all three lanes
 
-So the honest read is: **Phase 1 is closed as internal repo normalization.** Independent harness execution is the Phase 1.5 proof gap, and operator-shell support belongs to Phase 1.6. That makes the right next move proof-run evidence, not a jump straight to a standalone agentic platform.
+So the honest read is: **Phase 1 is closed as internal repo normalization, and Phase 1.5 is now closed under a pragmatic proof bar.** The next layer is Phase 1.6 operator-shell hardening, not more delay while pretending the current proof set does not count at all.
 
 ---
 
@@ -184,12 +184,16 @@ Each proof should measure:
 
 **Deliverable**: Evidence that the repo is actually harness-operable, not just theoretically well documented.
 
+Status as of 2026-04-22: pragmatically satisfied. The retained proof set exists across `research-heavy`, `publish-adjacent`, and `media/distribution`, but the lanes remain uneven in cleanliness. That asymmetry is now a hardening concern, not a phase blocker.
+
 ### Phase 1.5 Gate Criteria
 > [!IMPORTANT]
 > **Do not enter Phase 1.6 until you can honestly answer YES to all of these:**
 > 1. Can Codex or a similar harness determine the next valid action for a package without you explaining the repo?
 > 2. Can the harness start from an idea or package target and produce bounded outputs with the correct logs and approval behavior?
 > 3. Have at least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract?
+
+Status as of 2026-04-22: pragmatically `YES`, with retained caveats documented in `phase-1-1-5-closure-checklist.md` and `phase-1-1-5-proof-set-verdict-2026-04-22.md`.
 
 ---
 
