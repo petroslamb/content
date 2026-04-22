@@ -10,7 +10,7 @@ Research direction: Determine whether markdown workflow docs, skills, indexes, i
 - Status: Active / capped flagship attempt
 - Current stage: essay_iteration
 - Current route: `post_ceiling_pivot` active from the stop-gated packet
-- Current pivot read: grounded successor found, north-star clearance still blocked
+- Current pivot read: grounded successor found, north-star clearance blocked, narrower doctrine route chosen
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
 
 ## Orientation
@@ -88,7 +88,7 @@ The P1 intake extends the evidence surface toward portable agent specifications,
 - Treat the `r3` packet as the proof surface for the stop gate, not as a prelude to `r4`.
 - Treat [`literate-workflow-programming-ceiling-report-r3.md`](literate-workflow-programming-ceiling-report-r3.md) as the canonical donor report for this capped flagship attempt.
 - Treat [`pivot/active/literate-workflow-programming-pivot-grounding-review.md`](pivot/active/literate-workflow-programming-pivot-grounding-review.md) and [`pivot/active/literate-workflow-programming-pivot-decision.md`](pivot/active/literate-workflow-programming-pivot-decision.md) as the current source of truth for the successor search.
-- Treat [`pivot/active/literate-workflow-programming-next-pivot-candidate.md`](pivot/active/literate-workflow-programming-next-pivot-candidate.md) as the live successor surface. It is grounded, but it is not yet a cleared flagship pivot.
+- Treat [`pivot/active/literate-workflow-programming-next-pivot-candidate.md`](pivot/active/literate-workflow-programming-next-pivot-candidate.md) as the strongest grounded successor surface. The current route keeps it as a narrower doctrine object rather than a cleared flagship pivot.
 - Treat [`pivot/active/literate-workflow-programming-validation-lifecycle-consequence-pass.md`](pivot/active/literate-workflow-programming-validation-lifecycle-consequence-pass.md) as the current pressure pass on enemy and consequence for the active candidate.
 - Treat [`pivot/active/literate-workflow-programming-pivot-blocker.md`](pivot/active/literate-workflow-programming-pivot-blocker.md) as the guardrail against promoting the strongest wrapper into a fake new object.
 - Treat [`literate-workflow-programming-post-ceiling-reframe.md`](literate-workflow-programming-post-ceiling-reframe.md) and [`literate-workflow-programming-process-capture.md`](literate-workflow-programming-process-capture.md) as historical working notes, not as the primary handoff surface.
