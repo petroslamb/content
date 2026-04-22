@@ -32,6 +32,14 @@ def print_report(report: dict) -> None:
             else "missing"
         )
     )
+    print(
+        "Prewrite gate: "
+        + (
+            f"{report['prewrite_gate_path']} ({report['prewrite_gate_verdict']})"
+            if report.get("prewrite_gate_path")
+            else "unresolved"
+        )
+    )
     if not report["issues"]:
         print("No lifecycle warnings.")
         return

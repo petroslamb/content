@@ -8,11 +8,13 @@ launch_templates:
   - ".venv/bin/python scripts/init_essay_iteration_packet.py --package {package_key}"
 packet_templates:
   - "workflows/essay-iteration/templates/hardened_blueprint_template.md"
+  - "workflows/essay-iteration/templates/prewrite_gate_template.md"
   - "workflows/essay-iteration/templates/candidate_template.md"
   - "workflows/essay-iteration/templates/cold_replacement_review_template.md"
   - "workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md"
   - "workflows/essay-iteration/templates/promotion_decision_template.md"
 validator_commands:
+  - "npm run check:essay-prewrite -- --package {package_key}"
   - "npm run check:essay-iteration -- --package {package_key}"
 required_context:
   - canonical live draft
@@ -24,9 +26,10 @@ required_context:
   - target evidence surface or source index
 expected_outputs:
   - essay-iteration packet manifest beside the live draft
+  - essay-governing prewrite gate beside the live draft
   - bounded rewrite candidate and structured review artifacts within the packet
 done_when:
-  - a validated packet exists beside the live draft and the current direction is explicit enough for human review or the next lifecycle handoff
+  - a validated packet exists beside the live draft, the prewrite gate is explicit, and the current direction is clear enough for human review or the next lifecycle handoff
 approval_gate: required_for_major_rewrite
 judgment_policy: draft_only
 prohibited_moves:
@@ -59,8 +62,10 @@ The intended sequence is:
 1. set the leaf package `status.yaml` so `essay_iteration` is the next stage
 2. run `npm run stage:run -- --package <leaf> --stage essay_iteration`
 3. let the scaffold script create a package-local packet beside the live draft
-4. point the model at the leaf package plus that packet manifest
-5. fill the packet, run the validator, and leave promotion to a stronger reviewer or human approver
+4. harden the blueprint if the governing surface is not yet rewrite-ready
+5. run the essay prewrite gate inside the packet before opening a bounded candidate
+6. point the model at the leaf package plus that packet manifest
+7. fill the remaining packet, run the validator, and leave promotion to a stronger reviewer or human approver
 
 The scaffold step is allowed without promotion approval because it only creates or refreshes the working packet. It does not authorize replacement of the live draft and it does not mark the stage done automatically.
 
@@ -86,6 +91,8 @@ The packet manifest must name:
 - the prohibited moves
 
 Treat the packet manifest as the primary execution surface. The workflow prose remains the policy layer, but the packet is the object a weaker model should actually follow.
+
+The packet now includes a canonical **essay prewrite gate**. This is the generic home for the kind of pre-prose gating that packages such as `confidence-debt` previously handled with package-local artifacts. Use package-local supporting notes when needed, but collapse the actual draft-authorization verdict into the packet's prewrite gate rather than inventing a new lifecycle stage.
 
 ## Weak-Model Judgment Limit
 
@@ -155,6 +162,12 @@ Use the blueprint only after the main cold read if blueprint alignment needs com
 - When a hardened blueprint is aiming at the outstanding bar, an external AI review of the blueprint can be useful before the essay prewrite gate, but that review is advisory. The writer remains responsible for adjudicating which findings matter, which are misreads, and which proposed fixes would actually improve the governing surface.
 - Before writing a high-bar bounded draft, run an essay prewrite gate. Either produce an essay-governing prewrite surface strong enough to support an outstanding draft, or conclude explicitly that the essay is not yet writable at that bar.
 - Do not let package cleanliness, folder normalization, or archive work stand in for proof that the new essay is stronger. A cleaner package can still contain a thinner publication object.
+
+The generic workflow consequence is strict:
+
+- do not open a bounded candidate before the packet's prewrite gate says it is writable
+- when the package needs claim-state, contradiction, or proof artifacts to justify writability, reference them from the prewrite gate instead of inventing a new top-level stage
+- confidence-debt-style gates remain valid precedents, but future packages should express the reusable decision through the packet's prewrite gate
 
 ## Blueprint Hardening
 
@@ -241,6 +254,8 @@ The essay prewrite gate is also binary:
 
 1. produce an essay-governing prewrite surface strong enough to support an outstanding draft
 2. or conclude explicitly that the essay is not yet writable at that bar from the current frame, evidence, or voice constraints
+
+Inside the generic `essay_iteration` packet, this gate lives in the package-local `*-prewrite-gate-r<revision>.md` artifact. It is not a new lifecycle stage.
 
 The prewrite surface should not be a rough outline. It should set:
 

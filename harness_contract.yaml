@@ -19,6 +19,9 @@ interfaces:
   check:essay-iteration:
     entrypoint: npm run check:essay-iteration
     script: .venv/bin/python scripts/check_essay_iteration_packet.py
+  check:essay-prewrite:
+    entrypoint: npm run check:essay-prewrite
+    script: .venv/bin/python scripts/check_essay_iteration_packet.py --phase prewrite
   check:harness:
     entrypoint: npm run check:harness
     script: .venv/bin/python scripts/check_harness.py
@@ -130,19 +133,23 @@ lifecycle:
       - target evidence surface or source index
       expected_outputs:
       - essay-iteration packet manifest beside the live draft
+      - essay-governing prewrite gate beside the live draft
       - bounded rewrite candidate and structured review artifacts within the packet
       done_when:
-      - a validated packet exists beside the live draft and the current direction
-        is explicit enough for human review or the next lifecycle handoff
+      - a validated packet exists beside the live draft, the prewrite gate is explicit,
+        and the current direction is clear enough for human review or the next lifecycle
+        handoff
       launch_templates:
       - .venv/bin/python scripts/init_essay_iteration_packet.py --package {package_key}
       packet_templates:
       - workflows/essay-iteration/templates/hardened_blueprint_template.md
+      - workflows/essay-iteration/templates/prewrite_gate_template.md
       - workflows/essay-iteration/templates/candidate_template.md
       - workflows/essay-iteration/templates/cold_replacement_review_template.md
       - workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md
       - workflows/essay-iteration/templates/promotion_decision_template.md
       validator_commands:
+      - npm run check:essay-prewrite -- --package {package_key}
       - npm run check:essay-iteration -- --package {package_key}
       judgment_policy: draft_only
       prohibited_moves:

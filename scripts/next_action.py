@@ -29,6 +29,9 @@ def build_next_action(package_arg: str) -> dict:
         "required_context": [],
         "suggested_commands": [],
         "log_target": "reviewable-runs/logs/",
+        "packet_phase": None,
+        "next_packet_action": None,
+        "recommended_validator": None,
     }
     if next_stage is None:
         return base
@@ -44,6 +47,9 @@ def build_next_action(package_arg: str) -> dict:
         "required_context": resolution["required_context"],
         "suggested_commands": resolution["suggested_commands"],
         "log_target": resolution["log_target"],
+        "packet_phase": resolution.get("packet_phase"),
+        "next_packet_action": resolution.get("next_packet_action"),
+        "recommended_validator": resolution.get("recommended_validator"),
     }
 
 
@@ -58,6 +64,11 @@ def print_text(payload: dict) -> None:
     print(f"Approval Gate: {payload['approval_gate']}")
     print(f"Requires Approval: {payload['requires_approval']}")
     print(f"Can Execute: {payload['can_execute']}")
+
+    if payload.get("packet_phase"):
+        print(f"Packet Phase: {payload['packet_phase']}")
+        print(f"Next Packet Action: {payload.get('next_packet_action')}")
+        print(f"Recommended Validator: {payload.get('recommended_validator')}")
 
     if payload["blocking_issues"]:
         print("\nBlocking Issues:")

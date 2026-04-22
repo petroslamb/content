@@ -27,6 +27,9 @@ from essay_iteration_support import (
     ESCALATION_STOP_GATE_STATUSES,
     PACKET_SCHEMA_VERSION,
     PASSAGE_ANCHOR_FIELDS,
+    PREWRITE_BODY_HEADINGS,
+    PREWRITE_FRONTMATTER_FIELDS,
+    PREWRITE_WRITABILITY_VERDICTS,
     REVIEW_BODY_HEADINGS,
     REVIEW_FRONTMATTER_FIELDS,
     SCORECARD_BODY_HEADINGS,
@@ -40,9 +43,16 @@ from essay_iteration_support import (
 from lifecycle import REPO_ROOT, load_status_ref, split_frontmatter
 
 
-REQUIRED_PACKET_OUTPUTS = {
+PREWRITE_REQUIRED_PACKET_OUTPUTS = {
     "manifest",
     "blueprint",
+    "prewrite_gate",
+}
+
+FULL_REQUIRED_PACKET_OUTPUTS = {
+    "manifest",
+    "blueprint",
+    "prewrite_gate",
     "candidate",
     "replacement_review",
     "atlas_scorecard",
@@ -153,17 +163,62 @@ def parse_publication_power(value: object) -> float | None:
     return None
 
 
-def validate_packet(packet: dict) -> list[str]:
+def validate_prewrite_gate(frontmatter: dict, body: str, errors: list[str]) -> None:
+    validate_required_fields(frontmatter, PREWRITE_FRONTMATTER_FIELDS, "Prewrite gate", errors)
+    validate_required_headings(body, PREWRITE_BODY_HEADINGS, "Prewrite gate", errors)
+
+    verdict = frontmatter.get("writability_verdict")
+    if verdict not in PREWRITE_WRITABILITY_VERDICTS:
+        errors.append(
+            "Prewrite gate frontmatter field 'writability_verdict' must be one of: "
+            + ", ".join(sorted(PREWRITE_WRITABILITY_VERDICTS))
+            + "."
+        )
+
+    candidate_authorized = frontmatter.get("candidate_authorized")
+    if not isinstance(candidate_authorized, bool):
+        errors.append("Prewrite gate frontmatter field 'candidate_authorized' must be true or false.")
+
+    supporting_artifact_paths = frontmatter.get("supporting_artifact_paths")
+    if not isinstance(supporting_artifact_paths, list):
+        errors.append("Prewrite gate frontmatter field 'supporting_artifact_paths' must be a list.")
+
+    dominant_blocker_slug = frontmatter.get("dominant_blocker_slug")
+    if verdict == "writable":
+        if candidate_authorized is not True:
+            errors.append("Prewrite gate verdict 'writable' requires candidate_authorized: true.")
+    elif verdict == "not_yet_writable":
+        if candidate_authorized is not False:
+            errors.append("Prewrite gate verdict 'not_yet_writable' requires candidate_authorized: false.")
+        if not valid_dominant_blocker_slug(dominant_blocker_slug):
+            errors.append(
+                "Prewrite gate verdict 'not_yet_writable' requires a non-empty kebab-case dominant_blocker_slug."
+            )
+    elif verdict == "pending" and dominant_blocker_slug not in (None, "") and not valid_dominant_blocker_slug(
+        dominant_blocker_slug
+    ):
+        errors.append("Prewrite gate frontmatter field 'dominant_blocker_slug' must be kebab-case when filled in.")
+
+
+def validate_packet(packet: dict, phase: str = "full") -> list[str]:
     errors: list[str] = []
     schema_version = packet_schema_version(packet)
     output_paths = packet.get("output_paths", {})
-    missing_outputs = sorted(REQUIRED_PACKET_OUTPUTS - set(output_paths.keys()))
+    required_outputs = PREWRITE_REQUIRED_PACKET_OUTPUTS if phase == "prewrite" else FULL_REQUIRED_PACKET_OUTPUTS
+    missing_outputs = sorted(required_outputs - set(output_paths.keys()))
     if missing_outputs:
-        errors.append(f"Packet manifest is missing output paths: {', '.join(missing_outputs)}")
+        if "prewrite_gate" in missing_outputs:
+            errors.append(
+                "Packet manifest does not include output_paths.prewrite_gate. Refresh the essay-iteration packet scaffold to schema v3."
+            )
+        other_missing = [name for name in missing_outputs if name != "prewrite_gate"]
+        if other_missing:
+            errors.append(f"Packet manifest is missing output paths: {', '.join(other_missing)}")
         return errors
 
     resolved_outputs = {name: (REPO_ROOT / relpath).resolve() for name, relpath in output_paths.items()}
-    for name, path in resolved_outputs.items():
+    for name in sorted(required_outputs):
+        path = resolved_outputs[name]
         if not path.exists():
             errors.append(f"Packet output '{name}' does not exist: {path}")
 
@@ -187,6 +242,21 @@ def validate_packet(packet: dict) -> list[str]:
 
     blueprint_text = resolved_outputs["blueprint"].read_text()
     validate_required_headings(blueprint_text, BLUEPRINT_HEADINGS, "Blueprint", errors)
+
+    prewrite_frontmatter, prewrite_body = parse_markdown_frontmatter(resolved_outputs["prewrite_gate"])
+    validate_prewrite_gate(prewrite_frontmatter, prewrite_body, errors)
+
+    if phase == "prewrite":
+        if prewrite_frontmatter.get("writability_verdict") == "pending":
+            errors.append(
+                "Prewrite validation requires the prewrite gate verdict to be settled, not left at 'pending'."
+            )
+        return errors
+
+    if prewrite_frontmatter.get("writability_verdict") != "writable":
+        errors.append(
+            "Full packet validation requires prewrite gate writability_verdict: writable before candidate review."
+        )
 
     candidate_text = candidate_path.read_text()
     validate_candidate_sections(candidate_text, errors)
@@ -216,7 +286,7 @@ def validate_packet(packet: dict) -> list[str]:
         conditional_sections = packet.get("required_sections", {}).get("conditional_escalation_sections")
         if not isinstance(conditional_sections, dict):
             errors.append(
-                "Packet manifest is missing required_sections.conditional_escalation_sections for schema v2 packets."
+                "Packet manifest is missing required_sections.conditional_escalation_sections for schema v3 packets."
             )
 
         validate_required_fields(
@@ -348,23 +418,30 @@ def validate_packet(packet: dict) -> list[str]:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate a package-local essay-iteration packet.")
     parser.add_argument("--package", required=True, help="Leaf package path relative to publications/")
+    parser.add_argument(
+        "--phase",
+        choices=["prewrite", "full"],
+        default="full",
+        help="Validation phase: prewrite checks blueprint + prewrite gate, full checks the whole packet.",
+    )
     parser.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
     args = parser.parse_args()
 
     try:
         packet, _ = load_packet_manifest(args.package)
-        errors = validate_packet(packet)
+        errors = validate_packet(packet, phase=args.phase)
     except Exception as exc:
         payload = {"success": False, "errors": [str(exc)]}
         if args.format == "json":
             print(json.dumps(payload, indent=2))
         else:
-            print("Essay-iteration packet validation failed:")
+            print(f"Essay-iteration packet {args.phase} validation failed:")
             print(f"  - {exc}")
         raise SystemExit(1)
 
     payload = {
         "success": not errors,
+        "phase": args.phase,
         "packet_manifest_path": packet.get("packet_manifest_path"),
         "errors": errors,
     }
@@ -372,11 +449,11 @@ def main() -> None:
         print(json.dumps(payload, indent=2))
     else:
         if errors:
-            print("Essay-iteration packet validation failed:")
+            print(f"Essay-iteration packet {args.phase} validation failed:")
             for error in errors:
                 print(f"  - {error}")
         else:
-            print("Essay-iteration packet validation passed.")
+            print(f"Essay-iteration packet {args.phase} validation passed.")
     if errors:
         raise SystemExit(1)
 

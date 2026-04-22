@@ -11,7 +11,7 @@ import re
 from lifecycle import PUBLICATIONS_DIR, REPO_ROOT
 
 
-PACKET_SCHEMA_VERSION = 2
+PACKET_SCHEMA_VERSION = 3
 
 BLUEPRINT_PATTERNS = ("*blueprint*.md", "*plan*.md")
 REVIEW_PATTERNS = ("*review*.md", "*scorecard*.md", "*claims*.md", "*rubric*.md")
@@ -24,6 +24,37 @@ BLUEPRINT_HEADINGS = [
     "## Cut order",
     "## Failure triggers",
 ]
+
+PREWRITE_FRONTMATTER_FIELDS = [
+    "kind",
+    "package",
+    "revision",
+    "judgment_policy",
+    "live_draft_path",
+    "candidate_path",
+    "writability_verdict",
+    "candidate_authorized",
+    "dominant_blocker_slug",
+    "supporting_artifact_paths",
+]
+
+PREWRITE_BODY_HEADINGS = [
+    "## Promise",
+    "## Spine",
+    "## Paragraph burden",
+    "## Evidence burden",
+    "## Cut order",
+    "## Failure triggers",
+    "## Claim-State Gate",
+    "## Writability Verdict",
+    "## Required Follow-Through",
+]
+
+PREWRITE_WRITABILITY_VERDICTS = {
+    "pending",
+    "writable",
+    "not_yet_writable",
+}
 
 ESCALATION_BLUEPRINT_HEADINGS = [
     "## Opening Lab",
@@ -152,6 +183,7 @@ CANDIDATE_REFERENCES_HEADINGS = [
 
 PACKET_TEMPLATE_TARGETS = {
     "hardened_blueprint_template.md": "blueprint",
+    "prewrite_gate_template.md": "prewrite_gate",
     "candidate_template.md": "candidate",
     "cold_replacement_review_template.md": "replacement_review",
     "atlas_live_draft_scorecard_template.md": "atlas_scorecard",
@@ -165,6 +197,19 @@ ESCALATION_STOP_GATE_STATUSES = {
 }
 
 DOMINANT_BLOCKER_SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
+CANDIDATE_SCAFFOLD_MARKERS = [
+    "# Working Title",
+    "Write the candidate here.",
+    "## Limits",
+    "State the boundaries, counterpressure, or what the essay will not claim.",
+    "## References",
+    "Include real endmatter or references, not just a companion pointer.",
+]
+
+DECISION_REQUIRED_FOLLOW_THROUGH_PLACEHOLDER = (
+    "List the next concrete actions required before the stage can be marked done."
+)
 
 
 def repo_relpath(path: Path | None) -> str | None:
@@ -207,6 +252,10 @@ def escalation_mode_active(
 
 def valid_dominant_blocker_slug(value: object) -> bool:
     return isinstance(value, str) and bool(DOMINANT_BLOCKER_SLUG_RE.fullmatch(value))
+
+
+def candidate_text_looks_scaffold(text: str) -> bool:
+    return all(marker in text for marker in CANDIDATE_SCAFFOLD_MARKERS)
 
 
 def resolve_live_draft(package_path: Path, status_data: dict) -> Path | None:
@@ -346,6 +395,7 @@ def build_packet_paths(live_draft_path: Path, revision: int) -> dict[str, Path]:
     return {
         "manifest": root / f"{draft_stem}-essay-iteration-packet-r{revision}.json",
         "blueprint": root / f"{draft_stem}-blueprint-r{revision}.md",
+        "prewrite_gate": root / f"{draft_stem}-prewrite-gate-r{revision}.md",
         "candidate": root / f"{draft_stem}-candidate-r{revision}.md",
         "replacement_review": root / f"{draft_stem}-replacement-review-r{revision}.md",
         "atlas_scorecard": root / f"{draft_stem}-atlas-scorecard-r{revision}.md",
