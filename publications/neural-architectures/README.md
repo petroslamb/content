@@ -16,6 +16,8 @@ Umbrella package for the neural-architecture essay line of the publication. It i
 - Runnable leaf package for the promoted scaffold essay: [`neural-architecture-design-as-a-compositional-32e/README.md`](neural-architecture-design-as-a-compositional-32e/README.md)
 - Adjacent live working files: [`The Next Frontier in AI PART 1.md`](<The Next Frontier in AI PART 1.md>), [`The Next Frontier in AI PART 2.md`](<The Next Frontier in AI PART 2.md>), [`Multimodal Reasoning with Integrated Transformers.md`](<Multimodal Reasoning with Integrated Transformers.md>)
 
+The umbrella manifest now delegates its remaining runnable media-stage pointers to the default leaf package's draft and artifact bundle, because that is the only self-contained production surface currently present in this package line.
+
 ## Shared Sources And Artifacts
 
 - The shared paper library for this umbrella lives under [`papers/`](papers/), with the tracked index at [`papers/index.md`](papers/index.md).
