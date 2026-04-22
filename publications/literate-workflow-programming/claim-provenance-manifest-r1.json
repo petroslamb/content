@@ -1,0 +1,161 @@
+{
+  "kind": "claim_provenance_manifest",
+  "package": "literate-workflow-programming",
+  "revision": 1,
+  "status": "package_local_proof_surface",
+  "date": "2026-04-22",
+  "scope": {
+    "purpose": "Represent article-ready claims as package-local provenance state without drafting the essay body or proposing a repo-wide interface.",
+    "non_goals": [
+      "Do not treat this manifest as full semantic provenance graphs.",
+      "Do not treat this manifest as proof of broad behavioral conformance.",
+      "Do not use this manifest to justify repo-wide validator promotion.",
+      "Do not use this manifest as proof that the package is ready for essay-body drafting."
+    ]
+  },
+  "authority_order": [
+    "claim_ledger",
+    "contradiction_register",
+    "claim_scorecard",
+    "proof_note",
+    "reviewable_run_log"
+  ],
+  "inputs": {
+    "claim_ledger": "publications/literate-workflow-programming/claim-ledger.md",
+    "claim_scorecard": "publications/literate-workflow-programming/claim-scorecard.md",
+    "contradiction_register": "publications/literate-workflow-programming/contradiction-register.md",
+    "governing_brief": "publications/literate-workflow-programming/literate-workflow-programming.md",
+    "proof_note": "publications/literate-workflow-programming/research-notes/2026-04-22-claim-provenance-proof-note.md",
+    "p2a_note": "publications/literate-workflow-programming/research-notes/2026-04-21-p2a-local-intake-trace-provenance.md",
+    "transfer_note": "publications/literate-workflow-programming/research-notes/2026-04-21-confidence-debt-contradiction-ledger-transfer.md"
+  },
+  "claims": [
+    {
+      "claim_id": "CSA-C1",
+      "short_claim": "Workflow specs become meaningful source only when coupled to validation gates, policy enforcement, and semantic debugging traces.",
+      "article_role": "lead_frame",
+      "scorecard_label": "article-ready",
+      "evidence_state": "strong_local_support",
+      "contradiction_state": "resolved",
+      "contradiction_ids": [
+        "CSA-001",
+        "CSA-002",
+        "CSA-003"
+      ],
+      "validation_state": "partial_local_validation",
+      "validation_notes": "Local validation is bounded. spec-diff demonstrates source/evidence drift detection only.",
+      "trace_state": "indirect_local_trace_support",
+      "trace_artifacts": [
+        "reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md",
+        "reviewable-runs/logs/2026-04-21_illusion-of-swarm_spec-diff-proof-candidate.md"
+      ],
+      "current_use": "safe_with_bounded_proof_caveat"
+    },
+    {
+      "claim_id": "CSA-C2",
+      "short_claim": "Reviewable-run logs should be traces and semantic debugging surfaces, not the source of truth.",
+      "article_role": "proof_section",
+      "scorecard_label": "article-ready",
+      "evidence_state": "strong_local_support",
+      "contradiction_state": "resolved",
+      "contradiction_ids": [
+        "CSA-003"
+      ],
+      "validation_state": "partial_local_validation",
+      "validation_notes": "Reviewable Runs and spec-diff show trace/debug value without making logs the authority surface.",
+      "trace_state": "direct_local_trace_support",
+      "trace_artifacts": [
+        "reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md",
+        "reviewable-runs/logs/2026-04-21_illusion-of-swarm_spec-diff-proof-candidate.md"
+      ],
+      "current_use": "safe_if_source_trace_hierarchy_stays_explicit"
+    },
+    {
+      "claim_id": "CSA-C3",
+      "short_claim": "Markdown workflow files become programming substrate only when paired with runtime binding, validation, policy enforcement, and provenance.",
+      "article_role": "narrowed_metaphor",
+      "scorecard_label": "article-ready",
+      "evidence_state": "strong_local_support",
+      "contradiction_state": "open_but_bounded",
+      "contradiction_ids": [
+        "CSA-007"
+      ],
+      "validation_state": "partial_local_validation",
+      "validation_notes": "The package has validators and policy surfaces, but not full provenance integration.",
+      "trace_state": "indirect_local_trace_support",
+      "trace_artifacts": [
+        "reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md"
+      ],
+      "current_use": "safe_if_task_risk_caveat_remains_visible"
+    },
+    {
+      "claim_id": "CSA-C5",
+      "short_claim": "Local spec-diff experiments are repo-native proof candidates for source-linked drift detection.",
+      "article_role": "local_proof_example",
+      "scorecard_label": "article-ready",
+      "evidence_state": "strong_local_support",
+      "contradiction_state": "parked_for_repo_wide_promotion",
+      "contradiction_ids": [
+        "CSA-005"
+      ],
+      "validation_state": "strong_local_validation_for_bounded_claim",
+      "validation_notes": "Validated only for source-linked drift detection inside package-local proof candidates.",
+      "trace_state": "direct_local_trace_support",
+      "trace_artifacts": [
+        "reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md",
+        "reviewable-runs/logs/2026-04-21_illusion-of-swarm_spec-diff-proof-candidate.md"
+      ],
+      "current_use": "safe_as_local_proof_candidate_only"
+    },
+    {
+      "claim_id": "CSA-C6",
+      "short_claim": "Claim-level provenance and contradiction state should be part of the semantic-debugging surface for promoted workflow claims.",
+      "article_role": "next_layer_requirement",
+      "scorecard_label": "article-ready",
+      "evidence_state": "strong_local_support",
+      "contradiction_state": "resolved_on_scope_with_implementation_gap",
+      "contradiction_ids": [
+        "CSA-006",
+        "CSA-008"
+      ],
+      "validation_state": "weak_to_partial_local_validation",
+      "validation_notes": "The package has a contradiction register and state map, but no claim-evidence graph, coverage metric, or queryable provenance layer.",
+      "trace_state": "indirect_local_trace_support",
+      "trace_artifacts": [
+        "reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md",
+        "reviewable-runs/logs/2026-04-21_illusion-of-swarm_spec-diff-proof-candidate.md"
+      ],
+      "current_use": "safe_as_requirement_not_completed_capability"
+    },
+    {
+      "claim_id": "CSA-C7",
+      "short_claim": "Validation should be treated as lifecycle infrastructure, not as a one-time gate.",
+      "article_role": "hinge_claim",
+      "scorecard_label": "article-ready",
+      "evidence_state": "strong_local_support",
+      "contradiction_state": "open_but_bounded",
+      "contradiction_ids": [
+        "CSA-008"
+      ],
+      "validation_state": "partial_to_strong_local_validation",
+      "validation_notes": "spec-diff, packet validation, and package checks model continuous checking in a limited package-local way.",
+      "trace_state": "direct_local_trace_support",
+      "trace_artifacts": [
+        "reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md",
+        "reviewable-runs/logs/2026-04-22_literate-workflow-programming_next-action-proof-gate.md"
+      ],
+      "current_use": "safe_if_no_fully_autonomous_validation_claim_is_made"
+    }
+  ],
+  "implementation_gaps": [
+    "No claim-evidence graph.",
+    "No provenance coverage metric.",
+    "No provenance soundness metric.",
+    "No queryable contradiction transparency layer.",
+    "No automated authority resolution."
+  ],
+  "next_actions": [
+    "Fold this manifest into packet-level review once a real candidate draft exists.",
+    "Optionally design a smaller package-local claim provenance checker without promoting it repo-wide."
+  ]
+}
