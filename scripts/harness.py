@@ -289,6 +289,26 @@ def find_first_matching_file(root: Path, suffixes: tuple[str, ...]) -> Path | No
     return None
 
 
+def find_preferred_matching_file(root: Path, suffixes: tuple[str, ...]) -> Path | None:
+    if not root.exists():
+        return None
+    suffix_priority = {suffix.lower(): index for index, suffix in enumerate(suffixes)}
+    candidates = [
+        candidate
+        for candidate in sorted(root.rglob("*"))
+        if candidate.is_file() and candidate.suffix.lower() in suffixes
+    ]
+    if not candidates:
+        return None
+    return min(
+        candidates,
+        key=lambda candidate: (
+            suffix_priority.get(candidate.suffix.lower(), len(suffixes)),
+            str(candidate),
+        ),
+    )
+
+
 def parse_research_direction(package_path: Path) -> str | None:
     readme = resolve_leaf_readme(package_path)
     if not readme:
@@ -479,7 +499,9 @@ def resolve_context_item(item: str, package_path: Path, status_data: dict) -> di
 
     if item == "timed captions or transcript inputs":
         search_root = resolve_artifacts_dir(package_path, status_data) or package_path
-        transcript_path = find_first_matching_file(search_root, (".srt", ".vtt", ".txt", ".json"))
+        transcript_path = find_preferred_matching_file(
+            search_root, (".srt", ".vtt", ".txt", ".json")
+        )
         if transcript_path:
             return {"name": item, "status": "resolved", "blocking": False, "value": repo_relpath(transcript_path)}
         return {"name": item, "status": "missing", "blocking": True}
