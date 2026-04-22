@@ -1,0 +1,121 @@
+{
+  "kind": "lifecycle_stage_run",
+  "schema_version": 2,
+  "timestamp": "2026-04-22_17-54-42",
+  "run_id": "2026-04-22_17-54-42_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_local-mirror-validation",
+  "package": "neural-architectures/neural-architecture-design-as-a-compositional-32e",
+  "stage": "archive_sync",
+  "action": "local-mirror-validation",
+  "success": true,
+  "boundary": {
+    "type": "explicit non-approval reason",
+    "reason": "Tracked-state-only Phase 1.5 proof step. This run validated the local mirror against the checked-in archive and did not fetch Substack or mutate any external service.",
+    "external_side_effect": false,
+    "approval_gate": "none",
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Determine the next valid bounded publish-adjacent action for the package and execute one local archive-sync sub-step without external mutation.",
+    "stop_condition": "The next stage is resolved and one local validator command completes with a reviewable log.",
+    "non_goals": [
+      "Do not refresh the archive from Substack.",
+      "Do not mark archive_sync done from local validation alone.",
+      "Do not perform downstream distribution work."
+    ]
+  },
+  "execution": {
+    "commands": [
+      "npm run stage:next -- --package neural-architectures/neural-architecture-design-as-a-compositional-32e --format json",
+      "npm run stage:resolve -- --package neural-architectures/neural-architecture-design-as-a-compositional-32e --stage archive_sync --format json",
+      "npm run check:mirror"
+    ],
+    "output_excerpt": "Resolved next_stage=archive_sync with can_execute=true and approval_gate=none. `npm run check:mirror` rebuilt `publication_strategy_and_archive/mirror/_site`, emitted `/posts/neural-architecture-design-as-a-compositional-32e/index.html`, then passed `scripts/check_mirror.py` with `{\\n  \"checked_posts\": 23,\\n  \"checked_html_files\": 51,\\n  \"checked_editorial_atlas\": true,\\n  \"path_prefix\": \"/\"\\n}` and passed `scripts/e2e_mirror_smoke.py` for the normal mirror routes.",
+    "output_truncated": false,
+    "state_before": {
+      "done": false,
+      "last_updated": "2026-04-07"
+    },
+    "state_after": {
+      "done": false,
+      "last_updated": "2026-04-07"
+    },
+    "dependency_warnings": []
+  },
+  "evidence": {
+    "workflow_doc": "workflows/substack-archive-sync/README.md",
+    "status_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml",
+    "required_context": [
+      {
+        "name": "repo root environment with archive scripts available",
+        "status": "resolved",
+        "blocking": false,
+        "value": "scripts/sync_substack_archive.py"
+      },
+      {
+        "name": "up-to-date publication metadata or recently published post",
+        "status": "resolved",
+        "blocking": false,
+        "value": "publication_strategy_and_archive/substack_archive/metadata.json"
+      }
+    ],
+    "expected_outputs": [
+      "refreshed tracked public archive",
+      "updated archive metadata and README publication map"
+    ],
+    "done_when": [
+      "the archive refresh completes successfully and the mirror validation pass is clean"
+    ],
+    "tracked_state_observations": [
+      "The checked-in archive already contains `publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.md` and the matching HTML snapshot.",
+      "The checked-in post map already maps slug `neural-architecture-design-as-a-compositional-32e` to `publications/neural-architectures/neural-architecture-design-as-a-compositional-32e`."
+    ]
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "next_stage_resolution",
+        "result": "pass",
+        "notes": "The tracked harness resolved `archive_sync` as the next valid stage and reported `can_execute: true`."
+      },
+      {
+        "name": "mirror_build",
+        "result": "pass",
+        "notes": "Eleventy rebuilt the local mirror and emitted the package route for this slug."
+      },
+      {
+        "name": "mirror_static_validation",
+        "result": "pass",
+        "notes": "`scripts/check_mirror.py` completed successfully over the checked-in archive and built output."
+      },
+      {
+        "name": "mirror_e2e_smoke",
+        "result": "pass",
+        "notes": "`scripts/e2e_mirror_smoke.py` completed successfully for the normal mirror path prefix."
+      },
+      {
+        "name": "lifecycle_log_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-22_17-54-42_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_local-mirror-validation.json"
+      }
+    ],
+    "residual_risk": "This bounded step did not run the remote archive refresh and did not validate the `/content/` prefixed mirror mode. `archive_sync` therefore remains incomplete."
+  },
+  "failure_or_risk": {
+    "actual_failure": null,
+    "possible_failures": [
+      "The local mirror can pass while the remote Substack feed or archive API has diverged.",
+      "The normal mirror path can pass while the GitHub Pages `/content/` path prefix still has an issue.",
+      "The stage could be mistaken as complete even though only a local validation sub-step ran."
+    ]
+  },
+  "workflow_doc": "workflows/substack-archive-sync/README.md",
+  "status_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml",
+  "commands": [
+    "npm run stage:next -- --package neural-architectures/neural-architecture-design-as-a-compositional-32e --format json",
+    "npm run stage:resolve -- --package neural-architectures/neural-architecture-design-as-a-compositional-32e --stage archive_sync --format json",
+    "npm run check:mirror"
+  ],
+  "output_excerpt": "Resolved next_stage=archive_sync with can_execute=true and approval_gate=none, then passed the normal local mirror build and validators without external mutation.",
+  "output_truncated": false
+}
