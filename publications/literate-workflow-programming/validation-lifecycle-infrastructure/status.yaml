@@ -1,0 +1,36 @@
+kind: leaf
+publication: validation-is-lifecycle-infrastructure
+parent_package: literate-workflow-programming
+revision: 3
+config:
+  markdown_path: publications/literate-workflow-programming/validation-is-lifecycle-infrastructure.md
+  evidence_path: publications/literate-workflow-programming/papers
+  blueprint_path: blueprint.md
+stages:
+  paper_intake:
+    done: true
+    last_updated: '2026-04-21'
+  research:
+    done: true
+    last_updated: '2026-04-22'
+  essay_iteration:
+    done: true
+    last_updated: '2026-04-22'
+  notebooklm_artifacts:
+    done: false
+    last_updated: null
+  article_polish:
+    done: false
+    last_updated: null
+  substack_publishing:
+    done: false
+    last_updated: null
+  archive_sync:
+    done: false
+    last_updated: null
+  youtube_production:
+    done: false
+    last_updated: null
+  distribution:
+    done: false
+    last_updated: null
