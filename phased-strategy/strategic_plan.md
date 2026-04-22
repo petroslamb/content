@@ -205,6 +205,16 @@ Phase 1.5 gives Codex a stable machine-facing contract. Phase 1.6 gives you the 
 
 This is still **not** the standalone agentic platform. It is the human-and-agent operating layer above the repo contract and below the future platform.
 
+### Fixture Baseline After The Workflow Merge
+
+Phase 1.6 no longer needs to speculate about package classes. The repo now has real fixtures that the operator shell should handle correctly:
+
+- active umbrella with active flagship leaf: [`../publications/evidence-governance/`](../publications/evidence-governance/README.md)
+- umbrella with stopped successor-search overlay: [`../publications/literate-workflow-programming/`](../publications/literate-workflow-programming/README.md)
+- settled published umbrellas: [`../publications/autonomous-agents/`](../publications/autonomous-agents/README.md), [`../publications/hardware-friction/`](../publications/hardware-friction/README.md), [`../publications/orchestration-paradigm/`](../publications/orchestration-paradigm/README.md), and [`../publications/neural-architectures/`](../publications/neural-architectures/README.md)
+
+Phase 1.6 should use those as proof fixtures rather than building around synthetic package examples.
+
 ### Milestones
 
 #### M1.6.1 — Content Skill Pack On Top Of The Harness
@@ -254,6 +264,8 @@ Create a repeatable evaluation path for real Codex runs against this repo. Each 
 - whether the harness chose the next stage correctly
 
 The emphasis is not on synthetic demos. It is on real bounded runs against actual packages and actual workflow state.
+
+At least one retained proof run should exercise each of the live package classes above so the shell is judged against real umbrella and leaf routing cases rather than only against single-publication packages.
 
 **Deliverable**: You can measure whether the operator shell makes Codex more reliable, not just assume it.
 
@@ -341,6 +353,16 @@ If you pursue it, start with the smallest useful layer:
 This phase converts workflow specifications into a local execution platform with explicit contracts, validation, traces, and review gates. The platform should treat specs as the visible source surface, validation as lifecycle infrastructure, and traces as derivative debugging records rather than the source of truth.
 
 Phase 1.6 remains the operator-shell phase. It is not a blanket blocker for Phase 2. Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
+
+The package-shape migration is no longer a Phase 2 project. Phase 2 should consume the current repo truths:
+
+- `status.yaml` `kind: umbrella|leaf`
+- `config.default_leaf_package`
+- `config.leaf_packages`
+- `umbrella_route` for active umbrella-level routing
+- `current_stage: null` for settled umbrella roots
+
+Those semantics are now part of the baseline contract, not an open taxonomy debate for the platform phase.
 
 The strongest ideas promoted into this phase from `literate-workflow-programming` are:
 

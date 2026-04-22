@@ -50,6 +50,20 @@ Phase 1.6 should therefore be judged by one question:
 | Proof evidence | [`../reviewable-runs/logs/README.md`](../reviewable-runs/logs/README.md), [`../reviewable-runs/evaluation/README.md`](../reviewable-runs/evaluation/README.md) | Phase 1.6 should upgrade evaluation quality using the same retained-run discipline. |
 | Browser footholds | alphaXiv persistent profile guidance; Substack CDP attach flow | Build a narrow browser-session pattern instead of a general browser platform. |
 
+## New Fixture Baseline After Package Migration
+
+The operator shell now has real package classes to test against. Treat these as the minimum fixture set for Phase 1.6 proof runs:
+
+- active umbrella with active flagship leaf: [`../publications/evidence-governance/`](../publications/evidence-governance/README.md)
+- umbrella with stopped successor-search overlay: [`../publications/literate-workflow-programming/`](../publications/literate-workflow-programming/README.md)
+- settled published umbrellas: [`../publications/autonomous-agents/`](../publications/autonomous-agents/README.md), [`../publications/hardware-friction/`](../publications/hardware-friction/README.md), [`../publications/orchestration-paradigm/`](../publications/orchestration-paradigm/README.md), and [`../publications/neural-architectures/`](../publications/neural-architectures/README.md)
+
+This matters because Phase 1.6 is no longer testing only whether the shell can route a single-publication package. It must also:
+
+- avoid pretending that settled umbrella roots are still marching through downstream stages
+- correctly hand off from umbrella roots to active leaf packages when a leaf owns the lifecycle
+- surface umbrella-level routes such as `post_ceiling_pivot` when there is no active successor leaf
+
 ## Brainstorm Frame
 
 Before building, answer these five questions:
@@ -317,6 +331,8 @@ For proof runs through the new shell, capture:
 - whether the shell reduced prompt glue compared with the old path
 
 **Exit criterion**: at least two retained comparisons show that the shell improved a real run.
+
+Those comparisons should include at least one active umbrella-with-leaf case and one umbrella-overlay stop-path case so the proof set covers the new baseline package classes rather than only leaf-style runs.
 
 ## Recommended First Implementation Cut
 

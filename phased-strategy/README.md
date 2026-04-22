@@ -32,13 +32,17 @@ Extract findings back into this folder only when they change a phase gate, proof
 
 ## Current Read
 
-As of 2026-04-22:
+As of 2026-04-23:
 
 - Phase 1 is closed as the Clean Machine phase: repo normalization, one-command lifecycle visibility, package orientation, root-script hygiene, generic stage dispatch, and v2 reviewable run logs are in place.
 - The original "start-to-finish by an agent" ambition is now treated as Phase 1.5/1.6 autonomy proof work, not as a remaining Phase 1 blocker.
 - Phase 1.5 is now pragmatically gate-cleared: the retained proof set covers `research-heavy`, `publish-adjacent`, and `media/distribution`, even though the lanes remain asymmetric in cleanliness.
 - Phase 1.6 should remain the operator-shell layer that follows Phase 1.5 closure and hardens the remaining caveats.
 - Phase 2 now has its own planning folder under [`phase-2/`](phase-2/README.md), and that plan is now organized around executable contracts, validation, traces, gates, and a thin runtime rather than a CLI-first platform story.
+- Umbrella and leaf package normalization is now mostly complete in the repo baseline. Phase 1.6 and Phase 2 should treat the package-shape migration as largely done and use the real package classes as fixtures:
+  - settled published umbrella roots such as [`../publications/autonomous-agents/`](../publications/autonomous-agents/README.md), [`../publications/hardware-friction/`](../publications/hardware-friction/README.md), [`../publications/orchestration-paradigm/`](../publications/orchestration-paradigm/README.md), and [`../publications/neural-architectures/`](../publications/neural-architectures/README.md)
+  - an active umbrella with an active flagship leaf at [`../publications/evidence-governance/`](../publications/evidence-governance/README.md)
+  - an umbrella with a stopped successor-search overlay at [`../publications/literate-workflow-programming/`](../publications/literate-workflow-programming/README.md)
 
 ## When To Update This Folder
 
