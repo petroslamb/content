@@ -146,7 +146,19 @@ This note closes the specific open decision named in the live brief:
 - the bounded experiment can be satisfied by mapping the current article-ready claims onto evidence, contradiction, validation, and trace state
 - the result strengthens CSA-C6 as a package-local requirement claim without changing `phased-strategy/`
 
-The next bounded step is still not essay-body drafting. The next honest move would be either:
+## Contract Check
+
+As of the tracked package state on 2026-04-22:
+
+- [`../status.yaml`](../status.yaml) keeps the package in `essay_iteration`
+- [`../literate-workflow-programming-prewrite-gate-r1.md`](../literate-workflow-programming-prewrite-gate-r1.md) sets `writability_verdict: writable`
+- [`../literate-workflow-programming-prewrite-gate-r1.md`](../literate-workflow-programming-prewrite-gate-r1.md) sets `candidate_authorized: true`
+
+So the packet-level contract does authorize a bounded candidate draft. This proof note does not change that authorization. It only adds a stronger local record for CSA-C6 and the claim-state machinery behind it.
+
+For this proof pass, the bounded action stops here because the task constraint is explicit: do not draft the essay body.
+
+The next honest non-drafting move would be either:
 
 1. fold this state map into a stronger packet-level review artifact once a real candidate exists, or
 2. design a smaller package-local provenance manifest for claims without promoting it to a repo-wide interface
