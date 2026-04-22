@@ -1,0 +1,164 @@
+experiment:
+  name: youtube-cinematic-pilot
+  workspace_root: experiments/youtube-cinematic-pilot
+  schedule_shift_days_if_not_ready: 7
+  metric_checkpoints:
+    - "+24h"
+    - "+72h"
+    - "+7d"
+  templates:
+    cinematic_prompt: experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt
+    cinematic_description: experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md
+  playlists:
+    cinematic:
+      id: PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe
+      title: Rooted Layers Cinematic Briefs
+      description: >
+        Experimental cinematic companion lane for Rooted Layers publications.
+        Each upload is a documentary-style brief that points viewers back to the
+        full research breakdown.
+      privacy_status: public
+      create_if_missing: true
+    shorts:
+      id: PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd
+      title: AI Architecture Snippets & AI Research Shorts
+  defaults:
+    upload_privacy: public
+    shorts_primary_video_label: Full cinematic video
+    shorts_secondary_video_label: Full research breakdown
+
+publications:
+  neural_architecture:
+    label: Neural Architecture Design as a Reusable Scaffold
+    package: neural-architectures/neural-architecture-design-as-a-compositional-32e
+    notebook_id: 8c642f0e-dab3-44a6-aa81-1a5b3813714f
+    essay_url: https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e
+    baseline_longform_video_id: "-2CM4JYfQAs"
+    baseline_longform_url: https://www.youtube.com/watch?v=-2CM4JYfQAs
+    cinematic:
+      title: Why AI Design Converged on the Same Scaffold
+      hook: Every breakthrough in AI looks different on the surface. Underneath, the field keeps converging on the same reusable scaffold.
+      summary: |
+        This cinematic brief follows the transition from handcrafted architectures to residual scaffolds, portable transformer blocks, and the compute recipes that now dominate design.
+
+        The goal is not to recap the whole essay. It is to give new viewers one strong structural claim: modern AI progress kept accelerating because the field stopped redesigning the whole machine and started reusing a stable scaffold that could absorb scale, specialization, and new workloads.
+      video_file: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.mp4
+      output_srt: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.srt
+      upload_report: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic_upload_report.json
+      publish_at: "2026-04-22T15:14:39Z"
+      playlist:
+        title: Rooted Layers Cinematic Briefs
+      tags:
+        - AI
+        - research
+        - cinematic
+        - neural architectures
+    shorts:
+      manifest_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/shorts_manifest.json
+      playlist_id: PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd
+      selected:
+        - slug: why-handcrafted-ai-breaks
+          title: Why Handcrafted AI Breaks at Scale
+          publish_at: "2026-04-22T15:14:39Z"
+        - slug: transformer-portable-block
+          title: The Transformer Won as a Portable Block
+          publish_at: "2026-04-23T11:00:00Z"
+      reserve:
+        - slug: the-compute-recipe-became-design
+          title: The Compute Recipe Became the Design
+      upload_labels:
+        primary_video_label: Full cinematic video
+        secondary_video_label: Full research breakdown
+      notes:
+        - The package already has a broader six-clip Shorts manifest.
+        - "Materialize a pilot-specific two-clip package manifest before upload so the scheduled `publish_at` values match this experiment."
+
+  illusion_of_swarm:
+    label: The Illusion of the Swarm
+    package: illusion-of-swarm
+    notebook_id: 8bdbaa61-25f3-4c6c-bc4f-cdcb29b174ee
+    essay_url: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+    baseline_longform_video_id: AigaLYfpFZc
+    baseline_longform_url: https://www.youtube.com/watch?v=AigaLYfpFZc
+    cinematic:
+      title: Why Most Multi-Agent AI Is a Workaround
+      hook: Adding more agents can look like progress while quietly turning the system into a routing workaround that never fixed the real design problem.
+      summary: |
+        This cinematic brief reframes the multi-agent boom as a temporary coping mechanism for action spaces that were never decomposed cleanly enough in the first place.
+
+        It should pull in viewers who care about agent systems, orchestration, and production architecture, then redirect them to the full research breakdown on why better decomposition often beats louder coordination theater.
+      video_file: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4
+      output_srt: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt
+      upload_report: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic_upload_report.json
+      publish_at: "2026-04-29T15:00:00Z"
+      playlist:
+        title: Rooted Layers Cinematic Briefs
+      tags:
+        - AI
+        - research
+        - cinematic
+        - multi-agent systems
+    shorts:
+      manifest_path: publications/illusion-of-swarm/artifacts/video/shorts/shorts_manifest.json
+      playlist_id: PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd
+      selected:
+        - slug: workaround-not-destination
+          title: Most Multi-Agent AI Is a Workaround, Not the Destination
+          publish_at: "2026-04-30T11:00:00Z"
+        - slug: namespaces-beat-theatrical-routing
+          title: Better Decomposition Beats More Agent Theater
+          publish_at: "2026-05-01T07:00:00Z"
+      reserve:
+        - slug: recursive-structure-compresses-chaos
+          title: Recursive Structure Compresses the Chaos
+      upload_labels:
+        primary_video_label: Full cinematic video
+        secondary_video_label: Full research breakdown
+      notes:
+        - Recover the cinematic SRT before selecting the final 45-120 second clip boundaries.
+        - "Materialize the package-local `shorts_manifest.json` only after the final two clips are locked."
+
+  autonomy_tax:
+    label: The Autonomy Tax
+    package: autonomy-tax
+    notebook_id: b278a873-054c-4202-ab6e-9071ee3b1044
+    essay_url: https://lambpetros.substack.com/p/the-autonomy-tax
+    baseline_longform_video_id: 1laAYOsrTLg
+    baseline_longform_url: https://www.youtube.com/watch?v=1laAYOsrTLg
+    cinematic:
+      title: Why AI ROI Breaks Before Full Autonomy
+      hook: The expensive failure in enterprise AI is not model intelligence. It is the control layer that collapses before autonomy ever becomes profitable.
+      summary: |
+        This cinematic brief compresses the three-tax argument into one acquisition path for operators and executives: autonomy costs rise faster than the workflow controls needed to keep those systems safe, accountable, and economically sane.
+
+        The companion should drive viewers to the full longform only after landing the causal engine cleanly enough to feel urgent and repeatable.
+      video_file: publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic.mp4
+      output_srt: publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic.srt
+      upload_report: publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic_upload_report.json
+      publish_at: "2026-04-22T15:14:39Z"
+      playlist:
+        title: Rooted Layers Cinematic Briefs
+      tags:
+        - AI
+        - research
+        - cinematic
+        - enterprise AI
+    shorts:
+      manifest_path: publications/autonomy-tax/artifacts/video/shorts/shorts_manifest.json
+      playlist_id: PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd
+      selected:
+        - slug: why-ai-roi-breaks-before-autonomy
+          title: Why AI ROI Breaks Before Full Autonomy
+          publish_at: "2026-04-23T15:00:00Z"
+        - slug: control-layer-is-the-bottleneck
+          title: The Model Did Not Fail. The Control Layer Did.
+          publish_at: "2026-04-22T15:14:39Z"
+      reserve:
+        - slug: bounded-level-three
+          title: Bounded Level 3 Is Not Open Autonomy
+      upload_labels:
+        primary_video_label: Full cinematic video
+        secondary_video_label: Full research breakdown
+      notes:
+        - The baseline longform `1laAYOsrTLg` was made public on 2026-04-22 before the cinematic release.
+        - "`autonomy-tax` is a nested git repo; keep the experiment manifest canonical until the package-local video surface is created for the pilot."

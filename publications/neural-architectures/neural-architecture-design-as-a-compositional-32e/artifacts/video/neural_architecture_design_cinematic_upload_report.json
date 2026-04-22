@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-04-22T14:55:41.631439+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "neural_architecture",
+  "package": "neural-architectures/neural-architecture-design-as-a-compositional-32e",
+  "notebook_id": "8c642f0e-dab3-44a6-aa81-1a5b3813714f",
+  "video_source_file": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.mp4",
+  "caption_output": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.srt",
+  "title": "Why AI Design Converged on the Same Scaffold",
+  "description": "Every breakthrough in AI looks different on the surface. Underneath, the field keeps converging on the same reusable scaffold.\n\nThis cinematic brief follows the transition from handcrafted architectures to residual scaffolds, portable transformer blocks, and the compute recipes that now dominate design.\n\nThe goal is not to recap the whole essay. It is to give new viewers one strong structural claim: modern AI progress kept accelerating because the field stopped redesigning the whole machine and started reusing a stable scaffold that could absorb scale, specialization, and new workloads.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=-2CM4JYfQAs\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": "2026-04-22T15:14:39Z",
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "Experimental cinematic companion lane for Rooted Layers publications. Each upload is a documentary-style brief that points viewers back to the full research breakdown.\n",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41NkI0NEY2RDEwNTU3Q0M2",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41NkI0NEY2RDEwNTU3Q0M2",
+      "position": 0,
+      "title": "Why AI Design Converged on the Same Scaffold"
+    }
+  },
+  "baseline_longform": {
+    "id": "-2CM4JYfQAs",
+    "url": "https://www.youtube.com/watch?v=-2CM4JYfQAs"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
+  "video": {
+    "id": "0TpfmqhoB6s",
+    "url": "https://www.youtube.com/watch?v=0TpfmqhoB6s",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-22T14:55:37Z"
+    }
+  }
+}

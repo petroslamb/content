@@ -1,0 +1,26 @@
+{
+  "source_video": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.mp4",
+  "related_video_id": "0TpfmqhoB6s",
+  "essay_url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
+  "full_video_url": "https://www.youtube.com/watch?v=0TpfmqhoB6s",
+  "secondary_video_url": "https://www.youtube.com/watch?v=-2CM4JYfQAs",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "transformer-portable-block",
+      "title": "The Transformer Won as a Portable Block",
+      "summary": "Transformers mattered because the residual scaffold turned into a portable repeated block that could carry language, vision, and code.",
+      "start": "00:02:44.800",
+      "end": "00:03:35.680",
+      "publish_at": "2026-04-23T11:00:00Z"
+    },
+    {
+      "slug": "why-handcrafted-ai-breaks",
+      "title": "Why Handcrafted AI Breaks at Scale",
+      "summary": "Early AI design treated networks like handcrafted machines, but that approach could not leave behind a reusable rule for scaling.",
+      "start": "00:00:15.440",
+      "end": "00:01:16.159",
+      "publish_at": "2026-04-22T15:14:39Z"
+    }
+  ]
+}

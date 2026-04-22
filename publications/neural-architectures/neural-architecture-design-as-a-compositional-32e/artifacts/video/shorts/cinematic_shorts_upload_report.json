@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-22T15:09:30.284307+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "0TpfmqhoB6s",
+    "url": "https://www.youtube.com/watch?v=0TpfmqhoB6s"
+  },
+  "related_longform": {
+    "id": "0TpfmqhoB6s",
+    "url": "https://www.youtube.com/watch?v=0TpfmqhoB6s"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=0TpfmqhoB6s"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=-2CM4JYfQAs"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/portrait/01-transformer-portable-block_portrait.mp4",
+      "title": "The Transformer Won as a Portable Block #shorts",
+      "summary": "Transformers mattered because the residual scaffold turned into a portable repeated block that could carry language, vision, and code.",
+      "publish_at": "2026-04-23T11:00:00Z",
+      "video_id": "EroyOU7DqV4",
+      "url": "https://www.youtube.com/watch?v=EroyOU7DqV4",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4yM0EyQ0U1M0I2RkIwNTQ0"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "0TpfmqhoB6s"
+        ]
+      },
+      "probe": {
+        "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/portrait/01-transformer-portable-block_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 50.958333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 50.898005
+        },
+        "format_duration": 50.958333,
+        "duration": 50.958333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The Transformer Won as a Portable Block #shorts",
+        "published_at": "2026-04-22T15:09:13Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4yM0EyQ0U1M0I2RkIwNTQ0",
+        "position": 90,
+        "title": "The Transformer Won as a Portable Block #shorts"
+      }
+    },
+    {
+      "video_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/portrait/02-why-handcrafted-ai-breaks_portrait.mp4",
+      "title": "Why Handcrafted AI Breaks at Scale #shorts",
+      "summary": "Early AI design treated networks like handcrafted machines, but that approach could not leave behind a reusable rule for scaling.",
+      "publish_at": "2026-04-22T15:14:39Z",
+      "video_id": "hGVNJYqR9Zg",
+      "url": "https://www.youtube.com/watch?v=hGVNJYqR9Zg",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DQjg2RDQyMEVGQkZFOEVF"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "0TpfmqhoB6s"
+        ]
+      },
+      "probe": {
+        "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/portrait/02-why-handcrafted-ai-breaks_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 60.833333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 60.72
+        },
+        "format_duration": 60.833333,
+        "duration": 60.833333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "public",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why Handcrafted AI Breaks at Scale #shorts",
+        "published_at": "2026-04-22T15:09:22Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DQjg2RDQyMEVGQkZFOEVF",
+        "position": 89,
+        "title": "Why Handcrafted AI Breaks at Scale #shorts"
+      }
+    }
+  ]
+}
