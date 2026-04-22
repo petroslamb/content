@@ -1,0 +1,25 @@
+{
+  "source_video": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_explainer.mp4",
+  "related_video_id": "BSwFQTIrAmQ",
+  "essay_url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
+  "full_video_url": "https://www.youtube.com/watch?v=BSwFQTIrAmQ",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "what-ai-architects-design-now",
+      "title": "What AI Architects Design Now",
+      "summary": "Modern AI architects stopped hand-designing one perfect machine and started designing reusable scaffolds that can generate whole families of models.",
+      "start": "00:00:29.599",
+      "end": "00:01:18.000",
+      "publish_at": "2026-04-30T19:00:00Z"
+    },
+    {
+      "slug": "identical-ai-blocks-learn-different-jobs",
+      "title": "Why Identical AI Blocks Learn Different Jobs",
+      "summary": "Even when a model is built from repeated blocks, training causes different layers and heads to specialize into different functional roles.",
+      "start": "00:05:18.800",
+      "end": "00:06:00.720",
+      "publish_at": "2026-05-02T19:00:00Z"
+    }
+  ]
+}
