@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-22T16:04:27.815265+00:00",
+  "workflow": "ad_hoc_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "hNVBrptmRVs",
+    "url": "https://www.youtube.com/watch?v=hNVBrptmRVs"
+  },
+  "related_longform": {
+    "id": "hNVBrptmRVs",
+    "url": "https://www.youtube.com/watch?v=hNVBrptmRVs"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=hNVBrptmRVs"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=_FE96jVDsJM"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/portrait/01-human-review-fails-after-fluent-ai_portrait.mp4",
+      "title": "Why Human Review Fails After Fluent AI #shorts",
+      "summary": "A polished AI answer hides the missing branches of evidence, so the reviewer can only inspect what the model left on screen.",
+      "publish_at": "2026-04-27T11:00:00Z",
+      "video_id": "_M0ZS9y3Xx0",
+      "url": "https://www.youtube.com/watch?v=_M0ZS9y3Xx0",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5FRjdGNDMzN0I2RTI3MDlG"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "hNVBrptmRVs"
+        ]
+      },
+      "probe": {
+        "path": "publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/portrait/01-human-review-fails-after-fluent-ai_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 71.458333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 71.378005
+        },
+        "format_duration": 71.458333,
+        "duration": 71.458333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why Human Review Fails After Fluent AI #shorts",
+        "published_at": "2026-04-22T16:04:14Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5FRjdGNDMzN0I2RTI3MDlG",
+        "position": 93,
+        "title": "Why Human Review Fails After Fluent AI #shorts"
+      }
+    },
+    {
+      "video_path": "publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/portrait/02-user-calibration-comes-too-late_portrait.mp4",
+      "title": "Why User Calibration Comes Too Late #shorts",
+      "summary": "Once trust outruns evidence upstream, no downstream reminder about careful use can repair the pipeline.",
+      "publish_at": "2026-04-28T11:00:00Z",
+      "video_id": "v71Kx9W7wDw",
+      "url": "https://www.youtube.com/watch?v=v71Kx9W7wDw",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41ODIyMTgwQzA4NjJCQkZC"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "hNVBrptmRVs"
+        ]
+      },
+      "probe": {
+        "path": "publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/portrait/02-user-calibration-comes-too-late_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 61.708333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 61.601995
+        },
+        "format_duration": 61.708333,
+        "duration": 61.708333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why User Calibration Comes Too Late #shorts",
+        "published_at": "2026-04-22T16:04:20Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41ODIyMTgwQzA4NjJCQkZC",
+        "position": 94,
+        "title": "Why User Calibration Comes Too Late #shorts"
+      }
+    }
+  ]
+}

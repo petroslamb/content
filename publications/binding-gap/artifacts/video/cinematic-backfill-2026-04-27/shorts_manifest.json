@@ -1,0 +1,20 @@
+{
+  "clips": [
+    {
+      "slug": "ai-forgets-who-did-what",
+      "title": "Why AI Forgets Who Did What",
+      "summary": "The binding gap appears when the model retains the facts but loses the exact role assignments that make them usable.",
+      "start": "00:02:52.080",
+      "end": "00:03:34.319",
+      "publish_at": "2026-04-27T15:00:00Z"
+    },
+    {
+      "slug": "benchmarks-miss-structural-failure",
+      "title": "Why Benchmarks Miss Structural Failure",
+      "summary": "Generic benchmark wins can hide a model whose role binding is already unstable on extraction and attribution work.",
+      "start": "00:05:19.520",
+      "end": "00:06:08.560",
+      "publish_at": "2026-04-28T15:00:00Z"
+    }
+  ]
+}

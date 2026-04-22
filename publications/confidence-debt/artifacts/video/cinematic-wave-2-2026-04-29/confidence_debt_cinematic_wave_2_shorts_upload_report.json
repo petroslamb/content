@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-22T16:30:54.313722+00:00",
+  "workflow": "ad_hoc_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "hNVBrptmRVs",
+    "url": "https://www.youtube.com/watch?v=hNVBrptmRVs"
+  },
+  "related_longform": {
+    "id": "hNVBrptmRVs",
+    "url": "https://www.youtube.com/watch?v=hNVBrptmRVs"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=hNVBrptmRVs"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=_FE96jVDsJM"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/confidence-debt/artifacts/video/cinematic-wave-2-2026-04-29/portrait/01-polished-ai-report-beat-evidence_portrait.mp4",
+      "title": "The Polished AI Report Beat the Evidence #shorts",
+      "summary": "Once a fluent summary outranks the raw spreadsheet, trust moves downstream faster than the proof can catch up.",
+      "publish_at": "2026-04-30T11:00:00Z",
+      "video_id": "4GVruproN4Q",
+      "url": "https://www.youtube.com/watch?v=4GVruproN4Q",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CNEYyNTVBNDdGMDI1MDNC"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "hNVBrptmRVs"
+        ]
+      },
+      "probe": {
+        "path": "publications/confidence-debt/artifacts/video/cinematic-wave-2-2026-04-29/portrait/01-polished-ai-report-beat-evidence_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 30.333333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 30.255011
+        },
+        "format_duration": 30.333333,
+        "duration": 30.333333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The Polished AI Report Beat the Evidence #shorts",
+        "published_at": "2026-04-22T16:30:41Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CNEYyNTVBNDdGMDI1MDNC",
+        "position": 95,
+        "title": "The Polished AI Report Beat the Evidence #shorts"
+      }
+    },
+    {
+      "video_path": "publications/confidence-debt/artifacts/video/cinematic-wave-2-2026-04-29/portrait/02-readable-ai-summaries-delete-proof-trail_portrait.mp4",
+      "title": "Readable AI Summaries Delete the Proof Trail #shorts",
+      "summary": "Compression makes AI output legible by stripping away the caveats and source paths that engineers later need to challenge it.",
+      "publish_at": "2026-05-02T11:00:00Z",
+      "video_id": "6SQPInnw_sk",
+      "url": "https://www.youtube.com/watch?v=6SQPInnw_sk",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5GNzk2RTlDQTNCQzJCQzJG"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "hNVBrptmRVs"
+        ]
+      },
+      "probe": {
+        "path": "publications/confidence-debt/artifacts/video/cinematic-wave-2-2026-04-29/portrait/02-readable-ai-summaries-delete-proof-trail_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 75.541667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 75.440998
+        },
+        "format_duration": 75.541667,
+        "duration": 75.541667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Readable AI Summaries Delete the Proof Trail #shorts",
+        "published_at": "2026-04-22T16:30:47Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5GNzk2RTlDQTNCQzJCQzJG",
+        "position": 98,
+        "title": "Readable AI Summaries Delete the Proof Trail #shorts"
+      }
+    }
+  ]
+}

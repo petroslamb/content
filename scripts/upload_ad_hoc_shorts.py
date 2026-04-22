@@ -62,6 +62,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"])
     parser.add_argument("--essay-url", help="Optional essay URL. Use none, skip, or omit to leave it out.")
     parser.add_argument("--tldr-url", help="Optional TL;DR video URL.")
+    parser.add_argument(
+        "--primary-video-label",
+        default="Full visual deep dive",
+        help="Description label for --full-video-url. Default: Full visual deep dive",
+    )
+    parser.add_argument("--secondary-video-url", help="Optional secondary linked video URL for descriptions.")
+    parser.add_argument("--secondary-video-label", help="Optional label for --secondary-video-url.")
     parser.add_argument("--hashtag", default="adhocshorts", help="Primary description hashtag without #.")
     parser.add_argument("--tag", action="append", default=[], help="Additional YouTube tag. May be repeated.")
     parser.add_argument("--max-duration", type=float, default=180.0)
@@ -128,14 +135,20 @@ def main() -> None:
         return
 
     youtube = build_youtube()
+    secondary_video_url = args.secondary_video_url or args.tldr_url
+    secondary_video_label = args.secondary_video_label or (
+        "TL;DR video" if args.tldr_url and not args.secondary_video_url else "Related video" if secondary_video_url else None
+    )
     upload_results = upload_shorts(
         youtube=youtube,
         planned_items=planned_items,
         playlist_id=args.playlist_id,
         main_video_id=args.main_video_id,
         privacy=args.privacy,
-        full_video_url=args.full_video_url,
-        tldr_url=args.tldr_url,
+        primary_video_url=args.full_video_url,
+        primary_video_label=args.primary_video_label,
+        secondary_video_url=secondary_video_url,
+        secondary_video_label=secondary_video_label,
         essay_url=args.essay_url,
         package_hashtag=args.hashtag,
         tags=["AI", "research", "shorts", *args.tag],
@@ -145,7 +158,10 @@ def main() -> None:
         workflow="ad_hoc_shorts",
         playlist_id=args.playlist_id,
         main_video_id=args.main_video_id,
-        full_video_url=args.full_video_url,
+        primary_video_url=args.full_video_url,
+        primary_video_label=args.primary_video_label,
+        secondary_video_url=secondary_video_url,
+        secondary_video_label=secondary_video_label,
         planned_items=planned_items,
         probes=probes,
         upload_results=upload_results,

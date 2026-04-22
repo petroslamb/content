@@ -1,0 +1,16 @@
+{
+  "clips": [
+    {
+      "file": "01-polished-ai-report-beat-evidence_portrait.mp4",
+      "title": "The Polished AI Report Beat the Evidence",
+      "summary": "Once a fluent summary outranks the raw spreadsheet, trust moves downstream faster than the proof can catch up.",
+      "publish_at": "2026-04-30T11:00:00Z"
+    },
+    {
+      "file": "02-readable-ai-summaries-delete-proof-trail_portrait.mp4",
+      "title": "Readable AI Summaries Delete the Proof Trail",
+      "summary": "Compression makes AI output legible by stripping away the caveats and source paths that engineers later need to challenge it.",
+      "publish_at": "2026-05-02T11:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "source_video": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.mp4",
+  "related_video_id": "0TpfmqhoB6s",
+  "essay_url": "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e",
+  "full_video_url": "https://www.youtube.com/watch?v=0TpfmqhoB6s",
+  "secondary_video_url": "https://www.youtube.com/watch?v=-2CM4JYfQAs",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "56-layers-broke-old-design-playbook",
+      "title": "56 Layers Broke the Old AI Design Playbook",
+      "summary": "Stacking more handcrafted layers stopped working because each layer kept rewriting the signal from scratch until training collapsed.",
+      "start": "00:01:13.920",
+      "end": "00:02:30.720",
+      "publish_at": "2026-04-29T15:00:00Z"
+    },
+    {
+      "slug": "same-ai-block-learned-syntax-structure-meaning",
+      "title": "The Same AI Block Learned Syntax, Structure, and Meaning",
+      "summary": "BERT-style probing showed that identical layers can self-specialize, recreating the old hand-built stack without being explicitly designed that way.",
+      "start": "00:03:22.319",
+      "end": "00:04:11.760",
+      "publish_at": "2026-05-01T15:00:00Z"
+    }
+  ]
+}

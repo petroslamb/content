@@ -1,0 +1,16 @@
+{
+  "clips": [
+    {
+      "file": "01-human-review-fails-after-fluent-ai_portrait.mp4",
+      "title": "Why Human Review Fails After Fluent AI",
+      "summary": "A polished AI answer hides the missing branches of evidence, so the reviewer can only inspect what the model left on screen.",
+      "publish_at": "2026-04-27T11:00:00Z"
+    },
+    {
+      "file": "02-user-calibration-comes-too-late_portrait.mp4",
+      "title": "Why User Calibration Comes Too Late",
+      "summary": "Once trust outruns evidence upstream, no downstream reminder about careful use can repair the pipeline.",
+      "publish_at": "2026-04-28T11:00:00Z"
+    }
+  ]
+}
