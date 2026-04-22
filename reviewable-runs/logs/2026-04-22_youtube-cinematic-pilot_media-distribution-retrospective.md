@@ -1,5 +1,7 @@
 # Harness Proof Run: YouTube Cinematic Pilot Media/Distribution Retrospective
 
+Note: this remains valid secondary media/distribution evidence, but the current primary Phase 1.5 media/distribution lane record is [`2026-04-22_confidence-debt_media-distribution-retrospective.md`](./2026-04-22_confidence-debt_media-distribution-retrospective.md).
+
 This retrospective proof record reconstructs session `019db567-5fb0-7933-8487-ec24ea0ac512` as Phase 1.5 media/distribution evidence.
 
 It is not a clean cold-start proof. It began as an experiment discussion in Plan Mode, expanded into tracked workflow and script work, then crossed into real NotebookLM and YouTube channel mutations. The source trace is strong enough to document what happened and why it matters, but not strong enough to treat the run as a minimal-glue retained proof.
