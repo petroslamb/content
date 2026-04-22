@@ -1,0 +1,57 @@
+timezone: UTC
+window:
+  start: "2026-04-22T15:14:39Z"
+  end: "2026-05-01T07:00:00Z"
+
+events:
+  - scheduled_at: "2026-04-22T15:14:39Z"
+    publication: neural_architecture
+    asset_type: cinematic
+    title: Why AI Design Converged on the Same Scaffold
+    source: pilot_manifest.yaml
+  - scheduled_at: "2026-04-22T15:14:39Z"
+    publication: neural_architecture
+    asset_type: short
+    slug: why-handcrafted-ai-breaks
+    title: Why Handcrafted AI Breaks at Scale
+    source: publication shorts manifest materialized from pilot_manifest.yaml
+  - scheduled_at: "2026-04-23T11:00:00Z"
+    publication: neural_architecture
+    asset_type: short
+    slug: transformer-portable-block
+    title: The Transformer Won as a Portable Block
+    source: publication shorts manifest materialized from pilot_manifest.yaml
+  - scheduled_at: "2026-04-29T15:00:00Z"
+    publication: illusion_of_swarm
+    asset_type: cinematic
+    title: Why Most Multi-Agent AI Is a Workaround
+    source: pilot_manifest.yaml
+  - scheduled_at: "2026-04-30T11:00:00Z"
+    publication: illusion_of_swarm
+    asset_type: short
+    slug: workaround-not-destination
+    title: Most Multi-Agent AI Is a Workaround, Not the Destination
+    source: publication shorts manifest materialized from pilot_manifest.yaml
+  - scheduled_at: "2026-05-01T07:00:00Z"
+    publication: illusion_of_swarm
+    asset_type: short
+    slug: namespaces-beat-theatrical-routing
+    title: Better Decomposition Beats More Agent Theater
+    source: publication shorts manifest materialized from pilot_manifest.yaml
+  - scheduled_at: "2026-04-22T15:14:39Z"
+    publication: autonomy_tax
+    asset_type: cinematic
+    title: Why AI ROI Breaks Before Full Autonomy
+    source: pilot_manifest.yaml
+  - scheduled_at: "2026-04-23T15:00:00Z"
+    publication: autonomy_tax
+    asset_type: short
+    slug: why-ai-roi-breaks-before-autonomy
+    title: Why AI ROI Breaks Before Full Autonomy
+    source: publication shorts manifest materialized from pilot_manifest.yaml
+  - scheduled_at: "2026-04-22T15:14:39Z"
+    publication: autonomy_tax
+    asset_type: short
+    slug: control-layer-is-the-bottleneck
+    title: The Model Did Not Fail. The Control Layer Did.
+    source: publication shorts manifest materialized from pilot_manifest.yaml
