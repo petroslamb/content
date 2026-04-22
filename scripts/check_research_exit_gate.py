@@ -18,6 +18,7 @@ from research_exit_support import (
     RESEARCH_EXIT_FRONTMATTER_FIELDS,
     RESEARCH_EXIT_VERDICTS,
     build_research_exit_gate_path,
+    resolve_research_exit_gate_path,
     valid_blocker_slug,
 )
 
@@ -49,9 +50,10 @@ def validate_research_exit_gate(package_arg: str) -> tuple[list[str], Path | Non
     if not isinstance(revision, int):
         return (["status.yaml revision must be an integer."], None)
 
-    gate_path = build_research_exit_gate_path(manifest_ref.package_path, revision)
-    if not gate_path.exists():
-        return ([f"Research-exit gate is missing: {gate_path.relative_to(REPO_ROOT).as_posix()}"], gate_path)
+    gate_path = resolve_research_exit_gate_path(manifest_ref.package_path, revision)
+    if gate_path is None:
+        expected_path = build_research_exit_gate_path(manifest_ref.package_path, revision)
+        return ([f"Research-exit gate is missing: {expected_path.relative_to(REPO_ROOT).as_posix()}"], expected_path)
 
     errors: list[str] = []
     try:

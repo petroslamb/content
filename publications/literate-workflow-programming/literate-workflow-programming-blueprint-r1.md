@@ -75,16 +75,38 @@ Explicit boundaries:
 
 ## Opening Lab
 
-Not active.
+Open from a concrete operator problem, not from taxonomy repair. The best candidate opening is a bounded local workflow moment: a human edits the specification layer, a validator catches drift, and the system reveals that the human-readable workflow surface is already acting like source. Do not open with "markdown as code" as a slogan dispute. Use the dispute only after the concrete pressure point is visible.
 
 ## Object Decision
 
-Not active.
+No object change. Keep the essay about workflow specifications becoming source-like artifacts under validation, policy, traces, and provenance pressure. Do not widen into a general context-engineering essay and do not pivot into a skills essay.
 
 ## Body / Support / Footnote Ledger
 
-Not active.
+Body:
+
+- `2603.16021`
+- `2603.25723`
+- `2604.13346`
+- `2603.17399`
+- `2603.08806`
+- `2603.23806`
+- `2603.29848`
+- `2602.13855`
+- local `spec-diff` proof notes and retained run logs
+
+Support:
+
+- `2603.00822`
+- `2603.20380`
+- `2504.11703`
+- `2601.04748`
+
+Footnote:
+
+- `2512.19769`
+- `2512.18940`
 
 ## Second-Pass Bet
 
-Not active.
+The next pass works only if the essay stops sounding like a governed literature survey and starts sounding like one defended publication object. The bet is that a concrete opening plus a more compressed middle can supply that force without reopening research. If the same blocker survives `r2`, the stop gate should fire.

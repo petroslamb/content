@@ -1,97 +1,53 @@
+# Candidate Draft
+
+This bounded candidate must remain a sibling to the live draft. Do not overwrite `publications/literate-workflow-programming/literate-workflow-programming.md`.
+
+Packet manifest: `publications/literate-workflow-programming/literate-workflow-programming-essay-iteration-packet-r1.json`
+Current live draft: `publications/literate-workflow-programming/literate-workflow-programming.md`
+
 # Literate Workflow Programming
 
-The interesting change in agent systems is not that markdown suddenly became executable. It is that more of the system's real control surface now lives in human-readable workflow specifications: stage contracts, package manifests, tool policies, skill declarations, review gates, and packet scaffolds. Those surfaces are still too loose to call "code" in the ordinary sense. But calling them mere context files is now too weak. They increasingly behave like source artifacts for the parts of the system that matter most: what the agent is allowed to see, what it is allowed to do, what state can advance, and what failures can block promotion.
+The phrase sounds larger than the claim the evidence supports. That is the first thing worth fixing. It is easy to look at modern agent systems, see markdown workflow files, skill docs, policy checklists, package manifests, and reviewable execution logs, and decide that markdown itself is becoming a programming language. The literature does not justify that conclusion. What it does justify is narrower and more interesting: workflow specifications start behaving like source artifacts when a runtime can interpret them, validators can test their consequences, policies can constrain their execution, and traces can map failures back to the clauses that governed the run.
 
-That narrower claim matters because the broader one collapses under pressure. Passive markdown is not a programming language. A free-floating `AGENTS.md` file is not execution. A run log is not source. A workflow note only becomes source-like when a runtime can interpret it, validators can check it, policy can enforce it, and debugging traces can map failures back to the governing clauses. The right frame is therefore not "markdown as code." It is workflow specification as the visible source surface, validation as the hinge, traces as derivative debugging records, and provenance as the next missing layer.
+That shift matters because agent systems are drifting into an awkward middle state. They are no longer pure code in the old sense, where behavior is fixed by a compiled implementation and debugged through the implementation alone. They are also no longer just prompt bundles or operating notes. The stable object of design is increasingly a human-readable specification layer: a staged workflow, a contract for tools and context, a declared control surface, a set of allowed transitions, a validation stack, and a record of what happened when the system met the world. Once that layer becomes the thing operators edit, inspect, review, and debug, the old line between documentation and source starts to move.
 
-## What This Essay Will Not Claim
+The strongest recent papers are converging on that movement from different directions. Interpretable Context Methodology showed one early version of it by organizing agent behavior around folder structure, stage-specific markdown contracts, local scripts, and preserved intermediate artifacts. Natural-Language Agent Harnesses pushed the same intuition into a clearer engineering form by externalizing harness logic into editable contracts, adapters, and state conventions. AgentSPEX went further and gave the workflow itself an explicit specification surface: typed steps, branching, reusable modules, state management, checkpointing, replay, and verification hooks. Bootstrapping Coding Agents supplied the missing philosophical correction. The artifact of record should be the specification, not the generated output or the execution residue. That is the point where the argument becomes legible. The source-like layer is the workflow specification, not the pile of logs left behind it.
 
-This essay will not claim that plain markdown is executable by itself. It will not claim that stricter formalization always improves agent behavior. It will not claim that reviewable runs are the source of truth, that current repo skills already form a portable production substrate, or that this repo has already solved claim-level provenance. It will also keep imports, package-as-object semantics, and repo-wide validator promotion out of scope. Those are interesting extensions, but they are not the claims the current evidence can carry.
+That also explains why the usual "markdown as code" slogan collapses under pressure. Passive text does not govern anything by itself. A file becomes operationally meaningful only when another layer can load it, interpret it, constrain it, and compare behavior against it. ContextCov makes this explicit by extracting behavioral constraints from instruction files into executable checks. ALARA does the same for least-privilege context and tool exposure. Progent gives policy a more formal shape still by moving permissions and fallback behavior into a deterministic control layer. The pattern is the same each time. The file matters because the system can do something testable with it. Without that binding, the text remains aspiration, however detailed it looks.
 
-## The Specification Surface
+This is where validation stops being a trailing test pass and becomes the hinge of the whole architecture. If workflow specifications are going to function as source, they need more than readability. They need a way to stay attached to the environment they claim to govern. Test-Driven AI Agent Definition framed part of that problem through hidden checks, mutation-style tests, and regression logic for agent behavior. AgentFixer widened it into a fuller engineering loop: prompt analysis, intermediate checks, cross-stage consistency, trace comparison, diagnosis, and iterative repair. The lesson is hard to avoid. Validation is not a ceremonial gate at the end of the process. It is the machinery that keeps an externalized specification from drifting into fiction.
 
-Agent workflows increasingly expose a surface that looks more like source than prompt glue. A package manifest says what the live draft is, what the governing brief is, and which stage is active. A workflow document says what the stage means, what contexts are required, and what transitions are valid. A packet manifest says which artifact is the candidate, which artifact is the live draft, which validators apply, and which moves are prohibited. These surfaces do not contain the whole program, but they do contain the human-readable specification of what the harness is supposed to do next.
+Once that hinge is visible, reviewable traces make more sense too. There is a strong temptation in agent systems to treat logs as the deepest truth because they are concrete. They show exactly what happened. But that only makes them valuable when the system still knows what should have happened. AgentPex is useful here because it treats traces as something evaluatable against source-derived rules. FASTRIC does similar work at the prompt-protocol layer, checking whether an interaction sequence actually conforms to the intended finite-state procedure. These are strong arguments for traces as semantic debugging surfaces. They are weaker arguments for traces as primary source. The distinction matters. A log can tell you that a workflow violated its own procedure. It cannot by itself tell you whether the procedure was well designed, well scoped, or even the right object of authority.
 
-This is why "context engineering" is too broad a label. Context engineering covers anything that helps the model act. Workflow specifications make a narrower and more useful claim: they are inspectable control surfaces that can be read by both humans and runtimes. They do not replace code. They externalize the part of the system that would otherwise remain buried in ad hoc prompts, local memory, or operator folklore.
+This source versus trace hierarchy is exactly why the local `spec-diff` experiment in this repo matters as a bounded proof and not as a grand theory. The experiment did not show that a markdown workflow can fully determine runtime behavior. It showed something narrower and still useful: a declared package state can be checked against the evidence surface it claims to govern, and drift can be reported as a source-linked finding. That is the right scale for the example. It supports the claim that workflow-source systems need source-aware diagnostics. It does not support the stronger fantasy that lightweight textual specifications have solved conformance or semantic equivalence.
 
-The literature now gives that claim more support than the repo had at the start of this package. It is no longer only a local intuition that structured natural-language workflow layers can behave like source. Specification-oriented agent work is converging on the idea that the visible control surface should be explicit, inspectable, and executable enough for the runtime to honor it. That still does not make the specification sufficient on its own. It makes it the visible layer that later components can bind to.
+The same bounded reasoning applies to skills. The literature is now strong enough to treat skills as more than decorative instructions. SkVM, AgentSPEX, and the growing skills-as-code work all point toward externalized procedural units that can be selected, adapted, verified, and composed. Single-Agent With Skills sharpens that pressure by showing how multi-agent decomposition can collapse into an internalized skill library, while also exposing the semantic-selection limits of that move. The result is not a victory lap for raw markdown skills. It is a warning about what production substrate would actually require. Skills become reliable building blocks only when the runtime can bind capabilities explicitly, govern selection, and check execution against something stronger than optimistic prose.
 
-## Validation Is The Hinge
+This is why the most useful synthesis here is architectural rather than rhetorical. Workflow specifications are the visible surface. Validation and policy enforcement attach that surface to reality. Traces make the system debuggable after the fact. Skills sit beside that stack as reusable procedural units, but only with explicit binding and verification. What the stack still lacks, and what the literature is only beginning to make practical, is a real provenance layer. Claim-Level Auditability is the strongest signal in that direction because it reframes provenance as something richer than file history or trace retention. A promoted claim should preserve whether its evidence supports it, conflicts with it, or leaves an unresolved gap. That is a different standard from simply knowing which run touched which file.
 
-Validation is what stops this from collapsing back into documentation. A workflow specification only becomes meaningful source when the system can check whether the world still matches the declared contract. That is why validation belongs in the center of the argument rather than at the tail end of implementation.
+The current repo does not fully satisfy that standard, and pretending otherwise would weaken the whole essay. It has traces. It has validators. It has contradiction surfaces in some packages. It has bounded drift checks that compare declared state against observed package reality. Those are real pieces of a semantic-debugging stack. They still fall short of claim-level provenance graphs, provenance coverage metrics, or contradiction-aware audit paths that can survive across rewrites and promotions. That missing layer is not an embarrassment. It is the next design problem. Once source-like workflow systems exist, the pressure to explain and audit their claims becomes unavoidable.
 
-In practice, that validation layer is not one thing. It includes stage-resolution checks, package lifecycle checks, packet completeness checks, policy constraints on tools and transitions, contradiction checks on promoted claims, and bounded drift checks between source surfaces and local evidence. The common function is the same: validation turns a readable specification into an enforceable one.
+Seen from that angle, "literate workflow programming" becomes a usable name for a stack rather than a slogan for markdown maximalism. The literate part is not that prose-heavy files suddenly execute themselves. It is that the human-readable specification layer remains central even as the system becomes more operational. The programming part is not that every README is secretly code. It is that workflow behavior is increasingly shaped by inspectable source-like artifacts, bounded by validators and policies, and debugged through traces that still answer back to the specification layer. The category is real enough to study, but only if it stays narrow.
 
-This is also where the passive-markdown overclaim fails. A markdown file that nobody validates is still just a note. A markdown file that determines stage routing, points to the governing brief, blocks promotion when the packet is incomplete, and fails when evidence/index state drifts has crossed into a different category. It is still not executable in the same sense as a compiler target, but it is no longer accurate to describe it as only narrative support.
-
-The repo's own lifecycle guardrails now make that clearer than before. `status.yaml` is no longer just metadata. It routes the next stage. `config.blueprint_path` is no longer just an optional pointer. It determines the governing brief that packet tooling and lifecycle checks should resolve first. The point is not that these files replaced code. The point is that the system now depends on them as declared control surfaces.
-
-## Traces Are Not Source
-
-The temptation once a repo gains good logs is to treat the logs as the real artifact. That is the wrong hierarchy. Reviewable runs, execution records, and debugging traces matter because they show what happened under a specification. They do not become the specification by being detailed.
-
-That distinction matters for at least two reasons. First, logs are downstream artifacts. They inherit the ambiguities and omissions of the source surface. Second, the same log can be read very differently depending on whether the governing workflow contract was correct. A clean trace under a bad specification does not rescue the specification. A noisy trace under a good specification may still be diagnostically useful. The analytical job is to preserve the link between the two without collapsing them into one object.
-
-This is the right place to understand Reviewable Runs. They are not the place where the repo should store truth about what a package is or what a stage means. They are the place where the repo should store inspectable evidence of how the harness interpreted those truths, where it drifted, and what validator or checker forced correction. That is why the best use of a proof run is not "the trace proves the policy." It is "the trace shows how the system behaved relative to the policy."
-
-## `spec-diff` As A Bounded Local Proof
-
-The most useful local proof in this package is the `spec-diff` line, precisely because it is bounded. The validator did not prove broad behavioral conformance. It proved something narrower and more defensible: that a declared evidence surface and the package's local intake state can drift, that the drift can be detected from the source side, and that the repaired state can then be revalidated.
-
-That narrower result is exactly what a source-linked debugging tool should do. In `literate-workflow-programming`, it exposed mismatch in the paper-intake surface. In `illusion-of-swarm`, it caught orientation drift across mixed local evidence forms and verified the repaired index state without pretending to validate the essay itself. That is a useful proof because it shows the role of traces and validators in a workflow-specification stack. It does not show that stricter specs always improve agents. It shows that source-linked drift can be caught and explained.
-
-This is also why the source/trace distinction has to stay sharp. The `spec-diff` report is not the source artifact. The package manifest, paper index, and declared evidence surface are the source side. The report is a derivative debugging surface that tells you where those source surfaces no longer match local state.
-
-## Provenance Is The Next Missing Layer
-
-Once specification and validation are treated seriously, the next pressure point is provenance. A repo can know which stage is active, which candidate is authorized, and which validator failed without yet knowing which promoted claim is backed by which evidence and where a contradiction entered the system. That is the gap this package kept running into.
-
-The claim ledger, contradiction register, and scorecard improved that situation locally. They made it possible to say which claims were article-ready, which were caveated, and which tensions remained unresolved. But that is still not full claim-level provenance. It is a claim-state surface, not a complete claim-evidence graph. That distinction should remain explicit, because the current system benefits more from naming the missing layer honestly than from pretending it is already present.
-
-So the next layer in literate workflow programming is not "more markdown." It is provenance attached tightly enough to the workflow stack that promoted claims can carry their evidence state, contradiction state, and validation history with them. That is the point where semantic debugging becomes much more than rerunning validators. It becomes the ability to explain why a claim was allowed to travel.
-
-## Skills As A Bounded Support Layer
-
-Skills belong in the story, but not at the center. The evidence here is strong enough to say that skills are code-like workflow units: reusable, composable, and often closer to a callable capability than a paragraph of guidance. But raw markdown skills are still not portable production substrate. They depend on capability binding, routing, verification, and namespace control that the current repo only partially supplies.
-
-That is why the skills bridge should remain bounded. It helps explain why literate workflow programming is not only about stage docs and manifests. It does not justify turning the essay into a generalized claim that markdown skills are already equivalent to software modules. The correct claim is narrower: skills make the workflow stack more modular, but the portability and enforcement layer is still incomplete.
-
-## Conclusion
-
-Literate workflow programming is a useful label only if it stays narrow. The point is not that markdown became code. The point is that agent workflow systems increasingly expose a readable source-like layer, and that this layer becomes meaningful only when validators, policy checks, and debugging traces bind it to actual behavior. Specification is the visible surface. Validation is the hinge. Traces are derivative debugging records. Provenance is the next layer the current stack still lacks.
-
-That frame is stronger than the original metaphor because it fits both the literature and the repo. It explains why workflow files, manifests, and stage contracts matter without pretending they are sufficient by themselves. It explains why Reviewable Runs matter without mistaking them for the source of truth. And it explains why the right engineering question is no longer whether markdown is executable. The right question is whether the specification surface, validation layer, and trace layer are coherent enough to make workflow behavior inspectable, enforceable, and debuggable.
+That narrowness is the whole point. A workflow system crosses the line into source-like territory when its specifications can be interpreted, checked, enforced, and debugged without losing their human legibility. That is already happening. The stronger claims still need to wait. Passive markdown is not enough. Formality does not automatically improve behavior. Raw skills are not portable substrate just because they look modular. Reviewable runs are not yet full source maps. The architecture is still emerging. The right response is not to inflate the metaphor. It is to name the stack accurately and build the missing provenance layer with open eyes.
 
 ## Limits
 
-- This candidate does not claim that passive markdown is executable.
-- It does not claim that current repo skills are portable runtime substrate.
-- It treats `spec-diff` only as a bounded local proof of source/evidence drift detection.
-- It treats claim-level provenance as the next missing layer, not as a current repo capability.
-- It leaves import semantics, package-as-object semantics, and repo-wide validator promotion parked.
+This draft does not claim that markdown alone is executable, that stricter formalization monotonically improves agent behavior, or that current Reviewable Runs already provide full claim-level provenance. It keeps package-as-object semantics, markdown import semantics, and repo-wide validator promotion parked. It also keeps the skills claim bounded: skills can be code-like workflow units, but current markdown skills are not being presented as already portable production substrate.
 
 ## References
 
-- Package surfaces:
-  - `publications/literate-workflow-programming/claim-ledger.md`
-  - `publications/literate-workflow-programming/contradiction-register.md`
-  - `publications/literate-workflow-programming/claim-scorecard.md`
-  - `publications/literate-workflow-programming/literate-workflow-programming-blueprint-r1.md`
-  - `publications/literate-workflow-programming/research-notes/2026-04-20-spec-diff-experiment.md`
-  - `publications/literate-workflow-programming/research-notes/2026-04-21-p2a-local-intake-trace-provenance.md`
-- Local proof records:
-  - `reviewable-runs/logs/2026-04-22_literate-workflow-programming_manifest-first-proof-run.md`
-  - `reviewable-runs/logs/2026-04-22_literate-workflow-programming_claim-provenance-step.md`
-- Paper set:
-  - `2603.25723`
-  - `2604.13346`
-  - `2603.17399`
-  - `2603.00822`
-  - `2510.04173`
-  - `2512.19769`
-  - `2512.18940`
-  - `2603.20380`
-  - `2504.11703`
-  - `2603.23806`
-  - `2603.29848`
-  - `2602.13855`
+- `2603.16021` Interpretable Context Methodology
+- `2603.25723` Natural-Language Agent Harnesses
+- `2604.13346` AgentSPEX
+- `2603.17399` Bootstrapping Coding Agents
+- `2603.08806` Test-Driven AI Agent Definition
+- `2603.00822` ContextCov
+- `2512.19769` Declarative workflow DSL
+- `2512.18940` FASTRIC
+- `2603.20380` ALARA
+- `2504.11703` Progent
+- `2603.23806` AgentPex
+- `2603.29848` AgentFixer
+- `2602.13855` Claim-Level Auditability
+- `2601.04748` Single-Agent With Skills

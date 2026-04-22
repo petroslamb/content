@@ -11,7 +11,8 @@ import re
 from lifecycle import PUBLICATIONS_DIR, REPO_ROOT
 
 
-PACKET_SCHEMA_VERSION = 3
+PACKET_SCHEMA_VERSION = 4
+NORTH_STAR_ESCALATION_SCHEMA_VERSION = 2
 
 BLUEPRINT_PATTERNS = ("*blueprint*.md", "*plan*.md")
 REVIEW_PATTERNS = ("*review*.md", "*scorecard*.md", "*claims*.md", "*rubric*.md")
@@ -54,6 +55,51 @@ PREWRITE_WRITABILITY_VERDICTS = {
     "pending",
     "writable",
     "not_yet_writable",
+}
+
+CEILING_REPORT_FRONTMATTER_FIELDS = [
+    "kind",
+    "package",
+    "revision",
+    "live_draft_path",
+    "terminal_candidate_path",
+    "terminal_replacement_review_path",
+    "terminal_decision_path",
+    "dominant_blocker_slug",
+    "ceiling_verdict",
+    "effort_verdict",
+    "next_route",
+]
+
+CEILING_REPORT_BODY_HEADINGS = [
+    "## Verdict",
+    "## Iteration Chronology",
+    "## Blocker Timeline",
+    "## Effort Audit",
+    "## What Survived",
+    "## What Did Not Survive",
+    "## Lessons Learned",
+    "## Next Route",
+]
+
+CEILING_REPORT_VERDICTS = {
+    "pending",
+    "object_ceiling",
+    "not_ceiling",
+}
+
+CEILING_REPORT_EFFORT_VERDICTS = {
+    "pending",
+    "hard_enough",
+    "not_hard_enough",
+    "inconclusive",
+}
+
+CEILING_REPORT_NEXT_ROUTES = {
+    "pending",
+    "post_ceiling_pivot",
+    "publish_non_flagship",
+    "shelve",
 }
 
 ESCALATION_BLUEPRINT_HEADINGS = [
@@ -188,6 +234,7 @@ PACKET_TEMPLATE_TARGETS = {
     "cold_replacement_review_template.md": "replacement_review",
     "atlas_live_draft_scorecard_template.md": "atlas_scorecard",
     "promotion_decision_template.md": "decision",
+    "ceiling_report_template.md": "ceiling_report",
 }
 
 ESCALATION_STOP_GATE_STATUSES = {
@@ -244,7 +291,7 @@ def escalation_mode_active(
     decision_frontmatter: dict,
 ) -> bool:
     return (
-        packet_schema_version(packet) >= 2
+        packet_schema_version(packet) >= NORTH_STAR_ESCALATION_SCHEMA_VERSION
         and review_frontmatter.get("north_star_verdict") == "below_north_star"
         and decision_frontmatter.get("recommendation") == "revise_candidate"
     )
@@ -400,6 +447,7 @@ def build_packet_paths(live_draft_path: Path, revision: int) -> dict[str, Path]:
         "replacement_review": root / f"{draft_stem}-replacement-review-r{revision}.md",
         "atlas_scorecard": root / f"{draft_stem}-atlas-scorecard-r{revision}.md",
         "decision": root / f"{draft_stem}-decision-r{revision}.md",
+        "ceiling_report": root / f"{draft_stem}-ceiling-report-r{revision}.md",
     }
 
 
