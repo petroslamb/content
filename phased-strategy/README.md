@@ -15,6 +15,7 @@ Use this layer differently from the workflow layer:
 | :--- | :--- |
 | [`strategic_plan.md`](strategic_plan.md) | The canonical phase roadmap from clean internal automation through harness-native autonomy, operator shell, platform, and SaaS product. |
 | [`phase-1-1-5-closure-checklist.md`](phase-1-1-5-closure-checklist.md) | Current closure checklist for Phase 1 and Phase 1.5, including what is done, what is partial, and what remains open. |
+| [`phase-2/README.md`](phase-2/README.md) | Phase 2 planning index for the local execution platform: executable workflow contracts, validation, traces, gates, CLI, cockpit, and open questions. |
 
 ## Research Dependencies
 
@@ -36,6 +37,7 @@ As of 2026-04-22:
 - The original "start-to-finish by an agent" ambition is now treated as Phase 1.5/1.6 autonomy proof work, not as a remaining Phase 1 blocker.
 - Phase 1.5 is now pragmatically gate-cleared: the retained proof set covers `research-heavy`, `publish-adjacent`, and `media/distribution`, even though the lanes remain asymmetric in cleanliness.
 - Phase 1.6 should remain the operator-shell layer that follows Phase 1.5 closure and hardens the remaining caveats.
+- Phase 2 now has its own planning folder under [`phase-2/`](phase-2/README.md), and that plan is now organized around executable contracts, validation, traces, gates, and a thin runtime rather than a CLI-first platform story.
 
 ## When To Update This Folder
 
