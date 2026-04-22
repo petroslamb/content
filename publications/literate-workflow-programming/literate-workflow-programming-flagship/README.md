@@ -21,7 +21,7 @@ Leaf publication package inside the [`../README.md`](../README.md) umbrella for 
 
 ## Current Read
 
-This leaf is no longer the active expansion path. It remains the canonical donor object that produced the stop gate, the ceiling report, and the still-open successor search under the umbrella.
+This leaf is no longer the active expansion path. It remains the canonical donor object that produced the stop gate, the ceiling report, and the stopped successor-search record under the umbrella.
 
 ## Working Rule
 

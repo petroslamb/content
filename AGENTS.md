@@ -64,8 +64,11 @@ For package-stage decisions, use this order:
 1. read the package `status.yaml` first
 2. do not infer the lifecycle stage from research notes or the live brief alone
 3. read the package `README.md`
-4. load `config.blueprint_path` when the manifest names one
-5. if `essay_iteration` is active, seed or refresh the packet before making strong drafting-next-step claims
+4. if `kind: umbrella`, read `umbrella_route` before assuming any leaf-style stage semantics
+5. load `config.blueprint_path` when the manifest names one
+6. if `essay_iteration` is active, seed or refresh the packet before making strong drafting-next-step claims
+
+For umbrella packages, expect `current_stage: null` or another compatibility-only stage shell. The operational source of truth may be the umbrella route plus `stage:next`, not a leaf-style downstream stage.
 
 ## Local Skills
 
