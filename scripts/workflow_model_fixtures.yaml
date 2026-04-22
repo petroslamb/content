@@ -6,10 +6,10 @@ topic_packets:
 route_checks:
   - package: literate-workflow-programming
     stage: notebooklm_artifacts
-    expected_pipeline_profile: article_default
-    expected_effective_workflow: notebooklm_artifacts
+    expected_pipeline_profile: post_ceiling_successor
+    expected_effective_workflow: post_ceiling_pivot
     expected_effective_can_execute: false
-    expected_recommended_workflow: notebooklm_artifacts
+    expected_recommended_workflow: post_ceiling_pivot
 workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: clean-interface-illusion
@@ -24,11 +24,11 @@ workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: literate-workflow-programming
     expected_can_execute: false
-    expected_overlay_phase: post_block_route_settled
-    expected_next_overlay_action: hold_for_narrower_doctrine_write_or_later_larger_successor
-    expected_overlay_route: keep_as_strong_narrower_doctrine_object
+    expected_overlay_phase: build_pivot_slate
+    expected_next_overlay_action: rewrite_pivot_slate_for_materially_larger_successor_search
+    expected_overlay_route: restart_pivot_search_now
     expected_active_overlay_root: publications/literate-workflow-programming
-    expected_validator_substring: pivot_north_star_viability
+    expected_validator_substring: pivot_research_grounding
     expected_recommended_gates:
       - pivot_research_grounding
       - pivot_north_star_viability

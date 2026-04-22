@@ -7,7 +7,7 @@
 The capped flagship attempt produced one grounded successor and no cleared pivot.
 
 `Validation Is Lifecycle Infrastructure` is now the strongest grounded candidate in the package.
-It does not clear a north-star flagship attempt, and the package should now stop trying to force that escalation from the current candidate.
+It does not clear a north-star flagship attempt, and the package should now restart successor search instead of pretending the narrower branch resolved the pivot question.
 
 ## Why This Wins
 
@@ -32,9 +32,9 @@ It lost as a standalone pivot candidate because the evidence seam under it is no
 
 ### Traces Are Not Provenance
 
-This is the strongest narrower synthesis and the cleanest supporting seam.
+This is the strongest secondary seam and the cleanest supporting split.
 
-It lost because it is narrower, more inward, and more likely to read as tooling doctrine than as a flagship public argument.
+It lost because it is still more inward and more likely to read as tooling doctrine than as a flagship public argument.
 
 ### Workflow Is A Namespace
 
@@ -58,53 +58,49 @@ It is not the successor argument itself.
 
 ## Research Decision
 
-Do not open a sibling flagship package.
-Do not restart broad successor hunting now.
+Do not open a sibling flagship package from the current candidate.
+Do restart successor hunting now.
 
 The package has now made that decision.
 
-Treat `Validation Is Lifecycle Infrastructure` as a strong narrower doctrine object, not as a blocked almost-flagship waiting for one more rescue pass.
+Treat `Validation Is Lifecycle Infrastructure` as a serious explored branch, not as the package's pivot answer.
 
 The reason is simple:
 
 - the candidate is real
 - the candidate is stronger after the consequence pass
 - the candidate still fails the flagship bar for the same reason after the comparative rerank and restated north-star judgment
-- there is no stronger grounded successor in the current package state
+- there is no cleared successor in the current package state
 
 That means the honest route is:
 
-- keep this object available as a narrower doctrine write
-- stop active rescue attempts for flagship clearance
-- postpone any fresh pivot search until the package has a genuinely larger successor seam to test
+- keep this object available only as historical transfer material
+- stop active rescue attempts for flagship clearance from this candidate
+- reopen the slate immediately and search for a materially larger successor seam
 
-This is a stop on forced escalation, not a declaration that the package topic is dead.
+This is a stop on forced escalation from the current candidate, not a declaration that the package topic is dead.
 
 ## Post-Block Route
 
-`keep_as_strong_narrower_doctrine_object`
+`restart_pivot_search_now`
 
 The active overlay should now be read this way:
 
-- flagship successor route: blocked
-- narrower doctrine route: viable
-- restart-later route: allowed only when new evidence or a materially larger successor seam appears
+- flagship successor route from the current candidate: blocked
+- package-level successor search: active again
+- no-successor stop route: still available later if a reopened slate produces nothing larger
 
-So the package is no longer in open-ended pivot search. It is in a settled post-block state.
+So the package is back in active successor search, not in a settled salvage state.
 
-## Gate For Package Split
+## Gate For Successor Leaf
 
 Open a sibling flagship package only if a later pass closes all of these:
 
 - the public enemy grows beyond "end-of-line testing" into a genuinely larger mistake about governed workflow systems
 - the consequence surface extends beyond repo-shaped engineering doctrine
 - the object can sustain pressure without re-expanding into a full stack walk
-- the evidence remains stronger for this candidate than for the narrower provenance seam or the wrapper-only accusation
+- the evidence remains stronger for the new candidate than for the narrower provenance seam or the wrapper-only accusation
 
-If that gate fails again, keep this as a strong narrower doctrine piece and do not manufacture another flagship attempt from the same evidence shape.
+If that gate fails again, stop without a successor rather than manufacturing another salvage object.
 
-The package should reopen pivot search only if at least one of these changes:
-
-- a materially larger successor seam appears in later research
-- the current narrower doctrine object proves unusually strong in real drafting and reveals a broader governing term
-- a new evidence family expands the consequence surface beyond governed agent-workflow doctrine
+The reopened search should continue only if at least one materially larger successor seam appears in later research.

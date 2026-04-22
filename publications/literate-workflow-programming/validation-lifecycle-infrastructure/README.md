@@ -1,11 +1,11 @@
 # Validation Is Lifecycle Infrastructure
 
-Leaf publication package inside the [`../README.md`](../README.md) umbrella for the narrowed doctrine object that survived the post-ceiling pivot search.
+Historical exploratory branch inside the [`../README.md`](../README.md) umbrella for the earlier narrower-doctrine experiment.
 
 ## Package Role
 
 - Archetype: Leaf package inside the umbrella
-- Status: Strong bounded doctrine candidate
+- Status: Historical non-pivot branch
 - Canonical live draft surface: [`../validation-is-lifecycle-infrastructure.md`](../validation-is-lifecycle-infrastructure.md)
 - Governing blueprint: [`../validation-is-lifecycle-infrastructure-blueprint-r1.md`](../validation-is-lifecycle-infrastructure-blueprint-r1.md)
 - Current gate judgment: [`../validation-is-lifecycle-infrastructure-review-r3.md`](../validation-is-lifecycle-infrastructure-review-r3.md)
@@ -23,16 +23,16 @@ Leaf publication package inside the [`../README.md`](../README.md) umbrella for 
 
 ## Current Read
 
-This leaf is the active non-flagship publication object inside the umbrella. It keeps the package's strongest narrower doctrine without pretending to replace the capped flagship attempt.
+This branch records a serious narrower doctrine attempt that was explored and judged not good enough to count as the package's pivot answer.
 
-The current local gate is settled: the `r3` candidate clears as a strong bounded doctrine piece, so the next work is packaging, polish, or companion placement rather than another search for the doctrine.
+The current umbrella workflow no longer treats this branch as the active route. The package has reopened successor search for a real new flagship object instead.
 
 ## Working Rule
 
-Use this leaf when the task is specifically about:
+Use this branch when the task is specifically about:
 
-- iterating or polishing the doctrine object
-- deciding companion placement or packaging
-- evaluating whether the doctrine piece should move into polish or publication follow-through
+- reviewing what the narrower doctrine route achieved
+- checking whether any phrasing or evidence seam should be transferred into a later flagship successor
+- understanding why the package rejected this as the pivot answer
 
 Use the umbrella root for shared research and donor history. Use [`../literate-workflow-programming-flagship/README.md`](../literate-workflow-programming-flagship/README.md) when the task is specifically about the original flagship frame.

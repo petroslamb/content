@@ -2,7 +2,7 @@
 
 Live target: `publications/literate-workflow-programming/validation-is-lifecycle-infrastructure.md`
 Donor source: `publications/literate-workflow-programming/literate-workflow-programming-ceiling-report-r3.md`
-Route: `keep_as_strong_narrower_doctrine_object`
+Route: `historical_narrower_branch`
 
 ## Promise
 
@@ -57,7 +57,7 @@ Not active. This is a narrowed doctrine object, not a north-star escalation pass
 
 ## Object Decision
 
-Not active. The object has already been settled by the post-block route: keep as a strong narrower doctrine object.
+Not active. The object is preserved as a historical narrower branch, not as the current pivot answer.
 
 ## Body / Support / Footnote Ledger
 

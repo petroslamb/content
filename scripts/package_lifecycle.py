@@ -20,7 +20,7 @@ from essay_iteration_support import (
     resolve_live_draft,
     resolve_nearest_blueprint_path,
 )
-from lifecycle import STAGES, load_status_ref, split_frontmatter
+from lifecycle import STAGES, active_umbrella_route, load_status_ref, split_frontmatter
 
 
 STAGE_LABEL_ALIASES = {
@@ -43,6 +43,8 @@ def normalize_stage_label(value: str) -> str:
 
 
 def current_stage_from_status(status_data: dict) -> str | None:
+    if active_umbrella_route(status_data):
+        return None
     stages = status_data.get("stages", {})
     for stage in STAGES:
         if not stages.get(stage, {}).get("done", False):
@@ -153,6 +155,7 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
     manifest_ref, status_data = load_status_ref(package_arg)
     package_path = manifest_ref.package_path
     current_stage = current_stage_from_status(status_data)
+    umbrella_route = active_umbrella_route(status_data)
     readme_stage = parse_readme_current_stage(package_path)
     governing_brief = resolve_governing_brief(package_path, status_data)
     packet_manifest_path = resolve_packet_manifest_path(package_path, status_data)
@@ -386,6 +389,9 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
     return {
         "package": manifest_ref.package_key,
         "current_stage": current_stage,
+        "umbrella_route_workflow": umbrella_route.get("active_workflow") if umbrella_route else None,
+        "umbrella_route_state": umbrella_route.get("active_route") if umbrella_route else None,
+        "umbrella_route_next_action": umbrella_route.get("next_action") if umbrella_route else None,
         "readme_current_stage": readme_stage,
         "governing_brief_path": repo_relpath(governing_brief["path"]),
         "governing_brief_source": governing_brief["source"],
