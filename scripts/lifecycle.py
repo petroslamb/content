@@ -185,6 +185,18 @@ def is_leaf_manifest(status_data: dict) -> bool:
     return status_data.get("kind", "leaf") == "leaf"
 
 
+def active_umbrella_route(status_data: dict) -> dict | None:
+    if status_data.get("kind") != "umbrella":
+        return None
+    route = status_data.get("umbrella_route")
+    if not isinstance(route, dict):
+        return None
+    active_workflow = route.get("active_workflow")
+    if not isinstance(active_workflow, str) or not active_workflow:
+        return None
+    return route
+
+
 def iter_leaf_status_refs() -> list[tuple[ManifestRef, dict]]:
     refs = []
     for ref in iter_status_refs():

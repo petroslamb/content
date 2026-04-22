@@ -8,7 +8,7 @@ State what changed and why the package is reranking the live candidates now.
 
 - Main candidate:
 - Strongest adjacent seam:
-- Strongest narrower synthesis:
+- Strongest secondary seam:
 - Strongest wrapper or blocked rival:
 
 ## Rerank Question

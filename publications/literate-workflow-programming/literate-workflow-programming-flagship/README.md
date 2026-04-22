@@ -21,7 +21,7 @@ Leaf publication package inside the [`../README.md`](../README.md) umbrella for 
 
 ## Current Read
 
-This leaf is no longer the active expansion path. It remains the canonical donor object that produced the stop gate, the ceiling report, and the pivot search that generated the narrower doctrine leaf.
+This leaf is no longer the active expansion path. It remains the canonical donor object that produced the stop gate, the ceiling report, and the still-open successor search under the umbrella.
 
 ## Working Rule
 
@@ -30,6 +30,6 @@ Use this leaf when the task is about:
 - the original flagship frame
 - the `r1 -> r3` packet history
 - the stop-gated donor report
-- the pivot handoff into the narrower doctrine route
+- the pivot handoff into successor search
 
-Do not use this leaf as the active writing surface for the narrowed doctrine object. That work now lives in [`../validation-lifecycle-infrastructure/README.md`](../validation-lifecycle-infrastructure/README.md).
+Do not use this leaf as the active writing surface for successor search. That work now lives at the umbrella root through the active `post_ceiling_pivot` surfaces.

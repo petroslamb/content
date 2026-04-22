@@ -31,9 +31,9 @@ State the next bounded research or package action.
 Choose one of:
 
 - `pending`
-- `keep_as_strong_narrower_doctrine_object`
-- `restart_pivot_search_later`
+- `restart_pivot_search_now`
+- `no_successor`
 
-## Gate For Package Split
+## Gate For Successor Leaf
 
-State what still has to pass before a sibling package or flagship object is opened.
+State what still has to pass before a new flagship successor leaf is opened.

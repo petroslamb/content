@@ -1,14 +1,14 @@
 # Literate Workflow Programming Umbrella Brief
 
-This umbrella holds one shared research and evidence surface for two publication objects:
+This umbrella holds one shared research and evidence surface for one donor object plus an open successor search:
 
 - the capped flagship donor `Literate Workflow Programming`
-- the narrowed doctrine leaf `Validation Is Lifecycle Infrastructure`
+- the still-open search for a new flagship successor
 
-The umbrella exists because both objects depend on the same paper library, contradiction state, pivot history, and local `spec-diff` proof.
+The umbrella exists because donor history, pivot search, and any future successor all depend on the same paper library, contradiction state, and local `spec-diff` proof.
 
 Current governing rule:
 
 - keep shared research, pivot history, and donor artifacts at the umbrella root
-- keep active lifecycle interpretation at the leaf level
-- do not treat the doctrine leaf as an overwrite of the flagship donor
+- keep active lifecycle interpretation on the donor leaf plus the active successor-search overlay
+- do not treat the earlier doctrine branch as an overwrite or as the current pivot answer

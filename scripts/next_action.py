@@ -9,18 +9,22 @@ import argparse
 import json
 import sys
 
-from harness import build_stage_resolution, next_stage_for_package
-from lifecycle import load_status_ref
+from harness import build_stage_resolution, build_workflow_resolution, next_stage_for_package
+from lifecycle import active_umbrella_route, load_status_ref
 
 
 def build_next_action(package_arg: str) -> dict:
     manifest_ref, status_data = load_status_ref(package_arg)
+    umbrella_route = active_umbrella_route(status_data)
     next_stage = next_stage_for_package(manifest_ref.package_path, status_data)
     base = {
         "package": manifest_ref.package_key,
         "revision": status_data.get("revision", 1),
-        "all_stages_complete": next_stage is None,
+        "all_stages_complete": next_stage is None and umbrella_route is None,
         "next_stage": next_stage,
+        "umbrella_route_workflow": umbrella_route.get("active_workflow") if umbrella_route else None,
+        "umbrella_route_state": umbrella_route.get("active_route") if umbrella_route else None,
+        "umbrella_route_next_action": umbrella_route.get("next_action") if umbrella_route else None,
         "runner_mode": None,
         "approval_gate": None,
         "requires_approval": False,
@@ -51,6 +55,35 @@ def build_next_action(package_arg: str) -> dict:
         "overlay_recommended_validator": None,
         "active_overlay_root": None,
     }
+    if umbrella_route is not None:
+        resolution = build_workflow_resolution(umbrella_route["active_workflow"], package_arg=package_arg)
+        return {
+            **base,
+            "runner_mode": resolution.get("runner_mode"),
+            "approval_gate": resolution["approval_gate"],
+            "requires_approval": resolution["requires_approval"],
+            "can_execute": resolution["can_execute"],
+            "blocking_issues": resolution["blocking_issues"],
+            "required_context": resolution["required_context"],
+            "suggested_commands": resolution["suggested_commands"],
+            "log_target": resolution["log_target"],
+            "recommended_validator": resolution.get("recommended_validator"),
+            "recommended_workflows": [resolution["workflow_id"]],
+            "effective_workflow": resolution["workflow_id"],
+            "effective_workflow_kind": resolution["workflow_kind"],
+            "effective_workflow_doc": resolution["workflow_doc"],
+            "effective_next_action": resolution.get("next_overlay_action") or umbrella_route.get("next_action"),
+            "effective_route": resolution.get("overlay_route") or umbrella_route.get("active_route"),
+            "effective_can_execute": resolution["can_execute"],
+            "effective_requires_approval": resolution["requires_approval"],
+            "effective_approval_gate": resolution["approval_gate"],
+            "active_overlay": resolution["workflow_id"] if resolution["workflow_kind"] == "overlay" else None,
+            "overlay_phase": resolution.get("overlay_phase"),
+            "next_overlay_action": resolution.get("next_overlay_action"),
+            "overlay_route": resolution.get("overlay_route"),
+            "overlay_recommended_validator": resolution.get("recommended_validator"),
+            "active_overlay_root": resolution.get("active_overlay_root"),
+        }
     if next_stage is None:
         return base
 
@@ -93,8 +126,49 @@ def print_text(payload: dict) -> None:
     print(f"PACKAGE: {payload['package']}")
     print(f"Revision: {payload['revision']}")
     print(f"All Stages Complete: {payload['all_stages_complete']}")
-    print(f"Compatibility Stage: {payload['next_stage']}")
+    print(f"Compatibility Stage (status.yaml): {payload['next_stage']}")
+    if payload.get("umbrella_route_workflow"):
+        print(f"Umbrella Route Workflow: {payload['umbrella_route_workflow']}")
+        if payload.get("umbrella_route_state"):
+            print(f"Umbrella Route State: {payload['umbrella_route_state']}")
+        if payload.get("umbrella_route_next_action"):
+            print(f"Umbrella Route Next Action: {payload['umbrella_route_next_action']}")
     if payload["next_stage"] is None:
+        if payload.get("effective_workflow"):
+            print(f"Effective Workflow: {payload.get('effective_workflow')}")
+            print(f"Effective Kind: {payload.get('effective_workflow_kind')}")
+            print(f"Effective Can Execute: {payload.get('effective_can_execute')}")
+            print(f"Effective Approval Gate: {payload.get('effective_approval_gate')}")
+            print(f"Effective Requires Approval: {payload.get('effective_requires_approval')}")
+            print(f"Effective Next Action: {payload.get('effective_next_action')}")
+            if payload.get("effective_route"):
+                print(f"Effective Route: {payload.get('effective_route')}")
+        if payload.get("recommended_workflows"):
+            print("\nRecommended Workflows:")
+            for workflow_id in payload["recommended_workflows"]:
+                print(f"  - {workflow_id}")
+        if payload.get("active_overlay"):
+            print(f"\nActive Overlay: {payload['active_overlay']}")
+            print(f"Overlay Root: {payload.get('active_overlay_root')}")
+            print(f"Overlay Phase: {payload.get('overlay_phase')}")
+            print(f"Next Overlay Action: {payload.get('next_overlay_action')}")
+            if payload.get("overlay_route"):
+                print(f"Overlay Route: {payload.get('overlay_route')}")
+            print(f"Overlay Validator: {payload.get('overlay_recommended_validator')}")
+        if payload["blocking_issues"]:
+            print("\nBlocking Issues:")
+            for issue in payload["blocking_issues"]:
+                print(f"  - {issue}")
+        print("\nRequired Context:")
+        for item in payload["required_context"]:
+            value = item.get("value")
+            if value is None:
+                print(f"  - {item['name']}: {item['status']}")
+            else:
+                print(f"  - {item['name']}: {item['status']} ({value})")
+        print("\nSuggested Commands:")
+        for command in payload["suggested_commands"]:
+            print(f"  - {command}")
         return
     print(f"Runner Mode: {payload['runner_mode']}")
     print(f"Approval Gate: {payload['approval_gate']}")

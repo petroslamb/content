@@ -2,12 +2,18 @@ kind: umbrella
 publication: literate-workflow-programming
 revision: 3
 config:
-  default_leaf_package: literate-workflow-programming/validation-lifecycle-infrastructure
   evidence_path: publications/literate-workflow-programming/papers
   shared_evidence_path: publications/literate-workflow-programming/papers
   blueprint_path: umbrella-brief.md
   leaf_packages:
     - literate-workflow-programming/literate-workflow-programming-flagship
+umbrella_route:
+  active_workflow: post_ceiling_pivot
+  active_route: restart_pivot_search_now
+  next_action: rewrite_pivot_slate_for_materially_larger_successor_search
+  donor_leaf: literate-workflow-programming/literate-workflow-programming-flagship
+  active_successor_leaf: null
+  historical_branches:
     - literate-workflow-programming/validation-lifecycle-infrastructure
 stages:
   paper_intake:
@@ -19,21 +25,3 @@ stages:
   essay_iteration:
     done: true
     last_updated: '2026-04-22'
-  notebooklm_artifacts:
-    done: false
-    last_updated: null
-  article_polish:
-    done: false
-    last_updated: null
-  substack_publishing:
-    done: false
-    last_updated: null
-  archive_sync:
-    done: false
-    last_updated: null
-  youtube_production:
-    done: false
-    last_updated: null
-  distribution:
-    done: false
-    last_updated: null

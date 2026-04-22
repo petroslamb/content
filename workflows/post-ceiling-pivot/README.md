@@ -22,7 +22,7 @@ required_context:
   - current package shape, including whether umbrella upgrade or leaf initialization is still pending
 expected_outputs:
   - umbrella upgrade when starting from a single-publication donor
-  - donor leaf plus successor or narrowed-doctrine leaf when a second object becomes real
+  - donor leaf plus successor flagship leaf when a second object becomes real
   - pivot slate with ranked candidate families
   - grounding review and blocker record
   - one active next-pivot candidate surface
@@ -30,7 +30,7 @@ expected_outputs:
   - north-star viability gate for any candidate being considered for clearance
   - explicit pivot decision: blocked, provisional, clear lead, or pivot cleared
 done_when:
-  - one candidate clears both research grounding and north-star viability and the donor plus surviving object have distinct leaf identities, or the package explicitly blocks the whole pivot search and records why
+  - one candidate clears both research grounding and north-star viability and the donor plus surviving flagship successor have distinct leaf identities, or the package explicitly stops the successor search and records why
 approval_gate: required_for_pivot_clearance
 ---
 
@@ -90,6 +90,9 @@ That means:
 This workflow treats **candidate discovery** and **candidate clearance** as separate stages.
 It also treats **research-grounded** and **north-star viable** as different claims.
 
+When a pivot clears, the new successor leaf does **not** jump straight into `essay_iteration`.
+It re-enters `research` for successor-specific expansion on top of the shared umbrella evidence base, then must clear its own `research_exit` gate before bounded drafting.
+
 ## Filesystem Shape
 
 Treat a real post-ceiling search as an umbrella transition, not as a longer single-publication package.
@@ -99,9 +102,7 @@ The canonical shape is:
 - the `ceiling report` stays at the umbrella root because it is the terminal artifact of `essay_iteration`
 - shared research, donor history, and overlay search artifacts stay at the umbrella root
 - the capped original essay becomes a donor leaf
-- any surviving second object becomes either:
-  - a successor leaf
-  - or a narrower-doctrine leaf
+- any surviving second object becomes a successor flagship leaf
 
 That keeps publication objects separate while preserving one shared evidence tree.
 
@@ -158,8 +159,8 @@ The recurring strong artifact set is:
 
 For north-star-blocked grounded candidates, the pivot decision must also carry an explicit `post-block route`:
 
-- `keep_as_strong_narrower_doctrine_object`
-- `restart_pivot_search_later`
+- `restart_pivot_search_now`
+- `no_successor`
 
 Legacy compatibility:
 
@@ -186,20 +187,19 @@ Use these substeps:
 - `run_consequence_pressure`
 - `run_comparative_rerank`
 - `run_north_star_viability`
-- `decide_post_block_route`
-- `initialize_narrower_leaf`
-- `post_block_route_settled`
+- `decide_post_block_outcome`
+- `pivot_search_stopped`
 - `initialize_successor_leaf`
-- `successor_leaf_ready`
+- `successor_leaf_research_handoff`
 
 For a grounded candidate that is still north-star blocked, the normal loop is:
 
 1. consequence pressure
 2. comparative rerank
 3. restated north-star judgment
-4. decision to narrow, keep as doctrine piece, or search for a materially larger successor
+4. decision to restart successor search now or stop without a successor
 
-Once that decision is made explicitly, the overlay should leave `decide_post_block_route` and resolve a settled route instead of asking the same question again.
+Once that decision is made explicitly, the overlay should leave `decide_post_block_outcome` and either reopen slate-building or stop cleanly.
 
 ## Working Sequence
 
@@ -332,7 +332,7 @@ Record that distinction explicitly:
 
 - main candidate
 - strongest adjacent workflow seam
-- strongest narrower writeable synthesis
+- strongest secondary seam worth keeping in view
 
 Do not force every useful seam to become the headline object.
 
@@ -374,7 +374,7 @@ Keep the rerank separate from the decision note so the package preserves:
 
 - current main candidate
 - strongest adjacent seam
-- strongest narrower writeable synthesis
+- strongest secondary seam
 - strongest wrapper or blocked rival
 
 The full-package clearance pass must include the north-star viability gate below before the final status is assigned.
@@ -407,7 +407,7 @@ Answer these questions explicitly:
 
 Pass this gate only when the candidate is not merely research-supported, but structurally likely to produce a top-cluster essay.
 
-Fail this gate with `research_grounded_but_not_north_star_viable` when the candidate is promising and evidence-backed but likely to cap below the archive's north-star bar unless it is narrowed or receives materially stronger evidence.
+Fail this gate with `research_grounded_but_not_north_star_viable` when the candidate is promising and evidence-backed but still caps below the archive's north-star bar unless materially stronger evidence or a larger successor seam appears.
 
 ## Negative Evidence Rules
 
@@ -444,17 +444,11 @@ Do not treat failed searches as nothing. Treat them as evidence about what the c
 - the north-star viability gate passes
 - the largest intended landing has scale-matched evidence
 
-### Initialize A Narrower Leaf When:
-
-- the post-block route settles on `keep_as_strong_narrower_doctrine_object`
-- the package has not yet created a second leaf for that object
-- the object is strong enough to deserve its own bounded publication identity even though it is not a new flagship
-
 ### Initialize A Successor Leaf When:
 
 - the candidate has cleared both grounding and north-star viability
 - the package has already upgraded to an umbrella
-- the surviving object needs its own leaf before a new flagship iteration begins
+- the surviving object needs its own leaf before successor-specific research expansion begins
 
 ### Mark `research_grounded_but_not_north_star_viable` when:
 
@@ -499,7 +493,7 @@ For the original rollout, donor report freeze meant the legacy pair:
 - `post-ceiling reframe`
 - `process capture`
 
-For new packages, use the single `ceiling report` instead, then upgrade into an umbrella when a second object becomes real.
+For new packages, use the single `ceiling report` instead, then upgrade into an umbrella when a real successor object becomes real.
 
 ## Current Promotion Read
 
