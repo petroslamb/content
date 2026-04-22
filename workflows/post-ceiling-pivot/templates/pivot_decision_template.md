@@ -26,6 +26,14 @@ State why the leading candidate outranks the others.
 
 State the next bounded research or package action.
 
+## Post-Block Route
+
+Choose one of:
+
+- `pending`
+- `keep_as_strong_narrower_doctrine_object`
+- `restart_pivot_search_later`
+
 ## Gate For Package Split
 
 State what still has to pass before a sibling package or flagship object is opened.

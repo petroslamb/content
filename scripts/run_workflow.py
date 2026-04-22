@@ -47,6 +47,8 @@ def print_workflow_resolution(resolution: dict, launch_pack_path: str | None) ->
     if resolution.get("overlay_phase"):
         print(f"Overlay Phase: {resolution.get('overlay_phase')}")
         print(f"Next Overlay Action: {resolution.get('next_overlay_action')}")
+        if resolution.get("overlay_route"):
+            print(f"Overlay Route: {resolution.get('overlay_route')}")
         print(f"Overlay Validator: {resolution.get('recommended_validator')}")
         print(f"Active Overlay Root: {resolution.get('active_overlay_root')}")
     if launch_pack_path:

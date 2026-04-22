@@ -94,6 +94,10 @@ def check_route_fixtures(fixtures: dict, errors: list[str]) -> None:
             errors.append(
                 f"{fixture['package']} stage {fixture['stage']} expected next_overlay_action {fixture['expected_next_overlay_action']}, got {resolution.get('next_overlay_action')}."
             )
+        if fixture.get("expected_overlay_route") and resolution.get("overlay_route") != fixture["expected_overlay_route"]:
+            errors.append(
+                f"{fixture['package']} stage {fixture['stage']} expected overlay_route {fixture['expected_overlay_route']}, got {resolution.get('overlay_route')}."
+            )
         expected_overlay_validator = fixture.get("expected_overlay_validator_substring")
         if expected_overlay_validator and expected_overlay_validator not in (resolution.get("overlay_recommended_validator") or ""):
             errors.append(
@@ -134,6 +138,10 @@ def check_workflow_resolution_fixtures(fixtures: dict, errors: list[str]) -> Non
         if fixture.get("expected_next_overlay_action") and resolution.get("next_overlay_action") != fixture["expected_next_overlay_action"]:
             errors.append(
                 f"Workflow {fixture['workflow']} expected next_overlay_action {fixture['expected_next_overlay_action']}, got {resolution.get('next_overlay_action')}."
+            )
+        if fixture.get("expected_overlay_route") and resolution.get("overlay_route") != fixture["expected_overlay_route"]:
+            errors.append(
+                f"Workflow {fixture['workflow']} expected overlay_route {fixture['expected_overlay_route']}, got {resolution.get('overlay_route')}."
             )
         if fixture.get("expected_active_overlay_root") and resolution.get("active_overlay_root") != fixture["expected_active_overlay_root"]:
             errors.append(
