@@ -2,6 +2,15 @@
 
 Phase 2 is now ordered around executable contracts, validation, traces, and gates first. The CLI and cockpit come after those foundations stabilize.
 
+The package-shape migration is no longer part of these milestones. Phase 2 should consume the current repo baseline:
+
+- umbrella roots use `status.yaml` with `kind: umbrella`
+- leaf publication objects use `status.yaml` with `kind: leaf`
+- settled umbrella roots may have no active stage
+- active umbrella roots may route through `umbrella_route` or through an active default leaf
+
+Use the current publication packages as fixtures rather than inventing synthetic placeholder package classes.
+
 ## Subphase Read
 
 | Subphase | Job | Depends On | Done When |
@@ -31,6 +40,8 @@ That ordering is deliberate. Phase 2 should not start with a CLI or dashboard th
 ### 2.1 Executable Workflow Contract
 
 This is the anchor subphase. It decides what the platform can execute and what it must refuse.
+
+It should build on the existing package model rather than redefining it. In practice that means Phase 2.1 should load package kind and umbrella routing from current manifests before it decides which workflow contract to execute.
 
 The machine contract must cover:
 
