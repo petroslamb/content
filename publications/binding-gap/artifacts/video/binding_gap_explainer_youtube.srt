@@ -1,0 +1,1795 @@
+1
+00:00:00,240 --> 00:00:01,910
+
+You know, when an AI gets something
+
+2
+00:00:01,910 --> 00:00:01,920
+You know, when an AI gets something
+ 
+
+3
+00:00:01,920 --> 00:00:03,750
+You know, when an AI gets something
+wrong, we have this catch-all term for
+
+4
+00:00:03,750 --> 00:00:03,760
+wrong, we have this catch-all term for
+ 
+
+5
+00:00:03,760 --> 00:00:05,990
+wrong, we have this catch-all term for
+it, hallucination, but that's a bit like
+
+6
+00:00:05,990 --> 00:00:06,000
+it, hallucination, but that's a bit like
+ 
+
+7
+00:00:06,000 --> 00:00:08,470
+it, hallucination, but that's a bit like
+calling every sickness a fever. It tells
+
+8
+00:00:08,470 --> 00:00:08,480
+calling every sickness a fever. It tells
+ 
+
+9
+00:00:08,480 --> 00:00:10,230
+calling every sickness a fever. It tells
+you something's wrong, sure, but it
+
+10
+00:00:10,230 --> 00:00:10,240
+you something's wrong, sure, but it
+ 
+
+11
+00:00:10,240 --> 00:00:12,470
+you something's wrong, sure, but it
+hides what's really going on underneath.
+
+12
+00:00:12,470 --> 00:00:12,480
+hides what's really going on underneath.
+ 
+
+13
+00:00:12,480 --> 00:00:14,150
+hides what's really going on underneath.
+So, today we're going to dig into one
+
+14
+00:00:14,150 --> 00:00:14,160
+So, today we're going to dig into one
+ 
+
+15
+00:00:14,160 --> 00:00:16,230
+So, today we're going to dig into one
+very specific and, I think, critical
+
+16
+00:00:16,230 --> 00:00:16,240
+very specific and, I think, critical
+ 
+
+17
+00:00:16,240 --> 00:00:18,230
+very specific and, I think, critical
+failure that explains why even our most
+
+18
+00:00:18,230 --> 00:00:18,240
+failure that explains why even our most
+ 
+
+19
+00:00:18,240 --> 00:00:20,710
+failure that explains why even our most
+powerful AIs can stumble on the simplest
+
+20
+00:00:20,710 --> 00:00:20,720
+powerful AIs can stumble on the simplest
+ 
+
+21
+00:00:20,720 --> 00:00:23,830
+powerful AIs can stumble on the simplest
+of tasks. Let's get into it. Okay, let's
+
+22
+00:00:23,830 --> 00:00:23,840
+of tasks. Let's get into it. Okay, let's
+ 
+
+23
+00:00:23,840 --> 00:00:25,990
+of tasks. Let's get into it. Okay, let's
+start with a really simple puzzle.
+
+24
+00:00:25,990 --> 00:00:26,000
+start with a really simple puzzle.
+ 
+
+25
+00:00:26,000 --> 00:00:29,029
+start with a really simple puzzle.
+Imagine you tell an AI, Tom Smith's wife
+
+26
+00:00:29,029 --> 00:00:29,039
+Imagine you tell an AI, Tom Smith's wife
+ 
+
+27
+00:00:29,039 --> 00:00:32,150
+Imagine you tell an AI, Tom Smith's wife
+is Mary Stone and then you ask, "Who is
+
+28
+00:00:32,150 --> 00:00:32,160
+is Mary Stone and then you ask, "Who is
+ 
+
+29
+00:00:32,160 --> 00:00:34,790
+is Mary Stone and then you ask, "Who is
+Mary Stone's husband?" The answer should
+
+30
+00:00:34,790 --> 00:00:34,800
+Mary Stone's husband?" The answer should
+ 
+
+31
+00:00:34,800 --> 00:00:36,709
+Mary Stone's husband?" The answer should
+be totally obvious, right? I mean, all
+
+32
+00:00:36,709 --> 00:00:36,719
+be totally obvious, right? I mean, all
+ 
+
+33
+00:00:36,719 --> 00:00:38,389
+be totally obvious, right? I mean, all
+the pieces of the puzzle are right there
+
+34
+00:00:38,389 --> 00:00:38,399
+the pieces of the puzzle are right there
+ 
+
+35
+00:00:38,399 --> 00:00:41,030
+the pieces of the puzzle are right there
+in that first sentence. And yet, this is
+
+36
+00:00:41,030 --> 00:00:41,040
+in that first sentence. And yet, this is
+ 
+
+37
+00:00:41,040 --> 00:00:42,869
+in that first sentence. And yet, this is
+what you often get. This is a
+
+38
+00:00:42,869 --> 00:00:42,879
+what you often get. This is a
+ 
+
+39
+00:00:42,879 --> 00:00:45,030
+what you often get. This is a
+surprisingly common failure. The model
+
+40
+00:00:45,030 --> 00:00:45,040
+surprisingly common failure. The model
+ 
+
+41
+00:00:45,040 --> 00:00:46,869
+surprisingly common failure. The model
+clearly has the names. It has the
+
+42
+00:00:46,869 --> 00:00:46,879
+clearly has the names. It has the
+ 
+
+43
+00:00:46,879 --> 00:00:48,790
+clearly has the names. It has the
+relationship, but when you just flip the
+
+44
+00:00:48,790 --> 00:00:48,800
+relationship, but when you just flip the
+ 
+
+45
+00:00:48,800 --> 00:00:51,029
+relationship, but when you just flip the
+question around, it completely fails to
+
+46
+00:00:51,029 --> 00:00:51,039
+question around, it completely fails to
+ 
+
+47
+00:00:51,039 --> 00:00:53,430
+question around, it completely fails to
+make the connection. So, what is really
+
+48
+00:00:53,430 --> 00:00:53,440
+make the connection. So, what is really
+ 
+
+49
+00:00:53,440 --> 00:00:55,750
+make the connection. So, what is really
+going on under the hood here? Well, this
+
+50
+00:00:55,750 --> 00:00:55,760
+going on under the hood here? Well, this
+ 
+
+51
+00:00:55,760 --> 00:00:57,270
+going on under the hood here? Well, this
+little glitch has a name. It's called
+
+52
+00:00:57,270 --> 00:00:57,280
+little glitch has a name. It's called
+ 
+
+53
+00:00:57,280 --> 00:00:59,590
+little glitch has a name. It's called
+the reversal curse. And as some really
+
+54
+00:00:59,590 --> 00:00:59,600
+the reversal curse. And as some really
+ 
+
+55
+00:00:59,600 --> 00:01:01,590
+the reversal curse. And as some really
+sharp researchers have pointed out, it's
+
+56
+00:01:01,590 --> 00:01:01,600
+sharp researchers have pointed out, it's
+ 
+
+57
+00:01:01,600 --> 00:01:03,750
+sharp researchers have pointed out, it's
+not just some quirky bug. No, it's a
+
+58
+00:01:03,750 --> 00:01:03,760
+not just some quirky bug. No, it's a
+ 
+
+59
+00:01:03,760 --> 00:01:06,149
+not just some quirky bug. No, it's a
+symptom of something much, much deeper.
+
+60
+00:01:06,149 --> 00:01:06,159
+symptom of something much, much deeper.
+ 
+
+61
+00:01:06,159 --> 00:01:08,310
+symptom of something much, much deeper.
+A model can actually hold on to all the
+
+62
+00:01:08,310 --> 00:01:08,320
+A model can actually hold on to all the
+ 
+
+63
+00:01:08,320 --> 00:01:10,469
+A model can actually hold on to all the
+right ingredients of a fact, but lose
+
+64
+00:01:10,469 --> 00:01:10,479
+right ingredients of a fact, but lose
+ 
+
+65
+00:01:10,479 --> 00:01:12,710
+right ingredients of a fact, but lose
+the invisible wiring that connects them.
+
+66
+00:01:12,710 --> 00:01:12,720
+the invisible wiring that connects them.
+ 
+
+67
+00:01:12,720 --> 00:01:14,550
+the invisible wiring that connects them.
+The names are there, the relationship is
+
+68
+00:01:14,550 --> 00:01:14,560
+The names are there, the relationship is
+ 
+
+69
+00:01:14,560 --> 00:01:16,710
+The names are there, the relationship is
+there, but that attachment, the little
+
+70
+00:01:16,710 --> 00:01:16,720
+there, but that attachment, the little
+ 
+
+71
+00:01:16,720 --> 00:01:18,789
+there, but that attachment, the little
+tag that says this person fits that
+
+72
+00:01:18,789 --> 00:01:18,799
+tag that says this person fits that
+ 
+
+73
+00:01:18,799 --> 00:01:21,350
+tag that says this person fits that
+role, that's what breaks. This kind of
+
+74
+00:01:21,350 --> 00:01:21,360
+role, that's what breaks. This kind of
+ 
+
+75
+00:01:21,360 --> 00:01:23,109
+role, that's what breaks. This kind of
+failure really deserves a more precise
+
+76
+00:01:23,109 --> 00:01:23,119
+failure really deserves a more precise
+ 
+
+77
+00:01:23,119 --> 00:01:25,270
+failure really deserves a more precise
+name. It's not a hallucination in the
+
+78
+00:01:25,270 --> 00:01:25,280
+name. It's not a hallucination in the
+ 
+
+79
+00:01:25,280 --> 00:01:26,950
+name. It's not a hallucination in the
+classic sense where the model just
+
+80
+00:01:26,950 --> 00:01:26,960
+classic sense where the model just
+ 
+
+81
+00:01:26,960 --> 00:01:29,190
+classic sense where the model just
+invents things out of thin air. It's way
+
+82
+00:01:29,190 --> 00:01:29,200
+invents things out of thin air. It's way
+ 
+
+83
+00:01:29,200 --> 00:01:31,270
+invents things out of thin air. It's way
+more subtle and honestly in a lot of
+
+84
+00:01:31,270 --> 00:01:31,280
+more subtle and honestly in a lot of
+ 
+
+85
+00:01:31,280 --> 00:01:33,350
+more subtle and honestly in a lot of
+ways it's more frustrating. We need a
+
+86
+00:01:33,350 --> 00:01:33,360
+ways it's more frustrating. We need a
+ 
+
+87
+00:01:33,360 --> 00:01:35,030
+ways it's more frustrating. We need a
+better mental model to understand it.
+
+88
+00:01:35,030 --> 00:01:35,040
+better mental model to understand it.
+ 
+
+89
+00:01:35,040 --> 00:01:37,030
+better mental model to understand it.
+And a great one to use is the binding
+
+90
+00:01:37,030 --> 00:01:37,040
+And a great one to use is the binding
+ 
+
+91
+00:01:37,040 --> 00:01:39,429
+And a great one to use is the binding
+gap. So here it is. This is the key
+
+92
+00:01:39,429 --> 00:01:39,439
+gap. So here it is. This is the key
+ 
+
+93
+00:01:39,439 --> 00:01:41,910
+gap. So here it is. This is the key
+idea. A binding gap failure is what
+
+94
+00:01:41,910 --> 00:01:41,920
+idea. A binding gap failure is what
+ 
+
+95
+00:01:41,920 --> 00:01:43,670
+idea. A binding gap failure is what
+happens when a model has all the right
+
+96
+00:01:43,670 --> 00:01:43,680
+happens when a model has all the right
+ 
+
+97
+00:01:43,680 --> 00:01:45,590
+happens when a model has all the right
+pieces on the board, the names, the
+
+98
+00:01:45,590 --> 00:01:45,600
+pieces on the board, the names, the
+ 
+
+99
+00:01:45,600 --> 00:01:47,190
+pieces on the board, the names, the
+concepts, all of it, but the
+
+100
+00:01:47,190 --> 00:01:47,200
+concepts, all of it, but the
+ 
+
+101
+00:01:47,200 --> 00:01:49,190
+concepts, all of it, but the
+connections, the links between them have
+
+102
+00:01:49,190 --> 00:01:49,200
+connections, the links between them have
+ 
+
+103
+00:01:49,200 --> 00:01:51,109
+connections, the links between them have
+snapped. The research I'm drawing on
+
+104
+00:01:51,109 --> 00:01:51,119
+snapped. The research I'm drawing on
+ 
+
+105
+00:01:51,119 --> 00:01:53,109
+snapped. The research I'm drawing on
+here puts it perfectly. The model keeps
+
+106
+00:01:53,109 --> 00:01:53,119
+here puts it perfectly. The model keeps
+ 
+
+107
+00:01:53,119 --> 00:01:55,590
+here puts it perfectly. The model keeps
+the scene while dropping the wiring. The
+
+108
+00:01:55,590 --> 00:01:55,600
+the scene while dropping the wiring. The
+ 
+
+109
+00:01:55,600 --> 00:01:57,670
+the scene while dropping the wiring. The
+answer feels so close to being right,
+
+110
+00:01:57,670 --> 00:01:57,680
+answer feels so close to being right,
+ 
+
+111
+00:01:57,680 --> 00:01:59,350
+answer feels so close to being right,
+but without that critical connection,
+
+112
+00:01:59,350 --> 00:01:59,360
+but without that critical connection,
+ 
+
+113
+00:01:59,360 --> 00:02:01,830
+but without that critical connection,
+it's totally useless. This table really
+
+114
+00:02:01,830 --> 00:02:01,840
+it's totally useless. This table really
+ 
+
+115
+00:02:01,840 --> 00:02:03,830
+it's totally useless. This table really
+helps make it crystal clear. A binding
+
+116
+00:02:03,830 --> 00:02:03,840
+helps make it crystal clear. A binding
+ 
+
+117
+00:02:03,840 --> 00:02:05,910
+helps make it crystal clear. A binding
+gap is not a retrieval failure. That's
+
+118
+00:02:05,910 --> 00:02:05,920
+gap is not a retrieval failure. That's
+ 
+
+119
+00:02:05,920 --> 00:02:07,590
+gap is not a retrieval failure. That's
+when the model just never found the info
+
+120
+00:02:07,590 --> 00:02:07,600
+when the model just never found the info
+ 
+
+121
+00:02:07,600 --> 00:02:09,190
+when the model just never found the info
+in the first place. And it's not a
+
+122
+00:02:09,190 --> 00:02:09,200
+in the first place. And it's not a
+ 
+
+123
+00:02:09,200 --> 00:02:11,029
+in the first place. And it's not a
+generic hallucination where it just goes
+
+124
+00:02:11,029 --> 00:02:11,039
+generic hallucination where it just goes
+ 
+
+125
+00:02:11,039 --> 00:02:12,869
+generic hallucination where it just goes
+off the rails and makes stuff up. The
+
+126
+00:02:12,869 --> 00:02:12,879
+off the rails and makes stuff up. The
+ 
+
+127
+00:02:12,879 --> 00:02:15,190
+off the rails and makes stuff up. The
+binding gap is so much more specific.
+
+128
+00:02:15,190 --> 00:02:15,200
+binding gap is so much more specific.
+ 
+
+129
+00:02:15,200 --> 00:02:16,710
+binding gap is so much more specific.
+All the correct information is right
+
+130
+00:02:16,710 --> 00:02:16,720
+All the correct information is right
+ 
+
+131
+00:02:16,720 --> 00:02:18,710
+All the correct information is right
+there in the model's working memory, but
+
+132
+00:02:18,710 --> 00:02:18,720
+there in the model's working memory, but
+ 
+
+133
+00:02:18,720 --> 00:02:20,229
+there in the model's working memory, but
+the critical connections between those
+
+134
+00:02:20,229 --> 00:02:20,239
+the critical connections between those
+ 
+
+135
+00:02:20,239 --> 00:02:23,190
+the critical connections between those
+bits of information have just dissolved.
+
+136
+00:02:23,190 --> 00:02:23,200
+bits of information have just dissolved.
+ 
+
+137
+00:02:23,200 --> 00:02:24,869
+bits of information have just dissolved.
+So, how do you spot one of these in the
+
+138
+00:02:24,869 --> 00:02:24,879
+So, how do you spot one of these in the
+ 
+
+139
+00:02:24,879 --> 00:02:27,030
+So, how do you spot one of these in the
+wild? Well, here's a quick checklist.
+
+140
+00:02:27,030 --> 00:02:27,040
+wild? Well, here's a quick checklist.
+ 
+
+141
+00:02:27,040 --> 00:02:29,750
+wild? Well, here's a quick checklist.
+First, the answer feels close because
+
+142
+00:02:29,750 --> 00:02:29,760
+First, the answer feels close because
+ 
+
+143
+00:02:29,760 --> 00:02:32,710
+First, the answer feels close because
+all the right words are there. Second,
+
+144
+00:02:32,710 --> 00:02:32,720
+all the right words are there. Second,
+ 
+
+145
+00:02:32,720 --> 00:02:34,949
+all the right words are there. Second,
+the mistake really only shows up when
+
+146
+00:02:34,949 --> 00:02:34,959
+the mistake really only shows up when
+ 
+
+147
+00:02:34,959 --> 00:02:37,030
+the mistake really only shows up when
+precision is absolutely necessary, like
+
+148
+00:02:37,030 --> 00:02:37,040
+precision is absolutely necessary, like
+ 
+
+149
+00:02:37,040 --> 00:02:38,550
+precision is absolutely necessary, like
+when you have to assign a name to a
+
+150
+00:02:38,550 --> 00:02:38,560
+when you have to assign a name to a
+ 
+
+151
+00:02:38,560 --> 00:02:40,710
+when you have to assign a name to a
+specific role or a number to a specific
+
+152
+00:02:40,710 --> 00:02:40,720
+specific role or a number to a specific
+ 
+
+153
+00:02:40,720 --> 00:02:43,110
+specific role or a number to a specific
+variable. And third, you've made sure
+
+154
+00:02:43,110 --> 00:02:43,120
+variable. And third, you've made sure
+ 
+
+155
+00:02:43,120 --> 00:02:45,110
+variable. And third, you've made sure
+it's not a simpler error, like the model
+
+156
+00:02:45,110 --> 00:02:45,120
+it's not a simpler error, like the model
+ 
+
+157
+00:02:45,120 --> 00:02:46,630
+it's not a simpler error, like the model
+just not finding the information to
+
+158
+00:02:46,630 --> 00:02:46,640
+just not finding the information to
+ 
+
+159
+00:02:46,640 --> 00:02:49,030
+just not finding the information to
+begin with. And this idea of binding,
+
+160
+00:02:49,030 --> 00:02:49,040
+begin with. And this idea of binding,
+ 
+
+161
+00:02:49,040 --> 00:02:50,869
+begin with. And this idea of binding,
+it's not just a cute metaphor. The
+
+162
+00:02:50,869 --> 00:02:50,879
+it's not just a cute metaphor. The
+ 
+
+163
+00:02:50,879 --> 00:02:52,790
+it's not just a cute metaphor. The
+latest research is showing that it is a
+
+164
+00:02:52,790 --> 00:02:52,800
+latest research is showing that it is a
+ 
+
+165
+00:02:52,800 --> 00:02:55,190
+latest research is showing that it is a
+real mechanical process that's actually
+
+166
+00:02:55,190 --> 00:02:55,200
+real mechanical process that's actually
+ 
+
+167
+00:02:55,200 --> 00:02:57,509
+real mechanical process that's actually
+happening inside these models. It's not
+
+168
+00:02:57,509 --> 00:02:57,519
+happening inside these models. It's not
+ 
+
+169
+00:02:57,519 --> 00:02:59,910
+happening inside these models. It's not
+some vague cloud of associations. It's a
+
+170
+00:02:59,910 --> 00:02:59,920
+some vague cloud of associations. It's a
+ 
+
+171
+00:02:59,920 --> 00:03:01,910
+some vague cloud of associations. It's a
+mechanism, something we can actually
+
+172
+00:03:01,910 --> 00:03:01,920
+mechanism, something we can actually
+ 
+
+173
+00:03:01,920 --> 00:03:04,470
+mechanism, something we can actually
+observe and maybe even fix. So, let's
+
+174
+00:03:04,470 --> 00:03:04,480
+observe and maybe even fix. So, let's
+ 
+
+175
+00:03:04,480 --> 00:03:06,070
+observe and maybe even fix. So, let's
+take a quick peek at how it seems to
+
+176
+00:03:06,070 --> 00:03:06,080
+take a quick peek at how it seems to
+ 
+
+177
+00:03:06,080 --> 00:03:08,869
+take a quick peek at how it seems to
+work. So, here's a super simplified look
+
+178
+00:03:08,869 --> 00:03:08,879
+work. So, here's a super simplified look
+ 
+
+179
+00:03:08,879 --> 00:03:11,830
+work. So, here's a super simplified look
+at the internal machinery. First, models
+
+180
+00:03:11,830 --> 00:03:11,840
+at the internal machinery. First, models
+ 
+
+181
+00:03:11,840 --> 00:03:14,070
+at the internal machinery. First, models
+assign these special internal tags.
+
+182
+00:03:14,070 --> 00:03:14,080
+assign these special internal tags.
+ 
+
+183
+00:03:14,080 --> 00:03:15,750
+assign these special internal tags.
+Think of them like digital labels or
+
+184
+00:03:15,750 --> 00:03:15,760
+Think of them like digital labels or
+ 
+
+185
+00:03:15,760 --> 00:03:17,350
+Think of them like digital labels or
+vectors to different pieces of
+
+186
+00:03:17,350 --> 00:03:17,360
+vectors to different pieces of
+ 
+
+187
+00:03:17,360 --> 00:03:19,670
+vectors to different pieces of
+information. Then, another part of the
+
+188
+00:03:19,670 --> 00:03:19,680
+information. Then, another part of the
+ 
+
+189
+00:03:19,680 --> 00:03:21,670
+information. Then, another part of the
+system acts like a switchboard, steering
+
+190
+00:03:21,670 --> 00:03:21,680
+system acts like a switchboard, steering
+ 
+
+191
+00:03:21,680 --> 00:03:23,990
+system acts like a switchboard, steering
+these tags and connecting them together.
+
+192
+00:03:23,990 --> 00:03:24,000
+these tags and connecting them together.
+ 
+
+193
+00:03:24,000 --> 00:03:26,550
+these tags and connecting them together.
+The end result is an attachment, a link
+
+194
+00:03:26,550 --> 00:03:26,560
+The end result is an attachment, a link
+ 
+
+195
+00:03:26,560 --> 00:03:29,270
+The end result is an attachment, a link
+between two concepts. But, and this is
+
+196
+00:03:29,270 --> 00:03:29,280
+between two concepts. But, and this is
+ 
+
+197
+00:03:29,280 --> 00:03:31,750
+between two concepts. But, and this is
+the absolute key, that attachment can be
+
+198
+00:03:31,750 --> 00:03:31,760
+the absolute key, that attachment can be
+ 
+
+199
+00:03:31,760 --> 00:03:34,229
+the absolute key, that attachment can be
+really, really fragile. And this gets
+
+200
+00:03:34,229 --> 00:03:34,239
+really, really fragile. And this gets
+ 
+
+201
+00:03:34,239 --> 00:03:35,910
+really, really fragile. And this gets
+right to the heart of the problem. A
+
+202
+00:03:35,910 --> 00:03:35,920
+right to the heart of the problem. A
+ 
+
+203
+00:03:35,920 --> 00:03:37,509
+right to the heart of the problem. A
+model can understand the basic grammar
+
+204
+00:03:37,509 --> 00:03:37,519
+model can understand the basic grammar
+ 
+
+205
+00:03:37,519 --> 00:03:40,070
+model can understand the basic grammar
+of a sentence. you know who did what to
+
+206
+00:03:40,070 --> 00:03:40,080
+of a sentence. you know who did what to
+ 
+
+207
+00:03:40,080 --> 00:03:42,149
+of a sentence. you know who did what to
+whom, but that understanding can be
+
+208
+00:03:42,149 --> 00:03:42,159
+whom, but that understanding can be
+ 
+
+209
+00:03:42,159 --> 00:03:43,910
+whom, but that understanding can be
+incredibly weak. It's like it's written
+
+210
+00:03:43,910 --> 00:03:43,920
+incredibly weak. It's like it's written
+ 
+
+211
+00:03:43,920 --> 00:03:46,390
+incredibly weak. It's like it's written
+in pencil instead of ink. This creates
+
+212
+00:03:46,390 --> 00:03:46,400
+in pencil instead of ink. This creates
+ 
+
+213
+00:03:46,400 --> 00:03:48,550
+in pencil instead of ink. This creates
+the perfect storm for a binding gap. The
+
+214
+00:03:48,550 --> 00:03:48,560
+the perfect storm for a binding gap. The
+ 
+
+215
+00:03:48,560 --> 00:03:50,149
+the perfect storm for a binding gap. The
+model sounds totally fluent on the
+
+216
+00:03:50,149 --> 00:03:50,159
+model sounds totally fluent on the
+ 
+
+217
+00:03:50,159 --> 00:03:52,390
+model sounds totally fluent on the
+surface, but underneath those critical
+
+218
+00:03:52,390 --> 00:03:52,400
+surface, but underneath those critical
+ 
+
+219
+00:03:52,400 --> 00:03:54,630
+surface, but underneath those critical
+connections are just unstable. Okay,
+
+220
+00:03:54,630 --> 00:03:54,640
+connections are just unstable. Okay,
+ 
+
+221
+00:03:54,640 --> 00:03:56,309
+connections are just unstable. Okay,
+fine. So, the reversal curse is a neat
+
+222
+00:03:56,309 --> 00:03:56,319
+fine. So, the reversal curse is a neat
+ 
+
+223
+00:03:56,319 --> 00:03:57,910
+fine. So, the reversal curse is a neat
+little toy problem, but does this kind
+
+224
+00:03:57,910 --> 00:03:57,920
+little toy problem, but does this kind
+ 
+
+225
+00:03:57,920 --> 00:03:59,670
+little toy problem, but does this kind
+of failure actually matter in the real
+
+226
+00:03:59,670 --> 00:03:59,680
+of failure actually matter in the real
+ 
+
+227
+00:03:59,680 --> 00:04:02,070
+of failure actually matter in the real
+world? Oh, absolutely. Let's see what
+
+228
+00:04:02,070 --> 00:04:02,080
+world? Oh, absolutely. Let's see what
+ 
+
+229
+00:04:02,080 --> 00:04:03,429
+world? Oh, absolutely. Let's see what
+happens when we move beyond simple
+
+230
+00:04:03,429 --> 00:04:03,439
+happens when we move beyond simple
+ 
+
+231
+00:04:03,439 --> 00:04:04,949
+happens when we move beyond simple
+sentences and into something with really
+
+232
+00:04:04,949 --> 00:04:04,959
+sentences and into something with really
+ 
+
+233
+00:04:04,959 --> 00:04:06,470
+sentences and into something with really
+high stakes, like scientific
+
+234
+00:04:06,470 --> 00:04:06,480
+high stakes, like scientific
+ 
+
+235
+00:04:06,480 --> 00:04:09,030
+high stakes, like scientific
+metaanalysis. This chart, which is based
+
+236
+00:04:09,030 --> 00:04:09,040
+metaanalysis. This chart, which is based
+ 
+
+237
+00:04:09,040 --> 00:04:11,030
+metaanalysis. This chart, which is based
+on some startling research, tells a
+
+238
+00:04:11,030 --> 00:04:11,040
+on some startling research, tells a
+ 
+
+239
+00:04:11,040 --> 00:04:13,350
+on some startling research, tells a
+dramatic story. When an AI was asked to
+
+240
+00:04:13,350 --> 00:04:13,360
+dramatic story. When an AI was asked to
+ 
+
+241
+00:04:13,360 --> 00:04:15,190
+dramatic story. When an AI was asked to
+just pull single facts from scientific
+
+242
+00:04:15,190 --> 00:04:15,200
+just pull single facts from scientific
+ 
+
+243
+00:04:15,200 --> 00:04:17,990
+just pull single facts from scientific
+papers, like find the effect size, its
+
+244
+00:04:17,990 --> 00:04:18,000
+papers, like find the effect size, its
+ 
+
+245
+00:04:18,000 --> 00:04:20,629
+papers, like find the effect size, its
+performance was pretty decent. But when
+
+246
+00:04:20,629 --> 00:04:20,639
+performance was pretty decent. But when
+ 
+
+247
+00:04:20,639 --> 00:04:22,710
+performance was pretty decent. But when
+it was asked to bind multiple pieces of
+
+248
+00:04:22,710 --> 00:04:22,720
+it was asked to bind multiple pieces of
+ 
+
+249
+00:04:22,720 --> 00:04:24,629
+it was asked to bind multiple pieces of
+info together, linking a specific
+
+250
+00:04:24,629 --> 00:04:24,639
+info together, linking a specific
+ 
+
+251
+00:04:24,639 --> 00:04:26,790
+info together, linking a specific
+research method to its variables and its
+
+252
+00:04:26,790 --> 00:04:26,800
+research method to its variables and its
+ 
+
+253
+00:04:26,800 --> 00:04:28,790
+research method to its variables and its
+effect size, the performance completely
+
+254
+00:04:28,790 --> 00:04:28,800
+effect size, the performance completely
+ 
+
+255
+00:04:28,800 --> 00:04:31,590
+effect size, the performance completely
+collapsed. We're talking near zero. Now,
+
+256
+00:04:31,590 --> 00:04:31,600
+collapsed. We're talking near zero. Now,
+ 
+
+257
+00:04:31,600 --> 00:04:33,990
+collapsed. We're talking near zero. Now,
+let's really let that sink in. The model
+
+258
+00:04:33,990 --> 00:04:34,000
+let's really let that sink in. The model
+ 
+
+259
+00:04:34,000 --> 00:04:35,830
+let's really let that sink in. The model
+isn't failing because it can't find the
+
+260
+00:04:35,830 --> 00:04:35,840
+isn't failing because it can't find the
+ 
+
+261
+00:04:35,840 --> 00:04:38,150
+isn't failing because it can't find the
+information. It finds the right numbers,
+
+262
+00:04:38,150 --> 00:04:38,160
+information. It finds the right numbers,
+ 
+
+263
+00:04:38,160 --> 00:04:40,070
+information. It finds the right numbers,
+the right variables, the right methods.
+
+264
+00:04:40,070 --> 00:04:40,080
+the right variables, the right methods.
+ 
+
+265
+00:04:40,080 --> 00:04:41,749
+the right variables, the right methods.
+All the pieces are there. The
+
+266
+00:04:41,749 --> 00:04:41,759
+All the pieces are there. The
+ 
+
+267
+00:04:41,759 --> 00:04:43,670
+All the pieces are there. The
+catastrophic failure happens when it has
+
+268
+00:04:43,670 --> 00:04:43,680
+catastrophic failure happens when it has
+ 
+
+269
+00:04:43,680 --> 00:04:46,550
+catastrophic failure happens when it has
+to reliably keep them attached to one
+
+270
+00:04:46,550 --> 00:04:46,560
+to reliably keep them attached to one
+ 
+
+271
+00:04:46,560 --> 00:04:48,870
+to reliably keep them attached to one
+another. And in a research setting, an
+
+272
+00:04:48,870 --> 00:04:48,880
+another. And in a research setting, an
+ 
+
+273
+00:04:48,880 --> 00:04:50,550
+another. And in a research setting, an
+effect size that's been assigned to the
+
+274
+00:04:50,550 --> 00:04:50,560
+effect size that's been assigned to the
+ 
+
+275
+00:04:50,560 --> 00:04:53,030
+effect size that's been assigned to the
+wrong variable isn't just almost right,
+
+276
+00:04:53,030 --> 00:04:53,040
+wrong variable isn't just almost right,
+ 
+
+277
+00:04:53,040 --> 00:04:56,310
+wrong variable isn't just almost right,
+it's dangerously completely wrong. But
+
+278
+00:04:56,310 --> 00:04:56,320
+it's dangerously completely wrong. But
+ 
+
+279
+00:04:56,320 --> 00:04:58,710
+it's dangerously completely wrong. But
+here's the good news. Naming a problem
+
+280
+00:04:58,710 --> 00:04:58,720
+here's the good news. Naming a problem
+ 
+
+281
+00:04:58,720 --> 00:05:01,510
+here's the good news. Naming a problem
+this clearly gives us a huge advantage.
+
+282
+00:05:01,510 --> 00:05:01,520
+this clearly gives us a huge advantage.
+ 
+
+283
+00:05:01,520 --> 00:05:03,590
+this clearly gives us a huge advantage.
+Instead of just vaguely trying to make
+
+284
+00:05:03,590 --> 00:05:03,600
+Instead of just vaguely trying to make
+ 
+
+285
+00:05:03,600 --> 00:05:06,150
+Instead of just vaguely trying to make
+AI smarter, we now have a specific
+
+286
+00:05:06,150 --> 00:05:06,160
+AI smarter, we now have a specific
+ 
+
+287
+00:05:06,160 --> 00:05:08,310
+AI smarter, we now have a specific
+tangible target for improvement.
+
+288
+00:05:08,310 --> 00:05:08,320
+tangible target for improvement.
+ 
+
+289
+00:05:08,320 --> 00:05:10,390
+tangible target for improvement.
+Recognizing the binding gap gives us a
+
+290
+00:05:10,390 --> 00:05:10,400
+Recognizing the binding gap gives us a
+ 
+
+291
+00:05:10,400 --> 00:05:12,390
+Recognizing the binding gap gives us a
+whole new agenda for building AI systems
+
+292
+00:05:12,390 --> 00:05:12,400
+whole new agenda for building AI systems
+ 
+
+293
+00:05:12,400 --> 00:05:15,189
+whole new agenda for building AI systems
+we can actually trust. So here's what
+
+294
+00:05:15,189 --> 00:05:15,199
+we can actually trust. So here's what
+ 
+
+295
+00:05:15,199 --> 00:05:16,950
+we can actually trust. So here's what
+that new agenda looks like in
+
+296
+00:05:16,950 --> 00:05:16,960
+that new agenda looks like in
+ 
+
+297
+00:05:16,960 --> 00:05:19,029
+that new agenda looks like in
+evaluation. We need to stop just testing
+
+298
+00:05:19,029 --> 00:05:19,039
+evaluation. We need to stop just testing
+ 
+
+299
+00:05:19,039 --> 00:05:20,710
+evaluation. We need to stop just testing
+for fluency and start testing for
+
+300
+00:05:20,710 --> 00:05:20,720
+for fluency and start testing for
+ 
+
+301
+00:05:20,720 --> 00:05:23,029
+for fluency and start testing for
+precise attachment. For architecture,
+
+302
+00:05:23,029 --> 00:05:23,039
+precise attachment. For architecture,
+ 
+
+303
+00:05:23,039 --> 00:05:24,870
+precise attachment. For architecture,
+the goal has to be building models that
+
+304
+00:05:24,870 --> 00:05:24,880
+the goal has to be building models that
+ 
+
+305
+00:05:24,880 --> 00:05:26,390
+the goal has to be building models that
+are specifically designed to protect
+
+306
+00:05:26,390 --> 00:05:26,400
+are specifically designed to protect
+ 
+
+307
+00:05:26,400 --> 00:05:28,870
+are specifically designed to protect
+these fragile connections. And for the
+
+308
+00:05:28,870 --> 00:05:28,880
+these fragile connections. And for the
+ 
+
+309
+00:05:28,880 --> 00:05:30,950
+these fragile connections. And for the
+user interfaces we build, we need tools
+
+310
+00:05:30,950 --> 00:05:30,960
+user interfaces we build, we need tools
+ 
+
+311
+00:05:30,960 --> 00:05:32,870
+user interfaces we build, we need tools
+that make these pairings explicit
+
+312
+00:05:32,870 --> 00:05:32,880
+that make these pairings explicit
+ 
+
+313
+00:05:32,880 --> 00:05:34,390
+that make these pairings explicit
+instead of just hoping the model figures
+
+314
+00:05:34,390 --> 00:05:34,400
+instead of just hoping the model figures
+ 
+
+315
+00:05:34,400 --> 00:05:36,629
+instead of just hoping the model figures
+it all out from a messy block of text.
+
+316
+00:05:36,629 --> 00:05:36,639
+it all out from a messy block of text.
+ 
+
+317
+00:05:36,639 --> 00:05:38,790
+it all out from a messy block of text.
+This all leads to a kind of wager, a
+
+318
+00:05:38,790 --> 00:05:38,800
+This all leads to a kind of wager, a
+ 
+
+319
+00:05:38,800 --> 00:05:41,430
+This all leads to a kind of wager, a
+really clear testable hypothesis. If the
+
+320
+00:05:41,430 --> 00:05:41,440
+really clear testable hypothesis. If the
+ 
+
+321
+00:05:41,440 --> 00:05:43,510
+really clear testable hypothesis. If the
+binding gap theory is right, then tasks
+
+322
+00:05:43,510 --> 00:05:43,520
+binding gap theory is right, then tasks
+ 
+
+323
+00:05:43,520 --> 00:05:45,670
+binding gap theory is right, then tasks
+that demand a lot of precise connections
+
+324
+00:05:45,670 --> 00:05:45,680
+that demand a lot of precise connections
+ 
+
+325
+00:05:45,680 --> 00:05:47,830
+that demand a lot of precise connections
+should consistently fail before tasks
+
+326
+00:05:47,830 --> 00:05:47,840
+should consistently fail before tasks
+ 
+
+327
+00:05:47,840 --> 00:05:50,070
+should consistently fail before tasks
+that only need broad topical knowledge.
+
+328
+00:05:50,070 --> 00:05:50,080
+that only need broad topical knowledge.
+ 
+
+329
+00:05:50,080 --> 00:05:51,749
+that only need broad topical knowledge.
+For instance, correctly attributing a
+
+330
+00:05:51,749 --> 00:05:51,759
+For instance, correctly attributing a
+ 
+
+331
+00:05:51,759 --> 00:05:53,590
+For instance, correctly attributing a
+quote to its source should be way harder
+
+332
+00:05:53,590 --> 00:05:53,600
+quote to its source should be way harder
+ 
+
+333
+00:05:53,600 --> 00:05:55,110
+quote to its source should be way harder
+for a model than just giving a generic
+
+334
+00:05:55,110 --> 00:05:55,120
+for a model than just giving a generic
+ 
+
+335
+00:05:55,120 --> 00:05:57,270
+for a model than just giving a generic
+summary. If we keep seeing that pattern,
+
+336
+00:05:57,270 --> 00:05:57,280
+summary. If we keep seeing that pattern,
+ 
+
+337
+00:05:57,280 --> 00:05:59,430
+summary. If we keep seeing that pattern,
+we know we're on the right track. So,
+
+338
+00:05:59,430 --> 00:05:59,440
+we know we're on the right track. So,
+ 
+
+339
+00:05:59,440 --> 00:06:01,029
+we know we're on the right track. So,
+we're left with a pretty fundamental
+
+340
+00:06:01,029 --> 00:06:01,039
+we're left with a pretty fundamental
+ 
+
+341
+00:06:01,039 --> 00:06:03,189
+we're left with a pretty fundamental
+question. As we build these incredibly
+
+342
+00:06:03,189 --> 00:06:03,199
+question. As we build these incredibly
+ 
+
+343
+00:06:03,199 --> 00:06:05,270
+question. As we build these incredibly
+powerful systems, what's actually more
+
+344
+00:06:05,270 --> 00:06:05,280
+powerful systems, what's actually more
+ 
+
+345
+00:06:05,280 --> 00:06:07,110
+powerful systems, what's actually more
+important? The sheer volume of
+
+346
+00:06:07,110 --> 00:06:07,120
+important? The sheer volume of
+ 
+
+347
+00:06:07,120 --> 00:06:09,189
+important? The sheer volume of
+information a model can memorize or the
+
+348
+00:06:09,189 --> 00:06:09,199
+information a model can memorize or the
+ 
+
+349
+00:06:09,199 --> 00:06:10,870
+information a model can memorize or the
+structural integrity of how all that
+
+350
+00:06:10,870 --> 00:06:10,880
+structural integrity of how all that
+ 
+
+351
+00:06:10,880 --> 00:06:12,629
+structural integrity of how all that
+information is wired together? The
+
+352
+00:06:12,629 --> 00:06:12,639
+information is wired together? The
+ 
+
+353
+00:06:12,639 --> 00:06:14,309
+information is wired together? The
+binding gap suggests that the answer is
+
+354
+00:06:14,309 --> 00:06:14,319
+binding gap suggests that the answer is
+ 
+
+355
+00:06:14,319 --> 00:06:16,390
+binding gap suggests that the answer is
+overwhelmingly the latter. It's not
+
+356
+00:06:16,390 --> 00:06:16,400
+overwhelmingly the latter. It's not
+ 
+
+357
+00:06:16,400 --> 00:06:17,990
+overwhelmingly the latter. It's not
+about the pieces, it's about how they
+
+358
+00:06:17,990 --> 00:06:18,000
+about the pieces, it's about how they
+ 
+
+359
+00:06:18,000 --> 00:06:21,000
+about the pieces, it's about how they
+connect.
+
