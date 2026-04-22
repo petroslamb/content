@@ -1,8 +1,21 @@
 ---
 workflow_id: youtube_cinematic_pilot
+workflow_kind: module
+stability: experimental
 workflow_group: operations
 runner_mode: guided
 default_skill: youtube-data-api
+launch_templates: []
+required_context:
+  - experiment manifest entry for the target publication
+  - package-local cinematic video and caption artifact targets
+  - authenticated NotebookLM and YouTube access
+expected_outputs:
+  - settled cinematic pilot manifest state for the selected publication
+  - verified local cinematic assets or an exact upload/mutation plan
+  - recorded pilot metrics or blocked-state note for the publication run
+done_when:
+  - the requested cinematic pilot step is complete for the selected publication, or the exact blocker is recorded without hidden channel mutation
 approval_gate: required_before_channel_mutation
 ---
 

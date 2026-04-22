@@ -526,6 +526,31 @@ workflows:
     validator_commands: *id003
     judgment_policy: unrestricted
     prohibited_moves: *id001
+  youtube_cinematic_pilot:
+    workflow_doc: workflows/youtube-cinematic-pilot/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: experimental
+    runner_mode: guided
+    launch_mode: none
+    default_skill: youtube-data-api
+    approval_gate: required_before_channel_mutation
+    required_context:
+    - experiment manifest entry for the target publication
+    - package-local cinematic video and caption artifact targets
+    - authenticated NotebookLM and YouTube access
+    expected_outputs:
+    - settled cinematic pilot manifest state for the selected publication
+    - verified local cinematic assets or an exact upload/mutation plan
+    - recorded pilot metrics or blocked-state note for the publication run
+    done_when:
+    - the requested cinematic pilot step is complete for the selected publication,
+      or the exact blocker is recorded without hidden channel mutation
+    launch_templates: []
+    packet_templates: *id002
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
   youtube_production: *id012
   youtube_series_operating_agents:
     workflow_doc: workflows/youtube-series-operating-agents/README.md

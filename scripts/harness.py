@@ -1891,6 +1891,8 @@ def evaluate_pivot_north_star_viability_gate(package_path: Path) -> dict:
     payload["details"]["grounding_verdict"] = grounding_verdict
     viability_verdict = parse_pivot_north_star_verdict(north_star_path) if north_star_path else None
     payload["details"]["north_star_verdict"] = viability_verdict
+    post_block_route = parse_pivot_post_block_route(decision_path) if decision_path else None
+    payload["details"]["post_block_route"] = post_block_route
 
     decision_text = decision_path.read_text()
     decision_clears = (
@@ -1914,6 +1916,10 @@ def evaluate_pivot_north_star_viability_gate(package_path: Path) -> dict:
 
     if viability_verdict == "north_star_viable":
         payload["decision"] = "north_star_viable_pending_pivot_decision"
+        return payload
+
+    if post_block_route == "no_successor":
+        payload["decision"] = "no_successor"
         return payload
 
     if viability_verdict == "not_north_star_viable" or grounding_verdict == "research_grounded_but_not_north_star_viable":

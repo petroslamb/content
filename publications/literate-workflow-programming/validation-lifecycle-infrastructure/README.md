@@ -19,7 +19,7 @@ Historical exploratory branch inside the [`../README.md`](../README.md) umbrella
 - Candidates: [`../validation-is-lifecycle-infrastructure-candidate-r1.md`](../validation-is-lifecycle-infrastructure-candidate-r1.md), [`../validation-is-lifecycle-infrastructure-candidate-r2.md`](../validation-is-lifecycle-infrastructure-candidate-r2.md), [`../validation-is-lifecycle-infrastructure-candidate-r3.md`](../validation-is-lifecycle-infrastructure-candidate-r3.md)
 - Reviews: [`../validation-is-lifecycle-infrastructure-review-r1.md`](../validation-is-lifecycle-infrastructure-review-r1.md), [`../validation-is-lifecycle-infrastructure-review-r2.md`](../validation-is-lifecycle-infrastructure-review-r2.md), [`../validation-is-lifecycle-infrastructure-review-r3.md`](../validation-is-lifecycle-infrastructure-review-r3.md)
 - Legacy donor grounding note: [`../pivot/active/literate-workflow-programming-next-pivot-candidate.md`](../pivot/active/literate-workflow-programming-next-pivot-candidate.md)
-- Legacy consequence pressure pass: [`../pivot/active/literate-workflow-programming-validation-lifecycle-consequence-pass.md`](../pivot/active/literate-workflow-programming-validation-lifecycle-consequence-pass.md)
+- Legacy consequence pressure pass: [`../pivot/archive/validation-doctrine-attempt-2026-04-23/literate-workflow-programming-validation-lifecycle-consequence-pass.md`](../pivot/archive/validation-doctrine-attempt-2026-04-23/literate-workflow-programming-validation-lifecycle-consequence-pass.md)
 
 ## Current Read
 
