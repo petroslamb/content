@@ -85,6 +85,21 @@ That means:
 This workflow treats **candidate discovery** and **candidate clearance** as separate stages.
 It also treats **research-grounded** and **north-star viable** as different claims.
 
+## Filesystem Shape
+
+Keep the donor artifact split explicit:
+
+- the `ceiling report` stays at package root because it is the terminal artifact of `essay_iteration`
+- the active pivot-search workspace should live under `pivot/active/`
+- superseded pivot-search attempts should move to `pivot/archive/<pivot-id>/`
+
+This keeps the flagship iteration packet visible while preventing root-level mixing between:
+
+- terminal essay-iteration artifacts
+- live pivot-search artifacts
+
+For legacy packages, root-level pivot artifacts remain valid. For new packages, prefer `pivot/active/`.
+
 ## Status Vocabulary
 
 Use these states explicitly in the package artifacts:
