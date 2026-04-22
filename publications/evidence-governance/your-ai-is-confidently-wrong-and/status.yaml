@@ -4,6 +4,7 @@ parent_package: evidence-governance
 revision: 4
 config:
   markdown_path: publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md
+  blueprint_path: your-ai-is-confidently-wrong-and-blueprint-r4.md
   substack_post_id: 188403075
   substack_slug: your-ai-is-confidently-wrong-and
   substack_url: https://lambpetros.substack.com

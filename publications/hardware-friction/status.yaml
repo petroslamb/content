@@ -1,4 +1,6 @@
+kind: umbrella
 publication: hardware-friction
+revision: 1
 stages:
   paper_intake:
     done: true
@@ -22,14 +24,19 @@ stages:
     done: true
     last_updated: '2026-04-07'
   youtube_production:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'
   distribution:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-23'
 config:
+  default_leaf_package: hardware-friction/what-actually-works-the-hardware
+  leaf_packages:
+    - hardware-friction/what-actually-works-the-hardware
   markdown_path: publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md
+  blueprint_path: umbrella-governing-brief.md
   evidence_path: publications/hardware-friction/research_artifacts
+  shared_evidence_path: publications/hardware-friction/research_artifacts
   substack_slug: what-actually-works-the-hardware
   substack_url: https://lambpetros.substack.com
   notebooklm_posts:

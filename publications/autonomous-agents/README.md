@@ -33,6 +33,8 @@ If you are reading the public course essays:
 
 ## Surface Map
 
+- [`umbrella-governing-brief.md`](umbrella-governing-brief.md) is the umbrella routing note for the shared package.
+- [`the-agent-revolution/README.md`](the-agent-revolution/README.md) is the canonical legacy published leaf for the builder-first essay line.
 - [`essays/`](essays/) is the public course-chapter layer.
 - [`core/`](core/) is the architecture and method layer.
 - [`reference/`](reference/) is the literature and source-audit layer.
