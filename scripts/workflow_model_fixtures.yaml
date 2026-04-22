@@ -11,8 +11,9 @@ route_checks:
     expected_recommended_workflow: post_ceiling_pivot
     expected_overlay_candidate: post_ceiling_pivot
     expected_active_overlay: post_ceiling_pivot
-    expected_overlay_phase: decide_post_block_route
-    expected_next_overlay_action: decide_narrow_or_restart_pivot_search
+    expected_overlay_phase: post_block_route_settled
+    expected_next_overlay_action: hold_for_narrower_doctrine_write_or_later_larger_successor
+    expected_overlay_route: keep_as_strong_narrower_doctrine_object
     expected_overlay_validator_substring: pivot_north_star_viability
     expected_gate:
       gate_id: replacement_north_star
@@ -22,8 +23,9 @@ workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: literate-workflow-programming
     expected_can_execute: false
-    expected_overlay_phase: decide_post_block_route
-    expected_next_overlay_action: decide_narrow_or_restart_pivot_search
+    expected_overlay_phase: post_block_route_settled
+    expected_next_overlay_action: hold_for_narrower_doctrine_write_or_later_larger_successor
+    expected_overlay_route: keep_as_strong_narrower_doctrine_object
     expected_active_overlay_root: publications/literate-workflow-programming/pivot/active
     expected_validator_substring: pivot_north_star_viability
     expected_recommended_gates:
