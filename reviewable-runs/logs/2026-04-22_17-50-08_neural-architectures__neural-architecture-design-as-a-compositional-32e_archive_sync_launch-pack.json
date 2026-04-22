@@ -1,0 +1,82 @@
+{
+  "kind": "harness_launch_pack",
+  "schema_version": 2,
+  "timestamp": "2026-04-22_17-50-08",
+  "run_id": "2026-04-22_17-50-08_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_launch-pack",
+  "task_brief": "Advance package 'neural-architectures/neural-architecture-design-as-a-compositional-32e' through the 'archive_sync' stage using 'workflows/substack-archive-sync/README.md'.",
+  "boundary": {
+    "type": "handoff",
+    "reason": "Launch pack prepares a bounded guided run; it does not execute the stage.",
+    "external_side_effect": false,
+    "approval_gate": "none",
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Prepare a bounded launch packet for package 'neural-architectures/neural-architecture-design-as-a-compositional-32e' stage 'archive_sync'.",
+    "stop_condition": "Launch pack written to reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not claim the stage was executed.",
+      "Do not treat this launch pack as approval for external mutation."
+    ]
+  },
+  "package": "neural-architectures/neural-architecture-design-as-a-compositional-32e",
+  "stage": "archive_sync",
+  "workflow_doc": "workflows/substack-archive-sync/README.md",
+  "runner_mode": "scripted",
+  "launch_mode": "local_mutation",
+  "approval_gate": "none",
+  "required_context": [
+    {
+      "name": "repo root environment with archive scripts available",
+      "status": "resolved",
+      "blocking": false,
+      "value": "scripts/sync_substack_archive.py"
+    },
+    {
+      "name": "up-to-date publication metadata or recently published post",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publication_strategy_and_archive/substack_archive/metadata.json"
+    }
+  ],
+  "suggested_commands": [
+    "npm run stage:resolve -- --package neural-architectures/neural-architecture-design-as-a-compositional-32e --stage archive_sync --format json",
+    "npm run stage:run -- --package neural-architectures/neural-architecture-design-as-a-compositional-32e --stage archive_sync --format json"
+  ],
+  "suggested_skill": "substack-archive-sync",
+  "package_context_paths": {
+    "live_draft_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+    "leaf_readme_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/README.md",
+    "parent_package_path": "publications/neural-architectures",
+    "parent_package_readme_path": "publications/neural-architectures/README.md",
+    "companion_path": null,
+    "governing_brief_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/blueprint.md",
+    "nearest_blueprint_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/blueprint.md",
+    "review_artifact_paths": [],
+    "evidence_surface_path": "publications/neural-architectures/papers"
+  },
+  "packet_paths": {},
+  "expected_outputs": [
+    "refreshed tracked public archive",
+    "updated archive metadata and README publication map"
+  ],
+  "done_when": [
+    "the archive refresh completes successfully and the mirror validation pass is clean"
+  ],
+  "packet_templates": [],
+  "validator_commands": [],
+  "judgment_policy": "unrestricted",
+  "prohibited_moves": [],
+  "blocking_issues": [],
+  "verification": {
+    "checks": [
+      {
+        "name": "launch_pack_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-22_17-50-08_neural-architectures__neural-architecture-design-as-a-compositional-32e_archive_sync_launch-pack.json"
+      }
+    ],
+    "residual_risk": "The launch pack is only an entry packet for guided work. Review the final run separately."
+  }
+}
