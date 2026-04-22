@@ -1,0 +1,7 @@
+Create a documentary-style video overview for a Rooted Layers publication.
+
+Prioritize structural change, causality, and long-term implications over recap. Open from a concrete tension, failure chain, or decisive architectural shift. Keep the voice analytical, sober, and visually ambitious.
+
+Treat this as a discovery artifact for viewers who do not know the essay yet. The video should stand on its own, but it should clearly reward a click through to the full research breakdown afterward.
+
+Avoid listicle framing, generic YouTube hype, creator self-reference, and filler transitions. Do not use phrases like "TL;DR", "top 5", or "in this video". Favor memorable causal statements over enumerated summaries.

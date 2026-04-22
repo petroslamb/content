@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Upload publication Shorts from a package portrait folder, add them to a target
-playlist, and set the related long-form video reference when possible.
+playlist, and set the related full-video reference when possible.
 
 Run from project root:
   .venv/bin/python scripts/upload_publication_shorts.py \
@@ -23,6 +23,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+import yaml
 
 from probe_shorts_media import probe_files
 
@@ -97,22 +99,24 @@ def build_description(
     summary: str,
     package_hashtag: str,
     essay_url: str | None,
-    full_video_url: str,
-    tldr_url: str | None,
+    primary_video_url: str,
+    primary_video_label: str,
+    secondary_video_url: str | None,
+    secondary_video_label: str | None,
 ) -> str:
     description_lines = [
         title,
         "",
-        "Short clip from a Rooted Layers long-form research video.",
+        "Short clip from a Rooted Layers research video.",
         "",
     ]
     if summary:
         description_lines.extend([summary, ""])
     if essay_url and essay_url.lower() not in OMIT_ESSAY_VALUES:
         description_lines.append(f"Original essay: {essay_url}")
-    description_lines.append(f"Full visual deep dive: {full_video_url}")
-    if tldr_url:
-        description_lines.append(f"TL;DR video: {tldr_url}")
+    description_lines.append(f"{primary_video_label}: {primary_video_url}")
+    if secondary_video_url and secondary_video_label:
+        description_lines.append(f"{secondary_video_label}: {secondary_video_url}")
     description_lines.extend(["", f"#{package_hashtag} #ai #research #shorts"])
     return "\n".join(description_lines)
 
@@ -124,8 +128,10 @@ def upload_shorts(
     playlist_id: str,
     main_video_id: str,
     privacy: str,
-    full_video_url: str,
-    tldr_url: str | None,
+    primary_video_url: str,
+    primary_video_label: str,
+    secondary_video_url: str | None,
+    secondary_video_label: str | None,
     essay_url: str | None,
     package_hashtag: str,
     tags: list[str],
@@ -142,8 +148,10 @@ def upload_shorts(
             summary=item.get("summary", ""),
             package_hashtag=package_hashtag,
             essay_url=essay_url,
-            full_video_url=full_video_url,
-            tldr_url=tldr_url,
+            primary_video_url=primary_video_url,
+            primary_video_label=primary_video_label,
+            secondary_video_url=secondary_video_url,
+            secondary_video_label=secondary_video_label,
         )
 
         print(f"Uploading: {full_title}")
@@ -245,7 +253,10 @@ def build_report(
     workflow: str,
     playlist_id: str,
     main_video_id: str,
-    full_video_url: str,
+    primary_video_url: str,
+    primary_video_label: str,
+    secondary_video_url: str | None,
+    secondary_video_label: str | None,
     planned_items: list[dict[str, Any]],
     probes: list[dict[str, Any]],
     upload_results: list[dict[str, Any]],
@@ -277,9 +288,27 @@ def build_report(
         "created_at": datetime.now(timezone.utc).isoformat(),
         "workflow": workflow,
         "playlist_id": playlist_id,
+        "related_video": {
+            "id": main_video_id,
+            "url": primary_video_url,
+        },
         "related_longform": {
             "id": main_video_id,
-            "url": full_video_url,
+            "url": primary_video_url,
+        },
+        "linked_videos": {
+            "primary": {
+                "label": primary_video_label,
+                "url": primary_video_url,
+            },
+            "secondary": (
+                {
+                    "label": secondary_video_label,
+                    "url": secondary_video_url,
+                }
+                if secondary_video_url and secondary_video_label
+                else None
+            ),
         },
         "privacy": privacy,
         "planned_count": len(planned_items),
@@ -291,7 +320,7 @@ def build_report(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Upload publication shorts to YouTube.")
     parser.add_argument("--package", required=True, help="Package path under publications, e.g. confidence-debt")
-    parser.add_argument("--main-video-id", required=True, help="Main long-form video ID for the Shorts related-video field")
+    parser.add_argument("--main-video-id", required=True, help="Primary related-video ID for the Shorts related-video field")
     parser.add_argument("--playlist-id", required=True, help="Target Shorts playlist ID")
     parser.add_argument(
         "--essay-url",
@@ -300,7 +329,22 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--full-video-url", required=True, help="Public URL for the long-form video")
     parser.add_argument("--tldr-url", help="Optional public URL for the TL;DR companion")
+    parser.add_argument(
+        "--primary-video-label",
+        default="Full visual deep dive",
+        help="Description label for --full-video-url. Default: Full visual deep dive",
+    )
+    parser.add_argument("--secondary-video-url", help="Optional secondary linked video URL for descriptions.")
+    parser.add_argument("--secondary-video-label", help="Optional label for --secondary-video-url.")
     parser.add_argument("--manifest", type=Path, help="Optional manifest JSON to control titles, summaries, ordering, and scheduling.")
+    parser.add_argument("--selection-manifest", type=Path, help="Optional YAML or JSON manifest that supplies selected Shorts slugs and schedule overrides.")
+    parser.add_argument("--selection-publication", help="Publication key to read from --selection-manifest, e.g. neural_architecture.")
+    parser.add_argument(
+        "--include-slug",
+        action="append",
+        default=[],
+        help="Optional manifest clip slug to include. Repeat to upload only a selected subset from the manifest.",
+    )
     parser.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"], help="Privacy status (default: public)")
     parser.add_argument("--report-file", type=Path, help="Where to write the upload report. Defaults to the package shorts folder.")
     parser.add_argument("--skip-probe", action="store_true", help="Skip local 1080x1920/audio/duration preflight checks.")
@@ -309,24 +353,58 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def load_selection_overrides(selection_manifest: Path, publication_key: str) -> dict[str, dict[str, Any]]:
+    raw = selection_manifest.read_text()
+    if selection_manifest.suffix in {".yaml", ".yml"}:
+        data = yaml.safe_load(raw) or {}
+    else:
+        data = json.loads(raw)
+    publication = data.get("publications", {}).get(publication_key)
+    if not publication:
+        print(f"WARNING: No publication entry '{publication_key}' found in selection manifest {selection_manifest}")
+        return {}
+    selected = publication.get("shorts", {}).get("selected", [])
+    return {clip["slug"]: clip for clip in selected if "slug" in clip}
+
+
 def collect_planned_items(args: argparse.Namespace, shorts_dir: Path) -> list[dict[str, Any]]:
     planned_items: list[dict[str, Any]] = []
+    selection_overrides: dict[str, dict[str, Any]] = {}
+    if args.selection_manifest:
+        if not args.selection_publication:
+            print("WARNING: --selection-manifest was ignored because --selection-publication was not provided.")
+        else:
+            selection_overrides = load_selection_overrides(args.selection_manifest, args.selection_publication)
+
+    include_slugs = set(args.include_slug) or set(selection_overrides)
     if args.manifest:
         manifest = json.loads(args.manifest.read_text())
+        found_slugs: set[str] = set()
         for index, clip in enumerate(manifest.get("clips", []), start=1):
+            slug = clip["slug"]
+            if include_slugs and slug not in include_slugs:
+                continue
             video_path = shorts_dir / f"{index:02d}-{clip['slug']}_portrait.mp4"
             if not video_path.exists():
                 print(f"WARNING: Missing portrait clip for manifest entry, skipping: {video_path}")
                 continue
+            found_slugs.add(slug)
+            override = selection_overrides.get(slug, {})
             planned_items.append(
                 {
                     "video_path": video_path,
-                    "title": clip["title"],
-                    "summary": clip.get("summary", ""),
-                    "publish_at": clip.get("publish_at"),
+                    "title": override.get("title", clip["title"]),
+                    "summary": override.get("summary", clip.get("summary", "")),
+                    "publish_at": override.get("publish_at", clip.get("publish_at")),
                 }
             )
+        if include_slugs:
+            missing_slugs = include_slugs - found_slugs
+            for slug in sorted(missing_slugs):
+                print(f"WARNING: Manifest did not produce an uploadable clip for slug: {slug}")
     else:
+        if include_slugs:
+            print("WARNING: --include-slug was ignored because no --manifest was provided.")
         for video_path in sorted(shorts_dir.glob("*.mp4")):
             planned_items.append(
                 {
@@ -341,7 +419,6 @@ def collect_planned_items(args: argparse.Namespace, shorts_dir: Path) -> list[di
 
 def main() -> None:
     args = parse_args()
-    youtube = build_youtube()
     shorts_dir = Path("publications") / args.package / "artifacts" / "video" / "shorts" / "portrait"
     if not shorts_dir.exists():
         print(f"ERROR: Shorts directory not found: {shorts_dir}")
@@ -363,7 +440,7 @@ def main() -> None:
 
     print(f"Found {len(planned_items)} short(s) to upload")
     print(f"Target playlist: {args.playlist_id}")
-    print(f"Related long-form video: https://www.youtube.com/watch?v={args.main_video_id}")
+    print(f"Related full video: https://www.youtube.com/watch?v={args.main_video_id}")
     report_path = args.report_file or default_report_path(args.package)
     print(f"Upload report: {report_path}")
 
@@ -374,7 +451,12 @@ def main() -> None:
             print(f" - {normalize_title(item['title'])} <- {Path(item['video_path']).name}{schedule_suffix}")
         return
 
-    tags = ["AI", "research", "shorts", *args.package.split("-")]
+    youtube = build_youtube()
+    secondary_video_url = args.secondary_video_url or args.tldr_url
+    secondary_video_label = args.secondary_video_label or (
+        "TL;DR video" if args.tldr_url and not args.secondary_video_url else "Related video" if secondary_video_url else None
+    )
+    tags = ["AI", "research", "shorts", *args.package.replace("/", "-").split("-")]
     package_hashtag = args.package.replace("-", "").replace("/", "")
     upload_results = upload_shorts(
         youtube=youtube,
@@ -382,8 +464,10 @@ def main() -> None:
         playlist_id=args.playlist_id,
         main_video_id=args.main_video_id,
         privacy=args.privacy,
-        full_video_url=args.full_video_url,
-        tldr_url=args.tldr_url,
+        primary_video_url=args.full_video_url,
+        primary_video_label=args.primary_video_label,
+        secondary_video_url=secondary_video_url,
+        secondary_video_label=secondary_video_label,
         essay_url=args.essay_url,
         package_hashtag=package_hashtag,
         tags=tags,
@@ -395,7 +479,10 @@ def main() -> None:
         workflow="publication_shorts",
         playlist_id=args.playlist_id,
         main_video_id=args.main_video_id,
-        full_video_url=args.full_video_url,
+        primary_video_url=args.full_video_url,
+        primary_video_label=args.primary_video_label,
+        secondary_video_url=secondary_video_url,
+        secondary_video_label=secondary_video_label,
         planned_items=planned_items,
         probes=probes,
         upload_results=upload_results,

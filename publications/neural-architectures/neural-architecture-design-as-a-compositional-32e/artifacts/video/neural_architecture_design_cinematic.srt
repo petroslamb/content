@@ -1,0 +1,624 @@
+1
+00:00:00,400 --> 00:00:05,759
+When you build a suspension bridge, the
+
+2
+00:00:02,800 --> 00:00:08,080
+process is intensely deterministic. The
+
+3
+00:00:05,759 --> 00:00:10,719
+blueprint dictates the exact loadbearing
+
+4
+00:00:08,080 --> 00:00:12,559
+capacity of every steel beam and the
+
+5
+00:00:10,719 --> 00:00:15,440
+final structure reflects that plan
+
+6
+00:00:12,559 --> 00:00:17,680
+perfectly. But in building artificial
+
+7
+00:00:15,440 --> 00:00:19,920
+intelligence, that expectation of
+
+8
+00:00:17,680 --> 00:00:22,560
+perfect top- down engineering falls
+
+9
+00:00:19,920 --> 00:00:25,359
+apart. We started out trying to build
+
+10
+00:00:22,560 --> 00:00:27,519
+neural networks the exact same way. Back
+
+11
+00:00:25,359 --> 00:00:30,160
+around 2012, machine learning
+
+12
+00:00:27,519 --> 00:00:32,800
+researchers treated AI like a customuilt
+
+13
+00:00:30,160 --> 00:00:35,520
+watch. They acted as master watch
+
+14
+00:00:32,800 --> 00:00:38,000
+makers, explicitly decreeing what every
+
+15
+00:00:35,520 --> 00:00:40,399
+single layer should compute. Take
+
+16
+00:00:38,000 --> 00:00:42,239
+AlexNet, the model that proved deep
+
+17
+00:00:40,399 --> 00:00:44,960
+learning was the path forward for image
+
+18
+00:00:42,239 --> 00:00:47,200
+recognition. Its designers forcefully
+
+19
+00:00:44,960 --> 00:00:49,920
+dictated exactly how the network should
+
+20
+00:00:47,200 --> 00:00:52,399
+compress spatial data. They hard-coded
+
+21
+00:00:49,920 --> 00:00:54,239
+massive 11 by11 feature extraction
+
+22
+00:00:52,399 --> 00:00:56,000
+filters right at the beginning,
+
+23
+00:00:54,239 --> 00:00:57,760
+aggressively tailoring the pipeline to
+
+24
+00:00:56,000 --> 00:00:59,600
+fit the strict memory limits of the
+
+25
+00:00:57,760 --> 00:01:01,680
+graphics cards they were using. That
+
+26
+00:00:59,600 --> 00:01:03,680
+customized approach cut error rates by
+
+27
+00:01:01,680 --> 00:01:05,920
+double digits, effectively ending
+
+28
+00:01:03,680 --> 00:01:08,560
+handcoded visual features, but it
+
+29
+00:01:05,920 --> 00:01:10,080
+resulted in a highly localized machine.
+
+30
+00:01:08,560 --> 00:01:12,560
+Because it relied heavily on human
+
+31
+00:01:10,080 --> 00:01:13,920
+intuition, it left behind no universal
+
+32
+00:01:12,560 --> 00:01:16,159
+rule book for how to scale the
+
+33
+00:01:13,920 --> 00:01:17,759
+technology further. The logical next
+
+34
+00:01:16,159 --> 00:01:20,000
+step for the field was simply to go
+
+35
+00:01:17,759 --> 00:01:22,000
+deeper. Researchers assumed that to get
+
+36
+00:01:20,000 --> 00:01:23,920
+more complex AI, they just needed to
+
+37
+00:01:22,000 --> 00:01:25,920
+take those carefully designed layers and
+
+38
+00:01:23,920 --> 00:01:27,520
+stack them higher. This chart
+
+39
+00:01:25,920 --> 00:01:30,799
+illustrates the degradation problem of
+
+40
+00:01:27,520 --> 00:01:32,880
+2015. Expanding a network to 56 layers
+
+41
+00:01:30,799 --> 00:01:34,640
+caused its learning to crash, producing
+
+42
+00:01:32,880 --> 00:01:37,360
+higher error rates than a 20 layer
+
+43
+00:01:34,640 --> 00:01:39,680
+version. The optimizer got lost. Instead
+
+44
+00:01:37,360 --> 00:01:41,520
+of passing data unaltered, incoming data
+
+45
+00:01:39,680 --> 00:01:43,759
+was destructively rewritten at each
+
+46
+00:01:41,520 --> 00:01:45,600
+step. Imagine having to rewrite an
+
+47
+00:01:43,759 --> 00:01:48,000
+entire document from memory at every
+
+48
+00:01:45,600 --> 00:01:50,159
+single stage of editing. Forcing every
+
+49
+00:01:48,000 --> 00:01:52,000
+layer to execute a complete rewrite of
+
+50
+00:01:50,159 --> 00:01:54,079
+the representation from scratch is
+
+51
+00:01:52,000 --> 00:01:56,479
+mathematically exhausting and highly
+
+52
+00:01:54,079 --> 00:01:58,640
+prone to error. The master watchmaker
+
+53
+00:01:56,479 --> 00:02:00,640
+approach had hit a strict mathematical
+
+54
+00:01:58,640 --> 00:02:02,240
+wall. The field realized that
+
+55
+00:02:00,640 --> 00:02:04,479
+micromanaging the architecture of
+
+56
+00:02:02,240 --> 00:02:06,640
+intelligence by hand simply breaks at
+
+57
+00:02:04,479 --> 00:02:08,720
+scale. The solution arrived with the
+
+58
+00:02:06,640 --> 00:02:11,280
+ResNet architecture and a structural
+
+59
+00:02:08,720 --> 00:02:13,360
+mandate called residual path discipline.
+
+60
+00:02:11,280 --> 00:02:15,840
+This design abandoned the destructive
+
+61
+00:02:13,360 --> 00:02:17,360
+total rewrite model of earlier networks.
+
+62
+00:02:15,840 --> 00:02:19,920
+Engineers introduced the skip
+
+63
+00:02:17,360 --> 00:02:22,000
+connection. Data flows down an unaltered
+
+64
+00:02:19,920 --> 00:02:24,160
+main highway while computational layers
+
+65
+00:02:22,000 --> 00:02:26,319
+sit off to the side. The side layer
+
+66
+00:02:24,160 --> 00:02:28,400
+calculates a small mathematical delta
+
+67
+00:02:26,319 --> 00:02:30,720
+like a track changes feature and adds
+
+68
+00:02:28,400 --> 00:02:32,560
+that tweak back into the main flow. This
+
+69
+00:02:30,720 --> 00:02:34,080
+simple change in wiring flattened the
+
+70
+00:02:32,560 --> 00:02:36,239
+chaotic geometry of the training
+
+71
+00:02:34,080 --> 00:02:38,160
+process. By protecting the original
+
+72
+00:02:36,239 --> 00:02:40,400
+information, engineers could suddenly
+
+73
+00:02:38,160 --> 00:02:42,400
+and reliably train networks hundreds of
+
+74
+00:02:40,400 --> 00:02:44,800
+layers deep without them crashing.
+
+75
+00:02:42,400 --> 00:02:47,440
+Network depth stopped behaving like a
+
+76
+00:02:44,800 --> 00:02:50,080
+fragile chain of rewrites. It was tamed
+
+77
+00:02:47,440 --> 00:02:51,920
+into an accumulated refinement process
+
+78
+00:02:50,080 --> 00:02:54,560
+governed by a sturdy mathematical
+
+79
+00:02:51,920 --> 00:02:57,040
+scaffold. That scaffold paved the way
+
+80
+00:02:54,560 --> 00:02:59,440
+for the transformer model. Researchers
+
+81
+00:02:57,040 --> 00:03:01,840
+stripped away the older domain specific
+
+82
+00:02:59,440 --> 00:03:04,239
+visual filters. They replaced them with
+
+83
+00:03:01,840 --> 00:03:06,319
+self attention algorithms wrapped inside
+
+84
+00:03:04,239 --> 00:03:08,879
+the exact same residual scaffold that
+
+85
+00:03:06,319 --> 00:03:11,519
+ResNet pioneered. This created a
+
+86
+00:03:08,879 --> 00:03:14,560
+portable repeated block. It functions as
+
+87
+00:03:11,519 --> 00:03:16,640
+a true tabular blank slate agnostic to
+
+88
+00:03:14,560 --> 00:03:19,360
+processing human language or visual
+
+89
+00:03:16,640 --> 00:03:22,319
+images or computer code. But this raises
+
+90
+00:03:19,360 --> 00:03:24,720
+a central question explored in the 2019
+
+91
+00:03:22,319 --> 00:03:26,640
+BERT probing studies. Before deep
+
+92
+00:03:24,720 --> 00:03:28,800
+learning, humans had to build separate
+
+93
+00:03:26,640 --> 00:03:30,799
+software modules to handle grammar,
+
+94
+00:03:28,800 --> 00:03:33,360
+another for sentence structure, and a
+
+95
+00:03:30,799 --> 00:03:35,680
+third for the actual meaning. How does a
+
+96
+00:03:33,360 --> 00:03:37,280
+uniform repeating block handle all of
+
+97
+00:03:35,680 --> 00:03:39,440
+that without those handcrafted
+
+98
+00:03:37,280 --> 00:03:41,360
+compartments? The probing studies
+
+99
+00:03:39,440 --> 00:03:43,519
+revealed that during training, the
+
+100
+00:03:41,360 --> 00:03:45,760
+uniform layers organically specialized
+
+101
+00:03:43,519 --> 00:03:48,319
+on their own. The lowest layers handled
+
+102
+00:03:45,760 --> 00:03:50,400
+basic syntax, the middle layers managed
+
+103
+00:03:48,319 --> 00:03:52,879
+structural parsing, and the highest
+
+104
+00:03:50,400 --> 00:03:54,879
+layers took on complex semantics. By
+
+105
+00:03:52,879 --> 00:03:57,360
+looking inside these blocks, we see that
+
+106
+00:03:54,879 --> 00:03:59,760
+the AI rediscovered the specific stages
+
+107
+00:03:57,360 --> 00:04:02,000
+of language humans used to spend decades
+
+108
+00:03:59,760 --> 00:04:04,319
+trying to code. It proves that a
+
+109
+00:04:02,000 --> 00:04:06,720
+completely governable mathematical blank
+
+110
+00:04:04,319 --> 00:04:09,599
+slate is infinitely more capable than
+
+111
+00:04:06,720 --> 00:04:11,760
+any complex handdrawn human blueprint.
+
+112
+00:04:09,599 --> 00:04:14,159
+With the internal blocks stabilized, the
+
+113
+00:04:11,760 --> 00:04:16,079
+human engineer's job shifted upward. The
+
+114
+00:04:14,159 --> 00:04:18,239
+focus moved away from designing the
+
+115
+00:04:16,079 --> 00:04:20,000
+internal layers and toward designing the
+
+116
+00:04:18,239 --> 00:04:22,479
+overarching environment where those
+
+117
+00:04:20,000 --> 00:04:24,720
+identical blocks live. This chart plots
+
+118
+00:04:22,479 --> 00:04:26,639
+a declining power lock curve for model
+
+119
+00:04:24,720 --> 00:04:29,199
+error, mapping the modern physics of
+
+120
+00:04:26,639 --> 00:04:31,120
+scale. Researchers found that a model's
+
+121
+00:04:29,199 --> 00:04:33,759
+intelligence maps against predictable
+
+122
+00:04:31,120 --> 00:04:35,600
+equations, holding steady across massive
+
+123
+00:04:33,759 --> 00:04:37,840
+expansions in parameter counts and
+
+124
+00:04:35,600 --> 00:04:40,400
+compute budgets. But getting that math
+
+125
+00:04:37,840 --> 00:04:42,479
+right took refinement. A milestone known
+
+126
+00:04:40,400 --> 00:04:44,560
+as the chinchilla correction proved that
+
+127
+00:04:42,479 --> 00:04:46,639
+many early large models were severely
+
+128
+00:04:44,560 --> 00:04:48,560
+undertrained. Expanding a model's
+
+129
+00:04:46,639 --> 00:04:50,160
+parameter size yields poor results
+
+130
+00:04:48,560 --> 00:04:52,560
+unless you scale the amount of training
+
+131
+00:04:50,160 --> 00:04:54,639
+data equally. The definition of a good
+
+132
+00:04:52,560 --> 00:04:56,720
+architecture is no longer about a clever
+
+133
+00:04:54,639 --> 00:04:58,400
+diagram. It is about whether a model
+
+134
+00:04:56,720 --> 00:05:00,960
+family's behavior stays predictable
+
+135
+00:04:58,400 --> 00:05:02,800
+across massive expansions of scale. You
+
+136
+00:05:00,960 --> 00:05:05,759
+might look at modern mixture of experts
+
+137
+00:05:02,800 --> 00:05:07,199
+ore models and see a contradiction.
+
+138
+00:05:05,759 --> 00:05:08,960
+Routing data through multiple
+
+139
+00:05:07,199 --> 00:05:10,560
+specialized subnet networks looks like a
+
+140
+00:05:08,960 --> 00:05:12,880
+regression to the bespoke days of
+
+141
+00:05:10,560 --> 00:05:14,880
+AlexNet. There is a vital mechanistic
+
+142
+00:05:12,880 --> 00:05:16,960
+difference. In an MOE model, the
+
+143
+00:05:14,880 --> 00:05:19,600
+specialization is managed entirely by an
+
+144
+00:05:16,960 --> 00:05:21,919
+algorithmic router. Human intuition has
+
+145
+00:05:19,600 --> 00:05:24,800
+been removed from deciding which expert
+
+146
+00:05:21,919 --> 00:05:27,199
+handles which specific token of data.
+
+147
+00:05:24,800 --> 00:05:29,759
+This localized complexity is safe
+
+148
+00:05:27,199 --> 00:05:31,440
+because it remains securely contained.
+
+149
+00:05:29,759 --> 00:05:33,440
+It is governed by the predictable
+
+150
+00:05:31,440 --> 00:05:36,080
+physics of the external transformer
+
+151
+00:05:33,440 --> 00:05:38,160
+scaffold. Architecture is no longer
+
+152
+00:05:36,080 --> 00:05:40,800
+about scripting competence layer by
+
+153
+00:05:38,160 --> 00:05:43,360
+layer. Instead, the engineer's role is
+
+154
+00:05:40,800 --> 00:05:45,360
+to build sturdy blank slate environments
+
+155
+00:05:43,360 --> 00:05:49,160
+where the artificial intelligence can
+
+156
+00:05:45,360 --> 00:05:49,160
+reliably build itself.
+
