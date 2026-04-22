@@ -25,10 +25,13 @@ AUTO_CONTINUE_CODES = {
     "research_blueprint_path_invalid_type",
     "essay_iteration_missing_governing_brief",
     "essay_iteration_missing_packet_scaffold",
+    "essay_iteration_prewrite_gate_missing",
+    "essay_iteration_prewrite_gate_blocked",
+    "essay_iteration_candidate_opened_before_prewrite_clearance",
     "research_has_packet_scaffold",
 }
 LIFECYCLE_ASSERTION_RE = re.compile(
-    r"\b(stage|research|essay[_ ]iteration|governing brief|blueprint|packet|next step|ready to draft|draft gate)\b",
+    r"\b(stage|research|essay[_ ]iteration|governing brief|blueprint|packet|next step|ready to draft|draft gate|prewrite|candidate authorized|writable)\b",
     re.IGNORECASE,
 )
 

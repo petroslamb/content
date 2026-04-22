@@ -5,16 +5,22 @@ Shared lifecycle guardrails for package-stage and governing-brief checks.
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import re
 
+import yaml
+
 from essay_iteration_support import (
+    PACKET_SCHEMA_VERSION,
     build_packet_paths,
+    candidate_text_looks_scaffold,
+    packet_schema_version,
     repo_relpath,
     resolve_live_draft,
     resolve_nearest_blueprint_path,
 )
-from lifecycle import STAGES, load_status_ref
+from lifecycle import STAGES, load_status_ref, split_frontmatter
 
 
 STAGE_LABEL_ALIASES = {
@@ -125,6 +131,15 @@ def resolve_packet_manifest_path(package_path: Path, status_data: dict) -> Path 
     return build_packet_paths(live_draft_path, revision)["manifest"]
 
 
+def parse_markdown_frontmatter(path: Path) -> tuple[dict, str]:
+    text = path.read_text()
+    frontmatter_text, body = split_frontmatter(text)
+    frontmatter = yaml.safe_load(frontmatter_text) or {}
+    if not isinstance(frontmatter, dict):
+        raise ValueError(f"Frontmatter in {path} must be a mapping.")
+    return frontmatter, body
+
+
 def _issue(code: str, severity: str, message: str, *, blocking: bool = False) -> dict:
     return {
         "code": code,
@@ -142,6 +157,9 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
     governing_brief = resolve_governing_brief(package_path, status_data)
     packet_manifest_path = resolve_packet_manifest_path(package_path, status_data)
     packet_scaffold_exists = bool(packet_manifest_path and packet_manifest_path.exists())
+    prewrite_gate_path: Path | None = None
+    prewrite_gate_verdict: str | None = None
+    candidate_opened_before_prewrite_clearance = False
     issues: list[dict] = []
 
     if readme_stage and current_stage is not None:
@@ -228,6 +246,74 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
             )
         )
 
+    if current_stage == "essay_iteration" and packet_scaffold_exists and packet_manifest_path is not None:
+        try:
+            packet = json.loads(packet_manifest_path.read_text())
+            output_paths = packet.get("output_paths", {})
+            schema_version = packet_schema_version(packet)
+        except (json.JSONDecodeError, ValueError):
+            packet = {}
+            output_paths = {}
+            schema_version = 0
+
+        prewrite_relpath = output_paths.get("prewrite_gate")
+        if schema_version < PACKET_SCHEMA_VERSION or not isinstance(prewrite_relpath, str):
+            issues.append(
+                _issue(
+                    "essay_iteration_prewrite_gate_missing",
+                    "warning",
+                    "essay_iteration packet exists, but it has no canonical prewrite gate. Refresh the packet scaffold to the current schema and fill the prewrite gate before claiming draft readiness.",
+                )
+            )
+        else:
+            prewrite_gate_path = (Path(__file__).resolve().parents[1] / prewrite_relpath).resolve()
+            if not prewrite_gate_path.exists():
+                issues.append(
+                    _issue(
+                        "essay_iteration_prewrite_gate_missing",
+                        "warning",
+                        "essay_iteration packet exists, but the prewrite-gate artifact is missing.",
+                    )
+                )
+            else:
+                try:
+                    prewrite_frontmatter, _ = parse_markdown_frontmatter(prewrite_gate_path)
+                    prewrite_gate_verdict = prewrite_frontmatter.get("writability_verdict")
+                except ValueError:
+                    prewrite_frontmatter = {}
+                    prewrite_gate_verdict = None
+
+                if prewrite_gate_verdict in (None, "", "pending"):
+                    issues.append(
+                        _issue(
+                            "essay_iteration_prewrite_gate_missing",
+                            "warning",
+                            "essay_iteration packet exists, but the prewrite gate is still unresolved or left at pending.",
+                        )
+                    )
+                elif prewrite_gate_verdict == "not_yet_writable":
+                    issues.append(
+                        _issue(
+                            "essay_iteration_prewrite_gate_blocked",
+                            "warning",
+                            "essay_iteration prewrite gate says the package is not yet writable. Resolve the dominant blocker before opening or clearing a candidate.",
+                        )
+                    )
+
+                candidate_relpath = packet.get("candidate_path")
+                if isinstance(candidate_relpath, str):
+                    candidate_path = (Path(__file__).resolve().parents[1] / candidate_relpath).resolve()
+                    if candidate_path.exists() and not candidate_text_looks_scaffold(candidate_path.read_text()):
+                        if prewrite_gate_verdict != "writable":
+                            candidate_opened_before_prewrite_clearance = True
+                            issues.append(
+                                _issue(
+                                    "essay_iteration_candidate_opened_before_prewrite_clearance",
+                                    "warning",
+                                    "A bounded candidate has been opened before the essay prewrite gate cleared writability.",
+                                )
+                            )
+
     if current_stage == "research" and packet_scaffold_exists:
         issues.append(
             _issue(
@@ -246,6 +332,9 @@ def inspect_package_lifecycle(package_arg: str) -> dict:
         "blueprint_path_config": governing_brief["config_value"],
         "packet_manifest_path": repo_relpath(packet_manifest_path),
         "packet_scaffold_exists": packet_scaffold_exists,
+        "prewrite_gate_path": repo_relpath(prewrite_gate_path),
+        "prewrite_gate_verdict": prewrite_gate_verdict,
+        "candidate_opened_before_prewrite_clearance": candidate_opened_before_prewrite_clearance,
         "issues": issues,
         "warning_count": len(issues),
         "blocking_count": sum(1 for issue in issues if issue["blocking"]),
