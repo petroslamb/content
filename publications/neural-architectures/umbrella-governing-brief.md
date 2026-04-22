@@ -29,6 +29,13 @@ Use the umbrella package directly only when the task is genuinely umbrella-level
 - NotebookLM or media routing that belongs to the architecture line rather than one leaf
 - published *Transformer Attractor* lineage where the publication home is this umbrella, even if some source material still lives in `hardware-friction`
 
+For the **current remaining runnable media-stage state**, the umbrella delegates to the default leaf's artifact bundle:
+
+- live draft pointer: [`neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md`](neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md)
+- artifact bundle: [`neural-architecture-design-as-a-compositional-32e/artifacts/`](neural-architecture-design-as-a-compositional-32e/artifacts/)
+
+That delegation exists because this umbrella does not currently contain a second self-contained audio + slide + caption bundle for direct `youtube_production`.
+
 ## Current Lifecycle Interpretation
 
 The umbrella manifest is allowed to retain lifecycle state, but that state should be read narrowly.
@@ -40,6 +47,7 @@ The umbrella manifest is allowed to retain lifecycle state, but that state shoul
 ## Guardrails
 
 - Do not overwrite leaf-package drafts or artifacts from the umbrella by default.
+- Do not treat this delegated leaf media bundle as proof that every umbrella publication line has its own local video-production surface.
 - Do not treat upstream `hardware-friction` source files as if they already migrated into this package.
 - Do not let shared-paper maintenance silently change the governing object of the default leaf.
 - Do not use this brief to justify promotion or publication moves on its own; it is a routing surface, not a publication approval artifact.
