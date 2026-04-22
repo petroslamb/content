@@ -25,7 +25,7 @@ Historical exploratory branch inside the [`../README.md`](../README.md) umbrella
 
 This branch records a serious narrower doctrine attempt that was explored and judged not good enough to count as the package's pivot answer.
 
-The current umbrella workflow no longer treats this branch as the active route. The package has reopened successor search for a real new flagship object instead.
+The current umbrella workflow no longer treats this branch as the active route. The package resumed larger-successor search, tested it, and stopped without a cleared successor.
 
 ## Working Rule
 

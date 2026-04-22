@@ -1,9 +1,9 @@
 # Literate Workflow Programming
 
-Umbrella package for the literate-workflow-programming research line. The package now holds one capped donor leaf plus an open successor search that share one research and evidence tree:
+Umbrella package for the literate-workflow-programming research line. The package now holds one capped donor leaf plus a stopped successor-search record that share one research and evidence tree:
 
 - the capped flagship donor attempt `Literate Workflow Programming`
-- the open post-ceiling search for a new flagship successor
+- the stopped post-ceiling search for a new flagship successor, with no cleared successor
 
 The shared paper library, research notes, contradiction surfaces, and pivot record stay at the umbrella root so the two objects can reuse one evidence base without forked intake.
 
@@ -13,6 +13,8 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Status: Active unpublished umbrella
 - Donor flagship leaf: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
 - Active overlay: `post_ceiling_pivot`
+- Current umbrella route: `no_successor`
+- Current next action: `stop_without_successor`
 - Active successor candidate: none
 - Latest rejected larger candidate: `The Real System Lives In The Contract Layer`
 - Umbrella route manifest: [`status.yaml`](status.yaml)
@@ -68,7 +70,7 @@ The current umbrella state is:
 
 ## Working Guidance
 
-- Use the umbrella root for shared paper intake, shared research notes, contradiction work, and donor-history inspection.
+- Use the umbrella root for shared paper intake, shared research notes, contradiction work, donor-history inspection, and reading the current `no_successor` umbrella route.
 - Use [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md) when the task is specifically about the capped flagship packet, donor report, or pivot handoff.
 - Use [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md) only when the task is specifically about that rejected narrower branch as historical context.
 - Treat the root-level flagship packet and legacy `pivot/` files as donor history plus stopped successor-search surfaces, not as overwritten donor material.
