@@ -2,45 +2,55 @@
 
 ## Blocked Candidate
 
-`You're Debugging The Wrong Layer`
+`The Real System Lives In The Contract Layer`
 
 ## Block Type
 
-`research_grounding_failure`
+`north_star_failure`
 
 ## Why It Is Blocked
 
-This is the strongest opening and the strongest reusable accusation in the package.
+This candidate is the strongest larger successor the restarted search produced, and it is still blocked as a flagship pivot.
 
-It is blocked as a standalone pivot candidate because the current evidence does not give it a self-sufficient seam. The accusation works best as the wrapper around a deeper doctrine claim. By itself, it would likely reproduce the same ceiling the donor flagship already hit.
+The issue is not whether the seam is real. The issue is whether the candidate can cross from strong governed-agent doctrine into a real next flagship object.
+
+After the consequence-pressure pass and comparative rerank, the package still cannot make the candidate do more than this:
+
+- name a larger governance mistake than the earlier doctrine branch
+- sharpen the advisory-prose illusion as the public enemy
+- force operators to inspect contract surfaces earlier
+
+That is real progress, but it still lands most naturally as governed agent-systems doctrine rather than a field-reordering successor flagship.
 
 ## Evidence Used In The Block
 
-The block is grounded in the tracked donor surfaces:
-
-- the `r3` ceiling report
-- the `r3` replacement review
-- the `r3` candidate draft
-- the claim ledger
-- the article-surface pressure pass
-- the local `spec-diff` proof example
+- the donor ceiling report
+- the restarted pivot slate
+- the restarted grounding review
+- the restarted north-star viability note
+- the contract-layer consequence-pressure pass
+- the restarted comparative rerank
+- the archived pivot decision
 
 ## Blocking Findings
 
-1. The accusation is strong, but it is still a wrapper rather than a stable evidence seam.
-2. Without the validation doctrine underneath it, the candidate collapses back into the same source / validation / trace / provenance stack explanation.
-3. The current local proof shows wrong-layer debugging as a vivid example, not as a broad, independently grounded flagship object.
+1. The candidate is the strongest larger frame in the current package, but its consequence still peaks inside governed agent-workflow systems.
+2. The phrase `contract layer` remains more architectural than public, so the reader still has to accept too much system-language before the field claim feels large.
+3. The strongest adjacent assets still work better as support:
+   the wrong-layer line is a wrapper, and provenance is the next missing layer, not the headline object.
+4. Because the best larger candidate still fails, another immediate restart would just rename the same search instead of producing a materially different successor.
 
 ## What Would Unblock It
 
 At least one of these would have to arrive:
 
-- broader evidence that workflow-layer failures systematically outrun runtime-only diagnosis across multiple contexts
-- a sharper underlying variable than the accusation itself
-- a consequence seam large enough to keep the object from collapsing back into the full stack tour
+- evidence outside governed agent-workflow systems showing contract-layer drift as a broader public mistake
+- a cleaner public-language term than `contract layer`
+- a consequence surface that reorders more than engineering governance posture
+- a materially different successor candidate family that outranks this one without collapsing back into salvage
 
 ## Workflow Consequence
 
-Do not treat `You're Debugging The Wrong Layer` as the next flagship object.
+Do not open a successor flagship leaf from current tracked state.
 
-Keep it as a reusable wrapper, opener, or antagonist for the grounded validation candidate.
+Stop the current successor search without a cleared pivot.

@@ -4,103 +4,73 @@
 
 `research_grounded_but_not_north_star_viable`
 
-The capped flagship attempt produced one grounded successor and no cleared pivot.
+The restarted larger-successor search produced one grounded lead candidate and no cleared pivot.
 
-`Validation Is Lifecycle Infrastructure` is now the strongest grounded candidate in the package.
-It does not clear a north-star flagship attempt, and the package should now restart successor search instead of pretending the narrower branch resolved the pivot question.
+`The Real System Lives In The Contract Layer` is now the strongest active successor candidate in the package.
+It is larger than the rejected doctrine route, but it still does not clear a north-star flagship attempt from current tracked state.
 
 ## Why This Wins
 
-The donor package already proved that the old flagship frame fails when it has to explain the whole architecture stack in public prose.
+The winning candidate outranks the rest because it finally changes the organizing mistake:
 
-The winning candidate outranks the rest because it changes the organizing variable:
+- it moves from validation as one doctrine hinge to governance as the larger frame
+- it keeps the wrong-layer accusation as a consequence rather than as the thesis itself
+- it preserves provenance as the next missing layer without making provenance the whole article
+- it uses the donor's surviving stack as supporting machinery rather than as the main object
 
-- it treats validation as the hinge rather than as one stack layer
-- it keeps the `spec-diff` proof load-bearing
-- it preserves the wrong-layer accusation without making the essay depend on the accusation alone
-- it makes provenance a downstream demand rather than an extra architecture stop
+After the consequence-pressure pass, it also has the strongest consequence surface in the package.
+That is why it stays above the provenance seam and the wrapper rival.
 
-This is the strongest grounded way to reuse the donor assets without immediately reproducing the same ceiling.
+That still is not enough to clear.
 
 ## Why The Other Candidates Lost
 
 ### You're Debugging The Wrong Layer
 
-This remains the strongest opening and the strongest reusable accusation in the package.
+This remains the strongest opener and the best antagonist in the package.
 
-It lost as a standalone pivot candidate because the evidence seam under it is not self-sufficient. Without the validation doctrine underneath it, the object becomes a slogan wrapped around the same architecture explanation that already hit a ceiling.
+It lost again as a standalone pivot because it still names the symptom more cleanly than the governing variable underneath it.
 
-### Traces Are Not Provenance
+### Claims Need Provenance, Not Better Logs
 
-This is the strongest secondary seam and the cleanest supporting split.
+This remains the strongest downstream seam and the strongest next-layer requirement.
 
-It lost because it is still more inward and more likely to read as tooling doctrine than as a flagship public argument.
+It lost because it is still narrower than the full successor question and depends on the contract-governance frame to feel large enough.
 
-### Workflow Is A Namespace
+### Validation Is Lifecycle Infrastructure
 
-This remains a useful bounded synthesis for navigation and routing.
+This is no longer under active consideration as the pivot answer.
 
-It lost because the evidence still does not justify treating the namespace move as a field-reordering flagship object.
-
-### Split And Promote
-
-This is still a valid package move if no stronger flagship object emerges.
-It is not the successor argument itself.
+It survives only as a historical exploratory branch because the package has already judged it too small for the successor role.
 
 ## Asset Transfer Ledger
 
 - the validator-drift opening
+- the advisory-prose illusion
 - the "debugging the wrong layer" accusation
-- the rule that specification remains primary and traces stay derivative
-- the local `spec-diff` proof as a bounded source-linked drift exhibit
-- the trace / provenance boundary
-- the claim that validation is lifecycle infrastructure rather than a one-time gate
+- the source / validation / trace / provenance stack
+- the local `spec-diff` proof as a bounded contract-drift exhibit
+- the provenance requirement as the missing next layer rather than the headline object
 
 ## Research Decision
 
-Do not open a sibling flagship package from the current candidate.
-Do restart successor hunting now.
+Do not open a successor flagship leaf yet.
 
-The package has now made that decision.
+The package has now finished the consequence-pressure pass and the comparative rerank.
+Those passes improved the candidate but did not change the decisive blocker.
+The package's best larger candidate still lands as a strong governed agent-systems doctrine argument before it lands as a new flagship successor.
 
-Treat `Validation Is Lifecycle Infrastructure` as a serious explored branch, not as the package's pivot answer.
-
-The reason is simple:
-
-- the candidate is real
-- the candidate is stronger after the consequence pass
-- the candidate still fails the flagship bar for the same reason after the comparative rerank and restated north-star judgment
-- there is no cleared successor in the current package state
-
-That means the honest route is:
-
-- keep this object available only as historical transfer material
-- stop active rescue attempts for flagship clearance from this candidate
-- reopen the slate immediately and search for a materially larger successor seam
-
-This is a stop on forced escalation from the current candidate, not a declaration that the package topic is dead.
+Do not restart the successor search again from current tracked state.
 
 ## Post-Block Route
 
-`restart_pivot_search_now`
-
-The active overlay should now be read this way:
-
-- flagship successor route from the current candidate: blocked
-- package-level successor search: active again
-- no-successor stop route: still available later if a reopened slate produces nothing larger
-
-So the package is back in active successor search, not in a settled salvage state.
+`no_successor`
 
 ## Gate For Successor Leaf
 
-Open a sibling flagship package only if a later pass closes all of these:
+Open a new flagship successor leaf only if a later pass closes all of these:
 
-- the public enemy grows beyond "end-of-line testing" into a genuinely larger mistake about governed workflow systems
-- the consequence surface extends beyond repo-shaped engineering doctrine
-- the object can sustain pressure without re-expanding into a full stack walk
-- the evidence remains stronger for the new candidate than for the narrower provenance seam or the wrapper-only accusation
-
-If that gate fails again, stop without a successor rather than manufacturing another salvage object.
-
-The reopened search should continue only if at least one materially larger successor seam appears in later research.
+- the contract-layer frame becomes more than an inward architecture term
+- the public enemy scales beyond repo-shaped workflow doctrine
+- the consequence surface forces a broader behavioral change than "govern your workflow specs more carefully"
+- the candidate still outranks both the wrong-layer wrapper and the provenance seam after renewed pressure

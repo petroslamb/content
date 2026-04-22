@@ -9,8 +9,9 @@ config:
     - literate-workflow-programming/literate-workflow-programming-flagship
 umbrella_route:
   active_workflow: post_ceiling_pivot
-  active_route: restart_pivot_search_now
-  next_action: rewrite_pivot_slate_for_materially_larger_successor_search
+  active_route: no_successor
+  next_action: stop_without_successor
+  active_candidate: null
   donor_leaf: literate-workflow-programming/literate-workflow-programming-flagship
   active_successor_leaf: null
   historical_branches:

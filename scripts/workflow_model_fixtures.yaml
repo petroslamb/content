@@ -8,8 +8,13 @@ route_checks:
     stage: notebooklm_artifacts
     expected_pipeline_profile: post_ceiling_successor
     expected_effective_workflow: post_ceiling_pivot
+    expected_effective_next_action: stop_without_successor
     expected_effective_can_execute: false
     expected_recommended_workflow: post_ceiling_pivot
+    expected_active_overlay: post_ceiling_pivot
+    expected_overlay_phase: pivot_search_stopped
+    expected_next_overlay_action: stop_without_successor
+    expected_overlay_route: no_successor
 workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: clean-interface-illusion
@@ -24,11 +29,11 @@ workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: literate-workflow-programming
     expected_can_execute: false
-    expected_overlay_phase: build_pivot_slate
-    expected_next_overlay_action: rewrite_pivot_slate_for_materially_larger_successor_search
-    expected_overlay_route: restart_pivot_search_now
+    expected_overlay_phase: pivot_search_stopped
+    expected_next_overlay_action: stop_without_successor
+    expected_overlay_route: no_successor
     expected_active_overlay_root: publications/literate-workflow-programming
-    expected_validator_substring: pivot_research_grounding
+    expected_validator_substring: pivot_north_star_viability
     expected_recommended_gates:
       - pivot_research_grounding
       - pivot_north_star_viability
