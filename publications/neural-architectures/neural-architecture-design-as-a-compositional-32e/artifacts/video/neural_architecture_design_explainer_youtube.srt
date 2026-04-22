@@ -1,0 +1,992 @@
+1
+00:00:00,320 --> 00:00:04,160
+Today we're going to talk about a really
+
+2
+00:00:02,159 --> 00:00:06,480
+fundamental shift in how we think about
+
+3
+00:00:04,160 --> 00:00:08,080
+designing AI systems. It's a story
+
+4
+00:00:06,480 --> 00:00:10,080
+that's all about moving away from this
+
+5
+00:00:08,080 --> 00:00:11,759
+idea of handcrafting every single
+
+6
+00:00:10,080 --> 00:00:13,599
+component, you know, like a bespoke
+
+7
+00:00:11,759 --> 00:00:16,400
+machine and moving towards creating
+
+8
+00:00:13,599 --> 00:00:18,960
+these reusable, reliable frameworks or
+
+9
+00:00:16,400 --> 00:00:21,119
+scaffolds that can be scaled and adapted
+
+10
+00:00:18,960 --> 00:00:23,199
+in really predictable ways. And this
+
+11
+00:00:21,119 --> 00:00:24,880
+isn't just some minor technical update.
+
+12
+00:00:23,199 --> 00:00:26,720
+It's a deep change in the whole
+
+13
+00:00:24,880 --> 00:00:29,599
+philosophy of what it even means to
+
+14
+00:00:26,720 --> 00:00:31,439
+build intelligence. So, this leads to a
+
+15
+00:00:29,599 --> 00:00:34,000
+really interesting question. What does
+
+16
+00:00:31,439 --> 00:00:35,200
+an AI architect actually do today? I
+
+17
+00:00:34,000 --> 00:00:37,200
+mean, if they're no longer sitting there
+
+18
+00:00:35,200 --> 00:00:39,840
+drawing up a superdetailed blueprint for
+
+19
+00:00:37,200 --> 00:00:42,079
+one single unique machine, what are they
+
+20
+00:00:39,840 --> 00:00:44,399
+building instead? Well, the answer to
+
+21
+00:00:42,079 --> 00:00:46,800
+that has changed. I mean, dramatically
+
+22
+00:00:44,399 --> 00:00:48,480
+over the last decade. And this slide,
+
+23
+00:00:46,800 --> 00:00:51,039
+this really gets to the heart of the
+
+24
+00:00:48,480 --> 00:00:53,039
+whole mental model shift. The old way of
+
+25
+00:00:51,039 --> 00:00:55,280
+thinking, it was all about authoring a
+
+26
+00:00:53,039 --> 00:00:57,360
+very specific machine. You'd embed your
+
+27
+00:00:55,280 --> 00:00:59,120
+own expert judgment into every single
+
+28
+00:00:57,360 --> 00:01:01,760
+layer. You were creating a detailed
+
+29
+00:00:59,120 --> 00:01:03,359
+blueprint. But the new view is totally
+
+30
+00:01:01,760 --> 00:01:05,519
+different. It's about defining a
+
+31
+00:01:03,359 --> 00:01:08,080
+reusable regime. It's about putting your
+
+32
+00:01:05,519 --> 00:01:10,240
+trust in a repeatable scaffold. So, it's
+
+33
+00:01:08,080 --> 00:01:12,240
+less about one perfect blueprint and
+
+34
+00:01:10,240 --> 00:01:13,920
+more about creating a family discipline,
+
+35
+00:01:12,240 --> 00:01:16,560
+a set of rules that can generate a whole
+
+36
+00:01:13,920 --> 00:01:18,000
+population of really good models. To get
+
+37
+00:01:16,560 --> 00:01:20,479
+why this shift happened, we've got to
+
+38
+00:01:18,000 --> 00:01:23,280
+rewind a bit. So, let's start back in
+
+39
+00:01:20,479 --> 00:01:25,759
+the age of bespoke machines. This was a
+
+40
+00:01:23,280 --> 00:01:27,680
+time when honestly every major neural
+
+41
+00:01:25,759 --> 00:01:30,000
+network felt like its own unique
+
+42
+00:01:27,680 --> 00:01:31,759
+handbuilt object just packed with all
+
+43
+00:01:30,000 --> 00:01:34,240
+these specific choices that were pretty
+
+44
+00:01:31,759 --> 00:01:36,479
+hard to generalize. This whole period is
+
+45
+00:01:34,240 --> 00:01:38,560
+really defined by a few key moments. So
+
+46
+00:01:36,479 --> 00:01:39,920
+in 2012, AlexNet was this huge
+
+47
+00:01:38,560 --> 00:01:41,680
+breakthrough. It basically proved that
+
+48
+00:01:39,920 --> 00:01:43,840
+deep learning could win, but its design
+
+49
+00:01:41,680 --> 00:01:45,520
+was super specific. It was a successful
+
+50
+00:01:43,840 --> 00:01:47,439
+object for sure, but it wasn't a
+
+51
+00:01:45,520 --> 00:01:50,000
+repeatable formula. Then just 2 years
+
+52
+00:01:47,439 --> 00:01:52,000
+later in 2014, the field kind of split.
+
+53
+00:01:50,000 --> 00:01:53,520
+You had VGG which argued for simplicity
+
+54
+00:01:52,000 --> 00:01:55,520
+and discipline showing that just
+
+55
+00:01:53,520 --> 00:01:57,280
+repeating simple 3x3 convolutions could
+
+56
+00:01:55,520 --> 00:01:58,799
+be incredibly effective. But at the
+
+57
+00:01:57,280 --> 00:02:00,640
+exact same time you had inception which
+
+58
+00:01:58,799 --> 00:02:01,920
+argued for the opposite for complexity
+
+59
+00:02:00,640 --> 00:02:03,200
+building these modules with a bunch of
+
+60
+00:02:01,920 --> 00:02:04,880
+different operations all happening in
+
+61
+00:02:03,200 --> 00:02:07,040
+parallel. And this slide just
+
+62
+00:02:04,880 --> 00:02:08,879
+illustrates that crossroads perfectly.
+
+63
+00:02:07,040 --> 00:02:10,560
+The big question in the field was should
+
+64
+00:02:08,879 --> 00:02:13,280
+our architectures become more regular
+
+65
+00:02:10,560 --> 00:02:15,200
+and disciplined like VGG or should we be
+
+66
+00:02:13,280 --> 00:02:17,520
+embracing more local complexity and
+
+67
+00:02:15,200 --> 00:02:19,520
+variety like Inception? And back in
+
+68
+00:02:17,520 --> 00:02:21,040
+2014, you know, both answers seemed
+
+69
+00:02:19,520 --> 00:02:22,959
+pretty plausible. The path forward
+
+70
+00:02:21,040 --> 00:02:25,040
+wasn't clear at all. And this tension
+
+71
+00:02:22,959 --> 00:02:27,120
+actually exposed a much, much deeper
+
+72
+00:02:25,040 --> 00:02:29,680
+problem. And that problem was what we
+
+73
+00:02:27,120 --> 00:02:31,200
+now call the deep network paradox. See,
+
+74
+00:02:29,680 --> 00:02:32,720
+as researchers were trying to build more
+
+75
+00:02:31,200 --> 00:02:34,560
+and more powerful models by just
+
+76
+00:02:32,720 --> 00:02:36,239
+stacking more layers, something really
+
+77
+00:02:34,560 --> 00:02:38,560
+weird and counterintuitive started to
+
+78
+00:02:36,239 --> 00:02:41,519
+happen. The models, well, they started
+
+79
+00:02:38,560 --> 00:02:44,080
+to break. This quote from the 2015
+
+80
+00:02:41,519 --> 00:02:46,959
+ResNet paper just nails the core of the
+
+81
+00:02:44,080 --> 00:02:48,959
+paradox. deeper networks, the ones that
+
+82
+00:02:46,959 --> 00:02:50,959
+should have had more capacity, were
+
+83
+00:02:48,959 --> 00:02:53,200
+actually showing higher training error
+
+84
+00:02:50,959 --> 00:02:55,920
+than the shallower ones. I mean, this
+
+85
+00:02:53,200 --> 00:02:58,080
+was baffling. A deeper model should in
+
+86
+00:02:55,920 --> 00:03:00,480
+theory be able to at least perform as
+
+87
+00:02:58,080 --> 00:03:02,640
+well as a shallower one, right? But for
+
+88
+00:03:00,480 --> 00:03:04,400
+some reason, it just couldn't. And let's
+
+89
+00:03:02,640 --> 00:03:06,239
+be super clear here, this was not an
+
+90
+00:03:04,400 --> 00:03:07,920
+overfitting problem. The deeper models
+
+91
+00:03:06,239 --> 00:03:09,760
+were failing even on the data they were
+
+92
+00:03:07,920 --> 00:03:11,200
+supposed to have completely mastered.
+
+93
+00:03:09,760 --> 00:03:12,959
+This pointed to a really fundamental
+
+94
+00:03:11,200 --> 00:03:14,560
+optimization issue. The training
+
+95
+00:03:12,959 --> 00:03:16,879
+algorithms were basically getting lost
+
+96
+00:03:14,560 --> 00:03:18,400
+in an increasingly complex landscape and
+
+97
+00:03:16,879 --> 00:03:20,640
+they just couldn't find the right path
+
+98
+00:03:18,400 --> 00:03:23,040
+downhill. Repetition by itself was not
+
+99
+00:03:20,640 --> 00:03:25,360
+enough. And that that brings us to the
+
+100
+00:03:23,040 --> 00:03:27,200
+hinge of this entire story. A simple
+
+101
+00:03:25,360 --> 00:03:29,120
+elegant idea that solved the depth
+
+102
+00:03:27,200 --> 00:03:31,440
+problem and unlocked the ability to
+
+103
+00:03:29,120 --> 00:03:33,599
+train truly massive networks. This was
+
+104
+00:03:31,440 --> 00:03:35,599
+the moment the scaffold was born. And
+
+105
+00:03:33,599 --> 00:03:37,760
+the solution came down to this one
+
+106
+00:03:35,599 --> 00:03:38,640
+simple change. Instead of forcing a
+
+107
+00:03:37,760 --> 00:03:40,879
+layer to learn a complete
+
+108
+00:03:38,640 --> 00:03:43,120
+transformation, you know, y equals f
+
+109
+00:03:40,879 --> 00:03:45,440
+ofx, the residual connection asks it to
+
+110
+00:03:43,120 --> 00:03:47,040
+learn just a correction f ofx, which
+
+111
+00:03:45,440 --> 00:03:49,680
+then gets added back to the original
+
+112
+00:03:47,040 --> 00:03:52,159
+input. This little tweak had massive
+
+113
+00:03:49,680 --> 00:03:55,440
+global consequences. So this simple
+
+114
+00:03:52,159 --> 00:03:56,879
+equation, it changes everything. First,
+
+115
+00:03:55,440 --> 00:03:58,879
+layers go from trying to do a full
+
+116
+00:03:56,879 --> 00:04:00,959
+rewrite of their input to just making a
+
+117
+00:03:58,879 --> 00:04:03,120
+refinement. Second, and this is
+
+118
+00:04:00,959 --> 00:04:05,519
+absolutely critical, it preserves a
+
+119
+00:04:03,120 --> 00:04:07,120
+direct path for the original signal X to
+
+120
+00:04:05,519 --> 00:04:09,439
+just flow right through the network
+
+121
+00:04:07,120 --> 00:04:11,280
+undisturbed. And the result, the
+
+122
+00:04:09,439 --> 00:04:13,760
+architecture becomes this stable,
+
+123
+00:04:11,280 --> 00:04:15,200
+trainable scaffold. Suddenly, depth
+
+124
+00:04:13,760 --> 00:04:17,120
+doesn't feel like a fragile chain
+
+125
+00:04:15,200 --> 00:04:19,919
+anymore. It feels like an accumulation
+
+126
+00:04:17,120 --> 00:04:21,840
+of small stable improvements. And later,
+
+127
+00:04:19,919 --> 00:04:24,080
+research confirmed exactly why this
+
+128
+00:04:21,840 --> 00:04:25,840
+worked so well. It created this clean
+
+129
+00:04:24,080 --> 00:04:27,759
+highway for learning signals, the
+
+130
+00:04:25,840 --> 00:04:29,919
+gradients, to flow backwards through the
+
+131
+00:04:27,759 --> 00:04:31,840
+network. This effectively smoothed out
+
+132
+00:04:29,919 --> 00:04:33,520
+what we call the loss landscape. That's
+
+133
+00:04:31,840 --> 00:04:35,440
+the terrain our optimizer has to
+
+134
+00:04:33,520 --> 00:04:37,440
+navigate, making it so much easier to
+
+135
+00:04:35,440 --> 00:04:39,120
+find a good solution. The field had
+
+136
+00:04:37,440 --> 00:04:42,320
+finally figured out how to make depth
+
+137
+00:04:39,120 --> 00:04:45,440
+work. So, with the problem of depth
+
+138
+00:04:42,320 --> 00:04:47,840
+finally solved, this powerful idea was
+
+139
+00:04:45,440 --> 00:04:50,080
+then packaged into a repeatable block
+
+140
+00:04:47,840 --> 00:04:53,199
+that would go on to change not just one
+
+141
+00:04:50,080 --> 00:04:54,800
+corner of AI, but the entire field. And
+
+142
+00:04:53,199 --> 00:04:56,880
+that's when the transformer block
+
+143
+00:04:54,800 --> 00:04:58,560
+entered the scene. So, what is a
+
+144
+00:04:56,880 --> 00:05:00,400
+transporter block? Well, yeah, it's
+
+145
+00:04:58,560 --> 00:05:02,080
+famous for self attention, which lets
+
+146
+00:05:00,400 --> 00:05:04,160
+every element in a sequence look at
+
+147
+00:05:02,080 --> 00:05:06,400
+every other element. But what's just as
+
+148
+00:05:04,160 --> 00:05:08,560
+important is its structure. It packages
+
+149
+00:05:06,400 --> 00:05:10,479
+that powerful computation inside the
+
+150
+00:05:08,560 --> 00:05:12,240
+exact residual scaffold we were just
+
+151
+00:05:10,479 --> 00:05:14,320
+talking about. And that is what made the
+
+152
+00:05:12,240 --> 00:05:17,280
+block so repeatable, so stable, and
+
+153
+00:05:14,320 --> 00:05:18,800
+ultimately so incredibly portable. Okay,
+
+154
+00:05:17,280 --> 00:05:20,800
+so this raises a really interesting
+
+155
+00:05:18,800 --> 00:05:22,479
+question. If you build a massive model
+
+156
+00:05:20,800 --> 00:05:24,639
+by just stacking hundreds of these
+
+157
+00:05:22,479 --> 00:05:26,320
+identical blocks one after another, does
+
+158
+00:05:24,639 --> 00:05:28,080
+the model end up just doing the same
+
+159
+00:05:26,320 --> 00:05:30,080
+thing at every single layer, is its
+
+160
+00:05:28,080 --> 00:05:32,800
+function totally uniform? And
+
+161
+00:05:30,080 --> 00:05:35,199
+fascinatingly, the answer is no. Not at
+
+162
+00:05:32,800 --> 00:05:37,520
+all. When people analyze models like
+
+163
+00:05:35,199 --> 00:05:39,600
+BERT, they found that even inside a
+
+164
+00:05:37,520 --> 00:05:41,840
+perfectly uniform architecture,
+
+165
+00:05:39,600 --> 00:05:43,840
+functional specialization just emerges
+
+166
+00:05:41,840 --> 00:05:46,160
+during training. Different attention
+
+167
+00:05:43,840 --> 00:05:48,560
+heads learn completely distinct jobs.
+
+168
+00:05:46,160 --> 00:05:50,479
+Different layers also specialize forming
+
+169
+00:05:48,560 --> 00:05:52,960
+this sort of pipeline from low-level to
+
+170
+00:05:50,479 --> 00:05:54,960
+highle understanding. The architect
+
+171
+00:05:52,960 --> 00:05:56,720
+didn't have to design any of this. They
+
+172
+00:05:54,960 --> 00:05:58,479
+just had to create the scaffold and
+
+173
+00:05:56,720 --> 00:06:00,720
+training found the structure all on its
+
+174
+00:05:58,479 --> 00:06:02,400
+own. Now, the vision transformer showed
+
+175
+00:06:00,720 --> 00:06:04,880
+just how portable this scaffold really
+
+176
+00:06:02,400 --> 00:06:06,560
+was, applying it successfully to images.
+
+177
+00:06:04,880 --> 00:06:09,440
+But it also taught us a really crucial
+
+178
+00:06:06,560 --> 00:06:12,000
+lesson in humility. This portability,
+
+179
+00:06:09,440 --> 00:06:14,000
+it's not magic. The scaffold only really
+
+180
+00:06:12,000 --> 00:06:15,840
+works its magic in new domains when the
+
+181
+00:06:14,000 --> 00:06:18,319
+training regime, the amount of data and
+
+182
+00:06:15,840 --> 00:06:20,240
+compute is massive. Without that kind of
+
+183
+00:06:18,319 --> 00:06:22,880
+scale, more specialized architectures
+
+184
+00:06:20,240 --> 00:06:24,880
+can still win. And this brings us right
+
+185
+00:06:22,880 --> 00:06:27,520
+into the modern era where the AI
+
+186
+00:06:24,880 --> 00:06:29,039
+architect's job has elevated once again.
+
+187
+00:06:27,520 --> 00:06:31,039
+They are no longer just designing
+
+188
+00:06:29,039 --> 00:06:33,759
+models. They are designing the entire
+
+189
+00:06:31,039 --> 00:06:36,319
+system of creation. The new object of
+
+190
+00:06:33,759 --> 00:06:38,240
+design is now the design space. So
+
+191
+00:06:36,319 --> 00:06:40,240
+instead of one blueprint, the architect
+
+192
+00:06:38,240 --> 00:06:42,400
+defines a whole family of possible
+
+193
+00:06:40,240 --> 00:06:44,639
+architectures that are all governed by a
+
+194
+00:06:42,400 --> 00:06:46,639
+shared set of rules. Work like neural
+
+195
+00:06:44,639 --> 00:06:48,960
+architecture search and regenet made
+
+196
+00:06:46,639 --> 00:06:50,960
+this super explicit. The goal is to
+
+197
+00:06:48,960 --> 00:06:53,199
+define a space where lots of good models
+
+198
+00:06:50,960 --> 00:06:55,440
+can live, not just to find one single
+
+199
+00:06:53,199 --> 00:06:57,440
+hero architecture. And so the design
+
+200
+00:06:55,440 --> 00:06:59,199
+variables have changed. Architects are
+
+201
+00:06:57,440 --> 00:07:01,599
+now focusing on things like scaling
+
+202
+00:06:59,199 --> 00:07:03,280
+laws. how predictably a model family's
+
+203
+00:07:01,599 --> 00:07:05,440
+performance improves as you throw more
+
+204
+00:07:03,280 --> 00:07:07,440
+data, more parameters, and more compute
+
+205
+00:07:05,440 --> 00:07:09,280
+at it. And they designed these compute
+
+206
+00:07:07,440 --> 00:07:11,120
+optimal recipes like the one from the
+
+207
+00:07:09,280 --> 00:07:13,120
+Chinchilla paper, which figured out the
+
+208
+00:07:11,120 --> 00:07:15,440
+ideal ratio of model size to training
+
+209
+00:07:13,120 --> 00:07:17,759
+data. It's all about designing a process
+
+210
+00:07:15,440 --> 00:07:19,759
+that scales beautifully. This is also
+
+211
+00:07:17,759 --> 00:07:21,360
+where ideas like mixture of experts fit
+
+212
+00:07:19,759 --> 00:07:23,599
+in. Now, this might look like we're
+
+213
+00:07:21,360 --> 00:07:26,479
+going back to those old complex designs,
+
+214
+00:07:23,599 --> 00:07:28,400
+but it's not. MO is a controlled return
+
+215
+00:07:26,479 --> 00:07:30,000
+to specialization. Instead of an
+
+216
+00:07:28,400 --> 00:07:32,240
+architect handcrafting different
+
+217
+00:07:30,000 --> 00:07:33,840
+modules, you have a learned router that
+
+218
+00:07:32,240 --> 00:07:36,160
+directs each piece of data to a
+
+219
+00:07:33,840 --> 00:07:38,479
+specialized expert network. All of this
+
+220
+00:07:36,160 --> 00:07:40,160
+heterogeneity lives inside the stable
+
+221
+00:07:38,479 --> 00:07:42,160
+scaffold we've been talking about. So it
+
+222
+00:07:40,160 --> 00:07:44,400
+adds power without sacrificing that
+
+223
+00:07:42,160 --> 00:07:46,240
+critical stability. So where has this
+
+224
+00:07:44,400 --> 00:07:48,880
+whole journey taken us? What is the
+
+225
+00:07:46,240 --> 00:07:50,400
+architect's new role in this world?
+
+226
+00:07:48,880 --> 00:07:53,039
+Well, we've seen the field move from
+
+227
+00:07:50,400 --> 00:07:55,680
+Alexet's very specific bespoke blueprint
+
+228
+00:07:53,039 --> 00:07:58,319
+to VGG making simple repetition a
+
+229
+00:07:55,680 --> 00:08:00,160
+respectable idea. Then Resnet had its
+
+230
+00:07:58,319 --> 00:08:02,720
+breakthrough with trainable pads which
+
+231
+00:08:00,160 --> 00:08:04,400
+made truly deep learning possible. The
+
+232
+00:08:02,720 --> 00:08:06,479
+transformer then packaged that lesson
+
+233
+00:08:04,400 --> 00:08:08,879
+into a portable block that scaled across
+
+234
+00:08:06,479 --> 00:08:10,720
+totally different domains. And today the
+
+235
+00:08:08,879 --> 00:08:12,400
+frontier is designing entire families
+
+236
+00:08:10,720 --> 00:08:14,319
+and recipes that govern how these
+
+237
+00:08:12,400 --> 00:08:16,879
+incredibly powerful models are built,
+
+238
+00:08:14,319 --> 00:08:19,680
+scaled, and trained. So the architect's
+
+239
+00:08:16,879 --> 00:08:21,840
+job has fundamentally changed. It's no
+
+240
+00:08:19,680 --> 00:08:24,639
+longer about scripting competence layer
+
+241
+00:08:21,840 --> 00:08:26,479
+by layer. It's about defining a scaffold
+
+242
+00:08:24,639 --> 00:08:29,120
+that is sturdy enough for intelligence
+
+243
+00:08:26,479 --> 00:08:30,879
+to actually emerge within it. Which of
+
+244
+00:08:29,120 --> 00:08:33,120
+course leaves us with a final
+
+245
+00:08:30,879 --> 00:08:35,039
+fascinating question. Now that we know
+
+246
+00:08:33,120 --> 00:08:37,120
+how to build the scaffold, what new
+
+247
+00:08:35,039 --> 00:08:40,919
+forms of intelligence is training going
+
+248
+00:08:37,120 --> 00:08:40,919
+to build inside of it?
+

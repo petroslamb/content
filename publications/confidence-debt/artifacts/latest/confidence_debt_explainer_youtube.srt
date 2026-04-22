@@ -1,0 +1,2625 @@
+1
+00:00:00,240 --> 00:00:02,389
+
+You know, in this huge rush to automate
+
+2
+00:00:02,389 --> 00:00:02,399
+You know, in this huge rush to automate
+ 
+
+3
+00:00:02,399 --> 00:00:04,150
+You know, in this huge rush to automate
+everything, we've accidentally created
+
+4
+00:00:04,150 --> 00:00:04,160
+everything, we've accidentally created
+ 
+
+5
+00:00:04,160 --> 00:00:06,230
+everything, we've accidentally created
+this new kind of invisible risk inside
+
+6
+00:00:06,230 --> 00:00:06,240
+this new kind of invisible risk inside
+ 
+
+7
+00:00:06,240 --> 00:00:08,629
+this new kind of invisible risk inside
+our AI workflows. It's a vulnerability
+
+8
+00:00:08,629 --> 00:00:08,639
+our AI workflows. It's a vulnerability
+ 
+
+9
+00:00:08,639 --> 00:00:10,709
+our AI workflows. It's a vulnerability
+that just quietly compounds over time.
+
+10
+00:00:10,709 --> 00:00:10,719
+that just quietly compounds over time.
+ 
+
+11
+00:00:10,719 --> 00:00:11,990
+that just quietly compounds over time.
+And researchers are calling it
+
+12
+00:00:11,990 --> 00:00:12,000
+And researchers are calling it
+ 
+
+13
+00:00:12,000 --> 00:00:13,990
+And researchers are calling it
+confidence debt. It's what happens when
+
+14
+00:00:13,990 --> 00:00:14,000
+confidence debt. It's what happens when
+ 
+
+15
+00:00:14,000 --> 00:00:15,669
+confidence debt. It's what happens when
+an AI's answer shoots through an
+
+16
+00:00:15,669 --> 00:00:15,679
+an AI's answer shoots through an
+ 
+
+17
+00:00:15,679 --> 00:00:17,990
+an AI's answer shoots through an
+organization way, way faster than the
+
+18
+00:00:17,990 --> 00:00:18,000
+organization way, way faster than the
+ 
+
+19
+00:00:18,000 --> 00:00:19,590
+organization way, way faster than the
+actual evidence that's needed to back it
+
+20
+00:00:19,590 --> 00:00:19,600
+actual evidence that's needed to back it
+ 
+
+21
+00:00:19,600 --> 00:00:21,750
+actual evidence that's needed to back it
+up. So, let's dig into how this tiny gap
+
+22
+00:00:21,750 --> 00:00:21,760
+up. So, let's dig into how this tiny gap
+ 
+
+23
+00:00:21,760 --> 00:00:23,670
+up. So, let's dig into how this tiny gap
+can actually cause massive systemic
+
+24
+00:00:23,670 --> 00:00:23,680
+can actually cause massive systemic
+ 
+
+25
+00:00:23,680 --> 00:00:26,150
+can actually cause massive systemic
+problems. So, picture this. It's a
+
+26
+00:00:26,150 --> 00:00:26,160
+problems. So, picture this. It's a
+ 
+
+27
+00:00:26,160 --> 00:00:28,550
+problems. So, picture this. It's a
+classic scenario, right? It's 4:45 p.m.
+
+28
+00:00:28,550 --> 00:00:28,560
+classic scenario, right? It's 4:45 p.m.
+ 
+
+29
+00:00:28,560 --> 00:00:31,029
+classic scenario, right? It's 4:45 p.m.
+on a Thursday. You are wiped and just
+
+30
+00:00:31,029 --> 00:00:31,039
+on a Thursday. You are wiped and just
+ 
+
+31
+00:00:31,039 --> 00:00:33,270
+on a Thursday. You are wiped and just
+then an AI system drops a summary in
+
+32
+00:00:33,270 --> 00:00:33,280
+then an AI system drops a summary in
+ 
+
+33
+00:00:33,280 --> 00:00:36,470
+then an AI system drops a summary in
+your inbox. You open it up and wow, it's
+
+34
+00:00:36,470 --> 00:00:36,480
+your inbox. You open it up and wow, it's
+ 
+
+35
+00:00:36,480 --> 00:00:38,389
+your inbox. You open it up and wow, it's
+beautiful. The formatting is perfect.
+
+36
+00:00:38,389 --> 00:00:38,399
+beautiful. The formatting is perfect.
+ 
+
+37
+00:00:38,399 --> 00:00:40,709
+beautiful. The formatting is perfect.
+The tone is so definitive. It just looks
+
+38
+00:00:40,709 --> 00:00:40,719
+The tone is so definitive. It just looks
+ 
+
+39
+00:00:40,719 --> 00:00:42,630
+The tone is so definitive. It just looks
+right. And you can literally feel the
+
+40
+00:00:42,630 --> 00:00:42,640
+right. And you can literally feel the
+ 
+
+41
+00:00:42,640 --> 00:00:44,790
+right. And you can literally feel the
+stress just melting away. You scan the
+
+42
+00:00:44,790 --> 00:00:44,800
+stress just melting away. You scan the
+ 
+
+43
+00:00:44,800 --> 00:00:47,270
+stress just melting away. You scan the
+bolded text, you nod, and you forward it
+
+44
+00:00:47,270 --> 00:00:47,280
+bolded text, you nod, and you forward it
+ 
+
+45
+00:00:47,280 --> 00:00:48,950
+bolded text, you nod, and you forward it
+on to your boss because you're trusting
+
+46
+00:00:48,950 --> 00:00:48,960
+on to your boss because you're trusting
+ 
+
+47
+00:00:48,960 --> 00:00:51,830
+on to your boss because you're trusting
+that polished look completely. Well,
+
+48
+00:00:51,830 --> 00:00:51,840
+that polished look completely. Well,
+ 
+
+49
+00:00:51,840 --> 00:00:54,630
+that polished look completely. Well,
+that one little moment, that's the seed.
+
+50
+00:00:54,630 --> 00:00:54,640
+that one little moment, that's the seed.
+ 
+
+51
+00:00:54,640 --> 00:00:56,869
+that one little moment, that's the seed.
+That's where confidence step begins.
+
+52
+00:00:56,869 --> 00:00:56,879
+That's where confidence step begins.
+ 
+
+53
+00:00:56,879 --> 00:00:58,709
+That's where confidence step begins.
+Okay, so here's how we're going to break
+
+54
+00:00:58,709 --> 00:00:58,719
+Okay, so here's how we're going to break
+ 
+
+55
+00:00:58,719 --> 00:01:00,549
+Okay, so here's how we're going to break
+this down. First, we'll look at the
+
+56
+00:01:00,549 --> 00:01:00,559
+this down. First, we'll look at the
+ 
+
+57
+00:01:00,559 --> 00:01:02,310
+this down. First, we'll look at the
+psychological trap of that polished
+
+58
+00:01:02,310 --> 00:01:02,320
+psychological trap of that polished
+ 
+
+59
+00:01:02,320 --> 00:01:04,390
+psychological trap of that polished
+output. Then, we'll get a solid
+
+60
+00:01:04,390 --> 00:01:04,400
+output. Then, we'll get a solid
+ 
+
+61
+00:01:04,400 --> 00:01:06,070
+output. Then, we'll get a solid
+definition of what confidence debt
+
+62
+00:01:06,070 --> 00:01:06,080
+definition of what confidence debt
+ 
+
+63
+00:01:06,080 --> 00:01:08,710
+definition of what confidence debt
+really is as a systemic problem. After
+
+64
+00:01:08,710 --> 00:01:08,720
+really is as a systemic problem. After
+ 
+
+65
+00:01:08,720 --> 00:01:10,390
+really is as a systemic problem. After
+that, we're going to walk through three
+
+66
+00:01:10,390 --> 00:01:10,400
+that, we're going to walk through three
+ 
+
+67
+00:01:10,400 --> 00:01:12,710
+that, we're going to walk through three
+critical lines of defense or gates,
+
+68
+00:01:12,710 --> 00:01:12,720
+critical lines of defense or gates,
+ 
+
+69
+00:01:12,720 --> 00:01:14,950
+critical lines of defense or gates,
+auditing the artifact, evaluating for
+
+70
+00:01:14,950 --> 00:01:14,960
+auditing the artifact, evaluating for
+ 
+
+71
+00:01:14,960 --> 00:01:17,670
+auditing the artifact, evaluating for
+real reliability, and finally co-oditing
+
+72
+00:01:17,670 --> 00:01:17,680
+real reliability, and finally co-oditing
+ 
+
+73
+00:01:17,680 --> 00:01:19,670
+real reliability, and finally co-oditing
+the human in the loop. And we'll wrap it
+
+74
+00:01:19,670 --> 00:01:19,680
+the human in the loop. And we'll wrap it
+ 
+
+75
+00:01:19,680 --> 00:01:22,310
+the human in the loop. And we'll wrap it
+all up with a new doctrine for well, for
+
+76
+00:01:22,310 --> 00:01:22,320
+all up with a new doctrine for well, for
+ 
+
+77
+00:01:22,320 --> 00:01:24,310
+all up with a new doctrine for well, for
+survival. All right, let's dive into
+
+78
+00:01:24,310 --> 00:01:24,320
+survival. All right, let's dive into
+ 
+
+79
+00:01:24,320 --> 00:01:25,990
+survival. All right, let's dive into
+that first part, the illusion of
+
+80
+00:01:25,990 --> 00:01:26,000
+that first part, the illusion of
+ 
+
+81
+00:01:26,000 --> 00:01:27,590
+that first part, the illusion of
+confidence. What's really at the heart
+
+82
+00:01:27,590 --> 00:01:27,600
+confidence. What's really at the heart
+ 
+
+83
+00:01:27,600 --> 00:01:29,510
+confidence. What's really at the heart
+of this? Well, it's a pretty basic
+
+84
+00:01:29,510 --> 00:01:29,520
+of this? Well, it's a pretty basic
+ 
+
+85
+00:01:29,520 --> 00:01:32,550
+of this? Well, it's a pretty basic
+psychological bias. We are just wired to
+
+86
+00:01:32,550 --> 00:01:32,560
+psychological bias. We are just wired to
+ 
+
+87
+00:01:32,560 --> 00:01:34,310
+psychological bias. We are just wired to
+see something that looks polished and
+
+88
+00:01:34,310 --> 00:01:34,320
+see something that looks polished and
+ 
+
+89
+00:01:34,320 --> 00:01:36,469
+see something that looks polished and
+finished and assume it's accurate. It
+
+90
+00:01:36,469 --> 00:01:36,479
+finished and assume it's accurate. It
+ 
+
+91
+00:01:36,479 --> 00:01:38,630
+finished and assume it's accurate. It
+feels complete. It feels professional.
+
+92
+00:01:38,630 --> 00:01:38,640
+feels complete. It feels professional.
+ 
+
+93
+00:01:38,640 --> 00:01:40,469
+feels complete. It feels professional.
+So, our brains just go, "Yep, that's got
+
+94
+00:01:40,469 --> 00:01:40,479
+So, our brains just go, "Yep, that's got
+ 
+
+95
+00:01:40,479 --> 00:01:42,630
+So, our brains just go, "Yep, that's got
+to be true." The danger now is that
+
+96
+00:01:42,630 --> 00:01:42,640
+to be true." The danger now is that
+ 
+
+97
+00:01:42,640 --> 00:01:45,030
+to be true." The danger now is that
+generative AI can create that look of
+
+98
+00:01:45,030 --> 00:01:45,040
+generative AI can create that look of
+ 
+
+99
+00:01:45,040 --> 00:01:47,109
+generative AI can create that look of
+perfection in seconds. And that turns
+
+100
+00:01:47,109 --> 00:01:47,119
+perfection in seconds. And that turns
+ 
+
+101
+00:01:47,119 --> 00:01:49,350
+perfection in seconds. And that turns
+what was a useful mental shortcut into a
+
+102
+00:01:49,350 --> 00:01:49,360
+what was a useful mental shortcut into a
+ 
+
+103
+00:01:49,360 --> 00:01:51,910
+what was a useful mental shortcut into a
+huge blind spot for any organization.
+
+104
+00:01:51,910 --> 00:01:51,920
+huge blind spot for any organization.
+ 
+
+105
+00:01:51,920 --> 00:01:53,510
+huge blind spot for any organization.
+Now, let's be super clear about what
+
+106
+00:01:53,510 --> 00:01:53,520
+Now, let's be super clear about what
+ 
+
+107
+00:01:53,520 --> 00:01:56,310
+Now, let's be super clear about what
+confidence debt really is. This is not
+
+108
+00:01:56,310 --> 00:01:56,320
+confidence debt really is. This is not
+ 
+
+109
+00:01:56,320 --> 00:01:58,310
+confidence debt really is. This is not
+about a chatbot hallucinating a funny
+
+110
+00:01:58,310 --> 00:01:58,320
+about a chatbot hallucinating a funny
+ 
+
+111
+00:01:58,320 --> 00:01:59,350
+about a chatbot hallucinating a funny
+answer. I feel like the public
+
+112
+00:01:59,350 --> 00:01:59,360
+answer. I feel like the public
+ 
+
+113
+00:01:59,360 --> 00:02:00,709
+answer. I feel like the public
+conversation is obsessed with those
+
+114
+00:02:00,709 --> 00:02:00,719
+conversation is obsessed with those
+ 
+
+115
+00:02:00,719 --> 00:02:03,270
+conversation is obsessed with those
+one-off model errors. Confidence debt is
+
+116
+00:02:03,270 --> 00:02:03,280
+one-off model errors. Confidence debt is
+ 
+
+117
+00:02:03,280 --> 00:02:04,950
+one-off model errors. Confidence debt is
+a totally different beast. It's not a
+
+118
+00:02:04,950 --> 00:02:04,960
+a totally different beast. It's not a
+ 
+
+119
+00:02:04,960 --> 00:02:07,270
+a totally different beast. It's not a
+model error, and it's not a user error.
+
+120
+00:02:07,270 --> 00:02:07,280
+model error, and it's not a user error.
+ 
+
+121
+00:02:07,280 --> 00:02:09,350
+model error, and it's not a user error.
+It is a systemic failure. It's a
+
+122
+00:02:09,350 --> 00:02:09,360
+It is a systemic failure. It's a
+ 
+
+123
+00:02:09,360 --> 00:02:10,949
+It is a systemic failure. It's a
+structural gap that's built right into
+
+124
+00:02:10,949 --> 00:02:10,959
+structural gap that's built right into
+ 
+
+125
+00:02:10,959 --> 00:02:13,270
+structural gap that's built right into
+the workflow of an organization itself.
+
+126
+00:02:13,270 --> 00:02:13,280
+the workflow of an organization itself.
+ 
+
+127
+00:02:13,280 --> 00:02:15,750
+the workflow of an organization itself.
+So, here it is, the formal definition. A
+
+128
+00:02:15,750 --> 00:02:15,760
+So, here it is, the formal definition. A
+ 
+
+129
+00:02:15,760 --> 00:02:17,830
+So, here it is, the formal definition. A
+system incurs confidence debt when its
+
+130
+00:02:17,830 --> 00:02:17,840
+system incurs confidence debt when its
+ 
+
+131
+00:02:17,840 --> 00:02:20,150
+system incurs confidence debt when its
+output is trusted and acted on before
+
+132
+00:02:20,150 --> 00:02:20,160
+output is trusted and acted on before
+ 
+
+133
+00:02:20,160 --> 00:02:21,750
+output is trusted and acted on before
+the evidence actually warrants that
+
+134
+00:02:21,750 --> 00:02:21,760
+the evidence actually warrants that
+ 
+
+135
+00:02:21,760 --> 00:02:23,990
+the evidence actually warrants that
+trust. Think of it like this. You're
+
+136
+00:02:23,990 --> 00:02:24,000
+trust. Think of it like this. You're
+ 
+
+137
+00:02:24,000 --> 00:02:25,910
+trust. Think of it like this. You're
+borrowing trust against a receipt you
+
+138
+00:02:25,910 --> 00:02:25,920
+borrowing trust against a receipt you
+ 
+
+139
+00:02:25,920 --> 00:02:27,910
+borrowing trust against a receipt you
+haven't even looked at. The polished
+
+140
+00:02:27,910 --> 00:02:27,920
+haven't even looked at. The polished
+ 
+
+141
+00:02:27,920 --> 00:02:29,670
+haven't even looked at. The polished
+answer keeps moving forward up the
+
+142
+00:02:29,670 --> 00:02:29,680
+answer keeps moving forward up the
+ 
+
+143
+00:02:29,680 --> 00:02:31,910
+answer keeps moving forward up the
+chain, but the proof gets left behind.
+
+144
+00:02:31,910 --> 00:02:31,920
+chain, but the proof gets left behind.
+ 
+
+145
+00:02:31,920 --> 00:02:33,990
+chain, but the proof gets left behind.
+And that deficit, that debt just keeps
+
+146
+00:02:33,990 --> 00:02:34,000
+And that deficit, that debt just keeps
+ 
+
+147
+00:02:34,000 --> 00:02:36,470
+And that deficit, that debt just keeps
+growing. And this slide, this just
+
+148
+00:02:36,470 --> 00:02:36,480
+growing. And this slide, this just
+ 
+
+149
+00:02:36,480 --> 00:02:38,790
+growing. And this slide, this just
+perfectly shows how that debt gets worse
+
+150
+00:02:38,790 --> 00:02:38,800
+perfectly shows how that debt gets worse
+ 
+
+151
+00:02:38,800 --> 00:02:41,270
+perfectly shows how that debt gets worse
+and worse. As information travels up the
+
+152
+00:02:41,270 --> 00:02:41,280
+and worse. As information travels up the
+ 
+
+153
+00:02:41,280 --> 00:02:43,110
+and worse. As information travels up the
+corporate ladder, it gets compressed.
+
+154
+00:02:43,110 --> 00:02:43,120
+corporate ladder, it gets compressed.
+ 
+
+155
+00:02:43,120 --> 00:02:45,350
+corporate ladder, it gets compressed.
+Raw data turns into a summary and all
+
+156
+00:02:45,350 --> 00:02:45,360
+Raw data turns into a summary and all
+ 
+
+157
+00:02:45,360 --> 00:02:47,589
+Raw data turns into a summary and all
+the nuance gets stripped away. Then that
+
+158
+00:02:47,589 --> 00:02:47,599
+the nuance gets stripped away. Then that
+ 
+
+159
+00:02:47,599 --> 00:02:49,350
+the nuance gets stripped away. Then that
+summary gets turned into a single score
+
+160
+00:02:49,350 --> 00:02:49,360
+summary gets turned into a single score
+ 
+
+161
+00:02:49,360 --> 00:02:51,589
+summary gets turned into a single score
+on a dashboard and all the context is
+
+162
+00:02:51,589 --> 00:02:51,599
+on a dashboard and all the context is
+ 
+
+163
+00:02:51,599 --> 00:02:53,910
+on a dashboard and all the context is
+gone. By the time an executive sees that
+
+164
+00:02:53,910 --> 00:02:53,920
+gone. By the time an executive sees that
+ 
+
+165
+00:02:53,920 --> 00:02:55,589
+gone. By the time an executive sees that
+number, the workflow has managed to
+
+166
+00:02:55,589 --> 00:02:55,599
+number, the workflow has managed to
+ 
+
+167
+00:02:55,599 --> 00:02:57,670
+number, the workflow has managed to
+preserve the conclusion while completely
+
+168
+00:02:57,670 --> 00:02:57,680
+preserve the conclusion while completely
+ 
+
+169
+00:02:57,680 --> 00:02:59,270
+preserve the conclusion while completely
+destroying any possible way of
+
+170
+00:02:59,270 --> 00:02:59,280
+destroying any possible way of
+ 
+
+171
+00:02:59,280 --> 00:03:01,430
+destroying any possible way of
+challenging it. This brings us to our
+
+172
+00:03:01,430 --> 00:03:01,440
+challenging it. This brings us to our
+ 
+
+173
+00:03:01,440 --> 00:03:03,509
+challenging it. This brings us to our
+first line of defense, auditing the
+
+174
+00:03:03,509 --> 00:03:03,519
+first line of defense, auditing the
+ 
+
+175
+00:03:03,519 --> 00:03:05,589
+first line of defense, auditing the
+artifact. And you know, this whole idea
+
+176
+00:03:05,589 --> 00:03:05,599
+artifact. And you know, this whole idea
+ 
+
+177
+00:03:05,599 --> 00:03:07,509
+artifact. And you know, this whole idea
+wasn't born in a lab. It came from a
+
+178
+00:03:07,509 --> 00:03:07,519
+wasn't born in a lab. It came from a
+ 
+
+179
+00:03:07,519 --> 00:03:09,830
+wasn't born in a lab. It came from a
+realworld incident called the EP Verify
+
+180
+00:03:09,830 --> 00:03:09,840
+realworld incident called the EP Verify
+ 
+
+181
+00:03:09,840 --> 00:03:11,910
+realworld incident called the EP Verify
+project. Researchers asked this really
+
+182
+00:03:11,910 --> 00:03:11,920
+project. Researchers asked this really
+ 
+
+183
+00:03:11,920 --> 00:03:14,149
+project. Researchers asked this really
+highstakes question. Could an advanced
+
+184
+00:03:14,149 --> 00:03:14,159
+highstakes question. Could an advanced
+ 
+
+185
+00:03:14,159 --> 00:03:16,710
+highstakes question. Could an advanced
+AI audit the super complex rules of the
+
+186
+00:03:16,710 --> 00:03:16,720
+AI audit the super complex rules of the
+ 
+
+187
+00:03:16,720 --> 00:03:18,710
+AI audit the super complex rules of the
+Ethereum blockchain by tracing them all
+
+188
+00:03:18,710 --> 00:03:18,720
+Ethereum blockchain by tracing them all
+ 
+
+189
+00:03:18,720 --> 00:03:20,710
+Ethereum blockchain by tracing them all
+the way to the code? The goal was to see
+
+190
+00:03:20,710 --> 00:03:20,720
+the way to the code? The goal was to see
+ 
+
+191
+00:03:20,720 --> 00:03:22,470
+the way to the code? The goal was to see
+if AI could automate one of the hardest
+
+192
+00:03:22,470 --> 00:03:22,480
+if AI could automate one of the hardest
+ 
+
+193
+00:03:22,480 --> 00:03:25,430
+if AI could automate one of the hardest
+kinds of verification there is. Okay, so
+
+194
+00:03:25,430 --> 00:03:25,440
+kinds of verification there is. Okay, so
+ 
+
+195
+00:03:25,440 --> 00:03:27,910
+kinds of verification there is. Okay, so
+after its run, the AI produced two
+
+196
+00:03:27,910 --> 00:03:27,920
+after its run, the AI produced two
+ 
+
+197
+00:03:27,920 --> 00:03:30,630
+after its run, the AI produced two
+things. First, there was this beautiful
+
+198
+00:03:30,630 --> 00:03:30,640
+things. First, there was this beautiful
+ 
+
+199
+00:03:30,640 --> 00:03:33,430
+things. First, there was this beautiful
+polished report. It looked amazing. It
+
+200
+00:03:33,430 --> 00:03:33,440
+polished report. It looked amazing. It
+ 
+
+201
+00:03:33,440 --> 00:03:35,190
+polished report. It looked amazing. It
+basically declared mission accomplished
+
+202
+00:03:35,190 --> 00:03:35,200
+basically declared mission accomplished
+ 
+
+203
+00:03:35,200 --> 00:03:37,030
+basically declared mission accomplished
+and was ready to send straight to the
+
+204
+00:03:37,030 --> 00:03:37,040
+and was ready to send straight to the
+ 
+
+205
+00:03:37,040 --> 00:03:39,670
+and was ready to send straight to the
+funders. The second thing was the raw
+
+206
+00:03:39,670 --> 00:03:39,680
+funders. The second thing was the raw
+ 
+
+207
+00:03:39,680 --> 00:03:41,990
+funders. The second thing was the raw
+rowlevel evidence file, a messy,
+
+208
+00:03:41,990 --> 00:03:42,000
+rowlevel evidence file, a messy,
+ 
+
+209
+00:03:42,000 --> 00:03:44,070
+rowlevel evidence file, a messy,
+complicated spreadsheet. When the team
+
+210
+00:03:44,070 --> 00:03:44,080
+complicated spreadsheet. When the team
+ 
+
+211
+00:03:44,080 --> 00:03:46,149
+complicated spreadsheet. When the team
+decided to ignore the pretty report and
+
+212
+00:03:46,149 --> 00:03:46,159
+decided to ignore the pretty report and
+ 
+
+213
+00:03:46,159 --> 00:03:48,550
+decided to ignore the pretty report and
+actually dig into the messy one, they
+
+214
+00:03:48,550 --> 00:03:48,560
+actually dig into the messy one, they
+ 
+
+215
+00:03:48,560 --> 00:03:50,470
+actually dig into the messy one, they
+found out the two told completely
+
+216
+00:03:50,470 --> 00:03:50,480
+found out the two told completely
+ 
+
+217
+00:03:50,480 --> 00:03:52,390
+found out the two told completely
+different stories. The beautiful report
+
+218
+00:03:52,390 --> 00:03:52,400
+different stories. The beautiful report
+ 
+
+219
+00:03:52,400 --> 00:03:55,110
+different stories. The beautiful report
+was a total lie. And the failure rate
+
+220
+00:03:55,110 --> 00:03:55,120
+was a total lie. And the failure rate
+ 
+
+221
+00:03:55,120 --> 00:03:58,309
+was a total lie. And the failure rate
+was well, it was staggering. In one
+
+222
+00:03:58,309 --> 00:03:58,319
+was well, it was staggering. In one
+ 
+
+223
+00:03:58,319 --> 00:04:00,229
+was well, it was staggering. In one
+group they checked, there were 15
+
+224
+00:04:00,229 --> 00:04:00,239
+group they checked, there were 15
+ 
+
+225
+00:04:00,239 --> 00:04:01,830
+group they checked, there were 15
+entries that a human had to verify
+
+226
+00:04:01,830 --> 00:04:01,840
+entries that a human had to verify
+ 
+
+227
+00:04:01,840 --> 00:04:04,550
+entries that a human had to verify
+directly. Out of those 15, the AI's
+
+228
+00:04:04,550 --> 00:04:04,560
+directly. Out of those 15, the AI's
+ 
+
+229
+00:04:04,560 --> 00:04:06,710
+directly. Out of those 15, the AI's
+initial mapping was demonstrably wrong
+
+230
+00:04:06,710 --> 00:04:06,720
+initial mapping was demonstrably wrong
+ 
+
+231
+00:04:06,720 --> 00:04:09,190
+initial mapping was demonstrably wrong
+on 13 of them. It was pointing to things
+
+232
+00:04:09,190 --> 00:04:09,200
+on 13 of them. It was pointing to things
+ 
+
+233
+00:04:09,200 --> 00:04:11,270
+on 13 of them. It was pointing to things
+like interface code and test files,
+
+234
+00:04:11,270 --> 00:04:11,280
+like interface code and test files,
+ 
+
+235
+00:04:11,280 --> 00:04:12,710
+like interface code and test files,
+which is basically like being asked to
+
+236
+00:04:12,710 --> 00:04:12,720
+which is basically like being asked to
+ 
+
+237
+00:04:12,720 --> 00:04:14,710
+which is basically like being asked to
+verify the CEO's signature and pointing
+
+238
+00:04:14,710 --> 00:04:14,720
+verify the CEO's signature and pointing
+ 
+
+239
+00:04:14,720 --> 00:04:16,150
+verify the CEO's signature and pointing
+to the receptionist who answered the
+
+240
+00:04:16,150 --> 00:04:16,160
+to the receptionist who answered the
+ 
+
+241
+00:04:16,160 --> 00:04:18,469
+to the receptionist who answered the
+phone. So, this discovery led to a brand
+
+242
+00:04:18,469 --> 00:04:18,479
+phone. So, this discovery led to a brand
+ 
+
+243
+00:04:18,479 --> 00:04:21,349
+phone. So, this discovery led to a brand
+new rule, one they literally invented
+
+244
+00:04:21,349 --> 00:04:21,359
+new rule, one they literally invented
+ 
+
+245
+00:04:21,359 --> 00:04:23,350
+new rule, one they literally invented
+right there on the spot. This is our
+
+246
+00:04:23,350 --> 00:04:23,360
+right there on the spot. This is our
+ 
+
+247
+00:04:23,360 --> 00:04:24,950
+right there on the spot. This is our
+first gate establishing claim
+
+248
+00:04:24,950 --> 00:04:24,960
+first gate establishing claim
+ 
+
+249
+00:04:24,960 --> 00:04:26,950
+first gate establishing claim
+auditability. They made a rigid
+
+250
+00:04:26,950 --> 00:04:26,960
+auditability. They made a rigid
+ 
+
+251
+00:04:26,960 --> 00:04:28,710
+auditability. They made a rigid
+unbreakable rule for their entire
+
+252
+00:04:28,710 --> 00:04:28,720
+unbreakable rule for their entire
+ 
+
+253
+00:04:28,720 --> 00:04:31,430
+unbreakable rule for their entire
+workflow. The raw messy artifact must
+
+254
+00:04:31,430 --> 00:04:31,440
+workflow. The raw messy artifact must
+ 
+
+255
+00:04:31,440 --> 00:04:34,070
+workflow. The raw messy artifact must
+always legally outrank the polished
+
+256
+00:04:34,070 --> 00:04:34,080
+always legally outrank the polished
+ 
+
+257
+00:04:34,080 --> 00:04:36,390
+always legally outrank the polished
+summary. If they conflict, the messy
+
+258
+00:04:36,390 --> 00:04:36,400
+summary. If they conflict, the messy
+ 
+
+259
+00:04:36,400 --> 00:04:39,909
+summary. If they conflict, the messy
+spreadsheet wins. Period. No exceptions.
+
+260
+00:04:39,909 --> 00:04:39,919
+spreadsheet wins. Period. No exceptions.
+ 
+
+261
+00:04:39,919 --> 00:04:42,230
+spreadsheet wins. Period. No exceptions.
+So that brings us to our second gate,
+
+262
+00:04:42,230 --> 00:04:42,240
+So that brings us to our second gate,
+ 
+
+263
+00:04:42,240 --> 00:04:44,310
+So that brings us to our second gate,
+reliability. Because even if you make
+
+264
+00:04:44,310 --> 00:04:44,320
+reliability. Because even if you make
+ 
+
+265
+00:04:44,320 --> 00:04:46,150
+reliability. Because even if you make
+sure the messy artifact is the source of
+
+266
+00:04:46,150 --> 00:04:46,160
+sure the messy artifact is the source of
+ 
+
+267
+00:04:46,160 --> 00:04:48,150
+sure the messy artifact is the source of
+truth, the debt just finds a new place
+
+268
+00:04:48,150 --> 00:04:48,160
+truth, the debt just finds a new place
+ 
+
+269
+00:04:48,160 --> 00:04:50,469
+truth, the debt just finds a new place
+to hide. Management doesn't want a messy
+
+270
+00:04:50,469 --> 00:04:50,479
+to hide. Management doesn't want a messy
+ 
+
+271
+00:04:50,479 --> 00:04:51,909
+to hide. Management doesn't want a messy
+spreadsheet. They want a score, a
+
+272
+00:04:51,909 --> 00:04:51,919
+spreadsheet. They want a score, a
+ 
+
+273
+00:04:51,919 --> 00:04:53,670
+spreadsheet. They want a score, a
+benchmark, a single number on a
+
+274
+00:04:53,670 --> 00:04:53,680
+benchmark, a single number on a
+ 
+
+275
+00:04:53,680 --> 00:04:55,670
+benchmark, a single number on a
+dashboard. And this is the evaluation
+
+276
+00:04:55,670 --> 00:04:55,680
+dashboard. And this is the evaluation
+ 
+
+277
+00:04:55,680 --> 00:04:57,510
+dashboard. And this is the evaluation
+layer where all that complex reality
+
+278
+00:04:57,510 --> 00:04:57,520
+layer where all that complex reality
+ 
+
+279
+00:04:57,520 --> 00:04:59,350
+layer where all that complex reality
+gets squeezed into one dangerously
+
+280
+00:04:59,350 --> 00:04:59,360
+gets squeezed into one dangerously
+ 
+
+281
+00:04:59,360 --> 00:05:01,909
+gets squeezed into one dangerously
+simple metric. Now this slide is
+
+282
+00:05:01,909 --> 00:05:01,919
+simple metric. Now this slide is
+ 
+
+283
+00:05:01,919 --> 00:05:03,670
+simple metric. Now this slide is
+fascinating because it just shatters
+
+284
+00:05:03,670 --> 00:05:03,680
+fascinating because it just shatters
+ 
+
+285
+00:05:03,680 --> 00:05:05,909
+fascinating because it just shatters
+that illusion of a single score. So on
+
+286
+00:05:05,909 --> 00:05:05,919
+that illusion of a single score. So on
+ 
+
+287
+00:05:05,919 --> 00:05:07,749
+that illusion of a single score. So on
+this benchmark called Towbench, which
+
+288
+00:05:07,749 --> 00:05:07,759
+this benchmark called Towbench, which
+ 
+
+289
+00:05:07,759 --> 00:05:10,390
+this benchmark called Towbench, which
+tests really complex real world tasks,
+
+290
+00:05:10,390 --> 00:05:10,400
+tests really complex real world tasks,
+ 
+
+291
+00:05:10,400 --> 00:05:12,790
+tests really complex real world tasks,
+GPT40 gets it right on the first try
+
+292
+00:05:12,790 --> 00:05:12,800
+GPT40 gets it right on the first try
+ 
+
+293
+00:05:12,800 --> 00:05:15,350
+GPT40 gets it right on the first try
+about 61% of the time. Sounds pretty
+
+294
+00:05:15,350 --> 00:05:15,360
+about 61% of the time. Sounds pretty
+ 
+
+295
+00:05:15,360 --> 00:05:17,189
+about 61% of the time. Sounds pretty
+good, right? But look what happens when
+
+296
+00:05:17,189 --> 00:05:17,199
+good, right? But look what happens when
+ 
+
+297
+00:05:17,199 --> 00:05:18,550
+good, right? But look what happens when
+the test is changed to measure
+
+298
+00:05:18,550 --> 00:05:18,560
+the test is changed to measure
+ 
+
+299
+00:05:18,560 --> 00:05:21,029
+the test is changed to measure
+consistency across eight attempts. its
+
+300
+00:05:21,029 --> 00:05:21,039
+consistency across eight attempts. its
+ 
+
+301
+00:05:21,039 --> 00:05:23,189
+consistency across eight attempts. its
+performance completely craters to below
+
+302
+00:05:23,189 --> 00:05:23,199
+performance completely craters to below
+ 
+
+303
+00:05:23,199 --> 00:05:26,150
+performance completely craters to below
+25%. This just shows you the huge gap
+
+304
+00:05:26,150 --> 00:05:26,160
+25%. This just shows you the huge gap
+ 
+
+305
+00:05:26,160 --> 00:05:27,909
+25%. This just shows you the huge gap
+between what a model can do once in a
+
+306
+00:05:27,909 --> 00:05:27,919
+between what a model can do once in a
+ 
+
+307
+00:05:27,919 --> 00:05:30,070
+between what a model can do once in a
+lab versus what it can do reliably out
+
+308
+00:05:30,070 --> 00:05:30,080
+lab versus what it can do reliably out
+ 
+
+309
+00:05:30,080 --> 00:05:32,390
+lab versus what it can do reliably out
+in the wild. So if a single score is a
+
+310
+00:05:32,390 --> 00:05:32,400
+in the wild. So if a single score is a
+ 
+
+311
+00:05:32,400 --> 00:05:34,070
+in the wild. So if a single score is a
+trap, how do we measure this the right
+
+312
+00:05:34,070 --> 00:05:34,080
+trap, how do we measure this the right
+ 
+
+313
+00:05:34,080 --> 00:05:36,230
+trap, how do we measure this the right
+way? Well, the reliability bench
+
+314
+00:05:36,230 --> 00:05:36,240
+way? Well, the reliability bench
+ 
+
+315
+00:05:36,240 --> 00:05:38,469
+way? Well, the reliability bench
+framework gives us a better model. It
+
+316
+00:05:38,469 --> 00:05:38,479
+framework gives us a better model. It
+ 
+
+317
+00:05:38,479 --> 00:05:40,710
+framework gives us a better model. It
+says reliability isn't a single number.
+
+318
+00:05:40,710 --> 00:05:40,720
+says reliability isn't a single number.
+ 
+
+319
+00:05:40,720 --> 00:05:42,550
+says reliability isn't a single number.
+It's a reliability envelope that has
+
+320
+00:05:42,550 --> 00:05:42,560
+It's a reliability envelope that has
+ 
+
+321
+00:05:42,560 --> 00:05:44,390
+It's a reliability envelope that has
+multiple dimensions. You have to measure
+
+322
+00:05:44,390 --> 00:05:44,400
+multiple dimensions. You have to measure
+ 
+
+323
+00:05:44,400 --> 00:05:46,230
+multiple dimensions. You have to measure
+its consistency over lots of runs.
+
+324
+00:05:46,230 --> 00:05:46,240
+its consistency over lots of runs.
+ 
+
+325
+00:05:46,240 --> 00:05:47,830
+its consistency over lots of runs.
+That's its endurance. You have to
+
+326
+00:05:47,830 --> 00:05:47,840
+That's its endurance. You have to
+ 
+
+327
+00:05:47,840 --> 00:05:49,590
+That's its endurance. You have to
+measure its robustness against messy
+
+328
+00:05:49,590 --> 00:05:49,600
+measure its robustness against messy
+ 
+
+329
+00:05:49,600 --> 00:05:51,670
+measure its robustness against messy
+real world inputs. That's user chaos.
+
+330
+00:05:51,670 --> 00:05:51,680
+real world inputs. That's user chaos.
+ 
+
+331
+00:05:51,680 --> 00:05:52,790
+real world inputs. That's user chaos.
+And you have to measure its fault
+
+332
+00:05:52,790 --> 00:05:52,800
+And you have to measure its fault
+ 
+
+333
+00:05:52,800 --> 00:05:54,950
+And you have to measure its fault
+tolerance when things inevitably break.
+
+334
+00:05:54,950 --> 00:05:54,960
+tolerance when things inevitably break.
+ 
+
+335
+00:05:54,960 --> 00:05:57,029
+tolerance when things inevitably break.
+And that gives us our second big rule,
+
+336
+00:05:57,029 --> 00:05:57,039
+And that gives us our second big rule,
+ 
+
+337
+00:05:57,039 --> 00:05:59,670
+And that gives us our second big rule,
+reliability release. A benchmark score
+
+338
+00:05:59,670 --> 00:05:59,680
+reliability release. A benchmark score
+ 
+
+339
+00:05:59,680 --> 00:06:01,590
+reliability release. A benchmark score
+should only license the exact kind of
+
+340
+00:06:01,590 --> 00:06:01,600
+should only license the exact kind of
+ 
+
+341
+00:06:01,600 --> 00:06:03,350
+should only license the exact kind of
+trust that it actually measured. You
+
+342
+00:06:03,350 --> 00:06:03,360
+trust that it actually measured. You
+ 
+
+343
+00:06:03,360 --> 00:06:05,029
+trust that it actually measured. You
+can't take a one-shot capability score
+
+344
+00:06:05,029 --> 00:06:05,039
+can't take a one-shot capability score
+ 
+
+345
+00:06:05,039 --> 00:06:06,550
+can't take a one-shot capability score
+and use it as proof that the model is
+
+346
+00:06:06,550 --> 00:06:06,560
+and use it as proof that the model is
+ 
+
+347
+00:06:06,560 --> 00:06:08,309
+and use it as proof that the model is
+reliable for some long-term autonomous
+
+348
+00:06:08,309 --> 00:06:08,319
+reliable for some long-term autonomous
+ 
+
+349
+00:06:08,319 --> 00:06:10,390
+reliable for some long-term autonomous
+task. You can only deploy the system
+
+350
+00:06:10,390 --> 00:06:10,400
+task. You can only deploy the system
+ 
+
+351
+00:06:10,400 --> 00:06:12,070
+task. You can only deploy the system
+strictly inside the proven reliability
+
+352
+00:06:12,070 --> 00:06:12,080
+strictly inside the proven reliability
+ 
+
+353
+00:06:12,080 --> 00:06:14,390
+strictly inside the proven reliability
+envelope you've actually measured. This
+
+354
+00:06:14,390 --> 00:06:14,400
+envelope you've actually measured. This
+ 
+
+355
+00:06:14,400 --> 00:06:17,430
+envelope you've actually measured. This
+brings us to our third and final gate,
+
+356
+00:06:17,430 --> 00:06:17,440
+brings us to our third and final gate,
+ 
+
+357
+00:06:17,440 --> 00:06:20,309
+brings us to our third and final gate,
+us, the human. And this is probably the
+
+358
+00:06:20,309 --> 00:06:20,319
+us, the human. And this is probably the
+ 
+
+359
+00:06:20,319 --> 00:06:23,029
+us, the human. And this is probably the
+most critical and complex layer of all.
+
+360
+00:06:23,029 --> 00:06:23,039
+most critical and complex layer of all.
+ 
+
+361
+00:06:23,039 --> 00:06:24,790
+most critical and complex layer of all.
+So, we've audited the artifact. We've
+
+362
+00:06:24,790 --> 00:06:24,800
+So, we've audited the artifact. We've
+ 
+
+363
+00:06:24,800 --> 00:06:26,790
+So, we've audited the artifact. We've
+evaluated the model's reliability, but
+
+364
+00:06:26,790 --> 00:06:26,800
+evaluated the model's reliability, but
+ 
+
+365
+00:06:26,800 --> 00:06:28,790
+evaluated the model's reliability, but
+the system still needs a person to sign
+
+366
+00:06:28,790 --> 00:06:28,800
+the system still needs a person to sign
+ 
+
+367
+00:06:28,800 --> 00:06:31,270
+the system still needs a person to sign
+off on it. The big question is, what if
+
+368
+00:06:31,270 --> 00:06:31,280
+off on it. The big question is, what if
+ 
+
+369
+00:06:31,280 --> 00:06:32,790
+off on it. The big question is, what if
+the system itself has been secretly
+
+370
+00:06:32,790 --> 00:06:32,800
+the system itself has been secretly
+ 
+
+371
+00:06:32,800 --> 00:06:34,230
+the system itself has been secretly
+chipping away at that person's ability
+
+372
+00:06:34,230 --> 00:06:34,240
+chipping away at that person's ability
+ 
+
+373
+00:06:34,240 --> 00:06:35,990
+chipping away at that person's ability
+to even spot a mistake in the first
+
+374
+00:06:35,990 --> 00:06:36,000
+to even spot a mistake in the first
+ 
+
+375
+00:06:36,000 --> 00:06:38,710
+to even spot a mistake in the first
+place? And this gets to the idea of the
+
+376
+00:06:38,710 --> 00:06:38,720
+place? And this gets to the idea of the
+ 
+
+377
+00:06:38,720 --> 00:06:41,110
+place? And this gets to the idea of the
+competent shadow. When an AI gives you a
+
+378
+00:06:41,110 --> 00:06:41,120
+competent shadow. When an AI gives you a
+ 
+
+379
+00:06:41,120 --> 00:06:43,350
+competent shadow. When an AI gives you a
+curated list of, say, potential risks or
+
+380
+00:06:43,350 --> 00:06:43,360
+curated list of, say, potential risks or
+ 
+
+381
+00:06:43,360 --> 00:06:45,510
+curated list of, say, potential risks or
+summaries, you, the human reviewer, are
+
+382
+00:06:45,510 --> 00:06:45,520
+summaries, you, the human reviewer, are
+ 
+
+383
+00:06:45,520 --> 00:06:47,110
+summaries, you, the human reviewer, are
+now only looking at a pruned version of
+
+384
+00:06:47,110 --> 00:06:47,120
+now only looking at a pruned version of
+ 
+
+385
+00:06:47,120 --> 00:06:49,990
+now only looking at a pruned version of
+reality. If the AI missed a huge risk,
+
+386
+00:06:49,990 --> 00:06:50,000
+reality. If the AI missed a huge risk,
+ 
+
+387
+00:06:50,000 --> 00:06:51,590
+reality. If the AI missed a huge risk,
+you're never going to see it because it
+
+388
+00:06:51,590 --> 00:06:51,600
+you're never going to see it because it
+ 
+
+389
+00:06:51,600 --> 00:06:53,189
+you're never going to see it because it
+was never even put on the list for you
+
+390
+00:06:53,189 --> 00:06:53,199
+was never even put on the list for you
+ 
+
+391
+00:06:53,199 --> 00:06:55,270
+was never even put on the list for you
+to review. You just can't find something
+
+392
+00:06:55,270 --> 00:06:55,280
+to review. You just can't find something
+ 
+
+393
+00:06:55,280 --> 00:06:56,469
+to review. You just can't find something
+that's been edited out of the
+
+394
+00:06:56,469 --> 00:06:56,479
+that's been edited out of the
+ 
+
+395
+00:06:56,479 --> 00:06:59,029
+that's been edited out of the
+conversation entirely. So, this leads to
+
+396
+00:06:59,029 --> 00:06:59,039
+conversation entirely. So, this leads to
+ 
+
+397
+00:06:59,039 --> 00:07:01,589
+conversation entirely. So, this leads to
+a really critical realization. You hear
+
+398
+00:07:01,589 --> 00:07:01,599
+a really critical realization. You hear
+ 
+
+399
+00:07:01,599 --> 00:07:02,950
+a really critical realization. You hear
+this all the time from the tech
+
+400
+00:07:02,950 --> 00:07:02,960
+this all the time from the tech
+ 
+
+401
+00:07:02,960 --> 00:07:05,350
+this all the time from the tech
+industry, right? Don't worry, we keep a
+
+402
+00:07:05,350 --> 00:07:05,360
+industry, right? Don't worry, we keep a
+ 
+
+403
+00:07:05,360 --> 00:07:07,589
+industry, right? Don't worry, we keep a
+human in the loop. But if that human is
+
+404
+00:07:07,589 --> 00:07:07,599
+human in the loop. But if that human is
+ 
+
+405
+00:07:07,599 --> 00:07:09,749
+human in the loop. But if that human is
+overworked, their skills have faded, and
+
+406
+00:07:09,749 --> 00:07:09,759
+overworked, their skills have faded, and
+ 
+
+407
+00:07:09,759 --> 00:07:11,589
+overworked, their skills have faded, and
+they're just staring at a pre-filtered
+
+408
+00:07:11,589 --> 00:07:11,599
+they're just staring at a pre-filtered
+ 
+
+409
+00:07:11,599 --> 00:07:13,990
+they're just staring at a pre-filtered
+list, then human in the loop is just
+
+410
+00:07:13,990 --> 00:07:14,000
+list, then human in the loop is just
+ 
+
+411
+00:07:14,000 --> 00:07:16,230
+list, then human in the loop is just
+security theater. It's a rubber stamp,
+
+412
+00:07:16,230 --> 00:07:16,240
+security theater. It's a rubber stamp,
+ 
+
+413
+00:07:16,240 --> 00:07:18,629
+security theater. It's a rubber stamp,
+not a real check. So what's the actual
+
+414
+00:07:18,629 --> 00:07:18,639
+not a real check. So what's the actual
+ 
+
+415
+00:07:18,639 --> 00:07:21,510
+not a real check. So what's the actual
+cure? The cure is this concept called
+
+416
+00:07:21,510 --> 00:07:21,520
+cure? The cure is this concept called
+ 
+
+417
+00:07:21,520 --> 00:07:23,749
+cure? The cure is this concept called
+co- audit. Instead of just slapping a
+
+418
+00:07:23,749 --> 00:07:23,759
+co- audit. Instead of just slapping a
+ 
+
+419
+00:07:23,759 --> 00:07:26,070
+co- audit. Instead of just slapping a
+warning label on the AI's output, a co-
+
+420
+00:07:26,070 --> 00:07:26,080
+warning label on the AI's output, a co-
+ 
+
+421
+00:07:26,080 --> 00:07:27,589
+warning label on the AI's output, a co-
+audit system is a software level
+
+422
+00:07:27,589 --> 00:07:27,599
+audit system is a software level
+ 
+
+423
+00:07:27,599 --> 00:07:29,510
+audit system is a software level
+intervention. It's an interface that is
+
+424
+00:07:29,510 --> 00:07:29,520
+intervention. It's an interface that is
+ 
+
+425
+00:07:29,520 --> 00:07:31,589
+intervention. It's an interface that is
+specifically designed to force you into
+
+426
+00:07:31,589 --> 00:07:31,599
+specifically designed to force you into
+ 
+
+427
+00:07:31,599 --> 00:07:33,830
+specifically designed to force you into
+an active critical review. It extracts
+
+428
+00:07:33,830 --> 00:07:33,840
+an active critical review. It extracts
+ 
+
+429
+00:07:33,840 --> 00:07:35,990
+an active critical review. It extracts
+claims. It surfaces contradictions. And
+
+430
+00:07:35,990 --> 00:07:36,000
+claims. It surfaces contradictions. And
+ 
+
+431
+00:07:36,000 --> 00:07:37,749
+claims. It surfaces contradictions. And
+it makes the human structurally engage
+
+432
+00:07:37,749 --> 00:07:37,759
+it makes the human structurally engage
+ 
+
+433
+00:07:37,759 --> 00:07:39,430
+it makes the human structurally engage
+with the evidence before the system even
+
+434
+00:07:39,430 --> 00:07:39,440
+with the evidence before the system even
+ 
+
+435
+00:07:39,440 --> 00:07:42,150
+with the evidence before the system even
+lets them click approve. Okay, so let's
+
+436
+00:07:42,150 --> 00:07:42,160
+lets them click approve. Okay, so let's
+ 
+
+437
+00:07:42,160 --> 00:07:44,230
+lets them click approve. Okay, so let's
+pull all of this together into what we
+
+438
+00:07:44,230 --> 00:07:44,240
+pull all of this together into what we
+ 
+
+439
+00:07:44,240 --> 00:07:46,950
+pull all of this together into what we
+can call a doctrine of friction. We've
+
+440
+00:07:46,950 --> 00:07:46,960
+can call a doctrine of friction. We've
+ 
+
+441
+00:07:46,960 --> 00:07:48,870
+can call a doctrine of friction. We've
+looked at these three gates one by one,
+
+442
+00:07:48,870 --> 00:07:48,880
+looked at these three gates one by one,
+ 
+
+443
+00:07:48,880 --> 00:07:50,710
+looked at these three gates one by one,
+but in the real world, they don't fail
+
+444
+00:07:50,710 --> 00:07:50,720
+but in the real world, they don't fail
+ 
+
+445
+00:07:50,720 --> 00:07:53,029
+but in the real world, they don't fail
+in isolation. They collapse into each
+
+446
+00:07:53,029 --> 00:07:53,039
+in isolation. They collapse into each
+ 
+
+447
+00:07:53,039 --> 00:07:55,350
+in isolation. They collapse into each
+other, where one failure just finances
+
+448
+00:07:55,350 --> 00:07:55,360
+other, where one failure just finances
+ 
+
+449
+00:07:55,360 --> 00:07:57,909
+other, where one failure just finances
+the next one in this silent cascading
+
+450
+00:07:57,909 --> 00:07:57,919
+the next one in this silent cascading
+ 
+
+451
+00:07:57,919 --> 00:08:00,790
+the next one in this silent cascading
+disaster. So here's how it plays out. It
+
+452
+00:08:00,790 --> 00:08:00,800
+disaster. So here's how it plays out. It
+ 
+
+453
+00:08:00,800 --> 00:08:02,950
+disaster. So here's how it plays out. It
+starts at the artifact layer. A polished
+
+454
+00:08:02,950 --> 00:08:02,960
+starts at the artifact layer. A polished
+ 
+
+455
+00:08:02,960 --> 00:08:05,029
+starts at the artifact layer. A polished
+but totally false summary is trusted
+
+456
+00:08:05,029 --> 00:08:05,039
+but totally false summary is trusted
+ 
+
+457
+00:08:05,039 --> 00:08:07,270
+but totally false summary is trusted
+more than the messy evidence. That
+
+458
+00:08:07,270 --> 00:08:07,280
+more than the messy evidence. That
+ 
+
+459
+00:08:07,280 --> 00:08:09,029
+more than the messy evidence. That
+flawed artifact then gets fed into an
+
+460
+00:08:09,029 --> 00:08:09,039
+flawed artifact then gets fed into an
+ 
+
+461
+00:08:09,039 --> 00:08:11,189
+flawed artifact then gets fed into an
+evaluation tool which gives it a high
+
+462
+00:08:11,189 --> 00:08:11,199
+evaluation tool which gives it a high
+ 
+
+463
+00:08:11,199 --> 00:08:13,990
+evaluation tool which gives it a high
+but misleading score. That score becomes
+
+464
+00:08:13,990 --> 00:08:14,000
+but misleading score. That score becomes
+ 
+
+465
+00:08:14,000 --> 00:08:16,390
+but misleading score. That score becomes
+the main argument to deploy the system.
+
+466
+00:08:16,390 --> 00:08:16,400
+the main argument to deploy the system.
+ 
+
+467
+00:08:16,400 --> 00:08:18,150
+the main argument to deploy the system.
+And finally, all of this lands on the
+
+468
+00:08:18,150 --> 00:08:18,160
+And finally, all of this lands on the
+ 
+
+469
+00:08:18,160 --> 00:08:19,830
+And finally, all of this lands on the
+desk of a human reviewer who's been
+
+470
+00:08:19,830 --> 00:08:19,840
+desk of a human reviewer who's been
+ 
+
+471
+00:08:19,840 --> 00:08:22,070
+desk of a human reviewer who's been
+trained to just passively accept things
+
+472
+00:08:22,070 --> 00:08:22,080
+trained to just passively accept things
+ 
+
+473
+00:08:22,080 --> 00:08:24,070
+trained to just passively accept things
+completely unable to see that original
+
+474
+00:08:24,070 --> 00:08:24,080
+completely unable to see that original
+ 
+
+475
+00:08:24,080 --> 00:08:26,550
+completely unable to see that original
+error. The trust has compounded at every
+
+476
+00:08:26,550 --> 00:08:26,560
+error. The trust has compounded at every
+ 
+
+477
+00:08:26,560 --> 00:08:29,749
+error. The trust has compounded at every
+single step until it just explodes. So
+
+478
+00:08:29,749 --> 00:08:29,759
+single step until it just explodes. So
+ 
+
+479
+00:08:29,759 --> 00:08:31,430
+single step until it just explodes. So
+the most important takeaway is this
+
+480
+00:08:31,430 --> 00:08:31,440
+the most important takeaway is this
+ 
+
+481
+00:08:31,440 --> 00:08:33,990
+the most important takeaway is this
+unified doctrine for survival. We can
+
+482
+00:08:33,990 --> 00:08:34,000
+unified doctrine for survival. We can
+ 
+
+483
+00:08:34,000 --> 00:08:35,670
+unified doctrine for survival. We can
+really boil everything down to these
+
+484
+00:08:35,670 --> 00:08:35,680
+really boil everything down to these
+ 
+
+485
+00:08:35,680 --> 00:08:38,149
+really boil everything down to these
+three rules. First, demand a claim
+
+486
+00:08:38,149 --> 00:08:38,159
+three rules. First, demand a claim
+ 
+
+487
+00:08:38,159 --> 00:08:40,070
+three rules. First, demand a claim
+auditability before you trust an
+
+488
+00:08:40,070 --> 00:08:40,080
+auditability before you trust an
+ 
+
+489
+00:08:40,080 --> 00:08:43,110
+auditability before you trust an
+artifact. Second, enforce a reliability
+
+490
+00:08:43,110 --> 00:08:43,120
+artifact. Second, enforce a reliability
+ 
+
+491
+00:08:43,120 --> 00:08:45,509
+artifact. Second, enforce a reliability
+release before you deploy a system. And
+
+492
+00:08:45,509 --> 00:08:45,519
+release before you deploy a system. And
+ 
+
+493
+00:08:45,519 --> 00:08:47,910
+release before you deploy a system. And
+third, require a structured co- audit
+
+494
+00:08:47,910 --> 00:08:47,920
+third, require a structured co- audit
+ 
+
+495
+00:08:47,920 --> 00:08:49,829
+third, require a structured co- audit
+before any human signs off on a high
+
+496
+00:08:49,829 --> 00:08:49,839
+before any human signs off on a high
+ 
+
+497
+00:08:49,839 --> 00:08:51,670
+before any human signs off on a high
+stakes output. And I want to leave you
+
+498
+00:08:51,670 --> 00:08:51,680
+stakes output. And I want to leave you
+ 
+
+499
+00:08:51,680 --> 00:08:53,670
+stakes output. And I want to leave you
+with this final thought. The entire
+
+500
+00:08:53,670 --> 00:08:53,680
+with this final thought. The entire
+ 
+
+501
+00:08:53,680 --> 00:08:55,509
+with this final thought. The entire
+modern tech industry is built on this
+
+502
+00:08:55,509 --> 00:08:55,519
+modern tech industry is built on this
+ 
+
+503
+00:08:55,519 --> 00:08:57,509
+modern tech industry is built on this
+promise of seamless zero friction
+
+504
+00:08:57,509 --> 00:08:57,519
+promise of seamless zero friction
+ 
+
+505
+00:08:57,519 --> 00:08:59,430
+promise of seamless zero friction
+automation. But everything we've talked
+
+506
+00:08:59,430 --> 00:08:59,440
+automation. But everything we've talked
+ 
+
+507
+00:08:59,440 --> 00:09:01,190
+automation. But everything we've talked
+about today suggests the exact opposite
+
+508
+00:09:01,190 --> 00:09:01,200
+about today suggests the exact opposite
+ 
+
+509
+00:09:01,200 --> 00:09:03,269
+about today suggests the exact opposite
+is what we need to survive. Paying down
+
+510
+00:09:03,269 --> 00:09:03,279
+is what we need to survive. Paying down
+ 
+
+511
+00:09:03,279 --> 00:09:05,030
+is what we need to survive. Paying down
+this confidence debt requires us to
+
+512
+00:09:05,030 --> 00:09:05,040
+this confidence debt requires us to
+ 
+
+513
+00:09:05,040 --> 00:09:06,550
+this confidence debt requires us to
+intentionally design friction and
+
+514
+00:09:06,550 --> 00:09:06,560
+intentionally design friction and
+ 
+
+515
+00:09:06,560 --> 00:09:08,710
+intentionally design friction and
+structured resistance back into our
+
+516
+00:09:08,710 --> 00:09:08,720
+structured resistance back into our
+ 
+
+517
+00:09:08,720 --> 00:09:11,030
+structured resistance back into our
+systems. So it makes you wonder if true
+
+518
+00:09:11,030 --> 00:09:11,040
+systems. So it makes you wonder if true
+ 
+
+519
+00:09:11,040 --> 00:09:13,030
+systems. So it makes you wonder if true
+reliability requires human friction,
+
+520
+00:09:13,030 --> 00:09:13,040
+reliability requires human friction,
+ 
+
+521
+00:09:13,040 --> 00:09:14,630
+reliability requires human friction,
+does that fundamentally challenge the
+
+522
+00:09:14,630 --> 00:09:14,640
+does that fundamentally challenge the
+ 
+
+523
+00:09:14,640 --> 00:09:16,310
+does that fundamentally challenge the
+ultimate goal of the AI revolution
+
+524
+00:09:16,310 --> 00:09:16,320
+ultimate goal of the AI revolution
+ 
+
+525
+00:09:16,320 --> 00:09:19,320
+ultimate goal of the AI revolution
+itself?
+

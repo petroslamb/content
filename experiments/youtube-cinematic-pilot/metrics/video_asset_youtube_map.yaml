@@ -1,0 +1,117 @@
+generated_at: 2026-04-22
+purpose: >
+  Canonical local map from publication video assets and recovered transcripts
+  to their corresponding live YouTube uploads for the explainer and cinematic lanes.
+
+assets:
+  - publication: binding_gap
+    package: publications/binding-gap
+    asset_kind: explainer
+    local_video_file: publications/binding-gap/artifacts/video/The_Binding_Gap_explainer.mp4
+    local_transcript_file: publications/binding-gap/artifacts/video/binding_gap_explainer_youtube.srt
+    youtube:
+      video_id: NGFObh96z8k
+      title: "The Binding Gap: Explainer TL;DR"
+      url: https://www.youtube.com/watch?v=NGFObh96z8k
+    evidence:
+      match_method: channel_title_and_duration_match
+      local_duration_seconds: 381.225
+      youtube_duration_iso8601: PT6M22S
+      reference_files: []
+
+  - publication: neural_architecture
+    package: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e
+    asset_kind: explainer
+    local_video_file: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_explainer.mp4
+    local_transcript_file: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_explainer_youtube.srt
+    youtube:
+      video_id: BSwFQTIrAmQ
+      title: "Neural Architecture Design as a Reusable Scaffold | TL;DR"
+      url: https://www.youtube.com/watch?v=BSwFQTIrAmQ
+    evidence:
+      match_method: channel_title_and_duration_match
+      local_duration_seconds: 521.125
+      youtube_duration_iso8601: PT8M42S
+      reference_files: []
+
+  - publication: confidence_debt
+    package: publications/confidence-debt
+    asset_kind: explainer
+    local_video_file: publications/confidence-debt/artifacts/latest/video.mp4
+    local_transcript_file: publications/confidence-debt/artifacts/latest/confidence_debt_explainer_youtube.srt
+    youtube:
+      video_id: cerMkPv6YZw
+      title: "Confidence Debt: Explainer TL;DR"
+      url: https://www.youtube.com/watch?v=cerMkPv6YZw
+    evidence:
+      match_method: upload_report_and_duration_match
+      local_duration_seconds: 559.624
+      youtube_duration_iso8601: PT9M20S
+      reference_files:
+        - publications/confidence-debt/artifacts/latest/tldr_upload_report.json
+
+  - publication: neural_architecture
+    package: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e
+    asset_kind: cinematic
+    local_video_file: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.mp4
+    local_transcript_file: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.srt
+    youtube:
+      video_id: 0TpfmqhoB6s
+      title: "Why AI Design Converged on the Same Scaffold"
+      url: https://www.youtube.com/watch?v=0TpfmqhoB6s
+    evidence:
+      match_method: direct_upload_report
+      reference_files:
+        - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic_upload_report.json
+
+  - publication: autonomy_tax
+    package: publications/autonomy-tax
+    asset_kind: cinematic
+    local_video_file: publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic.mp4
+    local_transcript_file: publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic.srt
+    youtube:
+      video_id: gcsTDFRynyw
+      title: "Why AI ROI Breaks Before Full Autonomy"
+      url: https://www.youtube.com/watch?v=gcsTDFRynyw
+    evidence:
+      match_method: direct_upload_report
+      reference_files:
+        - publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic_upload_report.json
+
+  - publication: confidence_debt
+    package: publications/confidence-debt
+    asset_kind: cinematic
+    local_video_file: publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/confidence_debt_cinematic.mp4
+    local_transcript_file: publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/confidence_debt_cinematic.srt
+    youtube:
+      video_id: hNVBrptmRVs
+      title: "Why Polished AI Reports Can Outrun the Evidence"
+      url: https://www.youtube.com/watch?v=hNVBrptmRVs
+    evidence:
+      match_method: legacy_backfill_run_ledger
+      reference_files:
+        - experiments/youtube-cinematic-pilot/metrics/legacy-backfill-run-2026-04-22.md
+
+  - publication: binding_gap
+    package: publications/binding-gap
+    asset_kind: cinematic
+    local_video_file: publications/binding-gap/artifacts/video/The_Binding_Gap_cinematic.mp4
+    local_transcript_file: publications/binding-gap/artifacts/video/cinematic-backfill-2026-04-27/binding_gap_cinematic.srt
+    youtube:
+      video_id: wiic78FUJzU
+      title: "Why AI Keeps the Scene but Drops the Wiring"
+      url: https://www.youtube.com/watch?v=wiic78FUJzU
+    evidence:
+      match_method: legacy_backfill_run_ledger
+      reference_files:
+        - experiments/youtube-cinematic-pilot/metrics/legacy-backfill-run-2026-04-22.md
+
+pending_assets:
+  - publication: illusion_of_swarm
+    package: publications/illusion-of-swarm
+    asset_kind: cinematic
+    local_video_file: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4
+    local_transcript_file: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt
+    status: blocked
+    reason: NotebookLM daily Cinematics limit on 2026-04-22; no YouTube upload exists yet.
+    expected_youtube_title: "Why Most Multi-Agent AI Is a Workaround"
