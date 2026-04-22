@@ -1,0 +1,16 @@
+{
+  "clips": [
+    {
+      "file": "01-what-ai-architects-design-now_portrait.mp4",
+      "title": "What AI Architects Design Now",
+      "summary": "Modern AI architects stopped hand-designing one perfect machine and started designing reusable scaffolds that can generate whole families of models.",
+      "publish_at": "2026-04-30T19:00:00Z"
+    },
+    {
+      "file": "02-identical-ai-blocks-learn-different-jobs_portrait.mp4",
+      "title": "Why Identical AI Blocks Learn Different Jobs",
+      "summary": "Even when a model is built from repeated blocks, training causes different layers and heads to specialize into different functional roles.",
+      "publish_at": "2026-05-02T19:00:00Z"
+    }
+  ]
+}

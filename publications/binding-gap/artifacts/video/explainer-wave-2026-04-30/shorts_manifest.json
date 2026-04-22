@@ -1,0 +1,17 @@
+{
+  "source_video": "publications/binding-gap/artifacts/video/The_Binding_Gap_explainer.mp4",
+  "related_video_id": "NGFObh96z8k",
+  "essay_url": "https://lambpetros.substack.com/p/the-binding-gap",
+  "full_video_url": "https://www.youtube.com/watch?v=NGFObh96z8k",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "hallucination-is-like-calling-every-illness-a-fever",
+      "title": "Hallucination Is Like Calling Every Illness a Fever",
+      "summary": "Calling every AI failure a hallucination hides the mechanism. Some systems keep the facts but still lose the wiring that attaches them correctly.",
+      "start": "00:00:01.920",
+      "end": "00:00:53.430",
+      "publish_at": "2026-05-01T19:00:00Z"
+    }
+  ]
+}
