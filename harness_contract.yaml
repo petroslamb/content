@@ -1,10 +1,12 @@
-version: 1
+version: 2
 harness_target: codex
 autonomy_scope: local-first
 policy_file: harness_policy.yaml
 sources_of_truth:
   lifecycle: scripts/lifecycle.py
   workflow_frontmatter: workflows/*/README.md
+  gate_contracts: gate_contracts.yaml
+  pipeline_profiles: pipeline_profiles.yaml
   package_state: publications/**/status.yaml
   npm_scripts: package.json
 paths:
@@ -14,8 +16,8 @@ paths:
 interfaces:
   check:
     entrypoint: npm run check
-    script: npm run check:harness && npm run check:reviewable-runs && npm run check:repo-links
-      && npm run check:alphaxiv-discussions
+    script: npm run check:harness && npm run check:workflow-model && npm run check:reviewable-runs
+      && npm run check:repo-links && npm run check:alphaxiv-discussions
   check:essay-iteration:
     entrypoint: npm run check:essay-iteration
     script: .venv/bin/python scripts/check_essay_iteration_packet.py
@@ -28,6 +30,12 @@ interfaces:
   check:package-lifecycle:
     entrypoint: npm run check:package-lifecycle
     script: .venv/bin/python scripts/check_package_lifecycle.py
+  check:workflow-model:
+    entrypoint: npm run check:workflow-model
+    script: .venv/bin/python scripts/check_workflow_model.py
+  gate:check:
+    entrypoint: npm run gate:check
+    script: .venv/bin/python scripts/check_gate.py
   package:init:
     entrypoint: npm run package:init
     script: .venv/bin/python scripts/init_package.py
@@ -46,8 +54,21 @@ interfaces:
   status:
     entrypoint: npm run status
     script: .venv/bin/python scripts/check_status.py
+  workflow:resolve:
+    entrypoint: npm run workflow:resolve
+    script: .venv/bin/python scripts/run_workflow.py
+  workflow:run:
+    entrypoint: npm run workflow:run
+    script: .venv/bin/python scripts/run_workflow.py --execute
 package_init:
   default_first_stage: research
+  accepted_inputs:
+  - --idea
+  - --slug
+  - --from-topic-packet
+  status_config_fields:
+  - markdown_path
+  - discovery_packet_path
   scaffold:
   - README.md
   - <slug>.md
@@ -69,8 +90,11 @@ lifecycle:
   - youtube_production
   - distribution
   stages:
-    paper_intake:
+    paper_intake: &id009
       workflow_doc: workflows/paper-intake/README.md
+      workflow_kind: stage
+      stage_binding: paper_intake
+      stability: canonical
       runner_mode: guided
       launch_mode: none
       default_skill: markitdown-paper-intake
@@ -86,12 +110,15 @@ lifecycle:
       done_when:
       - selected papers are stored locally and the package evidence index is current
       launch_templates: []
-      packet_templates: &id001 []
-      validator_commands: &id002 []
+      packet_templates: &id002 []
+      validator_commands: &id003 []
       judgment_policy: unrestricted
-      prohibited_moves: &id003 []
-    research:
+      prohibited_moves: &id001 []
+    research: &id004
       workflow_doc: workflows/alphaxiv-research/README.md
+      workflow_kind: stage
+      stage_binding: research
+      stability: canonical
       runner_mode: guided
       launch_mode: none
       default_skill: alphaxiv
@@ -113,12 +140,17 @@ lifecycle:
         surface to govern essay_iteration, even if narrower conditional follow-on
         research remains queued
       launch_templates: []
-      packet_templates: *id001
-      validator_commands: *id002
+      packet_templates:
+      - workflows/alphaxiv-research/templates/research_exit_gate_template.md
+      validator_commands:
+      - .venv/bin/python scripts/check_research_exit_gate.py --package {package_key}
       judgment_policy: unrestricted
-      prohibited_moves: *id003
-    essay_iteration:
+      prohibited_moves: *id001
+    essay_iteration: &id007
       workflow_doc: workflows/essay-iteration/README.md
+      workflow_kind: stage
+      stage_binding: essay_iteration
+      stability: canonical
       runner_mode: hybrid
       launch_mode: scaffold_only
       default_skill: null
@@ -157,8 +189,11 @@ lifecycle:
       - Do not archive adjacent leaves before the promotion decision is explicit.
       - Do not mark the stage done from a weak-model run without human review.
       - Do not claim Publication Power 9 or above under the draft-only policy.
-    notebooklm_artifacts:
+    notebooklm_artifacts: &id008
       workflow_doc: workflows/notebooklm-artifacts/README.md
+      workflow_kind: stage
+      stage_binding: notebooklm_artifacts
+      stability: canonical
       runner_mode: guided
       launch_mode: none
       default_skill: notebooklm-artifact-bundle
@@ -174,12 +209,15 @@ lifecycle:
       - the required NotebookLM artifacts are downloaded into the canonical artifact
         home
       launch_templates: []
-      packet_templates: *id001
-      validator_commands: *id002
+      packet_templates: *id002
+      validator_commands: *id003
       judgment_policy: unrestricted
-      prohibited_moves: *id003
-    article_polish:
+      prohibited_moves: *id001
+    article_polish: &id005
       workflow_doc: workflows/article-polish/README.md
+      workflow_kind: stage
+      stage_binding: article_polish
+      stability: canonical
       runner_mode: guided
       launch_mode: none
       default_skill: null
@@ -195,12 +233,15 @@ lifecycle:
       done_when:
       - the draft is publication-ready and ready to hand off to the release gate
       launch_templates: []
-      packet_templates: *id001
-      validator_commands: *id002
+      packet_templates: *id002
+      validator_commands: *id003
       judgment_policy: unrestricted
-      prohibited_moves: *id003
-    substack_publishing:
+      prohibited_moves: *id001
+    substack_publishing: &id011
       workflow_doc: workflows/substack-publishing/README.md
+      workflow_kind: stage
+      stage_binding: substack_publishing
+      stability: canonical
       runner_mode: hybrid
       launch_mode: external_mutation
       default_skill: null
@@ -219,12 +260,15 @@ lifecycle:
       launch_templates:
       - .venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url
         {substack_url} --post-id {substack_post_id} --markdown {markdown_path}
-      packet_templates: *id001
-      validator_commands: *id002
+      packet_templates: *id002
+      validator_commands: *id003
       judgment_policy: unrestricted
-      prohibited_moves: *id003
-    archive_sync:
+      prohibited_moves: *id001
+    archive_sync: &id010
       workflow_doc: workflows/substack-archive-sync/README.md
+      workflow_kind: stage
+      stage_binding: archive_sync
+      stability: canonical
       runner_mode: scripted
       launch_mode: local_mutation
       default_skill: substack-archive-sync
@@ -241,12 +285,15 @@ lifecycle:
       launch_templates:
       - .venv/bin/python scripts/sync_substack_archive.py
       - npm run check:mirror
-      packet_templates: *id001
-      validator_commands: *id002
+      packet_templates: *id002
+      validator_commands: *id003
       judgment_policy: unrestricted
-      prohibited_moves: *id003
-    youtube_production:
+      prohibited_moves: *id001
+    youtube_production: &id012
       workflow_doc: workflows/youtube-production/README.md
+      workflow_kind: stage
+      stage_binding: youtube_production
+      stability: canonical
       runner_mode: guided
       launch_mode: none
       default_skill: youtube-slide-video-pipeline
@@ -262,12 +309,15 @@ lifecycle:
       - the local MP4 render is verified and ready for channel-side upload or replacement
         work
       launch_templates: []
-      packet_templates: *id001
-      validator_commands: *id002
+      packet_templates: *id002
+      validator_commands: *id003
       judgment_policy: unrestricted
-      prohibited_moves: *id003
-    distribution:
+      prohibited_moves: *id001
+    distribution: &id006
       workflow_doc: workflows/distribution/README.md
+      workflow_kind: stage
+      stage_binding: distribution
+      stability: canonical
       runner_mode: guided
       launch_mode: none
       default_skill: null
@@ -283,7 +333,372 @@ lifecycle:
       - the planned post-publication distribution work is complete or explicitly deferred
         with notes
       launch_templates: []
-      packet_templates: *id001
-      validator_commands: *id002
+      packet_templates: *id002
+      validator_commands: *id003
       judgment_policy: unrestricted
-      prohibited_moves: *id003
+      prohibited_moves: *id001
+workflows:
+  research: *id004
+  article_polish: *id005
+  distribution: *id006
+  essay_iteration: *id007
+  evidence_authorization:
+    workflow_doc: workflows/evidence-authorization/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: canonical
+    runner_mode: guided
+    launch_mode: none
+    default_skill: null
+    approval_gate: none
+    required_context:
+    - package README or leaf README
+    - package paper index or source index
+    - active blueprint, plan, draft, or review finding that created the evidence question
+    - current claim set or section spine
+    expected_outputs:
+    - package-local evidence authorization ledger
+    - source burden map separating body, hinge, optional, and forbidden uses
+    - synthesis boundary naming what the evidence proves and does not prove
+    done_when:
+    - the rewrite or blueprint can distinguish source-backed claims from synthesis
+      without reopening the whole paper library
+    launch_templates: []
+    packet_templates: *id002
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+  notebooklm_artifacts: *id008
+  package_normalization:
+    workflow_doc: workflows/package-normalization/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: canonical
+    runner_mode: guided
+    launch_mode: none
+    default_skill: null
+    approval_gate: none
+    required_context:
+    - package README or leaf README
+    - status.yaml
+    - current live draft path or config.markdown_path
+    - current evidence surface when one exists
+    expected_outputs:
+    - normalized package scaffold or explicit package-shape delta list
+    - corrected status manifest paths when they drifted from the package reality
+    - clear package-local map of live draft, evidence, artifacts, and archive surfaces
+    done_when:
+    - the package shape is coherent enough that lifecycle routing, evidence work,
+      and draft work no longer depend on guesswork
+    launch_templates: []
+    packet_templates: *id002
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+  paper_intake: *id009
+  post_ceiling_pivot:
+    workflow_doc: workflows/post-ceiling-pivot/README.md
+    workflow_kind: overlay
+    stage_binding: null
+    stability: experimental
+    runner_mode: guided
+    launch_mode: none
+    default_skill: alphaxiv
+    approval_gate: required_for_pivot_clearance
+    required_context:
+    - leaf package README
+    - latest stop-gate or replacement-review finding from the capped essay
+    - latest post-ceiling reframe or equivalent frame-ceiling finding
+    - current pivot artifacts when they already exist
+    - package evidence surface when local papers already anchor the failed object
+    expected_outputs:
+    - explicit post-ceiling reframe
+    - pivot slate with ranked candidate families
+    - grounding review and blocker record
+    - one active next-pivot candidate surface
+    - candidate-specific research delta
+    - north-star viability gate for any candidate being considered for clearance
+    - explicit pivot decision: blocked, provisional, clear lead, or pivot cleared
+    done_when:
+    - one candidate clears both research grounding and north-star viability, or the
+      package explicitly blocks the whole pivot search and records why
+    launch_templates: []
+    packet_templates:
+    - workflows/post-ceiling-pivot/templates/post_ceiling_reframe_template.md
+    - workflows/post-ceiling-pivot/templates/pivot_grounding_review_template.md
+    - workflows/post-ceiling-pivot/templates/pivot_north_star_viability_template.md
+    - workflows/post-ceiling-pivot/templates/pivot_decision_template.md
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+  release_gate:
+    workflow_doc: workflows/release-gate/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: canonical
+    runner_mode: guided
+    launch_mode: none
+    default_skill: null
+    approval_gate: required_before_live_publish
+    required_context:
+    - canonical live draft
+    - latest promotion decision or publication approval note
+    - package artifact surface and final media paths
+    - current references, links, and Substack target when present
+    expected_outputs:
+    - package-local release gate checklist or decision note
+    - explicit release verdict: release ready, minor fixes, or blocked
+    - list of required fixes before Substack publishing or external posting
+    done_when:
+    - the package has an explicit publish-readiness verdict and no unresolved release
+      blockers
+    launch_templates: []
+    packet_templates:
+    - workflows/release-gate/templates/release_gate_checklist_template.md
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+  archive_sync: *id010
+  substack_publishing: *id011
+  topic_discovery:
+    workflow_doc: workflows/topic-discovery/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: canonical
+    runner_mode: guided
+    launch_mode: none
+    default_skill: alphaxiv
+    approval_gate: required_before_package_init
+    required_context:
+    - seed question, archive gap, external trigger, review finding, or broad domain
+      to investigate
+    - relevant prior essays or archive cluster when the topic should build on existing
+      work
+    - target publication ambition, such as quick note, strong synthesis, or north-star
+      flagship
+    expected_outputs:
+    - topic vocabulary map for the research surface
+    - ranked candidate paper pool with exclusions and near-misses
+    - tracked assistant discussion notes when assistant comparison shapes the topic
+      decision
+    - candidate essay slate with evidence deltas and kill criteria
+    - handoff decision to package initialization, post-ceiling pivot, narrower research,
+      or parking
+    done_when:
+    - the repo has an explicit decision about whether the topic deserves a package,
+      pivot pass, or no further work, and any material assistant discussion is recoverable
+      from the discovery packet or successor package
+    launch_templates: []
+    packet_templates:
+    - workflows/topic-discovery/templates/topic_discovery_packet_template.md
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+  youtube_channel_ops:
+    workflow_doc: workflows/youtube-channel-ops/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: canonical
+    runner_mode: guided
+    launch_mode: none
+    default_skill: youtube-data-api
+    approval_gate: required_before_channel_mutation
+    required_context:
+    - authenticated YouTube channel access or repo auth check path
+    - target video ids, playlist ids, or caption targets when mutation is requested
+    - local package or series context when the operation is tied to tracked content
+    expected_outputs:
+    - verified channel/auth state or a bounded channel-side maintenance result
+    - local record of the mutation target or blocker when the task is package-linked
+    done_when:
+    - the requested channel inspection or bounded maintenance action is complete,
+      or the exact blocker is recorded with the next safe step
+    launch_templates: []
+    packet_templates: *id002
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+  youtube_production: *id012
+  youtube_series_operating_agents:
+    workflow_doc: workflows/youtube-series-operating-agents/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: canonical
+    runner_mode: guided
+    launch_mode: none
+    default_skill: youtube-operating-agents
+    approval_gate: required_before_channel_mutation
+    required_context:
+    - Operating Agents metadata file or exact chapter/video target
+    - verified local production artifacts when the task touches a full-video upload
+      or replacement
+    - authenticated YouTube channel access
+    expected_outputs:
+    - bounded Operating Agents channel mutation or verified no-op decision
+    - local record of the exact chapter/video target, links, or playlist state changed
+    done_when:
+    - the requested series-specific upload, cross-link, playlist, or replacement task
+      is complete, or the exact blocker is recorded
+    launch_templates: []
+    packet_templates: *id002
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+gates:
+  essay_prewrite:
+    description: Decide whether the active essay object is actually writable before
+      bounded candidate drafting.
+    scope: package
+    required_artifacts:
+    - essay-iteration packet manifest
+    - hardened blueprint
+    - essay prewrite gate
+    recommended_workflow: essay_iteration
+    recommended_validator: npm run check:essay-prewrite -- --package <package>
+    proof_mode: packet_gate
+  pivot_north_star_viability:
+    description: Decide whether a grounded pivot candidate is strong enough to open
+      a successor flagship object or sibling package.
+    scope: package
+    required_artifacts:
+    - pivot grounding review
+    - pivot north-star viability gate
+    - pivot decision
+    recommended_workflow: post_ceiling_pivot
+    recommended_validator: npm run gate:check -- --gate pivot_north_star_viability
+      --package <package>
+    proof_mode: overlay_gate
+  pivot_research_grounding:
+    description: Decide whether a post-ceiling pivot candidate is grounded enough
+      to be a real successor object.
+    scope: package
+    required_artifacts:
+    - post-ceiling reframe
+    - pivot grounding review
+    - pivot decision or live candidate status
+    recommended_workflow: post_ceiling_pivot
+    recommended_validator: npm run gate:check -- --gate pivot_research_grounding --package
+      <package>
+    proof_mode: overlay_gate
+  release_readiness:
+    description: Decide whether a package is safe to publish or externally mutate.
+    scope: package
+    required_artifacts:
+    - canonical live draft
+    - release-gate checklist or decision note
+    - publish target and approval context when external mutation is requested
+    recommended_workflow: release_gate
+    recommended_validator: npm run gate:check -- --gate release_readiness --package
+      <package>
+    proof_mode: release_checklist
+  replacement_north_star:
+    description: Decide whether the latest bounded candidate clears replacement and
+      north-star review or whether the object has hit a ceiling.
+    scope: package
+    required_artifacts:
+    - replacement review
+    - promotion decision
+    - current packet manifest
+    recommended_workflow: essay_iteration
+    recommended_validator: npm run check:essay-iteration -- --package <package>
+    proof_mode: packet_review
+  research_exit:
+    description: Decide whether research is complete enough to hand the package into
+      essay_iteration.
+    scope: package
+    required_artifacts:
+    - governing blueprint or brief
+    - local evidence surface
+    - research-exit gate artifact
+    recommended_workflow: research
+    recommended_validator: .venv/bin/python scripts/check_research_exit_gate.py --package
+      <package>
+    proof_mode: package_gate
+  topic_viability:
+    description: Decide whether a topic-discovery packet is mature enough to initialize
+      a package.
+    scope: packet
+    required_artifacts:
+    - topic-discovery packet with an explicit handoff decision
+    - carry-forward package fields when the decision is package_init_ready
+    recommended_workflow: topic_discovery
+    recommended_validator: npm run gate:check -- --gate topic_viability --packet <topic-packet>
+    proof_mode: topic_packet
+pipeline_profiles:
+  article_default:
+    description: Default package-development flow from research through release.
+    ordered_workflows:
+    - research
+    - paper_intake
+    - evidence_authorization
+    - essay_iteration
+    - article_polish
+    - release_gate
+    - substack_publishing
+    - archive_sync
+    - distribution
+    required_gates:
+    - research_exit
+    - essay_prewrite
+    - replacement_north_star
+    - release_readiness
+    allowed_entry_workflows:
+    - topic_discovery
+    - research
+    - paper_intake
+    - evidence_authorization
+    - essay_iteration
+    - article_polish
+    - release_gate
+    fallback_routes:
+      research_exit: research
+      essay_prewrite: essay_iteration
+      replacement_north_star: essay_iteration
+      release_readiness: release_gate
+  midstream_revision:
+    description: Re-enter an existing package from the middle without pretending the
+      whole lifecycle restarts.
+    ordered_workflows:
+    - evidence_authorization
+    - research
+    - essay_iteration
+    - article_polish
+    - release_gate
+    required_gates:
+    - research_exit
+    - essay_prewrite
+    - replacement_north_star
+    - release_readiness
+    allowed_entry_workflows:
+    - evidence_authorization
+    - research
+    - essay_iteration
+    - article_polish
+    - release_gate
+    fallback_routes:
+      research_exit: research
+      essay_prewrite: essay_iteration
+      replacement_north_star: essay_iteration
+      release_readiness: article_polish
+  post_ceiling_successor:
+    description: Experimental successor-object search after a flagship object hits
+      a genuine ceiling.
+    ordered_workflows:
+    - post_ceiling_pivot
+    - topic_discovery
+    - research
+    - essay_iteration
+    required_gates:
+    - pivot_research_grounding
+    - pivot_north_star_viability
+    - research_exit
+    - essay_prewrite
+    allowed_entry_workflows:
+    - post_ceiling_pivot
+    - topic_discovery
+    - research
+    fallback_routes:
+      pivot_research_grounding: post_ceiling_pivot
+      pivot_north_star_viability: post_ceiling_pivot
+      research_exit: research
+      essay_prewrite: essay_iteration

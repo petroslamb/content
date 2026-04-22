@@ -1,0 +1,63 @@
+topic_packets:
+  - packet: scripts/fixtures/workflow-model/topic-packet-package-init-ready.md
+    gate: topic_viability
+    expected_status: pass
+    expected_decision: package_init_ready
+route_checks:
+  - package: literate-workflow-programming
+    stage: essay_iteration
+    expected_pipeline_profile: article_default
+    expected_packet_phase: draft_candidate
+    expected_recommended_workflow: essay_iteration
+    expected_gate:
+      gate_id: essay_prewrite
+      status: pass
+      decision: writable
+  - package: clean-interface-illusion
+    stage: essay_iteration
+    expected_pipeline_profile: post_ceiling_successor
+    expected_overlay_candidate: post_ceiling_pivot
+    expected_gate:
+      gate_id: replacement_north_star
+      status: blocked
+      decision: object_ceiling
+gate_checks:
+  - gate: research_exit
+    package: literate-workflow-programming
+    expected_status: pass
+    expected_decision: ready_for_essay_iteration
+  - gate: research_exit
+    package: clean-interface-illusion
+    expected_status: pass
+    expected_decision: ready_for_essay_iteration
+  - gate: pivot_research_grounding
+    package: clean-interface-illusion
+    expected_status: pass
+    expected_decision: pivot_cleared_for_north_star_attempt
+  - gate: pivot_north_star_viability
+    package: clean-interface-illusion
+    expected_status: pass
+    expected_decision: north_star_viable
+  - gate: release_readiness
+    package: literate-workflow-programming
+    expected_status: blocked
+validator_coverage:
+  - workflow: research
+    validator_substring: check_research_exit_gate.py
+  - workflow: essay_iteration
+    validator_substring: check:essay-prewrite
+retained_examples:
+  logs:
+    - path: reviewable-runs/logs/2026-04-22_17-24-40_no-package_topic_viability_gate-check.json
+      kind: gate_check
+    - path: reviewable-runs/logs/2026-04-22_17-27-13_no-package_topic_discovery_workflow-launch-pack.json
+      kind: workflow_launch_pack
+    - path: reviewable-runs/logs/2026-04-22_17-27-13_no-package_topic_discovery_emit_launch_pack.json
+      kind: workflow_run
+    - path: reviewable-runs/logs/2026-04-22_17-27-13_clean-interface-illusion_essay_iteration_launch-pack.json
+      kind: harness_launch_pack
+  artifacts:
+    - path: publications/clean-interface-illusion/clean-interface-illusion-pivot-decision.md
+      label: pivot-clearance decision
+    - path: publications/clean-interface-illusion/clean-interface-illusion-pivot-north-star-viability.md
+      label: pivot north-star viability artifact

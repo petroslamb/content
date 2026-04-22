@@ -1,5 +1,8 @@
 ---
 workflow_id: notebooklm_artifacts
+workflow_kind: stage
+stage_binding: notebooklm_artifacts
+stability: canonical
 workflow_group: artifacts
 runner_mode: guided
 default_skill: notebooklm-artifact-bundle

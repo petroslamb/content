@@ -239,6 +239,7 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
     print(f"Approval Gate: {resolution['approval_gate']}")
     print(f"Requires Approval: {resolution['requires_approval']}")
     print(f"Can Execute: {resolution['can_execute']}")
+    print(f"Pipeline Profile: {resolution.get('pipeline_profile')}")
     governing_brief = resolution.get("package_context_paths", {}).get("governing_brief_path")
     if governing_brief:
         print(f"Governing Brief: {governing_brief}")
@@ -255,6 +256,21 @@ def print_stage_summary(resolution: dict, dependency_warnings: list[str], launch
         print("\nBlocking Issues:")
         for issue in resolution["blocking_issues"]:
             print(f"  - {issue}")
+
+    if resolution.get("recommended_workflows"):
+        print("\nRecommended Workflows:")
+        for workflow_id in resolution["recommended_workflows"]:
+            print(f"  - {workflow_id}")
+
+    if resolution.get("overlay_candidates"):
+        print("\nOverlay Candidates:")
+        for workflow_id in resolution["overlay_candidates"]:
+            print(f"  - {workflow_id}")
+
+    if resolution.get("gate_statuses"):
+        print("\nGate Statuses:")
+        for gate_id, gate_status in resolution["gate_statuses"].items():
+            print(f"  - {gate_id}: {gate_status.get('status')} ({gate_status.get('decision')})")
 
     print("\nRequired Context:")
     for item in resolution["required_context"]:

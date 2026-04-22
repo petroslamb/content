@@ -1,8 +1,22 @@
 ---
 workflow_id: package_normalization
+workflow_kind: module
+stability: canonical
 workflow_group: package
 runner_mode: guided
 default_skill: null
+launch_templates: []
+required_context:
+  - package README or leaf README
+  - status.yaml
+  - current live draft path or config.markdown_path
+  - current evidence surface when one exists
+expected_outputs:
+  - normalized package scaffold or explicit package-shape delta list
+  - corrected status manifest paths when they drifted from the package reality
+  - clear package-local map of live draft, evidence, artifacts, and archive surfaces
+done_when:
+  - the package shape is coherent enough that lifecycle routing, evidence work, and draft work no longer depend on guesswork
 approval_gate: none
 ---
 

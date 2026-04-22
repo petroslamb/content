@@ -1,5 +1,7 @@
 ---
 workflow_id: evidence_authorization
+workflow_kind: module
+stability: canonical
 workflow_group: evidence
 runner_mode: guided
 default_skill: null

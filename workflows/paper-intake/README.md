@@ -1,5 +1,8 @@
 ---
 workflow_id: paper_intake
+workflow_kind: stage
+stage_binding: paper_intake
+stability: canonical
 workflow_group: evidence
 runner_mode: guided
 default_skill: markitdown-paper-intake

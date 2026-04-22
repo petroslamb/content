@@ -1,0 +1,77 @@
+version: 1
+profiles:
+  article_default:
+    description: Default package-development flow from research through release.
+    ordered_workflows:
+      - research
+      - paper_intake
+      - evidence_authorization
+      - essay_iteration
+      - article_polish
+      - release_gate
+      - substack_publishing
+      - archive_sync
+      - distribution
+    required_gates:
+      - research_exit
+      - essay_prewrite
+      - replacement_north_star
+      - release_readiness
+    allowed_entry_workflows:
+      - topic_discovery
+      - research
+      - paper_intake
+      - evidence_authorization
+      - essay_iteration
+      - article_polish
+      - release_gate
+    fallback_routes:
+      research_exit: research
+      essay_prewrite: essay_iteration
+      replacement_north_star: essay_iteration
+      release_readiness: release_gate
+  midstream_revision:
+    description: Re-enter an existing package from the middle without pretending the whole lifecycle restarts.
+    ordered_workflows:
+      - evidence_authorization
+      - research
+      - essay_iteration
+      - article_polish
+      - release_gate
+    required_gates:
+      - research_exit
+      - essay_prewrite
+      - replacement_north_star
+      - release_readiness
+    allowed_entry_workflows:
+      - evidence_authorization
+      - research
+      - essay_iteration
+      - article_polish
+      - release_gate
+    fallback_routes:
+      research_exit: research
+      essay_prewrite: essay_iteration
+      replacement_north_star: essay_iteration
+      release_readiness: article_polish
+  post_ceiling_successor:
+    description: Experimental successor-object search after a flagship object hits a genuine ceiling.
+    ordered_workflows:
+      - post_ceiling_pivot
+      - topic_discovery
+      - research
+      - essay_iteration
+    required_gates:
+      - pivot_research_grounding
+      - pivot_north_star_viability
+      - research_exit
+      - essay_prewrite
+    allowed_entry_workflows:
+      - post_ceiling_pivot
+      - topic_discovery
+      - research
+    fallback_routes:
+      pivot_research_grounding: post_ceiling_pivot
+      pivot_north_star_viability: post_ceiling_pivot
+      research_exit: research
+      essay_prewrite: essay_iteration

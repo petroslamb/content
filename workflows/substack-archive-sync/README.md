@@ -1,5 +1,8 @@
 ---
 workflow_id: archive_sync
+workflow_kind: stage
+stage_binding: archive_sync
+stability: canonical
 workflow_group: release
 runner_mode: scripted
 launch_mode: local_mutation

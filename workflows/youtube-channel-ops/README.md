@@ -1,8 +1,20 @@
 ---
 workflow_id: youtube_channel_ops
+workflow_kind: module
+stability: canonical
 workflow_group: operations
 runner_mode: guided
 default_skill: youtube-data-api
+launch_templates: []
+required_context:
+  - authenticated YouTube channel access or repo auth check path
+  - target video ids, playlist ids, or caption targets when mutation is requested
+  - local package or series context when the operation is tied to tracked content
+expected_outputs:
+  - verified channel/auth state or a bounded channel-side maintenance result
+  - local record of the mutation target or blocker when the task is package-linked
+done_when:
+  - the requested channel inspection or bounded maintenance action is complete, or the exact blocker is recorded with the next safe step
 approval_gate: required_before_channel_mutation
 ---
 

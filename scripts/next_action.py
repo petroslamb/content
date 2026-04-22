@@ -32,6 +32,10 @@ def build_next_action(package_arg: str) -> dict:
         "packet_phase": None,
         "next_packet_action": None,
         "recommended_validator": None,
+        "pipeline_profile": None,
+        "recommended_workflows": [],
+        "gate_statuses": {},
+        "overlay_candidates": [],
     }
     if next_stage is None:
         return base
@@ -50,6 +54,10 @@ def build_next_action(package_arg: str) -> dict:
         "packet_phase": resolution.get("packet_phase"),
         "next_packet_action": resolution.get("next_packet_action"),
         "recommended_validator": resolution.get("recommended_validator"),
+        "pipeline_profile": resolution.get("pipeline_profile"),
+        "recommended_workflows": resolution.get("recommended_workflows", []),
+        "gate_statuses": resolution.get("gate_statuses", {}),
+        "overlay_candidates": resolution.get("overlay_candidates", []),
     }
 
 
@@ -64,11 +72,27 @@ def print_text(payload: dict) -> None:
     print(f"Approval Gate: {payload['approval_gate']}")
     print(f"Requires Approval: {payload['requires_approval']}")
     print(f"Can Execute: {payload['can_execute']}")
+    print(f"Pipeline Profile: {payload.get('pipeline_profile')}")
 
     if payload.get("packet_phase"):
         print(f"Packet Phase: {payload['packet_phase']}")
         print(f"Next Packet Action: {payload.get('next_packet_action')}")
         print(f"Recommended Validator: {payload.get('recommended_validator')}")
+
+    if payload.get("recommended_workflows"):
+        print("\nRecommended Workflows:")
+        for workflow_id in payload["recommended_workflows"]:
+            print(f"  - {workflow_id}")
+
+    if payload.get("overlay_candidates"):
+        print("\nOverlay Candidates:")
+        for workflow_id in payload["overlay_candidates"]:
+            print(f"  - {workflow_id}")
+
+    if payload.get("gate_statuses"):
+        print("\nGate Statuses:")
+        for gate_id, gate_status in payload["gate_statuses"].items():
+            print(f"  - {gate_id}: {gate_status.get('status')} ({gate_status.get('decision')})")
 
     if payload["blocking_issues"]:
         print("\nBlocking Issues:")

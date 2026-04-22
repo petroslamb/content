@@ -1,5 +1,7 @@
 ---
 workflow_id: topic_discovery
+workflow_kind: module
+stability: canonical
 workflow_group: portfolio
 runner_mode: guided
 default_skill: alphaxiv
