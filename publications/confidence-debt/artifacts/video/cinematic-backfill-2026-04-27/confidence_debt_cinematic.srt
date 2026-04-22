@@ -1,0 +1,916 @@
+1
+00:00:00,400 --> 00:00:04,799
+Verifying complex Ethereum protocol
+
+2
+00:00:02,960 --> 00:00:06,960
+requirements against the actual
+
+3
+00:00:04,799 --> 00:00:08,960
+implementation code is a demanding
+
+4
+00:00:06,960 --> 00:00:10,960
+engineering task. If you want to
+
+5
+00:00:08,960 --> 00:00:13,440
+automate that process using an AI
+
+6
+00:00:10,960 --> 00:00:15,759
+workflow, you have to ensure the system
+
+7
+00:00:13,440 --> 00:00:17,920
+actually traces the high-level rules
+
+8
+00:00:15,759 --> 00:00:20,000
+directly to the underlying repository
+
+9
+00:00:17,920 --> 00:00:23,359
+logic. That was the goal of a
+
+10
+00:00:20,000 --> 00:00:25,359
+verification project called EIP verify.
+
+11
+00:00:23,359 --> 00:00:27,119
+The researchers wanted to see if an AI
+
+12
+00:00:25,359 --> 00:00:29,279
+could map the strict demands of the
+
+13
+00:00:27,119 --> 00:00:32,000
+protocol to the specific lines of code
+
+14
+00:00:29,279 --> 00:00:34,079
+that execute them. During testing, the
+
+15
+00:00:32,000 --> 00:00:36,800
+workflow produced a strange operational
+
+16
+00:00:34,079 --> 00:00:38,640
+paradox. A single run generated two
+
+17
+00:00:36,800 --> 00:00:40,960
+distinct artifacts that were supposed to
+
+18
+00:00:38,640 --> 00:00:43,600
+agree with each other. The first was a
+
+19
+00:00:40,960 --> 00:00:46,160
+highly polished fluent summary report.
+
+20
+00:00:43,600 --> 00:00:48,480
+The second was the raw rowle spreadsheet
+
+21
+00:00:46,160 --> 00:00:50,079
+containing the actual evidence. The
+
+22
+00:00:48,480 --> 00:00:52,239
+problem was that they told two
+
+23
+00:00:50,079 --> 00:00:54,000
+completely different stories. The
+
+24
+00:00:52,239 --> 00:00:55,760
+polished summary confidently claimed
+
+25
+00:00:54,000 --> 00:00:57,920
+that every single obligation was
+
+26
+00:00:55,760 --> 00:01:00,480
+properly mapped, but checking the raw
+
+27
+00:00:57,920 --> 00:01:02,640
+spreadsheet exposed critical errors. The
+
+28
+00:01:00,480 --> 00:01:05,920
+raw data revealed mappings that pointed
+
+29
+00:01:02,640 --> 00:01:07,760
+to irrelevant test fixtures and RPC glue
+
+30
+00:01:05,920 --> 00:01:10,080
+completely missing the protocol logic
+
+31
+00:01:07,760 --> 00:01:12,159
+the system was supposed to verify. The
+
+32
+00:01:10,080 --> 00:01:14,720
+system was confident, but the evidence
+
+33
+00:01:12,159 --> 00:01:17,920
+was wrong. This creates a dangerous
+
+34
+00:01:14,720 --> 00:01:20,240
+asymmetry based entirely on legibility.
+
+35
+00:01:17,920 --> 00:01:22,240
+Without an explicit rule to stop it, the
+
+36
+00:01:20,240 --> 00:01:24,720
+incorrect polished summary naturally
+
+37
+00:01:22,240 --> 00:01:27,119
+moves downstream. It gets pasted into a
+
+38
+00:01:24,720 --> 00:01:30,000
+readme, used in a deployment argument,
+
+39
+00:01:27,119 --> 00:01:32,000
+or sent to a fun. The accurate, messier
+
+40
+00:01:30,000 --> 00:01:34,400
+spreadsheet stays technically available,
+
+41
+00:01:32,000 --> 00:01:36,400
+but is operationally ignored. This
+
+42
+00:01:34,400 --> 00:01:38,640
+dynamic illustrates a problem we call
+
+43
+00:01:36,400 --> 00:01:40,240
+confidence debt. A system incurs
+
+44
+00:01:38,640 --> 00:01:42,720
+confidence debt when its output is
+
+45
+00:01:40,240 --> 00:01:45,040
+trusted downstream before the verifiable
+
+46
+00:01:42,720 --> 00:01:46,880
+evidence actually warrants that trust.
+
+47
+00:01:45,040 --> 00:01:49,040
+The trust propagates faster than the
+
+48
+00:01:46,880 --> 00:01:51,200
+proof. To understand how this debt
+
+49
+00:01:49,040 --> 00:01:53,360
+compounds, we have to look at the three
+
+50
+00:01:51,200 --> 00:01:56,079
+layers of the AI deployment pipeline,
+
+51
+00:01:53,360 --> 00:01:58,719
+artifacts, evaluations, and humans.
+
+52
+00:01:56,079 --> 00:02:01,119
+Relying on fluent AI outputs without
+
+53
+00:01:58,719 --> 00:02:03,439
+verifying their epistemic texture breaks
+
+54
+00:02:01,119 --> 00:02:05,600
+the engineering pipeline. By the time a
+
+55
+00:02:03,439 --> 00:02:07,759
+human makes a decision, the workflow has
+
+56
+00:02:05,600 --> 00:02:09,440
+preserved the machine's conclusion while
+
+57
+00:02:07,759 --> 00:02:11,840
+stripping away the user's right to
+
+58
+00:02:09,440 --> 00:02:14,080
+dispute it. The cascade begins at the
+
+59
+00:02:11,840 --> 00:02:16,400
+artifact layer, where the raw outputs
+
+60
+00:02:14,080 --> 00:02:18,879
+are first generated. Think of a language
+
+61
+00:02:16,400 --> 00:02:21,120
+model as an industrial compressor. To
+
+62
+00:02:18,879 --> 00:02:24,080
+generate a readable summary, the system
+
+63
+00:02:21,120 --> 00:02:26,160
+crushes down the data. This compression
+
+64
+00:02:24,080 --> 00:02:28,239
+mechanism inherently strips away the
+
+65
+00:02:26,160 --> 00:02:30,720
+caveats, the source paths, and the
+
+66
+00:02:28,239 --> 00:02:33,200
+contradictions. Those jagged edges are
+
+67
+00:02:30,720 --> 00:02:35,360
+removed to maintain narrative fluency.
+
+68
+00:02:33,200 --> 00:02:37,200
+In standard engineering workflows, these
+
+69
+00:02:35,360 --> 00:02:39,440
+compressed summaries automatically
+
+70
+00:02:37,200 --> 00:02:41,599
+outrank the raw sources. A clean
+
+71
+00:02:39,440 --> 00:02:43,680
+paragraph is simply easier to read and
+
+72
+00:02:41,599 --> 00:02:45,920
+share than a complicated spreadsheet. So
+
+73
+00:02:43,680 --> 00:02:48,080
+it gets prioritized. This initial
+
+74
+00:02:45,920 --> 00:02:49,920
+transfer of borrowed trust means the
+
+75
+00:02:48,080 --> 00:02:51,760
+underlying data becomes completely
+
+76
+00:02:49,920 --> 00:02:54,560
+untethered from the deployment arguments
+
+77
+00:02:51,760 --> 00:02:57,680
+made downstream. The evidence gets left
+
+78
+00:02:54,560 --> 00:02:59,920
+behind. Fixing this requires inserting
+
+79
+00:02:57,680 --> 00:03:03,440
+our first structural checkpoint into the
+
+80
+00:02:59,920 --> 00:03:06,080
+workflow. Gate one. Gate one enforces
+
+81
+00:03:03,440 --> 00:03:08,159
+the rule of claim auditability. It
+
+82
+00:03:06,080 --> 00:03:10,159
+dictates that no claim can be promoted
+
+83
+00:03:08,159 --> 00:03:12,800
+to the next stage based solely on how
+
+84
+00:03:10,159 --> 00:03:14,959
+well it reads. The output cannot pass
+
+85
+00:03:12,800 --> 00:03:18,080
+until the summary expands back into an
+
+86
+00:03:14,959 --> 00:03:20,000
+inspectable state. In engineering terms,
+
+87
+00:03:18,080 --> 00:03:21,920
+a claim must permanently attach an
+
+88
+00:03:20,000 --> 00:03:24,480
+evidence ledger, a contradiction
+
+89
+00:03:21,920 --> 00:03:27,200
+register, and an expiry condition before
+
+90
+00:03:24,480 --> 00:03:29,120
+moving forward. The polished summary is
+
+91
+00:03:27,200 --> 00:03:31,840
+no longer allowed to outrank the raw
+
+92
+00:03:29,120 --> 00:03:34,319
+data. Claim auditability stops the
+
+93
+00:03:31,840 --> 00:03:35,680
+earliest stage of confidence debt. It
+
+94
+00:03:34,319 --> 00:03:37,840
+forces the evidence to travel
+
+95
+00:03:35,680 --> 00:03:39,440
+concurrently with the narrative output,
+
+96
+00:03:37,840 --> 00:03:42,080
+ensuring the proof survives the
+
+97
+00:03:39,440 --> 00:03:44,239
+compression process. Once the artifacts
+
+98
+00:03:42,080 --> 00:03:46,720
+are generated, the workflow moves to the
+
+99
+00:03:44,239 --> 00:03:49,120
+second stage, testing at the evaluation
+
+100
+00:03:46,720 --> 00:03:52,080
+layer. Here we encounter the operational
+
+101
+00:03:49,120 --> 00:03:54,239
+hazard of benchmarks. Converting complex
+
+102
+00:03:52,080 --> 00:03:56,480
+performance data into a single score
+
+103
+00:03:54,239 --> 00:03:58,720
+metric strips away of the operational
+
+104
+00:03:56,480 --> 00:04:01,120
+caveats, turning them into pure
+
+105
+00:03:58,720 --> 00:04:03,760
+numerical confidence debt. This bar
+
+106
+00:04:01,120 --> 00:04:06,159
+chart shows GPT40's performance on the
+
+107
+00:04:03,760 --> 00:04:08,879
+TOW bench benchmark for retail domain
+
+108
+00:04:06,159 --> 00:04:11,920
+tasks. The pass at one metric is marked
+
+109
+00:04:08,879 --> 00:04:13,840
+here at 61%. A team looking at that
+
+110
+00:04:11,920 --> 00:04:16,720
+single number might conclude the model
+
+111
+00:04:13,840 --> 00:04:19,519
+is ready, but pass at one only measures
+
+112
+00:04:16,720 --> 00:04:21,759
+execution of an isolated task once under
+
+113
+00:04:19,519 --> 00:04:24,800
+clean conditions. Watch what happens
+
+114
+00:04:21,759 --> 00:04:27,680
+when we adjust the Xaxis to evaluate
+
+115
+00:04:24,800 --> 00:04:30,960
+pass at 8, meaning repeated sustained
+
+116
+00:04:27,680 --> 00:04:32,560
+runs. The performance bar crashes below
+
+117
+00:04:30,960 --> 00:04:34,560
+25%.
+
+118
+00:04:32,560 --> 00:04:37,040
+The model didn't lose its base
+
+119
+00:04:34,560 --> 00:04:40,560
+capability. It failed because of
+
+120
+00:04:37,040 --> 00:04:43,280
+trajectory drift. In long horizon tasks,
+
+121
+00:04:40,560 --> 00:04:45,360
+capable agents slowly diverge from the
+
+122
+00:04:43,280 --> 00:04:47,680
+paths that successful runs tend to
+
+123
+00:04:45,360 --> 00:04:51,120
+follow, turning coherent partial
+
+124
+00:04:47,680 --> 00:04:53,520
+progress into unreoverable errors. Clean
+
+125
+00:04:51,120 --> 00:04:55,759
+benchmark scores hide the reality of
+
+126
+00:04:53,520 --> 00:04:57,759
+production environments. They don't
+
+127
+00:04:55,759 --> 00:05:00,560
+account for network timeouts, rate
+
+128
+00:04:57,759 --> 00:05:03,360
+limits, schema drift, or sudden partial
+
+129
+00:05:00,560 --> 00:05:06,720
+progress meltdowns. This requires our
+
+130
+00:05:03,360 --> 00:05:08,960
+second structural checkpoint, gate 2. To
+
+131
+00:05:06,720 --> 00:05:10,400
+evaluate correctly, we replace the
+
+132
+00:05:08,960 --> 00:05:12,639
+single bar chart with a
+
+133
+00:05:10,400 --> 00:05:15,440
+three-dimensional surface plot. This
+
+134
+00:05:12,639 --> 00:05:17,520
+graph's repeated consistency, robustness
+
+135
+00:05:15,440 --> 00:05:20,479
+against task variations, and fault
+
+136
+00:05:17,520 --> 00:05:22,960
+tolerance. This enforces reliability
+
+137
+00:05:20,479 --> 00:05:24,800
+release. It mandates that a single
+
+138
+00:05:22,960 --> 00:05:27,520
+benchmark score cannot license
+
+139
+00:05:24,800 --> 00:05:29,520
+deployment readiness alone. Systems must
+
+140
+00:05:27,520 --> 00:05:32,479
+be strictly scoped to a measured
+
+141
+00:05:29,520 --> 00:05:34,479
+operational envelope. You predefine your
+
+142
+00:05:32,479 --> 00:05:36,880
+systems tolerances for specific
+
+143
+00:05:34,479 --> 00:05:39,759
+perturbations and failures and release
+
+144
+00:05:36,880 --> 00:05:42,160
+it only within those proven boundaries.
+
+145
+00:05:39,759 --> 00:05:44,639
+Forcing a reliability release ensures
+
+146
+00:05:42,160 --> 00:05:46,800
+that the evaluation layer cannot finance
+
+147
+00:05:44,639 --> 00:05:49,919
+false deployment arguments based on
+
+148
+00:05:46,800 --> 00:05:52,080
+irrelevant oneshot metrics. That brings
+
+149
+00:05:49,919 --> 00:05:54,720
+us to the final stage of the pipeline,
+
+150
+00:05:52,080 --> 00:05:56,800
+the human layer. The industry typically
+
+151
+00:05:54,720 --> 00:05:59,039
+relies on a human in the loop to catch
+
+152
+00:05:56,800 --> 00:06:00,880
+the errors that slip through. This
+
+153
+00:05:59,039 --> 00:06:03,840
+approach introduces a serious
+
+154
+00:06:00,880 --> 00:06:06,080
+operational paradox. Placing a tired
+
+155
+00:06:03,840 --> 00:06:09,039
+human reviewer in front of highly fluent
+
+156
+00:06:06,080 --> 00:06:12,000
+AI output actively degrades operational
+
+157
+00:06:09,039 --> 00:06:14,639
+safety. Look at how an AI presents its
+
+158
+00:06:12,000 --> 00:06:17,280
+answer. The sleek text output sits
+
+159
+00:06:14,639 --> 00:06:19,600
+directly on top of the raw data, hiding
+
+160
+00:06:17,280 --> 00:06:22,240
+the massive tangled web of logic from
+
+161
+00:06:19,600 --> 00:06:24,800
+the reviewer. This creates what is known
+
+162
+00:06:22,240 --> 00:06:27,280
+as the competence shadow. The AI
+
+163
+00:06:24,800 --> 00:06:29,680
+artificially prunes the problem space,
+
+164
+00:06:27,280 --> 00:06:31,680
+removing specific hazards, alternative
+
+165
+00:06:29,680 --> 00:06:34,240
+solutions, and contradictions from the
+
+166
+00:06:31,680 --> 00:06:36,160
+visible discussion. A cognitive hazard
+
+167
+00:06:34,240 --> 00:06:38,080
+forms because the human reviewer can
+
+168
+00:06:36,160 --> 00:06:40,319
+only evaluate the information left on
+
+169
+00:06:38,080 --> 00:06:41,919
+the screen. They cannot inspect or
+
+170
+00:06:40,319 --> 00:06:44,560
+correct the branches of evidence that
+
+171
+00:06:41,919 --> 00:06:46,319
+the AI secretly omitted. Studies show
+
+172
+00:06:44,560 --> 00:06:48,720
+this degrades engineering skill over
+
+173
+00:06:46,319 --> 00:06:50,720
+time. When developers treat AI as a
+
+174
+00:06:48,720 --> 00:06:53,120
+contractor and themselves merely as
+
+175
+00:06:50,720 --> 00:06:54,400
+reviewers, they lose persistence and the
+
+176
+00:06:53,120 --> 00:06:56,720
+capacity to solve problems
+
+177
+00:06:54,400 --> 00:06:58,960
+independently. Adding a warning label
+
+178
+00:06:56,720 --> 00:07:01,120
+next to the output or asking the user to
+
+179
+00:06:58,960 --> 00:07:03,440
+click an approve button does absolutely
+
+180
+00:07:01,120 --> 00:07:05,199
+nothing to stop this cognitive erosion.
+
+181
+00:07:03,440 --> 00:07:08,400
+We have to install the final checkpoint
+
+182
+00:07:05,199 --> 00:07:10,800
+in the pipeline, gate 3. We apply gate 3
+
+183
+00:07:08,400 --> 00:07:12,880
+using a hypothesisdriven interface. It
+
+184
+00:07:10,800 --> 00:07:14,880
+extracts individual claims, highlights
+
+185
+00:07:12,880 --> 00:07:16,800
+unsupported statements in red and
+
+186
+00:07:14,880 --> 00:07:19,120
+actively surfaces alternative counter
+
+187
+00:07:16,800 --> 00:07:21,360
+evidence nodes. This is co- audit
+
+188
+00:07:19,120 --> 00:07:23,120
+software. Its entire function is to
+
+189
+00:07:21,360 --> 00:07:25,120
+shift the AI's output from something
+
+190
+00:07:23,120 --> 00:07:27,440
+passively consumed into something that
+
+191
+00:07:25,120 --> 00:07:30,080
+the human must actively work against.
+
+192
+00:07:27,440 --> 00:07:32,080
+The UI forces assumption checking. It
+
+193
+00:07:30,080 --> 00:07:34,400
+strictly demands that the reviewer
+
+194
+00:07:32,080 --> 00:07:36,319
+resolve the presented counter evidence
+
+195
+00:07:34,400 --> 00:07:38,880
+before an acceptance click is
+
+196
+00:07:36,319 --> 00:07:41,280
+mathematically allowed. Co- audit
+
+197
+00:07:38,880 --> 00:07:43,919
+transforms human oversight into an
+
+198
+00:07:41,280 --> 00:07:46,400
+active epistemic defense, halting the
+
+199
+00:07:43,919 --> 00:07:49,199
+final transfer of confidence debt right
+
+200
+00:07:46,400 --> 00:07:51,199
+before it translates into action. When
+
+201
+00:07:49,199 --> 00:07:53,759
+we zoom out and look at the entire
+
+202
+00:07:51,199 --> 00:07:55,919
+repaired pipeline, we see exactly how
+
+203
+00:07:53,759 --> 00:07:59,039
+the initial problem compounds if left
+
+204
+00:07:55,919 --> 00:08:00,960
+unchecked. In an unmitigated cascade,
+
+205
+00:07:59,039 --> 00:08:04,080
+artifact confidence outruns the
+
+206
+00:08:00,960 --> 00:08:06,800
+evidence. Then, evaluation scores outrun
+
+207
+00:08:04,080 --> 00:08:08,879
+actual reliability. Finally, human
+
+208
+00:08:06,800 --> 00:08:11,599
+acceptance outruns our capacity to
+
+209
+00:08:08,879 --> 00:08:13,599
+notice and correct errors. The standard
+
+210
+00:08:11,599 --> 00:08:16,240
+industry goal of teaching users
+
+211
+00:08:13,599 --> 00:08:18,720
+appropriate reliance fails because it
+
+212
+00:08:16,240 --> 00:08:20,879
+happens too late. User calibration
+
+213
+00:08:18,720 --> 00:08:23,759
+cannot fix evidence that was already
+
+214
+00:08:20,879 --> 00:08:25,440
+overcompressed three steps upstream.
+
+215
+00:08:23,759 --> 00:08:28,080
+Look at the structural layout of the
+
+216
+00:08:25,440 --> 00:08:29,840
+reinforced pipeline. The flow of data is
+
+217
+00:08:28,080 --> 00:08:32,479
+governed by these three distinct
+
+218
+00:08:29,840 --> 00:08:34,959
+checkpoints. Claim auditability before
+
+219
+00:08:32,479 --> 00:08:37,440
+trust, reliability release before
+
+220
+00:08:34,959 --> 00:08:40,080
+deployment, and co-odit before human
+
+221
+00:08:37,440 --> 00:08:42,159
+acceptance. Building governable AI
+
+222
+00:08:40,080 --> 00:08:44,880
+systems does not require waiting years
+
+223
+00:08:42,159 --> 00:08:46,800
+for flawless hallucinationfree models.
+
+224
+00:08:44,880 --> 00:08:49,519
+It requires engineering the workflow
+
+225
+00:08:46,800 --> 00:08:51,200
+around the model's limitations. Today,
+
+226
+00:08:49,519 --> 00:08:53,200
+safety is achieved by designing
+
+227
+00:08:51,200 --> 00:08:55,360
+workflows that explicitly preserve the
+
+228
+00:08:53,200 --> 00:08:58,680
+human right of dispute at every single
+
+229
+00:08:55,360 --> 00:08:58,680
+layer of delegation.
+
