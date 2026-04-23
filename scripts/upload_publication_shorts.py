@@ -323,6 +323,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--main-video-id", required=True, help="Primary related-video ID for the Shorts related-video field")
     parser.add_argument("--playlist-id", required=True, help="Target Shorts playlist ID")
     parser.add_argument(
+        "--shorts-dir",
+        type=Path,
+        help="Override portrait Shorts directory. Defaults to publications/<package>/artifacts/video/shorts/portrait",
+    )
+    parser.add_argument(
         "--essay-url",
         required=True,
         help="Canonical essay URL. Use none, skip, or omit to leave this line out of descriptions.",
@@ -419,7 +424,7 @@ def collect_planned_items(args: argparse.Namespace, shorts_dir: Path) -> list[di
 
 def main() -> None:
     args = parse_args()
-    shorts_dir = Path("publications") / args.package / "artifacts" / "video" / "shorts" / "portrait"
+    shorts_dir = args.shorts_dir or (Path("publications") / args.package / "artifacts" / "video" / "shorts" / "portrait")
     if not shorts_dir.exists():
         print(f"ERROR: Shorts directory not found: {shorts_dir}")
         sys.exit(1)
@@ -441,7 +446,9 @@ def main() -> None:
     print(f"Found {len(planned_items)} short(s) to upload")
     print(f"Target playlist: {args.playlist_id}")
     print(f"Related full video: https://www.youtube.com/watch?v={args.main_video_id}")
-    report_path = args.report_file or default_report_path(args.package)
+    report_path = args.report_file or (
+        shorts_dir.parent / "shorts_upload_report.json" if args.shorts_dir else default_report_path(args.package)
+    )
     print(f"Upload report: {report_path}")
 
     if not args.apply:
