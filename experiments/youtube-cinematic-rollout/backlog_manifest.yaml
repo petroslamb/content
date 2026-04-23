@@ -1,0 +1,539 @@
+experiment:
+  name: youtube-cinematic-rollout
+  workspace_root: experiments/youtube-cinematic-rollout
+  existing_video_map: experiments/youtube-cinematic-pilot/metrics/video_asset_youtube_map.yaml
+  release_ledger: experiments/youtube-cinematic-rollout/release_ledger.md
+  templates:
+    cinematic_prompt: experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt
+    cinematic_description: experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md
+  playlists:
+    cinematic:
+      id: PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe
+      title: Rooted Layers Cinematic Briefs
+      privacy_status: public
+    shorts:
+      id: PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd
+      title: AI Architecture Snippets & AI Research Shorts
+  defaults:
+    timezone: Europe/Athens
+    daily_run_time: '10:00'
+    max_new_cinematics_per_run: 2
+    auth_relogin_command: .venv/bin/notebooklm login
+    shorts_primary_video_label: Full cinematic video
+    shorts_secondary_video_label: Full research breakdown
+    shorts_slot_times:
+    - 09:00
+    - '10:30'
+    - '12:00'
+    - '13:30'
+    - '15:00'
+    - '16:30'
+    - '18:00'
+    - '19:30'
+    - '21:00'
+    - '22:30'
+    candidate_min_seconds: 35
+    candidate_target_seconds: 90
+    candidate_max_seconds: 120
+    rubric_thresholds:
+      approved_min: 22
+      reserve_min: 20
+  states:
+    generation_blocking:
+    - queued
+    - blocked_auth_expired
+    - blocked_rate_limited
+    - retryable_error
+    in_flight:
+    - cinematic_uploaded
+    - captions_pending
+    - shorts_selection_pending
+    - shorts_schedule_pending
+    - shorts_render_pending
+    - shorts_upload_pending
+    terminal:
+    - completed
+    - no_shorts_approved
+rollout_order:
+- illusion_of_swarm
+- the_agent_revolution
+- operating_agents_action
+- operating_agents_memory
+- operating_agents_reasoning
+- operating_agents_multi_agent
+- operating_agents_safety
+- operating_agents_optimization
+- moltbook_phenomenon
+- programmable_thinking
+publications:
+  illusion_of_swarm:
+    package: illusion-of-swarm
+    status_path: publications/illusion-of-swarm/status.yaml
+    markdown_path: publications/illusion-of-swarm/the-illusion-of-the-swarm.md
+    notebook_id: 8bdbaa61-25f3-4c6c-bc4f-cdcb29b174ee
+    notebook_title: Most Multi-Agent Systems Are a Workaround, Not a Destination (v9)
+    essay_url: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: AigaLYfpFZc
+      url: https://www.youtube.com/watch?v=AigaLYfpFZc
+    cinematic:
+      title: Why Most Multi-Agent AI Is a Workaround
+      hook: Adding more agents can look like progress while quietly turning the system
+        into a routing workaround that never fixed the real design problem.
+      summary: 'This cinematic brief reframes the multi-agent boom as a temporary
+        coping mechanism for action spaces that were never decomposed cleanly enough
+        in the first place.
+
+
+        It is meant to land one durable claim quickly for operators and builders:
+        better decomposition often beats louder coordination theater.
+
+        '
+      video_file: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4
+      output_srt: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt
+      upload_report: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: blocked_rate_limited
+      retry_state:
+        attempts: 1
+        last_attempted_at: '2026-04-23T10:52:50Z'
+        last_error: API rate limit or quota exceeded. Please wait before retrying.
+    shorts:
+      workspace_dir: publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  the_agent_revolution:
+    package: autonomous-agents/the-agent-revolution
+    status_path: publications/autonomous-agents/the-agent-revolution/status.yaml
+    notebook_source_status: publications/autonomous-agents/status.yaml
+    markdown_path: publications/autonomous-agents/the-agent-revolution/the-agent-revolution.md
+    notebook_id: cc1c6170-b7d5-426a-bee4-a4acc2f5a60c
+    notebook_title: Advances and Challenges in Foundation Agents
+    essay_url: https://lambpetros.substack.com/p/the-agent-revolution
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: ti-WonOox8M
+      url: https://www.youtube.com/watch?v=ti-WonOox8M
+    cinematic:
+      title: Why AI Agents Broke Out of the Chatbox
+      hook: 'Agents look like a sudden product category, but the real shift was architectural:
+        language models stopped answering and started operating.'
+      summary: 'This cinematic brief compresses the transition from chat interfaces
+        to autonomous systems that plan, act, recover, and collaborate under real-world
+        constraints.
+
+
+        The goal is to hook viewers on the structural shift, then push them toward
+        the full research breakdown behind modern agent design.
+
+        '
+      video_file: publications/autonomous-agents/the-agent-revolution/artifacts/video/the_agent_revolution_cinematic.mp4
+      output_srt: publications/autonomous-agents/the-agent-revolution/artifacts/video/the_agent_revolution_cinematic.srt
+      upload_report: publications/autonomous-agents/the-agent-revolution/artifacts/video/the_agent_revolution_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  operating_agents_action:
+    package: autonomous-agents/essays/action
+    status_path: publications/autonomous-agents/essays/action/status.yaml
+    markdown_path: publications/autonomous-agents/essays/action/01-action-tool-use.md
+    notebook_id: 43eacb58-6e9e-4db2-8a3f-41075f074177
+    notebook_title: 'Chapter 8 Blueprint: Action Systems and Tool Use'
+    essay_url: https://lambpetros.substack.com/p/operating-agents-i-when-language
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: swvX4mduJtk
+      url: https://www.youtube.com/watch?v=swvX4mduJtk
+    cinematic:
+      title: Why Reliable Agents Start with Action Boundaries
+      hook: Agents fail less often when action is treated as a contract surface, not
+        a vibe layered on top of language.
+      summary: 'This cinematic brief focuses on the boundary between language and
+        action: what changes once a model can make commitments, touch tools, and leave
+        traces in the world.
+
+
+        It should pull in builders who need a sharper mental model for tool use than
+        generic agent demos provide.
+
+        '
+      video_file: publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  operating_agents_memory:
+    package: autonomous-agents/essays/memory
+    status_path: publications/autonomous-agents/essays/memory/status.yaml
+    markdown_path: publications/autonomous-agents/essays/memory/02-memory-systems-and-authority.md
+    notebook_id: 2345e3d4-3a66-42e3-9a91-d723df10c287
+    notebook_title: 'Chapter 3 Blueprint: Memory'
+    essay_url: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: Pj4sjWvyJVQ
+      url: https://www.youtube.com/watch?v=Pj4sjWvyJVQ
+    cinematic:
+      title: Why Agent Memory Needs Authority
+      hook: Memory is not just storage. It is a control problem about which traces
+        are allowed to steer future action.
+      summary: 'This cinematic brief compresses the difference between remembering
+        more and remembering with authority, retrieval discipline, and operational
+        trust.
+
+
+        It should attract viewers who have felt the pain of agent memory drift but
+        do not yet have a clean architectural frame for it.
+
+        '
+      video_file: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  operating_agents_reasoning:
+    package: autonomous-agents/essays/reasoning
+    status_path: publications/autonomous-agents/essays/reasoning/status.yaml
+    markdown_path: publications/autonomous-agents/essays/reasoning/03-reasoning-scaffolds-and-planning.md
+    notebook_id: 285bb0df-cc68-45e5-8010-22cf7a88056a
+    notebook_title: 'Chapter 2 Blueprint: Reasoning and Planning'
+    essay_url: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: LykGDaONozw
+      url: https://www.youtube.com/watch?v=LykGDaONozw
+    cinematic:
+      title: Diagnose the Scaffold Before You Shop the Model
+      hook: Many reasoning failures blamed on the model are really failures in the
+        scaffold wrapped around it.
+      summary: 'This cinematic brief centers the architectural move behind good reasoning
+        systems: diagnose the scaffold, the memory path, and the planning loop before
+        treating model choice as the bottleneck.
+
+
+        It should work as a clean entry point for builders tired of benchmark-first
+        reasoning talk.
+
+        '
+      video_file: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  operating_agents_multi_agent:
+    package: autonomous-agents/essays/multi-agent
+    status_path: publications/autonomous-agents/essays/multi-agent/status.yaml
+    markdown_path: publications/autonomous-agents/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md
+    notebook_id: 7917892d-e1fc-40f5-8922-a282d088f15b
+    notebook_title: 'Chapter 14 Blueprint: Multi-Agent Design'
+    essay_url: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: xxd2VKlqiL4
+      url: https://www.youtube.com/watch?v=xxd2VKlqiL4
+    cinematic:
+      title: When the Second Agent Actually Buys a Boundary
+      hook: A second agent only earns its keep when it buys a real boundary in memory,
+        authority, or action space.
+      summary: 'This cinematic brief strips away the theater around multi-agent systems
+        and focuses on the narrower engineering question: when does another agent
+        create a real boundary instead of more coordination noise?
+
+
+        It should route viewers toward a cleaner decision rule than generic swarm
+        enthusiasm.
+
+        '
+      video_file: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  operating_agents_safety:
+    package: autonomous-agents/essays/safety
+    status_path: publications/autonomous-agents/essays/safety/status.yaml
+    markdown_path: publications/autonomous-agents/essays/safety/05-trust-boundaries-and-agent-safety.md
+    notebook_id: 0ea6bf22-8cb0-4da2-953e-6d7efc7244d4
+    notebook_title: 'Chapters 17, 18, and 19 Blueprint: Safety'
+    essay_url: https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: biyIKcSp3Po
+      url: https://www.youtube.com/watch?v=biyIKcSp3Po
+    cinematic:
+      title: The Attack Surface Is the Architecture
+      hook: The risk in agent systems is not just the model. It is the architecture
+        you wrapped around it and all the boundaries it quietly opened.
+      summary: 'This cinematic brief frames safety as an architectural problem, not
+        a last-mile policy layer pasted on after the system already has too many unsafe
+        degrees of freedom.
+
+
+        It should attract viewers who need a more operational model of agent safety
+        than red-team spectacle alone.
+
+        '
+      video_file: publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  operating_agents_optimization:
+    package: autonomous-agents/essays/optimization
+    status_path: publications/autonomous-agents/essays/optimization/status.yaml
+    markdown_path: publications/autonomous-agents/essays/optimization/06-workflow-optimization-and-evaluation.md
+    notebook_id: 2e2e9acb-e27c-4ac3-966c-b21e710df9ee
+    notebook_title: 'Chapters 9 and 11 Blueprint: Optimization and Self-Improvement'
+    essay_url: https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: 2Fs1iDw5I3Y
+      url: https://www.youtube.com/watch?v=2Fs1iDw5I3Y
+    cinematic:
+      title: When the Workflow Becomes the Object
+      hook: Optimization gets weirder once the workflow itself becomes the thing you
+        are tuning, measuring, and rewriting.
+      summary: 'This cinematic brief turns the bonus chapter into a broader systems
+        claim: the real object of optimization is often the scaffold, evaluation loop,
+        and workflow composition around the model.
+
+
+        It should catch viewers who care less about single prompts and more about
+        operational leverage.
+
+        '
+      video_file: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  moltbook_phenomenon:
+    package: moltbook-phenomenon
+    status_path: publications/moltbook-phenomenon/status.yaml
+    markdown_path: publications/moltbook-phenomenon/the-moltbook-phenomenon.md
+    notebook_id: d00e4691-de4c-4d48-86ea-2cea05bd708e
+    notebook_title: 'The Moltbook Phenomenon: Economics of the Agentic Social Graph'
+    essay_url: https://lambpetros.substack.com/p/the-moltbook-phenomenon
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: ahAVt338E_8
+      url: https://www.youtube.com/watch?v=ahAVt338E_8
+    cinematic:
+      title: Why Meta Bought a Broken AI Social Network
+      hook: Meta did not buy Moltbook because it was healthy. The brokenness was part
+        of the strategic value.
+      summary: 'This cinematic brief turns the Moltbook story into a sharper acquisition
+        argument about internal politics, platform leverage, and the economics of
+        the emerging agentic social graph.
+
+
+        It should work as a discovery object even for viewers who never read the original
+        post.
+
+        '
+      video_file: publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic.mp4
+      output_srt: publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic.srt
+      upload_report: publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  programmable_thinking:
+    package: programmable-thinking
+    status_path: publications/programmable-thinking/status.yaml
+    markdown_path: publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md
+    notebook_id: e97468b6-4d55-47e4-81f9-25624890bbe1
+    notebook_title: 'Recursive Language Models: Bridging Human and Model REPL Environments'
+    essay_url: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
+    cinematic:
+      title: Why LLMs Need a REPL for Their Own Thoughts
+      hook: Long prompts stop looking like input once you treat them as an environment
+        the model can inspect, filter, and program against.
+      summary: 'This cinematic brief compresses the core recursive-language-model
+        move into one structural claim: the model gets stronger when its own thinking
+        scaffold becomes programmable.
+
+
+        It should catch viewers interested in context limits, recursion, and self-orchestrating
+        reasoning systems even if they never saw the original essay.
+
+        '
+      video_file: publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.mp4
+      output_srt: publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt
+      upload_report: publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null

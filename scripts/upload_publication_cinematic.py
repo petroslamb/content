@@ -76,7 +76,7 @@ def render_description(
     hook: str,
     summary: str,
     essay_url: str,
-    baseline_longform_url: str,
+    secondary_link_url: str,
     cinematic_playlist_url: str,
 ) -> str:
     template = template_path.read_text(encoding="utf-8")
@@ -85,7 +85,7 @@ def render_description(
         hook=hook.strip(),
         summary=summary.strip(),
         essay_url=essay_url.strip(),
-        baseline_longform_url=baseline_longform_url.strip(),
+        baseline_longform_url=secondary_link_url.strip(),
         cinematic_playlist_url=cinematic_playlist_url.strip(),
     ).strip()
 
@@ -225,8 +225,10 @@ def main() -> None:
     package = get_required(publication, "package", f"{args.publication}")
     notebook_id = get_required(publication, "notebook_id", f"{args.publication}")
     essay_url = get_required(publication, "essay_url", f"{args.publication}")
-    baseline_longform_video_id = get_required(publication, "baseline_longform_video_id", f"{args.publication}")
-    baseline_longform_url = get_required(publication, "baseline_longform_url", f"{args.publication}")
+    secondary_link = publication.get("secondary_link") or {}
+    secondary_link_label = secondary_link.get("label") or "Full research breakdown"
+    secondary_link_video_id = publication.get("baseline_longform_video_id") or secondary_link.get("video_id")
+    secondary_link_url = publication.get("baseline_longform_url") or secondary_link.get("url") or essay_url
 
     cinematic = get_required(publication, "cinematic", f"{args.publication}")
     title = get_required(cinematic, "title", f"{args.publication}.cinematic")
@@ -260,7 +262,7 @@ def main() -> None:
         hook=hook,
         summary=summary,
         essay_url=essay_url,
-        baseline_longform_url=baseline_longform_url,
+        secondary_link_url=secondary_link_url,
         cinematic_playlist_url=placeholder_playlist_url,
     )
 
@@ -273,8 +275,11 @@ def main() -> None:
         "video_file_exists": video_file.exists(),
         "output_srt": str(output_srt),
         "title": title,
-        "baseline_longform_video_id": baseline_longform_video_id,
-        "baseline_longform_url": baseline_longform_url,
+        "secondary_link": {
+            "label": secondary_link_label,
+            "video_id": secondary_link_video_id,
+            "url": secondary_link_url,
+        },
         "essay_url": essay_url,
         "playlist": {
             "id": playlist_id,
@@ -318,7 +323,7 @@ def main() -> None:
         hook=hook,
         summary=summary,
         essay_url=essay_url,
-        baseline_longform_url=baseline_longform_url,
+        secondary_link_url=secondary_link_url,
         cinematic_playlist_url=playlist_url(playlist_id, playlist_title),
     )
     video_id = upload_video(
@@ -355,9 +360,10 @@ def main() -> None:
             "playlist_item_id": playlist_item_id,
             "readback": playlist_item,
         },
-        "baseline_longform": {
-            "id": baseline_longform_video_id,
-            "url": baseline_longform_url,
+        "secondary_link": {
+            "label": secondary_link_label,
+            "id": secondary_link_video_id,
+            "url": secondary_link_url,
         },
         "essay_url": essay_url,
         "video": {
