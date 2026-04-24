@@ -1,0 +1,79 @@
+{
+  "requested_id": "2504.15228",
+  "resolved": {
+    "preferred_id": "2504.15228v2",
+    "input_id": "2504.15228",
+    "title": "A Self-Improving Coding Agent",
+    "versionless_id": "2504.15228",
+    "canonical_id": "2504.15228v2",
+    "version_id": "0196dae4-9680-794c-a9ef-7fe019c38301",
+    "group_id": "01965949-4c10-786a-9ea0-6fbe61241ce4"
+  },
+  "title": "A Self-Improving Coding Agent",
+  "abstract": "Recent advancements in Large Language Models (LLMs) have spurred interest in\ndeploying LLM agents to undertake tasks in the world. LLMs are often deployed\nin agent systems: code that orchestrates LLM calls and provides them with\ntools. We demonstrate that an agent system, equipped with basic coding tools,\ncan autonomously edit itself, and thereby improve its performance on benchmark\ntasks. We find performance gains from 17% to 53% on a random subset of SWE\nBench Verified, with additional performance gains on LiveCodeBench, as well as\nsynthetically generated agent benchmarks. Our work represents an advancement in\nthe automated and open-ended design of agentic systems, and demonstrates a\ndata-efficient, non gradient-based learning mechanism driven by LLM reflection\nand code updates.",
+  "publication_date": "2025-05-16T20:58:56",
+  "authors": [
+    {
+      "id": "01985c82-84f3-7659-8411-e425605037f2",
+      "full_name": "Maxime Robeyns",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-ccde-7159-abf3-80d0ba12af13",
+      "full_name": "Martin Szummer",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-02aa-7cb7-9aae-6ddc3f0ec1dd",
+      "full_name": "Laurence Aitchison",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "fine-tuning",
+    "instruction-tuning",
+    "self-supervised-learning",
+    "tool-use",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2504.15228v2.pdf",
+    "source_url": "https://arxiv.org/abs/2504.15228"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 617,
+    "downvotes_count": 0,
+    "total_votes": 17,
+    "public_total_votes": 617,
+    "visits": {
+      "last24Hours": 4,
+      "last7Days": 13,
+      "last30Days": 108,
+      "last90Days": 299,
+      "all": 10629
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7a93-8956-7aa143d869a7",
+      "name": "University of Bristol",
+      "image": "images/organizations/university-of-bristol.jpeg"
+    },
+    {
+      "id": "01985c37-4bb3-7782-a83c-04f7ae24e649",
+      "name": "iGent AI",
+      "image": null
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

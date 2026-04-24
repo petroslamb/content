@@ -1,0 +1,119 @@
+{
+  "requested_id": "2604.02268",
+  "resolved": {
+    "preferred_id": "2604.02268v1",
+    "input_id": "2604.02268",
+    "title": "SKILL0: In-Context Agentic Reinforcement Learning for Skill Internalization",
+    "versionless_id": "2604.02268",
+    "canonical_id": "2604.02268v1",
+    "version_id": "019d511d-d09e-7393-8942-1927dfb3aa94",
+    "group_id": "019d511d-d065-788f-bb15-a8562d561925"
+  },
+  "title": "SKILL0: In-Context Agentic Reinforcement Learning for Skill Internalization",
+  "abstract": "Agent skills, structured packages of procedural knowledge and executable resources that agents dynamically load at inference time, have become a reliable mechanism for augmenting LLM agents. Yet inference-time skill augmentation is fundamentally limited: retrieval noise introduces irrelevant guidance, injected skill content imposes substantial token overhead, and the model never truly acquires the knowledge it merely follows. We ask whether skills can instead be internalized into model parameters, enabling zero-shot autonomous behavior without any runtime skill retrieval. We introduce SKILL0, an in-context reinforcement learning framework designed for skill internalization. SKILL0 introduces a training-time curriculum that begins with full skill context and progressively withdraws it. Skills are grouped offline by category and rendered with interaction history into a compact visual context, teaching he model tool invocation and multi-turn task completion. A Dynamic Curriculum then evaluates each skill file's on-policy helpfulness, retaining only those from which the current policy still benefits within a linearly decaying budget, until the agent operates in a fully zero-shot setting. Extensive agentic experiments demonstrate that SKILL0 achieves substantial improvements over the standard RL baseline (+9.7\\% for ALFWorld and +6.6\\% for Search-QA), while maintaining a highly efficient context of fewer than 0.5k tokens per step. Our code is available at this https URL.",
+  "publication_date": "2026-04-02T17:03:05",
+  "authors": [
+    {
+      "id": "01985c84-befd-71b5-995c-e0c5ab8ac063",
+      "full_name": "Zhengxi Lu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-5ca2-7719-b60a-7cd2b83e9909",
+      "full_name": "Zhiyuan Yao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-0382-7363-be21-9293e6ae8f44",
+      "full_name": "Jinyang Wu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e5a9-7243-8f51-88c95bf73e88",
+      "full_name": "Chengcheng Han",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-6973-7e6f-84e5-307050625c1d",
+      "full_name": "Qi Gu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ec40-765b-a600-e386a45011fc",
+      "full_name": "Xunliang Cai",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-eea8-77fc-aab8-a5b2bf5ca3b2",
+      "full_name": "Weiming Lu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e774-7ac2-b5d6-1937ecd8704c",
+      "full_name": "Jun Xiao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e774-7328-bafb-5e4dfeac4b73",
+      "full_name": "Yueting Zhuang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-eea8-73ae-a1dc-ae01f7eca48e",
+      "full_name": "Yongliang Shen",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [
+    {
+      "id": "019cd093-1836-715e-8cea-dc8b3c7342d9",
+      "full_name": "",
+      "user_id": null,
+      "username": "zhengxi-lu"
+    }
+  ],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.LG",
+    "deep-reinforcement-learning",
+    "fine-tuning",
+    "multi-modal-learning",
+    "tool-use",
+    "transfer-learning",
+    "transformers",
+    "zero-shot-learning"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2604.02268v1.pdf",
+    "source_url": "https://arxiv.org/abs/2604.02268"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 210,
+    "downvotes_count": 0,
+    "total_votes": 67,
+    "public_total_votes": 210,
+    "visits": {
+      "last24Hours": 28,
+      "last7Days": 340,
+      "last30Days": 3054,
+      "last90Days": 3054,
+      "all": 3054
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

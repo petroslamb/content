@@ -1,0 +1,78 @@
+{
+  "requested_id": "2604.14228",
+  "resolved": {
+    "preferred_id": "2604.14228v1",
+    "input_id": "2604.14228",
+    "title": "Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems",
+    "versionless_id": "2604.14228",
+    "canonical_id": "2604.14228v1",
+    "version_id": "019d9977-84aa-75ce-bc00-48ee3d1a8b16",
+    "group_id": "019d9977-845b-7dc8-901b-f015ebb27996"
+  },
+  "title": "Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems",
+  "abstract": "Claude Code is an agentic coding tool that can run shell commands, edit files, and call external services on behalf of the user. This study describes its comprehensive architecture by analyzing the publicly available TypeScript source code and further comparing it with OpenClaw, an independent open-source AI agent system that answers many of the same design questions from a different deployment context. Our analysis identifies five human values, philosophies, and needs that motivate the architecture (human decision authority, safety and security, reliable execution, capability amplification, and contextual adaptability) and traces them through thirteen design principles to specific implementation choices. The core of the system is a simple while-loop that calls the model, runs tools, and repeats. Most of the code, however, lives in the systems around this loop: a permission system with seven modes and an ML-based classifier, a five-layer compaction pipeline for context management, four extensibility mechanisms (MCP, plugins, skills, and hooks), a subagent delegation mechanism with worktree isolation, and append-oriented session storage. A comparison with OpenClaw, a multi-channel personal assistant gateway, shows that the same recurring design questions produce different architectural answers when the deployment context changes: from per-action safety classification to perimeter-level access control, from a single CLI loop to an embedded runtime within a gateway control plane, and from context-window extensions to gateway-wide capability registration. We finally identify six open design directions for future agent systems, grounded in recent empirical, architectural, and policy literature.",
+  "publication_date": "2026-04-14T17:59:37",
+  "authors": [
+    {
+      "id": "01985c81-e842-7419-b157-dfb3fd097758",
+      "full_name": "Jiacheng Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-250e-714a-a4e2-0871e682335c",
+      "full_name": "Xiaohan Zhao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-7acb-793a-97f1-1f70691f756e",
+      "full_name": "Xinyi Shang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d97f-7adb-940d-e7f4a27f5ce0",
+      "full_name": "Zhiqiang Shen",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.CL",
+    "cs.LG",
+    "cs.SE",
+    "cybersecurity",
+    "human-ai-interaction",
+    "inference-optimization",
+    "ml-systems",
+    "model-deployment-systems",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2604.14228v1.pdf",
+    "source_url": "https://arxiv.org/abs/2604.14228"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 90,
+    "downvotes_count": 0,
+    "total_votes": 23,
+    "public_total_votes": 90,
+    "visits": {
+      "last24Hours": 1256,
+      "last7Days": 2417,
+      "last30Days": 2417,
+      "last90Days": 2417,
+      "all": 2417
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

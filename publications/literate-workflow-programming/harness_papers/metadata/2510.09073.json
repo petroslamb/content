@@ -1,0 +1,56 @@
+{
+  "requested_id": "2510.09073",
+  "resolved": {
+    "preferred_id": "2510.09073v1",
+    "input_id": "2510.09073",
+    "title": "Literate Tracing",
+    "versionless_id": "2510.09073",
+    "canonical_id": "2510.09073v1",
+    "version_id": "0199e944-a9f0-7a35-9d05-2bfd18e6f40b",
+    "group_id": "0199e944-a9ce-7b8f-a460-f1f9c07e8883"
+  },
+  "title": "Literate Tracing",
+  "abstract": "As computer systems grow ever larger and more complex, a crucial task in software development is for one person (the system expert) to communicate to another (the system novice) how a certain program works. This paper reports on the author's experiences with a paradigm for program documentation that we call literate tracing. A literate trace explains a software system using annotated, concrete execution traces of the system. Literate traces complement both in-code comments (which often lack global context) and out-of-band design docs (which often lack a concrete connection to the code). We also describe TReX, our tool for making literate traces that are interactive, visual, and guaranteed by construction to be faithful to the program semantics. We have used TReX to write literate traces explaining components of large systems software including the Linux kernel, Git source control system, and GCC compiler.",
+  "publication_date": "2025-10-10T07:17:51",
+  "authors": [
+    {
+      "id": "01985c83-e2d6-7272-8943-97a2a20ce5ef",
+      "full_name": "Matthew Sotoudeh",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "Computer Science",
+    "cs.PL",
+    "cs.SE"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2510.09073v1.pdf",
+    "source_url": "https://arxiv.org/abs/2510.09073"
+  },
+  "metrics": {
+    "questions_count": 1,
+    "upvotes_count": 4,
+    "downvotes_count": 0,
+    "total_votes": 1,
+    "public_total_votes": 4,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 1,
+      "last30Days": 2,
+      "last90Days": 4,
+      "all": 28
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7a09-a47e-a0c87e4f3727",
+      "name": "Stanford University",
+      "image": "images/organizations/stanford.png"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

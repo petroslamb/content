@@ -1,0 +1,88 @@
+{
+  "requested_id": "2601.21557",
+  "resolved": {
+    "preferred_id": "2601.21557v2",
+    "input_id": "2601.21557",
+    "title": "Meta Context Engineering via Agentic Skill Evolution",
+    "versionless_id": "2601.21557",
+    "canonical_id": "2601.21557v2",
+    "version_id": "019cbbca-14e2-7a43-8439-927a6bba7138",
+    "group_id": "019c0cc3-1952-73e8-b369-73e077dc4dfe"
+  },
+  "title": "Meta Context Engineering via Agentic Skill Evolution",
+  "abstract": "The operational efficacy of large language models relies heavily on their inference-time context. This has established Context Engineering (CE) as a formal discipline for optimizing these inputs. Current CE methods rely on manually crafted harnesses, such as rigid generation-reflection workflows and predefined context schemas. They impose structural biases and restrict context optimization to a narrow, intuition-bound design space. To address this, we introduce Meta Context Engineering (MCE), a bi-level framework that supersedes static CE heuristics by co-evolving CE skills and context artifacts. In MCE iterations, a meta-level agent refines engineering skills via agentic crossover, a deliberative search over the history of skills, their executions, and evaluations. A base-level agent executes these skills, learns from training rollouts, and optimizes context as flexible files and code. We evaluate MCE across five disparate domains under offline and online settings. MCE demonstrates consistent performance gains, achieving 5.6--53.8% relative improvement over state-of-the-art agentic CE methods (mean of 16.9%), while maintaining superior context adaptability, transferability, and efficiency in both context usage and training.",
+  "publication_date": "2026-02-11T05:40:08",
+  "authors": [
+    {
+      "id": "01985c82-63f9-7f60-b38c-6cff9ef34064",
+      "full_name": "Haoran Ye",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019c0cc3-197d-7526-8ce9-5c4a8ab2c22b",
+      "full_name": "Xuning He",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019c0cc3-197f-7f8e-94e9-9d3c72585fec",
+      "full_name": "Vincent Arak",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-363f-7ed6-a6ca-a8de14bd40c9",
+      "full_name": "Haonan Dong",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-63f9-74f5-9e3e-91c690fef5e2",
+      "full_name": "Guojie Song",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.NE",
+    "evolutionary-algorithms",
+    "inference-optimization",
+    "meta-learning",
+    "multi-agent-learning",
+    "optimization-methods",
+    "reinforcement-learning",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2601.21557v2.pdf",
+    "source_url": "https://arxiv.org/abs/2601.21557"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 114,
+    "downvotes_count": 0,
+    "total_votes": 42,
+    "public_total_votes": 114,
+    "visits": {
+      "last24Hours": 15,
+      "last7Days": 68,
+      "last30Days": 270,
+      "last90Days": 1361,
+      "all": 1361
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7f38-af01-193670a7c218",
+      "name": "Peking University",
+      "image": "images/organizations/peking.png"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

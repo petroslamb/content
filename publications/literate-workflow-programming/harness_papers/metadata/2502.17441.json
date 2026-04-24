@@ -1,0 +1,134 @@
+{
+  "requested_id": "2502.17441",
+  "resolved": {
+    "preferred_id": "2502.17441v1",
+    "input_id": "2502.17441",
+    "title": "Renaissance of Literate Programming in the Era of LLMs: Enhancing  LLM-Based Code Generation in Large-Scale Projects",
+    "versionless_id": "2502.17441",
+    "canonical_id": "2502.17441v1",
+    "version_id": "0193fdb2-ae70-7da9-b3ca-0c90e62a9a87",
+    "group_id": "0193fdb2-ae70-7fad-81af-38f76509640b"
+  },
+  "title": "Renaissance of Literate Programming in the Era of LLMs: Enhancing  LLM-Based Code Generation in Large-Scale Projects",
+  "abstract": "Large Language Models (LLMs) have helped programmers increase efficiency\nthrough code generation, comprehension, and repair. However, their application\nto large-scale projects remains challenging due to complex interdependencies\nand the extensive size of modern codebases. Although Knuth's concept of\nLiterate Programming (LP) combines code and natural language to convey logic\nand intent, its potential for enhancing relationships in large projects has not\nbeen fully explored. In this study, we introduce the idea of Interoperable LP\n(ILP), which leverages literate programming principles to enhance the\ndevelopment of both small-scale documents and large-scale projects with LLMs.\nWe investigate how LLMs perform under ILP-style instructions for both\ndocument-oriented tasks and entire projects. Recognizing that many researchers\nrely on well-structured templates to guide LLMs, we propose a concise prompt\nengineering method to write LP documents so LLMs can better be involved in code\ngeneration. We also examine the capacity of various LLMs to generate Scheme and\nPython code on the RepoBench benchmark, illustrating the advantages of our\napproach. Our findings indicate that ILP with LLMs can enhance LLM-based code\ngeneration in large-scale project development.",
+  "publication_date": "2024-12-25T12:02:46",
+  "authors": [
+    {
+      "id": "01985c82-e0d4-7c27-bc02-812745b2ce97",
+      "full_name": "Wuyang Zhang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-78f1-7225-aeb8-6ac7602f945b",
+      "full_name": "Yansong Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763c-78f5-9e6c-5b73919d9211",
+      "full_name": "Zeyu Dong",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-de91-7a07-82ef-315133f9b4f5",
+      "full_name": "Yu Wu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-e627-7ef1-bab1-f6c90b1aa9c8",
+      "full_name": "Yingyao Zhou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-4f2c-7b64-b576-6a6b895472db",
+      "full_name": "Duolei Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-4f2c-7bee-9ee9-0ef445b8fafb",
+      "full_name": "Songsirou Xing",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-78f1-72f2-8c45-9879c95479f9",
+      "full_name": "Chichun Zhou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-4f2c-7c3b-9cce-5c5b4895989f",
+      "full_name": "Da Shen",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "Computer Science",
+    "cs.LG",
+    "cs.SE"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2502.17441v1.pdf",
+    "source_url": "https://arxiv.org/abs/2502.17441"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 1,
+    "downvotes_count": 0,
+    "total_votes": 1,
+    "public_total_votes": 1,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 0,
+      "last30Days": 1,
+      "last90Days": 3,
+      "all": 99
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7f32-bd92-3459da4957eb",
+      "name": "The Chinese University of Hong Kong, Shenzhen",
+      "image": null
+    },
+    {
+      "id": "01985c36-cf11-75c7-9950-827a5e7d5e81",
+      "name": "Stony Brook University",
+      "image": "images/organizations/stony-brook-university.jpeg"
+    },
+    {
+      "id": "01985c36-cf11-7768-8e80-7ee17642167a",
+      "name": "Rutgers University",
+      "image": "images/organizations/rutgers.png"
+    },
+    {
+      "id": "01985c36-d0db-79af-b486-728c07ed150e",
+      "name": "University of Illinois",
+      "image": null
+    },
+    {
+      "id": "01985c36-d51f-7acd-b04c-b7e03de4b573",
+      "name": "Dali University",
+      "image": null
+    },
+    {
+      "id": "01985c36-da35-7561-a816-d62e547cc9da",
+      "name": "John Hopkins University",
+      "image": null
+    },
+    {
+      "id": "01985c36-f61a-713b-8463-5ad28797a91d",
+      "name": "Liii Network",
+      "image": null
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

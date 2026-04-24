@@ -1,0 +1,114 @@
+{
+  "requested_id": "2511.16043",
+  "resolved": {
+    "preferred_id": "2511.16043v1",
+    "input_id": "2511.16043",
+    "title": "Agent0: Unleashing Self-Evolving Agents from Zero Data via Tool-Integrated Reasoning",
+    "versionless_id": "2511.16043",
+    "canonical_id": "2511.16043v1",
+    "version_id": "019aa507-bfda-7f57-9d69-b9f028d96b76",
+    "group_id": "019aa507-bfbd-7513-8524-cf255b743f94"
+  },
+  "title": "Agent0: Unleashing Self-Evolving Agents from Zero Data via Tool-Integrated Reasoning",
+  "abstract": "Large Language Model (LLM) Agents, often trained with Reinforcement Learning (RL), are constrained by a dependency on human-curated data, limiting scalability and tethering AI to human knowledge. Existing self-evolution frameworks offer an alternative but are typically restricted by the model's inherent capabilities and single-round interactions, hindering the development of complex curricula involving tool use or dynamic reasoning. We introduce Agent0, a fully autonomous framework that evolves high-performing agents without external data through multi-step co-evolution and seamless tool integration. Agent0 establishes a symbiotic competition between two agents initialized from the same base LLM: a curriculum agent that proposes increasingly challenging frontier tasks, and an executor agent that learns to solve them. We integrate external tools to enhance the executor's problem-solving capacity; this improvement, in turn, pressures the curriculum agent to construct more complex, tool-aware tasks. Through this iterative process, Agent0 establishes a self-reinforcing cycle that continuously produces high-quality curricula. Empirically, Agent0 substantially boosts reasoning capabilities, improving the Qwen3-8B-Base model by 18% on mathematical reasoning and 24% on general reasoning benchmarks. Code is available at this https URL.",
+  "publication_date": "2025-11-20T05:01:57",
+  "authors": [
+    {
+      "id": "01985c82-3305-7be5-ae91-842218f29e05",
+      "full_name": "Peng Xia",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c85-8b63-7766-8d65-3496b1c0a0a9",
+      "full_name": "Kaide Zeng",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ef77-72be-af8f-b5782b67ffd5",
+      "full_name": "Jiaqi Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e1bb-7120-8e23-bfe68bb3d51b",
+      "full_name": "Can Qin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-4e66-74a8-9e2b-fa016aca0c89",
+      "full_name": "Fang Wu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-071b-7a2f-a9d1-d83bd372a5ef",
+      "full_name": "Yiyang Zhou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d97e-75b3-9c64-ecf1ba9df82f",
+      "full_name": "Caiming Xiong",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e287-781e-b71b-3daf858a058d",
+      "full_name": "Huaxiu Yao",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.LG",
+    "fine-tuning",
+    "generative-models",
+    "reasoning",
+    "self-supervised-learning",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2511.16043v1.pdf",
+    "source_url": "https://arxiv.org/abs/2511.16043"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 280,
+    "downvotes_count": 0,
+    "total_votes": 113,
+    "public_total_votes": 280,
+    "visits": {
+      "last24Hours": 15,
+      "last7Days": 65,
+      "last30Days": 310,
+      "last90Days": 1059,
+      "all": 4606
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7a09-a47e-a0c87e4f3727",
+      "name": "Stanford University",
+      "image": "images/organizations/stanford.png"
+    },
+    {
+      "id": "01985c36-cf11-7b9a-a431-8f2fff88ca5f",
+      "name": "Salesforce Research",
+      "image": null
+    },
+    {
+      "id": "01985c36-d258-7037-a662-446b02575aa8",
+      "name": "UNC-Chapel Hill",
+      "image": null
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

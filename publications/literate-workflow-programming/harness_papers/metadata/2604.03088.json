@@ -1,0 +1,75 @@
+{
+  "requested_id": "2604.03088",
+  "resolved": {
+    "preferred_id": "2604.03088v3",
+    "input_id": "2604.03088",
+    "title": "SkVM: Revisiting Language VM for Skills across Heterogenous LLMs and Harnesses",
+    "versionless_id": "2604.03088",
+    "canonical_id": "2604.03088v3",
+    "version_id": "019d8abb-0b29-79a3-9635-6f5d708f0372",
+    "group_id": "019d60c3-86d2-7b4e-87e2-81055bb040d6"
+  },
+  "title": "SkVM: Revisiting Language VM for Skills across Heterogenous LLMs and Harnesses",
+  "abstract": "LLM agents increasingly adopt skills as a reusable unit of composition. While skills are shared across diverse agent platforms, current systems treat them as raw context, causing the same skill to behave inconsistently for different agents. This fragility undermines skill portability and execution efficiency.\nTo address this challenge, we analyze 118,000 skills and draw inspiration from traditional compiler design. We treat skills as code and LLMs as heterogeneous processors. To make portability actionable, we decompose a skill's requirements into a set of primitive capabilities, and measure how well each model-harness pair supports them. Based on these capability profiles, we propose SkVM, a compilation and runtime system designed for portable and efficient skill execution. At compile time, SkVM performs capability-based compilation, environment binding, and concurrency extraction. At runtime, SkVM applies JIT code solidification and adaptive recompilation for performance optimization.\nWe evaluate SkVM across eight LLMs of varying scales and three agent harnesses, covering SkillsBench and representative skill tasks. Results demonstrate that SkVM significantly improves task completion rates across different models and environments while reducing token consumption by up to 40%. In terms of performance, SkVM achieves up to 3.2x speedup with enhanced parallelism, and 19-50x latency reduction through code solidification.",
+  "publication_date": "2026-04-11T16:11:49",
+  "authors": [
+    {
+      "id": "01985c81-f234-7e4e-af07-e17f35cdc658",
+      "full_name": "Le Chen",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-f0d6-7537-941d-147112b3a790",
+      "full_name": "Erhu Feng",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-f312-7098-b7d8-795e85a19a8e",
+      "full_name": "Yubin Xia",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-dc26-79b2-8761-3390496c74dc",
+      "full_name": "Haibo Chen",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.LG",
+    "cs.SE",
+    "hardware-aware-algorithms",
+    "inference-optimization",
+    "ml-systems",
+    "model-deployment-systems",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2604.03088v3.pdf",
+    "source_url": "https://arxiv.org/abs/2604.03088"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 29,
+    "downvotes_count": 0,
+    "total_votes": 10,
+    "public_total_votes": 29,
+    "visits": {
+      "last24Hours": 15,
+      "last7Days": 119,
+      "last30Days": 222,
+      "last90Days": 222,
+      "all": 222
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

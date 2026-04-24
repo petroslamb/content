@@ -1,0 +1,175 @@
+{
+  "requested_id": "2601.14192",
+  "resolved": {
+    "preferred_id": "2601.14192v1",
+    "input_id": "2601.14192",
+    "title": "Toward Efficient Agents: Memory, Tool learning, and Planning",
+    "versionless_id": "2601.14192",
+    "canonical_id": "2601.14192v1",
+    "version_id": "019bdea1-048e-7bd8-933e-0415e1222367",
+    "group_id": "019bdea1-045c-7425-88a8-ad2dc1136217"
+  },
+  "title": "Toward Efficient Agents: Memory, Tool learning, and Planning",
+  "abstract": "Recent years have witnessed increasing interest in extending large language models into agentic systems. While the effectiveness of agents has continued to improve, efficiency, which is crucial for real-world deployment, has often been overlooked. This paper therefore investigates efficiency from three core components of agents: memory, tool learning, and planning, considering costs such as latency, tokens, steps, etc. Aimed at conducting comprehensive research addressing the efficiency of the agentic system itself, we review a broad range of recent approaches that differ in implementation yet frequently converge on shared high-level principles including but not limited to bounding context via compression and management, designing reinforcement learning rewards to minimize tool invocation, and employing controlled search mechanisms to enhance efficiency, which we discuss in detail. Accordingly, we characterize efficiency in two complementary ways: comparing effectiveness under a fixed cost budget, and comparing cost at a comparable level of effectiveness. This trade-off can also be viewed through the Pareto frontier between effectiveness and cost. From this perspective, we also examine efficiency oriented benchmarks by summarizing evaluation protocols for these components and consolidating commonly reported efficiency metrics from both benchmark and methodological studies. Moreover, we discuss the key challenges and future directions, with the goal of providing promising insights.",
+  "publication_date": "2026-01-20T17:51:56",
+  "authors": [
+    {
+      "id": "01985c85-768f-74b4-9d36-192fb46b0ba9",
+      "full_name": "Xiaofang Yang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-07f2-75e1-85c4-4f30072307bf",
+      "full_name": "Lijun Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-729c-7202-9bd5-bbf98d11da41",
+      "full_name": "Heng Zhou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3618-75d1-82d5-43b04176cd7a",
+      "full_name": "Tong Zhu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-f233-772a-b65c-b805df0e78f6",
+      "full_name": "Xiaoye Qu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-eaa7-74e1-8e59-5ab2c0ed1fbd",
+      "full_name": "Yuchen Fan",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-953a-770f-b726-c461d5e8c3bf",
+      "full_name": "Qianshan Wei",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-2958-7a42-ad09-6403b52b107c",
+      "full_name": "Rui Ye",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-1d4d-71d1-a36d-6da77cbdd148",
+      "full_name": "Li Kang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-4811-7227-b427-43ffc463334a",
+      "full_name": "Yiran Qin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-9d1a-73e6-9309-ae4a0fbf4f41",
+      "full_name": "Zhiqiang Kou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ef77-79fa-b25b-c6cd3f2c297d",
+      "full_name": "Daizong Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ddbd-799a-a283-43cd6d7097b6",
+      "full_name": "Qi Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e41b-70ce-b6d3-1150c7017457",
+      "full_name": "Ning Ding",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3b7d-799e-9522-ca9b9cbe3e14",
+      "full_name": "Siheng Chen",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-fb81-7f1d-bf32-546d2ed4cbb5",
+      "full_name": "Jing Shao",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [
+    {
+      "id": "01998b1b-a8aa-7171-aa8c-a38b2b08004f",
+      "full_name": "",
+      "user_id": null,
+      "username": "qianshan-wei"
+    }
+  ],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.CL",
+    "efficient-transformers",
+    "inference-optimization",
+    "optimization-methods",
+    "reinforcement-learning",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2601.14192v1.pdf",
+    "source_url": "https://arxiv.org/abs/2601.14192"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 400,
+    "downvotes_count": 0,
+    "total_votes": 206,
+    "public_total_votes": 400,
+    "visits": {
+      "last24Hours": 3,
+      "last7Days": 44,
+      "last30Days": 241,
+      "last90Days": 5021,
+      "all": 5021
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7330-9202-dddd193e607e",
+      "name": "Shanghai Artificial Intelligence Laboratory",
+      "image": null
+    },
+    {
+      "id": "01985c36-cf10-7722-bede-a3ca7ca90e27",
+      "name": "Fudan University",
+      "image": "images/organizations/fudan-university.png"
+    },
+    {
+      "id": "01985c36-cf10-776a-97cc-2c4b0cfb45b6",
+      "name": "University of Science and Technology of China",
+      "image": "images/organizations/university-of-science-and-technology-of-china.svg+xml"
+    },
+    {
+      "id": "01985c36-d0da-732c-865b-53c525aa1307",
+      "name": "Shanghai Jiaotong University",
+      "image": "images/organizations/jiaotong.png"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

@@ -58,6 +58,7 @@ Do not move generated media into the experiment workspace.
 
 - Backlog manifest:
   - `experiments/youtube-cinematic-rollout/backlog_manifest.yaml`
+  - includes `experiment.automation.watcher_automation_id` so the daily starter can avoid duplicating watcher heartbeats
 - Release ledger:
   - `experiments/youtube-cinematic-rollout/release_ledger.md`
 - Existing mapped-video exclusion source:
@@ -65,6 +66,21 @@ Do not move generated media into the experiment workspace.
 - Shared cinematic prompt and description template:
   - `experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt`
   - `experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md`
+
+## Automation Topology
+
+- Daily starter:
+  - runs once per day at `10:00` Athens time
+  - reconciles state first, then starts up to two new cinematic generations when capacity allows
+  - if it creates or detects any in-flight cinematic rollout work, it must create or refresh a temporary watcher heartbeat for this thread
+- Temporary watcher:
+  - runs every `30` minutes
+  - watches only in-flight entries already present in the backlog manifest
+  - does not start new backlog generations
+  - continues the pipeline through upload, captions, Shorts selection, render, Shorts upload, and readback
+  - deletes itself when there are no in-flight cinematic rollout entries left
+
+Do not rely on the daily starter alone for end-to-end completion. The watcher is the follow-through layer that turns started NotebookLM jobs into finished YouTube distribution work.
 
 ## Helper Scripts
 
@@ -126,6 +142,8 @@ When auth is valid and no higher-priority in-flight work blocks progress:
 ```
 
 If NotebookLM returns a global quota or rate-limit error, stop new generation for that run, record `blocked_rate_limited`, and retry on the next scheduled day.
+
+After new cinematic work is started, create or refresh the temporary 30-minute watcher so those jobs are polled to completion without waiting for the next daily run.
 
 ### 4. Upload the cinematic immediately
 
