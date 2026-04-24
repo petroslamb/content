@@ -1,0 +1,304 @@
+{
+  "requested_id": "2602.12670",
+  "resolved": {
+    "preferred_id": "2602.12670v3",
+    "input_id": "2602.12670",
+    "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+    "versionless_id": "2602.12670",
+    "canonical_id": "2602.12670v3",
+    "version_id": "019d0a91-5727-7bc0-97a9-35a676fec538",
+    "group_id": "019c6452-3d34-7749-a665-6be2290343c8"
+  },
+  "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+  "abstract": "Agent Skills are structured packages of procedural knowledge that augment LLM agents at inference time. Despite rapid adoption, there is no standard way to measure whether they actually help. We present SkillsBench, a benchmark of 86 tasks across 11 domains paired with curated Skills and deterministic verifiers. Each task is evaluated under three conditions: no Skills, curated Skills, and self-generated Skills. We test 7 agent-model configurations over 7,308 trajectories. Curated Skills raise average pass rate by 16.2 percentage points(pp), but effects vary widely by domain (+4.5pp for Software Engineering to +51.9pp for Healthcare) and 16 of 84 tasks show negative deltas. Self-generated Skills provide no benefit on average, showing that models cannot reliably author the procedural knowledge they benefit from consuming. Focused Skills with 2--3 modules outperform comprehensive documentation, and smaller models with Skills can match larger models without them.",
+  "publication_date": "2026-03-13T07:33:01",
+  "authors": [
+    {
+      "id": "01985c83-40bb-7806-88b2-9e1bbf7bcbab",
+      "full_name": "Xiangyi Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-98cb-7114-97d8-2ce7ad409181",
+      "full_name": "Wenbo Chen",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-4d83-73bf-9e81-d2bee79da3fa",
+      "full_name": "Yimin Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019c6452-3d56-76d3-8ee2-90fbe0ba3864",
+      "full_name": "Shenghan Zheng",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "0199e101-b176-7301-9402-bb49f3754aba",
+      "full_name": "Xiaokun Chen",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-4b95-7fb2-8409-31160a2c9607",
+      "full_name": "Yifeng He",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-2ed7-731c-9fca-dc68f7db6a8d",
+      "full_name": "Yubo Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-540a-70a7-ab88-117c0b994214",
+      "full_name": "Bingran You",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-39ba-7397-8c9e-a3db5a1641bb",
+      "full_name": "Haotian Shen",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-16b8-7d66-bf8b-d90c818d8561",
+      "full_name": "Jiankai Sun",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-8b36-7cfc-9d2a-5dd922ecb343",
+      "full_name": "Shuyi Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-a9c0-7d63-8fc2-47db4a1fe1f6",
+      "full_name": "Binxu Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c85-f63b-722b-aeb1-b545fd2004f8",
+      "full_name": "Qunhong Zeng",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-db51-7825-970c-d009fddd335d",
+      "full_name": "Di Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3619-7d3f-a319-2775842c90c4",
+      "full_name": "Xuandong Zhao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-2959-7e32-9dc3-b694bcf2e7b0",
+      "full_name": "Yuanli Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019c6452-3d6a-765f-b15b-3d41dc09f3a3",
+      "full_name": "Roey Ben Chaim",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ec41-7c0b-a77e-20fa4620f416",
+      "full_name": "Zonglin Di",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-2ba3-7c91-8871-72e5e82ebb21",
+      "full_name": "Yipeng Gao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-213d-77ad-aa2d-cfe81985a1c7",
+      "full_name": "Junwei He",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019afbe6-a1a5-7272-b4a9-6b4d66bab0c8",
+      "full_name": "Yizhuo He",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-6e1e-7e30-a2be-b9452e3d3a99",
+      "full_name": "Liqiang Jing",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-b59c-7542-9c81-2f47592a5fc5",
+      "full_name": "Luyang Kong",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-ba7a-7cc1-a3f0-19e2e19823ae",
+      "full_name": "Xin Lan",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e1bb-7c9c-b858-c62ec5139a9e",
+      "full_name": "Jiachen Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-08ac-71f5-a5e6-0cdfe1a5cb28",
+      "full_name": "Songlin Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-6d3d-7971-8c20-d17c7c4dd964",
+      "full_name": "Yijiang Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e4e5-7d3a-aa83-31ca3ed95f7e",
+      "full_name": "Yueqian Lin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e5a9-7e44-91e3-2553521cac0e",
+      "full_name": "Xinyi Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-0ab6-7f20-9798-429de0794505",
+      "full_name": "Xuanqing Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-0c9e-750d-87fc-723756ce1ac5",
+      "full_name": "Haoran Lyu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-42b3-7d20-8cb1-0bc37eea5a75",
+      "full_name": "Ze Ma",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-b1c2-757d-87d8-b61ef01ab94f",
+      "full_name": "Bowei Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3d3a-70f0-adcc-62dc3aa5706d",
+      "full_name": "Runhui Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e912-741e-8fbe-037e7b358f77",
+      "full_name": "Tianyu Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "0199bcde-c8e3-731b-8461-1c71dcccb980",
+      "full_name": "Wengao Ye",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d859-75d1-86e3-19c72395ca8d",
+      "full_name": "Yue Zhang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-78f1-7ba1-a98a-d9d9e7a157ff",
+      "full_name": "Hanwen Xing",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019c6452-3d94-7bec-939f-91d5605af22b",
+      "full_name": "Yiqi Xue",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-319f-744b-823c-7fd5878d6b4f",
+      "full_name": "Steven Dillmann",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019c6452-3d97-74ec-876e-7df49945dd7f",
+      "full_name": "Han-chung Lee",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [
+    {
+      "id": "01998963-5cb6-7c45-a0e3-a03f979b9ed9",
+      "full_name": "",
+      "user_id": null,
+      "username": "xiangyi-li"
+    }
+  ],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "data-curation",
+    "generative-models",
+    "lightweight-models",
+    "reasoning",
+    "test-time-inference",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2602.12670v3.pdf",
+    "source_url": "https://arxiv.org/abs/2602.12670"
+  },
+  "metrics": {
+    "questions_count": 3,
+    "upvotes_count": 217,
+    "downvotes_count": 0,
+    "total_votes": 104,
+    "public_total_votes": 217,
+    "visits": {
+      "last24Hours": 45,
+      "last7Days": 247,
+      "last30Days": 1174,
+      "last90Days": 4400,
+      "all": 4400
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

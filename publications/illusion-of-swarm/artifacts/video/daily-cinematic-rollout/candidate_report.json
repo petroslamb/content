@@ -1,0 +1,220 @@
+{
+  "package": "publications/illusion-of-swarm",
+  "srt_file": "publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt",
+  "existing_short_count": 0,
+  "candidate_count": 9,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:09.920",
+      "end": "00:01:38.479",
+      "start_seconds": 9.92,
+      "end_seconds": 98.479,
+      "duration_seconds": 88.559,
+      "excerpt": "it off to a coder agent, and lets a reviewer check the work, all operating like human experts. But a 2026 study from the University of British Columbia aggressively tested that setup. Researchers took a multi- aent system, stripped away the distinct personas, pulled their tools, and handed the entire library to a single AI model. This compiled system used 53.7% fewer tokens and cut latency by nearly half. The single model did the exact same quality of work, but it was twice as fast and half the price. This chart shows the Kim benchmark, which tested 180 configurations. As the number of agents increases, there is a clear negative trend line in performance. Every new agent adds coordination overhead and a point of failure, eventually dragging the system down. These sprawling societies of minds are not a more advanced form of intelligence. They are often just inefficient workflows designed to compensate for the fact that single models still struggle to organize tasks on their own. The primary bottleneck in these workflows is how the agents talk to one another. To coordinate, these models rely almost entirely on the English language, which is a remarkably lossy way to move data. An AI's understanding is a dense matrix of highdimensional math. To pass insight, it funnels those precise probabilities into a narrow string of text. The",
+      "suggested_slug": "off-coder-agent-lets-reviewer-check-work-all",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        5,
+        41
+      ]
+    },
+    {
+      "start": "00:00:34.079",
+      "end": "00:02:02.719",
+      "start_seconds": 34.079,
+      "end_seconds": 122.719,
+      "duration_seconds": 88.64,
+      "excerpt": "fewer tokens and cut latency by nearly half. The single model did the exact same quality of work, but it was twice as fast and half the price. This chart shows the Kim benchmark, which tested 180 configurations. As the number of agents increases, there is a clear negative trend line in performance. Every new agent adds coordination overhead and a point of failure, eventually dragging the system down. These sprawling societies of minds are not a more advanced form of intelligence. They are often just inefficient workflows designed to compensate for the fact that single models still struggle to organize tasks on their own. The primary bottleneck in these workflows is how the agents talk to one another. To coordinate, these models rely almost entirely on the English language, which is a remarkably lossy way to move data. An AI's understanding is a dense matrix of highdimensional math. To pass insight, it funnels those precise probabilities into a narrow string of text. The receiving agent guesses at missing context. Minor errors compound until a tiny hallucination becomes a catastrophic failure. If a single model is faster, cheaper, and more accurate, we have to ask why engineers were forced to build these swarms in the first place. Single agents work flawlessly right up until they hit a specific mathematical wall. It's called the",
+      "suggested_slug": "fewer-tokens-cut-latency-nearly-half-single-model",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        15,
+        51
+      ]
+    },
+    {
+      "start": "00:01:01.760",
+      "end": "00:02:30.879",
+      "start_seconds": 61.76,
+      "end_seconds": 150.879,
+      "duration_seconds": 89.119,
+      "excerpt": "not a more advanced form of intelligence. They are often just inefficient workflows designed to compensate for the fact that single models still struggle to organize tasks on their own. The primary bottleneck in these workflows is how the agents talk to one another. To coordinate, these models rely almost entirely on the English language, which is a remarkably lossy way to move data. An AI's understanding is a dense matrix of highdimensional math. To pass insight, it funnels those precise probabilities into a narrow string of text. The receiving agent guesses at missing context. Minor errors compound until a tiny hallucination becomes a catastrophic failure. If a single model is faster, cheaper, and more accurate, we have to ask why engineers were forced to build these swarms in the first place. Single agents work flawlessly right up until they hit a specific mathematical wall. It's called the disambiguation threshold. The wall is a result of semantic confusibility. When a developer gives a model a list of tools it can use, the model maps the descriptions into its internal space. When too many tools sound alike, that map becomes too crowded for the model to navigate. In this 3D map, 50 distinct actions have coordinates spaced far apart, so the model easily targets the right node. But at 90 tools, actions like resolve ticket and refund payment",
+      "suggested_slug": "not-more-advanced-form-intelligence-they-are-often",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        27,
+        63
+      ]
+    },
+    {
+      "start": "00:01:41.600",
+      "end": "00:03:11.760",
+      "start_seconds": 101.6,
+      "end_seconds": 191.76,
+      "duration_seconds": 90.16,
+      "excerpt": "tiny hallucination becomes a catastrophic failure. If a single model is faster, cheaper, and more accurate, we have to ask why engineers were forced to build these swarms in the first place. Single agents work flawlessly right up until they hit a specific mathematical wall. It's called the disambiguation threshold. The wall is a result of semantic confusibility. When a developer gives a model a list of tools it can use, the model maps the descriptions into its internal space. When too many tools sound alike, that map becomes too crowded for the model to navigate. In this 3D map, 50 distinct actions have coordinates spaced far apart, so the model easily targets the right node. But at 90 tools, actions like resolve ticket and refund payment overlap. The coordinates blur together, and the selector logic vibrates, unable to lock on. At this point, the model begins to guess blindly. Routing accuracy falls off a cliff, making a massive flat tool library impossible for a single model to manage. This reveals the real purpose of the modern swarm. Defining different digital personas isn't about creating new types of intelligence. It's about building code fences. Creating a marketing agent and a database agent keeps those 90 tools in separate localized namespaces. It ensures that similar tools never occupy the same mathematical space at the same time. There are rare cases where multiple agents are actually mandatory.",
+      "suggested_slug": "tiny-hallucination-becomes-catastrophic-failure-single-model-faster",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        44,
+        81
+      ]
+    },
+    {
+      "start": "00:02:05.680",
+      "end": "00:03:34.400",
+      "start_seconds": 125.68,
+      "end_seconds": 214.4,
+      "duration_seconds": 88.72,
+      "excerpt": "developer gives a model a list of tools it can use, the model maps the descriptions into its internal space. When too many tools sound alike, that map becomes too crowded for the model to navigate. In this 3D map, 50 distinct actions have coordinates spaced far apart, so the model easily targets the right node. But at 90 tools, actions like resolve ticket and refund payment overlap. The coordinates blur together, and the selector logic vibrates, unable to lock on. At this point, the model begins to guess blindly. Routing accuracy falls off a cliff, making a massive flat tool library impossible for a single model to manage. This reveals the real purpose of the modern swarm. Defining different digital personas isn't about creating new types of intelligence. It's about building code fences. Creating a marketing agent and a database agent keeps those 90 tools in separate localized namespaces. It ensures that similar tools never occupy the same mathematical space at the same time. There are rare cases where multiple agents are actually mandatory. This diagram shows a system using heterogeneous substrates where a vision model looks at pixels and a text model writes a report. Because these use different hardware architectures, they must remain separated. We also need swarms for safety boundaries where a critic agent is physically isolated from the generator or for embodied coordination where multiple robots have",
+      "suggested_slug": "developer-gives-model-list-tools-can-use-model",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        54,
+        91
+      ]
+    },
+    {
+      "start": "00:02:44.319",
+      "end": "00:04:14.400",
+      "start_seconds": 164.319,
+      "end_seconds": 254.4,
+      "duration_seconds": 90.081,
+      "excerpt": "the real purpose of the modern swarm. Defining different digital personas isn't about creating new types of intelligence. It's about building code fences. Creating a marketing agent and a database agent keeps those 90 tools in separate localized namespaces. It ensures that similar tools never occupy the same mathematical space at the same time. There are rare cases where multiple agents are actually mandatory. This diagram shows a system using heterogeneous substrates where a vision model looks at pixels and a text model writes a report. Because these use different hardware architectures, they must remain separated. We also need swarms for safety boundaries where a critic agent is physically isolated from the generator or for embodied coordination where multiple robots have to negotiate shared physical space without crashing. But outside of those rigid hardware or safety rules, the multi-agent persona is a workound, a temporary fix for a routing problem. The future of this technology is not more agents. The sprawling swarm is not a final product. It is a temporary training rig used to build the scaffolding for tomorrow's models. Engineers build these expensive systems to debate, explore, and correct errors in the lab. They log every successful trajectory and every internal correction to create a data set of highquality reasoning through process aware distillation. Those multi-agent",
+      "suggested_slug": "real-purpose-modern-swarm-defining-different-digital-personas",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        71,
+        108
+      ]
+    },
+    {
+      "start": "00:03:11.760",
+      "end": "00:04:40.400",
+      "start_seconds": 191.76,
+      "end_seconds": 280.4,
+      "duration_seconds": 88.64,
+      "excerpt": "heterogeneous substrates where a vision model looks at pixels and a text model writes a report. Because these use different hardware architectures, they must remain separated. We also need swarms for safety boundaries where a critic agent is physically isolated from the generator or for embodied coordination where multiple robots have to negotiate shared physical space without crashing. But outside of those rigid hardware or safety rules, the multi-agent persona is a workound, a temporary fix for a routing problem. The future of this technology is not more agents. The sprawling swarm is not a final product. It is a temporary training rig used to build the scaffolding for tomorrow's models. Engineers build these expensive systems to debate, explore, and correct errors in the lab. They log every successful trajectory and every internal correction to create a data set of highquality reasoning through process aware distillation. Those multi-agent reasoning traces are fed directly back into a single model. The single core learns to replicate the entire debate internally. The single model internalizes the scaffolding, burning the multi-agent reasoning steps directly into its own mathematical weights. Swarms are essentially training wheels. They are necessary to teach a system balance, but you don't leave them on during live deployment. But while engineers are moving to distill these",
+      "suggested_slug": "heterogeneous-substrates-where-vision-model-looks-pixels-text",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        83,
+        120
+      ]
+    },
+    {
+      "start": "00:03:42.159",
+      "end": "00:05:11.680",
+      "start_seconds": 222.159,
+      "end_seconds": 311.68,
+      "duration_seconds": 89.521,
+      "excerpt": "temporary fix for a routing problem. The future of this technology is not more agents. The sprawling swarm is not a final product. It is a temporary training rig used to build the scaffolding for tomorrow's models. Engineers build these expensive systems to debate, explore, and correct errors in the lab. They log every successful trajectory and every internal correction to create a data set of highquality reasoning through process aware distillation. Those multi-agent reasoning traces are fed directly back into a single model. The single core learns to replicate the entire debate internally. The single model internalizes the scaffolding, burning the multi-agent reasoning steps directly into its own mathematical weights. Swarms are essentially training wheels. They are necessary to teach a system balance, but you don't leave them on during live deployment. But while engineers are moving to distill these swarms away, the human world is doing the opposite. In an attempt to keep up, global corporations are restructuring their human departments to mirror these AI architectures. Companies are creating roles like agent orchestrators and designing internal communication loops meant specifically to manage the sprawling societies of minds we've been discussing. The irony is that society is matching its organizational charts to a digital structure that the industry is actively trying to dismantle. We are",
+      "suggested_slug": "temporary-fix-for-routing-problem-future-this-technology",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        96,
+        133
+      ]
+    },
+    {
+      "start": "00:04:34.080",
+      "end": "00:05:26.600",
+      "start_seconds": 274.08,
+      "end_seconds": 326.6,
+      "duration_seconds": 52.52,
+      "excerpt": "during live deployment. But while engineers are moving to distill these swarms away, the human world is doing the opposite. In an attempt to keep up, global corporations are restructuring their human departments to mirror these AI architectures. Companies are creating roles like agent orchestrators and designing internal communication loops meant specifically to manage the sprawling societies of minds we've been discussing. The irony is that society is matching its organizational charts to a digital structure that the industry is actively trying to dismantle. We are locking human workflows into a mechanical workound, redesigning our companies to fit a scaffold that is already being pulled down. To understand the data behind this shift, read the full architectural breakdown at rooted layers.",
+      "suggested_slug": "during-live-deployment-but-while-engineers-are-moving",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        119,
+        140
+      ]
+    }
+  ]
+}

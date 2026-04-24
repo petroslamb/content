@@ -1,0 +1,57 @@
+{
+  "requested_id": "2603.05344",
+  "resolved": {
+    "preferred_id": "2603.05344v3",
+    "input_id": "2603.05344",
+    "title": "Building Effective AI Coding Agents for the Terminal: Scaffolding, Harness, Context Engineering, and Lessons Learned",
+    "versionless_id": "2603.05344",
+    "canonical_id": "2603.05344v3",
+    "version_id": "019d272a-ab3e-70b5-b9bd-509a8ae626fd",
+    "group_id": "019cc18b-6cbf-79e7-b083-7245b85e62f3"
+  },
+  "title": "Building Effective AI Coding Agents for the Terminal: Scaffolding, Harness, Context Engineering, and Lessons Learned",
+  "abstract": "The landscape of AI coding assistance is undergoing a fundamental shift from complex IDE plugins to versatile, terminal-native agents. Operating directly where developers manage source control, execute builds, and deploy environments, CLI-based agents offer unprecedented autonomy for long-horizon development tasks. In this paper, we present OPENDEV, an open-source, command-line coding agent written in Rust, engineered specifically for this new paradigm. Effective autonomous assistance requires strict safety controls and highly efficient context management to prevent context bloat and reasoning degradation. OPENDEV overcomes these challenges through a compound AI system architecture with workload-specialized model routing, a dual-agent architecture separating planning from execution, lazy tool discovery, and adaptive context compaction that progressively reduces older observations. Furthermore, it employs an automated memory system to accumulate project-specific knowledge across sessions and counteracts instruction fade-out through event-driven system reminders. By enforcing explicit reasoning phases and prioritizing context efficiency, OPENDEV provides a secure, extensible foundation for terminal-first AI assistance, offering a blueprint for robust autonomous software engineering.",
+  "publication_date": "2026-03-13T04:11:16",
+  "authors": [
+    {
+      "id": "01985c82-02aa-7bc0-b990-d6fae803b8ab",
+      "full_name": "Nghi D. Q. Bui",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "continual-learning",
+    "cs.AI",
+    "human-ai-interaction",
+    "inference-optimization",
+    "ml-systems",
+    "reasoning",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.05344v3.pdf",
+    "source_url": "https://arxiv.org/abs/2603.05344"
+  },
+  "metrics": {
+    "questions_count": 1,
+    "upvotes_count": 59,
+    "downvotes_count": 0,
+    "total_votes": 10,
+    "public_total_votes": 59,
+    "visits": {
+      "last24Hours": 11,
+      "last7Days": 69,
+      "last30Days": 432,
+      "last90Days": 1065,
+      "all": 1065
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

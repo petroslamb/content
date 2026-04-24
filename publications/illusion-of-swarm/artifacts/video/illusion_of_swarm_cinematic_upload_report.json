@@ -1,0 +1,38 @@
+{
+  "created_at": "2026-04-24T08:09:59.844371+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "illusion_of_swarm",
+  "package": "illusion-of-swarm",
+  "notebook_id": "8bdbaa61-25f3-4c6c-bc4f-cdcb29b174ee",
+  "video_source_file": "publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4",
+  "caption_output": "publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt",
+  "title": "Why Most Multi-Agent AI Is a Workaround",
+  "description": "Adding more agents can look like progress while quietly turning the system into a routing workaround that never fixed the real design problem.\n\nThis cinematic brief reframes the multi-agent boom as a temporary coping mechanism for action spaces that were never decomposed cleanly enough in the first place.\n\nIt is meant to land one durable claim quickly for operators and builders: better decomposition often beats louder coordination theater.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-illusion-of-the-swarm\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=AigaLYfpFZc\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4xMkVGQjNCMUM1N0RFNEUx",
+    "readback": null
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "AigaLYfpFZc",
+    "url": "https://www.youtube.com/watch?v=AigaLYfpFZc"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-illusion-of-the-swarm",
+  "video": {
+    "id": "q3_gPM4E8yw",
+    "url": "https://www.youtube.com/watch?v=q3_gPM4E8yw",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-24T08:09:54Z"
+    }
+  }
+}

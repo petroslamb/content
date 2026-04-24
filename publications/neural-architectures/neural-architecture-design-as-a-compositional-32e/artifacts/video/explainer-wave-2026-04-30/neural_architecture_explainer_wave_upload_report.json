@@ -1,0 +1,125 @@
+{
+  "created_at": "2026-04-23T07:02:18.770510+00:00",
+  "workflow": "ad_hoc_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "BSwFQTIrAmQ",
+    "url": "https://www.youtube.com/watch?v=BSwFQTIrAmQ"
+  },
+  "related_longform": {
+    "id": "BSwFQTIrAmQ",
+    "url": "https://www.youtube.com/watch?v=BSwFQTIrAmQ"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full explainer video",
+      "url": "https://www.youtube.com/watch?v=BSwFQTIrAmQ"
+    },
+    "secondary": null
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/explainer-wave-2026-04-30/portrait/01-what-ai-architects-design-now_portrait.mp4",
+      "title": "What AI Architects Design Now #shorts",
+      "summary": "Modern AI architects stopped hand-designing one perfect machine and started designing reusable scaffolds that can generate whole families of models.",
+      "publish_at": "2026-04-30T19:00:00Z",
+      "video_id": "CV7mhng2Q3w",
+      "url": "https://www.youtube.com/watch?v=CV7mhng2Q3w",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4zNDIxRUJGQThFRTg1QzAy"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "BSwFQTIrAmQ"
+        ]
+      },
+      "probe": {
+        "path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/explainer-wave-2026-04-30/portrait/01-what-ai-architects-design-now_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 48.458333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 48.412993
+        },
+        "format_duration": 48.458333,
+        "duration": 48.458333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "What AI Architects Design Now #shorts",
+        "published_at": "2026-04-23T07:02:05Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4zNDIxRUJGQThFRTg1QzAy",
+        "position": 103,
+        "title": "What AI Architects Design Now #shorts"
+      }
+    },
+    {
+      "video_path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/explainer-wave-2026-04-30/portrait/02-identical-ai-blocks-learn-different-jobs_portrait.mp4",
+      "title": "Why Identical AI Blocks Learn Different Jobs #shorts",
+      "summary": "Even when a model is built from repeated blocks, training causes different layers and heads to specialize into different functional roles.",
+      "publish_at": "2026-05-02T19:00:00Z",
+      "video_id": "9evdTRtwjaI",
+      "url": "https://www.youtube.com/watch?v=9evdTRtwjaI",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EODgyNjY4MzA3QzY5RTkx"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "BSwFQTIrAmQ"
+        ]
+      },
+      "probe": {
+        "path": "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/explainer-wave-2026-04-30/portrait/02-identical-ai-blocks-learn-different-jobs_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 42.0
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 41.935011
+        },
+        "format_duration": 42.0,
+        "duration": 42.0
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why Identical AI Blocks Learn Different Jobs #shorts",
+        "published_at": "2026-04-23T07:02:11Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EODgyNjY4MzA3QzY5RTkx",
+        "position": 105,
+        "title": "Why Identical AI Blocks Learn Different Jobs #shorts"
+      }
+    }
+  ]
+}
