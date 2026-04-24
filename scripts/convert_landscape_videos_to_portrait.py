@@ -1,8 +1,27 @@
 from __future__ import annotations
 
 import argparse
+import os
+import shutil
 import subprocess
 from pathlib import Path
+
+
+def resolve_binary(name: str) -> str:
+    candidates = [
+        os.environ.get(name.upper()),
+        shutil.which(name),
+        f"/opt/homebrew/bin/{name}",
+        f"/usr/local/bin/{name}",
+    ]
+    for candidate in candidates:
+        if candidate and Path(candidate).exists():
+            return candidate
+    raise FileNotFoundError(f"Could not find required binary: {name}")
+
+
+FFMPEG_BIN = resolve_binary("ffmpeg")
+FFPROBE_BIN = resolve_binary("ffprobe")
 
 
 def run(cmd: list[str]) -> None:
@@ -12,7 +31,7 @@ def run(cmd: list[str]) -> None:
 def ffprobe_duration_seconds(path: Path) -> float:
     result = subprocess.run(
         [
-            "ffprobe",
+            FFPROBE_BIN,
             "-v",
             "error",
             "-show_entries",
@@ -47,7 +66,7 @@ def convert_video(
     )
     run(
         [
-            "ffmpeg",
+            FFMPEG_BIN,
             "-y",
             "-i",
             str(input_path),

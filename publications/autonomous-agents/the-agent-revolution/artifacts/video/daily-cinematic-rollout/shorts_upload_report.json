@@ -1,0 +1,228 @@
+{
+  "created_at": "2026-04-24T11:02:18.693057+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "N7FKycVsIUw",
+    "url": "https://www.youtube.com/watch?v=N7FKycVsIUw"
+  },
+  "related_longform": {
+    "id": "N7FKycVsIUw",
+    "url": "https://www.youtube.com/watch?v=N7FKycVsIUw"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=N7FKycVsIUw"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=ti-WonOox8M"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 4,
+  "uploaded_count": 4,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/01-engine-without-a-vehicle_portrait.mp4",
+      "title": "An LLM Is an Engine Without a Vehicle #shorts",
+      "summary": "A language model can generate power, but autonomy needs memory, steering, and sensors, not just next-token prediction.",
+      "publish_at": "2026-04-25T07:30:00Z",
+      "video_id": "bQQYzmHmAoo",
+      "url": "https://www.youtube.com/watch?v=bQQYzmHmAoo",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wRkVBNUY4OTkzN0JCNTA2"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "N7FKycVsIUw"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/01-engine-without-a-vehicle_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 67.041667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 66.966009
+        },
+        "format_duration": 67.041667,
+        "duration": 67.041667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "PT1M8S",
+        "definition": "hd",
+        "title": "An LLM Is an Engine Without a Vehicle #shorts",
+        "published_at": "2026-04-24T11:01:49Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wRkVBNUY4OTkzN0JCNTA2",
+        "position": 109,
+        "title": "An LLM Is an Engine Without a Vehicle #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/02-agents-need-a-world-model_portrait.mp4",
+      "title": "Why Agents Simulate Before They Act #shorts",
+      "summary": "Foundation agents need a world model so they can test consequences internally before they commit to real-world action.",
+      "publish_at": "2026-04-26T07:30:00Z",
+      "video_id": "kFEns6A8tZk",
+      "url": "https://www.youtube.com/watch?v=kFEns6A8tZk",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC43NjE5NDdDRTdENjQ3RTkw"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "N7FKycVsIUw"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/02-agents-need-a-world-model_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 35.833333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 35.781995
+        },
+        "format_duration": 35.833333,
+        "duration": 35.833333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "PT36S",
+        "definition": "hd",
+        "title": "Why Agents Simulate Before They Act #shorts",
+        "published_at": "2026-04-24T11:01:58Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC43NjE5NDdDRTdENjQ3RTkw",
+        "position": 110,
+        "title": "Why Agents Simulate Before They Act #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/03-multi-agent-debate-drops-errors_portrait.mp4",
+      "title": "Why Multi-Agent Debate Drops Error Rates #shorts",
+      "summary": "Independent agents critique one another, and that social friction removes hallucinations a single isolated agent would miss.",
+      "publish_at": "2026-04-27T07:30:00Z",
+      "video_id": "TeU3k4i6X_8",
+      "url": "https://www.youtube.com/watch?v=TeU3k4i6X_8",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ENEEyOTIwNkY4NzFGMkQ2"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "N7FKycVsIUw"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/03-multi-agent-debate-drops-errors_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 45.875
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 45.766009
+        },
+        "format_duration": 45.875,
+        "duration": 45.875
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Why Multi-Agent Debate Drops Error Rates #shorts",
+        "published_at": "2026-04-24T11:02:05Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ENEEyOTIwNkY4NzFGMkQ2",
+        "position": 111,
+        "title": "Why Multi-Agent Debate Drops Error Rates #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/04-agents-treat-guardrails-like-puzzles_portrait.mp4",
+      "title": "Agents Treat Guardrails Like Logic Puzzles #shorts",
+      "summary": "Static chatbot safety rules fail once agents can plan, because they learn to route around constraints instead of obeying them.",
+      "publish_at": "2026-04-28T06:00:00Z",
+      "video_id": "opdhk_sizGY",
+      "url": "https://www.youtube.com/watch?v=opdhk_sizGY",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC42NEZDNTU0RTRENDUzRjMz"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "N7FKycVsIUw"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/portrait/04-agents-treat-guardrails-like-puzzles_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 46.5
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 46.416009
+        },
+        "format_duration": 46.5,
+        "duration": 46.5
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Agents Treat Guardrails Like Logic Puzzles #shorts",
+        "published_at": "2026-04-24T11:02:11Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC42NEZDNTU0RTRENDUzRjMz",
+        "position": 112,
+        "title": "Agents Treat Guardrails Like Logic Puzzles #shorts"
+      }
+    }
+  ]
+}

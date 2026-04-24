@@ -1,0 +1,81 @@
+{
+  "requested_id": "2405.06907",
+  "resolved": {
+    "preferred_id": "2405.06907v2",
+    "input_id": "2405.06907",
+    "title": "AIOS Compiler: LLM as Interpreter for Natural Language Programming and\n  Flow Programming of AI Agents",
+    "versionless_id": "2405.06907",
+    "canonical_id": "2405.06907v2",
+    "version_id": "018f9cde-23f8-72d4-8785-bc0d07da679b",
+    "group_id": "018f9cde-23f8-717b-aa3b-614639af8f09"
+  },
+  "title": "AIOS Compiler: LLM as Interpreter for Natural Language Programming and\n  Flow Programming of AI Agents",
+  "abstract": "Since their inception, programming languages have trended towards greater\nreadability and lower barriers for programmers. Following this trend, natural\nlanguage can be a promising type of programming language that provides great\nflexibility and usability and helps towards the democracy of programming.\nHowever, the inherent vagueness, ambiguity, and verbosity of natural language\npose significant challenges in developing an interpreter that can accurately\nunderstand the programming logic and execute instructions written in natural\nlanguage. Fortunately, recent advancements in Large Language Models (LLMs) have\ndemonstrated remarkable proficiency in interpreting complex natural language.\nInspired by this, we develop a novel system for Code Representation and\nExecution (CoRE), which employs LLM as interpreter to interpret and execute\nnatural language instructions. The proposed system unifies natural language\nprogramming, pseudo-code programming, and flow programming under the same\nrepresentation for constructing language agents, while LLM serves as the\ninterpreter to interpret and execute the agent programs. In this paper, we\nbegin with defining the programming syntax that structures natural language\ninstructions logically. During the execution, we incorporate external memory to\nminimize redundancy. Furthermore, we equip the designed interpreter with the\ncapability to invoke external tools, compensating for the limitations of LLM in\nspecialized domains or when accessing real-time information. This work is\nopen-source at https://github.com/agiresearch/CoRE,\nhttps://github.com/agiresearch/OpenAGI, and\nhttps://github.com/agiresearch/AIOS.",
+  "publication_date": "2024-05-21T20:35:55",
+  "authors": [
+    {
+      "id": "01985c81-e0eb-7671-ac9d-3302f2a41f5a",
+      "full_name": "Shuyuan Xu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e0eb-7761-9160-fb45a4dbc89e",
+      "full_name": "Zelong Li",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-dc26-70e7-9eaa-f2d85a078371",
+      "full_name": "Kai Mei",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e0eb-7226-91c9-9ab65d99a513",
+      "full_name": "Yongfeng Zhang",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agent-based-systems",
+    "Computer Science",
+    "conversational-ai",
+    "cs.AI",
+    "cs.CL",
+    "cs.LG",
+    "cs.PL",
+    "human-ai-interaction",
+    "natural-language-processing",
+    "programming-languages"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2405.06907v2.pdf",
+    "source_url": "https://alphaxiv.org/paper/2405.06907"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 18,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 18,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 1,
+      "last30Days": 2,
+      "last90Days": 6,
+      "all": 286
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf11-7768-8e80-7ee17642167a",
+      "name": "Rutgers University",
+      "image": "images/organizations/rutgers.png"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

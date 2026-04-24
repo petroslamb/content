@@ -1,0 +1,178 @@
+{
+  "requested_id": "2408.04820",
+  "resolved": {
+    "preferred_id": "2408.04820v4",
+    "input_id": "2408.04820",
+    "title": "Natural Language Outlines for Code: Literate Programming in the LLM Era",
+    "versionless_id": "2408.04820",
+    "canonical_id": "2408.04820v4",
+    "version_id": "019645c6-7460-78d6-820f-5bf226df4d05",
+    "group_id": "019134f2-2878-7346-bf38-228423775078"
+  },
+  "title": "Natural Language Outlines for Code: Literate Programming in the LLM Era",
+  "abstract": "We propose using natural language outlines as a novel modality and\ninteraction surface for providing AI assistance to developers throughout the\nsoftware development process. An NL outline for a code function comprises\nmultiple statements written in concise prose, which partition the code and\nsummarize its main ideas in the style of literate programming. Crucially, we\nfind that modern LLMs can generate accurate and high-quality NL outlines in\npractice. Moreover, NL outlines enable a bidirectional sync between code and\nNL, where a developer can change either code or NL and have the LLM\nautomatically update the other. We discuss many use cases for NL outlines: they\ncan accelerate understanding and navigation of code and diffs, simplify code\nmaintenance, augment code search, steer code generation, and more. We then\npropose and compare multiple LLM prompting techniques for generating outlines\nand ask professional developers to judge outline quality. Finally, we present\ntwo case studies applying NL outlines toward code review and malware detection.",
+  "publication_date": "2025-04-17T22:02:36",
+  "authors": [
+    {
+      "id": "01985c81-f234-77a0-8976-a4be0bd5c420",
+      "full_name": "Kensen Shi",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-77bc-8ad4-7322d3c4ffa5",
+      "full_name": "Deniz Altınbüken",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7bb8-a1a3-6755d06029ba",
+      "full_name": "Saswat Anand",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ff32-7d89-933d-f632b46ecab5",
+      "full_name": "Mihai Christodorescu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7ca3-bb00-7152e2cccb2f",
+      "full_name": "Katja Grünwedel",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7a60-b254-430f00516fbf",
+      "full_name": "Alexa Koenings",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7b97-8fe6-89d5de13c7f0",
+      "full_name": "Sai Naidu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7933-b372-e7dc4043531e",
+      "full_name": "Anurag Pathak",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-72cd-a525-25bdc5955f1a",
+      "full_name": "Marc Rasi",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7411-b16c-10033bcef44e",
+      "full_name": "Fredde Ribeiro",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7894-8059-f889e7a9a4f3",
+      "full_name": "Brandon Ruffin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-700a-bda3-e16144f7152c",
+      "full_name": "Siddhant Sanyam",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-72b6-9f29-980158a78dbf",
+      "full_name": "Maxim Tabachnyk",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7a28-aeb7-232a1d714475",
+      "full_name": "Sara Toth",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-742e-9eeb-e085f847e92c",
+      "full_name": "Roy Tu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-7622-bfe4-29f8dc9ac34c",
+      "full_name": "Tobias Welp",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d97e-7dc2-b7f0-39fdab578855",
+      "full_name": "Pengcheng Yin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-fb81-7df3-8948-44db6c55f6e9",
+      "full_name": "Manzil Zaheer",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-763d-70c8-b2a0-f58ad53502bb",
+      "full_name": "Satish Chandra",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ddbd-7360-a873-1676b4bda546",
+      "full_name": "Charles Sutton",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "code-generation",
+    "Computer Science",
+    "cs.AI",
+    "cs.CL",
+    "cs.HC",
+    "cs.LG",
+    "cs.SE",
+    "explainable-ai",
+    "human-ai-interaction",
+    "representation-learning",
+    "text-generation"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2408.04820v4.pdf",
+    "source_url": "https://arXiv.org/paper/2408.04820"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 8,
+    "downvotes_count": 0,
+    "total_votes": 1,
+    "public_total_votes": 8,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 0,
+      "last30Days": 4,
+      "last90Days": 8,
+      "all": 399
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-7595-8048-85f1520518d9",
+      "name": "Google",
+      "image": "images/organizations/google.png"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

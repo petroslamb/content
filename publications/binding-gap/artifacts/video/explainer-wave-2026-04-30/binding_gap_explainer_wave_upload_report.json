@@ -1,0 +1,75 @@
+{
+  "created_at": "2026-04-23T07:02:13.264758+00:00",
+  "workflow": "ad_hoc_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "NGFObh96z8k",
+    "url": "https://www.youtube.com/watch?v=NGFObh96z8k"
+  },
+  "related_longform": {
+    "id": "NGFObh96z8k",
+    "url": "https://www.youtube.com/watch?v=NGFObh96z8k"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full explainer video",
+      "url": "https://www.youtube.com/watch?v=NGFObh96z8k"
+    },
+    "secondary": null
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "/Users/petros/Projects/content/publications/binding-gap/artifacts/video/explainer-wave-2026-04-30/portrait/01-hallucination-is-like-calling-every-illness-a-fever_portrait.mp4",
+      "title": "Hallucination Is Like Calling Every Illness a Fever #shorts",
+      "summary": "Calling every AI failure a hallucination hides the mechanism. Some systems keep the facts but still lose the wiring that attaches them correctly.",
+      "publish_at": "2026-05-01T19:00:00Z",
+      "video_id": "O4LF-2JVz78",
+      "url": "https://www.youtube.com/watch?v=O4LF-2JVz78",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wN0FBRUVFNEVBMTZBQ0Mx"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "NGFObh96z8k"
+        ]
+      },
+      "probe": {
+        "path": "/Users/petros/Projects/content/publications/binding-gap/artifacts/video/explainer-wave-2026-04-30/portrait/01-hallucination-is-like-calling-every-illness-a-fever_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 51.583333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 51.525011
+        },
+        "format_duration": 51.583333,
+        "duration": 51.583333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Hallucination Is Like Calling Every Illness a Fever #shorts",
+        "published_at": "2026-04-23T07:02:05Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wN0FBRUVFNEVBMTZBQ0Mx",
+        "position": 104,
+        "title": "Hallucination Is Like Calling Every Illness a Fever #shorts"
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "requested_id": "2602.20478",
+  "resolved": {
+    "preferred_id": "2602.20478v1",
+    "input_id": "2602.20478",
+    "title": "Codified Context: Infrastructure for AI Agents in a Complex Codebase",
+    "versionless_id": "2602.20478",
+    "canonical_id": "2602.20478v1",
+    "version_id": "019c9362-45df-77b9-a904-29030ab4eb0d",
+    "group_id": "019c9362-45d4-7e34-acfb-08d78e501c6b"
+  },
+  "title": "Codified Context: Infrastructure for AI Agents in a Complex Codebase",
+  "abstract": "LLM-based agentic coding assistants lack persistent memory: they lose coherence across sessions, forget project conventions, and repeat known mistakes. Recent studies characterize how developers configure agents through manifest files, but an open challenge remains how to scale such configurations for large, multi-agent projects. This paper presents a three-component codified context infrastructure developed during construction of a 108,000-line C# distributed system: (1) a hot-memory constitution encoding conventions, retrieval hooks, and orchestration protocols; (2) 19 specialized domain-expert agents; and (3) a cold-memory knowledge base of 34 on-demand specification documents. Quantitative metrics on infrastructure growth and interaction patterns across 283 development sessions are reported alongside four observational case studies illustrating how codified context propagates across sessions to prevent failures and maintain consistency. The framework is published as an open-source companion repository.",
+  "publication_date": "2026-02-24T02:11:26",
+  "authors": [
+    {
+      "id": "019c9362-45dd-78bd-a983-9a8117a1cf6e",
+      "full_name": "Aristidis Vasilopoulos",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "Computer Science",
+    "cs.SE"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2602.20478v1.pdf",
+    "source_url": "https://arxiv.org/abs/2602.20478"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 39,
+    "downvotes_count": 0,
+    "total_votes": 1,
+    "public_total_votes": 39,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 11,
+      "last30Days": 80,
+      "last90Days": 398,
+      "all": 398
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

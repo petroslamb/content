@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import shutil
 import subprocess
 import sys
 from fractions import Fraction
@@ -12,10 +14,26 @@ from pathlib import Path
 from typing import Any
 
 
+def resolve_binary(name: str) -> str:
+    candidates = [
+        os.environ.get(name.upper()),
+        shutil.which(name),
+        f"/opt/homebrew/bin/{name}",
+        f"/usr/local/bin/{name}",
+    ]
+    for candidate in candidates:
+        if candidate and Path(candidate).exists():
+            return candidate
+    raise FileNotFoundError(f"Could not find required binary: {name}")
+
+
+FFPROBE_BIN = resolve_binary("ffprobe")
+
+
 def run_ffprobe(path: Path) -> dict[str, Any]:
     result = subprocess.run(
         [
-            "ffprobe",
+            FFPROBE_BIN,
             "-v",
             "error",
             "-show_entries",

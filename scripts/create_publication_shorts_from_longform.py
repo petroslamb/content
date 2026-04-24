@@ -12,10 +12,28 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import shutil
 import subprocess
 from pathlib import Path
 
 from convert_landscape_videos_to_portrait import convert_video, ffprobe_duration_seconds
+
+
+def resolve_binary(name: str) -> str:
+    candidates = [
+        os.environ.get(name.upper()),
+        shutil.which(name),
+        f"/opt/homebrew/bin/{name}",
+        f"/usr/local/bin/{name}",
+    ]
+    for candidate in candidates:
+        if candidate and Path(candidate).exists():
+            return candidate
+    raise FileNotFoundError(f"Could not find required binary: {name}")
+
+
+FFMPEG_BIN = resolve_binary("ffmpeg")
 
 
 def run(cmd: list[str]) -> None:
@@ -37,7 +55,7 @@ def extract_clip(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     run(
         [
-            "ffmpeg",
+            FFMPEG_BIN,
             "-y",
             "-ss",
             start,

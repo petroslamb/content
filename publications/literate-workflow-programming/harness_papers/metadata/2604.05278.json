@@ -1,0 +1,65 @@
+{
+  "requested_id": "2604.05278",
+  "resolved": {
+    "preferred_id": "2604.05278v1",
+    "input_id": "2604.05278",
+    "title": "Spec Kit Agents: Context-Grounded Agentic Workflows",
+    "versionless_id": "2604.05278",
+    "canonical_id": "2604.05278v1",
+    "version_id": "019d6b78-db70-7d1e-962b-16ad7dc0c833",
+    "group_id": "019d6b78-db4f-79df-8c61-a12a246fb6c3"
+  },
+  "title": "Spec Kit Agents: Context-Grounded Agentic Workflows",
+  "abstract": "Spec-driven development (SDD) with AI coding agents provides a structured workflow, but agents often remain \"context blind\" in large, evolving repositories, leading to hallucinated APIs and architectural violations. We present Spec Kit Agents, a multi-agent SDD pipeline (with PM and developer roles) that adds phase-level, context-grounding hooks. Read-only probing hooks ground each stage (Specify, Plan, Tasks, Implement) in repository evidence, while validation hooks check intermediate artifacts against the environment. We evaluate 128 runs covering 32 features across five repositories. Context-grounding hooks improve judged quality by +0.15 on a 1-5 composite LLM-as-judge score (+3.0 percent of the full score; Wilcoxon signed-rank, p &lt; 0.05) while maintaining 99.7-100 percent repository-level test compatibility. We further evaluate the framework on SWE-bench Lite, where augmentation hooks improve baseline by 1.7 percent, achieving 58.2 percent Pass@1.",
+  "publication_date": "2026-04-07T00:26:49",
+  "authors": [
+    {
+      "id": "01985c83-1294-7633-84ce-395489fa5174",
+      "full_name": "Pardis Taghavi",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019cd5ae-61c8-77b7-b556-8a63647c11a0",
+      "full_name": "Santosh Bhavani",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.MA",
+    "cs.SE",
+    "human-ai-interaction",
+    "ml-systems",
+    "multi-agent-learning",
+    "reasoning",
+    "tool-use",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2604.05278v1.pdf",
+    "source_url": "https://arxiv.org/abs/2604.05278"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 0,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 0,
+    "visits": {
+      "last24Hours": 2,
+      "last7Days": 2,
+      "last30Days": 3,
+      "last90Days": 3,
+      "all": 3
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

@@ -1,0 +1,170 @@
+{
+  "requested_id": "2604.08224",
+  "resolved": {
+    "preferred_id": "2604.08224v1",
+    "input_id": "2604.08224",
+    "title": "Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering",
+    "versionless_id": "2604.08224",
+    "canonical_id": "2604.08224v1",
+    "version_id": "019d7505-f951-79c5-92c3-b269da618dae",
+    "group_id": "019d7505-f8dc-70d2-9909-302a694e14dc"
+  },
+  "title": "Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering",
+  "abstract": "Large language model (LLM) agents are increasingly built less by changing model weights than by reorganizing the runtime around them. Capabilities that earlier systems expected the model to recover internally are now externalized into memory stores, reusable skills, interaction protocols, and the surrounding harness that makes these modules reliable in practice. This paper reviews that shift through the lens of externalization. Drawing on the idea of cognitive artifacts, we argue that agent infrastructure matters not merely because it adds auxiliary components, but because it transforms hard cognitive burdens into forms that the model can solve more reliably. Under this view, memory externalizes state across time, skills externalize procedural expertise, protocols externalize interaction structure, and harness engineering serves as the unification layer that coordinates them into governed execution. We trace a historical progression from weights to context to harness, analyze memory, skills, and protocols as three distinct but coupled forms of externalization, and examine how they interact inside a larger agent system. We further discuss the trade-off between parametric and externalized capability, identify emerging directions such as self-evolving harnesses and shared agent infrastructure, and discuss open challenges in evaluation, governance, and the long-term co-evolution of models and external infrastructure. The result is a systems-level framework for explaining why practical agent progress increasingly depends not only on stronger models, but on better external cognitive infrastructure.",
+  "publication_date": "2026-04-09T13:19:41",
+  "authors": [
+    {
+      "id": "01985c82-4655-7dd9-97df-dddea3cc63fc",
+      "full_name": "Chenyu Zhou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-840c-7f84-bb05-8c898141db29",
+      "full_name": "Huacan Chai",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-909f-75aa-9ba3-84a2f3753219",
+      "full_name": "Wenteng Chen",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-99ab-75bd-b328-cf0a15940739",
+      "full_name": "Zihan Guo",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-8c36-7629-bcba-1e64150b3299",
+      "full_name": "Rong Shan",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c84-cac5-7e02-9308-44ff1e9673b2",
+      "full_name": "Yuanyi Song",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-840b-7bef-8a0f-50d443756e8e",
+      "full_name": "Tianyi Xu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-5e6a-76c6-b5e4-e826fd13d71f",
+      "full_name": "Yingxuan Yang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019cb294-b7f3-786e-9ec7-e383faa75c57",
+      "full_name": "Aofan Yu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e286-7db3-87b7-faef81bb13bf",
+      "full_name": "Weiming Zhang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "0199cbde-6b8d-77d8-b377-045741bb8b59",
+      "full_name": "Congming Zheng",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-37ee-7a3a-9cbf-7daba1d253ed",
+      "full_name": "Jiachen Zhu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ddbe-79b4-8f05-8d0f36d1242f",
+      "full_name": "Zeyu Zheng",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e1bb-79bd-9981-d33327747cfb",
+      "full_name": "Zhuosheng Zhang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-ef4f-7cda-a98a-e715fa7aa60d",
+      "full_name": "Xingyu Lou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-a356-7062-ad5c-737f02af8ec8",
+      "full_name": "Changwang Zhang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-937a-7ec0-81bd-97a9a7643245",
+      "full_name": "Zhihui Fu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-db51-773f-befe-2fb6827885d7",
+      "full_name": "Jun Wang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e911-7fee-a76d-393d12005a76",
+      "full_name": "Weiwen Liu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3b7d-7aa3-b92c-c05f5c31d7e6",
+      "full_name": "Jianghao Lin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-db50-76bc-bd53-c23a2fbf33b0",
+      "full_name": "Weinan Zhang",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "Computer Science",
+    "cs.MA",
+    "cs.SE"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2604.08224v1.pdf",
+    "source_url": "https://arxiv.org/abs/2604.08224"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 54,
+    "downvotes_count": 0,
+    "total_votes": 40,
+    "public_total_votes": 54,
+    "visits": {
+      "last24Hours": 235,
+      "last7Days": 1378,
+      "last30Days": 1913,
+      "last90Days": 1913,
+      "all": 1913
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

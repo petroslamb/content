@@ -1,0 +1,106 @@
+{
+  "requested_id": "2405.15793",
+  "resolved": {
+    "preferred_id": "2405.15793v3",
+    "input_id": "2405.15793",
+    "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+    "versionless_id": "2405.15793",
+    "canonical_id": "2405.15793v3",
+    "version_id": "01931cd0-eef8-7aa7-b80c-4a5450c0cce8",
+    "group_id": "018fcae7-d0c8-7ce6-86c0-58eb17e1ef4f"
+  },
+  "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+  "abstract": "Language model (LM) agents are increasingly being used to automate complicated tasks in digital environments. Just as humans benefit from powerful software applications, such as integrated development environments, for complex tasks like software engineering, we posit that LM agents represent a new category of end users with their own needs and abilities, and would benefit from specially-built interfaces to the software they use. We investigate how interface design affects the performance of language model agents. As a result of this exploration, we introduce SWE-agent: a system that facilitates LM agents to autonomously use computers to solve software engineering tasks. SWE-agent's custom agent-computer interface (ACI) significantly enhances an agent's ability to create and edit code files, navigate entire repositories, and execute tests and other programs. We evaluate SWE-agent on SWE-bench and HumanEvalFix, achieving state-of-the-art performance on both with a pass@1 rate of 12.5% and 87.7%, respectively, far exceeding the previous state-of-the-art achieved with non-interactive LMs. Finally, we provide insight on how the design of the ACI can impact agents' behavior and performance.",
+  "publication_date": "2024-11-11T20:01:15",
+  "authors": [
+    {
+      "id": "01985c81-eea8-7f09-b17a-73e4ea0ede62",
+      "full_name": "John Yang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3512-7396-8703-2aef3d4be9d7",
+      "full_name": "Carlos E. Jimenez",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-fa9e-78e8-8f85-934f70555f0d",
+      "full_name": "Alexander Wettig",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-3512-7f90-b193-ec3b2670dc11",
+      "full_name": "Kilian Lieret",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d97e-7e49-9edf-1bc110f28653",
+      "full_name": "Shunyu Yao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d97e-71a0-9363-d9c837760486",
+      "full_name": "Karthik Narasimhan",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-eaa6-715d-969b-d545fd2bccb2",
+      "full_name": "Ofir Press",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [
+    {
+      "id": "019880b1-cb6f-72b3-b763-c1d55224970b",
+      "full_name": "",
+      "user_id": null,
+      "username": "john-yang"
+    }
+  ],
+  "topics": [
+    "agent-based-systems",
+    "autonomous-systems",
+    "Computer Science",
+    "cs.AI",
+    "cs.CL",
+    "cs.HC",
+    "cs.LG",
+    "cs.SE",
+    "human-ai-interaction",
+    "software-engineering"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2405.15793v3.pdf",
+    "source_url": "https://alphaxiv.org/paper/2405.15793"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 153,
+    "downvotes_count": 0,
+    "total_votes": 8,
+    "public_total_votes": 153,
+    "visits": {
+      "last24Hours": 15,
+      "last7Days": 70,
+      "last30Days": 284,
+      "last90Days": 880,
+      "all": 7457
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf11-7f29-9c64-5d87aaee4b54",
+      "name": "Princeton University",
+      "image": "images/organizations/princeton.jpg"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

@@ -264,6 +264,11 @@ def classify_entry(entry: dict[str, Any]) -> None:
     portrait_dir = workspace_dir / "portrait"
     approved = shorts.get("approved_clips", []) or []
 
+    if cinematic.get("generation_task_id") and not cinematic.get("youtube_video_id"):
+        cinematic["state"] = "generation_pending"
+        shorts["state"] = "pending_cinematic"
+        return
+
     if cinematic.get("youtube_video_id"):
         if not output_srt.exists():
             cinematic["state"] = "captions_pending"
@@ -447,11 +452,14 @@ def main() -> None:
     manifest_paths = materialize_shorts_manifests(manifest)
 
     in_flight = in_flight_keys(manifest)
-    next_new = (
-        [blocked_auth_key]
-        if blocked_auth_key
-        else generation_candidate_keys(manifest)[: int(manifest["experiment"]["defaults"]["max_new_cinematics_per_run"])]
-    )
+    if in_flight:
+        next_new: list[str] = []
+    else:
+        next_new = (
+            [blocked_auth_key]
+            if blocked_auth_key
+            else generation_candidate_keys(manifest)[: int(manifest["experiment"]["defaults"]["max_new_cinematics_per_run"])]
+        )
 
     summary = {
         "run_started": now_utc().isoformat(),

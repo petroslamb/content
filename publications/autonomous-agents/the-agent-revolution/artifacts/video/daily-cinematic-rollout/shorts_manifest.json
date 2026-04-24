@@ -1,0 +1,50 @@
+{
+  "source_video": "publications/autonomous-agents/the-agent-revolution/artifacts/video/the_agent_revolution_cinematic.mp4",
+  "related_video_id": "N7FKycVsIUw",
+  "essay_url": "https://lambpetros.substack.com/p/the-agent-revolution",
+  "full_video_url": "https://www.youtube.com/watch?v=N7FKycVsIUw",
+  "secondary_video_url": "https://www.youtube.com/watch?v=ti-WonOox8M",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "engine-without-a-vehicle",
+      "title": "An LLM Is an Engine Without a Vehicle",
+      "summary": "A language model can generate power, but autonomy needs memory, steering, and sensors, not just next-token prediction.",
+      "start": "00:00:00.000",
+      "end": "00:01:06.960",
+      "publish_at": "2026-04-25T07:30:00Z",
+      "score_total": 24,
+      "score_breakdown": null
+    },
+    {
+      "slug": "agents-need-a-world-model",
+      "title": "Why Agents Simulate Before They Act",
+      "summary": "Foundation agents need a world model so they can test consequences internally before they commit to real-world action.",
+      "start": "00:01:58.159",
+      "end": "00:02:33.920",
+      "publish_at": "2026-04-26T07:30:00Z",
+      "score_total": 22,
+      "score_breakdown": null
+    },
+    {
+      "slug": "multi-agent-debate-drops-errors",
+      "title": "Why Multi-Agent Debate Drops Error Rates",
+      "summary": "Independent agents critique one another, and that social friction removes hallucinations a single isolated agent would miss.",
+      "start": "00:03:05.680",
+      "end": "00:03:51.440",
+      "publish_at": "2026-04-27T07:30:00Z",
+      "score_total": 23,
+      "score_breakdown": null
+    },
+    {
+      "slug": "agents-treat-guardrails-like-puzzles",
+      "title": "Agents Treat Guardrails Like Logic Puzzles",
+      "summary": "Static chatbot safety rules fail once agents can plan, because they learn to route around constraints instead of obeying them.",
+      "start": "00:04:31.919",
+      "end": "00:05:18.320",
+      "publish_at": "2026-04-28T06:00:00Z",
+      "score_total": 24,
+      "score_breakdown": null
+    }
+  ]
+}

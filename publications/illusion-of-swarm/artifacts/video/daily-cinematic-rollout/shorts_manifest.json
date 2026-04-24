@@ -1,0 +1,40 @@
+{
+  "source_video": "publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4",
+  "related_video_id": "q3_gPM4E8yw",
+  "essay_url": "https://lambpetros.substack.com/p/the-illusion-of-the-swarm",
+  "full_video_url": "https://www.youtube.com/watch?v=q3_gPM4E8yw",
+  "secondary_video_url": "https://www.youtube.com/watch?v=AigaLYfpFZc",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "single-model-beat-the-swarm",
+      "title": "Why One Model Beat the Whole AI Swarm",
+      "summary": "A single model matched the multi-agent workflow while using 53.7% fewer tokens, cutting latency nearly in half, and halving the cost.",
+      "start": "00:00:14.240",
+      "end": "00:01:01.760",
+      "publish_at": "2026-04-25T06:00:00Z",
+      "score_total": 24,
+      "score_breakdown": null
+    },
+    {
+      "slug": "single-agents-break-at-90-tools",
+      "title": "Why Single Agents Break at 90 Tools",
+      "summary": "Too many similar tools collapse into the same semantic neighborhood, so most swarms are really code fences around a routing problem.",
+      "start": "00:01:52.799",
+      "end": "00:02:54.480",
+      "publish_at": "2026-04-26T06:00:00Z",
+      "score_total": 23,
+      "score_breakdown": null
+    },
+    {
+      "slug": "ai-swarms-are-training-wheels",
+      "title": "AI Swarms Are Training Wheels",
+      "summary": "Multi-agent scaffolds are not the destination. They are temporary lab rigs whose reasoning traces get distilled back into one stronger model.",
+      "start": "00:03:42.159",
+      "end": "00:04:31.920",
+      "publish_at": "2026-04-27T06:00:00Z",
+      "score_total": 23,
+      "score_breakdown": null
+    }
+  ]
+}

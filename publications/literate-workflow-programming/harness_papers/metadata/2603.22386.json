@@ -1,0 +1,106 @@
+{
+  "requested_id": "2603.22386",
+  "resolved": {
+    "preferred_id": "2603.22386v1",
+    "input_id": "2603.22386",
+    "title": "From Static Templates to Dynamic Runtime Graphs: A Survey of Workflow Optimization for LLM Agents",
+    "versionless_id": "2603.22386",
+    "canonical_id": "2603.22386v1",
+    "version_id": "019d22f9-59b2-72d4-b6f2-10b89f5ecdaf",
+    "group_id": "019d22f9-595f-725e-b2ab-e30948ae0842"
+  },
+  "title": "From Static Templates to Dynamic Runtime Graphs: A Survey of Workflow Optimization for LLM Agents",
+  "abstract": "Large language model (LLM)-based systems are becoming increasingly popular for solving tasks by constructing executable workflows that interleave LLM calls, information retrieval, tool use, code execution, memory updates, and verification. This survey reviews recent methods for designing and optimizing such workflows, which we treat as agentic computation graphs (ACGs). We organize the literature based on when workflow structure is determined, where structure refers to which components or agents are present, how they depend on each other, and how information flows between them. This lens distinguishes static methods, which fix a reusable workflow scaffold before deployment, from dynamic methods, which select, generate, or revise the workflow for a particular run before or during execution. We further organize prior work along three dimensions: when structure is determined, what part of the workflow is optimized, and which evaluation signals guide optimization (e.g., task metrics, verifier signals, preferences, or trace-derived feedback). We also distinguish reusable workflow templates, run-specific realized graphs, and execution traces, separating reusable design choices from the structures actually deployed in a given run and from realized runtime behavior. Finally, we outline a structure-aware evaluation perspective that complements downstream task metrics with graph-level properties, execution cost, robustness, and structural variation across inputs. Our goal is to provide a clear vocabulary, a unified framework for positioning new methods, a more comparable view of existing body of literature, and a more reproducible evaluation standard for future work in workflow optimizations for LLM agents.",
+  "publication_date": "2026-03-23T17:42:59",
+  "authors": [
+    {
+      "id": "01985c82-213c-7d14-bb47-732b9942d4cb",
+      "full_name": "Ling Yue",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-363f-7096-92dc-7eb389a81300",
+      "full_name": "Kushal Raj Bhandari",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-204e-7506-aaa3-6221d7a62e8a",
+      "full_name": "Ching-Yun Ko",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-b3fb-790a-85a1-cc8c0a99d3f3",
+      "full_name": "Dhaval Patel",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ec41-7edb-9d4a-9fbbb1a1595c",
+      "full_name": "Shuxin Lin",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-541a-7e3d-b28e-8a1616b2af91",
+      "full_name": "Nianjun Zhou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-04d8-750e-b0a8-a2d453da79b4",
+      "full_name": "Jianxi Gao",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e34e-717e-9449-2b7cfb08591f",
+      "full_name": "Pin-Yu Chen",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-fca4-7561-b174-1fcebfe600f1",
+      "full_name": "Shaowu Pan",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.CL",
+    "ml-systems",
+    "model-observability",
+    "optimization-methods",
+    "reasoning",
+    "tool-use",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.22386v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.22386"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 34,
+    "downvotes_count": 0,
+    "total_votes": 0,
+    "public_total_votes": 34,
+    "visits": {
+      "last24Hours": 2,
+      "last7Days": 13,
+      "last30Days": 271,
+      "last90Days": 271,
+      "all": 271
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

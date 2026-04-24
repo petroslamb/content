@@ -1,0 +1,87 @@
+{
+  "requested_id": "2603.28052",
+  "resolved": {
+    "preferred_id": "2603.28052v1",
+    "input_id": "2603.28052",
+    "title": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+    "versionless_id": "2603.28052",
+    "canonical_id": "2603.28052v1",
+    "version_id": "019d41b7-1185-7c78-be8f-d11d778e4bb6",
+    "group_id": "019d41b7-1156-7866-b991-94545a578703"
+  },
+  "title": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+  "abstract": "The performance of large language model (LLM) systems depends not only on model weights, but also on their harness: the code that determines what information to store, retrieve, and present to the model. Yet harnesses are still designed largely by hand, and existing text optimizers are poorly matched to this setting because they compress feedback too aggressively. We introduce Meta-Harness, an outer-loop system that searches over harness code for LLM applications. It uses an agentic proposer that accesses the source code, scores, and execution traces of all prior candidates through a filesystem. On online text classification, Meta-Harness improves over a state-of-the-art context management system by 7.7 points while using 4x fewer context tokens. On retrieval-augmented math reasoning, a single discovered harness improves accuracy on 200 IMO-level problems by 4.7 points on average across five held-out models. On agentic coding, discovered harnesses surpass the best hand-engineered baselines on TerminalBench-2. Together, these results show that richer access to prior experience can enable automated harness engineering.",
+  "publication_date": "2026-03-30T05:33:50",
+  "authors": [
+    {
+      "id": "01985c81-d97e-7743-afc9-a96507000fa7",
+      "full_name": "Yoonho Lee",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019c1e75-20a2-7105-9731-9116a20c5763",
+      "full_name": "Roshen Nair",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-4f4d-747a-b9b5-c6b829af77ae",
+      "full_name": "Qizheng Zhang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-0013-7bc5-9e60-d1009901c005",
+      "full_name": "Kangwook Lee",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-df57-7d94-bfa6-f13842811a2f",
+      "full_name": "Omar Khattab",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-d858-7675-9109-e5797f339f85",
+      "full_name": "Chelsea Finn",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "efficient-transformers",
+    "meta-learning",
+    "ml-systems",
+    "optimization-methods",
+    "reasoning",
+    "tool-use",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.28052v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.28052"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 416,
+    "downvotes_count": 0,
+    "total_votes": 134,
+    "public_total_votes": 416,
+    "visits": {
+      "last24Hours": 121,
+      "last7Days": 1224,
+      "last30Days": 10745,
+      "last90Days": 10745,
+      "all": 10745
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

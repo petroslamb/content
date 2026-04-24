@@ -34,6 +34,7 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 
 - Shared paper library: [`papers/`](papers/)
 - Shared paper index: [`papers/index.md`](papers/index.md)
+- Harness-paper curation index: [`harness_papers/index.md`](harness_papers/index.md)
 - Shared research notes: [`research-notes/`](research-notes/)
 - alphaXiv discussion index: [`research-notes/alphaxiv-discussions/`](research-notes/alphaxiv-discussions/)
 - Claim ledger: [`claim-ledger.md`](claim-ledger.md)

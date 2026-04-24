@@ -1,0 +1,94 @@
+{
+  "requested_id": "2603.03329",
+  "resolved": {
+    "preferred_id": "2603.03329v1",
+    "input_id": "2603.03329",
+    "title": "AutoHarness: improving LLM agents by automatically synthesizing a code harness",
+    "versionless_id": "2603.03329",
+    "canonical_id": "2603.03329v1",
+    "version_id": "019cbccc-4a0e-7bc1-bc14-60acc4342a1f",
+    "group_id": "019cbccc-49c0-7c7a-88be-ca2f2025d14c"
+  },
+  "title": "AutoHarness: improving LLM agents by automatically synthesizing a code harness",
+  "abstract": "Despite significant strides in language models in the last few years, when used as agents, such models often try to perform actions that are not just suboptimal for a given state, but are strictly prohibited by the external environment. For example, in the recent Kaggle GameArena chess competition, 78% of Gemini-2.5-Flash losses were attributed to illegal moves. Often people manually write \"harnesses\" around LLMs to prevent such failures. In this paper, we demonstrate that Gemini-2.5-Flash can automatically synthesize such a code harness, using a small number of rounds of iterative code refinement given feedback from the (game) environment. The resulting harness prevents all illegal moves in 145 different TextArena games (both 1-player and 2-player), enabling the smaller Gemini-2.5-Flash model to outperform larger models, such as Gemini-2.5-Pro. Pushing our technique to the limit, we can get Gemini-2.5-Flash to generate the entire policy in code, thus eliminating the need to use the LLM at decision making time. The resulting code-policy receives a higher average reward than Gemini-2.5-Pro and GPT-5.2-High on 16 TextArena 1-player games. Our results show that using a smaller model to synthesize a custom code harness (or entire policy) can outperform a much larger model, while also being more cost effective.",
+  "publication_date": "2026-02-10T14:12:54",
+  "authors": [
+    {
+      "id": "01985c82-99ab-7164-82f9-149cde6802dc",
+      "full_name": "Xinghua Lou",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-eaa7-7ff0-90a3-3c8fa0857cf7",
+      "full_name": "Miguel Lázaro-Gredilla",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-38d4-7879-abc7-3c3e26d42fdf",
+      "full_name": "Antoine Dedieu",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c83-46ba-77fd-8703-5b32cfe96528",
+      "full_name": "Carter Wendelken",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-38d4-742b-97c9-6e750ea2368c",
+      "full_name": "Wolfgang Lehrach",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-7722-704a-83a4-92bdecee92c1",
+      "full_name": "Kevin P. Murphy",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.CL",
+    "generative-models",
+    "inference-optimization",
+    "lightweight-models",
+    "optimization-methods",
+    "reinforcement-learning",
+    "text-generation"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.03329v1.pdf",
+    "source_url": "https://arxiv.org/abs/2603.03329"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 47,
+    "downvotes_count": 0,
+    "total_votes": 21,
+    "public_total_votes": 47,
+    "visits": {
+      "last24Hours": 14,
+      "last7Days": 117,
+      "last30Days": 864,
+      "last90Days": 1344,
+      "all": 1344
+    }
+  },
+  "organizations": [
+    {
+      "id": "01985c36-cf10-70b0-87f8-9fd3ea8be353",
+      "name": "Google DeepMind",
+      "image": "images/organizations/deepmind.png"
+    }
+  ],
+  "implementation": null,
+  "marimo_implementation": null
+}

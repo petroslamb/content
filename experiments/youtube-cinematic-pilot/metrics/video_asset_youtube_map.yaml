@@ -1,4 +1,4 @@
-generated_at: 2026-04-22
+generated_at: 2026-04-24
 purpose: >
   Canonical local map from publication video assets and recovered transcripts
   to their corresponding live YouTube uploads for the explainer and cinematic lanes.
@@ -106,12 +106,30 @@ assets:
       reference_files:
         - experiments/youtube-cinematic-pilot/metrics/legacy-backfill-run-2026-04-22.md
 
-pending_assets:
   - publication: illusion_of_swarm
     package: publications/illusion-of-swarm
     asset_kind: cinematic
     local_video_file: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4
     local_transcript_file: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt
-    status: blocked
-    reason: NotebookLM daily Cinematics limit on 2026-04-22; no YouTube upload exists yet.
-    expected_youtube_title: "Why Most Multi-Agent AI Is a Workaround"
+    youtube:
+      video_id: q3_gPM4E8yw
+      title: "Why Most Multi-Agent AI Is a Workaround"
+      url: https://www.youtube.com/watch?v=q3_gPM4E8yw
+    evidence:
+      match_method: direct_upload_report
+      reference_files:
+        - publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic_upload_report.json
+
+  - publication: the_agent_revolution
+    package: publications/autonomous-agents/the-agent-revolution
+    asset_kind: cinematic
+    local_video_file: publications/autonomous-agents/the-agent-revolution/artifacts/video/the_agent_revolution_cinematic.mp4
+    local_transcript_file: publications/autonomous-agents/the-agent-revolution/artifacts/video/the_agent_revolution_cinematic.srt
+    youtube:
+      video_id: N7FKycVsIUw
+      title: "Why AI Agents Broke Out of the Chatbox"
+      url: https://www.youtube.com/watch?v=N7FKycVsIUw
+    evidence:
+      match_method: direct_upload_report
+      reference_files:
+        - publications/autonomous-agents/the-agent-revolution/artifacts/video/the_agent_revolution_cinematic_upload_report.json

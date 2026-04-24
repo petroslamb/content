@@ -69,6 +69,9 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 | [`review-gate-protocol.md`](review-gate-protocol.md) | Review-gate classes, artifact contract, gate store, and resume model. |
 | [`dashboard-v0.md`](dashboard-v0.md) | The first local cockpit scope built on gate and trace artifacts. |
 | [`open-questions.md`](open-questions.md) | The remaining Phase 2 decisions that are still genuinely open. |
+| [`idea-bank.md`](idea-bank.md) | Candidate ideas that may justify rewriting Phase 2 before implementation. |
+| [`claim-ledger.md`](claim-ledger.md) | Phase 2 planning claims that should be pressure-tested before implementation. |
+| [`contradiction-register.md`](contradiction-register.md) | The tensions, authority rules, and design instructions that constrain Phase 2 conclusions. |
 
 ## Foundation Specs
 
