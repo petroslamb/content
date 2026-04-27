@@ -21,6 +21,9 @@ experiment:
     timezone: Europe/Athens
     daily_run_time: '10:00'
     max_new_cinematics_per_run: 2
+    poll_interval_seconds: 600
+    notebooklm_generation_wait_timeout_seconds: 21600
+    youtube_caption_wait_timeout_seconds: 7200
     auth_relogin_command: .venv/bin/notebooklm login
     shorts_primary_video_label: Full cinematic video
     shorts_secondary_video_label: Full research breakdown
@@ -253,25 +256,43 @@ publications:
       video_file: publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt
       upload_report: publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: 31498c5c-8d0c-4222-ab96-7e0113ac0900
+      generation_task_started_at: '2026-04-25T07:03:38Z'
+      youtube_video_id: NIJ92a65SxM
+      youtube_url: https://www.youtube.com/watch?v=NIJ92a65SxM
+      published_at: '2026-04-26T07:03:05Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-26T07:03:05Z'
         last_error: null
     shorts:
       workspace_dir: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: writing-the-script-isnt-agency
+        title: Writing the Script Isn't Agency
+        summary: An agent is not real just because it can describe the work. It becomes
+          real when it can execute the task and verify the state actually changed.
+        start: '00:00:00.400'
+        end: '00:00:25.359'
+        total_score: 22
+        publish_at: '2026-04-29T06:00:00Z'
+      - slug: css-tags-can-break-an-agent
+        title: A Single CSS Tag Can Break an Agent
+        summary: Computer-using agents look impressive until a tiny interface change
+          wipes out their bearings. Human-facing surfaces are fragile action environments.
+        start: '00:01:07.680'
+        end: '00:01:32.720'
+        total_score: 22
+        publish_at: '2026-04-30T06:00:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-29T06:00:00Z'
+      last_scheduled_at: '2026-04-27T11:38:55.700871+00:00'
   operating_agents_memory:
     package: autonomous-agents/essays/memory
     status_path: publications/autonomous-agents/essays/memory/status.yaml
@@ -300,25 +321,44 @@ publications:
       video_file: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt
       upload_report: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: b31dcd80-4c6e-4091-941e-8f2839ef656e
+      generation_task_started_at: '2026-04-25T07:10:37Z'
+      youtube_video_id: J9dz9_9YPQw
+      youtube_url: https://www.youtube.com/watch?v=J9dz9_9YPQw
+      published_at: '2026-04-26T07:03:05Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-26T07:03:05Z'
         last_error: null
     shorts:
       workspace_dir: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: agents-dont-lose-iq-they-lose-attention
+        title: Agents Don't Lose IQ. They Lose Attention.
+        summary: When an agent loops or hallucinates mid-task, the failure is usually
+          not intelligence. It is an attention and memory collapse.
+        start: '00:00:00.400'
+        end: '00:00:26.080'
+        total_score: 22
+        publish_at: '2026-04-29T07:30:00Z'
+      - slug: flat-vector-memory-becomes-a-security-hole
+        title: Flat Vector Memory Becomes a Security Hole
+        summary: Dumping every document into one memory channel does not just add
+          noise. It creates retrieval drift and opens a path for hidden text to override
+          guardrails.
+        start: '00:00:54.480'
+        end: '00:01:29.759'
+        total_score: 22
+        publish_at: '2026-04-30T07:30:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-29T07:30:00Z'
+      last_scheduled_at: '2026-04-27T11:43:30.781655+00:00'
   operating_agents_reasoning:
     package: autonomous-agents/essays/reasoning
     status_path: publications/autonomous-agents/essays/reasoning/status.yaml
@@ -347,25 +387,55 @@ publications:
       video_file: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt
       upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: feccbf63-8d28-40fc-a43d-5b091406df98
+      generation_task_started_at: '2026-04-27T14:12:28Z'
+      youtube_video_id: bto9FNWlahY
+      youtube_url: https://www.youtube.com/watch?v=bto9FNWlahY
+      published_at: '2026-04-27T14:56:30Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-27T14:56:30Z'
         last_error: null
     shorts:
       workspace_dir: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: the-ai-did-not-fail-the-scaffold-did
+        title: The AI Did Not Fail. The Scaffold Did.
+        summary: Fluent plans can look validated until they hit a locked database.
+          The failure is often missing architecture, not missing intelligence.
+        start: '00:00:20.240'
+        end: '00:00:56.079'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 4
+        publish_at: '2026-04-28T06:00:00Z'
+      - slug: ai-cannot-check-its-own-gravity
+        title: AI Cannot Check Its Own Gravity
+        summary: Once a hallucination enters the same context window, the model bends
+          the rest of the answer around it. Verification needs isolation.
+        start: '00:02:33.519'
+        end: '00:03:23.920'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 5
+        publish_at: '2026-04-29T06:00:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-28T06:00:00Z'
+      last_scheduled_at: '2026-04-27T15:08:39.806221+00:00'
   operating_agents_multi_agent:
     package: autonomous-agents/essays/multi-agent
     status_path: publications/autonomous-agents/essays/multi-agent/status.yaml
@@ -394,25 +464,55 @@ publications:
       video_file: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt
       upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: 3113a471-43b4-4125-9ba2-993bb16e0bd8
+      generation_task_started_at: '2026-04-27T14:12:28Z'
+      youtube_video_id: abBHq8lwCEE
+      youtube_url: https://www.youtube.com/watch?v=abBHq8lwCEE
+      published_at: '2026-04-27T14:56:30Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-27T14:56:30Z'
         last_error: null
     shorts:
       workspace_dir: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: agent-theater-is-not-intelligence
+        title: Agent Theater Is Not Intelligence
+        summary: Splitting one model into CEO, developer, and tester roles can create
+          an organizational chart without creating a smarter system.
+        start: '00:00:00.480'
+        end: '00:00:56.879'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 4
+        publish_at: '2026-04-28T07:30:00Z'
+      - slug: the-coordination-tax-kills-agent-handoffs
+        title: The Coordination Tax Kills Agent Handoffs
+        summary: Every unnecessary handoff adds latency, token cost, and fidelity
+          loss. A single capable agent should own the task when it can.
+        start: '00:00:56.879'
+        end: '00:01:44.479'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 5
+        publish_at: '2026-04-29T07:30:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-28T07:30:00Z'
+      last_scheduled_at: '2026-04-27T15:08:39.806225+00:00'
   operating_agents_safety:
     package: autonomous-agents/essays/safety
     status_path: publications/autonomous-agents/essays/safety/status.yaml

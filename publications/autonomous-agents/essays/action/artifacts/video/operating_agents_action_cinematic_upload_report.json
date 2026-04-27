@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-04-26T07:03:09.979306+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "operating_agents_action",
+  "package": "autonomous-agents/essays/action",
+  "notebook_id": "43eacb58-6e9e-4db2-8a3f-41075f074177",
+  "video_source_file": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4",
+  "caption_output": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt",
+  "title": "Why Reliable Agents Start with Action Boundaries",
+  "description": "Agents fail less often when action is treated as a contract surface, not a vibe layered on top of language.\n\nThis cinematic brief focuses on the boundary between language and action: what changes once a model can make commitments, touch tools, and leave traces in the world.\n\nIt should pull in builders who need a sharper mental model for tool use than generic agent demos provide.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/operating-agents-i-when-language\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=swvX4mduJtk\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41MzJCQjBCNDIyRkJDN0VD",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41MzJCQjBCNDIyRkJDN0VD",
+      "position": 6,
+      "title": "Why Reliable Agents Start with Action Boundaries"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "swvX4mduJtk",
+    "url": "https://www.youtube.com/watch?v=swvX4mduJtk"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-i-when-language",
+  "video": {
+    "id": "NIJ92a65SxM",
+    "url": "https://www.youtube.com/watch?v=NIJ92a65SxM",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-26T07:03:05Z"
+    }
+  }
+}

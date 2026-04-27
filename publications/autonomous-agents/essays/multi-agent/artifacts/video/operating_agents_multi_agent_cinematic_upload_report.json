@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-04-27T14:56:19.815819+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "operating_agents_multi_agent",
+  "package": "autonomous-agents/essays/multi-agent",
+  "notebook_id": "7917892d-e1fc-40f5-8922-a282d088f15b",
+  "video_source_file": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4",
+  "caption_output": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt",
+  "title": "When the Second Agent Actually Buys a Boundary | A Cinematic Research Brief",
+  "base_title": "When the Second Agent Actually Buys a Boundary",
+  "description": "A second agent only earns its keep when it buys a real boundary in memory, authority, or action space.\n\nThis cinematic brief strips away the theater around multi-agent systems and focuses on the narrower engineering question: when does another agent create a real boundary instead of more coordination noise?\n\nIt should route viewers toward a cleaner decision rule than generic swarm enthusiasm.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/operating-agents-iv-the-second-agent\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=xxd2VKlqiL4\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS45NDk1REZENzhEMzU5MDQz",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS45NDk1REZENzhEMzU5MDQz",
+      "position": 8,
+      "title": "When the Second Agent Actually Buys a Boundary | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "xxd2VKlqiL4",
+    "url": "https://www.youtube.com/watch?v=xxd2VKlqiL4"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent",
+  "video": {
+    "id": "abBHq8lwCEE",
+    "url": "https://www.youtube.com/watch?v=abBHq8lwCEE",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-27T14:56:16Z"
+    }
+  }
+}

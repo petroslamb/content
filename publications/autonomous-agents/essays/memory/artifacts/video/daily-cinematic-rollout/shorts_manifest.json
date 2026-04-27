@@ -1,0 +1,30 @@
+{
+  "source_video": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4",
+  "related_video_id": "J9dz9_9YPQw",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-ii-memory-needs",
+  "full_video_url": "https://www.youtube.com/watch?v=J9dz9_9YPQw",
+  "secondary_video_url": "https://www.youtube.com/watch?v=Pj4sjWvyJVQ",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "agents-dont-lose-iq-they-lose-attention",
+      "title": "Agents Don't Lose IQ. They Lose Attention.",
+      "summary": "When an agent loops or hallucinates mid-task, the failure is usually not intelligence. It is an attention and memory collapse.",
+      "start": "00:00:00.400",
+      "end": "00:00:26.080",
+      "publish_at": "2026-04-29T07:30:00Z",
+      "score_total": 22,
+      "score_breakdown": null
+    },
+    {
+      "slug": "flat-vector-memory-becomes-a-security-hole",
+      "title": "Flat Vector Memory Becomes a Security Hole",
+      "summary": "Dumping every document into one memory channel does not just add noise. It creates retrieval drift and opens a path for hidden text to override guardrails.",
+      "start": "00:00:54.480",
+      "end": "00:01:29.759",
+      "publish_at": "2026-04-30T07:30:00Z",
+      "score_total": 22,
+      "score_breakdown": null
+    }
+  ]
+}

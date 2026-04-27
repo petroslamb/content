@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-27T15:12:03.329624+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "abBHq8lwCEE",
+    "url": "https://www.youtube.com/watch?v=abBHq8lwCEE"
+  },
+  "related_longform": {
+    "id": "abBHq8lwCEE",
+    "url": "https://www.youtube.com/watch?v=abBHq8lwCEE"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=abBHq8lwCEE"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=xxd2VKlqiL4"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/01-agent-theater-is-not-intelligence_portrait.mp4",
+      "title": "Agent Theater Is Not Intelligence #shorts",
+      "summary": "Splitting one model into CEO, developer, and tester roles can create an organizational chart without creating a smarter system.",
+      "publish_at": "2026-04-28T07:30:00Z",
+      "video_id": "PV-KfDYiLPo",
+      "url": "https://www.youtube.com/watch?v=PV-KfDYiLPo",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41NUMwNTVERDNBRDc4REM0"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "abBHq8lwCEE"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/01-agent-theater-is-not-intelligence_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 56.5
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 56.400998
+        },
+        "format_duration": 56.5,
+        "duration": 56.5
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Agent Theater Is Not Intelligence #shorts",
+        "published_at": "2026-04-27T15:11:49Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41NUMwNTVERDNBRDc4REM0",
+        "position": 118,
+        "title": "Agent Theater Is Not Intelligence #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/02-the-coordination-tax-kills-agent-handoffs_portrait.mp4",
+      "title": "The Coordination Tax Kills Agent Handoffs #shorts",
+      "summary": "Every unnecessary handoff adds latency, token cost, and fidelity loss. A single capable agent should own the task when it can.",
+      "publish_at": "2026-04-29T07:30:00Z",
+      "video_id": "qTucAFn5g8Y",
+      "url": "https://www.youtube.com/watch?v=qTucAFn5g8Y",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5BRUVCN0E0MzEwQzAwNjMy"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "abBHq8lwCEE"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/02-the-coordination-tax-kills-agent-handoffs_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 47.708333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 47.600998
+        },
+        "format_duration": 47.708333,
+        "duration": 47.708333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The Coordination Tax Kills Agent Handoffs #shorts",
+        "published_at": "2026-04-27T15:11:56Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5BRUVCN0E0MzEwQzAwNjMy",
+        "position": 119,
+        "title": "The Coordination Tax Kills Agent Handoffs #shorts"
+      }
+    }
+  ]
+}

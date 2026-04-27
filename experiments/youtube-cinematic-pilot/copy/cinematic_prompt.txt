@@ -4,4 +4,12 @@ Prioritize structural change, causality, and long-term implications over recap. 
 
 Treat this as a discovery artifact for viewers who do not know the essay yet. The video should stand on its own, but it should clearly reward a click through to the full research breakdown afterward.
 
+Build the narration in compact claim blocks that can be clipped cleanly into 25-45 second Shorts without extra setup. Include at least three self-contained lines or mini-sequences that each:
+- open with a sharp claim, tension, or failure mode in the first sentence
+- avoid pronoun-heavy callbacks that require earlier context to understand
+- land one concrete takeaway before moving on
+- sound quotable when isolated from the rest of the video
+
+Prefer crisp causal statements over layered explanation. If a section starts to feel like an essay paragraph, compress it until it can survive as a standalone clip.
+
 Avoid listicle framing, generic YouTube hype, creator self-reference, and filler transitions. Do not use phrases like "TL;DR", "top 5", or "in this video". Favor memorable causal statements over enumerated summaries.
