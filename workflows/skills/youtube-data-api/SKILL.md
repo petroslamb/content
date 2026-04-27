@@ -100,6 +100,18 @@ Use this after the portrait Shorts masters already exist inside a package. Keep 
 
 This wrapper is dry-run by default. It preflights every local portrait clip for `1080x1920`, audio, and a default maximum duration of `180` seconds; uploads all portrait Shorts in the package folder; adds them to the target playlist; attempts to set the long-form upload as the Shorts related video; then writes a structured upload report with local probe data, playlist item IDs, public URLs, and YouTube readback status.
 
+After upload, wait for timed captions when the downstream workflow depends on an SRT. For the cinematic rollout, prefer the root helper instead of one-off retries:
+
+```bash
+.venv/bin/python scripts/wait_for_youtube_captions.py \
+  --video-id <VIDEO_ID> \
+  --output <OUTPUT.srt> \
+  --interval 600 \
+  --timeout 7200
+```
+
+After Shorts upload, verify related-video linkage in YouTube Studio for each Short. Open `https://studio.youtube.com/video/<SHORT_ID>/edit`, set the right-side `Related video` card to the intended long-form or cinematic upload, save, reload the edit page, and confirm the card still shows the intended title. The Studio reload check is required because API readback can claim success while the Studio card remains `None`.
+
 Use `--essay-url none`, `--essay-url skip`, or `--essay-url omit` when there is no canonical essay URL and the description should omit the `Original essay` line.
 
 If a package has `artifacts/video/shorts/shorts_manifest.json`, pass `--manifest` so the wrapper uses explicit titles, summaries, and optional `publishAt` schedule times instead of inferring everything from filenames.
