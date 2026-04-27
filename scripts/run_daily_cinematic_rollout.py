@@ -264,6 +264,10 @@ def classify_entry(entry: dict[str, Any]) -> None:
     portrait_dir = workspace_dir / "portrait"
     approved = shorts.get("approved_clips", []) or []
 
+    if state == "no_shorts_approved":
+        shorts["state"] = "no_shorts_approved"
+        return
+
     if cinematic.get("generation_task_id") and not cinematic.get("youtube_video_id"):
         cinematic["state"] = "generation_pending"
         shorts["state"] = "pending_cinematic"

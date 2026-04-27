@@ -69,6 +69,11 @@ def render_generation_command(notebook_id: str, prompt_file: Path) -> str:
     )
 
 
+def normalize_cinematic_title(title: str) -> str:
+    suffix = " | A Cinematic Research Brief"
+    return title if title.endswith(suffix) else f"{title}{suffix}"
+
+
 def render_description(
     *,
     template_path: Path,
@@ -231,7 +236,8 @@ def main() -> None:
     secondary_link_url = publication.get("baseline_longform_url") or secondary_link.get("url") or essay_url
 
     cinematic = get_required(publication, "cinematic", f"{args.publication}")
-    title = get_required(cinematic, "title", f"{args.publication}.cinematic")
+    base_title = get_required(cinematic, "title", f"{args.publication}.cinematic")
+    title = normalize_cinematic_title(base_title)
     hook = get_required(cinematic, "hook", f"{args.publication}.cinematic")
     summary = get_required(cinematic, "summary", f"{args.publication}.cinematic")
     video_file = Path(get_required(cinematic, "video_file", f"{args.publication}.cinematic"))
@@ -275,6 +281,7 @@ def main() -> None:
         "video_file_exists": video_file.exists(),
         "output_srt": str(output_srt),
         "title": title,
+        "base_title": base_title,
         "secondary_link": {
             "label": secondary_link_label,
             "video_id": secondary_link_video_id,
@@ -349,6 +356,7 @@ def main() -> None:
         "video_source_file": str(video_file),
         "caption_output": str(output_srt),
         "title": title,
+        "base_title": base_title,
         "description": final_description,
         "publish_at": publish_at,
         "upload_privacy": upload_privacy,
