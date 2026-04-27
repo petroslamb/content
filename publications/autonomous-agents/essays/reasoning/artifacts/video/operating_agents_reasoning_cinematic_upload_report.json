@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-04-27T14:56:23.390156+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "operating_agents_reasoning",
+  "package": "autonomous-agents/essays/reasoning",
+  "notebook_id": "285bb0df-cc68-45e5-8010-22cf7a88056a",
+  "video_source_file": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4",
+  "caption_output": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt",
+  "title": "Diagnose the Scaffold Before You Shop the Model | A Cinematic Research Brief",
+  "base_title": "Diagnose the Scaffold Before You Shop the Model",
+  "description": "Many reasoning failures blamed on the model are really failures in the scaffold wrapped around it.\n\nThis cinematic brief centers the architectural move behind good reasoning systems: diagnose the scaffold, the memory path, and the planning loop before treating model choice as the bottleneck.\n\nIt should work as a clean entry point for builders tired of benchmark-first reasoning talk.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/operating-agents-iii-diagnose-the\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=LykGDaONozw\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5GNjNDRDREMDQxOThCMDQ2",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5GNjNDRDREMDQxOThCMDQ2",
+      "position": 9,
+      "title": "Diagnose the Scaffold Before You Shop the Model | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "LykGDaONozw",
+    "url": "https://www.youtube.com/watch?v=LykGDaONozw"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the",
+  "video": {
+    "id": "bto9FNWlahY",
+    "url": "https://www.youtube.com/watch?v=bto9FNWlahY",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-27T14:56:16Z"
+    }
+  }
+}

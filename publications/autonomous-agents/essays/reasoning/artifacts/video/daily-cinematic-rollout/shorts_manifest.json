@@ -1,0 +1,42 @@
+{
+  "source_video": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4",
+  "related_video_id": "bto9FNWlahY",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the",
+  "full_video_url": "https://www.youtube.com/watch?v=bto9FNWlahY",
+  "secondary_video_url": "https://www.youtube.com/watch?v=LykGDaONozw",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "the-ai-did-not-fail-the-scaffold-did",
+      "title": "The AI Did Not Fail. The Scaffold Did.",
+      "summary": "Fluent plans can look validated until they hit a locked database. The failure is often missing architecture, not missing intelligence.",
+      "start": "00:00:20.240",
+      "end": "00:00:56.079",
+      "publish_at": "2026-04-28T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      }
+    },
+    {
+      "slug": "ai-cannot-check-its-own-gravity",
+      "title": "AI Cannot Check Its Own Gravity",
+      "summary": "Once a hallucination enters the same context window, the model bends the rest of the answer around it. Verification needs isolation.",
+      "start": "00:02:33.519",
+      "end": "00:03:23.920",
+      "publish_at": "2026-04-29T06:00:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 5
+      }
+    }
+  ]
+}

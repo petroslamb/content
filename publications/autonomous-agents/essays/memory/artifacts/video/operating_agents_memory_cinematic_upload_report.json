@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-04-26T07:03:13.235084+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "operating_agents_memory",
+  "package": "autonomous-agents/essays/memory",
+  "notebook_id": "2345e3d4-3a66-42e3-9a91-d723df10c287",
+  "video_source_file": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4",
+  "caption_output": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt",
+  "title": "Why Agent Memory Needs Authority",
+  "description": "Memory is not just storage. It is a control problem about which traces are allowed to steer future action.\n\nThis cinematic brief compresses the difference between remembering more and remembering with authority, retrieval discipline, and operational trust.\n\nIt should attract viewers who have felt the pain of agent memory drift but do not yet have a clean architectural frame for it.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/operating-agents-ii-memory-needs\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=Pj4sjWvyJVQ\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5DQUNERDQ2NkIzRUQxNTY1",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5DQUNERDQ2NkIzRUQxNTY1",
+      "position": 7,
+      "title": "Why Agent Memory Needs Authority"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "Pj4sjWvyJVQ",
+    "url": "https://www.youtube.com/watch?v=Pj4sjWvyJVQ"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-ii-memory-needs",
+  "video": {
+    "id": "J9dz9_9YPQw",
+    "url": "https://www.youtube.com/watch?v=J9dz9_9YPQw",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-26T07:03:05Z"
+    }
+  }
+}

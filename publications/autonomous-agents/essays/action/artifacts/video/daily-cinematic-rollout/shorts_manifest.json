@@ -1,0 +1,30 @@
+{
+  "source_video": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4",
+  "related_video_id": "NIJ92a65SxM",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-i-when-language",
+  "full_video_url": "https://www.youtube.com/watch?v=NIJ92a65SxM",
+  "secondary_video_url": "https://www.youtube.com/watch?v=swvX4mduJtk",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "writing-the-script-isnt-agency",
+      "title": "Writing the Script Isn't Agency",
+      "summary": "An agent is not real just because it can describe the work. It becomes real when it can execute the task and verify the state actually changed.",
+      "start": "00:00:00.400",
+      "end": "00:00:25.359",
+      "publish_at": "2026-04-29T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": null
+    },
+    {
+      "slug": "css-tags-can-break-an-agent",
+      "title": "A Single CSS Tag Can Break an Agent",
+      "summary": "Computer-using agents look impressive until a tiny interface change wipes out their bearings. Human-facing surfaces are fragile action environments.",
+      "start": "00:01:07.680",
+      "end": "00:01:32.720",
+      "publish_at": "2026-04-30T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": null
+    }
+  ]
+}

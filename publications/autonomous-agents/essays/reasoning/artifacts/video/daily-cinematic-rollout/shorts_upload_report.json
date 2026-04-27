@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-27T15:12:03.580625+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "bto9FNWlahY",
+    "url": "https://www.youtube.com/watch?v=bto9FNWlahY"
+  },
+  "related_longform": {
+    "id": "bto9FNWlahY",
+    "url": "https://www.youtube.com/watch?v=bto9FNWlahY"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=bto9FNWlahY"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=LykGDaONozw"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/01-the-ai-did-not-fail-the-scaffold-did_portrait.mp4",
+      "title": "The AI Did Not Fail. The Scaffold Did. #shorts",
+      "summary": "Fluent plans can look validated until they hit a locked database. The failure is often missing architecture, not missing intelligence.",
+      "publish_at": "2026-04-28T06:00:00Z",
+      "video_id": "T-XSEz2bQUk",
+      "url": "https://www.youtube.com/watch?v=T-XSEz2bQUk",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wQTI4OEZFRUE0Q0Q3ODQw"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "bto9FNWlahY"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/01-the-ai-did-not-fail-the-scaffold-did_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 35.958333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 35.850998
+        },
+        "format_duration": 35.958333,
+        "duration": 35.958333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The AI Did Not Fail. The Scaffold Did. #shorts",
+        "published_at": "2026-04-27T15:11:49Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wQTI4OEZFRUE0Q0Q3ODQw",
+        "position": 117,
+        "title": "The AI Did Not Fail. The Scaffold Did. #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/02-ai-cannot-check-its-own-gravity_portrait.mp4",
+      "title": "AI Cannot Check Its Own Gravity #shorts",
+      "summary": "Once a hallucination enters the same context window, the model bends the rest of the answer around it. Verification needs isolation.",
+      "publish_at": "2026-04-29T06:00:00Z",
+      "video_id": "QCK0hPc0dPM",
+      "url": "https://www.youtube.com/watch?v=QCK0hPc0dPM",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EODkyNDMzRkJBNkQ2NkMz",
+        "recovered_after_transient_error": true
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "bto9FNWlahY"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/02-ai-cannot-check-its-own-gravity_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 50.5
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 50.41
+        },
+        "format_duration": 50.5,
+        "duration": 50.5
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "AI Cannot Check Its Own Gravity #shorts",
+        "published_at": "2026-04-27T15:11:56Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EODkyNDMzRkJBNkQ2NkMz",
+        "title": "AI Cannot Check Its Own Gravity #shorts"
+      }
+    }
+  ]
+}

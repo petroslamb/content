@@ -1,0 +1,42 @@
+{
+  "source_video": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4",
+  "related_video_id": "abBHq8lwCEE",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent",
+  "full_video_url": "https://www.youtube.com/watch?v=abBHq8lwCEE",
+  "secondary_video_url": "https://www.youtube.com/watch?v=xxd2VKlqiL4",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "agent-theater-is-not-intelligence",
+      "title": "Agent Theater Is Not Intelligence",
+      "summary": "Splitting one model into CEO, developer, and tester roles can create an organizational chart without creating a smarter system.",
+      "start": "00:00:00.480",
+      "end": "00:00:56.879",
+      "publish_at": "2026-04-28T07:30:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      }
+    },
+    {
+      "slug": "the-coordination-tax-kills-agent-handoffs",
+      "title": "The Coordination Tax Kills Agent Handoffs",
+      "summary": "Every unnecessary handoff adds latency, token cost, and fidelity loss. A single capable agent should own the task when it can.",
+      "start": "00:00:56.879",
+      "end": "00:01:44.479",
+      "publish_at": "2026-04-29T07:30:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 5
+      }
+    }
+  ]
+}

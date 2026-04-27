@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-27T11:43:30.781655+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "J9dz9_9YPQw",
+    "url": "https://www.youtube.com/watch?v=J9dz9_9YPQw"
+  },
+  "related_longform": {
+    "id": "J9dz9_9YPQw",
+    "url": "https://www.youtube.com/watch?v=J9dz9_9YPQw"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=J9dz9_9YPQw"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=Pj4sjWvyJVQ"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/01-agents-dont-lose-iq-they-lose-attention_portrait.mp4",
+      "title": "Agents Don't Lose IQ. They Lose Attention. #shorts",
+      "summary": "When an agent loops or hallucinates mid-task, the failure is usually not intelligence. It is an attention and memory collapse.",
+      "publish_at": "2026-04-29T07:30:00Z",
+      "video_id": "QRD1FJiKTfU",
+      "url": "https://www.youtube.com/watch?v=QRD1FJiKTfU",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wMDkwRkI3NzExODA2MTFG"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "J9dz9_9YPQw"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/01-agents-dont-lose-iq-they-lose-attention_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 25.75
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 25.680998
+        },
+        "format_duration": 25.75,
+        "duration": 25.75
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Agents Don't Lose IQ. They Lose Attention. #shorts",
+        "published_at": "2026-04-27T11:43:16Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wMDkwRkI3NzExODA2MTFG",
+        "position": 115,
+        "title": "Agents Don't Lose IQ. They Lose Attention. #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/02-flat-vector-memory-becomes-a-security-hole_portrait.mp4",
+      "title": "Flat Vector Memory Becomes a Security Hole #shorts",
+      "summary": "Dumping every document into one memory channel does not just add noise. It creates retrieval drift and opens a path for hidden text to override guardrails.",
+      "publish_at": "2026-04-30T07:30:00Z",
+      "video_id": "4UzuyKGNaKc",
+      "url": "https://www.youtube.com/watch?v=4UzuyKGNaKc",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4xRDJGOTc4RkUxMzUwMUFG"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "J9dz9_9YPQw"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/02-flat-vector-memory-becomes-a-security-hole_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 35.416667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 35.293991
+        },
+        "format_duration": 35.416667,
+        "duration": 35.416667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Flat Vector Memory Becomes a Security Hole #shorts",
+        "published_at": "2026-04-27T11:43:24Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4xRDJGOTc4RkUxMzUwMUFG",
+        "position": 116,
+        "title": "Flat Vector Memory Becomes a Security Hole #shorts"
+      }
+    }
+  ]
+}
