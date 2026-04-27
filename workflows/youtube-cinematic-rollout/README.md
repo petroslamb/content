@@ -13,9 +13,10 @@ required_context:
 expected_outputs:
   - updated evergreen backlog state
   - package-local cinematic and Shorts artifacts or an exact blocked-state note
+  - verified Studio card and end-screen links for uploaded cinematic briefs when a YouTube research-breakdown target exists
   - appended release-ledger entry for the run
 done_when:
-  - all in-flight package work for the run is reconciled, up to two new cinematics are started or completed when possible, and blockers are recorded without hidden state
+  - all in-flight package work for the run is reconciled, uploaded cinematic briefs have Studio card/end-screen wiring or an explicit blocker recorded, up to two new cinematics are started or completed when possible, and blockers are recorded without hidden state
 approval_gate: required_before_channel_mutation
 ---
 
@@ -28,6 +29,7 @@ Use this workflow when the task is:
 - continuing the cinematic backlog across all eligible published essays
 - reconciling in-flight cinematic packages before starting new ones
 - recovering captions, selecting high-bar Shorts, rendering them, and scheduling them into the shared daily queue
+- wiring full cinematic uploads in YouTube Studio so viewers can jump to the paired long research breakdown from an info card and end screen
 - handling hard NotebookLM auth and quota gates without faking progress
 
 ## Ownership Split
@@ -52,7 +54,12 @@ Do not move generated media into the experiment workspace.
 - Recover the cinematic `.srt` before choosing Shorts. Do not guess clip boundaries from untimed transcripts.
 - Apply the high-bar Shorts rubric and schedule only clips that score `22` or higher.
 - Publish cinematics immediately after upload.
+- For every full cinematic upload in `Rooted Layers Cinematic Briefs`, add one YouTube Studio info card in the first few minutes and one end-screen video element pointing to the configured YouTube research-breakdown target.
+- Do not add cards or end screens to Shorts as part of this workflow.
+- If the configured secondary link is an external essay URL rather than a YouTube video, record `studio_link_blocked_external_target` and skip the Studio card/end-screen step. Do not guess a target video.
+- If YouTube Studio browser auth is missing, record `studio_link_pending`, notify the user to sign in to Studio, and keep the item in follow-through until the card/end-screen wiring is verified.
 - Publish Shorts starting the following day, at most one Short per source video per day.
+- The active daily run or watcher must wait through normal asynchronous generation delays instead of yielding early. Use the manifest polling defaults: `poll_interval_seconds: 600`, `notebooklm_generation_wait_timeout_seconds: 21600`, and `youtube_caption_wait_timeout_seconds: 7200`.
 
 ## Canonical Files
 
@@ -72,15 +79,16 @@ Do not move generated media into the experiment workspace.
 - Daily starter:
   - runs once per day at `10:00` Athens time
   - reconciles state first, then starts up to two new cinematic generations when capacity allows
+  - after starting NotebookLM work, blocks on 10-minute generation polling when the current runtime can safely remain active
   - if it creates or detects any in-flight cinematic rollout work, it must create or refresh a temporary watcher heartbeat for this thread
 - Temporary watcher:
   - runs every `30` minutes
   - watches only in-flight entries already present in the backlog manifest
   - does not start new backlog generations
-  - continues the pipeline through upload, captions, Shorts selection, render, Shorts upload, and readback
+  - continues the pipeline through upload, Studio card/end-screen wiring, captions, Shorts selection, render, Shorts upload, and readback, using 10-minute waits for NotebookLM artifacts and YouTube captions before yielding
   - deletes itself when there are no in-flight cinematic rollout entries left
 
-Do not rely on the daily starter alone for end-to-end completion. The watcher is the follow-through layer that turns started NotebookLM jobs into finished YouTube distribution work.
+Do not rely on the daily starter alone for end-to-end completion. The active run should wait when it can; the watcher is the backup follow-through layer that turns any still-pending NotebookLM jobs into finished YouTube distribution work.
 
 ## Helper Scripts
 
@@ -90,6 +98,10 @@ Do not rely on the daily starter alone for end-to-end completion. The watcher is
   - `.venv/bin/python scripts/extract_cinematic_short_candidates.py --package <package> --srt-file <cinematic.srt> --output <candidate_report.json>`
 - Cinematic upload:
   - `.venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml --publication <key>`
+- Caption wait/download:
+  - `.venv/bin/python scripts/wait_for_youtube_captions.py --video-id <CINEMATIC_VIDEO_ID> --output <cinematic.srt> --interval 600 --timeout 7200`
+- Studio card and end-screen wiring:
+  - `https://studio.youtube.com/video/<CINEMATIC_VIDEO_ID>/editor`
 - Shorts render:
   - `.venv/bin/python scripts/create_publication_shorts_from_longform.py --video-file <cinematic.mp4> --manifest <package-local-shorts-manifest.json>`
 - Shorts upload:
@@ -120,6 +132,7 @@ The script must:
 Before starting any new cinematic generation, reconcile entries whose state is already beyond `queued`:
 
 - caption recovery
+- Studio card/end-screen reconciliation for any uploaded cinematic brief with a YouTube research-breakdown target
 - candidate extraction
 - rubric scoring
 - approved-clip scheduling
@@ -141,6 +154,18 @@ When auth is valid and no higher-priority in-flight work blocks progress:
   "$(cat experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt)"
 ```
 
+If the generation command returns an artifact ID before the video is downloadable, wait inside the same active run:
+
+```bash
+.venv/bin/notebooklm artifact wait <ARTIFACT_ID> \
+  -n NOTEBOOK_ID \
+  --timeout 21600 \
+  --interval 600 \
+  --json
+```
+
+When the artifact completes, download or export the completed video immediately into the entry's `cinematic.video_file`, then continue to upload. If the wait times out but the task is still `in_progress`, keep the entry in `generation_pending`, write the current artifact ID into the manifest, and rely on the 30-minute watcher for the next 10-minute polling window. Do not start additional backlog entries while any entry remains `generation_pending`.
+
 If NotebookLM returns a global quota or rate-limit error, stop new generation for that run, record `blocked_rate_limited`, and retry on the next scheduled day.
 
 After new cinematic work is started, create or refresh the temporary 30-minute watcher so those jobs are polled to completion without waiting for the next daily run.
@@ -158,14 +183,43 @@ Use the shared upload wrapper:
 
 The cinematic should be public immediately unless a specific `publish_at` override is present.
 
-### 5. Recover captions and extract candidates
+### 5. Wire Studio card and end screen
 
-Download the timed captions:
+This step applies only to the full cinematic upload in the `Rooted Layers Cinematic Briefs` playlist. It does not apply to Shorts, TL;DR uploads, visual deep dives, or other YouTube workflows.
+
+Use the configured YouTube research-breakdown target:
+
+- `secondary_link.video_id` when the manifest entry provides one
+- the mapped baseline longform/explainer video ID for pilot or legacy entries
+- no target when the secondary link is only an external essay URL
+
+When there is no YouTube target, write `studio_link_blocked_external_target` to the release ledger and continue with captions and Shorts. Cards and end screens should point to YouTube videos only; do not invent a fallback.
+
+Open the uploaded cinematic in YouTube Studio:
+
+```text
+https://studio.youtube.com/video/<CINEMATIC_VIDEO_ID>/editor
+```
+
+In Studio:
+
+- Add or edit the end screen. If the upload has no end screen yet, apply a one-video plus subscribe template, set the video element to the configured research-breakdown video ID, and save.
+- Add or edit an info card. Use a video card, set it to the configured research-breakdown video ID, place the teaser in the first few minutes, and save.
+- Prefer `00:01:00` for the card teaser time. If Studio rejects that timestamp for a very short upload, use the earliest valid first-minutes timestamp.
+- Reopen the editor after saving and verify the main editor shows both end screen and info cards as editable. If either surface did not persist, reopen that editor and save again.
+
+If Studio browser auth is missing, record `studio_link_pending` with the cinematic video ID and target video ID, notify the user to sign in to YouTube Studio in the in-app browser, and leave the item for the 30-minute watcher to retry. Downstream YouTube-only work can continue only when it does not hide the unresolved Studio wiring.
+
+### 6. Recover captions and extract candidates
+
+Wait for timed captions and download them. YouTube automatic captions often appear after upload processing, so use the polling wrapper rather than a single caption attempt:
 
 ```bash
-.venv/bin/python workflows/skills/youtube-data-api/scripts/download_video_captions.py \
+.venv/bin/python scripts/wait_for_youtube_captions.py \
   --video-id <CINEMATIC_VIDEO_ID> \
-  --output publications/<package>/artifacts/video/<cinematic>.srt
+  --output publications/<package>/artifacts/video/<cinematic>.srt \
+  --interval 600 \
+  --timeout 7200
 ```
 
 Then extract candidate windows:
@@ -179,7 +233,7 @@ Then extract candidate windows:
 
 The helper produces candidate windows, excerpts, duration metadata, and heuristic novelty hints. The operator still applies the final rubric judgment.
 
-### 6. Score and approve clips
+### 7. Score and approve clips
 
 Use the fixed rubric:
 
@@ -197,7 +251,7 @@ Scoring contract:
 
 Write approved, reserve, and rejected clips back into the backlog manifest entry, then rerun the rollout helper with `--apply` so it recomputes publish times and materializes the package-local Shorts manifest.
 
-### 7. Render and upload Shorts
+### 8. Render and upload Shorts
 
 Render from the cinematic MP4 using the package-local manifest generated by the rollout helper, then upload with:
 
@@ -215,6 +269,14 @@ Render from the cinematic MP4 using the package-local manifest generated by the 
   --manifest publications/<package>/artifacts/video/daily-cinematic-rollout/shorts_manifest.json \
   --apply
 ```
+
+After upload, verify the Shorts related-video setting in YouTube Studio, not only through the API report:
+
+- Open each Short in Studio at `https://studio.youtube.com/video/<SHORT_ID>/edit`.
+- In the right-side `Related video` card, set the related video to that Short's source cinematic brief from the `Rooted Layers Cinematic Briefs` playlist.
+- Save the Studio metadata change.
+- Reload the same Studio edit page and verify the `Related video` card still shows the cinematic brief title.
+- If the card returns to `None`, repeat the Studio selection and save; do not mark the entry completed until the reload check persists.
 
 ## Shorts Scheduling Contract
 
