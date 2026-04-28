@@ -2015,6 +2015,35 @@ def build_status_report(package_arg: str | None = None, limit: int = DEFAULT_REC
     }
 
 
+def build_init_report(check_only: bool = False) -> dict[str, Any]:
+    directories = [
+        RESOLVED_RUNS_DIR,
+        RUN_RECORDS_DIR,
+        REVIEW_GATES_DIR,
+    ]
+    directory_records = []
+    for directory in directories:
+        existed = directory.exists()
+        if not existed and not check_only:
+            directory.mkdir(parents=True, exist_ok=True)
+        directory_records.append({
+            "path": repo_relpath(directory),
+            "existed_before": existed,
+            "exists_after": directory.exists(),
+            "created": not existed and directory.exists() and not check_only,
+        })
+    validation_report = build_validation_report()
+    return {
+        "kind": "content_agent_init",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "check_only": check_only,
+        "runtime_directories": directory_records,
+        "root_surfaces": build_root_surface_summary(),
+        "validation_health": summarize_validation_health(validation_report),
+        "message": "content-agent runtime surfaces are initialized",
+    }
+
+
 def build_review_list_report(
     package_arg: str | None = None,
     status_filter: str = "all",
@@ -3629,6 +3658,30 @@ def print_text_status(report: dict[str, Any]) -> None:
             )
 
 
+def print_text_init(report: dict[str, Any]) -> None:
+    print("content-agent init")
+    print(f"check_only: {str(report.get('check_only') is True).lower()}")
+    print("runtime_directories:")
+    for record in report.get("runtime_directories", []):
+        print(
+            "  - "
+            f"{record.get('path')}: exists={str(record.get('exists_after') is True).lower()}, "
+            f"created={str(record.get('created') is True).lower()}"
+        )
+    health = report.get("validation_health", {})
+    counts = health.get("severity_counts", {})
+    state = "passed" if health.get("success") else "failed"
+    print(
+        "validation: "
+        f"{state} "
+        f"(errors={counts.get('error', 0)}, "
+        f"warnings={counts.get('warning', 0)}, "
+        f"info={counts.get('info', 0)})"
+    )
+    if report.get("message"):
+        print(f"message: {report.get('message')}")
+
+
 def print_text_review_list(report: dict[str, Any]) -> None:
     filters = report.get("filters", {})
     print("content-agent review list")
@@ -3825,6 +3878,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Deterministic Phase 2 content-agent facade.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+    init = subparsers.add_parser("init", help="Initialize or check content-agent runtime surfaces.")
+    init.add_argument("--check-only", action="store_true", help="Report setup state without creating directories.")
+    init.add_argument("--format", choices=["text", "json"], default="text")
+
     status = subparsers.add_parser("status", help="Report package, gate, run, and validation state.")
     status.add_argument("--package", help="Package path or key under publications/.")
     status.add_argument("--limit", type=int, default=DEFAULT_RECENT_LIMIT, help="Recent run/log records to show.")
@@ -3903,6 +3960,21 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
+
+    if args.command == "init":
+        try:
+            report = build_init_report(check_only=args.check_only)
+        except Exception as exc:
+            if args.format == "json":
+                print_json({"success": False, "error": str(exc)})
+            else:
+                print(f"content-agent init failed: {exc}")
+            sys.exit(1)
+        if args.format == "json":
+            print_json(report)
+        else:
+            print_text_init(report)
+        return
 
     if args.command == "status":
         try:
