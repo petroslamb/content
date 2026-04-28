@@ -1,0 +1,625 @@
+{
+  "updated_at": "2026-04-28T14:05:26.703Z",
+  "total": 47,
+  "results": [
+    {
+      "index": 1,
+      "videoId": "1PB-UE6GpBM",
+      "shortTitle": "Writing the Script Isn't Agency #shorts",
+      "targetTitle": "Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief",
+      "started_at": "2026-04-28T13:51:09.398Z",
+      "before_has_target": true,
+      "before_related_excerpt": "και άλλα\n  - status\n  - region \"Πρόγραμμα αναπαραγωγής βίντεο\":\n    - button \"Αναπαραγωγή\":\n    - button \"Σίγαση\":\n    - slider \"ένταση\"\n    - generic: 0:00 / 0:26\n    - button \"Ρυθμίσεις\":\n    - button \"Πλήρης οθόνη\":\n  - generic: Σύνδεσμος βίντεο\n  - link \"https://youtube.com/shorts/1PB-UE6GpBM\":\n    - /url: https://youtube.com/shorts/1PB-UE6GpBM\n  - button \"Αντιγραφή συνδέσμου βίντεο\":\n  - generic: Ποιότητα βίντεο\n  - generic \"Η επεξεργασία τυπικής ανάλυσης ολοκληρώθηκε\":\n  - img \"Η επεξεργασία υψηλής ανάλυσης ολοκληρώθηκε\":\n  - generic: Ορατότητα\n  - generic: Προγραμματισμένο\n  - button \"Επεξεργασία κατάστασης ορατότητας βίντεο\":\n  - generic: Περιορισμοί\n  - generic: Κανένας\n  - button \"Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief\":\n    - button \"Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief\":\n      - generic: Σχετικό βίντεο\n      - generic \"Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο.\":\n      - generic: Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief\n      - button:\n  - button \"Υπότιτλοι\":\n    - button \"Υπότιτλοι\":\n      - button \"Υπότιτλοι\":\n        - generic: Υπότιτλοι",
+      "skipped": "already had target in Studio",
+      "verified": true,
+      "verify_excerpt": "και άλλα\n  - status\n  - region \"Πρόγραμμα αναπαραγωγής βίντεο\":\n    - button \"Αναπαραγωγή\":\n    - button \"Σίγαση\":\n    - slider \"ένταση\"\n    - generic: 0:00 / 0:26\n    - button \"Ρυθμίσεις\":\n    - button \"Πλήρης οθόνη\":\n  - generic: Σύνδεσμος βίντεο\n  - link \"https://youtube.com/shorts/1PB-UE6GpBM\":\n    - /url: https://youtube.com/shorts/1PB-UE6GpBM\n  - button \"Αντιγραφή συνδέσμου βίντεο\":\n  - generic: Ποιότητα βίντεο\n  - generic \"Η επεξεργασία τυπικής ανάλυσης ολοκληρώθηκε\":\n  - img \"Η επεξεργασία υψηλής ανάλυσης ολοκληρώθηκε\":\n  - generic: Ορατότητα\n  - generic: Προγραμματισμένο\n  - button \"Επεξεργασία κατάστασης ορατότητας βίντεο\":\n  - generic: Περιορισμοί\n  - generic: Κανένας\n  - button \"Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief\":\n    - button \"Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief\":\n      - generic: Σχετικό βίντεο\n      - generic \"Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο.\":\n      - generic: Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief\n      - button:\n  - button \"Υπότιτλοι\":\n    - button \"Υπότιτλοι\":\n      - button \"Υπότιτλοι\":\n        - generic: Υπότιτλοι",
+      "completed_at": "2026-04-28T14:04:34.710Z",
+      "manual": true
+    },
+    {
+      "index": 2,
+      "videoId": "FaDtWYQ-8d8",
+      "shortTitle": "A Single CSS Tag Can Break an Agent #shorts",
+      "targetTitle": "Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 3,
+      "videoId": "D3BZrjUzsPw",
+      "shortTitle": "Agents Don't Lose IQ. They Lose Attention. #shorts",
+      "targetTitle": "Why Agent Memory Needs Authority | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 4,
+      "videoId": "PopV146TIe8",
+      "shortTitle": "Flat Vector Memory Becomes a Security Hole #shorts",
+      "targetTitle": "Why Agent Memory Needs Authority | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 5,
+      "videoId": "gENRTpSnHsw",
+      "shortTitle": "Agent Theater Is Not Intelligence #shorts",
+      "targetTitle": "When the Second Agent Actually Buys a Boundary | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 6,
+      "videoId": "_GOUwFLcERM",
+      "shortTitle": "The Coordination Tax Kills Agent Handoffs #shorts",
+      "targetTitle": "When the Second Agent Actually Buys a Boundary | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 7,
+      "videoId": "zWgN04X3ugk",
+      "shortTitle": "The AI Did Not Fail. The Scaffold Did. #shorts",
+      "targetTitle": "Diagnose the Scaffold Before You Shop the Model | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 8,
+      "videoId": "T8Gv8yX_NW8",
+      "shortTitle": "AI Cannot Check Its Own Gravity #shorts",
+      "targetTitle": "Diagnose the Scaffold Before You Shop the Model | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 9,
+      "videoId": "Ue9gGySTVRI",
+      "shortTitle": "Writing the Script Isn't Agency #shorts",
+      "targetTitle": "Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:00:29.774Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 160,
+        "y": 285
+      },
+      "save": {
+        "ok": true,
+        "clicked": true,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:00:39.883Z"
+    },
+    {
+      "index": 10,
+      "videoId": "bsvMg8LUb1M",
+      "shortTitle": "A Single CSS Tag Can Break an Agent #shorts",
+      "targetTitle": "Why Reliable Agents Start with Action Boundaries | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:00:39.883Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 180,
+        "y": 300
+      },
+      "save": {
+        "ok": true,
+        "clicked": true,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:00:55.947Z"
+    },
+    {
+      "index": 11,
+      "videoId": "QRD1FJiKTfU",
+      "shortTitle": "Agents Don't Lose IQ. They Lose Attention. #shorts",
+      "targetTitle": "Why Agent Memory Needs Authority | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:00:55.948Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 160,
+        "y": 285
+      },
+      "save": {
+        "ok": true,
+        "clicked": true,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:06.466Z"
+    },
+    {
+      "index": 12,
+      "videoId": "4UzuyKGNaKc",
+      "shortTitle": "Flat Vector Memory Becomes a Security Hole #shorts",
+      "targetTitle": "Why Agent Memory Needs Authority | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:01:06.466Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 160,
+        "y": 285
+      },
+      "save": {
+        "ok": true,
+        "clicked": true,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:16.968Z"
+    },
+    {
+      "index": 13,
+      "videoId": "qTucAFn5g8Y",
+      "shortTitle": "The Coordination Tax Kills Agent Handoffs #shorts",
+      "targetTitle": "When the Second Agent Actually Buys a Boundary | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:01:16.969Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 170,
+        "y": 220
+      },
+      "save": {
+        "ok": true,
+        "clicked": false,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:20.500Z"
+    },
+    {
+      "index": 14,
+      "videoId": "QCK0hPc0dPM",
+      "shortTitle": "AI Cannot Check Its Own Gravity #shorts",
+      "targetTitle": "Diagnose the Scaffold Before You Shop the Model | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:01:20.501Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 160,
+        "y": 285
+      },
+      "save": {
+        "ok": true,
+        "clicked": false,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:29.737Z"
+    },
+    {
+      "index": 15,
+      "videoId": "QTzx3xUCq8M",
+      "shortTitle": "AI Safety Changes When Models Get Hands #shorts",
+      "targetTitle": "The Attack Surface Is the Architecture | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:01:29.738Z",
+      "before_has_target": true,
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:32.006Z"
+    },
+    {
+      "index": 16,
+      "videoId": "AkjqAVVTIxY",
+      "shortTitle": "The Data Takes Control of the Agent #shorts",
+      "targetTitle": "The Attack Surface Is the Architecture | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:01:32.007Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 170,
+        "y": 220
+      },
+      "save": {
+        "ok": true,
+        "clicked": false,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:35.471Z"
+    },
+    {
+      "index": 17,
+      "videoId": "UcyUL7tQu7M",
+      "shortTitle": "Prompt Tweaks Create Drift Generators #shorts",
+      "targetTitle": "When the Workflow Becomes the Object | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:01:35.471Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 160,
+        "y": 285
+      },
+      "save": {
+        "ok": true,
+        "clicked": false,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:44.688Z"
+    },
+    {
+      "index": 18,
+      "videoId": "_nuZpcYskDw",
+      "shortTitle": "A JSON Schema Beats Prompt Whispering #shorts",
+      "targetTitle": "When the Workflow Becomes the Object | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:01:44.689Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 160,
+        "y": 285
+      },
+      "save": {
+        "ok": true,
+        "clicked": false,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:01:53.887Z"
+    },
+    {
+      "index": 19,
+      "videoId": "CV7mhng2Q3w",
+      "shortTitle": "What AI Architects Design Now #shorts",
+      "targetTitle": "Neural Architecture Design as a Reusable Scaffold | TL;DR",
+      "started_at": "2026-04-28T14:01:53.888Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 170,
+        "y": 220
+      },
+      "save": {
+        "ok": true,
+        "clicked": true,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:02:02.778Z"
+    },
+    {
+      "index": 20,
+      "videoId": "O4LF-2JVz78",
+      "shortTitle": "Hallucination Is Like Calling Every Illness a Fever #shorts",
+      "targetTitle": "The Binding Gap: Explainer TL;DR",
+      "started_at": "2026-04-28T14:02:02.779Z",
+      "before_has_target": false,
+      "related_button_name": "Σχετικό βίντεο Καθοδηγήστε το κοινό σας σε περιεχόμενο που σχετίζεται με αυτό το βίντεο. Κανένα",
+      "related_button_count": 2,
+      "search_count": 1,
+      "option_count": 1,
+      "picked": {
+        "ok": true,
+        "x": 170,
+        "y": 220
+      },
+      "save": {
+        "ok": true,
+        "clicked": true,
+        "disabled": true
+      },
+      "verified": true,
+      "completed_at": "2026-04-28T14:02:12.110Z"
+    },
+    {
+      "index": 21,
+      "videoId": "9evdTRtwjaI",
+      "shortTitle": "Why Identical AI Blocks Learn Different Jobs #shorts",
+      "targetTitle": "Neural Architecture Design as a Reusable Scaffold | TL;DR",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 22,
+      "videoId": "v71Kx9W7wDw",
+      "shortTitle": "Why User Calibration Comes Too Late #shorts",
+      "targetTitle": "Why Polished AI Reports Can Outrun the Evidence | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 23,
+      "videoId": "PV-KfDYiLPo",
+      "shortTitle": "Agent Theater Is Not Intelligence #shorts",
+      "targetTitle": "When the Second Agent Actually Buys a Boundary | A Cinematic Research Brief",
+      "verified": true,
+      "manual": true,
+      "completed_at": "2026-04-28T14:04:34.710Z"
+    },
+    {
+      "index": 24,
+      "videoId": "opdhk_sizGY",
+      "shortTitle": "Agents Treat Guardrails Like Logic Puzzles #shorts",
+      "targetTitle": "Agentic System Design | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:34.710Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:36.833Z"
+    },
+    {
+      "index": 25,
+      "videoId": "T-XSEz2bQUk",
+      "shortTitle": "The AI Did Not Fail. The Scaffold Did. #shorts",
+      "targetTitle": "Diagnose the Scaffold Before You Shop the Model | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:36.834Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:39.024Z"
+    },
+    {
+      "index": 26,
+      "videoId": "T5sxICFcgNE",
+      "shortTitle": "Why AI Forgets Who Did What #shorts",
+      "targetTitle": "Why AI Keeps the Scene but Drops the Wiring | A Cinematic Reasearch Brief",
+      "started_at": "2026-04-28T14:04:39.025Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:41.134Z"
+    },
+    {
+      "index": 27,
+      "videoId": "_M0ZS9y3Xx0",
+      "shortTitle": "Why Human Review Fails After Fluent AI #shorts",
+      "targetTitle": "Why Polished AI Reports Can Outrun the Evidence | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:41.135Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:43.251Z"
+    },
+    {
+      "index": 28,
+      "videoId": "TeU3k4i6X_8",
+      "shortTitle": "Why Multi-Agent Debate Drops Error Rates #shorts",
+      "targetTitle": "Agentic System Design | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:43.252Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:45.532Z"
+    },
+    {
+      "index": 29,
+      "videoId": "SNbhI6ceIRc",
+      "shortTitle": "AI Swarms Are Training Wheels #shorts",
+      "targetTitle": "Why Most Multi-Agent AI Is a Workaround | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:45.532Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:47.589Z"
+    },
+    {
+      "index": 30,
+      "videoId": "kFEns6A8tZk",
+      "shortTitle": "Why Agents Simulate Before They Act #shorts",
+      "targetTitle": "Agentic System Design | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:47.589Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:49.678Z"
+    },
+    {
+      "index": 31,
+      "videoId": "8oawVSdt9vM",
+      "shortTitle": "Why Single Agents Break at 90 Tools #shorts",
+      "targetTitle": "Why Most Multi-Agent AI Is a Workaround | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:49.678Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:51.723Z"
+    },
+    {
+      "index": 32,
+      "videoId": "4FUw-C63kSc",
+      "shortTitle": "Confidence Debt Compounds Into a Cascade #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:04:51.726Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:53.763Z"
+    },
+    {
+      "index": 33,
+      "videoId": "pE_BwIGiXXk",
+      "shortTitle": "AI Agents Drift Into the Ditch #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:04:53.763Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:55.804Z"
+    },
+    {
+      "index": 34,
+      "videoId": "bQQYzmHmAoo",
+      "shortTitle": "An LLM Is an Engine Without a Vehicle #shorts",
+      "targetTitle": "Agentic System Design | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:55.805Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:04:58.709Z"
+    },
+    {
+      "index": 35,
+      "videoId": "bGS_PcK4-oE",
+      "shortTitle": "Why One Model Beat the Whole AI Swarm #shorts",
+      "targetTitle": "Why Most Multi-Agent AI Is a Workaround | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:04:58.710Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:00.860Z"
+    },
+    {
+      "index": 36,
+      "videoId": "3RXxxfZzk2c",
+      "shortTitle": "Expired Confidence Is Still Dangerous #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:00.861Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:03.023Z"
+    },
+    {
+      "index": 37,
+      "videoId": "GIvclCV-6FI",
+      "shortTitle": "Generation Is Not the Bottleneck #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:03.023Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:05.047Z"
+    },
+    {
+      "index": 38,
+      "videoId": "nOLNvOPNIZQ",
+      "shortTitle": "Borrowing Trust From Formatting #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:05.047Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:06.716Z"
+    },
+    {
+      "index": 39,
+      "videoId": "GsTRNX7Nt-g",
+      "shortTitle": "Why AI ROI Breaks Before Full Autonomy #shorts",
+      "targetTitle": "The AI Autonomy Tax | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:05:06.716Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:08.836Z"
+    },
+    {
+      "index": 40,
+      "videoId": "QiScnvG0xd0",
+      "shortTitle": "The Beautiful Report Was Lying #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:08.836Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:11.126Z"
+    },
+    {
+      "index": 41,
+      "videoId": "EroyOU7DqV4",
+      "shortTitle": "The Transformer Won as a Portable Block #shorts",
+      "targetTitle": "Why AI Design Converged on the Same Scaffold | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:05:11.127Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:13.223Z"
+    },
+    {
+      "index": 42,
+      "videoId": "snftJKejEd8",
+      "shortTitle": "You Endorsed What You Did Not Verify #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:13.224Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:15.467Z"
+    },
+    {
+      "index": 43,
+      "videoId": "9943YKYuyGM",
+      "shortTitle": "The Model Did Not Fail. The Control Layer Did. #shorts",
+      "targetTitle": "The AI Autonomy Tax | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:05:15.468Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:17.643Z"
+    },
+    {
+      "index": 44,
+      "videoId": "hGVNJYqR9Zg",
+      "shortTitle": "Why Handcrafted AI Breaks at Scale #shorts",
+      "targetTitle": "Why AI Design Converged on the Same Scaffold | A Cinematic Research Brief",
+      "started_at": "2026-04-28T14:05:17.644Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:19.867Z"
+    },
+    {
+      "index": 45,
+      "videoId": "o8Yk-obGDPA",
+      "shortTitle": "Thursday at 4:45 Is the Danger Zone #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:19.867Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:21.975Z"
+    },
+    {
+      "index": 46,
+      "videoId": "kX3eg-W5Y7A",
+      "shortTitle": "The Doctrine of Friction #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:21.976Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:24.675Z"
+    },
+    {
+      "index": 47,
+      "videoId": "3C3YkSiKlxo",
+      "shortTitle": "The Human-in-the-Loop Liability Shield #shorts",
+      "targetTitle": "The AI Confidence Debt | A Visual Deep Research Dive",
+      "started_at": "2026-04-28T14:05:24.675Z",
+      "skipped": "already set",
+      "verified": true,
+      "completed_at": "2026-04-28T14:05:26.703Z"
+    }
+  ]
+}
