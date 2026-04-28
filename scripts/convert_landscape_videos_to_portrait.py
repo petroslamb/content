@@ -55,21 +55,54 @@ def convert_video(
     fps: int,
     video_bitrate: str,
     audio_bitrate: str,
+    subtitle_file: Path | None = None,
+    overlay_video: Path | None = None,
+    overlay_images: list[tuple[Path, float | None, float | None]] | None = None,
 ) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    filter_graph = (
+    base_filter = (
         f"[0:v]split=2[bg][fg];"
         f"[bg]scale={width}:{height}:force_original_aspect_ratio=increase,"
         f"crop={width}:{height},boxblur=20:10[bgv];"
         f"[fg]scale={width}:{height}:force_original_aspect_ratio=decrease[fgv];"
-        f"[bgv][fgv]overlay=(W-w)/2:(H-h)/2,format=yuv420p[v]"
+        f"[bgv][fgv]overlay=(W-w)/2:(H-h)/2"
     )
-    run(
+    if subtitle_file:
+        subtitle_path = (
+            str(subtitle_file)
+            .replace("\\", "\\\\")
+            .replace(":", "\\:")
+            .replace("'", "\\'")
+        )
+        filter_graph = f"{base_filter}[base];[base]ass=filename='{subtitle_path}',setsar=1,format=yuv420p[v]"
+    elif overlay_video:
+        filter_graph = (
+            f"{base_filter}[base];"
+            f"[base][1:v]overlay=0:0:format=auto:eof_action=pass,setsar=1,format=yuv420p[v]"
+        )
+    elif overlay_images:
+        chains = [f"{base_filter}[base0]"]
+        previous = "base0"
+        for index, (_, start, end) in enumerate(overlay_images, start=1):
+            output = f"ov{index}"
+            enable = ""
+            if start is not None and end is not None:
+                enable = f":enable='between(t,{start:.3f},{end:.3f})'"
+            chains.append(
+                f"[{previous}][{index}:v]overlay=0:0:format=auto{enable}[{output}]"
+            )
+            previous = output
+        chains.append(f"[{previous}]setsar=1,format=yuv420p[v]")
+        filter_graph = ";".join(chains)
+    else:
+        filter_graph = f"{base_filter},setsar=1,format=yuv420p[v]"
+    cmd = [FFMPEG_BIN, "-y", "-i", str(input_path)]
+    if overlay_video:
+        cmd.extend(["-i", str(overlay_video)])
+    for overlay_path, _, _ in overlay_images or []:
+        cmd.extend(["-loop", "1", "-i", str(overlay_path)])
+    cmd.extend(
         [
-            FFMPEG_BIN,
-            "-y",
-            "-i",
-            str(input_path),
             "-filter_complex",
             filter_graph,
             "-map",
@@ -101,6 +134,7 @@ def convert_video(
             str(output_path),
         ]
     )
+    run(cmd)
 
 
 def parse_args() -> argparse.Namespace:
