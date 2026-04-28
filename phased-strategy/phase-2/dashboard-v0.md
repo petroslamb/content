@@ -26,7 +26,7 @@ The first tracked slice is a read-only localhost surface:
 - command: `./content-cockpit` or `npm run cockpit`
 - implementation: `scripts/content_cockpit.py`
 - data boundary: imports existing `content-agent` status, review-list, and review-inspect readers
-- actions: refresh, artifact links, exact gate-artifact inspection, safe validation rerun, and gate decisions through `content-agent review`
+- actions: refresh, next-action inspection, artifact links, exact gate-artifact inspection, safe validation rerun, and gate decisions through `content-agent review`
 
 The cockpit still has no arbitrary job launcher, package editor, publication action, or lifecycle mutation path beyond existing `content-agent review` semantics.
 
