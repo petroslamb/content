@@ -44,3 +44,14 @@ npm run check:reviewable-runs
 ```
 
 Older JSON logs without `schema_version` are grandfathered as legacy operational records. Do not use them as examples for new runs.
+
+## Phase 2.3 YAML Run Records
+
+Phase 2.3 adds YAML `run_record` artifacts to this same store for governed, gated, resumable, continuous, or proof-relevant runs. Those records are stricter than the lightweight JSON v2 logs: they must include workflow id/version/hash, package status reference, admitted context paths and hashes, consumed and produced artifacts, validation results, enforcement outcomes, gate ids, terminal status, and embedded promoted-output state.
+
+Validate YAML execution evidence with:
+
+```bash
+./content-agent validate
+npm run check:workflow-model
+```
