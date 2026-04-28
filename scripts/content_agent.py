@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Deterministic Phase 2 content-agent facade.
 
-Only `validate` is implemented through Phase 2.3. It reads file-backed
-workflow contracts and execution evidence, then reports enforcement and trace
-readiness without mutating package state.
+Phase 2.4 adds status, next-action, review-gate inspection, and gate-decision
+commands over the Phase 2.1-2.3 file-backed contracts and evidence. The facade
+reports enforcement and trace readiness without promoting package state.
 """
 
 from __future__ import annotations
@@ -15,6 +15,8 @@ import re
 import shlex
 import shutil
 import sys
+from copy import deepcopy
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -33,6 +35,7 @@ from harness import load_harness_policy, load_package_scripts, validate_harness_
 from lifecycle import (
     PUBLICATIONS_DIR,
     REPO_ROOT,
+    STAGES,
     WORKFLOWS_DIR,
     active_umbrella_route,
     coerce_package_key,
@@ -40,6 +43,7 @@ from lifecycle import (
     load_pipeline_profiles,
     load_status_ref,
 )
+from next_action import build_next_action
 
 
 CONTENT_AGENT_VERSION = 1
@@ -58,6 +62,7 @@ PROMOTED_OUTPUT_STATE_KEYS = {
     "validation_state",
     "trace_state",
 }
+DEFAULT_RECENT_LIMIT = 5
 
 
 def repo_relpath(path: Path) -> str:
@@ -1709,6 +1714,758 @@ def parse_runtime_inputs(values: list[str]) -> dict[str, str]:
     return inputs
 
 
+def severity_counts(findings: list[dict[str, Any]]) -> dict[str, int]:
+    counts = {"error": 0, "warning": 0, "info": 0}
+    for finding in findings:
+        severity = str(finding.get("severity", "info"))
+        counts[severity] = counts.get(severity, 0) + 1
+    return counts
+
+
+def summarize_validation_health(report: dict[str, Any]) -> dict[str, Any]:
+    findings = report.get("findings", [])
+    if not isinstance(findings, list):
+        findings = []
+    evidence = report.get("execution_evidence", {})
+    counts = evidence.get("counts", {}) if isinstance(evidence, dict) else {}
+    return {
+        "success": report.get("success") is True,
+        "mode": report.get("mode"),
+        "package": report.get("package"),
+        "severity_counts": severity_counts([item for item in findings if isinstance(item, dict)]),
+        "finding_count": len(findings),
+        "execution_evidence_counts": counts,
+        "top_findings": [
+            {
+                "severity": item.get("severity"),
+                "surface": item.get("surface"),
+                "posture": item.get("posture"),
+                "workflow_id": item.get("workflow_id"),
+                "path": item.get("path"),
+                "message": item.get("message"),
+            }
+            for item in findings[:5]
+            if isinstance(item, dict)
+        ],
+    }
+
+
+def gate_package_key(data: dict[str, Any]) -> str | None:
+    package = data.get("package")
+    if not isinstance(package, dict):
+        return None
+    package_path = package.get("path")
+    if isinstance(package_path, str) and package_path:
+        return coerce_package_key(package_path)
+    status_path = package.get("status_path")
+    if isinstance(status_path, str) and status_path.startswith("publications/"):
+        return coerce_package_key(status_path.removesuffix("/status.yaml"))
+    return None
+
+
+def package_ref_matches(data: dict[str, Any], package_key: str | None) -> bool:
+    if package_key is None:
+        return True
+    return gate_package_key(data) == package_key
+
+
+def summarize_review_gate(path: Path, data: dict[str, Any]) -> dict[str, Any]:
+    package = data.get("package") if isinstance(data.get("package"), dict) else {}
+    workflow = data.get("workflow") if isinstance(data.get("workflow"), dict) else {}
+    run = data.get("run") if isinstance(data.get("run"), dict) else {}
+    stop = data.get("stop") if isinstance(data.get("stop"), dict) else {}
+    decision = data.get("decision") if isinstance(data.get("decision"), dict) else None
+    return {
+        "path": repo_relpath(path),
+        "gate_id": data.get("gate_id"),
+        "status": data.get("status"),
+        "gate_type": data.get("gate_type"),
+        "gate_contract": data.get("gate_contract"),
+        "package": package.get("path"),
+        "package_key": gate_package_key(data),
+        "workflow_id": workflow.get("workflow_id"),
+        "step_id": workflow.get("step_id"),
+        "run_id": run.get("run_id"),
+        "created_at": stop.get("created_at"),
+        "stop_reason": stop.get("reason"),
+        "decision_outcome": decision.get("outcome") if decision else None,
+        "decided_at": decision.get("decided_at") if decision else None,
+    }
+
+
+def load_review_gate_records(package_arg: str | None = None) -> list[dict[str, Any]]:
+    package_key = coerce_package_key(package_arg) if package_arg else None
+    records: list[dict[str, Any]] = []
+    for path in evidence_yaml_paths(REVIEW_GATES_DIR):
+        try:
+            data = load_mapping(path)
+        except Exception as exc:
+            records.append({
+                "path": repo_relpath(path),
+                "status": "invalid",
+                "error": str(exc),
+            })
+            continue
+        if data.get("kind") != "review_gate":
+            continue
+        if not package_ref_matches(data, package_key):
+            continue
+        records.append(summarize_review_gate(path, data))
+    return sorted(
+        records,
+        key=lambda item: (
+            str(item.get("created_at") or ""),
+            str(item.get("gate_id") or ""),
+            str(item.get("path") or ""),
+        ),
+        reverse=True,
+    )
+
+
+def summarize_run_record(path: Path, data: dict[str, Any]) -> dict[str, Any]:
+    package = data.get("package") if isinstance(data.get("package"), dict) else {}
+    workflow = data.get("workflow") if isinstance(data.get("workflow"), dict) else {}
+    timestamps = data.get("timestamps") if isinstance(data.get("timestamps"), dict) else {}
+    return {
+        "path": repo_relpath(path),
+        "run_id": data.get("run_id"),
+        "package": package.get("path"),
+        "package_key": gate_package_key(data),
+        "workflow_id": workflow.get("workflow_id"),
+        "run_mode": data.get("run_mode"),
+        "terminal_status": data.get("terminal_status"),
+        "started_at": timestamps.get("started_at"),
+        "ended_at": timestamps.get("ended_at"),
+        "gate_ids": data.get("gate_ids") if isinstance(data.get("gate_ids"), list) else [],
+    }
+
+
+def run_record_sort_key(record: dict[str, Any]) -> tuple[str, str, str]:
+    return (
+        str(record.get("ended_at") or record.get("started_at") or record.get("timestamp") or ""),
+        str(record.get("run_id") or ""),
+        str(record.get("path") or ""),
+    )
+
+
+def load_yaml_run_records(package_arg: str | None = None, limit: int | None = None) -> list[dict[str, Any]]:
+    package_key = coerce_package_key(package_arg) if package_arg else None
+    records: list[dict[str, Any]] = []
+    for path in evidence_yaml_paths(RUN_RECORDS_DIR):
+        try:
+            data = load_mapping(path)
+        except Exception as exc:
+            records.append({
+                "path": repo_relpath(path),
+                "kind": "invalid",
+                "error": str(exc),
+            })
+            continue
+        if data.get("kind") != "run_record":
+            continue
+        if not package_ref_matches(data, package_key):
+            continue
+        records.append(summarize_run_record(path, data))
+    records = sorted(records, key=run_record_sort_key, reverse=True)
+    return records[:limit] if limit is not None else records
+
+
+def legacy_log_package_key(data: dict[str, Any]) -> str | None:
+    value = data.get("package") or data.get("package_key")
+    if isinstance(value, str) and value and value != "no-package":
+        return coerce_package_key(value)
+    return None
+
+
+def summarize_legacy_json_log(path: Path, data: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "path": repo_relpath(path),
+        "kind": data.get("kind"),
+        "schema_version": data.get("schema_version"),
+        "timestamp": data.get("timestamp"),
+        "run_id": data.get("run_id"),
+        "package": data.get("package"),
+        "package_key": legacy_log_package_key(data),
+        "workflow": data.get("workflow") or data.get("workflow_id"),
+        "stage": data.get("stage"),
+        "gate_id": data.get("gate_id"),
+        "status": data.get("status"),
+        "decision": data.get("decision"),
+    }
+
+
+def load_legacy_json_logs(package_arg: str | None = None, limit: int | None = None) -> list[dict[str, Any]]:
+    package_key = coerce_package_key(package_arg) if package_arg else None
+    records: list[dict[str, Any]] = []
+    if not RUN_RECORDS_DIR.exists():
+        return records
+    for path in sorted(RUN_RECORDS_DIR.glob("*.json")):
+        try:
+            data = json.loads(path.read_text())
+        except Exception as exc:
+            records.append({
+                "path": repo_relpath(path),
+                "kind": "invalid_json",
+                "error": str(exc),
+            })
+            continue
+        if not isinstance(data, dict):
+            continue
+        if package_key is not None and legacy_log_package_key(data) != package_key:
+            continue
+        records.append(summarize_legacy_json_log(path, data))
+    records = sorted(records, key=run_record_sort_key, reverse=True)
+    return records[:limit] if limit is not None else records
+
+
+def current_stage(status_data: dict[str, Any]) -> str | None:
+    stages = status_data.get("stages", {})
+    if not isinstance(stages, dict):
+        return None
+    for stage in STAGES:
+        stage_data = stages.get(stage)
+        if isinstance(stage_data, dict) and stage_data.get("done") is not True:
+            return stage
+    for stage, stage_data in stages.items():
+        if isinstance(stage_data, dict) and stage_data.get("done") is not True:
+            return str(stage)
+    return None
+
+
+def summarize_package_status(package_arg: str) -> dict[str, Any]:
+    manifest_ref, status_data = load_status_ref(package_arg)
+    stages = status_data.get("stages", {})
+    stage_items = []
+    if isinstance(stages, dict):
+        for stage in [*STAGES, *sorted(set(stages) - set(STAGES))]:
+            stage_data = stages.get(stage)
+            if not isinstance(stage_data, dict):
+                continue
+            stage_items.append({
+                "stage": stage,
+                "done": stage_data.get("done") is True,
+                "last_updated": stage_data.get("last_updated"),
+            })
+    umbrella_route = active_umbrella_route(status_data)
+    return {
+        "package": manifest_ref.package_key,
+        "path": repo_relpath(manifest_ref.package_path),
+        "status_path": repo_relpath(manifest_ref.status_path),
+        "kind": status_data.get("kind", "leaf"),
+        "publication": status_data.get("publication"),
+        "revision": status_data.get("revision", 1),
+        "current_stage": current_stage(status_data),
+        "umbrella_route": umbrella_route,
+        "stages": stage_items,
+    }
+
+
+def build_root_surface_summary() -> dict[str, Any]:
+    workflow_contracts = load_workflow_yaml_contracts()
+    gate_contracts = load_gate_contracts()
+    pipeline_profiles = load_pipeline_profiles()
+    policy = load_harness_policy()
+    return {
+        "workflow_yaml_contracts": [
+            {
+                "workflow_id": workflow_id,
+                "path": repo_relpath(loaded["path"]),
+            }
+            for workflow_id, loaded in sorted(workflow_contracts.items())
+        ],
+        "workflow_yaml_count": len(workflow_contracts),
+        "gate_contracts": sorted(gate_contracts),
+        "gate_contract_count": len(gate_contracts),
+        "pipeline_profiles": sorted(pipeline_profiles),
+        "pipeline_profile_count": len(pipeline_profiles),
+        "harness_policy_path": "harness_policy.yaml",
+        "harness_policy_sections": sorted(policy),
+    }
+
+
+def split_gate_statuses(gates: list[dict[str, Any]]) -> dict[str, Any]:
+    pending = [gate for gate in gates if gate.get("status") == "pending"]
+    resolved = [gate for gate in gates if gate.get("status") == "resolved"]
+    invalid = [gate for gate in gates if gate.get("status") == "invalid"]
+    return {
+        "pending_count": len(pending),
+        "resolved_count": len(resolved),
+        "invalid_count": len(invalid),
+        "pending": pending,
+        "resolved": resolved,
+        "invalid": invalid,
+    }
+
+
+def build_status_report(package_arg: str | None = None, limit: int = DEFAULT_RECENT_LIMIT) -> dict[str, Any]:
+    validation_report = build_validation_report(package_arg=package_arg)
+    gates = load_review_gate_records(package_arg)
+    return {
+        "kind": "content_agent_status",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "package": summarize_package_status(package_arg) if package_arg else None,
+        "root_surfaces": build_root_surface_summary(),
+        "review_gates": split_gate_statuses(gates),
+        "recent_runs": {
+            "yaml_run_records": load_yaml_run_records(package_arg, limit),
+            "legacy_json_logs": load_legacy_json_logs(package_arg, limit),
+        },
+        "validation_health": summarize_validation_health(validation_report),
+    }
+
+
+def build_review_list_report(
+    package_arg: str | None = None,
+    status_filter: str = "all",
+) -> dict[str, Any]:
+    gates = load_review_gate_records(package_arg)
+    if status_filter != "all":
+        gates = [gate for gate in gates if gate.get("status") == status_filter]
+    gate_statuses = split_gate_statuses(gates)
+    return {
+        "kind": "content_agent_review_list",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "filters": {
+            "package": coerce_package_key(package_arg) if package_arg else None,
+            "status": status_filter,
+        },
+        "counts": {
+            "pending": gate_statuses["pending_count"],
+            "resolved": gate_statuses["resolved_count"],
+            "invalid": gate_statuses["invalid_count"],
+        },
+        "gates": gates,
+    }
+
+
+def resolve_review_gate_path(identifier: str) -> Path:
+    candidate = Path(identifier).expanduser()
+    if candidate.is_absolute() and candidate.exists():
+        return candidate
+    repo_candidate = (REPO_ROOT / candidate).resolve()
+    if repo_candidate.exists():
+        return repo_candidate
+
+    matches = []
+    for path in evidence_yaml_paths(REVIEW_GATES_DIR):
+        try:
+            data = load_mapping(path)
+        except Exception:
+            continue
+        if data.get("kind") != "review_gate":
+            continue
+        if identifier in {str(data.get("gate_id")), path.name, path.stem}:
+            matches.append(path)
+    if not matches:
+        raise FileNotFoundError(f"No review gate found for '{identifier}'.")
+    if len(matches) > 1:
+        raise ValueError(f"Review gate identifier is ambiguous: {identifier}")
+    return matches[0]
+
+
+def build_review_inspect_report(identifier: str) -> dict[str, Any]:
+    path = resolve_review_gate_path(identifier)
+    data = load_mapping(path)
+    if data.get("kind") != "review_gate":
+        raise ValueError(f"{repo_relpath(path)} is not a review_gate artifact.")
+    return {
+        "kind": "content_agent_review_inspect",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "gate": summarize_review_gate(path, data),
+        "artifact": data,
+    }
+
+
+def utc_timestamp() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def filename_timestamp(timestamp: str) -> str:
+    return timestamp.replace(":", "-")
+
+
+def slugify(value: str | None) -> str:
+    if not value:
+        return "item"
+    slug = re.sub(r"[^A-Za-z0-9]+", "-", value).strip("-").lower()
+    return slug or "item"
+
+
+def repo_path_from_artifact_value(value: Any, context: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{context} must be a non-empty repo path.")
+    candidate = Path(value).expanduser()
+    if candidate.is_absolute():
+        try:
+            candidate.resolve().relative_to(REPO_ROOT)
+        except ValueError as exc:
+            raise ValueError(f"{context} must stay inside the repository: {value}") from exc
+        return candidate.resolve()
+    return (REPO_ROOT / candidate).resolve()
+
+
+def artifact_ref(
+    artifact_id: str,
+    paths: list[str],
+    *,
+    hashes_required: bool = False,
+    precomputed_hashes: dict[str, dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    entry: dict[str, Any] = {
+        "id": artifact_id,
+        "paths": paths,
+    }
+    if hashes_required:
+        hashes: dict[str, dict[str, Any]] = {}
+        for relpath in paths:
+            if precomputed_hashes and relpath in precomputed_hashes:
+                hashes[relpath] = precomputed_hashes[relpath]
+                continue
+            hashes[relpath] = hash_path(repo_path_from_artifact_value(relpath, f"{artifact_id}.paths"))
+        entry["hashes"] = hashes
+    return entry
+
+
+def unique_yaml_path(directory: Path, stem: str) -> Path:
+    path = directory / f"{stem}.yaml"
+    if not path.exists():
+        return path
+    for index in range(2, 1000):
+        candidate = directory / f"{stem}-{index}.yaml"
+        if not candidate.exists():
+            return candidate
+    raise FileExistsError(f"Could not find a unique path for {stem}.yaml")
+
+
+def write_yaml_mapping(path: Path, data: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    rendered = yaml.safe_dump(data, sort_keys=False, allow_unicode=False)
+    temp_path = path.with_name(f".{path.name}.tmp")
+    temp_path.write_text(rendered)
+    temp_path.replace(path)
+
+
+APPROVAL_DIMENSION_REQUIRED_KEYS = {
+    "quality": "quality_required",
+    "external_mutation": "external_mutation_required",
+    "lifecycle_movement": "lifecycle_movement_required",
+    "promotion": "promotion_required",
+}
+
+
+def approval_dimension_records(approval: dict[str, Any], outcome: str) -> dict[str, dict[str, bool]]:
+    dimensions: dict[str, dict[str, bool]] = {}
+    for dimension, required_key in APPROVAL_DIMENSION_REQUIRED_KEYS.items():
+        required = approval.get(required_key) is True
+        dimensions[dimension] = {
+            "required": required,
+            "approved": outcome == "approve" and required,
+        }
+    return dimensions
+
+
+def build_decision_record(
+    data: dict[str, Any],
+    outcome: str,
+    *,
+    decided_at: str,
+    decided_by: str,
+    reason: str,
+    run_record_path: str | None = None,
+) -> dict[str, Any]:
+    approval = data.get("approval") if isinstance(data.get("approval"), dict) else {}
+    dimensions = approval_dimension_records(approval, outcome)
+    decision: dict[str, Any] = {
+        "decided_at": decided_at,
+        "decided_by": decided_by,
+        "outcome": outcome,
+        "quality_approved": dimensions["quality"]["approved"],
+        "external_mutation_approved": dimensions["external_mutation"]["approved"],
+        "lifecycle_movement_approved": dimensions["lifecycle_movement"]["approved"],
+        "promotion_approved": dimensions["promotion"]["approved"],
+        "reason": reason,
+        "approval_dimensions": dimensions,
+        "external_mutation": {
+            "approved": dimensions["external_mutation"]["approved"],
+            "required": dimensions["external_mutation"]["required"],
+            "distinct_from_quality_approval": True,
+            "effect": "not_performed_by_content_agent_2_4b",
+        },
+        "state_effects": {
+            "package_status": "unchanged",
+            "external_mutation": "not_performed",
+            "lifecycle_movement": "not_performed",
+            "promotion": "not_performed",
+        },
+    }
+    if run_record_path:
+        decision["run_record_path"] = run_record_path
+    return decision
+
+
+def assert_review_gate_decidable(data: dict[str, Any], outcome: str) -> None:
+    if data.get("kind") != "review_gate":
+        raise ValueError("Target artifact is not a review_gate.")
+    approval = data.get("approval") if isinstance(data.get("approval"), dict) else {}
+    allowed = approval.get("allowed_decisions", [])
+    if outcome not in allowed:
+        raise ValueError(f"Gate does not allow decision '{outcome}'.")
+    if data.get("status") != "pending":
+        raise ValueError(f"Gate is not pending; current status is {data.get('status')!r}.")
+    if data.get("decision") is not None:
+        raise ValueError("Gate already has a decision record.")
+
+
+def run_mode_for_gate(data: dict[str, Any]) -> str:
+    run = data.get("run") if isinstance(data.get("run"), dict) else {}
+    run_record_path = run.get("run_record_path")
+    if isinstance(run_record_path, str):
+        try:
+            run_record = load_mapping(repo_path_from_artifact_value(run_record_path, "review_gate.run.run_record_path"))
+        except Exception:
+            run_record = {}
+        mode = run_record.get("run_mode")
+        if mode in VALID_RUN_MODES:
+            return str(mode)
+    return "governed_continuous"
+
+
+def build_decision_run_record(
+    gate_path: Path,
+    gate_before_hash: dict[str, Any],
+    data: dict[str, Any],
+    decision: dict[str, Any],
+    run_record_path: Path,
+    *,
+    terminal_status: str,
+) -> dict[str, Any]:
+    gate_relpath = repo_relpath(gate_path)
+    run_record_relpath = repo_relpath(run_record_path)
+    package = data.get("package") if isinstance(data.get("package"), dict) else {}
+    workflow = data.get("workflow") if isinstance(data.get("workflow"), dict) else {}
+    run = data.get("run") if isinstance(data.get("run"), dict) else {}
+    resolved_run_relpath = run.get("resolved_run_path")
+    parent_run_record_relpath = run.get("run_record_path")
+    if not isinstance(resolved_run_relpath, str):
+        raise ValueError("review_gate.run.resolved_run_path must be present before recording a decision.")
+    if not isinstance(parent_run_record_relpath, str):
+        raise ValueError("review_gate.run.run_record_path must be present before recording a decision.")
+
+    context_admission = []
+    status_path = package.get("status_path")
+    if isinstance(status_path, str):
+        context_admission.append(artifact_ref("package_status", [status_path], hashes_required=True))
+    contract_path = workflow.get("contract_path")
+    if isinstance(contract_path, str):
+        context_admission.append(artifact_ref("workflow_contract", [contract_path], hashes_required=True))
+
+    consumed_artifacts = [
+        artifact_ref(
+            "review_gate_before_decision",
+            [gate_relpath],
+            hashes_required=True,
+            precomputed_hashes={gate_relpath: gate_before_hash},
+        ),
+        artifact_ref("parent_run_record", [parent_run_record_relpath], hashes_required=True),
+        artifact_ref("resolved_run", [resolved_run_relpath], hashes_required=True),
+    ]
+    gate_contract = str(data.get("gate_contract") or data.get("gate_id") or "review_gate")
+    gate_id = str(data.get("gate_id") or gate_contract)
+    external_approved = decision.get("external_mutation_approved") is True
+
+    return {
+        "kind": "run_record",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "run_id": run_record_path.stem,
+        "resolved_run_path": resolved_run_relpath,
+        "package": deepcopy(package),
+        "workflow": deepcopy(workflow),
+        "run_mode": run_mode_for_gate(data),
+        "timestamps": {
+            "started_at": decision["decided_at"],
+            "ended_at": decision["decided_at"],
+        },
+        "invocation": {
+            "entrypoint": "content-agent review",
+            "command": f"./content-agent review {decision['outcome']} --gate {gate_id}",
+        },
+        "context_admission": context_admission,
+        "consumed_artifacts": consumed_artifacts,
+        "parent_artifacts": [
+            {"id": "review_gate", "path": gate_relpath},
+            {"id": "parent_run_record", "path": parent_run_record_relpath},
+            {"id": "resolved_run", "path": resolved_run_relpath},
+        ],
+        "produced_artifacts": [
+            {"id": "run_record", "paths": [run_record_relpath]},
+            {"id": "review_gate_decision", "paths": [gate_relpath]},
+        ],
+        "validation_results": [
+            {
+                "id": "content_agent_review_decision",
+                "status": "passed",
+                "summary": f"Recorded {decision['outcome']} decision without lifecycle, promotion, or external mutation side effects.",
+            }
+        ],
+        "enforcement_outcomes": [
+            {
+                "surface": "review_gates",
+                "posture": "deny",
+                "status": f"{decision['outcome']}_recorded",
+            },
+            {
+                "surface": "external_mutation",
+                "posture": "deny",
+                "status": "approved_not_performed" if external_approved else "not_approved",
+            },
+            {
+                "surface": "lifecycle_movement",
+                "posture": "deny",
+                "status": "approved_not_moved" if decision.get("lifecycle_movement_approved") is True else "not_approved",
+            },
+            {
+                "surface": "promotion",
+                "posture": "deny",
+                "status": "approved_not_promoted" if decision.get("promotion_approved") is True else "not_approved",
+            },
+            {
+                "surface": "trace_completeness",
+                "posture": "detect",
+                "status": "recorded",
+            },
+        ],
+        "gate_ids": [gate_contract, gate_id],
+        "approval_decisions": [deepcopy(decision)],
+        "external_mutations": [
+            {
+                "target": "none",
+                "status": "not_attempted",
+                "approval_reference": f"{gate_id}#decision" if external_approved else None,
+            }
+        ],
+        "terminal_status": terminal_status,
+        "promoted_output_state": deepcopy(data.get("promoted_output_state", {})),
+    }
+
+
+def build_decision_run_record_path(data: dict[str, Any], outcome: str, decided_at: str) -> Path:
+    package_key = gate_package_key(data) or "no-package"
+    gate_id = str(data.get("gate_id") or data.get("gate_contract") or "review-gate")
+    stem = (
+        f"run-{filename_timestamp(decided_at)}-"
+        f"{slugify(package_key)}-review-{outcome}-{slugify(gate_id)}"
+    )
+    return unique_yaml_path(RUN_RECORDS_DIR, stem)
+
+
+def build_review_decision_report(
+    identifier: str,
+    outcome: str,
+    *,
+    reason: str | None = None,
+    decided_by: str | None = None,
+) -> dict[str, Any]:
+    path = resolve_review_gate_path(identifier)
+    data = load_mapping(path)
+    assert_review_gate_decidable(data, outcome)
+    decided_at = utc_timestamp()
+    actor = decided_by or f"content-agent review {outcome}"
+    decision_reason = reason or f"{outcome} recorded by content-agent review {outcome}."
+
+    if outcome == "defer":
+        decision = build_decision_record(
+            data,
+            outcome,
+            decided_at=decided_at,
+            decided_by=actor,
+            reason=decision_reason,
+        )
+        return {
+            "kind": "content_agent_review_decision",
+            "schema_version": CONTENT_AGENT_VERSION,
+            "mutating": False,
+            "gate": summarize_review_gate(path, data),
+            "status_before": data.get("status"),
+            "status_after": data.get("status"),
+            "decision": decision,
+            "run_record": None,
+            "message": "defer is non-mutating; gate remains pending",
+        }
+
+    terminal_status = "completed" if outcome == "approve" else "rejected"
+    run_record_path = build_decision_run_record_path(data, outcome, decided_at)
+    run_record_relpath = repo_relpath(run_record_path)
+    decision = build_decision_record(
+        data,
+        outcome,
+        decided_at=decided_at,
+        decided_by=actor,
+        reason=decision_reason,
+        run_record_path=run_record_relpath,
+    )
+    gate_before_hash = hash_path(path)
+    updated_data = deepcopy(data)
+    updated_data["status"] = "resolved"
+    updated_data["decision"] = decision
+    run_record = build_decision_run_record(
+        path,
+        gate_before_hash,
+        data,
+        decision,
+        run_record_path,
+        terminal_status=terminal_status,
+    )
+
+    write_yaml_mapping(run_record_path, run_record)
+    write_yaml_mapping(path, updated_data)
+
+    return {
+        "kind": "content_agent_review_decision",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "mutating": True,
+        "gate": summarize_review_gate(path, updated_data),
+        "status_before": data.get("status"),
+        "status_after": updated_data.get("status"),
+        "decision": decision,
+        "run_record": summarize_run_record(run_record_path, run_record),
+        "message": f"{outcome} decision recorded",
+    }
+
+
+def build_next_report(package_arg: str) -> dict[str, Any]:
+    payload = build_next_action(package_arg)
+    blockers = [gate for gate in load_review_gate_records(package_arg) if gate.get("status") == "pending"]
+    payload["kind"] = "content_agent_next"
+    payload["schema_version"] = CONTENT_AGENT_VERSION
+    payload["pending_review_gate_blockers"] = blockers
+    payload["has_pending_review_gate_blockers"] = bool(blockers)
+    payload["gate_blocking_policy"] = "pending review gates block governed progress"
+    if blockers:
+        blocking_issues = payload.setdefault("blocking_issues", [])
+        for gate in blockers:
+            issue = (
+                "Pending review gate blocks governed progress: "
+                f"{gate.get('gate_id')} ({gate.get('path')})"
+            )
+            if issue not in blocking_issues:
+                blocking_issues.append(issue)
+        payload["can_execute"] = False
+        if payload.get("effective_can_execute") is not None:
+            payload["effective_can_execute"] = False
+        suggested = payload.setdefault("suggested_commands", [])
+        for gate in blockers:
+            gate_id = gate.get("gate_id")
+            if gate_id:
+                command = f"content-agent review inspect --gate {gate_id}"
+                if command not in suggested:
+                    suggested.append(command)
+    return payload
+
+
+def print_json(payload: dict[str, Any]) -> None:
+    print(json.dumps(payload, indent=2, default=str))
+
+
 def print_text_report(report: dict[str, Any]) -> None:
     status = "passed" if report["success"] else "failed"
     print(f"content-agent validate {status}.")
@@ -1737,9 +2494,275 @@ def print_text_report(report: dict[str, Any]) -> None:
         )
 
 
+def print_text_status(report: dict[str, Any]) -> None:
+    print("content-agent status")
+    package = report.get("package")
+    if package:
+        print(f"package: {package['package']}")
+        print(f"kind: {package['kind']}")
+        print(f"revision: {package['revision']}")
+        print(f"current_stage: {package.get('current_stage')}")
+        if package.get("umbrella_route"):
+            route = package["umbrella_route"]
+            print(f"umbrella_route: {route.get('active_workflow')} ({route.get('active_route')})")
+    else:
+        print("package: not supplied")
+
+    root = report.get("root_surfaces", {})
+    print(
+        "root surfaces: "
+        f"workflow_yaml={root.get('workflow_yaml_count', 0)}, "
+        f"gate_contracts={root.get('gate_contract_count', 0)}, "
+        f"pipeline_profiles={root.get('pipeline_profile_count', 0)}"
+    )
+
+    gates = report.get("review_gates", {})
+    print(
+        "review gates: "
+        f"pending={gates.get('pending_count', 0)}, "
+        f"resolved={gates.get('resolved_count', 0)}, "
+        f"invalid={gates.get('invalid_count', 0)}"
+    )
+    if gates.get("pending"):
+        print("pending gate blockers:")
+        for gate in gates["pending"]:
+            print(
+                "  - "
+                f"{gate.get('gate_id')} "
+                f"({gate.get('gate_contract')}, {gate.get('workflow_id')}) "
+                f"{gate.get('path')}"
+            )
+
+    runs = report.get("recent_runs", {})
+    yaml_runs = runs.get("yaml_run_records", [])
+    legacy_logs = runs.get("legacy_json_logs", [])
+    print(f"recent YAML run records: {len(yaml_runs)}")
+    for record in yaml_runs:
+        print(
+            "  - "
+            f"{record.get('run_id')} "
+            f"{record.get('workflow_id')} "
+            f"{record.get('terminal_status')} "
+            f"{record.get('path')}"
+        )
+    print(f"recent legacy JSON logs: {len(legacy_logs)}")
+    for record in legacy_logs:
+        label = record.get("run_id") or record.get("timestamp") or record.get("path")
+        print(
+            "  - "
+            f"{label} "
+            f"{record.get('kind')} "
+            f"{record.get('status')} "
+            f"{record.get('path')}"
+        )
+
+    health = report.get("validation_health", {})
+    counts = health.get("severity_counts", {})
+    state = "passed" if health.get("success") else "failed"
+    print(
+        "validation: "
+        f"{state} "
+        f"(errors={counts.get('error', 0)}, "
+        f"warnings={counts.get('warning', 0)}, "
+        f"info={counts.get('info', 0)})"
+    )
+    if health.get("top_findings"):
+        print("validation findings:")
+        for finding in health["top_findings"]:
+            path = f" ({finding.get('path')})" if finding.get("path") else ""
+            print(
+                "  - "
+                f"[{str(finding.get('severity')).upper()}] "
+                f"{finding.get('surface')}: {finding.get('message')}{path}"
+            )
+
+
+def print_text_review_list(report: dict[str, Any]) -> None:
+    filters = report.get("filters", {})
+    print("content-agent review list")
+    print(f"package: {filters.get('package') or 'all'}")
+    print(f"status: {filters.get('status')}")
+    gates = report.get("gates", [])
+    if not gates:
+        print("gates: none")
+        return
+    print("gates:")
+    for gate in gates:
+        print(
+            "  - "
+            f"{gate.get('gate_id')} "
+            f"[{gate.get('status')}] "
+            f"{gate.get('gate_contract')} "
+            f"{gate.get('package_key')} "
+            f"{gate.get('path')}"
+        )
+
+
+def print_text_review_inspect(report: dict[str, Any]) -> None:
+    gate = report["gate"]
+    artifact = report["artifact"]
+    print(f"content-agent review inspect: {gate.get('gate_id')}")
+    print(f"path: {gate.get('path')}")
+    print(f"status: {gate.get('status')}")
+    print(f"gate_contract: {gate.get('gate_contract')}")
+    print(f"gate_type: {gate.get('gate_type')}")
+    print(f"package: {gate.get('package')}")
+    print(f"workflow: {gate.get('workflow_id')} / {gate.get('step_id')}")
+    print(f"run_id: {gate.get('run_id')}")
+    if gate.get("stop_reason"):
+        print(f"stop_reason: {gate.get('stop_reason')}")
+    evidence = artifact.get("evidence") if isinstance(artifact.get("evidence"), dict) else {}
+    preview_paths = evidence.get("preview_paths", [])
+    evidence_paths = evidence.get("evidence_paths", [])
+    if preview_paths:
+        print("preview_paths:")
+        for relpath in preview_paths:
+            print(f"  - {relpath}")
+    if evidence_paths:
+        print("evidence_paths:")
+        for relpath in evidence_paths:
+            print(f"  - {relpath}")
+    validation_results = evidence.get("validation_results", [])
+    if validation_results:
+        print("validation_results:")
+        for result in validation_results:
+            if not isinstance(result, dict):
+                continue
+            summary = f": {result.get('summary')}" if result.get("summary") else ""
+            print(f"  - {result.get('id')}: {result.get('status')}{summary}")
+    approval = artifact.get("approval") if isinstance(artifact.get("approval"), dict) else {}
+    if approval:
+        dimensions = [
+            key
+            for key in (
+                "quality_required",
+                "external_mutation_required",
+                "lifecycle_movement_required",
+                "promotion_required",
+            )
+            if approval.get(key) is True
+        ]
+        print("approval_required: " + (", ".join(dimensions) if dimensions else "none"))
+        print("allowed_decisions: " + ", ".join(str(item) for item in approval.get("allowed_decisions", [])))
+    decision = artifact.get("decision")
+    if isinstance(decision, dict):
+        print(f"decision: {decision.get('outcome')} by {decision.get('decided_by')} at {decision.get('decided_at')}")
+    else:
+        print("decision: pending")
+    resume = artifact.get("resume") if isinstance(artifact.get("resume"), dict) else {}
+    if resume.get("command_hint"):
+        print(f"command_hint: {resume.get('command_hint')}")
+
+
+def print_text_review_decision(report: dict[str, Any]) -> None:
+    gate = report["gate"]
+    decision = report["decision"]
+    print(f"content-agent review {decision.get('outcome')}: {gate.get('gate_id')}")
+    print(f"path: {gate.get('path')}")
+    print(f"mutating: {str(report.get('mutating') is True).lower()}")
+    print(f"status: {report.get('status_before')} -> {report.get('status_after')}")
+    print(f"decision: {decision.get('outcome')} by {decision.get('decided_by')} at {decision.get('decided_at')}")
+    print(f"reason: {decision.get('reason')}")
+    print("approval_dimensions:")
+    for dimension in ("quality", "external_mutation", "lifecycle_movement", "promotion"):
+        record = decision.get("approval_dimensions", {}).get(dimension, {})
+        print(
+            "  - "
+            f"{dimension}: required={str(record.get('required') is True).lower()}, "
+            f"approved={str(record.get('approved') is True).lower()}"
+        )
+    external = decision.get("external_mutation", {})
+    print(
+        "external_mutation_effect: "
+        f"approved={str(external.get('approved') is True).lower()}, "
+        f"effect={external.get('effect')}"
+    )
+    effects = decision.get("state_effects", {})
+    print(
+        "state_effects: "
+        f"package_status={effects.get('package_status')}, "
+        f"lifecycle_movement={effects.get('lifecycle_movement')}, "
+        f"promotion={effects.get('promotion')}"
+    )
+    run_record = report.get("run_record")
+    if isinstance(run_record, dict):
+        print(f"run_record: {run_record.get('path')}")
+    else:
+        print("run_record: none")
+    if report.get("message"):
+        print(f"message: {report.get('message')}")
+
+
+def print_text_next(report: dict[str, Any]) -> None:
+    print(f"content-agent next: {report.get('package')}")
+    if report.get("has_pending_review_gate_blockers"):
+        print("blocked_by_pending_review_gates: true")
+        for gate in report.get("pending_review_gate_blockers", []):
+            print(f"  - {gate.get('gate_id')} ({gate.get('path')})")
+    else:
+        print("blocked_by_pending_review_gates: false")
+    print(f"all_stages_complete: {report.get('all_stages_complete')}")
+    print(f"next_stage: {report.get('next_stage')}")
+    if report.get("effective_workflow"):
+        print(f"effective_workflow: {report.get('effective_workflow')}")
+        print(f"effective_kind: {report.get('effective_workflow_kind')}")
+        print(f"effective_next_action: {report.get('effective_next_action')}")
+        print(f"effective_can_execute: {report.get('effective_can_execute')}")
+        print(f"effective_requires_approval: {report.get('effective_requires_approval')}")
+        print(f"effective_approval_gate: {report.get('effective_approval_gate')}")
+    else:
+        print(f"can_execute: {report.get('can_execute')}")
+        print(f"requires_approval: {report.get('requires_approval')}")
+        print(f"approval_gate: {report.get('approval_gate')}")
+    if report.get("blocking_issues"):
+        print("blocking_issues:")
+        for issue in report["blocking_issues"]:
+            print(f"  - {issue}")
+    if report.get("suggested_commands"):
+        print("suggested_commands:")
+        for command in report["suggested_commands"]:
+            print(f"  - {command}")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Deterministic Phase 2 content-agent facade.")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    status = subparsers.add_parser("status", help="Report package, gate, run, and validation state.")
+    status.add_argument("--package", help="Package path or key under publications/.")
+    status.add_argument("--limit", type=int, default=DEFAULT_RECENT_LIMIT, help="Recent run/log records to show.")
+    status.add_argument("--format", choices=["text", "json"], default="text")
+
+    next_cmd = subparsers.add_parser("next", help="Resolve the next read-only eligible package action.")
+    next_cmd.add_argument("--package", required=True, help="Package path or key under publications/.")
+    next_cmd.add_argument("--format", choices=["text", "json"], default="text")
+
+    review = subparsers.add_parser("review", help="Inspect file-backed review gates.")
+    review_subparsers = review.add_subparsers(dest="review_command", required=True)
+    review_list = review_subparsers.add_parser("list", help="List pending and resolved review gates.")
+    review_list.add_argument("--package", help="Package path or key under publications/.")
+    review_list.add_argument("--status", choices=["pending", "resolved", "all"], default="all")
+    review_list.add_argument("--format", choices=["text", "json"], default="text")
+
+    review_inspect = review_subparsers.add_parser("inspect", help="Inspect a single review gate artifact.")
+    review_inspect.add_argument("gate_arg", nargs="?", help="Gate id, artifact path, or artifact filename.")
+    review_inspect.add_argument("--gate", dest="gate", help="Gate id, artifact path, or artifact filename.")
+    review_inspect.add_argument("--format", choices=["text", "json"], default="text")
+
+    for decision_command in ("approve", "reject", "defer"):
+        decision_parser = review_subparsers.add_parser(
+            decision_command,
+            help=f"Record a {decision_command} decision for a pending review gate.",
+        )
+        decision_parser.add_argument("gate_arg", nargs="?", help="Gate id, artifact path, or artifact filename.")
+        decision_parser.add_argument("--gate", dest="gate", help="Gate id, artifact path, or artifact filename.")
+        decision_parser.add_argument("--reason", help="Human-readable reason to preserve in the decision record.")
+        decision_parser.add_argument(
+            "--decided-by",
+            default=None,
+            help="Actor label to preserve in the decision record.",
+        )
+        decision_parser.add_argument("--format", choices=["text", "json"], default="text")
 
     validate = subparsers.add_parser("validate", help="Report contract enforcement readiness without promotion.")
     validate.add_argument("--workflow", help="Workflow id to validate. Defaults to all workflow.yaml contracts.")
@@ -1760,6 +2783,102 @@ def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
 
+    if args.command == "status":
+        try:
+            report = build_status_report(package_arg=args.package, limit=args.limit)
+        except Exception as exc:
+            if args.format == "json":
+                print_json({"success": False, "error": str(exc)})
+            else:
+                print(f"content-agent status failed: {exc}")
+            sys.exit(1)
+        if args.format == "json":
+            print_json(report)
+        else:
+            print_text_status(report)
+        return
+
+    if args.command == "review":
+        if args.review_command == "list":
+            try:
+                report = build_review_list_report(package_arg=args.package, status_filter=args.status)
+            except Exception as exc:
+                if args.format == "json":
+                    print_json({"success": False, "error": str(exc)})
+                else:
+                    print(f"content-agent review list failed: {exc}")
+                sys.exit(1)
+            if args.format == "json":
+                print_json(report)
+            else:
+                print_text_review_list(report)
+            return
+
+        if args.review_command == "inspect":
+            identifier = args.gate or args.gate_arg
+            if not identifier:
+                if args.format == "json":
+                    print_json({"success": False, "error": "review inspect requires --gate or a gate argument"})
+                else:
+                    print("content-agent review inspect failed: review inspect requires --gate or a gate argument")
+                sys.exit(1)
+            try:
+                report = build_review_inspect_report(identifier)
+            except Exception as exc:
+                if args.format == "json":
+                    print_json({"success": False, "error": str(exc)})
+                else:
+                    print(f"content-agent review inspect failed: {exc}")
+                sys.exit(1)
+            if args.format == "json":
+                print_json(report)
+            else:
+                print_text_review_inspect(report)
+            return
+
+        if args.review_command in {"approve", "reject", "defer"}:
+            identifier = args.gate or args.gate_arg
+            if not identifier:
+                message = f"review {args.review_command} requires --gate or a gate argument"
+                if args.format == "json":
+                    print_json({"success": False, "error": message})
+                else:
+                    print(f"content-agent review {args.review_command} failed: {message}")
+                sys.exit(1)
+            try:
+                report = build_review_decision_report(
+                    identifier,
+                    args.review_command,
+                    reason=args.reason,
+                    decided_by=args.decided_by,
+                )
+            except Exception as exc:
+                if args.format == "json":
+                    print_json({"success": False, "error": str(exc)})
+                else:
+                    print(f"content-agent review {args.review_command} failed: {exc}")
+                sys.exit(1)
+            if args.format == "json":
+                print_json(report)
+            else:
+                print_text_review_decision(report)
+            return
+
+    if args.command == "next":
+        try:
+            report = build_next_report(args.package)
+        except Exception as exc:
+            if args.format == "json":
+                print_json({"success": False, "error": str(exc)})
+            else:
+                print(f"content-agent next failed: {exc}")
+            sys.exit(1)
+        if args.format == "json":
+            print_json(report)
+        else:
+            print_text_next(report)
+        return
+
     if args.command == "validate":
         try:
             report = build_validation_report(
@@ -1776,7 +2895,7 @@ def main() -> None:
             sys.exit(1)
 
         if args.format == "json":
-            print(json.dumps(report, indent=2))
+            print_json(report)
         else:
             print_text_report(report)
         if not report["success"]:
