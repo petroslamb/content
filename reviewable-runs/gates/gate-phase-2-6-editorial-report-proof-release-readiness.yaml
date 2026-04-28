@@ -1,5 +1,6 @@
 kind: review_gate
 schema_version: 1
+retained_example: true
 gate_id: release_readiness-2026-04-28T15-17-39Z
 status: pending
 gate_type: external_mutation
