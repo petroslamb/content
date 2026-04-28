@@ -1,0 +1,249 @@
+kind: resolved_run
+schema_version: 1
+run_id: phase-2-6-editorial-report-proof
+package:
+  path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e
+  status_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml
+  status_hash: sha256:662efab88b067b839def03e70a752e3f7c81af31b7a4443453979f6ec1ad8941
+workflow:
+  workflow_id: article_polish
+  workflow_version: 1
+  workflow_hash: sha256:164cf58bd402217bbded0cb89cc157c938f691fd6fba4debf543ca84b0d66133
+  contract_path: workflows/article-polish/workflow.yaml
+run_mode: governed_continuous
+route:
+  package_kind: leaf
+  pipeline_profile: null
+  current_stage: null
+  workflow_stage: article_polish
+  resolved_from:
+  - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml
+  - workflows/article-polish/workflow.yaml
+  - harness_policy.yaml
+  - gate_contracts.yaml
+  - pipeline_profiles.yaml
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml
+  hashes:
+    publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml:
+      type: file_sha256
+      sha256: 662efab88b067b839def03e70a752e3f7c81af31b7a4443453979f6ec1ad8941
+      size_bytes: 1352
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/README.md
+  hashes:
+    publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/README.md:
+      type: file_sha256
+      sha256: 1195d296d081c49c7ac95cdadec6f9d05a3ccee8042563fed76438d2d5b10116
+      size_bytes: 5670
+- id: live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+  hashes:
+    ? publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+    : type: file_sha256
+      sha256: 3ea020df2622e1658b06c72ce11db601255970b1119ed0d7c747ef2f8be795e4
+      size_bytes: 35486
+- id: artifact_surface
+  required: true
+  status: resolved
+  paths:
+  - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts
+  hashes:
+    publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts:
+      type: directory_listing_sha256
+      sha256: aa3556670224004d940e8d270975ddc684d0fb00a82c8de98ab6c051aaa821fb
+      file_count: 86
+- id: current_references
+  required: true
+  status: resolved
+  paths:
+  - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+  hashes:
+    ? publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+    : type: file_sha256
+      sha256: 3ea020df2622e1658b06c72ce11db601255970b1119ed0d7c747ef2f8be795e4
+      size_bytes: 35486
+- id: notebooklm_or_local_media_outputs
+  required: false
+  status: resolved
+  paths:
+  - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts
+  hashes:
+    publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts:
+      type: directory_listing_sha256
+      sha256: aa3556670224004d940e8d270975ddc684d0fb00a82c8de98ab6c051aaa821fb
+      file_count: 86
+- id: publication_voice_guide
+  required: true
+  status: resolved
+  paths:
+  - voice_consistency_guide.md
+  hashes:
+    voice_consistency_guide.md:
+      type: file_sha256
+      sha256: cab35c04f3e6c880442ca26f886e447a534b84a45c2019d6faad58ff2c19507a
+      size_bytes: 4888
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/article-polish/README.md
+  hashes:
+    workflows/article-polish/README.md:
+      type: file_sha256
+      sha256: 9f44437ecfbb9c5d8baf2d9e2490ea2cb80800a52a66290f992c5cce34235aaa
+      size_bytes: 13995
+- id: release_gate_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/release-gate/README.md
+  hashes:
+    workflows/release-gate/README.md:
+      type: file_sha256
+      sha256: 4f8087e51fea21633c4c62937eb3d29f327865d8cd0c7c3a73e362fb2ca0887d
+      size_bytes: 8177
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: f5469dd80c06dde13a8b174aa5bee367675c1a177f45a688b0a5dda16d020e62
+      size_bytes: 2407
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 437b4bfe5f4a343f10cfdc7941f7de05b20201ae61513fc2709ac952098eea3f
+      size_bytes: 4828
+policy_resolution:
+  allowed_tools:
+  - id: image_embed_scan
+    command: rg -n '!\[[^]]*\]\(' publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+    required: true
+  - id: package_diff_scan
+    command: git diff --name-status -- publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/
+    required: true
+  - id: repo_link_check
+    command: npm run check:repo-links
+    required: true
+  - id: editorial_report
+    command: .venv/bin/python scripts/generate_editorial_report.py --package neural-architectures/neural-architecture-design-as-a-compositional-32e
+    required: true
+  - id: release_readiness_gate_check
+    command: npm run gate:check -- --gate release_readiness --package neural-architectures/neural-architecture-design-as-a-compositional-32e
+    required: true
+  allowed_capabilities:
+  - contract_validation
+  - context_admission
+  - scriptable_step_execution
+  - gate_stop
+  - run_record_writing
+  allowed_paths:
+    read:
+    - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/
+    - workflows/article-polish/
+    - workflows/release-gate/
+    - workflows/notebooklm-artifacts/
+    - voice_consistency_guide.md
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+    write:
+    - publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+selected_steps:
+- id: confirm_polish_target
+  mode: scriptable
+- id: inspect_existing_media_refs
+  mode: scriptable
+  executor: command
+- id: select_and_name_images
+  mode: codex_session
+- id: place_images
+  mode: codex_session
+- id: transcript_round_trip
+  mode: external_mutation_gated
+- id: final_editorial_pass
+  mode: codex_session
+- id: generate_editorial_report
+  mode: scriptable
+  executor: command
+- id: release_readiness_handoff
+  mode: review_gated
+  gate_id: release_readiness
+- id: record_handoff
+  mode: scriptable
+selected_gates:
+- id: release_readiness
+  contract: release_readiness
+  type: external_mutation
+  required: true
+  status: declared
+behavior:
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    max_transcript_round_trips: 1
+    external_mutations: 0
+    unapproved_publications: 0
+  recovery:
+    on_missing_artifacts: stop
+    on_image_extraction_failure: stop_and_request_narrow_user_handoff
+    on_transcript_recovery_failure: stop_and_request_narrow_user_handoff
+    on_repo_link_failure: stop_and_record
+    on_release_gate_reject: defer
+    resume_from: resolved_run
+    rollback_strategy: preserve_prior_image_embeds_and_package_assets
+  policy_run_modes:
+  - exploratory
+  - governed_continuous
+output_targets:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-6-editorial-report-proof.yaml
+- id: run_record
+  path: reviewable-runs/logs/phase-2-6-editorial-report-proof.yaml
+- id: polished_live_draft
+  path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+  required: true
+  format: markdown
+- id: publishable_images
+  path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/{image_slug}.png
+  required: conditional
+  format: image
+- id: transcript_artifact
+  path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/{transcript_filename}
+  required: conditional
+  format: text
+- id: editorial_report
+  path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/editorial-report-r4.json
+  required: true
+  format: json
+- id: release_readiness_gate
+  path: reviewable-runs/gates/{run_id}-release-readiness.yaml
+  required: conditional
+  format: yaml
+- id: review_gate:release_readiness
+  path: reviewable-runs/gates/gate-phase-2-6-editorial-report-proof-release-readiness.yaml
+  required: true

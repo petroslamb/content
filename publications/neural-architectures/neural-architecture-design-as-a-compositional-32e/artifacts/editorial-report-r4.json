@@ -1,0 +1,199 @@
+{
+  "kind": "editorial_automation_report",
+  "schema_version": 1,
+  "generated_at": "2026-04-28T15:17:39Z",
+  "package": {
+    "key": "neural-architectures/neural-architecture-design-as-a-compositional-32e",
+    "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e",
+    "status_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml",
+    "revision": 4,
+    "live_draft_path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md"
+  },
+  "authority": {
+    "voice_guide_path": "voice_consistency_guide.md",
+    "voice_guide_loaded": true
+  },
+  "checks": [
+    {
+      "id": "voice_ban_list",
+      "status": "passed",
+      "input_paths": [
+        "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "paragraph_rhythm",
+      "status": "findings",
+      "input_paths": [
+        "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 2
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "contrast_rhythm",
+      "status": "findings",
+      "input_paths": [
+        "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 2
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "claim_evidence_trace",
+      "status": "findings",
+      "input_paths": [
+        "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 5
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "local_link_integrity",
+      "status": "passed",
+      "input_paths": [
+        "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    }
+  ],
+  "severity_counts": {
+    "error": 0,
+    "warning": 0,
+    "advisory": 9
+  },
+  "findings": [
+    {
+      "check_id": "paragraph_rhythm",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Paragraph is 245 words; voice guide prefers dense but controlled medium-length paragraphs.",
+      "line": 101,
+      "excerpt": "Once the field has a reliable block, the natural design question rises above the individual model instance. Neural architecture search made that shift explicit by treating the s...",
+      "suggestion": "Split only if the paragraph contains more than one conceptual turn.",
+      "id": "editorial-finding-001"
+    },
+    {
+      "check_id": "paragraph_rhythm",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Paragraph is 282 words; voice guide prefers dense but controlled medium-length paragraphs.",
+      "line": 107,
+      "excerpt": "The scaling-law literature moves the target upward again by forcing the field to care about how a family behaves under enlargement and training, not merely whether one represent...",
+      "suggestion": "Split only if the paragraph contains more than one conceptual turn.",
+      "id": "editorial-finding-002"
+    },
+    {
+      "check_id": "contrast_rhythm",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Potential repetitive contrast construction.",
+      "line": 62,
+      "excerpt": "The later identity-mappings paper is where that strategy becomes mechanistically sharp instead of rhetorically attractive. The authors do not merely say that skip connections he...",
+      "suggestion": "Keep this only if the contrast is doing rare, high-value conceptual work.",
+      "id": "editorial-finding-003"
+    },
+    {
+      "check_id": "contrast_rhythm",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Potential repetitive contrast construction.",
+      "line": 119,
+      "excerpt": "Mixture-of-experts models are where non-uniformity returns, and the history only makes sense if that return is described carefully. Shazeer and colleagues did not reintroduce ol...",
+      "suggestion": "Keep this only if the contrast is doing rare, high-value conceptual work.",
+      "id": "editorial-finding-004"
+    },
+    {
+      "check_id": "claim_evidence_trace",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Authority or superlative claim may need visible evidence support.",
+      "line": 26,
+      "excerpt": "AlexNet is the right place to begin because it still belongs to the older world in a strong sense. Its success depended on more than architecture, but the architecture itself re...",
+      "suggestion": "Add a source, narrow the claim, or make the evidentiary basis explicit.",
+      "id": "editorial-finding-005"
+    },
+    {
+      "check_id": "claim_evidence_trace",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Authority or superlative claim may need visible evidence support.",
+      "line": 95,
+      "excerpt": "ViT matters not because it proves universal portability, but because it shows the portable block becoming viable only once the surrounding data regime is large enough:",
+      "suggestion": "Add a source, narrow the claim, or make the evidentiary basis explicit.",
+      "id": "editorial-finding-006"
+    },
+    {
+      "check_id": "claim_evidence_trace",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Authority or superlative claim may need visible evidence support.",
+      "line": 127,
+      "excerpt": "The line from AlexNet to contemporary large models is not best understood as a parade of ever more powerful architectures. It is better understood as a change in what architectu...",
+      "suggestion": "Add a source, narrow the claim, or make the evidentiary basis explicit.",
+      "id": "editorial-finding-007"
+    },
+    {
+      "check_id": "claim_evidence_trace",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Authority or superlative claim may need visible evidence support.",
+      "line": 149,
+      "excerpt": "VGG is the first clean demonstration that repeated small convolutions can outperform more decorated local design. Its role in the essay is to make repetition historically credib...",
+      "suggestion": "Add a source, narrow the claim, or make the evidentiary basis explicit.",
+      "id": "editorial-finding-008"
+    },
+    {
+      "check_id": "claim_evidence_trace",
+      "severity": "advisory",
+      "path": "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md",
+      "message": "Authority or superlative claim may need visible evidence support.",
+      "line": 254,
+      "excerpt": "Chinchilla corrects the first-generation scaling recipe by showing that many large models were undertrained. Its role in the essay is to make compute-aware training allocation p...",
+      "suggestion": "Add a source, narrow the claim, or make the evidentiary basis explicit.",
+      "id": "editorial-finding-009"
+    }
+  ],
+  "source_improvement_suggestions": [
+    {
+      "id": "add_claim_support_pass",
+      "source": "claim_evidence_trace",
+      "suggestion": "Add a claim-support pass before release readiness for authority-heavy drafts."
+    }
+  ],
+  "state_effects": {
+    "draft_rewritten": false,
+    "package_status_changed": false,
+    "lifecycle_moved": false,
+    "published": false,
+    "promoted": false
+  }
+}
