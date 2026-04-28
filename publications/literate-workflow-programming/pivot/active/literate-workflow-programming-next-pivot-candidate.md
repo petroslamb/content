@@ -2,72 +2,58 @@
 
 ## Candidate
 
-`The Real System Lives In The Contract Layer`
+`The Specification Surface Is the New Source of Truth`
 
-## Status
+## Candidate Status
 
-`research_grounded_but_not_north_star_viable`
+`pivot_cleared_for_north_star_attempt`
 
-This was the strongest lead candidate in the restarted larger-successor search.
+## One-Sentence Thesis
 
-It survived the restarted larger-successor slate because it is the only candidate that turns the donor's surviving assets into a broader governance mistake instead of a bounded doctrine essay.
+AI-native software work is not replacing code with vibes; it is moving authority into specification surfaces that humans can read, agents can execute or interpret, and validators can test.
 
-## Discovery Mode
+## Governing Term
 
-This candidate did not come from a fresh alphaXiv expansion yet.
+`specification surface`
 
-It came from a stricter rerank over tracked package state after the package explicitly rejected the narrower doctrine branch as the pivot answer:
+Use this instead of `contract layer`.
 
-1. the donor ceiling report
-2. the donor replacement reviews and stop decision
-3. the claim ledger and contradiction register
-4. the claim-provenance proof note
-5. the retained `spec-diff` proof artifacts
-6. the archived validation-doctrine pivot attempt
+The term is broad enough to cover natural-language outlines, AGENTS.md-style context files, executable harness specs, task contracts, shared prompt/program interfaces, and controlled-natural-language prompt APIs. It is also narrow enough to block the overclaim that ordinary prose is now source code.
 
-That matters because the current judgment is not "what sounds bigger?" It is "what larger candidate remains after the package has already disproved the smaller rescue route?"
+## Public Enemy
 
-## Working Thesis
+The false proxy is `vibe`.
 
-The operational system in modern agent workflows increasingly lives in a human-readable contract layer: workflow specifications, policy surfaces, and evidence maps that runtimes, validators, and audits already treat as governing artifacts. That is why runtime-only debugging keeps arriving too late and in the wrong place.
+Vibe coding treats intent as an informal prompt and output code as the real artifact. The reopened candidate argues the opposite: once AI systems generate, modify, test, and coordinate work from written intent, the written intent has to become a governed specification surface.
 
-## Why This Candidate Survived
+## Surviving Donor Assets
 
-- It enlarges the validation doctrine into a broader governance claim.
-- It keeps the wrong-layer accusation but gives it a more stable underlying variable than rhetoric alone.
-- It gives the package a portable enemy: the advisory-prose illusion around governed surfaces.
-- It keeps provenance as the downstream missing layer without letting provenance become the whole article.
-- It preserves the local `spec-diff` proof as a bounded exhibit of contract-layer drift rather than as the thesis itself.
+- source / validator / trace / provenance stack
+- `spec-diff` as a bounded local drift exhibit
+- claim-state and contradiction registers as governance surfaces
+- context-file negative evidence as the task-risk caveat
+- "debugging the wrong layer" as an opening move, not the thesis
 
-## Why It Stayed Above The Wrapper Rival
+## Evidence Spine
 
-`You're Debugging The Wrong Layer` still has the best opening force in the package.
+1. Natural-language outlines show that structured prose can become a synchronized code-review and program-comprehension surface.
+2. Bootstrapping coding agents shows that a precise natural-language specification can become the stable artifact from which implementation is regenerated.
+3. Agent harness/specification languages show that workflow logic can move into explicit declarative artifacts with runtime support.
+4. Open-source context-file studies show that these artifacts are already appearing as living configuration surfaces, but with debt and inconsistent quality.
+5. Negative AGENTS.md results show that ungoverned context is not enough.
+6. Spec-driven development, specification-gap, VibeContract, and CNL-P papers show the necessary repair: contracts, controlled language, validation, and traceability.
 
-It stayed below the active candidate because:
+## Largest Intended Claim
 
-- it still describes the symptom better than the governing variable
-- it is easier to sharpen rhetorically than to ground independently
-- without the contract-layer frame it risks reproducing the donor ceiling in more forceful prose
+In AI-native development, the durable artifact is increasingly the specification surface, not the generated implementation.
 
-## Why It Stayed Above The Provenance Rival
+This claim is cleared for a north-star attempt but not for successor-leaf initialization. It must pass the north-star viability gate before a successor leaf opens.
 
-`Claims Need Provenance, Not Better Logs` remains the strongest downstream seam.
+## Kill Boundary
 
-It stayed below the active candidate because:
+Reject or narrow the candidate if the next gate cannot defend this distinction:
 
-- provenance still reads as the next missing layer, not the whole governance mistake
-- the current evidence supports provenance as a requirement better than as the package's main flagship claim
-- the contract-layer frame can still absorb provenance, while the reverse is harder
+- loose natural language remains prompt material or documentation
+- controlled, maintained, validated specifications can become source-of-truth artifacts
 
-## Residual Risk
-
-The strongest remaining risk is still scale.
-
-The package can now name a larger mistake than validation doctrine alone, but it is not yet clear that the evidence proves this mistake is broad and field-reordering enough to clear north star rather than just produce a sharper architecture argument.
-
-## Decision Rule
-
-Treat this as the last tested grounded lead candidate, not as a cleared pivot.
-
-Do not initialize a successor leaf from current tracked state.
-The later pressure pass and rerank confirmed that the package should stop without a successor.
+If the essay cannot keep that distinction visible, it will repeat the earlier ceiling under a more attractive slogan.
