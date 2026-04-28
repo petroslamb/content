@@ -142,11 +142,21 @@ behavior:
     resume_from: resolved_run
 
 enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
   context_admission: deny
   tool_use: deny
   path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
   external_mutation: deny
   lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
   trace_completeness: detect
 
 validation:

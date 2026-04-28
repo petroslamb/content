@@ -11,6 +11,7 @@ from pathlib import Path
 import yaml
 
 from check_workflow_yaml_contracts import validate_workflow_yaml_contracts
+from content_agent import build_validation_report
 from harness import build_stage_resolution, build_workflow_resolution, evaluate_gate
 from lifecycle import (
     REPO_ROOT,
@@ -235,6 +236,22 @@ def check_run_record_completeness(fixtures: dict, errors: list[str]) -> None:
             errors.append(f"Retained workflow-model artifact is missing: {label}")
 
 
+def check_content_agent_validate(errors: list[str]) -> None:
+    static_report = build_validation_report()
+    if not static_report["success"]:
+        errors.append("content-agent validate failed for static workflow contract readiness.")
+        errors.extend(f"content-agent: {finding['message']}" for finding in static_report["findings"])
+
+    package_report = build_validation_report(
+        workflow_id="essay_iteration",
+        package_arg="clean-interface-illusion",
+        mode="governed_continuous",
+    )
+    if not package_report["success"]:
+        errors.append("content-agent validate failed for essay_iteration package context admission fixture.")
+        errors.extend(f"content-agent essay_iteration: {finding['message']}" for finding in package_report["findings"])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate the modular workflow model and evaluation fixtures.")
     parser.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
@@ -250,6 +267,7 @@ def main() -> None:
         check_gate_fixtures(fixtures, errors)
         check_validator_coverage(fixtures, errors)
         check_run_record_completeness(fixtures, errors)
+        check_content_agent_validate(errors)
         errors.extend(validate_workflow_yaml_contracts())
     except Exception as exc:
         errors.append(str(exc))
