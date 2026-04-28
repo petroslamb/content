@@ -11,6 +11,8 @@ umbrella_route:
   active_workflow: post_ceiling_pivot
   active_route: no_successor
   next_action: stop_without_successor
+  closure_artifact: publications/literate-workflow-programming/no-successor-closure.md
+  last_validated: '2026-04-28'
   active_candidate: null
   donor_leaf: literate-workflow-programming/literate-workflow-programming-flagship
   active_successor_leaf: null

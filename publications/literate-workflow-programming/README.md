@@ -16,6 +16,7 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Current umbrella route: `no_successor`
 - Current next action: `stop_without_successor`
 - Active successor candidate: none
+- Closure record: [`no-successor-closure.md`](no-successor-closure.md)
 - Latest rejected larger candidate: `The Real System Lives In The Contract Layer`
 - Umbrella route manifest: [`status.yaml`](status.yaml)
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
@@ -55,6 +56,7 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Active pivot north-star viability: [`pivot/active/literate-workflow-programming-pivot-north-star-viability.md`](pivot/active/literate-workflow-programming-pivot-north-star-viability.md)
 - Active pivot decision: [`pivot/active/literate-workflow-programming-pivot-decision.md`](pivot/active/literate-workflow-programming-pivot-decision.md)
 - Active pivot blocker: [`pivot/active/literate-workflow-programming-pivot-blocker.md`](pivot/active/literate-workflow-programming-pivot-blocker.md)
+- No-successor closure: [`no-successor-closure.md`](no-successor-closure.md)
 - Archived validation-doctrine attempt: [`pivot/archive/validation-doctrine-attempt-2026-04-23/`](pivot/archive/validation-doctrine-attempt-2026-04-23)
 
 ## Shared Working Frame
