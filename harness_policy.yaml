@@ -1,5 +1,6 @@
 version: 1
 mode: local-first
+policy_position: policy_floor
 read_only_allowed:
   operations:
     - repo exploration
@@ -7,18 +8,28 @@ read_only_allowed:
     - workflow resolution
     - package audit
     - contract validation
+    - gate inspection
+    - run record inspection
 local_write_allowed:
   paths:
     - publications/
     - scripts/
+    - reviewable-runs/resolved-runs/
     - reviewable-runs/logs/
+    - reviewable-runs/gates/
   operations:
     - package scaffolding
     - launch pack generation
     - local scripted stage execution
+    - resolved run persistence
+    - run record writing
+    - gate artifact creation
+    - local validation reports
 auto_mark_done_allowed:
   runner_modes:
     - scripted
+  step_modes:
+    - scriptable
   denied_stages:
     - notebooklm_artifacts
     - substack_publishing
@@ -33,6 +44,10 @@ approval_required:
     - required_before_live_publish
     - required_before_external_posting
     - required_before_channel_mutation
+  gate_types:
+    - external_mutation
+    - lifecycle_movement
+    - promotion
 disallowed_without_explicit_user_request:
   stages:
     - substack_publishing
@@ -42,3 +57,37 @@ disallowed_without_explicit_user_request:
     - authenticated remote mutation
     - playlist mutation
     - external posting
+governed_execution:
+  run_modes:
+    - exploratory
+    - governed_continuous
+  continue_until:
+    - review_gate
+    - external_mutation_gate
+    - terminal_failure
+    - budget_limit
+    - workflow_completion
+  resolved_run_required_when:
+    - governed
+    - gated
+    - resumable
+    - continuous
+    - audit_relevant
+enforcement_surfaces:
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+review_gate_store:
+  gate_path: reviewable-runs/gates/
+  run_record_path: reviewable-runs/logs/
+  resolved_run_path: reviewable-runs/resolved-runs/
+  quality_approval_distinct_from_external_mutation: true
+  decisions:
+    - approve
+    - reject
+    - defer

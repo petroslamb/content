@@ -1,123 +1,193 @@
 # Phase 2 Milestones
 
-Phase 2 is now ordered around executable contracts, validation, traces, and gates first. The CLI and cockpit come after those foundations stabilize.
+Phase 2 is ordered around stable file-backed authority before runtime convenience.
 
-The package-shape migration is no longer part of these milestones. Phase 2 should consume the current repo baseline:
+The sequence is:
+
+1. source workflow contracts
+2. bounded enforcement and validation
+3. execution evidence and review gates
+4. deterministic `content-agent` runtime
+5. thin local cockpit
+6. bounded editorial automation
+
+That order is deliberate. Phase 2 should not start with a dashboard, fat runtime, or autonomous agent wrapper over unstable workflow semantics.
+
+## Baseline Assumptions
+
+Phase 2 consumes the current repo model rather than redesigning package shape:
 
 - umbrella roots use `status.yaml` with `kind: umbrella`
 - leaf publication objects use `status.yaml` with `kind: leaf`
 - settled umbrella roots may have no active stage
 - active umbrella roots may route through `umbrella_route` or through an active default leaf
+- package content artifacts remain in package directories
+- generated execution evidence lives under `reviewable-runs/`
 
-Use the current publication packages as fixtures rather than inventing synthetic placeholder package classes.
+Use current publication packages as fixtures. Do not invent synthetic package classes to prove Phase 2.
+
+## Spec Stack
+
+The current operative stack is:
+
+- [`architecture.md`](architecture.md): authority planes, runtime boundary, object boundaries, and run modes
+- [`2.1-executable-workflow-contract.md`](2.1-executable-workflow-contract.md): authored workflow source contract
+- [`2.2-enforcement-and-validation-layer.md`](2.2-enforcement-and-validation-layer.md): deny/detect/record posture and validation stack
+- [`2.3-trace-and-provenance-minimums.md`](2.3-trace-and-provenance-minimums.md): resolved runs, run records, review gates, and promoted-output state
+- [`workflow-yaml-schema.md`](workflow-yaml-schema.md): schema companion to 2.1, not a competing authority
 
 ## Subphase Read
 
 | Subphase | Job | Depends On | Done When |
 | :--- | :--- | :--- | :--- |
-| **2.1 Executable Workflow Contract** | Make `workflow.yaml` the primary machine contract for target workflows. | Phase 1.5 contract surfaces and current workflow frontmatter. | Target workflows have authored `workflow.yaml` files with ordered steps, required context, allowed tools/paths, outputs, verification, gates, and trace requirements. |
-| **2.2 Enforcement and Validation Layer** | Make undeclared context, tools, and paths denyable, and define stage validation hooks. | Stable `workflow.yaml` contract. | Stage execution can detect undeclared inputs and produce bounded validation or drift findings instead of relying on prose discipline alone. |
-| **2.3 Trace and Provenance Minimums** | Add the minimum trace and promoted-output state needed for semantic debugging. | Stable workflow and validation contracts. | Run records carry context hashes, workflow version/hash, parent artifact ids, validation results, gate ids, and the minimal promoted-output state needed for contradiction/provenance awareness. |
-| **2.4 Gate Runtime and `content-agent`** | Create resumable gate artifacts and a thin CLI over the stable contract. | Stable workflow, validation, and trace artifacts plus the gate protocol. | `content-agent` can `status`, `next`, `run`, `review`, and `init` without becoming a second orchestration language. |
-| **2.5 Local Cockpit** | Add a thin browser reader/approver over filesystem-backed truth. | Stable gate store and trace records. | A local cockpit shows package state, pending gates, and recent runs without becoming the source of truth. |
-| **2.6 Editorial Automation** | Add structured style/compliance reporting and source-improvement suggestions. | Stable stage execution path and article-polish boundaries. | Editorial automation produces reports and suggestions, not autonomous rewrite authority. |
+| **2.1 Executable Workflow Contract** | Author per-workflow `workflow.yaml` as the highest functional truth layer for workflow behavior. | Architecture decisions, current workflow READMEs, root YAML surfaces, package `status.yaml`. | Target workflows have authored YAML contracts with identity, version, stability, kind, group, context dependencies, capabilities, paths, steps, outputs, validation, gates, trace requirements, and a small behavioral envelope. |
+| **2.2 Enforcement and Validation Layer** | Attach contracts to bounded runtime checks. | Stable 2.1 contract vocabulary. | Each enforcement surface declares `deny`, `detect`, or `record`; `content-agent validate` can report contract, context, path/tool, gate, and trace-readiness findings without promotion. |
+| **2.3 Trace and Provenance Minimums** | Define derivative execution evidence for debugging, resume, gates, and promotion. | Stable 2.1 and 2.2 semantics. | Governed or proof-relevant runs can persist `resolved_run`, write source-linked `run_record`, stop at YAML-backed `review_gate`, and record promoted-output state in run/gate artifacts. |
+| **2.4 Gate Runtime and `content-agent`** | Implement the deterministic CLI/runtime over stable contracts and evidence. | 2.1, 2.2, 2.3, `gate_contracts.yaml`, `pipeline_profiles.yaml`, `harness_policy.yaml`. | `content-agent init`, `status`, `next`, `run`, `resume`, `review`, and `validate` work over file-backed truth without becoming an LLM persona or second orchestration language. |
+| **2.5 Local Cockpit** | Add a thin browser reader/approver over package state, gates, and recent runs. | Stable gate store, run records, and CLI commands. | The cockpit exposes package state, pending gates, and recent runs while leaving filesystem-backed YAML and package files authoritative. |
+| **2.6 Editorial Automation** | Add structured editorial/style/compliance reporting. | Stable governed run path and article-polish boundaries. | Automation produces reports, violations, and source-improvement suggestions without autonomous rewrite, promotion, or publication authority. |
+
+## First Workflow Set
+
+2.1 should start with the workflows that define the essay lifecycle and external publication path:
+
+- `paper-intake`
+- `alphaxiv-research`
+- `essay-iteration`
+- `article-polish`
+- `substack-publishing`
+- `substack-archive-sync`
+
+Do not convert every workflow in the repo first. Add another workflow only when a real package-path run needs it.
 
 ## Execution Order
 
-The intended order is the same as the subphase numbering:
+### 1. Source Contract Pass
 
-1. contract
-2. enforcement and validation
-3. traces and small provenance state
-4. gate runtime and thin CLI
-5. cockpit
-6. editorial automation
+Complete the `workflow.yaml` contract layer for the first workflow set.
 
-That ordering is deliberate. Phase 2 should not start with a CLI or dashboard that sits on unstable workflow semantics.
+This pass should produce:
 
-## Subphase Notes
+- authored YAML contracts beside workflow READMEs
+- practical v1 schema conformance
+- README/YAML drift checks
+- context dependencies as governed dependencies
+- tool/capability and path declarations
+- preconditions, invariants, budgets, and recovery semantics where checkable
+- gate and trace references without implementing the full gate runtime
+- optional thin hand-authored discovery wrappers that point back to canonical `workflow.yaml`
 
-### 2.1 Executable Workflow Contract
+### 2. Enforcement And Validation Pass
 
-This is the anchor subphase. It decides what the platform can execute and what it must refuse.
+Add the bounded runtime checks that make workflow contracts honest.
 
-It should build on the existing package model rather than redefining it. In practice that means Phase 2.1 should load package kind and umbrella routing from current manifests before it decides which workflow contract to execute.
+This pass should produce:
 
-The machine contract must cover:
+- static contract checks
+- package and route resolution checks
+- context admission checks
+- allowed tool, capability, and path checks
+- precondition, invariant, budget, and recovery checks where supported
+- workflow validation hooks
+- bounded source-linked drift checks for at least one high-value stage family
+- explicit `deny`, `detect`, or `record` posture for each enforcement surface
 
-- ordered steps
-- required context
-- allowed tools
-- allowed paths
-- outputs
-- verification hooks
-- approval gates
-- trace requirements
+Do not claim perfect confinement. Work outside the governed path may happen, but it does not count as valid platform progress until validated and recorded.
 
-### 2.2 Enforcement and Validation Layer
+### 3. Execution Evidence Pass
 
-This is where the publication’s strongest thesis lands operationally. Specs become meaningful only when the runtime can enforce and validate them.
+Build the minimum evidence layer under `reviewable-runs/`.
 
-The initial target is not perfect conformance. It is bounded denial and bounded checking:
+This pass should produce:
 
-- undeclared tools should be rejectable
-- undeclared paths should be rejectable
-- undeclared context should be visible as a violation
-- source-linked drift checks should exist where they are high value
+- durable `resolved_run` files for governed, gated, resumable, continuous, or audit-relevant runs
+- source-linked run records under `reviewable-runs/logs/`
+- YAML-backed review gate artifacts under `reviewable-runs/gates/`
+- context paths and hashes in run records
+- workflow id, version, and hash in run records
+- validation results and enforcement outcomes in run records
+- gate ids and approval decisions in run/gate evidence
+- promoted-output state recorded in run records and gates
 
-### 2.3 Trace and Provenance Minimums
+Do not introduce standalone promoted-output manifests, full semantic provenance graphs, event-sourced replay, host-independent trace formats, or agent registries in this pass.
 
-This subphase should add enough trace structure for semantic debugging without demanding full provenance graphs.
+### 4. Gate Runtime And `content-agent` Pass
 
-The platform minimum is:
+Implement `content-agent` as deterministic infrastructure.
 
-- context file paths and hashes
-- workflow version/hash
-- parent artifact ids
-- validation results
-- gate ids
-- minimal contradiction/provenance state for promoted outputs
+The v1 command surface is:
 
-### 2.4 Gate Runtime and `content-agent`
-
-`content-agent` should be thin first.
-
-It should wrap stable lifecycle machinery rather than absorbing unstable orchestration logic. The initial command surface is:
-
+- `content-agent init`
 - `content-agent status`
 - `content-agent next`
 - `content-agent run`
+- `content-agent resume`
 - `content-agent review`
-- `content-agent init`
+- `content-agent validate`
 
-### 2.5 Local Cockpit
+The runtime should:
 
-The cockpit is a reader and approver over file-backed truth, not a new control plane.
+- load `workflow.yaml`, package `status.yaml`, root policy/profile/gate YAMLs, and package artifacts
+- resolve next valid workflow/action from package state
+- admit context as a declared dependency
+- validate contracts and enforcement posture
+- write source-linked run records
+- persist `resolved_run` only when governance, gates, resume, continuity, or audit require it
+- stop at file-backed review or external mutation gates
+- resume from gates only through explicit approval, rejection, or deferral
 
-Its job is to expose:
+`content-agent` is not a separate LLM persona and does not require separate model credentials in the first architecture.
 
-- package state
-- pending review gates
-- recent runs
+### 5. Cockpit Pass
 
-### 2.6 Editorial Automation
+Add a thin local reader/approver after the file-backed runtime objects stabilize.
 
-This is deliberately late. It depends on a stable runtime path and clear boundaries around what a report may do.
+The cockpit should expose:
+
+- package lifecycle state
+- selected route or next action
+- active/pending gates
+- recent run records
+- validation health
+
+It may index for convenience, but it must remain rebuildable or traceable to filesystem-backed truth.
+
+### 6. Editorial Automation Pass
+
+Add editorial automation after governed runs and approval boundaries are stable.
 
 The starting point is:
 
 - voice/style reports
 - structured violations
 - source-improvement suggestions based on repeated correction patterns
+- article-polish checks that run under workflow contracts
 
-Not autonomous promotion and not autonomous rewriting.
+This pass must not create autonomous rewrite, promotion, publication, or lifecycle authority.
 
 ## Phase 2 Gate Read
 
 Before Phase 2 can honestly close, the repo should show:
 
-1. stable `workflow.yaml` contracts for the platform-targeted lifecycle stages
-2. stage execution that can deny or surface undeclared context, tools, and paths
-3. resumable review gates that are visible outside terminal logs
-4. trace records rich enough to support source-linked debugging
-5. at least three full essay lifecycles completed through the platform path rather than legacy direct scripts
+1. stable `workflow.yaml` contracts for the target lifecycle workflows
+2. schema and drift checks that make README/YAML authority boundaries visible
+3. validation that can deny, detect, or record undeclared context, tools, paths, gates, budgets, and trace gaps
+4. durable review gates visible outside terminal logs
+5. source-linked run records with context hashes, workflow version/hash, parent artifacts, validation results, enforcement outcomes, gate ids, and promoted-output state
+6. `content-agent` commands operating over file-backed truth without replacing repo source surfaces
+7. retained proof runs on real package paths, not synthetic demos
+
+## Explicit Deferrals
+
+The following remain out of the Phase 2 milestone baseline:
+
+- repo-wide research memory
+- context lifecycle governance beyond admission checks
+- package-as-object semantics
+- markdown import semantics
+- standalone promoted-output manifests
+- full semantic provenance graphs
+- event-sourced replay as a minimum requirement
+- multi-agent or subagent orchestration as the default runtime model
+- host-independent verifiable traces
+- autonomous self-improvement or harness synthesis
