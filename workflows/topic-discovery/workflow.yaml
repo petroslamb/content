@@ -1,0 +1,367 @@
+workflow_id: topic_discovery
+version: 1
+stability: canonical
+workflow_kind: module
+workflow_group: portfolio
+summary: Decide whether a broad idea, archive gap, external trigger, review finding, or domain deserves a package, pivot pass, narrower research pass, or parking.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Existing package or archive cluster used as context when the topic is not fully greenfield.
+  discovery_trigger:
+    required: true
+    description: Seed question, archive gap, external trigger, review finding, or broad domain to investigate.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: run_id
+      source: content-agent run id
+    - id: topic_slug
+      source: operator-provided or inferred topic slug
+
+context_dependencies:
+  - id: seed_question_archive_gap_external_trigger_review_finding_or_broad_domain
+    source: cli.discovery_trigger
+    required: true
+    purpose: Bound the topic discovery pass before paper search or assistant comparison.
+    record_hash: false
+  - id: relevant_prior_essays_or_archive_cluster
+    path: publications/{package}/
+    required: false
+    purpose: Load prior essays or archive cluster context when the topic should build on existing work.
+    record_hash: true
+  - id: target_publication_ambition
+    source: operator ambition, package README, or archive gap note
+    required: true
+    purpose: Distinguish quick note, strong synthesis, and north-star flagship thresholds.
+    record_hash: false
+  - id: workflow_readme
+    path: workflows/topic-discovery/README.md
+    required: true
+    purpose: Load human-facing topic discovery guidance.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/topic-discovery/templates/
+    required: true
+    purpose: Provide the topic discovery packet template.
+    record_hash: true
+  - id: alphaxiv_skill
+    path: workflows/skills/alphaxiv/SKILL.md
+    required: true
+    purpose: Bind alphaXiv command guidance for vocabulary mapping and paper inspection.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply package-init and lifecycle movement policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve topic_viability gate requirements.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: alphaxiv_topic_search
+      command: ".venv/bin/alphaxiv search topics \"{discovery_trigger}\""
+      required: true
+    - id: alphaxiv_paper_search
+      command: ".venv/bin/alphaxiv search papers \"{discovery_trigger}\""
+      required: true
+    - id: topic_viability_gate_check
+      command: "npm run gate:check -- --gate topic_viability --packet {topic_packet_path}"
+      required: false
+  skills:
+    - alphaxiv
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - publication_strategy_and_archive/
+    - workflows/topic-discovery/
+    - workflows/alphaxiv-research/
+    - workflows/post-ceiling-pivot/
+    - workflows/skills/alphaxiv/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: topic_vocabulary_map
+    path_template: "reviewable-runs/logs/{run_id}-topic-vocabulary-map.md"
+    required: true
+    format: markdown
+    producer: map_topic_vocabulary
+  - id: ranked_candidate_paper_pool
+    path_template: "reviewable-runs/logs/{run_id}-candidate-paper-pool.md"
+    required: true
+    format: markdown
+    producer: inspect_candidate_papers
+  - id: assistant_discussion_notes
+    path_template: "reviewable-runs/logs/{run_id}-assistant-discussion-notes.md"
+    required: conditional
+    required_when: assistant comparison materially shapes the topic decision
+    format: markdown
+    producer: track_assistant_comparison
+  - id: candidate_essay_slate
+    path_template: "reviewable-runs/logs/{run_id}-candidate-essay-slate.md"
+    required: true
+    format: markdown
+    producer: rank_candidate_essay_objects
+  - id: handoff_decision
+    path_template: "reviewable-runs/logs/{run_id}-topic-discovery-handoff.md"
+    required: true
+    format: markdown
+    producer: decide_handoff
+    gated_by: topic_viability
+  - id: topic_viability_gate
+    path_template: "reviewable-runs/gates/{run_id}-topic-viability.yaml"
+    required: conditional
+    required_when: content-agent materializes a durable topic viability gate
+    format: yaml
+    producer: decide_handoff
+
+behavior:
+  preconditions:
+    - id: discovery_trigger_is_bounded
+      check: discovery_trigger_nonempty
+      target: discovery_trigger
+      on_fail: stop
+    - id: target_ambition_is_named
+      check: target_publication_ambition_present
+      target: target_publication_ambition
+      on_fail: stop
+    - id: alphaxiv_cli_available
+      check: executable_exists
+      target: .venv/bin/alphaxiv
+      on_fail: stop
+  invariants:
+    - id: topic_selection_precedes_package_init
+      check: package_init_requires_handoff_decision
+    - id: deterministic_retrieval_before_assistant
+      check: assistant_requires_prior_retrieval
+    - id: candidate_clearance_is_not_topic_interest
+      check: handoff_decision_distinguishes_interest_from_clearance
+    - id: parked_topics_are_recorded
+      check: parking_reason_recorded
+  budgets:
+    max_steps: 7
+    max_search_queries: 12
+    max_candidate_papers: 20
+    max_assistant_sessions: 1
+    external_mutations: 0
+    unapproved_package_inits: 0
+  recovery:
+    on_alphaxiv_auth_failure: continue_with_deterministic_retrieval_or_stop
+    on_candidate_not_viable: park_with_reason
+    on_package_init_needed: stop_at_topic_viability_gate
+    resume_from: resolved_run
+    rollback_strategy: preserve_discovery_packet_and_do_not_initialize_package
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - topic_viability_gate_references_resolve
+    - package_init_requires_handoff_decision
+  context_checks:
+    - discovery_trigger_recorded
+    - target_publication_ambition_recorded
+    - alphaxiv_cli_available
+    - prior_archive_cluster_resolves_when_present
+  hooks:
+    - id: topic_viability_gate_check
+      command: "npm run gate:check -- --gate topic_viability --packet {topic_packet_path}"
+      run_at:
+        - before_package_init
+      required: false
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: topic_viability
+    type: lifecycle_movement
+    contract: topic_viability
+    required: true
+    stop_before: package_initialization_or_pivot_handoff
+    validator: "npm run gate:check -- --gate topic_viability --packet {topic_packet_path}"
+    artifacts:
+      - topic_vocabulary_map
+      - ranked_candidate_paper_pool
+      - candidate_essay_slate
+      - handoff_decision
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - discovery_trigger
+    - target_publication_ambition
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: state_discovery_trigger
+    title: State discovery trigger
+    mode: codex_session
+    action: Record the seed question, archive gap, external trigger, review finding, or broad domain before searching.
+    consumes:
+      - seed_question_archive_gap_external_trigger_review_finding_or_broad_domain
+      - relevant_prior_essays_or_archive_cluster
+      - target_publication_ambition
+      - workflow_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: map_topic_vocabulary
+    title: Map topic vocabulary
+    mode: codex_session
+    action: Use deterministic alphaXiv topic and paper search to find the research vocabulary before ranking candidates.
+    consumes:
+      - seed_question_archive_gap_external_trigger_review_finding_or_broad_domain
+      - alphaxiv_skill
+    produces:
+      - topic_vocabulary_map
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: inspect_candidate_papers
+    title: Inspect candidate papers
+    mode: codex_session
+    action: Build a ranked candidate paper pool with exclusions and near-misses.
+    consumes:
+      - topic_vocabulary_map
+    produces:
+      - ranked_candidate_paper_pool
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: track_assistant_comparison
+    title: Track assistant comparison
+    mode: external_mutation_gated
+    action: Use assistant comparison only after retrieval and preserve material notes when it shapes the topic decision.
+    consumes:
+      - ranked_candidate_paper_pool
+      - topic_vocabulary_map
+    produces:
+      - assistant_discussion_notes
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: rank_candidate_essay_objects
+    title: Rank candidate essay objects
+    mode: codex_session
+    action: Create a candidate essay slate with evidence deltas, exclusions, and kill criteria.
+    consumes:
+      - ranked_candidate_paper_pool
+      - assistant_discussion_notes
+      - target_publication_ambition
+    produces:
+      - candidate_essay_slate
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: decide_handoff
+    title: Decide handoff
+    mode: review_gated
+    action: Decide package initialization, post-ceiling pivot, narrower research, or parking.
+    consumes:
+      - candidate_essay_slate
+      - topic_vocabulary_map
+      - workflow_templates
+    produces:
+      - handoff_decision
+      - topic_viability_gate
+    validation:
+      hooks:
+        - topic_viability_gate_check
+    gate:
+      id: topic_viability
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - handoff_decision
+      - topic_viability_gate
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks: []
+    trace:
+      required: true

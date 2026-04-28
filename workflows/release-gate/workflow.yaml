@@ -1,0 +1,336 @@
+workflow_id: release_gate
+version: 1
+stability: canonical
+workflow_kind: module
+workflow_group: release
+summary: Decide whether a polished package is safe to publish, sync, archive, or externally mutate.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+    - id: live_draft_path
+      source: publications/{package}/status.yaml:config.markdown_path
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve live draft, publication target, package kind, and lifecycle state.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package-specific release constraints and artifact conventions.
+    record_hash: true
+  - id: canonical_live_draft
+    path_from_status: config.markdown_path
+    required: true
+    purpose: Confirm the exact live draft being judged for release.
+    record_hash: true
+  - id: latest_promotion_decision_or_publication_approval_note
+    source: review gate, promotion decision, or explicit user approval
+    required: true
+    purpose: Prove the polished object is authorized for release review.
+    record_hash: true
+  - id: package_artifact_surface_and_final_media_paths
+    path_from_status: config.artifacts_path
+    fallback: publications/{package}/artifacts/
+    required: false
+    purpose: Check images, video markers, slides, transcript artifacts, and final media paths.
+    record_hash: true
+  - id: current_references_links_and_substack_target
+    path_from_status: config.markdown_path
+    required: true
+    purpose: Verify references, links, and configured Substack target when present.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/release-gate/README.md
+    required: true
+    purpose: Load human-facing release gate guidance.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/release-gate/templates/
+    required: true
+    purpose: Provide the release gate checklist template.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply external mutation and approval boundaries.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve the release_readiness gate contract.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: true
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      required: true
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/release-gate/
+    - workflows/article-polish/
+    - workflows/substack-publishing/
+    - workflows/substack-archive-sync/
+    - publication_strategy_and_archive/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: release_gate_checklist
+    path_template: "publications/{package}/{package_name}-release-gate-r{revision}.md"
+    required: true
+    format: markdown
+    producer: write_release_gate_checklist
+    gated_by: release_readiness
+  - id: release_verdict
+    path_template: "publications/{package}/{package_name}-release-verdict-r{revision}.md"
+    required: true
+    format: markdown
+    producer: record_release_verdict
+    gated_by: release_readiness
+  - id: required_release_fixes
+    path_template: "publications/{package}/{package_name}-release-fixes-r{revision}.md"
+    required: conditional
+    required_when: release blockers or minor fixes remain before publishing
+    format: markdown
+    producer: record_release_verdict
+  - id: release_readiness_gate
+    path_template: "reviewable-runs/gates/{run_id}-release-readiness.yaml"
+    required: conditional
+    required_when: content-agent materializes a durable release-readiness gate
+    format: yaml
+    producer: record_release_readiness_gate
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: live_draft_resolves
+      check: status_config_path_exists
+      target: config.markdown_path
+      on_fail: stop
+    - id: publication_approval_context_exists
+      check: approval_context_present
+      target: latest_promotion_decision_or_publication_approval_note
+      on_fail: stop
+  invariants:
+    - id: wrong_file_cannot_publish
+      check: release_target_matches_status_markdown_path
+    - id: media_paths_are_stable
+      check: media_paths_do_not_point_to_unstable_generated_artifacts
+    - id: references_are_complete
+      check: inline_reference_changes_reflected_in_endmatter
+    - id: external_mutation_requires_release_readiness
+      check: external_mutation_requires_release_readiness
+  budgets:
+    max_steps: 5
+    max_script_retries: 1
+    external_mutations: 0
+    unapproved_publications: 0
+  recovery:
+    on_release_blocker: record_required_fixes_and_defer
+    on_link_failure: stop_and_record
+    on_missing_publish_target: stop_and_record
+    resume_from: resolved_run
+    rollback_strategy: preserve_local_package_state_and_do_not_publish
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - live_draft_path_matches_status
+    - release_target_configured_when_external_mutation_requested
+  context_checks:
+    - package_status_resolves
+    - live_draft_resolves
+    - release_approval_context_resolves
+    - artifact_surface_resolves_when_present
+  hooks:
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - before_release_verdict
+      required: true
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      run_at:
+        - handoff
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: true
+    stop_before: external_publication_or_sync
+    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    artifacts:
+      - canonical_live_draft
+      - release_gate_checklist
+      - release_verdict
+      - required_release_fixes when blockers remain
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - live_draft_path
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_release_target
+    title: Resolve release target
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - canonical_live_draft
+      - latest_promotion_decision_or_publication_approval_note
+      - workflow_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: inspect_release_surfaces
+    title: Inspect release surfaces
+    mode: codex_session
+    action: Check draft target, references, links, media paths, Substack targets, and approval context before any external mutation.
+    consumes:
+      - canonical_live_draft
+      - package_artifact_surface_and_final_media_paths
+      - current_references_links_and_substack_target
+      - workflow_templates
+    produces:
+      - release_gate_checklist
+    validation:
+      hooks:
+        - repo_link_check
+    trace:
+      required: true
+  - id: record_release_verdict
+    title: Record release verdict
+    mode: review_gated
+    action: Record release ready, minor fixes, or blocked, and stop before external publishing until approval is explicit.
+    consumes:
+      - release_gate_checklist
+      - canonical_live_draft
+      - current_references_links_and_substack_target
+    produces:
+      - release_verdict
+      - required_release_fixes
+      - release_readiness_gate
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - release_gate_checklist
+      - release_verdict
+      - release_readiness_gate
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    trace:
+      required: true

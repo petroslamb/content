@@ -160,7 +160,7 @@ resume:
   on_approve: next_step
   on_reject: correction_step
   on_defer: keep_pending
-  command_hint: content-agent review --gate essay_iteration-major-rewrite-2026-04-22T18-10-00Z --approve
+  command_hint: content-agent review approve --gate essay_iteration-major-rewrite-2026-04-22T18-10-00Z --reason "<reason>"
 
 promoted_output_state:
   authority_order: workflow_contract_first

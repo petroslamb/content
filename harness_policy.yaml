@@ -27,6 +27,33 @@ local_write_allowed:
     - run record writing
     - gate artifact creation
     - local validation reports
+governance_maintenance_write_allowed:
+  paths:
+    - AUTHORITY.md
+    - AGENTS.md
+    - README.md
+    - package.json
+    - harness_contract.yaml
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - pipeline_profiles.yaml
+    - phased-strategy/
+    - workflows/
+    - scripts/
+    - tests/
+    - experiments/
+    - publications/README.md
+    - reviewable-runs/README.md
+    - reviewable-runs/logs/README.md
+    - reviewable-runs/gates/README.md
+  operations:
+    - authority map maintenance
+    - workflow contract maintenance
+    - compatibility contract regeneration
+    - policy and profile edits
+    - index and README maintenance
+    - experiment state indexing
+    - validation surface maintenance
 auto_mark_done_allowed:
   runner_modes:
     - scripted

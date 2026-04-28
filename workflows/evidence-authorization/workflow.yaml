@@ -1,0 +1,289 @@
+workflow_id: evidence_authorization
+version: 1
+stability: canonical
+workflow_kind: module
+workflow_group: evidence
+summary: Create a package-local claim permission layer that separates source inventory from what the next blueprint or rewrite may safely claim.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  evidence_question:
+    required: true
+    description: The claim, section, blueprint gap, or review finding that needs source authorization.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, revision, evidence configuration, and governing surfaces.
+    record_hash: true
+  - id: package_readme_or_leaf_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation before assigning claim permission.
+    record_hash: true
+  - id: package_paper_index_or_source_index
+    path_from_status: config.evidence_path
+    fallback:
+      - publications/{package}/papers/index.md
+      - publications/{package}/source-index.md
+      - publications/{package}/sources/index.md
+      - publications/{package}/papers/
+      - publications/{package}/sources/
+    required: true
+    purpose: Identify the source inventory that can license or constrain claims.
+    record_hash: true
+  - id: active_blueprint_plan_draft_or_review_finding
+    path_from_status: config.blueprint_path
+    fallback:
+      - publications/{package}/blueprint.md
+      - publications/{package}/plan.md
+      - publications/{package}/README.md
+    required: true
+    purpose: Bind the authorization pass to the active blueprint, plan, draft, or review finding that created the evidence question.
+    record_hash: true
+  - id: current_claim_set_or_section_spine
+    source: cli.evidence_question or package-local claim/review artifact
+    required: true
+    purpose: Keep the authorization ledger scoped to the current claim set or section spine.
+    record_hash: false
+  - id: workflow_readme
+    path: workflows/evidence-authorization/README.md
+    required: true
+    purpose: Load human-facing evidence authorization guidance.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/evidence-authorization/templates/
+    required: true
+    purpose: Provide ledger, claim-state, contradiction, scorecard, and rubric templates.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local write and approval boundaries.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: package_diff_scan
+      command: "git diff --name-status -- publications/{package}/"
+      required: false
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/evidence-authorization/
+    - harness_policy.yaml
+    - package.json
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: evidence_authorization_ledger
+    path_template: "publications/{package}/{package_name}-evidence-authorization-ledger-r{revision}.md"
+    required: true
+    format: markdown
+    producer: write_authorization_ledger
+  - id: source_burden_map
+    path_template: "publications/{package}/{package_name}-source-burden-map-r{revision}.md"
+    required: conditional
+    required_when: body, hinge, optional, or forbidden source use needs a separate map
+    format: markdown
+    producer: write_source_burden_map
+  - id: synthesis_boundary
+    path_template: "publications/{package}/{package_name}-synthesis-boundary-r{revision}.md"
+    required: conditional
+    required_when: the essay frame depends on synthesis across multiple sources
+    format: markdown
+    producer: name_synthesis_boundary
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: source_inventory_exists
+      check: evidence_surface_exists
+      target: package_paper_index_or_source_index
+      on_fail: stop
+    - id: evidence_question_is_bounded
+      check: evidence_question_nonempty
+      target: evidence_question
+      on_fail: stop
+  invariants:
+    - id: do_not_replace_paper_index
+      check: ledger_does_not_become_source_inventory
+    - id: forbidden_claims_are_explicit
+      check: forbidden_claims_named_when_sources_do_not_license_them
+    - id: synthesis_claims_are_labeled
+      check: synthesis_distinguished_from_direct_source_claims
+    - id: blueprint_receives_claim_permission_not_new_draft
+      check: authorization_does_not_rewrite_prose
+  budgets:
+    max_steps: 5
+    max_script_retries: 0
+    external_mutations: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_source_index: route_to_paper_intake_or_research
+    on_unclear_claim_set: stop_and_request_bounded_claim_question
+    on_authorization_blocker: record_forbidden_claims_and_defer
+    resume_from: resolved_run
+    rollback_strategy: preserve_existing_evidence_surfaces
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - source_inventory_resolves
+    - forbidden_claims_recorded_when_present
+  context_checks:
+    - package_status_resolves
+    - package_readme_resolves
+    - source_inventory_resolves
+    - evidence_question_recorded
+  hooks: []
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates: []
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - evidence_question
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_evidence_question
+    title: Resolve evidence question
+    mode: codex_session
+    action: Identify the exact claim set, section spine, blueprint gap, or review finding being authorized.
+    consumes:
+      - package_status
+      - package_readme_or_leaf_readme
+      - active_blueprint_plan_draft_or_review_finding
+      - current_claim_set_or_section_spine
+      - workflow_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: map_source_burdens
+    title: Map source burdens
+    mode: codex_session
+    action: Separate body claims, hinge claims, optional support, forbidden claims, and synthesis-only claims.
+    consumes:
+      - package_paper_index_or_source_index
+      - current_claim_set_or_section_spine
+      - workflow_templates
+    produces:
+      - source_burden_map
+      - synthesis_boundary
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: write_authorization_ledger
+    title: Write authorization ledger
+    mode: codex_session
+    action: Record what the evidence permits, what it does not permit, and what downstream blueprint or rewrite constraints follow.
+    consumes:
+      - package_paper_index_or_source_index
+      - source_burden_map
+      - synthesis_boundary
+    produces:
+      - evidence_authorization_ledger
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - evidence_authorization_ledger
+      - source_burden_map
+      - synthesis_boundary
+      - validation_results
+    produces:
+      - run_record
+    validation:
+      hooks: []
+    trace:
+      required: true

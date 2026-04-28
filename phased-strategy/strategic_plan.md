@@ -120,7 +120,7 @@ Add a single tracked machine-readable contract such as `agent_contract.yaml` or 
 **Deliverable**: A harness can read one file and understand how to operate in this repo without relying on a long custom prompt.
 
 #### M1.5.2 — Idea-To-Package Intake
-Create a generic intake command such as `scripts/init_package.py --idea "..." --slug ...` or `content-agent init --idea ...` that scaffolds a package, seeds `status.yaml`, and points the agent at the first actionable stage.
+Create a generic intake command such as `scripts/init_package.py --idea "..." --slug ...` that scaffolds a package, seeds `status.yaml`, and points the agent at the first actionable stage. After Phase 2, `content-agent init` means runtime setup/checking, not idea intake.
 
 **Deliverable**: "Here is an idea" becomes a runnable repo state, not a conversation-dependent setup step.
 
@@ -227,7 +227,7 @@ Add a small repo-local Codex skill family that wraps the new harness interfaces 
 - `/content-publish-check`
 - `/content-proof-run`
 
-Each skill should call `package:init`, `stage:next`, `stage:resolve`, `stage:run`, and launch-pack generation as the underlying execution surface rather than duplicating logic.
+Each skill should now prefer `content-agent` for governed status, next-action, validation, run, review, and resume behavior. Older `package:init`, `stage:next`, `stage:resolve`, `stage:run`, and launch-pack generation remain compatibility surfaces for workflows that still depend on their narrow behavior.
 
 **Deliverable**: The repo is usable through named content workflows instead of raw command memory.
 
@@ -390,10 +390,27 @@ Detailed planning for this phase now lives under [`phase-2/`](phase-2/README.md)
 - [`phase-2/dashboard-v0.md`](phase-2/dashboard-v0.md)
 - [`phase-2/open-questions.md`](phase-2/open-questions.md)
 
+### Current Status
+
+The Phase 2.1-2.6 local platform baseline is implemented. The current source-of-truth map lives in [`../AUTHORITY.md`](../AUTHORITY.md), and the detailed Phase 2 closeout lives in [`phase-2/milestones.md`](phase-2/milestones.md).
+
+This closes the local governed-runtime baseline:
+
+- executable workflow contracts for the first workflow set
+- contract, context, path/tool, gate, and trace validation
+- YAML resolved runs, run records, and review gates
+- `content-agent` as the deterministic runtime facade
+- `content-cockpit` as a thin local reader/approver
+- report-only editorial automation for `article_polish`
+
+It does not close the broader platform proof campaign. The repo still needs multiple full lifecycle proofs before Phase 3 should be treated as operationally unlocked.
+
 ### Milestones
 
 #### M2.1 — Executable Workflow Contract
-Make `workflow.yaml` the primary machine contract for platform-targeted workflows. It should define:
+Status: implemented.
+
+`workflow.yaml` is now the primary machine contract for platform-targeted workflows. It defines:
 
 - ordered steps
 - required context
@@ -403,23 +420,27 @@ Make `workflow.yaml` the primary machine contract for platform-targeted workflow
 - approval gates
 - trace requirements
 
-The workflow README remains the human explanation surface. Drift between prose and machine contract should be controlled by checks, not by treating prose as machine truth.
+The workflow README remains the human explanation surface. Drift between prose and machine contract is controlled by checks, not by treating prose as machine truth.
 
-**Deliverable**: target workflows have authored `workflow.yaml` contracts that the runtime can interpret directly.
+**Delivered**: target workflows have authored `workflow.yaml` contracts that `content-agent` and workflow-model checks can interpret directly.
 
 #### M2.2 — Enforcement And Validation Layer
-Turn the contract into a runtime boundary. The platform should be able to deny or surface:
+Status: implemented.
+
+The contract is now attached to runtime validation. The platform can deny or surface:
 
 - undeclared context
 - undeclared tools
 - undeclared paths
 
-It should also support per-stage validation hooks and bounded source-linked drift checks where they add real value.
+It also supports workflow validation hooks and bounded source-linked drift checks where they add real value.
 
-**Deliverable**: stage execution is attached to explicit validation and denial behavior rather than advisory prose.
+**Delivered**: governed execution is attached to explicit validation and denial behavior rather than advisory prose.
 
 #### M2.3 — Trace And Provenance Minimums
-Add the minimum trace structure needed for semantic debugging. At minimum, run paths should be able to record:
+Status: implemented.
+
+The repo now has the minimum trace structure needed for semantic debugging. Governed or proof-relevant run paths can record:
 
 - context file paths and hashes
 - workflow version or hash
@@ -435,49 +456,62 @@ Promoted outputs should also carry a small state vocabulary:
 - `validation_state`
 - `trace_state`
 
-**Deliverable**: traces are rich enough to support source-linked debugging without pretending to be full semantic provenance graphs.
+**Delivered**: traces are rich enough to support source-linked debugging without pretending to be full semantic provenance graphs.
 
 #### M2.4 — Gate Runtime And The `content-agent` CLI
-Build a proper Python package (not a loose script) named `content-agent`, but keep it thin first. It should wrap the stable lifecycle machinery and gate runtime instead of becoming a second orchestration language.
+Status: implemented as a local entrypoint and script-backed runtime facade.
+
+`content-agent` is intentionally thin. It wraps the stable workflow contract, package state, validation, trace, and gate machinery instead of becoming a second orchestration language.
 
 ```
-content-agent status
-content-agent next --package binding-gap
-content-agent run --package binding-gap --stage article_polish
-content-agent review --gate <gate-id> --approve
-content-agent init --package new-essay-name
+./content-agent status
+./content-agent next --package binding-gap
+./content-agent run --workflow article_polish --package binding-gap
+./content-agent review approve --gate <gate-id> --reason "<reason>"
+./content-agent init
 ```
 
 Pending review state should live in file-backed gate artifacts under `reviewable-runs/gates/`, not in terminal babysitting prompts.
 
-**Deliverable**: `content-agent` can `status`, `next`, `run`, `review`, and `init` against the stable contract.
+**Delivered**: `content-agent` can `init`, `status`, `next`, `run`, `resume`, `review`, and `validate` against file-backed truth.
 
 #### M2.5 — The Local Cockpit (v0)
-Add a thin local cockpit that reads filesystem-backed truth and shows:
+Status: implemented.
+
+The local cockpit reads filesystem-backed truth and shows:
 
 - package state
 - pending review gates
 - recent runs
+- validation health
+- next-action blockers
+- report-only editorial checks
 
 This is not a SaaS and not a second control plane. It is a local reader/approver over the gate and trace artifacts.
 
 #### M2.6 — Editorial Automation
-At the Article Polish stage, the platform should be able to produce structured editorial reports against `voice_consistency_guide.md` and related constraints. It may also suggest source-level improvements from repeated correction patterns.
+Status: implemented as report-only automation.
+
+At the Article Polish stage, the platform can produce structured editorial reports against `voice_consistency_guide.md` and related constraints. It may also suggest source-level improvements from repeated correction patterns.
 
 These outputs should remain reports and suggestions, not autonomous rewrite authority.
 
-**Deliverable**: editorial automation produces machine-readable reports without collapsing human review boundaries.
+**Delivered**: editorial automation produces machine-readable reports without collapsing human review boundaries.
 
 ---
 
 ### Phase 2 Gate Criteria
 > [!IMPORTANT]
-> **Do not enter Phase 3 until you can honestly answer YES to all of these:**
-> 1. Do the platform-targeted lifecycle stages have stable `workflow.yaml` contracts with explicit verification, approval gates, and trace requirements?
-> 2. Can the runtime deny or surface undeclared context, tools, and paths instead of relying on prose discipline alone?
-> 3. Are pending review gates visible and resumable outside terminal logs?
-> 4. Are traces rich enough to support source-linked debugging without pretending to be the source of truth?
-> 5. Has the platform completed at least 3 full essay lifecycles end to end without falling back to legacy direct-script operation?
+> **The local Phase 2 implementation baseline is complete, but Phase 3 remains blocked by proof depth.**
+>
+> Current read:
+> 1. Stable `workflow.yaml` contracts with explicit verification, approval gates, and trace requirements: yes for the first workflow set.
+> 2. Runtime denial or surfacing of undeclared context, tools, and paths: yes for the governed `content-agent` boundary.
+> 3. Pending review gates visible and resumable outside terminal logs: yes through `content-agent`, `content-cockpit`, and YAML gate artifacts.
+> 4. Traces rich enough for source-linked debugging without becoming source truth: yes for Phase 2 YAML evidence.
+> 5. At least 3 full essay lifecycles end to end without falling back to legacy direct-script operation: not yet.
+>
+> Do not treat Phase 3 as operationally unlocked until the proof campaign clears item 5.
 
 ---
 
@@ -501,7 +535,7 @@ One agent instance can manage multiple workspaces (i.e., one person with multipl
 #### M3.2 — Cloud Execution Layer
 Replace local `.venv` execution with a stateless execution runtime (AWS Lambda, Google Cloud Run, or a self-hosted Celery queue). The agent jobs are no longer tied to your laptop.
 
-**Deliverable**: `content-agent run --package binding-gap --stage polish` submits a job to a queue that runs without your machine being on.
+**Deliverable**: `content-agent run --workflow article_polish --package binding-gap` submits a job to a queue that runs without your machine being on.
 
 #### M3.3 — The Credential Vault
 Implement proper per-workspace credential management (not `.env` files). Use a standard secrets manager (AWS Secrets Manager / local Vault in self-hosted mode). This is the prerequisite for multi-user — your API keys must be isolated from someone else's.
