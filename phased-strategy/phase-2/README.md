@@ -14,7 +14,8 @@ Use this folder for Phase 2 planning only. Promote decisions into implementation
 
 ## Status
 
-- Phase 2 is planned, not started.
+- Phase 2.1, 2.2, and 2.3 are implemented and committed.
+- Phase 2.4 is the next implementation target.
 - Phase 1.6 still exists as a separate roadmap phase, but Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
 - This folder now treats Phase 2 as contract-first, validation-first, and trace-first rather than CLI-first.
 - Umbrella and leaf package normalization is now mostly done. Phase 2 should treat the current package model as a consumed contract surface, not as new migration work.
@@ -68,6 +69,9 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 | [`workflow-yaml-schema.md`](workflow-yaml-schema.md) | The target machine contract for executable workflows. |
 | [`review-gate-protocol.md`](review-gate-protocol.md) | Review-gate classes, artifact contract, gate store, and resume model. |
 | [`dashboard-v0.md`](dashboard-v0.md) | The first local cockpit scope built on gate and trace artifacts. |
+| [`2.4-gate-runtime-and-content-agent.md`](2.4-gate-runtime-and-content-agent.md) | The deterministic CLI/runtime implementation plan after contracts, validation, and evidence. |
+| [`2.5-local-cockpit.md`](2.5-local-cockpit.md) | The numbered cockpit phase wrapper and dependency boundary. |
+| [`2.6-editorial-automation.md`](2.6-editorial-automation.md) | The bounded editorial automation plan after governed gates and article-polish boundaries stabilize. |
 | [`open-questions.md`](open-questions.md) | The remaining Phase 2 decisions that are still genuinely open. |
 | [`idea-bank.md`](idea-bank.md) | Candidate ideas that may justify rewriting Phase 2 before implementation. |
 | [`claim-ledger.md`](claim-ledger.md) | Phase 2 planning claims that should be pressure-tested before implementation. |
@@ -80,6 +84,9 @@ The first implementation packets for the Phase 2 foundation are:
 - [`2.1-executable-workflow-contract.md`](2.1-executable-workflow-contract.md)
 - [`2.2-enforcement-and-validation-layer.md`](2.2-enforcement-and-validation-layer.md)
 - [`2.3-trace-and-provenance-minimums.md`](2.3-trace-and-provenance-minimums.md)
+- [`2.4-gate-runtime-and-content-agent.md`](2.4-gate-runtime-and-content-agent.md)
+- [`2.5-local-cockpit.md`](2.5-local-cockpit.md)
+- [`2.6-editorial-automation.md`](2.6-editorial-automation.md)
 
 ## Input Sources
 
