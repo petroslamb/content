@@ -135,7 +135,10 @@ def parse_json_bytes(raw: bytes) -> object:
 
 
 def run_content_agent(args: list[str]) -> dict[str, object]:
-    command = [str(content_agent.REPO_ROOT / "content-agent"), *args]
+    return run_repo_command([str(content_agent.REPO_ROOT / "content-agent"), *args])
+
+
+def run_repo_command(command: list[str]) -> dict[str, object]:
     proc = subprocess.run(
         command,
         cwd=content_agent.REPO_ROOT,
@@ -159,6 +162,20 @@ def run_content_agent(args: list[str]) -> dict[str, object]:
     if proc.stderr.strip():
         payload["stderr"] = proc.stderr
     return payload
+
+
+def editorial_report_action_payload(package_arg: str) -> dict[str, object]:
+    if not package_arg.strip():
+        raise ValueError("package is required")
+    return run_repo_command(
+        [
+            str(content_agent.REPO_ROOT / ".venv/bin/python"),
+            str(content_agent.REPO_ROOT / "scripts/generate_editorial_report.py"),
+            "--package",
+            package_arg.strip(),
+            "--stdout",
+        ]
+    )
 
 
 def validation_action_payload(package_arg: str | None) -> dict[str, object]:
@@ -440,6 +457,12 @@ validateButton.type = "button";
 validateButton.textContent = "Rerun Validation";
 validateButton.addEventListener("click", rerunValidation);
 document.querySelector(".toolbar").appendChild(validateButton);
+const editorialReportButton = document.createElement("button");
+editorialReportButton.id = "editorial-report-button";
+editorialReportButton.type = "button";
+editorialReportButton.textContent = "Editorial Report";
+editorialReportButton.addEventListener("click", runEditorialReport);
+document.querySelector(".toolbar").appendChild(editorialReportButton);
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -504,6 +527,56 @@ async function rerunValidation() {
   const payload = await response.json();
   output.innerHTML = `<section><h2>Validation Rerun</h2><pre>${esc(JSON.stringify(payload, null, 2))}</pre></section>`;
   await loadStatus();
+}
+
+async function runEditorialReport() {
+  const packageValue = packageInput.value.trim();
+  const output = document.getElementById("action-output");
+  if (!packageValue) {
+    output.innerHTML = '<section><div class="error">Select a package before running the editorial report.</div></section>';
+    return;
+  }
+  output.innerHTML = '<section>Running editorial report...</section>';
+  const response = await fetch("/api/editorial-report", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({package: packageValue})
+  });
+  const payload = await response.json();
+  output.innerHTML = renderEditorialReportResult(payload, response.ok);
+}
+
+function renderEditorialReportResult(payload, ok) {
+  const report = payload.stdout && typeof payload.stdout === "object" ? payload.stdout : null;
+  if (!ok || !report || report.kind !== "editorial_automation_report") {
+    return `<section><h2>Editorial Report</h2><pre>${esc(JSON.stringify(payload, null, 2))}</pre></section>`;
+  }
+  const counts = report.severity_counts || {};
+  const findings = (report.findings || []).slice(0, 12).map((finding) => `
+    <tr>
+      <td>${badge(finding.severity || "advisory")}</td>
+      <td>${esc(finding.check_id || "")}</td>
+      <td>${artifact(finding.path, finding.line ? `${finding.path}:${finding.line}` : finding.path)}</td>
+      <td>${esc(finding.message || "")}</td>
+    </tr>`).join("");
+  const suggestions = renderListItems((report.source_improvement_suggestions || []).map((item) => item.suggestion || item.id));
+  return `<section>
+    <h2>Editorial Report</h2>
+    <table><tbody>
+      <tr><th>Package</th><td>${esc(report.package?.key || "")}</td></tr>
+      <tr><th>Live draft</th><td>${artifact(report.package?.live_draft_path)}</td></tr>
+      <tr><th>Counts</th><td>${esc(counts.error || 0)} errors, ${esc(counts.warning || 0)} warnings, ${esc(counts.advisory || 0)} advisory</td></tr>
+      <tr><th>State effects</th><td><code>${esc(JSON.stringify(report.state_effects || {}))}</code></td></tr>
+    </tbody></table>
+    <h2 style="margin-top:14px">Findings</h2>
+    <table>
+      <thead><tr><th>Severity</th><th>Check</th><th>Path</th><th>Message</th></tr></thead>
+      <tbody>${findings || '<tr><td colspan="4" class="muted">No findings.</td></tr>'}</tbody>
+    </table>
+    <h2 style="margin-top:14px">Source Improvement Suggestions</h2>
+    <ul class="path-list">${suggestions || '<li class="muted">none</li>'}</ul>
+    <details style="margin-top:14px"><summary>Raw report</summary><pre>${esc(JSON.stringify(report, null, 2))}</pre></details>
+  </section>`;
 }
 
 function renderStatus(payload) {
@@ -877,6 +950,15 @@ class CockpitHandler(BaseHTTPRequestHandler):
             if parsed.path == "/api/validate":
                 package_arg = body.get("package") if isinstance(body.get("package"), str) else self.config.package_arg
                 payload = validation_action_payload(package_arg)
+                status = HTTPStatus.OK if payload.get("success") is True else HTTPStatus.BAD_REQUEST
+                self.send_json(payload, status)
+                return
+            if parsed.path == "/api/editorial-report":
+                package_arg = body.get("package") if isinstance(body.get("package"), str) else self.config.package_arg
+                if not package_arg:
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "package is required")
+                    return
+                payload = editorial_report_action_payload(package_arg)
                 status = HTTPStatus.OK if payload.get("success") is True else HTTPStatus.BAD_REQUEST
                 self.send_json(payload, status)
                 return
