@@ -1,0 +1,587 @@
+workflow_id: essay_iteration
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: editorial
+summary: Scaffold and validate a package-local essay-iteration packet, bounded candidate, review artifacts, and gated replacement decision.
+
+package_classes:
+  - leaf
+
+inputs:
+  package:
+    required: true
+    class: leaf
+    description: Leaf package path relative to publications/.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: live_draft_path
+      source: publications/{package}/status.yaml:config.markdown_path
+    - id: live_draft_dir
+      source: dirname(live_draft_path)
+    - id: live_draft_stem
+      source: stem(live_draft_path)
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+    - id: reviewable_runs
+      pattern: reviewable-runs/
+      required: false
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, lifecycle state, revision, live draft path, governing brief, and evidence configuration.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation and local structure before resolving packet inputs.
+    record_hash: true
+  - id: parent_umbrella_readme
+    path_from_status: parent_package
+    path_template: publications/{parent_package}/README.md
+    required: false
+    purpose: Preserve parent umbrella context when a leaf belongs to a larger package.
+    record_hash: true
+  - id: live_draft
+    path_from_status: config.markdown_path
+    required: true
+    purpose: Compare and protect the canonical live draft during bounded candidate work.
+    record_hash: true
+  - id: companion
+    path: publications/{package}/companion.md
+    required: false
+    purpose: Admit the companion only when the package uses one as an active support surface.
+    record_hash: true
+  - id: governing_brief
+    path_from_status: config.blueprint_path
+    fallback: nearest package or parent file matching *blueprint*.md or *plan*.md
+    required: true
+    purpose: Govern blueprint hardening, prewrite authorization, and bounded candidate scope.
+    record_hash: true
+  - id: review_artifacts
+    glob:
+      - publications/{package}/*review*.md
+      - publications/{package}/*scorecard*.md
+      - publications/{package}/*claims*.md
+      - publications/{package}/*rubric*.md
+    required: false
+    purpose: Reuse nearby review artifacts without treating them as lifecycle authority.
+    record_hash: true
+  - id: evidence_surface
+    path_from_status: config.evidence_path
+    fallback:
+      - publications/{package}/papers/index.md
+      - publications/{package}/papers/
+      - parent package papers/index.md or papers/
+    required: false
+    purpose: Support evidence-sensitive rewrites and claim discipline.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/essay-iteration/README.md
+    required: true
+    purpose: Load human-facing operator guidance for this workflow.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/essay-iteration/templates/
+    required: true
+    purpose: Seed the packet's blueprint, prewrite gate, candidate, review, scorecard, decision, and ceiling-report files.
+    record_hash: true
+  - id: workflow_voice_rules
+    path: workflows/essay-iteration/voice_rules.yaml
+    required: true
+    purpose: Validate machine-checkable voice-rule bans in candidate drafts.
+    record_hash: true
+  - id: publication_voice_guide
+    path: voice_consistency_guide.md
+    required: true
+    purpose: Govern publication-prose voice and cold replacement review context.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply repo-level autonomy, approval, path, and external-mutation policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve essay_prewrite and replacement_north_star gate definitions.
+    record_hash: true
+  - id: pipeline_profiles
+    path: pipeline_profiles.yaml
+    required: true
+    purpose: Resolve route-level sequencing and fallback gates that include essay_iteration.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: package_lifecycle_checker
+      command: ".venv/bin/python scripts/check_package_lifecycle.py --package {package}"
+      required: true
+    - id: packet_initializer
+      command: ".venv/bin/python scripts/init_essay_iteration_packet.py --package {package}"
+      required: true
+    - id: prewrite_packet_validator
+      command: "npm run check:essay-prewrite -- --package {package}"
+      required: true
+    - id: full_packet_validator
+      command: "npm run check:essay-iteration -- --package {package}"
+      required: true
+    - id: gate_checker
+      command: "npm run gate:check -- --gate {gate_id} --package {package}"
+      required: true
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/essay-iteration/
+    - voice_consistency_guide.md
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - pipeline_profiles.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: packet_manifest
+    path_template: "{live_draft_dir}/{live_draft_stem}-essay-iteration-packet-r{revision}.json"
+    required: true
+    format: json
+    producer: packet_initializer
+  - id: hardened_blueprint
+    path_template: "{live_draft_dir}/{live_draft_stem}-blueprint-r{revision}.md"
+    required: true
+    format: markdown
+    producer: packet_initializer
+  - id: prewrite_gate
+    path_template: "{live_draft_dir}/{live_draft_stem}-prewrite-gate-r{revision}.md"
+    required: true
+    format: markdown
+    producer: packet_initializer
+    gated_by: essay_prewrite
+  - id: candidate_draft
+    path_template: "{live_draft_dir}/{live_draft_stem}-candidate-r{revision}.md"
+    required: false
+    format: markdown
+    producer: packet_initializer
+    promotable: true
+    gated_by: essay_prewrite
+  - id: replacement_review
+    path_template: "{live_draft_dir}/{live_draft_stem}-replacement-review-r{revision}.md"
+    required: false
+    format: markdown
+    producer: packet_initializer
+    gated_by: replacement_north_star
+  - id: atlas_scorecard
+    path_template: "{live_draft_dir}/{live_draft_stem}-atlas-scorecard-r{revision}.md"
+    required: false
+    format: markdown
+    producer: packet_initializer
+    gated_by: replacement_north_star
+  - id: promotion_decision
+    path_template: "{live_draft_dir}/{live_draft_stem}-decision-r{revision}.md"
+    required: false
+    format: markdown
+    producer: packet_initializer
+    gated_by: replacement_north_star
+  - id: ceiling_report
+    path_template: "{live_draft_dir}/{live_draft_stem}-ceiling-report-r{revision}.md"
+    required: conditional
+    required_when: replacement_north_star stop gate fires
+    format: markdown
+    producer: packet_initializer
+    gated_by: replacement_north_star
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: package_is_leaf
+      check: status_field_equals
+      target: publications/{package}/status.yaml:kind
+      value: leaf
+      on_fail: stop
+    - id: live_draft_resolves
+      check: status_config_path_exists
+      target: config.markdown_path
+      on_fail: stop
+    - id: governing_brief_resolves
+      check: configured_or_nearest_blueprint_exists
+      target: config.blueprint_path
+      on_fail: stop
+    - id: workflow_policy_surfaces_exist
+      check: paths_exist
+      target:
+        - harness_policy.yaml
+        - gate_contracts.yaml
+        - pipeline_profiles.yaml
+      on_fail: stop
+  invariants:
+    - id: status_yaml_remains_package_route_authority
+      check: package_stage_from_status_yaml
+    - id: live_draft_not_overwritten_before_replacement_decision
+      check: live_draft_preserved_until_gate
+      gate: replacement_north_star
+    - id: candidate_differs_from_live_draft
+      check: candidate_path_must_differ_from_live_draft
+    - id: prewrite_authorizes_candidate_before_drafting
+      check: prewrite_gate_requires_candidate_authorized_true
+      gate: essay_prewrite
+    - id: draft_only_policy_blocks_auto_promotion
+      check: draft_only_packet_has_no_promotion
+    - id: no_external_mutation
+      check: external_mutations_equal_zero
+    - id: lifecycle_movement_requires_gate
+      check: lifecycle_movement_requires_gate_approval
+    - id: archive_after_explicit_promotion_decision
+      check: archive_requires_decision_artifact
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    max_candidate_drafts_per_revision: 1
+    max_packet_files_per_revision: 8
+    external_mutations: 0
+    unapproved_promotions: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_context: stop
+    on_precondition_failure: stop
+    on_validation_failure: stop_and_record
+    on_prewrite_reject: defer_to_blueprint_hardening_or_research
+    on_replacement_reject: defer_or_revise_from_promotion_decision
+    on_stop_gate_fired: require_ceiling_report_before_handoff
+    on_gate_reject: defer
+    resume_from: resolved_run
+    rollback_strategy: preserve_live_draft_and_packet_outputs
+
+enforcement:
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+  context_checks:
+    - package_status_resolves
+    - package_readme_exists
+    - live_draft_resolves
+    - governing_brief_resolves
+    - workflow_templates_resolve
+    - voice_rules_resolve
+  hooks:
+    - id: package_lifecycle_guardrail
+      command: ".venv/bin/python scripts/check_package_lifecycle.py --package {package} --format json"
+      run_at:
+        - preflight
+        - handoff
+      required: true
+    - id: prewrite_packet_check
+      command: "npm run check:essay-prewrite -- --package {package}"
+      run_at:
+        - before_candidate
+      required: true
+    - id: full_packet_check
+      command: "npm run check:essay-iteration -- --package {package}"
+      run_at:
+        - before_replacement_decision
+        - handoff
+      required: true
+    - id: essay_prewrite_gate_check
+      command: "npm run gate:check -- --gate essay_prewrite --package {package}"
+      run_at:
+        - before_candidate
+      required: true
+    - id: replacement_north_star_gate_check
+      command: "npm run gate:check -- --gate replacement_north_star --package {package}"
+      run_at:
+        - before_promotion_or_handoff
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+    - id: readme_launch_templates_covered_by_tools
+      required: true
+    - id: readme_validator_commands_covered_by_hooks
+      required: true
+    - id: packet_manifest_matches_workflow_identity
+      required: true
+
+gates:
+  - id: essay_prewrite
+    type: content_quality
+    contract: essay_prewrite
+    required: true
+    stop_before: write_bounded_candidate
+    validator: "npm run check:essay-prewrite -- --package {package}"
+    artifacts:
+      - packet_manifest
+      - hardened_blueprint
+      - prewrite_gate
+    decisions:
+      - approve
+      - reject
+      - defer
+  - id: replacement_north_star
+    type: content_quality
+    contract: replacement_north_star
+    required: true
+    stop_before: promotion_or_lifecycle_movement
+    validator: "npm run check:essay-iteration -- --package {package}"
+    artifacts:
+      - packet_manifest
+      - candidate_draft
+      - replacement_review
+      - atlas_scorecard
+      - promotion_decision
+      - ceiling_report when stop gate fires
+    decisions:
+      - approve
+      - reject
+      - defer
+  - id: release_readiness_boundary
+    type: external_mutation
+    contract: release_readiness
+    required: conditional
+    required_when: an operator requests publication or another external mutation from inside essay_iteration
+    default_action: deny_and_route_to_release_gate
+    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - tool_commands
+    - allowed_path_decisions
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+    - parent_artifact_ids
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_package_state
+    title: Resolve package state
+    mode: scriptable
+    executor:
+      command: ".venv/bin/python scripts/check_package_lifecycle.py --package {package} --format json"
+    consumes:
+      - package_status
+      - package_readme
+      - harness_policy
+      - gate_contracts
+      - pipeline_profiles
+    produces:
+      - lifecycle_guardrail_report
+    validation:
+      hooks:
+        - package_lifecycle_guardrail
+    trace:
+      required: true
+
+  - id: seed_iteration_packet
+    title: Seed iteration packet
+    mode: scriptable
+    executor:
+      command: ".venv/bin/python scripts/init_essay_iteration_packet.py --package {package}"
+    consumes:
+      - package_status
+      - live_draft
+      - package_readme
+      - parent_umbrella_readme
+      - companion
+      - governing_brief
+      - review_artifacts
+      - evidence_surface
+      - workflow_templates
+      - workflow_voice_rules
+    produces:
+      - packet_manifest
+      - hardened_blueprint
+      - prewrite_gate
+      - candidate_draft
+      - replacement_review
+      - atlas_scorecard
+      - promotion_decision
+      - ceiling_report
+    validation:
+      hooks:
+        - package_lifecycle_guardrail
+    trace:
+      required: true
+
+  - id: harden_blueprint
+    title: Harden governing blueprint
+    mode: codex_session
+    action: Fill or revise the packet blueprint so it can govern a bounded rewrite.
+    consumes:
+      - packet_manifest
+      - governing_brief
+      - evidence_surface
+      - review_artifacts
+      - publication_voice_guide
+    produces:
+      - hardened_blueprint
+    validation:
+      hooks:
+        - prewrite_packet_check
+    trace:
+      required: true
+
+  - id: settle_prewrite_gate
+    title: Settle prewrite gate
+    mode: review_gated
+    action: Fill the prewrite gate with an explicit writability verdict before candidate drafting.
+    consumes:
+      - packet_manifest
+      - hardened_blueprint
+      - governing_brief
+      - evidence_surface
+      - publication_voice_guide
+    produces:
+      - prewrite_gate
+    validation:
+      hooks:
+        - prewrite_packet_check
+        - essay_prewrite_gate_check
+    gate:
+      id: essay_prewrite
+    trace:
+      required: true
+
+  - id: write_bounded_candidate
+    title: Write bounded candidate
+    mode: codex_session
+    action: Write one bounded candidate beside the live draft only after the prewrite gate authorizes drafting.
+    consumes:
+      - packet_manifest
+      - prewrite_gate
+      - live_draft
+      - governing_brief
+      - evidence_surface
+      - publication_voice_guide
+    produces:
+      - candidate_draft
+    validation:
+      hooks:
+        - full_packet_check
+    gate:
+      id: essay_prewrite
+    trace:
+      required: true
+
+  - id: run_cold_replacement_review
+    title: Run cold replacement review
+    mode: codex_session
+    action: Compare the candidate against the live draft and north-star bar, then fill review, scorecard, decision, and any required ceiling report.
+    consumes:
+      - packet_manifest
+      - live_draft
+      - candidate_draft
+      - publication_voice_guide
+      - governing_brief
+    produces:
+      - replacement_review
+      - atlas_scorecard
+      - promotion_decision
+      - ceiling_report
+    validation:
+      hooks:
+        - full_packet_check
+    trace:
+      required: true
+
+  - id: stop_at_replacement_decision
+    title: Stop at replacement decision
+    mode: review_gated
+    action: Stop for replacement, revision, ceiling, or handoff approval; do not promote or move lifecycle state automatically under draft_only policy.
+    consumes:
+      - packet_manifest
+      - candidate_draft
+      - replacement_review
+      - atlas_scorecard
+      - promotion_decision
+      - ceiling_report
+    produces:
+      - replacement_north_star_gate
+      - run_record
+    validation:
+      hooks:
+        - full_packet_check
+        - replacement_north_star_gate_check
+    gate:
+      id: replacement_north_star
+    trace:
+      required: true
+
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - packet_manifest
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - package_lifecycle_guardrail
+    trace:
+      required: true

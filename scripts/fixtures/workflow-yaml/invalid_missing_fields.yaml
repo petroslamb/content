@@ -1,0 +1,6 @@
+workflow_id: invalid_fixture
+version: 0
+stability: draft
+workflow_kind: stage
+workflow_group: fixture
+summary: Invalid fixture used to verify workflow.yaml validation failures.

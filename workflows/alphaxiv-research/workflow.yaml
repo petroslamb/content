@@ -1,0 +1,463 @@
+workflow_id: research
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: evidence
+summary: Use alphaXiv for deterministic paper discovery, shortlist refinement, narrow claim validation, assistant-backed pressure testing, and research-exit handoff.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  research_question:
+    required: true
+    description: Current research question, thesis direction, claim gap, or shortlist refinement target.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: package_name
+      source: basename(package)
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: query
+      source: cli.research_question or selected search phrase
+    - id: paper_id
+      source: selected alphaXiv paper id
+    - id: session_id
+      source: selected alphaXiv assistant session id
+    - id: session_slug
+      source: short local slug for assistant extraction note
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+    - id: research_notes_dir
+      pattern: publications/{package}/research-notes/
+      required: false
+    - id: discussion_notes_dir
+      pattern: publications/{package}/research-notes/alphaxiv-discussions/
+      required: false
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, revision, lifecycle state, governing brief, and evidence configuration.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation, active claims, and local research conventions.
+    record_hash: true
+  - id: research_question
+    source: cli.research_question
+    required: true
+    purpose: Bound discovery or validation so alphaXiv retrieval is not loose browsing.
+    record_hash: false
+  - id: package_evidence_surface
+    path_from_status: config.evidence_path
+    fallback:
+      - publications/{package}/papers/index.md
+      - publications/{package}/source-index.md
+      - publications/{package}/sources/index.md
+      - publications/{package}/papers/
+      - publications/{package}/sources/
+    required: false
+    purpose: Ground shortlist refinement and validation against the current local source library.
+    record_hash: true
+  - id: governing_brief
+    path_from_status: config.blueprint_path
+    fallback: nearest package or parent file matching *blueprint*.md or *plan*.md
+    required: false
+    purpose: Provide the active claim frame when alphaXiv is used for validation rather than broad discovery.
+    record_hash: true
+  - id: existing_discussion_index
+    path: publications/{package}/research-notes/alphaxiv-discussions/index.md
+    required: false
+    purpose: Preserve package-local assistant discussion tracking when sessions materially shape the work.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/alphaxiv-research/README.md
+    required: true
+    purpose: Load human-facing alphaXiv research workflow guidance.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/alphaxiv-research/templates/
+    required: true
+    purpose: Provide research-exit and assistant-discussion extraction templates.
+    record_hash: true
+  - id: alphaxiv_skill
+    path: workflows/skills/alphaxiv/SKILL.md
+    required: true
+    purpose: Bind alphaXiv CLI command guidance without making the skill the runtime authority.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local-first policy, auth-heavy fail-closed behavior, and write boundaries.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve the research_exit gate contract.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: alphaxiv_search
+      command: ".venv/bin/alphaxiv search papers \"{query}\""
+      required: true
+    - id: alphaxiv_feed
+      command: ".venv/bin/alphaxiv feed list {feed_args}"
+      required: false
+    - id: alphaxiv_paper_show
+      command: ".venv/bin/alphaxiv paper show {paper_id}"
+      required: true
+    - id: alphaxiv_paper_summary
+      command: ".venv/bin/alphaxiv paper summary {paper_id}"
+      required: true
+    - id: alphaxiv_paper_overview
+      command: ".venv/bin/alphaxiv paper overview {paper_id}"
+      required: false
+    - id: alphaxiv_assistant_start
+      command: ".venv/bin/alphaxiv assistant start \"{assistant_prompt}\""
+      required: false
+    - id: alphaxiv_assistant_history
+      command: ".venv/bin/alphaxiv assistant history {session_id}"
+      required: false
+    - id: research_exit_validator
+      command: ".venv/bin/python scripts/check_research_exit_gate.py --package {package}"
+      required: true
+    - id: alphaxiv_discussion_validator
+      command: ".venv/bin/python scripts/check_alphaxiv_discussions.py --package {package}"
+      required: true
+  skills:
+    - alphaxiv
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/alphaxiv-research/
+    - workflows/skills/alphaxiv/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: research_shortlist
+    path_template: "publications/{package}/research-notes/alphaxiv-shortlist-r{revision}.md"
+    required: conditional
+    required_when: discovery or shortlist refinement materially changes the paper queue
+    format: markdown
+    producer: deterministic_retrieval
+  - id: assistant_discussion_index
+    path_template: "publications/{package}/research-notes/alphaxiv-discussions/index.md"
+    required: conditional
+    required_when: assistant sessions materially shape package claims, vocabulary, paper queue, or workflow decisions
+    format: markdown
+    producer: track_assistant_discussion
+  - id: assistant_discussion_extraction
+    path_template: "publications/{package}/research-notes/alphaxiv-discussions/{session_slug}.md"
+    required: conditional
+    required_when: an assistant session is tracked
+    format: markdown
+    producer: track_assistant_discussion
+  - id: paper_intake_queue
+    path_template: "publications/{package}/research-notes/paper-intake-queue-r{revision}.md"
+    required: conditional
+    required_when: selected papers are ready to move into paper_intake
+    format: markdown
+    producer: refine_shortlist
+  - id: research_exit_gate
+    path_template: "publications/{package}/{package_name}-research-exit-gate-r{revision}.md"
+    required: true
+    format: markdown
+    producer: settle_research_exit_gate
+    gated_by: research_exit
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: package_readme_exists
+      check: path_exists
+      target: publications/{package}/README.md
+      on_fail: stop
+    - id: research_question_is_bounded
+      check: research_question_nonempty
+      target: research_question
+      on_fail: stop
+    - id: alphaxiv_cli_available
+      check: executable_exists
+      target: .venv/bin/alphaxiv
+      on_fail: stop
+  invariants:
+    - id: retrieval_before_assistant
+      check: assistant_requires_prior_retrieval
+    - id: assistant_is_discussion_not_evidence
+      check: assistant_takeaways_require_source_backing
+    - id: material_assistant_sessions_are_tracked
+      check: assistant_session_refs_require_package_index
+    - id: selected_papers_route_to_paper_intake
+      check: intake_candidates_not_left_in_alphaxiv_only_context
+    - id: research_exit_requires_governing_surface
+      check: research_exit_gate_names_governing_brief
+    - id: no_publication_or_lifecycle_movement_without_gate
+      check: lifecycle_movement_requires_gate_approval
+  budgets:
+    max_steps: 7
+    max_script_retries: 1
+    max_search_queries: 12
+    max_candidate_papers: 20
+    max_assistant_sessions: 2
+    external_mutations: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_context: stop
+    on_alphaxiv_auth_failure: stop_and_request_user_auth_command
+    on_assistant_failure: continue_with_retrieval_only_or_defer
+    on_validation_failure: stop_and_record
+    on_research_exit_not_ready: defer_to_research
+    resume_from: resolved_run
+    rollback_strategy: preserve_local_notes_and_remote_session_ids
+
+enforcement:
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - deterministic_retrieval_precedes_assistant
+    - selected_papers_have_handoff_to_paper_intake
+  context_checks:
+    - package_status_resolves
+    - package_readme_exists
+    - research_question_recorded
+    - evidence_surface_resolves_when_claim_validation_mode
+    - alphaxiv_cli_available
+  hooks:
+    - id: research_exit_gate_check
+      command: ".venv/bin/python scripts/check_research_exit_gate.py --package {package}"
+      run_at:
+        - before_essay_iteration_handoff
+        - handoff
+      required: true
+    - id: alphaxiv_discussion_tracking_check
+      command: ".venv/bin/python scripts/check_alphaxiv_discussions.py --package {package}"
+      run_at:
+        - after_assistant_tracking
+        - handoff
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+    - id: readme_default_skill_matches_yaml_skill
+      required: true
+    - id: readme_validator_commands_covered_by_hooks
+      required: true
+    - id: readme_packet_templates_exist
+      required: true
+
+gates:
+  - id: research_exit
+    type: lifecycle_movement
+    contract: research_exit
+    required: true
+    stop_before: essay_iteration_handoff
+    validator: ".venv/bin/python scripts/check_research_exit_gate.py --package {package}"
+    artifacts:
+      - research_exit_gate
+      - research_shortlist when discovery changed the paper queue
+      - assistant_discussion_index when assistant sessions materially shaped the work
+      - paper_intake_queue when selected papers need intake
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - research_question
+    - alphaxiv_commands
+    - paper_ids
+    - assistant_session_ids
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_research_target
+    title: Resolve research target
+    mode: codex_session
+    action: Classify the run as broad discovery, shortlist refinement, gap-closing evidence pass, or framing challenge.
+    consumes:
+      - package_status
+      - package_readme
+      - research_question
+      - package_evidence_surface
+      - governing_brief
+      - workflow_readme
+      - alphaxiv_skill
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: deterministic_retrieval
+    title: Deterministic retrieval
+    mode: codex_session
+    action: Use alphaXiv search, feed, and paper inspection commands before any assistant synthesis.
+    consumes:
+      - research_question
+      - package_evidence_surface
+    produces:
+      - research_shortlist
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: refine_shortlist
+    title: Refine shortlist
+    mode: codex_session
+    action: Compare serious candidates, identify selected papers for intake, and keep broad synthesis out until the anchor set is stable.
+    consumes:
+      - research_question
+      - research_shortlist
+      - package_evidence_surface
+    produces:
+      - research_shortlist
+      - paper_intake_queue
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: assistant_pressure_test
+    title: Assistant pressure test
+    mode: external_mutation_gated
+    action: Use alphaXiv assistant only after retrieval to compare anchors, test claim boundaries, or challenge a frame; stop on auth failure.
+    consumes:
+      - research_shortlist
+      - package_evidence_surface
+      - governing_brief
+    produces:
+      - assistant_discussion_extraction
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: track_assistant_discussion
+    title: Track assistant discussion
+    mode: codex_session
+    action: Create or update the package-local assistant discussion index and compact extraction note when the session materially shapes the package.
+    consumes:
+      - assistant_discussion_extraction
+      - existing_discussion_index
+      - workflow_templates
+    produces:
+      - assistant_discussion_index
+      - assistant_discussion_extraction
+    validation:
+      hooks:
+        - alphaxiv_discussion_tracking_check
+    trace:
+      required: true
+
+  - id: settle_research_exit_gate
+    title: Settle research exit gate
+    mode: review_gated
+    action: Fill the package-local research-exit gate with an explicit ready/not-ready verdict and any follow-on research triggers.
+    consumes:
+      - package_status
+      - package_readme
+      - package_evidence_surface
+      - governing_brief
+      - research_shortlist
+      - paper_intake_queue
+      - assistant_discussion_index
+    produces:
+      - research_exit_gate
+    validation:
+      hooks:
+        - research_exit_gate_check
+        - alphaxiv_discussion_tracking_check
+    gate:
+      id: research_exit
+    trace:
+      required: true
+
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - research_exit_gate
+      - research_shortlist
+      - paper_intake_queue
+      - assistant_discussion_index
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - research_exit_gate_check
+    trace:
+      required: true

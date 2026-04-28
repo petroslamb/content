@@ -22,7 +22,7 @@
   "uploaded_count": 1,
   "items": [
     {
-      "video_path": "/Users/petros/Projects/content/publications/binding-gap/artifacts/video/explainer-wave-2026-04-30/portrait/01-hallucination-is-like-calling-every-illness-a-fever_portrait.mp4",
+      "video_path": "publications/binding-gap/artifacts/video/explainer-wave-2026-04-30/portrait/01-hallucination-is-like-calling-every-illness-a-fever_portrait.mp4",
       "title": "Hallucination Is Like Calling Every Illness a Fever #shorts",
       "summary": "Calling every AI failure a hallucination hides the mechanism. Some systems keep the facts but still lose the wiring that attaches them correctly.",
       "publish_at": "2026-05-01T19:00:00Z",
@@ -39,7 +39,7 @@
         ]
       },
       "probe": {
-        "path": "/Users/petros/Projects/content/publications/binding-gap/artifacts/video/explainer-wave-2026-04-30/portrait/01-hallucination-is-like-calling-every-illness-a-fever_portrait.mp4",
+        "path": "publications/binding-gap/artifacts/video/explainer-wave-2026-04-30/portrait/01-hallucination-is-like-calling-every-illness-a-fever_portrait.mp4",
         "ok": true,
         "errors": [],
         "warnings": [],

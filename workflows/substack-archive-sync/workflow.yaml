@@ -1,0 +1,407 @@
+workflow_id: archive_sync
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: release
+summary: Refresh the tracked public Substack archive, update archive metadata and the README publication map, validate the Eleventy mirror, and use manual import only when sync is blocked.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: false
+    description: Optional package that triggered the archive refresh; the archive sync itself is repo-wide.
+  recently_published_post:
+    required: false
+    description: Optional slug, URL, or post id that should be present after refresh.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: run_id
+      source: content-agent run id
+    - id: post_slug
+      source: recently published or manually imported Substack slug
+    - id: post_file
+      source: YYYY-MM-DD_<post_slug>
+    - id: substack_post_id
+      source: manual import post id
+    - id: markdown_path
+      source: manual import markdown source path
+  paths:
+    - id: archive_root
+      pattern: publication_strategy_and_archive/
+      required: true
+    - id: archive_posts
+      pattern: publication_strategy_and_archive/substack_archive/
+      required: true
+    - id: archive_metadata
+      pattern: publication_strategy_and_archive/substack_archive/metadata.json
+      required: true
+    - id: mirror_root
+      pattern: publication_strategy_and_archive/mirror/
+      required: true
+
+context_dependencies:
+  - id: repo_root_environment
+    path: package.json
+    required: true
+    purpose: Confirm the npm script surface for sync, mirror build, and mirror checks.
+    record_hash: true
+  - id: archive_orientation
+    path: publication_strategy_and_archive/README.md
+    required: true
+    purpose: Load the tracked archive and mirror system orientation.
+    record_hash: true
+  - id: post_map
+    path: publication_strategy_and_archive/post_map.yaml
+    required: true
+    purpose: Map Substack posts back to repository packages and regenerate the README publication table.
+    record_hash: true
+  - id: archive_metadata
+    path: publication_strategy_and_archive/substack_archive/metadata.json
+    required: true
+    purpose: Compare and update the tracked public archive manifest.
+    record_hash: true
+  - id: recently_published_post
+    source: cli.recently_published_post
+    required: false
+    purpose: Verify a just-published or recently changed post appears in the archive after sync.
+    record_hash: false
+  - id: workflow_readme
+    path: workflows/substack-archive-sync/README.md
+    required: true
+    purpose: Load human-facing archive sync guidance and fallback rules.
+    record_hash: true
+  - id: archive_sync_skill
+    path: workflows/skills/substack-archive-sync/SKILL.md
+    required: true
+    purpose: Bind archive-sync execution guidance without making the skill the runtime authority.
+    record_hash: true
+  - id: scripts_readme
+    path: scripts/README.md
+    required: true
+    purpose: Resolve tracked script responsibilities for archive refresh and mirror validation.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply repo-level local write policy for archive and README mutations.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: archive_refresh_npm
+      command: "npm run sync:substack"
+      required: true
+    - id: archive_refresh_python
+      command: ".venv/bin/python scripts/sync_substack_archive.py"
+      required: true
+    - id: archive_refresh_with_summary
+      command: ".venv/bin/python scripts/sync_substack_archive.py --summary-path reviewable-runs/logs/{run_id}-substack-sync-summary.json"
+      required: false
+    - id: mirror_build
+      command: "npm run build:mirror"
+      required: true
+    - id: mirror_check
+      command: "npm run check:mirror"
+      required: true
+    - id: prefixed_mirror_check
+      command: "ELEVENTY_PATH_PREFIX=/content/ MIRROR_SITE_URL=https://petroslamb.github.io npm run check:mirror"
+      required: false
+    - id: manual_import
+      command: ".venv/bin/python scripts/import_substack_draft_to_archive.py --post-id {substack_post_id} --markdown {markdown_path}"
+      required: false
+  skills:
+    - substack-archive-sync
+
+allowed_paths:
+  read:
+    - publication_strategy_and_archive/
+    - workflows/substack-archive-sync/
+    - workflows/skills/substack-archive-sync/
+    - scripts/
+    - package.json
+    - README.md
+    - harness_policy.yaml
+    - reviewable-runs/
+  write:
+    - publication_strategy_and_archive/
+    - README.md
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: archive_markdown
+    path_template: "publication_strategy_and_archive/substack_archive/{post_file}.md"
+    required: conditional
+    required_when: a public post is added or changed
+    format: markdown
+    collection: true
+    producer: refresh_archive
+  - id: archive_html
+    path_template: "publication_strategy_and_archive/substack_archive/{post_file}.html"
+    required: conditional
+    required_when: a public post is added or changed
+    format: html
+    collection: true
+    producer: refresh_archive
+  - id: archive_assets
+    path_template: "publication_strategy_and_archive/substack_archive/assets/{asset_filename}"
+    required: conditional
+    required_when: archived posts reference localized assets
+    format: asset
+    collection: true
+    producer: refresh_archive
+  - id: archive_metadata
+    path_template: "publication_strategy_and_archive/substack_archive/metadata.json"
+    required: true
+    format: json
+    producer: refresh_archive
+  - id: readme_publication_map
+    path_template: "README.md"
+    required: true
+    format: markdown
+    producer: refresh_archive
+  - id: mirror_site
+    path_template: "publication_strategy_and_archive/mirror/_site/"
+    required: true
+    format: directory
+    producer: validate_mirror
+  - id: sync_summary
+    path_template: "reviewable-runs/logs/{run_id}-substack-sync-summary.json"
+    required: conditional
+    required_when: content-agent requests a machine-readable archive sync summary
+    format: json
+    producer: refresh_archive_with_summary
+
+behavior:
+  preconditions:
+    - id: archive_scripts_exist
+      check: paths_exist
+      target:
+        - scripts/sync_substack_archive.py
+        - scripts/check_mirror.py
+        - scripts/e2e_mirror_smoke.py
+      on_fail: stop
+    - id: archive_metadata_exists
+      check: path_exists
+      target: publication_strategy_and_archive/substack_archive/metadata.json
+      on_fail: stop
+    - id: post_map_exists
+      check: path_exists
+      target: publication_strategy_and_archive/post_map.yaml
+      on_fail: stop
+  invariants:
+    - id: archive_files_follow_slug_pattern
+      check: archive_files_use_date_slug_pattern
+    - id: metadata_matches_archive_files
+      check: metadata_paths_resolve
+    - id: readme_map_matches_post_map
+      check: generated_readme_map_matches_post_map
+    - id: mirror_validation_after_mutation
+      check: mirror_check_required_after_archive_write
+    - id: manual_import_only_on_sync_block
+      check: manual_import_requires_sync_blocker
+    - id: no_external_mutation
+      check: external_mutations_equal_zero
+  budgets:
+    max_steps: 6
+    max_script_retries: 1
+    max_manual_imports_per_run: 3
+    external_mutations: 0
+  recovery:
+    on_feed_403: use_manual_import_fallback
+    on_sync_failure: stop_and_record
+    on_mirror_failure: stop_and_record
+    on_manual_import_failure: stop
+    resume_from: resolved_run
+    rollback_strategy: preserve_archive_diff_for_review
+
+enforcement:
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - archive_metadata_paths_resolve
+    - readme_publication_map_current
+    - mirror_validation_passed
+  context_checks:
+    - archive_scripts_exist
+    - post_map_exists
+    - archive_metadata_exists
+    - npm_scripts_available
+  hooks:
+    - id: mirror_check
+      command: "npm run check:mirror"
+      run_at:
+        - after_archive_refresh
+        - after_manual_import
+        - handoff
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+    - id: readme_default_skill_matches_yaml_skill
+      required: true
+    - id: readme_launch_templates_covered_by_tools
+      required: true
+
+gates: []
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - context_paths
+    - context_hashes
+    - sync_command
+    - updated_slugs
+    - unchanged_slugs
+    - removed_files
+    - removed_assets
+    - missing_post_map
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_archive_context
+    title: Resolve archive context
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - repo_root_environment
+      - archive_orientation
+      - post_map
+      - archive_metadata
+      - recently_published_post
+      - workflow_readme
+      - archive_sync_skill
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: refresh_archive
+    title: Refresh archive
+    mode: scriptable
+    executor:
+      command: "npm run sync:substack"
+    consumes:
+      - repo_root_environment
+      - post_map
+      - archive_metadata
+    produces:
+      - archive_markdown
+      - archive_html
+      - archive_assets
+      - archive_metadata
+      - readme_publication_map
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: validate_mirror
+    title: Validate mirror
+    mode: scriptable
+    executor:
+      command: "npm run check:mirror"
+    consumes:
+      - archive_metadata
+      - readme_publication_map
+    produces:
+      - mirror_site
+    validation:
+      hooks:
+        - mirror_check
+    trace:
+      required: true
+
+  - id: manual_import_fallback
+    title: Manual import fallback
+    mode: scriptable
+    executor:
+      command: ".venv/bin/python scripts/import_substack_draft_to_archive.py --post-id {substack_post_id} --markdown {markdown_path}"
+    consumes:
+      - archive_orientation
+      - post_map
+      - recently_published_post
+    produces:
+      - archive_markdown
+      - archive_html
+      - archive_assets
+      - archive_metadata
+      - readme_publication_map
+    validation:
+      hooks:
+        - mirror_check
+    trace:
+      required: true
+
+  - id: validate_prefixed_mirror
+    title: Validate prefixed mirror
+    mode: scriptable
+    executor:
+      command: "ELEVENTY_PATH_PREFIX=/content/ MIRROR_SITE_URL=https://petroslamb.github.io npm run check:mirror"
+    consumes:
+      - archive_metadata
+      - mirror_site
+    produces:
+      - mirror_site
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - archive_metadata
+      - readme_publication_map
+      - mirror_site
+      - sync_summary
+      - validation_results
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - mirror_check
+    trace:
+      required: true
