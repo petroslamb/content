@@ -7,6 +7,8 @@ import argparse
 import html
 import json
 import mimetypes
+import shlex
+import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -40,6 +42,8 @@ TEXT_SUFFIXES = {
     ".yaml",
     ".yml",
 }
+VALID_GATE_DECISIONS = {"approve", "reject", "defer"}
+MAX_ACTION_BODY_BYTES = 64_000
 
 
 @dataclass(frozen=True)
@@ -110,6 +114,73 @@ def cockpit_gate_payload(identifier: str) -> dict[str, object]:
         ],
         "review_gate": content_agent.build_review_inspect_report(identifier),
     }
+
+
+def parse_json_bytes(raw: bytes) -> object:
+    if not raw.strip():
+        return None
+    return json.loads(raw.decode("utf-8"))
+
+
+def run_content_agent(args: list[str]) -> dict[str, object]:
+    command = [str(content_agent.REPO_ROOT / "content-agent"), *args]
+    proc = subprocess.run(
+        command,
+        cwd=content_agent.REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    stdout_payload: object | None
+    try:
+        stdout_payload = json.loads(proc.stdout) if proc.stdout.strip() else None
+    except json.JSONDecodeError:
+        stdout_payload = proc.stdout
+    payload: dict[str, object] = {
+        "kind": "content_cockpit_content_agent_command",
+        "schema_version": 1,
+        "generated_at": utc_now(),
+        "command": shlex.join(command),
+        "returncode": proc.returncode,
+        "success": proc.returncode == 0,
+        "stdout": stdout_payload,
+    }
+    if proc.stderr.strip():
+        payload["stderr"] = proc.stderr
+    return payload
+
+
+def validation_action_payload(package_arg: str | None) -> dict[str, object]:
+    args = ["validate"]
+    if package_arg:
+        args.extend(["--package", package_arg])
+    args.extend(["--format", "json"])
+    return run_content_agent(args)
+
+
+def gate_decision_action_payload(
+    gate_identifier: str,
+    outcome: str,
+    *,
+    reason: str,
+    decided_by: str,
+) -> dict[str, object]:
+    if outcome not in VALID_GATE_DECISIONS:
+        raise ValueError("decision must be approve, reject, or defer")
+    if not reason.strip():
+        raise ValueError("decision reason is required")
+    args = [
+        "review",
+        outcome,
+        "--gate",
+        gate_identifier,
+        "--reason",
+        reason.strip(),
+        "--decided-by",
+        decided_by.strip() or "content-cockpit",
+        "--format",
+        "json",
+    ]
+    return run_content_agent(args)
 
 
 def repo_artifact_path(value: str) -> Path:
@@ -337,6 +408,7 @@ def index_page(config: CockpitConfig) -> bytes:
   </div>
 </header>
 <main>
+  <div id="action-output" class="stack"></div>
   <div id="status" class="stack"></div>
 </main>
 <script>
@@ -350,6 +422,12 @@ document.getElementById("refresh-button").addEventListener("click", loadStatus);
 packageInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") loadStatus();
 });
+const validateButton = document.createElement("button");
+validateButton.id = "validate-button";
+validateButton.type = "button";
+validateButton.textContent = "Rerun Validation";
+validateButton.addEventListener("click", rerunValidation);
+document.querySelector(".toolbar").appendChild(validateButton);
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -399,6 +477,20 @@ async function loadStatus() {
     return;
   }
   renderStatus(payload);
+}
+
+async function rerunValidation() {
+  const packageValue = packageInput.value.trim();
+  const output = document.getElementById("action-output");
+  output.innerHTML = '<section>Running validation...</section>';
+  const response = await fetch("/api/validate", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({package: packageValue || null})
+  });
+  const payload = await response.json();
+  output.innerHTML = `<section><h2>Validation Rerun</h2><pre>${esc(JSON.stringify(payload, null, 2))}</pre></section>`;
+  await loadStatus();
 }
 
 function renderStatus(payload) {
@@ -539,6 +631,7 @@ def gate_page(config: CockpitConfig, gate_identifier: str) -> bytes:
   </div>
 </header>
 <main>
+  <div id="decision-output" class="stack"></div>
   <div id="gate" class="stack">Loading...</div>
 </main>
 <script>
@@ -564,6 +657,29 @@ function artifact(path, label) {{
   if (!path) return '<span class="muted">none</span>';
   return `<a href="/artifact?path=${{encodeURIComponent(path)}}" target="_blank">${{esc(label || path)}}</a>`;
 }}
+async function submitDecision(outcome) {{
+  const reasonInput = document.getElementById("decision-reason");
+  const output = document.getElementById("decision-output");
+  const reason = reasonInput ? reasonInput.value.trim() : "";
+  if (!reason) {{
+    output.innerHTML = '<section><div class="error">Decision reason is required.</div></section>';
+    return;
+  }}
+  output.innerHTML = '<section>Recording decision...</section>';
+  const response = await fetch("/api/gate/decision", {{
+    method: "POST",
+    headers: {{"Content-Type": "application/json"}},
+    body: JSON.stringify({{
+      gate: gateIdentifier,
+      outcome,
+      reason,
+      decided_by: "content-cockpit"
+    }})
+  }});
+  const payload = await response.json();
+  output.innerHTML = `<section><h2>Decision Result</h2><pre>${{esc(JSON.stringify(payload, null, 2))}}</pre></section>`;
+  await loadGate();
+}}
 async function loadGate() {{
   const response = await fetch(`/api/gate?gate=${{encodeURIComponent(gateIdentifier)}}`);
   const payload = await response.json();
@@ -575,8 +691,21 @@ async function loadGate() {{
   const gate = report.gate || {{}};
   const artifactData = report.artifact || {{}};
   const evidence = artifactData.evidence || {{}};
+  const showDecisionControls = gate.status === "pending";
   const previewPaths = (evidence.preview_paths || []).map((path) => `<li>${{artifact(path)}}</li>`).join("");
   const evidencePaths = (evidence.evidence_paths || []).map((path) => `<li>${{artifact(path)}}</li>`).join("");
+  const decisionControls = showDecisionControls ? `
+      <section class="span-12">
+        <h2>Gate Decision</h2>
+        <label>Reason
+          <input id="decision-reason" placeholder="required decision reason">
+        </label>
+        <div class="toolbar" style="margin-top:10px">
+          <button type="button" onclick="submitDecision('approve')">Approve</button>
+          <button type="button" onclick="submitDecision('reject')">Reject</button>
+          <button type="button" onclick="submitDecision('defer')">Defer</button>
+        </div>
+      </section>` : "";
   document.getElementById("gate").innerHTML = `
     <div class="grid">
       <section class="span-4">
@@ -604,6 +733,7 @@ async function loadGate() {{
         <h2>Exact Gate Artifact</h2>
         <pre>${{esc(JSON.stringify(artifactData, null, 2))}}</pre>
       </section>
+      ${{decisionControls}}
     </div>`;
 }}
 loadGate();
@@ -661,6 +791,59 @@ class CockpitHandler(BaseHTTPRequestHandler):
             self.send_json_error(HTTPStatus.NOT_FOUND, "not found")
         except Exception as exc:  # pragma: no cover - server response path
             self.send_json_error(HTTPStatus.INTERNAL_SERVER_ERROR, str(exc))
+
+    def do_POST(self) -> None:
+        parsed = urlparse(self.path)
+        try:
+            body = self.read_json_body()
+            if parsed.path == "/api/validate":
+                package_arg = body.get("package") if isinstance(body.get("package"), str) else self.config.package_arg
+                payload = validation_action_payload(package_arg)
+                status = HTTPStatus.OK if payload.get("success") is True else HTTPStatus.BAD_REQUEST
+                self.send_json(payload, status)
+                return
+            if parsed.path == "/api/gate/decision":
+                gate = body.get("gate")
+                outcome = body.get("outcome")
+                reason = body.get("reason")
+                decided_by = body.get("decided_by", "content-cockpit")
+                if not isinstance(gate, str) or not gate.strip():
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "gate is required")
+                    return
+                if not isinstance(outcome, str):
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "outcome is required")
+                    return
+                if not isinstance(reason, str):
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "reason is required")
+                    return
+                if not isinstance(decided_by, str):
+                    decided_by = "content-cockpit"
+                payload = gate_decision_action_payload(
+                    gate,
+                    outcome,
+                    reason=reason,
+                    decided_by=decided_by,
+                )
+                status = HTTPStatus.OK if payload.get("success") is True else HTTPStatus.BAD_REQUEST
+                self.send_json(payload, status)
+                return
+            self.send_json_error(HTTPStatus.NOT_FOUND, "not found")
+        except ValueError as exc:
+            self.send_json_error(HTTPStatus.BAD_REQUEST, str(exc))
+        except Exception as exc:  # pragma: no cover - server response path
+            self.send_json_error(HTTPStatus.INTERNAL_SERVER_ERROR, str(exc))
+
+    def read_json_body(self) -> dict[str, object]:
+        length = int(self.headers.get("Content-Length", "0"))
+        if length > MAX_ACTION_BODY_BYTES:
+            raise ValueError("request body is too large")
+        raw = self.rfile.read(length)
+        payload = parse_json_bytes(raw) if raw else {}
+        if payload is None:
+            return {}
+        if not isinstance(payload, dict):
+            raise ValueError("request body must be a JSON object")
+        return payload
 
     def send_json(self, payload: object, status: HTTPStatus = HTTPStatus.OK) -> None:
         self.send_bytes(json_bytes(payload), "application/json; charset=utf-8", status)
