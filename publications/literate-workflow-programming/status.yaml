@@ -1,6 +1,6 @@
 kind: umbrella
 publication: literate-workflow-programming
-revision: 3
+revision: 4
 config:
   evidence_path: publications/literate-workflow-programming/papers
   shared_evidence_path: publications/literate-workflow-programming/papers
@@ -9,11 +9,12 @@ config:
     - literate-workflow-programming/literate-workflow-programming-flagship
 umbrella_route:
   active_workflow: post_ceiling_pivot
-  active_route: no_successor
-  next_action: stop_without_successor
-  closure_artifact: publications/literate-workflow-programming/no-successor-closure.md
+  active_route: pivot_cleared_for_north_star_attempt
+  next_action: run_north_star_viability
+  previous_closure_artifact: publications/literate-workflow-programming/no-successor-closure.md
+  reopened_at: '2026-04-28'
   last_validated: '2026-04-28'
-  active_candidate: null
+  active_candidate: The Specification Surface Is the New Source of Truth
   donor_leaf: literate-workflow-programming/literate-workflow-programming-flagship
   active_successor_leaf: null
   historical_branches:
