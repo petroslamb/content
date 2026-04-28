@@ -1,0 +1,434 @@
+workflow_id: article_polish
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: release
+summary: Polish the canonical live draft into a publication-ready article with intentional media placement, stable assets, transcript-informed edits, references, and release-gate readiness.
+
+package_classes:
+  - leaf
+
+inputs:
+  package:
+    required: true
+    class: leaf
+    description: Leaf package path relative to publications/.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: live_draft_path
+      source: publications/{package}/status.yaml:config.markdown_path
+    - id: artifact_surface
+      source: publications/{package}/status.yaml:config.artifacts_path or publications/{package}/artifacts/
+    - id: image_slug
+      source: semantically selected image slug
+    - id: transcript_filename
+      source: selected transcript filename
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+    - id: artifact_surface
+      pattern: publications/{package}/artifacts/
+      required: true
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve live draft path, artifact path, lifecycle state, and package-local configuration.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation and artifact conventions before changing markdown or images.
+    record_hash: true
+  - id: live_draft
+    path_from_status: config.markdown_path
+    required: true
+    purpose: Identify and protect the canonical polish target.
+    record_hash: true
+  - id: artifact_surface
+    path_from_status: config.artifacts_path
+    fallback: publications/{package}/artifacts/
+    required: true
+    purpose: Locate NotebookLM outputs, slide PDFs, image folders, audio, transcripts, and publishable media assets.
+    record_hash: true
+  - id: current_references
+    path_from_status: config.markdown_path
+    required: true
+    purpose: Inspect the live draft's reference section, repo links, and supporting links during final polish.
+    record_hash: true
+  - id: notebooklm_or_local_media_outputs
+    path_from_status: config.artifacts_path
+    fallback: publications/{package}/artifacts/
+    required: false
+    purpose: Admit downloaded NotebookLM or equivalent media outputs for image selection and transcript round-trip.
+    record_hash: true
+  - id: publication_voice_guide
+    path: voice_consistency_guide.md
+    required: true
+    purpose: Preserve publication voice while improving warmth, clarity, and reader orientation.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/article-polish/README.md
+    required: true
+    purpose: Load human-facing article polish guidance.
+    record_hash: true
+  - id: release_gate_readme
+    path: workflows/release-gate/README.md
+    required: true
+    purpose: Align polish handoff with the release-readiness gate.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply repo-level write, approval, and external-mutation policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve the release_readiness gate contract.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: image_embed_scan
+      command: "rg -n '!\\[[^]]*\\]\\(' {live_draft_path}"
+      required: true
+    - id: package_diff_scan
+      command: "git diff --name-status -- publications/{package}/"
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: true
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      required: true
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/article-polish/
+    - workflows/release-gate/
+    - workflows/notebooklm-artifacts/
+    - voice_consistency_guide.md
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: polished_live_draft
+    path_template: "{live_draft_path}"
+    required: true
+    format: markdown
+    producer: final_editorial_pass
+    promotable: true
+    gated_by: release_readiness
+  - id: publishable_images
+    path_template: "publications/{package}/artifacts/{image_slug}.png"
+    required: conditional
+    required_when: selected visuals materially improve comprehension
+    format: image
+    collection: true
+    producer: select_and_name_images
+  - id: transcript_artifact
+    path_template: "publications/{package}/artifacts/{transcript_filename}"
+    required: conditional
+    required_when: transcript round-trip is used for editorial polish
+    format: text
+    producer: transcript_round_trip
+  - id: release_readiness_gate
+    path_template: "reviewable-runs/gates/{run_id}-release-readiness.yaml"
+    required: conditional
+    required_when: content-agent materializes a durable release gate
+    format: yaml
+    producer: release_readiness_handoff
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: live_draft_resolves
+      check: status_config_path_exists
+      target: config.markdown_path
+      on_fail: stop
+    - id: artifact_surface_resolves
+      check: configured_or_default_artifact_surface_exists
+      target: config.artifacts_path
+      on_fail: stop
+    - id: release_policy_surfaces_exist
+      check: paths_exist
+      target:
+        - gate_contracts.yaml
+        - workflows/release-gate/README.md
+      on_fail: stop
+  invariants:
+    - id: live_draft_remains_canonical_target
+      check: edits_stay_on_status_markdown_path
+    - id: no_accidental_image_embed_deletions
+      check: removed_markdown_images_require_editorial_reason
+    - id: raw_artifacts_not_used_as_publication_targets
+      check: image_paths_use_stable_publishable_assets
+    - id: transcript_is_editorial_source_not_replacement_draft
+      check: transcript_edits_preserve_reviewed_claims
+    - id: references_and_repo_links_resolve
+      check: final_links_resolve
+    - id: external_mutation_requires_gate
+      check: external_mutation_requires_release_readiness
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    max_transcript_round_trips: 1
+    external_mutations: 0
+    unapproved_publications: 0
+  recovery:
+    on_missing_artifacts: stop
+    on_image_extraction_failure: stop_and_request_narrow_user_handoff
+    on_transcript_recovery_failure: stop_and_request_narrow_user_handoff
+    on_repo_link_failure: stop_and_record
+    on_release_gate_reject: defer
+    resume_from: resolved_run
+    rollback_strategy: preserve_prior_image_embeds_and_package_assets
+
+enforcement:
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - live_draft_path_matches_status
+    - publishable_image_paths_resolve
+    - markdown_image_paths_resolve
+    - references_and_repo_links_resolve
+    - removed_image_embeds_have_editorial_reason
+  context_checks:
+    - package_status_resolves
+    - live_draft_resolves
+    - artifact_surface_resolves
+    - publication_voice_guide_loaded
+  hooks:
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - handoff
+      required: true
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      run_at:
+        - before_release_gate_handoff
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+    - id: readme_expected_outputs_covered_by_yaml_outputs
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: true
+    stop_before: release_gate_handoff
+    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    artifacts:
+      - polished_live_draft
+      - publishable_images when images are used
+      - transcript_artifact when transcript round-trip is used
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - live_draft_path
+    - image_embed_scan
+    - package_diff_summary
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: confirm_polish_target
+    title: Confirm polish target
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - live_draft
+      - artifact_surface
+      - workflow_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: inspect_existing_media_refs
+    title: Inspect existing media refs
+    mode: scriptable
+    executor:
+      command: "rg -n '!\\[[^]]*\\]\\(' {live_draft_path}"
+    consumes:
+      - live_draft
+      - artifact_surface
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: select_and_name_images
+    title: Select and name images
+    mode: codex_session
+    action: Select only load-bearing visuals, preserve existing reviewed assets, and create semantically named publishable image files.
+    consumes:
+      - live_draft
+      - artifact_surface
+      - notebooklm_or_local_media_outputs
+      - publication_voice_guide
+    produces:
+      - publishable_images
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: place_images
+    title: Place images
+    mode: codex_session
+    action: Insert selected images near the prose where they materially improve comprehension without deleting existing embeds accidentally.
+    consumes:
+      - live_draft
+      - publishable_images
+      - publication_voice_guide
+    produces:
+      - polished_live_draft
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: transcript_round_trip
+    title: Transcript round trip
+    mode: external_mutation_gated
+    action: Recover a full transcript only when useful, then use it as a controlled editorial source rather than replacement prose.
+    consumes:
+      - artifact_surface
+      - notebooklm_or_local_media_outputs
+      - live_draft
+    produces:
+      - transcript_artifact
+      - polished_live_draft
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: final_editorial_pass
+    title: Final editorial pass
+    mode: codex_session
+    action: Finalize readability, references, appendices, orientation blurbs, repo links, and polish without weakening the reviewed argument.
+    consumes:
+      - polished_live_draft
+      - current_references
+      - transcript_artifact
+      - publication_voice_guide
+      - release_gate_readme
+    produces:
+      - polished_live_draft
+    validation:
+      hooks:
+        - repo_link_check
+    trace:
+      required: true
+
+  - id: release_readiness_handoff
+    title: Release readiness handoff
+    mode: review_gated
+    action: Stop at the release-readiness boundary with polished local artifacts; do not publish or externally mutate.
+    consumes:
+      - polished_live_draft
+      - publishable_images
+      - transcript_artifact
+    produces:
+      - release_readiness_gate
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - polished_live_draft
+      - release_readiness_gate
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    trace:
+      required: true

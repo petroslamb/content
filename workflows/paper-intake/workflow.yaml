@@ -1,0 +1,354 @@
+workflow_id: paper_intake
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: evidence
+summary: Promote selected papers into a package evidence surface, convert source files to markdown when useful, and update the local paper or source index.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  source_inputs:
+    required: true
+    description: Operator-selected local paper files, HTML exports, or source URLs that have already been judged in scope.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: source_path
+      source: selected source file path
+    - id: source_filename
+      source: basename(source_path)
+    - id: source_stem
+      source: stem(source_path)
+    - id: markdown_path
+      source: selected evidence markdown target
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+    - id: default_papers_dir
+      pattern: publications/{package}/papers/
+      required: false
+    - id: default_markdown_dir
+      pattern: publications/{package}/papers/markdown/
+      required: false
+    - id: default_paper_index
+      pattern: publications/{package}/papers/index.md
+      required: false
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, evidence configuration, lifecycle stage, and package-specific source paths.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation and any established evidence-surface conventions.
+    record_hash: true
+  - id: existing_evidence_surface
+    path_from_status: config.evidence_path
+    fallback:
+      - publications/{package}/papers/index.md
+      - publications/{package}/source-index.md
+      - publications/{package}/sources/index.md
+      - publications/{package}/papers/
+      - publications/{package}/sources/
+    required: false
+    purpose: Preserve an existing paper manifest or source index instead of creating a duplicate inventory.
+    record_hash: true
+  - id: source_inputs
+    source: cli.source_inputs
+    required: true
+    purpose: Record which selected papers, local files, or source URLs are being admitted into the package evidence surface.
+    record_hash: false
+  - id: workflow_readme
+    path: workflows/paper-intake/README.md
+    required: true
+    purpose: Load human-facing operator guidance for the intake workflow.
+    record_hash: true
+  - id: markitdown_skill
+    path: workflows/skills/markitdown-paper-intake/SKILL.md
+    required: true
+    purpose: Bind the repo-local paper-intake execution guidance without making the skill the runtime authority.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply repo-level local write, path, and external-mutation policy.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: markitdown_pdf_converter
+      command: ".venv/bin/markitdown {source_path} -o {markdown_path}"
+      required: true
+    - id: content_agent_run_record
+      command: "content-agent run-record"
+      required: false
+  skills:
+    - markitdown-paper-intake
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/paper-intake/
+    - workflows/skills/markitdown-paper-intake/
+    - harness_policy.yaml
+    - package.json
+    - selected source files explicitly provided by the operator
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: source_files
+    path_template: "publications/{package}/papers/{source_filename}"
+    required: true
+    format: source_file
+    collection: true
+    producer: place_source_files
+  - id: converted_markdown
+    path_template: "publications/{package}/papers/markdown/{source_stem}.md"
+    required: conditional
+    required_when: source file conversion is requested or useful for downstream drafting
+    format: markdown
+    collection: true
+    producer: convert_selected_files
+  - id: paper_index
+    path_template: "publications/{package}/papers/index.md"
+    required: conditional
+    required_when: the package uses the default paper library layout
+    format: markdown
+    producer: update_source_index
+  - id: existing_source_index
+    path_template: "publications/{package}/source-index.md"
+    required: conditional
+    required_when: the package already uses a source-index surface instead of papers/index.md
+    format: markdown
+    producer: update_source_index
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: package_readme_exists
+      check: path_exists
+      target: publications/{package}/README.md
+      on_fail: stop
+    - id: source_inputs_selected
+      check: source_inputs_nonempty
+      target: source_inputs
+      on_fail: stop
+    - id: selected_sources_are_in_scope
+      check: operator_selection_required
+      target: source_inputs
+      on_fail: stop
+  invariants:
+    - id: preserve_existing_source_layout
+      check: update_existing_manifest_before_creating_default_index
+    - id: no_index_entry_without_landed_source
+      check: index_entries_require_local_source_artifact
+    - id: source_files_stay_package_local
+      check: output_paths_within_package
+    - id: conversion_failures_are_recorded
+      check: failed_conversions_recorded_before_handoff
+    - id: no_lifecycle_movement_without_validation
+      check: lifecycle_movement_requires_gate_approval
+    - id: no_external_mutation
+      check: external_mutations_equal_zero
+  budgets:
+    max_steps: 6
+    max_script_retries: 1
+    max_papers_per_run: 12
+    external_mutations: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_source_input: stop
+    on_copy_failure: stop_and_report_command
+    on_conversion_failure: record_failure_and_continue_remaining_sources
+    on_index_update_failure: stop
+    on_validation_failure: stop_and_record
+    resume_from: resolved_run
+    rollback_strategy: keep_landed_sources_and_record_partial_intake
+
+enforcement:
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - selected_sources_landed
+    - converted_markdown_paths_exist_when_declared
+    - paper_or_source_index_updated
+    - no_index_entry_for_missing_source
+  context_checks:
+    - package_status_resolves
+    - package_readme_exists
+    - evidence_surface_resolves_or_default_layout_available
+    - source_inputs_recorded
+    - markitdown_binary_available
+  hooks: []
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+    - id: readme_default_skill_matches_yaml_skill
+      required: true
+    - id: readme_expected_outputs_covered_by_yaml_outputs
+      required: true
+
+gates: []
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - source_input_refs
+    - source_output_paths
+    - conversion_commands
+    - conversion_results
+    - index_paths
+    - validation_results
+    - enforcement_outcomes
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_evidence_surface
+    title: Resolve evidence surface
+    mode: codex_session
+    action: Identify the package's existing paper or source index, or choose the default papers/ layout for a leaf package.
+    consumes:
+      - package_status
+      - package_readme
+      - existing_evidence_surface
+      - source_inputs
+      - workflow_readme
+      - markitdown_skill
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: place_source_files
+    title: Place source files
+    mode: codex_session
+    action: Copy or download selected papers into the package evidence source tree without adding index entries for files that did not land.
+    consumes:
+      - package_status
+      - package_readme
+      - source_inputs
+      - existing_evidence_surface
+    produces:
+      - source_files
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: convert_selected_files
+    title: Convert selected files
+    mode: scriptable
+    executor:
+      command: ".venv/bin/markitdown {source_path} -o {markdown_path}"
+    consumes:
+      - source_files
+    produces:
+      - converted_markdown
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: inspect_conversions
+    title: Inspect conversions
+    mode: codex_session
+    action: Inspect markdown conversions for obvious extraction failure and record noisy or deferred conversions in the index.
+    consumes:
+      - source_files
+      - converted_markdown
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: update_source_index
+    title: Update source index
+    mode: codex_session
+    action: Update papers/index.md, manifest.json, source-index.md, or the package's existing source index with local paths and short relevance notes.
+    consumes:
+      - package_readme
+      - existing_evidence_surface
+      - source_files
+      - converted_markdown
+    produces:
+      - paper_index
+      - existing_source_index
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - source_files
+      - converted_markdown
+      - paper_index
+      - existing_source_index
+      - validation_results
+    produces:
+      - run_record
+    validation:
+      hooks: []
+    trace:
+      required: true

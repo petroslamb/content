@@ -47,6 +47,10 @@ def should_skip_markdown(package_root: Path, path: Path) -> bool:
     parts = rel.parts
     if len(parts) >= 2 and parts[0] == "papers" and parts[1] == "markdown":
         return True
+    if len(parts) >= 2 and parts[1] == "markdown" and (
+        parts[0] in {"sources", "harness_papers"} or parts[0].endswith("_papers")
+    ):
+        return True
     if len(parts) >= 2 and parts[0] == "sources" and parts[1] == "raw":
         return True
     return False

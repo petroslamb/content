@@ -13,6 +13,8 @@ read_only_allowed:
 local_write_allowed:
   paths:
     - publications/
+    - publication_strategy_and_archive/
+    - README.md
     - scripts/
     - reviewable-runs/resolved-runs/
     - reviewable-runs/logs/

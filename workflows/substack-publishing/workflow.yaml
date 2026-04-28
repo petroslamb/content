@@ -1,0 +1,457 @@
+workflow_id: substack_publishing
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: release
+summary: Sync an approved publication-ready markdown draft to Substack, preserve media placements, and stop at explicit live-publish and archive-follow-through boundaries.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: markdown_path
+      source: publications/{package}/status.yaml:config.markdown_path
+    - id: substack_url
+      source: publications/{package}/status.yaml:config.substack_url
+    - id: substack_post_id
+      source: publications/{package}/status.yaml:config.substack_post_id
+    - id: substack_slug
+      source: publications/{package}/status.yaml:config.substack_slug
+    - id: run_id
+      source: content-agent run id
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+    - id: reviewable_runs
+      pattern: reviewable-runs/
+      required: false
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve markdown path, Substack target, lifecycle state, and archive follow-through configuration.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation and any package-specific publishing constraints.
+    record_hash: true
+  - id: canonical_markdown
+    path_from_status: config.markdown_path
+    required: true
+    purpose: Load the exact local markdown that will be synced to Substack.
+    record_hash: true
+  - id: substack_publication_url
+    status_field: config.substack_url
+    required: true
+    purpose: Resolve the target Substack publication.
+    record_hash: false
+  - id: substack_post_id
+    status_field: config.substack_post_id
+    required: true
+    purpose: Resolve the existing Substack draft or post target for body replacement.
+    record_hash: false
+  - id: release_gate_verdict
+    source: release_readiness gate artifact or explicit user approval
+    required: true
+    purpose: Prove external mutation approval before syncing or publishing.
+    record_hash: true
+  - id: existing_substack_draft
+    source: config.substack_post_id and live Substack readback
+    required: true
+    purpose: Confirm the draft or post target exists before mutation.
+    record_hash: false
+  - id: workflow_readme
+    path: workflows/substack-publishing/README.md
+    required: true
+    purpose: Load human-facing Substack publishing guidance.
+    record_hash: true
+  - id: release_gate_readme
+    path: workflows/release-gate/README.md
+    required: true
+    purpose: Apply release approval boundaries before external mutation.
+    record_hash: true
+  - id: archive_sync_readme
+    path: workflows/substack-archive-sync/README.md
+    required: true
+    purpose: Route archive follow-through after successful publication.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply repo-level external mutation, approval, and publication policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve release_readiness approval requirements.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: generic_draft_sync
+      command: ".venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path}"
+      required: true
+    - id: generic_draft_sync_with_cdp
+      command: ".venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path} --chrome-debug-url http://127.0.0.1:9222"
+      required: false
+    - id: generic_live_publish
+      command: ".venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path} --publish"
+      required: false
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: true
+    - id: archive_sync
+      command: "npm run sync:substack"
+      required: false
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/substack-publishing/
+    - workflows/release-gate/
+    - workflows/substack-archive-sync/
+    - publication_strategy_and_archive/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: synced_substack_draft
+    external: true
+    external_target: "{substack_url}/publish/post/{substack_post_id}"
+    required: true
+    format: substack_draft
+    producer: sync_substack_draft
+    gated_by: release_readiness
+  - id: published_substack_post
+    external: true
+    external_target: "{substack_url}/p/{substack_slug}"
+    required: conditional
+    required_when: explicit live-publish approval is granted
+    format: substack_post
+    producer: optional_live_publish
+    gated_by: live_publish_approval
+  - id: sync_report
+    path_template: "reviewable-runs/logs/{run_id}-substack-sync.json"
+    required: true
+    format: json
+    producer: sync_substack_draft
+  - id: archive_sync_request
+    path_template: "reviewable-runs/logs/{run_id}-archive-sync-request.yaml"
+    required: conditional
+    required_when: synced or published post belongs in the tracked public archive
+    format: yaml
+    producer: archive_follow_through
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: markdown_path_resolves
+      check: status_config_path_exists
+      target: config.markdown_path
+      on_fail: stop
+    - id: substack_target_configured
+      check: status_fields_present
+      target:
+        - config.substack_url
+        - config.substack_post_id
+      on_fail: stop
+    - id: release_approval_present
+      check: release_readiness_gate_or_explicit_user_approval
+      target: release_gate_verdict
+      on_fail: stop
+  invariants:
+    - id: no_external_mutation_without_release_gate
+      check: external_mutation_requires_release_readiness
+    - id: draft_sync_does_not_imply_live_publish
+      check: publish_flag_requires_separate_approval
+    - id: local_markdown_remains_source
+      check: substack_body_generated_from_canonical_markdown
+    - id: video_tldr_marker_preserved
+      check: video_tldr_marker_maps_to_existing_draft_video
+    - id: archive_follow_through_required_for_tracked_posts
+      check: tracked_publication_requires_archive_sync
+  budgets:
+    max_steps: 7
+    max_script_retries: 1
+    max_draft_syncs: 1
+    max_live_publish_operations: 1
+    external_mutations: 1
+    live_publish_requires_explicit_approval: true
+  recovery:
+    on_missing_release_approval: stop
+    on_auth_failure: stop_and_request_narrow_user_handoff
+    on_draft_sync_failure: stop_and_record
+    on_live_publish_reject: keep_synced_draft_and_defer
+    on_archive_sync_failure: route_to_substack_archive_sync
+    resume_from: resolved_run
+    rollback_strategy: preserve_local_markdown_and_record_remote_mutation_status
+
+enforcement:
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - release_approval_precedes_external_mutation
+    - markdown_path_matches_status
+    - substack_target_configured
+  context_checks:
+    - package_status_resolves
+    - canonical_markdown_resolves
+    - substack_url_present
+    - substack_post_id_present
+    - release_gate_verdict_present
+  hooks:
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      run_at:
+        - before_draft_sync
+        - before_live_publish
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - before_draft_sync
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+    - id: readme_launch_templates_covered_by_tools
+      required: true
+    - id: readme_required_context_covered_by_yaml_context
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: true
+    stop_before: sync_substack_draft
+    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    artifacts:
+      - canonical_markdown
+      - release_gate_verdict
+      - existing_substack_draft
+    decisions:
+      - approve
+      - reject
+      - defer
+  - id: live_publish_approval
+    type: external_mutation
+    contract: release_readiness
+    required: conditional
+    required_when: sync command includes --publish or operator requests live publication
+    stop_before: optional_live_publish
+    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    artifacts:
+      - synced_substack_draft
+      - sync_report
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - markdown_path
+    - substack_url
+    - substack_post_id
+    - tool_commands
+    - remote_mutation_status
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_publish_target
+    title: Resolve publish target
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - canonical_markdown
+      - substack_publication_url
+      - substack_post_id
+      - existing_substack_draft
+      - workflow_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: validate_release_approval
+    title: Validate release approval
+    mode: review_gated
+    action: Stop unless release_readiness or explicit user approval authorizes the external mutation.
+    consumes:
+      - release_gate_verdict
+      - canonical_markdown
+      - release_gate_readme
+    produces: []
+    validation:
+      hooks:
+        - release_readiness_gate_check
+        - repo_link_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+
+  - id: prepare_substack_markdown
+    title: Prepare Substack markdown
+    mode: codex_session
+    action: Confirm references, media paths, and any Video TL;DR marker are suitable for the sync script.
+    consumes:
+      - canonical_markdown
+      - package_readme
+    produces: []
+    validation:
+      hooks:
+        - repo_link_check
+    trace:
+      required: true
+
+  - id: sync_substack_draft
+    title: Sync Substack draft
+    mode: external_mutation_gated
+    action: Replace the existing Substack draft body from the canonical local markdown after release approval.
+    executor:
+      command: ".venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path}"
+    consumes:
+      - canonical_markdown
+      - substack_publication_url
+      - substack_post_id
+      - release_gate_verdict
+    produces:
+      - synced_substack_draft
+      - sync_report
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+
+  - id: optional_live_publish
+    title: Optional live publish
+    mode: external_mutation_gated
+    action: Publish the synced draft only when separate explicit live-publish approval is present.
+    consumes:
+      - synced_substack_draft
+      - sync_report
+      - release_gate_verdict
+    produces:
+      - published_substack_post
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: live_publish_approval
+    trace:
+      required: true
+
+  - id: archive_follow_through
+    title: Archive follow-through
+    mode: scriptable
+    executor:
+      named: content-agent route archive_sync
+    consumes:
+      - synced_substack_draft
+      - published_substack_post
+      - archive_sync_readme
+    produces:
+      - archive_sync_request
+    validation:
+      hooks: []
+    trace:
+      required: true
+
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - synced_substack_draft
+      - published_substack_post
+      - sync_report
+      - archive_sync_request
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    trace:
+      required: true
