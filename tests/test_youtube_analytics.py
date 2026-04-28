@@ -20,6 +20,7 @@ sys.path.insert(0, str(YOUTUBE_SKILL_SCRIPTS))
 
 import build_youtube_decision_report as report  # noqa: E402
 import fetch_youtube_analytics as fetch  # noqa: E402
+import sync_youtube_reporting_reports as reporting_sync  # noqa: E402
 import youtube_common  # noqa: E402
 
 
@@ -241,6 +242,67 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertTrue((out_dir / "2026-04-28.md").exists())
             summary = json.loads((out_dir / "2026-04-28.json").read_text())
             self.assertEqual(summary["summary_counts"]["scale"], 1)
+
+    def test_reporting_rows_merge_reach_and_card_fields_into_ledger(self) -> None:
+        ledger = {
+            "videos": [
+                self.video(
+                    "REPORTING",
+                    "Reporting Candidate",
+                    "short",
+                    views=140,
+                    avg_pct=48,
+                    impressions=None,
+                    ctr=None,
+                )
+            ]
+        }
+        rows = [
+            {
+                "report_type_id": "channel_reach_basic_a1",
+                "date": "20260424",
+                "video_id": "REPORTING",
+                "video_thumbnail_impressions": "1000",
+                "video_thumbnail_impressions_ctr": "2.5",
+                "source_file": "experiments/youtube-analytics/reporting_downloads/channel_reach_basic_a1/2026-04-24.csv",
+            },
+            {
+                "report_type_id": "channel_basic_a3",
+                "date": "20260424",
+                "video_id": "REPORTING",
+                "card_clicks": "4",
+                "card_impressions": "20",
+                "card_click_rate": "20",
+                "card_teaser_clicks": "2",
+                "card_teaser_impressions": "50",
+                "card_teaser_click_rate": "4",
+                "source_file": "experiments/youtube-analytics/reporting_downloads/channel_basic_a3/2026-04-24.csv",
+            },
+        ]
+
+        reporting_sync.merge_reporting_rows_into_ledger(ledger, rows)
+        video = ledger["videos"][0]
+        metrics = video["analytics_windows"]["7d"]["metrics"]
+        observations = video["manual_observations"]
+
+        self.assertEqual(metrics["videoThumbnailImpressions"], 1000)
+        self.assertEqual(metrics["videoThumbnailImpressionsClickRate"], 2.5)
+        self.assertEqual(observations["card_clicks"], 4)
+        self.assertEqual(observations["card_impressions"], 20)
+
+        rules = {
+            "minimum_data_age_days": 2,
+            "preferred_window": "7d",
+            "thresholds": yaml.safe_load(
+                (REPO_ROOT / "experiments" / "youtube-analytics" / "decision_rules.yaml").read_text()
+            )["thresholds"],
+        }
+        classification = report.classify_video(
+            video,
+            rules,
+            as_of_date=date(2026, 4, 28),
+        )
+        self.assertIn("retitle", classification["categories"])
 
     def video(
         self,
