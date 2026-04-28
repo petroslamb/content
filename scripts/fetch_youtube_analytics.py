@@ -403,28 +403,47 @@ def fetch_recent_channel_uploads(
     since_days: int,
     limit: int,
 ) -> dict[str, dict[str, Any]]:
-    published_after = (utc_now() - timedelta(days=since_days)).isoformat().replace("+00:00", "Z")
+    cutoff = utc_now() - timedelta(days=since_days)
+    channels_response = (
+        youtube.channels()
+        .list(part="contentDetails", mine=True, maxResults=1)
+        .execute()
+    )
+    channel_items = channels_response.get("items", [])
+    if not channel_items:
+        return {}
+    uploads_playlist_id = (
+        channel_items[0]
+        .get("contentDetails", {})
+        .get("relatedPlaylists", {})
+        .get("uploads")
+    )
+    if not uploads_playlist_id:
+        return {}
+
     records: dict[str, dict[str, Any]] = {}
     page_token = None
     while len(records) < limit:
         response = (
-            youtube.search()
+            youtube.playlistItems()
             .list(
                 part="snippet",
-                forMine=True,
-                type="video",
-                order="date",
+                playlistId=uploads_playlist_id,
                 maxResults=min(50, limit - len(records)),
-                publishedAfter=published_after,
                 pageToken=page_token,
             )
             .execute()
         )
+        stop = False
         for item in response.get("items", []):
-            video_id = item.get("id", {}).get("videoId")
             snippet = item.get("snippet", {})
+            video_id = snippet.get("resourceId", {}).get("videoId")
             if not video_id:
                 continue
+            published_at = parse_iso_datetime(snippet.get("publishedAt"))
+            if published_at and published_at < cutoff:
+                stop = True
+                break
             records[video_id] = {
                 "video_id": video_id,
                 "title": snippet.get("title"),
@@ -439,7 +458,7 @@ def fetch_recent_channel_uploads(
                 "source_reports": [],
             }
         page_token = response.get("nextPageToken")
-        if not page_token:
+        if stop or not page_token:
             break
     return records
 
