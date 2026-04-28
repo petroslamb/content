@@ -27,6 +27,18 @@ experiment:
     auth_relogin_command: .venv/bin/notebooklm login
     shorts_primary_video_label: Full cinematic video
     shorts_secondary_video_label: Full research breakdown
+    shorts_overlay:
+      enabled: true
+      source: cinematic_srt
+      render_strategy: top_hook_spoken_subtitles_bottom_cta
+      default_cta: Full cinematic brief in Related Video
+      caption_wrap_width: 30
+      hook_max_words: 9
+      quality_check:
+        sample_frames_per_short: 3
+        require_top_hook: true
+        require_spoken_subtitles: true
+        require_bottom_cta: true
     shorts_slot_times:
     - 09:00
     - '10:30'

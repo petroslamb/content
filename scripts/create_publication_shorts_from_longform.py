@@ -609,22 +609,31 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         help="Timed SRT captions for the source video. Required when --burn-in-subtitles is used.",
     )
-    parser.add_argument(
+    overlay_group = parser.add_mutually_exclusive_group()
+    overlay_group.add_argument(
         "--burn-in-subtitles",
+        dest="burn_in_subtitles",
         action="store_true",
+        default=None,
         help="Burn top hooks, spoken subtitles, and a related-video CTA into each portrait Short.",
+    )
+    overlay_group.add_argument(
+        "--no-burn-in-subtitles",
+        dest="burn_in_subtitles",
+        action="store_false",
+        help="Disable manifest-configured burned-in overlays for this render.",
     )
     parser.add_argument(
         "--overlay-dir",
         type=Path,
-        help="Directory for generated ASS overlay files. Defaults next to the manifest.",
+        help="Directory for generated overlay images and alpha video files. Defaults next to the manifest.",
     )
     parser.add_argument(
         "--default-cta",
-        default="Full cinematic brief in Related Video",
+        default=None,
         help="Bottom CTA used when a clip does not define cta in the manifest.",
     )
-    parser.add_argument("--caption-wrap-width", type=int, default=30)
+    parser.add_argument("--caption-wrap-width", type=int, default=None)
     return parser.parse_args()
 
 
@@ -635,13 +644,32 @@ def main() -> None:
     if not clips:
         raise SystemExit(f"No clips found in manifest: {args.manifest}")
 
+    overlay_config = manifest.get("overlay") or {}
+    burn_in_subtitles = (
+        args.burn_in_subtitles
+        if args.burn_in_subtitles is not None
+        else bool(overlay_config.get("enabled", False))
+    )
+    manifest_srt = overlay_config.get("source_srt") or manifest.get("source_srt")
+    srt_file = args.srt_file or (Path(manifest_srt) if manifest_srt else None)
+    default_cta = (
+        args.default_cta
+        or overlay_config.get("default_cta")
+        or "Full cinematic brief in Related Video"
+    )
+    caption_wrap_width = int(
+        args.caption_wrap_width
+        or overlay_config.get("caption_wrap_width")
+        or 30
+    )
+
     base_dir = args.manifest.parent
     landscape_dir = args.landscape_dir or (base_dir / "landscape")
     portrait_dir = args.portrait_dir or (base_dir / "portrait")
     overlay_dir = args.overlay_dir or (base_dir / "overlays")
-    if args.burn_in_subtitles and not args.srt_file:
+    if burn_in_subtitles and not srt_file:
         raise SystemExit("--srt-file is required with --burn-in-subtitles")
-    caption_cues = parse_srt(args.srt_file) if args.burn_in_subtitles and args.srt_file else []
+    caption_cues = parse_srt(srt_file) if burn_in_subtitles and srt_file else []
 
     results: list[dict] = []
     for index, clip in enumerate(clips, start=1):
@@ -649,7 +677,7 @@ def main() -> None:
         stem = f"{index:02d}-{slug}"
         landscape_path = landscape_dir / f"{stem}.mp4"
         portrait_path = portrait_dir / f"{stem}_portrait.mp4"
-        clip_overlay_dir = overlay_dir / stem if args.burn_in_subtitles else None
+        clip_overlay_dir = overlay_dir / stem if burn_in_subtitles else None
         overlay_video: Path | None = None
         overlay_count = 0
 
@@ -671,7 +699,7 @@ def main() -> None:
                 fps=args.portrait_fps,
                 duration=clip_end - clip_start,
                 hook=clip.get("hook") or clip.get("top_hook") or clip["title"],
-                cta=clip.get("cta") or args.default_cta,
+                cta=clip.get("cta") or default_cta,
                 captions=caption_events_for_clip(caption_cues, clip_start, clip_end),
             )
         convert_video(
@@ -689,11 +717,14 @@ def main() -> None:
                 "slug": slug,
                 "title": clip["title"],
                 "hook": clip.get("hook") or clip.get("top_hook") or clip["title"],
-                "cta": clip.get("cta") or args.default_cta if args.burn_in_subtitles else None,
+                "cta": (clip.get("cta") or default_cta) if burn_in_subtitles else None,
                 "landscape_path": str(landscape_path),
                 "portrait_path": str(portrait_path),
                 "overlay_path": str(clip_overlay_dir) if clip_overlay_dir else None,
                 "overlay_count": overlay_count,
+                "overlay_enabled": burn_in_subtitles,
+                "source_srt": str(srt_file) if burn_in_subtitles and srt_file else None,
+                "caption_wrap_width": caption_wrap_width if burn_in_subtitles else None,
                 "landscape_duration": ffprobe_duration_seconds(landscape_path),
                 "portrait_duration": ffprobe_duration_seconds(portrait_path),
                 "publish_at": clip.get("publish_at"),

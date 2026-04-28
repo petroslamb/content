@@ -387,6 +387,23 @@ def shorts_manifest_clip_payload(clip: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
+def shorts_overlay_payload(manifest: dict[str, Any], cinematic: dict[str, Any]) -> dict[str, Any] | None:
+    defaults = manifest["experiment"].get("defaults", {})
+    overlay = defaults.get("shorts_overlay") or {}
+    if not overlay.get("enabled", False):
+        return None
+    return {
+        "enabled": True,
+        "source": overlay.get("source", "cinematic_srt"),
+        "source_srt": cinematic.get("output_srt"),
+        "render_strategy": overlay.get("render_strategy", "top_hook_spoken_subtitles_bottom_cta"),
+        "default_cta": overlay.get("default_cta", "Full cinematic brief in Related Video"),
+        "caption_wrap_width": int(overlay.get("caption_wrap_width", 30)),
+        "hook_max_words": int(overlay.get("hook_max_words", 9)),
+        "quality_check": overlay.get("quality_check", {}),
+    }
+
+
 def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
     publications = manifest["publications"]
     changed_paths: list[str] = []
@@ -399,8 +416,10 @@ def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
             continue
         manifest_path = Path(entry["shorts"]["manifest_path"])
         manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        overlay = shorts_overlay_payload(manifest, cinematic)
         payload = {
             "source_video": cinematic["video_file"],
+            "source_srt": cinematic.get("output_srt"),
             "related_video_id": cinematic["youtube_video_id"],
             "essay_url": entry.get("essay_url"),
             "full_video_url": cinematic["youtube_url"],
@@ -408,6 +427,8 @@ def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
             "playlist_id": manifest["experiment"]["playlists"]["shorts"]["id"],
             "clips": [shorts_manifest_clip_payload(clip) for clip in approved],
         }
+        if overlay:
+            payload["overlay"] = overlay
         new_text = json.dumps(payload, indent=2) + "\n"
         current_text = manifest_path.read_text(encoding="utf-8") if manifest_path.exists() else None
         if current_text != new_text:
