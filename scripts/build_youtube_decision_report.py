@@ -391,14 +391,22 @@ def action_line(classification: dict[str, Any]) -> str:
     )
 
 
-def report_table_rows(classifications: list[dict[str, Any]]) -> list[str]:
+def report_table_rows(
+    classifications: list[dict[str, Any]],
+    *,
+    display_category: str | None = None,
+) -> list[str]:
     rows = [
         "| Decision | Video | Window | Views | V/day | Avg viewed | CTR | Action |",
         "| :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |",
     ]
     for classification in classifications:
-        category = next(
-            (candidate for candidate in DECISION_ORDER if candidate in classification["categories"]),
+        category = display_category or next(
+            (
+                candidate
+                for candidate in DECISION_ORDER
+                if candidate in classification["categories"]
+            ),
             "ignore",
         )
         metrics = classification["metrics"]
@@ -493,7 +501,7 @@ def build_markdown_report(
         if not rows:
             lines.append("- No videos in this bucket.")
             continue
-        lines.extend(report_table_rows(rows))
+        lines.extend(report_table_rows(rows, display_category=category))
 
     lines.extend(["", "## Missing Manual Fields", ""])
     if not missing_manual:

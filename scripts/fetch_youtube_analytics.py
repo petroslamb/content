@@ -58,8 +58,9 @@ ANALYTICS_METRICS = [
     "videoThumbnailImpressions",
     "videoThumbnailImpressionsClickRate",
 ]
-CORE_ANALYTICS_METRICS = [
+QUERY_ANALYTICS_METRICS = [
     "views",
+    "engagedViews",
     "estimatedMinutesWatched",
     "averageViewDuration",
     "averageViewPercentage",
@@ -67,6 +68,15 @@ CORE_ANALYTICS_METRICS = [
     "comments",
     "shares",
     "subscribersGained",
+]
+CORE_ANALYTICS_METRICS = [
+    metric
+    for metric in QUERY_ANALYTICS_METRICS
+    if metric != "engagedViews"
+]
+NULLABLE_REACH_METRICS = [
+    "videoThumbnailImpressions",
+    "videoThumbnailImpressionsClickRate",
 ]
 TRAFFIC_SOURCE_METRICS = ["views", "estimatedMinutesWatched"]
 MANUAL_OBSERVATION_FIELDS = [
@@ -554,9 +564,8 @@ def build_analytics_windows(
             start_date=start_date,
             end_date=end_date,
             video_ids=video_ids,
-            metrics=ANALYTICS_METRICS,
+            metrics=QUERY_ANALYTICS_METRICS,
         )
-        metrics_used = ANALYTICS_METRICS
         if error:
             fallback_rows, fallback_error = query_analytics(
                 analytics,
@@ -569,7 +578,7 @@ def build_analytics_windows(
                 {
                     "window": label,
                     "query": "video_metrics",
-                    "metrics": ANALYTICS_METRICS,
+                    "metrics": QUERY_ANALYTICS_METRICS,
                     "error": error,
                     "fallback_metrics": CORE_ANALYTICS_METRICS,
                     "fallback_error": fallback_error,
@@ -577,7 +586,6 @@ def build_analytics_windows(
             )
             rows = fallback_rows
             error = fallback_error
-            metrics_used = CORE_ANALYTICS_METRICS
 
         rows_by_video = {str(row.get("video")): row for row in rows}
         for video_id in video_ids:
@@ -586,14 +594,14 @@ def build_analytics_windows(
                 windows_by_video[video_id][label] = empty_window(
                     start_date=start_date,
                     end_date=end_date,
-                    metrics=metrics_used,
+                    metrics=ANALYTICS_METRICS,
                     reason=error or "analytics_lag_or_no_rows",
                 )
                 continue
             windows_by_video[video_id][label] = {
                 "start_date": start_date,
                 "end_date": end_date,
-                "metrics": {metric: row.get(metric) for metric in metrics_used},
+                "metrics": {metric: row.get(metric) for metric in ANALYTICS_METRICS},
                 "missing": False,
                 "missing_reason": None,
             }
@@ -773,6 +781,10 @@ def build_ledger(
         "analytics_end_date": analytics_end_date,
         "windows": WATCH_WINDOWS,
         "manual_observation_fields": MANUAL_OBSERVATION_FIELDS,
+        "metric_availability_notes": {
+            metric: "Nullable; YouTube Analytics rejected this reach metric in the channel video report query."
+            for metric in NULLABLE_REACH_METRICS
+        },
         "query_notes": query_notes,
         "videos": videos,
     }
