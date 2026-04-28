@@ -27,6 +27,32 @@ DECISION_ORDER = [
     "ignore",
 ]
 WINDOW_ORDER = ["24h", "72h", "7d", "28d"]
+HORIZONS = {
+    "daily": {
+        "label": "Daily",
+        "description": "Latest per-day row available from YouTube Analytics.",
+        "window": None,
+        "days": 1,
+    },
+    "weekly": {
+        "label": "Weekly",
+        "description": "7-day Analytics window.",
+        "window": "7d",
+        "days": 7,
+    },
+    "monthly": {
+        "label": "28 Days",
+        "description": "28-day Analytics window, matching the Studio-style month view.",
+        "window": "28d",
+        "days": 28,
+    },
+}
+DAILY_WINDOW_PRIORITY = {
+    "24h": 0,
+    "72h": 1,
+    "7d": 2,
+    "28d": 3,
+}
 CORE_METRICS = [
     "views",
     "engagedViews",
@@ -163,6 +189,85 @@ def selected_metric(video: dict[str, Any], metric_name: str, preferred_window: s
     return None
 
 
+def normalize_metrics(
+    metrics: dict[str, Any] | None,
+    *,
+    days: int,
+) -> dict[str, float | None]:
+    metrics = metrics or {}
+    views = number(metrics.get("views"))
+    subscribers = number(metrics.get("subscribersGained"))
+    return {
+        "views": views,
+        "views_per_day": views / days if views is not None and days else None,
+        "estimatedMinutesWatched": number(metrics.get("estimatedMinutesWatched")),
+        "averageViewDuration": number(metrics.get("averageViewDuration")),
+        "averageViewPercentage": number(metrics.get("averageViewPercentage")),
+        "likes": number(metrics.get("likes")),
+        "comments": number(metrics.get("comments")),
+        "shares": number(metrics.get("shares")),
+        "subscribersGained": subscribers,
+        "subscribers_per_1000_views": subscribers / views * 1000 if subscribers is not None and views else None,
+        "videoThumbnailImpressions": number(metrics.get("videoThumbnailImpressions")),
+        "videoThumbnailImpressionsClickRate": number(metrics.get("videoThumbnailImpressionsClickRate")),
+    }
+
+
+def window_horizon_metrics(video: dict[str, Any], window_label: str, days: int) -> dict[str, Any]:
+    window = (video.get("analytics_windows") or {}).get(window_label)
+    if not window or window.get("missing"):
+        return {
+            "available": False,
+            "window": window_label,
+            "start_date": (window or {}).get("start_date"),
+            "end_date": (window or {}).get("end_date"),
+            "metrics": normalize_metrics(None, days=days),
+        }
+    return {
+        "available": True,
+        "window": window_label,
+        "start_date": window.get("start_date"),
+        "end_date": window.get("end_date"),
+        "metrics": normalize_metrics(window.get("metrics"), days=days),
+    }
+
+
+def latest_daily_horizon_metrics(video: dict[str, Any]) -> dict[str, Any]:
+    by_day: dict[str, dict[str, Any]] = {}
+    for row in video.get("daily_metrics") or []:
+        day = row.get("day")
+        if not day:
+            continue
+        existing = by_day.get(day)
+        current_priority = DAILY_WINDOW_PRIORITY.get(str(row.get("window")), 99)
+        existing_priority = DAILY_WINDOW_PRIORITY.get(str((existing or {}).get("window")), 99)
+        if existing is None or current_priority < existing_priority:
+            by_day[day] = row
+    if not by_day:
+        return {
+            "available": False,
+            "window": "daily",
+            "day": None,
+            "metrics": normalize_metrics(None, days=1),
+        }
+    day = max(by_day)
+    row = by_day[day]
+    return {
+        "available": True,
+        "window": row.get("window"),
+        "day": day,
+        "metrics": normalize_metrics(row.get("metrics"), days=1),
+    }
+
+
+def build_horizon_metrics(video: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    return {
+        "daily": latest_daily_horizon_metrics(video),
+        "weekly": window_horizon_metrics(video, "7d", 7),
+        "monthly": window_horizon_metrics(video, "28d", 28),
+    }
+
+
 def summarize_windows(videos: list[dict[str, Any]]) -> dict[str, dict[str, int]]:
     coverage: dict[str, dict[str, int]] = {}
     for label in WINDOW_ORDER:
@@ -288,6 +393,7 @@ def compact_classification(
     }
     source_reports = source_video.get("source_reports") or []
     click_metrics = known_clicks(observations)
+    horizon_metrics = build_horizon_metrics(source_video)
     return {
         "video_id": classification.get("video_id"),
         "title": classification.get("title"),
@@ -308,6 +414,7 @@ def compact_classification(
         "related_video": source_video.get("related_video") or classification.get("related_video"),
         "source_reports": source_reports,
         "source_report_links": source_report_links(source_reports),
+        "horizon_metrics": horizon_metrics,
         "funnel": {
             **click_metrics,
             "card_impressions": number(observations.get("card_impressions")),
@@ -409,11 +516,18 @@ def build_action_lanes(findings: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return lanes
 
 
-def build_package_rollups(findings: dict[str, Any]) -> list[dict[str, Any]]:
+def item_metrics_for_horizon(item: dict[str, Any], horizon: str) -> dict[str, Any]:
+    horizon_metrics = (item.get("horizon_metrics") or {}).get(horizon)
+    if horizon_metrics:
+        return horizon_metrics.get("metrics") or {}
+    return item.get("metrics") or {}
+
+
+def build_package_rollups(findings: dict[str, Any], *, horizon: str = "weekly") -> list[dict[str, Any]]:
     rollups: dict[str, dict[str, Any]] = {}
     for item in findings.get("classifications") or []:
         package = item.get("package") or "unknown"
-        metrics = item.get("metrics") or {}
+        metrics = item_metrics_for_horizon(item, horizon)
         row = rollups.setdefault(
             package,
             {
@@ -447,6 +561,76 @@ def build_package_rollups(findings: dict[str, Any]) -> list[dict[str, Any]]:
         row["category_counts"] = dict(categories)
         rows.append(row)
     return sorted(rows, key=lambda item: (item["action_items"], item["total_views"]), reverse=True)
+
+
+def build_package_rollups_by_horizon(findings: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
+    return {
+        horizon: build_package_rollups(findings, horizon=horizon)
+        for horizon in HORIZONS
+    }
+
+
+def build_horizon_summaries(findings: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    summaries: dict[str, dict[str, Any]] = {}
+    for horizon in HORIZONS:
+        videos_with_metrics = 0
+        total_views = 0.0
+        total_watch_time = 0.0
+        total_subscribers = 0.0
+        avg_viewed_sum = 0.0
+        avg_viewed_count = 0
+        for item in findings.get("classifications") or []:
+            horizon_row = (item.get("horizon_metrics") or {}).get(horizon) or {}
+            metrics = horizon_row.get("metrics") or {}
+            views = number(metrics.get("views"))
+            if views is not None:
+                videos_with_metrics += 1
+                total_views += views
+            total_watch_time += number(metrics.get("estimatedMinutesWatched")) or 0
+            total_subscribers += number(metrics.get("subscribersGained")) or 0
+            avg_viewed = number(metrics.get("averageViewPercentage"))
+            if avg_viewed is not None:
+                avg_viewed_sum += avg_viewed
+                avg_viewed_count += 1
+        summaries[horizon] = {
+            "label": HORIZONS[horizon]["label"],
+            "description": HORIZONS[horizon]["description"],
+            "videos_with_metrics": videos_with_metrics,
+            "total_views": total_views,
+            "total_watch_time_minutes": total_watch_time,
+            "total_subscribers_gained": total_subscribers,
+            "average_view_percentage": avg_viewed_sum / avg_viewed_count if avg_viewed_count else None,
+        }
+    return summaries
+
+
+def summarize_traffic_for_window(videos: list[dict[str, Any]], window: str) -> list[dict[str, Any]]:
+    totals: Counter[str] = Counter()
+    for video in videos:
+        for row in video.get("traffic_sources") or []:
+            if row.get("window") == window:
+                totals[str(row.get("source_type") or "unknown")] += int(number(row.get("views")) or 0)
+    return [{"source": key, "views": value} for key, value in totals.most_common(12)]
+
+
+def summarize_traffic_by_horizon(videos: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    return {
+        "daily": {
+            "label": "72h traffic-source proxy",
+            "note": "YouTube does not always expose a populated latest-day traffic-source mix; this uses the shortest available 72h source window.",
+            "sources": summarize_traffic_for_window(videos, "72h"),
+        },
+        "weekly": {
+            "label": "7d traffic sources",
+            "note": None,
+            "sources": summarize_traffic_for_window(videos, "7d"),
+        },
+        "monthly": {
+            "label": "28d traffic sources",
+            "note": None,
+            "sources": summarize_traffic_for_window(videos, "28d"),
+        },
+    }
 
 
 def build_funnel_rollups(findings: dict[str, Any]) -> dict[str, Any]:
@@ -560,8 +744,10 @@ def build_dashboard_payload(
     package_counts = Counter(video.get("package") or "unknown" for video in videos)
     findings = summarize_findings(report_summary, videos)
     action_lanes = build_action_lanes(findings)
-    package_rollups = build_package_rollups(findings)
+    package_rollups_by_horizon = build_package_rollups_by_horizon(findings)
     funnel_rollups = build_funnel_rollups(findings)
+    horizon_summaries = build_horizon_summaries(findings)
+    traffic_sources_by_horizon = summarize_traffic_by_horizon(videos)
 
     reach_impression_videos = sum(
         1
@@ -629,6 +815,7 @@ def build_dashboard_payload(
             "privacy": sorted_counter(privacy_counts),
             "top_packages": sorted_counter(package_counts, limit=15),
             "traffic_sources_7d": summarize_traffic(videos),
+            "traffic_sources_by_horizon": traffic_sources_by_horizon,
             "creator_content_type_7d": summarize_content_type(videos),
         },
         "coverage": {
@@ -650,8 +837,11 @@ def build_dashboard_payload(
             ),
         },
         "readable_field_labels": READABLE_FIELD_LABELS,
+        "horizons": HORIZONS,
+        "horizon_summaries": horizon_summaries,
         "action_lanes": action_lanes,
-        "package_rollups": package_rollups,
+        "package_rollups": package_rollups_by_horizon["weekly"],
+        "package_rollups_by_horizon": package_rollups_by_horizon,
         "funnel_rollups": funnel_rollups,
         "sort_defaults": {
             "videos": {"key": "score", "direction": "desc"},
@@ -660,6 +850,7 @@ def build_dashboard_payload(
         "data_gap_groups": build_data_gap_groups(findings),
         "ui_defaults": {
             "default_tab": "action-board",
+            "default_horizon": "weekly",
             "show_empty_buckets": False,
         },
         "findings": findings,
@@ -785,6 +976,33 @@ DASHBOARD_HTML = """<!doctype html>
 
     .check-chip { gap: 6px; cursor: pointer; }
     .check-chip input { width: auto; min-height: auto; margin: 0; }
+    .horizon-control {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .horizon-btn {
+      appearance: none;
+      min-height: 30px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      padding: 5px 9px;
+    }
+    .horizon-btn.active {
+      background: var(--panel);
+      border-color: var(--line);
+      color: var(--ink);
+      box-shadow: var(--shadow);
+    }
     .badge.scale, .badge.funnel_winner { color: var(--green); border-color: rgba(24, 122, 69, 0.28); background: #eef8f1; }
     .badge.clip_more, .badge.remaster { color: var(--teal); border-color: rgba(4, 116, 129, 0.28); background: #edf8f9; }
     .badge.retitle { color: var(--orange); border-color: rgba(182, 93, 0, 0.28); background: #fff5e8; }
@@ -1046,6 +1264,8 @@ DASHBOARD_HTML = """<!doctype html>
       needs_studio_check: "violet",
       watch: "teal"
     };
+    const horizonOrder = ["daily", "weekly", "monthly"];
+    let currentHorizon = ((data.ui_defaults || {}).default_horizon || "weekly");
     let showEmptyBuckets = Boolean((data.ui_defaults || {}).show_empty_buckets);
     let videoSort = { ...((data.sort_defaults || {}).videos || { key: "score", direction: "desc" }) };
 
@@ -1085,6 +1305,42 @@ DASHBOARD_HTML = """<!doctype html>
 
     function stat(label, value) {
       return `<div class="card"><span class="stat-value">${escapeHtml(value)}</span><span class="stat-label">${escapeHtml(label)}</span></div>`;
+    }
+
+    function horizonMeta() {
+      return (data.horizons || {})[currentHorizon] || { label: currentHorizon, description: "" };
+    }
+
+    function metricFor(item) {
+      const row = ((item.horizon_metrics || {})[currentHorizon] || {});
+      return row.metrics || item.metrics || {};
+    }
+
+    function horizonRangeFor(item) {
+      const row = ((item.horizon_metrics || {})[currentHorizon] || {});
+      if (currentHorizon === "daily") return row.day || "latest day";
+      if (row.start_date && row.end_date) return `${row.start_date} to ${row.end_date}`;
+      return horizonMeta().label || currentHorizon;
+    }
+
+    function horizonControl() {
+      return `
+        <div class="horizon-control" aria-label="Metric horizon">
+          ${horizonOrder.map((key) => {
+            const meta = (data.horizons || {})[key] || { label: key };
+            return `<button class="horizon-btn ${key === currentHorizon ? "active" : ""}" data-horizon="${escapeHtml(key)}">${escapeHtml(meta.label)}</button>`;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function bindHorizonControls() {
+      document.querySelectorAll("[data-horizon]").forEach((button) => {
+        button.addEventListener("click", () => {
+          currentHorizon = button.dataset.horizon;
+          renderDashboardSections();
+        });
+      });
     }
 
     function simpleTable(headers, rows) {
@@ -1139,6 +1395,7 @@ DASHBOARD_HTML = """<!doctype html>
       const readOnly = report.read_only && ledger.read_only ? "Read-only" : "Check mode";
       document.getElementById("status-strip").innerHTML = [
         `<span class="badge">${readOnly}</span>`,
+        `<span class="badge">${escapeHtml(horizonMeta().label)} view</span>`,
         `<span class="badge">${escapeHtml((data.reporting_status || {}).reach_status_text || "CTR pending")}</span>`,
         `<span class="badge">${fmtNumber(data.totals.actionable_videos)} action items</span>`,
         `<span class="badge">${fmtNumber(data.totals.waiting_for_ctr)} waiting for CTR</span>`
@@ -1147,7 +1404,7 @@ DASHBOARD_HTML = """<!doctype html>
 
     function findingCard(item, context) {
       const category = context || item.primary_category || "ignore";
-      const metrics = item.metrics || {};
+      const metrics = metricFor(item);
       const reason = (item.reasons_by_category || {})[category] || (item.reasons && item.reasons.length ? item.reasons[0] : "");
       const action = (item.actions_by_category || {})[category] || (item.recommended_actions && item.recommended_actions.length ? item.recommended_actions[0] : "");
       return `
@@ -1158,7 +1415,7 @@ DASHBOARD_HTML = """<!doctype html>
             <div>${escapeHtml(action || "Keep watching until a stronger signal appears.")}</div>
             ${sourceLinks(item)}
             <div class="metric-row">
-              <span class="metric-chip">${escapeHtml(item.selected_window || "-")}</span>
+              <span class="metric-chip">${escapeHtml(horizonMeta().label)}: ${escapeHtml(horizonRangeFor(item))}</span>
               <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
               <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
               <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
@@ -1174,6 +1431,7 @@ DASHBOARD_HTML = """<!doctype html>
     function renderActionBoard() {
       const lanes = data.action_lanes || {};
       const strongest = strongestAction();
+      const summary = (data.horizon_summaries || {})[currentHorizon] || {};
       const decisionRows = decisionOrder
         .filter((category) => showEmptyBuckets || ((data.findings.summary_counts || {})[category] || 0) > 0)
         .map((category) => ({ name: categoryLabels[category] || category, count: (data.findings.summary_counts || {})[category] || 0 }));
@@ -1193,10 +1451,23 @@ DASHBOARD_HTML = """<!doctype html>
       }).join("");
 
       document.getElementById("action-board").innerHTML = `
+        <div class="card" style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <div>
+              <h2 style="margin-bottom: 4px;">${escapeHtml(horizonMeta().label)} Decision View</h2>
+              <div class="muted">${escapeHtml(horizonMeta().description || "")}</div>
+            </div>
+            ${horizonControl()}
+          </div>
+        </div>
         <div class="grid two">
           <div class="card">
-            <h2>This Week</h2>
+            <h2>${escapeHtml(horizonMeta().label)} Snapshot</h2>
             <div class="metric-row">
+              <span class="metric-chip">${fmtNumber(summary.total_views)} views</span>
+              <span class="metric-chip">${fmtNumber(summary.total_watch_time_minutes)} watch minutes</span>
+              <span class="metric-chip">${fmtPercent(summary.average_view_percentage)} avg viewed</span>
+              <span class="metric-chip">${fmtNumber(summary.videos_with_metrics)} videos with data</span>
               <span class="metric-chip">${fmtNumber(data.totals.actionable_videos)} actionable</span>
               <span class="metric-chip">${fmtNumber(data.totals.waiting_for_ctr)} blocked by CTR</span>
               <span class="metric-chip">${fmtNumber(data.totals.needs_studio_check)} need Studio check</span>
@@ -1222,15 +1493,17 @@ DASHBOARD_HTML = """<!doctype html>
       `;
       document.getElementById("show-empty-buckets").addEventListener("change", (event) => {
         showEmptyBuckets = event.target.checked;
-        renderActionBoard();
+        renderDashboardSections();
       });
+      bindHorizonControls();
     }
 
     function renderOverview() {
       const totals = data.totals;
+      const summary = (data.horizon_summaries || {})[currentHorizon] || {};
       const metricRows = Object.entries(data.coverage.metrics).map(([name, count]) => ({ name: labelFor(name), count }));
       const decisionRows = decisionOrder.map((category) => ({ name: categoryLabels[category] || category, count: (data.findings.summary_counts || {})[category] || 0 }));
-      const packageRows = (data.package_rollups || []).slice(0, 10).map((row) => ({
+      const packageRows = ((data.package_rollups_by_horizon || {})[currentHorizon] || data.package_rollups || []).slice(0, 10).map((row) => ({
         package: row.package,
         action_items: row.action_items,
         total_views: row.total_views,
@@ -1245,14 +1518,24 @@ DASHBOARD_HTML = """<!doctype html>
         </tr>
       `);
       const sync = data.ledger.reporting_api_sync || {};
+      const traffic = ((data.distributions.traffic_sources_by_horizon || {})[currentHorizon] || {});
       document.getElementById("overview").innerHTML = `
+        <div class="card" style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <div>
+              <h2 style="margin-bottom: 4px;">Overview: ${escapeHtml(horizonMeta().label)}</h2>
+              <div class="muted">${escapeHtml(horizonMeta().description || "")}</div>
+            </div>
+            ${horizonControl()}
+          </div>
+        </div>
         <div class="grid stats">
           ${stat("Videos", fmtNumber(totals.videos))}
-          ${stat("Action Items", fmtNumber(totals.actionable_videos))}
-          ${stat("Waiting For CTR", fmtNumber(totals.waiting_for_ctr))}
-          ${stat("Needs Studio Check", fmtNumber(totals.needs_studio_check))}
+          ${stat(`${horizonMeta().label} Views`, fmtNumber(summary.total_views))}
+          ${stat("Watch Minutes", fmtNumber(summary.total_watch_time_minutes))}
+          ${stat("Avg Viewed", fmtPercent(summary.average_view_percentage))}
+          ${stat("Videos With Data", fmtNumber(summary.videos_with_metrics))}
           ${stat("Reach Impressions Ready", fmtNumber(totals.reach_impression_videos))}
-          ${stat("CTR Ready", fmtNumber(totals.ctr_videos))}
         </div>
         <div class="grid three">
           <div class="card"><h2>Status</h2>
@@ -1262,7 +1545,7 @@ DASHBOARD_HTML = """<!doctype html>
           </div>
           <div class="card"><h2>Formats</h2>${barList(data.distributions.formats || [], { color: "blue" })}</div>
           <div class="card"><h2>Decision Counts</h2>${barList(decisionRows, { color: "teal" })}</div>
-          <div class="card"><h2>Traffic Sources</h2>${barList(data.distributions.traffic_sources_7d || [], { labelKey: "source", valueKey: "views", color: "green" })}</div>
+          <div class="card"><h2>${escapeHtml(traffic.label || "Traffic Sources")}</h2>${traffic.note ? `<p class="muted">${escapeHtml(traffic.note)}</p>` : ""}${barList(traffic.sources || [], { labelKey: "source", valueKey: "views", color: "green" })}</div>
           <div class="card"><h2>Metric Coverage</h2>${barList(metricRows, { color: "violet" })}</div>
           <div class="card"><h2>Funnel Snapshot</h2>
             <div class="metric-row">
@@ -1273,14 +1556,15 @@ DASHBOARD_HTML = """<!doctype html>
           </div>
         </div>
         <div class="card" style="margin-top: 12px;">
-          <h2>Package Rollups</h2>
+          <h2>Package Rollups: ${escapeHtml(horizonMeta().label)}</h2>
           ${simpleTable(["Package", "Action Items", "Views", "Avg Viewed"], packageTableRows)}
         </div>
       `;
+      bindHorizonControls();
     }
 
     function sortValue(item, key) {
-      const metrics = item.metrics || {};
+      const metrics = metricFor(item);
       if (key === "score") return Number(item.score) || 0;
       if (key === "views") return Number(metrics.views) || 0;
       if (key === "views_per_day") return Number(metrics.views_per_day) || 0;
@@ -1292,7 +1576,7 @@ DASHBOARD_HTML = """<!doctype html>
     }
 
     function matchesQuickFilter(item, filter) {
-      const metrics = item.metrics || {};
+      const metrics = metricFor(item);
       if (filter === "actionable") return (item.categories || []).some((category) => category !== "ignore");
       if (filter === "shorts") return item.format === "short";
       if (filter === "cinematic") return item.format === "cinematic";
@@ -1306,6 +1590,15 @@ DASHBOARD_HTML = """<!doctype html>
       const classifications = data.findings.classifications || [];
       const formatOptions = [...new Set(classifications.map((item) => item.format || "unknown"))].sort();
       document.getElementById("videos").innerHTML = `
+        <div class="card" style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <div>
+              <h2 style="margin-bottom: 4px;">Videos: ${escapeHtml(horizonMeta().label)}</h2>
+              <div class="muted">Metric columns and sorting use the selected horizon.</div>
+            </div>
+            ${horizonControl()}
+          </div>
+        </div>
         <div class="toolbar">
           <input id="video-search" type="search" placeholder="Search title, package, or video ID">
           <select id="category-filter">
@@ -1349,13 +1642,13 @@ DASHBOARD_HTML = """<!doctype html>
             return 0;
           });
         const rows = sorted.map((item) => {
-          const metrics = item.metrics || {};
+          const metrics = metricFor(item);
           return `<tr class="row-${escapeHtml(item.primary_category || "ignore")}">
             <td>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div>${sourceLinks(item)}</td>
             <td>${(item.categories || []).map(badge).join(" ")}</td>
             <td>${escapeHtml(item.format || "-")}</td>
             <td>${escapeHtml(item.package || "-")}</td>
-            <td>${escapeHtml(item.selected_window || "-")}</td>
+            <td>${escapeHtml(horizonRangeFor(item))}</td>
             <td>${fmtNumber(metrics.views)}</td>
             <td>${fmtNumber(metrics.views_per_day, 1)}</td>
             <td>${fmtPercent(metrics.averageViewPercentage)}</td>
@@ -1369,7 +1662,7 @@ DASHBOARD_HTML = """<!doctype html>
           "Buckets",
           "Format",
           "Package",
-          "Window",
+          "Range",
           `<button class="sort-btn" data-sort="views">Views</button>`,
           `<button class="sort-btn" data-sort="views_per_day">V/day</button>`,
           `<button class="sort-btn" data-sort="avg_viewed">Avg Viewed</button>`,
@@ -1395,6 +1688,7 @@ DASHBOARD_HTML = """<!doctype html>
       document.querySelectorAll("[data-quick-filter]").forEach((input) => {
         input.addEventListener("change", renderTable);
       });
+      bindHorizonControls();
       renderTable();
     }
 
@@ -1465,11 +1759,15 @@ DASHBOARD_HTML = """<!doctype html>
       });
     }
 
-    renderMeta();
-    renderActionBoard();
-    renderOverview();
-    renderVideos();
-    renderGaps();
+    function renderDashboardSections() {
+      renderMeta();
+      renderActionBoard();
+      renderOverview();
+      renderVideos();
+      renderGaps();
+    }
+
+    renderDashboardSections();
     setupTabs();
   </script>
 </body>

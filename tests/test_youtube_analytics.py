@@ -271,6 +271,22 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                         views=1400,
                         avg_pct=60,
                         subs=3,
+                        daily_metrics=[
+                            {
+                                "window": "7d",
+                                "day": "2026-04-27",
+                                "metrics": {
+                                    "views": 25,
+                                    "estimatedMinutesWatched": 10,
+                                    "averageViewDuration": 20,
+                                    "averageViewPercentage": 55,
+                                    "likes": 1,
+                                    "comments": 0,
+                                    "shares": 0,
+                                    "subscribersGained": 1,
+                                },
+                            }
+                        ],
                     ),
                     self.video(
                         "REMASTER",
@@ -332,6 +348,16 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertEqual(payload["package_rollups"][0]["package"], "demo")
             self.assertEqual(payload["package_rollups"][0]["video_count"], 2)
             self.assertEqual(payload["package_rollups"][0]["action_items"], 2)
+            self.assertEqual(payload["horizons"]["monthly"]["label"], "28 Days")
+            self.assertEqual(payload["horizon_summaries"]["daily"]["total_views"], 25)
+            self.assertEqual(
+                payload["package_rollups_by_horizon"]["daily"][0]["total_views"],
+                25,
+            )
+            self.assertEqual(
+                payload["findings"]["by_category"]["scale"][0]["horizon_metrics"]["daily"]["day"],
+                "2026-04-27",
+            )
             self.assertEqual(payload["funnel_rollups"]["totals"]["shorts_with_related"], 1)
             self.assertEqual(payload["sort_defaults"]["videos"]["key"], "score")
             self.assertEqual(
@@ -438,6 +464,7 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         ctr: float | None = None,
         published_at: str = "2026-04-20T00:00:00Z",
         source_reports: list[str] | None = None,
+        daily_metrics: list[dict] | None = None,
     ) -> dict:
         metrics = {
             "views": views,
@@ -469,6 +496,7 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                     "metrics": metrics,
                 }
             },
+            "daily_metrics": daily_metrics or [],
             "manual_observations": {
                 "related_video_clicks": None,
                 "card_clicks": None,
