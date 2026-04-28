@@ -324,6 +324,16 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertEqual(payload["totals"]["videos"], 2)
             self.assertEqual(payload["totals"]["actionable_videos"], 2)
             self.assertEqual(payload["findings"]["by_category"]["scale"][0]["video_id"], "SCALE")
+            self.assertIn("retitle", payload["findings"]["by_category"])
+            self.assertEqual(payload["action_lanes"]["do_now"]["count"], 2)
+            self.assertEqual(payload["action_lanes"]["waiting_for_ctr"]["count"], 2)
+            self.assertEqual(payload["action_lanes"]["needs_studio_check"]["count"], 2)
+            self.assertEqual(payload["data_gap_groups"]["api_pending"]["fields"][0]["label"], "Thumbnail impressions")
+            self.assertEqual(payload["package_rollups"][0]["package"], "demo")
+            self.assertEqual(payload["package_rollups"][0]["video_count"], 2)
+            self.assertEqual(payload["package_rollups"][0]["action_items"], 2)
+            self.assertEqual(payload["funnel_rollups"]["totals"]["shorts_with_related"], 1)
+            self.assertEqual(payload["sort_defaults"]["videos"]["key"], "score")
             self.assertEqual(
                 payload["findings"]["by_category"]["remaster"][0]["actions_by_category"]["remaster"],
                 "Queue this Short for the overlay remaster workflow instead of unlisting it immediately.",

@@ -53,6 +53,76 @@ MANUAL_FIELDS = [
     "thumbnail_title_observations",
     "studio_related_verified",
 ]
+READABLE_FIELD_LABELS = {
+    "video_thumbnail_impressions": "Thumbnail impressions",
+    "thumbnail_impressions": "Thumbnail impressions",
+    "video_thumbnail_ctr": "Thumbnail CTR",
+    "thumbnail_ctr": "Thumbnail CTR",
+    "related_video_clicks": "Related-video clicks",
+    "card_clicks": "Card clicks",
+    "card_impressions": "Card impressions",
+    "card_teaser_clicks": "Card teaser clicks",
+    "card_teaser_impressions": "Card teaser impressions",
+    "card_click_rate": "Card click rate",
+    "card_teaser_click_rate": "Card teaser click rate",
+    "end_screen_clicks": "End-screen clicks",
+    "retention_notes": "Retention notes",
+    "thumbnail_title_observations": "Thumbnail/title observations",
+    "studio_related_verified": "Studio related-video verification",
+    "source_reports": "Source reports",
+    "package": "Package metadata",
+    "format": "Format metadata",
+    "views": "Views",
+    "engagedViews": "Engaged views",
+    "estimatedMinutesWatched": "Watch time",
+    "averageViewDuration": "Average view duration",
+    "averageViewPercentage": "Average viewed",
+    "likes": "Likes",
+    "comments": "Comments",
+    "shares": "Shares",
+    "subscribersGained": "Subscribers gained",
+    "videoThumbnailImpressions": "Thumbnail impressions",
+    "videoThumbnailImpressionsClickRate": "Thumbnail CTR",
+}
+FIELD_GROUPS = {
+    "api_pending": [
+        "video_thumbnail_impressions",
+        "video_thumbnail_ctr",
+        "card_clicks",
+        "card_impressions",
+        "card_teaser_clicks",
+        "card_teaser_impressions",
+    ],
+    "studio_manual": [
+        "related_video_clicks",
+        "end_screen_clicks",
+        "retention_notes",
+        "thumbnail_title_observations",
+        "studio_related_verified",
+    ],
+    "workflow_metadata": [
+        "source_reports",
+        "package",
+        "format",
+    ],
+}
+FIELD_UNLOCKS = {
+    "video_thumbnail_impressions": "channel_reach_basic_a1",
+    "video_thumbnail_ctr": "channel_reach_basic_a1",
+    "card_clicks": "channel_basic_a3",
+    "card_impressions": "channel_basic_a3",
+    "card_teaser_clicks": "channel_basic_a3",
+    "card_teaser_impressions": "channel_basic_a3",
+}
+DO_NOW_CATEGORIES = {"scale", "funnel_winner", "clip_more", "hook_problem", "remaster"}
+CTR_FIELDS = {"video_thumbnail_impressions", "video_thumbnail_ctr"}
+STUDIO_CHECK_FIELDS = {
+    "related_video_clicks",
+    "end_screen_clicks",
+    "retention_notes",
+    "thumbnail_title_observations",
+    "studio_related_verified",
+}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -167,8 +237,48 @@ def summarize_content_type(videos: list[dict[str, Any]]) -> list[dict[str, Any]]
     return [{"content_type": key, "views": value} for key, value in totals.most_common()]
 
 
-def compact_classification(classification: dict[str, Any]) -> dict[str, Any]:
+def source_report_links(source_reports: list[str]) -> list[dict[str, str]]:
+    links: list[dict[str, str]] = []
+    for report in source_reports:
+        path = Path(report)
+        absolute = path if path.is_absolute() else REPO_ROOT / path
+        links.append(
+            {
+                "label": path.name,
+                "path": str(path),
+                "url": absolute.as_uri(),
+            }
+        )
+    return links
+
+
+def primary_category(item: dict[str, Any]) -> str:
+    categories = item.get("categories") or ["ignore"]
+    for category in DECISION_ORDER:
+        if category in categories:
+            return category
+    return categories[0]
+
+
+def known_clicks(observations: dict[str, Any]) -> dict[str, float]:
+    related = number(observations.get("related_video_clicks")) or 0
+    card = number(observations.get("card_clicks")) or 0
+    end_screen = number(observations.get("end_screen_clicks")) or 0
+    return {
+        "related_video_clicks": related,
+        "card_clicks": card,
+        "end_screen_clicks": end_screen,
+        "known_downstream_clicks": related + card + end_screen,
+    }
+
+
+def compact_classification(
+    classification: dict[str, Any],
+    source_video: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     metrics = classification.get("metrics") or {}
+    source_video = source_video or {}
+    observations = source_video.get("manual_observations") or {}
     categories = classification.get("categories") or ["ignore"]
     reasons = classification.get("reasons") or []
     reasons_by_category = {
@@ -176,6 +286,8 @@ def compact_classification(classification: dict[str, Any]) -> dict[str, Any]:
         for index, category in enumerate(categories)
         if index < len(reasons)
     }
+    source_reports = source_video.get("source_reports") or []
+    click_metrics = known_clicks(observations)
     return {
         "video_id": classification.get("video_id"),
         "title": classification.get("title"),
@@ -183,13 +295,27 @@ def compact_classification(classification: dict[str, Any]) -> dict[str, Any]:
         "format": classification.get("format") or "unknown",
         "package": classification.get("package") or "unknown",
         "published_at": classification.get("published_at"),
+        "privacy_status": source_video.get("privacy_status"),
         "selected_window": classification.get("selected_window"),
+        "data_age_days": classification.get("data_age_days"),
         "categories": categories,
+        "primary_category": primary_category({"categories": categories}),
         "reasons": reasons,
         "reasons_by_category": reasons_by_category,
         "recommended_actions": classification.get("recommended_actions") or [],
         "actions_by_category": classification.get("actions_by_category") or {},
         "manual_fields_missing": classification.get("manual_fields_missing") or [],
+        "related_video": source_video.get("related_video") or classification.get("related_video"),
+        "source_reports": source_reports,
+        "source_report_links": source_report_links(source_reports),
+        "funnel": {
+            **click_metrics,
+            "card_impressions": number(observations.get("card_impressions")),
+            "card_teaser_clicks": number(observations.get("card_teaser_clicks")),
+            "card_teaser_impressions": number(observations.get("card_teaser_impressions")),
+            "card_click_rate": number(observations.get("card_click_rate")),
+            "card_teaser_click_rate": number(observations.get("card_teaser_click_rate")),
+        },
         "score": number(classification.get("score")) or 0,
         "metrics": {
             "views": number(metrics.get("views")),
@@ -205,8 +331,15 @@ def compact_classification(classification: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def summarize_findings(report_summary: dict[str, Any]) -> dict[str, Any]:
-    compact = [compact_classification(item) for item in report_summary.get("classifications") or []]
+def summarize_findings(
+    report_summary: dict[str, Any],
+    videos: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    video_lookup = {video.get("video_id"): video for video in videos or []}
+    compact = [
+        compact_classification(item, video_lookup.get(item.get("video_id")))
+        for item in report_summary.get("classifications") or []
+    ]
     by_category: dict[str, list[dict[str, Any]]] = {category: [] for category in DECISION_ORDER}
     missing_fields: Counter[str] = Counter()
     for item in compact:
@@ -234,6 +367,188 @@ def summarize_findings(report_summary: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def build_action_lanes(findings: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    lanes = {
+        "do_now": {
+            "label": "Do Now",
+            "description": "Recommendations with enough current signal to act on.",
+            "items": [],
+        },
+        "waiting_for_ctr": {
+            "label": "Waiting For CTR",
+            "description": "Videos where packaging judgment is blocked by missing impressions or CTR.",
+            "items": [],
+        },
+        "needs_studio_check": {
+            "label": "Needs Studio Check",
+            "description": "Videos missing Studio-only observations or downstream click fields.",
+            "items": [],
+        },
+        "watch": {
+            "label": "Watch",
+            "description": "Young, low-signal, or otherwise non-actionable videos.",
+            "items": [],
+        },
+    }
+    for item in findings.get("classifications") or []:
+        categories = set(item.get("categories") or [])
+        missing = set(item.get("manual_fields_missing") or [])
+        metrics = item.get("metrics") or {}
+        if categories & DO_NOW_CATEGORIES and metrics.get("views") is not None:
+            lanes["do_now"]["items"].append(item)
+        if missing & CTR_FIELDS:
+            lanes["waiting_for_ctr"]["items"].append(item)
+        if missing & STUDIO_CHECK_FIELDS:
+            lanes["needs_studio_check"]["items"].append(item)
+        if categories == {"ignore"}:
+            lanes["watch"]["items"].append(item)
+
+    for lane in lanes.values():
+        lane["items"].sort(key=lambda item: item.get("score") or 0, reverse=True)
+        lane["count"] = len(lane["items"])
+    return lanes
+
+
+def build_package_rollups(findings: dict[str, Any]) -> list[dict[str, Any]]:
+    rollups: dict[str, dict[str, Any]] = {}
+    for item in findings.get("classifications") or []:
+        package = item.get("package") or "unknown"
+        metrics = item.get("metrics") or {}
+        row = rollups.setdefault(
+            package,
+            {
+                "package": package,
+                "video_count": 0,
+                "action_items": 0,
+                "total_views": 0.0,
+                "average_view_percentage_sum": 0.0,
+                "average_view_percentage_count": 0,
+                "categories": Counter(),
+            },
+        )
+        row["video_count"] += 1
+        row["categories"].update(item.get("categories") or ["ignore"])
+        if any(category != "ignore" for category in item.get("categories") or []):
+            row["action_items"] += 1
+        views = number(metrics.get("views"))
+        if views is not None:
+            row["total_views"] += views
+        avg_viewed = number(metrics.get("averageViewPercentage"))
+        if avg_viewed is not None:
+            row["average_view_percentage_sum"] += avg_viewed
+            row["average_view_percentage_count"] += 1
+
+    rows = []
+    for row in rollups.values():
+        count = row.pop("average_view_percentage_count")
+        avg_sum = row.pop("average_view_percentage_sum")
+        categories = row.pop("categories")
+        row["average_view_percentage"] = avg_sum / count if count else None
+        row["category_counts"] = dict(categories)
+        rows.append(row)
+    return sorted(rows, key=lambda item: (item["action_items"], item["total_views"]), reverse=True)
+
+
+def build_funnel_rollups(findings: dict[str, Any]) -> dict[str, Any]:
+    parent_rollups: dict[str, dict[str, Any]] = {}
+    shorts_with_related: list[dict[str, Any]] = []
+    totals = {
+        "shorts_with_related": 0,
+        "videos_with_card_clicks": 0,
+        "total_related_video_clicks": 0.0,
+        "total_card_clicks": 0.0,
+        "total_end_screen_clicks": 0.0,
+        "known_downstream_clicks": 0.0,
+    }
+    for item in findings.get("classifications") or []:
+        related = item.get("related_video") or {}
+        if not related:
+            continue
+        funnel = item.get("funnel") or {}
+        clicks = number(funnel.get("known_downstream_clicks")) or 0
+        totals["known_downstream_clicks"] += clicks
+        totals["total_related_video_clicks"] += number(funnel.get("related_video_clicks")) or 0
+        totals["total_card_clicks"] += number(funnel.get("card_clicks")) or 0
+        totals["total_end_screen_clicks"] += number(funnel.get("end_screen_clicks")) or 0
+        if number(funnel.get("card_clicks")):
+            totals["videos_with_card_clicks"] += 1
+        if item.get("format") == "short":
+            totals["shorts_with_related"] += 1
+            shorts_with_related.append(item)
+
+        parent_id = related.get("id") or related.get("video_id") or related.get("url") or "unknown"
+        parent = parent_rollups.setdefault(
+            parent_id,
+            {
+                "parent_id": parent_id,
+                "parent_url": related.get("url"),
+                "source_count": 0,
+                "short_count": 0,
+                "known_downstream_clicks": 0.0,
+                "card_clicks": 0.0,
+                "related_video_clicks": 0.0,
+                "end_screen_clicks": 0.0,
+                "sources": [],
+            },
+        )
+        parent["source_count"] += 1
+        if item.get("format") == "short":
+            parent["short_count"] += 1
+        parent["known_downstream_clicks"] += clicks
+        parent["card_clicks"] += number(funnel.get("card_clicks")) or 0
+        parent["related_video_clicks"] += number(funnel.get("related_video_clicks")) or 0
+        parent["end_screen_clicks"] += number(funnel.get("end_screen_clicks")) or 0
+        parent["sources"].append(
+            {
+                "video_id": item.get("video_id"),
+                "title": item.get("title"),
+                "url": item.get("url"),
+                "format": item.get("format"),
+                "known_downstream_clicks": clicks,
+            }
+        )
+
+    return {
+        "totals": totals,
+        "parents": sorted(
+            parent_rollups.values(),
+            key=lambda item: (item["known_downstream_clicks"], item["source_count"]),
+            reverse=True,
+        ),
+        "shorts_with_related": sorted(
+            shorts_with_related,
+            key=lambda item: ((item.get("funnel") or {}).get("known_downstream_clicks") or 0, item.get("score") or 0),
+            reverse=True,
+        ),
+    }
+
+
+def build_data_gap_groups(findings: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    missing_counts = {
+        row["name"]: row["count"]
+        for row in findings.get("manual_missing_counts") or []
+    }
+    groups: dict[str, dict[str, Any]] = {}
+    for group_key, fields in FIELD_GROUPS.items():
+        groups[group_key] = {
+            "label": {
+                "api_pending": "API pending",
+                "studio_manual": "Studio/manual",
+                "workflow_metadata": "Workflow metadata",
+            }[group_key],
+            "fields": [
+                {
+                    "name": field,
+                    "label": READABLE_FIELD_LABELS.get(field, field),
+                    "missing_count": missing_counts.get(field, 0),
+                    "reporting_job": FIELD_UNLOCKS.get(field),
+                }
+                for field in fields
+            ],
+        }
+    return groups
+
+
 def build_dashboard_payload(
     ledger: dict[str, Any],
     report_summary: dict[str, Any],
@@ -243,7 +558,10 @@ def build_dashboard_payload(
     format_counts = Counter(video.get("format") or "unknown" for video in videos)
     privacy_counts = Counter(video.get("privacy_status") or "unknown" for video in videos)
     package_counts = Counter(video.get("package") or "unknown" for video in videos)
-    findings = summarize_findings(report_summary)
+    findings = summarize_findings(report_summary, videos)
+    action_lanes = build_action_lanes(findings)
+    package_rollups = build_package_rollups(findings)
+    funnel_rollups = build_funnel_rollups(findings)
 
     reach_impression_videos = sum(
         1
@@ -271,9 +589,16 @@ def build_dashboard_payload(
         }
         for key, job in sorted((jobs or {}).items())
     ]
+    reach_jobs = [
+        job
+        for job in reporting_job_rows
+        if str(job.get("report_type_id") or "").startswith("channel_reach")
+    ]
+    reach_ready = any((job.get("available_report_count") or 0) > 0 for job in reach_jobs)
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "repo_root": str(REPO_ROOT),
         "ledger": {
             "created_at": ledger.get("created_at"),
             "analytics_end_date": ledger.get("analytics_end_date"),
@@ -296,6 +621,8 @@ def build_dashboard_payload(
             "related_video_targets": sum(1 for video in videos if video.get("related_video")),
             "reach_impression_videos": reach_impression_videos,
             "ctr_videos": ctr_videos,
+            "waiting_for_ctr": action_lanes["waiting_for_ctr"]["count"],
+            "needs_studio_check": action_lanes["needs_studio_check"]["count"],
         },
         "distributions": {
             "formats": sorted_counter(format_counts),
@@ -310,6 +637,31 @@ def build_dashboard_payload(
             "manual_fields": summarize_manual_availability(videos),
         },
         "reporting_jobs": reporting_job_rows,
+        "reporting_status": {
+            "reach_ready": reach_ready,
+            "reach_status_text": "Reach reports ready" if reach_ready else "CTR and impressions pending",
+            "latest_reach_report_end_time": next(
+                (
+                    job.get("latest_report_end_time")
+                    for job in reach_jobs
+                    if job.get("latest_report_end_time")
+                ),
+                None,
+            ),
+        },
+        "readable_field_labels": READABLE_FIELD_LABELS,
+        "action_lanes": action_lanes,
+        "package_rollups": package_rollups,
+        "funnel_rollups": funnel_rollups,
+        "sort_defaults": {
+            "videos": {"key": "score", "direction": "desc"},
+            "packages": {"key": "action_items", "direction": "desc"},
+        },
+        "data_gap_groups": build_data_gap_groups(findings),
+        "ui_defaults": {
+            "default_tab": "action-board",
+            "show_empty_buckets": False,
+        },
         "findings": findings,
     }
 
@@ -370,6 +722,7 @@ DASHBOARD_HTML = """<!doctype html>
       --orange: #b65d00;
       --red: #b3261e;
       --teal: #047481;
+      --violet: #6650a4;
       --shadow: 0 1px 2px rgba(23, 32, 42, 0.08);
     }
 
@@ -384,7 +737,7 @@ DASHBOARD_HTML = """<!doctype html>
     }
 
     .shell {
-      width: min(1480px, calc(100vw - 32px));
+      width: min(1500px, calc(100vw - 32px));
       margin: 0 auto;
       padding: 24px 0 36px;
     }
@@ -397,24 +750,10 @@ DASHBOARD_HTML = """<!doctype html>
       margin-bottom: 18px;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 30px;
-      line-height: 1.15;
-      letter-spacing: 0;
-    }
-
-    h2 {
-      margin: 0 0 12px;
-      font-size: 18px;
-      letter-spacing: 0;
-    }
-
-    h3 {
-      margin: 0 0 10px;
-      font-size: 15px;
-      letter-spacing: 0;
-    }
+    h1 { margin: 0; font-size: 30px; line-height: 1.15; letter-spacing: 0; }
+    h2 { margin: 0 0 12px; font-size: 18px; letter-spacing: 0; }
+    h3 { margin: 0 0 10px; font-size: 15px; letter-spacing: 0; }
+    p { margin: 0 0 10px; }
 
     .meta {
       color: var(--muted);
@@ -422,14 +761,16 @@ DASHBOARD_HTML = """<!doctype html>
       margin-top: 8px;
     }
 
-    .status-strip {
+    .status-strip, .metric-row, .quick-filters {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-end;
       gap: 8px;
     }
 
-    .badge {
+    .status-strip { justify-content: flex-end; }
+    .metric-row { margin-top: 8px; }
+
+    .badge, .metric-chip, .check-chip {
       display: inline-flex;
       align-items: center;
       min-height: 26px;
@@ -442,6 +783,8 @@ DASHBOARD_HTML = """<!doctype html>
       white-space: nowrap;
     }
 
+    .check-chip { gap: 6px; cursor: pointer; }
+    .check-chip input { width: auto; min-height: auto; margin: 0; }
     .badge.scale, .badge.funnel_winner { color: var(--green); border-color: rgba(24, 122, 69, 0.28); background: #eef8f1; }
     .badge.clip_more, .badge.remaster { color: var(--teal); border-color: rgba(4, 116, 129, 0.28); background: #edf8f9; }
     .badge.retitle { color: var(--orange); border-color: rgba(182, 93, 0, 0.28); background: #fff5e8; }
@@ -476,27 +819,12 @@ DASHBOARD_HTML = """<!doctype html>
       box-shadow: var(--shadow);
     }
 
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .grid.stats {
-      grid-template-columns: repeat(6, minmax(140px, 1fr));
-      margin-bottom: 14px;
-    }
-
-    .grid.two {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .grid { display: grid; gap: 12px; }
+    .grid.stats { grid-template-columns: repeat(6, minmax(140px, 1fr)); margin-bottom: 14px; }
+    .grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     .card {
       background: var(--panel);
@@ -525,7 +853,7 @@ DASHBOARD_HTML = """<!doctype html>
       display: grid;
       grid-template-columns: minmax(220px, 1fr) 180px 180px;
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     input, select {
@@ -550,7 +878,7 @@ DASHBOARD_HTML = """<!doctype html>
     table {
       border-collapse: collapse;
       width: 100%;
-      min-width: 760px;
+      min-width: 900px;
       font-size: 13px;
     }
 
@@ -571,27 +899,59 @@ DASHBOARD_HTML = """<!doctype html>
       z-index: 1;
     }
 
-    tr:last-child td {
-      border-bottom: 0;
+    tr:last-child td { border-bottom: 0; }
+    tr.row-hook_problem td:first-child { border-left: 4px solid var(--red); }
+    tr.row-remaster td:first-child, tr.row-clip_more td:first-child { border-left: 4px solid var(--teal); }
+    tr.row-scale td:first-child, tr.row-funnel_winner td:first-child { border-left: 4px solid var(--green); }
+    tr.row-retitle td:first-child { border-left: 4px solid var(--orange); }
+
+    .sort-btn {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      padding: 0;
+      text-align: left;
     }
 
-    a {
-      color: var(--blue);
-      text-decoration: none;
-    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .muted { color: var(--muted); }
+    .small { font-size: 12px; }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .finding-list {
+    .bar-list { display: grid; gap: 9px; }
+    .bar-row {
       display: grid;
+      grid-template-columns: minmax(120px, 1fr) minmax(120px, 2fr) auto;
       gap: 10px;
+      align-items: center;
+      font-size: 13px;
     }
+
+    .bar-track {
+      height: 9px;
+      border-radius: 999px;
+      background: #e8ece8;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: var(--bar-width);
+      background: var(--blue);
+    }
+
+    .bar-fill.green { background: var(--green); }
+    .bar-fill.orange { background: var(--orange); }
+    .bar-fill.red { background: var(--red); }
+    .bar-fill.teal { background: var(--teal); }
+    .bar-fill.violet { background: var(--violet); }
+
+    .lane-list, .finding-list { display: grid; gap: 10px; }
+    .lane-section { margin-bottom: 16px; }
 
     .finding {
       display: grid;
@@ -605,30 +965,12 @@ DASHBOARD_HTML = """<!doctype html>
       box-shadow: var(--shadow);
     }
 
-    .finding-title {
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .metric-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .metric-chip {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 5px 7px;
-      background: #fbfcfa;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .category-section {
-      margin-bottom: 16px;
-    }
+    .finding-title { font-weight: 700; margin-bottom: 6px; }
+    .finding.hook_problem { border-left: 4px solid var(--red); }
+    .finding.remaster, .finding.clip_more { border-left: 4px solid var(--teal); }
+    .finding.scale, .finding.funnel_winner { border-left: 4px solid var(--green); }
+    .finding.retitle { border-left: 4px solid var(--orange); }
+    .finding.ignore { border-left: 4px solid var(--line); }
 
     .empty {
       border: 1px dashed var(--line);
@@ -638,18 +980,25 @@ DASHBOARD_HTML = """<!doctype html>
       background: rgba(255, 255, 255, 0.7);
     }
 
+    .summary-action {
+      border-left: 4px solid var(--blue);
+      padding-left: 12px;
+      margin-top: 10px;
+    }
+
     @media (max-width: 1100px) {
       .grid.stats { grid-template-columns: repeat(3, minmax(140px, 1fr)); }
-      .grid.two { grid-template-columns: 1fr; }
+      .grid.two, .grid.three { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 720px) {
-      .shell { width: min(100vw - 20px, 1480px); padding-top: 14px; }
+      .shell { width: min(100vw - 20px, 1500px); padding-top: 14px; }
       header { grid-template-columns: 1fr; }
       .status-strip { justify-content: flex-start; }
       .grid.stats { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
       .toolbar { grid-template-columns: 1fr; }
       .finding { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; gap: 4px; }
       h1 { font-size: 24px; }
     }
   </style>
@@ -665,14 +1014,14 @@ DASHBOARD_HTML = """<!doctype html>
     </header>
 
     <nav class="tabs" aria-label="Dashboard tabs">
-      <button class="tab active" data-tab="overview">Overview</button>
-      <button class="tab" data-tab="findings">Findings</button>
+      <button class="tab active" data-tab="action-board">Action Board</button>
+      <button class="tab" data-tab="overview">Overview</button>
       <button class="tab" data-tab="videos">Videos</button>
       <button class="tab" data-tab="gaps">Data Gaps</button>
     </nav>
 
-    <section class="panel active" id="overview"></section>
-    <section class="panel" id="findings"></section>
+    <section class="panel active" id="action-board"></section>
+    <section class="panel" id="overview"></section>
     <section class="panel" id="videos"></section>
     <section class="panel" id="gaps"></section>
   </div>
@@ -681,6 +1030,7 @@ DASHBOARD_HTML = """<!doctype html>
   <script>
     const data = JSON.parse(document.getElementById("dashboard-data").textContent);
     const decisionOrder = ["scale", "funnel_winner", "clip_more", "retitle", "hook_problem", "remaster", "ignore"];
+    const laneOrder = ["do_now", "waiting_for_ctr", "needs_studio_check", "watch"];
     const categoryLabels = {
       scale: "Scale",
       funnel_winner: "Funnel Winner",
@@ -690,6 +1040,14 @@ DASHBOARD_HTML = """<!doctype html>
       remaster: "Remaster",
       ignore: "Ignore"
     };
+    const laneColor = {
+      do_now: "green",
+      waiting_for_ctr: "orange",
+      needs_studio_check: "violet",
+      watch: "teal"
+    };
+    let showEmptyBuckets = Boolean((data.ui_defaults || {}).show_empty_buckets);
+    let videoSort = { ...((data.sort_defaults || {}).videos || { key: "score", direction: "desc" }) };
 
     function escapeHtml(value) {
       return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -711,6 +1069,10 @@ DASHBOARD_HTML = """<!doctype html>
       return `${fmtNumber(value, 1)}%`;
     }
 
+    function labelFor(field) {
+      return (data.readable_field_labels || {})[field] || field;
+    }
+
     function linkFor(item) {
       const title = escapeHtml(item.title || item.video_id || "Untitled");
       if (!item.url) return title;
@@ -729,11 +1091,44 @@ DASHBOARD_HTML = """<!doctype html>
       return `
         <div class="table-wrap">
           <table>
-            <thead><tr>${headers.map((head) => `<th>${escapeHtml(head)}</th>`).join("")}</tr></thead>
+            <thead><tr>${headers.map((head) => `<th>${head}</th>`).join("")}</tr></thead>
             <tbody>${rows.join("") || `<tr><td colspan="${headers.length}" class="muted">No rows.</td></tr>`}</tbody>
           </table>
         </div>
       `;
+    }
+
+    function barList(rows, options = {}) {
+      const labelKey = options.labelKey || "name";
+      const valueKey = options.valueKey || "count";
+      const color = options.color || "blue";
+      const max = Math.max(...rows.map((row) => Number(row[valueKey]) || 0), 1);
+      return `<div class="bar-list">${
+        rows.map((row) => {
+          const value = Number(row[valueKey]) || 0;
+          const width = Math.max(2, Math.round(value / max * 100));
+          return `
+            <div class="bar-row">
+              <div title="${escapeHtml(row[labelKey])}">${escapeHtml(row[labelKey])}</div>
+              <div class="bar-track"><div class="bar-fill ${escapeHtml(color)}" style="--bar-width: ${width}%"></div></div>
+              <div>${fmtNumber(value, options.digits || 0)}</div>
+            </div>
+          `;
+        }).join("")
+      }</div>`;
+    }
+
+    function sourceLinks(item) {
+      const links = item.source_report_links || [];
+      if (!links.length) return "";
+      return `<div class="small muted">Source: ${
+        links.slice(0, 2).map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join(", ")
+      }${links.length > 2 ? ` +${links.length - 2}` : ""}</div>`;
+    }
+
+    function strongestAction() {
+      const doNow = ((data.action_lanes || {}).do_now || {}).items || [];
+      return doNow[0] || (data.findings.action_items || [])[0] || null;
     }
 
     function renderMeta() {
@@ -742,72 +1137,33 @@ DASHBOARD_HTML = """<!doctype html>
       document.getElementById("dashboard-meta").textContent =
         `Report ${report.report_date || "-"} | analytics through ${ledger.analytics_end_date || "-"} | generated ${data.generated_at || "-"}`;
       const readOnly = report.read_only && ledger.read_only ? "Read-only" : "Check mode";
-      const reachReady = data.totals.ctr_videos > 0 ? "CTR ready" : "CTR pending";
       document.getElementById("status-strip").innerHTML = [
         `<span class="badge">${readOnly}</span>`,
-        `<span class="badge">${reachReady}</span>`,
-        `<span class="badge">${fmtNumber(data.totals.actionable_videos)} action items</span>`
+        `<span class="badge">${escapeHtml((data.reporting_status || {}).reach_status_text || "CTR pending")}</span>`,
+        `<span class="badge">${fmtNumber(data.totals.actionable_videos)} action items</span>`,
+        `<span class="badge">${fmtNumber(data.totals.waiting_for_ctr)} waiting for CTR</span>`
       ].join("");
     }
 
-    function renderOverview() {
-      const totals = data.totals;
-      const windows = data.coverage.windows;
-      const metricRows = Object.entries(data.coverage.metrics).map(([name, count]) =>
-        `<tr><td>${escapeHtml(name)}</td><td>${fmtNumber(count)}</td></tr>`
-      );
-      const formatRows = data.distributions.formats.map((row) =>
-        `<tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td></tr>`
-      );
-      const privacyRows = data.distributions.privacy.map((row) =>
-        `<tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td></tr>`
-      );
-      const packageRows = data.distributions.top_packages.map((row) =>
-        `<tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td></tr>`
-      );
-      const windowRows = Object.entries(windows).map(([label, row]) =>
-        `<tr><td>${escapeHtml(label)}</td><td>${fmtNumber(row.usable)}</td><td>${fmtNumber(row.with_views)}</td><td>${fmtNumber(row.missing)}</td></tr>`
-      );
-      const trafficRows = data.distributions.traffic_sources_7d.map((row) =>
-        `<tr><td>${escapeHtml(row.source)}</td><td>${fmtNumber(row.views)}</td></tr>`
-      );
-
-      document.getElementById("overview").innerHTML = `
-        <div class="grid stats">
-          ${stat("Videos", fmtNumber(totals.videos))}
-          ${stat("Action Items", fmtNumber(totals.actionable_videos))}
-          ${stat("Traffic Source Coverage", fmtNumber(totals.traffic_source_videos))}
-          ${stat("Daily Metric Coverage", fmtNumber(totals.daily_metric_videos))}
-          ${stat("Reach Impressions Ready", fmtNumber(totals.reach_impression_videos))}
-          ${stat("CTR Ready", fmtNumber(totals.ctr_videos))}
-        </div>
-        <div class="grid two">
-          <div class="card"><h2>Analytics Windows</h2>${simpleTable(["Window", "Usable", "With Views", "Missing"], windowRows)}</div>
-          <div class="card"><h2>Metric Availability</h2>${simpleTable(["Metric", "Rows"], metricRows)}</div>
-          <div class="card"><h2>Formats</h2>${simpleTable(["Format", "Videos"], formatRows)}</div>
-          <div class="card"><h2>Privacy</h2>${simpleTable(["Privacy", "Videos"], privacyRows)}</div>
-          <div class="card"><h2>Top Packages</h2>${simpleTable(["Package", "Videos"], packageRows)}</div>
-          <div class="card"><h2>Traffic Sources</h2>${simpleTable(["7d Source", "Views"], trafficRows)}</div>
-        </div>
-      `;
-    }
-
-    function findingCard(item, category) {
+    function findingCard(item, context) {
+      const category = context || item.primary_category || "ignore";
       const metrics = item.metrics || {};
       const reason = (item.reasons_by_category || {})[category] || (item.reasons && item.reasons.length ? item.reasons[0] : "");
       const action = (item.actions_by_category || {})[category] || (item.recommended_actions && item.recommended_actions.length ? item.recommended_actions[0] : "");
       return `
-        <article class="finding">
+        <article class="finding ${escapeHtml(item.primary_category || category)}">
           <div>
             <div class="finding-title">${linkFor(item)}</div>
-            <div class="muted">${escapeHtml(reason)}</div>
-            <div>${escapeHtml(action)}</div>
+            <div class="muted">${escapeHtml(reason || "No report reason recorded.")}</div>
+            <div>${escapeHtml(action || "Keep watching until a stronger signal appears.")}</div>
+            ${sourceLinks(item)}
             <div class="metric-row">
               <span class="metric-chip">${escapeHtml(item.selected_window || "-")}</span>
               <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
               <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
               <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
               <span class="metric-chip">${fmtPercent(metrics.videoThumbnailImpressionsClickRate)} CTR</span>
+              <span class="metric-chip">${fmtNumber((item.funnel || {}).known_downstream_clicks)} downstream clicks</span>
             </div>
           </div>
           <div>${(item.categories || [category]).map(badge).join(" ")}</div>
@@ -815,36 +1171,135 @@ DASHBOARD_HTML = """<!doctype html>
       `;
     }
 
-    function renderFindings() {
-      const summaryRows = decisionOrder.map((category) =>
-        `<tr><td>${badge(category)}</td><td>${fmtNumber((data.findings.summary_counts || {})[category] || 0)}</td></tr>`
-      );
-      const sections = decisionOrder
-        .filter((category) => category !== "ignore")
-        .map((category) => {
-          const rows = (data.findings.by_category[category] || []);
-          const body = rows.length
-            ? `<div class="finding-list">${rows.map((item) => findingCard(item, category)).join("")}</div>`
-            : `<div class="empty">No videos in this bucket.</div>`;
-          return `<section class="category-section"><h2>${escapeHtml(categoryLabels[category])}</h2>${body}</section>`;
-        })
-        .join("");
+    function renderActionBoard() {
+      const lanes = data.action_lanes || {};
+      const strongest = strongestAction();
+      const decisionRows = decisionOrder
+        .filter((category) => showEmptyBuckets || ((data.findings.summary_counts || {})[category] || 0) > 0)
+        .map((category) => ({ name: categoryLabels[category] || category, count: (data.findings.summary_counts || {})[category] || 0 }));
+      const laneSections = laneOrder.map((key) => {
+        const lane = lanes[key] || { label: key, description: "", items: [] };
+        if (!showEmptyBuckets && !lane.items.length) return "";
+        const body = lane.items.length
+          ? `<div class="lane-list">${lane.items.slice(0, key === "watch" ? 12 : 20).map((item) => findingCard(item)).join("")}</div>`
+          : `<div class="empty">No videos in this lane.</div>`;
+        return `
+          <section class="lane-section">
+            <h2>${escapeHtml(lane.label)} <span class="badge">${fmtNumber(lane.count || 0)}</span></h2>
+            <p class="muted">${escapeHtml(lane.description || "")}</p>
+            ${body}
+          </section>
+        `;
+      }).join("");
 
-      document.getElementById("findings").innerHTML = `
+      document.getElementById("action-board").innerHTML = `
         <div class="grid two">
-          <div class="card"><h2>Decision Counts</h2>${simpleTable(["Bucket", "Videos"], summaryRows)}</div>
           <div class="card">
-            <h2>Current Read</h2>
-            <p class="muted">The report is recommendation-only. CTR-dependent buckets stay conservative until reach reports populate thumbnail impressions and CTR.</p>
+            <h2>This Week</h2>
             <div class="metric-row">
-              <span class="metric-chip">${fmtNumber(data.findings.action_items.length)} actionable</span>
-              <span class="metric-chip">${fmtNumber(data.findings.ignored_count)} waiting</span>
-              <span class="metric-chip">${fmtNumber(data.totals.ctr_videos)} with CTR</span>
+              <span class="metric-chip">${fmtNumber(data.totals.actionable_videos)} actionable</span>
+              <span class="metric-chip">${fmtNumber(data.totals.waiting_for_ctr)} blocked by CTR</span>
+              <span class="metric-chip">${fmtNumber(data.totals.needs_studio_check)} need Studio check</span>
+              <span class="metric-chip">${escapeHtml((data.reporting_status || {}).reach_status_text || "-")}</span>
+            </div>
+            ${strongest ? `
+              <div class="summary-action">
+                <div class="muted">Strongest current action</div>
+                <div class="finding-title">${linkFor(strongest)}</div>
+                <div>${escapeHtml((strongest.recommended_actions || [])[0] || "Review this item.")}</div>
+              </div>
+            ` : `<div class="empty">No action items crossed the current thresholds.</div>`}
+          </div>
+          <div class="card">
+            <h2>Decision Counts</h2>
+            ${barList(decisionRows, { labelKey: "name", valueKey: "count", color: "teal" })}
+            <div class="metric-row">
+              <label class="check-chip"><input id="show-empty-buckets" type="checkbox" ${showEmptyBuckets ? "checked" : ""}> Show empty buckets</label>
             </div>
           </div>
         </div>
-        <div style="margin-top: 16px;">${sections}</div>
+        <div style="margin-top: 16px;">${laneSections}</div>
       `;
+      document.getElementById("show-empty-buckets").addEventListener("change", (event) => {
+        showEmptyBuckets = event.target.checked;
+        renderActionBoard();
+      });
+    }
+
+    function renderOverview() {
+      const totals = data.totals;
+      const metricRows = Object.entries(data.coverage.metrics).map(([name, count]) => ({ name: labelFor(name), count }));
+      const decisionRows = decisionOrder.map((category) => ({ name: categoryLabels[category] || category, count: (data.findings.summary_counts || {})[category] || 0 }));
+      const packageRows = (data.package_rollups || []).slice(0, 10).map((row) => ({
+        package: row.package,
+        action_items: row.action_items,
+        total_views: row.total_views,
+        average_view_percentage: row.average_view_percentage
+      }));
+      const packageTableRows = packageRows.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.package)}</td>
+          <td>${fmtNumber(row.action_items)}</td>
+          <td>${fmtNumber(row.total_views)}</td>
+          <td>${fmtPercent(row.average_view_percentage)}</td>
+        </tr>
+      `);
+      const sync = data.ledger.reporting_api_sync || {};
+      document.getElementById("overview").innerHTML = `
+        <div class="grid stats">
+          ${stat("Videos", fmtNumber(totals.videos))}
+          ${stat("Action Items", fmtNumber(totals.actionable_videos))}
+          ${stat("Waiting For CTR", fmtNumber(totals.waiting_for_ctr))}
+          ${stat("Needs Studio Check", fmtNumber(totals.needs_studio_check))}
+          ${stat("Reach Impressions Ready", fmtNumber(totals.reach_impression_videos))}
+          ${stat("CTR Ready", fmtNumber(totals.ctr_videos))}
+        </div>
+        <div class="grid three">
+          <div class="card"><h2>Status</h2>
+            <p>Analytics fresh through <strong>${escapeHtml(data.ledger.analytics_end_date || "-")}</strong>.</p>
+            <p>${escapeHtml((data.reporting_status || {}).reach_status_text || "CTR pending")}.</p>
+            <p class="muted">Reporting sync last merged ${escapeHtml(sync.merged_at || "-")} from ${fmtNumber(sync.source_file_count)} files.</p>
+          </div>
+          <div class="card"><h2>Formats</h2>${barList(data.distributions.formats || [], { color: "blue" })}</div>
+          <div class="card"><h2>Decision Counts</h2>${barList(decisionRows, { color: "teal" })}</div>
+          <div class="card"><h2>Traffic Sources</h2>${barList(data.distributions.traffic_sources_7d || [], { labelKey: "source", valueKey: "views", color: "green" })}</div>
+          <div class="card"><h2>Metric Coverage</h2>${barList(metricRows, { color: "violet" })}</div>
+          <div class="card"><h2>Funnel Snapshot</h2>
+            <div class="metric-row">
+              <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).shorts_with_related)} Shorts with related video</span>
+              <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).known_downstream_clicks)} known downstream clicks</span>
+              <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).total_card_clicks)} card clicks</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 12px;">
+          <h2>Package Rollups</h2>
+          ${simpleTable(["Package", "Action Items", "Views", "Avg Viewed"], packageTableRows)}
+        </div>
+      `;
+    }
+
+    function sortValue(item, key) {
+      const metrics = item.metrics || {};
+      if (key === "score") return Number(item.score) || 0;
+      if (key === "views") return Number(metrics.views) || 0;
+      if (key === "views_per_day") return Number(metrics.views_per_day) || 0;
+      if (key === "avg_viewed") return Number(metrics.averageViewPercentage) || 0;
+      if (key === "subs") return Number(metrics.subscribersGained) || 0;
+      if (key === "impressions") return Number(metrics.videoThumbnailImpressions) || 0;
+      if (key === "ctr") return Number(metrics.videoThumbnailImpressionsClickRate) || 0;
+      return String(item[key] || "").toLowerCase();
+    }
+
+    function matchesQuickFilter(item, filter) {
+      const metrics = item.metrics || {};
+      if (filter === "actionable") return (item.categories || []).some((category) => category !== "ignore");
+      if (filter === "shorts") return item.format === "short";
+      if (filter === "cinematic") return item.format === "cinematic";
+      if (filter === "missing_ctr") return metrics.videoThumbnailImpressions === null || metrics.videoThumbnailImpressionsClickRate === null;
+      if (filter === "has_related") return Boolean(item.related_video);
+      if (filter === "young") return item.data_age_days !== null && item.data_age_days !== undefined && item.data_age_days < 2;
+      return true;
     }
 
     function renderVideos() {
@@ -862,51 +1317,100 @@ DASHBOARD_HTML = """<!doctype html>
             ${formatOptions.map((format) => `<option value="${escapeHtml(format)}">${escapeHtml(format)}</option>`).join("")}
           </select>
         </div>
+        <div class="quick-filters" style="margin-bottom: 12px;">
+          <label class="check-chip"><input type="checkbox" data-quick-filter="actionable"> Actionable only</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="shorts"> Shorts</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="cinematic"> Cinematic</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="missing_ctr"> Missing CTR</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="has_related"> Has related video</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="young"> New or too young</label>
+        </div>
         <div id="video-table"></div>
       `;
       const renderTable = () => {
         const search = document.getElementById("video-search").value.toLowerCase();
         const category = document.getElementById("category-filter").value;
         const format = document.getElementById("format-filter").value;
-        const rows = classifications
+        const quickFilters = [...document.querySelectorAll("[data-quick-filter]:checked")].map((input) => input.dataset.quickFilter);
+        const sorted = classifications
           .filter((item) => !category || (item.categories || []).includes(category))
           .filter((item) => !format || item.format === format)
+          .filter((item) => quickFilters.every((filter) => matchesQuickFilter(item, filter)))
           .filter((item) => {
             const haystack = `${item.title || ""} ${item.package || ""} ${item.video_id || ""}`.toLowerCase();
             return !search || haystack.includes(search);
           })
-          .map((item) => {
-            const metrics = item.metrics || {};
-            return `<tr>
-              <td>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div></td>
-              <td>${(item.categories || []).map(badge).join(" ")}</td>
-              <td>${escapeHtml(item.format || "-")}</td>
-              <td>${escapeHtml(item.package || "-")}</td>
-              <td>${escapeHtml(item.selected_window || "-")}</td>
-              <td>${fmtNumber(metrics.views)}</td>
-              <td>${fmtNumber(metrics.views_per_day, 1)}</td>
-              <td>${fmtPercent(metrics.averageViewPercentage)}</td>
-              <td>${fmtNumber(metrics.videoThumbnailImpressions)}</td>
-              <td>${fmtPercent(metrics.videoThumbnailImpressionsClickRate)}</td>
-            </tr>`;
+          .sort((a, b) => {
+            const av = sortValue(a, videoSort.key);
+            const bv = sortValue(b, videoSort.key);
+            const direction = videoSort.direction === "asc" ? 1 : -1;
+            if (av < bv) return -1 * direction;
+            if (av > bv) return 1 * direction;
+            return 0;
           });
-        document.getElementById("video-table").innerHTML = simpleTable(
-          ["Video", "Buckets", "Format", "Package", "Window", "Views", "V/day", "Avg Viewed", "Impr.", "CTR"],
-          rows
-        );
+        const rows = sorted.map((item) => {
+          const metrics = item.metrics || {};
+          return `<tr class="row-${escapeHtml(item.primary_category || "ignore")}">
+            <td>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div>${sourceLinks(item)}</td>
+            <td>${(item.categories || []).map(badge).join(" ")}</td>
+            <td>${escapeHtml(item.format || "-")}</td>
+            <td>${escapeHtml(item.package || "-")}</td>
+            <td>${escapeHtml(item.selected_window || "-")}</td>
+            <td>${fmtNumber(metrics.views)}</td>
+            <td>${fmtNumber(metrics.views_per_day, 1)}</td>
+            <td>${fmtPercent(metrics.averageViewPercentage)}</td>
+            <td>${fmtNumber(metrics.subscribersGained)}</td>
+            <td>${fmtNumber(metrics.videoThumbnailImpressions)}</td>
+            <td>${fmtPercent(metrics.videoThumbnailImpressionsClickRate)}</td>
+          </tr>`;
+        });
+        const headers = [
+          "Video",
+          "Buckets",
+          "Format",
+          "Package",
+          "Window",
+          `<button class="sort-btn" data-sort="views">Views</button>`,
+          `<button class="sort-btn" data-sort="views_per_day">V/day</button>`,
+          `<button class="sort-btn" data-sort="avg_viewed">Avg Viewed</button>`,
+          `<button class="sort-btn" data-sort="subs">Subs</button>`,
+          `<button class="sort-btn" data-sort="impressions">Impr.</button>`,
+          `<button class="sort-btn" data-sort="ctr">CTR</button>`
+        ];
+        document.getElementById("video-table").innerHTML = simpleTable(headers, rows);
+        document.querySelectorAll("[data-sort]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const key = button.dataset.sort;
+            videoSort = {
+              key,
+              direction: videoSort.key === key && videoSort.direction === "desc" ? "asc" : "desc"
+            };
+            renderTable();
+          });
+        });
       };
       ["video-search", "category-filter", "format-filter"].forEach((id) => {
         document.getElementById(id).addEventListener("input", renderTable);
+      });
+      document.querySelectorAll("[data-quick-filter]").forEach((input) => {
+        input.addEventListener("change", renderTable);
       });
       renderTable();
     }
 
     function renderGaps() {
-      const missingRows = data.findings.manual_missing_counts.map((row) =>
-        `<tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td></tr>`
-      );
+      const groupCards = Object.entries(data.data_gap_groups || {}).map(([key, group]) => {
+        const rows = (group.fields || []).map((field) => `
+          <tr>
+            <td>${escapeHtml(field.label)}</td>
+            <td>${fmtNumber(field.missing_count)}</td>
+            <td>${escapeHtml(field.reporting_job || "-")}</td>
+          </tr>
+        `);
+        return `<div class="card"><h2>${escapeHtml(group.label)}</h2>${simpleTable(["Field", "Missing", "Unlocked By"], rows)}</div>`;
+      }).join("");
       const manualRows = Object.entries(data.coverage.manual_fields).map(([field, count]) =>
-        `<tr><td>${escapeHtml(field)}</td><td>${fmtNumber(count)}</td></tr>`
+        `<tr><td>${escapeHtml(labelFor(field))}</td><td>${fmtNumber(count)}</td></tr>`
       );
       const jobRows = data.reporting_jobs.map((job) =>
         `<tr>
@@ -918,12 +1422,21 @@ DASHBOARD_HTML = """<!doctype html>
           <td>${escapeHtml(job.purpose || "")}</td>
         </tr>`
       );
+      const parentRows = (data.funnel_rollups.parents || []).slice(0, 12).map((parent) => `
+        <tr>
+          <td>${parent.parent_url ? `<a href="${escapeHtml(parent.parent_url)}" target="_blank" rel="noreferrer">${escapeHtml(parent.parent_id)}</a>` : escapeHtml(parent.parent_id)}</td>
+          <td>${fmtNumber(parent.short_count)}</td>
+          <td>${fmtNumber(parent.known_downstream_clicks)}</td>
+          <td>${fmtNumber(parent.card_clicks)}</td>
+          <td>${fmtNumber(parent.related_video_clicks)}</td>
+        </tr>
+      `);
       const queryNotes = (data.ledger.query_notes || []).map((note) => `<li>${escapeHtml(note)}</li>`).join("");
       const sync = data.ledger.reporting_api_sync || {};
 
       document.getElementById("gaps").innerHTML = `
-        <div class="grid two">
-          <div class="card"><h2>Missing Fields In Findings</h2>${simpleTable(["Field", "Videos"], missingRows)}</div>
+        <div class="grid three">${groupCards}</div>
+        <div class="grid two" style="margin-top: 12px;">
           <div class="card"><h2>Manual Field Coverage</h2>${simpleTable(["Field", "Videos"], manualRows)}</div>
           <div class="card">
             <h2>Reporting API Sync</h2>
@@ -932,12 +1445,11 @@ DASHBOARD_HTML = """<!doctype html>
               <span class="metric-chip">${fmtNumber(sync.source_file_count)} files</span>
               <span class="metric-chip">${fmtNumber(sync.videos_updated)} videos updated</span>
             </div>
-          </div>
-          <div class="card">
-            <h2>Query Notes</h2>
+            <h3 style="margin-top: 14px;">Query Notes</h3>
             ${queryNotes ? `<ul>${queryNotes}</ul>` : `<div class="empty">No API query errors recorded.</div>`}
           </div>
         </div>
+        <div class="card" style="margin-top: 12px;"><h2>Funnel Diagnostics</h2>${simpleTable(["Parent", "Related Shorts", "Known Clicks", "Card Clicks", "Related Clicks"], parentRows)}</div>
         <div class="card" style="margin-top: 12px;"><h2>Reporting Jobs</h2>${simpleTable(["Key", "Name", "Available", "Downloaded", "Latest", "Purpose"], jobRows)}</div>
       `;
     }
@@ -954,8 +1466,8 @@ DASHBOARD_HTML = """<!doctype html>
     }
 
     renderMeta();
+    renderActionBoard();
     renderOverview();
-    renderFindings();
     renderVideos();
     renderGaps();
     setupTabs();
