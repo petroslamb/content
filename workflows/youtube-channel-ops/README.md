@@ -165,7 +165,39 @@ For ad hoc clips that arrive outside the package folder, use the local clip wrap
 
 If those inputs are still landscape, add `--convert-from-landscape --work-dir <portrait-output-dir>` to produce portrait masters before upload. The same preflight and report behavior applies.
 
-### 6. Branch To The Correct Next Workflow
+### 6. Run The Weekly Analytics Decision Loop
+
+Use the analytics loop after production, upload, and related-video verification have settled. This is a recommendation-only workflow: it reads YouTube Data API and YouTube Analytics API state, writes local reports, and never edits titles, descriptions, visibility, playlists, related-video settings, uploads, or channel state.
+
+Refresh the metrics ledger:
+
+```bash
+.venv/bin/python scripts/fetch_youtube_analytics.py --since-days 30
+```
+
+Build the weekly recommendation report:
+
+```bash
+.venv/bin/python scripts/build_youtube_decision_report.py
+```
+
+The default outputs are:
+
+- `experiments/youtube-analytics/metrics_ledger.json`
+- `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.md`
+- `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.json`
+
+If the cached OAuth token predates Analytics access, the fetch script will stop with a reauth instruction. Run:
+
+```bash
+.venv/bin/python workflows/skills/youtube-data-api/scripts/auth_and_channel_check.py
+```
+
+The report buckets videos into `scale`, `clip_more`, `remaster`, `retitle`, `hook_problem`, `funnel_winner`, and `ignore`. Treat those as production recommendations only. Title changes, unlisting, remasters, uploads, and related-video fixes remain separate confirmed workflows.
+
+Studio-only observations can be filled into the ledger manually when needed: related-video clicks, card/end-screen clicks, retention notes, thumbnail/title observations, and Studio related-video verification.
+
+### 7. Branch To The Correct Next Workflow
 
 - If the task is local slide/audio/caption production, move to [`../youtube-production/README.md`](../youtube-production/README.md).
 - If the task is the Operating Agents course or TL;DR series, move to [`../youtube-series-operating-agents/README.md`](../youtube-series-operating-agents/README.md).

@@ -5,7 +5,7 @@ experiment:
   release_ledger: experiments/youtube-cinematic-rollout/release_ledger.md
   automation:
     daily_starter_id: daily-cinematic-starter
-    watcher_automation_id: cinematic-rollout-watcher
+    watcher_automation_id: null
   templates:
     cinematic_prompt: experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt
     cinematic_description: experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md

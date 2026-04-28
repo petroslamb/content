@@ -51,7 +51,7 @@
       "new_video_path": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-writing-the-script-isnt-agency_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -85,7 +85,7 @@
       "new_video_path": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-css-tags-can-break-an-agent_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -119,7 +119,7 @@
       "new_video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-agents-dont-lose-iq-they-lose-attention_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -153,7 +153,7 @@
       "new_video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-flat-vector-memory-becomes-a-security-hole_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -187,7 +187,7 @@
       "new_video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-agent-theater-is-not-intelligence_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -221,7 +221,7 @@
       "new_video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-the-coordination-tax-kills-agent-handoffs_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -255,7 +255,7 @@
       "new_video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-the-ai-did-not-fail-the-scaffold-did_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -289,7 +289,7 @@
       "new_video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-ai-cannot-check-its-own-gravity_portrait.mp4",
       "new_upload_report": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
       "old_status_target": "unlisted",
-      "studio_related_verified": false,
+      "studio_related_verified": true,
       "ready_to_unlist_old": false,
       "new_youtube_readback": {
         "upload_status": "uploaded",
@@ -306,7 +306,7 @@
       }
     }
   ],
-  "updated_at": "2026-04-28T10:32:29.959870+00:00",
+  "updated_at": "2026-04-28T14:05:42.285903+00:00",
   "uploaded_count": 8,
   "missing_uploads": []
 }

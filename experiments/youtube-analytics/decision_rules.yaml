@@ -1,0 +1,44 @@
+workflow: youtube_analytics_decision_loop
+version: 1
+minimum_data_age_days: 2
+preferred_window: 7d
+
+thresholds:
+  min_views_for_signal: 50
+
+  scale:
+    views_per_day: 100
+    average_view_percentage: 55
+    subscribers_per_1000_views: 1.0
+
+  clip_more:
+    parent_formats:
+      - cinematic
+      - longform
+      - tldr
+    views_per_day: 25
+    average_view_percentage: 40
+
+  remaster:
+    views_per_day: 15
+    average_view_percentage_below: 45
+    ctr_below: 4.0
+
+  retitle:
+    min_impressions: 250
+    weak_ctr: 3.0
+
+  hook_problem:
+    min_views: 75
+    average_view_percentage_below: 35
+
+  funnel_winner:
+    min_known_clicks: 3
+
+manual_fields:
+  related_video_clicks: null
+  card_clicks: null
+  end_screen_clicks: null
+  retention_notes: null
+  thumbnail_title_observations: null
+  studio_related_verified: null

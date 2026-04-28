@@ -479,3 +479,10 @@ Initial rollout order from `backlog_manifest.yaml`:
   - Optimization cinematic `n99g7mLWQek` has an end screen and info card pointing to research breakdown `2Fs1iDw5I3Y`.
 - Info cards persisted with teaser text `Full research breakdown`; YouTube Studio reset manual teaser timing edits back to `0:00:00` after reload, so the preferred `1:00:00` timestamp was not recorded as persisted.
 - Watcher cleanup was deferred because the latest user request was to commit this work only.
+
+### 2026-04-28T14:25:06Z
+
+- Cleanup pass found no remaining in-flight cinematic rollout entries; completed entries remain `completed` and the next backlog items remain queued.
+- Cleared `experiment.automation.watcher_automation_id` back to `null` because the temporary `cinematic-rollout-watcher` heartbeat is no longer needed.
+- Studio related-video verification was completed for the overlay remaster pilot and broader scheduled/recent Shorts sweep; the remaster crosswalk now has `studio_related_verified: true` for all 8 pilot remasters.
+- Old Shorts were not unlisted. The May 2 unlist automation remains active and should still require explicit confirmation before applying the unlist step.
