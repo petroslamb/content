@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Deterministic Phase 2 content-agent facade.
 
-Only `validate` is implemented in Phase 2.2. It reads file-backed workflow
-contracts and reports enforcement readiness without mutating package state.
+Only `validate` is implemented through Phase 2.3. It reads file-backed
+workflow contracts and execution evidence, then reports enforcement and trace
+readiness without mutating package state.
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ from check_workflow_yaml_contracts import (
     POLICY_SENSITIVE_ENFORCEMENT_SURFACES,
     REQUIRED_ENFORCEMENT_SURFACES,
     REQUIRED_TRACE_ITEMS,
+    VALID_GATE_DECISIONS,
     VALID_ENFORCEMENT_POSTURES,
     path_covered,
     validate_workflow_yaml_contracts,
@@ -43,6 +45,19 @@ from lifecycle import (
 CONTENT_AGENT_VERSION = 1
 VALID_RUN_MODES = {"exploratory", "governed_continuous"}
 HASHABLE_FILE_LIMIT_BYTES = 5_000_000
+REVIEWABLE_RUNS_DIR = REPO_ROOT / "reviewable-runs"
+RESOLVED_RUNS_DIR = REVIEWABLE_RUNS_DIR / "resolved-runs"
+RUN_RECORDS_DIR = REVIEWABLE_RUNS_DIR / "logs"
+REVIEW_GATES_DIR = REVIEWABLE_RUNS_DIR / "gates"
+VALID_TERMINAL_STATUSES = {"completed", "gated", "failed", "deferred", "rejected", "superseded"}
+VALID_GATE_ARTIFACT_STATUSES = {"pending", "resolved"}
+PROMOTED_OUTPUT_STATE_KEYS = {
+    "authority_order",
+    "claim_state",
+    "contradiction_state",
+    "validation_state",
+    "trace_state",
+}
 
 
 def repo_relpath(path: Path) -> str:
@@ -439,6 +454,717 @@ def add_finding(
 
 def missing_context_severity(mode: str) -> str:
     return "error" if mode == "governed_continuous" else "warning"
+
+
+def evidence_yaml_paths(directory: Path) -> list[Path]:
+    if not directory.exists():
+        return []
+    return sorted([*directory.glob("*.yaml"), *directory.glob("*.yml")])
+
+
+def sha256_like(value: Any) -> bool:
+    return isinstance(value, str) and re.fullmatch(r"(sha256:)?[0-9a-f]{64}", value) is not None
+
+
+def require_artifact_keys(
+    artifact: dict[str, Any],
+    required: set[str],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+    surface: str = "trace_completeness",
+    posture: str = "detect",
+) -> None:
+    missing = sorted(key for key in required if key not in artifact)
+    if missing:
+        add_finding(
+            findings,
+            "error",
+            surface,
+            posture,
+            f"{context} is missing required keys: {', '.join(missing)}.",
+            path=path,
+        )
+
+
+def require_artifact_mapping(
+    artifact: dict[str, Any],
+    key: str,
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+    surface: str = "trace_completeness",
+    posture: str = "detect",
+) -> dict[str, Any]:
+    value = artifact.get(key)
+    if not isinstance(value, dict):
+        add_finding(
+            findings,
+            "error",
+            surface,
+            posture,
+            f"{context}.{key} must be a mapping.",
+            path=path,
+        )
+        return {}
+    return value
+
+
+def require_artifact_list(
+    artifact: dict[str, Any],
+    key: str,
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+    surface: str = "trace_completeness",
+    posture: str = "detect",
+) -> list[Any]:
+    value = artifact.get(key)
+    if not isinstance(value, list):
+        add_finding(
+            findings,
+            "error",
+            surface,
+            posture,
+            f"{context}.{key} must be a list.",
+            path=path,
+        )
+        return []
+    return value
+
+
+def validate_artifact_repo_path(
+    value: Any,
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+    *,
+    required: bool = True,
+    surface: str = "trace_completeness",
+    posture: str = "detect",
+) -> None:
+    if value in (None, ""):
+        if required:
+            add_finding(
+                findings,
+                "error",
+                surface,
+                posture,
+                f"{context} must reference a repo path.",
+                path=path,
+            )
+        return
+    if not isinstance(value, str):
+        add_finding(
+            findings,
+            "error",
+            surface,
+            posture,
+            f"{context} must be a string repo path.",
+            path=path,
+        )
+        return
+    if re.match(r"^[a-z]+://", value):
+        return
+    if "{" in value:
+        return
+    candidate = REPO_ROOT / value
+    if not candidate.exists():
+        add_finding(
+            findings,
+            "error",
+            surface,
+            posture,
+            f"{context} points to a missing repo path: {value}.",
+            path=path,
+        )
+
+
+def validate_hash_mapping(
+    hashes: Any,
+    expected_paths: list[Any],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    if not isinstance(hashes, dict):
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            f"{context}.hashes must be a mapping keyed by repo path.",
+            path=path,
+        )
+        return
+    for relpath in expected_paths:
+        if not isinstance(relpath, str):
+            continue
+        hash_record = hashes.get(relpath)
+        if not isinstance(hash_record, dict):
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{context}.hashes is missing hash record for {relpath}.",
+                path=path,
+            )
+            continue
+        if not sha256_like(hash_record.get("sha256")):
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{context}.hashes[{relpath}] must include a sha256 digest.",
+                path=path,
+            )
+
+
+def validate_context_or_artifact_refs(
+    entries: list[Any],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+    *,
+    hashes_required: bool,
+) -> None:
+    for index, entry in enumerate(entries):
+        entry_context = f"{context}[{index}]"
+        if not isinstance(entry, dict):
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{entry_context} must be a mapping.",
+                path=path,
+            )
+            continue
+        if not isinstance(entry.get("id"), str) or not entry["id"]:
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{entry_context} must define a non-empty id.",
+                path=path,
+            )
+        paths = entry.get("paths", [])
+        if "path" in entry and "paths" not in entry:
+            paths = [entry["path"]]
+        if not isinstance(paths, list):
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{entry_context}.paths must be a list.",
+                path=path,
+            )
+            paths = []
+        for relpath in paths:
+            validate_artifact_repo_path(relpath, f"{entry_context}.paths", path, findings)
+        if hashes_required and paths:
+            validate_hash_mapping(entry.get("hashes"), paths, entry_context, path, findings)
+
+
+def validate_workflow_ref(
+    workflow: dict[str, Any],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    require_artifact_keys(workflow, {"workflow_id", "workflow_version", "workflow_hash"}, context, path, findings)
+    if not isinstance(workflow.get("workflow_id"), str) or not workflow["workflow_id"]:
+        add_finding(findings, "error", "trace_completeness", "detect", f"{context}.workflow_id must be non-empty.", path=path)
+    if not isinstance(workflow.get("workflow_version"), int):
+        add_finding(findings, "error", "trace_completeness", "detect", f"{context}.workflow_version must be an integer.", path=path)
+    if not sha256_like(workflow.get("workflow_hash")):
+        add_finding(findings, "error", "trace_completeness", "detect", f"{context}.workflow_hash must be a sha256 digest.", path=path)
+    validate_artifact_repo_path(workflow.get("contract_path"), f"{context}.contract_path", path, findings, required=False)
+    if isinstance(workflow.get("step_id"), str) and not workflow["step_id"]:
+        add_finding(findings, "error", "trace_completeness", "detect", f"{context}.step_id must be non-empty when present.", path=path)
+
+
+def validate_package_ref(
+    package: dict[str, Any],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    require_artifact_keys(package, {"path", "status_path"}, context, path, findings)
+    validate_artifact_repo_path(package.get("path"), f"{context}.path", path, findings)
+    validate_artifact_repo_path(package.get("status_path"), f"{context}.status_path", path, findings)
+    if "status_hash" in package and not sha256_like(package.get("status_hash")):
+        add_finding(findings, "error", "trace_completeness", "detect", f"{context}.status_hash must be a sha256 digest.", path=path)
+
+
+def validate_promoted_output_state(
+    artifact: dict[str, Any],
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    state = artifact.get("promoted_output_state")
+    if not isinstance(state, dict):
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "promoted_output_state must be embedded as a mapping in run or gate evidence.",
+            path=path,
+        )
+        return
+    missing = sorted(PROMOTED_OUTPUT_STATE_KEYS - state.keys())
+    if missing:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "promoted_output_state is missing required vocabulary: " + ", ".join(missing) + ".",
+            path=path,
+        )
+    extra = sorted(set(state.keys()) - PROMOTED_OUTPUT_STATE_KEYS)
+    if extra:
+        add_finding(
+            findings,
+            "warning",
+            "trace_completeness",
+            "record",
+            "promoted_output_state should stay within the v1 vocabulary.",
+            path=path,
+            evidence={"extra_keys": extra},
+        )
+
+
+def validate_resolved_run_artifact(path: Path, data: dict[str, Any], findings: list[dict[str, Any]]) -> None:
+    context = "resolved_run"
+    require_artifact_keys(
+        data,
+        {
+            "kind",
+            "schema_version",
+            "run_id",
+            "package",
+            "workflow",
+            "run_mode",
+            "route",
+            "context_admission",
+            "policy_resolution",
+            "selected_steps",
+            "selected_gates",
+            "behavior",
+            "output_targets",
+        },
+        context,
+        path,
+        findings,
+    )
+    if data.get("kind") != "resolved_run":
+        add_finding(findings, "error", "trace_completeness", "detect", "Resolved-run YAML must set kind: resolved_run.", path=path)
+    if data.get("schema_version") != CONTENT_AGENT_VERSION:
+        add_finding(findings, "error", "trace_completeness", "detect", "resolved_run.schema_version must match content-agent v1.", path=path)
+    if not isinstance(data.get("run_id"), str) or not data["run_id"]:
+        add_finding(findings, "error", "trace_completeness", "detect", "resolved_run.run_id must be non-empty.", path=path)
+    if data.get("run_mode") not in VALID_RUN_MODES:
+        add_finding(findings, "error", "trace_completeness", "detect", "resolved_run.run_mode must be exploratory or governed_continuous.", path=path)
+
+    validate_package_ref(require_artifact_mapping(data, "package", context, path, findings), "resolved_run.package", path, findings)
+    validate_workflow_ref(require_artifact_mapping(data, "workflow", context, path, findings), "resolved_run.workflow", path, findings)
+
+    validate_context_or_artifact_refs(
+        require_artifact_list(data, "context_admission", context, path, findings),
+        "resolved_run.context_admission",
+        path,
+        findings,
+        hashes_required=True,
+    )
+    policy_resolution = require_artifact_mapping(data, "policy_resolution", context, path, findings)
+    require_artifact_keys(
+        policy_resolution,
+        {"allowed_tools", "allowed_capabilities", "allowed_paths"},
+        "resolved_run.policy_resolution",
+        path,
+        findings,
+    )
+    require_artifact_mapping(policy_resolution, "allowed_paths", "resolved_run.policy_resolution", path, findings)
+    behavior = require_artifact_mapping(data, "behavior", context, path, findings)
+    require_artifact_keys(behavior, {"budgets", "recovery"}, "resolved_run.behavior", path, findings)
+    require_artifact_list(data, "selected_steps", context, path, findings)
+    require_artifact_list(data, "selected_gates", context, path, findings)
+    require_artifact_list(data, "output_targets", context, path, findings)
+
+
+def validate_run_record_artifact(path: Path, data: dict[str, Any], findings: list[dict[str, Any]]) -> None:
+    context = "run_record"
+    require_artifact_keys(
+        data,
+        {
+            "kind",
+            "schema_version",
+            "run_id",
+            "resolved_run_path",
+            "package",
+            "workflow",
+            "run_mode",
+            "timestamps",
+            "invocation",
+            "context_admission",
+            "consumed_artifacts",
+            "parent_artifacts",
+            "produced_artifacts",
+            "validation_results",
+            "enforcement_outcomes",
+            "gate_ids",
+            "approval_decisions",
+            "external_mutations",
+            "terminal_status",
+            "promoted_output_state",
+        },
+        context,
+        path,
+        findings,
+    )
+    if data.get("kind") != "run_record":
+        add_finding(findings, "error", "trace_completeness", "detect", "Run-record YAML must set kind: run_record.", path=path)
+    if data.get("schema_version") != CONTENT_AGENT_VERSION:
+        add_finding(findings, "error", "trace_completeness", "detect", "run_record.schema_version must match content-agent v1.", path=path)
+    if not isinstance(data.get("run_id"), str) or not data["run_id"]:
+        add_finding(findings, "error", "trace_completeness", "detect", "run_record.run_id must be non-empty.", path=path)
+    if data.get("run_mode") not in VALID_RUN_MODES:
+        add_finding(findings, "error", "trace_completeness", "detect", "run_record.run_mode must be exploratory or governed_continuous.", path=path)
+    if data.get("terminal_status") not in VALID_TERMINAL_STATUSES:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "run_record.terminal_status must be one of the Phase 2 terminal statuses.",
+            path=path,
+        )
+
+    validate_artifact_repo_path(data.get("resolved_run_path"), "run_record.resolved_run_path", path, findings)
+    validate_package_ref(require_artifact_mapping(data, "package", context, path, findings), "run_record.package", path, findings)
+    validate_workflow_ref(require_artifact_mapping(data, "workflow", context, path, findings), "run_record.workflow", path, findings)
+    timestamps = require_artifact_mapping(data, "timestamps", context, path, findings)
+    require_artifact_keys(timestamps, {"started_at", "ended_at"}, "run_record.timestamps", path, findings)
+    invocation = require_artifact_mapping(data, "invocation", context, path, findings)
+    require_artifact_keys(invocation, {"entrypoint", "command"}, "run_record.invocation", path, findings)
+
+    validate_context_or_artifact_refs(
+        require_artifact_list(data, "context_admission", context, path, findings),
+        "run_record.context_admission",
+        path,
+        findings,
+        hashes_required=True,
+    )
+    validate_context_or_artifact_refs(
+        require_artifact_list(data, "consumed_artifacts", context, path, findings),
+        "run_record.consumed_artifacts",
+        path,
+        findings,
+        hashes_required=True,
+    )
+    validate_context_or_artifact_refs(
+        require_artifact_list(data, "parent_artifacts", context, path, findings),
+        "run_record.parent_artifacts",
+        path,
+        findings,
+        hashes_required=False,
+    )
+    validate_context_or_artifact_refs(
+        require_artifact_list(data, "produced_artifacts", context, path, findings),
+        "run_record.produced_artifacts",
+        path,
+        findings,
+        hashes_required=False,
+    )
+    validation_results = require_artifact_list(data, "validation_results", context, path, findings)
+    for index, result in enumerate(validation_results):
+        if not isinstance(result, dict):
+            add_finding(findings, "error", "trace_completeness", "detect", f"run_record.validation_results[{index}] must be a mapping.", path=path)
+            continue
+        require_artifact_keys(result, {"id", "status"}, f"run_record.validation_results[{index}]", path, findings)
+    enforcement_outcomes = require_artifact_list(data, "enforcement_outcomes", context, path, findings)
+    for index, outcome in enumerate(enforcement_outcomes):
+        if not isinstance(outcome, dict):
+            add_finding(findings, "error", "trace_completeness", "detect", f"run_record.enforcement_outcomes[{index}] must be a mapping.", path=path)
+            continue
+        require_artifact_keys(outcome, {"surface", "posture", "status"}, f"run_record.enforcement_outcomes[{index}]", path, findings)
+    require_artifact_list(data, "gate_ids", context, path, findings)
+    require_artifact_list(data, "approval_decisions", context, path, findings)
+    external_mutations = require_artifact_list(data, "external_mutations", context, path, findings)
+    for index, mutation in enumerate(external_mutations):
+        if not isinstance(mutation, dict):
+            add_finding(findings, "error", "external_mutation", "deny", f"run_record.external_mutations[{index}] must be a mapping.", path=path)
+            continue
+        if "status" not in mutation:
+            add_finding(findings, "error", "external_mutation", "deny", f"run_record.external_mutations[{index}] must record status.", path=path)
+        status = mutation.get("status")
+        if status in {"attempted", "performed", "requested"} and not mutation.get("approval_reference"):
+            add_finding(
+                findings,
+                "error",
+                "external_mutation",
+                "deny",
+                f"run_record.external_mutations[{index}] requires an approval_reference.",
+                path=path,
+            )
+    validate_promoted_output_state(data, path, findings)
+
+
+def validate_review_gate_artifact(
+    path: Path,
+    data: dict[str, Any],
+    gate_contracts: dict[str, Any],
+    findings: list[dict[str, Any]],
+) -> None:
+    context = "review_gate"
+    require_artifact_keys(
+        data,
+        {
+            "kind",
+            "schema_version",
+            "gate_id",
+            "status",
+            "gate_type",
+            "gate_contract",
+            "package",
+            "workflow",
+            "run",
+            "stop",
+            "evidence",
+            "approval",
+            "resume",
+            "promoted_output_state",
+            "decision",
+        },
+        context,
+        path,
+        findings,
+        surface="review_gates",
+        posture="deny",
+    )
+    if data.get("kind") != "review_gate":
+        add_finding(findings, "error", "review_gates", "deny", "Review-gate YAML must set kind: review_gate.", path=path)
+    if data.get("schema_version") != CONTENT_AGENT_VERSION:
+        add_finding(findings, "error", "review_gates", "deny", "review_gate.schema_version must match content-agent v1.", path=path)
+    if data.get("status") not in VALID_GATE_ARTIFACT_STATUSES:
+        add_finding(findings, "error", "review_gates", "deny", "review_gate.status must be pending or resolved.", path=path)
+
+    gate_contract_id = data.get("gate_contract")
+    gate_contract = gate_contracts.get(gate_contract_id)
+    if not isinstance(gate_contract_id, str) or not gate_contract:
+        add_finding(
+            findings,
+            "error",
+            "review_gates",
+            "deny",
+            f"review_gate.gate_contract must reference gate_contracts.yaml, got {gate_contract_id!r}.",
+            path=path,
+        )
+        gate_contract = {}
+    expected_gate_type = gate_contract.get("gate_type")
+    if expected_gate_type and data.get("gate_type") != expected_gate_type:
+        add_finding(
+            findings,
+            "error",
+            "review_gates",
+            "deny",
+            "review_gate.gate_type must match gate_contracts.yaml.",
+            path=path,
+            evidence={"expected": expected_gate_type, "actual": data.get("gate_type")},
+        )
+
+    validate_package_ref(require_artifact_mapping(data, "package", context, path, findings, "review_gates", "deny"), "review_gate.package", path, findings)
+    workflow = require_artifact_mapping(data, "workflow", context, path, findings, "review_gates", "deny")
+    validate_workflow_ref(workflow, "review_gate.workflow", path, findings)
+    if not isinstance(workflow.get("step_id"), str) or not workflow.get("step_id"):
+        add_finding(findings, "error", "review_gates", "deny", "review_gate.workflow.step_id must identify the stopped step.", path=path)
+
+    run = require_artifact_mapping(data, "run", context, path, findings, "review_gates", "deny")
+    require_artifact_keys(run, {"run_id", "resolved_run_path", "run_record_path"}, "review_gate.run", path, findings, "review_gates", "deny")
+    validate_artifact_repo_path(run.get("resolved_run_path"), "review_gate.run.resolved_run_path", path, findings, surface="review_gates", posture="deny")
+    validate_artifact_repo_path(run.get("run_record_path"), "review_gate.run.run_record_path", path, findings, surface="review_gates", posture="deny")
+
+    stop = require_artifact_mapping(data, "stop", context, path, findings, "review_gates", "deny")
+    require_artifact_keys(stop, {"reason", "created_at", "created_by"}, "review_gate.stop", path, findings, "review_gates", "deny")
+
+    evidence = require_artifact_mapping(data, "evidence", context, path, findings, "review_gates", "deny")
+    preview_paths = require_artifact_list(evidence, "preview_paths", "review_gate.evidence", path, findings, "review_gates", "deny")
+    evidence_paths = require_artifact_list(evidence, "evidence_paths", "review_gate.evidence", path, findings, "review_gates", "deny")
+    for relpath in [*preview_paths, *evidence_paths]:
+        validate_artifact_repo_path(relpath, "review_gate.evidence paths", path, findings, surface="review_gates", posture="deny")
+    validation_results = require_artifact_list(evidence, "validation_results", "review_gate.evidence", path, findings, "review_gates", "deny")
+    for index, result in enumerate(validation_results):
+        if isinstance(result, dict):
+            require_artifact_keys(result, {"id", "status"}, f"review_gate.evidence.validation_results[{index}]", path, findings, "review_gates", "deny")
+    enforcement_outcomes = require_artifact_list(evidence, "enforcement_outcomes", "review_gate.evidence", path, findings, "review_gates", "deny")
+    for index, outcome in enumerate(enforcement_outcomes):
+        if isinstance(outcome, dict):
+            require_artifact_keys(outcome, {"surface", "posture", "status"}, f"review_gate.evidence.enforcement_outcomes[{index}]", path, findings, "review_gates", "deny")
+
+    approval = require_artifact_mapping(data, "approval", context, path, findings, "review_gates", "deny")
+    approval_required_keys = {
+        "quality_required",
+        "external_mutation_required",
+        "lifecycle_movement_required",
+        "promotion_required",
+        "allowed_decisions",
+    }
+    require_artifact_keys(approval, approval_required_keys, "review_gate.approval", path, findings, "review_gates", "deny")
+    for key in approval_required_keys - {"allowed_decisions"}:
+        if not isinstance(approval.get(key), bool):
+            add_finding(findings, "error", "review_gates", "deny", f"review_gate.approval.{key} must be boolean.", path=path)
+    decisions = approval.get("allowed_decisions")
+    if not isinstance(decisions, list) or not decisions or not set(decisions) <= VALID_GATE_DECISIONS:
+        add_finding(findings, "error", "review_gates", "deny", "review_gate.approval.allowed_decisions must be approve/reject/defer.", path=path)
+    approval_dimensions = gate_contract.get("approval_dimensions", {}) if isinstance(gate_contract, dict) else {}
+    if isinstance(approval_dimensions, dict):
+        dimension_map = {
+            "quality": "quality_required",
+            "external_mutation": "external_mutation_required",
+            "lifecycle_movement": "lifecycle_movement_required",
+            "promotion": "promotion_required",
+        }
+        for contract_key, artifact_key in dimension_map.items():
+            if approval_dimensions.get(contract_key) is True and approval.get(artifact_key) is not True:
+                add_finding(
+                    findings,
+                    "error",
+                    "review_gates",
+                    "deny",
+                    f"review_gate.approval.{artifact_key} must preserve gate_contracts.yaml approval dimension {contract_key}.",
+                    path=path,
+                )
+    if data.get("gate_type") == "external_mutation" and approval.get("external_mutation_required") is not True:
+        add_finding(
+            findings,
+            "error",
+            "external_mutation",
+            "deny",
+            "External-mutation gates must explicitly require external_mutation approval.",
+            path=path,
+        )
+
+    resume = require_artifact_mapping(data, "resume", context, path, findings, "review_gates", "deny")
+    require_artifact_keys(resume, {"on_approve", "on_reject", "on_defer", "command_hint"}, "review_gate.resume", path, findings, "review_gates", "deny")
+
+    decision = data.get("decision")
+    if data.get("status") == "pending" and decision is not None:
+        add_finding(findings, "error", "review_gates", "deny", "Pending review gates must have decision: null.", path=path)
+    if data.get("status") == "resolved":
+        if not isinstance(decision, dict):
+            add_finding(findings, "error", "review_gates", "deny", "Resolved review gates must include a decision record.", path=path)
+        else:
+            require_artifact_keys(
+                decision,
+                {"decided_at", "decided_by", "outcome", "quality_approved", "external_mutation_approved", "lifecycle_movement_approved", "promotion_approved", "reason"},
+                "review_gate.decision",
+                path,
+                findings,
+                "review_gates",
+                "deny",
+            )
+            if decision.get("outcome") not in VALID_GATE_DECISIONS:
+                add_finding(findings, "error", "review_gates", "deny", "review_gate.decision.outcome must be approve, reject, or defer.", path=path)
+    validate_promoted_output_state(data, path, findings)
+
+
+def validate_no_standalone_promoted_output_manifests(findings: list[dict[str, Any]]) -> None:
+    if not REVIEWABLE_RUNS_DIR.exists():
+        return
+    for path in sorted([*REVIEWABLE_RUNS_DIR.rglob("*.yaml"), *REVIEWABLE_RUNS_DIR.rglob("*.yml")]):
+        try:
+            data = yaml.safe_load(path.read_text()) or {}
+        except Exception:
+            continue
+        if isinstance(data, dict) and data.get("kind") == "promoted_output_state":
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "deny",
+                "Phase 2.3 forbids standalone promoted-output manifests; embed state in run records or gates.",
+                path=path,
+            )
+
+
+def validate_execution_evidence_artifacts(
+    root: dict[str, Any],
+    findings: list[dict[str, Any]],
+) -> dict[str, Any]:
+    stores = {
+        "resolved_runs": RESOLVED_RUNS_DIR,
+        "run_records": RUN_RECORDS_DIR,
+        "review_gates": REVIEW_GATES_DIR,
+    }
+    summary: dict[str, Any] = {
+        "stores": {name: repo_relpath(path) for name, path in stores.items()},
+        "counts": {"resolved_run": 0, "run_record": 0, "review_gate": 0},
+        "checked_paths": [],
+    }
+    for name, directory in stores.items():
+        if not directory.exists():
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"Execution evidence store is missing: {repo_relpath(directory)}.",
+                path=directory,
+            )
+
+    gate_contracts = root.get("gate_contracts", {})
+    for kind, directory, validator in [
+        ("resolved_run", RESOLVED_RUNS_DIR, validate_resolved_run_artifact),
+        ("run_record", RUN_RECORDS_DIR, validate_run_record_artifact),
+    ]:
+        for path in evidence_yaml_paths(directory):
+            try:
+                data = load_mapping(path)
+            except Exception as exc:
+                add_finding(findings, "error", "trace_completeness", "detect", f"Failed to load execution evidence YAML: {exc}", path=path)
+                continue
+            if data.get("kind") != kind:
+                add_finding(
+                    findings,
+                    "error",
+                    "trace_completeness",
+                    "detect",
+                    f"{repo_relpath(path)} is in the {kind} store but declares kind {data.get('kind')!r}.",
+                    path=path,
+                )
+                continue
+            validator(path, data, findings)
+            summary["counts"][kind] += 1
+            summary["checked_paths"].append(repo_relpath(path))
+
+    for path in evidence_yaml_paths(REVIEW_GATES_DIR):
+        try:
+            data = load_mapping(path)
+        except Exception as exc:
+            add_finding(findings, "error", "review_gates", "deny", f"Failed to load review gate YAML: {exc}", path=path)
+            continue
+        if data.get("kind") != "review_gate":
+            add_finding(
+                findings,
+                "error",
+                "review_gates",
+                "deny",
+                f"{repo_relpath(path)} is in the review_gate store but declares kind {data.get('kind')!r}.",
+                path=path,
+            )
+            continue
+        validate_review_gate_artifact(path, data, gate_contracts if isinstance(gate_contracts, dict) else {}, findings)
+        summary["counts"]["review_gate"] += 1
+        summary["checked_paths"].append(repo_relpath(path))
+
+    validate_no_standalone_promoted_output_manifests(findings)
+    return summary
 
 
 def validate_root_surfaces(findings: list[dict[str, Any]]) -> dict[str, Any]:
@@ -900,6 +1626,7 @@ def build_validation_report(
     runtime_inputs = runtime_inputs or {}
     findings: list[dict[str, Any]] = []
     root = validate_root_surfaces(findings)
+    execution_evidence = validate_execution_evidence_artifacts(root, findings)
 
     static_errors = validate_workflow_yaml_contracts()
     for error in static_errors:
@@ -964,6 +1691,7 @@ def build_validation_report(
         "package": package_key,
         "success": not any(item["severity"] == "error" for item in findings),
         "findings": findings,
+        "execution_evidence": execution_evidence,
         "workflows": workflow_reports,
     }
 
@@ -988,6 +1716,13 @@ def print_text_report(report: dict[str, Any]) -> None:
     if report.get("package"):
         print(f"package: {report['package']}")
     print("workflows: " + ", ".join(item["workflow_id"] for item in report["workflows"]))
+    evidence = report.get("execution_evidence", {})
+    counts = evidence.get("counts", {}) if isinstance(evidence, dict) else {}
+    if counts:
+        print(
+            "execution evidence: "
+            + ", ".join(f"{key}={value}" for key, value in sorted(counts.items()))
+        )
     if not report["findings"]:
         print("findings: none")
         return

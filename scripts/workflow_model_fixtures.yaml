@@ -85,3 +85,10 @@ retained_examples:
       label: pivot north-star viability artifact
     - path: publications/literate-workflow-programming/literate-workflow-programming-ceiling-report-r3.md
       label: canonical ceiling report
+  execution_evidence:
+    - path: reviewable-runs/resolved-runs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml
+      kind: resolved_run
+    - path: reviewable-runs/logs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml
+      kind: run_record
+    - path: reviewable-runs/gates/gate-2026-04-28T10-27-24Z-clean-interface-illusion-replacement-north-star.yaml
+      kind: review_gate

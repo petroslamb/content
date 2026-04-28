@@ -1,0 +1,140 @@
+kind: resolved_run
+schema_version: 1
+retained_example: true
+retention_reason: Phase 2.3 trace/provenance validator fixture on a real leaf package.
+run_id: run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration
+package:
+  path: publications/clean-interface-illusion
+  status_path: publications/clean-interface-illusion/status.yaml
+  status_hash: sha256:692d6674985c292c8c00e90f7ed8f231ab947ed07adb14df5acc30a2a296bfb4
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:5b5d5dbc252f454f864e98cc30233b780bf5d5fc5d9171e4ae168ef4bd42d3d1
+  contract_path: workflows/essay-iteration/workflow.yaml
+run_mode: governed_continuous
+route:
+  package_kind: leaf
+  pipeline_profile: article_default
+  current_stage: notebooklm_artifacts
+  workflow_stage: essay_iteration
+  resolved_from:
+    - publications/clean-interface-illusion/status.yaml
+    - workflows/essay-iteration/workflow.yaml
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - pipeline_profiles.yaml
+context_admission:
+  - id: package_status
+    required: true
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/status.yaml
+    hashes:
+      publications/clean-interface-illusion/status.yaml:
+        type: file_sha256
+        sha256: 692d6674985c292c8c00e90f7ed8f231ab947ed07adb14df5acc30a2a296bfb4
+        size_bytes: 791
+  - id: package_readme
+    required: true
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/README.md
+    hashes:
+      publications/clean-interface-illusion/README.md:
+        type: file_sha256
+        sha256: a63f792f48a3bdad1a2691115167dd9324d9da25336791a7f2b6e11d99f8ee18
+        size_bytes: 6162
+  - id: live_draft
+    required: true
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/clean-interface-illusion.md
+    hashes:
+      publications/clean-interface-illusion/clean-interface-illusion.md:
+        type: file_sha256
+        sha256: 0d527bc64dff1c826d4a4ad47deb04a14ac945274700707da919f8cb723088ff
+        size_bytes: 1392
+  - id: governing_brief
+    required: true
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/blueprint.md
+    hashes:
+      publications/clean-interface-illusion/blueprint.md:
+        type: file_sha256
+        sha256: cc146298e903a5a65d8980234b936904c9203f8e27ee9f26e38b208c6e6e6295
+        size_bytes: 6825
+  - id: evidence_surface
+    required: false
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/papers
+    hashes:
+      publications/clean-interface-illusion/papers:
+        type: directory_listing_sha256
+        sha256: 31126503042a96dd3d779d43b26598ce66e5a9b3a5fec665072222c8d21bad49
+        file_count: 13
+policy_resolution:
+  allowed_tools:
+    - id: content_agent_validate
+      command: ./content-agent validate --workflow essay_iteration --package clean-interface-illusion --mode governed_continuous
+    - id: package_lifecycle_guardrail
+      command: npm run check:package-lifecycle -- --package clean-interface-illusion --format json
+    - id: essay_iteration_validator
+      command: npm run check:essay-iteration -- --package clean-interface-illusion
+    - id: replacement_north_star_gate_check
+      command: npm run gate:check -- --gate replacement_north_star --package clean-interface-illusion --format json
+  allowed_capabilities:
+    - contract_validation
+    - context_admission
+    - package_lifecycle_inspection
+    - gate_readiness_inspection
+  allowed_paths:
+    read:
+      - publications/clean-interface-illusion/
+      - workflows/essay-iteration/
+      - harness_policy.yaml
+      - gate_contracts.yaml
+      - pipeline_profiles.yaml
+    write:
+      - reviewable-runs/resolved-runs/
+      - reviewable-runs/logs/
+      - reviewable-runs/gates/
+selected_steps:
+  - id: resolve_package_state
+    mode: scriptable
+  - id: seed_iteration_packet
+    mode: scriptable
+  - id: harden_blueprint
+    mode: codex_session
+  - id: settle_prewrite_gate
+    mode: review_gated
+  - id: write_bounded_candidate
+    mode: codex_session
+  - id: run_cold_replacement_review
+    mode: codex_session
+  - id: stop_at_replacement_decision
+    mode: review_gated
+  - id: record_handoff
+    mode: scriptable
+selected_gates:
+  - id: replacement_north_star
+    contract: replacement_north_star
+    status: reached
+behavior:
+  budgets:
+    max_runtime_minutes: 30
+    external_mutation: denied
+  recovery:
+    on_validation_failure: stop_at_review_gate
+    resume_from: resolved_run
+output_targets:
+  - id: run_record
+    path: reviewable-runs/logs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml
+  - id: review_gate
+    path: reviewable-runs/gates/gate-2026-04-28T10-27-24Z-clean-interface-illusion-replacement-north-star.yaml
+  - id: candidate_draft
+    path: publications/clean-interface-illusion/clean-interface-illusion-candidate-r3.md
+  - id: promotion_decision
+    path: publications/clean-interface-illusion/clean-interface-illusion-decision-r3.md
