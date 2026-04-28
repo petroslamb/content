@@ -66,7 +66,15 @@ REQUIRED_NPM_SCRIPTS = {
     "check:essay-iteration",
     "check:package-lifecycle",
     "check:workflow-model",
+    "check:workflow-yaml",
     "gate:check",
+    "content-agent",
+    "agent:status",
+    "agent:next",
+    "agent:validate",
+    "agent:review",
+    "cockpit",
+    "editorial:report",
     "stage:next",
     "stage:resolve",
     "stage:run",
@@ -79,9 +87,13 @@ REQUIRED_NPM_SCRIPTS = {
 POLICY_SECTIONS = {
     "read_only_allowed",
     "local_write_allowed",
+    "governance_maintenance_write_allowed",
     "auto_mark_done_allowed",
     "approval_required",
     "disallowed_without_explicit_user_request",
+    "governed_execution",
+    "enforcement_surfaces",
+    "review_gate_store",
 }
 
 PATH_LIKE_SUFFIXES = (
@@ -222,7 +234,32 @@ def validate_harness_policy(policy: dict) -> list[str]:
     if runner_modes and not isinstance(runner_modes, list):
         errors.append("harness_policy.yaml auto_mark_done_allowed.runner_modes must be a list.")
 
+    for section in ["local_write_allowed", "governance_maintenance_write_allowed"]:
+        paths = policy.get(section, {}).get("paths", [])
+        if not isinstance(paths, list) or not all(isinstance(item, str) for item in paths):
+            errors.append(f"harness_policy.yaml {section}.paths must be a list of strings.")
+
     return errors
+
+
+def workflow_yaml_contract_index() -> dict[str, dict[str, str | int | None]]:
+    contracts: dict[str, dict[str, str | int | None]] = {}
+    for path in sorted((REPO_ROOT / "workflows").glob("*/workflow.yaml")):
+        if path.parent.name == "skills":
+            continue
+        data = load_yaml_file(path)
+        workflow_id = data.get("workflow_id")
+        if not isinstance(workflow_id, str) or not workflow_id.strip():
+            continue
+        contracts[workflow_id] = {
+            "contract_path": repo_relpath(path),
+            "readme_path": repo_relpath(path.parent / "README.md"),
+            "version": data.get("version"),
+            "workflow_kind": data.get("workflow_kind"),
+            "workflow_group": data.get("workflow_group"),
+            "stability": data.get("stability"),
+        }
+    return contracts
 
 
 def build_harness_contract() -> dict:
@@ -258,22 +295,47 @@ def build_harness_contract() -> dict:
         }
 
     return {
-        "version": 2,
+        "version": 3,
         "harness_target": "codex",
         "autonomy_scope": "local-first",
+        "contract_role": "generated_compatibility_index",
         "policy_file": "harness_policy.yaml",
         "sources_of_truth": {
-            "lifecycle": "scripts/lifecycle.py",
-            "workflow_frontmatter": "workflows/*/README.md",
+            "authority_map": "AUTHORITY.md",
+            "workflow_yaml": "workflows/*/workflow.yaml",
             "gate_contracts": "gate_contracts.yaml",
             "pipeline_profiles": "pipeline_profiles.yaml",
             "package_state": "publications/**/status.yaml",
+            "harness_policy": "harness_policy.yaml",
             "npm_scripts": "package.json",
+        },
+        "compatibility_sources": {
+            "lifecycle": "scripts/lifecycle.py",
+            "workflow_frontmatter": "workflows/*/README.md",
         },
         "paths": {
             "publications_dir": "publications",
             "workflows_dir": "workflows",
             "logs_dir": "reviewable-runs/logs",
+            "resolved_runs_dir": "reviewable-runs/resolved-runs",
+            "review_gates_dir": "reviewable-runs/gates",
+        },
+        "operator_surfaces": {
+            "governed_runtime": {
+                "entrypoint": "./content-agent",
+                "script": "scripts/content_agent.py",
+                "npm_alias": "npm run content-agent",
+            },
+            "local_cockpit": {
+                "entrypoint": "./content-cockpit",
+                "script": "scripts/content_cockpit.py",
+                "npm_alias": "npm run cockpit",
+            },
+            "editorial_report": {
+                "entrypoint": "npm run editorial:report",
+                "script": "scripts/generate_editorial_report.py",
+                "posture": "report_only",
+            },
         },
         "interfaces": command_surface,
         "package_init": {
@@ -302,6 +364,7 @@ def build_harness_contract() -> dict:
             "stage_order": STAGES,
             "stages": stage_contracts,
         },
+        "workflow_yaml_contracts": workflow_yaml_contract_index(),
         "workflows": workflow_contracts,
         "gates": load_gate_contracts(),
         "pipeline_profiles": load_pipeline_profiles(),
@@ -840,6 +903,16 @@ def configured_leaf_packages(package_path: Path) -> list[str]:
     return [item for item in leaf_packages if isinstance(item, str)]
 
 
+def post_ceiling_status_route(package_path: Path) -> dict | None:
+    data = load_local_status_data(package_path)
+    route = data.get("umbrella_route")
+    if not isinstance(route, dict):
+        return None
+    if route.get("active_workflow") != "post_ceiling_pivot":
+        return None
+    return route
+
+
 def count_local_markdown_papers(package_path: Path) -> int:
     markdown_dir = package_path / "papers" / "markdown"
     if not markdown_dir.exists():
@@ -1080,6 +1153,7 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
     overlay_root = package_path
     status_kind = package_kind(package_path)
     leaf_packages = configured_leaf_packages(package_path)
+    status_route = post_ceiling_status_route(package_path)
 
     slate_path = find_active_pivot_artifact(package_path, PIVOT_SLATE_PATTERNS)
     grounding_path = find_active_pivot_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
@@ -1107,6 +1181,14 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
         "pivot_decision_path": repo_relpath(decision_path),
         "pivot_blocker_path": repo_relpath(blocker_path),
     }
+
+    if status_route and status_route.get("active_route") == "no_successor":
+        progress["overlay_phase"] = "pivot_search_stopped"
+        progress["next_overlay_action"] = status_route.get("next_action") or "stop_without_successor"
+        progress["overlay_route"] = "no_successor"
+        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+        progress["closure_artifact"] = status_route.get("closure_artifact")
+        return progress
 
     if status_kind != "umbrella":
         progress["overlay_phase"] = "upgrade_to_umbrella"
@@ -1869,6 +1951,7 @@ def evaluate_pivot_research_grounding_gate(package_path: Path) -> dict:
 
 def evaluate_pivot_north_star_viability_gate(package_path: Path) -> dict:
     payload = base_gate_payload("pivot_north_star_viability")
+    status_route = post_ceiling_status_route(package_path)
     grounding_path = find_active_pivot_artifact(package_path, PIVOT_GROUNDING_PATTERNS)
     decision_path = find_active_pivot_artifact(package_path, PIVOT_DECISION_PATTERNS)
     north_star_path = find_active_pivot_artifact(package_path, PIVOT_NORTH_STAR_PATTERNS)
@@ -1877,6 +1960,11 @@ def evaluate_pivot_north_star_viability_gate(package_path: Path) -> dict:
         "pivot_decision_path": repo_relpath(decision_path),
         "north_star_viability_path": repo_relpath(north_star_path),
     }
+    if status_route and status_route.get("active_route") == "no_successor":
+        payload["decision"] = "no_successor"
+        payload["details"]["post_block_route"] = "no_successor"
+        payload["details"]["closure_artifact"] = status_route.get("closure_artifact")
+        return payload
     if grounding_path is None:
         payload["missing_artifacts"].append("pivot grounding review")
     if decision_path is None:

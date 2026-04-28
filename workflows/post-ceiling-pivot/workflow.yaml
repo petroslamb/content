@@ -1,0 +1,468 @@
+workflow_id: post_ceiling_pivot
+version: 1
+stability: experimental
+workflow_kind: overlay
+workflow_group: editorial
+summary: Govern the search for a stronger successor object after a flagship essay hits a documented frame ceiling.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Donor package or umbrella package path relative to publications/.
+  pivot_question:
+    required: true
+    description: The successor-object search question created by the capped essay.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+
+context_dependencies:
+  - id: package_readme_or_donor_leaf_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load the donor package or umbrella context before pivoting.
+    record_hash: true
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve current package shape, kind, umbrella route, revision, and leaf initialization state.
+    record_hash: true
+  - id: latest_stop_gate_or_replacement_review_finding
+    path_from_status: config.latest_review_path
+    fallback:
+      - publications/{package}/*replacement-review*.md
+      - publications/{package}/*decision*.md
+      - publications/{package}/*stop*.md
+    required: true
+    purpose: Prove the original object has a real ceiling rather than an ordinary rewrite problem.
+    record_hash: true
+  - id: latest_ceiling_report_or_legacy_donor_report_pair
+    path_from_status: config.ceiling_report_path
+    fallback:
+      - publications/{package}/*ceiling-report*.md
+      - publications/{package}/*donor-report*.md
+    required: true
+    purpose: Preserve the capped object's terminal finding before opening a successor search.
+    record_hash: true
+  - id: current_overlay_artifacts
+    fallback:
+      - publications/{package}/pivot/
+      - publications/{package}/pivot/active/
+      - publications/{package}/
+    required: false
+    purpose: Reuse current overlay artifacts when they already exist.
+    record_hash: true
+  - id: package_evidence_surface
+    path_from_status: config.evidence_path
+    fallback:
+      - publications/{package}/papers/index.md
+      - publications/{package}/source-index.md
+      - publications/{package}/sources/index.md
+      - publications/{package}/papers/
+      - publications/{package}/sources/
+    required: false
+    purpose: Ground the successor search in local papers when the failed object already has an evidence base.
+    record_hash: true
+  - id: current_package_shape
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Determine whether umbrella upgrade or successor leaf initialization is pending.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/post-ceiling-pivot/README.md
+    required: true
+    purpose: Load human-facing post-ceiling pivot guidance.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/post-ceiling-pivot/templates/
+    required: true
+    purpose: Provide reframe, grounding, consequence, rerank, north-star, and decision templates.
+    record_hash: true
+  - id: alphaxiv_skill
+    path: workflows/skills/alphaxiv/SKILL.md
+    required: true
+    purpose: Bind alphaXiv retrieval guidance for successor research checks.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply lifecycle movement and promotion boundaries.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve pivot grounding and pivot north-star viability gate contracts.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: alphaxiv_paper_search
+      command: ".venv/bin/alphaxiv search papers \"{pivot_question}\""
+      required: true
+    - id: pivot_research_grounding_gate_check
+      command: "npm run gate:check -- --gate pivot_research_grounding --package {package}"
+      required: true
+    - id: pivot_north_star_viability_gate_check
+      command: "npm run gate:check -- --gate pivot_north_star_viability --package {package}"
+      required: true
+  skills:
+    - alphaxiv
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/post-ceiling-pivot/
+    - workflows/topic-discovery/
+    - workflows/alphaxiv-research/
+    - workflows/skills/alphaxiv/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: umbrella_upgrade_record
+    path_template: "publications/{package}/{package_name}-umbrella-upgrade-r{revision}.md"
+    required: conditional
+    required_when: starting from a single-publication donor
+    format: markdown
+    producer: record_package_shape_decision
+  - id: donor_leaf_and_successor_flagship_leaf_record
+    path_template: "publications/{package}/{package_name}-leaf-identity-record-r{revision}.md"
+    required: conditional
+    required_when: a second object becomes real
+    format: markdown
+    producer: record_package_shape_decision
+  - id: pivot_slate
+    path_template: "publications/{package}/{package_name}-pivot-slate-r{revision}.md"
+    required: true
+    format: markdown
+    producer: build_pivot_slate
+  - id: grounding_review_and_blocker_record
+    path_template: "publications/{package}/{package_name}-pivot-grounding-review-r{revision}.md"
+    required: true
+    format: markdown
+    producer: run_grounding_review
+    gated_by: pivot_research_grounding
+  - id: active_next_pivot_candidate
+    path_template: "publications/{package}/{package_name}-next-pivot-candidate-r{revision}.md"
+    required: true
+    format: markdown
+    producer: select_next_candidate
+  - id: candidate_specific_research_delta
+    path_template: "publications/{package}/{package_name}-research-delta-r{revision}.md"
+    required: true
+    format: markdown
+    producer: name_research_delta
+  - id: north_star_viability_gate
+    path_template: "publications/{package}/{package_name}-pivot-north-star-viability-r{revision}.md"
+    required: true
+    format: markdown
+    producer: test_north_star_viability
+    gated_by: pivot_north_star_viability
+  - id: pivot_decision
+    path_template: "publications/{package}/{package_name}-pivot-decision-r{revision}.md"
+    required: true
+    format: markdown
+    producer: record_pivot_decision
+    gated_by: pivot_north_star_viability
+  - id: review_gate_artifact
+    path_template: "reviewable-runs/gates/{run_id}-pivot-gate.yaml"
+    required: conditional
+    required_when: content-agent materializes a durable pivot gate
+    format: yaml
+    producer: record_pivot_decision
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: ceiling_report_exists
+      check: ceiling_report_or_donor_report_exists
+      target: latest_ceiling_report_or_legacy_donor_report_pair
+      on_fail: stop
+    - id: replacement_review_finding_exists
+      check: stop_gate_or_replacement_review_exists
+      target: latest_stop_gate_or_replacement_review_finding
+      on_fail: stop
+  invariants:
+    - id: pivot_requires_ceiling
+      check: pivot_not_used_for_ordinary_rewrite
+    - id: grounding_precedes_clearance
+      check: north_star_viability_requires_grounding_review
+    - id: candidate_discovery_separate_from_clearance
+      check: pivot_slate_not_treated_as_pivot_decision
+    - id: lifecycle_movement_requires_gate
+      check: successor_leaf_initialization_requires_pivot_gate
+  budgets:
+    max_steps: 9
+    max_script_retries: 1
+    max_candidate_families: 6
+    max_assistant_sessions: 1
+    external_mutations: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_ceiling_report: stop_and_return_to_essay_iteration
+    on_grounding_failure: record_blocker_and_defer
+    on_north_star_failure: record_no_successor_or_continue_search
+    on_pivot_clearance: stop_for_leaf_initialization_approval
+    resume_from: resolved_run
+    rollback_strategy: preserve_donor_artifacts_and_do_not_promote_successor
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - grounding_gate_precedes_north_star_gate
+    - successor_leaf_initialization_requires_decision
+  context_checks:
+    - package_status_resolves
+    - donor_readme_resolves
+    - ceiling_report_resolves
+    - stop_gate_or_replacement_review_resolves
+    - evidence_surface_resolves_when_present
+  hooks:
+    - id: pivot_research_grounding_gate_check
+      command: "npm run gate:check -- --gate pivot_research_grounding --package {package}"
+      run_at:
+        - before_north_star_viability
+      required: true
+    - id: pivot_north_star_viability_gate_check
+      command: "npm run gate:check -- --gate pivot_north_star_viability --package {package}"
+      run_at:
+        - before_pivot_clearance
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: pivot_research_grounding
+    type: lifecycle_movement
+    contract: pivot_research_grounding
+    required: true
+    stop_before: north_star_viability
+    validator: "npm run gate:check -- --gate pivot_research_grounding --package {package}"
+    artifacts:
+      - latest_ceiling_report_or_legacy_donor_report_pair
+      - pivot_slate
+      - grounding_review_and_blocker_record
+    decisions:
+      - approve
+      - reject
+      - defer
+  - id: pivot_north_star_viability
+    type: lifecycle_movement
+    contract: pivot_north_star_viability
+    required: true
+    stop_before: successor_leaf_initialization_or_successor_search_stop
+    validator: "npm run gate:check -- --gate pivot_north_star_viability --package {package}"
+    artifacts:
+      - grounding_review_and_blocker_record
+      - north_star_viability_gate
+      - pivot_decision
+      - donor_leaf_and_successor_flagship_leaf_record when a new flagship object is adopted
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - pivot_question
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: confirm_ceiling
+    title: Confirm ceiling
+    mode: codex_session
+    action: Confirm that the donor object has a real ceiling and that another local rewrite is not the correct next move.
+    consumes:
+      - package_readme_or_donor_leaf_readme
+      - package_status
+      - latest_stop_gate_or_replacement_review_finding
+      - latest_ceiling_report_or_legacy_donor_report_pair
+      - workflow_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_package_shape_decision
+    title: Record package shape decision
+    mode: codex_session
+    action: Record whether the donor package needs umbrella upgrade or successor leaf initialization before any pivot can be promoted.
+    consumes:
+      - current_package_shape
+      - latest_ceiling_report_or_legacy_donor_report_pair
+    produces:
+      - umbrella_upgrade_record
+      - donor_leaf_and_successor_flagship_leaf_record
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: build_pivot_slate
+    title: Build pivot slate
+    mode: codex_session
+    action: Rank materially different candidate families before deep research.
+    consumes:
+      - latest_ceiling_report_or_legacy_donor_report_pair
+      - current_overlay_artifacts
+      - package_evidence_surface
+      - alphaxiv_skill
+    produces:
+      - pivot_slate
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: run_grounding_review
+    title: Run grounding review
+    mode: review_gated
+    action: Decide whether the active candidate is grounded enough to justify a real second publication object.
+    consumes:
+      - pivot_slate
+      - package_evidence_surface
+      - workflow_templates
+    produces:
+      - grounding_review_and_blocker_record
+      - review_gate_artifact
+    validation:
+      hooks:
+        - pivot_research_grounding_gate_check
+    gate:
+      id: pivot_research_grounding
+    trace:
+      required: true
+  - id: select_next_candidate
+    title: Select next candidate
+    mode: codex_session
+    action: Keep one active next-pivot candidate without pretending it is cleared.
+    consumes:
+      - grounding_review_and_blocker_record
+      - pivot_slate
+    produces:
+      - active_next_pivot_candidate
+      - candidate_specific_research_delta
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: test_north_star_viability
+    title: Test north-star viability
+    mode: review_gated
+    action: Decide whether the grounded candidate has enough field-reordering force, evidence aperture, and doctrine to open a successor attempt.
+    consumes:
+      - active_next_pivot_candidate
+      - candidate_specific_research_delta
+      - grounding_review_and_blocker_record
+      - workflow_templates
+    produces:
+      - north_star_viability_gate
+      - review_gate_artifact
+    validation:
+      hooks:
+        - pivot_north_star_viability_gate_check
+    gate:
+      id: pivot_north_star_viability
+    trace:
+      required: true
+  - id: record_pivot_decision
+    title: Record pivot decision
+    mode: codex_session
+    action: Record blocked, provisional, clear lead, pivot cleared, no successor, or continued search.
+    consumes:
+      - north_star_viability_gate
+      - grounding_review_and_blocker_record
+      - donor_leaf_and_successor_flagship_leaf_record
+    produces:
+      - pivot_decision
+    validation:
+      hooks:
+        - pivot_north_star_viability_gate_check
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - pivot_decision
+      - review_gate_artifact
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - pivot_north_star_viability_gate_check
+    trace:
+      required: true

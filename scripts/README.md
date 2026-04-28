@@ -13,7 +13,7 @@ This directory holds the tracked repo-level automation code. These scripts are t
 
 The default rule is: root-level scripts should be generic repo automation. A script may show a package name in CLI help text as an example when it still accepts `--package` or another generic selector. A script becomes a Phase 1 exception when it hardcodes one package, one series, or one migration context into its behavior.
 
-Current root-script status: no accepted package-specific root-script exceptions.
+Current root-script status: no accepted package-specific root-script exceptions. Temporary cross-package experiment toolchains are allowed only when they are indexed in [`../experiments/README.md`](../experiments/README.md) and tied back to a workflow.
 
 Retired or moved exceptions:
 
@@ -32,6 +32,8 @@ Non-exceptions:
 
 These scripts keep the publication lifecycle contracts, manifests, and refinement cycles coherent. They are the automation layer behind the tracked stage ids, but they do not replace the workflow docs that define how the work should actually be done.
 
+For source-of-truth and operator-surface questions, read [`../AUTHORITY.md`](../AUTHORITY.md) first. New governed execution should use `./content-agent` over `workflow.yaml`, root policy/profile/gate YAMLs, and package `status.yaml`. The older `stage:*` and `workflow:*` npm commands remain compatibility adapters for existing scripts and narrow scaffold behavior.
+
 Routine lifecycle records from this layer belong in [`../reviewable-runs/logs/`](../reviewable-runs/logs/README.md), not in the retained proof surface under `reviewable-runs/examples/proofs/`. For scaffolded `essay_iteration`, the log records the scaffold event while the canonical working packet lives beside the leaf draft inside the package.
 
 Use `npm run check` as the lightweight pre-review validation bundle. It runs harness validation, workflow-model validation, content-agent validation readiness, Reviewable Runs log validation, repo-link validation, and alphaXiv discussion tracking. It intentionally excludes mirror builds, publication sync, and other external or heavier checks.
@@ -45,17 +47,19 @@ Tracked docs:
 | :--- | :--- | :--- | :--- |
 | `lifecycle.py` | Shared lifecycle constants plus the generic workflow/gate/profile contract loader used by the other lifecycle scripts. | imported by other scripts | This is the contract layer, not a direct user command. |
 | `harness.py` | Shared Codex-facing helpers for policy loading, context resolution, stage composition, workflow resolution, gate evaluation, launch packs, and harness contract generation. | imported by other scripts | Keep the machine-readable harness surface consistent. |
+| `essay_iteration_support.py` | Shared helpers for essay-iteration packet discovery, scaffold detection, path resolution, and packet validation constants. | imported by essay-iteration scripts | Support module, not a user-facing entrypoint. |
+| `research_exit_support.py` | Shared helpers for canonical research-exit gate path construction and frontmatter/body validation constants. | imported by research-exit checks | Support module, not a user-facing entrypoint. |
 | `init_status.py` | Initializes `status.yaml` manifests for publication packages. | `.venv/bin/python scripts/init_status.py --package <package>` | Use `--recursive` when bootstrapping many README-backed packages. |
 | `sync_status_schema.py` | Adds missing lifecycle stages and leaf defaults to existing manifests after schema changes. | `.venv/bin/python scripts/sync_status_schema.py` | Maintenance helper when the tracked stage list changes. |
 | `check_status.py` | Prints the leaf-package lifecycle matrix across `publications/`. | `.venv/bin/python scripts/check_status.py` | Fast visibility into current package state. |
 | `check_package_lifecycle.py` | Checks one package for stage/README drift, governing-brief resolution, and packet-scaffold consistency. | `npm run check:package-lifecycle -- --package <leaf-package>` | Advisory lifecycle guardrail surface and the machine-readable input used by the local Stop hook. |
 | `check_notebooklm_registry.py` | Validates NotebookLM notebook mappings from `post_map.yaml` to package `status.yaml`, checks restricted URL/ID consistency, and can resolve IDs through the NotebookLM CLI with `--live`. | `.venv/bin/python scripts/check_notebooklm_registry.py` | Use after adding or changing publication NotebookLM mappings. |
 | `check_alphaxiv_discussions.py` | Validates that package notes mentioning alphaXiv assistant session ids are indexed in package-local `research-notes/alphaxiv-discussions/index.md` files. | `npm run check:alphaxiv-discussions` | Use after alphaXiv assistant sessions materially shape package claims, vocabulary, or paper queues. |
-| `run_stage.py` | Inspects one lifecycle stage, resolves its workflow contract, can execute or mark the stage state, and writes a lightweight run log. | `npm run run -- --package <package> --stage <stage>` | This is the stage runner surface. The autogenerated log is operational trace, not retained proof. |
-| `next_action.py` | Resolves the next valid lifecycle step for one package and emits a stable JSON/text payload for harnesses. | `npm run stage:next -- --package <package>` | The Phase 1.5 next-step surface. |
-| `run_workflow.py` | Resolves or runs any tracked workflow id, including reusable modules and experimental overlays. | `npm run workflow:resolve -- --workflow <workflow_id>` or `npm run workflow:run -- --workflow <workflow_id>` | Guided workflows emit launch packs instead of pretending hidden execution happened. |
+| `run_stage.py` | Compatibility stage runner: inspects one lifecycle stage, resolves its workflow contract, can execute or mark the stage state, and writes a lightweight run log. | `npm run run -- --package <package> --stage <stage>` | Keep for existing lifecycle utilities and narrow scaffold behavior. New governed execution should prefer `./content-agent run`. |
+| `next_action.py` | Compatibility next-action resolver for older stage-oriented harnesses. | `npm run stage:next -- --package <package>` | `./content-agent next --package <package>` is the preferred governed operator surface. |
+| `run_workflow.py` | Compatibility workflow resolver/runner for reusable modules and experimental overlays. | `npm run workflow:resolve -- --workflow <workflow_id>` or `npm run workflow:run -- --workflow <workflow_id>` | Use when a workflow still depends on launch-pack behavior. New governed workflow execution should prefer `./content-agent run --workflow <workflow_id> --package <package>`. |
 | `check_gate.py` | Evaluates a first-class gate contract against a package or packet and writes a gate-check log. | `npm run gate:check -- --gate <gate_id> --package <package>` | This is the machine-checkable movement-decision surface. |
-| `content_agent.py` | Implements the Phase 2 `content-agent` facade over `workflow.yaml`, root policy/profile/gate YAMLs, package `status.yaml`, context admission, tool/path posture, gate readiness, trace readiness, and Phase 2 YAML execution evidence. | `./content-agent status`, `./content-agent validate --workflow <workflow_id> --package <package>`, or `./content-agent review list` | Validation and status reads are read-only. Review decisions are the explicit file-backed gate mutation path and do not move lifecycle state, publish, or promote outputs. |
+| `content_agent.py` | Implements the Phase 2 `content-agent` facade over `workflow.yaml`, root policy/profile/gate YAMLs, package `status.yaml`, context admission, tool/path posture, gate readiness, trace readiness, and Phase 2 YAML execution evidence. | `./content-agent status`, `npm run content-agent -- status`, `npm run agent:validate -- --workflow <workflow_id> --package <package>`, or `./content-agent review list` | Validation and status reads are read-only. Review decisions are the explicit file-backed gate mutation path and do not move lifecycle state, publish, or promote outputs. |
 | `content_cockpit.py` | Serves the Phase 2.5/2.6 local cockpit over `content-agent` status, next-action, review-gate, run-record, validation, review-decision, and report-only editorial commands. | `npm run cockpit -- --package <package>` or `./content-cockpit --package <package>` | Cockpit actions call existing repo commands. It does not run arbitrary jobs, edit packages, move lifecycle state, publish, or promote outputs. |
 | `generate_editorial_report.py` | Generates the Phase 2.6 structured article-polish editorial report from the package `status.yaml` live draft and `voice_consistency_guide.md`. | `npm run editorial:report -- --package <package>` or `.venv/bin/python scripts/generate_editorial_report.py --package <package> --stdout` | Report-only automation. It records findings and source-improvement suggestions without rewriting drafts, approving gates, moving lifecycle state, publishing, or promoting outputs. |
 | `init_package.py` | Bootstraps a minimal leaf package from an idea or a canonical topic-discovery packet and seeds a runnable `status.yaml`. | `npm run package:init -- --idea "..."` or `npm run package:init -- --from-topic-packet <packet>` | Creates the harness-first idea-to-package scaffold. |
@@ -153,6 +157,19 @@ Tracked workflows:
 | `convert_landscape_videos_to_portrait.py` | Converts landscape MP4 clips into portrait `9:16` versions by centering the original frame over a blurred vertical background, keeping output in a standard `H.264`/`AAC` web-delivery envelope. | prep horizontal clips for Shorts-style upload | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
 | `probe_shorts_media.py` | Probes portrait Shorts masters for dimensions, audio, duration, and JSON-reportable preflight status. | verify Shorts media before upload | [`youtube-data-api`](../workflows/skills/youtube-data-api/SKILL.md) |
 | `scrape_youtube_watch_transcript.py` | Scrapes the visible watch-page transcript panel into JSON when you need a browser fallback for transcript inspection. | transcript fallback or debugging | [`youtube-slide-video-pipeline`](../workflows/skills/youtube-slide-video-pipeline/SKILL.md) |
+
+## YouTube Analytics And Experiment Tooling
+
+These scripts support cross-package YouTube experiments tracked under [`../experiments/`](../experiments/README.md). They are not package lifecycle runners.
+
+| Script | Role | Typical Use | Related Workflow |
+| :--- | :--- | :--- | :--- |
+| `fetch_youtube_analytics.py` | Fetches read-only YouTube Analytics and video metadata into the local analytics ledger. | update `../experiments/youtube-analytics/metrics_ledger.json` before a recommendation pass | [`youtube-channel-ops`](../workflows/youtube-channel-ops/README.md) |
+| `build_youtube_decision_report.py` | Builds recommendation-only weekly YouTube decision reports from the analytics ledger and decision rules. | generate `../experiments/youtube-analytics/weekly_reports/` without mutating the channel | [`youtube-channel-ops`](../workflows/youtube-channel-ops/README.md) |
+| `prepare_overlay_remaster_backfill.py` | Prepares overlay-remaster Shorts manifests and a crosswalk report for a multi-package backfill. | create or refresh rollout remaster planning state under `../experiments/youtube-cinematic-rollout/` | [`youtube-cinematic-rollout`](../workflows/youtube-cinematic-rollout/README.md) |
+| `sync_overlay_remaster_uploads.py` | Syncs overlay-remaster crosswalk items from generated upload reports. | update remaster crosswalk state after upload reports exist | [`youtube-cinematic-rollout`](../workflows/youtube-cinematic-rollout/README.md) |
+| `mark_overlay_remaster_studio_verified.py` | Marks overlay-remaster items as Studio related-video verified. | record manual Studio verification in the remaster crosswalk | [`youtube-cinematic-rollout`](../workflows/youtube-cinematic-rollout/README.md) |
+| `unlist_overlay_remaster_old_shorts.py` | Unlists old Shorts after verified overlay remaster uploads. | guarded cleanup after remasters are uploaded and related-video verification is recorded | [`youtube-channel-ops`](../workflows/youtube-channel-ops/README.md) |
 
 ## Thin Operational Wrappers
 

@@ -1,7 +1,7 @@
 {
   "name": "content",
   "version": "1.0.0",
-  "description": "This repository is organized primarily by **Topic**. Each top-level folder corresponds to a specific research area, concept, or multi-part publication (e.g., `publications/autonomy-tax`, `publications/hardware-friction`).",
+  "description": "Rooted Layers content repo: publication packages, workflow contracts, reviewable runs, archive/mirror automation, and governed content-agent surfaces.",
   "main": "index.js",
   "scripts": {
     "sync:substack": ".venv/bin/python scripts/sync_substack_archive.py",
@@ -19,6 +19,11 @@
     "check:notebooklm-registry": ".venv/bin/python scripts/check_notebooklm_registry.py",
     "check:alphaxiv-discussions": ".venv/bin/python scripts/check_alphaxiv_discussions.py",
     "check": "npm run check:harness && npm run check:workflow-model && npm run check:reviewable-runs && npm run check:repo-links && npm run check:alphaxiv-discussions",
+    "content-agent": "./content-agent",
+    "agent:status": "./content-agent status",
+    "agent:next": "./content-agent next",
+    "agent:validate": "./content-agent validate",
+    "agent:review": "./content-agent review",
     "cockpit": "./content-cockpit",
     "editorial:report": ".venv/bin/python scripts/generate_editorial_report.py",
     "status": ".venv/bin/python scripts/check_status.py",

@@ -7,11 +7,12 @@ This file is the local operator-facing orientation layer for `/Users/petros/Proj
 Use it together with:
 
 1. root [`README.md`](README.md) for the repo model
-2. [`publications/README.md`](publications/README.md) for the canonical publication-package map
-3. package `README.md` files for local structure
-4. tracked [`workflows/README.md`](workflows/README.md) for canonical playbooks
-5. [`scripts/README.md`](scripts/README.md) for tracked repo automation
-6. tracked [`workflows/skills/README.md`](workflows/skills/README.md), with local `.agents/skills/` symlinked for Codex discovery
+2. root [`AUTHORITY.md`](AUTHORITY.md) for the source-of-truth map and Phase 2 operator boundary
+3. [`publications/README.md`](publications/README.md) for the canonical publication-package map
+4. package `README.md` files for local structure
+5. tracked [`workflows/README.md`](workflows/README.md) for canonical playbooks
+6. [`scripts/README.md`](scripts/README.md) for tracked repo automation
+7. tracked [`workflows/skills/README.md`](workflows/skills/README.md), with local `.agents/skills/` symlinked for Codex discovery
 
 ## Repo Model
 
@@ -57,6 +58,34 @@ For single-publication packages, prefer this paper-intake structure unless the p
 | inspect tracked automation | [`scripts/README.md`](scripts/README.md) | the specific script or workflow doc |
 | perform security research or red-teaming survey | [`publications/security-research/README.md`](publications/security-research/README.md) | its local research papers and surveys |
 
+## Authority And Operator Surface
+
+For governed repo work, use [`AUTHORITY.md`](AUTHORITY.md) as the source-of-truth map.
+
+The highest machine-authority layer is:
+
+- per-workflow `workflow.yaml`
+- package `status.yaml`
+- [`harness_policy.yaml`](harness_policy.yaml)
+- [`gate_contracts.yaml`](gate_contracts.yaml)
+- [`pipeline_profiles.yaml`](pipeline_profiles.yaml)
+
+The preferred governed operator entrypoint is `./content-agent`:
+
+```bash
+./content-agent status --package <package>
+./content-agent next --package <package>
+./content-agent validate --workflow <workflow_id> --package <package>
+./content-agent run --workflow <workflow_id> --package <package>
+./content-agent review list
+./content-agent review inspect --gate <gate_id>
+./content-agent resume --gate <gate_id>
+```
+
+Use `./content-cockpit --package <package>` when a browser surface is more useful than terminal output.
+
+Treat `npm run stage:*` and `npm run workflow:*` as compatibility adapters unless a workflow doc explicitly calls for their narrow behavior.
+
 ## Stage Decision Checklist
 
 For package-stage decisions, use this order:
@@ -68,7 +97,7 @@ For package-stage decisions, use this order:
 5. load `config.blueprint_path` when the manifest names one
 6. if `essay_iteration` is active, seed or refresh the packet before making strong drafting-next-step claims
 
-For umbrella packages, expect `current_stage: null` or another compatibility-only stage shell. The operational source of truth may be the umbrella route plus `stage:next`, not a leaf-style downstream stage.
+For umbrella packages, expect `current_stage: null` or another compatibility-only stage shell. The operational source of truth may be the umbrella route plus `./content-agent next`, not a leaf-style downstream stage.
 
 ## Local Skills
 
