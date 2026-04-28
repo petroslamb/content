@@ -34,6 +34,9 @@ The current operative stack is:
 - [`2.1-executable-workflow-contract.md`](2.1-executable-workflow-contract.md): authored workflow source contract
 - [`2.2-enforcement-and-validation-layer.md`](2.2-enforcement-and-validation-layer.md): deny/detect/record posture and validation stack
 - [`2.3-trace-and-provenance-minimums.md`](2.3-trace-and-provenance-minimums.md): resolved runs, run records, review gates, and promoted-output state
+- [`2.4-gate-runtime-and-content-agent.md`](2.4-gate-runtime-and-content-agent.md): deterministic CLI/runtime implementation plan
+- [`2.5-local-cockpit.md`](2.5-local-cockpit.md): cockpit dependency boundary and v0 scope
+- [`2.6-editorial-automation.md`](2.6-editorial-automation.md): bounded editorial automation plan
 - [`workflow-yaml-schema.md`](workflow-yaml-schema.md): schema companion to 2.1, not a competing authority
 
 ## Subphase Read
