@@ -1,0 +1,46 @@
+{
+  "source_video": "publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.mp4",
+  "related_video_id": "n99g7mLWQek",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow",
+  "full_video_url": "https://www.youtube.com/watch?v=n99g7mLWQek",
+  "secondary_video_url": "https://www.youtube.com/watch?v=2Fs1iDw5I3Y",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "prompt-tweaks-create-drift-generators",
+      "title": "Prompt Tweaks Create Drift Generators",
+      "summary": "In production, a prompt fix can break another part of the chain. Without measurement, optimization becomes hidden regression.",
+      "start": "00:00:15.519",
+      "end": "00:01:16.880",
+      "publish_at": "2026-04-29T10:30:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "hook": "Prompt fixes can create hidden regressions",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "a-json-schema-beats-prompt-whispering",
+      "title": "A JSON Schema Beats Prompt Whispering",
+      "summary": "Many agent failures come from ambiguous boundaries. A strict schema can remove an entire class of downstream parser failures.",
+      "start": "00:01:46.000",
+      "end": "00:02:32.959",
+      "publish_at": "2026-04-30T10:30:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "hook": "A JSON schema beats prompt whispering",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ]
+}

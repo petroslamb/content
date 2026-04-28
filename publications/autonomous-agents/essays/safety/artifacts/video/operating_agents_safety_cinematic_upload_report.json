@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-04-28T08:46:48.000988+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "operating_agents_safety",
+  "package": "autonomous-agents/essays/safety",
+  "notebook_id": "0ea6bf22-8cb0-4da2-953e-6d7efc7244d4",
+  "video_source_file": "publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.mp4",
+  "caption_output": "publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.srt",
+  "title": "The Attack Surface Is the Architecture | A Cinematic Research Brief",
+  "base_title": "The Attack Surface Is the Architecture",
+  "description": "The risk in agent systems is not just the model. It is the architecture you wrapped around it and all the boundaries it quietly opened.\n\nThis cinematic brief frames safety as an architectural problem, not a last-mile policy layer pasted on after the system already has too many unsafe degrees of freedom.\n\nIt should attract viewers who need a more operational model of agent safety than red-team spectacle alone.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/operating-agents-v-the-attack-surface\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=biyIKcSp3Po\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS40NzZCMERDMjVEN0RFRThB",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS40NzZCMERDMjVEN0RFRThB",
+      "position": 10,
+      "title": "The Attack Surface Is the Architecture | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "biyIKcSp3Po",
+    "url": "https://www.youtube.com/watch?v=biyIKcSp3Po"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface",
+  "video": {
+    "id": "vCpW8dYfeEY",
+    "url": "https://www.youtube.com/watch?v=vCpW8dYfeEY",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-28T08:46:43Z"
+    }
+  }
+}
