@@ -19,6 +19,7 @@
     "check:notebooklm-registry": ".venv/bin/python scripts/check_notebooklm_registry.py",
     "check:alphaxiv-discussions": ".venv/bin/python scripts/check_alphaxiv_discussions.py",
     "check": "npm run check:harness && npm run check:workflow-model && npm run check:reviewable-runs && npm run check:repo-links && npm run check:alphaxiv-discussions",
+    "cockpit": "./content-cockpit",
     "status": ".venv/bin/python scripts/check_status.py",
     "run": ".venv/bin/python scripts/run_stage.py",
     "stage:next": ".venv/bin/python scripts/next_action.py",
