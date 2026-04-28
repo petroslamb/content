@@ -105,6 +105,9 @@ capabilities:
     - id: repo_link_check
       command: "npm run check:repo-links"
       required: true
+    - id: editorial_report
+      command: ".venv/bin/python scripts/generate_editorial_report.py --package {package}"
+      required: true
     - id: release_readiness_gate_check
       command: "npm run gate:check -- --gate release_readiness --package {package}"
       required: true
@@ -149,6 +152,12 @@ outputs:
     required_when: transcript round-trip is used for editorial polish
     format: text
     producer: transcript_round_trip
+  - id: editorial_report
+    path_template: "publications/{package}/artifacts/editorial-report-r{revision}.json"
+    required: true
+    format: json
+    producer: generate_editorial_report
+    promotable: false
   - id: release_readiness_gate
     path_template: "reviewable-runs/gates/{run_id}-release-readiness.yaml"
     required: conditional
@@ -246,6 +255,11 @@ validation:
       run_at:
         - handoff
       required: true
+    - id: editorial_report
+      command: ".venv/bin/python scripts/generate_editorial_report.py --package {package}"
+      run_at:
+        - before_release_gate_handoff
+      required: true
     - id: release_readiness_gate_check
       command: "npm run gate:check -- --gate release_readiness --package {package}"
       run_at:
@@ -291,6 +305,7 @@ trace:
     - live_draft_path
     - image_embed_scan
     - package_diff_summary
+    - editorial_report_path
     - output_paths
     - validation_results
     - enforcement_outcomes
@@ -405,6 +420,23 @@ steps:
     trace:
       required: true
 
+  - id: generate_editorial_report
+    title: Generate editorial report
+    mode: scriptable
+    executor:
+      command: ".venv/bin/python scripts/generate_editorial_report.py --package {package}"
+    consumes:
+      - polished_live_draft
+      - current_references
+      - publication_voice_guide
+    produces:
+      - editorial_report
+    validation:
+      hooks:
+        - editorial_report
+    trace:
+      required: true
+
   - id: release_readiness_handoff
     title: Release readiness handoff
     mode: review_gated
@@ -413,10 +445,12 @@ steps:
       - polished_live_draft
       - publishable_images
       - transcript_artifact
+      - editorial_report
     produces:
       - release_readiness_gate
     validation:
       hooks:
+        - editorial_report
         - release_readiness_gate_check
     gate:
       id: release_readiness
