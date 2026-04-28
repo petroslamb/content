@@ -1791,10 +1791,15 @@ def summarize_review_gate(path: Path, data: dict[str, Any]) -> dict[str, Any]:
         "stop_reason": stop.get("reason"),
         "decision_outcome": decision.get("outcome") if decision else None,
         "decided_at": decision.get("decided_at") if decision else None,
+        "retained_example": data.get("retained_example") is True,
     }
 
 
-def load_review_gate_records(package_arg: str | None = None) -> list[dict[str, Any]]:
+def load_review_gate_records(
+    package_arg: str | None = None,
+    *,
+    include_retained: bool = False,
+) -> list[dict[str, Any]]:
     package_key = coerce_package_key(package_arg) if package_arg else None
     records: list[dict[str, Any]] = []
     for path in evidence_yaml_paths(REVIEW_GATES_DIR):
@@ -1810,6 +1815,8 @@ def load_review_gate_records(package_arg: str | None = None) -> list[dict[str, A
         if data.get("kind") != "review_gate":
             continue
         if not package_ref_matches(data, package_key):
+            continue
+        if data.get("retained_example") is True and not include_retained:
             continue
         records.append(summarize_review_gate(path, data))
     return sorted(
@@ -2047,8 +2054,10 @@ def build_init_report(check_only: bool = False) -> dict[str, Any]:
 def build_review_list_report(
     package_arg: str | None = None,
     status_filter: str = "all",
+    *,
+    include_retained: bool = False,
 ) -> dict[str, Any]:
-    gates = load_review_gate_records(package_arg)
+    gates = load_review_gate_records(package_arg, include_retained=include_retained)
     if status_filter != "all":
         gates = [gate for gate in gates if gate.get("status") == status_filter]
     gate_statuses = split_gate_statuses(gates)
@@ -2058,6 +2067,7 @@ def build_review_list_report(
         "filters": {
             "package": coerce_package_key(package_arg) if package_arg else None,
             "status": status_filter,
+            "include_retained": include_retained,
         },
         "counts": {
             "pending": gate_statuses["pending_count"],
@@ -3757,6 +3767,7 @@ def print_text_review_list(report: dict[str, Any]) -> None:
     print("content-agent review list")
     print(f"package: {filters.get('package') or 'all'}")
     print(f"status: {filters.get('status')}")
+    print(f"include_retained: {filters.get('include_retained')}")
     gates = report.get("gates", [])
     if not gates:
         print("gates: none")
@@ -3769,6 +3780,7 @@ def print_text_review_list(report: dict[str, Any]) -> None:
             f"[{gate.get('status')}] "
             f"{gate.get('gate_contract')} "
             f"{gate.get('package_key')} "
+            f"{'retained ' if gate.get('retained_example') else ''}"
             f"{gate.get('path')}"
         )
 
@@ -3990,6 +4002,11 @@ def build_parser() -> argparse.ArgumentParser:
     review_list = review_subparsers.add_parser("list", help="List pending and resolved review gates.")
     review_list.add_argument("--package", help="Package path or key under publications/.")
     review_list.add_argument("--status", choices=["pending", "resolved", "all"], default="all")
+    review_list.add_argument(
+        "--include-retained",
+        action="store_true",
+        help="Include retained proof examples that are ignored by active gate blockers.",
+    )
     review_list.add_argument("--format", choices=["text", "json"], default="text")
 
     review_inspect = review_subparsers.add_parser("inspect", help="Inspect a single review gate artifact.")
@@ -4064,7 +4081,11 @@ def main() -> None:
     if args.command == "review":
         if args.review_command == "list":
             try:
-                report = build_review_list_report(package_arg=args.package, status_filter=args.status)
+                report = build_review_list_report(
+                    package_arg=args.package,
+                    status_filter=args.status,
+                    include_retained=args.include_retained,
+                )
             except Exception as exc:
                 if args.format == "json":
                     print_json({"success": False, "error": str(exc)})
