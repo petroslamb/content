@@ -285,6 +285,7 @@ gates:
     validator: "npm run gate:check -- --gate release_readiness --package {package}"
     artifacts:
       - polished_live_draft
+      - editorial_report
       - publishable_images when images are used
       - transcript_artifact when transcript round-trip is used
     decisions:
