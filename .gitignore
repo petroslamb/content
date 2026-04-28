@@ -41,6 +41,12 @@ output/
 # Generated long-form course renders
 publications/autonomous-agents/essays/*/artifacts/video/*Timed Slides.mp4
 
+# Generated short-form overlay intermediates
+**/artifacts/video/**/overlays/
+
+# Local scratch outputs
+tmp/
+
 # --- Repository Content Hygiene Policy ---
 # Globally ignore PDF, Video, and Audio assets to keep the Git footprint small.
 # Images are NOT ignored to preserve inline essay rendering.
