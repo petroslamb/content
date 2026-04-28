@@ -1,0 +1,50 @@
+{
+  "source_video": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4",
+  "source_srt": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video_id": "NIJ92a65SxM",
+  "full_video_url": "https://www.youtube.com/watch?v=NIJ92a65SxM",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-i-when-language",
+  "secondary_video_url": "https://www.youtube.com/watch?v=swvX4mduJtk",
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  },
+  "clips": [
+    {
+      "slug": "writing-the-script-isnt-agency",
+      "title": "Writing the Script Isn't Agency",
+      "summary": "An agent is not real just because it can describe the work. It becomes real when it can execute the task and verify the state actually changed.",
+      "start": "00:00:00.400",
+      "end": "00:00:25.359",
+      "publish_at": "2026-04-29T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": null,
+      "hook": "Writing the Script Isn't Agency",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "css-tags-can-break-an-agent",
+      "title": "A Single CSS Tag Can Break an Agent",
+      "summary": "Computer-using agents look impressive until a tiny interface change wipes out their bearings. Human-facing surfaces are fragile action environments.",
+      "start": "00:01:07.680",
+      "end": "00:01:32.720",
+      "publish_at": "2026-04-29T07:30:00Z",
+      "score_total": 22,
+      "score_breakdown": null,
+      "hook": "A Single CSS Tag Can Break an Agent",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ]
+}
