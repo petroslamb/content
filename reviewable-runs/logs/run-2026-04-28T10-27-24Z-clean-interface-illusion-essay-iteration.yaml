@@ -1,0 +1,158 @@
+kind: run_record
+schema_version: 1
+retained_example: true
+retention_reason: Phase 2.3 trace/provenance validator fixture on a real leaf package.
+run_id: run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration
+resolved_run_path: reviewable-runs/resolved-runs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml
+package:
+  path: publications/clean-interface-illusion
+  status_path: publications/clean-interface-illusion/status.yaml
+  status_hash: sha256:692d6674985c292c8c00e90f7ed8f231ab947ed07adb14df5acc30a2a296bfb4
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:5b5d5dbc252f454f864e98cc30233b780bf5d5fc5d9171e4ae168ef4bd42d3d1
+  contract_path: workflows/essay-iteration/workflow.yaml
+run_mode: governed_continuous
+timestamps:
+  started_at: "2026-04-28T10:27:24Z"
+  ended_at: "2026-04-28T10:27:56Z"
+invocation:
+  entrypoint: content-agent validate
+  command: ./content-agent validate --workflow essay_iteration --package clean-interface-illusion --mode governed_continuous
+context_admission:
+  - id: package_status
+    required: true
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/status.yaml
+    hashes:
+      publications/clean-interface-illusion/status.yaml:
+        type: file_sha256
+        sha256: 692d6674985c292c8c00e90f7ed8f231ab947ed07adb14df5acc30a2a296bfb4
+        size_bytes: 791
+  - id: live_draft
+    required: true
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/clean-interface-illusion.md
+    hashes:
+      publications/clean-interface-illusion/clean-interface-illusion.md:
+        type: file_sha256
+        sha256: 0d527bc64dff1c826d4a4ad47deb04a14ac945274700707da919f8cb723088ff
+        size_bytes: 1392
+  - id: governing_brief
+    required: true
+    status: resolved
+    paths:
+      - publications/clean-interface-illusion/blueprint.md
+    hashes:
+      publications/clean-interface-illusion/blueprint.md:
+        type: file_sha256
+        sha256: cc146298e903a5a65d8980234b936904c9203f8e27ee9f26e38b208c6e6e6295
+        size_bytes: 6825
+consumed_artifacts:
+  - id: packet_manifest
+    paths:
+      - publications/clean-interface-illusion/clean-interface-illusion-essay-iteration-packet-r3.json
+    hashes:
+      publications/clean-interface-illusion/clean-interface-illusion-essay-iteration-packet-r3.json:
+        type: file_sha256
+        sha256: 5297308a95d373c6af06e179700fb88c4be0e27135075f6a6288c9b87ec0d72f
+        size_bytes: 5422
+  - id: candidate_draft
+    paths:
+      - publications/clean-interface-illusion/clean-interface-illusion-candidate-r3.md
+    hashes:
+      publications/clean-interface-illusion/clean-interface-illusion-candidate-r3.md:
+        type: file_sha256
+        sha256: c3b6bdd9f562ea214f5f992bbb094830276748251ef8a8f1f27ed6dc096919d4
+        size_bytes: 5772
+  - id: replacement_review
+    paths:
+      - publications/clean-interface-illusion/clean-interface-illusion-replacement-review-r3.md
+    hashes:
+      publications/clean-interface-illusion/clean-interface-illusion-replacement-review-r3.md:
+        type: file_sha256
+        sha256: ec9eccfe5f222021eed44c8787b1515c65d195604f4aa1b39377354aca65230b
+        size_bytes: 4294
+  - id: promotion_decision
+    paths:
+      - publications/clean-interface-illusion/clean-interface-illusion-decision-r3.md
+    hashes:
+      publications/clean-interface-illusion/clean-interface-illusion-decision-r3.md:
+        type: file_sha256
+        sha256: 9e472a9791b6ccfa27ee52e87262568a572aac3b68a88ff6336e011c49a9eb01
+        size_bytes: 1701
+parent_artifacts:
+  - id: package_status
+    path: publications/clean-interface-illusion/status.yaml
+  - id: packet_manifest
+    path: publications/clean-interface-illusion/clean-interface-illusion-essay-iteration-packet-r3.json
+produced_artifacts:
+  - id: resolved_run
+    paths:
+      - reviewable-runs/resolved-runs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml
+  - id: run_record
+    paths:
+      - reviewable-runs/logs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml
+  - id: review_gate
+    paths:
+      - reviewable-runs/gates/gate-2026-04-28T10-27-24Z-clean-interface-illusion-replacement-north-star.yaml
+validation_results:
+  - id: content_agent_validate
+    status: passed
+    command: ./content-agent validate --workflow essay_iteration --package clean-interface-illusion --mode governed_continuous --format json
+  - id: package_lifecycle_guardrail
+    status: passed
+    command: npm run check:package-lifecycle -- --package clean-interface-illusion --format json
+  - id: full_packet_check
+    status: failed
+    command: npm run check:essay-iteration -- --package clean-interface-illusion
+    summary: Packet manifest is missing output_paths.prewrite_gate and output_paths.ceiling_report.
+  - id: replacement_north_star_gate_check
+    status: blocked
+    command: npm run gate:check -- --gate replacement_north_star --package clean-interface-illusion --format json
+    summary: Gate is blocked because the stop-gate ceiling report is missing.
+enforcement_outcomes:
+  - surface: contract_shape
+    posture: deny
+    status: passed
+  - surface: context_admission
+    posture: deny
+    status: passed
+  - surface: path_access
+    posture: deny
+    status: passed
+  - surface: validation_hooks
+    posture: deny
+    status: blocked
+  - surface: review_gates
+    posture: deny
+    status: gate_recorded
+  - surface: external_mutation
+    posture: deny
+    status: not_attempted
+  - surface: lifecycle_movement
+    posture: deny
+    status: blocked
+  - surface: promotion
+    posture: deny
+    status: blocked
+  - surface: trace_completeness
+    posture: detect
+    status: recorded
+gate_ids:
+  - replacement_north_star
+approval_decisions: []
+external_mutations:
+  - target: none
+    status: not_attempted
+    approval_reference: null
+terminal_status: gated
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: blocked
+  trace_state: minimum_complete

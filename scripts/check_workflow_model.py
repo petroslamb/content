@@ -201,6 +201,7 @@ def check_run_record_completeness(fixtures: dict, errors: list[str]) -> None:
     retained = fixtures.get("retained_examples", {})
     log_fixtures = retained.get("logs", [])
     artifact_fixtures = retained.get("artifacts", [])
+    evidence_fixtures = retained.get("execution_evidence", [])
 
     kinds = set()
     for fixture in log_fixtures:
@@ -234,6 +235,18 @@ def check_run_record_completeness(fixtures: dict, errors: list[str]) -> None:
         if not path.exists():
             label = fixture.get("label") or fixture["path"]
             errors.append(f"Retained workflow-model artifact is missing: {label}")
+
+    for fixture in evidence_fixtures:
+        path = (REPO_ROOT / fixture["path"]).resolve()
+        if not path.exists():
+            errors.append(f"Retained Phase 2.3 execution evidence is missing: {fixture['path']}")
+            continue
+        data = load_yaml(path)
+        expected_kind = fixture.get("kind")
+        if expected_kind and data.get("kind") != expected_kind:
+            errors.append(
+                f"Retained Phase 2.3 execution evidence {fixture['path']} expected kind {expected_kind}, got {data.get('kind')}."
+            )
 
 
 def check_content_agent_validate(errors: list[str]) -> None:
@@ -281,6 +294,9 @@ def main() -> None:
             "pipeline_profiles.yaml",
             "workflows/*/workflow.yaml",
             "scripts/workflow_model_fixtures.yaml",
+            "reviewable-runs/resolved-runs/*.yaml",
+            "reviewable-runs/logs/*.yaml",
+            "reviewable-runs/gates/*.yaml",
         ],
     }
 
