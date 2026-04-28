@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter, defaultdict
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -423,6 +424,23 @@ def report_table_rows(classifications: list[dict[str, Any]]) -> list[str]:
     return rows
 
 
+def analytics_blocker_from_notes(query_notes: list[dict[str, Any]]) -> str | None:
+    note_text = "\n".join(
+        str(note.get("error") or note.get("fallback_error") or "")
+        for note in query_notes
+    )
+    if "accessNotConfigured" in note_text or "has not been used in project" in note_text:
+        match = re.search(r"https://console\.developers\.google\.com/\S+", note_text)
+        link = match.group(0).rstrip('".') if match else "Google Cloud API Library"
+        return f"YouTube Analytics API is disabled for this OAuth project. Enable it here: {link}"
+    if "insufficientPermissions" in note_text or "insufficient authentication scopes" in note_text:
+        return (
+            "The cached OAuth token lacks Analytics scopes. Re-run: "
+            ".venv/bin/python workflows/skills/youtube-data-api/scripts/auth_and_channel_check.py"
+        )
+    return None
+
+
 def build_markdown_report(
     *,
     ledger: dict[str, Any],
@@ -438,6 +456,8 @@ def build_markdown_report(
     missing_manual = [
         item for item in classifications if item.get("manual_fields_missing")
     ]
+    query_notes = ledger.get("query_notes") or []
+    analytics_blocker = analytics_blocker_from_notes(query_notes)
     lines = [
         f"# YouTube Analytics Decision Report - {report_date.isoformat()}",
         "",
@@ -450,11 +470,14 @@ def build_markdown_report(
         f"- Videos reviewed: `{len(classifications)}`",
         f"- Decision counts: "
         + ", ".join(f"`{key}` {value}" for key, value in summary_counts.items()),
-        "",
-        "## Top Recommended Actions",
-        "",
     ]
-    if actionable:
+    if analytics_blocker:
+        lines.append(f"- Analytics blocker: {analytics_blocker}")
+    lines.extend(["", "## Top Recommended Actions", ""])
+
+    if analytics_blocker:
+        lines.append("- No recommendations were made because Analytics API metrics were unavailable.")
+    elif actionable:
         lines.extend(action_line(item) for item in actionable[:12])
     else:
         lines.append("- No videos crossed the conservative action thresholds.")
@@ -484,8 +507,9 @@ def build_markdown_report(
             )
 
     lines.extend(["", "## Data Quality Notes", ""])
-    query_notes = ledger.get("query_notes") or []
     if query_notes:
+        if analytics_blocker:
+            lines.append(f"- {analytics_blocker}")
         for note in query_notes[:12]:
             lines.append(
                 f"- `{note.get('window')}` `{note.get('query')}`: "
@@ -507,6 +531,8 @@ def build_summary(
         for category in classification["categories"]:
             counts[category] += 1
     summary_counts = {category: counts.get(category, 0) for category in DECISION_ORDER}
+    query_notes = ledger.get("query_notes") or []
+    analytics_blocker = analytics_blocker_from_notes(query_notes)
     return {
         "created_at": datetime.now(timezone.utc).isoformat(),
         "report_date": report_date.isoformat(),
@@ -514,6 +540,7 @@ def build_summary(
         "read_only": True,
         "source_ledger_created_at": ledger.get("created_at"),
         "analytics_end_date": ledger.get("analytics_end_date"),
+        "analytics_blocker": analytics_blocker,
         "summary_counts": summary_counts,
         "top_actions": [
             {
