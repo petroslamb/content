@@ -1,5 +1,6 @@
 kind: resolved_run
 schema_version: 1
+retained_example: true
 run_id: phase-2-6-editorial-report-proof
 package:
   path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e

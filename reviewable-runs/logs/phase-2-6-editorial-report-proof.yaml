@@ -1,5 +1,6 @@
 kind: run_record
 schema_version: 1
+retained_example: true
 run_id: phase-2-6-editorial-report-proof
 resolved_run_path: reviewable-runs/resolved-runs/phase-2-6-editorial-report-proof.yaml
 package:
