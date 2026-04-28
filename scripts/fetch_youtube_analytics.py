@@ -45,6 +45,10 @@ WATCH_WINDOWS = {
     "7d": 7,
     "28d": 28,
 }
+THUMBNAIL_REACH_METRICS = [
+    "videoThumbnailImpressions",
+    "videoThumbnailImpressionsClickRate",
+]
 ANALYTICS_METRICS = [
     "views",
     "engagedViews",
@@ -55,9 +59,7 @@ ANALYTICS_METRICS = [
     "comments",
     "shares",
     "subscribersGained",
-    "videoThumbnailImpressions",
-    "videoThumbnailImpressionsClickRate",
-]
+] + THUMBNAIL_REACH_METRICS
 QUERY_ANALYTICS_METRICS = [
     "views",
     "engagedViews",
@@ -86,6 +88,15 @@ MANUAL_OBSERVATION_FIELDS = [
     "retention_notes",
     "thumbnail_title_observations",
     "studio_related_verified",
+    "video_thumbnail_impressions",
+    "video_thumbnail_ctr",
+    "card_impressions",
+    "card_click_rate",
+    "card_teaser_impressions",
+    "card_teaser_clicks",
+    "card_teaser_click_rate",
+    "end_screen_impressions",
+    "end_screen_click_rate",
 ]
 IGNORED_DIR_NAMES = {
     ".git",
@@ -230,6 +241,11 @@ def merge_video_record(
     for key, value in record.items():
         if key == "source_reports":
             continue
+        if key == "manual_observations" and isinstance(value, dict):
+            merged = dict(existing.get("manual_observations", {}))
+            merged.update(value)
+            existing[key] = merged
+            continue
         if value not in (None, "", [], {}):
             existing[key] = value
     existing_reports = set(existing.get("source_reports", []))
@@ -301,6 +317,11 @@ def video_record_from_upload_report(
                     workflow=workflow,
                     video_path=report.get("video_source_file"),
                 ),
+                "manual_observations": (
+                    report.get("manual_observations")
+                    if isinstance(report.get("manual_observations"), dict)
+                    else {}
+                ),
                 "package": package,
                 "topic": infer_topic(package),
                 "workflow": workflow,
@@ -336,6 +357,11 @@ def video_record_from_upload_report(
                     report_path=report_path,
                     workflow=workflow,
                     video_path=item.get("video_path") or item.get("portrait_file"),
+                ),
+                "manual_observations": (
+                    item.get("manual_observations")
+                    if isinstance(item.get("manual_observations"), dict)
+                    else {}
                 ),
                 "package": package,
                 "topic": infer_topic(package),
@@ -405,6 +431,13 @@ def query_analytics(
             return [], str(exc)
         rows.extend(normalize_analytics_rows(response))
     return rows, None
+
+
+def thumbnail_query_not_supported_error(error: str | None) -> bool:
+    if not error:
+        return False
+    lowered = error.lower()
+    return "query not supported" in lowered or "query is not supported" in lowered
 
 
 def fetch_recent_channel_uploads(
@@ -556,6 +589,7 @@ def build_analytics_windows(
     content_type_by_video: dict[str, list[dict[str, Any]]] = defaultdict(list)
     query_notes: list[dict[str, Any]] = []
     end = datetime.fromisoformat(end_date).date()
+    thumbnail_query_supported = True
 
     for label, days in WATCH_WINDOWS.items():
         start_date = (end - timedelta(days=days - 1)).isoformat()
@@ -587,10 +621,38 @@ def build_analytics_windows(
             rows = fallback_rows
             error = fallback_error
 
+        thumbnail_rows: list[dict[str, Any]] = []
+        thumbnail_error: str | None = None
+        if thumbnail_query_supported:
+            thumbnail_rows, thumbnail_error = query_analytics(
+                analytics,
+                start_date=start_date,
+                end_date=end_date,
+                video_ids=video_ids,
+                metrics=THUMBNAIL_REACH_METRICS,
+            )
+        if thumbnail_error:
+            if thumbnail_query_not_supported_error(thumbnail_error):
+                thumbnail_query_supported = False
+            else:
+                query_notes.append(
+                    {
+                        "window": label,
+                        "query": "video_thumbnail_metrics",
+                        "metrics": THUMBNAIL_REACH_METRICS,
+                        "error": thumbnail_error,
+                    }
+                )
+
         rows_by_video = {str(row.get("video")): row for row in rows}
+        thumbnail_by_video = {
+            str(row.get("video")): row for row in thumbnail_rows
+        }
         for video_id in video_ids:
-            row = rows_by_video.get(video_id)
-            if not row:
+            row = rows_by_video.get(video_id) or {}
+            thumbnail_row = thumbnail_by_video.get(video_id) or {}
+            merged_row = {**row, **thumbnail_row}
+            if not merged_row:
                 windows_by_video[video_id][label] = empty_window(
                     start_date=start_date,
                     end_date=end_date,
@@ -601,7 +663,10 @@ def build_analytics_windows(
             windows_by_video[video_id][label] = {
                 "start_date": start_date,
                 "end_date": end_date,
-                "metrics": {metric: row.get(metric) for metric in ANALYTICS_METRICS},
+                "metrics": {
+                    metric: merged_row.get(metric)
+                    for metric in ANALYTICS_METRICS
+                },
                 "missing": False,
                 "missing_reason": None,
             }
@@ -698,10 +763,20 @@ def build_analytics_windows(
 
 
 def add_manual_fields(record: dict[str, Any]) -> None:
-    record["manual_observations"] = {
-        field: record.get("manual_observations", {}).get(field)
+    observations = (
+        dict(record.get("manual_observations", {}))
         if isinstance(record.get("manual_observations"), dict)
-        else None
+        else {}
+    )
+    if (
+        "video_thumbnail_impressions" not in observations
+        and "thumbnail_impressions" in observations
+    ):
+        observations["video_thumbnail_impressions"] = observations["thumbnail_impressions"]
+    if "video_thumbnail_ctr" not in observations and "thumbnail_ctr" in observations:
+        observations["video_thumbnail_ctr"] = observations["thumbnail_ctr"]
+    record["manual_observations"] = {
+        field: observations.get(field)
         for field in MANUAL_OBSERVATION_FIELDS
     }
 

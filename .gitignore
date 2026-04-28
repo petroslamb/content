@@ -47,6 +47,11 @@ publications/autonomous-agents/essays/*/artifacts/video/*Timed Slides.mp4
 # Local scratch outputs
 tmp/
 
+# Generated YouTube analytics state
+experiments/youtube-analytics/metrics_ledger.json
+experiments/youtube-analytics/reporting_downloads/
+experiments/youtube-analytics/weekly_reports/
+
 # --- Repository Content Hygiene Policy ---
 # Globally ignore PDF, Video, and Audio assets to keep the Git footprint small.
 # Images are NOT ignored to preserve inline essay rendering.

@@ -167,12 +167,18 @@ If those inputs are still landscape, add `--convert-from-landscape --work-dir <p
 
 ### 6. Run The Weekly Analytics Decision Loop
 
-Use the analytics loop after production, upload, and related-video verification have settled. This is a recommendation-only workflow: it reads YouTube Data API and YouTube Analytics API state, writes local reports, and never edits titles, descriptions, visibility, playlists, related-video settings, uploads, or channel state.
+Use the analytics loop after production, upload, and related-video verification have settled. This is a recommendation-only workflow: it reads YouTube Data API, YouTube Analytics API, and YouTube Reporting API state; writes local reports; and never edits titles, descriptions, visibility, playlists, related-video settings, uploads, or channel publishing state.
 
 Refresh the metrics ledger:
 
 ```bash
 .venv/bin/python scripts/fetch_youtube_analytics.py --since-days 30
+```
+
+Sync delayed bulk Reporting API exports, including thumbnail reach and card fields when files are available:
+
+```bash
+.venv/bin/python scripts/sync_youtube_reporting_reports.py --since-days 30
 ```
 
 Build the weekly recommendation report:
@@ -184,6 +190,8 @@ Build the weekly recommendation report:
 The default outputs are:
 
 - `experiments/youtube-analytics/metrics_ledger.json`
+- `experiments/youtube-analytics/reporting_jobs.json`
+- `experiments/youtube-analytics/reporting_downloads/`
 - `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.md`
 - `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.json`
 
@@ -194,6 +202,8 @@ If the cached OAuth token predates Analytics access, the fetch script will stop 
 ```
 
 The report buckets videos into `scale`, `clip_more`, `remaster`, `retitle`, `hook_problem`, `funnel_winner`, and `ignore`. Treat those as production recommendations only. Title changes, unlisting, remasters, uploads, and related-video fixes remain separate confirmed workflows.
+
+Thumbnail impressions and CTR come from Reporting API reach jobs, not the targeted Analytics API query path. If `reporting_downloads/` has no reach CSVs yet, rerun the sync later; Google generates Reporting API files asynchronously after the job exists.
 
 Studio-only observations can be filled into the ledger manually when needed: related-video clicks, card/end-screen clicks, retention notes, thumbnail/title observations, and Studio related-video verification.
 

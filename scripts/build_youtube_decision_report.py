@@ -33,6 +33,14 @@ WINDOW_DAYS = {
     "7d": 7,
     "28d": 28,
 }
+MANUAL_THUMBNAIL_IMPRESSIONS_FIELDS = (
+    "video_thumbnail_impressions",
+    "thumbnail_impressions",
+)
+MANUAL_THUMBNAIL_CTR_FIELDS = (
+    "video_thumbnail_ctr",
+    "thumbnail_ctr",
+)
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -115,6 +123,15 @@ def manual_value(video: dict[str, Any], key: str) -> Any:
     return observations.get(key)
 
 
+def manual_metric(video: dict[str, Any], keys: tuple[str, ...]) -> float | None:
+    for key in keys:
+        value = manual_value(video, key)
+        converted = number(value)
+        if converted is not None:
+            return converted
+    return None
+
+
 def is_remastered(video: dict[str, Any]) -> bool:
     reports = " ".join(video.get("source_reports") or []).lower()
     return "remastered-overlays" in reports or "overlay" in reports
@@ -130,6 +147,7 @@ def add_decision(
         result["categories"].append(category)
     result["reasons"].append(reason)
     result["recommended_actions"].append(action)
+    result.setdefault("actions_by_category", {})[category] = action
 
 
 def classification_sort_key(classification: dict[str, Any]) -> tuple[int, float]:
@@ -153,7 +171,11 @@ def classify_video(
     avg_view_duration = metric(selected_window, "averageViewDuration")
     avg_view_percentage = metric(selected_window, "averageViewPercentage")
     impressions = metric(selected_window, "videoThumbnailImpressions")
+    if impressions is None:
+        impressions = manual_metric(video, MANUAL_THUMBNAIL_IMPRESSIONS_FIELDS)
     ctr = metric(selected_window, "videoThumbnailImpressionsClickRate")
+    if ctr is None:
+        ctr = manual_metric(video, MANUAL_THUMBNAIL_CTR_FIELDS)
     subscribers = metric(selected_window, "subscribersGained")
     vpd = views_per_day(views, selected_label)
     subscribers_per_1000_views = per_1000(subscribers, views)
@@ -175,6 +197,7 @@ def classify_video(
         "categories": [],
         "reasons": [],
         "recommended_actions": [],
+        "actions_by_category": {},
         "metrics": {
             "views": views,
             "views_per_day": vpd,
@@ -310,12 +333,16 @@ def classify_video(
         add_decision(
             result,
             "funnel_winner",
-            f"Manual Studio fields show {total_known_clicks:g} known downstream clicks.",
+            f"Reporting or Studio fields show {total_known_clicks:g} known downstream clicks.",
             "Keep the related-video target and build more Shorts that point to this parent.",
         )
 
     if video.get("related_video") and related_clicks is None:
         result["manual_fields_missing"].append("related_video_clicks")
+    if impressions is None:
+        result["manual_fields_missing"].append("video_thumbnail_impressions")
+    if ctr is None:
+        result["manual_fields_missing"].append("video_thumbnail_ctr")
     for field in ["card_clicks", "end_screen_clicks", "retention_notes"]:
         if manual_value(video, field) is None:
             result["manual_fields_missing"].append(field)
@@ -410,6 +437,10 @@ def report_table_rows(
             "ignore",
         )
         metrics = classification["metrics"]
+        action = classification.get("actions_by_category", {}).get(
+            category,
+            classification["recommended_actions"][0],
+        )
         title = md_escape(classification.get("title") or classification.get("video_id"))
         url = classification.get("url")
         linked_title = f"[{title}]({url})" if url else title
@@ -424,7 +455,7 @@ def report_table_rows(
                     fmt_number(metrics.get("views_per_day")),
                     fmt_number(metrics.get("averageViewPercentage"), "%"),
                     fmt_number(metrics.get("videoThumbnailImpressionsClickRate"), "%"),
-                    md_escape(classification["recommended_actions"][0]),
+                    md_escape(action),
                 ]
             )
             + " |"
