@@ -1,0 +1,312 @@
+{
+  "created_at": "2026-04-28T10:17:44.616454+00:00",
+  "workflow": "overlay_remaster_backfill_pilot",
+  "run_id": "remastered-overlays-2026-04-28",
+  "publish_start_date": "2026-04-29",
+  "publish_cadence": "2 per UTC day at 06:00 and 07:30",
+  "old_status_target": "unlisted",
+  "default_cta": "Full cinematic brief in Related Video",
+  "packages": [
+    {
+      "package_key": "action",
+      "manifest": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "clip_count": 2,
+      "source_srt": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt"
+    },
+    {
+      "package_key": "memory",
+      "manifest": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "clip_count": 2,
+      "source_srt": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt"
+    },
+    {
+      "package_key": "multi-agent",
+      "manifest": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "clip_count": 2,
+      "source_srt": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt"
+    },
+    {
+      "package_key": "reasoning",
+      "manifest": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "clip_count": 2,
+      "source_srt": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt"
+    }
+  ],
+  "items": [
+    {
+      "package": "autonomous-agents/essays/action",
+      "package_key": "action",
+      "slug": "writing-the-script-isnt-agency",
+      "title": "Writing the Script Isn't Agency",
+      "publish_at": "2026-04-29T06:00:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt",
+      "old_video_id": "Ue9gGySTVRI",
+      "old_url": "https://www.youtube.com/watch?v=Ue9gGySTVRI",
+      "old_video_path": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/portrait/01-writing-the-script-isnt-agency_portrait.mp4",
+      "new_video_id": "1PB-UE6GpBM",
+      "new_url": "https://www.youtube.com/watch?v=1PB-UE6GpBM",
+      "new_video_path": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-writing-the-script-isnt-agency_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Writing the Script Isn't Agency #shorts",
+        "published_at": "2026-04-28T10:28:56Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5BQzRBQzNEOTgzNTU2QkZB",
+        "position": 125,
+        "title": "Writing the Script Isn't Agency #shorts"
+      }
+    },
+    {
+      "package": "autonomous-agents/essays/action",
+      "package_key": "action",
+      "slug": "css-tags-can-break-an-agent",
+      "title": "A Single CSS Tag Can Break an Agent",
+      "publish_at": "2026-04-29T07:30:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt",
+      "old_video_id": "bsvMg8LUb1M",
+      "old_url": "https://www.youtube.com/watch?v=bsvMg8LUb1M",
+      "old_video_path": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/portrait/02-css-tags-can-break-an-agent_portrait.mp4",
+      "new_video_id": "FaDtWYQ-8d8",
+      "new_url": "https://www.youtube.com/watch?v=FaDtWYQ-8d8",
+      "new_video_path": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-css-tags-can-break-an-agent_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "A Single CSS Tag Can Break an Agent #shorts",
+        "published_at": "2026-04-28T10:29:03Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EN0U0NTk3NzIwMjUxN0M3",
+        "position": 126,
+        "title": "A Single CSS Tag Can Break an Agent #shorts"
+      }
+    },
+    {
+      "package": "autonomous-agents/essays/memory",
+      "package_key": "memory",
+      "slug": "agents-dont-lose-iq-they-lose-attention",
+      "title": "Agents Don't Lose IQ. They Lose Attention.",
+      "publish_at": "2026-04-30T06:00:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt",
+      "old_video_id": "QRD1FJiKTfU",
+      "old_url": "https://www.youtube.com/watch?v=QRD1FJiKTfU",
+      "old_video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/01-agents-dont-lose-iq-they-lose-attention_portrait.mp4",
+      "new_video_id": "D3BZrjUzsPw",
+      "new_url": "https://www.youtube.com/watch?v=D3BZrjUzsPw",
+      "new_video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-agents-dont-lose-iq-they-lose-attention_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Agents Don't Lose IQ. They Lose Attention. #shorts",
+        "published_at": "2026-04-28T10:29:24Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC44M0Q5MzQ0QTcwQzFDMjc5",
+        "position": 127,
+        "title": "Agents Don't Lose IQ. They Lose Attention. #shorts"
+      }
+    },
+    {
+      "package": "autonomous-agents/essays/memory",
+      "package_key": "memory",
+      "slug": "flat-vector-memory-becomes-a-security-hole",
+      "title": "Flat Vector Memory Becomes a Security Hole",
+      "publish_at": "2026-04-30T07:30:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt",
+      "old_video_id": "4UzuyKGNaKc",
+      "old_url": "https://www.youtube.com/watch?v=4UzuyKGNaKc",
+      "old_video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/02-flat-vector-memory-becomes-a-security-hole_portrait.mp4",
+      "new_video_id": "PopV146TIe8",
+      "new_url": "https://www.youtube.com/watch?v=PopV146TIe8",
+      "new_video_path": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-flat-vector-memory-becomes-a-security-hole_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Flat Vector Memory Becomes a Security Hole #shorts",
+        "published_at": "2026-04-28T10:29:29Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wMEMyQTBBOTUwNTM0OUFG",
+        "position": 128,
+        "title": "Flat Vector Memory Becomes a Security Hole #shorts"
+      }
+    },
+    {
+      "package": "autonomous-agents/essays/multi-agent",
+      "package_key": "multi-agent",
+      "slug": "agent-theater-is-not-intelligence",
+      "title": "Agent Theater Is Not Intelligence",
+      "publish_at": "2026-05-01T06:00:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt",
+      "old_video_id": "PV-KfDYiLPo",
+      "old_url": "https://www.youtube.com/watch?v=PV-KfDYiLPo",
+      "old_video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/01-agent-theater-is-not-intelligence_portrait.mp4",
+      "new_video_id": "gENRTpSnHsw",
+      "new_url": "https://www.youtube.com/watch?v=gENRTpSnHsw",
+      "new_video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-agent-theater-is-not-intelligence_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Agent Theater Is Not Intelligence #shorts",
+        "published_at": "2026-04-28T10:29:45Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5FQjcyRDZBMEMyNTY3OTdE",
+        "position": 129,
+        "title": "Agent Theater Is Not Intelligence #shorts"
+      }
+    },
+    {
+      "package": "autonomous-agents/essays/multi-agent",
+      "package_key": "multi-agent",
+      "slug": "the-coordination-tax-kills-agent-handoffs",
+      "title": "The Coordination Tax Kills Agent Handoffs",
+      "publish_at": "2026-05-01T07:30:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt",
+      "old_video_id": "qTucAFn5g8Y",
+      "old_url": "https://www.youtube.com/watch?v=qTucAFn5g8Y",
+      "old_video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/02-the-coordination-tax-kills-agent-handoffs_portrait.mp4",
+      "new_video_id": "_GOUwFLcERM",
+      "new_url": "https://www.youtube.com/watch?v=_GOUwFLcERM",
+      "new_video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-the-coordination-tax-kills-agent-handoffs_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The Coordination Tax Kills Agent Handoffs #shorts",
+        "published_at": "2026-04-28T10:29:51Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC44REI4QUZDRDI5MDc4Q0NF",
+        "position": 130,
+        "title": "The Coordination Tax Kills Agent Handoffs #shorts"
+      }
+    },
+    {
+      "package": "autonomous-agents/essays/reasoning",
+      "package_key": "reasoning",
+      "slug": "the-ai-did-not-fail-the-scaffold-did",
+      "title": "The AI Did Not Fail. The Scaffold Did.",
+      "publish_at": "2026-05-02T06:00:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt",
+      "old_video_id": "T-XSEz2bQUk",
+      "old_url": "https://www.youtube.com/watch?v=T-XSEz2bQUk",
+      "old_video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/01-the-ai-did-not-fail-the-scaffold-did_portrait.mp4",
+      "new_video_id": "zWgN04X3ugk",
+      "new_url": "https://www.youtube.com/watch?v=zWgN04X3ugk",
+      "new_video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-the-ai-did-not-fail-the-scaffold-did_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The AI Did Not Fail. The Scaffold Did. #shorts",
+        "published_at": "2026-04-28T10:30:07Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC40ODU2MTBGM0M5MkIwQzU0",
+        "position": 131,
+        "title": "The AI Did Not Fail. The Scaffold Did. #shorts"
+      }
+    },
+    {
+      "package": "autonomous-agents/essays/reasoning",
+      "package_key": "reasoning",
+      "slug": "ai-cannot-check-its-own-gravity",
+      "title": "AI Cannot Check Its Own Gravity",
+      "publish_at": "2026-05-02T07:30:00Z",
+      "source_manifest": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json",
+      "remaster_manifest": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json",
+      "source_video": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4",
+      "source_srt": "publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt",
+      "old_video_id": "QCK0hPc0dPM",
+      "old_url": "https://www.youtube.com/watch?v=QCK0hPc0dPM",
+      "old_video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/02-ai-cannot-check-its-own-gravity_portrait.mp4",
+      "new_video_id": "T8Gv8yX_NW8",
+      "new_url": "https://www.youtube.com/watch?v=T8Gv8yX_NW8",
+      "new_video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-ai-cannot-check-its-own-gravity_portrait.mp4",
+      "new_upload_report": "publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json",
+      "old_status_target": "unlisted",
+      "studio_related_verified": false,
+      "ready_to_unlist_old": false,
+      "new_youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "AI Cannot Check Its Own Gravity #shorts",
+        "published_at": "2026-04-28T10:30:13Z"
+      },
+      "new_playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC42RDgxQ0M2OUIwREZCNjZF",
+        "position": 132,
+        "title": "AI Cannot Check Its Own Gravity #shorts"
+      }
+    }
+  ],
+  "updated_at": "2026-04-28T10:32:29.959870+00:00",
+  "uploaded_count": 8,
+  "missing_uploads": []
+}
