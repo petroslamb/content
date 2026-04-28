@@ -47,6 +47,55 @@ VALID_STEP_MODES = {
 }
 VALID_ENFORCEMENT_POSTURES = {"deny", "detect", "record"}
 VALID_GATE_DECISIONS = {"approve", "reject", "defer"}
+POSTURE_STRENGTH = {
+    "record": 1,
+    "detect": 2,
+    "deny": 3,
+}
+
+REQUIRED_ENFORCEMENT_SURFACES = [
+    "contract_shape",
+    "package_route_resolution",
+    "context_admission",
+    "tool_use",
+    "path_access",
+    "preconditions",
+    "invariants",
+    "budgets",
+    "expected_outputs",
+    "validation_hooks",
+    "review_gates",
+    "external_mutation",
+    "lifecycle_movement",
+    "gate_approval",
+    "promotion",
+    "trace_completeness",
+]
+
+POLICY_SENSITIVE_ENFORCEMENT_SURFACES = {
+    "external_mutation",
+    "lifecycle_movement",
+    "gate_approval",
+    "promotion",
+}
+
+REQUIRED_STATIC_CHECKS = {
+    "workflow_contract_loads",
+    "readme_yaml_drift",
+    "root_policy_compatible",
+    "package_class_supported",
+    "allowed_paths_cover_outputs",
+}
+
+REQUIRED_TRACE_ITEMS = {
+    "workflow_id",
+    "workflow_version",
+    "workflow_hash",
+    "context_paths",
+    "context_hashes",
+    "validation_results",
+    "enforcement_outcomes",
+}
 
 RUNTIME_REFERENCES = {
     "gate_artifact_paths",
@@ -103,6 +152,8 @@ INVALID_FIXTURES = [
         ],
     },
 ]
+
+HARNESS_POLICY_PATH = REPO_ROOT / "harness_policy.yaml"
 
 
 def repo_relpath(path: Path) -> str:
@@ -371,7 +422,11 @@ def validate_readme_drift(contract_path: Path, contract: dict[str, Any], errors:
             )
 
 
-def validate_contract(path: Path, gate_contract_ids: set[str]) -> list[str]:
+def posture_weaker_than(contract_posture: str, policy_posture: str) -> bool:
+    return POSTURE_STRENGTH.get(contract_posture, 0) < POSTURE_STRENGTH.get(policy_posture, 0)
+
+
+def validate_contract(path: Path, gate_contract_ids: set[str], policy_enforcement: dict[str, str] | None = None) -> list[str]:
     errors: list[str] = []
     contract = load_mapping(path)
 
@@ -507,9 +562,23 @@ def validate_contract(path: Path, gate_contract_ids: set[str]) -> list[str]:
         errors.append(f"{repo_relpath(path)}: trace.resolved_run must be a mapping when present.")
 
     enforcement = require_mapping(path, contract, "enforcement", errors)
+    missing_enforcement = [surface for surface in REQUIRED_ENFORCEMENT_SURFACES if surface not in enforcement]
+    if missing_enforcement:
+        errors.append(
+            f"{repo_relpath(path)}: enforcement is missing required surfaces: "
+            + ", ".join(missing_enforcement)
+        )
     for key, value in enforcement.items():
         if value not in VALID_ENFORCEMENT_POSTURES:
             errors.append(f"{repo_relpath(path)}: enforcement.{key} must be one of {sorted(VALID_ENFORCEMENT_POSTURES)}.")
+            continue
+        if key in POLICY_SENSITIVE_ENFORCEMENT_SURFACES and value != "deny":
+            errors.append(f"{repo_relpath(path)}: policy-sensitive enforcement.{key} must be deny.")
+        if policy_enforcement and key in policy_enforcement and posture_weaker_than(value, policy_enforcement[key]):
+            errors.append(
+                f"{repo_relpath(path)}: enforcement.{key} posture '{value}' weakens "
+                f"harness_policy.yaml floor '{policy_enforcement[key]}'."
+            )
 
     for section in ["preconditions", "invariants"]:
         items = behavior.get(section, [])
@@ -522,6 +591,51 @@ def validate_contract(path: Path, gate_contract_ids: set[str]) -> list[str]:
         errors.append(f"{repo_relpath(path)}: behavior.budgets must be a mapping.")
     if not isinstance(behavior.get("recovery"), dict):
         errors.append(f"{repo_relpath(path)}: behavior.recovery must be a mapping.")
+
+    static_checks = validation.get("static_checks", [])
+    if not isinstance(static_checks, list) or not all(isinstance(item, str) for item in static_checks):
+        errors.append(f"{repo_relpath(path)}: validation.static_checks must be a list of strings.")
+        static_checks = []
+    missing_static_checks = sorted(REQUIRED_STATIC_CHECKS - set(static_checks))
+    if missing_static_checks:
+        errors.append(
+            f"{repo_relpath(path)}: validation.static_checks is missing required checks: "
+            + ", ".join(missing_static_checks)
+        )
+
+    context_checks = validation.get("context_checks", [])
+    if not isinstance(context_checks, list) or not all(isinstance(item, str) for item in context_checks):
+        errors.append(f"{repo_relpath(path)}: validation.context_checks must be a list of strings.")
+        context_checks = []
+    if context_dependencies and not context_checks:
+        errors.append(f"{repo_relpath(path)}: validation.context_checks must declare context-admission checks.")
+
+    drift_checks = validation.get("drift_checks", [])
+    if drift_checks is None:
+        drift_checks = []
+    if not isinstance(drift_checks, list):
+        errors.append(f"{repo_relpath(path)}: validation.drift_checks must be a list.")
+        drift_checks = []
+    require_ids(path, drift_checks, "validation.drift_checks", errors)
+    for drift_check in drift_checks:
+        if isinstance(drift_check, dict) and "required" in drift_check and not isinstance(drift_check.get("required"), bool):
+            errors.append(f"{repo_relpath(path)}: validation drift check '{drift_check.get('id')}' required must be boolean.")
+
+    trace_include = trace.get("include", [])
+    if not isinstance(trace_include, list) or not all(isinstance(item, str) for item in trace_include):
+        errors.append(f"{repo_relpath(path)}: trace.include must be a list of strings.")
+        trace_include = []
+    missing_trace_items = sorted(REQUIRED_TRACE_ITEMS - set(trace_include))
+    if missing_trace_items:
+        errors.append(
+            f"{repo_relpath(path)}: trace.include is missing required 2.2 trace-readiness items: "
+            + ", ".join(missing_trace_items)
+        )
+    if gates and "gate_ids" not in trace_include:
+        errors.append(f"{repo_relpath(path)}: gated workflows must include gate_ids in trace.include.")
+
+    if trace.get("run_record") != "required":
+        errors.append(f"{repo_relpath(path)}: trace.run_record must be required.")
 
     for gate in gates:
         if not isinstance(gate, dict):
@@ -597,6 +711,33 @@ def validate_contract(path: Path, gate_contract_ids: set[str]) -> list[str]:
 def validate_workflow_yaml_contracts() -> list[str]:
     errors: list[str] = []
     gate_contract_ids = set(load_gate_contracts().keys())
+    policy_enforcement: dict[str, str] = {}
+    try:
+        policy = load_mapping(HARNESS_POLICY_PATH)
+        policy_enforcement_data = policy.get("enforcement_surfaces", {})
+        if not isinstance(policy_enforcement_data, dict):
+            errors.append("harness_policy.yaml: enforcement_surfaces must be a mapping.")
+        else:
+            missing_policy_surfaces = [
+                surface for surface in REQUIRED_ENFORCEMENT_SURFACES if surface not in policy_enforcement_data
+            ]
+            if missing_policy_surfaces:
+                errors.append(
+                    "harness_policy.yaml: enforcement_surfaces is missing required surfaces: "
+                    + ", ".join(missing_policy_surfaces)
+                )
+            for key, value in policy_enforcement_data.items():
+                if value not in VALID_ENFORCEMENT_POSTURES:
+                    errors.append(
+                        f"harness_policy.yaml: enforcement_surfaces.{key} must be one of {sorted(VALID_ENFORCEMENT_POSTURES)}."
+                    )
+                else:
+                    policy_enforcement[key] = value
+                if key in POLICY_SENSITIVE_ENFORCEMENT_SURFACES and value != "deny":
+                    errors.append(f"harness_policy.yaml: policy-sensitive enforcement_surfaces.{key} must be deny.")
+    except Exception as exc:
+        errors.append(f"harness_policy.yaml: {exc}")
+
     seen_workflow_ids: dict[str, Path] = {}
 
     for path in workflow_yaml_paths():
@@ -611,15 +752,15 @@ def validate_workflow_yaml_contracts() -> list[str]:
                     )
                 else:
                     seen_workflow_ids[workflow_id] = path
-            errors.extend(validate_contract(path, gate_contract_ids))
+            errors.extend(validate_contract(path, gate_contract_ids, policy_enforcement))
         except Exception as exc:
             errors.append(f"{repo_relpath(path)}: {exc}")
 
-    errors.extend(validate_invalid_fixtures(gate_contract_ids))
+    errors.extend(validate_invalid_fixtures(gate_contract_ids, policy_enforcement))
     return errors
 
 
-def validate_invalid_fixtures(gate_contract_ids: set[str]) -> list[str]:
+def validate_invalid_fixtures(gate_contract_ids: set[str], policy_enforcement: dict[str, str] | None = None) -> list[str]:
     errors: list[str] = []
     for fixture in INVALID_FIXTURES:
         path = fixture["path"]
@@ -627,7 +768,7 @@ def validate_invalid_fixtures(gate_contract_ids: set[str]) -> list[str]:
             errors.append(f"Invalid workflow.yaml fixture is missing: {repo_relpath(path)}")
             continue
         try:
-            fixture_errors = validate_contract(path, gate_contract_ids)
+            fixture_errors = validate_contract(path, gate_contract_ids, policy_enforcement)
         except Exception as exc:
             fixture_errors = [str(exc)]
 
