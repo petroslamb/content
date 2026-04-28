@@ -116,6 +116,18 @@ def cockpit_gate_payload(identifier: str) -> dict[str, object]:
     }
 
 
+def cockpit_next_payload(package_arg: str) -> dict[str, object]:
+    return {
+        "kind": "content_cockpit_next",
+        "schema_version": 1,
+        "generated_at": utc_now(),
+        "readers": [
+            "content_agent.build_next_report",
+        ],
+        "next": content_agent.build_next_report(package_arg),
+    }
+
+
 def parse_json_bytes(raw: bytes) -> object:
     if not raw.strip():
         return None
@@ -477,6 +489,7 @@ async function loadStatus() {
     return;
   }
   renderStatus(payload);
+  await loadNextAction(packageValue || (payload.status?.package?.package || ""));
 }
 
 async function rerunValidation() {
@@ -513,9 +526,67 @@ function renderStatus(payload) {
     <div class="grid">
       <section class="span-4">${renderPackage(report.package, root)}</section>
       <section class="span-8">${renderValidation(health)}</section>
+      <section class="span-12" id="next-action-section">${renderNextPlaceholder(report.package)}</section>
       <section class="span-12">${renderGates(gates)}</section>
       <section class="span-12">${renderRuns(yamlRuns, legacyRuns)}</section>
     </div>`;
+}
+
+function renderNextPlaceholder(pkg) {
+  if (!pkg) {
+    return '<h2>Next Action</h2><p class="muted">Select a package to resolve the next action.</p>';
+  }
+  return '<h2>Next Action</h2><p class="muted">Resolving...</p>';
+}
+
+async function loadNextAction(packageValue) {
+  const section = document.getElementById("next-action-section");
+  if (!section || !packageValue) return;
+  const response = await fetch(`/api/next?package=${encodeURIComponent(packageValue)}`);
+  const payload = await response.json();
+  if (!response.ok) {
+    section.innerHTML = `<h2>Next Action</h2><div class="error">${esc(payload.error || response.statusText)}</div>`;
+    return;
+  }
+  section.innerHTML = renderNextAction(payload.next || {});
+}
+
+function renderListItems(items) {
+  return (items || []).map((item) => `<li>${esc(item)}</li>`).join("");
+}
+
+function renderGateBlockers(gates) {
+  return (gates || []).map((gate) => `
+    <tr>
+      <td>${badge(gate.status)}</td>
+      <td><a href="${gateHref(gate)}">${esc(gate.gate_id || gate.path)}</a></td>
+      <td>${esc(gate.workflow_id || "")}</td>
+      <td>${esc(gate.stop_reason || "")}</td>
+    </tr>`).join("");
+}
+
+function renderNextAction(next) {
+  const blockers = renderListItems(next.blocking_issues || []);
+  const commands = renderListItems(next.suggested_commands || []);
+  const gateRows = renderGateBlockers(next.pending_review_gate_blockers || []);
+  return `<h2>Next Action</h2>
+    <table><tbody>
+      <tr><th>Next stage</th><td>${esc(next.next_stage || "none")}</td></tr>
+      <tr><th>Effective workflow</th><td>${esc(next.effective_workflow || next.next_stage || "none")}</td></tr>
+      <tr><th>Effective action</th><td>${esc(next.effective_next_action || next.next_packet_action || "none")}</td></tr>
+      <tr><th>Can execute</th><td>${badge(String(next.can_execute === true || next.effective_can_execute === true))}</td></tr>
+      <tr><th>Requires approval</th><td>${badge(String(next.requires_approval === true || next.effective_requires_approval === true))}</td></tr>
+      <tr><th>Pipeline profile</th><td>${esc(next.pipeline_profile || "none")}</td></tr>
+    </tbody></table>
+    <h2 style="margin-top:14px">Blocking Issues</h2>
+    <ul class="path-list">${blockers || '<li class="muted">none</li>'}</ul>
+    <h2 style="margin-top:14px">Pending Gate Blockers</h2>
+    <table>
+      <thead><tr><th>Status</th><th>Gate</th><th>Workflow</th><th>Reason</th></tr></thead>
+      <tbody>${gateRows || '<tr><td colspan="4" class="muted">No pending gate blockers.</td></tr>'}</tbody>
+    </table>
+    <h2 style="margin-top:14px">Suggested Commands</h2>
+    <ul class="path-list">${commands || '<li class="muted">none</li>'}</ul>`;
 }
 
 function renderPackage(pkg, root) {
@@ -765,6 +836,13 @@ class CockpitHandler(BaseHTTPRequestHandler):
                 package_arg = first_query_value(query, "package") or self.config.package_arg
                 limit = clamp_limit(first_query_value(query, "limit"), self.config.limit)
                 self.send_json(cockpit_status_payload(package_arg, limit))
+                return
+            if parsed.path == "/api/next":
+                package_arg = first_query_value(query, "package") or self.config.package_arg
+                if not package_arg:
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "package is required")
+                    return
+                self.send_json(cockpit_next_payload(package_arg))
                 return
             if parsed.path == "/api/gates":
                 package_arg = first_query_value(query, "package") or self.config.package_arg
