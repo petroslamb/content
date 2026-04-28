@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import date, datetime
+from collections.abc import Iterable
 from pathlib import Path
 
 from google.auth.transport.requests import Request
@@ -10,7 +11,15 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-SCOPES = ["https://www.googleapis.com/auth/youtube.force-ssl"]
+YOUTUBE_FORCE_SSL_SCOPE = "https://www.googleapis.com/auth/youtube.force-ssl"
+YOUTUBE_READONLY_SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
+YOUTUBE_ANALYTICS_READONLY_SCOPE = "https://www.googleapis.com/auth/yt-analytics.readonly"
+
+SCOPES = [
+    YOUTUBE_FORCE_SSL_SCOPE,
+    YOUTUBE_READONLY_SCOPE,
+    YOUTUBE_ANALYTICS_READONLY_SCOPE,
+]
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_ROOT = SCRIPT_DIR.parent
@@ -27,11 +36,67 @@ DEFAULT_SHORTS_DRAFTS_PLAYLIST_ID = "PL8lPx5mgRhhZtQzAegVjLEqD5v12GWrOw"
 DEFAULT_OPERATING_AGENTS_COURSE_PLAYLIST_ID = "PL8lPx5mgRhhZiKRR-cLl7YJd6GXhcbZAr"
 
 
-def load_credentials(interactive: bool = False) -> Credentials:
-    creds = None
+class OAuthReauthRequired(RuntimeError):
+    """Raised when the cached OAuth token lacks scopes required by this repo."""
 
-    if TOKEN_FILE.exists():
-        creds = Credentials.from_authorized_user_file(str(TOKEN_FILE), SCOPES)
+
+def _normalise_scopes(scopes: Iterable[str] | None = None) -> list[str]:
+    return list(scopes or SCOPES)
+
+
+def _reauth_command() -> str:
+    return f".venv/bin/python {SCRIPT_DIR / 'auth_and_channel_check.py'}"
+
+
+def token_file_scopes(token_file: Path = TOKEN_FILE) -> set[str] | None:
+    if not token_file.exists():
+        return None
+    try:
+        payload = json.loads(token_file.read_text())
+    except json.JSONDecodeError:
+        return None
+    scopes = payload.get("scopes")
+    if isinstance(scopes, str):
+        return set(scopes.split())
+    if isinstance(scopes, list):
+        return {str(scope) for scope in scopes}
+    scope = payload.get("scope")
+    if isinstance(scope, str):
+        return set(scope.split())
+    return None
+
+
+def missing_oauth_scopes(
+    required_scopes: Iterable[str] | None = None,
+    token_file: Path = TOKEN_FILE,
+) -> list[str]:
+    cached_scopes = token_file_scopes(token_file)
+    if cached_scopes is None:
+        return []
+    return sorted(set(_normalise_scopes(required_scopes)) - cached_scopes)
+
+
+def reauth_required_message(missing_scopes: Iterable[str]) -> str:
+    missing = ", ".join(missing_scopes)
+    return (
+        f"OAuth token at {TOKEN_FILE} is missing required YouTube scopes: {missing}. "
+        f"Re-run channel auth with: {_reauth_command()}"
+    )
+
+
+def load_credentials(
+    interactive: bool = False,
+    scopes: Iterable[str] | None = None,
+) -> Credentials:
+    required_scopes = _normalise_scopes(scopes)
+    creds = None
+    missing_scopes = missing_oauth_scopes(required_scopes)
+
+    if TOKEN_FILE.exists() and missing_scopes and not interactive:
+        raise OAuthReauthRequired(reauth_required_message(missing_scopes))
+
+    if TOKEN_FILE.exists() and not missing_scopes:
+        creds = Credentials.from_authorized_user_file(str(TOKEN_FILE), required_scopes)
 
     if creds and creds.valid:
         return creds
@@ -50,11 +115,11 @@ def load_credentials(interactive: bool = False) -> Credentials:
         if not TOKEN_FILE.exists():
             raise FileNotFoundError(
                 f"Missing OAuth token cache at {TOKEN_FILE}. "
-                f"Run {SCRIPT_DIR / 'auth_and_channel_check.py'} first."
+                f"Run {_reauth_command()} first."
             )
         raise RuntimeError(
             f"Could not refresh OAuth token at {TOKEN_FILE}. "
-            f"Run {SCRIPT_DIR / 'auth_and_channel_check.py'} to refresh auth."
+            f"Run {_reauth_command()} to refresh auth."
         )
 
     if not CLIENT_SECRETS_FILE.exists():
@@ -63,15 +128,33 @@ def load_credentials(interactive: bool = False) -> Credentials:
             "Download a Google Cloud desktop-app OAuth client and place it there."
         )
 
-    flow = InstalledAppFlow.from_client_secrets_file(str(CLIENT_SECRETS_FILE), SCOPES)
+    flow = InstalledAppFlow.from_client_secrets_file(
+        str(CLIENT_SECRETS_FILE),
+        required_scopes,
+    )
     creds = flow.run_local_server(port=0)
     TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
     TOKEN_FILE.write_text(creds.to_json())
     return creds
 
 
-def build_youtube(interactive: bool = False):
-    return build("youtube", "v3", credentials=load_credentials(interactive=interactive))
+def build_youtube(
+    interactive: bool = False,
+    scopes: Iterable[str] | None = None,
+):
+    return build(
+        "youtube",
+        "v3",
+        credentials=load_credentials(interactive=interactive, scopes=scopes),
+    )
+
+
+def build_youtube_analytics(interactive: bool = False):
+    return build(
+        "youtubeAnalytics",
+        "v2",
+        credentials=load_credentials(interactive=interactive, scopes=SCOPES),
+    )
 
 
 def load_metadata(path: Path = METADATA_FILE) -> dict:
