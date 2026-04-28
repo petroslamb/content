@@ -10,6 +10,7 @@ from pathlib import Path
 
 import yaml
 
+from check_workflow_yaml_contracts import validate_workflow_yaml_contracts
 from harness import build_stage_resolution, build_workflow_resolution, evaluate_gate
 from lifecycle import (
     REPO_ROOT,
@@ -249,6 +250,7 @@ def main() -> None:
         check_gate_fixtures(fixtures, errors)
         check_validator_coverage(fixtures, errors)
         check_run_record_completeness(fixtures, errors)
+        errors.extend(validate_workflow_yaml_contracts())
     except Exception as exc:
         errors.append(str(exc))
 
@@ -259,6 +261,7 @@ def main() -> None:
             "harness_contract.yaml",
             "gate_contracts.yaml",
             "pipeline_profiles.yaml",
+            "workflows/*/workflow.yaml",
             "scripts/workflow_model_fixtures.yaml",
         ],
     }
