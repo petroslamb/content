@@ -1,0 +1,337 @@
+workflow_id: distribution
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: distribution
+summary: Plan, queue, or record post-publication distribution work for the channels that matter to a package.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+    - id: published_url
+      source: publications/{package}/status.yaml:config.substack_url or publication map
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, publication URL, and lifecycle state.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package-specific audience, artifact, and distribution conventions.
+    record_hash: true
+  - id: published_canonical_post_url
+    status_field: config.published_url
+    fallback:
+      - config.substack_url
+      - publication_strategy_and_archive/post_map.yaml
+    required: true
+    purpose: Ensure downstream copy starts from the live canonical post URL.
+    record_hash: false
+  - id: package_or_publication_distribution_plan
+    path_from_status: config.distribution_path
+    fallback:
+      - publications/{package}/distribution/
+      - publications/{package}/socials/
+      - publications/{package}/README.md
+    required: false
+    purpose: Reuse any package or publication distribution plan instead of creating a parallel surface.
+    record_hash: true
+  - id: platform_specific_copy_or_media_assets
+    path_from_status: config.artifacts_path
+    fallback:
+      - publications/{package}/artifacts/
+      - publications/{package}/distribution/
+      - publications/{package}/socials/
+    required: false
+    purpose: Locate required platform-specific copy, images, clips, or other media assets.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/distribution/README.md
+    required: true
+    purpose: Load human-facing distribution workflow guidance.
+    record_hash: true
+  - id: release_gate_readme
+    path: workflows/release-gate/README.md
+    required: true
+    purpose: Preserve external-posting approval boundaries.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply external posting and mutation policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve release_readiness approval requirements when distribution mutates external channels.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: true
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      required: false
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/distribution/
+    - workflows/release-gate/
+    - publication_strategy_and_archive/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: distribution_copy_or_posting_plan
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: true
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: distribution_follow_through_log
+    path_template: "publications/{package}/{package_name}-distribution-log-r{revision}.md"
+    required: true
+    format: markdown
+    producer: record_distribution_follow_through
+    gated_by: release_readiness
+  - id: external_posting_gate
+    path_template: "reviewable-runs/gates/{run_id}-external-posting.yaml"
+    required: conditional
+    required_when: the run will mutate LinkedIn, X, Reddit, Hacker News, Substack Notes, or another external channel
+    format: yaml
+    producer: stop_for_external_posting_approval
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: published_url_resolves
+      check: published_url_present
+      target: published_canonical_post_url
+      on_fail: stop
+    - id: external_posting_approval_present_when_mutating
+      check: external_mutation_requires_release_readiness
+      target: release_readiness
+      on_fail: stop
+  invariants:
+    - id: copy_starts_from_live_post
+      check: distribution_copy_uses_published_url
+    - id: no_external_post_without_gate
+      check: external_mutation_requires_release_readiness
+    - id: skipped_channels_are_recorded
+      check: explicit_deferral_required_for_skipped_distribution
+  budgets:
+    max_steps: 5
+    max_script_retries: 1
+    external_mutations: 0
+    unapproved_external_posts: 0
+  recovery:
+    on_missing_published_url: stop_and_route_to_archive_or_release_gate
+    on_missing_distribution_plan: create_plan_in_package_surface
+    on_external_posting_not_approved: record_plan_and_defer
+    resume_from: resolved_run
+    rollback_strategy: preserve_local_copy_and_record_no_external_mutation
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - published_url_required
+    - external_posting_requires_gate
+  context_checks:
+    - package_status_resolves
+    - package_readme_resolves
+    - published_canonical_post_url_resolves
+    - distribution_plan_resolves_when_present
+  hooks:
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - handoff
+      required: true
+    - id: release_readiness_gate_check
+      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      run_at:
+        - before_external_posting
+      required: false
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: conditional
+    required_when: distribution includes external posting or channel mutation
+    stop_before: external_posting
+    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    artifacts:
+      - published_canonical_post_url
+      - distribution_copy_or_posting_plan
+      - external_posting_gate
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - published_url
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_distribution_context
+    title: Resolve distribution context
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - published_canonical_post_url
+      - package_or_publication_distribution_plan
+      - workflow_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: prepare_distribution_copy
+    title: Prepare distribution copy
+    mode: codex_session
+    action: Adapt the published post for the selected channels without changing the thesis or losing the canonical URL.
+    consumes:
+      - published_canonical_post_url
+      - package_or_publication_distribution_plan
+      - platform_specific_copy_or_media_assets
+    produces:
+      - distribution_copy_or_posting_plan
+    validation:
+      hooks:
+        - repo_link_check
+    trace:
+      required: true
+  - id: stop_for_external_posting_approval
+    title: Stop for external posting approval
+    mode: review_gated
+    action: Stop before external posting or channel mutation unless approval is explicit.
+    consumes:
+      - distribution_copy_or_posting_plan
+      - release_gate_readme
+    produces:
+      - external_posting_gate
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: record_distribution_follow_through
+    title: Record distribution follow-through
+    mode: codex_session
+    action: Record what shipped, what was queued, and what was intentionally skipped.
+    consumes:
+      - distribution_copy_or_posting_plan
+      - external_posting_gate
+    produces:
+      - distribution_follow_through_log
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - distribution_copy_or_posting_plan
+      - distribution_follow_through_log
+      - validation_results
+      - gate_artifact_paths
+    produces:
+      - run_record
+    validation:
+      hooks: []
+    trace:
+      required: true

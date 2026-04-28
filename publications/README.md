@@ -40,7 +40,7 @@ NotebookLM notebook links for the publication corpus are indexed in [`notebooklm
 | [`hardware-friction/`](hardware-friction/README.md) | Umbrella | Published umbrella | Hardware-friction map, scorecard, long-form article, and dataset |
 | [`neural-architectures/`](neural-architectures/README.md) | Umbrella | Published umbrella | Architecture-language essay line including *The Transformer Attractor* |
 | [`orchestration-paradigm/`](orchestration-paradigm/README.md) | Umbrella | Published umbrella | The Orchestration Paradigm series and ToolOrchestra research package |
-| [`security-research/`](security-research/README.md) | Single-publication | Active / unpublished | Red-teaming and AI-security research bucket |
+| [`security-research/`](security-research/README.md) | Research bucket / support package | Active / unpublished | Red-teaming and AI-security notes not yet normalized into a publication package |
 
 ## Canonical Single-Publication Contract
 
@@ -86,3 +86,5 @@ If you are unsure where an essay belongs:
 1. start with the package README in this directory
 2. if the package is unclear, consult the archive map in [`../publication_strategy_and_archive/post_map.yaml`](../publication_strategy_and_archive/post_map.yaml)
 3. if the task is procedural, move to the tracked workflow layer in [`../workflows/README.md`](../workflows/README.md)
+
+Research buckets such as [`security-research/`](security-research/README.md) are allowed to live here while they are still source material rather than publication packages. Do not infer package lifecycle state from them until they get a `status.yaml` and an explicit live draft or plan.

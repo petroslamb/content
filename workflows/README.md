@@ -6,18 +6,22 @@ Use package READMEs to understand local structure. Use the workflow docs here to
 
 The current defaults in this directory were tightened against recurring March-April 2026 rollout patterns. When the idealized process diverged from what actually worked in the rollouts, the workflow docs were rewritten toward the observed practice.
 
+For the current source-of-truth map, read [`../AUTHORITY.md`](../AUTHORITY.md). This workflow layer explains process; the Phase 2 authority layer defines what the runtime may load, validate, execute, gate, and record.
+
 ## Taxonomy
 
 The repo now treats these as separate things:
 
-- **stage**: the default lifecycle layer exposed through `status.yaml` and `stage:*`
+- **source workflow contract**: the machine-readable `workflow.yaml` beside a workflow README
+- **stage**: the compatibility lifecycle label exposed through `status.yaml` and older `stage:*` adapters
 - **workflow module**: a reusable runnable process that can be called directly from the middle
 - **gate**: a machine-checkable movement decision such as `research_exit` or `essay_prewrite`
 - **overlay**: an explicit experimental branch such as `post_ceiling_pivot`
 - **validator / evaluation**: a check or proof tool such as `spec-diff`, packet validators, or workflow-model fixtures
 - **reviewable run**: the retained run/proof record layer under [`../reviewable-runs/`](../reviewable-runs/README.md)
+- **operator surface**: `./content-agent` and `./content-cockpit`
 
-Keep the lifecycle simple and put the bar in gates. The runner stage ids remain unchanged for compatibility, but the repo is no longer modeled as stage-only execution.
+Keep the lifecycle simple and put the bar in gates. The runner stage ids remain unchanged for compatibility, but the repo is no longer modeled as stage-only execution. New governed work should route through `workflow.yaml` plus `./content-agent`.
 
 ## Current Workflow Map
 
@@ -52,9 +56,12 @@ Use the layers like this:
 
 | Layer | Main Question | Canonical Surface |
 | :--- | :--- | :--- |
+| authority map | which layer wins when surfaces disagree? | [`../AUTHORITY.md`](../AUTHORITY.md) |
+| source authority | what may the runtime load, validate, execute, stop, and record? | `workflow.yaml`, `status.yaml`, `harness_policy.yaml`, `gate_contracts.yaml`, `pipeline_profiles.yaml` |
 | package context | what publication object am I actually changing? | `status.yaml` first, then package `README.md` / leaf `README.md`, then the governing brief named by `config.blueprint_path` when present |
 | lifecycle workflow | what kind of work am I doing right now? | the relevant tracked workflow doc in this directory |
-| execution help | which commands, helper scripts, or repo-local skills actually perform it? | [`skills/`](skills/README.md) and [`../scripts/README.md`](../scripts/README.md) |
+| governed execution | what is the next action, what validates, what gates block, and what evidence is written? | `./content-agent` and [`../scripts/content_agent.py`](../scripts/content_agent.py) |
+| execution help | which helper scripts or repo-local skills actually perform narrow operations? | [`skills/`](skills/README.md) and [`../scripts/README.md`](../scripts/README.md) |
 | routine run record | what happened in this bounded operational run? | [`../reviewable-runs/logs/README.md`](../reviewable-runs/logs/README.md) |
 | retained proof | which runs are strong enough to preserve as reviewable-run examples? | [`../reviewable-runs/examples/proofs/README.md`](../reviewable-runs/examples/proofs/README.md) |
 
@@ -122,10 +129,12 @@ For real end-to-end work, treat those flat stage ids as a compatibility layer ov
 4. **Package media production**: `notebooklm_artifacts`, `article_polish`, `youtube_production`
 5. **Publication and outward release**: release gate, `substack_publishing`, `archive_sync`, `distribution`
 
-The modular command surfaces map onto that hierarchy like this:
+The current command surfaces map onto that hierarchy like this:
 
-- `stage:*` keeps the default orchestrated path
-- `workflow:*` runs or resolves a reusable workflow directly
+- `./content-agent` is the preferred governed runtime and review surface
+- `./content-cockpit` is the local browser reader/approver over `content-agent` state
+- `stage:*` keeps the older orchestrated path available as a compatibility adapter
+- `workflow:*` resolves or runs reusable workflows through older runner machinery when a workflow still depends on that path
 - `gate:check` evaluates a movement decision without mutating package state
 
 The default profiles are tracked in [`../pipeline_profiles.yaml`](../pipeline_profiles.yaml). The gates themselves are tracked in [`../gate_contracts.yaml`](../gate_contracts.yaml).
@@ -145,7 +154,7 @@ For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 4. run the essay prewrite gate before drafting: either produce an essay-governing prewrite surface or conclude explicitly that the essay is not yet writable at the target bar
 5. keep confidence-debt-style or package-local proof notes as optional support, but express the actual draft-authorization verdict through the packet's prewrite gate
 6. use alphaXiv in targeted validation mode against the active anchor papers when needed
-7. run `stage:run` for `essay_iteration` to seed or refresh the package-local packet beside the stable live draft
+7. use `./content-agent validate --workflow essay_iteration --package <package>` before governed iteration, and use `stage:run` only when the narrow scaffold behavior is needed to seed or refresh the package-local packet beside the stable live draft
 8. fill that packet with a bounded candidate, replacement review, scorecard, and decision artifact
 9. run the packet validator before claiming the packet is ready for review
 10. compare before promotion instead of overwriting first
@@ -200,12 +209,14 @@ After a blocking high-bar review, return to step 2 rather than generating anothe
 
 ## How To Use This Layer
 
-1. Start with the relevant package `README.md`.
-2. Read that package's `status.yaml` before inferring the current stage from prose.
-3. Open the matching workflow doc here.
-4. Load the governing brief from `config.blueprint_path` when the manifest names one.
-5. Use the tracked skill bundle in [`skills/`](skills/README.md) only after the tracked workflow is clear.
-6. Use [`../scripts/README.md`](../scripts/README.md) when a workflow depends on tracked repo scripts.
+1. Start with [`../AUTHORITY.md`](../AUTHORITY.md) when deciding source-of-truth or operator-surface questions.
+2. Read the relevant package's `status.yaml` before inferring the current stage from prose.
+3. Read the package `README.md`.
+4. Open the matching workflow doc here and its `workflow.yaml` when it exists.
+5. Load the governing brief from `config.blueprint_path` when the manifest names one.
+6. Use `./content-agent status`, `next`, and `validate` for governed routing and validation.
+7. Use the tracked skill bundle in [`skills/`](skills/README.md) only after the tracked workflow is clear.
+8. Use [`../scripts/README.md`](../scripts/README.md) when a workflow depends on tracked repo scripts.
 
 ## Skill Bundles
 
@@ -227,4 +238,4 @@ The repo also supports a local `.codex/` mirror for lightweight assistive hooks.
 - `.codex/` stays local-only and gitignored
 - use [`../scripts/install_codex_stop_hook.py`](../scripts/install_codex_stop_hook.py) to mirror the tracked Stop-hook assets into `.codex/`
 
-The hook is a backstop, not a source of truth. Lifecycle correctness still belongs to `status.yaml`, workflow docs, and tracked checkers.
+The hook is a backstop, not a source of truth. Lifecycle correctness belongs to the authority layer described in [`../AUTHORITY.md`](../AUTHORITY.md): `status.yaml`, `workflow.yaml`, root policy/profile/gate YAMLs, `content-agent`, and tracked checkers.

@@ -65,12 +65,13 @@ The default is not “versioned files forever” and not “rewrite in place wit
 The intended sequence is:
 
 1. set the leaf package `status.yaml` so `essay_iteration` is the next stage
-2. run `npm run stage:run -- --package <leaf> --stage essay_iteration`
-3. let the scaffold script create a package-local packet beside the live draft
-4. harden the blueprint if the governing surface is not yet rewrite-ready
-5. run the essay prewrite gate inside the packet before opening a bounded candidate
-6. point the model at the leaf package plus that packet manifest
-7. fill the remaining packet, run the validator, and leave promotion to a stronger reviewer or human approver
+2. run `./content-agent validate --workflow essay_iteration --package <leaf>` to check the governed contract boundary
+3. run `npm run stage:run -- --package <leaf> --stage essay_iteration` only for the compatibility scaffold step
+4. let the scaffold script create a package-local packet beside the live draft
+5. harden the blueprint if the governing surface is not yet rewrite-ready
+6. run the essay prewrite gate inside the packet before opening a bounded candidate
+7. point the model at the leaf package plus that packet manifest
+8. fill the remaining packet, run the validator, and leave promotion to a stronger reviewer or human approver
 
 The scaffold step is allowed without promotion approval because it only creates or refreshes the working packet. It does not authorize replacement of the live draft and it does not mark the stage done automatically.
 

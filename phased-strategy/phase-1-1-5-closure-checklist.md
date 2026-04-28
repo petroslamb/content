@@ -2,6 +2,8 @@
 
 Snapshot date: 2026-04-22
 
+Post-Phase-2 note: this checklist records the Phase 1/1.5 closure state. Its `stage:*` and `workflow:*` commands remain valid compatibility adapters, but the preferred governed operator surface is now `./content-agent`; see [`../AUTHORITY.md`](../AUTHORITY.md).
+
 Status legend:
 
 - `DONE`: implemented and verified enough to count toward phase closure
@@ -103,7 +105,7 @@ The repo now has the main Phase 1.5 machinery and enough retained proof-run evid
 | M1.5.2 Idea-to-package intake | `DONE` | `scripts/init_package.py`; `npm run package:init` | Test in a real idea-to-research proof run |
 | M1.5.3 Next-action resolution | `DONE` | `scripts/next_action.py`; `npm run stage:next -- --package <package>` | Improve package metadata where next action is ambiguous |
 | M1.5.4 Guided stage launch packs | `PARTIAL` | `scripts/harness.py`; `run_stage.py` launch-pack behavior; guided workflow frontmatter | Launch packs exist, but guided execution quality still varies by stage and package |
-| M1.5.5 Harness adapters | `DONE` | `npm run stage:resolve`; `npm run stage:run`; `npm run stage:next`; `npm run package:init` | Keep adapters as the preferred command surface |
+| M1.5.5 Harness adapters | `DONE` | `npm run stage:resolve`; `npm run stage:run`; `npm run stage:next`; `npm run package:init` | Keep adapters available as compatibility surfaces; use `./content-agent` for new governed execution |
 | M1.5.6 Autonomy boundaries and approval rules | `DONE` | `harness_policy.yaml`; sandbox/permission guidance in workflow docs | Continue hardening browser/auth and external side-effect handoffs |
 | M1.5.7 Harness proof runs | `DONE` | Retained proof records now exist for `research-heavy`, `publish-adjacent`, and `media/distribution` | Optional stricter reruns can improve quality, but are no longer blockers |
 

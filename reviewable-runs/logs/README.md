@@ -2,6 +2,8 @@
 
 This folder is the lightweight operational record layer for Reviewable Runs.
 
+In the Phase 2 authority model, YAML `run_record` files in this folder are governed execution evidence. They are stricter than legacy JSON logs, but they are still derivative records. Workflow behavior belongs to `workflow.yaml`; package lifecycle state belongs to `status.yaml`; the source-of-truth map lives in [`../../AUTHORITY.md`](../../AUTHORITY.md).
+
 Use it for:
 
 - routine bounded internal runs

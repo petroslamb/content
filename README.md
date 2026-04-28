@@ -32,26 +32,65 @@ That lifecycle does not force one rigid folder shape on every package. The repo 
 | `phased-strategy/` | Phase roadmap, closure gates, and productization strategy | [`phased-strategy/README.md`](phased-strategy/README.md) |
 | `workflows/` | Canonical tracked playbooks | [`workflows/README.md`](workflows/README.md) |
 | `scripts/` | Tracked repo automation | [`scripts/README.md`](scripts/README.md) |
+| `experiments/` | Cross-package experiment state and temporary operating ledgers | [`experiments/README.md`](experiments/README.md) |
 | `publication_strategy_and_archive/` | Substack archive, mirror, publication map, and editorial atlas | [`publication_strategy_and_archive/README.md`](publication_strategy_and_archive/README.md) |
 | `reviewable-runs/` | Reviewable execution framework and examples | [`reviewable-runs/README.md`](reviewable-runs/README.md) |
 | `publications/security-research/` | Research bucket, not yet normalized into publication packages | [`publications/security-research/README.md`](publications/security-research/README.md) |
+| `AUTHORITY.md` | Source-of-truth map and Phase 2 operator boundary | [`AUTHORITY.md`](AUTHORITY.md) |
 
 Use these layers in order:
 
 1. root README
-2. [`publications/README.md`](publications/README.md) or the relevant workflow/support README
-3. the specific package `README.md`
-4. the matching workflow doc in [`workflows/`](workflows/README.md)
-5. tracked scripts and tracked skills if execution help is needed
+2. [`AUTHORITY.md`](AUTHORITY.md) when deciding source-of-truth or governed operator questions
+3. [`publications/README.md`](publications/README.md) or the relevant workflow/support README
+4. the specific package `README.md`
+5. the matching workflow doc in [`workflows/`](workflows/README.md)
+6. tracked scripts and tracked skills if execution help is needed
 
-## Harness Surface
+## Authority And Operator Surface
 
-The repo now exposes a tracked harness-facing surface for Codex-style operation:
+The repo now has a Phase 2 source-of-truth map:
+
+- [`AUTHORITY.md`](AUTHORITY.md): authority order, operator surface, compatibility boundary, workflow-change protocol, and evidence rules
+
+Use this map when deciding which file or command wins.
+
+The highest machine-authority layer is:
+
+- per-workflow `workflow.yaml`
+- package `status.yaml`
+- [`harness_policy.yaml`](harness_policy.yaml)
+- [`gate_contracts.yaml`](gate_contracts.yaml)
+- [`pipeline_profiles.yaml`](pipeline_profiles.yaml)
+
+The preferred governed operator entrypoint is:
+
+- [`./content-agent`](content-agent)
+
+Primary commands:
+
+- `./content-agent status --package <package>`
+- `./content-agent next --package <package>`
+- `./content-agent validate --workflow <workflow_id> --package <package>`
+- `./content-agent run --workflow <workflow_id> --package <package>`
+- `./content-agent review list`
+- `./content-agent review inspect --gate <gate_id>`
+- `./content-agent review approve --gate <gate_id> --reason "<reason>"`
+- `./content-agent review reject --gate <gate_id> --reason "<reason>"`
+- `./content-agent review defer --gate <gate_id> --reason "<reason>"`
+- `./content-agent resume --gate <gate_id>`
+
+Local view and report surfaces:
+
+- [`./content-cockpit`](content-cockpit) or `npm run cockpit -- --package <package>`
+- `npm run editorial:report -- --package <package>`
+
+The older harness-facing surfaces remain available as compatibility adapters:
 
 - [`harness_contract.yaml`](harness_contract.yaml): machine-readable repo contract
 - [`harness_policy.yaml`](harness_policy.yaml): local-first autonomy and approval boundaries
 
-Stable entrypoints:
+Compatibility entrypoints:
 
 - `npm run check`
 - `npm run workflow:resolve -- --workflow <workflow_id> --format json`
@@ -66,7 +105,7 @@ Stable entrypoints:
 - `npm run check:workflow-model`
 - `npm run check:reviewable-runs`
 
-These surfaces do not replace the workflow docs. They make the existing lifecycle legible to an external harness without relying on a long custom prompt.
+These compatibility surfaces do not replace the workflow docs or the Phase 2 authority layer. They keep older lifecycle runners and existing scripts legible while new governed work moves through `content-agent`.
 
 The repo now distinguishes:
 
@@ -76,7 +115,7 @@ The repo now distinguishes:
 - overlays as explicit experimental branches
 - reviewable runs as the retained proof and evaluation layer
 
-Use `npm run check` as the lightweight pre-review validation bundle. It runs the harness contract check, Reviewable Runs log check, repo-link check, and alphaXiv discussion tracking check. It intentionally does not build the public mirror or perform external sync work.
+Use `npm run check` as the lightweight pre-review validation bundle. It runs harness validation, workflow-model validation, Reviewable Runs log validation, repo-link validation, and alphaXiv discussion tracking. It intentionally does not build the public mirror or perform external sync work.
 
 When the essay object itself is still undecided, use [`workflows/topic-discovery/README.md`](workflows/topic-discovery/README.md) before `package:init`. Topic discovery is a pre-package decision layer, not a `status.yaml` lifecycle stage yet.
 
@@ -100,6 +139,16 @@ For single-publication packages, the default paper-intake convention is:
 - `papers/index.md`
 
 Umbrella packages may preserve stronger established variants when those structures already carry more meaning than the generic layout.
+
+## Root Assets
+
+Root-level image assets are reserved for brand and mirror use:
+
+- `petroslamb.png`
+- `RootedLayers.png`
+- `RootedLayers_inverted.png`
+
+New package-specific images should live in the relevant package `artifacts/`, `assets/`, `visuals/`, or publication-specific media folder rather than at the repository root.
 
 ## Publications Layer
 

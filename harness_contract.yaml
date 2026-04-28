@@ -1,19 +1,51 @@
-version: 2
+version: 3
 harness_target: codex
 autonomy_scope: local-first
+contract_role: generated_compatibility_index
 policy_file: harness_policy.yaml
 sources_of_truth:
-  lifecycle: scripts/lifecycle.py
-  workflow_frontmatter: workflows/*/README.md
+  authority_map: AUTHORITY.md
+  workflow_yaml: workflows/*/workflow.yaml
   gate_contracts: gate_contracts.yaml
   pipeline_profiles: pipeline_profiles.yaml
   package_state: publications/**/status.yaml
+  harness_policy: harness_policy.yaml
   npm_scripts: package.json
+compatibility_sources:
+  lifecycle: scripts/lifecycle.py
+  workflow_frontmatter: workflows/*/README.md
 paths:
   publications_dir: publications
   workflows_dir: workflows
   logs_dir: reviewable-runs/logs
+  resolved_runs_dir: reviewable-runs/resolved-runs
+  review_gates_dir: reviewable-runs/gates
+operator_surfaces:
+  governed_runtime:
+    entrypoint: ./content-agent
+    script: scripts/content_agent.py
+    npm_alias: npm run content-agent
+  local_cockpit:
+    entrypoint: ./content-cockpit
+    script: scripts/content_cockpit.py
+    npm_alias: npm run cockpit
+  editorial_report:
+    entrypoint: npm run editorial:report
+    script: scripts/generate_editorial_report.py
+    posture: report_only
 interfaces:
+  agent:next:
+    entrypoint: npm run agent:next
+    script: ./content-agent next
+  agent:review:
+    entrypoint: npm run agent:review
+    script: ./content-agent review
+  agent:status:
+    entrypoint: npm run agent:status
+    script: ./content-agent status
+  agent:validate:
+    entrypoint: npm run agent:validate
+    script: ./content-agent validate
   check:
     entrypoint: npm run check
     script: npm run check:harness && npm run check:workflow-model && npm run check:reviewable-runs
@@ -33,6 +65,18 @@ interfaces:
   check:workflow-model:
     entrypoint: npm run check:workflow-model
     script: .venv/bin/python scripts/check_workflow_model.py
+  check:workflow-yaml:
+    entrypoint: npm run check:workflow-yaml
+    script: .venv/bin/python scripts/check_workflow_yaml_contracts.py
+  cockpit:
+    entrypoint: npm run cockpit
+    script: ./content-cockpit
+  content-agent:
+    entrypoint: npm run content-agent
+    script: ./content-agent
+  editorial:report:
+    entrypoint: npm run editorial:report
+    script: .venv/bin/python scripts/generate_editorial_report.py
   gate:check:
     entrypoint: npm run gate:check
     script: .venv/bin/python scripts/check_gate.py
@@ -339,6 +383,84 @@ lifecycle:
       validator_commands: *id003
       judgment_policy: unrestricted
       prohibited_moves: *id001
+workflow_yaml_contracts:
+  research:
+    contract_path: workflows/alphaxiv-research/workflow.yaml
+    readme_path: workflows/alphaxiv-research/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: evidence
+    stability: canonical
+  article_polish:
+    contract_path: workflows/article-polish/workflow.yaml
+    readme_path: workflows/article-polish/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: release
+    stability: canonical
+  distribution:
+    contract_path: workflows/distribution/workflow.yaml
+    readme_path: workflows/distribution/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: distribution
+    stability: canonical
+  essay_iteration:
+    contract_path: workflows/essay-iteration/workflow.yaml
+    readme_path: workflows/essay-iteration/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: editorial
+    stability: canonical
+  evidence_authorization:
+    contract_path: workflows/evidence-authorization/workflow.yaml
+    readme_path: workflows/evidence-authorization/README.md
+    version: 1
+    workflow_kind: module
+    workflow_group: evidence
+    stability: canonical
+  paper_intake:
+    contract_path: workflows/paper-intake/workflow.yaml
+    readme_path: workflows/paper-intake/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: evidence
+    stability: canonical
+  post_ceiling_pivot:
+    contract_path: workflows/post-ceiling-pivot/workflow.yaml
+    readme_path: workflows/post-ceiling-pivot/README.md
+    version: 1
+    workflow_kind: overlay
+    workflow_group: editorial
+    stability: experimental
+  release_gate:
+    contract_path: workflows/release-gate/workflow.yaml
+    readme_path: workflows/release-gate/README.md
+    version: 1
+    workflow_kind: module
+    workflow_group: release
+    stability: canonical
+  archive_sync:
+    contract_path: workflows/substack-archive-sync/workflow.yaml
+    readme_path: workflows/substack-archive-sync/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: release
+    stability: canonical
+  substack_publishing:
+    contract_path: workflows/substack-publishing/workflow.yaml
+    readme_path: workflows/substack-publishing/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: release
+    stability: canonical
+  topic_discovery:
+    contract_path: workflows/topic-discovery/workflow.yaml
+    readme_path: workflows/topic-discovery/README.md
+    version: 1
+    workflow_kind: module
+    workflow_group: portfolio
+    stability: canonical
 workflows:
   research: *id004
   article_polish: *id005

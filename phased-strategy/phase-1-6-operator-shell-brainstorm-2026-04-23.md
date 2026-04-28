@@ -2,6 +2,8 @@
 
 Snapshot date: 2026-04-23
 
+Post-Phase-2 note: this is a historical brainstorm from before the `content-agent` baseline landed. Treat references to `stage:*`, `workflow:*`, and launch-pack routing as compatibility context. The current governed operator surface is `./content-agent`; see [`../AUTHORITY.md`](../AUTHORITY.md).
+
 ## Purpose
 
 This note is the working plan for Phase 1.6.
