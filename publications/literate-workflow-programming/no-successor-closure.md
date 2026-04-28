@@ -8,8 +8,13 @@ donor_leaf: literate-workflow-programming/literate-workflow-programming-flagship
 active_successor_leaf: null
 decision: stop_without_successor
 gate_check_log: reviewable-runs/logs/2026-04-28_18-39-21_literate-workflow-programming_pivot_north_star_viability_gate-check.json
+superseded_by: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-next-pivot-candidate.md
 ---
 # No-Successor Closure
+
+## Supersession Note
+
+This closure remains the historical decision for the stopped `contract layer` search. It is no longer the active umbrella route after the 2026-04-28 reopened evidence pass.
 
 ## Decision
 
@@ -20,13 +25,13 @@ The umbrella route remains `no_successor`. The package should preserve the cappe
 ## Evidence Chain
 
 - Donor ceiling report: [`literate-workflow-programming-ceiling-report-r3.md`](literate-workflow-programming-ceiling-report-r3.md)
-- Restarted pivot slate: [`pivot/active/literate-workflow-programming-pivot-slate.md`](pivot/active/literate-workflow-programming-pivot-slate.md)
-- Grounding review: [`pivot/active/literate-workflow-programming-pivot-grounding-review.md`](pivot/active/literate-workflow-programming-pivot-grounding-review.md)
-- North-star viability gate: [`pivot/active/literate-workflow-programming-pivot-north-star-viability.md`](pivot/active/literate-workflow-programming-pivot-north-star-viability.md)
-- Consequence pressure: [`pivot/active/literate-workflow-programming-pivot-consequence-pressure.md`](pivot/active/literate-workflow-programming-pivot-consequence-pressure.md)
-- Comparative rerank: [`pivot/active/literate-workflow-programming-pivot-comparative-rerank.md`](pivot/active/literate-workflow-programming-pivot-comparative-rerank.md)
-- Pivot blocker: [`pivot/active/literate-workflow-programming-pivot-blocker.md`](pivot/active/literate-workflow-programming-pivot-blocker.md)
-- Pivot decision: [`pivot/active/literate-workflow-programming-pivot-decision.md`](pivot/active/literate-workflow-programming-pivot-decision.md)
+- Restarted pivot slate: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-slate.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-slate.md)
+- Grounding review: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-grounding-review.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-grounding-review.md)
+- North-star viability gate: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-north-star-viability.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-north-star-viability.md)
+- Consequence pressure: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-consequence-pressure.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-consequence-pressure.md)
+- Comparative rerank: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-comparative-rerank.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-comparative-rerank.md)
+- Pivot blocker: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-blocker.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-blocker.md)
+- Pivot decision: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-decision.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-decision.md)
 
 ## Closure Rationale
 

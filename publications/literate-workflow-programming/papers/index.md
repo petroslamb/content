@@ -167,6 +167,13 @@ These papers are indexed for deliberate download and conversion later. They are 
 
 | Priority | arXiv ID | Title | Why It Matters Here |
 | :--- | :--- | :--- | :--- |
+| P0-reopen | [`2602.00180`](https://arxiv.org/abs/2602.00180) | Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants | General software-engineering bridge for specifications as authoritative contracts and spec-as-source workflows. |
+| P0-reopen | [`2603.24284`](https://arxiv.org/abs/2603.24284) | The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents | Strong negative/pressure evidence that underspecified agents fail to coordinate and that rich specs matter. |
+| P0-reopen | [`2512.14012`](https://arxiv.org/abs/2512.14012) | Professional Software Developers Don't Vibe, They Control | Public-practice anchor for the anti-vibe, human-control framing. |
+| P0-reopen | [`2512.14805`](https://arxiv.org/abs/2512.14805) | Sharing State Between Prompts and Programs | Boundary evidence for natural-language code interacting with formal program state through explicit interfaces. |
+| P1-reopen | [`2508.06942`](https://arxiv.org/abs/2508.06942) | When Prompt Engineering Meets Software Engineering: CNL-P as Natural and Robust APIs for Human-AI Interaction | Controlled natural-language prompts, linting, and static-analysis evidence for specification-surface discipline. |
+| P1-reopen | [`2603.15691`](https://arxiv.org/abs/2603.15691) | VibeContract: The Missing Quality Assurance Piece in Vibe Coding | Task-level contracts, traceability, testing, runtime verification, and debugging for AI-native code generation. |
+| P1-reopen | [`2510.21413`](https://arxiv.org/abs/2510.21413) | Context Engineering for AI Agents in Open-Source Software | Empirical evidence that AI context files are emerging as maintained machine-facing project artifacts. |
 | P2 | [`2603.05344`](https://arxiv.org/abs/2603.05344) | Building Effective AI Coding Agents for the Terminal | Terminal-native harnesses, context management, safety controls, lazy tool discovery, and instruction fade-out. |
 | P2 | [`2512.05470`](https://arxiv.org/abs/2512.05470) | Everything is Context | Filesystem abstraction for persistent, governed context artifacts. |
 | P2 | [`2602.20478`](https://arxiv.org/abs/2602.20478) | Codified Context | Hot/cold memory, persistent project conventions, and multi-session agent coherence. |
