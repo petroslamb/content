@@ -377,3 +377,105 @@ Initial rollout order from `backlog_manifest.yaml`:
   - YouTube caption recovery should use `scripts/wait_for_youtube_captions.py --interval 600 --timeout 7200` before Shorts extraction.
 - Added polling defaults to `experiments/youtube-cinematic-rollout/backlog_manifest.yaml` so future daily starters and watcher runs have canonical wait settings.
 - Added the root caption wait helper and documented it in the workflow, script index, and YouTube Data API skill.
+
+### 2026-04-28T07:02:30.153189+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `operating_agents_safety`, `operating_agents_optimization`
+
+### 2026-04-28T07:03:41Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- New cinematic task accepted for `operating_agents_safety`.
+- NotebookLM task/artifact id: `ce68d722-6bfa-485c-89ed-bb1b3f5f969e`
+- Current artifact status after initial follow-through poll: `in_progress`
+- New cinematic task accepted for `operating_agents_optimization`.
+- NotebookLM task/artifact id: `cd9d9698-b347-4a9a-b320-dc64bf833e51`
+- Current artifact status after initial follow-through poll: `in_progress`
+- Queue action: mark both entries as `generation_pending`; do not start additional new cinematics while these two jobs are active.
+- Watcher note: `experiment.automation.watcher_automation_id` remains `null` because this Codex runtime still does not expose an automation-management tool, so the required 30-minute heartbeat watcher could not be created or refreshed from this run.
+
+### 2026-04-28T08:40:07Z
+
+- Follow-up inspection found the daily starter thread archived after final response; its long NotebookLM wait commands timed out after the thread completed.
+- Both NotebookLM artifacts now report `completed`:
+  - `operating_agents_safety`: `ce68d722-6bfa-485c-89ed-bb1b3f5f969e`
+  - `operating_agents_optimization`: `cd9d9698-b347-4a9a-b320-dc64bf833e51`
+- Created active heartbeat watcher `cinematic-rollout-watcher` and wrote it to `experiment.automation.watcher_automation_id` so follow-through can continue.
+
+### 2026-04-28T08:48:31Z
+
+- Watcher follow-through downloaded completed NotebookLM cinematic renders:
+  - `operating_agents_safety`: `publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.mp4`
+  - `operating_agents_optimization`: `publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.mp4`
+- YouTube OAuth/channel check: `ok`
+- Cinematic uploads:
+  - `operating_agents_safety`: `vCpW8dYfeEY`
+  - `operating_agents_optimization`: `n99g7mLWQek`
+- Playlist action: both were added to `Rooted Layers Cinematic Briefs`.
+- Queue action: move both entries from `generation_pending` to `captions_pending`.
+- Studio link blocker: a separate Playwright browser reached Google sign-in for YouTube Studio, but that was the wrong auth profile. The watcher then attempted the Codex in-app browser path, and this heartbeat runtime reported no Codex IAB backend available. Card/end-screen wiring remains pending in the Codex browser profile.
+  - `operating_agents_safety`: cinematic `vCpW8dYfeEY` should link to research breakdown `biyIKcSp3Po`.
+  - `operating_agents_optimization`: cinematic `n99g7mLWQek` should link to research breakdown `2Fs1iDw5I3Y`.
+- Caption recovery first attempt found no caption tracks yet; keep both entries in `captions_pending` for the next watcher heartbeat.
+
+### 2026-04-28T08:53:48Z
+
+- Caption recovery succeeded for both in-flight cinematics:
+  - `operating_agents_safety`: `publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.srt`
+  - `operating_agents_optimization`: `publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.srt`
+- Queue action: move both entries from `captions_pending` to `shorts_selection_pending`.
+
+### 2026-04-28T08:58:44.552167+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `operating_agents_safety`, `operating_agents_optimization`
+- Materialized Shorts manifests: `publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+
+### 2026-04-28T08:58:58.089357+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `operating_agents_safety`, `operating_agents_optimization`
+
+### 2026-04-28T09:09:06.634444+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `operating_agents_safety`, `operating_agents_optimization`
+- Materialized Shorts manifests: `publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+
+### 2026-04-28T09:09:25.303365+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `operating_agents_safety`, `operating_agents_optimization`
+- Materialized Shorts manifests: `publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+
+### 2026-04-28T09:23:12.310970+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `operating_agents_safety`, `operating_agents_optimization`
+
+### 2026-04-28T09:24:48.218766+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `moltbook_phenomenon`, `programmable_thinking`
+
+### 2026-04-28T09:53:01Z
+
+- Completed the in-flight cinematic rollout entries `operating_agents_safety` and `operating_agents_optimization`; no new backlog generations were started.
+- Rendered Shorts as portrait videos with baked-in spoken subtitles, top hook text, and bottom CTA text (`Full cinematic brief in Related Video`).
+- Uploaded and Studio-verified Shorts related-video links:
+  - `QTzx3xUCq8M` and `AkjqAVVTIxY` point to safety cinematic `vCpW8dYfeEY`.
+  - `UcyUL7tQu7M` and `_nuZpcYskDw` point to optimization cinematic `n99g7mLWQek`.
+- Studio-verified full cinematic cross-links:
+  - Safety cinematic `vCpW8dYfeEY` has an end screen and info card pointing to research breakdown `biyIKcSp3Po`.
+  - Optimization cinematic `n99g7mLWQek` has an end screen and info card pointing to research breakdown `2Fs1iDw5I3Y`.
+- Info cards persisted with teaser text `Full research breakdown`; YouTube Studio reset manual teaser timing edits back to `0:00:00` after reload, so the preferred `1:00:00` timestamp was not recorded as persisted.
+- Watcher cleanup was deferred because the latest user request was to commit this work only.

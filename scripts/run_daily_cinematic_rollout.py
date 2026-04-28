@@ -368,6 +368,25 @@ def schedule_approved_clips(manifest: dict[str, Any]) -> int:
     return changed
 
 
+def shorts_manifest_clip_payload(clip: dict[str, Any]) -> dict[str, Any]:
+    payload = {
+        "slug": clip["slug"],
+        "title": clip["title"],
+        "summary": clip.get("summary", ""),
+        "start": clip["start"],
+        "end": clip["end"],
+        "publish_at": clip.get("publish_at"),
+        "score_total": clip.get("total_score"),
+        "score_breakdown": clip.get("score_breakdown"),
+    }
+    hook = clip.get("hook") or clip.get("top_hook")
+    if hook:
+        payload["hook"] = hook
+    if clip.get("cta"):
+        payload["cta"] = clip["cta"]
+    return payload
+
+
 def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
     publications = manifest["publications"]
     changed_paths: list[str] = []
@@ -387,19 +406,7 @@ def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
             "full_video_url": cinematic["youtube_url"],
             "secondary_video_url": entry.get("secondary_link", {}).get("url"),
             "playlist_id": manifest["experiment"]["playlists"]["shorts"]["id"],
-            "clips": [
-                {
-                    "slug": clip["slug"],
-                    "title": clip["title"],
-                    "summary": clip.get("summary", ""),
-                    "start": clip["start"],
-                    "end": clip["end"],
-                    "publish_at": clip.get("publish_at"),
-                    "score_total": clip.get("total_score"),
-                    "score_breakdown": clip.get("score_breakdown"),
-                }
-                for clip in approved
-            ],
+            "clips": [shorts_manifest_clip_payload(clip) for clip in approved],
         }
         new_text = json.dumps(payload, indent=2) + "\n"
         current_text = manifest_path.read_text(encoding="utf-8") if manifest_path.exists() else None

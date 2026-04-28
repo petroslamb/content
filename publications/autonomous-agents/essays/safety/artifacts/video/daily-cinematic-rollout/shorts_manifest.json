@@ -1,0 +1,46 @@
+{
+  "source_video": "publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.mp4",
+  "related_video_id": "vCpW8dYfeEY",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface",
+  "full_video_url": "https://www.youtube.com/watch?v=vCpW8dYfeEY",
+  "secondary_video_url": "https://www.youtube.com/watch?v=biyIKcSp3Po",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "ai-safety-changes-when-models-get-hands",
+      "title": "AI Safety Changes When Models Get Hands",
+      "summary": "Chat mistakes used to stop at the screen. Once an agent can read, remember, write files, and trigger APIs, errors become infrastructure failures.",
+      "start": "00:00:15.360",
+      "end": "00:01:08.960",
+      "publish_at": "2026-04-29T09:00:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 5,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "hook": "AI safety changes when models get hands",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "the-data-takes-control-of-the-agent",
+      "title": "The Data Takes Control of the Agent",
+      "summary": "Prompt injection works because the model reads developer instructions and untrusted retrieved text as the same stream of tokens.",
+      "start": "00:01:24.400",
+      "end": "00:02:21.120",
+      "publish_at": "2026-04-30T09:00:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 5
+      },
+      "hook": "The data can take control of the agent",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ]
+}

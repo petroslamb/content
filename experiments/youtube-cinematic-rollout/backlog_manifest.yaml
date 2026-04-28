@@ -5,7 +5,7 @@ experiment:
   release_ledger: experiments/youtube-cinematic-rollout/release_ledger.md
   automation:
     daily_starter_id: daily-cinematic-starter
-    watcher_automation_id: null
+    watcher_automation_id: cinematic-rollout-watcher
   templates:
     cinematic_prompt: experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt
     cinematic_description: experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md
@@ -541,25 +541,59 @@ publications:
       video_file: publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.srt
       upload_report: publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: ce68d722-6bfa-485c-89ed-bb1b3f5f969e
+      generation_task_started_at: '2026-04-28T07:03:41Z'
+      youtube_video_id: vCpW8dYfeEY
+      youtube_url: https://www.youtube.com/watch?v=vCpW8dYfeEY
+      published_at: '2026-04-28T08:46:43Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-28T08:46:43Z'
         last_error: null
     shorts:
       workspace_dir: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: ai-safety-changes-when-models-get-hands
+        title: AI Safety Changes When Models Get Hands
+        hook: AI safety changes when models get hands
+        cta: Full cinematic brief in Related Video
+        summary: Chat mistakes used to stop at the screen. Once an agent can read,
+          remember, write files, and trigger APIs, errors become infrastructure failures.
+        start: '00:00:15.360'
+        end: '00:01:08.960'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 5
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 4
+        publish_at: '2026-04-29T09:00:00Z'
+      - slug: the-data-takes-control-of-the-agent
+        title: The Data Takes Control of the Agent
+        hook: The data can take control of the agent
+        cta: Full cinematic brief in Related Video
+        summary: Prompt injection works because the model reads developer instructions
+          and untrusted retrieved text as the same stream of tokens.
+        start: '00:01:24.400'
+        end: '00:02:21.120'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 5
+        publish_at: '2026-04-30T09:00:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-29T09:00:00Z'
+      last_scheduled_at: '2026-04-28T08:58:11Z'
   operating_agents_optimization:
     package: autonomous-agents/essays/optimization
     status_path: publications/autonomous-agents/essays/optimization/status.yaml
@@ -588,25 +622,59 @@ publications:
       video_file: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.srt
       upload_report: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: cd9d9698-b347-4a9a-b320-dc64bf833e51
+      generation_task_started_at: '2026-04-28T07:03:41Z'
+      youtube_video_id: n99g7mLWQek
+      youtube_url: https://www.youtube.com/watch?v=n99g7mLWQek
+      published_at: '2026-04-28T08:46:57Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-28T08:46:57Z'
         last_error: null
     shorts:
       workspace_dir: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: prompt-tweaks-create-drift-generators
+        title: Prompt Tweaks Create Drift Generators
+        hook: Prompt fixes can create hidden regressions
+        cta: Full cinematic brief in Related Video
+        summary: In production, a prompt fix can break another part of the chain.
+          Without measurement, optimization becomes hidden regression.
+        start: '00:00:15.519'
+        end: '00:01:16.880'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 4
+        publish_at: '2026-04-29T10:30:00Z'
+      - slug: a-json-schema-beats-prompt-whispering
+        title: A JSON Schema Beats Prompt Whispering
+        hook: A JSON schema beats prompt whispering
+        cta: Full cinematic brief in Related Video
+        summary: Many agent failures come from ambiguous boundaries. A strict schema
+          can remove an entire class of downstream parser failures.
+        start: '00:01:46.000'
+        end: '00:02:32.959'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 4
+        publish_at: '2026-04-30T10:30:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-29T10:30:00Z'
+      last_scheduled_at: '2026-04-28T08:58:11Z'
   moltbook_phenomenon:
     package: moltbook-phenomenon
     status_path: publications/moltbook-phenomenon/status.yaml

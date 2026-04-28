@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-28T09:24:09.614789+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "vCpW8dYfeEY",
+    "url": "https://www.youtube.com/watch?v=vCpW8dYfeEY"
+  },
+  "related_longform": {
+    "id": "vCpW8dYfeEY",
+    "url": "https://www.youtube.com/watch?v=vCpW8dYfeEY"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=vCpW8dYfeEY"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=biyIKcSp3Po"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/portrait/01-ai-safety-changes-when-models-get-hands_portrait.mp4",
+      "title": "AI Safety Changes When Models Get Hands #shorts",
+      "summary": "Chat mistakes used to stop at the screen. Once an agent can read, remember, write files, and trigger APIs, errors become infrastructure failures.",
+      "publish_at": "2026-04-29T09:00:00Z",
+      "video_id": "QTzx3xUCq8M",
+      "url": "https://www.youtube.com/watch?v=QTzx3xUCq8M",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41MzJFNEYxODEyNzA0QUUx"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "vCpW8dYfeEY"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/portrait/01-ai-safety-changes-when-models-get-hands_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 53.666667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 53.615011
+        },
+        "format_duration": 53.666667,
+        "duration": 53.666667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "AI Safety Changes When Models Get Hands #shorts",
+        "published_at": "2026-04-28T09:23:55Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41MzJFNEYxODEyNzA0QUUx",
+        "position": 121,
+        "title": "AI Safety Changes When Models Get Hands #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/portrait/02-the-data-takes-control-of-the-agent_portrait.mp4",
+      "title": "The Data Takes Control of the Agent #shorts",
+      "summary": "Prompt injection works because the model reads developer instructions and untrusted retrieved text as the same stream of tokens.",
+      "publish_at": "2026-04-30T09:00:00Z",
+      "video_id": "AkjqAVVTIxY",
+      "url": "https://www.youtube.com/watch?v=AkjqAVVTIxY",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ENjg3MEUyQ0IzODMzQThB"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "vCpW8dYfeEY"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/portrait/02-the-data-takes-control-of-the-agent_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 56.791667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 56.726009
+        },
+        "format_duration": 56.791667,
+        "duration": 56.791667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The Data Takes Control of the Agent #shorts",
+        "published_at": "2026-04-28T09:24:02Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ENjg3MEUyQ0IzODMzQThB",
+        "position": 122,
+        "title": "The Data Takes Control of the Agent #shorts"
+      }
+    }
+  ]
+}

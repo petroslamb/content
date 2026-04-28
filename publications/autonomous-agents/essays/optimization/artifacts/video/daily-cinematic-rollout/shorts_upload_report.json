@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-28T09:24:40.572081+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "n99g7mLWQek",
+    "url": "https://www.youtube.com/watch?v=n99g7mLWQek"
+  },
+  "related_longform": {
+    "id": "n99g7mLWQek",
+    "url": "https://www.youtube.com/watch?v=n99g7mLWQek"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=n99g7mLWQek"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=2Fs1iDw5I3Y"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/portrait/01-prompt-tweaks-create-drift-generators_portrait.mp4",
+      "title": "Prompt Tweaks Create Drift Generators #shorts",
+      "summary": "In production, a prompt fix can break another part of the chain. Without measurement, optimization becomes hidden regression.",
+      "publish_at": "2026-04-29T10:30:00Z",
+      "video_id": "UcyUL7tQu7M",
+      "url": "https://www.youtube.com/watch?v=UcyUL7tQu7M",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC45MEI3NjgzMTVFQkZGODYx"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "n99g7mLWQek"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/portrait/01-prompt-tweaks-create-drift-generators_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 61.416667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 61.37
+        },
+        "format_duration": 61.416667,
+        "duration": 61.416667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Prompt Tweaks Create Drift Generators #shorts",
+        "published_at": "2026-04-28T09:24:27Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC45MEI3NjgzMTVFQkZGODYx",
+        "position": 123,
+        "title": "Prompt Tweaks Create Drift Generators #shorts"
+      }
+    },
+    {
+      "video_path": "publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/portrait/02-a-json-schema-beats-prompt-whispering_portrait.mp4",
+      "title": "A JSON Schema Beats Prompt Whispering #shorts",
+      "summary": "Many agent failures come from ambiguous boundaries. A strict schema can remove an entire class of downstream parser failures.",
+      "publish_at": "2026-04-30T10:30:00Z",
+      "video_id": "_nuZpcYskDw",
+      "url": "https://www.youtube.com/watch?v=_nuZpcYskDw",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4zNEMzQ0FDREY1MkE1RkQ1"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "n99g7mLWQek"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/portrait/02-a-json-schema-beats-prompt-whispering_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 47.041667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 46.973991
+        },
+        "format_duration": 47.041667,
+        "duration": 47.041667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "A JSON Schema Beats Prompt Whispering #shorts",
+        "published_at": "2026-04-28T09:24:33Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4zNEMzQ0FDREY1MkE1RkQ1",
+        "position": 124,
+        "title": "A JSON Schema Beats Prompt Whispering #shorts"
+      }
+    }
+  ]
+}
