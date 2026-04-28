@@ -14,6 +14,7 @@ import json
 import re
 import shlex
 import shutil
+import subprocess
 import sys
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -2432,6 +2433,341 @@ def build_review_decision_report(
     }
 
 
+def prefixed_sha256(path: Path) -> str:
+    return "sha256:" + hash_path(path)["sha256"]
+
+
+def rendered_repo_relpath(value: str, placeholders: dict[str, Any], package_path: Path) -> str:
+    rendered = substitute_placeholders(value, placeholders)
+    candidate = package_relative_or_repo_path(rendered, package_path)
+    try:
+        return repo_relpath(candidate)
+    except ValueError:
+        return rendered
+
+
+def render_patterns(values: Any, placeholders: dict[str, Any]) -> list[str]:
+    if not isinstance(values, list):
+        return []
+    return [
+        substitute_placeholders(item, placeholders)
+        for item in values
+        if isinstance(item, str)
+    ]
+
+
+def render_contract_command(command: str, placeholders: dict[str, Any]) -> str:
+    rendered = substitute_placeholders(command, placeholders)
+    package_key = placeholders.get("package")
+    if package_key is not None:
+        rendered = rendered.replace("{package_key}", str(package_key))
+    return rendered
+
+
+def workflow_ref_payload(
+    workflow_id: str,
+    contract_path: Path,
+    contract: dict[str, Any],
+    *,
+    step_id: str | None = None,
+) -> dict[str, Any]:
+    payload: dict[str, Any] = {
+        "workflow_id": workflow_id,
+        "workflow_version": contract.get("version", CONTENT_AGENT_VERSION),
+        "workflow_hash": prefixed_sha256(contract_path),
+        "contract_path": repo_relpath(contract_path),
+    }
+    if step_id:
+        payload["step_id"] = step_id
+    return payload
+
+
+def package_ref_payload(manifest_ref: Any) -> dict[str, Any]:
+    return {
+        "path": repo_relpath(manifest_ref.package_path),
+        "status_path": repo_relpath(manifest_ref.status_path),
+        "status_hash": prefixed_sha256(manifest_ref.status_path),
+    }
+
+
+def resolve_pipeline_profile_name(package_arg: str) -> str | None:
+    try:
+        next_payload = build_next_action(package_arg)
+    except Exception:
+        return None
+    profile = next_payload.get("pipeline_profile")
+    return str(profile) if profile else None
+
+
+def build_run_id(workflow_id: str, package_key: str, timestamp: str, supplied_run_id: str | None = None) -> str:
+    if supplied_run_id:
+        if not re.fullmatch(r"[A-Za-z0-9_.:-]+", supplied_run_id):
+            raise ValueError("run id may only contain letters, digits, underscores, dots, colons, and hyphens.")
+        return supplied_run_id
+    return f"run-{filename_timestamp(timestamp)}-{slugify(package_key)}-{slugify(workflow_id)}"
+
+
+def planned_gate_path(run_id: str, gate_id: str) -> str:
+    return f"reviewable-runs/gates/gate-{slugify(run_id)}-{slugify(gate_id)}.yaml"
+
+
+def build_policy_resolution(contract: dict[str, Any], placeholders: dict[str, Any]) -> dict[str, Any]:
+    tools = contract.get("capabilities", {}).get("tools", [])
+    allowed_tools = []
+    if isinstance(tools, list):
+        for tool in tools:
+            if not isinstance(tool, dict):
+                continue
+            command = tool.get("command")
+            if not isinstance(command, str):
+                continue
+            allowed_tools.append({
+                "id": tool.get("id"),
+                "command": render_contract_command(command, placeholders),
+                "required": tool.get("required") is True,
+            })
+    allowed_paths = contract.get("allowed_paths", {})
+    if not isinstance(allowed_paths, dict):
+        allowed_paths = {}
+    return {
+        "allowed_tools": allowed_tools,
+        "allowed_capabilities": [
+            "contract_validation",
+            "context_admission",
+            "scriptable_step_execution",
+            "gate_stop",
+            "run_record_writing",
+        ],
+        "allowed_paths": {
+            "read": render_patterns(allowed_paths.get("read"), placeholders),
+            "write": render_patterns(allowed_paths.get("write"), placeholders),
+        },
+    }
+
+
+def selected_steps_from_contract(contract: dict[str, Any]) -> list[dict[str, Any]]:
+    steps = []
+    for step in contract.get("steps", []):
+        if not isinstance(step, dict):
+            continue
+        item: dict[str, Any] = {
+            "id": step.get("id"),
+            "mode": step.get("mode"),
+        }
+        gate = step.get("gate")
+        if isinstance(gate, dict) and gate.get("id"):
+            item["gate_id"] = gate.get("id")
+        if isinstance(step.get("executor"), dict) and step["executor"].get("command"):
+            item["executor"] = "command"
+        steps.append(item)
+    return steps
+
+
+def selected_gates_from_contract(contract: dict[str, Any], gate_contracts: dict[str, Any]) -> list[dict[str, Any]]:
+    gates = []
+    for gate in contract.get("gates", []):
+        if not isinstance(gate, dict):
+            continue
+        contract_id = gate.get("contract")
+        gate_contract = gate_contracts.get(contract_id, {}) if isinstance(gate_contracts, dict) else {}
+        gates.append({
+            "id": gate.get("id"),
+            "contract": contract_id,
+            "type": gate_contract.get("gate_type") or gate.get("type"),
+            "required": gate.get("required"),
+            "status": "declared",
+        })
+    return gates
+
+
+def output_targets_from_contract(
+    contract: dict[str, Any],
+    placeholders: dict[str, Any],
+    package_path: Path,
+    run_id: str,
+) -> list[dict[str, Any]]:
+    targets: list[dict[str, Any]] = [
+        {
+            "id": "resolved_run",
+            "path": f"reviewable-runs/resolved-runs/{run_id}.yaml",
+        },
+        {
+            "id": "run_record",
+            "path": f"reviewable-runs/logs/{run_id}.yaml",
+        },
+    ]
+    for output in contract.get("outputs", []):
+        if not isinstance(output, dict):
+            continue
+        template = output.get("path_template")
+        if not isinstance(template, str):
+            continue
+        targets.append({
+            "id": output.get("id"),
+            "path": rendered_repo_relpath(template, placeholders, package_path),
+            "required": output.get("required"),
+            "format": output.get("format"),
+        })
+    for gate in contract.get("gates", []):
+        if not isinstance(gate, dict) or not gate.get("id"):
+            continue
+        targets.append({
+            "id": f"review_gate:{gate['id']}",
+            "path": planned_gate_path(run_id, str(gate["id"])),
+            "required": gate.get("required"),
+        })
+    return targets
+
+
+def resolved_run_persistence_reasons(contract: dict[str, Any], run_mode: str) -> list[str]:
+    reasons: list[str] = []
+    trace = contract.get("trace", {}) if isinstance(contract.get("trace"), dict) else {}
+    resolved_run = trace.get("resolved_run", {}) if isinstance(trace.get("resolved_run"), dict) else {}
+    persist_when = resolved_run.get("persist_when", [])
+    persist_set = set(item for item in persist_when if isinstance(item, str))
+    if run_mode == "governed_continuous" and "governed" in persist_set:
+        reasons.append("governed")
+    if run_mode == "governed_continuous" and "continuous" in persist_set:
+        reasons.append("continuous")
+    if contract.get("gates") and "gated" in persist_set:
+        reasons.append("gated")
+    recovery = contract.get("behavior", {}).get("recovery", {}) if isinstance(contract.get("behavior"), dict) else {}
+    if isinstance(recovery, dict) and recovery.get("resume_from") == "resolved_run" and "resumable" in persist_set:
+        reasons.append("resumable")
+    if trace.get("run_record") == "required" and "audit_relevant" in persist_set:
+        reasons.append("audit_relevant")
+    return sorted(set(reasons))
+
+
+def assert_validation_success(report: dict[str, Any], context: str) -> None:
+    if report.get("success") is True:
+        return
+    errors = [
+        str(item.get("message"))
+        for item in report.get("findings", [])
+        if isinstance(item, dict) and item.get("severity") == "error"
+    ]
+    detail = "; ".join(errors[:3]) if errors else "validation failed"
+    raise ValueError(f"{context}: {detail}")
+
+
+def build_resolved_run_payload(
+    workflow_id: str,
+    package_arg: str,
+    *,
+    run_mode: str,
+    supplied_run_id: str | None = None,
+) -> tuple[dict[str, Any], Path, list[str]]:
+    contracts = load_workflow_yaml_contracts()
+    if workflow_id not in contracts:
+        raise KeyError(f"Unknown workflow '{workflow_id}'.")
+    loaded = contracts[workflow_id]
+    contract_path = loaded["path"]
+    contract = loaded["data"]
+    manifest_ref, status_data = load_status_ref(package_arg)
+    package_key = manifest_ref.package_key
+    placeholders = build_placeholders(package_key, status_data)
+    timestamp = utc_timestamp()
+    run_id = build_run_id(workflow_id, package_key, timestamp, supplied_run_id)
+    run_path = RESOLVED_RUNS_DIR / f"{run_id}.yaml"
+    if run_path.exists():
+        raise FileExistsError(f"Resolved run already exists: {repo_relpath(run_path)}")
+
+    validation_report = build_validation_report(
+        workflow_id=workflow_id,
+        package_arg=package_key,
+        mode=run_mode,
+    )
+    assert_validation_success(validation_report, "cannot create resolved run")
+
+    gate_contracts = load_gate_contracts()
+    policy = load_harness_policy()
+    route = {
+        "package_kind": status_data.get("kind", "leaf"),
+        "pipeline_profile": resolve_pipeline_profile_name(package_key),
+        "current_stage": current_stage(status_data),
+        "workflow_stage": workflow_id if contract.get("workflow_kind") == "stage" else None,
+        "resolved_from": [
+            repo_relpath(manifest_ref.status_path),
+            repo_relpath(contract_path),
+            "harness_policy.yaml",
+            "gate_contracts.yaml",
+            "pipeline_profiles.yaml",
+        ],
+    }
+    payload = {
+        "kind": "resolved_run",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "run_id": run_id,
+        "package": package_ref_payload(manifest_ref),
+        "workflow": workflow_ref_payload(workflow_id, contract_path, contract),
+        "run_mode": run_mode,
+        "route": route,
+        "context_admission": validate_context_admission(
+            workflow_id,
+            contract_path,
+            contract,
+            package_key,
+            manifest_ref.package_path,
+            status_data,
+            {},
+            run_mode,
+            [],
+        ),
+        "policy_resolution": build_policy_resolution(contract, placeholders),
+        "selected_steps": selected_steps_from_contract(contract),
+        "selected_gates": selected_gates_from_contract(gate_contracts=gate_contracts, contract=contract),
+        "behavior": {
+            "budgets": deepcopy(contract.get("behavior", {}).get("budgets", {}))
+            if isinstance(contract.get("behavior"), dict)
+            else {},
+            "recovery": deepcopy(contract.get("behavior", {}).get("recovery", {}))
+            if isinstance(contract.get("behavior"), dict)
+            else {},
+            "policy_run_modes": policy.get("governed_execution", {}).get("run_modes", []),
+        },
+        "output_targets": output_targets_from_contract(contract, placeholders, manifest_ref.package_path, run_id),
+    }
+    return payload, run_path, resolved_run_persistence_reasons(contract, run_mode)
+
+
+def build_run_resolve_report(
+    workflow_id: str,
+    package_arg: str,
+    *,
+    run_mode: str,
+    supplied_run_id: str | None = None,
+) -> dict[str, Any]:
+    payload, run_path, persistence_reasons = build_resolved_run_payload(
+        workflow_id,
+        package_arg,
+        run_mode=run_mode,
+        supplied_run_id=supplied_run_id,
+    )
+    persisted = bool(persistence_reasons)
+    if persisted:
+        write_yaml_mapping(run_path, payload)
+        validation_report = build_validation_report(
+            workflow_id=workflow_id,
+            package_arg=payload["package"]["path"],
+            mode=run_mode,
+        )
+        assert_validation_success(validation_report, "resolved run validation failed after write")
+    return {
+        "kind": "content_agent_run_resolution",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "workflow_id": workflow_id,
+        "package": gate_package_key(payload),
+        "run_id": payload["run_id"],
+        "run_mode": run_mode,
+        "persisted": persisted,
+        "persistence_reasons": persistence_reasons,
+        "resolved_run_path": repo_relpath(run_path) if persisted else None,
+        "resolved_run": payload,
+        "message": "resolved run persisted" if persisted else "resolved run is transient",
+    }
+
+
 def build_next_report(package_arg: str) -> dict[str, Any]:
     payload = build_next_action(package_arg)
     blockers = [gate for gate in load_review_gate_records(package_arg) if gate.get("status") == "pending"]
@@ -2693,6 +3029,24 @@ def print_text_review_decision(report: dict[str, Any]) -> None:
         print(f"message: {report.get('message')}")
 
 
+def print_text_run_resolution(report: dict[str, Any]) -> None:
+    print(f"content-agent run: {report.get('workflow_id')}")
+    print(f"package: {report.get('package')}")
+    print(f"run_id: {report.get('run_id')}")
+    print(f"run_mode: {report.get('run_mode')}")
+    print(f"persisted: {str(report.get('persisted') is True).lower()}")
+    if report.get("resolved_run_path"):
+        print(f"resolved_run: {report.get('resolved_run_path')}")
+    reasons = report.get("persistence_reasons", [])
+    print("persistence_reasons: " + (", ".join(reasons) if reasons else "none"))
+    selected_steps = report.get("resolved_run", {}).get("selected_steps", [])
+    selected_gates = report.get("resolved_run", {}).get("selected_gates", [])
+    print(f"selected_steps: {len(selected_steps)}")
+    print(f"selected_gates: {len(selected_gates)}")
+    if report.get("message"):
+        print(f"message: {report.get('message')}")
+
+
 def print_text_next(report: dict[str, Any]) -> None:
     print(f"content-agent next: {report.get('package')}")
     if report.get("has_pending_review_gate_blockers"):
@@ -2736,6 +3090,23 @@ def build_parser() -> argparse.ArgumentParser:
     next_cmd = subparsers.add_parser("next", help="Resolve the next read-only eligible package action.")
     next_cmd.add_argument("--package", required=True, help="Package path or key under publications/.")
     next_cmd.add_argument("--format", choices=["text", "json"], default="text")
+
+    run = subparsers.add_parser("run", help="Create or execute a governed workflow run.")
+    run.add_argument("--workflow", required=True, help="Workflow id from workflows/*/workflow.yaml.")
+    run.add_argument("--package", required=True, help="Package path or key under publications/.")
+    run.add_argument(
+        "--mode",
+        choices=sorted(VALID_RUN_MODES),
+        default="governed_continuous",
+        help="Run mode for context admission and persistence policy.",
+    )
+    run.add_argument("--run-id", help="Optional deterministic run id for tests or handoffs.")
+    run.add_argument(
+        "--resolve-only",
+        action="store_true",
+        help="Persist the resolved_run and stop before script execution.",
+    )
+    run.add_argument("--format", choices=["text", "json"], default="text")
 
     review = subparsers.add_parser("review", help="Inspect file-backed review gates.")
     review_subparsers = review.add_subparsers(dest="review_command", required=True)
@@ -2863,6 +3234,26 @@ def main() -> None:
             else:
                 print_text_review_decision(report)
             return
+
+    if args.command == "run":
+        try:
+            report = build_run_resolve_report(
+                args.workflow,
+                args.package,
+                run_mode=args.mode,
+                supplied_run_id=args.run_id,
+            )
+        except Exception as exc:
+            if args.format == "json":
+                print_json({"success": False, "error": str(exc)})
+            else:
+                print(f"content-agent run failed: {exc}")
+            sys.exit(1)
+        if args.format == "json":
+            print_json(report)
+        else:
+            print_text_run_resolution(report)
+        return
 
     if args.command == "next":
         try:
