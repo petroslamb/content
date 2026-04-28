@@ -3264,6 +3264,226 @@ def build_run_execution_report(
     )
 
 
+def resolve_resolved_run_path(identifier: str) -> Path:
+    candidate = Path(identifier).expanduser()
+    if candidate.is_absolute() and candidate.exists():
+        return candidate.resolve()
+    repo_candidate = (REPO_ROOT / candidate).resolve()
+    if repo_candidate.exists():
+        return repo_candidate
+    matches = []
+    for path in evidence_yaml_paths(RESOLVED_RUNS_DIR):
+        try:
+            data = load_mapping(path)
+        except Exception:
+            continue
+        if data.get("kind") != "resolved_run":
+            continue
+        if identifier in {str(data.get("run_id")), path.name, path.stem}:
+            matches.append(path)
+    if not matches:
+        raise FileNotFoundError(f"No resolved run found for '{identifier}'.")
+    if len(matches) > 1:
+        raise ValueError(f"Resolved run identifier is ambiguous: {identifier}")
+    return matches[0]
+
+
+def assert_gate_resume_allowed(gate: dict[str, Any]) -> None:
+    if gate.get("status") != "resolved":
+        raise ValueError(f"Cannot resume gate with status {gate.get('status')!r}; approve the gate first.")
+    decision = gate.get("decision")
+    if not isinstance(decision, dict):
+        raise ValueError("Cannot resume gate without a decision record.")
+    if decision.get("outcome") != "approve":
+        raise ValueError(f"Cannot resume from decision outcome {decision.get('outcome')!r}.")
+    approval = gate.get("approval") if isinstance(gate.get("approval"), dict) else {}
+    checks = [
+        ("quality_required", "quality_approved"),
+        ("external_mutation_required", "external_mutation_approved"),
+        ("lifecycle_movement_required", "lifecycle_movement_approved"),
+        ("promotion_required", "promotion_approved"),
+    ]
+    missing = [
+        approved_key
+        for required_key, approved_key in checks
+        if approval.get(required_key) is True and decision.get(approved_key) is not True
+    ]
+    if missing:
+        raise ValueError("Cannot resume; approval dimensions are insufficient: " + ", ".join(missing))
+
+
+def resume_run_record_path(source_id: str, package_key: str, timestamp: str) -> Path:
+    stem = f"run-{filename_timestamp(timestamp)}-{slugify(package_key)}-resume-{slugify(source_id)}"
+    return unique_yaml_path(RUN_RECORDS_DIR, stem)
+
+
+def build_resume_run_record(
+    resolved_run: dict[str, Any],
+    resolved_run_path: Path,
+    run_record_path: Path,
+    *,
+    timestamp: str,
+    gate_path: Path | None = None,
+    gate: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    resolved_run_relpath = repo_relpath(resolved_run_path)
+    run_record_relpath = repo_relpath(run_record_path)
+    consumed = [
+        artifact_ref("resolved_run", [resolved_run_relpath], hashes_required=True),
+        *context_artifact_refs(resolved_run),
+    ]
+    parent_artifacts = [
+        {"id": "resolved_run", "path": resolved_run_relpath},
+        {"id": "package_status", "path": resolved_run["package"]["status_path"]},
+    ]
+    gate_ids: list[str] = []
+    approval_decisions: list[dict[str, Any]] = []
+    if gate_path and gate:
+        gate_relpath = repo_relpath(gate_path)
+        consumed.append(artifact_ref("approved_review_gate", [gate_relpath], hashes_required=True))
+        parent_artifacts.append({"id": "approved_review_gate", "path": gate_relpath})
+        gate_ids = [str(gate.get("gate_contract")), str(gate.get("gate_id"))]
+        if isinstance(gate.get("decision"), dict):
+            approval_decisions.append(deepcopy(gate["decision"]))
+    return {
+        "kind": "run_record",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "run_id": run_record_path.stem,
+        "resolved_run_path": resolved_run_relpath,
+        "package": deepcopy(resolved_run["package"]),
+        "workflow": deepcopy(resolved_run["workflow"]),
+        "run_mode": resolved_run["run_mode"],
+        "timestamps": {
+            "started_at": timestamp,
+            "ended_at": timestamp,
+        },
+        "invocation": {
+            "entrypoint": "content-agent resume",
+            "command": "./content-agent resume",
+        },
+        "context_admission": deepcopy(resolved_run.get("context_admission", [])),
+        "consumed_artifacts": consumed,
+        "parent_artifacts": parent_artifacts,
+        "produced_artifacts": [
+            {"id": "run_record", "paths": [run_record_relpath]},
+        ],
+        "validation_results": [
+            {
+                "id": "content_agent_resume_preflight",
+                "status": "passed",
+                "summary": "Resume preflight accepted file-backed state without lifecycle, promotion, or external mutation side effects.",
+            }
+        ],
+        "enforcement_outcomes": [
+            {
+                "surface": "review_gates",
+                "posture": "deny",
+                "status": "approved" if gate else "not_applicable",
+            },
+            {
+                "surface": "external_mutation",
+                "posture": "deny",
+                "status": "not_attempted",
+            },
+            {
+                "surface": "lifecycle_movement",
+                "posture": "deny",
+                "status": "not_moved",
+            },
+            {
+                "surface": "promotion",
+                "posture": "deny",
+                "status": "not_promoted",
+            },
+            {
+                "surface": "trace_completeness",
+                "posture": "detect",
+                "status": "recorded",
+            },
+        ],
+        "gate_ids": gate_ids,
+        "approval_decisions": approval_decisions,
+        "external_mutations": [
+            {
+                "target": "none",
+                "status": "not_attempted",
+                "approval_reference": f"{gate.get('gate_id')}#decision" if gate else None,
+            }
+        ],
+        "terminal_status": "deferred",
+        "promoted_output_state": default_promoted_output_state("passed"),
+        "resume": {
+            "source": "review_gate" if gate else "resolved_run",
+            "source_path": repo_relpath(gate_path) if gate_path else resolved_run_relpath,
+            "effect": "resume_authorized_without_automatic_lifecycle_or_promotion",
+        },
+    }
+
+
+def build_resume_report(gate_identifier: str | None = None, resolved_run_identifier: str | None = None) -> dict[str, Any]:
+    if bool(gate_identifier) == bool(resolved_run_identifier):
+        raise ValueError("resume requires exactly one of --gate or --resolved-run.")
+    gate_path = None
+    gate = None
+    if gate_identifier:
+        gate_path = resolve_review_gate_path(gate_identifier)
+        gate = load_mapping(gate_path)
+        if gate.get("kind") != "review_gate":
+            raise ValueError(f"{repo_relpath(gate_path)} is not a review_gate artifact.")
+        assert_gate_resume_allowed(gate)
+        run_ref = gate.get("run") if isinstance(gate.get("run"), dict) else {}
+        resolved_run_value = run_ref.get("resolved_run_path")
+        if not isinstance(resolved_run_value, str):
+            raise ValueError("Approved gate is missing run.resolved_run_path.")
+        resolved_run_path = repo_path_from_artifact_value(resolved_run_value, "review_gate.run.resolved_run_path")
+    else:
+        resolved_run_path = resolve_resolved_run_path(str(resolved_run_identifier))
+
+    resolved_run = load_mapping(resolved_run_path)
+    if resolved_run.get("kind") != "resolved_run":
+        raise ValueError(f"{repo_relpath(resolved_run_path)} is not a resolved_run artifact.")
+    package_key = gate_package_key(resolved_run)
+    workflow_id = resolved_run.get("workflow", {}).get("workflow_id") if isinstance(resolved_run.get("workflow"), dict) else None
+    if not package_key or not isinstance(workflow_id, str):
+        raise ValueError("Resolved run is missing package or workflow identity.")
+    validation_report = build_validation_report(
+        workflow_id=workflow_id,
+        package_arg=package_key,
+        mode=resolved_run.get("run_mode", "governed_continuous"),
+    )
+    assert_validation_success(validation_report, "resume validation failed")
+    timestamp = utc_timestamp()
+    source_id = str(gate.get("gate_id") if gate else resolved_run.get("run_id"))
+    run_record_path = resume_run_record_path(source_id, package_key, timestamp)
+    run_record = build_resume_run_record(
+        resolved_run,
+        resolved_run_path,
+        run_record_path,
+        timestamp=timestamp,
+        gate_path=gate_path,
+        gate=gate,
+    )
+    write_yaml_mapping(run_record_path, run_record)
+    post_report = build_validation_report(
+        workflow_id=workflow_id,
+        package_arg=package_key,
+        mode=resolved_run.get("run_mode", "governed_continuous"),
+    )
+    assert_validation_success(post_report, "resume evidence validation failed after write")
+    return {
+        "kind": "content_agent_resume",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "source": "review_gate" if gate else "resolved_run",
+        "source_path": repo_relpath(gate_path) if gate_path else repo_relpath(resolved_run_path),
+        "package": package_key,
+        "workflow_id": workflow_id,
+        "resolved_run_path": repo_relpath(resolved_run_path),
+        "run_record_path": repo_relpath(run_record_path),
+        "terminal_status": "deferred",
+        "message": "resume authorized and recorded",
+    }
+
+
 def build_next_report(package_arg: str) -> dict[str, Any]:
     payload = build_next_action(package_arg)
     blockers = [gate for gate in load_review_gate_records(package_arg) if gate.get("status") == "pending"]
@@ -3558,6 +3778,18 @@ def print_text_run_execution(report: dict[str, Any]) -> None:
     print(f"scriptable_steps_executed: {report.get('scriptable_steps_executed')}")
 
 
+def print_text_resume(report: dict[str, Any]) -> None:
+    print(f"content-agent resume: {report.get('source')}")
+    print(f"source: {report.get('source_path')}")
+    print(f"package: {report.get('package')}")
+    print(f"workflow: {report.get('workflow_id')}")
+    print(f"resolved_run: {report.get('resolved_run_path')}")
+    print(f"run_record: {report.get('run_record_path')}")
+    print(f"terminal_status: {report.get('terminal_status')}")
+    if report.get("message"):
+        print(f"message: {report.get('message')}")
+
+
 def print_text_next(report: dict[str, Any]) -> None:
     print(f"content-agent next: {report.get('package')}")
     if report.get("has_pending_review_gate_blockers"):
@@ -3620,6 +3852,11 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--start-at", help="Start execution at a named workflow step.")
     run.add_argument("--max-scriptable-steps", type=int, help="Maximum scriptable steps to execute before deferring.")
     run.add_argument("--format", choices=["text", "json"], default="text")
+
+    resume = subparsers.add_parser("resume", help="Resume from an approved gate or durable resolved run.")
+    resume.add_argument("--gate", help="Approved review gate id, path, or filename.")
+    resume.add_argument("--resolved-run", help="Resolved run id, path, or filename.")
+    resume.add_argument("--format", choices=["text", "json"], default="text")
 
     review = subparsers.add_parser("review", help="Inspect file-backed review gates.")
     review_subparsers = review.add_subparsers(dest="review_command", required=True)
@@ -3779,6 +4016,24 @@ def main() -> None:
                 print_text_run_resolution(report)
             else:
                 print_text_run_execution(report)
+        return
+
+    if args.command == "resume":
+        try:
+            report = build_resume_report(
+                gate_identifier=args.gate,
+                resolved_run_identifier=args.resolved_run,
+            )
+        except Exception as exc:
+            if args.format == "json":
+                print_json({"success": False, "error": str(exc)})
+            else:
+                print(f"content-agent resume failed: {exc}")
+            sys.exit(1)
+        if args.format == "json":
+            print_json(report)
+        else:
+            print_text_resume(report)
         return
 
     if args.command == "next":
