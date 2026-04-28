@@ -1,8 +1,22 @@
 version: 1
+artifact_store: reviewable-runs/gates/
+allowed_decisions:
+  - approve
+  - reject
+  - defer
+required_artifact_links:
+  - run_record
+  - resolved_run_when_governed_or_resumable
 gates:
   topic_viability:
     description: Decide whether a topic-discovery packet is mature enough to initialize a package.
     scope: packet
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: false
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: false
     required_artifacts:
       - topic-discovery packet with an explicit handoff decision
       - carry-forward package fields when the decision is package_init_ready
@@ -12,6 +26,12 @@ gates:
   research_exit:
     description: Decide whether research is complete enough to hand the package into essay_iteration.
     scope: package
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: false
     required_artifacts:
       - governing blueprint or brief
       - local evidence surface
@@ -22,6 +42,12 @@ gates:
   essay_prewrite:
     description: Decide whether the active essay object is actually writable before bounded candidate drafting.
     scope: package
+    gate_type: content_quality
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: false
+      promotion: false
     required_artifacts:
       - essay-iteration packet manifest
       - hardened blueprint
@@ -32,6 +58,12 @@ gates:
   replacement_north_star:
     description: Decide whether the latest bounded candidate clears replacement and north-star review or whether the object has hit a ceiling.
     scope: package
+    gate_type: content_quality
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: true
     required_artifacts:
       - replacement review
       - promotion decision
@@ -43,6 +75,12 @@ gates:
   pivot_research_grounding:
     description: Decide whether a post-ceiling pivot candidate is grounded enough to justify a real second publication object under an umbrella package.
     scope: package
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: false
     required_artifacts:
       - ceiling report or legacy donor-report pair
       - pivot grounding review
@@ -54,6 +92,12 @@ gates:
   pivot_north_star_viability:
     description: Decide whether a grounded pivot candidate is strong enough to open a successor flagship leaf or whether the package should stop without a successor.
     scope: package
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: true
     required_artifacts:
       - pivot grounding review
       - pivot north-star viability gate
@@ -65,6 +109,12 @@ gates:
   release_readiness:
     description: Decide whether a package is safe to publish or externally mutate.
     scope: package
+    gate_type: external_mutation
+    approval_dimensions:
+      quality: true
+      external_mutation: true
+      lifecycle_movement: true
+      promotion: true
     required_artifacts:
       - canonical live draft
       - release-gate checklist or decision note
