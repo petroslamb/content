@@ -2768,6 +2768,502 @@ def build_run_resolve_report(
     }
 
 
+def resolve_step_start_index(steps: list[Any], start_at: str | None) -> int:
+    if not start_at:
+        return 0
+    for index, step in enumerate(steps):
+        if isinstance(step, dict) and step.get("id") == start_at:
+            return index
+    raise ValueError(f"Unknown workflow step: {start_at}")
+
+
+def rendered_step_command(step: dict[str, Any], placeholders: dict[str, Any]) -> str | None:
+    executor = step.get("executor")
+    if not isinstance(executor, dict):
+        return None
+    command = executor.get("command")
+    if not isinstance(command, str) or not command:
+        return None
+    return render_contract_command(command, placeholders)
+
+
+def declared_rendered_commands(contract: dict[str, Any], placeholders: dict[str, Any]) -> set[str]:
+    commands = set()
+    tools = contract.get("capabilities", {}).get("tools", [])
+    if not isinstance(tools, list):
+        return commands
+    for tool in tools:
+        if not isinstance(tool, dict) or not isinstance(tool.get("command"), str):
+            continue
+        commands.add(normalize_command(render_contract_command(tool["command"], placeholders)))
+    return commands
+
+
+def output_excerpt(stdout: str, stderr: str, limit: int = 6000) -> str:
+    combined = stdout + stderr
+    if len(combined) <= limit:
+        return combined
+    return combined[-limit:]
+
+
+def run_scriptable_command(command: str) -> dict[str, Any]:
+    proc = subprocess.run(
+        command,
+        shell=True,
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    return {
+        "command": command,
+        "returncode": proc.returncode,
+        "status": "passed" if proc.returncode == 0 else "failed",
+        "output_excerpt": output_excerpt(proc.stdout, proc.stderr),
+        "output_truncated": len(proc.stdout + proc.stderr) > 6000,
+    }
+
+
+def gate_entry_for_step(contract: dict[str, Any], step: dict[str, Any]) -> dict[str, Any] | None:
+    gate_ref = step.get("gate")
+    gate_id = gate_ref.get("id") if isinstance(gate_ref, dict) else None
+    if not gate_id:
+        return None
+    for gate in contract.get("gates", []):
+        if isinstance(gate, dict) and gate.get("id") == gate_id:
+            return gate
+    return {"id": gate_id}
+
+
+def output_target_paths_by_id(resolved_run: dict[str, Any]) -> dict[str, str]:
+    paths: dict[str, str] = {}
+    for target in resolved_run.get("output_targets", []):
+        if not isinstance(target, dict):
+            continue
+        target_id = target.get("id")
+        target_path = target.get("path")
+        if isinstance(target_id, str) and isinstance(target_path, str):
+            paths[target_id] = target_path
+    return paths
+
+
+def gate_preview_paths(gate_entry: dict[str, Any], resolved_run: dict[str, Any]) -> list[str]:
+    paths_by_id = output_target_paths_by_id(resolved_run)
+    paths = []
+    artifacts = gate_entry.get("artifacts", [])
+    if not isinstance(artifacts, list):
+        return paths
+    for artifact_id in artifacts:
+        if not isinstance(artifact_id, str):
+            continue
+        clean_id = artifact_id.split()[0]
+        relpath = paths_by_id.get(clean_id)
+        if not relpath:
+            continue
+        if (REPO_ROOT / relpath).exists():
+            paths.append(relpath)
+    return paths
+
+
+def default_promoted_output_state(validation_state: str = "passed") -> dict[str, str]:
+    return {
+        "authority_order": "workflow_contract_first",
+        "claim_state": "unchanged",
+        "contradiction_state": "none_known",
+        "validation_state": validation_state,
+        "trace_state": "minimum_complete",
+    }
+
+
+def validation_results_from_execution(command_results: list[dict[str, Any]], preflight_status: str = "passed") -> list[dict[str, Any]]:
+    results = [
+        {
+            "id": "content_agent_validate",
+            "status": preflight_status,
+            "command": "./content-agent validate",
+        }
+    ]
+    for result in command_results:
+        item = {
+            "id": f"scriptable_step:{result.get('step_id')}",
+            "status": result.get("status"),
+            "command": result.get("command"),
+        }
+        if result.get("returncode") is not None:
+            item["returncode"] = result.get("returncode")
+        results.append(item)
+    return results
+
+
+def enforcement_outcomes_for_execution(terminal_status: str, gate_written: bool) -> list[dict[str, Any]]:
+    return [
+        {
+            "surface": "contract_shape",
+            "posture": "deny",
+            "status": "passed",
+        },
+        {
+            "surface": "context_admission",
+            "posture": "deny",
+            "status": "passed",
+        },
+        {
+            "surface": "tool_use",
+            "posture": "deny",
+            "status": "passed" if terminal_status != "failed" else "failed",
+        },
+        {
+            "surface": "path_access",
+            "posture": "deny",
+            "status": "passed",
+        },
+        {
+            "surface": "review_gates",
+            "posture": "deny",
+            "status": "gate_recorded" if gate_written else "not_reached",
+        },
+        {
+            "surface": "external_mutation",
+            "posture": "deny",
+            "status": "not_attempted",
+        },
+        {
+            "surface": "lifecycle_movement",
+            "posture": "deny",
+            "status": "not_attempted",
+        },
+        {
+            "surface": "promotion",
+            "posture": "deny",
+            "status": "not_attempted",
+        },
+        {
+            "surface": "trace_completeness",
+            "posture": "detect",
+            "status": "recorded",
+        },
+    ]
+
+
+def approval_requirements_from_gate_contract(gate_contract: dict[str, Any]) -> dict[str, Any]:
+    dimensions = gate_contract.get("approval_dimensions", {}) if isinstance(gate_contract, dict) else {}
+    return {
+        "quality_required": dimensions.get("quality") is True,
+        "external_mutation_required": dimensions.get("external_mutation") is True,
+        "lifecycle_movement_required": dimensions.get("lifecycle_movement") is True,
+        "promotion_required": dimensions.get("promotion") is True,
+        "allowed_decisions": ["approve", "reject", "defer"],
+    }
+
+
+def build_review_gate_from_run(
+    resolved_run: dict[str, Any],
+    resolved_run_path: Path,
+    run_record_path: Path,
+    contract: dict[str, Any],
+    step: dict[str, Any],
+    gate_entry: dict[str, Any],
+    validation_results: list[dict[str, Any]],
+    enforcement_outcomes: list[dict[str, Any]],
+    timestamp: str,
+) -> tuple[dict[str, Any], Path]:
+    gate_contracts = load_gate_contracts()
+    contract_id = gate_entry.get("contract") or gate_entry.get("id")
+    gate_contract = gate_contracts.get(contract_id, {}) if isinstance(contract_id, str) else {}
+    gate_id = f"{contract_id}-{filename_timestamp(timestamp)}"
+    planned_path = output_target_paths_by_id(resolved_run).get(f"review_gate:{gate_entry.get('id')}")
+    gate_path = (REPO_ROOT / planned_path).resolve() if planned_path else REVIEW_GATES_DIR / f"gate-{slugify(resolved_run['run_id'])}-{slugify(str(gate_entry.get('id')))}.yaml"
+    if gate_path.exists():
+        gate_path = unique_yaml_path(REVIEW_GATES_DIR, f"gate-{slugify(resolved_run['run_id'])}-{slugify(str(gate_entry.get('id')))}")
+    gate_type = gate_contract.get("gate_type") or gate_entry.get("type")
+    artifact = {
+        "kind": "review_gate",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "gate_id": gate_id,
+        "status": "pending",
+        "gate_type": gate_type,
+        "gate_contract": contract_id,
+        "package": deepcopy(resolved_run["package"]),
+        "workflow": {
+            **deepcopy(resolved_run["workflow"]),
+            "step_id": step.get("id"),
+        },
+        "run": {
+            "run_id": resolved_run["run_id"],
+            "resolved_run_path": repo_relpath(resolved_run_path),
+            "run_record_path": repo_relpath(run_record_path),
+        },
+        "stop": {
+            "reason": f"Reached review gate '{gate_entry.get('id')}' before governed progress could continue.",
+            "created_at": timestamp,
+            "created_by": "content-agent run",
+        },
+        "evidence": {
+            "preview_paths": gate_preview_paths(gate_entry, resolved_run),
+            "evidence_paths": [
+                repo_relpath(resolved_run_path),
+                repo_relpath(run_record_path),
+            ],
+            "validation_results": validation_results,
+            "enforcement_outcomes": enforcement_outcomes,
+        },
+        "approval": approval_requirements_from_gate_contract(gate_contract),
+        "resume": {
+            "on_approve": "content-agent resume --gate " + gate_id,
+            "on_reject": "route_to_correction_or_stop",
+            "on_defer": "keep_pending",
+            "command_hint": "content-agent resume --gate " + gate_id,
+        },
+        "promoted_output_state": default_promoted_output_state("blocked"),
+        "decision": None,
+    }
+    return artifact, gate_path
+
+
+def context_artifact_refs(resolved_run: dict[str, Any]) -> list[dict[str, Any]]:
+    refs = []
+    for entry in resolved_run.get("context_admission", []):
+        if not isinstance(entry, dict):
+            continue
+        paths = entry.get("paths", [])
+        if not isinstance(paths, list) or not paths:
+            continue
+        refs.append(artifact_ref(
+            f"context:{entry.get('id')}",
+            [path for path in paths if isinstance(path, str)],
+            hashes_required=True,
+            precomputed_hashes=entry.get("hashes") if isinstance(entry.get("hashes"), dict) else None,
+        ))
+    return refs
+
+
+def build_execution_run_record(
+    resolved_run: dict[str, Any],
+    resolved_run_path: Path,
+    run_record_path: Path,
+    *,
+    terminal_status: str,
+    started_at: str,
+    ended_at: str,
+    command_results: list[dict[str, Any]],
+    gate_artifact_path: Path | None,
+    gate_artifact: dict[str, Any] | None,
+    stop_reason: str,
+) -> dict[str, Any]:
+    resolved_run_relpath = repo_relpath(resolved_run_path)
+    run_record_relpath = repo_relpath(run_record_path)
+    validation_state = "passed" if terminal_status in {"completed", "gated", "deferred"} else "failed"
+    validation_results = validation_results_from_execution(command_results)
+    gate_ids = []
+    if gate_artifact:
+        gate_ids = [
+            str(gate_artifact.get("gate_contract")),
+            str(gate_artifact.get("gate_id")),
+        ]
+    produced_artifacts = [
+        {"id": "resolved_run", "paths": [resolved_run_relpath]},
+        {"id": "run_record", "paths": [run_record_relpath]},
+    ]
+    if gate_artifact_path:
+        produced_artifacts.append({"id": "review_gate", "paths": [repo_relpath(gate_artifact_path)]})
+    return {
+        "kind": "run_record",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "run_id": resolved_run["run_id"],
+        "resolved_run_path": resolved_run_relpath,
+        "package": deepcopy(resolved_run["package"]),
+        "workflow": deepcopy(resolved_run["workflow"]),
+        "run_mode": resolved_run["run_mode"],
+        "timestamps": {
+            "started_at": started_at,
+            "ended_at": ended_at,
+        },
+        "invocation": {
+            "entrypoint": "content-agent run",
+            "command": f"./content-agent run --workflow {resolved_run['workflow']['workflow_id']} --package {gate_package_key(resolved_run) or resolved_run['package']['path']}",
+        },
+        "context_admission": deepcopy(resolved_run.get("context_admission", [])),
+        "consumed_artifacts": [
+            artifact_ref("resolved_run", [resolved_run_relpath], hashes_required=True),
+            *context_artifact_refs(resolved_run),
+        ],
+        "parent_artifacts": [
+            {"id": "resolved_run", "path": resolved_run_relpath},
+            {"id": "package_status", "path": resolved_run["package"]["status_path"]},
+        ],
+        "produced_artifacts": produced_artifacts,
+        "validation_results": validation_results,
+        "enforcement_outcomes": enforcement_outcomes_for_execution(terminal_status, gate_artifact is not None),
+        "gate_ids": gate_ids,
+        "approval_decisions": [],
+        "external_mutations": [
+            {
+                "target": "none",
+                "status": "not_attempted",
+                "approval_reference": None,
+            }
+        ],
+        "terminal_status": terminal_status,
+        "promoted_output_state": default_promoted_output_state(validation_state),
+        "execution": {
+            "stop_reason": stop_reason,
+            "scriptable_steps": command_results,
+        },
+    }
+
+
+def execute_resolved_run(
+    resolved_run: dict[str, Any],
+    resolved_run_path: Path,
+    *,
+    start_at: str | None = None,
+    max_scriptable_steps: int | None = None,
+) -> dict[str, Any]:
+    workflow_id = resolved_run["workflow"]["workflow_id"]
+    contract_path = repo_path_from_artifact_value(resolved_run["workflow"]["contract_path"], "resolved_run.workflow.contract_path")
+    contract = load_mapping(contract_path)
+    package_key = gate_package_key(resolved_run)
+    if not package_key:
+        raise ValueError("Resolved run package path does not map to a package key.")
+    manifest_ref, status_data = load_status_ref(package_key)
+    placeholders = build_placeholders(package_key, status_data)
+    declared_commands = declared_rendered_commands(contract, placeholders)
+    steps = contract.get("steps", [])
+    if not isinstance(steps, list):
+        raise ValueError("workflow steps must be a list.")
+
+    started_at = utc_timestamp()
+    command_results: list[dict[str, Any]] = []
+    scriptable_count = 0
+    terminal_status = "completed"
+    stop_reason = "workflow completed"
+    gate_artifact = None
+    gate_artifact_path = None
+    run_record_path = RUN_RECORDS_DIR / f"{resolved_run['run_id']}.yaml"
+    if run_record_path.exists():
+        raise FileExistsError(f"Run record already exists: {repo_relpath(run_record_path)}")
+
+    start_index = resolve_step_start_index(steps, start_at)
+    for step in steps[start_index:]:
+        if not isinstance(step, dict):
+            continue
+        step_id = str(step.get("id") or "unknown")
+        mode = step.get("mode")
+        if mode == "review_gated" or gate_entry_for_step(contract, step):
+            terminal_status = "gated"
+            stop_reason = f"stopped at review gate step: {step_id}"
+            validation_results = validation_results_from_execution(command_results)
+            enforcement_outcomes = enforcement_outcomes_for_execution("gated", True)
+            gate_artifact, gate_artifact_path = build_review_gate_from_run(
+                resolved_run,
+                resolved_run_path,
+                run_record_path,
+                contract,
+                step,
+                gate_entry_for_step(contract, step) or {"id": step_id},
+                validation_results,
+                enforcement_outcomes,
+                utc_timestamp(),
+            )
+            break
+        if mode != "scriptable":
+            terminal_status = "deferred"
+            stop_reason = f"deferred before non-scriptable step: {step_id}"
+            break
+        if max_scriptable_steps is not None and scriptable_count >= max_scriptable_steps:
+            terminal_status = "deferred"
+            stop_reason = f"scriptable step limit reached before: {step_id}"
+            break
+        command = rendered_step_command(step, placeholders)
+        if not command:
+            terminal_status = "deferred"
+            stop_reason = f"scriptable step has no runnable command: {step_id}"
+            break
+        if not command_is_covered(command, declared_commands):
+            raise ValueError(f"Scriptable step '{step_id}' uses a command not declared in capabilities.tools.")
+        available, reason = command_availability(command, load_package_scripts())
+        if not available:
+            raise ValueError(f"Scriptable step '{step_id}' command is unavailable: {reason}")
+        result = run_scriptable_command(command)
+        result["step_id"] = step_id
+        command_results.append(result)
+        scriptable_count += 1
+        if result["status"] != "passed":
+            terminal_status = "failed"
+            stop_reason = f"scriptable step failed: {step_id}"
+            break
+
+    ended_at = utc_timestamp()
+    run_record = build_execution_run_record(
+        resolved_run,
+        resolved_run_path,
+        run_record_path,
+        terminal_status=terminal_status,
+        started_at=started_at,
+        ended_at=ended_at,
+        command_results=command_results,
+        gate_artifact_path=gate_artifact_path,
+        gate_artifact=gate_artifact,
+        stop_reason=stop_reason,
+    )
+    if gate_artifact and gate_artifact_path:
+        write_yaml_mapping(gate_artifact_path, gate_artifact)
+    write_yaml_mapping(run_record_path, run_record)
+
+    validation_report = build_validation_report(
+        workflow_id=workflow_id,
+        package_arg=package_key,
+        mode=resolved_run["run_mode"],
+    )
+    assert_validation_success(validation_report, "run evidence validation failed after write")
+    return {
+        "kind": "content_agent_run",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "workflow_id": workflow_id,
+        "package": package_key,
+        "run_id": resolved_run["run_id"],
+        "terminal_status": terminal_status,
+        "stop_reason": stop_reason,
+        "resolved_run_path": repo_relpath(resolved_run_path),
+        "run_record_path": repo_relpath(run_record_path),
+        "review_gate_path": repo_relpath(gate_artifact_path) if gate_artifact_path else None,
+        "review_gate_id": gate_artifact.get("gate_id") if gate_artifact else None,
+        "scriptable_steps_executed": scriptable_count,
+        "command_results": command_results,
+    }
+
+
+def build_run_execution_report(
+    workflow_id: str,
+    package_arg: str,
+    *,
+    run_mode: str,
+    supplied_run_id: str | None = None,
+    start_at: str | None = None,
+    max_scriptable_steps: int | None = None,
+) -> dict[str, Any]:
+    resolved_run, resolved_run_path, persistence_reasons = build_resolved_run_payload(
+        workflow_id,
+        package_arg,
+        run_mode=run_mode,
+        supplied_run_id=supplied_run_id,
+    )
+    if not persistence_reasons:
+        raise ValueError("content-agent run currently requires a persisted resolved_run.")
+    write_yaml_mapping(resolved_run_path, resolved_run)
+    validation_report = build_validation_report(
+        workflow_id=workflow_id,
+        package_arg=package_arg,
+        mode=run_mode,
+    )
+    assert_validation_success(validation_report, "resolved run validation failed before execution")
+    return execute_resolved_run(
+        resolved_run,
+        resolved_run_path,
+        start_at=start_at,
+        max_scriptable_steps=max_scriptable_steps,
+    )
+
+
 def build_next_report(package_arg: str) -> dict[str, Any]:
     payload = build_next_action(package_arg)
     blockers = [gate for gate in load_review_gate_records(package_arg) if gate.get("status") == "pending"]
@@ -3047,6 +3543,21 @@ def print_text_run_resolution(report: dict[str, Any]) -> None:
         print(f"message: {report.get('message')}")
 
 
+def print_text_run_execution(report: dict[str, Any]) -> None:
+    print(f"content-agent run: {report.get('workflow_id')}")
+    print(f"package: {report.get('package')}")
+    print(f"run_id: {report.get('run_id')}")
+    print(f"terminal_status: {report.get('terminal_status')}")
+    print(f"stop_reason: {report.get('stop_reason')}")
+    print(f"resolved_run: {report.get('resolved_run_path')}")
+    print(f"run_record: {report.get('run_record_path')}")
+    if report.get("review_gate_path"):
+        print(f"review_gate: {report.get('review_gate_id')} ({report.get('review_gate_path')})")
+    else:
+        print("review_gate: none")
+    print(f"scriptable_steps_executed: {report.get('scriptable_steps_executed')}")
+
+
 def print_text_next(report: dict[str, Any]) -> None:
     print(f"content-agent next: {report.get('package')}")
     if report.get("has_pending_review_gate_blockers"):
@@ -3106,6 +3617,8 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Persist the resolved_run and stop before script execution.",
     )
+    run.add_argument("--start-at", help="Start execution at a named workflow step.")
+    run.add_argument("--max-scriptable-steps", type=int, help="Maximum scriptable steps to execute before deferring.")
     run.add_argument("--format", choices=["text", "json"], default="text")
 
     review = subparsers.add_parser("review", help="Inspect file-backed review gates.")
@@ -3237,12 +3750,22 @@ def main() -> None:
 
     if args.command == "run":
         try:
-            report = build_run_resolve_report(
-                args.workflow,
-                args.package,
-                run_mode=args.mode,
-                supplied_run_id=args.run_id,
-            )
+            if args.resolve_only:
+                report = build_run_resolve_report(
+                    args.workflow,
+                    args.package,
+                    run_mode=args.mode,
+                    supplied_run_id=args.run_id,
+                )
+            else:
+                report = build_run_execution_report(
+                    args.workflow,
+                    args.package,
+                    run_mode=args.mode,
+                    supplied_run_id=args.run_id,
+                    start_at=args.start_at,
+                    max_scriptable_steps=args.max_scriptable_steps,
+                )
         except Exception as exc:
             if args.format == "json":
                 print_json({"success": False, "error": str(exc)})
@@ -3252,7 +3775,10 @@ def main() -> None:
         if args.format == "json":
             print_json(report)
         else:
-            print_text_run_resolution(report)
+            if report.get("kind") == "content_agent_run_resolution":
+                print_text_run_resolution(report)
+            else:
+                print_text_run_execution(report)
         return
 
     if args.command == "next":
