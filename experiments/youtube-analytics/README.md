@@ -12,6 +12,7 @@ Run the loop in this order:
 .venv/bin/python scripts/fetch_youtube_analytics.py --since-days 30
 .venv/bin/python scripts/sync_youtube_reporting_reports.py --since-days 30
 .venv/bin/python scripts/build_youtube_decision_report.py
+.venv/bin/python scripts/build_youtube_analytics_dashboard.py
 ```
 
 The first command uses the YouTube Data API and YouTube Analytics API for recent/repo-known video inventory, views, watch time, average view duration, average viewed percentage, engagement, traffic sources, and creator content type.
@@ -20,6 +21,8 @@ The second command uses the YouTube Reporting API bulk CSV exports. It downloads
 
 The third command builds the recommendation report from the merged ledger. It does not call YouTube.
 
+The fourth command builds a static local dashboard from the ledger and latest weekly report. It does not call YouTube.
+
 ## State Files
 
 - `decision_rules.yaml`: local classification rules for recommendation reports
@@ -27,6 +30,7 @@ The third command builds the recommendation report from the merged ledger. It do
 - `metrics_ledger.json`: generated read-only metrics ledger when analytics fetches run
 - `reporting_downloads/`: generated Reporting API CSV downloads
 - `weekly_reports/`: generated recommendation reports
+- `dashboard/`: generated local dashboard HTML and embedded payload
 
 ## Reporting Jobs
 

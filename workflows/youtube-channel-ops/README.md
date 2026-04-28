@@ -187,6 +187,12 @@ Build the weekly recommendation report:
 .venv/bin/python scripts/build_youtube_decision_report.py
 ```
 
+Build the local review dashboard:
+
+```bash
+.venv/bin/python scripts/build_youtube_analytics_dashboard.py
+```
+
 The default outputs are:
 
 - `experiments/youtube-analytics/metrics_ledger.json`
@@ -194,6 +200,7 @@ The default outputs are:
 - `experiments/youtube-analytics/reporting_downloads/`
 - `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.md`
 - `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.json`
+- `experiments/youtube-analytics/dashboard/index.html`
 
 If the cached OAuth token predates Analytics access, the fetch script will stop with a reauth instruction. Run:
 

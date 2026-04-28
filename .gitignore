@@ -51,6 +51,7 @@ tmp/
 experiments/youtube-analytics/metrics_ledger.json
 experiments/youtube-analytics/reporting_downloads/
 experiments/youtube-analytics/weekly_reports/
+experiments/youtube-analytics/dashboard/
 
 # --- Repository Content Hygiene Policy ---
 # Globally ignore PDF, Video, and Audio assets to keep the Git footprint small.
