@@ -19,6 +19,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 sys.path.insert(0, str(YOUTUBE_SKILL_SCRIPTS))
 
 import build_youtube_decision_report as report  # noqa: E402
+import build_youtube_analytics_dashboard as dashboard  # noqa: E402
 import fetch_youtube_analytics as fetch  # noqa: E402
 import sync_youtube_reporting_reports as reporting_sync  # noqa: E402
 import youtube_common  # noqa: E402
@@ -242,6 +243,116 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertTrue((out_dir / "2026-04-28.md").exists())
             summary = json.loads((out_dir / "2026-04-28.json").read_text())
             self.assertEqual(summary["summary_counts"]["scale"], 1)
+
+    def test_dashboard_payload_and_cli_write_static_dashboard(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            ledger_path = tmp / "ledger.json"
+            report_path = tmp / "weekly_reports" / "2026-04-28.json"
+            jobs_path = tmp / "reporting_jobs.json"
+            output_path = tmp / "dashboard" / "index.html"
+            payload_path = tmp / "dashboard" / "dashboard_payload.json"
+
+            ledger = {
+                "created_at": "2026-04-28T00:00:00+00:00",
+                "analytics_end_date": "2026-04-27",
+                "read_only": True,
+                "query_notes": [],
+                "reporting_api_sync": {
+                    "merged_at": "2026-04-28T01:00:00+00:00",
+                    "source_file_count": 2,
+                    "videos_updated": 1,
+                },
+                "videos": [
+                    self.video(
+                        "SCALE",
+                        "Scale Candidate",
+                        "cinematic",
+                        views=1400,
+                        avg_pct=60,
+                        subs=3,
+                    ),
+                    self.video(
+                        "REMASTER",
+                        "Remaster Candidate",
+                        "short",
+                        views=140,
+                        avg_pct=22,
+                        source_reports=["publications/demo/artifacts/video/shorts_upload_report.json"],
+                    ),
+                ],
+            }
+            rules = {
+                "minimum_data_age_days": 2,
+                "preferred_window": "7d",
+                "thresholds": yaml.safe_load(
+                    (REPO_ROOT / "experiments" / "youtube-analytics" / "decision_rules.yaml").read_text()
+                )["thresholds"],
+            }
+            classifications = report.classify_ledger(
+                ledger,
+                rules,
+                as_of_date=date(2026, 4, 28),
+            )
+            report_summary = {
+                "report_date": "2026-04-28",
+                "created_at": "2026-04-28T00:00:00+00:00",
+                "analytics_end_date": "2026-04-27",
+                "read_only": True,
+                "summary_counts": {"scale": 1},
+                "top_actions": [],
+                "classifications": classifications,
+            }
+            jobs = {
+                "jobs": {
+                    "channel_reach_basic_a1": {
+                        "name": "Reach basic",
+                        "report_type_id": "channel_reach_basic_a1",
+                        "available_report_count": 0,
+                        "downloaded_report_count": 0,
+                        "latest_report_end_time": None,
+                        "purpose": "Daily per-video thumbnail impressions and thumbnail CTR.",
+                    }
+                }
+            }
+            ledger_path.write_text(json.dumps(ledger))
+            report_path.parent.mkdir(parents=True)
+            report_path.write_text(json.dumps(report_summary))
+            jobs_path.write_text(json.dumps(jobs))
+
+            payload = dashboard.build_dashboard_payload(ledger, report_summary, jobs)
+            self.assertEqual(payload["totals"]["videos"], 2)
+            self.assertEqual(payload["totals"]["actionable_videos"], 2)
+            self.assertEqual(payload["findings"]["by_category"]["scale"][0]["video_id"], "SCALE")
+            self.assertEqual(
+                payload["findings"]["by_category"]["remaster"][0]["actions_by_category"]["remaster"],
+                "Queue this Short for the overlay remaster workflow instead of unlisting it immediately.",
+            )
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/build_youtube_analytics_dashboard.py",
+                    "--ledger",
+                    str(ledger_path),
+                    "--report",
+                    str(report_path),
+                    "--reporting-jobs",
+                    str(jobs_path),
+                    "--output",
+                    str(output_path),
+                    "--payload-output",
+                    str(payload_path),
+                ],
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+            self.assertIn("YouTube Analytics Dashboard", output_path.read_text())
+            self.assertEqual(json.loads(payload_path.read_text())["totals"]["videos"], 2)
 
     def test_reporting_rows_merge_reach_and_card_fields_into_ledger(self) -> None:
         ledger = {
