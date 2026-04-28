@@ -2875,6 +2875,67 @@ def output_target_paths_by_id(resolved_run: dict[str, Any]) -> dict[str, str]:
     return paths
 
 
+def existing_output_artifact_refs(
+    resolved_run: dict[str, Any],
+    *,
+    only_ids: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    refs: list[dict[str, Any]] = []
+    for target in resolved_run.get("output_targets", []):
+        if not isinstance(target, dict):
+            continue
+        target_id = target.get("id")
+        target_path = target.get("path")
+        if not isinstance(target_id, str) or not isinstance(target_path, str):
+            continue
+        if target_id in {"resolved_run", "run_record"} or target_id.startswith("review_gate:"):
+            continue
+        if only_ids is not None and target_id not in only_ids:
+            continue
+        try:
+            candidate = repo_path_from_artifact_value(target_path, f"output_targets.{target_id}.path")
+        except ValueError:
+            continue
+        if candidate.exists():
+            refs.append({"id": target_id, "paths": [target_path]})
+    return refs
+
+
+def executed_step_output_ids(resolved_run: dict[str, Any], command_results: list[dict[str, Any]]) -> set[str]:
+    passed_step_ids = {
+        str(result.get("step_id"))
+        for result in command_results
+        if result.get("status") == "passed" and result.get("step_id")
+    }
+    if not passed_step_ids:
+        return set()
+    contract_path = repo_path_from_artifact_value(
+        resolved_run["workflow"]["contract_path"],
+        "resolved_run.workflow.contract_path",
+    )
+    contract = load_mapping(contract_path)
+    output_ids: set[str] = set()
+    for step in contract.get("steps", []):
+        if not isinstance(step, dict) or step.get("id") not in passed_step_ids:
+            continue
+        produces = step.get("produces", [])
+        if not isinstance(produces, list):
+            continue
+        output_ids.update(item for item in produces if isinstance(item, str))
+    return output_ids
+
+
+def unique_paths(paths: list[str]) -> list[str]:
+    seen: set[str] = set()
+    unique: list[str] = []
+    for path in paths:
+        if path in seen:
+            continue
+        seen.add(path)
+        unique.append(path)
+    return unique
+
+
 def gate_preview_paths(gate_entry: dict[str, Any], resolved_run: dict[str, Any]) -> list[str]:
     paths_by_id = output_target_paths_by_id(resolved_run)
     paths = []
@@ -3004,6 +3065,12 @@ def build_review_gate_from_run(
     if gate_path.exists():
         gate_path = unique_yaml_path(REVIEW_GATES_DIR, f"gate-{slugify(resolved_run['run_id'])}-{slugify(str(gate_entry.get('id')))}")
     gate_type = gate_contract.get("gate_type") or gate_entry.get("type")
+    preview_paths = gate_preview_paths(gate_entry, resolved_run)
+    evidence_paths = unique_paths([
+        repo_relpath(resolved_run_path),
+        repo_relpath(run_record_path),
+        *preview_paths,
+    ])
     artifact = {
         "kind": "review_gate",
         "schema_version": CONTENT_AGENT_VERSION,
@@ -3027,11 +3094,8 @@ def build_review_gate_from_run(
             "created_by": "content-agent run",
         },
         "evidence": {
-            "preview_paths": gate_preview_paths(gate_entry, resolved_run),
-            "evidence_paths": [
-                repo_relpath(resolved_run_path),
-                repo_relpath(run_record_path),
-            ],
+            "preview_paths": preview_paths,
+            "evidence_paths": evidence_paths,
             "validation_results": validation_results,
             "enforcement_outcomes": enforcement_outcomes,
         },
@@ -3092,6 +3156,12 @@ def build_execution_run_record(
         {"id": "resolved_run", "paths": [resolved_run_relpath]},
         {"id": "run_record", "paths": [run_record_relpath]},
     ]
+    produced_artifacts.extend(
+        existing_output_artifact_refs(
+            resolved_run,
+            only_ids=executed_step_output_ids(resolved_run, command_results),
+        )
+    )
     if gate_artifact_path:
         produced_artifacts.append({"id": "review_gate", "paths": [repo_relpath(gate_artifact_path)]})
     return {
