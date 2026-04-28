@@ -19,6 +19,17 @@ It should consume:
 
 It should not lead the design of those artifacts.
 
+## Current Implementation Slice
+
+The first tracked slice is a read-only localhost surface:
+
+- command: `./content-cockpit` or `npm run cockpit`
+- implementation: `scripts/content_cockpit.py`
+- data boundary: imports existing `content-agent` status, review-list, and review-inspect readers
+- actions: refresh/read only, artifact links, and exact gate-artifact inspection
+
+Approval controls and validation rerun controls remain separate follow-up slices.
+
 ## Required Views
 
 ### Fleet Status
