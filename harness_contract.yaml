@@ -551,6 +551,35 @@ workflows:
     validator_commands: *id003
     judgment_policy: unrestricted
     prohibited_moves: *id001
+  youtube_cinematic_rollout:
+    workflow_doc: workflows/youtube-cinematic-rollout/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: experimental
+    runner_mode: guided
+    launch_mode: none
+    default_skill: youtube-data-api
+    approval_gate: required_before_channel_mutation
+    required_context:
+    - experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+    - authenticated NotebookLM and YouTube access
+    - package-local artifact surfaces for the target publications
+    expected_outputs:
+    - updated evergreen backlog state
+    - package-local cinematic and Shorts artifacts or an exact blocked-state note
+    - verified Studio card and end-screen links for uploaded cinematic briefs when
+      a YouTube research-breakdown target exists
+    - appended release-ledger entry for the run
+    done_when:
+    - all in-flight package work for the run is reconciled, uploaded cinematic briefs
+      have Studio card/end-screen wiring or an explicit blocker recorded, up to two
+      new cinematics are started or completed when possible, and blockers are recorded
+      without hidden state
+    launch_templates: []
+    packet_templates: *id002
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
   youtube_production: *id012
   youtube_series_operating_agents:
     workflow_doc: workflows/youtube-series-operating-agents/README.md
@@ -582,6 +611,12 @@ gates:
     description: Decide whether the active essay object is actually writable before
       bounded candidate drafting.
     scope: package
+    gate_type: content_quality
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: false
+      promotion: false
     required_artifacts:
     - essay-iteration packet manifest
     - hardened blueprint
@@ -593,6 +628,12 @@ gates:
     description: Decide whether a grounded pivot candidate is strong enough to open
       a successor flagship leaf or whether the package should stop without a successor.
     scope: package
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: true
     required_artifacts:
     - pivot grounding review
     - pivot north-star viability gate
@@ -606,6 +647,12 @@ gates:
     description: Decide whether a post-ceiling pivot candidate is grounded enough
       to justify a real second publication object under an umbrella package.
     scope: package
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: false
     required_artifacts:
     - ceiling report or legacy donor-report pair
     - pivot grounding review
@@ -618,6 +665,12 @@ gates:
   release_readiness:
     description: Decide whether a package is safe to publish or externally mutate.
     scope: package
+    gate_type: external_mutation
+    approval_dimensions:
+      quality: true
+      external_mutation: true
+      lifecycle_movement: true
+      promotion: true
     required_artifacts:
     - canonical live draft
     - release-gate checklist or decision note
@@ -630,6 +683,12 @@ gates:
     description: Decide whether the latest bounded candidate clears replacement and
       north-star review or whether the object has hit a ceiling.
     scope: package
+    gate_type: content_quality
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: true
     required_artifacts:
     - replacement review
     - promotion decision
@@ -642,6 +701,12 @@ gates:
     description: Decide whether research is complete enough to hand the package into
       essay_iteration.
     scope: package
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: true
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: false
     required_artifacts:
     - governing blueprint or brief
     - local evidence surface
@@ -654,6 +719,12 @@ gates:
     description: Decide whether a topic-discovery packet is mature enough to initialize
       a package.
     scope: packet
+    gate_type: lifecycle_movement
+    approval_dimensions:
+      quality: false
+      external_mutation: false
+      lifecycle_movement: true
+      promotion: false
     required_artifacts:
     - topic-discovery packet with an explicit handoff decision
     - carry-forward package fields when the decision is package_init_ready
@@ -663,6 +734,7 @@ gates:
 pipeline_profiles:
   article_default:
     description: Default package-development flow from research through release.
+    run_mode: governed_continuous
     ordered_workflows:
     - research
     - paper_intake
@@ -678,6 +750,10 @@ pipeline_profiles:
     - essay_prewrite
     - replacement_north_star
     - release_readiness
+    gate_policy:
+      stop_at_required_gates: true
+      external_mutation_requires_gate: release_readiness
+      lifecycle_movement_requires_gate: true
     allowed_entry_workflows:
     - topic_discovery
     - research
@@ -694,6 +770,7 @@ pipeline_profiles:
   midstream_revision:
     description: Re-enter an existing package from the middle without pretending the
       whole lifecycle restarts.
+    run_mode: governed_continuous
     ordered_workflows:
     - evidence_authorization
     - research
@@ -705,6 +782,10 @@ pipeline_profiles:
     - essay_prewrite
     - replacement_north_star
     - release_readiness
+    gate_policy:
+      stop_at_required_gates: true
+      external_mutation_requires_gate: release_readiness
+      lifecycle_movement_requires_gate: true
     allowed_entry_workflows:
     - evidence_authorization
     - research
@@ -719,6 +800,8 @@ pipeline_profiles:
   post_ceiling_successor:
     description: Experimental successor-object search after a flagship object hits
       a genuine ceiling.
+    run_mode: governed_continuous
+    stability: experimental
     ordered_workflows:
     - post_ceiling_pivot
     - topic_discovery
@@ -729,6 +812,10 @@ pipeline_profiles:
     - pivot_north_star_viability
     - research_exit
     - essay_prewrite
+    gate_policy:
+      stop_at_required_gates: true
+      external_mutation_requires_gate: null
+      lifecycle_movement_requires_gate: true
     allowed_entry_workflows:
     - post_ceiling_pivot
     - topic_discovery

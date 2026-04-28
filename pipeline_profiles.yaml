@@ -1,7 +1,22 @@
 version: 1
+route_authority: workflow_yaml_and_package_status
+evidence_policy:
+  run_record: required
+  gate_store: reviewable-runs/gates/
+  resolved_run_required_when:
+    - governed
+    - gated
+    - resumable
+    - continuous
+    - audit_relevant
+default_enforcement:
+  external_mutation: deny
+  lifecycle_movement: deny
+  promotion: deny
 profiles:
   article_default:
     description: Default package-development flow from research through release.
+    run_mode: governed_continuous
     ordered_workflows:
       - research
       - paper_intake
@@ -17,6 +32,10 @@ profiles:
       - essay_prewrite
       - replacement_north_star
       - release_readiness
+    gate_policy:
+      stop_at_required_gates: true
+      external_mutation_requires_gate: release_readiness
+      lifecycle_movement_requires_gate: true
     allowed_entry_workflows:
       - topic_discovery
       - research
@@ -32,6 +51,7 @@ profiles:
       release_readiness: release_gate
   midstream_revision:
     description: Re-enter an existing package from the middle without pretending the whole lifecycle restarts.
+    run_mode: governed_continuous
     ordered_workflows:
       - evidence_authorization
       - research
@@ -43,6 +63,10 @@ profiles:
       - essay_prewrite
       - replacement_north_star
       - release_readiness
+    gate_policy:
+      stop_at_required_gates: true
+      external_mutation_requires_gate: release_readiness
+      lifecycle_movement_requires_gate: true
     allowed_entry_workflows:
       - evidence_authorization
       - research
@@ -56,6 +80,8 @@ profiles:
       release_readiness: article_polish
   post_ceiling_successor:
     description: Experimental successor-object search after a flagship object hits a genuine ceiling.
+    run_mode: governed_continuous
+    stability: experimental
     ordered_workflows:
       - post_ceiling_pivot
       - topic_discovery
@@ -66,6 +92,10 @@ profiles:
       - pivot_north_star_viability
       - research_exit
       - essay_prewrite
+    gate_policy:
+      stop_at_required_gates: true
+      external_mutation_requires_gate: null
+      lifecycle_movement_requires_gate: true
     allowed_entry_workflows:
       - post_ceiling_pivot
       - topic_discovery
