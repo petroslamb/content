@@ -14,11 +14,13 @@ Use this folder for Phase 2 planning only. Promote decisions into implementation
 
 ## Status
 
-- Phase 2.1, 2.2, and 2.3 are implemented and committed.
-- Phase 2.4 is the next implementation target.
+- Phase 2.1 through 2.6 are implemented and committed as the Phase 2 local platform baseline.
+- Phase 2.6 has a retained real-package proof run: `phase-2-6-editorial-report-proof`.
 - Phase 1.6 still exists as a separate roadmap phase, but Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
 - This folder now treats Phase 2 as contract-first, validation-first, and trace-first rather than CLI-first.
 - Umbrella and leaf package normalization is now mostly done. Phase 2 should treat the current package model as a consumed contract surface, not as new migration work.
+
+The baseline closes the local governed-runtime implementation: workflow contracts, validation, evidence, gates, `content-agent`, cockpit, and bounded editorial-report automation. It does not claim autonomous end-to-end publication, browser-backed external mutation, multi-agent orchestration, or full lifecycle reliability across multiple fresh packages.
 
 ## What Phase 2 Promotes From `literate-workflow-programming`
 

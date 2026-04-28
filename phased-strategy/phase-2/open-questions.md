@@ -1,8 +1,8 @@
-# Phase 2 Open Questions
+# Phase 2 Open And Narrowed Questions
 
-These are the decisions that still remain open after the distilled-findings, claim-ledger, and contradiction-register pass.
+These are the decisions that remain open or were recently narrowed after the distilled-findings, claim-ledger, and contradiction-register pass.
 
-Use this file as the unresolved sidecar. Do not treat a question here as settled until the answer has moved through [`claim-ledger.md`](claim-ledger.md) and [`contradiction-register.md`](contradiction-register.md).
+Use this file as the unresolved sidecar. Do not treat a question here as fully settled until the answer has moved through [`claim-ledger.md`](claim-ledger.md) and [`contradiction-register.md`](contradiction-register.md).
 
 ## 1. Do Non-Publication System Surfaces Need A Lighter Manifest Type?
 
@@ -20,14 +20,16 @@ Current rule: do not invent a second manifest family until Phase 2 hits a concre
 
 ## 2. What Counts As A Full Lifecycle For Phase 2 Closure?
 
-The Phase 2 gate requires three full essay lifecycles through the platform path.
+Status: narrowed for Phase 2.1-2.6 implementation closeout.
 
-It is still open whether that means:
+The Phase 2.1-2.6 implementation baseline closes on real package-path proof, not synthetic demos. The retained proof is `phase-2-6-editorial-report-proof`, which shows a real package producing a governed editorial report and stopping at a release-readiness gate with linked evidence.
+
+The stronger reliability claim remains open:
 
 - fully new idea-to-publication runs, or
 - continuation of existing packages through all remaining stages using the platform path
 
-This needs a strict answer before proof design starts. Synthetic demos may help development, but they do not close Phase 2.
+That strict answer is still required before claiming the platform is reliable across multiple full essay lifecycles. Synthetic demos may help development, but they do not close either the implementation baseline or the later lifecycle-reliability proof.
 
 Related contradiction: `P2-011`.
 
