@@ -43,12 +43,29 @@ The current operative stack is:
 
 | Subphase | Job | Depends On | Done When |
 | :--- | :--- | :--- | :--- |
-| **2.1 Executable Workflow Contract** | Author per-workflow `workflow.yaml` as the highest functional truth layer for workflow behavior. | Architecture decisions, current workflow READMEs, root YAML surfaces, package `status.yaml`. | Target workflows have authored YAML contracts with identity, version, stability, kind, group, context dependencies, capabilities, paths, steps, outputs, validation, gates, trace requirements, and a small behavioral envelope. |
-| **2.2 Enforcement and Validation Layer** | Attach contracts to bounded runtime checks. | Stable 2.1 contract vocabulary. | Each enforcement surface declares `deny`, `detect`, or `record`; `content-agent validate` can report contract, context, path/tool, gate, and trace-readiness findings without promotion. |
-| **2.3 Trace and Provenance Minimums** | Define derivative execution evidence for debugging, resume, gates, and promotion. | Stable 2.1 and 2.2 semantics. | Governed or proof-relevant runs can persist `resolved_run`, write source-linked `run_record`, stop at YAML-backed `review_gate`, and record promoted-output state in run/gate artifacts. |
-| **2.4 Gate Runtime and `content-agent`** | Implement the deterministic CLI/runtime over stable contracts and evidence. | 2.1, 2.2, 2.3, `gate_contracts.yaml`, `pipeline_profiles.yaml`, `harness_policy.yaml`. | `content-agent init`, `status`, `next`, `run`, `resume`, `review`, and `validate` work over file-backed truth without becoming an LLM persona or second orchestration language. |
-| **2.5 Local Cockpit** | Add a thin browser reader/approver over package state, gates, and recent runs. | Stable gate store, run records, and CLI commands. | The cockpit exposes package state, pending gates, and recent runs while leaving filesystem-backed YAML and package files authoritative. |
-| **2.6 Editorial Automation** | Add structured editorial/style/compliance reporting. | Stable governed run path and article-polish boundaries. | Automation produces reports, violations, and source-improvement suggestions without autonomous rewrite, promotion, or publication authority. |
+| **2.1 Executable Workflow Contract** | Author per-workflow `workflow.yaml` as the highest functional truth layer for workflow behavior. | Architecture decisions, current workflow READMEs, root YAML surfaces, package `status.yaml`. | Implemented. Target workflows have authored YAML contracts with identity, version, stability, kind, group, context dependencies, capabilities, paths, steps, outputs, validation, gates, trace requirements, and a small behavioral envelope. |
+| **2.2 Enforcement and Validation Layer** | Attach contracts to bounded runtime checks. | Stable 2.1 contract vocabulary. | Implemented. Each enforcement surface declares `deny`, `detect`, or `record`; `content-agent validate` reports contract, context, path/tool, gate, and trace-readiness findings without promotion. |
+| **2.3 Trace and Provenance Minimums** | Define derivative execution evidence for debugging, resume, gates, and promotion. | Stable 2.1 and 2.2 semantics. | Implemented. Governed or proof-relevant runs persist `resolved_run`, write source-linked `run_record`, stop at YAML-backed `review_gate`, and record promoted-output state in run/gate artifacts. |
+| **2.4 Gate Runtime and `content-agent`** | Implement the deterministic CLI/runtime over stable contracts and evidence. | 2.1, 2.2, 2.3, `gate_contracts.yaml`, `pipeline_profiles.yaml`, `harness_policy.yaml`. | Implemented. `content-agent init`, `status`, `next`, `run`, `resume`, `review`, and `validate` work over file-backed truth without becoming an LLM persona or second orchestration language. |
+| **2.5 Local Cockpit** | Add a thin browser reader/approver over package state, gates, and recent runs. | Stable gate store, run records, and CLI commands. | Implemented. The cockpit exposes package state, pending gates, recent runs, validation health, gate decisions, and report-only editorial checks while leaving filesystem-backed YAML and package files authoritative. |
+| **2.6 Editorial Automation** | Add structured editorial/style/compliance reporting. | Stable governed run path and article-polish boundaries. | Implemented. Automation produces reports, violations, and source-improvement suggestions without autonomous rewrite, promotion, publication, or lifecycle authority. |
+
+## Implementation Closeout
+
+The Phase 2.1-2.6 local platform baseline is implemented.
+
+Retained proof:
+
+- run id: `phase-2-6-editorial-report-proof`
+- package: `neural-architectures/neural-architecture-design-as-a-compositional-32e`
+- resolved run: `reviewable-runs/resolved-runs/phase-2-6-editorial-report-proof.yaml`
+- run record: `reviewable-runs/logs/phase-2-6-editorial-report-proof.yaml`
+- review gate: `reviewable-runs/gates/gate-phase-2-6-editorial-report-proof-release-readiness.yaml`
+- package report: `publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/editorial-report-r4.json`
+
+That proof demonstrates the current platform path on a real package: `article_polish` produced a structured editorial report, recorded the report as a declared workflow output, stopped at a file-backed release-readiness gate, and linked the live draft plus report into gate preview and evidence paths.
+
+Do not read this as a claim that Phase 2 now performs autonomous end-to-end publication. External mutation, lifecycle movement, and promotion remain gate-controlled and human-approved.
 
 ## First Workflow Set
 
@@ -170,7 +187,7 @@ This pass must not create autonomous rewrite, promotion, publication, or lifecyc
 
 ## Phase 2 Gate Read
 
-Before Phase 2 can honestly close, the repo should show:
+The implemented Phase 2 baseline now shows:
 
 1. stable `workflow.yaml` contracts for the target lifecycle workflows
 2. schema and drift checks that make README/YAML authority boundaries visible
@@ -179,6 +196,8 @@ Before Phase 2 can honestly close, the repo should show:
 5. source-linked run records with context hashes, workflow version/hash, parent artifacts, validation results, enforcement outcomes, gate ids, and promoted-output state
 6. `content-agent` commands operating over file-backed truth without replacing repo source surfaces
 7. retained proof runs on real package paths, not synthetic demos
+
+The stronger claim that the platform is reliable across multiple fresh idea-to-publication lifecycles remains outside this implementation closeout. That is a later proof campaign, not a prerequisite for the Phase 2.1-2.6 local baseline.
 
 ## Explicit Deferrals
 

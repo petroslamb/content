@@ -29,7 +29,7 @@ This ledger is the Phase 2 decision surface that consumes distilled findings and
 | Skills should enter Phase 2 as bound capabilities under contract and policy rather than as raw portable markdown assumptions. | Stable planning claim | [`phase-2-distilled-findings.md`](phase-2-distilled-findings.md), [`README.md`](README.md), [`architecture.md`](architecture.md), `2604.03088`, `2602.12670`, `2604.08224`, `2603.25723` | The claim is about binding, routing, and verification. It does not require Phase 2 to solve universal skill portability. |
 | Phase 2 only needs a small contradiction/provenance state for promoted outputs, not full semantic provenance graphs. | Stable planning claim | [`phase-2-distilled-findings.md`](phase-2-distilled-findings.md), [`2.3-trace-and-provenance-minimums.md`](2.3-trace-and-provenance-minimums.md), [`open-questions.md`](open-questions.md), `2602.13855`, package claim-state work in `literate-workflow-programming` | The vocabulary is mostly settled. The storage surface is not. |
 | The current package model is a consumed platform input, not a Phase 2 redesign target. | Stable local proof-backed claim | [`README.md`](README.md), [`architecture.md`](architecture.md), [`milestones.md`](milestones.md), [`../../publications/literate-workflow-programming/status.yaml`](../../publications/literate-workflow-programming/status.yaml), manifest-first proof run | This is stable for publication packages. It does not settle whether non-publication system surfaces need a lighter manifest type. |
-| Phase 2 closure should be proven through real file-backed runs on real packages, not through planning completeness, synthetic demos, or dashboard polish. | Stable planning claim | [`phase-2-distilled-findings.md`](phase-2-distilled-findings.md), [`milestones.md`](milestones.md), [`open-questions.md`](open-questions.md), [`../strategic_plan.md`](../strategic_plan.md), Reviewable Runs evidence | The exact definition of a "full lifecycle" is still open and needs to be fixed before proof design. |
+| Phase 2 closure should be proven through real file-backed runs on real packages, not through planning completeness, synthetic demos, or dashboard polish. | Stable implementation-backed claim | [`phase-2-distilled-findings.md`](phase-2-distilled-findings.md), [`milestones.md`](milestones.md), [`open-questions.md`](open-questions.md), [`../strategic_plan.md`](../strategic_plan.md), `phase-2-6-editorial-report-proof`, Reviewable Runs evidence | The Phase 2.1-2.6 implementation baseline has a real package-path proof. The stronger multiple-full-lifecycle reliability claim remains a later proof campaign. |
 
 ## Current Phase-2-Safe Conclusions
 
@@ -53,7 +53,7 @@ Use these as the strongest current conclusions before implementation:
 - How to keep behavioral-envelope fields small enough to validate across real workflows.
 - How context lifecycle governance should handle decay, pruning, privacy, contradiction, and versioned reuse.
 - Where the small contradiction/provenance state should live.
-- What counts as a full lifecycle for Phase 2 closure.
+- What counts as enough repeated full-lifecycle proof before claiming lifecycle reliability beyond the Phase 2 implementation baseline.
 - How much persistent browser support is actually a Phase 2 dependency.
 - Whether non-publication system surfaces need a lighter manifest type.
 
