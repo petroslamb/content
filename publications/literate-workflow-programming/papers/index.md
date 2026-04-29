@@ -31,6 +31,33 @@ This index tracks papers for the `literate-workflow-programming/` research packa
 - Metadata: [`metadata/2603.17399.json`](metadata/2603.17399.json)
 - Relevance: Key pressure paper. It supports specification-as-source, but narrows reviewable logs into derived traces rather than the artifact of record.
 
+### Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants
+
+- arXiv: [`2602.00180v1`](https://arxiv.org/abs/2602.00180)
+- Authors: Deepak Babu Piskala
+- Local PDF: [`2602.00180.pdf`](2602.00180.pdf)
+- Local markdown: [`markdown/2602.00180.md`](markdown/2602.00180.md)
+- Metadata: [`metadata/2602.00180.json`](metadata/2602.00180.json)
+- Relevance: Primary non-agent bridge for specifications as authoritative contracts in general software practice. It supplies the spec-first, spec-anchored, and spec-as-source spectrum, plus the caveat that stronger specification discipline is valuable only when it removes real ambiguity and has enforcement or maintenance support.
+
+### The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents
+
+- arXiv: [`2603.24284v1`](https://arxiv.org/abs/2603.24284)
+- Authors: Camilo Chacon Sartori
+- Local PDF: [`2603.24284.pdf`](2603.24284.pdf)
+- Local markdown: [`markdown/2603.24284.md`](markdown/2603.24284.md)
+- Metadata: [`metadata/2603.24284.json`](metadata/2603.24284.json)
+- Relevance: Main negative bridge for underspecification. The experiment shows that stripped specifications cause integration failure in multi-agent code generation, while restoring the full specification is the strongest recovery instrument. It supports specification surfaces as coordination contracts rather than decorative docs.
+
+### Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025
+
+- arXiv: [`2512.14012v1`](https://arxiv.org/abs/2512.14012)
+- Authors: Ruanqianqian Huang, Avery Reyna, Sorin Lerner, Haijun Xia, Brian Hempel
+- Local PDF: [`2512.14012.pdf`](2512.14012.pdf)
+- Local markdown: [`markdown/2512.14012.md`](markdown/2512.14012.md)
+- Metadata: [`metadata/2512.14012.json`](metadata/2512.14012.json)
+- Relevance: Public-practice bridge for the anti-vibe frame. Experienced developers use agents through planning, supervision, validation, version control, and domain expertise rather than unconstrained delegation, which gives the successor essay a stronger professional-control antagonist.
+
 ### Test-Driven AI Agent Definition
 
 - arXiv: [`2603.08806v1`](https://arxiv.org/abs/2603.08806)
@@ -160,6 +187,7 @@ This index tracks papers for the `literate-workflow-programming/` research packa
 - `2510.04173v4` and `2504.11703v2` contain compressed spacing in portions of the converted text, but section structure and body text remain usable.
 - `2512.19769`, `2512.18940`, `2603.20380`, and `2601.04748v2` contain first-page arXiv/header extraction noise, but the main body text is usable.
 - `2603.23806`, `2603.29848`, and `2602.13855` contain first-page arXiv/header extraction noise, but the main body text is usable.
+- `2602.00180`, `2603.24284`, and `2512.14012` were downloaded through alphaXiv PDF resolution on 2026-04-30 and converted with the repo-local `markitdown` binary. `2602.00180` has table/header noise in the opening pages, but the specification-spectrum, workflow, pitfalls, and conclusion sections are usable; `2603.24284` and `2512.14012` converted cleanly enough for research use.
 
 ## Intake Queue
 
@@ -167,9 +195,6 @@ These papers are indexed for deliberate download and conversion later. They are 
 
 | Priority | arXiv ID | Title | Why It Matters Here |
 | :--- | :--- | :--- | :--- |
-| P0-reopen | [`2602.00180`](https://arxiv.org/abs/2602.00180) | Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants | General software-engineering bridge for specifications as authoritative contracts and spec-as-source workflows. |
-| P0-reopen | [`2603.24284`](https://arxiv.org/abs/2603.24284) | The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents | Strong negative/pressure evidence that underspecified agents fail to coordinate and that rich specs matter. |
-| P0-reopen | [`2512.14012`](https://arxiv.org/abs/2512.14012) | Professional Software Developers Don't Vibe, They Control | Public-practice anchor for the anti-vibe, human-control framing. |
 | P0-reopen | [`2512.14805`](https://arxiv.org/abs/2512.14805) | Sharing State Between Prompts and Programs | Boundary evidence for natural-language code interacting with formal program state through explicit interfaces. |
 | P1-reopen | [`2508.06942`](https://arxiv.org/abs/2508.06942) | When Prompt Engineering Meets Software Engineering: CNL-P as Natural and Robust APIs for Human-AI Interaction | Controlled natural-language prompts, linting, and static-analysis evidence for specification-surface discipline. |
 | P1-reopen | [`2603.15691`](https://arxiv.org/abs/2603.15691) | VibeContract: The Missing Quality Assurance Piece in Vibe Coding | Task-level contracts, traceability, testing, runtime verification, and debugging for AI-native code generation. |

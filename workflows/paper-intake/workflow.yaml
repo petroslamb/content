@@ -101,6 +101,8 @@ capabilities:
 allowed_paths:
   read:
     - publications/{package}/
+    - "{evidence_path}"
+    - "{shared_evidence_path}"
     - workflows/paper-intake/
     - workflows/skills/markitdown-paper-intake/
     - harness_policy.yaml

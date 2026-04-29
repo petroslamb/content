@@ -93,6 +93,8 @@ capabilities:
 allowed_paths:
   read:
     - publications/{package}/
+    - "{evidence_path}"
+    - "{shared_evidence_path}"
     - workflows/evidence-authorization/
     - harness_policy.yaml
     - package.json
