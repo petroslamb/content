@@ -6,9 +6,9 @@
 
 The reopened search found a materially different candidate family from the stopped `contract layer` frame.
 
-`The Specification Surface Is the New Source of Truth` is cleared for the next north-star viability pass.
+`The Specification Surface Is the New Source of Truth` passed the north-star viability gate.
 
-This does not initialize a successor leaf yet.
+This clears the candidate for successor leaf initialization. The lifecycle-movement approval boundary was approved on 2026-04-28.
 
 ## Why This Clears The Research Grounding Gate
 
@@ -23,15 +23,35 @@ The evidence now crosses more than governed agent-workflow doctrine:
 - professional-control evidence against vibe coding
 - controlled natural language, task contracts, and shared prompt/program state
 
-## Why It Is Not A Successor Leaf Yet
+## North-Star Viability
 
-The candidate still needs the north-star viability gate.
+North-star viability gate:
 
-That gate must decide whether the largest intended claim is scale-matched:
+```bash
+npm run gate:check -- --gate pivot_north_star_viability --package literate-workflow-programming --format json
+```
+
+Result:
+
+- status: `pass`
+- decision: `north_star_viable`
+- log: [`../../../../reviewable-runs/logs/2026-04-28_21-53-15_literate-workflow-programming_pivot_north_star_viability_gate-check.json`](../../../../reviewable-runs/logs/2026-04-28_21-53-15_literate-workflow-programming_pivot_north_star_viability_gate-check.json)
+
+The gate accepted the largest intended claim only under the precision boundary:
 
 `In AI-native development, the durable artifact is increasingly the specification surface, not the generated implementation.`
 
-If the gate cannot defend that claim without pretending loose prose is code, the candidate must narrow or stop.
+The candidate must keep saying controlled, maintained, validated specification surfaces are becoming source-of-truth artifacts. It must not say loose natural language is code.
+
+## Why It Is Not A Successor Leaf Yet
+
+Successor leaf initialization has been completed.
+
+New successor leaf:
+
+[`../../specification-surface-source-of-truth/README.md`](../../specification-surface-source-of-truth/README.md)
+
+The successor leaf must re-enter `research`; it is not cleared for drafting, publishing, or release.
 
 ## Validation
 
@@ -49,4 +69,4 @@ Result:
 
 ## Post-Block Route
 
-`run_north_star_viability`
+`successor_leaf_research_handoff`

@@ -1,0 +1,42 @@
+kind: leaf
+publication: specification-surface-source-of-truth
+parent_package: literate-workflow-programming
+revision: 1
+config:
+  evidence_path: publications/literate-workflow-programming/papers
+  shared_evidence_path: publications/literate-workflow-programming/papers
+  blueprint_path: publications/literate-workflow-programming/specification-surface-source-of-truth/research-handoff.md
+  pivot_decision_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-decision.md
+  north_star_viability_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-north-star-viability.md
+  research_question: How do controlled, typed, linted, validated, and trace-linked
+    specification surfaces become the governed source-of-truth artifact in AI-assisted
+    software work, and why is this different from treating natural language prompts
+    as code?
+stages:
+  paper_intake:
+    done: true
+    last_updated: '2026-04-28'
+  research:
+    done: true
+    last_updated: '2026-04-29'
+  essay_iteration:
+    done: false
+    last_updated: null
+  notebooklm_artifacts:
+    done: false
+    last_updated: null
+  article_polish:
+    done: false
+    last_updated: null
+  substack_publishing:
+    done: false
+    last_updated: null
+  archive_sync:
+    done: false
+    last_updated: null
+  youtube_production:
+    done: false
+    last_updated: null
+  distribution:
+    done: false
+    last_updated: null
