@@ -20,6 +20,7 @@ sys.path.insert(0, str(YOUTUBE_SKILL_SCRIPTS))
 
 import build_youtube_decision_report as report  # noqa: E402
 import build_youtube_analytics_dashboard as dashboard  # noqa: E402
+import analyze_youtube_srt_content as content_rubric  # noqa: E402
 import fetch_youtube_analytics as fetch  # noqa: E402
 import sync_youtube_reporting_reports as reporting_sync  # noqa: E402
 import youtube_common  # noqa: E402
@@ -164,6 +165,63 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             ),
             "podcast",
         )
+
+    def test_release_timing_and_thumbnail_extraction(self) -> None:
+        timing = fetch.release_timing_from_published_at("2026-04-29T06:00:02Z")
+        self.assertEqual(timing["timezone"], "Europe/Athens")
+        self.assertEqual(timing["weekday"], "Wednesday")
+        self.assertEqual(timing["hour"], 9)
+        thumbnails = fetch.compact_thumbnail_set(
+            {
+                "default": {"url": "default.jpg", "width": 120, "height": 90},
+                "high": {"url": "high.jpg", "width": 480, "height": 360},
+                "maxres": {"url": "maxres.jpg", "width": 1280, "height": 720},
+            }
+        )
+        self.assertEqual(thumbnails["best_url"], "maxres.jpg")
+        self.assertEqual(thumbnails["variants"][0]["quality"], "maxres")
+
+    def test_length_fit_bands_cover_supported_formats(self) -> None:
+        self.assertEqual(dashboard.length_fit("short", 37)["bucket"], "target")
+        self.assertEqual(dashboard.length_fit("short", 80)["bucket"], "too_long")
+        self.assertEqual(dashboard.length_fit("cinematic", 300)["bucket"], "target")
+        self.assertEqual(dashboard.length_fit("tldr", 720)["bucket"], "acceptable_long")
+        self.assertEqual(dashboard.length_fit("podcast", 3600)["severity"], "neutral")
+
+    def test_srt_content_analysis_present_missing_and_malformed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            srt = root / "publications" / "demo" / "artifacts" / "video" / "demo_cinematic.srt"
+            srt.parent.mkdir(parents=True)
+            srt.write_text(
+                "1\n00:00:01,000 --> 00:00:04,000\nWhy agents fail in production.\n\n"
+                "2\n00:00:10,000 --> 00:00:13,000\nThe system loses memory and control.\n\n"
+                "3\n00:00:40,000 --> 00:00:43,000\nWatch the full brief below.\n"
+            )
+            video = self.video(
+                "SRT",
+                "Why Agents Fail",
+                "cinematic",
+                views=10,
+                avg_pct=40,
+                source_reports=["publications/demo/artifacts/video/shorts_upload_report.json"],
+            )
+            mapped = content_rubric.map_srt_for_video(video, root=root)
+            self.assertEqual(mapped["status"], "present")
+            self.assertEqual(mapped["first_spoken_line"], "Why agents fail in production.")
+            self.assertTrue(mapped["closing_cta_presence"])
+
+            missing = content_rubric.map_srt_for_video(
+                {**video, "package": "other", "title": "No Match", "source_reports": []},
+                root=root,
+            )
+            self.assertEqual(missing["status"], "missing")
+
+            bad = root / "publications" / "bad" / "bad.srt"
+            bad.parent.mkdir(parents=True)
+            bad.write_text("not a subtitle")
+            malformed = content_rubric.analyze_srt(bad, title="Bad")
+            self.assertEqual(malformed["status"], "malformed")
 
     def test_decision_classification_covers_core_buckets(self) -> None:
         rules = {
@@ -407,6 +465,11 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                 "Visual Deep Research Dives",
             )
             self.assertEqual(payload["funnel_rollups"]["totals"]["shorts_with_related"], 1)
+            self.assertIn("rubric", payload)
+            self.assertEqual(payload["rubric"]["items"][0]["video_id"], "SCALE")
+            self.assertEqual(payload["rubric"]["items"][0]["length_fit"]["bucket"], "target")
+            self.assertIn("release_rollups_by_horizon", payload)
+            self.assertIn("length_rollups_by_horizon", payload)
             self.assertEqual(payload["sort_defaults"]["videos"]["key"], "score")
             self.assertEqual(
                 payload["findings"]["by_category"]["remaster"][0]["actions_by_category"]["remaster"],
@@ -515,6 +578,8 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         source_reports: list[str] | None = None,
         daily_metrics: list[dict] | None = None,
         playlists: list[dict] | None = None,
+        duration_seconds: float = 300,
+        thumbnail_url: str | None = "https://i.ytimg.com/vi/demo/maxresdefault.jpg",
     ) -> dict:
         metrics = {
             "views": views,
@@ -533,6 +598,19 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             "title": title,
             "url": f"https://www.youtube.com/watch?v={video_id}",
             "published_at": published_at,
+            "release_timing": dashboard.release_timing_from_published_at(published_at),
+            "duration_seconds": duration_seconds,
+            "thumbnail_url": thumbnail_url,
+            "thumbnails": [
+                {
+                    "quality": "maxres",
+                    "url": thumbnail_url,
+                    "width": 1280,
+                    "height": 720,
+                }
+            ]
+            if thumbnail_url
+            else [],
             "format": format_name,
             "format_source": "fixture",
             "package": "demo",

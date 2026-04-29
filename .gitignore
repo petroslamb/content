@@ -49,6 +49,7 @@ tmp/
 
 # Generated YouTube analytics state
 experiments/youtube-analytics/metrics_ledger.json
+experiments/youtube-analytics/content_rubric.json
 experiments/youtube-analytics/reporting_downloads/
 experiments/youtube-analytics/weekly_reports/
 experiments/youtube-analytics/dashboard/
