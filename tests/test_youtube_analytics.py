@@ -45,6 +45,95 @@ class EmptyAnalytics:
         return FakeExecute({"columnHeaders": headers, "rows": []})
 
 
+class FakeChannels:
+    def list(self, **kwargs):
+        return FakeExecute(
+            {
+                "items": [
+                    {
+                        "contentDetails": {
+                            "relatedPlaylists": {"uploads": "UPLOADS"}
+                        }
+                    }
+                ]
+            }
+        )
+
+
+class FakePlaylists:
+    def list(self, **kwargs):
+        return FakeExecute(
+            {
+                "items": [
+                    {
+                        "id": "COURSE",
+                        "snippet": {"title": "Rooted Layers Course", "description": ""},
+                        "contentDetails": {"itemCount": 1},
+                        "status": {"privacyStatus": "public"},
+                    },
+                    {
+                        "id": "SHORTS",
+                        "snippet": {"title": "AI Architecture Shorts", "description": ""},
+                        "contentDetails": {"itemCount": 1},
+                        "status": {"privacyStatus": "public"},
+                    },
+                ]
+            }
+        )
+
+
+class FakePlaylistItems:
+    def __init__(self):
+        self.items = {
+            "UPLOADS": [
+                {
+                    "id": "UPLOAD_ITEM",
+                    "snippet": {
+                        "title": "Uploaded Video",
+                        "publishedAt": "2026-04-20T00:00:00Z",
+                        "resourceId": {"videoId": "UPLOADED"},
+                    },
+                }
+            ],
+            "COURSE": [
+                {
+                    "id": "COURSE_ITEM",
+                    "snippet": {
+                        "title": "Course Only Video",
+                        "publishedAt": "2026-04-21T00:00:00Z",
+                        "position": 0,
+                        "resourceId": {"videoId": "COURSEONLY"},
+                    },
+                }
+            ],
+            "SHORTS": [
+                {
+                    "id": "SHORTS_ITEM",
+                    "snippet": {
+                        "title": "Uploaded Video",
+                        "publishedAt": "2026-04-22T00:00:00Z",
+                        "position": 0,
+                        "resourceId": {"videoId": "UPLOADED"},
+                    },
+                }
+            ],
+        }
+
+    def list(self, **kwargs):
+        return FakeExecute({"items": self.items.get(kwargs["playlistId"], [])})
+
+
+class FakeYouTubeDiscovery:
+    def channels(self):
+        return FakeChannels()
+
+    def playlists(self):
+        return FakePlaylists()
+
+    def playlistItems(self):
+        return FakePlaylistItems()
+
+
 class YouTubeAnalyticsTests(unittest.TestCase):
     maxDiff = None
 
@@ -165,6 +254,32 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             ),
             "podcast",
         )
+
+    def test_all_channel_discovery_merges_uploads_playlists_and_repo_sources(self) -> None:
+        youtube = FakeYouTubeDiscovery()
+        records = {
+            "UPLOADED": {
+                "video_id": "UPLOADED",
+                "title": "Uploaded Video From Repo",
+                "discovery_sources": ["repo_upload_report"],
+                "source_reports": ["publications/demo/upload_report.json"],
+            }
+        }
+        for record in fetch.fetch_channel_uploads(youtube).values():
+            fetch.merge_video_record(records, record)
+        playlists, memberships, playlist_records = fetch.fetch_playlist_inventory_and_memberships(youtube)
+        for record in playlist_records.values():
+            fetch.merge_video_record(records, record)
+        fetch.apply_playlist_memberships(records, memberships)
+
+        self.assertEqual(set(records), {"UPLOADED", "COURSEONLY"})
+        self.assertEqual(
+            records["UPLOADED"]["discovery_sources"],
+            ["channel_playlist", "channel_uploads", "repo_upload_report"],
+        )
+        self.assertEqual(records["COURSEONLY"]["discovery_sources"], ["channel_playlist"])
+        self.assertEqual(len(playlists), 2)
+        self.assertEqual(records["COURSEONLY"]["playlists"][0]["title"], "Rooted Layers Course")
 
     def test_release_timing_and_thumbnail_extraction(self) -> None:
         timing = fetch.release_timing_from_published_at("2026-04-29T06:00:02Z")
@@ -355,6 +470,24 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                     "source_file_count": 2,
                     "videos_updated": 1,
                 },
+                "channel_playlists": [
+                    {
+                        "id": "PLAYLIST123",
+                        "title": "Visual Deep Research Dives",
+                        "item_count": 3,
+                        "observed_item_count": 3,
+                        "privacy_status": "public",
+                        "url": "https://www.youtube.com/playlist?list=PLAYLIST123",
+                    },
+                    {
+                        "id": "COURSE123",
+                        "title": "Rooted Layers Course",
+                        "item_count": 7,
+                        "observed_item_count": 7,
+                        "privacy_status": "public",
+                        "url": "https://www.youtube.com/playlist?list=COURSE123",
+                    },
+                ],
                 "videos": [
                     self.video(
                         "SCALE",
@@ -450,6 +583,12 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertEqual(payload["totals"]["playlist_videos"], 1)
             self.assertEqual(payload["playlist_rollups"][0]["playlist"], "Visual Deep Research Dives")
             self.assertEqual(payload["playlist_rollups"][0]["video_count"], 1)
+            course_inventory = {
+                row["playlist_id"]: row
+                for row in payload["playlist_inventory"]
+            }["COURSE123"]
+            self.assertEqual(course_inventory["in_scope_video_count"], 0)
+            self.assertEqual(course_inventory["missing_from_scope_count"], 7)
             self.assertEqual(payload["horizons"]["monthly"]["label"], "28 Days")
             self.assertEqual(payload["horizon_summaries"]["daily"]["total_views"], 25)
             self.assertEqual(
@@ -470,7 +609,11 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertEqual(payload["rubric"]["items"][0]["length_fit"]["bucket"], "target")
             self.assertIn("release_rollups_by_horizon", payload)
             self.assertIn("length_rollups_by_horizon", payload)
-            self.assertEqual(payload["sort_defaults"]["videos"]["key"], "score")
+            self.assertEqual(payload["sort_defaults"]["videos"]["key"], "useful")
+            self.assertEqual(payload["coverage"]["metrics"]["views"]["total"], 2)
+            self.assertEqual(payload["coverage"]["metrics"]["views"]["count"], 2)
+            self.assertIn("metric_coverage", payload["help_text"])
+            self.assertIn("srt_hook", payload["help_text"])
             self.assertEqual(
                 payload["findings"]["by_category"]["remaster"][0]["actions_by_category"]["remaster"],
                 "Queue this Short for the overlay remaster workflow instead of unlisting it immediately.",
@@ -500,6 +643,64 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
             self.assertIn("YouTube Analytics Dashboard", output_path.read_text())
             self.assertEqual(json.loads(payload_path.read_text())["totals"]["videos"], 2)
+
+    def test_dashboard_warns_when_reach_reports_are_ready_but_not_hydrated(self) -> None:
+        ledger = {
+            "created_at": "2026-04-28T00:00:00+00:00",
+            "analytics_end_date": "2026-04-27",
+            "read_only": True,
+            "videos": [
+                self.video(
+                    "NOCTR",
+                    "No CTR",
+                    "short",
+                    views=20,
+                    avg_pct=40,
+                    impressions=None,
+                    ctr=None,
+                )
+            ],
+        }
+        report_summary = {
+            "report_date": "2026-04-28",
+            "read_only": True,
+            "summary_counts": {},
+            "top_actions": [],
+            "classifications": [
+                {
+                    "video_id": "NOCTR",
+                    "title": "No CTR",
+                    "url": "https://www.youtube.com/watch?v=NOCTR",
+                    "format": "short",
+                    "package": "demo",
+                    "published_at": "2026-04-20T00:00:00Z",
+                    "selected_window": "7d",
+                    "data_age_days": 8,
+                    "categories": ["ignore"],
+                    "reasons": [],
+                    "recommended_actions": [],
+                    "manual_fields_missing": ["video_thumbnail_impressions", "video_thumbnail_ctr"],
+                    "metrics": {},
+                }
+            ],
+        }
+        jobs = {
+            "jobs": {
+                "channel_reach_basic_a1": {
+                    "name": "Reach basic",
+                    "report_type_id": "channel_reach_basic_a1",
+                    "available_report_count": 1,
+                    "downloaded_report_count": 1,
+                    "latest_report_end_time": "2026-04-27T07:00:00Z",
+                    "purpose": "Daily per-video thumbnail impressions and thumbnail CTR.",
+                }
+            }
+        }
+
+        payload = dashboard.build_dashboard_payload(ledger, report_summary, jobs)
+
+        self.assertTrue(payload["reporting_status"]["reach_hydration_gap"])
+        self.assertEqual(payload["warnings"][0]["key"], "reporting_reach_not_hydrated")
 
     def test_reporting_rows_merge_reach_and_card_fields_into_ledger(self) -> None:
         ledger = {
