@@ -11,6 +11,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 YOUTUBE_SKILL_SCRIPTS = (
     Path(__file__).resolve().parents[1]
@@ -107,6 +108,8 @@ IGNORED_DIR_NAMES = {
     "__pycache__",
 }
 VIDEO_URL_TEMPLATE = "https://www.youtube.com/watch?v={video_id}"
+DEFAULT_RELEASE_TIMEZONE = "Europe/Athens"
+THUMBNAIL_ORDER = ["maxres", "standard", "high", "medium", "default"]
 
 
 def utc_now() -> datetime:
@@ -166,6 +169,71 @@ def extract_video_id_from_url(value: str | None) -> str | None:
         if match:
             return match.group(1)
     return None
+
+
+def release_timing_from_published_at(
+    value: str | None,
+    *,
+    timezone_name: str = DEFAULT_RELEASE_TIMEZONE,
+) -> dict[str, Any] | None:
+    parsed = parse_iso_datetime(value)
+    if not parsed:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    local = parsed.astimezone(ZoneInfo(timezone_name))
+    hour = local.hour
+    if 5 <= hour < 12:
+        daypart = "morning"
+    elif 12 <= hour < 17:
+        daypart = "afternoon"
+    elif 17 <= hour < 22:
+        daypart = "evening"
+    else:
+        daypart = "overnight"
+    return {
+        "published_at_utc": parsed.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "timezone": timezone_name,
+        "local_iso": local.isoformat(),
+        "weekday": local.strftime("%A"),
+        "weekday_index": local.weekday(),
+        "hour": hour,
+        "hour_label": f"{hour:02d}:00",
+        "daypart": daypart,
+    }
+
+
+def compact_thumbnail_set(thumbnails: dict[str, Any] | None) -> dict[str, Any]:
+    if not thumbnails:
+        return {"best_url": None, "variants": []}
+    variants = []
+    for key in THUMBNAIL_ORDER:
+        value = thumbnails.get(key)
+        if not isinstance(value, dict) or not value.get("url"):
+            continue
+        variants.append(
+            {
+                "quality": key,
+                "url": value.get("url"),
+                "width": value.get("width"),
+                "height": value.get("height"),
+            }
+        )
+    for key, value in thumbnails.items():
+        if key in THUMBNAIL_ORDER or not isinstance(value, dict) or not value.get("url"):
+            continue
+        variants.append(
+            {
+                "quality": key,
+                "url": value.get("url"),
+                "width": value.get("width"),
+                "height": value.get("height"),
+            }
+        )
+    return {
+        "best_url": variants[0]["url"] if variants else None,
+        "variants": variants,
+    }
 
 
 def relative_path(path: Path, root: Path = REPO_ROOT) -> str:
@@ -689,16 +757,22 @@ def apply_video_details(record: dict[str, Any], detail: dict[str, Any] | None) -
     statistics = detail.get("statistics", {})
     duration = content_details.get("duration")
     duration_seconds = parse_iso8601_duration_seconds(duration)
+    published_at = snippet.get("publishedAt") or record.get("published_at")
+    thumbnails = compact_thumbnail_set(snippet.get("thumbnails"))
     record.update(
         {
             "data_api_found": True,
             "title": snippet.get("title") or record.get("title"),
-            "published_at": snippet.get("publishedAt") or record.get("published_at"),
+            "published_at": published_at,
+            "release_timing": release_timing_from_published_at(published_at)
+            or record.get("release_timing"),
             "privacy_status": status.get("privacyStatus") or record.get("privacy_status"),
             "duration": duration or record.get("duration"),
             "duration_seconds": duration_seconds
             if duration_seconds is not None
             else record.get("duration_seconds"),
+            "thumbnail_url": thumbnails["best_url"] or record.get("thumbnail_url"),
+            "thumbnails": thumbnails["variants"] or record.get("thumbnails") or [],
             "data_api_statistics": statistics,
         }
     )
