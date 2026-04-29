@@ -53,6 +53,7 @@ experiments/youtube-analytics/content_rubric.json
 experiments/youtube-analytics/reporting_downloads/
 experiments/youtube-analytics/weekly_reports/
 experiments/youtube-analytics/dashboard/
+experiments/youtube-analytics/snapshots/
 
 # --- Repository Content Hygiene Policy ---
 # Globally ignore PDF, Video, and Audio assets to keep the Git footprint small.
