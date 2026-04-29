@@ -641,7 +641,16 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             )
 
             self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
-            self.assertIn("YouTube Analytics Dashboard", output_path.read_text())
+            html = output_path.read_text()
+            self.assertIn("YouTube Analytics Dashboard", html)
+            self.assertIn("dashboard-tooltip", html)
+            self.assertIn("data-tooltip", html)
+            self.assertIn('<button class="tab active" data-tab="overview">Overview</button>', html)
+            self.assertNotIn('data-tab="daily-delta"', html)
+            self.assertNotIn('data-tab="packaging"', html)
+            self.assertNotIn('data-tab="funnel"', html)
+            self.assertNotIn('data-tab="release-lab"', html)
+            self.assertNotIn('data-tab="production"', html)
             self.assertEqual(json.loads(payload_path.read_text())["totals"]["videos"], 2)
 
     def test_dashboard_warns_when_reach_reports_are_ready_but_not_hydrated(self) -> None:
@@ -701,6 +710,182 @@ class YouTubeAnalyticsTests(unittest.TestCase):
 
         self.assertTrue(payload["reporting_status"]["reach_hydration_gap"])
         self.assertEqual(payload["warnings"][0]["key"], "reporting_reach_not_hydrated")
+
+    def test_v4_dashboard_decision_cockpit_payloads(self) -> None:
+        ledger = {
+            "created_at": "2026-04-28T00:00:00+00:00",
+            "analytics_end_date": "2026-04-27",
+            "read_only": True,
+            "videos": [
+                self.video(
+                    "PACK",
+                    "AI Memory Failure in Multi-Agent Systems",
+                    "short",
+                    views=350,
+                    avg_pct=62,
+                    impressions=1000,
+                    ctr=2.1,
+                    traffic_sources=[
+                        {"window": "7d", "source_type": "RELATED_VIDEO", "views": 8}
+                    ],
+                    daily_metrics=[
+                        {
+                            "window": "7d",
+                            "day": "2026-04-25",
+                            "metrics": {
+                                "views": 10,
+                                "estimatedMinutesWatched": 4,
+                                "averageViewDuration": 20,
+                                "averageViewPercentage": 40,
+                                "likes": 0,
+                                "comments": 0,
+                                "shares": 0,
+                                "subscribersGained": 0,
+                            },
+                        },
+                        {
+                            "window": "7d",
+                            "day": "2026-04-26",
+                            "metrics": {
+                                "views": 30,
+                                "estimatedMinutesWatched": 15,
+                                "averageViewDuration": 30,
+                                "averageViewPercentage": 55,
+                                "likes": 1,
+                                "comments": 0,
+                                "shares": 0,
+                                "subscribersGained": 1,
+                            },
+                        },
+                    ],
+                    manual_observations={
+                        "related_video_clicks": 2,
+                        "card_clicks": 4,
+                        "end_screen_clicks": 1,
+                        "retention_notes": None,
+                    },
+                ),
+                self.video(
+                    "WAIT",
+                    "Useful But Underdistributed Agent Memory",
+                    "short",
+                    views=24,
+                    avg_pct=74,
+                    impressions=90,
+                    ctr=8.0,
+                ),
+            ],
+        }
+        rules = {
+            "minimum_data_age_days": 2,
+            "preferred_window": "7d",
+            "thresholds": yaml.safe_load(
+                (REPO_ROOT / "experiments" / "youtube-analytics" / "decision_rules.yaml").read_text()
+            )["thresholds"],
+        }
+        classifications = report.classify_ledger(
+            ledger,
+            rules,
+            as_of_date=date(2026, 4, 28),
+        )
+        report_summary = {
+            "report_date": "2026-04-28",
+            "created_at": "2026-04-28T00:00:00+00:00",
+            "analytics_end_date": "2026-04-27",
+            "read_only": True,
+            "summary_counts": {},
+            "top_actions": [],
+            "classifications": classifications,
+        }
+        content = {
+            "items": {
+                "PACK": {
+                    "status": "present",
+                    "specificity_hints": ["agent", "memory", "multi-agent"],
+                }
+            },
+            "status_counts": {"present": 1},
+        }
+        previous_snapshot = {
+            "generated_at": "2026-04-27T00:00:00+00:00",
+            "findings": {
+                "classifications": [
+                    {
+                        "video_id": "PACK",
+                        "horizon_metrics": {
+                            "weekly": {
+                                "metrics": {
+                                    "views_per_day": 10,
+                                    "videoThumbnailImpressionsClickRate": 3.5,
+                                    "averageViewPercentage": 58,
+                                    "subscribersGained": 0,
+                                }
+                            }
+                        },
+                        "funnel": {"known_downstream_clicks": 1},
+                        "traffic_sources": [
+                            {"window": "7d", "source_type": "RELATED_VIDEO", "views": 2}
+                        ],
+                    }
+                ]
+            },
+        }
+        registry = {
+            "source_path": "fixture.yaml",
+            "experiments": [
+                {
+                    "id": "packaging_test",
+                    "name": "Packaging Test",
+                    "type": "title_test",
+                    "status": "active",
+                    "hypothesis": "Sharper title should improve CTR.",
+                    "video_ids": ["PACK"],
+                    "start_date": "2026-04-27",
+                    "metric_target": "videoThumbnailImpressionsClickRate",
+                    "notes": "",
+                }
+            ],
+        }
+
+        payload = dashboard.build_dashboard_payload(
+            ledger,
+            report_summary,
+            reporting_jobs=None,
+            content_rubric=content,
+            experiment_registry=registry,
+            previous_snapshot=previous_snapshot,
+        )
+
+        self.assertEqual(payload["delta_summary"]["status"], "ready")
+        self.assertEqual(payload["daily_movement"]["status"], "ready")
+        self.assertEqual(payload["daily_movement"]["latest_day"], "2026-04-26")
+        self.assertEqual(
+            payload["daily_movement"]["groups"]["latest_day_views"]["items"][0]["video_id"],
+            "PACK",
+        )
+        self.assertEqual(
+            payload["delta_summary"]["groups"]["views_day_movers"]["items"][0]["video_id"],
+            "PACK",
+        )
+        self.assertEqual(payload["experiments"]["experiments"][0]["id"], "packaging_test")
+        self.assertEqual(payload["experiments"]["experiments"][0]["cohort_found"], 1)
+        self.assertEqual(
+            payload["packaging_lab"]["buckets"]["high_impression_low_ctr"]["items"][0]["video_id"],
+            "PACK",
+        )
+        self.assertEqual(payload["funnel_map"]["buckets"]["card_clicks"]["items"][0]["video_id"], "PACK")
+        self.assertEqual(payload["funnel_map"]["buckets"]["end_screen_clicks"]["items"][0]["video_id"], "PACK")
+        self.assertEqual(
+            payload["funnel_map"]["buckets"]["related_video_traffic"]["items"][0]["related_video_traffic_views"],
+            8,
+        )
+        self.assertTrue(payload["topic_clusters"]["clusters"])
+        self.assertIn("short", payload["release_time_lab"]["by_format"])
+        self.assertEqual(payload["production_queue"]["items"][0]["action"], "thumbnail_review")
+        self.assertIn("daily_delta", payload["help_text"])
+        self.assertIn("production_queue", payload["help_text"])
+        snapshot = dashboard.compact_snapshot_payload(payload)
+        self.assertEqual(snapshot["findings"]["classifications"][0]["video_id"], "PACK")
 
     def test_reporting_rows_merge_reach_and_card_fields_into_ledger(self) -> None:
         ledger = {
@@ -781,6 +966,8 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         playlists: list[dict] | None = None,
         duration_seconds: float = 300,
         thumbnail_url: str | None = "https://i.ytimg.com/vi/demo/maxresdefault.jpg",
+        traffic_sources: list[dict] | None = None,
+        manual_observations: dict | None = None,
     ) -> dict:
         metrics = {
             "views": views,
@@ -828,7 +1015,8 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                 }
             },
             "daily_metrics": daily_metrics or [],
-            "manual_observations": {
+            "traffic_sources": traffic_sources or [],
+            "manual_observations": manual_observations or {
                 "related_video_clicks": None,
                 "card_clicks": None,
                 "end_screen_clicks": None,

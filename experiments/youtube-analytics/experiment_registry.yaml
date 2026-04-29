@@ -1,0 +1,32 @@
+# Manual YouTube analytics experiment registry.
+# The dashboard reads this file only; it never mutates YouTube state.
+experiments:
+  - id: overlay_remaster_pilot
+    name: Overlay Remaster Pilot
+    type: overlay_remaster
+    status: active
+    hypothesis: Remastered Shorts with top hooks, spoken subtitles, and bottom CTA will improve retention and funnel value.
+    video_ids: []
+    start_date: "2026-04-28"
+    metric_target: averageViewPercentage
+    notes: Add remastered Short IDs after each pilot upload is verified in Studio.
+
+  - id: shorts_related_video_funnel
+    name: Shorts Related-Video Funnel
+    type: shorts_funnel_test
+    status: planned
+    hypothesis: Shorts with verified related-video targets should increase long-form related-video traffic.
+    video_ids: []
+    start_date: ""
+    metric_target: related_video_traffic_views
+    notes: Use only Shorts whose Studio related-video setting has been verified.
+
+  - id: release_time_baseline
+    name: Release-Time Baseline
+    type: release_time_test
+    status: planned
+    hypothesis: Europe/Athens morning releases will outperform overnight releases on first-week views/day.
+    video_ids: []
+    start_date: ""
+    metric_target: views_per_day
+    notes: Keep cohorts format-specific before drawing conclusions.
