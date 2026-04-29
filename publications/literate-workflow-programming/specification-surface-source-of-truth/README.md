@@ -27,15 +27,19 @@ The governing term is `specification surface`.
 
 ## Current State
 
-This leaf has been initialized, but it has not cleared successor-specific research.
+This leaf has cleared successor-specific research and has a canonical live draft anchor at [`specification-surface-source-of-truth.md`](specification-surface-source-of-truth.md).
 
-Do not start bounded drafting from this leaf yet. The next useful work is research handoff:
+The `essay_iteration` packet, bounded r1 candidate, replacement review, scorecard, and decision exist. The r1 candidate is below the north-star bar and is not promotion-ready. The current packet route is to harden the bridge evidence, then write the next same-object candidate while leaving the live draft unchanged:
 
-- strengthen the non-agent-workflow bridge
-- inspect the spec-driven development and specification-gap evidence
-- preserve the negative AGENTS.md/context-file evidence
-- sharpen the distinction between loose prose and governed specification surfaces
-- decide what successor-specific evidence must exist before a research-exit gate
+- [`research-handoff.md`](research-handoff.md)
+- [`specification-surface-source-of-truth-claim-boundary-ledger.md`](specification-surface-source-of-truth-claim-boundary-ledger.md)
+- [`specification-surface-source-of-truth-research-exit-gate-r1.md`](specification-surface-source-of-truth-research-exit-gate-r1.md)
+- [`specification-surface-source-of-truth-essay-iteration-packet-r1.json`](specification-surface-source-of-truth-essay-iteration-packet-r1.json)
+- [`specification-surface-source-of-truth-blueprint-r1.md`](specification-surface-source-of-truth-blueprint-r1.md)
+- [`specification-surface-source-of-truth-prewrite-gate-r1.md`](specification-surface-source-of-truth-prewrite-gate-r1.md)
+- [`specification-surface-source-of-truth-candidate-r1.md`](specification-surface-source-of-truth-candidate-r1.md)
+- [`specification-surface-source-of-truth-replacement-review-r1.md`](specification-surface-source-of-truth-replacement-review-r1.md)
+- [`specification-surface-source-of-truth-decision-r1.md`](specification-surface-source-of-truth-decision-r1.md)
 
 ## Evidence Spine To Recheck
 
