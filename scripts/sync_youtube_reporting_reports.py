@@ -122,6 +122,15 @@ def number(value: Any) -> float | None:
         return None
 
 
+def percent_rate(value: Any) -> float | None:
+    converted = number(value)
+    if converted is None:
+        return None
+    if 0 < converted <= 1:
+        return converted * 100
+    return converted
+
+
 def add_sum(target: dict[str, float], key: str, value: Any) -> None:
     converted = number(value)
     if converted is None:
@@ -148,6 +157,23 @@ def add_weighted_average(
     target[f"_{value_key}_weight"] = target.get(f"_{value_key}_weight", 0.0) + converted_weight
     if sum_weight_as:
         target[sum_weight_as] = target.get(sum_weight_as, 0.0) + converted_weight
+
+
+def add_weighted_percent_average(
+    target: dict[str, float],
+    value_key: str,
+    value: Any,
+    weight: Any,
+    *,
+    sum_weight_as: str | None = None,
+) -> None:
+    add_weighted_average(
+        target,
+        value_key,
+        percent_rate(value),
+        weight,
+        sum_weight_as=sum_weight_as,
+    )
 
 
 def finalize_weighted_average(
@@ -318,7 +344,7 @@ def aggregate_reporting_rows_for_video(
                 continue
             aggregate = aggregates[label][report_type_id]
             if report_type_id in {"channel_reach_basic_a1", "channel_reach_combined_a1"}:
-                add_weighted_average(
+                add_weighted_percent_average(
                     aggregate,
                     "videoThumbnailImpressionsClickRate",
                     row.get("video_thumbnail_impressions_ctr"),
@@ -328,7 +354,7 @@ def aggregate_reporting_rows_for_video(
             elif report_type_id == "channel_basic_a3":
                 add_sum(aggregate, "card_clicks", row.get("card_clicks"))
                 add_sum(aggregate, "card_impressions", row.get("card_impressions"))
-                add_weighted_average(
+                add_weighted_percent_average(
                     aggregate,
                     "card_click_rate",
                     row.get("card_click_rate"),
@@ -340,7 +366,7 @@ def aggregate_reporting_rows_for_video(
                     "card_teaser_impressions",
                     row.get("card_teaser_impressions"),
                 )
-                add_weighted_average(
+                add_weighted_percent_average(
                     aggregate,
                     "card_teaser_click_rate",
                     row.get("card_teaser_click_rate"),
@@ -357,7 +383,7 @@ def aggregate_reporting_rows_for_video(
                     "end_screen_impressions",
                     row.get("end_screen_element_impressions"),
                 )
-                add_weighted_average(
+                add_weighted_percent_average(
                     aggregate,
                     "end_screen_click_rate",
                     row.get("end_screen_element_click_rate"),

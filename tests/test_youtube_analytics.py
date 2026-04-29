@@ -458,7 +458,7 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                 "date": "20260424",
                 "video_id": "REPORTING",
                 "video_thumbnail_impressions": "1000",
-                "video_thumbnail_impressions_ctr": "2.5",
+                "video_thumbnail_impressions_ctr": "0.025",
                 "source_file": "experiments/youtube-analytics/reporting_downloads/channel_reach_basic_a1/2026-04-24.csv",
             },
             {
@@ -467,10 +467,10 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                 "video_id": "REPORTING",
                 "card_clicks": "4",
                 "card_impressions": "20",
-                "card_click_rate": "20",
+                "card_click_rate": "0.2",
                 "card_teaser_clicks": "2",
                 "card_teaser_impressions": "50",
-                "card_teaser_click_rate": "4",
+                "card_teaser_click_rate": "0.04",
                 "source_file": "experiments/youtube-analytics/reporting_downloads/channel_basic_a3/2026-04-24.csv",
             },
         ]
@@ -484,6 +484,7 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         self.assertEqual(metrics["videoThumbnailImpressionsClickRate"], 2.5)
         self.assertEqual(observations["card_clicks"], 4)
         self.assertEqual(observations["card_impressions"], 20)
+        self.assertEqual(observations["card_click_rate"], 20.0)
 
         rules = {
             "minimum_data_age_days": 2,
