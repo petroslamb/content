@@ -1,0 +1,78 @@
+{
+  "kind": "content_cockpit_next_approval",
+  "schema_version": 2,
+  "timestamp": "2026-04-28",
+  "run_id": "2026-04-28_literate-workflow-programming_required_for_pivot_clearance_chat-approval",
+  "package": "literate-workflow-programming",
+  "package_key": "literate-workflow-programming",
+  "workflow": "post_ceiling_pivot",
+  "stage": null,
+  "action": "record-approve-decision",
+  "success": true,
+  "gate_id": "required_for_pivot_clearance",
+  "status": "recorded",
+  "decision": "approve",
+  "decided_by": "user-in-chat",
+  "reason": "Approve successor leaf initialization because the reopened specification-surface candidate passed both pivot research grounding and pivot north-star viability. The approval is only for creating a successor leaf and routing it back to research, not for drafting, publishing, or treating the essay as complete.",
+  "next_action": "initialize_successor_leaf",
+  "boundary": {
+    "type": "approval decision",
+    "reason": "User-in-chat approval recorded for local successor leaf initialization.",
+    "external_side_effect": false,
+    "approval_gate": "required_for_pivot_clearance",
+    "approval_required": true,
+    "approval_status": "approve"
+  },
+  "task": {
+    "objective": "Record approve decision for the pivot-clearance approval boundary.",
+    "stop_condition": "Approval decision written to reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not treat this approval record as drafting clearance.",
+      "Do not publish or mutate external systems from this approval record."
+    ]
+  },
+  "execution": {
+    "commands": [],
+    "output_excerpt": "approve decision recorded for required_for_pivot_clearance.",
+    "output_truncated": false,
+    "state_before": {
+      "approval_recorded": false
+    },
+    "state_after": {
+      "approval_recorded": true,
+      "approval_status": "approve"
+    }
+  },
+  "evidence": {
+    "workflow_doc": "workflows/post-ceiling-pivot/README.md",
+    "status_path": "publications/literate-workflow-programming/status.yaml",
+    "related_gate_log": "reviewable-runs/logs/2026-04-28_21-53-15_literate-workflow-programming_pivot_north_star_viability_gate-check.json"
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "approval_log_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-28_literate-workflow-programming_required_for_pivot_clearance_chat-approval.json"
+      }
+    ],
+    "residual_risk": "This record captures operator approval only. Separate lifecycle and gate logs record actual package-state movement."
+  },
+  "failure_or_risk": {
+    "actual_failure": null,
+    "possible_failures": [
+      "Approval record mistaken for drafting clearance.",
+      "Approval record mistaken for lifecycle movement.",
+      "Approval record mistaken for external publication or promotion."
+    ]
+  },
+  "workflow_doc": "workflows/post-ceiling-pivot/README.md",
+  "status_path": "publications/literate-workflow-programming/status.yaml",
+  "effects": {
+    "approval_recorded": true,
+    "lifecycle_movement_approved": true,
+    "lifecycle_movement_performed": true,
+    "promotion_performed": false,
+    "external_mutation_performed": false
+  }
+}
