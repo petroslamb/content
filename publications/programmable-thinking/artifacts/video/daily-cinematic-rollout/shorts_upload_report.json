@@ -1,0 +1,125 @@
+{
+  "created_at": "2026-04-29T10:00:39.030958+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "chr4R-fSZUY",
+    "url": "https://www.youtube.com/watch?v=chr4R-fSZUY"
+  },
+  "related_longform": {
+    "id": "chr4R-fSZUY",
+    "url": "https://www.youtube.com/watch?v=chr4R-fSZUY"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=chr4R-fSZUY"
+    },
+    "secondary": null
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/portrait/02-long-prompts-should-become-an-environment_portrait.mp4",
+      "title": "Long Prompts Should Become an Environment #shorts",
+      "summary": "Recursive language models work by moving huge inputs outside the model and forcing the model to query them like an environment instead of memorizing everything at once.",
+      "publish_at": "2026-05-01T07:30:00Z",
+      "video_id": "Ej4co5IN01U",
+      "url": "https://www.youtube.com/watch?v=Ej4co5IN01U",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC44NzQ1OTI1OUFFM0NFRTc5"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "chr4R-fSZUY"
+        ]
+      },
+      "probe": {
+        "path": "publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/portrait/02-long-prompts-should-become-an-environment_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 56.833333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 56.726009
+        },
+        "format_duration": 56.833333,
+        "duration": 56.833333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Long Prompts Should Become an Environment #shorts",
+        "published_at": "2026-04-29T10:00:27Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC44NzQ1OTI1OUFFM0NFRTc5",
+        "position": 135,
+        "title": "Long Prompts Should Become an Environment #shorts"
+      }
+    },
+    {
+      "video_path": "publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/portrait/03-a-bad-filter-can-blind-the-model_portrait.mp4",
+      "title": "A Bad Filter Can Blind the Model #shorts",
+      "summary": "Once a model chooses the wrong search filter or chunk boundary, it can hide the evidence from itself and hallucinate with total confidence.",
+      "publish_at": "2026-05-02T07:30:00Z",
+      "video_id": "3QKR4423VAQ",
+      "url": "https://www.youtube.com/watch?v=3QKR4423VAQ",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CMDk1Q0MxREYyOTVEOTZF"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "chr4R-fSZUY"
+        ]
+      },
+      "probe": {
+        "path": "publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/portrait/03-a-bad-filter-can-blind-the-model_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 57.291667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 57.213991
+        },
+        "format_duration": 57.291667,
+        "duration": 57.291667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "A Bad Filter Can Blind the Model #shorts",
+        "published_at": "2026-04-29T10:00:33Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CMDk1Q0MxREYyOTVEOTZF",
+        "position": 136,
+        "title": "A Bad Filter Can Blind the Model #shorts"
+      }
+    }
+  ]
+}

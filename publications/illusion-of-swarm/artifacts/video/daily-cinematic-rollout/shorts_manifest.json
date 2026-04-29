@@ -1,5 +1,6 @@
 {
   "source_video": "publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4",
+  "source_srt": "publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt",
   "related_video_id": "q3_gPM4E8yw",
   "essay_url": "https://lambpetros.substack.com/p/the-illusion-of-the-swarm",
   "full_video_url": "https://www.youtube.com/watch?v=q3_gPM4E8yw",
@@ -36,5 +37,20 @@
       "score_total": 23,
       "score_breakdown": null
     }
-  ]
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
 }

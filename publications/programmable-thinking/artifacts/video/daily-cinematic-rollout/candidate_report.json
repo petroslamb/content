@@ -1,0 +1,197 @@
+{
+  "package": "publications/programmable-thinking",
+  "srt_file": "publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt",
+  "existing_short_count": 0,
+  "candidate_count": 8,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:03.439",
+      "end": "00:01:32.640",
+      "start_seconds": 3.439,
+      "end_seconds": 92.64,
+      "duration_seconds": 89.201,
+      "excerpt": "of data and trying to shove it all into a single rigidlysized box. For years, this is how we've handled artificial intelligence memory. We gather up massive data sets and attempt to force them directly into a neural network's rigidly fixed active memory. This chart illustrates the breaking point of that strategy. On the left, we have a standard model maxing out at a 100,000 token limit. on the right, a modern data set towering at 11 million tokens. The hardware simply lacks the RAM to bridge that deficit. When analyzing millions of financial records, complex medical histories, or endless legal documents, asking an AI to hold every single word in its head simultaneously becomes computationally impossible. Feeding massive documents directly into a neural network's context window is an architectural dead end. Researchers at MIT Seesale recognized this physical bottleneck and designed a structural workound. They built what they call a recursive language model or RLM. It relies on a central insight. Long prompts shouldn't be fed directly into the neural network at all. Instead, the text is relocated. The data is stored completely outside the model as a variable within a separate programmatic environment. To read anything, the AI must now write functional Python code to actively search, filter, and pull only the specific highlighted fragments it",
+      "suggested_slug": "data-trying-shove-all-single-rigidlysized-box-for",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        2,
+        37
+      ]
+    },
+    {
+      "start": "00:00:36.160",
+      "end": "00:02:04.799",
+      "start_seconds": 36.16,
+      "end_seconds": 124.799,
+      "duration_seconds": 88.639,
+      "excerpt": "that deficit. When analyzing millions of financial records, complex medical histories, or endless legal documents, asking an AI to hold every single word in its head simultaneously becomes computationally impossible. Feeding massive documents directly into a neural network's context window is an architectural dead end. Researchers at MIT Seesale recognized this physical bottleneck and designed a structural workound. They built what they call a recursive language model or RLM. It relies on a central insight. Long prompts shouldn't be fed directly into the neural network at all. Instead, the text is relocated. The data is stored completely outside the model as a variable within a separate programmatic environment. To read anything, the AI must now write functional Python code to actively search, filter, and pull only the specific highlighted fragments it needs from that external environment. Treating the input as an external environment allows a model with a 128,000 token limit to process millions of tokens by selectively querying only the data it needs for a specific task. Because the data lives outside its immediate memory, the model operates using outofcore processing. It autonomously writes regular expressions, specialized search queries to rapidly filter through those massive blocks of external data, discarding the noise and keeping only the relevant hits. It then takes those filtered documents and",
+      "suggested_slug": "that-deficit-when-analyzing-millions-financial-records-complex",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        15,
+        52
+      ]
+    },
+    {
+      "start": "00:01:08.080",
+      "end": "00:02:36.800",
+      "start_seconds": 68.08,
+      "end_seconds": 156.8,
+      "duration_seconds": 88.72,
+      "excerpt": "relies on a central insight. Long prompts shouldn't be fed directly into the neural network at all. Instead, the text is relocated. The data is stored completely outside the model as a variable within a separate programmatic environment. To read anything, the AI must now write functional Python code to actively search, filter, and pull only the specific highlighted fragments it needs from that external environment. Treating the input as an external environment allows a model with a 128,000 token limit to process millions of tokens by selectively querying only the data it needs for a specific task. Because the data lives outside its immediate memory, the model operates using outofcore processing. It autonomously writes regular expressions, specialized search queries to rapidly filter through those massive blocks of external data, discarding the noise and keeping only the relevant hits. It then takes those filtered documents and algorithmically slices them into smaller digestible chunks. For the most complex queries, the model spawns smaller identical copies of itself, recursive submodels tasked with verifying answers across these individual separated text chunks. This shifts the primary engineering challenge from hardware memory constraints to the reliability of the model's own orchestration logic. When a model decides how to decompose a problem, it often makes mistakes. In the original RLM setup, these fundamental",
+      "suggested_slug": "relies-central-insight-long-prompts-shouldn't-fed-directly",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        28,
+        65
+      ]
+    },
+    {
+      "start": "00:01:36.560",
+      "end": "00:03:07.040",
+      "start_seconds": 96.56,
+      "end_seconds": 187.04,
+      "duration_seconds": 90.48,
+      "excerpt": "128,000 token limit to process millions of tokens by selectively querying only the data it needs for a specific task. Because the data lives outside its immediate memory, the model operates using outofcore processing. It autonomously writes regular expressions, specialized search queries to rapidly filter through those massive blocks of external data, discarding the noise and keeping only the relevant hits. It then takes those filtered documents and algorithmically slices them into smaller digestible chunks. For the most complex queries, the model spawns smaller identical copies of itself, recursive submodels tasked with verifying answers across these individual separated text chunks. This shifts the primary engineering challenge from hardware memory constraints to the reliability of the model's own orchestration logic. When a model decides how to decompose a problem, it often makes mistakes. In the original RLM setup, these fundamental decisions are completely invisible to the human operator. The chain of failure starts quietly. The model writes a flawed search filter or it selects an arbitrary boundary to chunk a text file. The physical consequence is immediate. A critical semantic unit of data is split directly in half. Now, a recursive submodel is asked to verify an answer based on incomplete text. Because it can only see half the context, it attempts to invent a logical connection that isn't actually there, it hallucinates.",
+      "suggested_slug": "128-000-token-limit-process-millions-tokens-selectively",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        41,
+        78
+      ]
+    },
+    {
+      "start": "00:02:22.400",
+      "end": "00:03:52.480",
+      "start_seconds": 142.4,
+      "end_seconds": 232.48,
+      "duration_seconds": 90.08,
+      "excerpt": "memory constraints to the reliability of the model's own orchestration logic. When a model decides how to decompose a problem, it often makes mistakes. In the original RLM setup, these fundamental decisions are completely invisible to the human operator. The chain of failure starts quietly. The model writes a flawed search filter or it selects an arbitrary boundary to chunk a text file. The physical consequence is immediate. A critical semantic unit of data is split directly in half. Now, a recursive submodel is asked to verify an answer based on incomplete text. Because it can only see half the context, it attempts to invent a logical connection that isn't actually there, it hallucinates. The system stitches these findings together and delivers an answer that is confidently wrong, while the root error remains entirely hidden behind the clean interface of the execution environment. If an autonomous model writes a flawed filter, it permanently blinds itself to the evidence before any actual reasoning even begins. This creates a dangerous new class of failure. Prior academic frameworks recognized this opacity. Systems developed at the University of Pennsylvania attempted to log multi- aent systems, but they only tracked top level delegations, which child agent handled which task. That highle view isn't enough for RLMs. Operators need to see the microscopic execution steps, exactly what code the model wrote, and the precise reax filters it applied to the external data. The solution is to",
+      "suggested_slug": "memory-constraints-reliability-model's-own-orchestration-logic-when",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        61,
+        99
+      ]
+    },
+    {
+      "start": "00:03:02.560",
+      "end": "00:04:32.000",
+      "start_seconds": 182.56,
+      "end_seconds": 272.0,
+      "duration_seconds": 89.44,
+      "excerpt": "isn't actually there, it hallucinates. The system stitches these findings together and delivers an answer that is confidently wrong, while the root error remains entirely hidden behind the clean interface of the execution environment. If an autonomous model writes a flawed filter, it permanently blinds itself to the evidence before any actual reasoning even begins. This creates a dangerous new class of failure. Prior academic frameworks recognized this opacity. Systems developed at the University of Pennsylvania attempted to log multi- aent systems, but they only tracked top level delegations, which child agent handled which task. That highle view isn't enough for RLMs. Operators need to see the microscopic execution steps, exactly what code the model wrote, and the precise reax filters it applied to the external data. The solution is to remove the AI from its isolated container. By moving the model into a shared Jupiter workspace, we create a shared heap, a space where both the human and the AI access the exact same computational state. Within this shared environment, new trace artifacts appear directly on the result objects. These traces expose the AI's exact filtering decisions, making the previously invisible failure chain entirely legible to the user. Breaking the model's isolation and forcing it into a shared workspace ensures that every autonomous decision it makes can be reviewed and",
+      "suggested_slug": "isn't-actually-there-hallucinates-system-stitches-these-findings",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        78,
+        114
+      ]
+    },
+    {
+      "start": "00:03:26.959",
+      "end": "00:04:56.240",
+      "start_seconds": 206.959,
+      "end_seconds": 296.24,
+      "duration_seconds": 89.281,
+      "excerpt": "frameworks recognized this opacity. Systems developed at the University of Pennsylvania attempted to log multi- aent systems, but they only tracked top level delegations, which child agent handled which task. That highle view isn't enough for RLMs. Operators need to see the microscopic execution steps, exactly what code the model wrote, and the precise reax filters it applied to the external data. The solution is to remove the AI from its isolated container. By moving the model into a shared Jupiter workspace, we create a shared heap, a space where both the human and the AI access the exact same computational state. Within this shared environment, new trace artifacts appear directly on the result objects. These traces expose the AI's exact filtering decisions, making the previously invisible failure chain entirely legible to the user. Breaking the model's isolation and forcing it into a shared workspace ensures that every autonomous decision it makes can be reviewed and held accountable. When a trace reveals a mistake, the human user can step seamlessly into the automated process to surgically correct a failing variable. You simply pause the execution, rewrite the flawed regex so it catches the missing document, and resume the process directly from the point of failure. Contrast this with a traditional turnbased API structure where a single",
+      "suggested_slug": "frameworks-recognized-this-opacity-systems-developed-university-pennsylvania",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        89,
+        124
+      ]
+    },
+    {
+      "start": "00:04:00.319",
+      "end": "00:05:19.479",
+      "start_seconds": 240.319,
+      "end_seconds": 319.479,
+      "duration_seconds": 79.16,
+      "excerpt": "human and the AI access the exact same computational state. Within this shared environment, new trace artifacts appear directly on the result objects. These traces expose the AI's exact filtering decisions, making the previously invisible failure chain entirely legible to the user. Breaking the model's isolation and forcing it into a shared workspace ensures that every autonomous decision it makes can be reviewed and held accountable. When a trace reveals a mistake, the human user can step seamlessly into the automated process to surgically correct a failing variable. You simply pause the execution, rewrite the flawed regex so it catches the missing document, and resume the process directly from the point of failure. Contrast this with a traditional turnbased API structure where a single error means throwing away the entire run and spending the massive time and token costs to reprocess millions of words from scratch. As models begin to program their own thinking, oversight moves from the prompt window into the execution environment. Managing these autonomous decisions requires shared workspaces and surgical collaborative debugging.",
+      "suggested_slug": "human-access-exact-same-computational-state-within-this",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        104,
+        133
+      ]
+    }
+  ]
+}

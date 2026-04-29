@@ -1,0 +1,128 @@
+{
+  "created_at": "2026-04-29T10:02:11.792719+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "9C-N9gaJjN4",
+    "url": "https://www.youtube.com/watch?v=9C-N9gaJjN4"
+  },
+  "related_longform": {
+    "id": "9C-N9gaJjN4",
+    "url": "https://www.youtube.com/watch?v=9C-N9gaJjN4"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=9C-N9gaJjN4"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=ahAVt338E_8"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/portrait/02-moltbook-vibe-coded-the-security-hole_portrait.mp4",
+      "title": "Vibe Coding Turned Moltbook into a Security Hole #shorts",
+      "summary": "Moltbook moved fast enough to skip row-level security, exposing private identities, direct messages, and production API keys almost immediately.",
+      "publish_at": "2026-05-01T06:00:00Z",
+      "video_id": "mk10NpAfXh4",
+      "url": "https://www.youtube.com/watch?v=mk10NpAfXh4",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC43RjdBQTMwNUUwRTA1QkE3"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "9C-N9gaJjN4"
+        ]
+      },
+      "probe": {
+        "path": "publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/portrait/02-moltbook-vibe-coded-the-security-hole_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 60.458333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 60.418005
+        },
+        "format_duration": 60.458333,
+        "duration": 60.458333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Vibe Coding Turned Moltbook into a Security Hole #shorts",
+        "published_at": "2026-04-29T10:01:56Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC43RjdBQTMwNUUwRTA1QkE3",
+        "position": 137,
+        "title": "Vibe Coding Turned Moltbook into a Security Hole #shorts"
+      }
+    },
+    {
+      "video_path": "publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/portrait/03-moltbook-prompt-injection-escaped-the-cloud_portrait.mp4",
+      "title": "Prompt Injection Escaped the Cloud #shorts",
+      "summary": "Hidden instructions inside Moltbook posts could turn a central platform bug into command execution on users' local agent machines.",
+      "publish_at": "2026-05-02T06:00:00Z",
+      "video_id": "pycFeHW0R9E",
+      "url": "https://www.youtube.com/watch?v=pycFeHW0R9E",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5GN0EwRkMxQTJGMTFCNDc1"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "9C-N9gaJjN4"
+        ]
+      },
+      "probe": {
+        "path": "publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/portrait/03-moltbook-prompt-injection-escaped-the-cloud_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 49.291667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 49.202993
+        },
+        "format_duration": 49.291667,
+        "duration": 49.291667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Prompt Injection Escaped the Cloud #shorts",
+        "published_at": "2026-04-29T10:02:03Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5GN0EwRkMxQTJGMTFCNDc1",
+        "position": 138,
+        "title": "Prompt Injection Escaped the Cloud #shorts"
+      }
+    }
+  ]
+}

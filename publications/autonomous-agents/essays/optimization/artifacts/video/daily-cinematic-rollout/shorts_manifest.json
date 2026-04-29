@@ -6,21 +6,6 @@
   "full_video_url": "https://www.youtube.com/watch?v=n99g7mLWQek",
   "secondary_video_url": "https://www.youtube.com/watch?v=2Fs1iDw5I3Y",
   "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
-  "overlay": {
-    "enabled": true,
-    "source": "cinematic_srt",
-    "source_srt": "publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.srt",
-    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
-    "default_cta": "Full cinematic brief in Related Video",
-    "caption_wrap_width": 30,
-    "hook_max_words": 9,
-    "quality_check": {
-      "sample_frames_per_short": 3,
-      "require_top_hook": true,
-      "require_spoken_subtitles": true,
-      "require_bottom_cta": true
-    }
-  },
   "clips": [
     {
       "slug": "prompt-tweaks-create-drift-generators",
@@ -58,5 +43,20 @@
       "hook": "A JSON schema beats prompt whispering",
       "cta": "Full cinematic brief in Related Video"
     }
-  ]
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
 }
