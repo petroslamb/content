@@ -110,7 +110,7 @@ After upload, wait for timed captions when the downstream workflow depends on an
   --timeout 7200
 ```
 
-After Shorts upload, verify related-video linkage in YouTube Studio for each Short. Open `https://studio.youtube.com/video/<SHORT_ID>/edit`, set the right-side `Related video` card to the intended long-form or cinematic upload, save, reload the edit page, and confirm the card still shows the intended title. The Studio reload check is required because API readback can claim success while the Studio card remains `None`.
+After Shorts upload, verify related-video linkage in YouTube Studio for each Short. Open `https://studio.youtube.com/video/<SHORT_ID>/edit`, set the right-side `Related video` card to the intended long-form or cinematic upload, save, wait for the save state to fully settle before leaving the page, reload the edit page, and confirm the card still shows the intended title. The Studio reload check is required because API readback can claim success while the Studio card remains `None`.
 
 Use `--essay-url none`, `--essay-url skip`, or `--essay-url omit` when there is no canonical essay URL and the description should omit the `Original essay` line.
 
