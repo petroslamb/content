@@ -1,0 +1,165 @@
+{
+  "kind": "harness_launch_pack",
+  "schema_version": 2,
+  "timestamp": "2026-04-30_01-41-41",
+  "run_id": "2026-04-30_01-41-41_literate-workflow-programming__specification-surface-source-of-truth_essay_iteration_launch-pack",
+  "task_brief": "Advance package 'literate-workflow-programming/specification-surface-source-of-truth' through the 'essay_iteration' stage using 'workflows/essay-iteration/README.md'.",
+  "boundary": {
+    "type": "handoff",
+    "reason": "Launch pack prepares a bounded guided run; it does not execute the stage.",
+    "external_side_effect": false,
+    "approval_gate": "required_for_major_rewrite",
+    "approval_required": true,
+    "approval_status": "pending_if_stage_executes"
+  },
+  "task": {
+    "objective": "Prepare a bounded launch packet for package 'literate-workflow-programming/specification-surface-source-of-truth' stage 'essay_iteration'.",
+    "stop_condition": "Launch pack written to reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not claim the stage was executed.",
+      "Do not treat this launch pack as approval for external mutation."
+    ]
+  },
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "stage": "essay_iteration",
+  "workflow_doc": "workflows/essay-iteration/README.md",
+  "runner_mode": "hybrid",
+  "launch_mode": "scaffold_only",
+  "approval_gate": "required_for_major_rewrite",
+  "required_context": [
+    {
+      "name": "canonical live draft",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
+    },
+    {
+      "name": "leaf package README",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/literate-workflow-programming/specification-surface-source-of-truth/README.md"
+    },
+    {
+      "name": "parent umbrella README when present",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/literate-workflow-programming/README.md"
+    },
+    {
+      "name": "companion when present",
+      "status": "advisory",
+      "blocking": false
+    },
+    {
+      "name": "governing brief from config.blueprint_path or fallback blueprint",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/literate-workflow-programming/specification-surface-source-of-truth/research-handoff.md"
+    },
+    {
+      "name": "nearest review artifacts when present",
+      "status": "resolved",
+      "blocking": false,
+      "value": [
+        "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r3.md",
+        "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r3.md",
+        "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r3.md",
+        "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r2.md",
+        "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r2.md",
+        "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r2.md",
+        "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r1.md",
+        "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r1.md",
+        "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r1.md",
+        "publications/literate-workflow-programming/claim-scoring-rubric.md",
+        "publications/literate-workflow-programming/claim-scorecard.md"
+      ]
+    },
+    {
+      "name": "target evidence surface or source index",
+      "status": "resolved",
+      "blocking": false,
+      "value": "publications/literate-workflow-programming/papers/index.md"
+    }
+  ],
+  "suggested_commands": [
+    "npm run stage:resolve -- --package literate-workflow-programming/specification-surface-source-of-truth --stage essay_iteration --format json",
+    "npm run stage:run -- --package literate-workflow-programming/specification-surface-source-of-truth --stage essay_iteration --format json"
+  ],
+  "suggested_skill": null,
+  "package_context_paths": {
+    "live_draft_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+    "leaf_readme_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/README.md",
+    "parent_package_path": "publications/literate-workflow-programming",
+    "parent_package_readme_path": "publications/literate-workflow-programming/README.md",
+    "companion_path": null,
+    "governing_brief_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/research-handoff.md",
+    "nearest_blueprint_path": "publications/literate-workflow-programming/literate-workflow-programming-blueprint-r3.md",
+    "review_artifact_paths": [
+      "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r3.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r3.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r3.md",
+      "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r2.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r2.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r2.md",
+      "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r1.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r1.md",
+      "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r1.md",
+      "publications/literate-workflow-programming/claim-scoring-rubric.md",
+      "publications/literate-workflow-programming/claim-scorecard.md"
+    ],
+    "evidence_surface_path": "publications/literate-workflow-programming/papers"
+  },
+  "packet_paths": {
+    "manifest": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-essay-iteration-packet-r1.json",
+    "blueprint": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-blueprint-r1.md",
+    "prewrite_gate": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-prewrite-gate-r1.md",
+    "candidate": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md",
+    "replacement_review": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-replacement-review-r1.md",
+    "atlas_scorecard": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-atlas-scorecard-r1.md",
+    "decision": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-decision-r1.md",
+    "ceiling_report": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-ceiling-report-r1.md"
+  },
+  "expected_outputs": [
+    "essay-iteration packet manifest beside the live draft",
+    "essay-governing prewrite gate beside the live draft",
+    "bounded rewrite candidate and structured review artifacts within the packet",
+    "stop-fired donor report when a flagship object is judged capped"
+  ],
+  "done_when": [
+    "a validated packet exists beside the live draft, the prewrite gate is explicit, and any stop-fired packet has a completed ceiling report before the next lifecycle handoff"
+  ],
+  "packet_templates": [
+    "workflows/essay-iteration/templates/hardened_blueprint_template.md",
+    "workflows/essay-iteration/templates/prewrite_gate_template.md",
+    "workflows/essay-iteration/templates/candidate_template.md",
+    "workflows/essay-iteration/templates/cold_replacement_review_template.md",
+    "workflows/essay-iteration/templates/atlas_live_draft_scorecard_template.md",
+    "workflows/essay-iteration/templates/promotion_decision_template.md",
+    "workflows/essay-iteration/templates/ceiling_report_template.md"
+  ],
+  "validator_commands": [
+    "npm run check:essay-prewrite -- --package literate-workflow-programming/specification-surface-source-of-truth",
+    "npm run check:essay-iteration -- --package literate-workflow-programming/specification-surface-source-of-truth"
+  ],
+  "judgment_policy": "draft_only",
+  "prohibited_moves": [
+    "Do not overwrite the current live draft before a replacement verdict exists.",
+    "Do not archive adjacent leaves before the promotion decision is explicit.",
+    "Do not mark the stage done from a weak-model run without human review.",
+    "Do not claim Publication Power 9 or above under the draft-only policy."
+  ],
+  "blocking_issues": [
+    "Gate 'essay_prewrite' is blocked: seed_or_refresh_packet.",
+    "Gate 'replacement_north_star' is blocked: missing_packet_manifest."
+  ],
+  "verification": {
+    "checks": [
+      {
+        "name": "launch_pack_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-30_01-41-41_literate-workflow-programming__specification-surface-source-of-truth_essay_iteration_launch-pack.json"
+      }
+    ],
+    "residual_risk": "The launch pack is only an entry packet for guided work. Review the final run separately."
+  }
+}
