@@ -155,6 +155,25 @@ STUDIO_CHECK_FIELDS = {
     "thumbnail_title_observations",
     "studio_related_verified",
 }
+HELP_TEXT = {
+    "actionable_videos": "Videos whose current data crossed a recommendation threshold.",
+    "videos_with_thumbnail_impressions": "Videos with thumbnail impression rows hydrated from the YouTube Reporting API.",
+    "videos_with_ctr": "Videos with thumbnail CTR rows hydrated from the YouTube Reporting API.",
+    "known_funnel_clicks": "Known clicks into another video from related-video clicks, cards, or end screens. This excludes normal YouTube related-video traffic views.",
+    "related_video_traffic_views": "Views whose YouTube Analytics traffic source is RELATED_VIDEO.",
+    "metric_coverage": "How many videos have this metric in at least one selected Analytics/Reporting window.",
+    "package_rollups": "Repo publication package grouping inferred from local upload reports and paths, not a YouTube grouping.",
+    "playlist_rollups": "Performance for videos in the dashboard scope grouped by YouTube playlist membership.",
+    "playlist_inventory": "Full channel playlist inventory from the YouTube Data API, including playlists with no currently analyzed videos.",
+    "subscriber_traffic": "YouTube traffic source SUBSCRIBER: views from feeds on the YouTube homepage or YouTube subscription features.",
+    "release_timezone": f"Release cohorts use local publish time in {DEFAULT_RELEASE_TIMEZONE}.",
+    "srt_hook": "Transcript-derived hook speed from first spoken timestamp and first-15s word count.",
+    "srt_promise": "Transcript/title overlap: how much the transcript appears to pay off the title promise.",
+    "srt_specificity": "Transcript specificity based on concrete mechanism terms, numbers, and acronyms.",
+    "srt_density": "Approximate claim/sentence density per minute from local SRT cues.",
+    "srt_payoff": "Whether the closing transcript contains a detectable CTA/payoff phrase.",
+    "srt_coverage": "Local SRT match status, file confidence, or missing/malformed reason.",
+}
 LENGTH_BANDS = {
     "short": {"target_min": 25, "target_max": 45, "acceptable_max": 60, "label": "25-45s target"},
     "cinematic": {"target_min": 180, "target_max": 360, "acceptable_max": 480, "label": "3-6m target"},
@@ -446,25 +465,45 @@ def summarize_windows(videos: list[dict[str, Any]]) -> dict[str, dict[str, int]]
     return coverage
 
 
-def summarize_metric_availability(videos: list[dict[str, Any]]) -> dict[str, int]:
+def summarize_metric_availability(videos: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     counts: Counter[str] = Counter()
     for video in videos:
-        for window in (video.get("analytics_windows") or {}).values():
-            metrics = window.get("metrics") or {}
-            for metric_name in CORE_METRICS:
-                if number(metrics.get(metric_name)) is not None:
-                    counts[metric_name] += 1
-    return {metric_name: counts.get(metric_name, 0) for metric_name in CORE_METRICS}
+        observations = video.get("manual_observations") or {}
+        for metric_name in CORE_METRICS:
+            fallback = None
+            if metric_name == "videoThumbnailImpressions":
+                fallback = observations.get("video_thumbnail_impressions")
+            elif metric_name == "videoThumbnailImpressionsClickRate":
+                fallback = observations.get("video_thumbnail_ctr")
+            if selected_metric(video, metric_name) is not None or number(fallback) is not None:
+                counts[metric_name] += 1
+    total = len(videos)
+    return {
+        metric_name: {
+            "count": counts.get(metric_name, 0),
+            "total": total,
+            "percent": counts.get(metric_name, 0) / total * 100 if total else None,
+        }
+        for metric_name in CORE_METRICS
+    }
 
 
-def summarize_manual_availability(videos: list[dict[str, Any]]) -> dict[str, int]:
+def summarize_manual_availability(videos: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     counts: Counter[str] = Counter()
     for video in videos:
         observations = video.get("manual_observations") or {}
         for field in MANUAL_FIELDS:
             if observations.get(field) is not None:
                 counts[field] += 1
-    return {field: counts.get(field, 0) for field in MANUAL_FIELDS}
+    total = len(videos)
+    return {
+        field: {
+            "count": counts.get(field, 0),
+            "total": total,
+            "percent": counts.get(field, 0) / total * 100 if total else None,
+        }
+        for field in MANUAL_FIELDS
+    }
 
 
 def summarize_traffic(videos: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -577,6 +616,7 @@ def compact_classification(
         "url": classification.get("url"),
         "format": classification.get("format") or "unknown",
         "format_source": source_video.get("format_source") or "unknown",
+        "discovery_sources": source_video.get("discovery_sources") or [],
         "package": classification.get("package") or "unknown",
         "playlists": playlists,
         "primary_playlist": playlists[0] if playlists else None,
@@ -898,8 +938,15 @@ def build_funnel_rollups(findings: dict[str, Any]) -> dict[str, Any]:
         "total_card_clicks": 0.0,
         "total_end_screen_clicks": 0.0,
         "known_downstream_clicks": 0.0,
+        "related_video_traffic_views": 0.0,
     }
     for item in findings.get("classifications") or []:
+        related_traffic_views = sum(
+            number(row.get("views")) or 0
+            for row in item.get("traffic_sources") or []
+            if row.get("window") == "7d" and row.get("source_type") == "RELATED_VIDEO"
+        )
+        totals["related_video_traffic_views"] += related_traffic_views
         related = item.get("related_video") or {}
         if not related:
             continue
@@ -1040,10 +1087,24 @@ def build_rubric_item(
     content_status = content_item.get("status") or "missing"
     if content_status != "present":
         content_axis = axis_status("Content Quality", "gap", "No matched local SRT analysis yet.")
+        hook_axis = axis_status("Hook Speed", "gap", "No local transcript available for hook timing.")
+        promise_axis = axis_status("Promise Match", "gap", "No transcript/title overlap available.")
+        specificity_axis = axis_status("Specificity", "gap", "No transcript specificity signal available.")
+        density_axis = axis_status("Claim Density", "gap", "No transcript density signal available.")
+        payoff_axis = axis_status("Payoff/CTA", "gap", "No closing transcript available.")
+        transcript_axis = axis_status(
+            "Transcript Coverage",
+            "gap",
+            content_item.get("reason") or content_item.get("error") or "No matched local SRT.",
+        )
     else:
         hook_delay = number(content_item.get("hook_delay_seconds")) or 0
         first_words = number(content_item.get("first_15s_word_count")) or 0
         overlap = number(content_item.get("title_transcript_overlap"))
+        specificity_count = number(content_item.get("specificity_hint_count")) or 0
+        transcript_seconds = number(content_item.get("transcript_duration_seconds")) or 0
+        specificity_per_minute = specificity_count / (transcript_seconds / 60) if transcript_seconds else None
+        density = number(content_item.get("claim_density_per_minute"))
         if hook_delay > 3 or first_words < 20:
             status = "risk"
             detail = "Hook starts slowly or has low first-15s density."
@@ -1054,6 +1115,46 @@ def build_rubric_item(
             status = "watch"
             detail = "Transcript is present; content signal is moderate."
         content_axis = axis_status("Content Quality", status, detail)
+        if hook_delay <= 1.5 and first_words >= 20:
+            hook_axis = axis_status("Hook Speed", "good", f"Starts at {hook_delay:.1f}s with {first_words:.0f} words in 15s.")
+        elif hook_delay > 3 or first_words < 15:
+            hook_axis = axis_status("Hook Speed", "risk", f"Starts at {hook_delay:.1f}s with only {first_words:.0f} words in 15s.")
+        else:
+            hook_axis = axis_status("Hook Speed", "watch", f"Starts at {hook_delay:.1f}s with {first_words:.0f} words in 15s.")
+        if overlap is None:
+            promise_axis = axis_status("Promise Match", "gap", "Title overlap could not be computed.")
+        elif overlap >= 0.45:
+            promise_axis = axis_status("Promise Match", "good", f"{overlap * 100:.0f}% of title terms appear in the transcript.")
+        elif overlap < 0.2:
+            promise_axis = axis_status("Promise Match", "risk", f"Only {overlap * 100:.0f}% title/transcript overlap.")
+        else:
+            promise_axis = axis_status("Promise Match", "watch", f"{overlap * 100:.0f}% title/transcript overlap.")
+        if specificity_per_minute is None:
+            specificity_axis = axis_status("Specificity", "gap", "Specificity rate unavailable.")
+        elif specificity_per_minute >= 3:
+            specificity_axis = axis_status("Specificity", "good", f"{specificity_per_minute:.1f} specificity hints/min.")
+        elif specificity_per_minute < 1:
+            specificity_axis = axis_status("Specificity", "risk", f"{specificity_per_minute:.1f} specificity hints/min.")
+        else:
+            specificity_axis = axis_status("Specificity", "watch", f"{specificity_per_minute:.1f} specificity hints/min.")
+        if density is None:
+            density_axis = axis_status("Claim Density", "gap", "Claim density unavailable.")
+        elif 5 <= density <= 16:
+            density_axis = axis_status("Claim Density", "good", f"{density:.1f} claims/minute.")
+        elif density < 3:
+            density_axis = axis_status("Claim Density", "risk", f"{density:.1f} claims/minute.")
+        else:
+            density_axis = axis_status("Claim Density", "watch", f"{density:.1f} claims/minute.")
+        payoff_axis = axis_status(
+            "Payoff/CTA",
+            "good" if content_item.get("closing_cta_presence") else "watch",
+            "Closing CTA detected." if content_item.get("closing_cta_presence") else "No closing CTA detected in local SRT.",
+        )
+        transcript_axis = axis_status(
+            "Transcript Coverage",
+            "good" if content_item.get("match_confidence") in {"high", "medium"} else "watch",
+            f"{content_item.get('match_confidence', 'unknown')} match: {content_item.get('srt_path', '-')}",
+        )
 
     downstream_clicks = number(funnel.get("known_downstream_clicks")) or 0
     if not item.get("related_video"):
@@ -1083,6 +1184,12 @@ def build_rubric_item(
         ),
         "thumbnail_packaging": packaging,
         "content_quality": content_axis,
+        "hook_speed": hook_axis,
+        "promise_match": promise_axis,
+        "specificity": specificity_axis,
+        "claim_density": density_axis,
+        "payoff_cta": payoff_axis,
+        "transcript_coverage": transcript_axis,
         "funnel_value": axis_status("Funnel Value", funnel_status, funnel_detail),
         "production_leverage": axis_status(
             "Production Leverage",
@@ -1100,6 +1207,9 @@ def build_rubric_item(
         why.append(f"Duration {item.get('duration_label')} is outside the {length.get('target')} band.")
     if content_axis["status"] == "risk":
         why.append(content_axis["detail"])
+    for content_risk_axis in [hook_axis, promise_axis, specificity_axis, density_axis]:
+        if content_risk_axis["status"] == "risk" and content_risk_axis["detail"] not in why:
+            why.append(content_risk_axis["detail"])
     if not why:
         why.append((item.get("reasons") or ["No single risk dominates; keep monitoring the combined signal."])[0])
 
@@ -1109,6 +1219,7 @@ def build_rubric_item(
         "url": item.get("url"),
         "format": item.get("format"),
         "package": item.get("package"),
+        "discovery_sources": item.get("discovery_sources") or [],
         "primary_category": item.get("primary_category"),
         "categories": item.get("categories") or [],
         "thumbnail_url": item.get("thumbnail_url"),
@@ -1216,6 +1327,63 @@ def build_length_rollups(findings: dict[str, Any], *, horizon: str = "weekly") -
     return sorted(rollups.values(), key=lambda row: (row["views"], row["count"]), reverse=True)
 
 
+def build_playlist_inventory(
+    ledger: dict[str, Any],
+    findings: dict[str, Any],
+    *,
+    horizon: str = "weekly",
+) -> list[dict[str, Any]]:
+    stats: dict[str, dict[str, Any]] = {}
+    for item in findings.get("classifications") or []:
+        metrics = item_metrics_for_horizon(item, horizon)
+        for playlist in item.get("playlists") or []:
+            playlist_id = playlist.get("id")
+            if not playlist_id:
+                continue
+            row = stats.setdefault(
+                playlist_id,
+                {
+                    "in_scope_video_count": 0,
+                    "action_items": 0,
+                    "total_views": 0.0,
+                },
+            )
+            row["in_scope_video_count"] += 1
+            row["total_views"] += number(metrics.get("views")) or 0
+            if any(category != "ignore" for category in item.get("categories") or []):
+                row["action_items"] += 1
+
+    inventory = []
+    for playlist in ledger.get("channel_playlists") or []:
+        playlist_id = playlist.get("id")
+        stat = stats.get(playlist_id, {})
+        item_count = number(playlist.get("item_count"))
+        in_scope = stat.get("in_scope_video_count", 0)
+        inventory.append(
+            {
+                "playlist_id": playlist_id,
+                "playlist": playlist.get("title") or playlist_id or "Untitled playlist",
+                "url": playlist.get("url"),
+                "privacy_status": playlist.get("privacy_status"),
+                "item_count": item_count,
+                "observed_item_count": playlist.get("observed_item_count"),
+                "in_scope_video_count": in_scope,
+                "missing_from_scope_count": max(item_count - in_scope, 0) if item_count is not None else None,
+                "action_items": stat.get("action_items", 0),
+                "total_views": stat.get("total_views", 0.0),
+            }
+        )
+    return sorted(
+        inventory,
+        key=lambda row: (
+            row.get("item_count") or 0,
+            row.get("in_scope_video_count") or 0,
+            row.get("playlist") or "",
+        ),
+        reverse=True,
+    )
+
+
 def build_data_gap_groups(findings: dict[str, Any]) -> dict[str, dict[str, Any]]:
     missing_counts = {
         row["name"]: row["count"]
@@ -1264,6 +1432,10 @@ def build_dashboard_payload(
     action_lanes = build_action_lanes(findings)
     package_rollups_by_horizon = build_package_rollups_by_horizon(findings)
     playlist_rollups_by_horizon = build_playlist_rollups_by_horizon(findings)
+    playlist_inventory_by_horizon = {
+        horizon: build_playlist_inventory(ledger, findings, horizon=horizon)
+        for horizon in HORIZONS
+    }
     funnel_rollups = build_funnel_rollups(findings)
     horizon_summaries = build_horizon_summaries(findings)
     traffic_sources_by_horizon = summarize_traffic_by_horizon(videos)
@@ -1310,6 +1482,15 @@ def build_dashboard_payload(
         if str(job.get("report_type_id") or "").startswith("channel_reach")
     ]
     reach_ready = any((job.get("available_report_count") or 0) > 0 for job in reach_jobs)
+    reach_hydration_gap = reach_ready and reach_impression_videos == 0
+    warnings = []
+    if reach_hydration_gap:
+        warnings.append(
+            {
+                "key": "reporting_reach_not_hydrated",
+                "message": "Reach reports are available, but no videos have thumbnail impressions/CTR hydrated into the ledger.",
+            }
+        )
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -1320,6 +1501,7 @@ def build_dashboard_payload(
             "read_only": ledger.get("read_only", True),
             "query_notes": ledger.get("query_notes") or [],
             "reporting_api_sync": ledger.get("reporting_api_sync") or {},
+            "source": ledger.get("source") or {},
         },
         "report": {
             "report_date": report_summary.get("report_date"),
@@ -1357,7 +1539,14 @@ def build_dashboard_payload(
         "reporting_jobs": reporting_job_rows,
         "reporting_status": {
             "reach_ready": reach_ready,
-            "reach_status_text": "Reach reports ready" if reach_ready else "CTR and impressions pending",
+            "reach_hydration_gap": reach_hydration_gap,
+            "reach_status_text": (
+                "Reach reports need merge"
+                if reach_hydration_gap
+                else "Reach reports ready"
+                if reach_ready
+                else "CTR and impressions pending"
+            ),
             "latest_reach_report_end_time": next(
                 (
                     job.get("latest_report_end_time")
@@ -1367,6 +1556,8 @@ def build_dashboard_payload(
                 None,
             ),
         },
+        "warnings": warnings,
+        "help_text": HELP_TEXT,
         "readable_field_labels": READABLE_FIELD_LABELS,
         "horizons": HORIZONS,
         "horizon_summaries": horizon_summaries,
@@ -1376,11 +1567,14 @@ def build_dashboard_payload(
         "package_rollups_by_horizon": package_rollups_by_horizon,
         "playlist_rollups": playlist_rollups_by_horizon["weekly"],
         "playlist_rollups_by_horizon": playlist_rollups_by_horizon,
+        "playlist_inventory": playlist_inventory_by_horizon["weekly"],
+        "playlist_inventory_by_horizon": playlist_inventory_by_horizon,
         "funnel_rollups": funnel_rollups,
         "release_rollups_by_horizon": release_rollups_by_horizon,
         "length_rollups_by_horizon": length_rollups_by_horizon,
         "sort_defaults": {
-            "videos": {"key": "score", "direction": "desc"},
+            "videos": {"key": "useful", "direction": "desc"},
+            "rubric": {"key": "useful", "direction": "desc"},
             "packages": {"key": "action_items", "direction": "desc"},
         },
         "data_gap_groups": build_data_gap_groups(findings),
@@ -1791,6 +1985,19 @@ DASHBOARD_HTML = """<!doctype html>
     .axis.watch, .axis.neutral { background: #f9faf8; }
     .axis-title { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
     .why-list { margin: 8px 0 0 18px; padding: 0; }
+    .help {
+      border-bottom: 1px dotted currentColor;
+      cursor: help;
+      text-decoration: none;
+    }
+    .warning {
+      border: 1px solid rgba(182, 93, 0, 0.3);
+      border-left: 4px solid var(--orange);
+      background: #fff8ee;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+    }
 
     @media (max-width: 1100px) {
       .grid.stats { grid-template-columns: repeat(3, minmax(140px, 1fr)); }
@@ -1860,6 +2067,7 @@ DASHBOARD_HTML = """<!doctype html>
     let currentHorizon = ((data.ui_defaults || {}).default_horizon || "weekly");
     let showEmptyBuckets = Boolean((data.ui_defaults || {}).show_empty_buckets);
     let videoSort = { ...((data.sort_defaults || {}).videos || { key: "score", direction: "desc" }) };
+    let rubricSort = { ...((data.sort_defaults || {}).rubric || { key: "useful", direction: "desc" }) };
 
     function escapeHtml(value) {
       return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -1885,6 +2093,22 @@ DASHBOARD_HTML = """<!doctype html>
       return (data.readable_field_labels || {})[field] || field;
     }
 
+    function helpText(key) {
+      return (data.help_text || {})[key] || "";
+    }
+
+    function withHelp(label, key) {
+      const text = helpText(key);
+      if (!text) return escapeHtml(label);
+      return `<span class="help" title="${escapeHtml(text)}">${escapeHtml(label)}</span>`;
+    }
+
+    function coverageText(row) {
+      if (typeof row === "number") return fmtNumber(row);
+      if (!row) return "-";
+      return `${fmtNumber(row.count)} / ${fmtNumber(row.total)} (${fmtPercent(row.percent)})`;
+    }
+
     function linkFor(item) {
       const title = escapeHtml(item.title || item.video_id || "Untitled");
       if (!item.url) return title;
@@ -1900,8 +2124,9 @@ DASHBOARD_HTML = """<!doctype html>
       return `<span class="badge ${escapeHtml(category)}">${escapeHtml(categoryLabels[category] || category)}</span>`;
     }
 
-    function stat(label, value) {
-      return `<div class="card"><span class="stat-value">${escapeHtml(value)}</span><span class="stat-label">${escapeHtml(label)}</span></div>`;
+    function stat(label, value, helpKey = "") {
+      const text = helpText(helpKey);
+      return `<div class="card" ${text ? `title="${escapeHtml(text)}"` : ""}><span class="stat-value">${escapeHtml(value)}</span><span class="stat-label">${withHelp(label, helpKey)}</span></div>`;
     }
 
     function horizonMeta() {
@@ -1954,6 +2179,7 @@ DASHBOARD_HTML = """<!doctype html>
     function barList(rows, options = {}) {
       const labelKey = options.labelKey || "name";
       const valueKey = options.valueKey || "count";
+      const displayKey = options.displayKey || valueKey;
       const color = options.color || "blue";
       const max = Math.max(...rows.map((row) => Number(row[valueKey]) || 0), 1);
       return `<div class="bar-list">${
@@ -1964,7 +2190,7 @@ DASHBOARD_HTML = """<!doctype html>
             <div class="bar-row">
               <div title="${escapeHtml(row[labelKey])}">${escapeHtml(row[labelKey])}</div>
               <div class="bar-track"><div class="bar-fill ${escapeHtml(color)}" style="--bar-width: ${width}%"></div></div>
-              <div>${fmtNumber(value, options.digits || 0)}</div>
+              <div>${row[displayKey] !== undefined && displayKey !== valueKey ? escapeHtml(row[displayKey]) : fmtNumber(value, options.digits || 0)}</div>
             </div>
           `;
         }).join("")
@@ -1997,6 +2223,12 @@ DASHBOARD_HTML = """<!doctype html>
     function strongestAction() {
       const doNow = ((data.action_lanes || {}).do_now || {}).items || [];
       return doNow[0] || (data.findings.action_items || [])[0] || null;
+    }
+
+    function warningsHtml() {
+      const warnings = data.warnings || [];
+      if (!warnings.length) return "";
+      return warnings.map((warning) => `<div class="warning">${escapeHtml(warning.message || warning.key)}</div>`).join("");
     }
 
     function renderMeta() {
@@ -2033,7 +2265,7 @@ DASHBOARD_HTML = """<!doctype html>
               <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
               <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
               <span class="metric-chip">${fmtPercent(metrics.videoThumbnailImpressionsClickRate)} CTR</span>
-              <span class="metric-chip">${fmtNumber((item.funnel || {}).known_downstream_clicks)} downstream clicks</span>
+              <span class="metric-chip" title="${escapeHtml(helpText("known_funnel_clicks"))}">${fmtNumber((item.funnel || {}).known_downstream_clicks)} known funnel clicks</span>
             </div>
           </div>
           <div>${(item.categories || [category]).map(badge).join(" ")}</div>
@@ -2064,6 +2296,7 @@ DASHBOARD_HTML = """<!doctype html>
       }).join("");
 
       document.getElementById("action-board").innerHTML = `
+        ${warningsHtml()}
         <div class="card" style="margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
             <div>
@@ -2114,7 +2347,7 @@ DASHBOARD_HTML = """<!doctype html>
     function renderOverview() {
       const totals = data.totals;
       const summary = (data.horizon_summaries || {})[currentHorizon] || {};
-      const metricRows = Object.entries(data.coverage.metrics).map(([name, count]) => ({ name: labelFor(name), count }));
+      const metricRows = Object.entries(data.coverage.metrics).map(([name, row]) => ({ name: labelFor(name), count: row.count || 0, detail: coverageText(row) }));
       const decisionRows = decisionOrder.map((category) => ({ name: categoryLabels[category] || category, count: (data.findings.summary_counts || {})[category] || 0 }));
       const packageRows = ((data.package_rollups_by_horizon || {})[currentHorizon] || data.package_rollups || []).slice(0, 10).map((row) => ({
         package: row.package,
@@ -2147,9 +2380,19 @@ DASHBOARD_HTML = """<!doctype html>
           <td>${fmtPercent(row.average_view_percentage)}</td>
         </tr>
       `);
+      const inventoryRows = (((data.playlist_inventory_by_horizon || {})[currentHorizon] || data.playlist_inventory || []).slice(0, 20)).map((row) => `
+        <tr>
+          <td>${row.url ? `<a href="${escapeHtml(row.url)}" target="_blank" rel="noreferrer">${escapeHtml(row.playlist)}</a>` : escapeHtml(row.playlist)}</td>
+          <td>${fmtNumber(row.item_count)}</td>
+          <td>${fmtNumber(row.in_scope_video_count)}</td>
+          <td>${fmtNumber(row.missing_from_scope_count)}</td>
+          <td>${escapeHtml(row.privacy_status || "-")}</td>
+        </tr>
+      `);
       const sync = data.ledger.reporting_api_sync || {};
       const traffic = ((data.distributions.traffic_sources_by_horizon || {})[currentHorizon] || {});
       document.getElementById("overview").innerHTML = `
+        ${warningsHtml()}
         <div class="card" style="margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
             <div>
@@ -2160,13 +2403,13 @@ DASHBOARD_HTML = """<!doctype html>
           </div>
         </div>
         <div class="grid stats">
-          ${stat("Videos", fmtNumber(totals.videos))}
+          ${stat("Videos", fmtNumber(totals.videos), "metric_coverage")}
           ${stat(`${horizonMeta().label} Views`, fmtNumber(summary.total_views))}
           ${stat("Watch Minutes", fmtNumber(summary.total_watch_time_minutes))}
           ${stat("Avg Viewed", fmtPercent(summary.average_view_percentage))}
-          ${stat("Videos With Data", fmtNumber(summary.videos_with_metrics))}
-          ${stat("Videos In Playlists", fmtNumber(totals.playlist_videos))}
-          ${stat("Reach Impressions Ready", fmtNumber(totals.reach_impression_videos))}
+          ${stat("Videos With Data", fmtNumber(summary.videos_with_metrics), "metric_coverage")}
+          ${stat("Videos In Playlists", fmtNumber(totals.playlist_videos), "playlist_rollups")}
+          ${stat("Videos With Thumbnail Impressions", fmtNumber(totals.reach_impression_videos), "videos_with_thumbnail_impressions")}
         </div>
         <div class="grid three">
           <div class="card"><h2>Status</h2>
@@ -2175,25 +2418,31 @@ DASHBOARD_HTML = """<!doctype html>
             <p class="muted">Reporting sync last merged ${escapeHtml(sync.merged_at || "-")} from ${fmtNumber(sync.source_file_count)} files.</p>
           </div>
           <div class="card"><h2>Formats</h2>${barList(data.distributions.formats || [], { color: "blue" })}</div>
-          <div class="card"><h2>Playlists</h2>${barList(data.distributions.top_playlists || [], { color: "teal" })}</div>
+          <div class="card"><h2>${withHelp("Playlists In Scope", "playlist_rollups")}</h2>${barList(data.distributions.top_playlists || [], { color: "teal" })}</div>
           <div class="card"><h2>Decision Counts</h2>${barList(decisionRows, { color: "teal" })}</div>
-          <div class="card"><h2>${escapeHtml(traffic.label || "Traffic Sources")}</h2>${traffic.note ? `<p class="muted">${escapeHtml(traffic.note)}</p>` : ""}${barList(traffic.sources || [], { labelKey: "source", valueKey: "views", color: "green" })}</div>
-          <div class="card"><h2>Metric Coverage</h2>${barList(metricRows, { color: "violet" })}</div>
+          <div class="card"><h2>${withHelp(traffic.label || "Traffic Sources", "subscriber_traffic")}</h2>${traffic.note ? `<p class="muted">${escapeHtml(traffic.note)}</p>` : ""}${barList(traffic.sources || [], { labelKey: "source", valueKey: "views", color: "green" })}</div>
+          <div class="card"><h2>${withHelp("Metric Coverage", "metric_coverage")}</h2>${barList(metricRows, { color: "violet", displayKey: "detail" })}</div>
           <div class="card"><h2>Funnel Snapshot</h2>
             <div class="metric-row">
               <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).shorts_with_related)} Shorts with related video</span>
-              <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).known_downstream_clicks)} known downstream clicks</span>
+              <span class="metric-chip" title="${escapeHtml(helpText("known_funnel_clicks"))}">${fmtNumber((data.funnel_rollups.totals || {}).known_downstream_clicks)} known funnel clicks</span>
+              <span class="metric-chip" title="${escapeHtml(helpText("related_video_traffic_views"))}">${fmtNumber((data.funnel_rollups.totals || {}).related_video_traffic_views)} related-video traffic views</span>
               <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).total_card_clicks)} card clicks</span>
             </div>
           </div>
         </div>
         <div class="card" style="margin-top: 12px;">
-          <h2>Package Rollups: ${escapeHtml(horizonMeta().label)}</h2>
-          ${simpleTable(["Package", "Action Items", "Views", "Avg Viewed"], packageTableRows)}
+          <h2>${withHelp(`Package Rollups: ${horizonMeta().label}`, "package_rollups")}</h2>
+          ${simpleTable([withHelp("Package", "package_rollups"), "Action Items", "Views", "Avg Viewed"], packageTableRows)}
         </div>
         <div class="card" style="margin-top: 12px;">
-          <h2>Playlist Rollups: ${escapeHtml(horizonMeta().label)}</h2>
-          ${simpleTable(["Playlist", "Videos", "Action Items", "Views", "Avg Viewed"], playlistTableRows)}
+          <h2>${withHelp(`Playlist Rollups For Videos In Scope: ${horizonMeta().label}`, "playlist_rollups")}</h2>
+          ${simpleTable([withHelp("Playlist", "playlist_rollups"), "Videos", "Action Items", "Views", "Avg Viewed"], playlistTableRows)}
+        </div>
+        <div class="card" style="margin-top: 12px;">
+          <h2>${withHelp("Channel Playlist Inventory", "playlist_inventory")}</h2>
+          <p class="muted">Missing from scope means the playlist has channel items that are not currently represented by an analyzed video row, or are private/deleted/unavailable to video detail lookup.</p>
+          ${simpleTable(["Playlist", "Channel Items", "Analyzed Videos", "Missing From Scope", "Privacy"], inventoryRows)}
         </div>
       `;
       bindHorizonControls();
@@ -2201,6 +2450,11 @@ DASHBOARD_HTML = """<!doctype html>
 
     function sortValue(item, key) {
       const metrics = metricFor(item);
+      if (key === "useful") {
+        const actionable = (item.categories || []).some((category) => category !== "ignore") ? 1000000000 : 0;
+        const severity = { hook_problem: 600000, remaster: 500000, retitle: 400000, scale: 300000, clip_more: 200000, funnel_winner: 200000, ignore: 0 }[item.primary_category || "ignore"] || 0;
+        return actionable + severity + (Number(metrics.views_per_day) || 0) * 1000 + (Number(metrics.views) || 0);
+      }
       if (key === "score") return Number(item.score) || 0;
       if (key === "views") return Number(metrics.views) || 0;
       if (key === "views_per_day") return Number(metrics.views_per_day) || 0;
@@ -2312,7 +2566,7 @@ DASHBOARD_HTML = """<!doctype html>
         const rows = sorted.map((item) => {
           const metrics = metricFor(item);
           return `<tr class="row-${escapeHtml(item.primary_category || "ignore")}">
-            <td><div class="video-cell">${thumbnailFor(item)}<div>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div>${sourceLinks(item)}${playlistLinks(item)}</div></div></td>
+            <td><div class="video-cell">${thumbnailFor(item)}<div>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div><div class="small muted">Discovery: ${escapeHtml((item.discovery_sources || []).join(", ") || "-")}</div>${sourceLinks(item)}${playlistLinks(item)}</div></div></td>
             <td>${(item.categories || []).map(badge).join(" ")}</td>
             <td>${escapeHtml(item.format || "-")}<div class="small muted">${escapeHtml(item.format_source || "unknown")}</div></td>
             <td>${escapeHtml(item.package || "-")}</td>
@@ -2367,9 +2621,17 @@ DASHBOARD_HTML = """<!doctype html>
     }
 
     function axisBlock(axis) {
+      const axisHelp = {
+        "Hook Speed": "srt_hook",
+        "Promise Match": "srt_promise",
+        "Specificity": "srt_specificity",
+        "Claim Density": "srt_density",
+        "Payoff/CTA": "srt_payoff",
+        "Transcript Coverage": "srt_coverage"
+      }[axis.label || ""];
       return `
-        <div class="axis ${escapeHtml(axis.status || "watch")}">
-          <div class="axis-title">${escapeHtml(axis.label || "")}</div>
+        <div class="axis ${escapeHtml(axis.status || "watch")}" ${axisHelp ? `title="${escapeHtml(helpText(axisHelp))}"` : ""}>
+          <div class="axis-title">${withHelp(axis.label || "", axisHelp)}</div>
           <div class="small muted">${escapeHtml(axis.status || "watch")}</div>
           <div>${escapeHtml(axis.detail || "")}</div>
         </div>
@@ -2382,6 +2644,12 @@ DASHBOARD_HTML = """<!doctype html>
       const lengthOptions = [...new Set(items.map((item) => ((item.length_fit || {}).bucket || "missing")))].sort();
       const contentSummary = (data.rubric || {}).content_summary || {};
       const releaseRows = (((data.release_rollups_by_horizon || {})[currentHorizon] || {}).daypart || []).map((row) => `
+        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
+      `);
+      const releaseWeekdayRows = (((data.release_rollups_by_horizon || {})[currentHorizon] || {}).weekday || []).map((row) => `
+        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
+      `);
+      const releaseHourRows = (((data.release_rollups_by_horizon || {})[currentHorizon] || {}).hour || []).slice(0, 12).map((row) => `
         <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
       `);
       const lengthRows = ((data.length_rollups_by_horizon || {})[currentHorizon] || []).map((row) => `
@@ -2406,8 +2674,12 @@ DASHBOARD_HTML = """<!doctype html>
           ${stat("Related Targets", fmtNumber(items.filter((item) => item.related_video).length))}
         </div>
         <div class="grid two" style="margin-bottom: 12px;">
-          <div class="card"><h2>Release Cohorts</h2>${simpleTable(["Daypart", "Videos", "Views", "Avg Viewed", "CTR"], releaseRows)}</div>
+          <div class="card"><h2>${withHelp("Release Cohorts By Daypart", "release_timezone")}</h2>${simpleTable(["Daypart", "Videos", "Views", "Avg Viewed", "CTR"], releaseRows)}</div>
           <div class="card"><h2>Length Fit</h2>${simpleTable(["Band", "Videos", "Views"], lengthRows)}</div>
+        </div>
+        <div class="grid two" style="margin-bottom: 12px;">
+          <div class="card"><h2>${withHelp("Release Cohorts By Weekday", "release_timezone")}</h2>${simpleTable(["Weekday", "Videos", "Views", "Avg Viewed", "CTR"], releaseWeekdayRows)}</div>
+          <div class="card"><h2>${withHelp("Release Cohorts By Hour", "release_timezone")}</h2>${simpleTable(["Hour", "Videos", "Views", "Avg Viewed", "CTR"], releaseHourRows)}</div>
         </div>
         <div class="toolbar">
           <input id="rubric-search" type="search" placeholder="Search title, package, or video ID">
@@ -2423,6 +2695,13 @@ DASHBOARD_HTML = """<!doctype html>
             <option value="">All length bands</option>
             ${lengthOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
           </select>
+          <select id="rubric-sort">
+            <option value="useful">Sort: useful first</option>
+            <option value="views_per_day">Sort: views/day</option>
+            <option value="views">Sort: views</option>
+            <option value="avg_viewed">Sort: avg viewed</option>
+            <option value="ctr">Sort: CTR</option>
+          </select>
         </div>
         <div class="quick-filters" style="margin-bottom: 12px;">
           <label class="check-chip"><input type="checkbox" data-rubric-filter="missing_thumbnail"> Missing thumbnail</label>
@@ -2437,6 +2716,7 @@ DASHBOARD_HTML = """<!doctype html>
         const category = document.getElementById("rubric-category-filter").value;
         const release = document.getElementById("rubric-release-filter").value;
         const length = document.getElementById("rubric-length-filter").value;
+        const sortKey = document.getElementById("rubric-sort").value;
         const filters = [...document.querySelectorAll("[data-rubric-filter]:checked")].map((input) => input.dataset.rubricFilter);
         const filtered = items
           .filter((item) => !category || (item.categories || []).includes(category))
@@ -2446,6 +2726,14 @@ DASHBOARD_HTML = """<!doctype html>
           .filter((item) => {
             const haystack = `${item.title || ""} ${item.package || ""} ${item.video_id || ""}`.toLowerCase();
             return !search || haystack.includes(search);
+          })
+          .sort((a, b) => {
+            const av = sortValue(a, sortKey || rubricSort.key);
+            const bv = sortValue(b, sortKey || rubricSort.key);
+            const direction = rubricSort.direction === "asc" ? 1 : -1;
+            if (av < bv) return -1 * direction;
+            if (av > bv) return 1 * direction;
+            return 0;
           });
         document.getElementById("rubric-list").innerHTML = `<div class="rubric-grid">${
           filtered.map((item) => {
@@ -2463,7 +2751,7 @@ DASHBOARD_HTML = """<!doctype html>
                 </div>
                 <div>
                   <div class="finding-title">${linkFor(item)}</div>
-                  <div class="muted">${escapeHtml(item.video_id || "")} | ${escapeHtml(item.format || "-")} | ${escapeHtml(item.package || "-")}</div>
+                  <div class="muted">${escapeHtml(item.video_id || "")} | ${escapeHtml(item.format || "-")} | ${escapeHtml(item.package || "-")} | ${escapeHtml((item.discovery_sources || []).join(", ") || "-")}</div>
                   <div class="metric-row">
                     ${(item.categories || []).map(badge).join(" ")}
                     <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
@@ -2484,7 +2772,7 @@ DASHBOARD_HTML = """<!doctype html>
           }).join("") || `<div class="empty">No rubric items match these filters.</div>`
         }</div>`;
       };
-      ["rubric-search", "rubric-category-filter", "rubric-release-filter", "rubric-length-filter"].forEach((id) => {
+      ["rubric-search", "rubric-category-filter", "rubric-release-filter", "rubric-length-filter", "rubric-sort"].forEach((id) => {
         document.getElementById(id).addEventListener("input", renderList);
       });
       document.querySelectorAll("[data-rubric-filter]").forEach((input) => {
@@ -2505,8 +2793,8 @@ DASHBOARD_HTML = """<!doctype html>
         `);
         return `<div class="card"><h2>${escapeHtml(group.label)}</h2>${simpleTable(["Field", "Missing", "Unlocked By"], rows)}</div>`;
       }).join("");
-      const manualRows = Object.entries(data.coverage.manual_fields).map(([field, count]) =>
-        `<tr><td>${escapeHtml(labelFor(field))}</td><td>${fmtNumber(count)}</td></tr>`
+      const manualRows = Object.entries(data.coverage.manual_fields).map(([field, row]) =>
+        `<tr><td>${escapeHtml(labelFor(field))}</td><td>${escapeHtml(coverageText(row))}</td></tr>`
       );
       const jobRows = data.reporting_jobs.map((job) =>
         `<tr>
@@ -2533,7 +2821,7 @@ DASHBOARD_HTML = """<!doctype html>
       document.getElementById("gaps").innerHTML = `
         <div class="grid three">${groupCards}</div>
         <div class="grid two" style="margin-top: 12px;">
-          <div class="card"><h2>Manual Field Coverage</h2>${simpleTable(["Field", "Videos"], manualRows)}</div>
+          <div class="card"><h2>${withHelp("Manual Field Coverage", "metric_coverage")}</h2>${simpleTable(["Field", "Coverage"], manualRows)}</div>
           <div class="card">
             <h2>Reporting API Sync</h2>
             <div class="metric-row">
@@ -2545,7 +2833,7 @@ DASHBOARD_HTML = """<!doctype html>
             ${queryNotes ? `<ul>${queryNotes}</ul>` : `<div class="empty">No API query errors recorded.</div>`}
           </div>
         </div>
-        <div class="card" style="margin-top: 12px;"><h2>Funnel Diagnostics</h2>${simpleTable(["Parent", "Related Shorts", "Known Clicks", "Card Clicks", "Related Clicks"], parentRows)}</div>
+        <div class="card" style="margin-top: 12px;"><h2>Funnel Diagnostics</h2>${simpleTable(["Parent", "Related Shorts", withHelp("Known Funnel Clicks", "known_funnel_clicks"), "Card Clicks", "Related Clicks"], parentRows)}</div>
         <div class="card" style="margin-top: 12px;"><h2>Reporting Jobs</h2>${simpleTable(["Key", "Name", "Available", "Downloaded", "Latest", "Purpose"], jobRows)}</div>
       `;
     }
