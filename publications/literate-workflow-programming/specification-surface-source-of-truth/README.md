@@ -29,7 +29,7 @@ The governing term is `specification surface`.
 
 This leaf has cleared successor-specific research and has a canonical live draft anchor at [`specification-surface-source-of-truth.md`](specification-surface-source-of-truth.md).
 
-The `essay_iteration` packet, bounded r1 candidate, replacement review, scorecard, and decision exist. The r1 candidate is below the north-star bar and is not promotion-ready. The current packet route is to harden the bridge evidence, then write the next same-object candidate while leaving the live draft unchanged:
+The `essay_iteration` r2 packet now exists beside the live draft. The r2 pass intook the three P0 bridge papers, hardened the blueprint, authorized the r2 candidate, and wrote a same-object bounded candidate. The r2 candidate is stronger than r1 and resolves the old `bridge-evidence-thinness` blocker in substance, but it remains under `draft_only` policy and is not promotion-ready without human approval. The live draft remains unchanged.
 
 - [`research-handoff.md`](research-handoff.md)
 - [`specification-surface-source-of-truth-claim-boundary-ledger.md`](specification-surface-source-of-truth-claim-boundary-ledger.md)
@@ -40,6 +40,13 @@ The `essay_iteration` packet, bounded r1 candidate, replacement review, scorecar
 - [`specification-surface-source-of-truth-candidate-r1.md`](specification-surface-source-of-truth-candidate-r1.md)
 - [`specification-surface-source-of-truth-replacement-review-r1.md`](specification-surface-source-of-truth-replacement-review-r1.md)
 - [`specification-surface-source-of-truth-decision-r1.md`](specification-surface-source-of-truth-decision-r1.md)
+- [`specification-surface-source-of-truth-essay-iteration-packet-r2.json`](specification-surface-source-of-truth-essay-iteration-packet-r2.json)
+- [`specification-surface-source-of-truth-blueprint-r2.md`](specification-surface-source-of-truth-blueprint-r2.md)
+- [`specification-surface-source-of-truth-prewrite-gate-r2.md`](specification-surface-source-of-truth-prewrite-gate-r2.md)
+- [`specification-surface-source-of-truth-candidate-r2.md`](specification-surface-source-of-truth-candidate-r2.md)
+- [`specification-surface-source-of-truth-replacement-review-r2.md`](specification-surface-source-of-truth-replacement-review-r2.md)
+- [`specification-surface-source-of-truth-atlas-scorecard-r2.md`](specification-surface-source-of-truth-atlas-scorecard-r2.md)
+- [`specification-surface-source-of-truth-decision-r2.md`](specification-surface-source-of-truth-decision-r2.md)
 
 ## Evidence Spine To Recheck
 

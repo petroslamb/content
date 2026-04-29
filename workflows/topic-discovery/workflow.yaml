@@ -82,6 +82,7 @@ capabilities:
 
 allowed_paths:
   read:
+    - publications/{package}
     - publications/{package}/
     - publication_strategy_and_archive/
     - workflows/topic-discovery/

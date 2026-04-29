@@ -144,6 +144,8 @@ capabilities:
 allowed_paths:
   read:
     - publications/{package}/
+    - "{evidence_path}"
+    - "{shared_evidence_path}"
     - workflows/alphaxiv-research/
     - workflows/skills/alphaxiv/
     - harness_policy.yaml

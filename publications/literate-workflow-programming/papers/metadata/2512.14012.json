@@ -1,0 +1,79 @@
+{
+  "requested_id": "2512.14012",
+  "resolved": {
+    "preferred_id": "2512.14012v1",
+    "input_id": "2512.14012",
+    "title": "Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025",
+    "versionless_id": "2512.14012",
+    "canonical_id": "2512.14012v1",
+    "version_id": "019b2a41-8fd4-76c3-831c-0f46c71b3d5d",
+    "group_id": "019b2a41-8fc3-7185-be92-e35b250a6541"
+  },
+  "title": "Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025",
+  "abstract": "The rise of AI agents is transforming how software can be built. The promise of agents is that developers might write code quicker, delegate multiple tasks to different agents, and even write a full piece of software purely out of natural language. In reality, what roles agents play in professional software development remains in question. This paper investigates how experienced developers use agents in building software, including their motivations, strategies, task suitability, and sentiments. Through field observations (N=13) and qualitative surveys (N=99), we find that while experienced developers value agents as a productivity boost, they retain their agency in software design and implementation out of insistence on fundamental software quality attributes, employing strategies for controlling agent behavior leveraging their expertise. In addition, experienced developers feel overall positive about incorporating agents into software development given their confidence in complementing the agents' limitations. Our results shed light on the value of software development best practices in effective use of agents, suggest the kinds of tasks for which agents may be suitable, and point towards future opportunities for better agentic interfaces and agentic use guidelines.",
+  "publication_date": "2025-12-16T02:15:06",
+  "authors": [
+    {
+      "id": "01985c82-da84-7c90-b548-25af989ffc51",
+      "full_name": "Ruanqianqian Huang",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "019a851b-a41c-7bfb-9682-7a7d09d7baaa",
+      "full_name": "Avery Reyna",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-ec41-734c-bdad-40277f4e040f",
+      "full_name": "Sorin Lerner",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c81-e774-77aa-bd12-50f323ffa6f1",
+      "full_name": "Haijun Xia",
+      "user_id": null,
+      "username": null
+    },
+    {
+      "id": "01985c82-e0d4-7bf4-b36a-86e1f7f14cf2",
+      "full_name": "Brian Hempel",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agentic-frameworks",
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.HC",
+    "cs.SE",
+    "human-ai-interaction",
+    "tool-use"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2512.14012v1",
+    "source_url": "https://arxiv.org/abs/2512.14012"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 12,
+    "downvotes_count": 0,
+    "total_votes": 2,
+    "public_total_votes": 12,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 12,
+      "last30Days": 28,
+      "last90Days": 76,
+      "all": 429
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

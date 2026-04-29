@@ -144,6 +144,8 @@ capabilities:
 allowed_paths:
   read:
     - publications/{package}/
+    - "{evidence_path}"
+    - "{shared_evidence_path}"
     - workflows/essay-iteration/
     - voice_consistency_guide.md
     - harness_policy.yaml

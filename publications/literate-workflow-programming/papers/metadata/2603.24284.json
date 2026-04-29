@@ -1,0 +1,51 @@
+{
+  "requested_id": "2603.24284",
+  "resolved": {
+    "preferred_id": "2603.24284v1",
+    "input_id": "2603.24284",
+    "title": "The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents",
+    "versionless_id": "2603.24284",
+    "canonical_id": "2603.24284v1",
+    "version_id": "019d286c-e64a-7387-b5aa-b26388d7ac27",
+    "group_id": "019d286c-e5f3-76d4-99ce-15ad5b36690e"
+  },
+  "title": "The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents",
+  "abstract": "When multiple LLM-based code agents independently implement parts of the same class, they must agree on shared internal representations, even when the specification leaves those choices implicit. We study this coordination problem across 51 class-generation tasks, progressively stripping specification detail from full docstrings (L0) to bare signatures (L3), and introducing opposing structural biases (lists vs. dictionaries) to stress-test integration. Three findings emerge. First, a persistent specification gap: two-agent integration accuracy drops from 58% to 25% as detail is removed, while a single-agent baseline degrades more gracefully (89% to 56%), leaving a 25--39 pp coordination gap that is consistent across two Claude models (Sonnet, Haiku) and three independent runs. Second, an AST-based conflict detector achieves 97% precision at the weakest specification level without additional LLM calls, yet a factorial recovery experiment shows that restoring the full specification alone recovers the single-agent ceiling (89%), while providing conflict reports adds no measurable benefit. Third, decomposing the gap into coordination cost (+16 pp) and information asymmetry (+11 pp) suggests that the two effects are independent and approximately additive. The gap is not merely a consequence of hidden information, but reflects the difficulty of producing compatible code without shared decisions. These results support a specification-first view of multi-agent code generation: richer specifications are both the primary coordination mechanism and the sufficient recovery instrument.",
+  "publication_date": "2026-03-25T13:18:26",
+  "authors": [
+    {
+      "id": "01985c82-0014-71c0-b2e5-8fcf17031483",
+      "full_name": "Camilo Chacón Sartori",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "Computer Science",
+    "cs.AI",
+    "cs.MA",
+    "cs.SE"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2603.24284v1",
+    "source_url": "https://arxiv.org/abs/2603.24284"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 22,
+    "downvotes_count": 0,
+    "total_votes": 1,
+    "public_total_votes": 22,
+    "visits": {
+      "last24Hours": 0,
+      "last7Days": 1,
+      "last30Days": 78,
+      "last90Days": 138,
+      "all": 138
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}

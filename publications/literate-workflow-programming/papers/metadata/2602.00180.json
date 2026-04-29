@@ -1,0 +1,59 @@
+{
+  "requested_id": "2602.00180",
+  "resolved": {
+    "preferred_id": "2602.00180v1",
+    "input_id": "2602.00180",
+    "title": "Spec-Driven Development:From Code to Contract in the Age of AI Coding Assistants",
+    "versionless_id": "2602.00180",
+    "canonical_id": "2602.00180v1",
+    "version_id": "019c21c5-a0a7-79e9-ae80-ecd8c1c71147",
+    "group_id": "019c21c5-a09b-73db-891f-99249d9c724e"
+  },
+  "title": "Spec-Driven Development:From Code to Contract in the Age of AI Coding Assistants",
+  "abstract": "The rise of AI coding assistants has reignited interest in an old idea: what if specifications-not code-were the primary artifact of software development? Spec-driven development (SDD) inverts the traditional workflow by treating specifications as the source of truth and code as a generated or verified secondary artifact. This paper provides practitioners with a comprehensive guide to SDD, covering its principles, workflow patterns, and supporting tools. We present three levels of specification rigor-spec-first, spec-anchored, and spec-as-source-with clear guidance on when each applies. Through analysis of tools ranging from Behavior-Driven Development frameworks to modern AI-assisted toolkits like GitHub Spec Kit, we demonstrate how the spec-first philosophy maps to real implementations. We present case studies from API development, enterprise systems, and embedded software, illustrating how different domains apply SDD. We conclude with a decision framework helping practitioners determine when SDD provides value and when simpler approaches suffice.",
+  "publication_date": "2026-01-30T04:45:42",
+  "authors": [
+    {
+      "id": "01985c84-4816-71ed-9fe2-28d6a2b59af7",
+      "full_name": "Deepak Babu Piskala",
+      "user_id": null,
+      "username": null
+    }
+  ],
+  "verified_authors": [],
+  "topics": [
+    "agents",
+    "Computer Science",
+    "cs.AI",
+    "cs.SE",
+    "generative-models",
+    "human-ai-interaction",
+    "ml-systems",
+    "reasoning",
+    "sequence-modeling",
+    "text-generation",
+    "tool-use",
+    "transformers"
+  ],
+  "links": {
+    "pdf_url": "https://fetcher.alphaxiv.org/v2/pdf/2602.00180v1",
+    "source_url": "https://arxiv.org/abs/2602.00180"
+  },
+  "metrics": {
+    "questions_count": 0,
+    "upvotes_count": 6,
+    "downvotes_count": 0,
+    "total_votes": 2,
+    "public_total_votes": 6,
+    "visits": {
+      "last24Hours": 7,
+      "last7Days": 21,
+      "last30Days": 72,
+      "last90Days": 152,
+      "all": 152
+    }
+  },
+  "organizations": [],
+  "implementation": null,
+  "marimo_implementation": null
+}
