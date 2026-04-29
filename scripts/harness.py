@@ -476,6 +476,28 @@ def find_preferred_matching_file(root: Path, suffixes: tuple[str, ...]) -> Path 
 
 
 def parse_research_direction(package_path: Path) -> str | None:
+    status_path = package_path / "status.yaml"
+    if status_path.exists():
+        in_config = False
+        config_indent = ""
+        for line in status_path.read_text().splitlines():
+            stripped = line.lstrip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            indent = line[: len(line) - len(stripped)]
+            if stripped == "config:":
+                in_config = True
+                config_indent = indent
+                continue
+            if in_config and not line.startswith(f"{config_indent} "):
+                in_config = False
+            if in_config and stripped.startswith("research_question:"):
+                value = stripped.split(":", 1)[1].strip()
+                if value and value not in {"null", "None", "~"}:
+                    if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
+                        value = value[1:-1]
+                    if value.strip():
+                        return value.strip()
     readme = resolve_leaf_readme(package_path)
     if not readme:
         return None
