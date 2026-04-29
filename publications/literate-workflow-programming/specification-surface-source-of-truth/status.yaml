@@ -3,9 +3,10 @@ publication: specification-surface-source-of-truth
 parent_package: literate-workflow-programming
 revision: 1
 config:
+  markdown_path: publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
   evidence_path: publications/literate-workflow-programming/papers
   shared_evidence_path: publications/literate-workflow-programming/papers
-  blueprint_path: publications/literate-workflow-programming/specification-surface-source-of-truth/research-handoff.md
+  blueprint_path: research-handoff.md
   pivot_decision_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-decision.md
   north_star_viability_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-north-star-viability.md
   research_question: How do controlled, typed, linted, validated, and trace-linked

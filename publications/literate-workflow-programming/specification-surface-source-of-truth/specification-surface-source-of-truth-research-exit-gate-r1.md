@@ -2,7 +2,7 @@
 kind: research_exit_gate
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
-governing_brief_path: "publications/literate-workflow-programming/literate-workflow-programming-blueprint-r3.md"
+governing_brief_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/research-handoff.md"
 evidence_surface_path: "publications/literate-workflow-programming/papers"
 claim_boundary_status: satisfied
 claim_boundary_paths:
@@ -18,9 +18,9 @@ follow_on_research_triggers:
 
 ## Governing Blueprint
 
-The generated launch pack resolves the governing blueprint through the shared umbrella surface, currently [`../literate-workflow-programming-blueprint-r3.md`](../literate-workflow-programming-blueprint-r3.md). That blueprint belongs to the capped donor attempt, so it is not the successor thesis by itself. For this leaf, it functions as shared prior discipline: source/runtime hierarchy, validation pressure, trace boundaries, and parked overclaims.
+The governing brief is [`research-handoff.md`](research-handoff.md), reinforced by the active pivot decision and north-star viability gate. Together they define the new object: controlled, maintained, typed, linted, validated, or trace-linked specification surfaces becoming source-of-truth artifacts in AI-native development. The handoff also supplies the kill boundary: do not claim `natural language is code`.
 
-The successor-specific brief is [`research-handoff.md`](research-handoff.md), reinforced by the active pivot decision and north-star viability gate. Together they define the new object: controlled, maintained, typed, linted, validated, or trace-linked specification surfaces becoming source-of-truth artifacts in AI-native development. The handoff also supplies the kill boundary: do not claim `natural language is code`.
+The capped donor blueprint remains useful only as shared prior discipline: source/runtime hierarchy, validation pressure, trace boundaries, and parked overclaims. It is not the successor thesis by itself.
 
 ## Evidence Surface
 
@@ -60,4 +60,4 @@ The successor leaf has enough local evidence, pivot pressure, and claim-boundary
 - Keep the forbidden claims out of the blueprint and first candidate.
 - Treat `quote-level-intake-of-nonlocal-bridge-papers` as the first follow-on research trigger if the draft needs close source work.
 - Carry the negative context-file evidence beside any AGENTS.md, README, or context-file claim.
-- Use lifecycle marking separately if the operator decides to move `status.yaml` out of `research`.
+- Keep lifecycle marking separate from packet work; `status.yaml` now marks `research` done and leaves `essay_iteration` open.
