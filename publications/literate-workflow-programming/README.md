@@ -14,8 +14,9 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Donor flagship leaf: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
 - Active overlay: `post_ceiling_pivot`
 - Current umbrella route: `pivot_cleared_for_north_star_attempt`
-- Current next action: `run_north_star_viability`
+- Current next action: `successor_leaf_research_handoff`
 - Active successor candidate: `The Specification Surface Is the New Source of Truth`
+- Active successor leaf: [`specification-surface-source-of-truth/README.md`](specification-surface-source-of-truth/README.md)
 - Previous closure record: [`no-successor-closure.md`](no-successor-closure.md)
 - Archived rejected larger candidate: `The Real System Lives In The Contract Layer`
 - Umbrella route manifest: [`status.yaml`](status.yaml)
@@ -25,6 +26,8 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 
 - **Flagship donor leaf**: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
   Uses the capped `r1 -> r3` flagship attempt and the stop-gated donor report.
+- **Successor flagship leaf**: [`specification-surface-source-of-truth/README.md`](specification-surface-source-of-truth/README.md)
+  Uses the reopened `specification surface` pivot candidate. It starts in research handoff, not drafting.
 
 ## Historical Exploratory Branch
 
@@ -53,6 +56,7 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Active pivot grounding review: [`pivot/active/literate-workflow-programming-pivot-grounding-review.md`](pivot/active/literate-workflow-programming-pivot-grounding-review.md)
 - Active pivot candidate: [`pivot/active/literate-workflow-programming-next-pivot-candidate.md`](pivot/active/literate-workflow-programming-next-pivot-candidate.md)
 - Active pivot research delta: [`pivot/active/literate-workflow-programming-candidate-research-delta.md`](pivot/active/literate-workflow-programming-candidate-research-delta.md)
+- Active pivot north-star viability gate: [`pivot/active/literate-workflow-programming-pivot-north-star-viability.md`](pivot/active/literate-workflow-programming-pivot-north-star-viability.md)
 - Active pivot decision: [`pivot/active/literate-workflow-programming-pivot-decision.md`](pivot/active/literate-workflow-programming-pivot-decision.md)
 - Archived contract-layer pivot slate: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-slate.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-slate.md)
 - Archived contract-layer pivot grounding review: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-grounding-review.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-grounding-review.md)
@@ -75,7 +79,8 @@ The current umbrella state is:
 - the flagship donor tested the largest version of the frame and hit a ceiling
 - the doctrine experiment was preserved as a historical side branch, not accepted as the pivot answer
 - the first restarted larger-successor search tested `The Real System Lives In The Contract Layer` and stopped without a cleared successor
-- the reopened search now tests whether `specification surface` is the larger public object: not loose natural-language prose, but constrained specifications that become source-of-truth control surfaces for AI-native work
+- the reopened search passed the north-star viability gate for `specification surface` as the larger public object: not loose natural-language prose, but constrained specifications that become source-of-truth control surfaces for AI-native work
+- the successor leaf has now been initialized and should re-enter research before any flagship drafting
 
 ## Working Guidance
 
