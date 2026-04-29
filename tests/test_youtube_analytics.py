@@ -398,6 +398,37 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         self.assertIn("ignore", by_id["YOUNG"]["categories"])
         self.assertNotIn("scale", by_id["YOUNG"]["categories"])
 
+    def test_tiny_shorts_thumbnail_ctr_does_not_drive_remaster(self) -> None:
+        rules = {
+            "minimum_data_age_days": 2,
+            "preferred_window": "7d",
+            "thresholds": yaml.safe_load(
+                (REPO_ROOT / "experiments" / "youtube-analytics" / "decision_rules.yaml").read_text()
+            )["thresholds"],
+        }
+        video = self.video(
+            "SHORTTINYCTR",
+            "Short With Shorts Feed Views",
+            "short",
+            views=140,
+            avg_pct=47,
+            impressions=3,
+            ctr=0,
+            source_reports=["publications/demo/artifacts/video/shorts_upload_report.json"],
+            traffic_sources=[
+                {"window": "7d", "source_type": "SHORTS", "views": 130},
+            ],
+        )
+
+        classification = report.classify_video(
+            video,
+            rules,
+            as_of_date=date(2026, 4, 28),
+        )
+
+        self.assertNotIn("remaster", classification["categories"])
+        self.assertIn("ignore", classification["categories"])
+
     def test_report_cli_writes_markdown_and_json_without_api_access(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmp = Path(tmpdir)
@@ -645,6 +676,8 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertIn("YouTube Analytics Dashboard", html)
             self.assertIn("dashboard-tooltip", html)
             self.assertIn("data-tooltip", html)
+            self.assertIn("Shorts Views", html)
+            self.assertIn("Tiny CTR sample", html)
             self.assertIn('<button class="tab active" data-tab="overview">Overview</button>', html)
             self.assertNotIn('data-tab="daily-delta"', html)
             self.assertNotIn('data-tab="packaging"', html)
@@ -774,6 +807,18 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                     impressions=90,
                     ctr=8.0,
                 ),
+                self.video(
+                    "SHORTFEED",
+                    "Shorts Feed Mismatch",
+                    "short",
+                    views=117,
+                    avg_pct=47,
+                    impressions=3,
+                    ctr=33.3,
+                    traffic_sources=[
+                        {"window": "7d", "source_type": "SHORTS", "views": 103},
+                    ],
+                ),
             ],
         }
         rules = {
@@ -872,6 +917,23 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         self.assertEqual(
             payload["packaging_lab"]["buckets"]["high_impression_low_ctr"]["items"][0]["video_id"],
             "PACK",
+        )
+        self.assertEqual(
+            payload["packaging_lab"]["buckets"]["shorts_feed_thumbnail_mismatch"]["items"][0]["video_id"],
+            "SHORTFEED",
+        )
+        shortfeed = {
+            item["video_id"]: item
+            for item in payload["findings"]["classifications"]
+        }["SHORTFEED"]
+        self.assertEqual(shortfeed["shorts_feed_views"], 103)
+        rubric_shortfeed = {
+            item["video_id"]: item
+            for item in payload["rubric"]["items"]
+        }["SHORTFEED"]
+        self.assertIn(
+            "Shorts-feed views",
+            rubric_shortfeed["axes"]["discovery"]["detail"],
         )
         self.assertEqual(payload["funnel_map"]["buckets"]["card_clicks"]["items"][0]["video_id"], "PACK")
         self.assertEqual(payload["funnel_map"]["buckets"]["end_screen_clicks"]["items"][0]["video_id"], "PACK")
