@@ -119,6 +119,8 @@ capabilities:
 allowed_paths:
   read:
     - publications/{package}/
+    - "{evidence_path}"
+    - "{shared_evidence_path}"
     - workflows/post-ceiling-pivot/
     - workflows/topic-discovery/
     - workflows/alphaxiv-research/
