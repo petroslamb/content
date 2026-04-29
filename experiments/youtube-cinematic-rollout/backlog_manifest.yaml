@@ -715,25 +715,76 @@ publications:
       video_file: publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic.mp4
       output_srt: publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic.srt
       upload_report: publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: 06d53894-7c4d-4734-8065-3facda430079
+      generation_task_started_at: '2026-04-29T07:49:36Z'
+      youtube_video_id: 9C-N9gaJjN4
+      youtube_url: https://www.youtube.com/watch?v=9C-N9gaJjN4
+      published_at: '2026-04-29T08:52:08Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-29T08:52:08Z'
         last_error: null
     shorts:
       workspace_dir: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: meta-bought-moltbook-for-political-leverage
+        title: Meta Bought Moltbook for Political Leverage
+        hook: Meta bought leverage, not software
+        cta: Full cinematic brief in Related Video
+        summary: Meta did not buy Moltbook for engineering quality. It bought a live
+          proof of the agent graph and the internal leverage to own that identity
+          layer.
+        start: '00:06:33.199'
+        end: '00:07:58.639'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 4
+        publish_at: '2026-04-30T06:00:00Z'
+      - slug: moltbook-vibe-coded-the-security-hole
+        title: Vibe Coding Turned Moltbook into a Security Hole
+        hook: Vibe coding created a live exploit path
+        cta: Full cinematic brief in Related Video
+        summary: Moltbook moved fast enough to skip row-level security, exposing private
+          identities, direct messages, and production API keys almost immediately.
+        start: '00:01:19.520'
+        end: '00:02:19.920'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        publish_at: '2026-05-01T06:00:00Z'
+      - slug: moltbook-prompt-injection-escaped-the-cloud
+        title: Prompt Injection Escaped the Cloud
+        hook: One database bug escaped the cloud
+        cta: Full cinematic brief in Related Video
+        summary: Hidden instructions inside Moltbook posts could turn a central platform
+          bug into command execution on users' local agent machines.
+        start: '00:02:31.440'
+        end: '00:03:20.640'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        publish_at: '2026-05-02T06:00:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-30T06:00:00Z'
+      last_scheduled_at: '2026-04-29T09:44:41.578035+00:00'
   programmable_thinking:
     package: programmable-thinking
     status_path: publications/programmable-thinking/status.yaml
@@ -762,22 +813,74 @@ publications:
       video_file: publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.mp4
       output_srt: publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt
       upload_report: publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic_upload_report.json
-      youtube_video_id: null
-      youtube_url: null
-      published_at: null
-      state: queued
+      generation_task_id: d385c9bc-200b-4317-9055-e492d316dcae
+      generation_task_started_at: '2026-04-29T07:49:36Z'
+      youtube_video_id: chr4R-fSZUY
+      youtube_url: https://www.youtube.com/watch?v=chr4R-fSZUY
+      published_at: '2026-04-29T08:52:08Z'
+      state: completed
       retry_state:
-        attempts: 0
-        last_attempted_at: null
+        attempts: 1
+        last_attempted_at: '2026-04-29T08:52:08Z'
         last_error: null
     shorts:
       workspace_dir: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout
       candidate_report: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/candidate_report.json
       manifest_path: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
       upload_report: publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: pending_cinematic
-      approved_clips: []
+      state: completed
+      approved_clips:
+      - slug: ai-needs-a-shared-workspace-not-just-a-prompt
+        title: AI Needs a Shared Workspace, Not Just a Prompt
+        hook: AI needs a shared workspace
+        cta: Full cinematic brief in Related Video
+        summary: Once models program their own reasoning, oversight has to move into
+          the execution environment where humans can inspect and repair the chain
+          mid-run.
+        start: '00:04:19.359'
+        end: '00:05:19.479'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 5
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 4
+        publish_at: '2026-04-30T07:30:00Z'
+      - slug: long-prompts-should-become-an-environment
+        title: Long Prompts Should Become an Environment
+        hook: Stop stuffing long prompts into memory
+        cta: Full cinematic brief in Related Video
+        summary: Recursive language models work by moving huge inputs outside the
+          model and forcing the model to query them like an environment instead of
+          memorizing everything at once.
+        start: '00:01:08.080'
+        end: '00:02:04.799'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        publish_at: '2026-05-01T07:30:00Z'
+      - slug: a-bad-filter-can-blind-the-model
+        title: A Bad Filter Can Blind the Model
+        hook: A bad filter can blind the model
+        cta: Full cinematic brief in Related Video
+        summary: Once a model chooses the wrong search filter or chunk boundary, it
+          can hide the evidence from itself and hallucinate with total confidence.
+        start: '00:02:27.280'
+        end: '00:03:24.480'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        publish_at: '2026-05-02T07:30:00Z'
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-04-30T07:30:00Z'
+      last_scheduled_at: '2026-04-29T09:44:41.578041+00:00'

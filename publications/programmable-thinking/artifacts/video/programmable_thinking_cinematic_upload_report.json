@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-04-29T08:52:13.057360+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "programmable_thinking",
+  "package": "programmable-thinking",
+  "notebook_id": "e97468b6-4d55-47e4-81f9-25624890bbe1",
+  "video_source_file": "publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.mp4",
+  "caption_output": "publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt",
+  "title": "Why LLMs Need a REPL for Their Own Thoughts | A Cinematic Research Brief",
+  "base_title": "Why LLMs Need a REPL for Their Own Thoughts",
+  "description": "Long prompts stop looking like input once you treat them as an environment the model can inspect, filter, and program against.\n\nThis cinematic brief compresses the core recursive-language-model move into one structural claim: the model gets stronger when its own thinking scaffold becomes programmable.\n\nIt should catch viewers interested in context limits, recursion, and self-orchestrating reasoning systems even if they never saw the original essay.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking\n\nFull research breakdown:\nhttps://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS45ODRDNTg0QjA4NkFBNkQy",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS45ODRDNTg0QjA4NkFBNkQy",
+      "position": 12,
+      "title": "Why LLMs Need a REPL for Their Own Thoughts | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": null,
+    "url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
+  "video": {
+    "id": "chr4R-fSZUY",
+    "url": "https://www.youtube.com/watch?v=chr4R-fSZUY",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-29T08:52:08Z"
+    }
+  }
+}

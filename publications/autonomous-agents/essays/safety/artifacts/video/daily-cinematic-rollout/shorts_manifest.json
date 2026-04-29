@@ -6,21 +6,6 @@
   "full_video_url": "https://www.youtube.com/watch?v=vCpW8dYfeEY",
   "secondary_video_url": "https://www.youtube.com/watch?v=biyIKcSp3Po",
   "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
-  "overlay": {
-    "enabled": true,
-    "source": "cinematic_srt",
-    "source_srt": "publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.srt",
-    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
-    "default_cta": "Full cinematic brief in Related Video",
-    "caption_wrap_width": 30,
-    "hook_max_words": 9,
-    "quality_check": {
-      "sample_frames_per_short": 3,
-      "require_top_hook": true,
-      "require_spoken_subtitles": true,
-      "require_bottom_cta": true
-    }
-  },
   "clips": [
     {
       "slug": "ai-safety-changes-when-models-get-hands",
@@ -58,5 +43,20 @@
       "hook": "The data can take control of the agent",
       "cta": "Full cinematic brief in Related Video"
     }
-  ]
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/autonomous-agents/essays/safety/artifacts/video/operating_agents_safety_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
 }

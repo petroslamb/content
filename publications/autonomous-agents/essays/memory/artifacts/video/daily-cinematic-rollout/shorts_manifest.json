@@ -1,5 +1,6 @@
 {
   "source_video": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4",
+  "source_srt": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt",
   "related_video_id": "J9dz9_9YPQw",
   "essay_url": "https://lambpetros.substack.com/p/operating-agents-ii-memory-needs",
   "full_video_url": "https://www.youtube.com/watch?v=J9dz9_9YPQw",
@@ -26,5 +27,20 @@
       "score_total": 22,
       "score_breakdown": null
     }
-  ]
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
 }

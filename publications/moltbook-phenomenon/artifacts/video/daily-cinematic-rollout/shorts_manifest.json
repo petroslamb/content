@@ -1,0 +1,80 @@
+{
+  "source_video": "publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic.mp4",
+  "source_srt": "publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic.srt",
+  "related_video_id": "9C-N9gaJjN4",
+  "essay_url": "https://lambpetros.substack.com/p/the-moltbook-phenomenon",
+  "full_video_url": "https://www.youtube.com/watch?v=9C-N9gaJjN4",
+  "secondary_video_url": "https://www.youtube.com/watch?v=ahAVt338E_8",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "meta-bought-moltbook-for-political-leverage",
+      "title": "Meta Bought Moltbook for Political Leverage",
+      "summary": "Meta did not buy Moltbook for engineering quality. It bought a live proof of the agent graph and the internal leverage to own that identity layer.",
+      "start": "00:06:33.199",
+      "end": "00:07:58.639",
+      "publish_at": "2026-04-30T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "hook": "Meta bought leverage, not software",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "moltbook-vibe-coded-the-security-hole",
+      "title": "Vibe Coding Turned Moltbook into a Security Hole",
+      "summary": "Moltbook moved fast enough to skip row-level security, exposing private identities, direct messages, and production API keys almost immediately.",
+      "start": "00:01:19.520",
+      "end": "00:02:19.920",
+      "publish_at": "2026-05-01T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "Vibe coding created a live exploit path",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "moltbook-prompt-injection-escaped-the-cloud",
+      "title": "Prompt Injection Escaped the Cloud",
+      "summary": "Hidden instructions inside Moltbook posts could turn a central platform bug into command execution on users' local agent machines.",
+      "start": "00:02:31.440",
+      "end": "00:03:20.640",
+      "publish_at": "2026-05-02T06:00:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "One database bug escaped the cloud",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/moltbook-phenomenon/artifacts/video/moltbook_phenomenon_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

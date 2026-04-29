@@ -1,0 +1,80 @@
+{
+  "source_video": "publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.mp4",
+  "source_srt": "publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt",
+  "related_video_id": "chr4R-fSZUY",
+  "essay_url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
+  "full_video_url": "https://www.youtube.com/watch?v=chr4R-fSZUY",
+  "secondary_video_url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "ai-needs-a-shared-workspace-not-just-a-prompt",
+      "title": "AI Needs a Shared Workspace, Not Just a Prompt",
+      "summary": "Once models program their own reasoning, oversight has to move into the execution environment where humans can inspect and repair the chain mid-run.",
+      "start": "00:04:19.359",
+      "end": "00:05:19.479",
+      "publish_at": "2026-04-30T07:30:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 5,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "hook": "AI needs a shared workspace",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "long-prompts-should-become-an-environment",
+      "title": "Long Prompts Should Become an Environment",
+      "summary": "Recursive language models work by moving huge inputs outside the model and forcing the model to query them like an environment instead of memorizing everything at once.",
+      "start": "00:01:08.080",
+      "end": "00:02:04.799",
+      "publish_at": "2026-05-01T07:30:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "Stop stuffing long prompts into memory",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "a-bad-filter-can-blind-the-model",
+      "title": "A Bad Filter Can Blind the Model",
+      "summary": "Once a model chooses the wrong search filter or chunk boundary, it can hide the evidence from itself and hallucinate with total confidence.",
+      "start": "00:02:27.280",
+      "end": "00:03:24.480",
+      "publish_at": "2026-05-02T07:30:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "A bad filter can blind the model",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}
