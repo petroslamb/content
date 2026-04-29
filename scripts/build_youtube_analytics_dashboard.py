@@ -5,17 +5,21 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_LEDGER_PATH = REPO_ROOT / "experiments" / "youtube-analytics" / "metrics_ledger.json"
 DEFAULT_WEEKLY_REPORT_DIR = REPO_ROOT / "experiments" / "youtube-analytics" / "weekly_reports"
 DEFAULT_REPORTING_JOBS_PATH = REPO_ROOT / "experiments" / "youtube-analytics" / "reporting_jobs.json"
+DEFAULT_CONTENT_RUBRIC_PATH = REPO_ROOT / "experiments" / "youtube-analytics" / "content_rubric.json"
 DEFAULT_OUTPUT_PATH = REPO_ROOT / "experiments" / "youtube-analytics" / "dashboard" / "index.html"
+DEFAULT_RELEASE_TIMEZONE = "Europe/Athens"
 
 DECISION_ORDER = [
     "scale",
@@ -151,10 +155,51 @@ STUDIO_CHECK_FIELDS = {
     "thumbnail_title_observations",
     "studio_related_verified",
 }
+LENGTH_BANDS = {
+    "short": {"target_min": 25, "target_max": 45, "acceptable_max": 60, "label": "25-45s target"},
+    "cinematic": {"target_min": 180, "target_max": 360, "acceptable_max": 480, "label": "3-6m target"},
+    "tldr": {"target_min": 300, "target_max": 600, "acceptable_max": 900, "label": "5-10m target"},
+    "podcast": {"target_min": 1200, "target_max": 5400, "acceptable_max": 7200, "label": "archive/funnel"},
+    "unknown": {"target_min": 25, "target_max": 600, "acceptable_max": 900, "label": "unknown format"},
+}
+TITLE_STOP_WORDS = {
+    "a",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "for",
+    "from",
+    "how",
+    "in",
+    "into",
+    "is",
+    "of",
+    "on",
+    "or",
+    "that",
+    "the",
+    "this",
+    "to",
+    "why",
+    "with",
+}
 
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text())
+
+
+def load_content_rubric(path: Path = DEFAULT_CONTENT_RUBRIC_PATH) -> dict[str, Any]:
+    if not path.exists():
+        return {
+            "generated_from": "local_srt",
+            "video_count": 0,
+            "status_counts": {},
+            "items": {},
+        }
+    return load_json(path)
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -169,6 +214,110 @@ def number(value: Any) -> float | None:
         return float(value)
     except (TypeError, ValueError):
         return None
+
+
+def parse_iso_datetime(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def release_timing_from_published_at(
+    value: str | None,
+    *,
+    timezone_name: str = DEFAULT_RELEASE_TIMEZONE,
+) -> dict[str, Any] | None:
+    parsed = parse_iso_datetime(value)
+    if not parsed:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    local = parsed.astimezone(ZoneInfo(timezone_name))
+    hour = local.hour
+    if 5 <= hour < 12:
+        daypart = "morning"
+    elif 12 <= hour < 17:
+        daypart = "afternoon"
+    elif 17 <= hour < 22:
+        daypart = "evening"
+    else:
+        daypart = "overnight"
+    return {
+        "published_at_utc": parsed.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "timezone": timezone_name,
+        "local_iso": local.isoformat(),
+        "weekday": local.strftime("%A"),
+        "weekday_index": local.weekday(),
+        "hour": hour,
+        "hour_label": f"{hour:02d}:00",
+        "daypart": daypart,
+    }
+
+
+def format_duration(seconds: Any) -> str:
+    value = number(seconds)
+    if value is None:
+        return "-"
+    value = int(round(value))
+    minutes, secs = divmod(value, 60)
+    hours, minutes = divmod(minutes, 60)
+    if hours:
+        return f"{hours}:{minutes:02d}:{secs:02d}"
+    return f"{minutes}:{secs:02d}"
+
+
+def length_fit(format_name: str | None, duration_seconds: Any) -> dict[str, Any]:
+    seconds = number(duration_seconds)
+    band = LENGTH_BANDS.get(format_name or "unknown", LENGTH_BANDS["unknown"])
+    if seconds is None:
+        return {
+            "bucket": "missing",
+            "label": "Duration missing",
+            "target": band["label"],
+            "severity": "gap",
+            "duration_label": "-",
+        }
+    if seconds < band["target_min"]:
+        bucket = "short"
+        label = "Shorter than target"
+        severity = "watch"
+    elif seconds <= band["target_max"]:
+        bucket = "target"
+        label = "In target band"
+        severity = "good"
+    elif seconds <= band["acceptable_max"]:
+        bucket = "acceptable_long"
+        label = "Long but acceptable"
+        severity = "watch"
+    else:
+        bucket = "too_long"
+        label = "Long for format"
+        severity = "risk"
+    if format_name == "podcast":
+        label = "Archive/funnel length"
+        severity = "neutral"
+    return {
+        "bucket": bucket,
+        "label": label,
+        "target": band["label"],
+        "severity": severity,
+        "duration_label": format_duration(seconds),
+    }
+
+
+def title_profile(title: str | None) -> dict[str, Any]:
+    words = re.findall(r"[A-Za-z0-9][A-Za-z0-9'-]*", title or "")
+    meaningful = [word.lower() for word in words if word.lower() not in TITLE_STOP_WORDS]
+    specificity = len(set(meaningful)) + len(re.findall(r"\b[A-Z]{2,}\b|\d+", title or ""))
+    return {
+        "character_count": len(title or ""),
+        "word_count": len(words),
+        "has_question": "?" in (title or "") or (words[:1] and words[0].lower() in {"why", "how", "what"}),
+        "specificity_score": specificity,
+    }
 
 
 def sorted_counter(counter: Counter[str], limit: int | None = None) -> list[dict[str, Any]]:
@@ -417,6 +566,11 @@ def compact_classification(
     click_metrics = known_clicks(observations)
     horizon_metrics = build_horizon_metrics(source_video)
     playlists = compact_playlists(source_video)
+    duration_seconds = number(source_video.get("duration_seconds"))
+    release_timing = source_video.get("release_timing") or release_timing_from_published_at(
+        classification.get("published_at") or source_video.get("published_at")
+    )
+    fit = length_fit(classification.get("format") or source_video.get("format"), duration_seconds)
     return {
         "video_id": classification.get("video_id"),
         "title": classification.get("title"),
@@ -427,7 +581,15 @@ def compact_classification(
         "playlists": playlists,
         "primary_playlist": playlists[0] if playlists else None,
         "published_at": classification.get("published_at"),
+        "release_timing": release_timing,
         "privacy_status": source_video.get("privacy_status"),
+        "duration_seconds": duration_seconds,
+        "duration_label": format_duration(duration_seconds),
+        "length_fit": fit,
+        "thumbnail_url": source_video.get("thumbnail_url"),
+        "thumbnails": source_video.get("thumbnails") or [],
+        "title_profile": title_profile(classification.get("title")),
+        "traffic_sources": source_video.get("traffic_sources") or [],
         "selected_window": classification.get("selected_window"),
         "data_age_days": classification.get("data_age_days"),
         "categories": categories,
@@ -800,6 +962,260 @@ def build_funnel_rollups(findings: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def traffic_mix_for_item(item: dict[str, Any], *, horizon_window: str = "7d") -> list[dict[str, Any]]:
+    rows = [
+        row
+        for row in item.get("traffic_sources") or []
+        if row.get("window") == horizon_window
+    ]
+    total = sum(number(row.get("views")) or 0 for row in rows)
+    compact = []
+    for row in sorted(rows, key=lambda source: number(source.get("views")) or 0, reverse=True)[:5]:
+        views = number(row.get("views")) or 0
+        compact.append(
+            {
+                "source": row.get("source_type") or "unknown",
+                "views": views,
+                "share": views / total * 100 if total else None,
+            }
+        )
+    return compact
+
+
+def axis_status(label: str, status: str, detail: str, value: Any = None) -> dict[str, Any]:
+    return {
+        "label": label,
+        "status": status,
+        "detail": detail,
+        "value": value,
+    }
+
+
+def build_rubric_item(
+    item: dict[str, Any],
+    *,
+    content_item: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    metrics = item.get("metrics") or {}
+    impressions = number(metrics.get("videoThumbnailImpressions"))
+    ctr = number(metrics.get("videoThumbnailImpressionsClickRate"))
+    views_per_day = number(metrics.get("views_per_day"))
+    avg_viewed = number(metrics.get("averageViewPercentage"))
+    avg_duration = number(metrics.get("averageViewDuration"))
+    length = item.get("length_fit") or {}
+    release_timing = item.get("release_timing") or {}
+    title = item.get("title_profile") or {}
+    funnel = item.get("funnel") or {}
+    content_item = content_item or {"status": "missing"}
+
+    if impressions is None or ctr is None:
+        discovery = axis_status("Discovery", "gap", "CTR/impression reporting is still missing.")
+    elif impressions >= 500 and ctr < 3:
+        discovery = axis_status("Discovery", "risk", "High impressions with weak CTR points to packaging.")
+    elif views_per_day is not None and views_per_day >= 20:
+        discovery = axis_status("Discovery", "good", "Views/day is showing current demand.")
+    else:
+        discovery = axis_status("Discovery", "watch", "Discovery signal is still modest.")
+
+    if avg_viewed is None:
+        retention = axis_status("Retention", "gap", "Average viewed is unavailable.")
+    elif avg_viewed < 30:
+        retention = axis_status("Retention", "risk", "Average viewed is weak for the selected window.")
+    elif avg_viewed >= 55:
+        retention = axis_status("Retention", "good", "Retention is strong enough to study or scale.")
+    else:
+        retention = axis_status("Retention", "watch", "Retention is acceptable but not a standout.")
+
+    thumbnail_status = "gap" if not item.get("thumbnail_url") else "watch"
+    if impressions is not None and ctr is not None and impressions >= 500 and ctr < 3:
+        thumbnail_status = "risk"
+    elif ctr is not None and ctr >= 5:
+        thumbnail_status = "good"
+    packaging = axis_status(
+        "Thumbnail/Packaging",
+        thumbnail_status,
+        f"{title.get('word_count', 0)} title words, {title.get('character_count', 0)} chars.",
+    )
+
+    content_status = content_item.get("status") or "missing"
+    if content_status != "present":
+        content_axis = axis_status("Content Quality", "gap", "No matched local SRT analysis yet.")
+    else:
+        hook_delay = number(content_item.get("hook_delay_seconds")) or 0
+        first_words = number(content_item.get("first_15s_word_count")) or 0
+        overlap = number(content_item.get("title_transcript_overlap"))
+        if hook_delay > 3 or first_words < 20:
+            status = "risk"
+            detail = "Hook starts slowly or has low first-15s density."
+        elif overlap is not None and overlap >= 0.4:
+            status = "good"
+            detail = "Transcript aligns with the title promise early."
+        else:
+            status = "watch"
+            detail = "Transcript is present; content signal is moderate."
+        content_axis = axis_status("Content Quality", status, detail)
+
+    downstream_clicks = number(funnel.get("known_downstream_clicks")) or 0
+    if not item.get("related_video"):
+        funnel_status = "gap"
+        funnel_detail = "No related-video target recorded."
+    elif downstream_clicks >= 3:
+        funnel_status = "good"
+        funnel_detail = "Known downstream clicks are present."
+    else:
+        funnel_status = "watch"
+        funnel_detail = "Related target exists, but downstream click evidence is low or missing."
+
+    leverage = "ignore"
+    for category in ["scale", "clip_more", "funnel_winner", "retitle", "hook_problem", "remaster"]:
+        if category in (item.get("categories") or []):
+            leverage = category
+            break
+
+    axes = {
+        "discovery": discovery,
+        "retention": retention,
+        "length_fit": axis_status("Length Fit", length.get("severity") or "gap", length.get("label") or "Duration missing"),
+        "release_timing": axis_status(
+            "Release Timing",
+            "watch",
+            f"{release_timing.get('weekday', 'Unknown')} {release_timing.get('hour_label', '-')}, {release_timing.get('daypart', 'unknown')}",
+        ),
+        "thumbnail_packaging": packaging,
+        "content_quality": content_axis,
+        "funnel_value": axis_status("Funnel Value", funnel_status, funnel_detail),
+        "production_leverage": axis_status(
+            "Production Leverage",
+            "good" if leverage in {"scale", "clip_more", "funnel_winner"} else "risk" if leverage in {"retitle", "hook_problem", "remaster"} else "watch",
+            leverage.replace("_", " ").title(),
+        ),
+    }
+
+    why = []
+    if discovery["status"] == "risk":
+        why.append(discovery["detail"])
+    if retention["status"] == "risk":
+        why.append(retention["detail"])
+    if length.get("severity") == "risk":
+        why.append(f"Duration {item.get('duration_label')} is outside the {length.get('target')} band.")
+    if content_axis["status"] == "risk":
+        why.append(content_axis["detail"])
+    if not why:
+        why.append((item.get("reasons") or ["No single risk dominates; keep monitoring the combined signal."])[0])
+
+    return {
+        "video_id": item.get("video_id"),
+        "title": item.get("title"),
+        "url": item.get("url"),
+        "format": item.get("format"),
+        "package": item.get("package"),
+        "primary_category": item.get("primary_category"),
+        "categories": item.get("categories") or [],
+        "thumbnail_url": item.get("thumbnail_url"),
+        "duration_seconds": item.get("duration_seconds"),
+        "duration_label": item.get("duration_label"),
+        "length_fit": length,
+        "release_timing": release_timing,
+        "metrics": metrics,
+        "traffic_mix": traffic_mix_for_item(item),
+        "title_profile": title,
+        "content": content_item,
+        "funnel": funnel,
+        "related_video": item.get("related_video"),
+        "score": item.get("score") or 0,
+        "axes": axes,
+        "why": why,
+        "source_report_links": item.get("source_report_links") or [],
+        "playlists": item.get("playlists") or [],
+    }
+
+
+def build_rubric(findings: dict[str, Any], content_rubric: dict[str, Any]) -> dict[str, Any]:
+    content_items = content_rubric.get("items") or {}
+    items = [
+        build_rubric_item(item, content_item=content_items.get(item.get("video_id")))
+        for item in findings.get("classifications") or []
+    ]
+    axis_counts: dict[str, Counter[str]] = defaultdict(Counter)
+    for item in items:
+        for axis_key, axis in (item.get("axes") or {}).items():
+            axis_counts[axis_key][axis.get("status") or "gap"] += 1
+    return {
+        "items": sorted(items, key=lambda item: (item.get("score") or 0), reverse=True),
+        "axis_counts": {key: dict(value) for key, value in axis_counts.items()},
+        "content_summary": content_rubric.get("status_counts") or {},
+    }
+
+
+def build_release_rollups(findings: dict[str, Any], *, horizon: str = "weekly") -> dict[str, list[dict[str, Any]]]:
+    by_weekday: dict[str, dict[str, Any]] = {}
+    by_hour: dict[str, dict[str, Any]] = {}
+    by_daypart: dict[str, dict[str, Any]] = {}
+
+    def add(row_map: dict[str, dict[str, Any]], key: str, metrics: dict[str, Any]) -> None:
+        row = row_map.setdefault(
+            key,
+            {
+                "name": key,
+                "count": 0,
+                "views": 0.0,
+                "average_view_percentage_sum": 0.0,
+                "average_view_percentage_count": 0,
+                "ctr_sum": 0.0,
+                "ctr_count": 0,
+            },
+        )
+        row["count"] += 1
+        row["views"] += number(metrics.get("views")) or 0
+        avg = number(metrics.get("averageViewPercentage"))
+        if avg is not None:
+            row["average_view_percentage_sum"] += avg
+            row["average_view_percentage_count"] += 1
+        ctr = number(metrics.get("videoThumbnailImpressionsClickRate"))
+        if ctr is not None:
+            row["ctr_sum"] += ctr
+            row["ctr_count"] += 1
+
+    for item in findings.get("classifications") or []:
+        timing = item.get("release_timing") or {}
+        metrics = item_metrics_for_horizon(item, horizon)
+        if not timing:
+            continue
+        add(by_weekday, timing.get("weekday") or "Unknown", metrics)
+        add(by_hour, timing.get("hour_label") or "Unknown", metrics)
+        add(by_daypart, timing.get("daypart") or "unknown", metrics)
+
+    def finalize(rows: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+        output = []
+        for row in rows.values():
+            avg_count = row.pop("average_view_percentage_count")
+            avg_sum = row.pop("average_view_percentage_sum")
+            ctr_count = row.pop("ctr_count")
+            ctr_sum = row.pop("ctr_sum")
+            row["average_view_percentage"] = avg_sum / avg_count if avg_count else None
+            row["ctr"] = ctr_sum / ctr_count if ctr_count else None
+            output.append(row)
+        return sorted(output, key=lambda item: (item["views"], item["count"]), reverse=True)
+
+    return {
+        "weekday": finalize(by_weekday),
+        "hour": finalize(by_hour),
+        "daypart": finalize(by_daypart),
+    }
+
+
+def build_length_rollups(findings: dict[str, Any], *, horizon: str = "weekly") -> list[dict[str, Any]]:
+    rollups: dict[str, dict[str, Any]] = {}
+    for item in findings.get("classifications") or []:
+        fit = item.get("length_fit") or {}
+        key = fit.get("bucket") or "missing"
+        metrics = item_metrics_for_horizon(item, horizon)
+        row = rollups.setdefault(key, {"name": fit.get("label") or key, "count": 0, "views": 0.0})
+        row["count"] += 1
+        row["views"] += number(metrics.get("views")) or 0
+    return sorted(rollups.values(), key=lambda row: (row["views"], row["count"]), reverse=True)
+
+
 def build_data_gap_groups(findings: dict[str, Any]) -> dict[str, dict[str, Any]]:
     missing_counts = {
         row["name"]: row["count"]
@@ -830,6 +1246,7 @@ def build_dashboard_payload(
     ledger: dict[str, Any],
     report_summary: dict[str, Any],
     reporting_jobs: dict[str, Any] | None = None,
+    content_rubric: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     videos = ledger.get("videos") or []
     format_counts = Counter(video.get("format") or "unknown" for video in videos)
@@ -850,6 +1267,16 @@ def build_dashboard_payload(
     funnel_rollups = build_funnel_rollups(findings)
     horizon_summaries = build_horizon_summaries(findings)
     traffic_sources_by_horizon = summarize_traffic_by_horizon(videos)
+    content_rubric = content_rubric or load_content_rubric()
+    rubric = build_rubric(findings, content_rubric)
+    release_rollups_by_horizon = {
+        horizon: build_release_rollups(findings, horizon=horizon)
+        for horizon in HORIZONS
+    }
+    length_rollups_by_horizon = {
+        horizon: build_length_rollups(findings, horizon=horizon)
+        for horizon in HORIZONS
+    }
 
     reach_impression_videos = sum(
         1
@@ -944,11 +1371,14 @@ def build_dashboard_payload(
         "horizons": HORIZONS,
         "horizon_summaries": horizon_summaries,
         "action_lanes": action_lanes,
+        "rubric": rubric,
         "package_rollups": package_rollups_by_horizon["weekly"],
         "package_rollups_by_horizon": package_rollups_by_horizon,
         "playlist_rollups": playlist_rollups_by_horizon["weekly"],
         "playlist_rollups_by_horizon": playlist_rollups_by_horizon,
         "funnel_rollups": funnel_rollups,
+        "release_rollups_by_horizon": release_rollups_by_horizon,
+        "length_rollups_by_horizon": length_rollups_by_horizon,
         "sort_defaults": {
             "videos": {"key": "score", "direction": "desc"},
             "packages": {"key": "action_items", "direction": "desc"},
@@ -973,6 +1403,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER_PATH)
     parser.add_argument("--report", type=Path, default=None)
     parser.add_argument("--reporting-jobs", type=Path, default=DEFAULT_REPORTING_JOBS_PATH)
+    parser.add_argument("--content-rubric", type=Path, default=DEFAULT_CONTENT_RUBRIC_PATH)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--payload-output", type=Path, default=None)
     return parser.parse_args()
@@ -986,8 +1417,9 @@ def main() -> int:
         raise SystemExit("No weekly report JSON found. Run build_youtube_decision_report.py first.")
     report_summary = load_json(report_path)
     reporting_jobs = load_json(args.reporting_jobs) if args.reporting_jobs.exists() else None
+    content_rubric = load_content_rubric(args.content_rubric)
 
-    payload = build_dashboard_payload(ledger, report_summary, reporting_jobs)
+    payload = build_dashboard_payload(ledger, report_summary, reporting_jobs, content_rubric)
     html = build_html(payload)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(html)
@@ -1310,6 +1742,56 @@ DASHBOARD_HTML = """<!doctype html>
       margin-top: 10px;
     }
 
+    .thumb {
+      width: 128px;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #eef1ef;
+      display: block;
+    }
+
+    .video-cell {
+      display: grid;
+      grid-template-columns: 128px minmax(220px, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .rubric-grid { display: grid; gap: 12px; }
+    .rubric-card {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+    .rubric-card .thumb { width: 220px; }
+    .axis-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .axis {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      min-height: 78px;
+      background: #fbfcfa;
+    }
+    .axis.good { border-color: rgba(24, 122, 69, 0.3); background: #f0f8f2; }
+    .axis.risk { border-color: rgba(179, 38, 30, 0.3); background: #fff4f2; }
+    .axis.gap { border-color: rgba(182, 93, 0, 0.3); background: #fff8ee; }
+    .axis.watch, .axis.neutral { background: #f9faf8; }
+    .axis-title { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
+    .why-list { margin: 8px 0 0 18px; padding: 0; }
+
     @media (max-width: 1100px) {
       .grid.stats { grid-template-columns: repeat(3, minmax(140px, 1fr)); }
       .grid.two, .grid.three { grid-template-columns: 1fr; }
@@ -1322,6 +1804,8 @@ DASHBOARD_HTML = """<!doctype html>
       .grid.stats { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
       .toolbar { grid-template-columns: 1fr; }
       .finding { grid-template-columns: 1fr; }
+      .video-cell, .rubric-card { grid-template-columns: 1fr; }
+      .axis-grid { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 1fr; gap: 4px; }
       h1 { font-size: 24px; }
     }
@@ -1341,12 +1825,14 @@ DASHBOARD_HTML = """<!doctype html>
       <button class="tab active" data-tab="action-board">Action Board</button>
       <button class="tab" data-tab="overview">Overview</button>
       <button class="tab" data-tab="videos">Videos</button>
+      <button class="tab" data-tab="rubric">Rubric</button>
       <button class="tab" data-tab="gaps">Data Gaps</button>
     </nav>
 
     <section class="panel active" id="action-board"></section>
     <section class="panel" id="overview"></section>
     <section class="panel" id="videos"></section>
+    <section class="panel" id="rubric"></section>
     <section class="panel" id="gaps"></section>
   </div>
 
@@ -1403,6 +1889,11 @@ DASHBOARD_HTML = """<!doctype html>
       const title = escapeHtml(item.title || item.video_id || "Untitled");
       if (!item.url) return title;
       return `<a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">${title}</a>`;
+    }
+
+    function thumbnailFor(item) {
+      if (!item.thumbnail_url) return `<div class="thumb" aria-label="No thumbnail"></div>`;
+      return `<img class="thumb" src="${escapeHtml(item.thumbnail_url)}" alt="" loading="lazy">`;
     }
 
     function badge(category) {
@@ -1717,6 +2208,7 @@ DASHBOARD_HTML = """<!doctype html>
       if (key === "subs") return Number(metrics.subscribersGained) || 0;
       if (key === "impressions") return Number(metrics.videoThumbnailImpressions) || 0;
       if (key === "ctr") return Number(metrics.videoThumbnailImpressionsClickRate) || 0;
+      if (key === "duration") return Number(item.duration_seconds) || 0;
       return String(item[key] || "").toLowerCase();
     }
 
@@ -1729,13 +2221,19 @@ DASHBOARD_HTML = """<!doctype html>
       if (filter === "has_related") return Boolean(item.related_video);
       if (filter === "has_playlist") return (item.playlists || []).length > 0;
       if (filter === "young") return item.data_age_days !== null && item.data_age_days !== undefined && item.data_age_days < 2;
+      if (filter === "missing_thumbnail") return !item.thumbnail_url;
+      if (filter === "missing_srt") return !item.content || item.content.status !== "present";
+      if (filter === "high_impression_low_ctr") return Number(metrics.videoThumbnailImpressions) >= 500 && Number(metrics.videoThumbnailImpressionsClickRate) < 3;
       return true;
     }
 
     function renderVideos() {
       const classifications = data.findings.classifications || [];
+      const rubricById = Object.fromEntries(((data.rubric || {}).items || []).map((item) => [item.video_id, item]));
       const formatOptions = [...new Set(classifications.map((item) => item.format || "unknown"))].sort();
       const playlistOptions = [...new Set(classifications.flatMap((item) => playlistLabels(item)))].sort();
+      const releaseOptions = [...new Set(classifications.map((item) => ((item.release_timing || {}).daypart || "unknown")))].sort();
+      const lengthOptions = [...new Set(classifications.map((item) => ((item.length_fit || {}).bucket || "missing")))].sort();
       document.getElementById("videos").innerHTML = `
         <div class="card" style="margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
@@ -1760,6 +2258,14 @@ DASHBOARD_HTML = """<!doctype html>
             <option value="">All playlists</option>
             ${playlistOptions.map((playlist) => `<option value="${escapeHtml(playlist)}">${escapeHtml(playlist)}</option>`).join("")}
           </select>
+          <select id="release-filter">
+            <option value="">All release times</option>
+            ${releaseOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
+          </select>
+          <select id="length-filter">
+            <option value="">All length bands</option>
+            ${lengthOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
+          </select>
         </div>
         <div class="quick-filters" style="margin-bottom: 12px;">
           <label class="check-chip"><input type="checkbox" data-quick-filter="actionable"> Actionable only</label>
@@ -1769,6 +2275,9 @@ DASHBOARD_HTML = """<!doctype html>
           <label class="check-chip"><input type="checkbox" data-quick-filter="has_related"> Has related video</label>
           <label class="check-chip"><input type="checkbox" data-quick-filter="has_playlist"> Has playlist</label>
           <label class="check-chip"><input type="checkbox" data-quick-filter="young"> New or too young</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="missing_thumbnail"> Missing thumbnail</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="missing_srt"> Missing SRT</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="high_impression_low_ctr"> High impr / low CTR</label>
         </div>
         <div id="video-table"></div>
       `;
@@ -1777,11 +2286,16 @@ DASHBOARD_HTML = """<!doctype html>
         const category = document.getElementById("category-filter").value;
         const format = document.getElementById("format-filter").value;
         const playlist = document.getElementById("playlist-filter").value;
+        const release = document.getElementById("release-filter").value;
+        const length = document.getElementById("length-filter").value;
         const quickFilters = [...document.querySelectorAll("[data-quick-filter]:checked")].map((input) => input.dataset.quickFilter);
         const sorted = classifications
+          .map((item) => ({ ...item, content: (rubricById[item.video_id] || {}).content }))
           .filter((item) => !category || (item.categories || []).includes(category))
           .filter((item) => !format || item.format === format)
           .filter((item) => !playlist || playlistLabels(item).includes(playlist))
+          .filter((item) => !release || ((item.release_timing || {}).daypart || "unknown") === release)
+          .filter((item) => !length || ((item.length_fit || {}).bucket || "missing") === length)
           .filter((item) => quickFilters.every((filter) => matchesQuickFilter(item, filter)))
           .filter((item) => {
             const haystack = `${item.title || ""} ${item.package || ""} ${playlistLabels(item).join(" ")} ${item.video_id || ""}`.toLowerCase();
@@ -1798,11 +2312,13 @@ DASHBOARD_HTML = """<!doctype html>
         const rows = sorted.map((item) => {
           const metrics = metricFor(item);
           return `<tr class="row-${escapeHtml(item.primary_category || "ignore")}">
-            <td>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div>${sourceLinks(item)}${playlistLinks(item)}</td>
+            <td><div class="video-cell">${thumbnailFor(item)}<div>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div>${sourceLinks(item)}${playlistLinks(item)}</div></div></td>
             <td>${(item.categories || []).map(badge).join(" ")}</td>
             <td>${escapeHtml(item.format || "-")}<div class="small muted">${escapeHtml(item.format_source || "unknown")}</div></td>
             <td>${escapeHtml(item.package || "-")}</td>
             <td>${escapeHtml((item.primary_playlist || {}).title || "-")}</td>
+            <td>${escapeHtml(item.duration_label || "-")}<div class="small muted">${escapeHtml((item.length_fit || {}).label || "-")}</div></td>
+            <td>${escapeHtml(((item.release_timing || {}).weekday || "-"))}<div class="small muted">${escapeHtml(((item.release_timing || {}).hour_label || "-"))}</div></td>
             <td>${escapeHtml(horizonRangeFor(item))}</td>
             <td>${fmtNumber(metrics.views)}</td>
             <td>${fmtNumber(metrics.views_per_day, 1)}</td>
@@ -1818,6 +2334,8 @@ DASHBOARD_HTML = """<!doctype html>
           "Format",
           "Package",
           "Playlist",
+          `<button class="sort-btn" data-sort="duration">Length</button>`,
+          "Release",
           "Range",
           `<button class="sort-btn" data-sort="views">Views</button>`,
           `<button class="sort-btn" data-sort="views_per_day">V/day</button>`,
@@ -1838,7 +2356,7 @@ DASHBOARD_HTML = """<!doctype html>
           });
         });
       };
-      ["video-search", "category-filter", "format-filter", "playlist-filter"].forEach((id) => {
+      ["video-search", "category-filter", "format-filter", "playlist-filter", "release-filter", "length-filter"].forEach((id) => {
         document.getElementById(id).addEventListener("input", renderTable);
       });
       document.querySelectorAll("[data-quick-filter]").forEach((input) => {
@@ -1846,6 +2364,134 @@ DASHBOARD_HTML = """<!doctype html>
       });
       bindHorizonControls();
       renderTable();
+    }
+
+    function axisBlock(axis) {
+      return `
+        <div class="axis ${escapeHtml(axis.status || "watch")}">
+          <div class="axis-title">${escapeHtml(axis.label || "")}</div>
+          <div class="small muted">${escapeHtml(axis.status || "watch")}</div>
+          <div>${escapeHtml(axis.detail || "")}</div>
+        </div>
+      `;
+    }
+
+    function renderRubric() {
+      const items = ((data.rubric || {}).items || []);
+      const releaseOptions = [...new Set(items.map((item) => ((item.release_timing || {}).daypart || "unknown")))].sort();
+      const lengthOptions = [...new Set(items.map((item) => ((item.length_fit || {}).bucket || "missing")))].sort();
+      const contentSummary = (data.rubric || {}).content_summary || {};
+      const releaseRows = (((data.release_rollups_by_horizon || {})[currentHorizon] || {}).daypart || []).map((row) => `
+        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
+      `);
+      const lengthRows = ((data.length_rollups_by_horizon || {})[currentHorizon] || []).map((row) => `
+        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td></tr>
+      `);
+      document.getElementById("rubric").innerHTML = `
+        <div class="card" style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <div>
+              <h2 style="margin-bottom: 4px;">Rubric: ${escapeHtml(horizonMeta().label)}</h2>
+              <div class="muted">Multi-axis scorecards for diagnosis, packaging, timing, content, funnel, and production leverage.</div>
+            </div>
+            ${horizonControl()}
+          </div>
+        </div>
+        <div class="grid stats">
+          ${stat("Rubric Videos", fmtNumber(items.length))}
+          ${stat("SRT Present", fmtNumber(contentSummary.present || 0))}
+          ${stat("SRT Missing", fmtNumber(contentSummary.missing || 0))}
+          ${stat("SRT Malformed", fmtNumber(contentSummary.malformed || 0))}
+          ${stat("Thumbnails", fmtNumber(items.filter((item) => item.thumbnail_url).length))}
+          ${stat("Related Targets", fmtNumber(items.filter((item) => item.related_video).length))}
+        </div>
+        <div class="grid two" style="margin-bottom: 12px;">
+          <div class="card"><h2>Release Cohorts</h2>${simpleTable(["Daypart", "Videos", "Views", "Avg Viewed", "CTR"], releaseRows)}</div>
+          <div class="card"><h2>Length Fit</h2>${simpleTable(["Band", "Videos", "Views"], lengthRows)}</div>
+        </div>
+        <div class="toolbar">
+          <input id="rubric-search" type="search" placeholder="Search title, package, or video ID">
+          <select id="rubric-category-filter">
+            <option value="">All diagnoses</option>
+            ${decisionOrder.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(categoryLabels[category])}</option>`).join("")}
+          </select>
+          <select id="rubric-release-filter">
+            <option value="">All release times</option>
+            ${releaseOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
+          </select>
+          <select id="rubric-length-filter">
+            <option value="">All length bands</option>
+            ${lengthOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
+          </select>
+        </div>
+        <div class="quick-filters" style="margin-bottom: 12px;">
+          <label class="check-chip"><input type="checkbox" data-rubric-filter="missing_thumbnail"> Missing thumbnail</label>
+          <label class="check-chip"><input type="checkbox" data-rubric-filter="missing_srt"> Missing SRT</label>
+          <label class="check-chip"><input type="checkbox" data-rubric-filter="high_impression_low_ctr"> High impr / low CTR</label>
+          <label class="check-chip"><input type="checkbox" data-rubric-filter="actionable"> Actionable only</label>
+        </div>
+        <div id="rubric-list"></div>
+      `;
+      const renderList = () => {
+        const search = document.getElementById("rubric-search").value.toLowerCase();
+        const category = document.getElementById("rubric-category-filter").value;
+        const release = document.getElementById("rubric-release-filter").value;
+        const length = document.getElementById("rubric-length-filter").value;
+        const filters = [...document.querySelectorAll("[data-rubric-filter]:checked")].map((input) => input.dataset.rubricFilter);
+        const filtered = items
+          .filter((item) => !category || (item.categories || []).includes(category))
+          .filter((item) => !release || ((item.release_timing || {}).daypart || "unknown") === release)
+          .filter((item) => !length || ((item.length_fit || {}).bucket || "missing") === length)
+          .filter((item) => filters.every((filter) => matchesQuickFilter(item, filter)))
+          .filter((item) => {
+            const haystack = `${item.title || ""} ${item.package || ""} ${item.video_id || ""}`.toLowerCase();
+            return !search || haystack.includes(search);
+          });
+        document.getElementById("rubric-list").innerHTML = `<div class="rubric-grid">${
+          filtered.map((item) => {
+            const axes = item.axes || {};
+            const metrics = item.metrics || {};
+            const why = (item.why || []).map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+            return `
+              <article class="rubric-card row-${escapeHtml(item.primary_category || "ignore")}">
+                <div>
+                  ${thumbnailFor(item)}
+                  <div class="metric-row">
+                    <span class="metric-chip">${escapeHtml(item.duration_label || "-")}</span>
+                    <span class="metric-chip">${escapeHtml((item.length_fit || {}).label || "-")}</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="finding-title">${linkFor(item)}</div>
+                  <div class="muted">${escapeHtml(item.video_id || "")} | ${escapeHtml(item.format || "-")} | ${escapeHtml(item.package || "-")}</div>
+                  <div class="metric-row">
+                    ${(item.categories || []).map(badge).join(" ")}
+                    <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
+                    <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
+                    <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
+                    <span class="metric-chip">${fmtNumber(metrics.videoThumbnailImpressions)} impr.</span>
+                    <span class="metric-chip">${fmtPercent(metrics.videoThumbnailImpressionsClickRate)} CTR</span>
+                    <span class="metric-chip">${escapeHtml(((item.release_timing || {}).weekday || "-"))} ${escapeHtml(((item.release_timing || {}).hour_label || ""))}</span>
+                  </div>
+                  <h3 style="margin-top: 10px;">Why This Diagnosis?</h3>
+                  <ul class="why-list">${why}</ul>
+                  <div class="axis-grid">
+                    ${Object.values(axes).map(axisBlock).join("")}
+                  </div>
+                </div>
+              </article>
+            `;
+          }).join("") || `<div class="empty">No rubric items match these filters.</div>`
+        }</div>`;
+      };
+      ["rubric-search", "rubric-category-filter", "rubric-release-filter", "rubric-length-filter"].forEach((id) => {
+        document.getElementById(id).addEventListener("input", renderList);
+      });
+      document.querySelectorAll("[data-rubric-filter]").forEach((input) => {
+        input.addEventListener("change", renderList);
+      });
+      bindHorizonControls();
+      renderList();
     }
 
     function renderGaps() {
@@ -1920,6 +2566,7 @@ DASHBOARD_HTML = """<!doctype html>
       renderActionBoard();
       renderOverview();
       renderVideos();
+      renderRubric();
       renderGaps();
     }
 
