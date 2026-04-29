@@ -1,0 +1,44 @@
+{
+  "kind": "gate_check",
+  "schema_version": 2,
+  "timestamp": "2026-04-29_19-14-51",
+  "run_id": "2026-04-29_19-14-51_literate-workflow-programming__specification-surface-source-of-truth_research_exit_gate-check",
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "gate_id": "research_exit",
+  "packet_path": null,
+  "boundary": {
+    "type": "gate evaluation",
+    "reason": "Gate checks record movement decisions without mutating package state by themselves.",
+    "external_side_effect": false,
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Evaluate gate 'research_exit'.",
+    "stop_condition": "Gate result recorded in reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not mutate lifecycle state from the gate check alone."
+    ]
+  },
+  "decision": "ready_for_essay_iteration",
+  "status": "pass",
+  "required_artifacts": [
+    "governing blueprint or brief",
+    "local evidence surface",
+    "research-exit gate artifact"
+  ],
+  "missing_artifacts": [],
+  "recommended_workflow": "essay_iteration",
+  "recommended_validator": ".venv/bin/python scripts/check_research_exit_gate.py --package <package>",
+  "proof_mode": "package_gate",
+  "verification": {
+    "checks": [
+      {
+        "name": "gate_check_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-29_19-14-51_literate-workflow-programming__specification-surface-source-of-truth_research_exit_gate-check.json"
+      }
+    ],
+    "residual_risk": "Gate checks capture the current bounded decision, but the underlying artifacts still need normal human review when the stakes are high."
+  }
+}
