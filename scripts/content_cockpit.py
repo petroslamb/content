@@ -18,6 +18,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, quote, urlparse
 
 import content_agent
+from research_exit_support import build_research_exit_gate_path
 
 
 DEFAULT_HOST = "127.0.0.1"
@@ -334,6 +335,12 @@ def derive_workflow_step_state(
 ) -> tuple[str, str, bool]:
     gate_id = step_gate_id(step)
     mode = str(step.get("mode") or "")
+    gates = next_report.get("gate_statuses")
+    gate_status = gates.get(gate_id) if isinstance(gates, dict) and gate_id else None
+    if isinstance(gate_status, dict) and gate_status.get("blocking") is not True:
+        status_text = str(gate_status.get("status") or gate_status.get("decision") or "")
+        if status_text in {"pass", "passed", "ready", "completed", "ready_for_essay_iteration"}:
+            return ("completed", f"Gate '{gate_id}' has a non-blocking passing status.", False)
     if gate_id and gate_id in blocked_gates:
         return ("blocked", f"Gate '{gate_id}' is currently blocking this package.", True)
     if workflow_id == active_workflow and gate_id and blocked_gates:
@@ -365,6 +372,7 @@ def workflow_step_actions(
     step: dict[str, object],
     state: str,
     is_current: bool,
+    missing_artifacts: list[str],
 ) -> dict[str, list[dict[str, str]]]:
     mode = str(step.get("mode") or "unknown")
     gate_id = step_gate_id(step)
@@ -376,6 +384,13 @@ def workflow_step_actions(
         enabled.append({"id": "gates", "label": "Open Gates", "target": "gates"})
     if mode in {"codex_session", "external_mutation_gated", "review_gated"} or state in {"blocked", "current"}:
         enabled.append({"id": "copy_instruction", "label": "Copy Codex instruction", "instruction": instruction})
+    if gate_id == "research_exit" and any("research-exit" in item or "claim-boundary" in item for item in missing_artifacts):
+        enabled.append({
+            "id": "prepare_template",
+            "label": "Prepare research-exit templates",
+            "workflow": workflow_id,
+            "step": str(step.get("id") or ""),
+        })
     disabled = [
         {
             "id": "reopen_step",
@@ -419,6 +434,9 @@ def workflow_step_view(
     executor = step.get("executor")
     command = executor.get("command") if isinstance(executor, dict) else None
     gate_id = step_gate_id(step)
+    gates = next_report.get("gate_statuses")
+    gate_status = gates.get(gate_id) if isinstance(gates, dict) and gate_id else None
+    missing_artifacts = stringify_list(gate_status.get("missing_artifacts")) if isinstance(gate_status, dict) else []
     return {
         "id": str(step.get("id") or "unnamed_step"),
         "title": str(step.get("title") or step.get("id") or "Unnamed step"),
@@ -428,12 +446,13 @@ def workflow_step_view(
         "produces": stringify_list(step.get("produces")),
         "validation_hooks": step_validation_hooks(step),
         "gate_id": gate_id,
+        "missing_artifacts": missing_artifacts,
         "executor_command": str(command) if command else None,
         "state": state,
         "state_reason": state_reason,
         "is_current": is_current,
         "instruction": workflow_step_instruction(package_key, workflow_id, step, state),
-        "actions": workflow_step_actions(package_key, workflow_id, step, state, is_current),
+        "actions": workflow_step_actions(package_key, workflow_id, step, state, is_current, missing_artifacts),
     }
 
 
@@ -704,6 +723,117 @@ def research_question_action_payload(package_arg: str, research_question: str) -
         "status_path": content_agent.repo_relpath(status_path),
         "research_question": question,
         "message": "Research question saved to package status.yaml.",
+    }
+
+
+def research_exit_gate_template(package_key: str, package_path: Path, revision: int, boundary_relpath: str) -> str:
+    return f"""---
+kind: research_exit_gate
+package: {json.dumps(package_key)}
+revision: {revision}
+governing_brief_path: ""
+evidence_surface_path: ""
+claim_boundary_status: required_but_missing
+claim_boundary_paths:
+  - {json.dumps(boundary_relpath)}
+research_exit_verdict: pending
+dominant_blocker_slug: template-fill-required
+follow_on_research_triggers: []
+---
+
+# Research Exit Gate
+
+## Governing Blueprint
+
+TODO: Name the governing brief, handoff, or blueprint surface that constrains the essay attempt.
+
+## Evidence Surface
+
+TODO: Summarize the evidence inventory that supports this leaf and name the source index or paper stack.
+
+## Claim Boundaries
+
+TODO: Link the claim-boundary ledger and summarize the allowed, forbidden, and caveated claims.
+
+## Drafting Boundary
+
+TODO: State the draftable object, what must stay out of scope, and what follow-on research remains.
+
+## Verdict
+
+TODO: Choose `ready_for_essay_iteration` or `not_ready` and explain the decision.
+
+## Required Follow-Through
+
+TODO: List the next governed workflow or gate.
+"""
+
+
+def claim_boundary_template(package_key: str) -> str:
+    return f"""# Claim-Boundary Ledger
+
+Package: `{package_key}`
+
+## Authorized Core Claim
+
+TODO: State the strongest claim the current evidence permits.
+
+## Forbidden Claims
+
+TODO: List claims the draft must not make.
+
+## Caveats And Source Burden
+
+TODO: Name caveats, weak evidence, and claims that require direct source support.
+
+## Follow-On Research Triggers
+
+TODO: List conditions that should send the package back to research.
+"""
+
+
+def prepare_workflow_template_action_payload(package_arg: str, workflow_id: str, step_id: str) -> dict[str, object]:
+    package_key = content_agent.coerce_package_key(package_arg.strip())
+    if not package_key:
+        raise ValueError("package is required")
+    if workflow_id != "research" or step_id != "settle_research_exit_gate":
+        raise ValueError("no deterministic cockpit template is available for this workflow step")
+    package_path = content_agent.REPO_ROOT / "publications" / package_key
+    status_path = package_path / "status.yaml"
+    if not status_path.exists():
+        raise ValueError(f"status.yaml not found for package: {package_key}")
+    status_data = content_agent.load_mapping(status_path)
+    revision = status_data.get("revision", 1)
+    if not isinstance(revision, int):
+        revision = 1
+    gate_path = build_research_exit_gate_path(package_path, revision)
+    boundary_path = package_path / f"{package_path.name}-claim-boundary-ledger.md"
+    boundary_relpath = content_agent.repo_relpath(boundary_path)
+    created: list[str] = []
+    skipped: list[str] = []
+    if not boundary_path.exists():
+        boundary_path.write_text(claim_boundary_template(package_key), encoding="utf-8")
+        created.append(boundary_relpath)
+    else:
+        skipped.append(boundary_relpath)
+    gate_relpath = content_agent.repo_relpath(gate_path)
+    if not gate_path.exists():
+        gate_path.write_text(research_exit_gate_template(package_key, package_path, revision, boundary_relpath), encoding="utf-8")
+        created.append(gate_relpath)
+    else:
+        skipped.append(gate_relpath)
+    return {
+        "kind": "content_cockpit_workflow_template_result",
+        "schema_version": 1,
+        "generated_at": utc_now(),
+        "success": True,
+        "mutating": True,
+        "package": package_key,
+        "workflow": workflow_id,
+        "step": step_id,
+        "created_paths": created,
+        "skipped_existing_paths": skipped,
+        "message": "Prepared deterministic research-exit template artifacts." if created else "Research-exit template artifacts already exist.",
     }
 
 
@@ -1252,6 +1382,37 @@ def page_shell(title: str, body: str, config: CockpitConfig) -> bytes:
       border-radius: 8px;
       background: #fbfcfd;
     }}
+    .lifecycle-columns {{
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 360px;
+      grid-template-columns: none;
+      gap: 12px;
+      margin-top: 14px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 10px;
+      scroll-snap-type: x proximity;
+    }}
+    .lifecycle-lane {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #ffffff;
+      min-width: 360px;
+      scroll-snap-align: start;
+    }}
+    .lifecycle-lane > h3 {{
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }}
+    .lifecycle-lane .workflow-section {{
+      margin-top: 10px;
+      padding: 10px;
+    }}
     .workflow-section-head {{
       display: flex;
       gap: 12px;
@@ -1374,8 +1535,11 @@ const packageInput = document.getElementById("package-input");
 let currentStatusReport = null;
 let currentNextReport = null;
 let currentWorkflowMap = null;
-let workflowMapMode = "active_route";
-let workflowStepFilter = "all";
+let activeCockpitTab = (new URLSearchParams(window.location.search)).get("tab") || "workflow-map";
+let workflowMapMode = (new URLSearchParams(window.location.search)).get("mode") || "active_route";
+let workflowStepFilter = (new URLSearchParams(window.location.search)).get("filter") || "all";
+let selectedWorkflowId = (new URLSearchParams(window.location.search)).get("workflow") || "";
+let selectedWorkflowStepId = (new URLSearchParams(window.location.search)).get("step") || "";
 packageInput.value = params.get("package") || initial.package || "";
 document.getElementById("refresh-button").addEventListener("click", loadStatus);
 packageInput.addEventListener("change", loadStatus);
@@ -1394,7 +1558,7 @@ function badge(value) {
   const raw = String(value ?? "unknown");
   let cls = "badge";
   if (["pass", "passed", "completed", "resolved", "true", "ready"].includes(raw)) cls += " good";
-  if (["pending", "warning", "deferred", "gated", "needs approval", "needs research setup", "follow-up"].includes(raw)) cls += " warn";
+  if (["pending", "warning", "deferred", "gated", "needs approval", "needs research setup", "follow-up", "future", "inferred", "current"].includes(raw)) cls += " warn";
   if (["blocked", "failed", "failing", "error", "invalid", "rejected", "false"].includes(raw)) cls += " bad";
   return `<span class="${cls}">${esc(raw)}</span>`;
 }
@@ -1431,10 +1595,31 @@ function packageStatusPath(packageKey, filename) {
   return `publications/${packageKey}/${filename}`;
 }
 
+function urlParams() {
+  return new URLSearchParams(window.location.search);
+}
+
+function urlParam(name) {
+  return urlParams().get(name);
+}
+
+function updateUrlFromState() {
+  const limitInput = document.getElementById("limit-input");
+  const limitValue = (limitInput ? limitInput.value : (urlParam("limit") || initial.limit || 5)).toString().trim();
+  syncUrlState(packageInput.value.trim(), limitValue);
+}
+
 function syncUrlState(packageValue, limitValue) {
   const query = new URLSearchParams();
   if (packageValue) query.set("package", packageValue);
   if (limitValue) query.set("limit", limitValue);
+  if (activeCockpitTab) query.set("tab", activeCockpitTab);
+  if (workflowMapMode) query.set("mode", workflowMapMode);
+  if (workflowStepFilter) query.set("filter", workflowStepFilter);
+  if (selectedWorkflowId && selectedWorkflowStepId) {
+    query.set("workflow", selectedWorkflowId);
+    query.set("step", selectedWorkflowStepId);
+  }
   const nextUrl = `${window.location.pathname}${query.toString() ? `?${query.toString()}` : ""}`;
   window.history.replaceState({}, "", nextUrl);
 }
@@ -1462,16 +1647,18 @@ function renderCollapsed(title, body, open = false) {
 }
 
 function showCockpitTab(tabName) {
+  activeCockpitTab = tabName;
   for (const button of document.querySelectorAll(".tab-button")) {
     button.classList.toggle("active", button.dataset.tab === tabName);
   }
   for (const panel of document.querySelectorAll(".tab-panel")) {
     panel.hidden = panel.dataset.tab !== tabName;
   }
+  updateUrlFromState();
 }
 
 async function loadPackageOptions() {
-  const selected = packageInput.value || params.get("package") || initial.package || "";
+  const selected = packageInput.value || urlParam("package") || initial.package || "";
   try {
     const response = await fetch("/api/packages");
     const payload = await response.json();
@@ -1501,7 +1688,7 @@ async function loadStatus() {
   const query = new URLSearchParams();
   const packageValue = packageInput.value.trim();
   const limitInput = document.getElementById("limit-input");
-  const limitValue = (limitInput ? limitInput.value : (params.get("limit") || initial.limit || 5)).toString().trim();
+  const limitValue = (limitInput ? limitInput.value : (urlParam("limit") || initial.limit || 5)).toString().trim();
   if (packageValue) query.set("package", packageValue);
   if (limitValue) query.set("limit", limitValue);
   syncUrlState(packageValue, limitValue);
@@ -1694,11 +1881,11 @@ function renderStatus(payload) {
       </div>
     </div>`;
   configureToolbarForPackage(report.package);
-  showCockpitTab("workflow-map");
+  showCockpitTab(urlParam("tab") || activeCockpitTab || "workflow-map");
 }
 
 function renderDiagnosticsControls() {
-  const limitValue = params.get("limit") || initial.limit || 5;
+  const limitValue = urlParam("limit") || initial.limit || 5;
   return `<h2>Diagnostics Controls</h2>
     <div class="toolbar">
       <label for="limit-input">Recent limit
@@ -1806,9 +1993,10 @@ async function loadNextAction(packageValue) {
   }
   const next = payload.next || {};
   currentNextReport = next;
-  section.innerHTML = renderNextAction(next);
+  currentWorkflowMap = next.cockpit_view_model?.workflow_map || {};
   const workflowMapSection = document.getElementById("workflow-map-section");
-  if (workflowMapSection) workflowMapSection.innerHTML = renderWorkflowMap(next.cockpit_view_model?.workflow_map || {});
+  if (workflowMapSection) workflowMapSection.innerHTML = renderWorkflowMap(currentWorkflowMap);
+  section.innerHTML = renderNextAction(next);
   const gateSection = document.getElementById("gate-readiness-section");
   if (gateSection) gateSection.innerHTML = renderGateReadinessTab(next);
   const diagnosticsSection = document.getElementById("routing-diagnostics-section");
@@ -1830,11 +2018,16 @@ function deriveStepState(step) {
 
 function setWorkflowMapMode(mode) {
   workflowMapMode = mode;
+  selectedWorkflowId = "";
+  selectedWorkflowStepId = "";
   const body = document.getElementById("workflow-map-body");
   if (body && currentWorkflowMap) body.innerHTML = renderWorkflowMapBody(currentWorkflowMap);
+  const wizard = document.getElementById("next-action-section");
+  if (wizard && currentNextReport) wizard.innerHTML = renderNextAction(currentNextReport);
   for (const button of document.querySelectorAll(".workflow-mode-button")) {
     button.classList.toggle("active", button.dataset.mode === workflowMapMode);
   }
+  updateUrlFromState();
 }
 
 function setWorkflowStepFilter(filter) {
@@ -1844,6 +2037,7 @@ function setWorkflowStepFilter(filter) {
   for (const button of document.querySelectorAll(".workflow-filter-button")) {
     button.classList.toggle("active", button.dataset.filter === workflowStepFilter);
   }
+  updateUrlFromState();
 }
 
 function workflowStepMatchesFilter(step) {
@@ -1856,18 +2050,18 @@ function workflowStepMatchesFilter(step) {
 
 function renderWorkflowMap(map) {
   currentWorkflowMap = map || {};
-  workflowMapMode = currentWorkflowMap.default_mode || "active_route";
-  workflowStepFilter = currentWorkflowMap.default_filter || "all";
+  workflowMapMode = urlParam("mode") || workflowMapMode || currentWorkflowMap.default_mode || "active_route";
+  workflowStepFilter = urlParam("filter") || workflowStepFilter || currentWorkflowMap.default_filter || "all";
   return `<h2>Workflow Map</h2>
     <p class="muted">Sequential workflow steps derived from workflow.yaml and package state. This is an operator map, not workflow authority.</p>
     <div class="workflow-map-controls">
-      <button class="workflow-mode-button active" type="button" data-mode="active_route" onclick="setWorkflowMapMode('active_route')">Active route</button>
-      <button class="workflow-mode-button" type="button" data-mode="all_workflows" onclick="setWorkflowMapMode('all_workflows')">All workflows</button>
+      <button class="workflow-mode-button ${workflowMapMode === "active_route" ? "active" : ""}" type="button" data-mode="active_route" onclick="setWorkflowMapMode('active_route')">Active route</button>
+      <button class="workflow-mode-button ${workflowMapMode === "all_workflows" ? "active" : ""}" type="button" data-mode="all_workflows" onclick="setWorkflowMapMode('all_workflows')">All workflows</button>
       <span class="muted">Filter</span>
-      <button class="workflow-filter-button active" type="button" data-filter="all" onclick="setWorkflowStepFilter('all')">All</button>
-      <button class="workflow-filter-button" type="button" data-filter="current_blocked" onclick="setWorkflowStepFilter('current_blocked')">Current/blocked</button>
-      <button class="workflow-filter-button" type="button" data-filter="runnable" onclick="setWorkflowStepFilter('runnable')">Runnable</button>
-      <button class="workflow-filter-button" type="button" data-filter="gated" onclick="setWorkflowStepFilter('gated')">Gated</button>
+      <button class="workflow-filter-button ${workflowStepFilter === "all" ? "active" : ""}" type="button" data-filter="all" onclick="setWorkflowStepFilter('all')">All</button>
+      <button class="workflow-filter-button ${workflowStepFilter === "current_blocked" ? "active" : ""}" type="button" data-filter="current_blocked" onclick="setWorkflowStepFilter('current_blocked')">Current/blocked</button>
+      <button class="workflow-filter-button ${workflowStepFilter === "runnable" ? "active" : ""}" type="button" data-filter="runnable" onclick="setWorkflowStepFilter('runnable')">Runnable</button>
+      <button class="workflow-filter-button ${workflowStepFilter === "gated" ? "active" : ""}" type="button" data-filter="gated" onclick="setWorkflowStepFilter('gated')">Gated</button>
     </div>
     <div id="workflow-map-body">${renderWorkflowMapBody(currentWorkflowMap)}</div>`;
 }
@@ -1875,14 +2069,45 @@ function renderWorkflowMap(map) {
 function renderWorkflowMapBody(map) {
   const mode = map?.modes?.[workflowMapMode] || map?.modes?.active_route || {};
   const workflows = mode.workflows || [];
-  const sections = workflows.map((workflow) => renderWorkflowSection(workflow)).join("");
+  const sections = workflowMapMode === "all_workflows"
+    ? renderLifecycleWorkflowColumns(workflows)
+    : workflows.map((workflow) => renderWorkflowSection(workflow)).join("");
   const empty = '<div class="callout warn">No workflow steps matched this mode/filter.</div>';
+  const selected = selectedWorkflowId && selectedWorkflowStepId ? findWorkflowStep(selectedWorkflowId, selectedWorkflowStepId) : {};
+  const selectedDetails = selected.step ? renderStepDetails(selected.workflow, selected.step) : "";
   return `<div class="callout">
       <strong>${esc(mode.label || "Workflow map")}</strong>
       <div class="muted" style="margin-top:4px">${esc(mode.description || "")}</div>
     </div>
     ${sections || empty}
-    <div id="workflow-step-details" class="workflow-detail" hidden></div>`;
+    <div id="workflow-step-details" class="workflow-detail"${selectedDetails ? "" : " hidden"}>${selectedDetails}</div>`;
+}
+
+function workflowLifecycleLane(workflow) {
+  const id = String(workflow.id || "").replaceAll("-", "_");
+  if (id.includes("topic")) return "Discovery";
+  if (id === "research" || id.includes("alphaxiv")) return "Research";
+  if (id.includes("paper_intake") || id.includes("evidence")) return "Evidence";
+  if (id.includes("essay")) return "Drafting";
+  if (id.includes("article_polish") || id.includes("release")) return "Polish";
+  if (id.includes("substack") && !id.includes("archive")) return "Publishing";
+  if (id.includes("distribution")) return "Distribution";
+  return "Maintenance";
+}
+
+function renderLifecycleWorkflowColumns(workflows) {
+  const laneNames = ["Discovery", "Research", "Evidence", "Drafting", "Polish", "Publishing", "Distribution", "Maintenance"];
+  const lanes = Object.fromEntries(laneNames.map((name) => [name, []]));
+  for (const workflow of workflows) {
+    const rendered = renderWorkflowSection(workflow);
+    if (!rendered) continue;
+    lanes[workflowLifecycleLane(workflow)].push(rendered);
+  }
+  const columns = laneNames.map((name) => `<div class="lifecycle-lane">
+    <h3>${esc(name)}</h3>
+    ${lanes[name].join("") || '<p class="muted">No matching workflows.</p>'}
+  </div>`).join("");
+  return `<div class="lifecycle-columns">${columns}</div>`;
 }
 
 function renderWorkflowSection(workflow) {
@@ -1926,11 +2151,16 @@ function findWorkflowStep(workflowId, stepId) {
 }
 
 function openWorkflowStep(workflowId, stepId) {
+  selectedWorkflowId = workflowId;
+  selectedWorkflowStepId = stepId;
   const match = findWorkflowStep(workflowId, stepId);
   const details = document.getElementById("workflow-step-details");
   if (!details || !match.step) return;
   details.hidden = false;
   details.innerHTML = renderStepDetails(match.workflow, match.step);
+  const wizard = document.getElementById("next-action-section");
+  if (wizard && currentNextReport) wizard.innerHTML = renderNextAction(currentNextReport);
+  updateUrlFromState();
   details.scrollIntoView({behavior: "smooth", block: "nearest"});
 }
 
@@ -1942,6 +2172,7 @@ function renderStepDetails(workflow, step) {
     if (action.id === "gates") return '<button type="button" onclick="showCockpitTab(\\'gates\\')">Open Gates</button>';
     if (action.id === "diagnostics") return '<button type="button" onclick="showCockpitTab(\\'diagnostics\\')">Open Diagnostics</button>';
     if (action.id === "copy_instruction") return `<button type="button" data-instruction="${esc(action.instruction || step.instruction || "")}" onclick="copyWorkflowInstruction(this)">Copy Codex instruction</button>`;
+    if (action.id === "prepare_template") return `<button type="button" onclick="submitWorkflowTemplate('${esc(action.workflow || workflow.id)}', '${esc(action.step || step.id)}')">Prepare research-exit templates</button>`;
     return "";
   }).join("");
   const disabledButtons = disabled.map((action) => `<span class="disabled-action">
@@ -1964,6 +2195,7 @@ function renderStepDetails(workflow, step) {
       <tr><th>Consumes</th><td><ul class="path-list">${renderInlineList(step.consumes)}</ul></td></tr>
       <tr><th>Produces</th><td><ul class="path-list">${renderInlineList(step.produces)}</ul></td></tr>
       <tr><th>Validation hooks</th><td><ul class="path-list">${renderInlineList(step.validation_hooks)}</ul></td></tr>
+      <tr><th>Missing artifacts</th><td><ul class="path-list">${renderInlineList(step.missing_artifacts)}</ul></td></tr>
       <tr><th>Gate</th><td>${esc(step.gate_id || "none")}</td></tr>
       <tr><th>Executor</th><td>${esc(step.executor_command || "not directly executable from cockpit v1")}</td></tr>
     </tbody></table>
@@ -1978,6 +2210,29 @@ async function copyWorkflowInstruction(button) {
   await navigator.clipboard.writeText(instruction);
   const result = document.getElementById("workflow-step-copy-result");
   if (result) result.textContent = "Codex instruction copied.";
+}
+
+async function submitWorkflowTemplate(workflow, step) {
+  const result = document.getElementById("workflow-step-copy-result") || actionOutput();
+  result.textContent = "Preparing deterministic template artifacts...";
+  const response = await fetch("/api/workflow-template", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({package: packageInput.value.trim(), workflow, step})
+  });
+  const payload = await response.json();
+  if (!response.ok) {
+    result.innerHTML = `<span class="error">${esc(payload.error || response.statusText)}</span>`;
+    return;
+  }
+  const created = (payload.created_paths || []).map((path) => `<li>${artifact(path, path)}</li>`).join("");
+  const skipped = (payload.skipped_existing_paths || []).map((path) => `<li>${artifact(path, path)}</li>`).join("");
+  result.innerHTML = `<div class="callout">
+    <strong>${esc(payload.message || "Template action complete.")}</strong>
+    <div style="margin-top:8px"><strong>Created</strong><ul class="path-list">${created || '<li class="muted">none</li>'}</ul></div>
+    <div style="margin-top:8px"><strong>Already existed</strong><ul class="path-list">${skipped || '<li class="muted">none</li>'}</ul></div>
+  </div>`;
+  await loadStatus();
 }
 
 const defaultResearchQuestions = {
@@ -2270,7 +2525,76 @@ function renderGateBlockers(gates) {
     </tr>`).join("");
 }
 
+function selectedWorkflowStepMatch() {
+  if (!selectedWorkflowId || !selectedWorkflowStepId || !currentWorkflowMap) return {};
+  return findWorkflowStep(selectedWorkflowId, selectedWorkflowStepId);
+}
+
+function clearSelectedWorkflowStep() {
+  selectedWorkflowId = "";
+  selectedWorkflowStepId = "";
+  updateUrlFromState();
+  const wizard = document.getElementById("next-action-section");
+  if (wizard && currentNextReport) wizard.innerHTML = renderNextAction(currentNextReport);
+  const body = document.getElementById("workflow-map-body");
+  if (body && currentWorkflowMap) body.innerHTML = renderWorkflowMapBody(currentWorkflowMap);
+}
+
+function renderSelectedStepWizard(next, workflow, step) {
+  const gateStatuses = next.gate_statuses || {};
+  const gate = step.gate_id ? gateStatuses[step.gate_id] : null;
+  const missing = step.missing_artifacts || gate?.missing_artifacts || [];
+  const enabled = step.actions?.enabled || [];
+  const disabled = step.actions?.disabled || [];
+  const prepareAction = enabled.find((action) => action.id === "prepare_template");
+  const copyAction = enabled.find((action) => action.id === "copy_instruction");
+  const gateCallout = gate
+    ? `<div class="callout ${gate.blocking ? "bad" : ""}" style="margin-top:10px">
+        <strong>Gate ${esc(step.gate_id)}: ${badge(gate.status || "unknown")}</strong>
+        <div class="muted" style="margin-top:6px">${esc(gate.decision || gate.recommended_workflow || "Gate status is available in Gates.")}</div>
+        <table style="margin-top:8px"><tbody>
+          <tr><th>Missing artifacts</th><td><ul class="path-list">${renderInlineList(missing)}</ul></td></tr>
+          <tr><th>Recommended workflow</th><td>${esc(gate.recommended_workflow || "none")}</td></tr>
+          <tr><th>Recommended validator</th><td>${esc(gate.recommended_validator || "none")}</td></tr>
+        </tbody></table>
+      </div>`
+    : "";
+  const disabledRows = disabled.map((action) => `<span class="disabled-action">
+    <button type="button" disabled>${esc(action.label)}</button>
+    <small>${esc(action.reason)}</small>
+  </span>`).join("");
+  return `<div class="wizard-head">
+      <div>
+        <div class="wizard-kicker">Selected workflow step</div>
+        <div class="wizard-title">${esc(step.title || step.id)}</div>
+        <div class="muted" style="margin-top:4px">${esc(workflow.id)} · ${esc(step.id)} · ${esc(step.mode)}</div>
+      </div>
+      <div>${badge(deriveStepState(step))}</div>
+    </div>
+    <div class="callout">
+      <strong>This Wizard is now focused on the selected Workflow Map step.</strong>
+      <div class="muted" style="margin-top:6px">${esc(step.state_reason || "Derived from workflow.yaml and current package state.")}</div>
+    </div>
+    ${gateCallout}
+    <section style="margin-top:12px">
+      <h2>Immediate action</h2>
+      <p>${esc(step.action || "No action summary.")}</p>
+      <div class="toolbar" style="margin-top:10px">
+        <button type="button" onclick="showCockpitTab('workflow-map')">Back to Workflow Map</button>
+        ${step.gate_id ? '<button type="button" onclick="showCockpitTab(\\'gates\\')">Open Gates</button>' : ""}
+        <button type="button" onclick="showCockpitTab('diagnostics')">Open Diagnostics</button>
+        ${copyAction ? `<button type="button" data-instruction="${esc(copyAction.instruction || step.instruction || "")}" onclick="copyWorkflowInstruction(this)">Copy Codex instruction</button>` : ""}
+        ${prepareAction ? `<button type="button" onclick="submitWorkflowTemplate('${esc(prepareAction.workflow || workflow.id)}', '${esc(prepareAction.step || step.id)}')">Prepare research-exit templates</button>` : ""}
+        <button class="secondary-button" type="button" onclick="clearSelectedWorkflowStep()">Clear selected step</button>
+      </div>
+      <div id="workflow-step-copy-result" class="muted" style="margin-top:8px"></div>
+      <div style="margin-top:8px">${disabledRows}</div>
+    </section>`;
+}
+
 function renderNextAction(next) {
+  const selected = selectedWorkflowStepMatch();
+  if (selected.step) return renderSelectedStepWizard(next, selected.workflow, selected.step);
   const commands = renderListItems(next.suggested_commands || []);
   const gateRows = renderGateBlockers(next.pending_review_gate_blockers || []);
   const canExecute = next.can_execute === true || next.effective_can_execute === true;
@@ -2775,6 +3099,19 @@ class CockpitHandler(BaseHTTPRequestHandler):
                 payload = next_execute_action_payload(package_arg, approved is True)
                 status = HTTPStatus.OK if payload.get("success") is True else HTTPStatus.BAD_REQUEST
                 self.send_json(payload, status)
+                return
+            if parsed.path == "/api/workflow-template":
+                package_arg = body.get("package") if isinstance(body.get("package"), str) else self.config.package_arg
+                workflow_id = body.get("workflow")
+                step_id = body.get("step")
+                if not isinstance(package_arg, str) or not package_arg.strip():
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "package is required")
+                    return
+                if not isinstance(workflow_id, str) or not isinstance(step_id, str):
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "workflow and step are required")
+                    return
+                payload = prepare_workflow_template_action_payload(package_arg, workflow_id, step_id)
+                self.send_json(payload, HTTPStatus.OK)
                 return
             if parsed.path == "/api/gate/decision":
                 gate = body.get("gate")
