@@ -159,10 +159,14 @@ STUDIO_CHECK_FIELDS = {
     "thumbnail_title_observations",
     "studio_related_verified",
 }
+MIN_THUMBNAIL_CTR_SAMPLE = 50
 HELP_TEXT = {
     "actionable_videos": "Videos whose current data crossed a recommendation threshold.",
     "videos_with_thumbnail_impressions": "Videos with thumbnail impression rows hydrated from the YouTube Reporting API.",
     "videos_with_ctr": "Videos with thumbnail CTR rows hydrated from the YouTube Reporting API.",
+    "shorts_thumbnail_impressions": "For Shorts, thumbnail impressions are classic registered thumbnail exposures. They do not represent every Shorts-feed exposure.",
+    "shorts_feed_views": "Views from the YouTube Analytics SHORTS traffic source. These can be much higher than thumbnail impressions because Shorts-feed viewing is not always a thumbnail click.",
+    "tiny_thumbnail_sample": f"CTR is treated as directional only after at least {MIN_THUMBNAIL_CTR_SAMPLE} thumbnail impressions. Below that, it is too noisy for packaging decisions.",
     "known_funnel_clicks": "Known clicks into another video from related-video clicks, cards, or end screens. This excludes normal YouTube related-video traffic views.",
     "related_video_traffic_views": "Views whose YouTube Analytics traffic source is RELATED_VIDEO.",
     "metric_coverage": "How many videos have this metric in at least one selected Analytics/Reporting window.",
@@ -191,8 +195,9 @@ HELP_TEXT = {
     "retention_movers": "Videos whose average viewed percentage changed the most since the previous refresh.",
     "subscriber_movers": "Videos whose subscribers gained changed the most since the previous refresh.",
     "funnel_movers": "Videos whose known funnel clicks or related-video traffic moved since the previous refresh.",
-    "high_impression_low_ctr": "The video received enough impressions to judge packaging, but CTR is weak.",
-    "low_impression_high_retention": "The video keeps viewers once they arrive, but has not received much distribution.",
+    "high_impression_low_ctr": "The video received enough thumbnail impressions to judge packaging, but CTR is weak.",
+    "low_impression_high_retention": "The video keeps viewers once they arrive, but has not received much classic thumbnail distribution.",
+    "shorts_feed_thumbnail_mismatch": "Shorts-feed views are present while registered thumbnail impressions are tiny. Use Shorts traffic and retention, not thumbnail CTR, for this read.",
     "title_too_broad": "The title has low specificity and may not signal a concrete mechanism or payoff.",
     "title_too_long": "The title is long enough that it may truncate or dilute the promise.",
     "weak_thumbnail_metadata": "Thumbnail, impression, or CTR metadata is missing or too weak for a clean packaging read.",
@@ -671,6 +676,7 @@ def compact_classification(
     source_reports = source_video.get("source_reports") or []
     click_metrics = known_clicks(observations)
     horizon_metrics = build_horizon_metrics(source_video)
+    traffic_sources = source_video.get("traffic_sources") or []
     playlists = compact_playlists(source_video)
     duration_seconds = number(source_video.get("duration_seconds"))
     release_timing = source_video.get("release_timing") or release_timing_from_published_at(
@@ -696,7 +702,12 @@ def compact_classification(
         "thumbnail_url": source_video.get("thumbnail_url"),
         "thumbnails": source_video.get("thumbnails") or [],
         "title_profile": title_profile(classification.get("title")),
-        "traffic_sources": source_video.get("traffic_sources") or [],
+        "traffic_sources": traffic_sources,
+        "shorts_feed_views": traffic_source_views_for_item(
+            {"traffic_sources": traffic_sources},
+            "SHORTS",
+            horizon_window="7d",
+        ),
         "selected_window": classification.get("selected_window"),
         "data_age_days": classification.get("data_age_days"),
         "categories": categories,
@@ -1096,6 +1107,40 @@ def traffic_mix_for_item(item: dict[str, Any], *, horizon_window: str = "7d") ->
     return compact
 
 
+def traffic_source_views_for_item(
+    item: dict[str, Any],
+    source_type: str,
+    *,
+    horizon_window: str = "7d",
+) -> float:
+    return sum(
+        number(row.get("views")) or 0
+        for row in item.get("traffic_sources") or []
+        if row.get("window") == horizon_window and row.get("source_type") == source_type
+    )
+
+
+def weekly_shorts_feed_views(item: dict[str, Any]) -> float:
+    return traffic_source_views_for_item(item, "SHORTS", horizon_window="7d")
+
+
+def thumbnail_ctr_is_usable(item: dict[str, Any], impressions: float | None) -> bool:
+    if impressions is None:
+        return False
+    if item.get("format") == "short" and weekly_shorts_feed_views(item) > 0:
+        return impressions >= MIN_THUMBNAIL_CTR_SAMPLE
+    return impressions >= MIN_THUMBNAIL_CTR_SAMPLE
+
+
+def is_shorts_thumbnail_mismatch(item: dict[str, Any], impressions: float | None) -> bool:
+    return (
+        item.get("format") == "short"
+        and weekly_shorts_feed_views(item) > 0
+        and impressions is not None
+        and impressions < MIN_THUMBNAIL_CTR_SAMPLE
+    )
+
+
 def axis_status(label: str, status: str, detail: str, value: Any = None) -> dict[str, Any]:
     return {
         "label": label,
@@ -1113,6 +1158,8 @@ def build_rubric_item(
     metrics = item.get("metrics") or {}
     impressions = number(metrics.get("videoThumbnailImpressions"))
     ctr = number(metrics.get("videoThumbnailImpressionsClickRate"))
+    shorts_views = weekly_shorts_feed_views(item)
+    tiny_shorts_thumbnail_sample = is_shorts_thumbnail_mismatch(item, impressions)
     views_per_day = number(metrics.get("views_per_day"))
     avg_viewed = number(metrics.get("averageViewPercentage"))
     avg_duration = number(metrics.get("averageViewDuration"))
@@ -1124,6 +1171,14 @@ def build_rubric_item(
 
     if impressions is None or ctr is None:
         discovery = axis_status("Discovery", "gap", "CTR/impression reporting is still missing.")
+    elif tiny_shorts_thumbnail_sample:
+        discovery = axis_status(
+            "Discovery",
+            "watch",
+            f"{shorts_views:g} Shorts-feed views with only {impressions:g} thumbnail impressions; CTR is not a packaging read.",
+        )
+    elif not thumbnail_ctr_is_usable(item, impressions):
+        discovery = axis_status("Discovery", "watch", "Too few thumbnail impressions for a reliable CTR read.")
     elif impressions >= 500 and ctr < 3:
         discovery = axis_status("Discovery", "risk", "High impressions with weak CTR points to packaging.")
     elif views_per_day is not None and views_per_day >= 20:
@@ -1141,14 +1196,20 @@ def build_rubric_item(
         retention = axis_status("Retention", "watch", "Retention is acceptable but not a standout.")
 
     thumbnail_status = "gap" if not item.get("thumbnail_url") else "watch"
-    if impressions is not None and ctr is not None and impressions >= 500 and ctr < 3:
+    if tiny_shorts_thumbnail_sample:
+        thumbnail_status = "watch"
+    elif impressions is not None and ctr is not None and impressions >= 500 and ctr < 3:
         thumbnail_status = "risk"
-    elif ctr is not None and ctr >= 5:
+    elif ctr is not None and ctr >= 5 and thumbnail_ctr_is_usable(item, impressions):
         thumbnail_status = "good"
+    if tiny_shorts_thumbnail_sample:
+        packaging_detail = f"{impressions:g} thumbnail impressions vs {shorts_views:g} Shorts-feed views."
+    else:
+        packaging_detail = f"{title.get('word_count', 0)} title words, {title.get('character_count', 0)} chars."
     packaging = axis_status(
         "Thumbnail/Packaging",
         thumbnail_status,
-        f"{title.get('word_count', 0)} title words, {title.get('character_count', 0)} chars.",
+        packaging_detail,
     )
 
     content_status = content_item.get("status") or "missing"
@@ -1296,6 +1357,7 @@ def build_rubric_item(
         "release_timing": release_timing,
         "metrics": metrics,
         "traffic_mix": traffic_mix_for_item(item),
+        "shorts_feed_views": shorts_views,
         "title_profile": title,
         "content": content_item,
         "funnel": funnel,
@@ -1350,7 +1412,8 @@ def build_release_rollups(findings: dict[str, Any], *, horizon: str = "weekly") 
             row["average_view_percentage_sum"] += avg
             row["average_view_percentage_count"] += 1
         ctr = number(metrics.get("videoThumbnailImpressionsClickRate"))
-        if ctr is not None:
+        impressions = number(metrics.get("videoThumbnailImpressions"))
+        if ctr is not None and thumbnail_ctr_is_usable(item, impressions):
             row["ctr_sum"] += ctr
             row["ctr_count"] += 1
 
@@ -1762,6 +1825,11 @@ def build_packaging_lab(findings: dict[str, Any], *, horizon: str = "weekly") ->
             "tooltip_key": "low_impression_high_retention",
             "items": [],
         },
+        "shorts_feed_thumbnail_mismatch": {
+            "label": "Shorts feed / thumbnail mismatch",
+            "tooltip_key": "shorts_feed_thumbnail_mismatch",
+            "items": [],
+        },
         "title_too_broad": {
             "label": "Title too broad",
             "tooltip_key": "title_too_broad",
@@ -1785,9 +1853,18 @@ def build_packaging_lab(findings: dict[str, Any], *, horizon: str = "weekly") ->
         retention = number(metrics.get("averageViewPercentage"))
         profile = item.get("title_profile") or {}
         enriched = with_confidence(item, horizon=horizon)
+        shorts_mismatch = is_shorts_thumbnail_mismatch(item, impressions)
         if impressions is not None and impressions >= 500 and ctr is not None and ctr < 3:
             buckets["high_impression_low_ctr"]["items"].append(enriched)
-        if impressions is not None and impressions < 150 and retention is not None and retention >= 55:
+        if shorts_mismatch:
+            buckets["shorts_feed_thumbnail_mismatch"]["items"].append(enriched)
+        if (
+            not shorts_mismatch
+            and impressions is not None
+            and impressions < 150
+            and retention is not None
+            and retention >= 55
+        ):
             buckets["low_impression_high_retention"]["items"].append(enriched)
         if (profile.get("specificity_score") or 0) <= 4 or (profile.get("word_count") or 0) <= 4:
             buckets["title_too_broad"]["items"].append(enriched)
@@ -1938,7 +2015,8 @@ def build_topic_clusters(
             row["retention_sum"] += retention
             row["retention_count"] += 1
         ctr = number(metrics.get("videoThumbnailImpressionsClickRate"))
-        if ctr is not None:
+        impressions = number(metrics.get("videoThumbnailImpressions"))
+        if ctr is not None and thumbnail_ctr_is_usable(item, impressions):
             row["ctr_sum"] += ctr
             row["ctr_count"] += 1
         row["top_videos"].append(
@@ -2082,6 +2160,8 @@ def build_production_queue(findings: dict[str, Any], *, horizon: str = "weekly")
                 "primary_category": item.get("primary_category"),
                 "categories": item.get("categories") or [],
                 "thumbnail_url": item.get("thumbnail_url"),
+                "traffic_sources": item.get("traffic_sources") or [],
+                "shorts_feed_views": weekly_shorts_feed_views(item),
                 "action": action,
                 "reason": reason,
                 "confidence": confidence,
@@ -2113,7 +2193,12 @@ def build_experiments(registry: dict[str, Any], findings: dict[str, Any], *, hor
         total_views_per_day = sum(number(metrics.get("views_per_day")) or 0 for metrics in metrics_rows)
         total_subscribers = sum(number(metrics.get("subscribersGained")) or 0 for metrics in metrics_rows)
         retention_values = [number(metrics.get("averageViewPercentage")) for metrics in metrics_rows if number(metrics.get("averageViewPercentage")) is not None]
-        ctr_values = [number(metrics.get("videoThumbnailImpressionsClickRate")) for metrics in metrics_rows if number(metrics.get("videoThumbnailImpressionsClickRate")) is not None]
+        ctr_values = [
+            number(metrics.get("videoThumbnailImpressionsClickRate"))
+            for item, metrics in zip(cohort, metrics_rows)
+            if number(metrics.get("videoThumbnailImpressionsClickRate")) is not None
+            and thumbnail_ctr_is_usable(item, number(metrics.get("videoThumbnailImpressions")))
+        ]
         status = str(experiment.get("status") or "planned")
         experiments.append(
             {
@@ -3069,6 +3154,42 @@ DASHBOARD_HTML = """<!doctype html>
       return row.metrics || item.metrics || {};
     }
 
+    function trafficSourceViews(item, sourceType, window = "7d") {
+      return (item.traffic_sources || [])
+        .filter((row) => row.window === window && row.source_type === sourceType)
+        .reduce((total, row) => total + (Number(row.views) || 0), 0);
+    }
+
+    function shortsFeedViews(item) {
+      return Number(item.shorts_feed_views) || trafficSourceViews(item, "SHORTS", "7d");
+    }
+
+    function tinyThumbnailSample(item, metrics) {
+      const impressions = Number(metrics.videoThumbnailImpressions);
+      return item.format === "short" && shortsFeedViews(item) > 0 && Number.isFinite(impressions) && impressions < 50;
+    }
+
+    function thumbnailImpressionText(item, metrics) {
+      const impressions = fmtNumber(metrics.videoThumbnailImpressions);
+      const shorts = shortsFeedViews(item);
+      if (item.format === "short" && shorts > 0) return `${impressions} thumb / ${fmtNumber(shorts)} Shorts`;
+      return `${impressions} thumb`;
+    }
+
+    function thumbnailCtrText(item, metrics) {
+      if (tinyThumbnailSample(item, metrics)) return "tiny sample";
+      return fmtPercent(metrics.videoThumbnailImpressionsClickRate);
+    }
+
+    function thumbnailImpressionCell(item, metrics) {
+      const shorts = shortsFeedViews(item);
+      return `${fmtNumber(metrics.videoThumbnailImpressions)}<div class="small muted">${item.format === "short" && shorts > 0 ? `${fmtNumber(shorts)} Shorts views` : "thumbnail exposures"}</div>`;
+    }
+
+    function thumbnailCtrCell(item, metrics) {
+      return `${thumbnailCtrText(item, metrics)}${tinyThumbnailSample(item, metrics) ? `<div class="small muted">not used for packaging</div>` : ""}`;
+    }
+
     function horizonRangeFor(item) {
       const row = ((item.horizon_metrics || {})[currentHorizon] || {});
       if (currentHorizon === "daily") return row.day || "latest day";
@@ -3195,7 +3316,8 @@ DASHBOARD_HTML = """<!doctype html>
               <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
               <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
               <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
-              <span class="metric-chip">${fmtPercent(metrics.videoThumbnailImpressionsClickRate)} CTR</span>
+              ${item.format === "short" ? `<span class="metric-chip"${tooltipAttrs(helpText("shorts_feed_views"), "Shorts views")}>${fmtNumber(shortsFeedViews(item))} Shorts views</span>` : ""}
+              <span class="metric-chip"${tinyThumbnailSample(item, metrics) ? tooltipAttrs(helpText("tiny_thumbnail_sample"), "Thumbnail CTR") : ""}>${thumbnailCtrText(item, metrics)} CTR</span>
               <span class="metric-chip"${tooltipAttrs(helpText("known_funnel_clicks"), "Known funnel clicks")}>${fmtNumber((item.funnel || {}).known_downstream_clicks)} known funnel clicks</span>
             </div>
           </div>
@@ -3529,7 +3651,7 @@ DASHBOARD_HTML = """<!doctype html>
             <h2>${withHelp("Packaging Lab", "packaging_lab")}</h2>
             ${packagingItems.map((item) => {
               const metrics = metricFor(item);
-              return compactItemLine(item, `${fmtNumber(metrics.videoThumbnailImpressions)} impressions | ${fmtPercent(metrics.videoThumbnailImpressionsClickRate)} CTR`);
+              return compactItemLine(item, `${thumbnailImpressionText(item, metrics)} | ${thumbnailCtrText(item, metrics)} CTR`);
             }).join("") || `<div class="empty">No high-impression / low-CTR items.</div>`}
           </div>
           <div class="card">
@@ -3654,7 +3776,7 @@ DASHBOARD_HTML = """<!doctype html>
               <td>${fmtNumber(metrics.views)}</td>
               <td>${fmtNumber(metrics.views_per_day, 1)}</td>
               <td>${fmtPercent(metrics.averageViewPercentage)}</td>
-              <td>${fmtPercent(metrics.videoThumbnailImpressionsClickRate)}</td>
+              <td>${thumbnailCtrCell(item, metrics)}</td>
               <td>${fmtNumber(item.score, 1)}</td>
             </tr>`;
           });
@@ -3786,7 +3908,8 @@ DASHBOARD_HTML = """<!doctype html>
       if (key === "avg_viewed") return Number(metrics.averageViewPercentage) || 0;
       if (key === "subs") return Number(metrics.subscribersGained) || 0;
       if (key === "impressions") return Number(metrics.videoThumbnailImpressions) || 0;
-      if (key === "ctr") return Number(metrics.videoThumbnailImpressionsClickRate) || 0;
+      if (key === "ctr") return tinyThumbnailSample(item, metrics) ? -1 : (Number(metrics.videoThumbnailImpressionsClickRate) || 0);
+      if (key === "shorts_views") return shortsFeedViews(item);
       if (key === "duration") return Number(item.duration_seconds) || 0;
       return String(item[key] || "").toLowerCase();
     }
@@ -3803,6 +3926,7 @@ DASHBOARD_HTML = """<!doctype html>
       if (filter === "missing_thumbnail") return !item.thumbnail_url;
       if (filter === "missing_srt") return !item.content || item.content.status !== "present";
       if (filter === "high_impression_low_ctr") return Number(metrics.videoThumbnailImpressions) >= 500 && Number(metrics.videoThumbnailImpressionsClickRate) < 3;
+      if (filter === "tiny_thumbnail_sample") return tinyThumbnailSample(item, metrics);
       return true;
     }
 
@@ -3858,6 +3982,7 @@ DASHBOARD_HTML = """<!doctype html>
           <label class="check-chip"><input type="checkbox" data-quick-filter="missing_thumbnail"> Missing thumbnail</label>
           <label class="check-chip"><input type="checkbox" data-quick-filter="missing_srt"> Missing SRT</label>
           <label class="check-chip"><input type="checkbox" data-quick-filter="high_impression_low_ctr"> High impr / low CTR</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="tiny_thumbnail_sample"> ${withHelp("Tiny CTR sample", "tiny_thumbnail_sample")}</label>
         </div>
         <div id="video-table"></div>
       `;
@@ -3904,8 +4029,9 @@ DASHBOARD_HTML = """<!doctype html>
             <td>${fmtNumber(metrics.views_per_day, 1)}</td>
             <td>${fmtPercent(metrics.averageViewPercentage)}</td>
             <td>${fmtNumber(metrics.subscribersGained)}</td>
-            <td>${fmtNumber(metrics.videoThumbnailImpressions)}</td>
-            <td>${fmtPercent(metrics.videoThumbnailImpressionsClickRate)}</td>
+            <td>${thumbnailImpressionCell(item, metrics)}</td>
+            <td>${item.format === "short" ? fmtNumber(shortsFeedViews(item)) : "-"}</td>
+            <td>${thumbnailCtrCell(item, metrics)}</td>
           </tr>`;
         });
         const headers = [
@@ -3921,8 +4047,9 @@ DASHBOARD_HTML = """<!doctype html>
           `<button class="sort-btn" data-sort="views_per_day">V/day</button>`,
           `<button class="sort-btn" data-sort="avg_viewed">Avg Viewed</button>`,
           `<button class="sort-btn" data-sort="subs">Subs</button>`,
-          `<button class="sort-btn" data-sort="impressions">Impr.</button>`,
-          `<button class="sort-btn" data-sort="ctr">CTR</button>`
+          `<button class="sort-btn" data-sort="impressions">${withHelp("Thumb Impr.", "shorts_thumbnail_impressions")}</button>`,
+          `<button class="sort-btn" data-sort="shorts_views">${withHelp("Shorts Views", "shorts_feed_views")}</button>`,
+          `<button class="sort-btn" data-sort="ctr">${withHelp("Thumb CTR", "tiny_thumbnail_sample")}</button>`
         ];
         document.getElementById("video-table").innerHTML = simpleTable(headers, rows);
         document.querySelectorAll("[data-sort]").forEach((button) => {
@@ -4033,6 +4160,7 @@ DASHBOARD_HTML = """<!doctype html>
           <label class="check-chip"><input type="checkbox" data-rubric-filter="missing_thumbnail"> Missing thumbnail</label>
           <label class="check-chip"><input type="checkbox" data-rubric-filter="missing_srt"> Missing SRT</label>
           <label class="check-chip"><input type="checkbox" data-rubric-filter="high_impression_low_ctr"> High impr / low CTR</label>
+          <label class="check-chip"><input type="checkbox" data-rubric-filter="tiny_thumbnail_sample"> ${withHelp("Tiny CTR sample", "tiny_thumbnail_sample")}</label>
           <label class="check-chip"><input type="checkbox" data-rubric-filter="actionable"> Actionable only</label>
         </div>
         <div id="rubric-list"></div>
@@ -4083,8 +4211,9 @@ DASHBOARD_HTML = """<!doctype html>
                     <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
                     <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
                     <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
-                    <span class="metric-chip">${fmtNumber(metrics.videoThumbnailImpressions)} impr.</span>
-                    <span class="metric-chip">${fmtPercent(metrics.videoThumbnailImpressionsClickRate)} CTR</span>
+                    <span class="metric-chip"${item.format === "short" ? tooltipAttrs(helpText("shorts_thumbnail_impressions"), "Thumbnail impressions") : ""}>${thumbnailImpressionText(item, metrics)}</span>
+                    ${item.format === "short" ? `<span class="metric-chip"${tooltipAttrs(helpText("shorts_feed_views"), "Shorts views")}>${fmtNumber(shortsFeedViews(item))} Shorts views</span>` : ""}
+                    <span class="metric-chip"${tinyThumbnailSample(item, metrics) ? tooltipAttrs(helpText("tiny_thumbnail_sample"), "Thumbnail CTR") : ""}>${thumbnailCtrText(item, metrics)} CTR</span>
                     <span class="metric-chip">${escapeHtml(((item.release_timing || {}).weekday || "-"))} ${escapeHtml(((item.release_timing || {}).hour_label || ""))}</span>
                   </div>
                   <h3 style="margin-top: 10px;">Why This Diagnosis?</h3>

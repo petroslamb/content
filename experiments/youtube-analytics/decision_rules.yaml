@@ -22,6 +22,7 @@ thresholds:
   remaster:
     views_per_day: 15
     average_view_percentage_below: 45
+    min_impressions_for_ctr: 250
     ctr_below: 4.0
 
   retitle:

@@ -116,6 +116,14 @@ def per_1000(numerator: float | None, denominator: float | None) -> float | None
     return numerator / denominator * 1000
 
 
+def has_reliable_thumbnail_ctr(
+    impressions: float | None,
+    *,
+    min_impressions: float,
+) -> bool:
+    return impressions is not None and impressions >= min_impressions
+
+
 def manual_value(video: dict[str, Any], key: str) -> Any:
     observations = video.get("manual_observations")
     if not isinstance(observations, dict):
@@ -307,6 +315,13 @@ def classify_video(
 
     remaster = thresholds.get("remaster", {})
     old_format = format_name == "short" and not is_remastered(video)
+    remaster_ctr_usable = has_reliable_thumbnail_ctr(
+        impressions,
+        min_impressions=remaster.get(
+            "min_impressions_for_ctr",
+            thresholds.get("retitle", {}).get("min_impressions", 250),
+        ),
+    )
     if (
         old_format
         and vpd is not None
@@ -314,7 +329,7 @@ def classify_video(
         and (
             avg_view_percentage is None
             or avg_view_percentage < remaster.get("average_view_percentage_below", 45)
-            or (ctr is not None and ctr < remaster.get("ctr_below", 4.0))
+            or (remaster_ctr_usable and ctr is not None and ctr < remaster.get("ctr_below", 4.0))
         )
     ):
         add_decision(
