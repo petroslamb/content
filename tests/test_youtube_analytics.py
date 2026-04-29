@@ -131,6 +131,40 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         self.assertEqual(content_type["VIDEO123"], [])
         self.assertEqual(notes, [])
 
+    def test_playlist_membership_can_drive_format_inference(self) -> None:
+        records = {
+            "VIDEO123": {
+                "video_id": "VIDEO123",
+                "title": "Confidence Debt",
+                "format": "unknown",
+                "duration_seconds": 3272,
+                "workflow": "youtube_recent_upload",
+            }
+        }
+        memberships = {
+            "VIDEO123": [
+                {
+                    "id": "PLAYLIST123",
+                    "title": "Visual Deep Research Dives",
+                    "position": 0,
+                }
+            ]
+        }
+
+        fetch.apply_playlist_memberships(records, memberships)
+
+        self.assertEqual(records["VIDEO123"]["format"], "cinematic")
+        self.assertEqual(records["VIDEO123"]["format_source"], "playlist")
+        self.assertEqual(records["VIDEO123"]["playlists"][0]["title"], "Visual Deep Research Dives")
+        self.assertEqual(
+            fetch.infer_format(
+                title="Confidence Debt",
+                duration_seconds=3272,
+                playlists=[{"title": "Rooted Layers Main Podcast"}],
+            ),
+            "podcast",
+        )
+
     def test_decision_classification_covers_core_buckets(self) -> None:
         rules = {
             "minimum_data_age_days": 2,
@@ -271,6 +305,13 @@ class YouTubeAnalyticsTests(unittest.TestCase):
                         views=1400,
                         avg_pct=60,
                         subs=3,
+                        playlists=[
+                            {
+                                "id": "PLAYLIST123",
+                                "title": "Visual Deep Research Dives",
+                                "position": 0,
+                            }
+                        ],
                         daily_metrics=[
                             {
                                 "window": "7d",
@@ -348,6 +389,9 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertEqual(payload["package_rollups"][0]["package"], "demo")
             self.assertEqual(payload["package_rollups"][0]["video_count"], 2)
             self.assertEqual(payload["package_rollups"][0]["action_items"], 2)
+            self.assertEqual(payload["totals"]["playlist_videos"], 1)
+            self.assertEqual(payload["playlist_rollups"][0]["playlist"], "Visual Deep Research Dives")
+            self.assertEqual(payload["playlist_rollups"][0]["video_count"], 1)
             self.assertEqual(payload["horizons"]["monthly"]["label"], "28 Days")
             self.assertEqual(payload["horizon_summaries"]["daily"]["total_views"], 25)
             self.assertEqual(
@@ -357,6 +401,10 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             self.assertEqual(
                 payload["findings"]["by_category"]["scale"][0]["horizon_metrics"]["daily"]["day"],
                 "2026-04-27",
+            )
+            self.assertEqual(
+                payload["findings"]["by_category"]["scale"][0]["primary_playlist"]["title"],
+                "Visual Deep Research Dives",
             )
             self.assertEqual(payload["funnel_rollups"]["totals"]["shorts_with_related"], 1)
             self.assertEqual(payload["sort_defaults"]["videos"]["key"], "score")
@@ -465,6 +513,7 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         published_at: str = "2026-04-20T00:00:00Z",
         source_reports: list[str] | None = None,
         daily_metrics: list[dict] | None = None,
+        playlists: list[dict] | None = None,
     ) -> dict:
         metrics = {
             "views": views,
@@ -484,8 +533,10 @@ class YouTubeAnalyticsTests(unittest.TestCase):
             "url": f"https://www.youtube.com/watch?v={video_id}",
             "published_at": published_at,
             "format": format_name,
+            "format_source": "fixture",
             "package": "demo",
             "topic": "demo",
+            "playlists": playlists or [],
             "source_reports": source_reports or [],
             "related_video": {"id": "LONG123"},
             "analytics_windows": {

@@ -27,6 +27,7 @@ try:
         OAuthReauthRequired,
         build_youtube,
         build_youtube_analytics,
+        fetch_playlist_items,
     )
 except ImportError as exc:  # pragma: no cover - exercised by operator use.
     print(
@@ -200,7 +201,13 @@ def infer_format(
     report_path: Path | None = None,
     workflow: str | None = None,
     video_path: str | None = None,
+    playlists: list[dict[str, Any]] | None = None,
 ) -> str:
+    playlist_titles = [
+        str(playlist.get("title") or playlist.get("playlist_title") or "")
+        for playlist in playlists or []
+        if isinstance(playlist, dict)
+    ]
     haystack = " ".join(
         value.lower()
         for value in [
@@ -208,16 +215,55 @@ def infer_format(
             workflow or "",
             str(report_path or ""),
             video_path or "",
+            *playlist_titles,
         ]
     )
     if "#shorts" in haystack or "shorts" in haystack or "portrait" in haystack:
         return "short"
     if "tldr" in haystack or "tl;dr" in haystack:
         return "tldr"
-    if "cinematic" in haystack:
+    if "cinematic" in haystack or "visual deep research" in haystack:
         return "cinematic"
+    if "podcast" in haystack:
+        return "podcast"
     if duration_seconds is not None and duration_seconds <= 180:
         return "short"
+    return "unknown"
+
+
+def format_source(
+    *,
+    title: str | None,
+    duration_seconds: float | None,
+    report_path: Path | None = None,
+    workflow: str | None = None,
+    video_path: str | None = None,
+    playlists: list[dict[str, Any]] | None = None,
+) -> str:
+    playlist_format = infer_format(
+        title=None,
+        duration_seconds=None,
+        playlists=playlists,
+    )
+    if playlist_format != "unknown":
+        return "playlist"
+    path_format = infer_format(
+        title=None,
+        duration_seconds=None,
+        report_path=report_path,
+        workflow=workflow,
+        video_path=video_path,
+    )
+    if path_format != "unknown":
+        return "workflow"
+    title_format = infer_format(
+        title=title,
+        duration_seconds=None,
+    )
+    if title_format != "unknown":
+        return "title"
+    if duration_seconds is not None and duration_seconds <= 180:
+        return "duration"
     return "unknown"
 
 
@@ -301,6 +347,13 @@ def video_record_from_upload_report(
         readback = video.get("youtube_readback", {})
         duration = readback.get("duration")
         duration_seconds = parse_iso8601_duration_seconds(duration)
+        inferred_format = infer_format(
+            title=report.get("title"),
+            duration_seconds=duration_seconds,
+            report_path=report_path,
+            workflow=workflow,
+            video_path=report.get("video_source_file"),
+        )
         records.append(
             {
                 "video_id": video_id,
@@ -310,7 +363,8 @@ def video_record_from_upload_report(
                 "privacy_status": readback.get("privacy_status") or report.get("upload_privacy"),
                 "duration": duration,
                 "duration_seconds": duration_seconds,
-                "format": infer_format(
+                "format": inferred_format,
+                "format_source": format_source(
                     title=report.get("title"),
                     duration_seconds=duration_seconds,
                     report_path=report_path,
@@ -341,6 +395,13 @@ def video_record_from_upload_report(
             or probe.get("format_duration")
             or parse_iso8601_duration_seconds(readback.get("duration"))
         )
+        inferred_format = infer_format(
+            title=item.get("title"),
+            duration_seconds=duration_seconds,
+            report_path=report_path,
+            workflow=workflow,
+            video_path=item.get("video_path") or item.get("portrait_file"),
+        )
         records.append(
             {
                 "video_id": video_id,
@@ -351,7 +412,8 @@ def video_record_from_upload_report(
                 "privacy_status": readback.get("privacy_status"),
                 "duration": readback.get("duration"),
                 "duration_seconds": duration_seconds,
-                "format": infer_format(
+                "format": inferred_format,
+                "format_source": format_source(
                     title=item.get("title"),
                     duration_seconds=duration_seconds,
                     report_path=report_path,
@@ -497,6 +559,11 @@ def fetch_recent_channel_uploads(
                     duration_seconds=None,
                     workflow="youtube_recent_upload",
                 ),
+                "format_source": format_source(
+                    title=snippet.get("title"),
+                    duration_seconds=None,
+                    workflow="youtube_recent_upload",
+                ),
                 "workflow": "youtube_recent_upload",
                 "source_reports": [],
             }
@@ -504,6 +571,95 @@ def fetch_recent_channel_uploads(
         if stop or not page_token:
             break
     return records
+
+
+def fetch_channel_playlists(youtube: Any) -> list[dict[str, Any]]:
+    playlists: list[dict[str, Any]] = []
+    page_token = None
+    while True:
+        response = (
+            youtube.playlists()
+            .list(
+                part="snippet,contentDetails,status",
+                mine=True,
+                maxResults=50,
+                pageToken=page_token,
+            )
+            .execute()
+        )
+        for item in response.get("items", []):
+            snippet = item.get("snippet", {})
+            playlists.append(
+                {
+                    "id": item.get("id"),
+                    "title": snippet.get("title"),
+                    "description": snippet.get("description"),
+                    "item_count": (item.get("contentDetails") or {}).get("itemCount"),
+                    "privacy_status": (item.get("status") or {}).get("privacyStatus"),
+                }
+            )
+        page_token = response.get("nextPageToken")
+        if not page_token:
+            return [playlist for playlist in playlists if playlist.get("id")]
+
+
+def fetch_playlist_memberships(youtube: Any) -> dict[str, list[dict[str, Any]]]:
+    memberships: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for playlist in fetch_channel_playlists(youtube):
+        playlist_id = playlist["id"]
+        for item in fetch_playlist_items(youtube, playlist_id, part="id,snippet"):
+            snippet = item.get("snippet", {})
+            video_id = (snippet.get("resourceId") or {}).get("videoId")
+            if not video_id:
+                continue
+            memberships[video_id].append(
+                {
+                    "id": playlist_id,
+                    "title": playlist.get("title"),
+                    "item_id": item.get("id"),
+                    "position": snippet.get("position"),
+                    "playlist_item_published_at": snippet.get("publishedAt"),
+                    "privacy_status": playlist.get("privacy_status"),
+                }
+            )
+    for video_id in list(memberships):
+        memberships[video_id] = sorted(
+            memberships[video_id],
+            key=lambda row: (
+                str(row.get("title") or "").lower(),
+                row.get("position") if row.get("position") is not None else 999999,
+            ),
+        )
+    return dict(memberships)
+
+
+def apply_playlist_memberships(
+    records: dict[str, dict[str, Any]],
+    memberships: dict[str, list[dict[str, Any]]],
+) -> None:
+    for video_id, record in records.items():
+        playlists = memberships.get(video_id, [])
+        if not playlists:
+            record.setdefault("playlists", [])
+            continue
+        record["playlists"] = playlists
+        playlist_format = infer_format(
+            title=record.get("title"),
+            duration_seconds=record.get("duration_seconds"),
+            workflow=record.get("workflow"),
+            playlists=playlists,
+        )
+        if playlist_format != "unknown":
+            if record.get("format") != playlist_format:
+                record["format"] = playlist_format
+            record["format_source"] = "playlist"
+        elif not record.get("format_source") or record.get("format_source") == "unknown":
+            record["format_source"] = format_source(
+                title=record.get("title"),
+                duration_seconds=record.get("duration_seconds"),
+                workflow=record.get("workflow"),
+                playlists=playlists,
+            )
 
 
 def fetch_video_details(youtube: Any, video_ids: list[str]) -> dict[str, dict[str, Any]]:
@@ -546,11 +702,20 @@ def apply_video_details(record: dict[str, Any], detail: dict[str, Any] | None) -
             "data_api_statistics": statistics,
         }
     )
-    record["format"] = infer_format(
+    inferred_format = infer_format(
         title=record.get("title"),
         duration_seconds=record.get("duration_seconds"),
         workflow=record.get("workflow"),
+        playlists=record.get("playlists"),
     )
+    if inferred_format != "unknown" or not record.get("format"):
+        record["format"] = inferred_format
+        record["format_source"] = format_source(
+            title=record.get("title"),
+            duration_seconds=record.get("duration_seconds"),
+            workflow=record.get("workflow"),
+            playlists=record.get("playlists"),
+        )
 
 
 def empty_window(
@@ -789,6 +954,7 @@ def build_ledger(
     video_ids: list[str],
     from_upload_reports: bool,
     recent_limit: int,
+    include_playlists: bool,
     repo_root: Path = REPO_ROOT,
 ) -> dict[str, Any]:
     records: dict[str, dict[str, Any]] = {}
@@ -815,6 +981,11 @@ def build_ledger(
     details = fetch_video_details(youtube, sorted_video_ids)
     for video_id in sorted_video_ids:
         apply_video_details(records[video_id], details.get(video_id))
+
+    playlist_memberships: dict[str, list[dict[str, Any]]] = {}
+    if include_playlists:
+        playlist_memberships = fetch_playlist_memberships(youtube)
+        apply_playlist_memberships(records, playlist_memberships)
 
     analytics_end_date = (utc_now().date() - timedelta(days=1)).isoformat()
     (
@@ -852,6 +1023,11 @@ def build_ledger(
             "from_upload_reports": from_upload_reports,
             "explicit_video_ids": video_ids,
             "recent_limit": recent_limit,
+            "include_playlists": include_playlists,
+            "playlist_membership_videos": sum(
+                1 for record in records.values() if record.get("playlists")
+            ),
+            "channel_playlist_membership_videos": len(playlist_memberships),
         },
         "analytics_end_date": analytics_end_date,
         "windows": WATCH_WINDOWS,
@@ -888,6 +1064,12 @@ def parse_args() -> argparse.Namespace:
         default=100,
         help="Maximum recent channel uploads to discover.",
     )
+    parser.add_argument(
+        "--include-playlists",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Enrich known videos with channel playlist memberships.",
+    )
     parser.add_argument("--output", type=Path, default=DEFAULT_LEDGER_PATH)
     return parser.parse_args()
 
@@ -911,6 +1093,7 @@ def main() -> None:
             video_ids=flatten_video_ids(args.video_id),
             from_upload_reports=args.from_upload_reports,
             recent_limit=args.recent_limit,
+            include_playlists=args.include_playlists,
         )
     except OAuthReauthRequired as exc:
         print(str(exc), file=sys.stderr)

@@ -98,6 +98,7 @@ READABLE_FIELD_LABELS = {
     "source_reports": "Source reports",
     "package": "Package metadata",
     "format": "Format metadata",
+    "playlists": "Playlist metadata",
     "views": "Views",
     "engagedViews": "Engaged views",
     "estimatedMinutesWatched": "Watch time",
@@ -130,6 +131,7 @@ FIELD_GROUPS = {
         "source_reports",
         "package",
         "format",
+        "playlists",
     ],
 }
 FIELD_UNLOCKS = {
@@ -377,6 +379,26 @@ def known_clicks(observations: dict[str, Any]) -> dict[str, float]:
     }
 
 
+def compact_playlist(playlist: dict[str, Any]) -> dict[str, Any]:
+    playlist_id = playlist.get("id") or playlist.get("playlist_id")
+    title = playlist.get("title") or playlist.get("playlist_title") or playlist_id or "Untitled playlist"
+    return {
+        "id": playlist_id,
+        "title": title,
+        "url": f"https://www.youtube.com/playlist?list={playlist_id}" if playlist_id else None,
+        "position": playlist.get("position"),
+        "privacy_status": playlist.get("privacy_status"),
+    }
+
+
+def compact_playlists(video: dict[str, Any]) -> list[dict[str, Any]]:
+    return [
+        compact_playlist(playlist)
+        for playlist in video.get("playlists") or []
+        if isinstance(playlist, dict)
+    ]
+
+
 def compact_classification(
     classification: dict[str, Any],
     source_video: dict[str, Any] | None = None,
@@ -394,12 +416,16 @@ def compact_classification(
     source_reports = source_video.get("source_reports") or []
     click_metrics = known_clicks(observations)
     horizon_metrics = build_horizon_metrics(source_video)
+    playlists = compact_playlists(source_video)
     return {
         "video_id": classification.get("video_id"),
         "title": classification.get("title"),
         "url": classification.get("url"),
         "format": classification.get("format") or "unknown",
+        "format_source": source_video.get("format_source") or "unknown",
         "package": classification.get("package") or "unknown",
+        "playlists": playlists,
+        "primary_playlist": playlists[0] if playlists else None,
         "published_at": classification.get("published_at"),
         "privacy_status": source_video.get("privacy_status"),
         "selected_window": classification.get("selected_window"),
@@ -454,6 +480,14 @@ def summarize_findings(
             by_category.setdefault(category, []).append(item)
         for field in item["manual_fields_missing"]:
             missing_fields[field] += 1
+        if not item.get("source_reports"):
+            missing_fields["source_reports"] += 1
+        if not item.get("package") or item.get("package") == "unknown":
+            missing_fields["package"] += 1
+        if not item.get("format") or item.get("format") == "unknown":
+            missing_fields["format"] += 1
+        if not item.get("playlists"):
+            missing_fields["playlists"] += 1
 
     action_items = [
         item
@@ -566,6 +600,65 @@ def build_package_rollups(findings: dict[str, Any], *, horizon: str = "weekly") 
 def build_package_rollups_by_horizon(findings: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
     return {
         horizon: build_package_rollups(findings, horizon=horizon)
+        for horizon in HORIZONS
+    }
+
+
+def playlist_names_for_item(item: dict[str, Any]) -> list[dict[str, Any]]:
+    playlists = item.get("playlists") or []
+    if not playlists:
+        return [{"id": None, "title": "No playlist", "url": None}]
+    return playlists
+
+
+def build_playlist_rollups(findings: dict[str, Any], *, horizon: str = "weekly") -> list[dict[str, Any]]:
+    rollups: dict[str, dict[str, Any]] = {}
+    for item in findings.get("classifications") or []:
+        metrics = item_metrics_for_horizon(item, horizon)
+        for playlist in playlist_names_for_item(item):
+            playlist_id = playlist.get("id")
+            title = playlist.get("title") or playlist_id or "No playlist"
+            key = playlist_id or title
+            row = rollups.setdefault(
+                key,
+                {
+                    "playlist_id": playlist_id,
+                    "playlist": title,
+                    "url": playlist.get("url"),
+                    "video_count": 0,
+                    "action_items": 0,
+                    "total_views": 0.0,
+                    "average_view_percentage_sum": 0.0,
+                    "average_view_percentage_count": 0,
+                    "categories": Counter(),
+                },
+            )
+            row["video_count"] += 1
+            row["categories"].update(item.get("categories") or ["ignore"])
+            if any(category != "ignore" for category in item.get("categories") or []):
+                row["action_items"] += 1
+            views = number(metrics.get("views"))
+            if views is not None:
+                row["total_views"] += views
+            avg_viewed = number(metrics.get("averageViewPercentage"))
+            if avg_viewed is not None:
+                row["average_view_percentage_sum"] += avg_viewed
+                row["average_view_percentage_count"] += 1
+
+    rows = []
+    for row in rollups.values():
+        count = row.pop("average_view_percentage_count")
+        avg_sum = row.pop("average_view_percentage_sum")
+        categories = row.pop("categories")
+        row["average_view_percentage"] = avg_sum / count if count else None
+        row["category_counts"] = dict(categories)
+        rows.append(row)
+    return sorted(rows, key=lambda item: (item["action_items"], item["total_views"], item["video_count"]), reverse=True)
+
+
+def build_playlist_rollups_by_horizon(findings: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
+    return {
+        horizon: build_playlist_rollups(findings, horizon=horizon)
         for horizon in HORIZONS
     }
 
@@ -742,9 +835,18 @@ def build_dashboard_payload(
     format_counts = Counter(video.get("format") or "unknown" for video in videos)
     privacy_counts = Counter(video.get("privacy_status") or "unknown" for video in videos)
     package_counts = Counter(video.get("package") or "unknown" for video in videos)
+    playlist_counts: Counter[str] = Counter()
+    for video in videos:
+        playlists = compact_playlists(video)
+        if not playlists:
+            playlist_counts["No playlist"] += 1
+            continue
+        for playlist in playlists:
+            playlist_counts[playlist["title"]] += 1
     findings = summarize_findings(report_summary, videos)
     action_lanes = build_action_lanes(findings)
     package_rollups_by_horizon = build_package_rollups_by_horizon(findings)
+    playlist_rollups_by_horizon = build_playlist_rollups_by_horizon(findings)
     funnel_rollups = build_funnel_rollups(findings)
     horizon_summaries = build_horizon_summaries(findings)
     traffic_sources_by_horizon = summarize_traffic_by_horizon(videos)
@@ -804,6 +906,7 @@ def build_dashboard_payload(
             "traffic_source_videos": sum(1 for video in videos if video.get("traffic_sources")),
             "content_type_videos": sum(1 for video in videos if video.get("creator_content_type")),
             "daily_metric_videos": sum(1 for video in videos if video.get("daily_metrics")),
+            "playlist_videos": sum(1 for video in videos if video.get("playlists")),
             "related_video_targets": sum(1 for video in videos if video.get("related_video")),
             "reach_impression_videos": reach_impression_videos,
             "ctr_videos": ctr_videos,
@@ -814,6 +917,7 @@ def build_dashboard_payload(
             "formats": sorted_counter(format_counts),
             "privacy": sorted_counter(privacy_counts),
             "top_packages": sorted_counter(package_counts, limit=15),
+            "top_playlists": sorted_counter(playlist_counts, limit=15),
             "traffic_sources_7d": summarize_traffic(videos),
             "traffic_sources_by_horizon": traffic_sources_by_horizon,
             "creator_content_type_7d": summarize_content_type(videos),
@@ -842,6 +946,8 @@ def build_dashboard_payload(
         "action_lanes": action_lanes,
         "package_rollups": package_rollups_by_horizon["weekly"],
         "package_rollups_by_horizon": package_rollups_by_horizon,
+        "playlist_rollups": playlist_rollups_by_horizon["weekly"],
+        "playlist_rollups_by_horizon": playlist_rollups_by_horizon,
         "funnel_rollups": funnel_rollups,
         "sort_defaults": {
             "videos": {"key": "score", "direction": "desc"},
@@ -1382,6 +1488,21 @@ DASHBOARD_HTML = """<!doctype html>
       }${links.length > 2 ? ` +${links.length - 2}` : ""}</div>`;
     }
 
+    function playlistLabels(item) {
+      return (item.playlists || []).map((playlist) => playlist.title || playlist.id).filter(Boolean);
+    }
+
+    function playlistLinks(item) {
+      const playlists = item.playlists || [];
+      if (!playlists.length) return `<div class="small muted">Playlist: none</div>`;
+      return `<div class="small muted">Playlist: ${
+        playlists.slice(0, 2).map((playlist) => playlist.url
+          ? `<a href="${escapeHtml(playlist.url)}" target="_blank" rel="noreferrer">${escapeHtml(playlist.title || playlist.id)}</a>`
+          : escapeHtml(playlist.title || playlist.id || "Untitled playlist")
+        ).join(", ")
+      }${playlists.length > 2 ? ` +${playlists.length - 2}` : ""}</div>`;
+    }
+
     function strongestAction() {
       const doNow = ((data.action_lanes || {}).do_now || {}).items || [];
       return doNow[0] || (data.findings.action_items || [])[0] || null;
@@ -1414,6 +1535,7 @@ DASHBOARD_HTML = """<!doctype html>
             <div class="muted">${escapeHtml(reason || "No report reason recorded.")}</div>
             <div>${escapeHtml(action || "Keep watching until a stronger signal appears.")}</div>
             ${sourceLinks(item)}
+            ${playlistLinks(item)}
             <div class="metric-row">
               <span class="metric-chip">${escapeHtml(horizonMeta().label)}: ${escapeHtml(horizonRangeFor(item))}</span>
               <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
@@ -1509,9 +1631,26 @@ DASHBOARD_HTML = """<!doctype html>
         total_views: row.total_views,
         average_view_percentage: row.average_view_percentage
       }));
+      const playlistRows = ((data.playlist_rollups_by_horizon || {})[currentHorizon] || data.playlist_rollups || []).slice(0, 10).map((row) => ({
+        playlist: row.playlist,
+        url: row.url,
+        video_count: row.video_count,
+        action_items: row.action_items,
+        total_views: row.total_views,
+        average_view_percentage: row.average_view_percentage
+      }));
       const packageTableRows = packageRows.map((row) => `
         <tr>
           <td>${escapeHtml(row.package)}</td>
+          <td>${fmtNumber(row.action_items)}</td>
+          <td>${fmtNumber(row.total_views)}</td>
+          <td>${fmtPercent(row.average_view_percentage)}</td>
+        </tr>
+      `);
+      const playlistTableRows = playlistRows.map((row) => `
+        <tr>
+          <td>${row.url ? `<a href="${escapeHtml(row.url)}" target="_blank" rel="noreferrer">${escapeHtml(row.playlist)}</a>` : escapeHtml(row.playlist)}</td>
+          <td>${fmtNumber(row.video_count)}</td>
           <td>${fmtNumber(row.action_items)}</td>
           <td>${fmtNumber(row.total_views)}</td>
           <td>${fmtPercent(row.average_view_percentage)}</td>
@@ -1535,6 +1674,7 @@ DASHBOARD_HTML = """<!doctype html>
           ${stat("Watch Minutes", fmtNumber(summary.total_watch_time_minutes))}
           ${stat("Avg Viewed", fmtPercent(summary.average_view_percentage))}
           ${stat("Videos With Data", fmtNumber(summary.videos_with_metrics))}
+          ${stat("Videos In Playlists", fmtNumber(totals.playlist_videos))}
           ${stat("Reach Impressions Ready", fmtNumber(totals.reach_impression_videos))}
         </div>
         <div class="grid three">
@@ -1544,6 +1684,7 @@ DASHBOARD_HTML = """<!doctype html>
             <p class="muted">Reporting sync last merged ${escapeHtml(sync.merged_at || "-")} from ${fmtNumber(sync.source_file_count)} files.</p>
           </div>
           <div class="card"><h2>Formats</h2>${barList(data.distributions.formats || [], { color: "blue" })}</div>
+          <div class="card"><h2>Playlists</h2>${barList(data.distributions.top_playlists || [], { color: "teal" })}</div>
           <div class="card"><h2>Decision Counts</h2>${barList(decisionRows, { color: "teal" })}</div>
           <div class="card"><h2>${escapeHtml(traffic.label || "Traffic Sources")}</h2>${traffic.note ? `<p class="muted">${escapeHtml(traffic.note)}</p>` : ""}${barList(traffic.sources || [], { labelKey: "source", valueKey: "views", color: "green" })}</div>
           <div class="card"><h2>Metric Coverage</h2>${barList(metricRows, { color: "violet" })}</div>
@@ -1558,6 +1699,10 @@ DASHBOARD_HTML = """<!doctype html>
         <div class="card" style="margin-top: 12px;">
           <h2>Package Rollups: ${escapeHtml(horizonMeta().label)}</h2>
           ${simpleTable(["Package", "Action Items", "Views", "Avg Viewed"], packageTableRows)}
+        </div>
+        <div class="card" style="margin-top: 12px;">
+          <h2>Playlist Rollups: ${escapeHtml(horizonMeta().label)}</h2>
+          ${simpleTable(["Playlist", "Videos", "Action Items", "Views", "Avg Viewed"], playlistTableRows)}
         </div>
       `;
       bindHorizonControls();
@@ -1582,6 +1727,7 @@ DASHBOARD_HTML = """<!doctype html>
       if (filter === "cinematic") return item.format === "cinematic";
       if (filter === "missing_ctr") return metrics.videoThumbnailImpressions === null || metrics.videoThumbnailImpressionsClickRate === null;
       if (filter === "has_related") return Boolean(item.related_video);
+      if (filter === "has_playlist") return (item.playlists || []).length > 0;
       if (filter === "young") return item.data_age_days !== null && item.data_age_days !== undefined && item.data_age_days < 2;
       return true;
     }
@@ -1589,6 +1735,7 @@ DASHBOARD_HTML = """<!doctype html>
     function renderVideos() {
       const classifications = data.findings.classifications || [];
       const formatOptions = [...new Set(classifications.map((item) => item.format || "unknown"))].sort();
+      const playlistOptions = [...new Set(classifications.flatMap((item) => playlistLabels(item)))].sort();
       document.getElementById("videos").innerHTML = `
         <div class="card" style="margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
@@ -1609,6 +1756,10 @@ DASHBOARD_HTML = """<!doctype html>
             <option value="">All formats</option>
             ${formatOptions.map((format) => `<option value="${escapeHtml(format)}">${escapeHtml(format)}</option>`).join("")}
           </select>
+          <select id="playlist-filter">
+            <option value="">All playlists</option>
+            ${playlistOptions.map((playlist) => `<option value="${escapeHtml(playlist)}">${escapeHtml(playlist)}</option>`).join("")}
+          </select>
         </div>
         <div class="quick-filters" style="margin-bottom: 12px;">
           <label class="check-chip"><input type="checkbox" data-quick-filter="actionable"> Actionable only</label>
@@ -1616,6 +1767,7 @@ DASHBOARD_HTML = """<!doctype html>
           <label class="check-chip"><input type="checkbox" data-quick-filter="cinematic"> Cinematic</label>
           <label class="check-chip"><input type="checkbox" data-quick-filter="missing_ctr"> Missing CTR</label>
           <label class="check-chip"><input type="checkbox" data-quick-filter="has_related"> Has related video</label>
+          <label class="check-chip"><input type="checkbox" data-quick-filter="has_playlist"> Has playlist</label>
           <label class="check-chip"><input type="checkbox" data-quick-filter="young"> New or too young</label>
         </div>
         <div id="video-table"></div>
@@ -1624,13 +1776,15 @@ DASHBOARD_HTML = """<!doctype html>
         const search = document.getElementById("video-search").value.toLowerCase();
         const category = document.getElementById("category-filter").value;
         const format = document.getElementById("format-filter").value;
+        const playlist = document.getElementById("playlist-filter").value;
         const quickFilters = [...document.querySelectorAll("[data-quick-filter]:checked")].map((input) => input.dataset.quickFilter);
         const sorted = classifications
           .filter((item) => !category || (item.categories || []).includes(category))
           .filter((item) => !format || item.format === format)
+          .filter((item) => !playlist || playlistLabels(item).includes(playlist))
           .filter((item) => quickFilters.every((filter) => matchesQuickFilter(item, filter)))
           .filter((item) => {
-            const haystack = `${item.title || ""} ${item.package || ""} ${item.video_id || ""}`.toLowerCase();
+            const haystack = `${item.title || ""} ${item.package || ""} ${playlistLabels(item).join(" ")} ${item.video_id || ""}`.toLowerCase();
             return !search || haystack.includes(search);
           })
           .sort((a, b) => {
@@ -1644,10 +1798,11 @@ DASHBOARD_HTML = """<!doctype html>
         const rows = sorted.map((item) => {
           const metrics = metricFor(item);
           return `<tr class="row-${escapeHtml(item.primary_category || "ignore")}">
-            <td>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div>${sourceLinks(item)}</td>
+            <td>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div>${sourceLinks(item)}${playlistLinks(item)}</td>
             <td>${(item.categories || []).map(badge).join(" ")}</td>
-            <td>${escapeHtml(item.format || "-")}</td>
+            <td>${escapeHtml(item.format || "-")}<div class="small muted">${escapeHtml(item.format_source || "unknown")}</div></td>
             <td>${escapeHtml(item.package || "-")}</td>
+            <td>${escapeHtml((item.primary_playlist || {}).title || "-")}</td>
             <td>${escapeHtml(horizonRangeFor(item))}</td>
             <td>${fmtNumber(metrics.views)}</td>
             <td>${fmtNumber(metrics.views_per_day, 1)}</td>
@@ -1662,6 +1817,7 @@ DASHBOARD_HTML = """<!doctype html>
           "Buckets",
           "Format",
           "Package",
+          "Playlist",
           "Range",
           `<button class="sort-btn" data-sort="views">Views</button>`,
           `<button class="sort-btn" data-sort="views_per_day">V/day</button>`,
@@ -1682,7 +1838,7 @@ DASHBOARD_HTML = """<!doctype html>
           });
         });
       };
-      ["video-search", "category-filter", "format-filter"].forEach((id) => {
+      ["video-search", "category-filter", "format-filter", "playlist-filter"].forEach((id) => {
         document.getElementById(id).addEventListener("input", renderTable);
       });
       document.querySelectorAll("[data-quick-filter]").forEach((input) => {
