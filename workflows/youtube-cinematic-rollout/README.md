@@ -309,6 +309,7 @@ After upload, verify the Shorts related-video setting in YouTube Studio, not onl
 - Open each Short in Studio at `https://studio.youtube.com/video/<SHORT_ID>/edit`.
 - In the right-side `Related video` card, set the related video to that Short's source cinematic brief from the `Rooted Layers Cinematic Briefs` playlist.
 - Save the Studio metadata change.
+- Stay on the page until the save state fully settles; do not navigate away immediately after clicking Save.
 - Reload the same Studio edit page and verify the `Related video` card still shows the cinematic brief title.
 - If the card returns to `None`, repeat the Studio selection and save; do not mark the entry completed until the reload check persists.
 

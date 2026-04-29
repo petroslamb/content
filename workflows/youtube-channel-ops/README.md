@@ -125,7 +125,7 @@ Use the package wrapper for this path:
 
 This script is dry-run by default. It preflights every local clip for `1080x1920`, audio, and YouTube-safe duration; uploads every `*.mp4` in `artifacts/video/shorts/portrait/`; adds them to the target playlist; attempts to set the long-form video as the Shorts related video through the API; and writes an upload report with playlist item IDs, public URLs, related-video update results, local probe data, and YouTube readback status.
 
-The API related-video update is not enough for final verification. For scheduled Shorts, open each Short in YouTube Studio, set the right-side `Related video` card to the intended long-form or cinematic upload, save, then reload the same edit page and confirm the card still shows the intended title. Treat this reload-persistent Studio state as the source of truth before marking the upload batch complete.
+The API related-video update is not enough for final verification. For scheduled Shorts, open each Short in YouTube Studio, set the right-side `Related video` card to the intended long-form or cinematic upload, save, wait for the save state to fully settle before leaving the page, then reload the same edit page and confirm the card still shows the intended title. Treat this reload-persistent Studio state as the source of truth before marking the upload batch complete.
 
 If there is no canonical essay URL, pass `--essay-url none`, `--essay-url skip`, or `--essay-url omit`. The uploader will leave the `Original essay` line out of the description rather than publishing a placeholder.
 

@@ -486,3 +486,61 @@ Initial rollout order from `backlog_manifest.yaml`:
 - Cleared `experiment.automation.watcher_automation_id` back to `null` because the temporary `cinematic-rollout-watcher` heartbeat is no longer needed.
 - Studio related-video verification was completed for the overlay remaster pilot and broader scheduled/recent Shorts sweep; the remaster crosswalk now has `studio_related_verified: true` for all 8 pilot remasters.
 - Old Shorts were not unlisted. The May 2 unlist automation remains active and should still require explicit confirmation before applying the unlist step.
+
+### 2026-04-29T07:20:32.445737+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `moltbook_phenomenon`, `programmable_thinking`
+- Materialized Shorts manifests: `publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/safety/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+
+### 2026-04-29T07:49:36Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- New cinematic task accepted for `moltbook_phenomenon`.
+- NotebookLM task/artifact id: `06d53894-7c4d-4734-8065-3facda430079`
+- Current artifact status: `in_progress`
+- New cinematic task accepted for `programmable_thinking`.
+- NotebookLM task/artifact id: `d385c9bc-200b-4317-9055-e492d316dcae`
+- Current artifact status: `in_progress`
+- Queue action: mark both entries as `generation_pending`; do not start additional backlog entries while these two jobs are active.
+- Watcher note: `experiment.automation.watcher_automation_id` remains `null` because this session does not expose an automation-management tool, so the required 30-minute heartbeat watcher could not be created or refreshed from this run.
+
+### 2026-04-29T09:07:21.505383+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `moltbook_phenomenon`, `programmable_thinking`
+- Materialized Shorts manifests: `publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+- Newly scheduled approved clips: `2`
+
+### 2026-04-29T09:42:44.746179+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+
+### 2026-04-29T09:44:41.580983+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Materialized Shorts manifests: `publications/moltbook-phenomenon/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/programmable-thinking/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+- Newly scheduled approved clips: `4`
+
+### 2026-04-29T10:54:00Z
+
+- Studio-verified full cinematic cross-links:
+  - Moltbook cinematic `9C-N9gaJjN4` has an end screen and info card pointing to `The Moltbook Phenomenon` (`ahAVt338E_8`).
+  - Programmable Thinking cinematic `chr4R-fSZUY` has an end screen and info card pointing to `When the LLM Programs Its Own Thinking` (`omWd8dyHJfY`).
+- Studio warning: both longer target videos are currently private, so the card/end-screen targets are wired but may not appear to viewers until those longer videos become visible.
+- Shorts related-video blocker: Studio selection/save attempts for the scheduled Shorts reload back to `Κανένα` (`None`), and a direct YouTube Data API `relatedVideoIds` rewrite did not make the Studio field persist. Retry the related-video Studio pass for all six Shorts after the scheduled Shorts are closer to publish time or live:
+  - `AIoNHCL1GPw`, `Ej4co5IN01U`, `3QKR4423VAQ` -> `chr4R-fSZUY`
+  - `syYrPcOcKWE`, `mk10NpAfXh4`, `pycFeHW0R9E` -> `9C-N9gaJjN4`
+
+### 2026-04-29T14:44:45Z
+
+- User manually fixed the remaining Shorts related-video settings in YouTube Studio after the earlier Studio save persistence issue.
+- Treat all six 2026-04-29 Shorts as wired to their corresponding cinematic brief:
+  - `AIoNHCL1GPw`, `Ej4co5IN01U`, `3QKR4423VAQ` -> `chr4R-fSZUY`
+  - `syYrPcOcKWE`, `mk10NpAfXh4`, `pycFeHW0R9E` -> `9C-N9gaJjN4`
+- Workflow correction: after setting the Shorts `Related video` card in Studio, wait for the save state to fully settle before leaving the page, then reload the same edit page and verify the card still shows the intended cinematic title.
