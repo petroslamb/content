@@ -1,6 +1,6 @@
 {
   "workflow": "youtube_analytics_reporting_sync",
-  "updated_at": "2026-04-29T07:53:34.558889+00:00",
+  "updated_at": "2026-04-29T15:20:33.733884+00:00",
   "jobs": {
     "channel_basic_a3": {
       "job_id": "34a0840f-7a59-4a78-b6ed-91b47819cb80",
@@ -8,7 +8,7 @@
       "report_type_id": "channel_basic_a3",
       "created_at": "2025-12-31T12:15:23Z",
       "purpose": "Daily bulk user activity plus aggregate card click fields.",
-      "last_checked_at": "2026-04-29T07:53:34.558889+00:00",
+      "last_checked_at": "2026-04-29T15:20:33.733884+00:00",
       "available_report_count": 29,
       "downloaded_report_count": 29,
       "latest_report_end_time": "2026-04-28T07:00:00Z"
@@ -19,9 +19,9 @@
       "report_type_id": "channel_reach_basic_a1",
       "created_at": "2026-04-28T19:04:41Z",
       "purpose": "Daily per-video thumbnail impressions and thumbnail CTR.",
-      "last_checked_at": "2026-04-29T07:53:34.558889+00:00",
-      "available_report_count": 3,
-      "downloaded_report_count": 3,
+      "last_checked_at": "2026-04-29T15:20:33.733884+00:00",
+      "available_report_count": 29,
+      "downloaded_report_count": 29,
       "latest_report_end_time": "2026-04-28T07:00:00Z"
     },
     "channel_reach_combined_a1": {
@@ -30,9 +30,9 @@
       "report_type_id": "channel_reach_combined_a1",
       "created_at": "2026-04-28T19:04:42Z",
       "purpose": "Daily thumbnail reach broken down by traffic source and device.",
-      "last_checked_at": "2026-04-29T07:53:34.558889+00:00",
-      "available_report_count": 3,
-      "downloaded_report_count": 3,
+      "last_checked_at": "2026-04-29T15:20:33.733884+00:00",
+      "available_report_count": 29,
+      "downloaded_report_count": 29,
       "latest_report_end_time": "2026-04-28T07:00:00Z"
     }
   }

@@ -353,7 +353,7 @@ def merge_video_record(
         return
     existing = records.setdefault(video_id, {"video_id": video_id})
     for key, value in record.items():
-        if key == "source_reports":
+        if key in {"source_reports", "discovery_sources"}:
             continue
         if key == "manual_observations" and isinstance(value, dict):
             merged = dict(existing.get("manual_observations", {}))
@@ -365,6 +365,9 @@ def merge_video_record(
     existing_reports = set(existing.get("source_reports", []))
     existing_reports.update(record.get("source_reports", []))
     existing["source_reports"] = sorted(existing_reports)
+    existing_sources = set(existing.get("discovery_sources", []))
+    existing_sources.update(record.get("discovery_sources", []))
+    existing["discovery_sources"] = sorted(existing_sources)
 
 
 def related_video_from_report(report: dict[str, Any]) -> dict[str, Any] | None:
@@ -448,6 +451,7 @@ def video_record_from_upload_report(
                 "topic": infer_topic(package),
                 "workflow": workflow,
                 "related_video": related_video,
+                "discovery_sources": ["repo_upload_report"],
                 "source_reports": [source_report],
             }
         )
@@ -497,6 +501,7 @@ def video_record_from_upload_report(
                 "topic": infer_topic(package),
                 "workflow": workflow,
                 "related_video": related_video,
+                "discovery_sources": ["repo_upload_report"],
                 "source_reports": [source_report],
             }
         )
@@ -570,13 +575,7 @@ def thumbnail_query_not_supported_error(error: str | None) -> bool:
     return "query not supported" in lowered or "query is not supported" in lowered
 
 
-def fetch_recent_channel_uploads(
-    youtube: Any,
-    *,
-    since_days: int,
-    limit: int,
-) -> dict[str, dict[str, Any]]:
-    cutoff = utc_now() - timedelta(days=since_days)
+def channel_uploads_playlist_id(youtube: Any) -> str | None:
     channels_response = (
         youtube.channels()
         .list(part="contentDetails", mine=True, maxResults=1)
@@ -584,25 +583,36 @@ def fetch_recent_channel_uploads(
     )
     channel_items = channels_response.get("items", [])
     if not channel_items:
-        return {}
-    uploads_playlist_id = (
+        return None
+    return (
         channel_items[0]
         .get("contentDetails", {})
         .get("relatedPlaylists", {})
         .get("uploads")
     )
+
+
+def fetch_channel_uploads(
+    youtube: Any,
+    *,
+    since_days: int | None = None,
+    limit: int | None = None,
+) -> dict[str, dict[str, Any]]:
+    cutoff = utc_now() - timedelta(days=since_days) if since_days is not None else None
+    uploads_playlist_id = channel_uploads_playlist_id(youtube)
     if not uploads_playlist_id:
         return {}
 
     records: dict[str, dict[str, Any]] = {}
     page_token = None
-    while len(records) < limit:
+    while limit is None or len(records) < limit:
+        max_results = 50 if limit is None else min(50, limit - len(records))
         response = (
             youtube.playlistItems()
             .list(
                 part="snippet",
                 playlistId=uploads_playlist_id,
-                maxResults=min(50, limit - len(records)),
+                maxResults=max_results,
                 pageToken=page_token,
             )
             .execute()
@@ -614,7 +624,7 @@ def fetch_recent_channel_uploads(
             if not video_id:
                 continue
             published_at = parse_iso_datetime(snippet.get("publishedAt"))
-            if published_at and published_at < cutoff:
+            if cutoff and published_at and published_at < cutoff:
                 stop = True
                 break
             records[video_id] = {
@@ -632,13 +642,23 @@ def fetch_recent_channel_uploads(
                     duration_seconds=None,
                     workflow="youtube_recent_upload",
                 ),
-                "workflow": "youtube_recent_upload",
+                "workflow": "youtube_uploads_playlist",
+                "discovery_sources": ["channel_uploads"],
                 "source_reports": [],
             }
         page_token = response.get("nextPageToken")
         if stop or not page_token:
             break
     return records
+
+
+def fetch_recent_channel_uploads(
+    youtube: Any,
+    *,
+    since_days: int,
+    limit: int,
+) -> dict[str, dict[str, Any]]:
+    return fetch_channel_uploads(youtube, since_days=since_days, limit=limit)
 
 
 def fetch_channel_playlists(youtube: Any) -> list[dict[str, Any]]:
@@ -664,6 +684,7 @@ def fetch_channel_playlists(youtube: Any) -> list[dict[str, Any]]:
                     "description": snippet.get("description"),
                     "item_count": (item.get("contentDetails") or {}).get("itemCount"),
                     "privacy_status": (item.get("status") or {}).get("privacyStatus"),
+                    "url": f"https://www.youtube.com/playlist?list={item.get('id')}",
                 }
             )
         page_token = response.get("nextPageToken")
@@ -671,25 +692,52 @@ def fetch_channel_playlists(youtube: Any) -> list[dict[str, Any]]:
             return [playlist for playlist in playlists if playlist.get("id")]
 
 
-def fetch_playlist_memberships(youtube: Any) -> dict[str, list[dict[str, Any]]]:
+def fetch_playlist_inventory_and_memberships(
+    youtube: Any,
+) -> tuple[list[dict[str, Any]], dict[str, list[dict[str, Any]]], dict[str, dict[str, Any]]]:
+    playlists = fetch_channel_playlists(youtube)
     memberships: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for playlist in fetch_channel_playlists(youtube):
+    playlist_records: dict[str, dict[str, Any]] = {}
+    for playlist in playlists:
         playlist_id = playlist["id"]
+        playlist_items: list[dict[str, Any]] = []
         for item in fetch_playlist_items(youtube, playlist_id, part="id,snippet"):
             snippet = item.get("snippet", {})
             video_id = (snippet.get("resourceId") or {}).get("videoId")
+            playlist_item = {
+                "item_id": item.get("id"),
+                "video_id": video_id,
+                "title": snippet.get("title"),
+                "position": snippet.get("position"),
+                "playlist_item_published_at": snippet.get("publishedAt"),
+            }
+            playlist_items.append(playlist_item)
             if not video_id:
                 continue
-            memberships[video_id].append(
+            membership = {
+                "id": playlist_id,
+                "title": playlist.get("title"),
+                "item_id": item.get("id"),
+                "position": snippet.get("position"),
+                "playlist_item_published_at": snippet.get("publishedAt"),
+                "privacy_status": playlist.get("privacy_status"),
+            }
+            memberships[video_id].append(membership)
+            playlist_records.setdefault(
+                video_id,
                 {
-                    "id": playlist_id,
-                    "title": playlist.get("title"),
-                    "item_id": item.get("id"),
-                    "position": snippet.get("position"),
-                    "playlist_item_published_at": snippet.get("publishedAt"),
-                    "privacy_status": playlist.get("privacy_status"),
-                }
+                    "video_id": video_id,
+                    "title": snippet.get("title"),
+                    "url": VIDEO_URL_TEMPLATE.format(video_id=video_id),
+                    "workflow": "youtube_playlist_membership",
+                    "playlists": [],
+                    "discovery_sources": ["channel_playlist"],
+                    "source_reports": [],
+                },
             )
+            playlist_records[video_id]["playlists"].append(membership)
+        playlist["observed_item_count"] = len(playlist_items)
+        playlist["items"] = playlist_items
     for video_id in list(memberships):
         memberships[video_id] = sorted(
             memberships[video_id],
@@ -698,7 +746,14 @@ def fetch_playlist_memberships(youtube: Any) -> dict[str, list[dict[str, Any]]]:
                 row.get("position") if row.get("position") is not None else 999999,
             ),
         )
-    return dict(memberships)
+        if video_id in playlist_records:
+            playlist_records[video_id]["playlists"] = memberships[video_id]
+    return playlists, dict(memberships), playlist_records
+
+
+def fetch_playlist_memberships(youtube: Any) -> dict[str, list[dict[str, Any]]]:
+    _, memberships, _ = fetch_playlist_inventory_and_memberships(youtube)
+    return memberships
 
 
 def apply_playlist_memberships(
@@ -1029,6 +1084,7 @@ def build_ledger(
     from_upload_reports: bool,
     recent_limit: int,
     include_playlists: bool,
+    all_channel_videos: bool = True,
     repo_root: Path = REPO_ROOT,
 ) -> dict[str, Any]:
     records: dict[str, dict[str, Any]] = {}
@@ -1041,25 +1097,37 @@ def build_ledger(
                 "video_id": video_id,
                 "url": VIDEO_URL_TEMPLATE.format(video_id=video_id),
                 "workflow": "explicit_video_id",
+                "discovery_sources": ["explicit_video_id"],
                 "source_reports": [],
             },
         )
-    for record in fetch_recent_channel_uploads(
-        youtube,
-        since_days=since_days,
-        limit=recent_limit,
-    ).values():
+    upload_records = (
+        fetch_channel_uploads(youtube)
+        if all_channel_videos
+        else fetch_recent_channel_uploads(
+            youtube,
+            since_days=since_days,
+            limit=recent_limit,
+        )
+    )
+    for record in upload_records.values():
         merge_video_record(records, record)
+
+    channel_playlists: list[dict[str, Any]] = []
+    playlist_memberships: dict[str, list[dict[str, Any]]] = {}
+    if include_playlists:
+        channel_playlists, playlist_memberships, playlist_records = (
+            fetch_playlist_inventory_and_memberships(youtube)
+        )
+        if all_channel_videos:
+            for record in playlist_records.values():
+                merge_video_record(records, record)
+        apply_playlist_memberships(records, playlist_memberships)
 
     sorted_video_ids = sorted(records)
     details = fetch_video_details(youtube, sorted_video_ids)
     for video_id in sorted_video_ids:
         apply_video_details(records[video_id], details.get(video_id))
-
-    playlist_memberships: dict[str, list[dict[str, Any]]] = {}
-    if include_playlists:
-        playlist_memberships = fetch_playlist_memberships(youtube)
-        apply_playlist_memberships(records, playlist_memberships)
 
     analytics_end_date = (utc_now().date() - timedelta(days=1)).isoformat()
     (
@@ -1094,15 +1162,19 @@ def build_ledger(
         "read_only": True,
         "source": {
             "since_days": since_days,
+            "scope": "all_channel" if all_channel_videos else "recent_repo",
             "from_upload_reports": from_upload_reports,
             "explicit_video_ids": video_ids,
             "recent_limit": recent_limit,
             "include_playlists": include_playlists,
+            "channel_upload_videos": len(upload_records),
             "playlist_membership_videos": sum(
                 1 for record in records.values() if record.get("playlists")
             ),
             "channel_playlist_membership_videos": len(playlist_memberships),
+            "channel_playlists": len(channel_playlists),
         },
+        "channel_playlists": channel_playlists,
         "analytics_end_date": analytics_end_date,
         "windows": WATCH_WINDOWS,
         "manual_observation_fields": MANUAL_OBSERVATION_FIELDS,
@@ -1139,6 +1211,12 @@ def parse_args() -> argparse.Namespace:
         help="Maximum recent channel uploads to discover.",
     )
     parser.add_argument(
+        "--scope",
+        choices=["all-channel", "recent"],
+        default="all-channel",
+        help="Video discovery scope. all-channel uses the full uploads playlist plus playlist memberships.",
+    )
+    parser.add_argument(
         "--include-playlists",
         action=argparse.BooleanOptionalAction,
         default=True,
@@ -1168,6 +1246,7 @@ def main() -> None:
             from_upload_reports=args.from_upload_reports,
             recent_limit=args.recent_limit,
             include_playlists=args.include_playlists,
+            all_channel_videos=args.scope == "all-channel",
         )
     except OAuthReauthRequired as exc:
         print(str(exc), file=sys.stderr)
