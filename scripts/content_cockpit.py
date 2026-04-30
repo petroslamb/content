@@ -238,7 +238,11 @@ def build_cockpit_view_model(package_arg: str, next_report: dict[str, object]) -
             "required_context": required_context if isinstance(required_context, list) else [],
             "launch_pack": wizard.get("launch_pack"),
         },
-        "workflow_map": build_workflow_map_view_model(package_arg, next_report),
+        "workflow_map": build_workflow_map_view_model(
+            package_arg,
+            next_report,
+            status_report=content_agent.summarize_package_status(package_arg),
+        ),
     }
 
 
@@ -332,6 +336,7 @@ def derive_workflow_step_state(
     next_report: dict[str, object],
     active_workflow: str,
     blocked_gates: set[str],
+    stage_statuses: dict[str, dict[str, object]],
 ) -> tuple[str, str, bool]:
     gate_id = step_gate_id(step)
     mode = str(step.get("mode") or "")
@@ -343,10 +348,17 @@ def derive_workflow_step_state(
             return ("completed", f"Gate '{gate_id}' has a non-blocking passing status.", False)
     if gate_id and gate_id in blocked_gates:
         return ("blocked", f"Gate '{gate_id}' is currently blocking this package.", True)
+    stage_status = stage_statuses.get(workflow_id)
+    if workflow_id != active_workflow and isinstance(stage_status, dict) and stage_status.get("done") is True:
+        updated = stage_status.get("last_updated")
+        suffix = f" on {updated}" if updated else ""
+        return ("completed", f"Package status marks lifecycle stage '{workflow_id}' done{suffix}.", False)
     if workflow_id == active_workflow and gate_id and blocked_gates:
         return ("future", "This step is gated after the current blocker is resolved.", False)
     if workflow_id == active_workflow and not blocked_gates:
         return ("available", "This step belongs to the active workflow route.", True)
+    if isinstance(stage_status, dict):
+        return ("future", f"Package status has not reached lifecycle stage '{workflow_id}' yet.", False)
     if workflow_id in stringify_list(next_report.get("recommended_workflows")):
         return ("future", "This workflow is recommended after the current package blocker is resolved.", False)
     return ("inferred", "Shown from workflow.yaml; no package-local completion proof is attached.", False)
@@ -422,6 +434,7 @@ def workflow_step_view(
     next_report: dict[str, object],
     active_workflow: str,
     blocked_gates: set[str],
+    stage_statuses: dict[str, dict[str, object]],
 ) -> dict[str, object]:
     state, state_reason, is_current = derive_workflow_step_state(
         workflow_id,
@@ -429,6 +442,7 @@ def workflow_step_view(
         next_report,
         active_workflow,
         blocked_gates,
+        stage_statuses,
     )
     mode = str(step.get("mode") or "unknown")
     executor = step.get("executor")
@@ -463,12 +477,21 @@ def workflow_section_view(
     next_report: dict[str, object],
     active_workflow: str,
     blocked_gates: set[str],
+    stage_statuses: dict[str, dict[str, object]],
 ) -> dict[str, object]:
     data = contract.get("data") if isinstance(contract, dict) else {}
     path = contract.get("path") if isinstance(contract, dict) else None
     if not isinstance(data, dict):
         data = {}
     steps = [step for step in data.get("steps", []) if isinstance(step, dict)]
+    stage_status = stage_statuses.get(workflow_id)
+    lifecycle_state = "inferred"
+    if workflow_id == active_workflow:
+        lifecycle_state = "current"
+    elif isinstance(stage_status, dict) and stage_status.get("done") is True:
+        lifecycle_state = "completed"
+    elif isinstance(stage_status, dict):
+        lifecycle_state = "future"
     return {
         "id": workflow_id,
         "summary": str(data.get("summary") or ""),
@@ -477,8 +500,9 @@ def workflow_section_view(
         "stability": str(data.get("stability") or ""),
         "path": content_agent.repo_relpath(path) if path else "",
         "is_active": workflow_id == active_workflow,
+        "lifecycle_state": lifecycle_state,
         "steps": [
-            workflow_step_view(package_key, workflow_id, step, next_report, active_workflow, blocked_gates)
+            workflow_step_view(package_key, workflow_id, step, next_report, active_workflow, blocked_gates, stage_statuses)
             for step in steps
         ],
     }
@@ -490,11 +514,18 @@ def build_workflow_map_view_model(
     status_report: dict[str, object] | None = None,
     mode: str = "active_route",
 ) -> dict[str, object]:
-    del status_report, mode
+    del mode
     package_key = content_agent.coerce_package_key(package_arg)
     contracts = content_agent.load_workflow_yaml_contracts()
     active_workflow = current_workflow_id(next_report)
     blocked_gates = blocked_gate_ids(next_report)
+    status_report = status_report or content_agent.summarize_package_status(package_key)
+    stages = status_report.get("stages") if isinstance(status_report, dict) else []
+    stage_statuses = {
+        str(stage.get("stage")): stage
+        for stage in stages
+        if isinstance(stage, dict) and stage.get("stage")
+    }
 
     active_ids: list[str] = []
 
@@ -518,11 +549,11 @@ def build_workflow_map_view_model(
             push(fallback)
 
     active_workflows = [
-        workflow_section_view(workflow_id, contracts[workflow_id], package_key, next_report, active_workflow, blocked_gates)
+        workflow_section_view(workflow_id, contracts[workflow_id], package_key, next_report, active_workflow, blocked_gates, stage_statuses)
         for workflow_id in active_ids
     ]
     all_workflows = [
-        workflow_section_view(workflow_id, contract, package_key, next_report, active_workflow, blocked_gates)
+        workflow_section_view(workflow_id, contract, package_key, next_report, active_workflow, blocked_gates, stage_statuses)
         for workflow_id, contract in sorted(contracts.items(), key=workflow_lifecycle_sort_key)
     ]
     return {
@@ -2180,7 +2211,7 @@ function renderWorkflowSection(workflow) {
   return `<div class="workflow-section">
     <div class="workflow-section-head">
       <div>
-        <h3 style="margin:0">${esc(workflow.id || "workflow")}${workflow.is_active ? ` ${badge("current")}` : ""}</h3>
+        <h3 style="margin:0">${esc(workflow.id || "workflow")} ${badge(workflow.lifecycle_state || (workflow.is_active ? "current" : "inferred"))}</h3>
         <div class="muted" style="margin-top:4px">${esc(meta || "workflow")}</div>
         <div class="muted" style="margin-top:4px">${esc(workflow.summary || "")}</div>
       </div>
