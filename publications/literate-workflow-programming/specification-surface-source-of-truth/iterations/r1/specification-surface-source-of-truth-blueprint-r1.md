@@ -1,8 +1,8 @@
 # Hardened Blueprint
 
 Live draft: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md`
-Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md`
-Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-essay-iteration-packet-r1.json`
+Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-candidate-r1.md`
+Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-essay-iteration-packet-r1.json`
 
 ## Promise
 

@@ -3,11 +3,11 @@ kind: essay_iteration_atlas_scorecard
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 3
 judgment_policy: "draft_only"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md"
-opening_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md:3"
-middle_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md:13"
-ending_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md:45"
-nearby_archive_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md"
+opening_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md:3"
+middle_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md:13"
+ending_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md:45"
+nearby_archive_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md"
 stronger_archive_anchor: "publications/confidence-debt/confidence-debt.md"
 weaker_archive_anchor: "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure.md"
 traction: 8.6
@@ -41,7 +41,7 @@ The ending returns to the pull request and gives the operator doctrine in three 
 
 ## Archive Anchors
 
-- Nearby: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md`
+- Nearby: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md`
 - Stronger: `publications/confidence-debt/confidence-debt.md`
 - Weaker: `publications/literate-workflow-programming/validation-is-lifecycle-infrastructure.md`
 
