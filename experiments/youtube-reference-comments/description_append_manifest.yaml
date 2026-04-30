@@ -1,0 +1,91 @@
+experiment:
+  name: youtube-reference-comments
+  posture: append_only_description_backfill
+  append_label: "Key paper"
+  note: Append one curated paper line to the end of existing descriptions only.
+targets:
+  - key: the_agent_revolution
+    variant: cinematic
+    video_id: N7FKycVsIUw
+    markdown_file: publications/autonomous-agents/the-agent-revolution/the-agent-revolution.md
+    append_line: "Key paper: ReAct: Synergizing Reasoning and Acting in Language Models — https://arxiv.org/abs/2210.03629"
+  - key: the_agent_revolution
+    variant: longform
+    video_id: ti-WonOox8M
+    markdown_file: publications/autonomous-agents/the-agent-revolution/the-agent-revolution.md
+    append_line: "Key paper: ReAct: Synergizing Reasoning and Acting in Language Models — https://arxiv.org/abs/2210.03629"
+  - key: operating_agents_action
+    variant: cinematic
+    video_id: NIJ92a65SxM
+    markdown_file: publications/autonomous-agents/essays/action/01-action-tool-use.md
+    append_line: "Key paper: Toolformer: Language Models Can Teach Themselves to Use Tools — https://arxiv.org/abs/2302.04761"
+  - key: operating_agents_action
+    variant: longform
+    video_id: swvX4mduJtk
+    markdown_file: publications/autonomous-agents/essays/action/01-action-tool-use.md
+    append_line: "Key paper: Toolformer: Language Models Can Teach Themselves to Use Tools — https://arxiv.org/abs/2302.04761"
+  - key: operating_agents_memory
+    variant: cinematic
+    video_id: J9dz9_9YPQw
+    markdown_file: publications/autonomous-agents/essays/memory/02-memory-systems-and-authority.md
+    append_line: "Key paper: MemGPT: Towards LLMs as Operating Systems — https://arxiv.org/abs/2310.08560"
+  - key: operating_agents_memory
+    variant: longform
+    video_id: Pj4sjWvyJVQ
+    markdown_file: publications/autonomous-agents/essays/memory/02-memory-systems-and-authority.md
+    append_line: "Key paper: MemGPT: Towards LLMs as Operating Systems — https://arxiv.org/abs/2310.08560"
+  - key: operating_agents_reasoning
+    variant: cinematic
+    video_id: bto9FNWlahY
+    markdown_file: publications/autonomous-agents/essays/reasoning/03-reasoning-scaffolds-and-planning.md
+    append_line: "Key paper: Least-to-Most Prompting Enables Complex Reasoning in Large Language Models — https://arxiv.org/abs/2205.10625"
+  - key: operating_agents_reasoning
+    variant: longform
+    video_id: LykGDaONozw
+    markdown_file: publications/autonomous-agents/essays/reasoning/03-reasoning-scaffolds-and-planning.md
+    append_line: "Key paper: Least-to-Most Prompting Enables Complex Reasoning in Large Language Models — https://arxiv.org/abs/2205.10625"
+  - key: operating_agents_multi_agent
+    variant: cinematic
+    video_id: abBHq8lwCEE
+    markdown_file: publications/autonomous-agents/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md
+    append_line: "Key paper: AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation — https://arxiv.org/abs/2308.08155"
+  - key: operating_agents_multi_agent
+    variant: longform
+    video_id: xxd2VKlqiL4
+    markdown_file: publications/autonomous-agents/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md
+    append_line: "Key paper: AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation — https://arxiv.org/abs/2308.08155"
+  - key: operating_agents_safety
+    variant: cinematic
+    video_id: vCpW8dYfeEY
+    markdown_file: publications/autonomous-agents/essays/safety/05-trust-boundaries-and-agent-safety.md
+    append_line: "Key paper: Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection — https://arxiv.org/abs/2302.12173"
+  - key: operating_agents_safety
+    variant: longform
+    video_id: biyIKcSp3Po
+    markdown_file: publications/autonomous-agents/essays/safety/05-trust-boundaries-and-agent-safety.md
+    append_line: "Key paper: Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection — https://arxiv.org/abs/2302.12173"
+  - key: operating_agents_optimization
+    variant: cinematic
+    video_id: n99g7mLWQek
+    markdown_file: publications/autonomous-agents/essays/optimization/06-workflow-optimization-and-evaluation.md
+    append_line: "Key paper: TextGrad: Automatic \"Differentiation\" via Text — https://arxiv.org/abs/2406.07496"
+  - key: operating_agents_optimization
+    variant: longform
+    video_id: 2Fs1iDw5I3Y
+    markdown_file: publications/autonomous-agents/essays/optimization/06-workflow-optimization-and-evaluation.md
+    append_line: "Key paper: TextGrad: Automatic \"Differentiation\" via Text — https://arxiv.org/abs/2406.07496"
+  - key: programmable_thinking
+    variant: cinematic
+    video_id: chr4R-fSZUY
+    markdown_file: publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md
+    append_line: "Key paper: Recursive Language Models — https://arxiv.org/abs/2512.06464"
+  - key: hardware_friction_map
+    variant: cinematic
+    video_id: xPLU4cISmxE
+    markdown_file: publications/hardware-friction/substack_drafts/The_Hardware_Friction_Map_Substack.md
+    append_line: "Key paper: FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness — https://arxiv.org/abs/2205.14135"
+  - key: what_actually_works_hardware
+    variant: cinematic
+    video_id: Ju5UJvO4X5k
+    markdown_file: publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md
+    append_line: "Key paper: Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity — https://arxiv.org/abs/2101.03961"

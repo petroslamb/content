@@ -50,6 +50,7 @@ experiment:
     - '19:30'
     - '21:00'
     - '22:30'
+    shorts_not_before_date: '2026-05-03'
     candidate_min_seconds: 35
     candidate_target_seconds: 90
     candidate_max_seconds: 120
@@ -84,6 +85,13 @@ rollout_order:
 - operating_agents_optimization
 - moltbook_phenomenon
 - programmable_thinking
+- hardware_friction_map
+- what_actually_works_hardware
+- orchestration_paradigm_series
+- orchestration_paradigm_issue_factory
+- orchestration_paradigm_issue_behavior
+- orchestration_paradigm_issue_reality
+- transformer_attractor
 publications:
   illusion_of_swarm:
     package: illusion-of-swarm
@@ -169,8 +177,8 @@ publications:
     secondary_link:
       kind: youtube
       label: Full research breakdown
-      video_id: ti-WonOox8M
-      url: https://www.youtube.com/watch?v=ti-WonOox8M
+      video_id: -2CM4JYfQAs
+      url: https://www.youtube.com/watch?v=-2CM4JYfQAs
     cinematic:
       title: Why AI Agents Broke Out of the Chatbox
       hook: 'Agents look like a sudden product category, but the real shift was architectural:
@@ -884,3 +892,403 @@ publications:
       rejected_clips: []
       next_publish_at: '2026-04-30T07:30:00Z'
       last_scheduled_at: '2026-04-29T09:44:41.578041+00:00'
+  hardware_friction_map:
+    package: hardware-friction
+    status_path: publications/hardware-friction/status.yaml
+    markdown_path: publications/hardware-friction/essay_sections/The_Hardware_Friction_Map_Essay_substack.md
+    notebook_id: 02eb281e-2fe7-459b-8b0e-57cbe2738337
+    notebook_title: The Hardware Friction Map for Neural Architecture
+    essay_url: https://lambpetros.substack.com/p/the-hardware-friction-map
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/the-hardware-friction-map
+    cinematic:
+      title: Why Hardware Friction Decides What Ships in AI
+      hook: The architectures that win are not always the most elegant. They are the
+        ones that survive the hardware and infrastructure gauntlet.
+      summary: 'This cinematic brief reframes architecture progress around deployment
+        friction, kernel support, memory movement, and integration cost rather than
+        benchmark theater.
+
+
+        It should hook viewers on the claim that real-world AI design is constrained
+        by hardware economics before it is constrained by theory.'
+      video_file: publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.mp4
+      output_srt: publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.srt
+      upload_report: publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic_upload_report.json
+      generation_task_id: 40dbbe9d-eebb-410a-88d2-925c5ffcf0ce
+      generation_task_started_at: '2026-04-30T11:53:57Z'
+      youtube_video_id: xPLU4cISmxE
+      youtube_url: https://www.youtube.com/watch?v=xPLU4cISmxE
+      published_at: '2026-04-30T12:33:52Z'
+      state: completed
+      retry_state:
+        attempts: 1
+        last_attempted_at: '2026-04-30T12:33:52Z'
+        last_error: null
+    shorts:
+      workspace_dir: publications/hardware-friction/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/hardware-friction/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/hardware-friction/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/hardware-friction/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: completed
+      approved_clips:
+      - slug: flash-attention-pays-a-two-year-ecosystem-tax
+        title: FlashAttention Pays a Two-Year Ecosystem Tax
+        hook: Great math still waits on infrastructure
+        cta: Full cinematic brief in Related Video
+        summary: FlashAttention proved itself early, but it still took roughly 20
+          months for the ecosystem to catch up. Kernel wins are real, but infrastructure
+          moves slower than papers.
+        start: '00:00:34.160'
+        end: '00:02:03.680'
+        total_score: 19
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 2
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 4
+        publish_at: '2026-05-03T06:00:00Z'
+      - slug: mixture-of-experts-is-a-capital-hammer
+        title: Mixture of Experts Is a Capital Hammer
+        hook: MoE spread only when labs could afford the pain
+        cta: Full cinematic brief in Related Video
+        summary: Mixture of Experts looked elegant on paper, but adoption waited until
+          labs were willing to pay the systems cost of routing, parallelism, and server
+          rewrites.
+        start: '00:02:09.119'
+        end: '00:03:38.879'
+        total_score: 19
+        score_breakdown:
+          hook_strength: 4
+          standalone_clarity: 2
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 4
+        publish_at: '2026-05-04T06:00:00Z'
+      - slug: hardware-friction-becomes-a-startup-tax
+        title: Hardware Friction Becomes a Startup Tax
+        hook: Silicon creates one market for giants and another for startups
+        cta: Full cinematic brief in Related Video
+        summary: The same hardware friction that acts like a moat for major labs becomes
+          runway burn for startups. Transformer dominance is partly an economic trap
+          set by silicon.
+        start: '00:04:15.360'
+        end: '00:05:01.000'
+        total_score: 20
+        score_breakdown:
+          hook_strength: 3
+          standalone_clarity: 3
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 5
+          rewatch_shareability: 4
+        publish_at: '2026-05-05T06:00:00Z'
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: '2026-05-03T06:00:00Z'
+      last_scheduled_at: '2026-04-30T12:50:09.332418+00:00'
+  what_actually_works_hardware:
+    package: hardware-friction/what-actually-works-the-hardware
+    status_path: publications/hardware-friction/what-actually-works-the-hardware/status.yaml
+    notebook_source_status: publications/hardware-friction/status.yaml
+    markdown_path: publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md
+    notebook_id: 3be56bf2-410a-40ce-85e2-d6c7a16162ca
+    notebook_title: The Hardware Compatibility Filter for LLM Success
+    essay_url: https://lambpetros.substack.com/p/what-actually-works-the-hardware
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/what-actually-works-the-hardware
+    cinematic:
+      title: Why AI Architecture Progress Is Filtered by Hardware
+      hook: In production AI, the architectures that survive are the ones that fit
+        kernels, memory hierarchies, and serving stacks, not just the ones with the
+        prettiest papers.
+      summary: 'This cinematic brief compresses the hardware-compatibility thesis
+        behind modern model architecture: FlashAttention, GQA, MLA, and MoE spread
+        because they map cleanly onto real infrastructure.
+
+
+        It should pull viewers toward the deeper long-form argument that architecture
+        success is an economic and systems story, not only a research story.'
+      video_file: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.mp4
+      output_srt: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.srt
+      upload_report: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic_upload_report.json
+      generation_task_id: 85b5a14a-bee9-4c3b-8ae0-2514d78cd167
+      generation_task_started_at: '2026-04-30T11:53:57Z'
+      youtube_video_id: Ju5UJvO4X5k
+      youtube_url: https://www.youtube.com/watch?v=Ju5UJvO4X5k
+      published_at: '2026-04-30T13:20:00Z'
+      state: completed
+      retry_state:
+        attempts: 1
+        last_attempted_at: '2026-04-30T13:20:00Z'
+        last_error: null
+    shorts:
+      workspace_dir: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: completed
+      approved_clips:
+      - slug: hardware-kills-elegant-architectures
+        title: Hardware Kills Elegant AI Architectures
+        summary: Transformers won because GPUs reward blocky matrix math and punish
+          architectures with awkward memory access patterns.
+        start: '00:00:32.399'
+        end: '00:02:01.200'
+        total_score: 18
+        publish_at: '2026-05-03T06:00:00Z'
+      - slug: flash-attention-passed-the-silicon-filter
+        title: FlashAttention Passed the Silicon Filter
+        summary: FlashAttention became standard because it changed the memory access
+          pattern without fighting the physical layout of the chip.
+        start: '00:01:50.640'
+        end: '00:03:21.440'
+        total_score: 17
+        publish_at: '2026-05-04T06:00:00Z'
+      - slug: infrastructure-lag-slows-ai-progress
+        title: Infrastructure Lag Slows AI Progress
+        summary: The real bottleneck is no longer ideas alone but the years it takes
+          to rewrite kernels and serving stacks around them.
+        start: '00:04:14.400'
+        end: '00:05:45.120'
+        total_score: 19
+        publish_at: '2026-05-05T06:00:00Z'
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: '2026-05-03T06:00:00Z'
+      last_scheduled_at: '2026-04-30T13:34:26.001112+00:00'
+  orchestration_paradigm_series:
+    package: orchestration-paradigm/the-orchestration-paradigm-series
+    status_path: publications/orchestration-paradigm/the-orchestration-paradigm-series/status.yaml
+    notebook_source_status: publications/orchestration-paradigm/status.yaml
+    markdown_path: publications/orchestration-paradigm/the-orchestration-paradigm-series/the-orchestration-paradigm-series.md
+    notebook_id: a9ac7ec8-6ef5-4d78-87cd-286108db6ac4
+    notebook_title: 'The Orchestration Paradigm: Reinforcement Learning for AI Tool
+      Routing'
+    essay_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-series
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/the-orchestration-paradigm-series
+    cinematic:
+      title: 'The Orchestration Paradigm: Reinforcement Learning for AI Tool Routing'
+      hook: 'This cinematic brief introduces the main structural claim behind The
+        Orchestration Paradigm: Reinforcement Learning for AI Tool Routing without
+        forcing viewers to know the essay first.'
+      summary: 'This cinematic brief is the discovery surface for The Orchestration
+        Paradigm: Reinforcement Learning for AI Tool Routing.
+
+
+        Use it to land the core causal move quickly, then point viewers toward the
+        full research breakdown.'
+      video_file: publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.mp4
+      output_srt: publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.srt
+      upload_report: publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  orchestration_paradigm_issue_factory:
+    package: orchestration-paradigm
+    status_path: publications/orchestration-paradigm/status.yaml
+    markdown_path: publications/orchestration-paradigm/ToolOrchestra_Parts/substack_posts/Issue_2_The_Factory.md
+    notebook_id: 6a88af78-006e-458a-8109-b822c55e6a35
+    notebook_title: 'The Factory: Engineering the LLM Orchestration Pipeline'
+    essay_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e
+    cinematic:
+      title: 'The Factory: Engineering the LLM Orchestration Pipeline'
+      hook: 'This cinematic brief introduces the main structural claim behind The
+        Factory: Engineering the LLM Orchestration Pipeline without forcing viewers
+        to know the essay first.'
+      summary: 'This cinematic brief is the discovery surface for The Factory: Engineering
+        the LLM Orchestration Pipeline.
+
+
+        Use it to land the core causal move quickly, then point viewers toward the
+        full research breakdown.'
+      video_file: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.mp4
+      output_srt: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.srt
+      upload_report: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  orchestration_paradigm_issue_behavior:
+    package: orchestration-paradigm
+    status_path: publications/orchestration-paradigm/status.yaml
+    markdown_path: publications/orchestration-paradigm/ToolOrchestra_Parts/substack_posts/Issue_3_The_Behavior.md
+    notebook_id: 963f3bba-9c7c-4e5a-aa1a-e7e681f118b5
+    notebook_title: 'Orchestration Behavior: Emergent State Machines and Alignment
+      Traps'
+    essay_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-018
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-018
+    cinematic:
+      title: 'Orchestration Behavior: Emergent State Machines and Alignment Traps'
+      hook: 'This cinematic brief introduces the main structural claim behind Orchestration
+        Behavior: Emergent State Machines and Alignment Traps without forcing viewers
+        to know the essay first.'
+      summary: 'This cinematic brief is the discovery surface for Orchestration Behavior:
+        Emergent State Machines and Alignment Traps.
+
+
+        Use it to land the core causal move quickly, then point viewers toward the
+        full research breakdown.'
+      video_file: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.mp4
+      output_srt: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.srt
+      upload_report: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  orchestration_paradigm_issue_reality:
+    package: orchestration-paradigm
+    status_path: publications/orchestration-paradigm/status.yaml
+    markdown_path: publications/orchestration-paradigm/ToolOrchestra_Parts/substack_posts/Issue_4_The_Reality.md
+    notebook_id: 64889a43-abbd-40ce-aa19-438f3b6b728b
+    notebook_title: 'Agentic AI: The Orchestration Paradigm and Production Reality'
+    essay_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397
+    cinematic:
+      title: 'Agentic AI: The Orchestration Paradigm and Production Reality'
+      hook: 'This cinematic brief introduces the main structural claim behind Agentic
+        AI: The Orchestration Paradigm and Production Reality without forcing viewers
+        to know the essay first.'
+      summary: 'This cinematic brief is the discovery surface for Agentic AI: The
+        Orchestration Paradigm and Production Reality.
+
+
+        Use it to land the core causal move quickly, then point viewers toward the
+        full research breakdown.'
+      video_file: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.mp4
+      output_srt: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.srt
+      upload_report: publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null
+  transformer_attractor:
+    package: neural-architectures
+    status_path: publications/neural-architectures/status.yaml
+    markdown_path: publications/hardware-friction/essay_sections/The_Transformer_Attractor.md
+    notebook_id: ece2cbca-3a4a-4d6c-864e-20a33cdb9b93
+    notebook_title: 'The Transformer Attractor: Architecture Lock-in and Hardware
+      Determinism'
+    essay_url: https://lambpetros.substack.com/p/the-transformer-attractor
+    secondary_link:
+      kind: essay
+      label: Full research breakdown
+      video_id: null
+      url: https://lambpetros.substack.com/p/the-transformer-attractor
+    cinematic:
+      title: 'The Transformer Attractor: Architecture Lock-in and Hardware Determinism'
+      hook: 'This cinematic brief introduces the main structural claim behind The
+        Transformer Attractor: Architecture Lock-in and Hardware Determinism without
+        forcing viewers to know the essay first.'
+      summary: 'This cinematic brief is the discovery surface for The Transformer
+        Attractor: Architecture Lock-in and Hardware Determinism.
+
+
+        Use it to land the core causal move quickly, then point viewers toward the
+        full research breakdown.'
+      video_file: publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.mp4
+      output_srt: publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.srt
+      upload_report: publications/neural-architectures/artifacts/video/transformer_attractor_cinematic_upload_report.json
+      youtube_video_id: null
+      youtube_url: null
+      published_at: null
+      state: queued
+      retry_state:
+        attempts: 0
+        last_attempted_at: null
+        last_error: null
+    shorts:
+      workspace_dir: publications/neural-architectures/artifacts/video/daily-cinematic-rollout
+      candidate_report: publications/neural-architectures/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      manifest_path: publications/neural-architectures/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      upload_report: publications/neural-architectures/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+      state: pending_cinematic
+      approved_clips: []
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: null
+      last_scheduled_at: null

@@ -1,0 +1,40 @@
+{
+  "markdown_file": "publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md",
+  "video_title": "Why AI Architecture Progress Is Filtered by Hardware | A Cinematic Research Brief",
+  "essay_url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware",
+  "max_refs": 5,
+  "reference_count": 5,
+  "references": [
+    {
+      "section": "1. Mixture-of-Experts and Conditional Computation",
+      "title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+      "guidance": "Original large-scale sparse MoE for language models, establishing Switch as a practical scaling path.",
+      "citation": "Fedus, W. et al. (2021). *Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity*. arXiv:2101.03961. Original large-scale sparse MoE for language models, establishing Switch as a practical scaling path."
+    },
+    {
+      "section": "1. Mixture-of-Experts and Conditional Computation",
+      "title": "GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding",
+      "guidance": "Introduces GShard and conditional computation techniques for scaling models across many devices.",
+      "citation": "Lepikhin, D. et al. (2020). *GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding*. arXiv:2006.16668. Introduces GShard and conditional computation techniques for scaling models across many devices."
+    },
+    {
+      "section": "1. Mixture-of-Experts and Conditional Computation",
+      "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts",
+      "guidance": "Demonstrates Google\u2019s GLaM MoE architecture and its efficiency\u2013quality trade-offs.",
+      "citation": "Du, N. et al. (2021). *GLaM: Efficient Scaling of Language Models with Mixture-of-Experts*. arXiv:2112.06905. Demonstrates Google\u2019s GLaM MoE architecture and its efficiency\u2013quality trade-offs."
+    },
+    {
+      "section": "1. Mixture-of-Experts and Conditional Computation",
+      "title": "Mixture-of-Experts with Expert Choice Routing",
+      "guidance": "Proposes expert-choice routing to improve MoE load balancing and training stability.",
+      "citation": "Zhou, Y. et al. (2022). *Mixture-of-Experts with Expert Choice Routing*. NeurIPS 2022. arXiv:2202.09368. Proposes expert-choice routing to improve MoE load balancing and training stability."
+    },
+    {
+      "section": "1. Mixture-of-Experts and Conditional Computation",
+      "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "guidance": "Early MoE paper showing sparsely-gated experts can scale to very large parameter counts.",
+      "citation": "Shazeer, N. et al. (2017). *Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer*. arXiv:1701.06538. Early MoE paper showing sparsely-gated experts can scale to very large parameter counts."
+    }
+  ],
+  "comment_markdown": "Draft references comment for: Why AI Architecture Progress Is Filtered by Hardware | A Cinematic Research Brief\n\nThis brief leans most heavily on these sources:\n\n- **Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity** \u2014 Original large-scale sparse MoE for language models, establishing Switch as a practical scaling path.\n- **GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding** \u2014 Introduces GShard and conditional computation techniques for scaling models across many devices.\n- **GLaM: Efficient Scaling of Language Models with Mixture-of-Experts** \u2014 Demonstrates Google\u2019s GLaM MoE architecture and its efficiency\u2013quality trade-offs.\n- **Mixture-of-Experts with Expert Choice Routing** \u2014 Proposes expert-choice routing to improve MoE load balancing and training stability.\n- **Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer** \u2014 Early MoE paper showing sparsely-gated experts can scale to very large parameter counts.\n\nFull essay + full references: https://lambpetros.substack.com/p/what-actually-works-the-hardware\n"
+}

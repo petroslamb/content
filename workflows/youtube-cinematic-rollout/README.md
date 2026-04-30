@@ -81,7 +81,9 @@ Do not move generated media into the experiment workspace.
   - runs once per day at `10:00` Athens time
   - reconciles state first, then starts up to two new cinematic generations when capacity allows
   - after starting NotebookLM work, blocks on 10-minute generation polling when the current runtime can safely remain active
-  - if it creates or detects any in-flight cinematic rollout work, it must create or refresh a temporary watcher heartbeat for this thread
+  - when any cinematic rollout entry is in flight, the active run should stay alive and keep using 10-minute sleep-and-check polling until that batch is fully finished through Shorts scheduling, Shorts upload, Shorts related-video Studio verification, and full cinematic Studio card/end-screen verification
+  - do not yield early just because the next required step is asynchronous; sleep for `poll_interval_seconds` and resume until the current batch is fully reconciled or a real auth/rate-limit blocker is recorded
+  - if it creates or detects any in-flight cinematic rollout work and the runtime truly cannot stay alive, create or refresh a temporary watcher heartbeat for this thread as the fallback only
 - Temporary watcher:
   - runs every `30` minutes
   - watches only in-flight entries already present in the backlog manifest
@@ -89,7 +91,7 @@ Do not move generated media into the experiment workspace.
   - continues the pipeline through upload, Studio card/end-screen wiring, captions, Shorts selection, render, Shorts upload, and readback, using 10-minute waits for NotebookLM artifacts and YouTube captions before yielding
   - deletes itself when there are no in-flight cinematic rollout entries left
 
-Do not rely on the daily starter alone for end-to-end completion. The active run should wait when it can; the watcher is the backup follow-through layer that turns any still-pending NotebookLM jobs into finished YouTube distribution work.
+Do not rely on a single reconciliation pass. The active run should normally stay alive and wait through the full in-flight batch end to end, using repeated 10-minute polling windows. The watcher is the backup follow-through layer only when that active runtime cannot stay alive.
 
 ## Helper Scripts
 
@@ -210,7 +212,7 @@ In Studio:
 - Prefer `00:01:00` for the card teaser time. If Studio rejects that timestamp for a very short upload, use the earliest valid first-minutes timestamp.
 - Reopen the editor after saving and verify the main editor shows both end screen and info cards as editable. If either surface did not persist, reopen that editor and save again.
 
-If Studio browser auth is missing, record `studio_link_pending` with the cinematic video ID and target video ID, notify the user to sign in to YouTube Studio in the in-app browser, and leave the item for the 30-minute watcher to retry. Downstream YouTube-only work can continue only when it does not hide the unresolved Studio wiring.
+If Studio browser auth is missing, record `studio_link_pending` with the cinematic video ID and target video ID, notify the user to sign in to YouTube Studio in the in-app browser, and keep the item in the active follow-through loop until auth is restored or the run is explicitly blocked. Downstream YouTube-only work can continue only when it does not hide the unresolved Studio wiring.
 
 ### 6. Recover captions and extract candidates
 
@@ -312,6 +314,7 @@ After upload, verify the Shorts related-video setting in YouTube Studio, not onl
 - Stay on the page until the save state fully settles; do not navigate away immediately after clicking Save.
 - Reload the same Studio edit page and verify the `Related video` card still shows the cinematic brief title.
 - If the card returns to `None`, repeat the Studio selection and save; do not mark the entry completed until the reload check persists.
+- Use the Codex in-app browser for this verification and persistence pass whenever browser automation is available for the run.
 
 ## Shorts Scheduling Contract
 

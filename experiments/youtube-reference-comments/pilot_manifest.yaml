@@ -1,0 +1,56 @@
+experiment:
+  name: youtube-reference-comments
+  posture: draft_review_only
+  max_references_per_comment: 5
+  comment_style:
+    lead: This brief leans most heavily on these sources
+    require_guidance_sentence: true
+    end_with_full_references_link: true
+  policy_guardrails:
+  - Keep comments on-topic for the specific video.
+  - Avoid near-identical wording across a broad backfill wave.
+  - Do not dump the full bibliography into YouTube comments.
+  - Review drafts manually before posting.
+videos:
+  - key: hardware_friction_map
+    video_id: xPLU4cISmxE
+    video_title: Why Hardware Friction Decides What Ships in AI | A Cinematic Research Brief
+    markdown_file: publications/hardware-friction/substack_drafts/The_Hardware_Friction_Map_Substack.md
+    essay_url: https://lambpetros.substack.com/p/the-hardware-friction-map
+    draft_markdown: experiments/youtube-reference-comments/drafts/hardware_friction_map_comment.md
+    draft_json: experiments/youtube-reference-comments/drafts/hardware_friction_map_comment.json
+  - key: what_actually_works_hardware
+    video_id: Ju5UJvO4X5k
+    video_title: Why AI Architecture Progress Is Filtered by Hardware | A Cinematic Research Brief
+    markdown_file: publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md
+    essay_url: https://lambpetros.substack.com/p/what-actually-works-the-hardware
+    draft_markdown: experiments/youtube-reference-comments/drafts/what_actually_works_hardware_comment.md
+    draft_json: experiments/youtube-reference-comments/drafts/what_actually_works_hardware_comment.json
+  - key: illusion_of_swarm
+    video_id: q3_gPM4E8yw
+    video_title: Why Most Multi-Agent AI Is a Workaround
+    markdown_file: publications/illusion-of-swarm/the-illusion-of-the-swarm.md
+    essay_url: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+    draft_markdown: experiments/youtube-reference-comments/drafts/illusion_of_swarm_comment.md
+    draft_json: experiments/youtube-reference-comments/drafts/illusion_of_swarm_comment.json
+  - key: illusion_of_swarm_longform
+    video_id: AigaLYfpFZc
+    video_title: Many Multi-Agent Systems Are a Workaround, Not a Destination
+    markdown_file: publications/illusion-of-swarm/the-illusion-of-the-swarm.md
+    essay_url: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+    draft_markdown: experiments/youtube-reference-comments/drafts/illusion_of_swarm_longform_comment.md
+    draft_json: experiments/youtube-reference-comments/drafts/illusion_of_swarm_longform_comment.json
+  - key: moltbook_phenomenon
+    video_id: 9C-N9gaJjN4
+    video_title: Why Meta Bought a Broken AI Social Network
+    markdown_file: publications/moltbook-phenomenon/the-moltbook-phenomenon.md
+    essay_url: https://lambpetros.substack.com/p/the-moltbook-phenomenon
+    draft_markdown: experiments/youtube-reference-comments/drafts/moltbook_phenomenon_comment.md
+    draft_json: experiments/youtube-reference-comments/drafts/moltbook_phenomenon_comment.json
+  - key: moltbook_phenomenon_longform
+    video_id: ahAVt338E_8
+    video_title: Meta Bought a Catastrophically Broken AI Social Network
+    markdown_file: publications/moltbook-phenomenon/the-moltbook-phenomenon.md
+    essay_url: https://lambpetros.substack.com/p/the-moltbook-phenomenon
+    draft_markdown: experiments/youtube-reference-comments/drafts/moltbook_phenomenon_longform_comment.md
+    draft_json: experiments/youtube-reference-comments/drafts/moltbook_phenomenon_longform_comment.json

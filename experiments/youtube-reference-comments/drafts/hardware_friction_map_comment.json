@@ -1,0 +1,40 @@
+{
+  "markdown_file": "publications/hardware-friction/substack_drafts/The_Hardware_Friction_Map_Substack.md",
+  "video_title": "Why Hardware Friction Decides What Ships in AI | A Cinematic Research Brief",
+  "essay_url": "https://lambpetros.substack.com/p/the-hardware-friction-map",
+  "max_refs": 5,
+  "reference_count": 5,
+  "references": [
+    {
+      "section": "References",
+      "title": "\"Switch Transformers\"",
+      "guidance": "",
+      "citation": "Fedus et al., 2021 \u2014 *\"Switch Transformers\"* (arXiv:2101.03961)"
+    },
+    {
+      "section": "References",
+      "title": "DeepSeek-V3 and DeepSeek-R1 technical reports (2024\u20132025)",
+      "guidance": "",
+      "citation": "DeepSeek-V3 and DeepSeek-R1 technical reports (2024\u20132025)"
+    },
+    {
+      "section": "References",
+      "title": "Mixtral-8\u00d77B technical report (Mistral, 2023)",
+      "guidance": "",
+      "citation": "Mixtral-8\u00d77B technical report (Mistral, 2023)"
+    },
+    {
+      "section": "References",
+      "title": "FlashAttention",
+      "guidance": "",
+      "citation": "Meta Llama 4 (Scout/Maverick) model cards **FlashAttention**"
+    },
+    {
+      "section": "References",
+      "title": "\"FlashAttention\"",
+      "guidance": "",
+      "citation": "Dao et al., 2022 \u2014 *\"FlashAttention\"* (arXiv:2205.14135)"
+    }
+  ],
+  "comment_markdown": "Draft references comment for: Why Hardware Friction Decides What Ships in AI | A Cinematic Research Brief\n\nThis brief leans most heavily on these sources:\n\n- **\"Switch Transformers\"**\n- **DeepSeek-V3 and DeepSeek-R1 technical reports (2024\u20132025)**\n- **Mixtral-8\u00d77B technical report (Mistral, 2023)**\n- **FlashAttention**\n- **\"FlashAttention\"**\n\nFull essay + full references: https://lambpetros.substack.com/p/the-hardware-friction-map\n"
+}
