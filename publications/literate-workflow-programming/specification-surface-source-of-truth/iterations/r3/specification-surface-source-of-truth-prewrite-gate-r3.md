@@ -4,16 +4,16 @@ package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 3
 judgment_policy: "draft_only"
 live_draft_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md"
 writability_verdict: writable
 candidate_authorized: true
 dominant_blocker_slug: "publication-sharpness-gap"
 supporting_artifact_paths:
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-blueprint-r3.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-replacement-review-r2.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-atlas-scorecard-r2.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-decision-r2.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-blueprint-r3.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-replacement-review-r2.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-atlas-scorecard-r2.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-decision-r2.md"
   - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-claim-boundary-ledger.md"
   - "publications/literate-workflow-programming/papers/index.md"
   - "publications/literate-workflow-programming/papers/markdown/2602.00180.md"
@@ -23,8 +23,8 @@ supporting_artifact_paths:
 # Essay Prewrite Gate
 
 Live draft: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md`
-Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md`
-Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-essay-iteration-packet-r3.json`
+Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md`
+Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-essay-iteration-packet-r3.json`
 
 ## Promise
 

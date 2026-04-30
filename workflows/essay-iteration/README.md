@@ -29,12 +29,12 @@ required_context:
   - nearest review artifacts when present
   - target evidence surface or source index
 expected_outputs:
-  - essay-iteration packet manifest beside the live draft
-  - essay-governing prewrite gate beside the live draft
-  - bounded rewrite candidate and structured review artifacts within the packet
+  - essay-iteration packet manifest under the package-local `iterations/r<revision>/` directory
+  - essay-governing prewrite gate in the same revision packet directory
+  - bounded rewrite candidate and structured review artifacts within the same revision packet directory
   - stop-fired donor report when a flagship object is judged capped
 done_when:
-  - a validated packet exists beside the live draft, the prewrite gate is explicit, and any stop-fired packet has a completed ceiling report before the next lifecycle handoff
+  - a validated packet exists for the active revision, the prewrite gate is explicit, and any stop-fired packet has a completed ceiling report before the next lifecycle handoff
 approval_gate: required_for_major_rewrite
 judgment_policy: draft_only
 prohibited_moves:
@@ -53,7 +53,7 @@ This is the canonical tracked workflow for taking an essay from live draft to re
 The repo standard is:
 
 - one stable **live draft** path
-- supporting review artifacts beside it when useful
+- package-local revision packet directories under `iterations/r<revision>/` for candidates and their supporting review artifacts
 - older versions and superseded support files moved into local `archive/`
 
 The default is not “versioned files forever” and not “rewrite in place with no history.”
@@ -67,7 +67,7 @@ The intended sequence is:
 1. set the leaf package `status.yaml` so `essay_iteration` is the next stage
 2. run `./content-agent validate --workflow essay_iteration --package <leaf>` to check the governed contract boundary
 3. run `npm run stage:run -- --package <leaf> --stage essay_iteration` only for the compatibility scaffold step
-4. let the scaffold script create a package-local packet beside the live draft
+4. let the scaffold script create a package-local packet under `iterations/r<revision>/`
 5. harden the blueprint if the governing surface is not yet rewrite-ready
 6. run the essay prewrite gate inside the packet before opening a bounded candidate
 7. point the model at the leaf package plus that packet manifest
@@ -261,7 +261,7 @@ The essay prewrite gate is also binary:
 1. produce an essay-governing prewrite surface strong enough to support an outstanding draft
 2. or conclude explicitly that the essay is not yet writable at that bar from the current frame, evidence, or voice constraints
 
-Inside the generic `essay_iteration` packet, this gate lives in the package-local `*-prewrite-gate-r<revision>.md` artifact. It is not a new lifecycle stage.
+Inside the generic `essay_iteration` packet, this gate lives in the package-local `iterations/r<revision>/*-prewrite-gate-r<revision>.md` artifact. It is not a new lifecycle stage.
 
 The prewrite surface should not be a rough outline. It should set:
 
@@ -294,7 +294,7 @@ The default sequence is:
 2. run a scored brutal review or cold comparison across the candidate leaves
 3. produce one hardened blueprint for the proposed flagship object
 4. run the essay prewrite gate for that flagship object
-5. write one bounded flagship candidate beside the existing surfaces when feasible
+5. write one bounded flagship candidate in its active revision packet directory when feasible
 6. run a cold replacement review against the strongest prior leaf, not just against the author's intent
 7. promote only after the candidate wins on publication power rather than cleanliness alone
 8. archive the superseded leaves only after the promotion decision is explicit
@@ -442,7 +442,7 @@ For a published or older essay under refinement, the recurring strong pattern is
 4. optionally run an external blueprint review and integrate only the adjudicated fixes that materially improve governance
 5. run the essay prewrite gate before drafting any high-bar bounded candidate
 6. run targeted validation against the package evidence surface when principle-level claims need pressure-testing
-7. write a bounded candidate beside the live draft
+7. write a bounded candidate in the active revision packet directory
 8. run a cold replacement review against both the live draft and the outstanding-essay bar
 9. if the review blocks promotion, return immediately to the post-review blueprint gate instead of launching another freehand rewrite
 10. compare, choose, and only then promote one draft back into the canonical live path

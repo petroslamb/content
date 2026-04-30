@@ -4,15 +4,15 @@ package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 3
 judgment_policy: "draft_only"
 live_draft_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md"
 replacement_verdict: human_review_required
 north_star_verdict: clears_north_star
 dominant_blocker_slug: draft-only-human-approval
 continue_iteration: false
 evidence_anchor_paths:
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-blueprint-r3.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-prewrite-gate-r3.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-blueprint-r3.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-prewrite-gate-r3.md"
   - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-claim-boundary-ledger.md"
   - "publications/literate-workflow-programming/papers/index.md"
   - "publications/literate-workflow-programming/papers/markdown/2602.00180.md"

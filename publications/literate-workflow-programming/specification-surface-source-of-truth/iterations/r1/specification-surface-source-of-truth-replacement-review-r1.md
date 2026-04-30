@@ -4,14 +4,14 @@ package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
 judgment_policy: "draft_only"
 live_draft_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-candidate-r1.md"
 replacement_verdict: revise_before_replacement
 north_star_verdict: below_north_star
 dominant_blocker_slug: bridge-evidence-thinness
 continue_iteration: true
 evidence_anchor_paths:
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-blueprint-r1.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-candidate-r1.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-blueprint-r1.md"
   - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-claim-boundary-ledger.md"
   - "publications/literate-workflow-programming/papers/index.md"
 ---

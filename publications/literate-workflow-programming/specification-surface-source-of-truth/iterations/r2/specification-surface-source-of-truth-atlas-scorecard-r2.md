@@ -3,11 +3,11 @@ kind: essay_iteration_atlas_scorecard
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 2
 judgment_policy: "draft_only"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md"
-opening_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md:3"
-middle_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md:15"
-ending_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md:43"
-nearby_archive_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md"
+opening_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md:3"
+middle_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md:15"
+ending_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md:43"
+nearby_archive_anchor: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-candidate-r1.md"
 stronger_archive_anchor: "publications/confidence-debt/confidence-debt.md"
 weaker_archive_anchor: "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure.md"
 traction: 8.0
@@ -41,7 +41,7 @@ The ending keeps the essay on the right side of the forbidden claim and restates
 
 ## Archive Anchors
 
-- Nearby: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md`
+- Nearby: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-candidate-r1.md`
 - Stronger: `publications/confidence-debt/confidence-debt.md`
 - Weaker: `publications/literate-workflow-programming/validation-is-lifecycle-infrastructure.md`
 

@@ -395,6 +395,24 @@ def _glob_direct_files(root: Path, patterns: tuple[str, ...]) -> list[Path]:
     return matches
 
 
+def _glob_packet_surface_files(root: Path, patterns: tuple[str, ...]) -> list[Path]:
+    matches = _glob_direct_files(root, patterns)
+    iterations_root = root / "iterations"
+    if iterations_root.exists():
+        for revision_dir in sorted(iterations_root.glob("r*")):
+            if revision_dir.is_dir():
+                matches.extend(_glob_direct_files(revision_dir, patterns))
+
+    deduped: list[Path] = []
+    seen: set[Path] = set()
+    for match in matches:
+        if match in seen:
+            continue
+        seen.add(match)
+        deduped.append(match)
+    return deduped
+
+
 def _revision_sort_key(path: Path) -> tuple[int, str]:
     match = re.search(r"-r(\d+)\.md$", path.name)
     if match:
@@ -404,7 +422,7 @@ def _revision_sort_key(path: Path) -> tuple[int, str]:
 
 def resolve_nearest_blueprint_path(package_path: Path, status_data: dict) -> Path | None:
     for root in filter(None, [package_path, resolve_parent_package_path(package_path, status_data)]):
-        matches = _glob_direct_files(root, BLUEPRINT_PATTERNS)
+        matches = _glob_packet_surface_files(root, BLUEPRINT_PATTERNS)
         if matches:
             return max(matches, key=_revision_sort_key)
     return None
@@ -428,7 +446,7 @@ def resolve_review_artifact_paths(package_path: Path, status_data: dict) -> list
     matches: list[Path] = []
     seen: set[Path] = set()
     for root in filter(None, [package_path, resolve_parent_package_path(package_path, status_data)]):
-        for candidate in _glob_direct_files(root, REVIEW_PATTERNS):
+        for candidate in _glob_packet_surface_files(root, REVIEW_PATTERNS):
             if candidate in seen:
                 continue
             seen.add(candidate)
@@ -439,7 +457,7 @@ def resolve_review_artifact_paths(package_path: Path, status_data: dict) -> list
 def build_packet_paths(live_draft_path: Path, revision: int) -> dict[str, Path]:
     draft_stem = live_draft_path.stem
     root = live_draft_path.parent
-    return {
+    legacy_paths = {
         "manifest": root / f"{draft_stem}-essay-iteration-packet-r{revision}.json",
         "blueprint": root / f"{draft_stem}-blueprint-r{revision}.md",
         "prewrite_gate": root / f"{draft_stem}-prewrite-gate-r{revision}.md",
@@ -449,6 +467,16 @@ def build_packet_paths(live_draft_path: Path, revision: int) -> dict[str, Path]:
         "decision": root / f"{draft_stem}-decision-r{revision}.md",
         "ceiling_report": root / f"{draft_stem}-ceiling-report-r{revision}.md",
     }
+    packet_root = root / "iterations" / f"r{revision}"
+    iteration_paths = {
+        name: packet_root / path.name
+        for name, path in legacy_paths.items()
+    }
+    if any(path.exists() for path in iteration_paths.values()):
+        return iteration_paths
+    if any(path.exists() for path in legacy_paths.values()):
+        return legacy_paths
+    return iteration_paths
 
 
 def describe_packet_paths(live_draft_path: Path | None, revision: int | None) -> dict[str, str]:

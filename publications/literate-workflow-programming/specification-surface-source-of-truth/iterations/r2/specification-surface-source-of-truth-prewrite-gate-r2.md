@@ -4,13 +4,13 @@ package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 2
 judgment_policy: "draft_only"
 live_draft_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md"
 writability_verdict: writable
 candidate_authorized: true
 dominant_blocker_slug: "bridge-evidence-thinness"
 supporting_artifact_paths:
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-blueprint-r2.md"
-  - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-replacement-review-r1.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-blueprint-r2.md"
+  - "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-replacement-review-r1.md"
   - "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-claim-boundary-ledger.md"
   - "publications/literate-workflow-programming/papers/index.md"
   - "publications/literate-workflow-programming/papers/markdown/2602.00180.md"
@@ -20,8 +20,8 @@ supporting_artifact_paths:
 # Essay Prewrite Gate
 
 Live draft: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md`
-Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md`
-Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-essay-iteration-packet-r2.json`
+Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md`
+Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-essay-iteration-packet-r2.json`
 
 ## Promise
 

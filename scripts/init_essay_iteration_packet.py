@@ -67,6 +67,7 @@ def should_write(path: Path, force: bool) -> bool:
 def write_template(path: Path, template_text: str, render_values: dict[str, object], force: bool) -> str:
     if not should_write(path, force):
         return "kept"
+    path.parent.mkdir(parents=True, exist_ok=True)
     rendered = Template(template_text).safe_substitute(
         {key: "" if value is None else str(value) for key, value in render_values.items()}
     )
@@ -236,6 +237,7 @@ def main() -> None:
             args.force,
         )
 
+    packet_paths["manifest"].parent.mkdir(parents=True, exist_ok=True)
     packet_paths["manifest"].write_text(json.dumps(packet_manifest, indent=2) + "\n")
     file_status["manifest"] = "written"
 

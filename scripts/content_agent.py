@@ -32,6 +32,7 @@ from check_workflow_yaml_contracts import (
     path_covered,
     validate_workflow_yaml_contracts,
 )
+from essay_iteration_support import build_packet_paths
 from harness import load_harness_policy, load_package_scripts, validate_harness_policy
 from lifecycle import (
     PUBLICATIONS_DIR,
@@ -1569,7 +1570,7 @@ def validate_essay_iteration_packet_drift(
     if not isinstance(markdown_path, str) or not isinstance(revision, int):
         return
     live_draft = package_relative_or_repo_path(markdown_path, package_path)
-    manifest_path = live_draft.with_name(f"{live_draft.stem}-essay-iteration-packet-r{revision}.json")
+    manifest_path = build_packet_paths(live_draft, revision)["manifest"]
     if not manifest_path.exists():
         add_finding(
             findings,

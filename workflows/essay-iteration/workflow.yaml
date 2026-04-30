@@ -74,6 +74,10 @@ context_dependencies:
       - publications/{package}/*scorecard*.md
       - publications/{package}/*claims*.md
       - publications/{package}/*rubric*.md
+      - publications/{package}/iterations/r*/*review*.md
+      - publications/{package}/iterations/r*/*scorecard*.md
+      - publications/{package}/iterations/r*/*claims*.md
+      - publications/{package}/iterations/r*/*rubric*.md
     required: false
     purpose: Reuse nearby review artifacts without treating them as lifecycle authority.
     record_hash: true
@@ -162,48 +166,48 @@ allowed_paths:
 
 outputs:
   - id: packet_manifest
-    path_template: "{live_draft_dir}/{live_draft_stem}-essay-iteration-packet-r{revision}.json"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-essay-iteration-packet-r{revision}.json"
     required: true
     format: json
     producer: packet_initializer
   - id: hardened_blueprint
-    path_template: "{live_draft_dir}/{live_draft_stem}-blueprint-r{revision}.md"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-blueprint-r{revision}.md"
     required: true
     format: markdown
     producer: packet_initializer
   - id: prewrite_gate
-    path_template: "{live_draft_dir}/{live_draft_stem}-prewrite-gate-r{revision}.md"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-prewrite-gate-r{revision}.md"
     required: true
     format: markdown
     producer: packet_initializer
     gated_by: essay_prewrite
   - id: candidate_draft
-    path_template: "{live_draft_dir}/{live_draft_stem}-candidate-r{revision}.md"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-candidate-r{revision}.md"
     required: false
     format: markdown
     producer: packet_initializer
     promotable: true
     gated_by: essay_prewrite
   - id: replacement_review
-    path_template: "{live_draft_dir}/{live_draft_stem}-replacement-review-r{revision}.md"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-replacement-review-r{revision}.md"
     required: false
     format: markdown
     producer: packet_initializer
     gated_by: replacement_north_star
   - id: atlas_scorecard
-    path_template: "{live_draft_dir}/{live_draft_stem}-atlas-scorecard-r{revision}.md"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-atlas-scorecard-r{revision}.md"
     required: false
     format: markdown
     producer: packet_initializer
     gated_by: replacement_north_star
   - id: promotion_decision
-    path_template: "{live_draft_dir}/{live_draft_stem}-decision-r{revision}.md"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-decision-r{revision}.md"
     required: false
     format: markdown
     producer: packet_initializer
     gated_by: replacement_north_star
   - id: ceiling_report
-    path_template: "{live_draft_dir}/{live_draft_stem}-ceiling-report-r{revision}.md"
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-ceiling-report-r{revision}.md"
     required: conditional
     required_when: replacement_north_star stop gate fires
     format: markdown
@@ -517,7 +521,7 @@ steps:
   - id: write_bounded_candidate
     title: Write bounded candidate
     mode: codex_session
-    action: Write one bounded candidate beside the live draft only after the prewrite gate authorizes drafting.
+    action: Write one bounded candidate in the active revision packet directory only after the prewrite gate authorizes drafting.
     consumes:
       - packet_manifest
       - prewrite_gate
