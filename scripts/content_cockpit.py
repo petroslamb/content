@@ -2150,6 +2150,7 @@ function workflowLifecycleLane(workflow) {
   if (id === "research" || id.includes("alphaxiv")) return "Research";
   if (id.includes("paper_intake") || id.includes("evidence")) return "Evidence";
   if (id.includes("essay")) return "Drafting";
+  if (id.includes("notebooklm") || id.includes("youtube_production")) return "Artifacts";
   if (id.includes("article_polish") || id.includes("release")) return "Polish";
   if (id.includes("substack") && !id.includes("archive")) return "Publishing";
   if (id.includes("distribution")) return "Distribution";
@@ -2157,7 +2158,7 @@ function workflowLifecycleLane(workflow) {
 }
 
 function renderLifecycleWorkflowColumns(workflows) {
-  const laneNames = ["Discovery", "Research", "Evidence", "Drafting", "Polish", "Publishing", "Distribution", "Maintenance"];
+  const laneNames = ["Discovery", "Research", "Evidence", "Drafting", "Artifacts", "Polish", "Publishing", "Distribution", "Maintenance"];
   const lanes = Object.fromEntries(laneNames.map((name) => [name, []]));
   for (const workflow of workflows) {
     const rendered = renderWorkflowSection(workflow);
