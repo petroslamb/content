@@ -4,7 +4,7 @@ package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
 judgment_policy: "draft_only"
 live_draft_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-candidate-r1.md"
 writability_verdict: writable
 candidate_authorized: true
 dominant_blocker_slug: ""
@@ -17,8 +17,8 @@ supporting_artifact_paths:
 # Essay Prewrite Gate
 
 Live draft: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md`
-Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r1.md`
-Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-essay-iteration-packet-r1.json`
+Candidate target: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-candidate-r1.md`
+Packet manifest: `publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-essay-iteration-packet-r1.json`
 
 ## Promise
 

@@ -6,8 +6,8 @@
   "workflow_doc": "workflows/essay-iteration/README.md",
   "judgment_policy": "draft_only",
   "live_draft_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
-  "candidate_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md",
-  "packet_manifest_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-essay-iteration-packet-r3.json",
+  "candidate_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md",
+  "packet_manifest_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-essay-iteration-packet-r3.json",
   "validator_commands": [
     "npm run check:essay-prewrite -- --package literate-workflow-programming/specification-surface-source-of-truth",
     "npm run check:essay-iteration -- --package literate-workflow-programming/specification-surface-source-of-truth"
@@ -34,13 +34,13 @@
       "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r3.md",
       "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r3.md",
       "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r2.md",
-      "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-replacement-review-r2.md",
-      "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-atlas-scorecard-r2.md",
+      "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-replacement-review-r2.md",
+      "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-atlas-scorecard-r2.md",
       "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r2.md",
       "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r2.md",
       "publications/literate-workflow-programming/validation-is-lifecycle-infrastructure-review-r1.md",
-      "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-replacement-review-r1.md",
-      "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-atlas-scorecard-r1.md",
+      "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-replacement-review-r1.md",
+      "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r1/specification-surface-source-of-truth-atlas-scorecard-r1.md",
       "publications/literate-workflow-programming/literate-workflow-programming-replacement-review-r1.md",
       "publications/literate-workflow-programming/literate-workflow-programming-atlas-scorecard-r1.md",
       "publications/literate-workflow-programming/claim-scoring-rubric.md",
@@ -50,14 +50,14 @@
     "voice_rules_path": "workflows/essay-iteration/voice_rules.yaml"
   },
   "output_paths": {
-    "manifest": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-essay-iteration-packet-r3.json",
-    "blueprint": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-blueprint-r3.md",
-    "prewrite_gate": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-prewrite-gate-r3.md",
-    "candidate": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r3.md",
-    "replacement_review": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-replacement-review-r3.md",
-    "atlas_scorecard": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-atlas-scorecard-r3.md",
-    "decision": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-decision-r3.md",
-    "ceiling_report": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-ceiling-report-r3.md"
+    "manifest": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-essay-iteration-packet-r3.json",
+    "blueprint": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-blueprint-r3.md",
+    "prewrite_gate": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-prewrite-gate-r3.md",
+    "candidate": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-candidate-r3.md",
+    "replacement_review": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-replacement-review-r3.md",
+    "atlas_scorecard": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-atlas-scorecard-r3.md",
+    "decision": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-decision-r3.md",
+    "ceiling_report": "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r3/specification-surface-source-of-truth-ceiling-report-r3.md"
   },
   "packet_templates": {
     "blueprint": "workflows/essay-iteration/templates/hardened_blueprint_template.md",

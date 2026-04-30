@@ -29,31 +29,19 @@ The governing term is `specification surface`.
 
 This leaf has cleared successor-specific research and has a canonical live draft anchor at [`specification-surface-source-of-truth.md`](specification-surface-source-of-truth.md).
 
-The `essay_iteration` r3 packet now exists beside the live draft. The r2 pass intook the three P0 bridge papers and resolved the old `bridge-evidence-thinness` blocker in substance. The r3 pass was a same-object publication-pressure edit from r2: it tightened the pull-request opening, made the specification-gap evidence the hinge, and returned the ending to operator review doctrine. The r3 replacement review finds that the candidate clears the r2 north-star blocker, but the package remains under `draft_only` policy and still requires human approval before promotion. The live draft remains unchanged.
+The `essay_iteration` r3 packet now lives under [`iterations/r3/`](iterations/r3/). The r2 pass intook the three P0 bridge papers and resolved the old `bridge-evidence-thinness` blocker in substance. The r3 pass was a same-object publication-pressure edit from r2: it tightened the pull-request opening, made the specification-gap evidence the hinge, and returned the ending to operator review doctrine. The external r3 synthesis records three independent reviewers judging the candidate to clear the north-star bar, and [`specification-surface-source-of-truth-candidate-r3-polished.md`](iterations/r3/specification-surface-source-of-truth-candidate-r3-polished.md) is the current promotion-polish candidate. The package remains under `draft_only` policy and still requires human approval before promotion. The live draft remains unchanged.
+
+Paper-route work now lives under [`paper/`](paper/). Treat it as separate from the public essay route and use the experimental `paper_development` workflow for paper-facing blueprints, evidence maps, and case-study planning.
 
 - [`research-handoff.md`](research-handoff.md)
 - [`specification-surface-source-of-truth-claim-boundary-ledger.md`](specification-surface-source-of-truth-claim-boundary-ledger.md)
 - [`specification-surface-source-of-truth-research-exit-gate-r1.md`](specification-surface-source-of-truth-research-exit-gate-r1.md)
-- [`specification-surface-source-of-truth-essay-iteration-packet-r1.json`](specification-surface-source-of-truth-essay-iteration-packet-r1.json)
-- [`specification-surface-source-of-truth-blueprint-r1.md`](specification-surface-source-of-truth-blueprint-r1.md)
-- [`specification-surface-source-of-truth-prewrite-gate-r1.md`](specification-surface-source-of-truth-prewrite-gate-r1.md)
-- [`specification-surface-source-of-truth-candidate-r1.md`](specification-surface-source-of-truth-candidate-r1.md)
-- [`specification-surface-source-of-truth-replacement-review-r1.md`](specification-surface-source-of-truth-replacement-review-r1.md)
-- [`specification-surface-source-of-truth-decision-r1.md`](specification-surface-source-of-truth-decision-r1.md)
-- [`specification-surface-source-of-truth-essay-iteration-packet-r2.json`](specification-surface-source-of-truth-essay-iteration-packet-r2.json)
-- [`specification-surface-source-of-truth-blueprint-r2.md`](specification-surface-source-of-truth-blueprint-r2.md)
-- [`specification-surface-source-of-truth-prewrite-gate-r2.md`](specification-surface-source-of-truth-prewrite-gate-r2.md)
-- [`specification-surface-source-of-truth-candidate-r2.md`](specification-surface-source-of-truth-candidate-r2.md)
-- [`specification-surface-source-of-truth-replacement-review-r2.md`](specification-surface-source-of-truth-replacement-review-r2.md)
-- [`specification-surface-source-of-truth-atlas-scorecard-r2.md`](specification-surface-source-of-truth-atlas-scorecard-r2.md)
-- [`specification-surface-source-of-truth-decision-r2.md`](specification-surface-source-of-truth-decision-r2.md)
-- [`specification-surface-source-of-truth-essay-iteration-packet-r3.json`](specification-surface-source-of-truth-essay-iteration-packet-r3.json)
-- [`specification-surface-source-of-truth-blueprint-r3.md`](specification-surface-source-of-truth-blueprint-r3.md)
-- [`specification-surface-source-of-truth-prewrite-gate-r3.md`](specification-surface-source-of-truth-prewrite-gate-r3.md)
-- [`specification-surface-source-of-truth-candidate-r3.md`](specification-surface-source-of-truth-candidate-r3.md)
-- [`specification-surface-source-of-truth-replacement-review-r3.md`](specification-surface-source-of-truth-replacement-review-r3.md)
-- [`specification-surface-source-of-truth-atlas-scorecard-r3.md`](specification-surface-source-of-truth-atlas-scorecard-r3.md)
-- [`specification-surface-source-of-truth-decision-r3.md`](specification-surface-source-of-truth-decision-r3.md)
+
+Essay-iteration packets are grouped by revision:
+
+- [`iterations/r1/`](iterations/r1/): r1 packet, blueprint, prewrite gate, candidate, replacement review, atlas scorecard, decision, and ceiling-report scaffold
+- [`iterations/r2/`](iterations/r2/): r2 packet, blueprint, prewrite gate, candidate, replacement review, atlas scorecard, decision, and ceiling-report scaffold
+- [`iterations/r3/`](iterations/r3/): r3 packet, blueprint, prewrite gate, reviewed candidate, polished candidate, replacement review, atlas scorecard, external review synthesis, decision, and ceiling-report scaffold
 
 ## Evidence Spine To Recheck
 

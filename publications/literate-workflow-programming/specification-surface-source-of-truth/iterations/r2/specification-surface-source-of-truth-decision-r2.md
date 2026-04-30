@@ -4,7 +4,7 @@ package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 2
 judgment_policy: "draft_only"
 live_draft_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
-candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-candidate-r2.md"
+candidate_path: "publications/literate-workflow-programming/specification-surface-source-of-truth/iterations/r2/specification-surface-source-of-truth-candidate-r2.md"
 recommendation: revise_candidate
 promotion_allowed: false
 requires_human_approval: true
