@@ -21,7 +21,7 @@ stages:
     done: true
     last_updated: '2026-04-29'
   essay_iteration:
-    done: false
+    done: true
     last_updated: '2026-04-30'
   notebooklm_artifacts:
     done: false
