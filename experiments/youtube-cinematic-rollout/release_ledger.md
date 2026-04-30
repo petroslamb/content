@@ -544,3 +544,84 @@ Initial rollout order from `backlog_manifest.yaml`:
   - `AIoNHCL1GPw`, `Ej4co5IN01U`, `3QKR4423VAQ` -> `chr4R-fSZUY`
   - `syYrPcOcKWE`, `mk10NpAfXh4`, `pycFeHW0R9E` -> `9C-N9gaJjN4`
 - Workflow correction: after setting the Shorts `Related video` card in Studio, wait for the save state to fully settle before leaving the page, then reload the same edit page and verify the card still shows the intended cinematic title.
+
+### 2026-04-30T07:59:46.701498+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Daily kickoff reconciliation found no in-flight cinematic rollout entries and no new eligible generation candidates.
+- Watcher action: none required; `experiment.automation.watcher_automation_id` remains `null`.
+- Queue state: rollout backlog is fully terminal for now, so keep the daily starter active and wait for newly eligible publications before starting more cinematic work.
+
+### 2026-04-30T11:46:33.084722+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Daily reconciliation again found no in-flight cinematic rollout entries and no new eligible generation candidates.
+- No 10-minute polling loop was required because the rollout backlog is already fully terminal.
+- Watcher action: none required; `experiment.automation.watcher_automation_id` remains `null`.
+
+### 2026-04-30T11:53:43.803325+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `hardware_friction_map`, `what_actually_works_hardware`
+
+### 2026-04-30T11:53:57Z
+
+- Added a manual next-wave cinematic batch to `backlog_manifest.yaml`:
+  - `hardware_friction_map`
+  - `what_actually_works_hardware`
+  - `orchestration_paradigm_series`
+  - `orchestration_paradigm_issue_factory`
+  - `orchestration_paradigm_issue_behavior`
+  - `orchestration_paradigm_issue_reality`
+  - `transformer_attractor`
+- Started today's first two cinematic generations in rollout order:
+  - `hardware_friction_map` -> NotebookLM artifact `40dbbe9d-eebb-410a-88d2-925c5ffcf0ce`
+  - `what_actually_works_hardware` -> NotebookLM artifact `85b5a14a-bee9-4c3b-8ae0-2514d78cd167`
+- Queue action: mark both first-wave entries `generation_pending`; future queue remains staged behind them at two-per-day cadence.
+
+### 2026-04-30T12:33:58.672692+00:00
+
+- `hardware_friction_map` cinematic render completed, was downloaded locally, and uploaded to YouTube as `xPLU4cISmxE`.
+- Playlist action: added `xPLU4cISmxE` to `Rooted Layers Cinematic Briefs`.
+- State action: `hardware_friction_map` moved to `captions_pending`.
+- Studio link note: current manifest mapping exposes only the Substack essay URL for this publication, not a paired YouTube long-form target, so the cinematic should be treated as `studio_link_blocked_external_target` unless a real long-form YouTube target is added later.
+- Caption recovery for `xPLU4cISmxE` started with 10-minute polling.
+- `what_actually_works_hardware` remains `generation_pending` after repeated 10-minute NotebookLM wait cycles.
+
+### 2026-04-30T12:50:09.335491+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `hardware_friction_map`, `what_actually_works_hardware`
+- Materialized Shorts manifests: `publications/hardware-friction/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+- Newly scheduled approved clips: `3`
+
+### 2026-04-30T13:34:26.004847+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `what_actually_works_hardware`
+- Materialized Shorts manifests: `publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+- Newly scheduled approved clips: `3`
+
+### 2026-04-30T13:35:13.667088+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `what_actually_works_hardware`
+- Materialized Shorts manifests: `publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+
+### 2026-04-30T13:49:51.815504+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `orchestration_paradigm_series`, `orchestration_paradigm_issue_factory`
+
+### 2026-04-30T16:03:00+00:00
+
+- Rewired `the_agent_revolution` cinematic follow-through from the old private long-form `ti-WonOox8M` to the newer public visual deep dive `-2CM4JYfQAs`.
+- Canonical state action: updated `experiments/youtube-cinematic-rollout/backlog_manifest.yaml` `secondary_link` for `the_agent_revolution`.
+- Live YouTube action: update cinematic brief `N7FKycVsIUw` description so `Full research breakdown` points to `https://www.youtube.com/watch?v=-2CM4JYfQAs`.

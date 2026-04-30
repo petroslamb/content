@@ -1,0 +1,40 @@
+{
+  "created_at": "2026-04-30T14:53:35.099156+00:00",
+  "items": [
+    {
+      "key": "illusion_of_swarm_cinematic",
+      "video_id": "q3_gPM4E8yw",
+      "draft": "experiments/youtube-reference-comments/drafts/illusion_of_swarm_comment.md",
+      "comment_id": "UgxezQHjAYXlO-Phiq94AaABAg",
+      "permalink": "https://www.youtube.com/watch?v=q3_gPM4E8yw&lc=UgxezQHjAYXlO-Phiq94AaABAg",
+      "created": false,
+      "status": "posted"
+    },
+    {
+      "key": "illusion_of_swarm_longform",
+      "video_id": "AigaLYfpFZc",
+      "draft": "experiments/youtube-reference-comments/drafts/illusion_of_swarm_longform_comment.md",
+      "comment_id": "Ugw5k-njIfh1Q9L1kq54AaABAg",
+      "permalink": "https://www.youtube.com/watch?v=AigaLYfpFZc&lc=Ugw5k-njIfh1Q9L1kq54AaABAg",
+      "created": false,
+      "status": "posted"
+    },
+    {
+      "key": "moltbook_phenomenon_cinematic",
+      "video_id": "9C-N9gaJjN4",
+      "draft": "experiments/youtube-reference-comments/drafts/moltbook_phenomenon_comment.md",
+      "comment_id": "UgwWKgaEo-MjZK5gOQJ4AaABAg",
+      "permalink": "https://www.youtube.com/watch?v=9C-N9gaJjN4&lc=UgwWKgaEo-MjZK5gOQJ4AaABAg",
+      "created": false,
+      "status": "posted"
+    },
+    {
+      "key": "moltbook_phenomenon_longform",
+      "video_id": "ahAVt338E_8",
+      "draft": "experiments/youtube-reference-comments/drafts/moltbook_phenomenon_longform_comment.md",
+      "status": "blocked",
+      "http_status": 403,
+      "error": "{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"The video identified by the \\u003ccode\\u003e\\u003ca href=\\\"/youtube/v3/docs/commentThreads/list#videoId\\\"\\u003evideoId\\u003c/a\\u003e\\u003c/code\\u003e parameter has disabled comments.\",\n    \"errors\": [\n      {\n        \"message\": \"The video identified by the \\u003ccode\\u003e\\u003ca href=\\\"/youtube/v3/docs/commentThreads/list#videoId\\\"\\u003evideoId\\u003c/a\\u003e\\u003c/code\\u003e parameter has disabled comments.\",\n        \"domain\": \"youtube.commentThread\",\n        \"reason\": \"commentsDisabled\",\n        \"location\": \"videoId\",\n        \"locationType\": \"parameter\"\n      }\n    ]\n  }\n}\n"
+    }
+  ]
+}
