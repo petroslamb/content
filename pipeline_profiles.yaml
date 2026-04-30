@@ -22,6 +22,7 @@ profiles:
       - paper_intake
       - evidence_authorization
       - essay_iteration
+      - notebooklm_artifacts
       - article_polish
       - release_gate
       - substack_publishing
@@ -42,6 +43,7 @@ profiles:
       - paper_intake
       - evidence_authorization
       - essay_iteration
+      - notebooklm_artifacts
       - article_polish
       - release_gate
     fallback_routes:
@@ -56,6 +58,7 @@ profiles:
       - evidence_authorization
       - research
       - essay_iteration
+      - notebooklm_artifacts
       - article_polish
       - release_gate
     required_gates:
@@ -71,6 +74,7 @@ profiles:
       - evidence_authorization
       - research
       - essay_iteration
+      - notebooklm_artifacts
       - article_polish
       - release_gate
     fallback_routes:
