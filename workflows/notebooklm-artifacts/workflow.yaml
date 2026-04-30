@@ -1,0 +1,333 @@
+workflow_id: notebooklm_artifacts
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: artifacts
+summary: Generate NotebookLM audio, slide, video, transcript, or related raw artifacts and download them into the package artifact surface without making editorial placement decisions.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: live_draft_path
+      source: publications/{package}/status.yaml:config.markdown_path
+    - id: notebooklm_notebook_id
+      source: publications/{package}/status.yaml:config.notebooklm_notebook_id
+    - id: notebooklm_notebook_title
+      source: publications/{package}/status.yaml:config.notebooklm_notebook_title
+    - id: artifact_surface
+      source: publications/{package}/status.yaml:config.artifacts_path or publications/{package}/artifacts/
+    - id: artifact_filename
+      source: generated NotebookLM artifact filename
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+    - id: artifact_surface
+      pattern: publications/{package}/artifacts/
+      required: true
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve lifecycle state, live draft path, NotebookLM target, and destination artifact surface.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package artifact conventions before generating or moving media.
+    record_hash: true
+  - id: canonical_live_draft
+    path_from_status: config.markdown_path
+    required: true
+    purpose: Identify the canonical live draft that should become the NotebookLM source context.
+    record_hash: true
+  - id: notebooklm_target
+    status_field: config.notebooklm_notebook_id
+    fallback_status_field: config.notebooklm_notebook_title
+    required: true
+    purpose: Resolve the target NotebookLM notebook id or exact title before any artifact generation.
+    record_hash: false
+  - id: artifact_surface
+    path_from_status: config.artifacts_path
+    fallback: publications/{package}/artifacts/
+    required: true
+    purpose: Resolve the destination artifacts directory for downloaded NotebookLM outputs.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/notebooklm-artifacts/README.md
+    required: true
+    purpose: Load human-facing NotebookLM artifact-generation guidance and raw-artifact boundaries.
+    record_hash: true
+  - id: notebooklm_skill
+    path: workflows/skills/notebooklm-artifact-bundle/SKILL.md
+    required: true
+    purpose: Use the repo-local NotebookLM artifact bundle process and prompts.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply approval, external mutation, and hidden-auth-state policy.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: notebooklm_auth_check
+      command: ".venv/bin/notebooklm auth check --test"
+      required: false
+    - id: notebooklm_registry_check
+      command: ".venv/bin/python scripts/check_notebooklm_registry.py"
+      required: false
+    - id: artifact_diff_scan
+      command: "git diff --name-status -- publications/{package}/"
+      required: true
+  skills:
+    - notebooklm-artifact-bundle
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/notebooklm-artifacts/
+    - workflows/skills/notebooklm-artifact-bundle/
+    - workflows/skills/pdf-slides-to-substack-images/
+    - harness_policy.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: notebooklm_artifact_bundle
+    path_template: "publications/{package}/artifacts/notebooklm/{artifact_filename}"
+    required: true
+    format: media
+    collection: true
+    producer: download_notebooklm_artifacts
+    promotable: false
+  - id: artifact_task_manifest
+    path_template: "publications/{package}/artifacts/notebooklm/notebooklm-artifacts-r{revision}.json"
+    required: true
+    format: json
+    producer: record_notebooklm_tasks
+    promotable: false
+  - id: transcript_reference
+    path_template: "publications/{package}/artifacts/notebooklm/{artifact_filename}"
+    required: conditional
+    required_when: transcript recovery is used for later article polish
+    format: text
+    producer: recover_transcript_reference
+    promotable: false
+  - id: artifact_handoff_note
+    path_template: "publications/{package}/artifacts/notebooklm/notebooklm-artifacts-handoff-r{revision}.md"
+    required: true
+    format: markdown
+    producer: record_artifact_handoff
+    promotable: false
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: live_draft_resolves
+      check: status_config_path_exists
+      target: config.markdown_path
+      on_fail: stop
+    - id: notebooklm_target_resolves
+      check: status_field_or_title_exists
+      target: config.notebooklm_notebook_id or config.notebooklm_notebook_title
+      on_fail: stop
+    - id: artifact_surface_resolves
+      check: configured_or_default_artifact_surface_exists
+      target: config.artifacts_path
+      on_fail: stop
+  invariants:
+    - id: hidden_auth_state_not_committed
+      check: hidden_notebooklm_state_stays_untracked
+    - id: raw_artifacts_do_not_edit_live_draft
+      check: notebooklm_generation_does_not_remove_or_place_markdown_images
+    - id: raw_bundle_not_publication_target
+      check: downloaded_outputs_remain_raw_until_article_polish
+    - id: external_mutation_requires_operator_approval
+      check: notebooklm_generation_requires_explicit_approval
+  budgets:
+    max_steps: 6
+    max_script_retries: 1
+    max_artifact_generation_attempts: 1
+    external_mutations: 0
+    unapproved_publications: 0
+  recovery:
+    on_missing_notebook_target: stop_and_request_target
+    on_auth_failure: stop_and_request_narrow_user_handoff
+    on_task_poll_timeout: stop_and_record_task_ids
+    on_download_failure: stop_and_record_expected_output_path
+    on_accidental_editorial_diff: stop_and_record
+    resume_from: resolved_run
+    rollback_strategy: preserve_existing_artifacts_and_do_not_delete_publishable_media
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - notebooklm_skill_resolves
+  context_checks:
+    - package_status_resolves
+    - live_draft_resolves
+    - notebooklm_target_resolves
+    - artifact_surface_resolves
+  hooks:
+    - id: notebooklm_registry_check
+      command: ".venv/bin/python scripts/check_notebooklm_registry.py"
+      run_at:
+        - before_generation
+      required: false
+    - id: artifact_diff_scan
+      command: "git diff --name-status -- publications/{package}/"
+      run_at:
+        - before_handoff
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates: []
+
+trace:
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    required_when:
+      - governed
+      - audit_relevant
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - context_paths
+    - context_hashes
+    - validation_results
+    - enforcement_outcomes
+    - run_record
+
+steps:
+  - id: resolve_notebook_target
+    title: Resolve NotebookLM target
+    mode: codex_session
+    action: Resolve the target NotebookLM notebook id or exact title and the destination artifacts directory from package status before generating anything.
+    consumes:
+      - package_status
+      - package_readme
+      - canonical_live_draft
+      - notebooklm_target
+      - artifact_surface
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - notebooklm_registry_check
+    trace:
+      required: true
+  - id: verify_sources_ready
+    title: Verify notebook sources
+    mode: codex_session
+    action: Inspect the notebook and source readiness, stopping before source upload or replacement unless the user explicitly approves that remote mutation.
+    consumes:
+      - notebooklm_target
+      - canonical_live_draft
+    produces:
+      - run_record
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: generate_artifact_bundle
+    title: Generate artifact bundle
+    mode: external_mutation_gated
+    action: Use the standard NotebookLM prompt bundle to generate the approved raw audio, slide, video, quiz, flashcard, or transcript artifacts.
+    consumes:
+      - notebooklm_target
+      - canonical_live_draft
+      - artifact_surface
+    produces:
+      - notebooklm_artifact_bundle
+      - artifact_task_manifest
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: download_artifacts
+    title: Download artifacts
+    mode: codex_session
+    action: Download ready NotebookLM outputs into the canonical artifact surface and preserve task identifiers needed for later verification.
+    consumes:
+      - notebooklm_target
+      - artifact_surface
+      - artifact_task_manifest
+    produces:
+      - notebooklm_artifact_bundle
+      - transcript_reference
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_artifact_handoff
+    title: Record artifact handoff
+    mode: codex_session
+    action: Record what was generated, where it landed, what remains raw, and what article polish may use without editing the live draft during artifact generation.
+    consumes:
+      - notebooklm_artifact_bundle
+      - artifact_task_manifest
+      - transcript_reference
+    produces:
+      - artifact_handoff_note
+      - run_record
+    validation:
+      hooks:
+        - artifact_diff_scan
+    trace:
+      required: true
