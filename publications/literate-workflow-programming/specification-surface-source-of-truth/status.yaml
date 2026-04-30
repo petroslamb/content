@@ -4,9 +4,14 @@ parent_package: literate-workflow-programming
 revision: 3
 config:
   markdown_path: publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
+  artifacts_path: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts
   evidence_path: publications/literate-workflow-programming/papers
   shared_evidence_path: publications/literate-workflow-programming/papers
   blueprint_path: research-handoff.md
+  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
+  notebooklm_notebook_title: The Specification Surface Is the New Source of Truth
+  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_related_notebooks: []
   pivot_decision_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-decision.md
   north_star_viability_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-north-star-viability.md
   research_question: How do controlled, typed, linted, validated, and trace-linked
