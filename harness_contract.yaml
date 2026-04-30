@@ -477,6 +477,13 @@ workflow_yaml_contracts:
     workflow_kind: module
     workflow_group: portfolio
     stability: canonical
+  youtube_production:
+    contract_path: workflows/youtube-production/workflow.yaml
+    readme_path: workflows/youtube-production/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: artifacts
+    stability: canonical
 workflows:
   research: *id004
   article_polish: *id005
@@ -553,12 +560,16 @@ workflows:
     - package paper folder
     expected_outputs:
     - package-local paper folder README
+    - package-local paper roadmap/status surface
     - paper blueprint
     - literature mapping table when the route needs a separate appendix surface
     - case study trace plan when the route needs artifact analysis
+    - draftability audit before full manuscript drafting
+    - draft manuscript when the audit allows drafting
+    - references and venue checklist surfaces before submission or posting
     done_when:
-    - the package has a paper folder with a blueprint strong enough to decide whether
-      to draft an extended abstract
+    - the package has a paper folder with a roadmap strong enough to decide whether
+      to draft, harden the method, submit, post, park, or stop
     launch_templates: []
     packet_templates: []
     validator_commands: *id003
@@ -912,6 +923,7 @@ pipeline_profiles:
     - release_gate
     - substack_publishing
     - archive_sync
+    - youtube_production
     - distribution
     required_gates:
     - research_exit
@@ -931,6 +943,7 @@ pipeline_profiles:
     - notebooklm_artifacts
     - article_polish
     - release_gate
+    - youtube_production
     fallback_routes:
       research_exit: research
       essay_prewrite: essay_iteration
@@ -947,6 +960,7 @@ pipeline_profiles:
     - notebooklm_artifacts
     - article_polish
     - release_gate
+    - youtube_production
     required_gates:
     - research_exit
     - essay_prewrite
