@@ -1267,6 +1267,31 @@ def page_shell(title: str, body: str, config: CockpitConfig) -> bytes:
       display: block;
       margin-bottom: 5px;
     }}
+    .route-summary {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px;
+      margin: 12px 0;
+    }}
+    .stage-pills {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }}
+    .stage-pill {{
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }}
     .wizard-head {{
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
@@ -2054,6 +2079,7 @@ function renderWorkflowMap(map) {
   workflowStepFilter = urlParam("filter") || workflowStepFilter || currentWorkflowMap.default_filter || "all";
   return `<h2>Workflow Map</h2>
     <p class="muted">Sequential workflow steps derived from workflow.yaml and package state. This is an operator map, not workflow authority.</p>
+    ${renderLifecycleStatusSummary()}
     <div class="workflow-map-controls">
       <button class="workflow-mode-button ${workflowMapMode === "active_route" ? "active" : ""}" type="button" data-mode="active_route" onclick="setWorkflowMapMode('active_route')">Active route</button>
       <button class="workflow-mode-button ${workflowMapMode === "all_workflows" ? "active" : ""}" type="button" data-mode="all_workflows" onclick="setWorkflowMapMode('all_workflows')">All workflows</button>
@@ -2064,6 +2090,41 @@ function renderWorkflowMap(map) {
       <button class="workflow-filter-button ${workflowStepFilter === "gated" ? "active" : ""}" type="button" data-filter="gated" onclick="setWorkflowStepFilter('gated')">Gated</button>
     </div>
     <div id="workflow-map-body">${renderWorkflowMapBody(currentWorkflowMap)}</div>`;
+}
+
+function stageLabel(stage) {
+  return String(stage || "none").replaceAll("_", " ");
+}
+
+function renderStagePills(stages, currentStage) {
+  return (stages || []).map((stage) => {
+    const id = stage.stage || "";
+    const state = stage.done === true ? "completed" : (id === currentStage ? "current" : "pending");
+    const date = stage.last_updated ? ` · ${esc(stage.last_updated)}` : "";
+    return `<span class="stage-pill ${esc(state)}">${badge(state)} ${esc(stageLabel(id))}${date}</span>`;
+  }).join("");
+}
+
+function renderLifecycleStatusSummary() {
+  const pkg = currentStatusReport?.package || {};
+  const stages = pkg.stages || [];
+  if (!stages.length) return "";
+  const currentStage = currentNextReport?.next_stage || pkg.current_stage || "";
+  const completed = stages.filter((stage) => stage.done === true);
+  const remaining = stages.filter((stage) => stage.done !== true);
+  const blockers = currentNextReport?.blocking_issues || [];
+  const missingContext = (currentNextReport?.required_context || []).filter((item) => item.status === "missing" || item.blocking === true);
+  return `<div class="route-summary">
+    <div class="summary">
+      <div class="metric"><div class="label">Completed</div><div class="value">${esc(completed.length)} / ${esc(stages.length)}</div></div>
+      <div class="metric"><div class="label">Current stage</div><div class="value">${esc(stageLabel(currentStage || "none"))}</div></div>
+      <div class="metric"><div class="label">Next workflow</div><div class="value">${esc(stageLabel(currentNextReport?.effective_workflow || currentStage || "none"))}</div></div>
+      <div class="metric"><div class="label">Missing context</div><div class="value">${esc(missingContext.length)}</div></div>
+      <div class="metric"><div class="label">Blockers</div><div class="value">${esc(blockers.length)}</div></div>
+    </div>
+    <div class="stage-pills">${renderStagePills(stages, currentStage)}</div>
+    <div class="muted" style="margin-top:8px">Done: ${esc(completed.map((stage) => stageLabel(stage.stage)).join(", ") || "none")}. Left: ${esc(remaining.map((stage) => stageLabel(stage.stage)).join(", ") || "none")}.</div>
+  </div>`;
 }
 
 function renderWorkflowMapBody(map) {

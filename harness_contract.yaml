@@ -208,12 +208,14 @@ lifecycle:
       - nearest review artifacts when present
       - target evidence surface or source index
       expected_outputs:
-      - essay-iteration packet manifest beside the live draft
-      - essay-governing prewrite gate beside the live draft
-      - bounded rewrite candidate and structured review artifacts within the packet
+      - essay-iteration packet manifest under the package-local `iterations/r<revision>/`
+        directory
+      - essay-governing prewrite gate in the same revision packet directory
+      - bounded rewrite candidate and structured review artifacts within the same
+        revision packet directory
       - stop-fired donor report when a flagship object is judged capped
       done_when:
-      - a validated packet exists beside the live draft, the prewrite gate is explicit,
+      - a validated packet exists for the active revision, the prewrite gate is explicit,
         and any stop-fired packet has a completed ceiling report before the next lifecycle
         handoff
       launch_templates:
@@ -419,6 +421,20 @@ workflow_yaml_contracts:
     workflow_kind: module
     workflow_group: evidence
     stability: canonical
+  notebooklm_artifacts:
+    contract_path: workflows/notebooklm-artifacts/workflow.yaml
+    readme_path: workflows/notebooklm-artifacts/README.md
+    version: 1
+    workflow_kind: stage
+    workflow_group: artifacts
+    stability: canonical
+  paper_development:
+    contract_path: workflows/paper-development/workflow.yaml
+    readme_path: workflows/paper-development/README.md
+    version: 1
+    workflow_kind: module
+    workflow_group: scholarship
+    stability: experimental
   paper_intake:
     contract_path: workflows/paper-intake/workflow.yaml
     readme_path: workflows/paper-intake/README.md
@@ -516,6 +532,35 @@ workflows:
       and draft work no longer depend on guesswork
     launch_templates: []
     packet_templates: *id002
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
+  paper_development:
+    workflow_doc: workflows/paper-development/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: experimental
+    runner_mode: guided
+    launch_mode: none
+    default_skill: null
+    approval_gate: none
+    required_context:
+    - package status
+    - package README
+    - source essay candidate or live draft
+    - claim_boundary_ledger when present
+    - package evidence surface
+    - package paper folder
+    expected_outputs:
+    - package-local paper folder README
+    - paper blueprint
+    - literature mapping table when the route needs a separate appendix surface
+    - case study trace plan when the route needs artifact analysis
+    done_when:
+    - the package has a paper folder with a blueprint strong enough to decide whether
+      to draft an extended abstract
+    launch_templates: []
+    packet_templates: []
     validator_commands: *id003
     judgment_policy: unrestricted
     prohibited_moves: *id001
@@ -862,6 +907,7 @@ pipeline_profiles:
     - paper_intake
     - evidence_authorization
     - essay_iteration
+    - notebooklm_artifacts
     - article_polish
     - release_gate
     - substack_publishing
@@ -882,6 +928,7 @@ pipeline_profiles:
     - paper_intake
     - evidence_authorization
     - essay_iteration
+    - notebooklm_artifacts
     - article_polish
     - release_gate
     fallback_routes:
@@ -897,6 +944,7 @@ pipeline_profiles:
     - evidence_authorization
     - research
     - essay_iteration
+    - notebooklm_artifacts
     - article_polish
     - release_gate
     required_gates:
@@ -912,6 +960,7 @@ pipeline_profiles:
     - evidence_authorization
     - research
     - essay_iteration
+    - notebooklm_artifacts
     - article_polish
     - release_gate
     fallback_routes:
