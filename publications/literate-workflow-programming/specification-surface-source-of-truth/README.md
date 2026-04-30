@@ -5,7 +5,7 @@ Successor flagship leaf inside the [`../README.md`](../README.md) umbrella.
 ## Package Role
 
 - Archetype: Leaf package inside the umbrella
-- Status: Successor candidate initialized after post-ceiling pivot clearance
+- Status: Live essay promoted after r3 external review and human approval
 - Parent umbrella: [`../README.md`](../README.md)
 - Donor leaf: [`../literate-workflow-programming-flagship/README.md`](../literate-workflow-programming-flagship/README.md)
 - Shared evidence library: [`../papers/`](../papers/)
@@ -27,9 +27,9 @@ The governing term is `specification surface`.
 
 ## Current State
 
-This leaf has cleared successor-specific research and has a canonical live draft anchor at [`specification-surface-source-of-truth.md`](specification-surface-source-of-truth.md).
+This leaf has cleared successor-specific research and now has a promoted live draft at [`specification-surface-source-of-truth.md`](specification-surface-source-of-truth.md).
 
-The `essay_iteration` r3 packet now lives under [`iterations/r3/`](iterations/r3/). The r2 pass intook the three P0 bridge papers and resolved the old `bridge-evidence-thinness` blocker in substance. The r3 pass was a same-object publication-pressure edit from r2: it tightened the pull-request opening, made the specification-gap evidence the hinge, and returned the ending to operator review doctrine. The external r3 synthesis records three independent reviewers judging the candidate to clear the north-star bar, and [`specification-surface-source-of-truth-candidate-r3-polished.md`](iterations/r3/specification-surface-source-of-truth-candidate-r3-polished.md) is the current promotion-polish candidate. The package remains under `draft_only` policy and still requires human approval before promotion. The live draft remains unchanged.
+The `essay_iteration` r3 packet now lives under [`iterations/r3/`](iterations/r3/). The r2 pass intook the three P0 bridge papers and resolved the old `bridge-evidence-thinness` blocker in substance. The r3 pass was a same-object publication-pressure edit from r2: it tightened the pull-request opening, made the specification-gap evidence the hinge, and returned the ending to operator review doctrine. The external r3 synthesis records three independent reviewers judging the candidate to clear the north-star bar, and [`specification-surface-source-of-truth-candidate-r3-polished.md`](iterations/r3/specification-surface-source-of-truth-candidate-r3-polished.md) was promoted into the live draft on 2026-04-30 after explicit human approval. The approval surface is [`specification-surface-source-of-truth-human-promotion-approval-r3.md`](iterations/r3/specification-surface-source-of-truth-human-promotion-approval-r3.md). Downstream publication stages remain incomplete.
 
 Paper-route work now lives under [`paper/`](paper/). Treat it as separate from the public essay route and use the experimental `paper_development` workflow for paper-facing blueprints, evidence maps, and case-study planning.
 
@@ -41,7 +41,7 @@ Essay-iteration packets are grouped by revision:
 
 - [`iterations/r1/`](iterations/r1/): r1 packet, blueprint, prewrite gate, candidate, replacement review, atlas scorecard, decision, and ceiling-report scaffold
 - [`iterations/r2/`](iterations/r2/): r2 packet, blueprint, prewrite gate, candidate, replacement review, atlas scorecard, decision, and ceiling-report scaffold
-- [`iterations/r3/`](iterations/r3/): r3 packet, blueprint, prewrite gate, reviewed candidate, polished candidate, replacement review, atlas scorecard, external review synthesis, decision, and ceiling-report scaffold
+- [`iterations/r3/`](iterations/r3/): r3 packet, blueprint, prewrite gate, reviewed candidate, polished candidate, replacement review, atlas scorecard, external review synthesis, human promotion approval, decision, and ceiling-report scaffold
 
 ## Evidence Spine To Recheck
 
