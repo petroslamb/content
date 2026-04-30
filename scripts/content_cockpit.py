@@ -2507,9 +2507,10 @@ function renderLifecycleWorkflowColumns(workflows) {
     if (!lanes[lane]) lanes[lane] = [];
     lanes[lane].push(rendered);
   }
-  const columns = laneNames.map((name) => `<div class="lifecycle-lane">
+  const populatedLaneNames = laneNames.filter((name) => lanes[name].length);
+  const columns = populatedLaneNames.map((name) => `<div class="lifecycle-lane">
     <h3>${esc(name)}</h3>
-    ${lanes[name].join("") || '<p class="muted">No matching workflows.</p>'}
+    ${lanes[name].join("")}
   </div>`).join("");
   return `<div class="lifecycle-columns">${columns}</div>`;
 }
