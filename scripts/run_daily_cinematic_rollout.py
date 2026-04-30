@@ -329,6 +329,10 @@ def schedule_approved_clips(manifest: dict[str, Any]) -> int:
     defaults = manifest["experiment"]["defaults"]
     slot_times = defaults["shorts_slot_times"]
     tz_name = defaults["timezone"]
+    not_before_date = defaults.get("shorts_not_before_date")
+    min_start_day = None
+    if not_before_date:
+        min_start_day = datetime.fromisoformat(str(not_before_date)).date()
     publications = manifest["publications"]
     rollout_order = manifest["rollout_order"]
     changed = 0
@@ -341,6 +345,8 @@ def schedule_approved_clips(manifest: dict[str, Any]) -> int:
         if not approved or not published_at:
             continue
         start_day = published_at.astimezone(ZoneInfo(tz_name)).date() + timedelta(days=1)
+        if min_start_day and start_day < min_start_day:
+            start_day = min_start_day
         for clip_index, clip in enumerate(approved):
             if clip.get("publish_at"):
                 continue
