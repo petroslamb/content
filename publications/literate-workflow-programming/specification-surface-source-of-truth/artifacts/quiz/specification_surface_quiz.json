@@ -1,0 +1,265 @@
+{
+  "title": "Specification Quiz",
+  "questions": [
+    {
+      "question": "According to the source material, what is the 'decisive property' that transforms loose prose into a legitimate specification surface?",
+      "answerOptions": [
+        {
+          "text": "The use of standardized Markdown syntax within a repository.",
+          "isCorrect": false,
+          "rationale": "The text explicitly states that syntax is secondary and that simply existing in the repository as a README does not grant control."
+        },
+        {
+          "text": "The implementation of governance and operational force.",
+          "isCorrect": true,
+          "rationale": "A specification surface is defined by its ability to be linted, validated, or interpreted by a runtime to control system behavior."
+        },
+        {
+          "text": "The inclusion of comprehensive docstrings and natural language advice.",
+          "isCorrect": false,
+          "rationale": "The material notes that guidance that is only consulted upfront or remains as passive advice can drift and fails to be a control plane."
+        },
+        {
+          "text": "The chronological precedence of the document over the generated code.",
+          "isCorrect": false,
+          "rationale": "The text argues that a one-off chat prompt or document does not become a source of truth just because it preceded the implementation."
+        }
+      ],
+      "hint": "Consider what allows a document to actually act as a control plane for the system."
+    },
+    {
+      "question": "In Chacon Sartori's study on the 'Specification Gap,' how did integration accuracy change when specifications were stripped to bare signatures?",
+      "answerOptions": [
+        {
+          "text": "Both single-agent and multi-agent performance remained stable due to model reasoning.",
+          "isCorrect": false,
+          "rationale": "The study showed significant performance drops, particularly in multi-agent settings, when shared intent was removed."
+        },
+        {
+          "text": "Single-agent performance improved while multi-agent integration failed.",
+          "isCorrect": false,
+          "rationale": "The single-agent baseline actually degraded, though it did so more gracefully than the multi-agent configurations."
+        },
+        {
+          "text": "Multi-agent integration accuracy fell sharply compared to the single-agent baseline.",
+          "isCorrect": true,
+          "rationale": "Weak specifications remove the shared decisions that independent agents cannot reliably infer from fragments."
+        },
+        {
+          "text": "Integration accuracy was recovered primarily through the use of post-hoc conflict detectors.",
+          "isCorrect": false,
+          "rationale": "While detectors identify mismatches, the paper concludes that only restoring the full specification recovers performance."
+        }
+      ],
+      "hint": "Think about the impact of fragmented knowledge on coordination between independent workers."
+    },
+    {
+      "question": "What is described as the 'quieter failure' underneath the trend of vibe coding?",
+      "answerOptions": [
+        {
+          "text": "The obvious risk of placing too much trust in an unproven model.",
+          "isCorrect": false,
+          "rationale": "The text identifies misplaced trust as the obvious risk, while the deeper failure relates to the persistence of intent."
+        },
+        {
+          "text": "The fact that intent remains informal until code becomes the only 'real' object.",
+          "isCorrect": true,
+          "rationale": "When generated code is the only public record, the controlling intent stays outside the governed system, making repair difficult."
+        },
+        {
+          "text": "The inability of agents to pass standard unit tests during pull requests.",
+          "isCorrect": false,
+          "rationale": "The text describes a scenario where tests pass and the diff looks normal, yet the underlying intent is still lost."
+        },
+        {
+          "text": "The high computational cost associated with generating large-scale code diffs.",
+          "isCorrect": false,
+          "rationale": "The source material focuses on governance and coordination failures rather than infrastructure costs."
+        }
+      ],
+      "hint": "Reflect on what happens to the 'why' behind a change when implementation is generated too quickly."
+    },
+    {
+      "question": "How does 'ContextCov' elevate agent instruction files from documentation to a specification surface?",
+      "answerOptions": [
+        {
+          "text": "By expanding the token limit to include more project-level context.",
+          "isCorrect": false,
+          "rationale": "Simply providing more context does not automatically produce more control or prevent drift."
+        },
+        {
+          "text": "By translating markdown files into natural language audio for the developer.",
+          "isCorrect": false,
+          "rationale": "This does not provide the executable validation or governance required for a specification surface."
+        },
+        {
+          "text": "By extracting constraints into executable checks like AST queries or LLM judgments.",
+          "isCorrect": true,
+          "rationale": "ContextCov moves guidance into a control loop where failures reveal ambiguity or staleness in the instructions."
+        },
+        {
+          "text": "By ensuring that every instruction file is written in a strict, typed schema.",
+          "isCorrect": false,
+          "rationale": "While types are a property of some surfaces, ContextCov specifically focuses on the enforcement of constraints."
+        }
+      ],
+      "hint": "Look for the mechanism that turns passive guidance into an active invariant."
+    },
+    {
+      "question": "According to 'Professional Software Developers Don't Vibe, They Control,' what characterizes the workflow of experienced developers using agents?",
+      "answerOptions": [
+        {
+          "text": "They prioritize speed by treating agent output as autonomous authority.",
+          "isCorrect": false,
+          "rationale": "Experienced developers are noted for their skepticism and do not grant agents autonomous authority over design."
+        },
+        {
+          "text": "They move the burden of intent into artifacts like plans, constraints, and traces.",
+          "isCorrect": true,
+          "rationale": "Professional control is characterized by preserving agency through planning, supervision, and validation of outputs."
+        },
+        {
+          "text": "They rely on the model's internal state to maintain project history and design choices.",
+          "isCorrect": false,
+          "rationale": "The text argues that allowing intent to stay private to the model is a 'vibe' error; professionals use public artifacts."
+        },
+        {
+          "text": "They avoid agents for complex tasks, using them only for repetitive boilerplate.",
+          "isCorrect": false,
+          "rationale": "The study suggests they use agents for speed but apply domain expertise to decide where they are suitable and how to supervise them."
+        }
+      ],
+      "hint": "Consider the relationship between individual agency and durable project artifacts."
+    },
+    {
+      "question": "Which transition represents the 'hierarchy inversion' found in spec-driven development?",
+      "answerOptions": [
+        {
+          "text": "Code becomes the primary source of truth from which documentation is derived.",
+          "isCorrect": false,
+          "rationale": "This describes the 'old software problem' where requirements drift and the implementation becomes the only artifact people trust."
+        },
+        {
+          "text": "Specifications are treated as contracts that code must implement or derive from.",
+          "isCorrect": true,
+          "rationale": "Spec-driven development treats the specification as the stable artifact against which the downstream code is checked."
+        },
+        {
+          "text": "Natural language prompts replace the need for compiled programming languages.",
+          "isCorrect": false,
+          "rationale": "The author explicitly notes that the argument is not that natural language is code or that code stops mattering."
+        },
+        {
+          "text": "Tests are generated post-hoc based on the behaviors observed in the agent output.",
+          "isCorrect": false,
+          "rationale": "In a spec-driven approach, tests and contracts should anchor the implementation to the specification, not follow it."
+        }
+      ],
+      "hint": "Think about which artifact is considered 'upstream' and which is 'downstream'."
+    },
+    {
+      "question": "What distinguishes the approach in 'Bootstrapping Coding Agents' regarding the role of the specification?",
+      "answerOptions": [
+        {
+          "text": "It proves that prose will eventually replace all manually written code.",
+          "isCorrect": false,
+          "rationale": "The text explicitly states that the paper does not prove prose should replace all code."
+        },
+        {
+          "text": "It uses the specification as a durable object to generate and compare implementations.",
+          "isCorrect": true,
+          "rationale": "The specification is the program, and different implementations are downstream products that are repaired by targeting the spec."
+        },
+        {
+          "text": "It focuses on real-time chat interactions to guide the agent's internal reasoning.",
+          "isCorrect": false,
+          "rationale": "The paper emphasizes a controlled inversion where the specification is the stable, durable artifact, not a transient chat."
+        },
+        {
+          "text": "It prioritizes the agent's ability to self-correct without human-edited specifications.",
+          "isCorrect": false,
+          "rationale": "The model emphasizes that repair happens at the specification level, which remains a human-edited or human-controlled surface."
+        }
+      ],
+      "hint": "Identify which element is the 'repair target' when a divergence occurs."
+    },
+    {
+      "question": "The 'operational test' for whether a file belongs to the specification surface involves checking if the file can:",
+      "answerOptions": [
+        {
+          "text": "Provide a helpful high-level summary for human orientation during onboarding.",
+          "isCorrect": false,
+          "rationale": "If a file only describes the project for humans, it is documentation, not a governing specification surface."
+        },
+        {
+          "text": "Be read and understood by a developer without any specialized tooling.",
+          "isCorrect": false,
+          "rationale": "While readability is good, the test for a specification surface is its operational impact on the agent's governance."
+        },
+        {
+          "text": "Change what an agent is allowed to do, which tools are reachable, or what counts as valid.",
+          "isCorrect": true,
+          "rationale": "A file belongs to the surface if it has the authority to govern the agent's state, tools, or validation criteria."
+        },
+        {
+          "text": "Increase the total number of lines of code generated by the agent.",
+          "isCorrect": false,
+          "rationale": "Volume of output is not a metric for governance or source-of-truth authority."
+        }
+      ],
+      "hint": "Consider the difference between a description and a constraint."
+    },
+    {
+      "question": "Why does the source material argue that 'better post-hoc inspection' of agent traces is insufficient for integration failures?",
+      "answerOptions": [
+        {
+          "text": "Because trace logs are too large for human reviewers to parse effectively.",
+          "isCorrect": false,
+          "rationale": "While volume is a challenge, the core argument is about the absence of shared decisions that prevent breaks from occurring."
+        },
+        {
+          "text": "Because diagnosis explains where a break appeared but does not restore shared decisions.",
+          "isCorrect": true,
+          "rationale": "The specification gap requires the surface to contain the decisions independent workers must share to prevent errors, not just find them."
+        },
+        {
+          "text": "Because agents are likely to hallucinate the contents of the trace after the execution.",
+          "isCorrect": false,
+          "rationale": "The text focuses on the coordination failure caused by weak specifications, rather than the reliability of the trace itself."
+        },
+        {
+          "text": "Because inspection tools like AgentFixer are only compatible with single-agent systems.",
+          "isCorrect": false,
+          "rationale": "The text mentions AgentFixer and AgentPex as useful evidence surfaces, but notes they don't replace the need for the upstream spec."
+        }
+      ],
+      "hint": "Think about the difference between identifying a symptom and providing the governing intent."
+    },
+    {
+      "question": "How does 'AgentSPEX' contribute to the concept of a 'specification surface' in agentic workflows?",
+      "answerOptions": [
+        {
+          "text": "It provides a typed workflow language that can be versioned, parsed, and audited.",
+          "isCorrect": true,
+          "rationale": "AgentSPEX adds structure\u2014steps, state management, and checkpoints\u2014that makes the execution flow a durable part of the source."
+        },
+        {
+          "text": "It eliminates the need for developers to review pull requests by automating approvals.",
+          "isCorrect": false,
+          "rationale": "The source material emphasizes that a serious team still reviews the generated code."
+        },
+        {
+          "text": "It focuses on improving the 'vibe' of the agent to match the developer's style.",
+          "isCorrect": false,
+          "rationale": "AgentSPEX is cited as moving logic from product intent into execution structure, which is the opposite of 'vibe' coding."
+        },
+        {
+          "text": "It allows agents to operate without a defined state or checkpointing system.",
+          "isCorrect": false,
+          "rationale": "One of the key features of AgentSPEX mentioned is its management of state and checkpointing for verification."
+        }
+      ],
+      "hint": "Consider what makes a workflow file 'versionable' compared to a standard chat session."
+    }
+  ]
+}

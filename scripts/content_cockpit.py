@@ -213,6 +213,29 @@ def cockpit_wizard_state(package_arg: str, next_report: dict[str, object]) -> di
     }
 
 
+def notebooklm_setup_context(package_arg: str) -> dict[str, object]:
+    package_key = content_agent.coerce_package_key(package_arg)
+    if not package_key:
+        return {}
+    try:
+        manifest_ref, status_data = content_agent.load_status_ref(package_key)
+    except Exception:
+        return {}
+    config = status_data.get("config") if isinstance(status_data, dict) else {}
+    if not isinstance(config, dict):
+        config = {}
+    default_artifacts_path = f"publications/{package_key}/artifacts"
+    return {
+        "package": package_key,
+        "status_path": content_agent.repo_relpath(manifest_ref.status_path),
+        "default_artifacts_path": default_artifacts_path,
+        "notebooklm_notebook_id": config.get("notebooklm_notebook_id") or "",
+        "notebooklm_notebook_title": config.get("notebooklm_notebook_title") or "",
+        "notebooklm_notebook_url": config.get("notebooklm_notebook_url") or "",
+        "artifacts_path": config.get("artifacts_path") or default_artifacts_path,
+    }
+
+
 def build_cockpit_view_model(package_arg: str, next_report: dict[str, object]) -> dict[str, object]:
     """Build a cockpit-specific adapter model without changing workflow/status schemas."""
     wizard = next_report.get("cockpit_wizard")
@@ -221,6 +244,7 @@ def build_cockpit_view_model(package_arg: str, next_report: dict[str, object]) -
     gate_statuses = next_report.get("gate_statuses")
     blocking_issues = next_report.get("blocking_issues")
     required_context = next_report.get("required_context")
+    status_report = content_agent.summarize_package_status(package_arg)
     return {
         "schema_version": 1,
         "default_tab": "workflow-map",
@@ -238,10 +262,13 @@ def build_cockpit_view_model(package_arg: str, next_report: dict[str, object]) -
             "required_context": required_context if isinstance(required_context, list) else [],
             "launch_pack": wizard.get("launch_pack"),
         },
+        "setup": {
+            "notebooklm": notebooklm_setup_context(package_arg),
+        },
         "workflow_map": build_workflow_map_view_model(
             package_arg,
             next_report,
-            status_report=content_agent.summarize_package_status(package_arg),
+            status_report=status_report,
         ),
     }
 
@@ -257,7 +284,8 @@ WORKFLOW_LIFECYCLE_ORDER = {
     "substack_publishing": 80,
     "distribution": 90,
     "post_ceiling_pivot": 100,
-    "substack_archive_sync": 900,
+    "archive_sync": 110,
+    "paper_development": 700,
 }
 
 
@@ -280,6 +308,51 @@ def workflow_lifecycle_sort_key(item: tuple[str, dict[str, object]]) -> tuple[in
     return (800, workflow_id)
 
 
+WORKFLOW_GROUP_LABELS = {
+    "package": "Package",
+    "portfolio": "Discovery",
+    "evidence": "Evidence",
+    "editorial": "Editorial",
+    "scholarship": "Scholarship",
+    "artifacts": "Artifacts",
+    "release": "Release",
+    "publication": "Release",
+    "distribution": "Distribution",
+    "operations": "Operations",
+}
+
+WORKFLOW_GROUP_ORDER = {
+    "Package": 10,
+    "Discovery": 20,
+    "Evidence": 30,
+    "Editorial": 40,
+    "Scholarship": 45,
+    "Artifacts": 50,
+    "Release": 60,
+    "Distribution": 70,
+    "Operations": 80,
+    "Other": 900,
+}
+
+
+def workflow_catalog_lane(workflow_id: str, data: dict[str, object]) -> str:
+    group = str(data.get("workflow_group") or "")
+    if group in WORKFLOW_GROUP_LABELS:
+        return WORKFLOW_GROUP_LABELS[group]
+    if workflow_id == "research":
+        return "Evidence"
+    return "Other"
+
+
+def workflow_catalog_sort_key(item: tuple[str, dict[str, object]]) -> tuple[int, int, str]:
+    workflow_id, contract = item
+    data = contract.get("data") if isinstance(contract, dict) else {}
+    if not isinstance(data, dict):
+        data = {}
+    lane = workflow_catalog_lane(workflow_id, data)
+    return (WORKFLOW_GROUP_ORDER.get(lane, 900), workflow_lifecycle_sort_key(item)[0], workflow_id)
+
+
 def listify(value: object) -> list[object]:
     if isinstance(value, list):
         return value
@@ -290,6 +363,51 @@ def listify(value: object) -> list[object]:
 
 def stringify_list(value: object) -> list[str]:
     return [str(item) for item in listify(value)]
+
+
+def missing_required_context(next_report: dict[str, object]) -> list[dict[str, object]]:
+    required_context = next_report.get("required_context")
+    if not isinstance(required_context, list):
+        return []
+    return [
+        item
+        for item in required_context
+        if isinstance(item, dict) and (item.get("status") == "missing" or item.get("blocking") is True)
+    ]
+
+
+CONTEXT_ID_TO_REQUIRED_NAME = {
+    "canonical_live_draft": "canonical live draft",
+    "live_draft": "canonical live draft",
+    "notebooklm_target": "target NotebookLM notebook id or exact title",
+    "artifact_surface": "destination artifacts directory",
+}
+
+
+def workflow_context_statuses(data: dict[str, object], next_report: dict[str, object]) -> dict[str, dict[str, object]]:
+    required_by_name = {
+        str(item.get("name")): item
+        for item in listify(next_report.get("required_context"))
+        if isinstance(item, dict) and item.get("name")
+    }
+    statuses: dict[str, dict[str, object]] = {}
+    context_dependencies = data.get("context_dependencies")
+    if not isinstance(context_dependencies, list):
+        return statuses
+    for dependency in context_dependencies:
+        if not isinstance(dependency, dict):
+            continue
+        context_id = dependency.get("id")
+        if not context_id:
+            continue
+        context_key = str(context_id)
+        required_name = CONTEXT_ID_TO_REQUIRED_NAME.get(context_key, context_key.replace("_", " "))
+        status = required_by_name.get(required_name)
+        if status is None and context_key == "artifact_surface":
+            status = required_by_name.get("package artifact surface with NotebookLM or local media outputs")
+        if isinstance(status, dict):
+            statuses[context_key] = status
+    return statuses
 
 
 def step_gate_id(step: dict[str, object]) -> str | None:
@@ -337,6 +455,9 @@ def derive_workflow_step_state(
     active_workflow: str,
     blocked_gates: set[str],
     stage_statuses: dict[str, dict[str, object]],
+    step_index: int,
+    active_next_step_index: int | None,
+    missing_inputs: list[str],
 ) -> tuple[str, str, bool]:
     gate_id = step_gate_id(step)
     mode = str(step.get("mode") or "")
@@ -356,7 +477,17 @@ def derive_workflow_step_state(
     if workflow_id == active_workflow and gate_id and blocked_gates:
         return ("future", "This step is gated after the current blocker is resolved.", False)
     if workflow_id == active_workflow and not blocked_gates:
-        return ("available", "This step belongs to the active workflow route.", True)
+        if active_next_step_index is None:
+            return ("available", "This step belongs to the active workflow route.", True)
+        if step_index < active_next_step_index:
+            return ("available", "Required context for this setup step is already resolved; confirm only if needed.", False)
+        if step_index == active_next_step_index:
+            if not missing_inputs and (mode == "external_mutation_gated" or next_report.get("effective_requires_approval") is True):
+                return ("approval_required", "This is the next workflow step and it crosses an approval boundary.", True)
+            return ("next", "This is the next workflow step to resolve for the active route.", True)
+        if missing_inputs:
+            return ("waiting", f"Waiting for required context: {', '.join(missing_inputs)}.", False)
+        return ("waiting", "Waiting for earlier active-route steps to finish or be recorded.", False)
     if isinstance(stage_status, dict):
         return ("future", f"Package status has not reached lifecycle stage '{workflow_id}' yet.", False)
     if workflow_id in stringify_list(next_report.get("recommended_workflows")):
@@ -394,7 +525,7 @@ def workflow_step_actions(
         enabled.insert(0, {"id": "wizard", "label": "Open in Wizard", "target": "wizard"})
     if gate_id or mode == "review_gated":
         enabled.append({"id": "gates", "label": "Open Gates", "target": "gates"})
-    if mode in {"codex_session", "external_mutation_gated", "review_gated"} or state in {"blocked", "current"}:
+    if mode in {"codex_session", "external_mutation_gated", "review_gated"} or state in {"blocked", "current", "next", "approval_required"}:
         enabled.append({"id": "copy_instruction", "label": "Copy Codex instruction", "instruction": instruction})
     if gate_id == "research_exit" and any("research-exit" in item or "claim-boundary" in item for item in missing_artifacts):
         enabled.append({
@@ -435,7 +566,17 @@ def workflow_step_view(
     active_workflow: str,
     blocked_gates: set[str],
     stage_statuses: dict[str, dict[str, object]],
+    step_index: int,
+    active_next_step_index: int | None,
+    context_statuses: dict[str, dict[str, object]],
 ) -> dict[str, object]:
+    consumes = stringify_list(step.get("consumes"))
+    missing_inputs = [
+        item
+        for item in consumes
+        if isinstance(context_statuses.get(item), dict)
+        and (context_statuses[item].get("status") == "missing" or context_statuses[item].get("blocking") is True)
+    ]
     state, state_reason, is_current = derive_workflow_step_state(
         workflow_id,
         step,
@@ -443,6 +584,9 @@ def workflow_step_view(
         active_workflow,
         blocked_gates,
         stage_statuses,
+        step_index,
+        active_next_step_index,
+        missing_inputs,
     )
     mode = str(step.get("mode") or "unknown")
     executor = step.get("executor")
@@ -456,11 +600,12 @@ def workflow_step_view(
         "title": str(step.get("title") or step.get("id") or "Unnamed step"),
         "mode": mode,
         "action": str(step.get("action") or ""),
-        "consumes": stringify_list(step.get("consumes")),
+        "consumes": consumes,
         "produces": stringify_list(step.get("produces")),
         "validation_hooks": step_validation_hooks(step),
         "gate_id": gate_id,
         "missing_artifacts": missing_artifacts,
+        "missing_inputs": missing_inputs,
         "executor_command": str(command) if command else None,
         "state": state,
         "state_reason": state_reason,
@@ -478,6 +623,7 @@ def workflow_section_view(
     active_workflow: str,
     blocked_gates: set[str],
     stage_statuses: dict[str, dict[str, object]],
+    route_states: dict[str, dict[str, object]],
 ) -> dict[str, object]:
     data = contract.get("data") if isinstance(contract, dict) else {}
     path = contract.get("path") if isinstance(contract, dict) else None
@@ -485,26 +631,124 @@ def workflow_section_view(
         data = {}
     steps = [step for step in data.get("steps", []) if isinstance(step, dict)]
     stage_status = stage_statuses.get(workflow_id)
-    lifecycle_state = "inferred"
+    route_state = route_states.get(workflow_id, {})
+    lifecycle_state = str(route_state.get("state") or "inferred")
     if workflow_id == active_workflow:
         lifecycle_state = "current"
-    elif isinstance(stage_status, dict) and stage_status.get("done") is True:
+    elif not route_state and isinstance(stage_status, dict) and stage_status.get("done") is True:
         lifecycle_state = "completed"
-    elif isinstance(stage_status, dict):
+    elif not route_state and isinstance(stage_status, dict):
         lifecycle_state = "future"
+    context_statuses = workflow_context_statuses(data, next_report) if workflow_id == active_workflow else {}
+    active_next_step_index: int | None = None
+    if workflow_id == active_workflow and steps:
+        missing_context = missing_required_context(next_report)
+        if missing_context:
+            active_next_step_index = 0
+        else:
+            active_next_step_index = 0
+            for index, step in enumerate(steps):
+                step_id = str(step.get("id") or "")
+                if not step_id.startswith("resolve_"):
+                    active_next_step_index = index
+                    break
     return {
         "id": workflow_id,
         "summary": str(data.get("summary") or ""),
         "workflow_kind": str(data.get("workflow_kind") or ""),
         "workflow_group": str(data.get("workflow_group") or ""),
+        "catalog_lane": workflow_catalog_lane(workflow_id, data),
         "stability": str(data.get("stability") or ""),
         "path": content_agent.repo_relpath(path) if path else "",
         "is_active": workflow_id == active_workflow,
         "lifecycle_state": lifecycle_state,
+        "route_state_reason": str(route_state.get("reason") or ""),
         "steps": [
-            workflow_step_view(package_key, workflow_id, step, next_report, active_workflow, blocked_gates, stage_statuses)
-            for step in steps
+            workflow_step_view(
+                package_key,
+                workflow_id,
+                step,
+                next_report,
+                active_workflow,
+                blocked_gates,
+                stage_statuses,
+                index,
+                active_next_step_index,
+                context_statuses,
+            )
+            for index, step in enumerate(steps)
         ],
+    }
+
+
+def build_package_route_view_model(
+    next_report: dict[str, object],
+    status_report: dict[str, object],
+    contracts: dict[str, dict[str, object]],
+    stage_statuses: dict[str, dict[str, object]],
+    active_workflow: str,
+) -> dict[str, object]:
+    profiles = content_agent.load_pipeline_profiles()
+    profile_id = str(next_report.get("pipeline_profile") or "")
+    if profile_id not in profiles:
+        profile_id = "article_default" if "article_default" in profiles else next(iter(profiles), "")
+    profile = profiles.get(profile_id, {})
+    ordered_workflows = stringify_list(profile.get("ordered_workflows"))
+    active_index = ordered_workflows.index(active_workflow) if active_workflow in ordered_workflows else None
+    items: list[dict[str, object]] = []
+    route_states: dict[str, dict[str, object]] = {}
+    for index, workflow_id in enumerate(ordered_workflows):
+        contract = contracts.get(workflow_id, {})
+        data = contract.get("data") if isinstance(contract, dict) else {}
+        if not isinstance(data, dict):
+            data = {}
+        stage_status = stage_statuses.get(workflow_id)
+        workflow_kind = str(data.get("workflow_kind") or "")
+        if workflow_id == active_workflow:
+            state = "current"
+            reason = "Active workflow from content-agent next."
+        elif isinstance(stage_status, dict) and stage_status.get("done") is True:
+            state = "completed"
+            updated = stage_status.get("last_updated")
+            reason = f"status.yaml marks this lifecycle stage done{f' on {updated}' if updated else ''}."
+        elif isinstance(stage_status, dict):
+            state = "future"
+            reason = "Tracked lifecycle stage not complete yet."
+        elif active_index is not None and index < active_index:
+            state = "support"
+            reason = "Route module before the active workflow; completion is not tracked as a lifecycle stage."
+        else:
+            state = "future"
+            reason = "Route checkpoint from pipeline profile; not a status.yaml lifecycle stage."
+        item = {
+            "id": workflow_id,
+            "index": index + 1,
+            "state": state,
+            "reason": reason,
+            "workflow_kind": workflow_kind,
+            "workflow_group": str(data.get("workflow_group") or ""),
+            "catalog_lane": workflow_catalog_lane(workflow_id, data),
+            "tracked_stage": isinstance(stage_status, dict),
+            "path": content_agent.repo_relpath(contract.get("path")) if isinstance(contract, dict) and contract.get("path") else "",
+        }
+        items.append(item)
+        route_states[workflow_id] = item
+    stages = status_report.get("stages") if isinstance(status_report, dict) else []
+    lifecycle_total = len(stages) if isinstance(stages, list) else 0
+    lifecycle_completed = len([
+        stage
+        for stage in stages
+        if isinstance(stage, dict) and stage.get("done") is True
+    ])
+    return {
+        "profile": profile_id,
+        "description": str(profile.get("description") or ""),
+        "items": items,
+        "route_total": len(items),
+        "route_position": (active_index + 1) if active_index is not None else None,
+        "lifecycle_completed": lifecycle_completed,
+        "lifecycle_total": lifecycle_total,
+        "route_states": route_states,
     }
 
 
@@ -526,6 +770,16 @@ def build_workflow_map_view_model(
         for stage in stages
         if isinstance(stage, dict) and stage.get("stage")
     }
+    package_route = build_package_route_view_model(
+        next_report,
+        status_report,
+        contracts,
+        stage_statuses,
+        active_workflow,
+    )
+    route_states = package_route.get("route_states") if isinstance(package_route, dict) else {}
+    if not isinstance(route_states, dict):
+        route_states = {}
 
     active_ids: list[str] = []
 
@@ -549,12 +803,12 @@ def build_workflow_map_view_model(
             push(fallback)
 
     active_workflows = [
-        workflow_section_view(workflow_id, contracts[workflow_id], package_key, next_report, active_workflow, blocked_gates, stage_statuses)
+        workflow_section_view(workflow_id, contracts[workflow_id], package_key, next_report, active_workflow, blocked_gates, stage_statuses, route_states)
         for workflow_id in active_ids
     ]
     all_workflows = [
-        workflow_section_view(workflow_id, contract, package_key, next_report, active_workflow, blocked_gates, stage_statuses)
-        for workflow_id, contract in sorted(contracts.items(), key=workflow_lifecycle_sort_key)
+        workflow_section_view(workflow_id, contract, package_key, next_report, active_workflow, blocked_gates, stage_statuses, route_states)
+        for workflow_id, contract in sorted(contracts.items(), key=workflow_catalog_sort_key)
     ]
     return {
         "schema_version": 1,
@@ -562,15 +816,16 @@ def build_workflow_map_view_model(
         "default_filter": "all",
         "active_workflow": active_workflow,
         "blocked_gate_ids": sorted(blocked_gates),
+        "package_route": package_route,
         "modes": {
             "active_route": {
-                "label": "Active route",
-                "description": "Current package route plus recommended support workflows.",
+                "label": "Current workflow",
+                "description": "Only the workflow content-agent selected for the current package route.",
                 "workflows": active_workflows,
             },
             "all_workflows": {
-                "label": "All workflows",
-                "description": "Catalog view of all workflow.yaml contracts.",
+                "label": "Workflow catalog",
+                "description": "Catalog view of every workflow.yaml contract, grouped by workflow_group.",
                 "workflows": all_workflows,
             },
         },
@@ -754,6 +1009,61 @@ def research_question_action_payload(package_arg: str, research_question: str) -
         "status_path": content_agent.repo_relpath(status_path),
         "research_question": question,
         "message": "Research question saved to package status.yaml.",
+    }
+
+
+def package_scoped_artifacts_path(package_key: str, raw_path: str | None) -> tuple[str, Path]:
+    package_root = content_agent.REPO_ROOT / "publications" / package_key
+    value = (raw_path or "").strip() or f"publications/{package_key}/artifacts"
+    candidate = Path(value).expanduser()
+    if candidate.is_absolute():
+        resolved = candidate.resolve()
+    elif value.startswith("publications/"):
+        resolved = (content_agent.REPO_ROOT / value).resolve()
+    else:
+        resolved = (package_root / value).resolve()
+    if not resolved.is_relative_to(package_root.resolve()):
+        raise ValueError("artifacts_path must stay inside the selected package")
+    return content_agent.repo_relpath(resolved), resolved
+
+
+def notebooklm_setup_action_payload(
+    package_arg: str,
+    notebook_id: str | None,
+    notebook_title: str | None,
+    artifacts_path: str | None,
+) -> dict[str, object]:
+    package_key = content_agent.coerce_package_key(package_arg.strip())
+    if not package_key:
+        raise ValueError("package is required")
+    manifest_ref, status_data = content_agent.load_status_ref(package_key)
+    config = status_data.setdefault("config", {})
+    if not isinstance(config, dict):
+        raise ValueError("status.yaml config must be a mapping")
+    clean_id = (notebook_id or "").strip()
+    clean_title = (notebook_title or "").strip()
+    if clean_id:
+        config["notebooklm_notebook_id"] = clean_id
+    if clean_title:
+        config["notebooklm_notebook_title"] = clean_title
+    if not (config.get("notebooklm_notebook_id") or config.get("notebooklm_notebook_title")):
+        raise ValueError("NotebookLM notebook id or exact title is required")
+    artifacts_relpath, artifacts_dir = package_scoped_artifacts_path(package_key, artifacts_path)
+    config["artifacts_path"] = artifacts_relpath
+    artifacts_dir.mkdir(parents=True, exist_ok=True)
+    content_agent.write_yaml_mapping(manifest_ref.status_path, status_data)
+    return {
+        "kind": "content_cockpit_notebooklm_setup_result",
+        "schema_version": 1,
+        "generated_at": utc_now(),
+        "success": True,
+        "mutating": True,
+        "package": package_key,
+        "status_path": content_agent.repo_relpath(manifest_ref.status_path),
+        "artifacts_path": artifacts_relpath,
+        "notebooklm_notebook_id": config.get("notebooklm_notebook_id") or "",
+        "notebooklm_notebook_title": config.get("notebooklm_notebook_title") or "",
+        "message": "NotebookLM setup saved to package status.yaml.",
     }
 
 
@@ -1204,7 +1514,7 @@ def page_shell(title: str, body: str, config: CockpitConfig) -> bytes:
     .span-4 {{ grid-column: span 4; }}
     .summary {{
       display: grid;
-      grid-template-columns: 2fr repeat(4, minmax(110px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
       gap: 10px;
     }}
     .metric {{
@@ -1500,6 +1810,14 @@ def page_shell(title: str, body: str, config: CockpitConfig) -> bytes:
       border-color: #e3a0a0;
       background: #fff8f8;
     }}
+    .workflow-step.next, .workflow-step.approval_required {{
+      border-left: 4px solid var(--accent);
+      background: #f8fcfd;
+    }}
+    .workflow-step.waiting, .workflow-step.future {{
+      background: #f7f8fa;
+      color: #445064;
+    }}
     .workflow-step.current {{
       border-left: 4px solid var(--accent);
     }}
@@ -1613,8 +1931,8 @@ function esc(value) {
 function badge(value) {
   const raw = String(value ?? "unknown");
   let cls = "badge";
-  if (["pass", "passed", "completed", "resolved", "true", "ready"].includes(raw)) cls += " good";
-  if (["pending", "warning", "deferred", "gated", "needs approval", "needs research setup", "follow-up", "future", "inferred", "current"].includes(raw)) cls += " warn";
+  if (["pass", "passed", "completed", "resolved", "true", "ready", "available"].includes(raw)) cls += " good";
+  if (["pending", "warning", "deferred", "gated", "needs approval", "missing context", "needs research setup", "follow-up", "future", "inferred", "current", "next", "waiting", "approval_required", "support", "checkpoint"].includes(raw)) cls += " warn";
   if (["blocked", "failed", "failing", "error", "invalid", "rejected", "false"].includes(raw)) cls += " bad";
   return `<span class="${cls}">${esc(raw)}</span>`;
 }
@@ -1909,14 +2227,14 @@ function renderStatus(payload) {
     </div>`;
   document.getElementById("status").innerHTML = `
     <div class="tabs" role="tablist" aria-label="Cockpit sections">
-      <button class="tab-button" type="button" data-tab="workflow-map" onclick="showCockpitTab('workflow-map')">Workflow Map</button>
+      <button class="tab-button" type="button" data-tab="workflow-map" onclick="showCockpitTab('workflow-map')">Package Route</button>
       <button class="tab-button" type="button" data-tab="wizard" onclick="showCockpitTab('wizard')">Wizard</button>
       <button class="tab-button" type="button" data-tab="gates" onclick="showCockpitTab('gates')">Gates</button>
       <button class="tab-button" type="button" data-tab="diagnostics" onclick="showCockpitTab('diagnostics')">Diagnostics</button>
     </div>
     <div class="grid">
       <div class="span-12 tab-panel" data-tab="workflow-map">
-        <section id="workflow-map-section"><h2>Workflow Map</h2><p class="muted">Resolving...</p></section>
+        <section id="workflow-map-section"><h2>Package Route</h2><p class="muted">Resolving...</p></section>
       </div>
       <div class="span-12 tab-panel" data-tab="wizard" hidden>
         <section class="primary-section" id="next-action-section">${renderNextPlaceholder(report.package)}</section>
@@ -1986,12 +2304,12 @@ function renderFlowContext(report) {
   return `<h2>Why this is the next step</h2>
     <div class="callout warn">
       <strong>Viewing leaf package.</strong>
-      This is the working object. The current job is to make the research stage runnable, not to draft or publish.
+      This is the working publication object. The current route is <strong>${esc(pkg.current_stage || "unresolved")}</strong>.
     </div>
     <div class="flow-steps">
-      <div class="flow-step"><strong>1. Read handoff</strong>Open the research handoff and status file from the Next Step card.</div>
-      <div class="flow-step"><strong>2. Define question</strong>Fill the current research question or thesis direction in the leaf package state.</div>
-      <div class="flow-step"><strong>3. Recheck route</strong>Return to this cockpit after the research setup exists.</div>
+      <div class="flow-step"><strong>1. Inspect current workflow</strong>Use Package Route and Wizard to see the active workflow and blockers.</div>
+      <div class="flow-step"><strong>2. Resolve required context</strong>Fill missing status fields, local artifact paths, or gate artifacts before approval.</div>
+      <div class="flow-step"><strong>3. Recheck route</strong>Return to this cockpit after the package state changes.</div>
     </div>
     <details class="advanced">
       <summary>Leaf context</summary>
@@ -2098,9 +2416,9 @@ function setWorkflowStepFilter(filter) {
 
 function workflowStepMatchesFilter(step) {
   const state = deriveStepState(step);
-  if (workflowStepFilter === "current_blocked") return step.is_current || state === "blocked" || state === "current";
+  if (workflowStepFilter === "current_blocked") return step.is_current || state === "blocked" || state === "current" || state === "next" || state === "approval_required";
   if (workflowStepFilter === "runnable") return state === "available" && !["codex_session", "external_mutation_gated"].includes(step.mode);
-  if (workflowStepFilter === "gated") return Boolean(step.gate_id) || String(step.mode || "").includes("gated");
+  if (workflowStepFilter === "gated") return Boolean(step.gate_id) || String(step.mode || "").includes("gated") || state === "approval_required";
   return true;
 }
 
@@ -2108,12 +2426,12 @@ function renderWorkflowMap(map) {
   currentWorkflowMap = map || {};
   workflowMapMode = urlParam("mode") || workflowMapMode || currentWorkflowMap.default_mode || "active_route";
   workflowStepFilter = urlParam("filter") || workflowStepFilter || currentWorkflowMap.default_filter || "all";
-  return `<h2>Workflow Map</h2>
-    <p class="muted">Sequential workflow steps derived from workflow.yaml and package state. This is an operator map, not workflow authority.</p>
-    ${renderLifecycleStatusSummary()}
+  return `<h2>Package Route</h2>
+    <p class="muted">The top route is profile-backed package sequence with lifecycle completion overlaid. The lower panel is either the current workflow or the workflow catalog.</p>
+    ${renderPackageRouteSummary(currentWorkflowMap)}
     <div class="workflow-map-controls">
-      <button class="workflow-mode-button ${workflowMapMode === "active_route" ? "active" : ""}" type="button" data-mode="active_route" onclick="setWorkflowMapMode('active_route')">Active route</button>
-      <button class="workflow-mode-button ${workflowMapMode === "all_workflows" ? "active" : ""}" type="button" data-mode="all_workflows" onclick="setWorkflowMapMode('all_workflows')">All workflows</button>
+      <button class="workflow-mode-button ${workflowMapMode === "active_route" ? "active" : ""}" type="button" data-mode="active_route" onclick="setWorkflowMapMode('active_route')">Current workflow</button>
+      <button class="workflow-mode-button ${workflowMapMode === "all_workflows" ? "active" : ""}" type="button" data-mode="all_workflows" onclick="setWorkflowMapMode('all_workflows')">Workflow catalog</button>
       <span class="muted">Filter</span>
       <button class="workflow-filter-button ${workflowStepFilter === "all" ? "active" : ""}" type="button" data-filter="all" onclick="setWorkflowStepFilter('all')">All</button>
       <button class="workflow-filter-button ${workflowStepFilter === "current_blocked" ? "active" : ""}" type="button" data-filter="current_blocked" onclick="setWorkflowStepFilter('current_blocked')">Current/blocked</button>
@@ -2127,34 +2445,34 @@ function stageLabel(stage) {
   return String(stage || "none").replaceAll("_", " ");
 }
 
-function renderStagePills(stages, currentStage) {
-  return (stages || []).map((stage) => {
-    const id = stage.stage || "";
-    const state = stage.done === true ? "completed" : (id === currentStage ? "current" : "pending");
-    const date = stage.last_updated ? ` · ${esc(stage.last_updated)}` : "";
-    return `<span class="stage-pill ${esc(state)}">${badge(state)} ${esc(stageLabel(id))}${date}</span>`;
+function renderRoutePills(items) {
+  return (items || []).map((item) => {
+    const state = item.state || "future";
+    const kind = item.tracked_stage ? "" : " · checkpoint";
+    return `<span class="stage-pill ${esc(state)}" title="${esc(item.reason || "")}">${badge(state)} ${esc(stageLabel(item.id))}${esc(kind)}</span>`;
   }).join("");
 }
 
-function renderLifecycleStatusSummary() {
+function renderPackageRouteSummary(map) {
   const pkg = currentStatusReport?.package || {};
-  const stages = pkg.stages || [];
-  if (!stages.length) return "";
+  const route = map?.package_route || {};
+  const items = route.items || [];
+  if (!items.length) return "";
+  const currentWorkflow = map?.active_workflow || currentNextReport?.effective_workflow || currentNextReport?.next_stage || "";
   const currentStage = currentNextReport?.next_stage || pkg.current_stage || "";
-  const completed = stages.filter((stage) => stage.done === true);
-  const remaining = stages.filter((stage) => stage.done !== true);
   const blockers = currentNextReport?.blocking_issues || [];
   const missingContext = (currentNextReport?.required_context || []).filter((item) => item.status === "missing" || item.blocking === true);
   return `<div class="route-summary">
     <div class="summary">
-      <div class="metric"><div class="label">Completed</div><div class="value">${esc(completed.length)} / ${esc(stages.length)}</div></div>
-      <div class="metric"><div class="label">Current stage</div><div class="value">${esc(stageLabel(currentStage || "none"))}</div></div>
-      <div class="metric"><div class="label">Next workflow</div><div class="value">${esc(stageLabel(currentNextReport?.effective_workflow || currentStage || "none"))}</div></div>
+      <div class="metric"><div class="label">Profile</div><div class="value">${esc(route.profile || "none")}</div></div>
+      <div class="metric"><div class="label">Lifecycle done</div><div class="value">${esc(route.lifecycle_completed || 0)} / ${esc(route.lifecycle_total || 0)}</div></div>
+      <div class="metric"><div class="label">Route position</div><div class="value">${esc(route.route_position || "-")} / ${esc(route.route_total || items.length)}</div></div>
+      <div class="metric"><div class="label">Current workflow</div><div class="value">${esc(stageLabel(currentWorkflow || currentStage || "none"))}</div></div>
       <div class="metric"><div class="label">Missing context</div><div class="value">${esc(missingContext.length)}</div></div>
       <div class="metric"><div class="label">Blockers</div><div class="value">${esc(blockers.length)}</div></div>
     </div>
-    <div class="stage-pills">${renderStagePills(stages, currentStage)}</div>
-    <div class="muted" style="margin-top:8px">Done: ${esc(completed.map((stage) => stageLabel(stage.stage)).join(", ") || "none")}. Left: ${esc(remaining.map((stage) => stageLabel(stage.stage)).join(", ") || "none")}.</div>
+    <div class="stage-pills">${renderRoutePills(items)}</div>
+    <div class="muted" style="margin-top:8px">${esc(route.description || "Route order comes from pipeline_profiles.yaml; completion comes from status.yaml when the workflow is a tracked lifecycle stage.")}</div>
   </div>`;
 }
 
@@ -2175,26 +2493,19 @@ function renderWorkflowMapBody(map) {
     <div id="workflow-step-details" class="workflow-detail"${selectedDetails ? "" : " hidden"}>${selectedDetails}</div>`;
 }
 
-function workflowLifecycleLane(workflow) {
-  const id = String(workflow.id || "").replaceAll("-", "_");
-  if (id.includes("topic")) return "Discovery";
-  if (id === "research" || id.includes("alphaxiv")) return "Research";
-  if (id.includes("paper_intake") || id.includes("evidence")) return "Evidence";
-  if (id.includes("essay")) return "Drafting";
-  if (id.includes("notebooklm") || id.includes("youtube_production")) return "Artifacts";
-  if (id.includes("article_polish") || id.includes("release")) return "Polish";
-  if (id.includes("substack") && !id.includes("archive")) return "Publishing";
-  if (id.includes("distribution")) return "Distribution";
-  return "Maintenance";
+function workflowCatalogLane(workflow) {
+  return workflow.catalog_lane || "Other";
 }
 
 function renderLifecycleWorkflowColumns(workflows) {
-  const laneNames = ["Discovery", "Research", "Evidence", "Drafting", "Artifacts", "Polish", "Publishing", "Distribution", "Maintenance"];
+  const laneNames = ["Package", "Discovery", "Evidence", "Editorial", "Scholarship", "Artifacts", "Release", "Distribution", "Operations", "Other"];
   const lanes = Object.fromEntries(laneNames.map((name) => [name, []]));
   for (const workflow of workflows) {
     const rendered = renderWorkflowSection(workflow);
     if (!rendered) continue;
-    lanes[workflowLifecycleLane(workflow)].push(rendered);
+    const lane = workflowCatalogLane(workflow);
+    if (!lanes[lane]) lanes[lane] = [];
+    lanes[lane].push(rendered);
   }
   const columns = laneNames.map((name) => `<div class="lifecycle-lane">
     <h3>${esc(name)}</h3>
@@ -2224,8 +2535,9 @@ function renderWorkflowSection(workflow) {
 function renderWorkflowStep(workflow, step) {
   const state = deriveStepState(step);
   const actionText = step.action ? `${esc(step.action).slice(0, 180)}${String(step.action).length > 180 ? "..." : ""}` : "No action summary.";
+  const missingBadge = (step.missing_inputs || []).length ? badge(`missing:${(step.missing_inputs || []).length}`) : "";
   return `<button class="workflow-step ${esc(state)} ${step.is_current ? "current" : ""}" type="button" onclick="openWorkflowStep('${esc(workflow.id)}', '${esc(step.id)}')">
-    <div class="workflow-step-meta">${badge(state)} ${step.gate_id ? badge(`gate:${step.gate_id}`) : ""}</div>
+    <div class="workflow-step-meta">${badge(state)} ${missingBadge} ${step.gate_id ? badge(`gate:${step.gate_id}`) : ""}</div>
     <div class="workflow-step-title">${esc(step.title || step.id)}</div>
     <div class="muted">${esc(step.id || "")} · ${esc(step.mode || "unknown")}</div>
     <div>${actionText}</div>
@@ -2288,6 +2600,7 @@ function renderStepDetails(workflow, step) {
       <tr><th>Consumes</th><td><ul class="path-list">${renderInlineList(step.consumes)}</ul></td></tr>
       <tr><th>Produces</th><td><ul class="path-list">${renderInlineList(step.produces)}</ul></td></tr>
       <tr><th>Validation hooks</th><td><ul class="path-list">${renderInlineList(step.validation_hooks)}</ul></td></tr>
+      <tr><th>Missing inputs</th><td><ul class="path-list">${renderInlineList(step.missing_inputs)}</ul></td></tr>
       <tr><th>Missing artifacts</th><td><ul class="path-list">${renderInlineList(step.missing_artifacts)}</ul></td></tr>
       <tr><th>Gate</th><td>${esc(step.gate_id || "none")}</td></tr>
       <tr><th>Executor</th><td>${esc(step.executor_command || "not directly executable from cockpit v1")}</td></tr>
@@ -2358,6 +2671,40 @@ async function submitResearchQuestion() {
   if (response.ok) await loadStatus();
 }
 
+async function submitNotebookLmSetup() {
+  const idInput = document.getElementById("notebooklm-id-input");
+  const titleInput = document.getElementById("notebooklm-title-input");
+  const artifactsInput = document.getElementById("notebooklm-artifacts-input");
+  const output = document.getElementById("notebooklm-setup-result") || document.getElementById("action-output");
+  const packageValue = packageInput.value.trim();
+  const notebookId = idInput ? idInput.value.trim() : "";
+  const notebookTitle = titleInput ? titleInput.value.trim() : "";
+  const artifactsPath = artifactsInput ? artifactsInput.value.trim() : "";
+  if (!notebookId && !notebookTitle) {
+    output.innerHTML = '<div class="callout bad">Notebook id or exact title is required.</div>';
+    return;
+  }
+  const ok = window.confirm(`Save NotebookLM setup for ${packageValue}? This writes local status.yaml and may create the local artifacts directory. It does not contact NotebookLM.`);
+  if (!ok) return;
+  output.innerHTML = '<div class="callout">Saving NotebookLM setup...</div>';
+  const response = await fetch("/api/notebooklm-setup", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      package: packageValue,
+      notebooklm_notebook_id: notebookId,
+      notebooklm_notebook_title: notebookTitle,
+      artifacts_path: artifactsPath
+    })
+  });
+  const payload = await response.json();
+  output.innerHTML = `
+    <div class="${response.ok ? "callout" : "callout bad"}">${esc(payload.message || payload.error || "NotebookLM setup action completed.")}</div>
+    <details class="advanced"><summary>Action result</summary><pre>${esc(JSON.stringify(payload, null, 2))}</pre></details>
+  `;
+  if (response.ok) await loadStatus();
+}
+
 function updateNextExecuteButton() {
   const checkbox = document.getElementById("next-execute-approved");
   const button = document.getElementById("next-execute-button");
@@ -2410,7 +2757,7 @@ function explainBlocker(message, next) {
   if (text.includes("Runner mode 'guided'") && text.includes("launch_mode 'none'")) {
     return {
       meaning: "The workflow is intentionally guided. The dashboard can show the next action and record approval, but it cannot automatically perform the package edit.",
-      action: "Emit a launch pack or have Codex perform the guided research-stage file work."
+      action: "Emit a launch pack where the workflow supports it, or have Codex perform the guided workflow work."
     };
   }
   if (text.includes("Missing required context:")) {
@@ -2442,6 +2789,13 @@ function explainBlocker(message, next) {
     meaning: "The runner cannot continue until this condition is resolved.",
     action: "Use the suggested command or inspect the linked workflow/status artifact."
   };
+}
+
+function approvalGateLabel(next) {
+  const requiresApproval = next.requires_approval === true || next.effective_requires_approval === true;
+  const gate = next.approval_gate || next.effective_approval_gate || "none";
+  if (requiresApproval && (!gate || gate === "none")) return "policy approval required";
+  return gate || "none";
 }
 
 function renderBlockers(blockingIssues, next) {
@@ -2513,7 +2867,7 @@ function renderGateReadinessTab(next) {
 function renderRoutingDiagnostics(next) {
   const canExecute = next.can_execute === true || next.effective_can_execute === true;
   const requiresApproval = next.requires_approval === true || next.effective_requires_approval === true;
-  const approvalGate = next.approval_gate || next.effective_approval_gate || "none";
+  const approvalGate = approvalGateLabel(next);
   const action = next.effective_next_action || next.next_overlay_action || next.next_packet_action || next.umbrella_route_next_action || "none";
   const workflow = next.effective_workflow || next.active_overlay || next.umbrella_route_workflow || next.next_stage || "none";
   const route = next.effective_route || next.umbrella_route_state || next.overlay_phase || "none";
@@ -2619,10 +2973,14 @@ function renderApprovalBoundaryContext(next, stageLabel, workflowLabel, approval
   const issues = next.blocking_issues || [];
   const contextChecklist = renderRequiredContextChecklist(next);
   const commands = renderListItems(next.suggested_commands || []);
+  const missingContext = (next.required_context || []).filter((item) => item.status === "missing" || item.blocking === true);
+  const contextGuidance = missingContext.length
+    ? "Approval here records intent only; missing context still has to be supplied through the workflow."
+    : "Approval here records intent only. Required context is shown below so the operator can verify the boundary before continuing.";
   if (!issues.length && !contextChecklist && !commands) return "";
   return `<div class="approval-panel">
     <h3>Approval boundary context</h3>
-    <p class="muted">This is the workflow state the operator should inspect before recording a boundary decision. Approval here records intent only; missing context still has to be supplied through the workflow.</p>
+    <p class="muted">This is the workflow state the operator should inspect before recording a boundary decision. ${esc(contextGuidance)}</p>
     <table><tbody>
       <tr><th>Stage</th><td>${esc(stageLabel)}</td></tr>
       <tr><th>Workflow</th><td>${esc(workflowLabel)}</td></tr>
@@ -2635,6 +2993,43 @@ function renderApprovalBoundaryContext(next, stageLabel, workflowLabel, approval
       <summary>Suggested commands</summary>
       <ul class="path-list">${commands || '<li class="muted">none</li>'}</ul>
     </details>
+  </div>`;
+}
+
+function isNotebookLmSetupNeeded(next) {
+  const workflow = next.effective_workflow || next.next_stage || "";
+  if (workflow !== "notebooklm_artifacts") return false;
+  const missing = next.required_context || [];
+  return missing.some((item) => {
+    const name = String(item.name || "");
+    return (item.status === "missing" || item.blocking === true)
+      && (name.includes("NotebookLM") || name.includes("artifacts directory"));
+  });
+}
+
+function renderNotebookLmSetupPanel(next) {
+  const setup = next.cockpit_view_model?.setup?.notebooklm || {};
+  const packageValue = packageInput.value.trim();
+  const defaultArtifacts = setup.artifacts_path || setup.default_artifacts_path || `publications/${packageValue}/artifacts`;
+  return `<div class="approval-panel">
+    <h3>Configure NotebookLM setup</h3>
+    <p class="muted">This writes local package status only. It records the target notebook id or exact title and the artifact directory used by the NotebookLM artifacts workflow.</p>
+    <div class="grid">
+      <label class="span-6">Notebook id
+        <input id="notebooklm-id-input" value="${esc(setup.notebooklm_notebook_id || "")}" placeholder="NotebookLM UUID">
+      </label>
+      <label class="span-6">Exact title
+        <input id="notebooklm-title-input" value="${esc(setup.notebooklm_notebook_title || "")}" placeholder="Exact NotebookLM notebook title">
+      </label>
+      <label class="span-12">Artifacts directory
+        <input id="notebooklm-artifacts-input" value="${esc(defaultArtifacts)}" placeholder="publications/${esc(packageValue)}/artifacts">
+      </label>
+    </div>
+    <div class="toolbar" style="margin-top:10px">
+      <button type="button" onclick="submitNotebookLmSetup()">Save NotebookLM setup</button>
+      ${artifact(setup.status_path, "Preview status.yaml")}
+    </div>
+    <div id="notebooklm-setup-result" style="margin-top:10px"></div>
   </div>`;
 }
 
@@ -2682,6 +3077,12 @@ function renderSelectedStepWizard(next, workflow, step) {
         </tbody></table>
       </div>`
     : "";
+  const missingInputCallout = (step.missing_inputs || []).length
+    ? `<div class="callout warn" style="margin-top:10px">
+        <strong>Missing required inputs</strong>
+        <ul class="path-list">${renderInlineList(step.missing_inputs)}</ul>
+      </div>`
+    : "";
   const disabledRows = disabled.map((action) => `<span class="disabled-action">
     <button type="button" disabled>${esc(action.label)}</button>
     <small>${esc(action.reason)}</small>
@@ -2695,15 +3096,16 @@ function renderSelectedStepWizard(next, workflow, step) {
       <div>${badge(deriveStepState(step))}</div>
     </div>
     <div class="callout">
-      <strong>This Wizard is now focused on the selected Workflow Map step.</strong>
+      <strong>This Wizard is now focused on the selected package-route/catalog step.</strong>
       <div class="muted" style="margin-top:6px">${esc(step.state_reason || "Derived from workflow.yaml and current package state.")}</div>
     </div>
     ${gateCallout}
+    ${missingInputCallout}
     <section style="margin-top:12px">
       <h2>Immediate action</h2>
       <p>${esc(step.action || "No action summary.")}</p>
       <div class="toolbar" style="margin-top:10px">
-        <button type="button" onclick="showCockpitTab('workflow-map')">Back to Workflow Map</button>
+        <button type="button" onclick="showCockpitTab('workflow-map')">Back to Package Route</button>
         ${step.gate_id ? '<button type="button" onclick="showCockpitTab(\\'gates\\')">Open Gates</button>' : ""}
         <button type="button" onclick="showCockpitTab('diagnostics')">Open Diagnostics</button>
         ${copyAction ? `<button type="button" data-instruction="${esc(copyAction.instruction || step.instruction || "")}" onclick="copyWorkflowInstruction(this)">Copy Codex instruction</button>` : ""}
@@ -2722,7 +3124,7 @@ function renderNextAction(next) {
   const gateRows = renderGateBlockers(next.pending_review_gate_blockers || []);
   const canExecute = next.can_execute === true || next.effective_can_execute === true;
   const requiresApproval = next.requires_approval === true || next.effective_requires_approval === true;
-  const approvalGate = next.approval_gate || next.effective_approval_gate || "none";
+  const approvalGate = approvalGateLabel(next);
   const action = next.effective_next_action || next.next_overlay_action || next.next_packet_action || next.umbrella_route_next_action || "none";
   const workflow = next.effective_workflow || next.active_overlay || next.umbrella_route_workflow || next.next_stage || "none";
   const route = next.effective_route || next.umbrella_route_state || next.overlay_phase || "none";
@@ -2730,28 +3132,56 @@ function renderNextAction(next) {
   const selectedRoute = selectedPackage.umbrella_route || {};
   const successorLeaf = selectedRoute.active_successor_leaf;
   const umbrellaHasSuccessor = selectedPackage.kind === "umbrella" && successorLeaf;
+  const missingContext = (next.required_context || []).filter((item) => item.status === "missing" || item.blocking === true);
+  const hasMissingContext = missingContext.length > 0;
+  const notebookLmSetupNeeded = isNotebookLmSetupNeeded(next);
   const missingResearchQuestion = (next.blocking_issues || []).some((issue) => String(issue).includes("current research question"));
-  const genericBlocked = !umbrellaHasSuccessor && !missingResearchQuestion && !canExecute && !requiresApproval;
-  const executionState = umbrellaHasSuccessor ? "ready" : (canExecute ? "ready" : (requiresApproval ? "needs approval" : (missingResearchQuestion ? "needs research setup" : "blocked")));
-  const displayAction = umbrellaHasSuccessor
-    ? "continue in successor leaf"
-    : (missingResearchQuestion && action === "none"
-      ? "define current research question"
-      : (genericBlocked && action === "none" ? deriveBlockedAction(next) : action));
+  const genericBlocked = !umbrellaHasSuccessor && !missingResearchQuestion && !hasMissingContext && !canExecute && !requiresApproval;
+  let executionState = "blocked";
+  if (umbrellaHasSuccessor || canExecute) {
+    executionState = "ready";
+  } else if (notebookLmSetupNeeded || hasMissingContext) {
+    executionState = "missing context";
+  } else if (requiresApproval) {
+    executionState = "needs approval";
+  } else if (missingResearchQuestion) {
+    executionState = "needs research setup";
+  }
+  let displayAction = action;
+  if (umbrellaHasSuccessor) {
+    displayAction = "continue in successor leaf";
+  } else if (notebookLmSetupNeeded) {
+    displayAction = "configure NotebookLM setup";
+  } else if (hasMissingContext) {
+    displayAction = "resolve required context";
+  } else if (missingResearchQuestion && action === "none") {
+    displayAction = "define current research question";
+  } else if (requiresApproval && action === "none") {
+    displayAction = approvalGate === "none" ? "record approval boundary" : `record ${approvalGate.replace(" required", "")} boundary`;
+  } else if (genericBlocked && action === "none") {
+    displayAction = deriveBlockedAction(next);
+  }
   const validator = next.recommended_validator || next.overlay_recommended_validator || "none";
-  const guidance = umbrellaHasSuccessor
-    ? "The pivot has already produced a successor leaf. Continue there; this umbrella is now context, not the working object."
-    : (missingResearchQuestion
-      ? "This leaf needs a research question or thesis direction before the research workflow can run."
-      : (requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length
-        ? "This is an approval boundary from the workflow/package state, not a materialized review-gate file. The cockpit can record an operator decision, but it will not move lifecycle state by itself."
-        : (canExecute
-          ? "This action is executable from the governed runner."
-          : "The research question is admitted. The remaining work is a guided research-stage packet, not a direct cockpit run.")));
-  const calloutClass = umbrellaHasSuccessor || canExecute ? "callout" : (requiresApproval ? "callout warn" : "callout bad");
+  let guidance = "The current workflow is guided. Use the workflow step instructions or suggested command to continue.";
+  if (umbrellaHasSuccessor) {
+    guidance = "The pivot has already produced a successor leaf. Continue there; this umbrella is now context, not the working object.";
+  } else if (notebookLmSetupNeeded) {
+    guidance = "The NotebookLM artifacts workflow needs a target notebook and a local artifact directory before generation or approval.";
+  } else if (hasMissingContext) {
+    guidance = "The workflow contract has required context that is not resolved yet. Resolve this before approval or execution.";
+  } else if (missingResearchQuestion) {
+    guidance = "This leaf needs a research question or thesis direction before the research workflow can run.";
+  } else if (requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length) {
+    guidance = "This is an approval boundary from the workflow/package state, not a materialized review-gate file. The cockpit can record an operator decision, but it will not move lifecycle state by itself.";
+  } else if (canExecute) {
+    guidance = "This action is executable from the governed runner.";
+  }
+  const calloutClass = umbrellaHasSuccessor || canExecute ? "callout" : ((requiresApproval || hasMissingContext) ? "callout warn" : "callout bad");
   const primaryButtons = umbrellaHasSuccessor
     ? `<div class="toolbar" style="margin-top:10px"><button type="button" onclick="switchToPackage('${esc(successorLeaf)}')">Continue in successor leaf</button></div>`
-    : (missingResearchQuestion
+    : (notebookLmSetupNeeded
+      ? renderNotebookLmSetupPanel(next)
+      : (missingResearchQuestion
       ? `<div class="approval-panel">
           <h3>Set research question</h3>
           <p class="muted">This saves the research question into the selected leaf status file so the research workflow has a concrete target.</p>
@@ -2765,13 +3195,13 @@ function renderNextAction(next) {
           </div>
           <div id="research-question-result" style="margin-top:10px"></div>
         </div>`
-      : (genericBlocked ? renderVisibleBlockerPanel(next) : ""));
+      : (genericBlocked || hasMissingContext ? renderVisibleBlockerPanel(next) : "")));
   const stageLabel = next.next_stage || selectedPackage.current_stage || "none";
   const workflowLabel = workflow === "none" ? stageLabel : workflow;
-  const syntheticApprovalContext = !umbrellaHasSuccessor && requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length
+  const syntheticApprovalContext = !umbrellaHasSuccessor && !hasMissingContext && requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length
     ? renderApprovalBoundaryContext(next, stageLabel, workflowLabel, approvalGate)
     : "";
-  const syntheticApprovalControls = !umbrellaHasSuccessor && requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length
+  const syntheticApprovalControls = !umbrellaHasSuccessor && !hasMissingContext && requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length
     ? `<details class="advanced">
       <summary>Record approval boundary</summary>
       <div class="approval-panel">
@@ -3215,6 +3645,22 @@ class CockpitHandler(BaseHTTPRequestHandler):
                     self.send_json_error(HTTPStatus.BAD_REQUEST, "research_question is required")
                     return
                 payload = research_question_action_payload(package_arg, research_question)
+                self.send_json(payload, HTTPStatus.OK)
+                return
+            if parsed.path == "/api/notebooklm-setup":
+                package_arg = body.get("package") if isinstance(body.get("package"), str) else self.config.package_arg
+                notebook_id = body.get("notebooklm_notebook_id")
+                notebook_title = body.get("notebooklm_notebook_title")
+                artifacts_path = body.get("artifacts_path")
+                if not isinstance(package_arg, str) or not package_arg.strip():
+                    self.send_json_error(HTTPStatus.BAD_REQUEST, "package is required")
+                    return
+                payload = notebooklm_setup_action_payload(
+                    package_arg,
+                    notebook_id if isinstance(notebook_id, str) else None,
+                    notebook_title if isinstance(notebook_title, str) else None,
+                    artifacts_path if isinstance(artifacts_path, str) else None,
+                )
                 self.send_json(payload, HTTPStatus.OK)
                 return
             if parsed.path == "/api/next/execute":
