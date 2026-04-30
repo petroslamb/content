@@ -1,0 +1,376 @@
+workflow_id: youtube_production
+version: 1
+stability: canonical
+workflow_kind: stage
+workflow_group: artifacts
+summary: Turn narrated audio, slide images or PDFs, transcripts, and captions into a reviewed cue sheet and verified local MP4 before any YouTube channel mutation.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+    - id: video_surface
+      source: publications/{package}/status.yaml:config.video_artifacts_path or publications/{package}/artifacts/video/
+    - id: audio_path
+      source: canonical audio narration
+    - id: slides_path
+      source: slide images or PDF deck
+    - id: captions_path
+      source: timed SRT captions or transcript inputs
+  paths:
+    - id: package_root
+      pattern: publications/{package}/
+      required: true
+    - id: package_status
+      pattern: publications/{package}/status.yaml
+      required: true
+    - id: video_surface
+      pattern: publications/{package}/artifacts/video/
+      required: true
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, lifecycle state, artifact paths, and any configured YouTube production targets.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package artifact conventions and publication-specific video constraints.
+    record_hash: true
+  - id: canonical_audio_narration
+    path_from_status: config.audio_path
+    fallback:
+      - publications/{package}/artifacts/audio/
+      - publications/{package}/artifacts/notebooklm/
+    required: true
+    purpose: Locate the final narration audio that controls video duration and timing.
+    record_hash: true
+  - id: slide_images_or_pdfs
+    path_from_status: config.slides_path
+    fallback:
+      - publications/{package}/artifacts/slides/
+      - publications/{package}/artifacts/notebooklm/
+    required: true
+    purpose: Locate the image sequence or deck PDF used to build the slide video.
+    record_hash: true
+  - id: timed_captions_or_transcript_inputs
+    path_from_status: config.captions_path
+    fallback:
+      - publications/{package}/artifacts/video/
+      - publications/{package}/artifacts/transcripts/
+      - publications/{package}/artifacts/notebooklm/
+    required: true
+    purpose: Locate timed SRT captions or transcript inputs used to align slides to narration.
+    record_hash: true
+  - id: video_artifact_surface
+    path_from_status: config.video_artifacts_path
+    fallback: publications/{package}/artifacts/video/
+    required: true
+    purpose: Resolve the destination for cue sheets, recovered captions, render logs, and verified MP4 outputs.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/youtube-production/README.md
+    required: true
+    purpose: Load human-facing local YouTube production guidance.
+    record_hash: true
+  - id: youtube_slide_video_skill
+    path: workflows/skills/youtube-slide-video-pipeline/SKILL.md
+    required: true
+    purpose: Bind the local slide-video production skill and command sequence.
+    record_hash: true
+  - id: youtube_channel_ops_readme
+    path: workflows/youtube-channel-ops/README.md
+    required: true
+    purpose: Preserve the boundary between local MP4 production and channel-side upload or replacement.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local write, approval, external mutation, and hidden-auth-state policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve release_readiness when channel mutation or upload handoff is requested.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: caption_download
+      command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/download_video_captions.py --video-id {video_id} --output {captions_path}"
+      required: false
+    - id: temporary_caption_recovery
+      command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/recover_transcript_via_temporary_upload.py --audio-path {audio_path} --image-path <still-image> --title <temporary-title> --output {captions_path}"
+      required: false
+    - id: ocr_caption_alignment
+      command: ".venv/bin/python scripts/align_slides_to_captions.py --slides-dir {slides_path} --captions {captions_path} --output {video_surface}/{package_name}-ocr-first.json"
+      required: false
+    - id: cue_template
+      command: ".venv/bin/python scripts/render_audio_slides_video.py template --audio {audio_path} --slides-dir {slides_path} --output {video_surface}/{package_name}-cue-template.json"
+      required: false
+    - id: render_mp4
+      command: ".venv/bin/python scripts/render_audio_slides_video.py render --cues {video_surface}/{package_name}-cues.json --output {video_surface}/{package_name}.mp4 --fps 5"
+      required: true
+    - id: zero_byte_video_scan
+      command: "find publications/{package}/artifacts/video -type f -size 0"
+      required: true
+  skills:
+    - youtube-slide-video-pipeline
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/youtube-production/
+    - workflows/youtube-channel-ops/
+    - workflows/skills/youtube-slide-video-pipeline/
+    - workflows/skills/youtube-data-api/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: recovered_or_verified_captions
+    path_template: "publications/{package}/artifacts/video/{package_name}-captions.srt"
+    required: conditional
+    required_when: no trusted timed captions already exist
+    format: srt
+    producer: recover_timing_inputs
+  - id: reviewed_cue_sheet
+    path_template: "publications/{package}/artifacts/video/{package_name}-cues.json"
+    required: true
+    format: json
+    producer: build_reviewed_cue_sheet
+  - id: verified_mp4
+    path_template: "publications/{package}/artifacts/video/{package_name}.mp4"
+    required: true
+    format: mp4
+    producer: render_and_verify_mp4
+    promotable: false
+  - id: video_handoff_note
+    path_template: "publications/{package}/artifacts/video/{package_name}-youtube-production-handoff-r{revision}.md"
+    required: true
+    format: markdown
+    producer: record_video_handoff
+    gated_by: channel_mutation_boundary
+  - id: channel_mutation_gate
+    path_template: "reviewable-runs/gates/{run_id}-youtube-channel-mutation.yaml"
+    required: conditional
+    required_when: the next step will upload, replace, schedule, mutate playlists, or change YouTube channel state
+    format: yaml
+    producer: stop_for_channel_mutation_approval
+    gated_by: channel_mutation_boundary
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: audio_input_resolves
+      check: configured_or_fallback_audio_exists
+      target: canonical_audio_narration
+      on_fail: stop
+    - id: slide_input_resolves
+      check: configured_or_fallback_slides_exist
+      target: slide_images_or_pdfs
+      on_fail: stop
+    - id: timing_input_resolves_or_recovery_is_approved
+      check: captions_transcript_or_recovery_path_present
+      target: timed_captions_or_transcript_inputs
+      on_fail: stop
+  invariants:
+    - id: caption_timestamps_are_timing_anchor
+      check: reviewed_cues_use_timed_captions_when_available
+    - id: ocr_is_drafting_aid_only
+      check: low_score_ocr_alignment_requires_manual_review
+    - id: no_zero_byte_media
+      check: zero_byte_video_scan_empty
+    - id: mp4_duration_matches_audio
+      check: rendered_mp4_duration_close_to_audio
+    - id: channel_mutation_is_out_of_stage
+      check: no_youtube_upload_or_playlist_mutation_without_explicit_approval
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    max_render_attempts: 2
+    external_mutations: 0
+    unapproved_publications: 0
+  recovery:
+    on_missing_captions: stop_or_use_approved_temporary_upload_handoff
+    on_low_ocr_alignment: switch_to_manual_cue_curation
+    on_render_failure: delete_truncated_mp4_and_rerun_once
+    on_zero_byte_outputs: stop_and_inspect
+    on_channel_mutation_requested: stop_for_release_readiness_gate
+    resume_from: resolved_run
+    rollback_strategy: preserve_existing_video_artifacts_and_do_not_mutate_channel
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - youtube_slide_video_skill_resolves
+  context_checks:
+    - package_status_resolves
+    - audio_input_resolves
+    - slide_input_resolves
+    - timing_input_resolves
+    - video_surface_resolves
+  hooks:
+    - id: zero_byte_video_scan
+      command: "find publications/{package}/artifacts/video -type f -size 0"
+      run_at:
+        - before_handoff
+      required: true
+    - id: render_mp4
+      command: ".venv/bin/python scripts/render_audio_slides_video.py render --cues {video_surface}/{package_name}-cues.json --output {video_surface}/{package_name}.mp4 --fps 5"
+      run_at:
+        - render
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: channel_mutation_boundary
+    contract: release_readiness
+    required: conditional
+    trigger: upload_replace_schedule_playlist_or_channel_mutation
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - audit_relevant
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - context_paths
+    - context_hashes
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - run_record
+
+steps:
+  - id: recover_timing_inputs
+    title: Recover timing inputs
+    mode: external_mutation_gated
+    action: Resolve trusted timed captions, recover captions from an existing managed video, or stop for approved temporary-upload recovery when only local audio exists.
+    consumes:
+      - package_status
+      - canonical_audio_narration
+      - timed_captions_or_transcript_inputs
+    produces:
+      - recovered_or_verified_captions
+      - run_record
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: build_reviewed_cue_sheet
+    title: Build reviewed cue sheet
+    mode: codex_session
+    action: Align slides to narration using timed captions as the timing anchor, treating OCR alignment as a draft that must be reviewed.
+    consumes:
+      - canonical_audio_narration
+      - slide_images_or_pdfs
+      - timed_captions_or_transcript_inputs
+      - recovered_or_verified_captions
+    produces:
+      - reviewed_cue_sheet
+      - run_record
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: render_and_verify_mp4
+    title: Render and verify MP4
+    mode: codex_session
+    action: Render the slide video at the local production defaults, verify duration against audio, and reject truncated or zero-byte outputs.
+    consumes:
+      - reviewed_cue_sheet
+      - canonical_audio_narration
+      - slide_images_or_pdfs
+    produces:
+      - verified_mp4
+      - run_record
+    validation:
+      hooks:
+        - render_mp4
+        - zero_byte_video_scan
+    trace:
+      required: true
+  - id: record_video_handoff
+    title: Record video handoff
+    mode: codex_session
+    action: Record the verified MP4, cue sheet, caption source, duration checks, and the explicit boundary before channel-side upload or replacement work.
+    consumes:
+      - recovered_or_verified_captions
+      - reviewed_cue_sheet
+      - verified_mp4
+    produces:
+      - video_handoff_note
+      - run_record
+    gate:
+      id: channel_mutation_boundary
+    validation:
+      hooks:
+        - zero_byte_video_scan
+    trace:
+      required: true
