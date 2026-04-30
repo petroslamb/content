@@ -27,6 +27,7 @@ profiles:
       - release_gate
       - substack_publishing
       - archive_sync
+      - youtube_production
       - distribution
     required_gates:
       - research_exit
@@ -46,6 +47,7 @@ profiles:
       - notebooklm_artifacts
       - article_polish
       - release_gate
+      - youtube_production
     fallback_routes:
       research_exit: research
       essay_prewrite: essay_iteration
@@ -61,6 +63,7 @@ profiles:
       - notebooklm_artifacts
       - article_polish
       - release_gate
+      - youtube_production
     required_gates:
       - research_exit
       - essay_prewrite
