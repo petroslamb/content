@@ -2320,6 +2320,13 @@ function explainBlocker(message, next) {
       action: "Emit a launch pack or have Codex perform the guided research-stage file work."
     };
   }
+  if (text.includes("Missing required context:")) {
+    const missing = text.split("Missing required context:").pop().trim();
+    return {
+      meaning: "The workflow.yaml contract names this context as required, and the package state has not resolved it yet.",
+      action: `Provide ${missing || "the missing context"} before trying to run this workflow.`
+    };
+  }
   if (text.includes("Gate 'research_exit' is blocked")) {
     return {
       meaning: "The research question is now admitted, but the leaf does not yet have the research-exit gate artifact and claim-boundary surface required to leave research.",
@@ -2515,6 +2522,29 @@ function renderVisibleBlockerPanel(next) {
   </div>`;
 }
 
+function renderApprovalBoundaryContext(next, stageLabel, workflowLabel, approvalGate) {
+  const issues = next.blocking_issues || [];
+  const contextChecklist = renderRequiredContextChecklist(next);
+  const commands = renderListItems(next.suggested_commands || []);
+  if (!issues.length && !contextChecklist && !commands) return "";
+  return `<div class="approval-panel">
+    <h3>Approval boundary context</h3>
+    <p class="muted">This is the workflow state the operator should inspect before recording a boundary decision. Approval here records intent only; missing context still has to be supplied through the workflow.</p>
+    <table><tbody>
+      <tr><th>Stage</th><td>${esc(stageLabel)}</td></tr>
+      <tr><th>Workflow</th><td>${esc(workflowLabel)}</td></tr>
+      <tr><th>Approval gate</th><td>${esc(approvalGate)}</td></tr>
+    </tbody></table>
+    ${contextChecklist}
+    <h3 style="margin-top:14px">Blocking issues</h3>
+    ${renderBlockers(issues, next)}
+    <details class="advanced">
+      <summary>Suggested commands</summary>
+      <ul class="path-list">${commands || '<li class="muted">none</li>'}</ul>
+    </details>
+  </div>`;
+}
+
 function renderGateBlockers(gates) {
   return (gates || []).map((gate) => `
     <tr>
@@ -2643,6 +2673,11 @@ function renderNextAction(next) {
           <div id="research-question-result" style="margin-top:10px"></div>
         </div>`
       : (genericBlocked ? renderVisibleBlockerPanel(next) : ""));
+  const stageLabel = next.next_stage || selectedPackage.current_stage || "none";
+  const workflowLabel = workflow === "none" ? stageLabel : workflow;
+  const syntheticApprovalContext = !umbrellaHasSuccessor && requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length
+    ? renderApprovalBoundaryContext(next, stageLabel, workflowLabel, approvalGate)
+    : "";
   const syntheticApprovalControls = !umbrellaHasSuccessor && requiresApproval && !canExecute && !(next.pending_review_gate_blockers || []).length
     ? `<details class="advanced">
       <summary>Record approval boundary</summary>
@@ -2659,8 +2694,6 @@ function renderNextAction(next) {
       </div>
     </details>`
     : "";
-  const stageLabel = next.next_stage || selectedPackage.current_stage || "none";
-  const workflowLabel = workflow === "none" ? stageLabel : workflow;
   return `<div class="wizard-head">
       <div>
         <div class="wizard-kicker">Workflow wizard</div>
@@ -2674,6 +2707,7 @@ function renderNextAction(next) {
       <div class="muted" style="margin-top:6px">${esc(guidance)}</div>
       ${primaryButtons}
     </div>
+    ${syntheticApprovalContext}
     ${syntheticApprovalControls}`;
 }
 
