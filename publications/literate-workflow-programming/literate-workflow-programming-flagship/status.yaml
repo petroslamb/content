@@ -3,9 +3,9 @@ publication: literate-workflow-programming-flagship
 parent_package: literate-workflow-programming
 revision: 3
 config:
-  markdown_path: publications/literate-workflow-programming/literate-workflow-programming.md
+  markdown_path: publications/literate-workflow-programming/literate-workflow-programming-flagship/literate-workflow-programming.md
   evidence_path: publications/literate-workflow-programming/papers
-  blueprint_path: blueprint.md
+  blueprint_path: iterations/r3/literate-workflow-programming-blueprint-r3.md
 stages:
   paper_intake:
     done: true

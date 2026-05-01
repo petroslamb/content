@@ -8,7 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 import re
 
-from lifecycle import PUBLICATIONS_DIR, REPO_ROOT
+from lifecycle import PUBLICATIONS_DIR, REPO_ROOT, load_status
 
 
 PACKET_SCHEMA_VERSION = 4
@@ -349,6 +349,29 @@ def resolve_parent_package_readme(package_path: Path, status_data: dict) -> Path
     return None
 
 
+def resolve_review_context_roots(package_path: Path, status_data: dict) -> list[Path]:
+    roots: list[Path] = [package_path]
+    parent_path = resolve_parent_package_path(package_path, status_data)
+    if parent_path:
+        roots.extend([parent_path, parent_path / "claims"])
+        parent_status = load_status(parent_path) or {}
+        leaf_packages = parent_status.get("config", {}).get("leaf_packages", [])
+        if isinstance(leaf_packages, list):
+            for leaf in leaf_packages:
+                if isinstance(leaf, str) and leaf.strip():
+                    roots.append((PUBLICATIONS_DIR / leaf.strip()).resolve())
+
+    deduped: list[Path] = []
+    seen: set[Path] = set()
+    for root in roots:
+        resolved = root.resolve()
+        if resolved in seen or not resolved.exists():
+            continue
+        seen.add(resolved)
+        deduped.append(root)
+    return deduped
+
+
 def resolve_companion_path(package_path: Path) -> Path | None:
     candidate = package_path / "companion.md"
     if candidate.exists():
@@ -445,7 +468,7 @@ def resolve_governing_brief_path(package_path: Path, status_data: dict) -> Path 
 def resolve_review_artifact_paths(package_path: Path, status_data: dict) -> list[Path]:
     matches: list[Path] = []
     seen: set[Path] = set()
-    for root in filter(None, [package_path, resolve_parent_package_path(package_path, status_data)]):
+    for root in resolve_review_context_roots(package_path, status_data):
         for candidate in _glob_packet_surface_files(root, REVIEW_PATTERNS):
             if candidate in seen:
                 continue

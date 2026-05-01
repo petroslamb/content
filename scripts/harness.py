@@ -1317,6 +1317,26 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
                 progress["next_overlay_action"] = "initialize_successor_leaf"
                 progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <package>"
                 return progress
+            successor_leaf = status_route.get("active_successor_leaf") if status_route else None
+            if isinstance(successor_leaf, str) and successor_leaf.strip():
+                try:
+                    successor_ref, successor_status = load_status_ref(successor_leaf.strip())
+                    successor_next_stage = next_stage_for_package(successor_ref.package_path, successor_status)
+                    progress["successor_leaf"] = successor_ref.package_key
+                    progress["successor_next_stage"] = successor_next_stage
+                    progress["recommended_validator"] = (
+                        "npm run check:package-lifecycle -- --package "
+                        + successor_ref.package_key
+                    )
+                    if successor_next_stage:
+                        progress["overlay_phase"] = "successor_leaf_stage_handoff"
+                        progress["next_overlay_action"] = f"continue_successor_leaf_{successor_next_stage}"
+                        return progress
+                    progress["overlay_phase"] = "successor_leaf_complete"
+                    progress["next_overlay_action"] = "close_or_archive_umbrella_route"
+                    return progress
+                except FileNotFoundError:
+                    pass
             progress["overlay_phase"] = "successor_leaf_research_handoff"
             progress["next_overlay_action"] = "handoff_to_successor_leaf_for_research_expansion"
             progress["recommended_validator"] = "npm run check:package-lifecycle -- --package <successor-leaf>"

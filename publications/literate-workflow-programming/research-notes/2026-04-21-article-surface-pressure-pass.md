@@ -6,7 +6,7 @@ Status: surface-completion synthesis, not paper intake.
 
 ## Purpose
 
-This pass pushed beyond the first claim-state gap note to reach the article surface claimed in [`../literate-workflow-programming.md`](../literate-workflow-programming.md).
+This pass pushed beyond the first claim-state gap note to reach the article surface claimed in [`../literate-workflow-programming.md`](../literate-workflow-programming-flagship/literate-workflow-programming.md).
 
 The target was not a new lead. The target was a cleaner surface:
 
