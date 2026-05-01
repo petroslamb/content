@@ -1,0 +1,305 @@
+{
+  "slides": [
+    {
+      "index": 1,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-001.png",
+      "slug": "research-report-title",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/001-specification_surface_slides_set3-slide-001-research-report-title.png"
+    },
+    {
+      "index": 2,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-001.png",
+      "slug": "directive-title",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/002-specification_surface_slides_set2-slide-001-directive-title.png"
+    },
+    {
+      "index": 3,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-001.png",
+      "slug": "source-of-truth-title",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/003-specification_surface_slides_set1-slide-001-source-of-truth-title.png"
+    },
+    {
+      "index": 4,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-002.png",
+      "slug": "perfect-pull-request",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/004-specification_surface_slides_set3-slide-002-perfect-pull-request.png"
+    },
+    {
+      "index": 5,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-002.png",
+      "slug": "unreviewable-pull-request",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/005-specification_surface_slides_set2-slide-002-unreviewable-pull-request.png"
+    },
+    {
+      "index": 6,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-002.png",
+      "slug": "silent-failure-pr",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/006-specification_surface_slides_set1-slide-002-silent-failure-pr.png"
+    },
+    {
+      "index": 7,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-003.png",
+      "slug": "downstream-artifact-trap",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/007-specification_surface_slides_set3-slide-003-downstream-artifact-trap.png"
+    },
+    {
+      "index": 8,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-004.png",
+      "slug": "vibe-source-truth-error",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/008-specification_surface_slides_set3-slide-004-vibe-source-truth-error.png"
+    },
+    {
+      "index": 9,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-003.png",
+      "slug": "vibe-vs-professional-control",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/009-specification_surface_slides_set1-slide-003-vibe-vs-professional-control.png"
+    },
+    {
+      "index": 10,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-003.png",
+      "slug": "coordination-failure-vibe",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/010-specification_surface_slides_set2-slide-003-coordination-failure-vibe.png"
+    },
+    {
+      "index": 11,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-005.png",
+      "slug": "specification-surface-primitive",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/011-specification_surface_slides_set3-slide-005-specification-surface-primitive.png"
+    },
+    {
+      "index": 12,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-004.png",
+      "slug": "defining-specification-surface",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/012-specification_surface_slides_set2-slide-004-defining-specification-surface.png"
+    },
+    {
+      "index": 13,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-004.png",
+      "slug": "authority-through-governance",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/013-specification_surface_slides_set1-slide-004-authority-through-governance.png"
+    },
+    {
+      "index": 14,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-006.png",
+      "slug": "documentation-vs-specification",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/014-specification_surface_slides_set3-slide-006-documentation-vs-specification.png"
+    },
+    {
+      "index": 15,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-005.png",
+      "slug": "loose-prose-vs-invariants",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/015-specification_surface_slides_set1-slide-005-loose-prose-vs-invariants.png"
+    },
+    {
+      "index": 16,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-007.png",
+      "slug": "spec-driven-spectrum",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/016-specification_surface_slides_set3-slide-007-spec-driven-spectrum.png"
+    },
+    {
+      "index": 17,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-006.png",
+      "slug": "spectrum-of-authority",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/017-specification_surface_slides_set2-slide-006-spectrum-of-authority.png"
+    },
+    {
+      "index": 18,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-006.png",
+      "slug": "maintenance-loop-spectrum",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/018-specification_surface_slides_set1-slide-006-maintenance-loop-spectrum.png"
+    },
+    {
+      "index": 19,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-008.png",
+      "slug": "specification-gap-coordination",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/019-specification_surface_slides_set3-slide-008-specification-gap-coordination.png"
+    },
+    {
+      "index": 20,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-005.png",
+      "slug": "separate-workers",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/020-specification_surface_slides_set2-slide-005-separate-workers.png"
+    },
+    {
+      "index": 21,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-007.png",
+      "slug": "partial-knowledge-curve",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/021-specification_surface_slides_set1-slide-007-partial-knowledge-curve.png"
+    },
+    {
+      "index": 22,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-008.png",
+      "slug": "professional-control-loop",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/022-specification_surface_slides_set1-slide-008-professional-control-loop.png"
+    },
+    {
+      "index": 23,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-009.png",
+      "slug": "architecture-of-control",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/023-specification_surface_slides_set3-slide-009-architecture-of-control.png"
+    },
+    {
+      "index": 24,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-009.png",
+      "slug": "specification-is-program",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/024-specification_surface_slides_set1-slide-009-specification-is-program.png"
+    },
+    {
+      "index": 25,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-010.png",
+      "slug": "execution-layer-spec-program",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/025-specification_surface_slides_set3-slide-010-execution-layer-spec-program.png"
+    },
+    {
+      "index": 26,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-007.png",
+      "slug": "passive-prose-active-invariant",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/026-specification_surface_slides_set2-slide-007-passive-prose-active-invariant.png"
+    },
+    {
+      "index": 27,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-010.png",
+      "slug": "midstream-control-invariant",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/027-specification_surface_slides_set1-slide-010-midstream-control-invariant.png"
+    },
+    {
+      "index": 28,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-011.png",
+      "slug": "invariant-layer-control",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/028-specification_surface_slides_set3-slide-011-invariant-layer-control.png"
+    },
+    {
+      "index": 29,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-011.png",
+      "slug": "downstream-claim-evidence",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/029-specification_surface_slides_set1-slide-011-downstream-claim-evidence.png"
+    },
+    {
+      "index": 30,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-008.png",
+      "slug": "downstream-audit",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/030-specification_surface_slides_set2-slide-008-downstream-audit.png"
+    },
+    {
+      "index": 31,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-012.png",
+      "slug": "audit-layer-trace-validation",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/031-specification_surface_slides_set3-slide-012-audit-layer-trace-validation.png"
+    },
+    {
+      "index": 32,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-012.png",
+      "slug": "more-context-trap",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/032-specification_surface_slides_set1-slide-012-more-context-trap.png"
+    },
+    {
+      "index": 33,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-014.png",
+      "slug": "context-file-trap",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/033-specification_surface_slides_set3-slide-014-context-file-trap.png"
+    },
+    {
+      "index": 34,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-009.png",
+      "slug": "operational-test-context-control",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/034-specification_surface_slides_set2-slide-009-operational-test-context-control.png"
+    },
+    {
+      "index": 35,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-013.png",
+      "slug": "repository-file-litmus-test",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/035-specification_surface_slides_set1-slide-013-repository-file-litmus-test.png"
+    },
+    {
+      "index": 36,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-015.png",
+      "slug": "operational-test",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/036-specification_surface_slides_set3-slide-015-operational-test.png"
+    },
+    {
+      "index": 37,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-013.png",
+      "slug": "authority-maintenance-loop",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/037-specification_surface_slides_set3-slide-013-authority-maintenance-loop.png"
+    },
+    {
+      "index": 38,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-014.png",
+      "slug": "governed-review-loop",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/038-specification_surface_slides_set1-slide-014-governed-review-loop.png"
+    },
+    {
+      "index": 39,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-016.png",
+      "slug": "architectural-boundaries",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/039-specification_surface_slides_set3-slide-016-architectural-boundaries.png"
+    },
+    {
+      "index": 40,
+      "deck": "specification_surface_slides_set2",
+      "source_slide": "slide-010.png",
+      "slug": "governable-pr-review",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/040-specification_surface_slides_set2-slide-010-governable-pr-review.png"
+    },
+    {
+      "index": 41,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-017.png",
+      "slug": "new-standard-pull-requests",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/041-specification_surface_slides_set3-slide-017-new-standard-pull-requests.png"
+    },
+    {
+      "index": 42,
+      "deck": "specification_surface_slides_set1",
+      "source_slide": "slide-015.png",
+      "slug": "empirical-research-sources",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/042-specification_surface_slides_set1-slide-015-empirical-research-sources.png"
+    },
+    {
+      "index": 43,
+      "deck": "specification_surface_slides_set3",
+      "source_slide": "slide-018.png",
+      "slug": "source-literature",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/043-specification_surface_slides_set3-slide-018-source-literature.png"
+    }
+  ]
+}

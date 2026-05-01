@@ -1,0 +1,574 @@
+{
+  "audio": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/audio/specifications_are_the_new_source_of_truth.mp3",
+  "captions": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_auto_captions.srt",
+  "slides_dir": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides",
+  "alignment_source_slides_dir": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides",
+  "alignment_support_slides_dirs": [],
+  "render_variant_slides_dirs": [
+    "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides"
+  ],
+  "segments": [
+    {
+      "image": "001-specification_surface_slides_set3-slide-001-research-report-title.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/001-specification_surface_slides_set3-slide-001-research-report-title.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0022-0027. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.4563,
+      "ocr_excerpt": "ROOTED LAYERS // RESEARCH REPORT Al Systems Grounded in Research: The Specification Surface Why vibe coding is an infrastructural trap, and how engineering teams must govern Al-assisted software development. Ai NotebookLM",
+      "matched_captions": [
+        "our insights today from a really rigorous piece of research published by rooted layers AI systems grounded in",
+        "research. Yes, rooted layers. The post is titled the specification surface is the new source of truth. And",
+        "throughout this deep dive, we'll naturally be referring to this source material simply as the post. Uh it",
+        "acts as a fantastic lens for understanding this entire transition. Our mission today is to unpack the mental",
+        "models and the bigger hidden patterns behind a very popular trend called vibe coding. And we're going to",
+        "compare that to what the post calls specdriven development. Yeah. And we need to explain exactly why this"
+      ],
+      "caption_start_index": 22,
+      "caption_end_index": 27,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "002-specification_surface_slides_set2-slide-001-directive-title.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/002-specification_surface_slides_set2-slide-001-directive-title.png",
+      "start": "00:35:43.057",
+      "note": "Caption-first draft from slide OCR. Caption window 0347-0353. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.3419,
+      "ocr_excerpt": "ROOTED LAYERS / RESEARCH DIRECTIVE The Specification Surface Is the New Source of Truth. Why vibe coding fails, and how governed artifacts restore control in Al-assisted software engineering. Ai NotebookLM",
+      "matched_captions": [
+        "checked during execution, and systematically repaired after a failure, then your team finally has a true source of",
+        "truth. That transition from atmosphere to artifact is where AI assisted software work finally becomes governable. So let's",
+        "synthesize this incredible journey. we've been on today. We started by dismantling the illusion of the perfect pull",
+        "request. We looked at the quiet systemic failure of vibe coding where the code looks completely fine on",
+        "the surface, but the driving intent has vanished into the ether. We did. We established that the era",
+        "of relying on the code itself as the sole memory of a systems intent is rapidly ending. Vibe",
+        "coding is a temporary, highly fragile state of misplaced trust. And the future of complex engineering belongs to"
+      ],
+      "caption_start_index": 347,
+      "caption_end_index": 353,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "003-specification_surface_slides_set1-slide-001-source-of-truth-title.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/003-specification_surface_slides_set1-slide-001-source-of-truth-title.png",
+      "start": "00:36:38.641",
+      "note": "Caption-first draft from slide OCR. Caption window 0356-0362. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.3697,
+      "ocr_excerpt": "The specification surface is the new source of truth Moving from vibe coding to governed AI systems. By Rooted Layers \u2014 AI Systems Grounded in Research. Ai NotebookLM",
+      "matched_captions": [
+        "their daily workflows. They don't vibe, they control the input. We explored the actual mechanics of making those",
+        "surfaces operational. Moving from passive markdown documents that rot in repositories to active invariance powered by a queries",
+        "and LLM pipelines that actually gate the deployment. We learn that the code is no longer the sole",
+        "source of truth. The specification is the mold and the code is just the plastic. Ultimately the frame",
+        "here is not some utopian vision that natural language is the new code. The common property of all",
+        "these surfaces whether they are written in YAML structured markdown or Python tests is govern authority. Govern authority.",
+        "They are maintained surfaces that systems can read that automated tools can check that humans can review and"
+      ],
+      "caption_start_index": 356,
+      "caption_end_index": 362,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "004-specification_surface_slides_set3-slide-002-perfect-pull-request.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/004-specification_surface_slides_set3-slide-002-perfect-pull-request.png",
+      "start": "00:37:40.400",
+      "note": "Caption-first draft from slide OCR. Caption window 0366-0366. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.1463,
+      "ocr_excerpt": "The Illusion of the Perfect Pull Request Pull Request #4096: Feature Refactor - Status ~ All checks passed (5/5) ~ Build finished / Unit tests passed [ee \u201c Integration tests passed Y Linter passed _-- What did this feature have to preserve? wh security scan passed ae Code Changes",
+      "matched_captions": [
+        "feature or do you have a governed surface? Are you actively inspecting the intent of the system or"
+      ],
+      "caption_start_index": 366,
+      "caption_end_index": 366,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "005-specification_surface_slides_set2-slide-002-unreviewable-pull-request.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/005-specification_surface_slides_set2-slide-002-unreviewable-pull-request.png",
+      "start": "00:37:52.752",
+      "note": "Caption-first draft from slide OCR. Caption window 0368-0372. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.0388,
+      "ocr_excerpt": "The unreviewable pull request. The agent-generated diff is plausible and tests pass, but the authority behind the code is invisible. The team is forced to review a downstream artifact while the controlling intent remains outside the governed system. \u201c Tests Pass + function calcul",
+      "matched_captions": [
+        "mindset. We are moving from managing the endless volume of output to rigorously governing the constraints of the",
+        "input. And I want to leave you with a final slightly provocative thought to mull over. Something building",
+        "on all this incredible research but pointing even further into the horizon. Yeah. What is it? If AI",
+        "systems continue to accelerate at their current pace, if they can soon generate hundreds of thousands of lines",
+        "of code in seconds based entirely on our rigorous operational specification surfaces, will human developers eventually stop reading"
+      ],
+      "caption_start_index": 368,
+      "caption_end_index": 372,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "006-specification_surface_slides_set1-slide-002-silent-failure-pr.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/006-specification_surface_slides_set1-slide-002-silent-failure-pr.png",
+      "start": "00:38:17.456",
+      "note": "Caption-first draft from slide OCR. Caption window 0372-0373. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.0919,
+      "ocr_excerpt": "The agent-generated diff is plausible and the tests pass. The code is entirely visible. The silent failure underneath the pristine pull request = eS ss Ss warnntaceenetedene fT] function = coolbl, data) q . af (test.mane = function (a) \u00a2{ return a= testiistetil); return null; FRE",
+      "matched_captions": [
+        "of code in seconds based entirely on our rigorous operational specification surfaces, will human developers eventually stop reading",
+        "code entirely? That's a huge question. What happens to the software industry when our only job, our sole"
+      ],
+      "caption_start_index": 372,
+      "caption_end_index": 373,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "007-specification_surface_slides_set3-slide-003-downstream-artifact-trap.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/007-specification_surface_slides_set3-slide-003-downstream-artifact-trap.png",
+      "start": "00:38:23.632",
+      "note": "Caption-first draft from slide OCR. Caption window 0373-0373. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.0952,
+      "ocr_excerpt": "The Downstream Artifact Trap When intent remains informal, the generated code becomes the only object treated as real. You are forced to reverse-engineer intent from symptoms. The PR Reviewer Informal Intent The Agent .ts file (Chat Prompt / Vibe) (Black Box) Ai NotebookLM",
+      "matched_captions": [
+        "code entirely? That's a huge question. What happens to the software industry when our only job, our sole"
+      ],
+      "caption_start_index": 373,
+      "caption_end_index": 373,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "008-specification_surface_slides_set3-slide-004-vibe-source-truth-error.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/008-specification_surface_slides_set3-slide-004-vibe-source-truth-error.png",
+      "start": "00:38:29.808",
+      "note": "Caption-first draft from slide OCR. Caption window 0374-0374. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.0,
+      "ocr_excerpt": "\"Vibe\" is a Source-of- Truth Error Vibe coding asks the model to carry intent privately, then asks the generated code to stand as the public record. It bypasses the durable artifacts required for professional control. Private + ERRON 5 Public Code Intent Record Experienced develo",
+      "matched_captions": [
+        "value ad is writing, reading, and debugging the specification surface itself? And further, what happens when those specification"
+      ],
+      "caption_start_index": 374,
+      "caption_end_index": 374,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "009-specification_surface_slides_set1-slide-003-vibe-vs-professional-control.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/009-specification_surface_slides_set1-slide-003-vibe-vs-professional-control.png",
+      "start": "00:38:35.984",
+      "note": "Caption-first draft from slide OCR. Caption window 0375-0375. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.0,
+      "ocr_excerpt": "Vibe coding is a source-of-truth error Path A: Vibe Coding Path B: Professional Control Private Prompt / aa 4 } | Chat Transcript Durable Artifact Agent in, | Generated Code Generated Code (False Source of Truth) | (Derivative Output) 5 Vibe coding asks a model to carry intent pr",
+      "matched_captions": [
+        "surfaces become so incredibly complex and interconnected that we need an AI just to write the specs for"
+      ],
+      "caption_start_index": 375,
+      "caption_end_index": 375,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "010-specification_surface_slides_set2-slide-003-coordination-failure-vibe.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/010-specification_surface_slides_set2-slide-003-coordination-failure-vibe.png",
+      "start": "00:38:42.160",
+      "note": "Caption-first draft from slide OCR. Caption window 0376-0378. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.0394,
+      "ocr_excerpt": "Vibe is a source-of-truth coordination failure. Vibe Coding Error Professional Control Human Prompt Human Intent 3 3 Intent Evaporates i Durable Artifact (Plan/Spec) Agent Execution Agent Black Box Validation Loop Code as Sole Truth \u201cProfessional Software Developers Don't Vibe, T",
+      "matched_captions": [
+        "the AI? Layers upon layers. Are we just moving the murky waters one layer higher up the abstraction",
+        "stack? You might have the perfect house and you might have saved the steel mold, but what happens",
+        "when human beings can no longer read the language? uage the blueprints are written in."
+      ],
+      "caption_start_index": 376,
+      "caption_end_index": 378,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "011-specification_surface_slides_set3-slide-005-specification-surface-primitive.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/011-specification_surface_slides_set3-slide-005-specification-surface-primitive.png",
+      "start": "00:38:54.512",
+      "note": "Caption-first draft from slide OCR. Caption window 0378-0378. Render variant: visual_deep_dive_slides.",
+      "match_score": 0.0479,
+      "ocr_excerpt": "The New Primitive: The Specification Surface A specification surface is a written artifact that gains operational force because it is controlled, maintained, and structurally embedded in the engineering lifecycle. \u2014 - Typed & Linted \u2014 - Validated & Trace-linked \u2014 - Interpreted by",
+      "matched_captions": [
+        "when human beings can no longer read the language? uage the blueprints are written in."
+      ],
+      "caption_start_index": 378,
+      "caption_end_index": 378,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "012-specification_surface_slides_set2-slide-004-defining-specification-surface.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/012-specification_surface_slides_set2-slide-004-defining-specification-surface.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0379-0379. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Defining the Specification Surface A written surface that gains operational force through governance. f { enforcement is primary. \u2014 Type THE SPECIFICATION SURFACE - Authority exists only = re when tools and teams a Agent Generated System - : te Execution Code state SS - Loose pro",
+      "matched_captions": [],
+      "caption_start_index": 379,
+      "caption_end_index": 379,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "013-specification_surface_slides_set1-slide-004-authority-through-governance.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/013-specification_surface_slides_set1-slide-004-authority-through-governance.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0380-0380. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Authority is earned through governance, not syntax The Specification Surface Interpreted | by Runtime \u2014 A specification surface is an object that gains operational force because it is acted upon. The syntax is secondary. A one-off chat prompt does not become source of truth just ",
+      "matched_captions": [],
+      "caption_start_index": 380,
+      "caption_end_index": 380,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "014-specification_surface_slides_set3-slide-006-documentation-vs-specification.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/014-specification_surface_slides_set3-slide-006-documentation-vs-specification.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0381-0381. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Documentation vs. Specification Loose Prose Governed Authority (Documentation ) (Specification Surface) Parsable structure (YAML, ADs UIC ORS Tenet Sd) REX strict Markdown, protocols) Maintenance Rots silently Breaks build when stale Enforcement Requires human memory Checked by l",
+      "matched_captions": [],
+      "caption_start_index": 381,
+      "caption_end_index": 381,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "015-specification_surface_slides_set1-slide-005-loose-prose-vs-invariants.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/015-specification_surface_slides_set1-slide-005-loose-prose-vs-invariants.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0382-0382. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "hee Me f | Formality earns its place when it gives a team something to test and repair. Distinguishing loose prose from governed surfaces Passive Context ; Active Invariants | 7 1 BDD scenarios and \u2014 | SB ADWGIES UO\" TA | acceptance criteria. [SE | i | | Typed workflows | Ongaot ",
+      "matched_captions": [],
+      "caption_start_index": 382,
+      "caption_end_index": 382,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "016-specification_surface_slides_set3-slide-007-spec-driven-spectrum.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/016-specification_surface_slides_set3-slide-007-spec-driven-spectrum.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0383-0383. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Spec-Driven Development Spectrum The useful rule: deploy enough specification to remove consequential ambiguity, with enough enforcement to make drift visible. Guided Implementation Anchored Verification Derivative Generation (Light Form) (Strong Form) Generated code becomes ",
+      "matched_captions": [],
+      "caption_start_index": 383,
+      "caption_end_index": 383,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "017-specification_surface_slides_set2-slide-006-spectrum-of-authority.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/017-specification_surface_slides_set2-slide-006-spectrum-of-authority.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0384-0384. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "L The Spectrum of Specification Authority \u201c2 Light Guidance Anchored Work Spec-as-Source Muted Alert Orange Academic Blue Architectural blueprint Guidance consulted upfront. Tests, contract checks, and Generated code is purely High risk of architectural drift. code reviews keep t",
+      "matched_captions": [],
+      "caption_start_index": 384,
+      "caption_end_index": 384,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "018-specification_surface_slides_set1-slide-006-maintenance-loop-spectrum.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/018-specification_surface_slides_set1-slide-006-maintenance-loop-spectrum.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0385-0385. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Authority comes from the maintenance loop Low Governance Medium Governance High Governance Lazy Markdown Anchored Implementation Spec-as-Source =\u2014 Generated | \u2014 code -_\u2014 Guidance consulted only Implementation is kept anchored Generated code is entirely derivative. up front rots r",
+      "matched_captions": [],
+      "caption_start_index": 385,
+      "caption_end_index": 385,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "019-specification_surface_slides_set3-slide-008-specification-gap-coordination.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/019-specification_surface_slides_set3-slide-008-specification-gap-coordination.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0386-0386. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Specification Gap: A Coordination Failure When specifications are stripped toward bare signatures, multi-agent integration accuracy collapses. Separate workers cannot reliably infer shared decisions from isolated fragments. Integration Accuracy a Say \u2018=o, Single Agent Baselin",
+      "matched_captions": [],
+      "caption_start_index": 386,
+      "caption_end_index": 386,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "020-specification_surface_slides_set2-slide-005-separate-workers.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/020-specification_surface_slides_set2-slide-005-separate-workers.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0387-0387. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Specification Gap: Separate workers do not reliably converge on unstated decisions A Plot Line 1 , - Pine In multi-agent environments, S stripping shared specifications 5 down to bare signatures causes a ay integration to fail entirely. c e 2 Plot Line 2 \u2014 Specification < Two",
+      "matched_captions": [],
+      "caption_start_index": 387,
+      "caption_end_index": 387,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "021-specification_surface_slides_set1-slide-007-partial-knowledge-curve.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/021-specification_surface_slides_set1-slide-007-partial-knowledge-curve.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0388-0388. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The coordination failure under partial knowledge IN = a oo a c ee ae beoee \u00a9 | ie | <r _\u2014 a Oo S \u2014_) | | xX = i Multi-Agent Integration | vA Gi@BSeGbBennhr Gis Bare ee Full Signatures Specification Detail Docstrings Data Insight When specifications are stripped toward bare signat",
+      "matched_captions": [],
+      "caption_start_index": 388,
+      "caption_end_index": 388,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "022-specification_surface_slides_set1-slide-008-professional-control-loop.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/022-specification_surface_slides_set1-slide-008-professional-control-loop.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0389-0389. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Experienced developers view skepticism as infrastructure [Agent | (Version \\ Work] \\ Control] Citation: Professional Software Developers Don't Vibe, They Control (Huang et al., arXiv 2512.14012) 2 = SE Ee a Core Findings - Professionals use agents for speed, not autonomous author",
+      "matched_captions": [],
+      "caption_start_index": 389,
+      "caption_end_index": 389,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "023-specification_surface_slides_set3-slide-009-architecture-of-control.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/023-specification_surface_slides_set3-slide-009-architecture-of-control.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0390-0390. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Architecture of Control Synthesizing recent research reveals a three-tier operational framework required to turn natural language intents into verifiable system guardrails. Monperrus Execution: Harnesses & Runtimes Pan et al. Wang et al. Sharma ContextCov Invariants: Active C",
+      "matched_captions": [],
+      "caption_start_index": 390,
+      "caption_end_index": 390,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "024-specification_surface_slides_set1-slide-009-specification-is-program.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/024-specification_surface_slides_set1-slide-009-specification-is-program.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0391-0391. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Upstream Control: The specification is the program Compact Repair Target _ Specification | Takeaway: lf outputs diverge, the repair target is the specification and its interpretation, not the mere fact that a file changed. Mechanism: The stable artifact generates both the executi",
+      "matched_captions": [],
+      "caption_start_index": 391,
+      "caption_end_index": 391,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "025-specification_surface_slides_set3-slide-010-execution-layer-spec-program.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/025-specification_surface_slides_set3-slide-010-execution-layer-spec-program.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0392-0392. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Execution Layer: Spec as Program The specification is the stable, durable object. Implementations become downstream products compared against it. la Agent Runtime Repair Target Mechanisms: Typed workflow languages Insight: If implementations diverge, repair (AgentSPEX), check",
+      "matched_captions": [],
+      "caption_start_index": 392,
+      "caption_end_index": 392,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "026-specification_surface_slides_set2-slide-007-passive-prose-active-invariant.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/026-specification_surface_slides_set2-slide-007-passive-prose-active-invariant.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0393-0393. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Making it operational: from passive prose to active invariant. AST Queries . Shell Shims \u2014\u2014 el Extraction ee Runtime Architectural Validators Passive Instruction (.md, AGENTS.md) LLM-Judges Natural language harnesses and AgentSPEX move intent into execution structure. ContextCov ",
+      "matched_captions": [],
+      "caption_start_index": 393,
+      "caption_end_index": 393,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "027-specification_surface_slides_set1-slide-010-midstream-control-invariant.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/027-specification_surface_slides_set1-slide-010-midstream-control-invariant.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0394-0394. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Midstream Control: Passive instruction becomes active invariant Filter Module se y YY; Shell Shims L | WAKA Mechanism: Guidance on a page is weak unless it enters a control loop. These systems extract executable checks directly from natural-language instructions. Takeaway: Instru",
+      "matched_captions": [],
+      "caption_start_index": 394,
+      "caption_end_index": 394,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "028-specification_surface_slides_set3-slide-011-invariant-layer-control.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/028-specification_surface_slides_set3-slide-011-invariant-layer-control.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0395-0395. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Invariant Layer: From Guidance to Control Guidance on a page is weak unless it enters a control loop. Context files must be extracted into executable checks\u2014shell shims, AST queries, and architectural validators. Agents must not bypass the authorization middleware. Poe Contex",
+      "matched_captions": [],
+      "caption_start_index": 395,
+      "caption_end_index": 395,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "029-specification_surface_slides_set1-slide-011-downstream-claim-evidence.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/029-specification_surface_slides_set1-slide-011-downstream-claim-evidence.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0396-0396. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Downstream Control: Reconstructing the claim-evidence relation Execution Traces Dual-Ledger Audit Specification Surface : init_agent(role=\"fixer') | RULE: Agent must use latest specification Be Ponte hes aoe | | | CONSTRAINT: All file modifications must be atomic : plan_fix(strat",
+      "matched_captions": [],
+      "caption_start_index": 396,
+      "caption_end_index": 396,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "030-specification_surface_slides_set2-slide-008-downstream-audit.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/030-specification_surface_slides_set2-slide-008-downstream-audit.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0397-0397. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Downstream Audit: Polished outputs are not enough. a ; Pass Specification Surface Repair Target Execution 1 Polished | Execution 1 Outputs | Traces When claim-evidence relations cannot be reconstructed, polished outputs hide procedural violations. Evidence surfaces (AgentPex,",
+      "matched_captions": [],
+      "caption_start_index": 397,
+      "caption_end_index": 397,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "031-specification_surface_slides_set3-slide-012-audit-layer-trace-validation.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/031-specification_surface_slides_set3-slide-012-audit-layer-trace-validation.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0398-0398. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Audit Layer: Inspecting the Path Polished outputs are not enough if claim-evidence relations cannot be reconstructed. Evidence surfaces evaluate procedural violations, comparing execution traces directly against the specification surface. Outcome-Only Scoring Trace Validation",
+      "matched_captions": [],
+      "caption_start_index": 398,
+      "caption_end_index": 398,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "032-specification_surface_slides_set1-slide-012-more-context-trap.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/032-specification_surface_slides_set1-slide-012-more-context-trap.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0399-0399. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "More context does not automatically produce more control 10,000-Word Project Instructio The Trap: A long instruction file can easily be stale, contradictory, ignored, or useful only for a narrow class of tasks. fr Enk6QPahGzi6A\"Spem:-ERIEBAd | WSPOb006 bp6eso6(7e8FaauZaF+OTyCve6/",
+      "matched_captions": [],
+      "caption_start_index": 399,
+      "caption_end_index": 399,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "033-specification_surface_slides_set3-slide-014-context-file-trap.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/033-specification_surface_slides_set3-slide-014-context-file-trap.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0400-0400. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Context File Trap More context does not automatically produce more control. A long instruction file can be stale, contradictory, or ignored by the model. Yi _ A | Enforced (10,000 lines) . S| (/ (18 lines) Rule: Context files remain mere documentation until they are maintaine",
+      "matched_captions": [],
+      "caption_start_index": 400,
+      "caption_end_index": 400,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "034-specification_surface_slides_set2-slide-009-operational-test-context-control.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/034-specification_surface_slides_set2-slide-009-operational-test-context-control.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0401-0401. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Operational Test: Sorting context from control. Does this file change what an agent is allowed to do, what state persists, or what outputs count as valid? Yes No ee \"* Governing Surface [ Passive Documentation i I I - Must be linted | - Useful for human orientation ; - Must b",
+      "matched_captions": [],
+      "caption_start_index": 401,
+      "caption_end_index": 401,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "035-specification_surface_slides_set1-slide-013-repository-file-litmus-test.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/035-specification_surface_slides_set1-slide-013-repository-file-litmus-test.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0402-0402. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The operational litmus test for repository files Does modifying * this file change... ...what an agent ...what state = ... what tests = ... which trace is allowed to do? \\{& must persist? are generated? = violations matter? \u2014S specification Surface Human Documentation \u2018Action: Ne",
+      "matched_captions": [],
+      "caption_start_index": 402,
+      "caption_end_index": 402,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "036-specification_surface_slides_set3-slide-015-operational-test.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/036-specification_surface_slides_set3-slide-015-operational-test.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0403-0403. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The Operational Test Does this file change what an agent is allowed to do, reachable tools, or v outputs? Is it validated, linted, or trace-linked? YES [SPECIFICATION [UNENFORCED RISK] SURFACE] [ DOCUMENTATION] Ai NotebookLM",
+      "matched_captions": [],
+      "caption_start_index": 403,
+      "caption_end_index": 403,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "037-specification_surface_slides_set3-slide-013-authority-maintenance-loop.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/037-specification_surface_slides_set3-slide-013-authority-maintenance-loop.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0404-0404. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Authority Comes From the Maintenance Loop A specification surface is not a static document. It is a living control plane. Authority is forged when execution failures push back into specification revisions, not just code tweaks. Specification Surface Revision Pressure Execution Fa",
+      "matched_captions": [],
+      "caption_start_index": 404,
+      "caption_end_index": 404,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "038-specification_surface_slides_set1-slide-014-governed-review-loop.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/038-specification_surface_slides_set1-slide-014-governed-review-loop.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0405-0405. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The governed review loop 1. Was the intended behavior specified upstream? def validate wrequest (rec if not req.token: raise AuthError() | process_data(req.data) |} return True | 2. Were the constraints checkable? 3. Did the implementation drift, or did the surface fail to carry ",
+      "matched_captions": [],
+      "caption_start_index": 405,
+      "caption_end_index": 405,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "039-specification_surface_slides_set3-slide-016-architectural-boundaries.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/039-specification_surface_slides_set3-slide-016-architectural-boundaries.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0406-0406. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Architectural Boundaries Natural language is-code. BUT THIS Surfaces must be parseable, typed, and checked. Generated imp Lementation doesn-t-matter. BUT THIS Implementation is the downstream execution of upstream intent. Universal spec-as-source. BUT THIS Governed authority matc",
+      "matched_captions": [],
+      "caption_start_index": 406,
+      "caption_end_index": 406,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "040-specification_surface_slides_set2-slide-010-governable-pr-review.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/040-specification_surface_slides_set2-slide-010-governable-pr-review.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0407-0407. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Al-assisted work becomes governable upstream of the diff. The Governable PR Review JY 1. What surface governed the agent? f 2.What evidence shows the work conformed to it? JY 3. What missing decision must be added to the surface before the next run? If the answer lives only ina c",
+      "matched_captions": [],
+      "caption_start_index": 407,
+      "caption_end_index": 407,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "041-specification_surface_slides_set3-slide-017-new-standard-pull-requests.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/041-specification_surface_slides_set3-slide-017-new-standard-pull-requests.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0408-0408. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "The New Standard for Pull Requests If the answer lives only in a chat transcript, the system is running on atmosphere. If the answer lives in a maintained artifact that can be read before execution, checked during execution, and repaired after failure, the team has a source of tr",
+      "matched_captions": [],
+      "caption_start_index": 408,
+      "caption_end_index": 408,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "042-specification_surface_slides_set1-slide-015-empirical-research-sources.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/042-specification_surface_slides_set1-slide-015-empirical-research-sources.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0409-0409. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Systems grounded in empirical research Piskala (2602.00180): Spec-Driven Development Chacon Sartori (2603.24284): The Specification Gap Huang et al. (2512.14012): Developers Don\u2019t Vibe, They Control Monperrus (2603.17399): Bootstrapping Coding Agents Pan et al. (2603.25723): Natu",
+      "matched_captions": [],
+      "caption_start_index": 409,
+      "caption_end_index": 409,
+      "render_variant": "visual_deep_dive_slides"
+    },
+    {
+      "image": "043-specification_surface_slides_set3-slide-018-source-literature.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/043-specification_surface_slides_set3-slide-018-source-literature.png",
+      "start": "00:00:00.000",
+      "note": "Caption-first draft from slide OCR. Caption window 0410-0410. Render variant: visual_deep_dive_slides.",
+      "match_score": -1.0,
+      "ocr_excerpt": "Source Literature Piskala, D.B. Spec-Driven Development (arXiv: 2602.00180) Chacon Sartori, C. The Specification Gap (arXiv: 2603.24284) Huang, R. et al. Professional Software Developers Don\u2019t Vibe, They Control (arXiv: 2512.14012) Monperrus, M. Bootstrapping Coding Agents (arXiv",
+      "matched_captions": [],
+      "caption_start_index": 410,
+      "caption_end_index": 410,
+      "render_variant": "visual_deep_dive_slides"
+    }
+  ]
+}

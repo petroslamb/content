@@ -1,0 +1,268 @@
+{
+  "audio": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/audio/specifications_are_the_new_source_of_truth.mp3",
+  "captions": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_auto_captions.srt",
+  "slides_dir": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides",
+  "cue_strategy": "manual_caption_anchor_alignment_from_recovered_youtube_asr_after_ocr_draft_rejected",
+  "caption_source": "youtube_asr_track_recovered_from_temporary_upload_and_deleted_after_recovery",
+  "slide_count": 43,
+  "segments": [
+    {
+      "image": "001-specification_surface_slides_set3-slide-001-research-report-title.png",
+      "start": "00:00:00.000",
+      "note": "Open with the research-report framing while the conversation sets the problem context.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "002-specification_surface_slides_set2-slide-001-directive-title.png",
+      "start": "00:00:45.000",
+      "note": "Move from the report title into the operational directive version of the thesis.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "003-specification_surface_slides_set1-slide-001-source-of-truth-title.png",
+      "start": "00:01:35.000",
+      "note": "Hold the source-of-truth thesis before the narration names the central failure mode.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "004-specification_surface_slides_set3-slide-002-perfect-pull-request.png",
+      "start": "00:03:19.360",
+      "note": "Perfect pull request / hidden failure point anchor from ASR.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "005-specification_surface_slides_set2-slide-002-unreviewable-pull-request.png",
+      "start": "00:03:43.280",
+      "note": "Unreviewable pull request as the discussion turns to schema and reviewability.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "006-specification_surface_slides_set1-slide-002-silent-failure-pr.png",
+      "start": "00:04:21.040",
+      "note": "Silent failure PR while the narration discusses schema-level mistakes.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "007-specification_surface_slides_set3-slide-003-downstream-artifact-trap.png",
+      "start": "00:05:08.320",
+      "note": "Downstream artifact trap as the conversation moves from code output to upstream instruction.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "008-specification_surface_slides_set3-slide-004-vibe-source-truth-error.png",
+      "start": "00:06:23.440",
+      "note": "Vibe coding source-of-truth error anchor.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "009-specification_surface_slides_set1-slide-003-vibe-vs-professional-control.png",
+      "start": "00:06:56.960",
+      "note": "Contrast vibe control with professional control as generated code becomes durable.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "010-specification_surface_slides_set2-slide-003-coordination-failure-vibe.png",
+      "start": "00:07:40.720",
+      "note": "Coordination failure in vibe-driven workflows.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "011-specification_surface_slides_set3-slide-005-specification-surface-primitive.png",
+      "start": "00:08:06.800",
+      "note": "Specification surface introduced as an operational primitive.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "012-specification_surface_slides_set2-slide-004-defining-specification-surface.png",
+      "start": "00:08:10.160",
+      "note": "Definition of specification surface.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "013-specification_surface_slides_set1-slide-004-authority-through-governance.png",
+      "start": "00:08:37.599",
+      "note": "Authority through governance and operational force.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "014-specification_surface_slides_set3-slide-006-documentation-vs-specification.png",
+      "start": "00:10:31.920",
+      "note": "Documentation versus specification, anchored to waterfall/specification discussion.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "015-specification_surface_slides_set1-slide-005-loose-prose-vs-invariants.png",
+      "start": "00:11:08.240",
+      "note": "Control-loop section: prose only matters when it constrains execution.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "016-specification_surface_slides_set3-slide-007-spec-driven-spectrum.png",
+      "start": "00:12:13.519",
+      "note": "Spec-driven authority spectrum as the narration uses the plastic/manufacturing analogy.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "017-specification_surface_slides_set2-slide-006-spectrum-of-authority.png",
+      "start": "00:13:04.000",
+      "note": "Spectrum of authority across notes, policies, tests, and gates.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "018-specification_surface_slides_set1-slide-006-maintenance-loop-spectrum.png",
+      "start": "00:14:29.000",
+      "note": "Maintenance-loop spectrum / Spec-Driven section anchor.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "019-specification_surface_slides_set3-slide-008-specification-gap-coordination.png",
+      "start": "00:15:08.959",
+      "note": "Specification gap and bare signatures anchor.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "020-specification_surface_slides_set2-slide-005-separate-workers.png",
+      "start": "00:15:27.279",
+      "note": "Separate workers / agents cannot infer a missing shared surface.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "021-specification_surface_slides_set1-slide-007-partial-knowledge-curve.png",
+      "start": "00:16:19.920",
+      "note": "Partial-knowledge curve in multi-agent coordination.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "022-specification_surface_slides_set1-slide-008-professional-control-loop.png",
+      "start": "00:18:40.320",
+      "note": "Professional software control loop anchor.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "023-specification_surface_slides_set3-slide-009-architecture-of-control.png",
+      "start": "00:21:31.840",
+      "note": "Architecture of control as the narration enters implementation/execution layers.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "024-specification_surface_slides_set1-slide-009-specification-is-program.png",
+      "start": "00:21:47.039",
+      "note": "Specification as program / bootstrapping anchor.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "025-specification_surface_slides_set3-slide-010-execution-layer-spec-program.png",
+      "start": "00:22:33.200",
+      "note": "Execution layer and DNA analogy anchor.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "026-specification_surface_slides_set2-slide-007-passive-prose-active-invariant.png",
+      "start": "00:24:07.840",
+      "note": "Passive prose becomes active invariant in harness/spec workflows.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "027-specification_surface_slides_set1-slide-010-midstream-control-invariant.png",
+      "start": "00:25:00.320",
+      "note": "Midstream invariant layer / Test-Driven and FASTRIC comparison.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "028-specification_surface_slides_set3-slide-011-invariant-layer-control.png",
+      "start": "00:25:26.640",
+      "note": "Invariant layer of control before the context-file discussion.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "032-specification_surface_slides_set1-slide-012-more-context-trap.png",
+      "start": "00:27:10.400",
+      "note": "More-context trap as the narration names context files.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "033-specification_surface_slides_set3-slide-014-context-file-trap.png",
+      "start": "00:27:14.640",
+      "note": "Context-file trap: context does not equal control.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "034-specification_surface_slides_set2-slide-009-operational-test-context-control.png",
+      "start": "00:29:45.679",
+      "note": "Operational test for context/control.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "035-specification_surface_slides_set1-slide-013-repository-file-litmus-test.png",
+      "start": "00:30:20.000",
+      "note": "Repository-file litmus test during the practical test section.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "036-specification_surface_slides_set3-slide-015-operational-test.png",
+      "start": "00:30:58.399",
+      "note": "Operational test summary as the narration returns to waterfall/source-control contrasts.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "037-specification_surface_slides_set3-slide-013-authority-maintenance-loop.png",
+      "start": "00:31:16.240",
+      "note": "Authority maintenance loop before review/audit.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "029-specification_surface_slides_set1-slide-011-downstream-claim-evidence.png",
+      "start": "00:32:11.360",
+      "note": "Downstream claim/evidence layer when generated code and evidence surfaces appear.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "030-specification_surface_slides_set2-slide-008-downstream-audit.png",
+      "start": "00:32:13.440",
+      "note": "Downstream audit and trace-validation anchor.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "031-specification_surface_slides_set3-slide-012-audit-layer-trace-validation.png",
+      "start": "00:33:18.480",
+      "note": "Audit layer / trace validation and evidence surface.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "038-specification_surface_slides_set1-slide-014-governed-review-loop.png",
+      "start": "00:34:36.639",
+      "note": "Governed review loop as review moves upstream of the diff.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "039-specification_surface_slides_set3-slide-016-architectural-boundaries.png",
+      "start": "00:34:50.560",
+      "note": "Architectural boundaries in the new workflow section.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "040-specification_surface_slides_set2-slide-010-governable-pr-review.png",
+      "start": "00:35:05.680",
+      "note": "Governable PR review / concrete review questions.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "041-specification_surface_slides_set3-slide-017-new-standard-pull-requests.png",
+      "start": "00:35:57.359",
+      "note": "New standard for pull requests as the narration synthesizes the argument.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "042-specification_surface_slides_set1-slide-015-empirical-research-sources.png",
+      "start": "00:36:22.960",
+      "note": "Empirical research sources and future-of-complex-software framing.",
+      "render_variant": "all_three_decks_interleaved"
+    },
+    {
+      "image": "043-specification_surface_slides_set3-slide-018-source-literature.png",
+      "start": "00:37:20.320",
+      "note": "Source literature and maintained surfaces through the close.",
+      "render_variant": "all_three_decks_interleaved"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "audio": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/audio/specifications_are_the_new_source_of_truth.mp3",
+  "slides_dir": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides",
+  "segments": [
+    {
+      "image": "001-specification_surface_slides_set3-slide-001-research-report-title.png",
+      "start": "00:00:00.000",
+      "note": ""
+    },
+    {
+      "image": "002-specification_surface_slides_set2-slide-001-directive-title.png",
+      "start": "00:00:54.435",
+      "note": ""
+    },
+    {
+      "image": "003-specification_surface_slides_set1-slide-001-source-of-truth-title.png",
+      "start": "00:01:48.869",
+      "note": ""
+    },
+    {
+      "image": "004-specification_surface_slides_set3-slide-002-perfect-pull-request.png",
+      "start": "00:02:43.304",
+      "note": ""
+    },
+    {
+      "image": "005-specification_surface_slides_set2-slide-002-unreviewable-pull-request.png",
+      "start": "00:03:37.738",
+      "note": ""
+    },
+    {
+      "image": "006-specification_surface_slides_set1-slide-002-silent-failure-pr.png",
+      "start": "00:04:32.173",
+      "note": ""
+    },
+    {
+      "image": "007-specification_surface_slides_set3-slide-003-downstream-artifact-trap.png",
+      "start": "00:05:26.608",
+      "note": ""
+    },
+    {
+      "image": "008-specification_surface_slides_set3-slide-004-vibe-source-truth-error.png",
+      "start": "00:06:21.042",
+      "note": ""
+    },
+    {
+      "image": "009-specification_surface_slides_set1-slide-003-vibe-vs-professional-control.png",
+      "start": "00:07:15.477",
+      "note": ""
+    },
+    {
+      "image": "010-specification_surface_slides_set2-slide-003-coordination-failure-vibe.png",
+      "start": "00:08:09.911",
+      "note": ""
+    },
+    {
+      "image": "011-specification_surface_slides_set3-slide-005-specification-surface-primitive.png",
+      "start": "00:09:04.346",
+      "note": ""
+    },
+    {
+      "image": "012-specification_surface_slides_set2-slide-004-defining-specification-surface.png",
+      "start": "00:09:58.781",
+      "note": ""
+    },
+    {
+      "image": "013-specification_surface_slides_set1-slide-004-authority-through-governance.png",
+      "start": "00:10:53.215",
+      "note": ""
+    },
+    {
+      "image": "014-specification_surface_slides_set3-slide-006-documentation-vs-specification.png",
+      "start": "00:11:47.650",
+      "note": ""
+    },
+    {
+      "image": "015-specification_surface_slides_set1-slide-005-loose-prose-vs-invariants.png",
+      "start": "00:12:42.084",
+      "note": ""
+    },
+    {
+      "image": "016-specification_surface_slides_set3-slide-007-spec-driven-spectrum.png",
+      "start": "00:13:36.519",
+      "note": ""
+    },
+    {
+      "image": "017-specification_surface_slides_set2-slide-006-spectrum-of-authority.png",
+      "start": "00:14:30.953",
+      "note": ""
+    },
+    {
+      "image": "018-specification_surface_slides_set1-slide-006-maintenance-loop-spectrum.png",
+      "start": "00:15:25.388",
+      "note": ""
+    },
+    {
+      "image": "019-specification_surface_slides_set3-slide-008-specification-gap-coordination.png",
+      "start": "00:16:19.823",
+      "note": ""
+    },
+    {
+      "image": "020-specification_surface_slides_set2-slide-005-separate-workers.png",
+      "start": "00:17:14.257",
+      "note": ""
+    },
+    {
+      "image": "021-specification_surface_slides_set1-slide-007-partial-knowledge-curve.png",
+      "start": "00:18:08.692",
+      "note": ""
+    },
+    {
+      "image": "022-specification_surface_slides_set1-slide-008-professional-control-loop.png",
+      "start": "00:19:03.126",
+      "note": ""
+    },
+    {
+      "image": "023-specification_surface_slides_set3-slide-009-architecture-of-control.png",
+      "start": "00:19:57.561",
+      "note": ""
+    },
+    {
+      "image": "024-specification_surface_slides_set1-slide-009-specification-is-program.png",
+      "start": "00:20:51.996",
+      "note": ""
+    },
+    {
+      "image": "025-specification_surface_slides_set3-slide-010-execution-layer-spec-program.png",
+      "start": "00:21:46.430",
+      "note": ""
+    },
+    {
+      "image": "026-specification_surface_slides_set2-slide-007-passive-prose-active-invariant.png",
+      "start": "00:22:40.865",
+      "note": ""
+    },
+    {
+      "image": "027-specification_surface_slides_set1-slide-010-midstream-control-invariant.png",
+      "start": "00:23:35.299",
+      "note": ""
+    },
+    {
+      "image": "028-specification_surface_slides_set3-slide-011-invariant-layer-control.png",
+      "start": "00:24:29.734",
+      "note": ""
+    },
+    {
+      "image": "029-specification_surface_slides_set1-slide-011-downstream-claim-evidence.png",
+      "start": "00:25:24.169",
+      "note": ""
+    },
+    {
+      "image": "030-specification_surface_slides_set2-slide-008-downstream-audit.png",
+      "start": "00:26:18.603",
+      "note": ""
+    },
+    {
+      "image": "031-specification_surface_slides_set3-slide-012-audit-layer-trace-validation.png",
+      "start": "00:27:13.038",
+      "note": ""
+    },
+    {
+      "image": "032-specification_surface_slides_set1-slide-012-more-context-trap.png",
+      "start": "00:28:07.472",
+      "note": ""
+    },
+    {
+      "image": "033-specification_surface_slides_set3-slide-014-context-file-trap.png",
+      "start": "00:29:01.907",
+      "note": ""
+    },
+    {
+      "image": "034-specification_surface_slides_set2-slide-009-operational-test-context-control.png",
+      "start": "00:29:56.342",
+      "note": ""
+    },
+    {
+      "image": "035-specification_surface_slides_set1-slide-013-repository-file-litmus-test.png",
+      "start": "00:30:50.776",
+      "note": ""
+    },
+    {
+      "image": "036-specification_surface_slides_set3-slide-015-operational-test.png",
+      "start": "00:31:45.211",
+      "note": ""
+    },
+    {
+      "image": "037-specification_surface_slides_set3-slide-013-authority-maintenance-loop.png",
+      "start": "00:32:39.645",
+      "note": ""
+    },
+    {
+      "image": "038-specification_surface_slides_set1-slide-014-governed-review-loop.png",
+      "start": "00:33:34.080",
+      "note": ""
+    },
+    {
+      "image": "039-specification_surface_slides_set3-slide-016-architectural-boundaries.png",
+      "start": "00:34:28.515",
+      "note": ""
+    },
+    {
+      "image": "040-specification_surface_slides_set2-slide-010-governable-pr-review.png",
+      "start": "00:35:22.949",
+      "note": ""
+    },
+    {
+      "image": "041-specification_surface_slides_set3-slide-017-new-standard-pull-requests.png",
+      "start": "00:36:17.384",
+      "note": ""
+    },
+    {
+      "image": "042-specification_surface_slides_set1-slide-015-empirical-research-sources.png",
+      "start": "00:37:11.818",
+      "note": ""
+    },
+    {
+      "image": "043-specification_surface_slides_set3-slide-018-source-literature.png",
+      "start": "00:38:06.253",
+      "note": ""
+    }
+  ]
+}
