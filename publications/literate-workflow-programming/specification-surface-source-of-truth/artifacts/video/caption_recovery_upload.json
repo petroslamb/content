@@ -1,0 +1,22 @@
+{
+  "purpose": "temporary YouTube upload for automatic caption recovery",
+  "video_id": "adZiCXGP914",
+  "url": "https://www.youtube.com/watch?v=adZiCXGP914",
+  "title": "Caption recovery - The Specification Surface Is the New Source of Truth",
+  "privacy_status": "unlisted",
+  "default_language": "en",
+  "default_audio_language": "en",
+  "audio_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/audio/specifications_are_the_new_source_of_truth.mp3",
+  "still_image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-001.png",
+  "output_srt": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_auto_captions.srt",
+  "poll_interval_seconds": 600,
+  "delete_after_recovery": true,
+  "created_at_utc": "2026-04-30T17:27:48Z",
+  "caption_track_id": "AUieDaawtDh6OgeposF1vxCyhedORjWUnIHflosDhOhHrZqsemg",
+  "caption_language": "en",
+  "caption_kind": "asr",
+  "processing_status": "succeeded",
+  "recovered_at_utc": "2026-04-30T18:17:55Z",
+  "deleted_video": true,
+  "deleted_at_utc": "2026-04-30T18:17:55Z"
+}

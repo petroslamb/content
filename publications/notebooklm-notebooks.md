@@ -6,6 +6,15 @@ The machine-readable source of truth lives in each package or leaf `status.yaml`
 
 ## Registry
 
+### The Specification Surface Is the New Source of Truth
+
+- Slug: `specification-surface-source-of-truth`
+- Research folder: `publications/literate-workflow-programming/specification-surface-source-of-truth`
+- Primary notebook: [The Specification Surface Is the New Source of Truth](https://notebooklm.google.com/notebook/bd61da1d-f328-4cf0-8c77-26b094dd27b8)
+- Related notebooks: none
+- Matching evidence: Notebook source `specification-surface-source-of-truth.md`; source indexing completed before artifact generation.
+- Confidence: High
+
 ### Confidence Debt
 
 - Slug: `confidence-debt`

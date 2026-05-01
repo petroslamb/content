@@ -12,6 +12,9 @@ config:
   notebooklm_notebook_title: The Specification Surface Is the New Source of Truth
   notebooklm_notebook_url: https://notebooklm.google.com/notebook/bd61da1d-f328-4cf0-8c77-26b094dd27b8
   notebooklm_related_notebooks: []
+  substack_url: https://lambpetros.substack.com
+  substack_post_id: 196091276
+  substack_draft_url: https://lambpetros.substack.com/publish/post/196091276
   pivot_decision_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-decision.md
   north_star_viability_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-north-star-viability.md
   research_question: How do controlled, typed, linted, validated, and trace-linked
@@ -29,11 +32,11 @@ stages:
     done: true
     last_updated: '2026-04-30'
   notebooklm_artifacts:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-30'
   article_polish:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-30'
   substack_publishing:
     done: false
     last_updated: null
@@ -41,8 +44,8 @@ stages:
     done: false
     last_updated: null
   youtube_production:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-04-30'
   distribution:
     done: false
     last_updated: null
