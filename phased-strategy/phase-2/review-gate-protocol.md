@@ -136,7 +136,7 @@ stop:
 
 evidence:
   preview_paths:
-    - publications/literate-workflow-programming/literate-workflow-programming-candidate-r1.md
+    - publications/literate-workflow-programming/literate-workflow-programming-flagship/iterations/r1/literate-workflow-programming-candidate-r1.md
   evidence_paths:
     - reviewable-runs/logs/run-2026-04-22T18-10-00Z.yaml
   validation_results:

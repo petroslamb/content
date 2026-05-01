@@ -14,10 +14,10 @@ The target is narrow. This is not a new article frame, a candidate draft, or a r
 
 ## Inputs Used
 
-- [`../claim-ledger.md`](../claim-ledger.md)
-- [`../claim-scorecard.md`](../claim-scorecard.md)
-- [`../contradiction-register.md`](../contradiction-register.md)
-- [`../literate-workflow-programming.md`](../literate-workflow-programming.md)
+- [`../claim-ledger.md`](../claims/claim-ledger.md)
+- [`../claim-scorecard.md`](../claims/claim-scorecard.md)
+- [`../contradiction-register.md`](../claims/contradiction-register.md)
+- [`../literate-workflow-programming.md`](../literate-workflow-programming-flagship/literate-workflow-programming.md)
 - [`2026-04-21-p2a-local-intake-trace-provenance.md`](2026-04-21-p2a-local-intake-trace-provenance.md)
 - [`2026-04-21-confidence-debt-contradiction-ledger-transfer.md`](2026-04-21-confidence-debt-contradiction-ledger-transfer.md)
 - [`../../../reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md`](../../../reviewable-runs/logs/2026-04-21_literate-workflow-programming_p1-intake-spec-diff-proof-candidate.md)
@@ -151,8 +151,8 @@ This note closes the specific open decision named in the live brief:
 As of the tracked package state on 2026-04-22:
 
 - [`../status.yaml`](../status.yaml) keeps the package in `essay_iteration`
-- [`../literate-workflow-programming-prewrite-gate-r1.md`](../literate-workflow-programming-prewrite-gate-r1.md) sets `writability_verdict: writable`
-- [`../literate-workflow-programming-prewrite-gate-r1.md`](../literate-workflow-programming-prewrite-gate-r1.md) sets `candidate_authorized: true`
+- [`../literate-workflow-programming-prewrite-gate-r1.md`](../literate-workflow-programming-flagship/iterations/r1/literate-workflow-programming-prewrite-gate-r1.md) sets `writability_verdict: writable`
+- [`../literate-workflow-programming-prewrite-gate-r1.md`](../literate-workflow-programming-flagship/iterations/r1/literate-workflow-programming-prewrite-gate-r1.md) sets `candidate_authorized: true`
 
 So the packet-level contract does authorize a bounded candidate draft. This proof note does not change that authorization. It only adds a stronger local record for CSA-C6 and the claim-state machinery behind it.
 

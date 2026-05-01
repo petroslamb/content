@@ -75,8 +75,8 @@ The closest local phrase remains `literate workflow programming`, but the assist
 ## Where It Entered The Package
 
 - [`../2026-04-20-markdown-workflow-language.md`](../2026-04-20-markdown-workflow-language.md)
-- [`../../literate-workflow-programming.md`](../../literate-workflow-programming.md)
-- [`../../claim-ledger.md`](../../claim-ledger.md)
+- [`../../literate-workflow-programming.md`](../../literate-workflow-programming-flagship/literate-workflow-programming.md)
+- [`../../claim-ledger.md`](../../claims/claim-ledger.md)
 
 ## Current Status
 

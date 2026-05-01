@@ -67,7 +67,7 @@ evidence-authorization-ledger.md
 claims-evidence-ledger.md
 ```
 
-Keep it beside the blueprint or active package root, not inside `papers/`. The paper index owns source paths. The ledger owns claim permission.
+For new packages, keep claim-permission outputs under package-local `claims/`, not loose in the package root and not inside `papers/`. The paper index owns source paths. The ledger owns claim permission.
 
 ## Hinge Warrant Ledger
 

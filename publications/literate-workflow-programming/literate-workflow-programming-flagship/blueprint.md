@@ -2,11 +2,11 @@
 
 This leaf exists to give the capped flagship attempt a clean leaf identity inside the umbrella.
 
-Canonical donor surfaces still live at the umbrella root:
+Canonical donor surfaces now live inside this leaf:
 
-- live draft: [`../literate-workflow-programming.md`](../literate-workflow-programming.md)
-- donor report: [`../literate-workflow-programming-ceiling-report-r3.md`](../literate-workflow-programming-ceiling-report-r3.md)
-- packet history: [`../literate-workflow-programming-essay-iteration-packet-r3.json`](../literate-workflow-programming-essay-iteration-packet-r3.json) and the matching `r1 -> r3` packet files
+- live draft: [`literate-workflow-programming.md`](literate-workflow-programming.md)
+- donor report: [`iterations/r3/literate-workflow-programming-ceiling-report-r3.md`](iterations/r3/literate-workflow-programming-ceiling-report-r3.md)
+- packet history: [`iterations/r3/literate-workflow-programming-essay-iteration-packet-r3.json`](iterations/r3/literate-workflow-programming-essay-iteration-packet-r3.json) and the matching `r1 -> r3` packet files under [`iterations/`](iterations/)
 
 This leaf's role is historical and diagnostic:
 

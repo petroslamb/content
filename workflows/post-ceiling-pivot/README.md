@@ -99,8 +99,9 @@ Treat a real post-ceiling search as an umbrella transition, not as a longer sing
 
 The canonical shape is:
 
-- the `ceiling report` stays at the umbrella root because it is the terminal artifact of `essay_iteration`
-- shared research, donor history, and overlay search artifacts stay at the umbrella root
+- the `ceiling report` stays in the donor leaf's `iterations/r<revision>/` packet because it is the terminal artifact of `essay_iteration`
+- shared research and claim-state surfaces stay under umbrella-owned folders such as `papers/`, `research-notes/`, and `claims/`
+- active overlay search artifacts stay under `pivot/active/`; superseded searches move to `pivot/archive/<pivot-id>/`
 - the capped original essay becomes a donor leaf
 - any surviving second object becomes a successor flagship leaf
 
@@ -109,8 +110,8 @@ That keeps publication objects separate while preserving one shared evidence tre
 Legacy compatibility:
 
 - older packages may still keep pivot artifacts under `pivot/` or `pivot/active/`
-- root-level pivot artifacts also remain valid
-- for new packages, do not treat `pivot/active/` as the canonical long-term destination once a second object is real
+- older root-level pivot artifacts remain readable as history, but new pivot outputs should not be added loose at the package root
+- for new packages, do not treat `pivot/active/` as the canonical long-term destination once a second object is real; archive or summarize it after successor leaf initialization
 
 ## Status Vocabulary
 

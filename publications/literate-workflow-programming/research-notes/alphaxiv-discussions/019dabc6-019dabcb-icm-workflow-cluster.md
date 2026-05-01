@@ -56,7 +56,7 @@ The sessions pushed four tensions into the package:
 - [`../2026-04-20-icm-and-markdown-workflows.md`](../2026-04-20-icm-and-markdown-workflows.md)
 - [`../2026-04-20-p0-intake-synthesis.md`](../2026-04-20-p0-intake-synthesis.md)
 - [`../2026-04-20-spec-diff-experiment.md`](../2026-04-20-spec-diff-experiment.md)
-- [`../../claim-ledger.md`](../../claim-ledger.md)
+- [`../../claim-ledger.md`](../../claims/claim-ledger.md)
 
 ## Current Status
 

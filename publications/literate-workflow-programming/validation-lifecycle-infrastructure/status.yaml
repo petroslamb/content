@@ -3,9 +3,9 @@ publication: validation-is-lifecycle-infrastructure
 parent_package: literate-workflow-programming
 revision: 3
 config:
-  markdown_path: publications/literate-workflow-programming/validation-is-lifecycle-infrastructure.md
+  markdown_path: publications/literate-workflow-programming/validation-lifecycle-infrastructure/validation-is-lifecycle-infrastructure.md
   evidence_path: publications/literate-workflow-programming/papers
-  blueprint_path: blueprint.md
+  blueprint_path: iterations/r1/validation-is-lifecycle-infrastructure-blueprint-r1.md
 stages:
   paper_intake:
     done: true

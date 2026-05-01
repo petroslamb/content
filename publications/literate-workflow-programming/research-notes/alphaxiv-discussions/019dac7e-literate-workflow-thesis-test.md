@@ -53,8 +53,8 @@ The session sharpened the package thesis:
 
 - [`../2026-04-20-p0-intake-synthesis.md`](../2026-04-20-p0-intake-synthesis.md)
 - [`../2026-04-20-spec-diff-experiment.md`](../2026-04-20-spec-diff-experiment.md)
-- [`../../claim-ledger.md`](../../claim-ledger.md)
-- [`../../literate-workflow-programming.md`](../../literate-workflow-programming.md)
+- [`../../claim-ledger.md`](../../claims/claim-ledger.md)
+- [`../../literate-workflow-programming.md`](../../literate-workflow-programming-flagship/literate-workflow-programming.md)
 
 ## Current Status
 

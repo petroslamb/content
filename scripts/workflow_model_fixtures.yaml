@@ -6,14 +6,10 @@ topic_packets:
 route_checks:
   - package: literate-workflow-programming
     stage: notebooklm_artifacts
-    expected_pipeline_profile: post_ceiling_successor
-    expected_effective_workflow: post_ceiling_pivot
-    expected_effective_next_action: write_north_star_viability
+    expected_pipeline_profile: midstream_revision
+    expected_effective_workflow: notebooklm_artifacts
     expected_effective_can_execute: false
-    expected_recommended_workflow: post_ceiling_pivot
-    expected_active_overlay: post_ceiling_pivot
-    expected_overlay_phase: run_north_star_viability
-    expected_next_overlay_action: write_north_star_viability
+    expected_recommended_workflow: notebooklm_artifacts
 workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: clean-interface-illusion
@@ -28,10 +24,10 @@ workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: literate-workflow-programming
     expected_can_execute: false
-    expected_overlay_phase: run_north_star_viability
-    expected_next_overlay_action: write_north_star_viability
+    expected_overlay_phase: successor_leaf_stage_handoff
+    expected_next_overlay_action: continue_successor_leaf_notebooklm_artifacts
     expected_active_overlay_root: publications/literate-workflow-programming
-    expected_validator_substring: pivot_north_star_viability
+    expected_validator_substring: check:package-lifecycle
     expected_recommended_gates:
       - pivot_research_grounding
       - pivot_north_star_viability
@@ -50,8 +46,8 @@ gate_checks:
     expected_decision: north_star_viable
   - gate: pivot_north_star_viability
     package: literate-workflow-programming
-    expected_status: blocked
-    expected_decision: missing_pivot_artifacts
+    expected_status: pass
+    expected_decision: north_star_viable
   - gate: release_readiness
     package: literate-workflow-programming
     expected_status: blocked
@@ -81,7 +77,7 @@ retained_examples:
       label: pivot-clearance decision
     - path: publications/clean-interface-illusion/clean-interface-illusion-pivot-north-star-viability.md
       label: pivot north-star viability artifact
-    - path: publications/literate-workflow-programming/literate-workflow-programming-ceiling-report-r3.md
+    - path: publications/literate-workflow-programming/literate-workflow-programming-flagship/iterations/r3/literate-workflow-programming-ceiling-report-r3.md
       label: canonical ceiling report
   execution_evidence:
     - path: reviewable-runs/resolved-runs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml

@@ -41,6 +41,9 @@ context_dependencies:
       - publications/{package}/*replacement-review*.md
       - publications/{package}/*decision*.md
       - publications/{package}/*stop*.md
+      - publications/{package}/*/iterations/r*/*replacement-review*.md
+      - publications/{package}/*/iterations/r*/*decision*.md
+      - publications/{package}/*/iterations/r*/*stop*.md
     required: true
     purpose: Prove the original object has a real ceiling rather than an ordinary rewrite problem.
     record_hash: true
@@ -49,6 +52,8 @@ context_dependencies:
     fallback:
       - publications/{package}/*ceiling-report*.md
       - publications/{package}/*donor-report*.md
+      - publications/{package}/*/iterations/r*/*ceiling-report*.md
+      - publications/{package}/*/iterations/r*/*donor-report*.md
     required: true
     purpose: Preserve the capped object's terminal finding before opening a successor search.
     record_hash: true
@@ -138,46 +143,46 @@ allowed_paths:
 
 outputs:
   - id: umbrella_upgrade_record
-    path_template: "publications/{package}/{package_name}-umbrella-upgrade-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-umbrella-upgrade-r{revision}.md"
     required: conditional
     required_when: starting from a single-publication donor
     format: markdown
     producer: record_package_shape_decision
   - id: donor_leaf_and_successor_flagship_leaf_record
-    path_template: "publications/{package}/{package_name}-leaf-identity-record-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-leaf-identity-record-r{revision}.md"
     required: conditional
     required_when: a second object becomes real
     format: markdown
     producer: record_package_shape_decision
   - id: pivot_slate
-    path_template: "publications/{package}/{package_name}-pivot-slate-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-pivot-slate-r{revision}.md"
     required: true
     format: markdown
     producer: build_pivot_slate
   - id: grounding_review_and_blocker_record
-    path_template: "publications/{package}/{package_name}-pivot-grounding-review-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-pivot-grounding-review-r{revision}.md"
     required: true
     format: markdown
     producer: run_grounding_review
     gated_by: pivot_research_grounding
   - id: active_next_pivot_candidate
-    path_template: "publications/{package}/{package_name}-next-pivot-candidate-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-next-pivot-candidate-r{revision}.md"
     required: true
     format: markdown
     producer: select_next_candidate
   - id: candidate_specific_research_delta
-    path_template: "publications/{package}/{package_name}-research-delta-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-research-delta-r{revision}.md"
     required: true
     format: markdown
     producer: name_research_delta
   - id: north_star_viability_gate
-    path_template: "publications/{package}/{package_name}-pivot-north-star-viability-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-pivot-north-star-viability-r{revision}.md"
     required: true
     format: markdown
     producer: test_north_star_viability
     gated_by: pivot_north_star_viability
   - id: pivot_decision
-    path_template: "publications/{package}/{package_name}-pivot-decision-r{revision}.md"
+    path_template: "publications/{package}/pivot/active/{package_name}-pivot-decision-r{revision}.md"
     required: true
     format: markdown
     producer: record_pivot_decision

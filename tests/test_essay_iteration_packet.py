@@ -24,6 +24,7 @@ def create_temp_leaf_package(package_dir: Path) -> str:
     (package_dir / "papers").mkdir(exist_ok=True)
     (package_dir / "papers" / "index.md").write_text("# Paper Index\n")
     (package_dir / "README.md").write_text(f"# {package_key}\n")
+    (package_dir / "blueprint.md").write_text("# Blueprint\n\n## Promise\n\nA bounded promise.\n")
     draft_path.write_text(f"# {package_key}\n\n## Limits\n\n## References\n")
 
     status = {
@@ -32,6 +33,7 @@ def create_temp_leaf_package(package_dir: Path) -> str:
         "revision": 1,
         "config": {
             "markdown_path": f"publications/{package_key}/{package_key}.md",
+            "blueprint_path": "blueprint.md",
         },
         "stages": {
             stage: {"done": False, "last_updated": None}
@@ -108,7 +110,7 @@ class EssayIterationPacketTests(unittest.TestCase):
         package_key: str,
         revision: int = 1,
     ) -> tuple[dict, dict[str, Path]]:
-        manifest_path = package_dir / f"{package_key}-essay-iteration-packet-r{revision}.json"
+        manifest_path = package_dir / "iterations" / f"r{revision}" / f"{package_key}-essay-iteration-packet-r{revision}.json"
         packet = json.loads(manifest_path.read_text())
         outputs = {
             name: (REPO_ROOT / relpath).resolve()
@@ -123,7 +125,7 @@ class EssayIterationPacketTests(unittest.TestCase):
         revision: int,
         packet: dict,
     ) -> None:
-        manifest_path = package_dir / f"{package_key}-essay-iteration-packet-r{revision}.json"
+        manifest_path = package_dir / "iterations" / f"r{revision}" / f"{package_key}-essay-iteration-packet-r{revision}.json"
         manifest_path.write_text(json.dumps(packet, indent=2))
 
     def populate_valid_packet(
@@ -168,6 +170,34 @@ class EssayIterationPacketTests(unittest.TestCase):
             "A concrete opening paragraph.\n\n"
             "## Limits\n\nThis essay does not claim complete institutional coverage.\n\n"
             "## References\n\nOne annotated reference.\n"
+        )
+
+        write_frontmatter_markdown(
+            outputs["prewrite_gate"],
+            {
+                "kind": "essay_iteration_prewrite_gate",
+                "package": package_key,
+                "revision": revision,
+                "judgment_policy": "draft_only",
+                "live_draft_path": packet["live_draft_path"],
+                "candidate_path": packet["candidate_path"],
+                "writability_verdict": "writable",
+                "candidate_authorized": True,
+                "dominant_blocker_slug": "",
+                "supporting_artifact_paths": [packet["input_paths"]["governing_brief_path"]],
+            },
+            (
+                "# Essay Prewrite Gate\n\n"
+                "## Promise\n\nA bounded thesis.\n\n"
+                "## Spine\n\nA section spine.\n\n"
+                "## Paragraph burden\n\nEach section has a job.\n\n"
+                "## Evidence burden\n\nBody work and references are separated.\n\n"
+                "## Cut order\n\nTrim examples before the core argument.\n\n"
+                "## Failure triggers\n\nPromotion is void if the evidence no longer supports the claim.\n\n"
+                "## Claim-State Gate\n\nThe governing brief and blueprint authorize the candidate.\n\n"
+                "## Writability Verdict\n\nWritable; the candidate is authorized.\n\n"
+                "## Required Follow-Through\n\nComplete the candidate review packet.\n"
+            ),
         )
 
         write_frontmatter_markdown(
@@ -260,6 +290,34 @@ class EssayIterationPacketTests(unittest.TestCase):
             ),
         )
 
+        write_frontmatter_markdown(
+            outputs["ceiling_report"],
+            {
+                "kind": "object_ceiling_report",
+                "package": package_key,
+                "revision": revision,
+                "live_draft_path": packet["live_draft_path"],
+                "terminal_candidate_path": packet["candidate_path"],
+                "terminal_replacement_review_path": packet["output_paths"]["replacement_review"],
+                "terminal_decision_path": packet["output_paths"]["decision"],
+                "dominant_blocker_slug": dominant_blocker_slug,
+                "ceiling_verdict": "object_ceiling",
+                "effort_verdict": "hard_enough",
+                "next_route": "post_ceiling_pivot",
+            },
+            (
+                "# Ceiling Report\n\n"
+                "## Verdict\n\nThe object hit a real ceiling.\n\n"
+                "## Iteration Chronology\n\nThe candidate was tested through the active packet.\n\n"
+                "## Blocker Timeline\n\nThe dominant blocker persisted through the stop decision.\n\n"
+                "## Effort Audit\n\nThe pass did enough work to justify stopping.\n\n"
+                "## What Survived\n\n- The reusable thesis pressure.\n\n"
+                "## What Did Not Survive\n\n- The flagship object.\n\n"
+                "## Lessons Learned\n\n- Route successor work through a new package.\n\n"
+                "## Next Route\n\nPost-ceiling pivot.\n"
+            ),
+        )
+
         return packet, outputs
 
     def test_init_packet_reuses_existing_non_empty_files_without_force(self) -> None:
@@ -269,7 +327,7 @@ class EssayIterationPacketTests(unittest.TestCase):
             package_key = create_temp_leaf_package(package_dir)
             self.run_init(package_key)
 
-            candidate_path = package_dir / f"{package_key}-candidate-r1.md"
+            candidate_path = package_dir / "iterations" / "r1" / f"{package_key}-candidate-r1.md"
             candidate_path.write_text("# Candidate Draft\n\ncustom work\n")
 
             payload = self.run_init(package_key)
@@ -283,7 +341,7 @@ class EssayIterationPacketTests(unittest.TestCase):
             package_key = create_temp_leaf_package(package_dir)
             packet, _ = self.populate_valid_packet(package_dir, package_key)
             packet["candidate_path"] = packet["live_draft_path"]
-            (package_dir / f"{package_key}-essay-iteration-packet-r1.json").write_text(json.dumps(packet, indent=2))
+            self.write_packet_manifest(package_dir, package_key, 1, packet)
 
             payload = self.run_validator(package_key, expect_success=False)
             self.assertTrue(any("Candidate path must differ" in error for error in payload["errors"]))
@@ -564,10 +622,13 @@ class EssayIterationPacketTests(unittest.TestCase):
             package_dir = Path(tmpdir)
             package_key = create_temp_leaf_package(package_dir)
             status = yaml.safe_load((package_dir / "status.yaml").read_text())
-            (package_dir / f"{package_key}-blueprint-r1.md").write_text("r1")
-            (package_dir / f"{package_key}-blueprint-r2.md").write_text("r2")
-            (package_dir / f"{package_key}-replacement-review-r1.md").write_text("r1")
-            (package_dir / f"{package_key}-replacement-review-r3.md").write_text("r3")
+            (package_dir / "iterations" / "r1").mkdir(parents=True)
+            (package_dir / "iterations" / "r2").mkdir(parents=True)
+            (package_dir / "iterations" / "r3").mkdir(parents=True)
+            (package_dir / "iterations" / "r1" / f"{package_key}-blueprint-r1.md").write_text("r1")
+            (package_dir / "iterations" / "r2" / f"{package_key}-blueprint-r2.md").write_text("r2")
+            (package_dir / "iterations" / "r1" / f"{package_key}-replacement-review-r1.md").write_text("r1")
+            (package_dir / "iterations" / "r3" / f"{package_key}-replacement-review-r3.md").write_text("r3")
 
             latest_blueprint = essay_iteration_support.resolve_nearest_blueprint_path(package_dir, status)
             review_artifacts = essay_iteration_support.resolve_review_artifact_paths(package_dir, status)
