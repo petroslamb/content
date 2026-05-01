@@ -1,0 +1,580 @@
+workflow_id: paper_development
+version: 1
+stability: experimental
+workflow_kind: module
+workflow_group: scholarship
+summary: Create and harden package-local academic-paper artifacts from an existing essay argument without mutating the public essay route or requiring custom runner code.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  paper_question:
+    required: false
+    description: The academic-paper conversion question or route, when narrower than the package topic.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, revision, live draft path, evidence path, and governing brief.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation and local route boundaries before creating paper artifacts.
+    record_hash: true
+  - id: source_essay_candidate_or_live_draft
+    path_from_status: config.markdown_path
+    fallback:
+      - publications/{package}/*candidate-r*.md
+      - publications/{package}/*.md
+    required: true
+    purpose: Identify the essay argument being converted into a paper route.
+    record_hash: true
+  - id: claim_boundary_ledger
+    fallback:
+      - publications/{package}/*claim-boundary-ledger*.md
+      - publications/{package}/*evidence-authorization-ledger*.md
+      - publications/{package}/*claims*.md
+    required: false
+    purpose: Preserve allowed, caveated, and forbidden claims while changing genre.
+    record_hash: true
+  - id: evidence_surface
+    path_from_status: config.evidence_path
+    fallback:
+      - publications/{package}/papers/index.md
+      - publications/{package}/papers/
+      - publications/{package}/sources/index.md
+      - publications/{package}/sources/
+    required: true
+    purpose: Ground the paper contribution in local evidence rather than essay force alone.
+    record_hash: true
+  - id: package_paper_folder
+    path: publications/{package}/paper/
+    required: false
+    purpose: Reuse or create the package-local home for academic-paper artifacts.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/paper-development/README.md
+    required: true
+    purpose: Load human-facing paper-development guidance.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/paper-development/templates/
+    required: true
+    purpose: Provide the paper north-star rubric, draftability audit, and docs-only approval gate templates.
+    record_hash: true
+  - id: essay_iteration_readme
+    path: workflows/essay-iteration/README.md
+    required: true
+    purpose: Keep the paper route separated from live essay promotion and replacement decisions.
+    record_hash: true
+  - id: evidence_authorization_readme
+    path: workflows/evidence-authorization/README.md
+    required: false
+    purpose: Reuse claim-permission guidance when the paper route depends on synthesis across multiple papers.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local write and external-mutation policy.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: package_lifecycle_checker
+      command: ".venv/bin/python scripts/check_package_lifecycle.py --package {package}"
+      required: false
+    - id: paper_workflow_validation
+      command: "./content-agent validate --workflow paper_development --package {package}"
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: false
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - "{evidence_path}"
+    - "{shared_evidence_path}"
+    - workflows/paper-development/
+    - workflows/essay-iteration/
+    - workflows/evidence-authorization/
+    - harness_policy.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/paper/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: paper_folder_readme
+    path_template: "publications/{package}/paper/README.md"
+    required: true
+    format: markdown
+    producer: create_paper_folder
+  - id: paper_roadmap
+    path_template: "publications/{package}/paper/{package_name}-paper-roadmap.md"
+    required: true
+    format: markdown
+    producer: record_paper_roadmap
+  - id: paper_north_star_rubric
+    path_template: "publications/{package}/paper/{package_name}-paper-north-star-rubric.md"
+    required: true
+    format: markdown
+    producer: define_paper_north_star_rubric
+  - id: paper_blueprint
+    path_template: "publications/{package}/paper/{package_name}-paper-blueprint.md"
+    required: true
+    format: markdown
+    producer: write_paper_blueprint
+  - id: publication_route_note
+    path_template: "publications/{package}/paper/{package_name}-publication-route.md"
+    required: conditional
+    required_when: the paper route needs arXiv, OpenReview, workshop, conference, or journal route research
+    format: markdown
+    producer: research_publication_route
+  - id: literature_mapping_table
+    path_template: "publications/{package}/paper/{package_name}-literature-mapping.md"
+    required: conditional
+    required_when: the blueprint's evidence table needs an appendix-ready standalone surface
+    format: markdown
+    producer: build_literature_mapping
+  - id: case_study_trace_plan
+    path_template: "publications/{package}/paper/{package_name}-case-study-trace.md"
+    required: conditional
+    required_when: the paper route depends on case-study or artifact-analysis evidence
+    format: markdown
+    producer: plan_case_study_trace
+  - id: extended_abstract
+    path_template: "publications/{package}/paper/{package_name}-extended-abstract.md"
+    required: conditional
+    required_when: the blueprint is strong enough to draft a venue-facing abstract
+    format: markdown
+    producer: draft_extended_abstract
+  - id: draftability_audit
+    path_template: "publications/{package}/paper/{package_name}-draftability-audit.md"
+    required: conditional
+    required_when: the route is deciding whether to draft, harden the method, stop, or park
+    format: markdown
+    producer: run_draftability_audit
+  - id: paper_draft_approval_gate
+    path_template: "publications/{package}/paper/{package_name}-paper-draft-approval-gate.md"
+    required: conditional
+    required_when: the draftability audit recommends manuscript drafting
+    format: markdown
+    producer: approve_paper_drafting
+  - id: case_study_method_note
+    path_template: "publications/{package}/paper/{package_name}-case-study-method.md"
+    required: conditional
+    required_when: the draftability audit finds the case-study trace too thin for drafting
+    format: markdown
+    producer: harden_case_study_method
+  - id: paper_draft
+    path_template: "publications/{package}/paper/{package_name}-paper-draft.md"
+    required: conditional
+    required_when: the draftability audit allows manuscript drafting
+    format: markdown
+    producer: draft_paper_manuscript
+  - id: references_bib
+    path_template: "publications/{package}/paper/references.bib"
+    required: conditional
+    required_when: the paper is moving from draft to venue packet
+    format: bibtex
+    producer: prepare_venue_packet
+  - id: venue_checklist
+    path_template: "publications/{package}/paper/{package_name}-submission-checklist.md"
+    required: conditional
+    required_when: the paper is moving toward venue submission or arXiv posting
+    format: markdown
+    producer: prepare_venue_packet
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: source_essay_exists
+      check: source_essay_candidate_or_live_draft_exists
+      target: source_essay_candidate_or_live_draft
+      on_fail: stop
+    - id: evidence_surface_exists
+      check: evidence_surface_exists
+      target: evidence_surface
+      on_fail: stop
+  invariants:
+    - id: paper_route_separate_from_live_essay
+      check: paper_outputs_stay_in_package_paper_folder
+    - id: no_custom_runner_patch
+      check: workflow_remains_data_driven_unless_generic_validator_is_justified
+    - id: blueprint_before_draft
+      check: extended_abstract_requires_blueprint
+    - id: rubric_before_draftability_audit
+      check: draftability_audit_requires_paper_north_star_rubric
+    - id: draftability_before_manuscript
+      check: paper_draft_requires_draftability_audit
+    - id: approval_before_manuscript
+      check: paper_draft_requires_two_reviewer_approval_gate
+    - id: no_external_submission
+      check: workflow_cannot_submit_or_post_to_external_venues
+    - id: concrete_contribution_required
+      check: blueprint_names_definition_taxonomy_model_case_or_method
+    - id: forbidden_framing_recorded
+      check: blueprint_records_forbidden_claims_when_argument_is_translated_from_essay
+  budgets:
+    max_steps: 14
+    max_script_retries: 1
+    external_mutations: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_evidence_surface: route_to_paper_intake_or_research
+    on_position_paper_drift: return_to_blueprint_and_require_concrete_contribution
+    on_case_study_gap: stop_before_extended_abstract
+    on_split_reviewer_verdict: revise_audit_or_method_and_rerun_approval_gate
+    on_rejected_experiment: park_experiment_preserve_package_paper_artifacts
+    resume_from: resolved_run
+    rollback_strategy: preserve_existing_paper_artifacts_and_write_new_revision
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - paper_outputs_are_package_local
+  context_checks:
+    - package_status_resolves
+    - package_readme_resolves
+    - source_essay_candidate_or_live_draft_resolves
+    - evidence_surface_resolves
+    - package_paper_folder_resolves_when_present
+  hooks:
+    - id: package_lifecycle_checker
+      command: ".venv/bin/python scripts/check_package_lifecycle.py --package {package}"
+      run_at:
+        - before_blueprint
+      required: false
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - handoff
+      required: false
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates: []
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - paper_question
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_paper_context
+    title: Resolve paper context
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - source_essay_candidate_or_live_draft
+      - claim_boundary_ledger
+      - evidence_surface
+      - workflow_readme
+      - workflow_templates
+    produces: []
+    validation:
+      hooks:
+        - package_lifecycle_checker
+    trace:
+      required: true
+  - id: create_paper_folder
+    title: Create paper folder
+    mode: codex_session
+    action: Create or update the package-local paper folder README without moving or promoting the live essay.
+    consumes:
+      - package_status
+      - package_readme
+      - package_paper_folder
+    produces:
+      - paper_folder_readme
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_paper_roadmap
+    title: Record paper roadmap
+    mode: codex_session
+    action: Create or update the package-local roadmap that records completed artifacts, remaining artifacts, current phase, next decision, and rejection or parking policy.
+    consumes:
+      - package_status
+      - package_readme
+      - paper_folder_readme
+    produces:
+      - paper_roadmap
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: define_paper_north_star_rubric
+    title: Define paper north-star rubric
+    mode: codex_session
+    action: Create or update the package-local rubric that sets the fast-feedback ladder, peer-review quality floor, scoring dimensions, hard caps, and two-reviewer approval model.
+    consumes:
+      - paper_roadmap
+      - workflow_templates
+    produces:
+      - paper_north_star_rubric
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: write_paper_blueprint
+    title: Write paper blueprint
+    mode: codex_session
+    action: Draft or revise the paper blueprint with title, abstract, contribution, route, outline, taxonomy or model, evidence map, case plan, risks, and limitations.
+    consumes:
+      - source_essay_candidate_or_live_draft
+      - claim_boundary_ledger
+      - evidence_surface
+      - paper_folder_readme
+      - paper_roadmap
+      - paper_north_star_rubric
+    produces:
+      - paper_blueprint
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: research_publication_route
+    title: Research publication route
+    mode: codex_session
+    action: Record the arXiv, OpenReview, conference, workshop, or journal route when the paper needs a review or preprint strategy.
+    consumes:
+      - paper_blueprint
+      - paper_roadmap
+      - paper_north_star_rubric
+    produces:
+      - publication_route_note
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: build_literature_mapping
+    title: Build literature mapping
+    mode: codex_session
+    action: Promote the blueprint evidence table into a standalone mapping when the paper needs an appendix-ready source map.
+    consumes:
+      - paper_blueprint
+      - evidence_surface
+      - paper_roadmap
+      - paper_north_star_rubric
+    produces:
+      - literature_mapping_table
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: plan_case_study_trace
+    title: Plan case-study trace
+    mode: codex_session
+    action: Define the artifact-analysis or case-study trace that turns the paper from a position argument into a concrete framework paper.
+    consumes:
+      - paper_blueprint
+      - package_status
+      - package_readme
+      - paper_roadmap
+      - paper_north_star_rubric
+    produces:
+      - case_study_trace_plan
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: draft_extended_abstract
+    title: Draft extended abstract
+    mode: codex_session
+    action: Draft a venue-facing extended abstract only after the blueprint has a concrete contribution and case-study or method path.
+    consumes:
+      - paper_blueprint
+      - literature_mapping_table
+      - case_study_trace_plan
+      - publication_route_note
+      - paper_north_star_rubric
+    produces:
+      - extended_abstract
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: run_draftability_audit
+    title: Run draftability audit
+    mode: codex_session
+    action: Decide whether the paper route should draft now, harden the method, aim for a later route, stop, or park.
+    consumes:
+      - paper_roadmap
+      - paper_north_star_rubric
+      - paper_blueprint
+      - publication_route_note
+      - literature_mapping_table
+      - case_study_trace_plan
+      - extended_abstract
+    produces:
+      - draftability_audit
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: approve_paper_drafting
+    title: Approve paper drafting
+    mode: review_gated
+    action: Run the docs-only two-reviewer approval gate; Reviewer A owns scholarship, evidence, and method, Reviewer B owns venue fit, paper shape, and reviewability, and both must approve the same route before drafting starts.
+    consumes:
+      - paper_roadmap
+      - paper_north_star_rubric
+      - draftability_audit
+      - literature_mapping_table
+      - case_study_trace_plan
+      - publication_route_note
+    produces:
+      - paper_draft_approval_gate
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: harden_case_study_method
+    title: Harden case-study method
+    mode: codex_session
+    action: Convert the case-study trace into a method surface with unit of analysis, artifact corpus, coding scheme, observations, and non-claims when the audit requires it.
+    consumes:
+      - paper_roadmap
+      - paper_north_star_rubric
+      - case_study_trace_plan
+      - draftability_audit
+      - paper_draft_approval_gate
+    produces:
+      - case_study_method_note
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: draft_paper_manuscript
+    title: Draft paper manuscript
+    mode: codex_session
+    action: Draft the first manuscript in Markdown after the audit allows drafting; convert to TeX only after the venue route is selected.
+    consumes:
+      - paper_roadmap
+      - paper_blueprint
+      - literature_mapping_table
+      - case_study_trace_plan
+      - case_study_method_note
+      - draftability_audit
+      - paper_draft_approval_gate
+    produces:
+      - paper_draft
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: prepare_venue_packet
+    title: Prepare venue packet
+    mode: codex_session
+    action: Prepare references, artifact availability language, figures or tables, and the target venue or arXiv checklist without performing the external submission.
+    consumes:
+      - paper_roadmap
+      - publication_route_note
+      - paper_draft
+      - paper_draft_approval_gate
+    produces:
+      - references_bib
+      - venue_checklist
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - paper_roadmap
+      - paper_north_star_rubric
+      - paper_blueprint
+      - publication_route_note
+      - literature_mapping_table
+      - case_study_trace_plan
+      - extended_abstract
+      - draftability_audit
+      - paper_draft_approval_gate
+      - validation_results
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - repo_link_check
+    trace:
+      required: true
