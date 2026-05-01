@@ -1,0 +1,305 @@
+{
+  "slides": [
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-001.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-001.png",
+      "ocr_text": "The specification surface is the new source of truth\n\nMoving from vibe coding to governed AI systems.\n\nBy Rooted Layers \u2014 AI Systems Grounded in Research.\n\nAi NotebookLM",
+      "ocr_excerpt": "The specification surface is the new source of truth Moving from vibe coding to governed AI systems. By Rooted Layers \u2014 AI Systems Grounded in Research. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-002.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-002.png",
+      "ocr_text": "The agent-generated\ndiff is plausible and\nthe tests pass. The\ncode is entirely\nvisible.\n\nThe silent failure underneath the pristine pull request\n\n=\n\neS ss Ss\n\nwarnntaceenetedene fT]\n\nfunction\n\n= coolbl, data) q\n\n. af (test.mane = function (a) \u00a2{\nreturn a= testiistetil);\n\nreturn null;\n\nFRESE REE Te BG) SL ap\nif function } {\nreturn neojorey/datal]);\neotxts(K\"sifomssset anck.Pia\"\", \u201cunalonaie\u2122\u2019 ]) \u2014\n\nnaan om 2 (2:\n\n=a\n\nBinding\nConstraints\n\nThe authority behind\nthe code is not. The\nteam is reviewing a\ndownstream artifact\nwhile the controlling\nintent remains\nentirely outside the\ngoverned system.\n\nAi NotebookLM",
+      "ocr_excerpt": "The agent-generated diff is plausible and the tests pass. The code is entirely visible. The silent failure underneath the pristine pull request = eS ss Ss warnntaceenetedene fT] function = coolbl, data) q . af (test.mane = function (a) \u00a2{ return a= testiistetil); return null; FRESE REE Te BG) SL ap if function } { return neojorey/datal]); eotxts(K\"sifomssset anck.Pia\"\", \u201cunalonaie\u2122\u2019 ]) \u2014 naan om 2 (2: =a Binding Constraints The authority behind the code is not. The team is reviewing a downstream"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-003.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-003.png",
+      "ocr_text": "Vibe coding is a source-of-truth error\n\nPath A: Vibe Coding Path B: Professional Control\nPrivate Prompt / aa 4 }\n| Chat Transcript Durable Artifact\n\nAgent\n\nin,\n|\n\nGenerated Code Generated Code\n(False Source of Truth) | (Derivative Output) 5\n\nVibe coding asks a model to carry intent privately, leaving generated code as the only public record.\n\nEvery later question\u2014Why this schema? Which test matters?\u2014must be reconstructed from symptoms.\n\n\u2018|, Professional control moves the burden back into durable artifacts. p.\n\nct al\n\nAi NotebookLM",
+      "ocr_excerpt": "Vibe coding is a source-of-truth error Path A: Vibe Coding Path B: Professional Control Private Prompt / aa 4 } | Chat Transcript Durable Artifact Agent in, | Generated Code Generated Code (False Source of Truth) | (Derivative Output) 5 Vibe coding asks a model to carry intent privately, leaving generated code as the only public record. Every later question\u2014Why this schema? Which test matters?\u2014must be reconstructed from symptoms. \u2018|, Professional control moves the burden back into durable artifa"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-004.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-004.png",
+      "ocr_text": "Authority is earned through governance, not syntax\n\nThe\nSpecification\nSurface\n\nInterpreted |\nby Runtime \u2014\n\nA specification surface is an object that gains operational force because it is acted upon.\n\nThe syntax is secondary. A one-off chat prompt does not become source of truth just\nbecause it preceded the code. The decisive property is governance.\n\nAi NotebookLM",
+      "ocr_excerpt": "Authority is earned through governance, not syntax The Specification Surface Interpreted | by Runtime \u2014 A specification surface is an object that gains operational force because it is acted upon. The syntax is secondary. A one-off chat prompt does not become source of truth just because it preceded the code. The decisive property is governance. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-005.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-005.png",
+      "ocr_text": "hee\n\nMe\nf\n|\n\nFormality earns its place when it gives a team something to test and repair.\n\nDistinguishing loose prose from governed surfaces\n\nPassive Context\n\n; Active Invariants\n\n| 7 1 BDD scenarios and \u2014\n| SB ADWGIES UO\" TA | acceptance criteria.\n[SE | i\n| | Typed workflows\n| Ongaot hap OME Fy i } (e.g., AgentSPEY).\n| PS et ogi | Schema definitions _\n| Vague ticketing queen's. | } and apiicontracte |\nResult: Drifts quickly; remains ; | i Result: Anchored implementation;\noutside the control loop. creates a target for repair.\n\nAi NotebookLM",
+      "ocr_excerpt": "hee Me f | Formality earns its place when it gives a team something to test and repair. Distinguishing loose prose from governed surfaces Passive Context ; Active Invariants | 7 1 BDD scenarios and \u2014 | SB ADWGIES UO\" TA | acceptance criteria. [SE | i | | Typed workflows | Ongaot hap OME Fy i } (e.g., AgentSPEY). | PS et ogi | Schema definitions _ | Vague ticketing queen's. | } and apiicontracte | Result: Drifts quickly; remains ; | i Result: Anchored implementation; outside the control loop. cre"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-006.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-006.png",
+      "ocr_text": "Authority comes from the maintenance loop\n\nLow Governance Medium Governance High Governance\nLazy Markdown Anchored Implementation Spec-as-Source\n\n=\u2014 Generated |\n\n\u2014 code\n\n-_\u2014\n\nGuidance consulted only Implementation is kept anchored Generated code is entirely derivative.\nup front rots rapidly. via contracts, checks, Fits only where domain and tooling\nand review loops. tolerate the discipline.\n\nEnough specification to remove consequential ambiguity\n+ enough enforcement to make drift visible.\n\nAi NotebookLM",
+      "ocr_excerpt": "Authority comes from the maintenance loop Low Governance Medium Governance High Governance Lazy Markdown Anchored Implementation Spec-as-Source =\u2014 Generated | \u2014 code -_\u2014 Guidance consulted only Implementation is kept anchored Generated code is entirely derivative. up front rots rapidly. via contracts, checks, Fits only where domain and tooling and review loops. tolerate the discipline. Enough specification to remove consequential ambiguity + enough enforcement to make drift visible. Ai NotebookL"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-007.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-007.png",
+      "ocr_text": "The coordination failure under partial knowledge\n\nIN\n= a\noo a\nc ee ae\nbeoee\n\u00a9\n| ie |\n<r\n_\u2014 a\nOo\nS\n\u2014_) | |\nxX\n=\ni Multi-Agent\nIntegration\n| vA Gi@BSeGbBennhr Gis\nBare ee Full\nSignatures Specification Detail Docstrings\n\nData Insight\n\nWhen specifications are stripped\ntoward bare signatures, two-agent\nintegration accuracy plummets.\n\n: Synthesis ;\n\nSeparate workers (Al or human)\ncannot reliably converge on\nunstated decisions. Better post-hoc\nconflict detection does not solve\nthis; only restoring the shared\nspecification recovers\nperformance.\n\nSource: Chacon Sartori (arXiv 2603.24284)\n\nAi NotebookLM",
+      "ocr_excerpt": "The coordination failure under partial knowledge IN = a oo a c ee ae beoee \u00a9 | ie | <r _\u2014 a Oo S \u2014_) | | xX = i Multi-Agent Integration | vA Gi@BSeGbBennhr Gis Bare ee Full Signatures Specification Detail Docstrings Data Insight When specifications are stripped toward bare signatures, two-agent integration accuracy plummets. : Synthesis ; Separate workers (Al or human) cannot reliably converge on unstated decisions. Better post-hoc conflict detection does not solve this; only restoring the share"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-008.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-008.png",
+      "ocr_text": "Experienced developers view skepticism as infrastructure\n\n[Agent | (Version \\\nWork] \\ Control]\n\nCitation: Professional Software\nDevelopers Don't Vibe, They Control\n(Huang et al., arXiv 2512.14012)\n\n2 = SE Ee a\n\nCore Findings\n\n- Professionals use agents for speed,\nnot autonomous authority.\n\n- They strictly limit how much work\nan agent does at once.\n\n- They preserve agency over design\nby forcing intent into reviewable\nartifacts.\n\n~ Control has to live somewhere\nthe ne! can actively Inspect. 3",
+      "ocr_excerpt": "Experienced developers view skepticism as infrastructure [Agent | (Version \\ Work] \\ Control] Citation: Professional Software Developers Don't Vibe, They Control (Huang et al., arXiv 2512.14012) 2 = SE Ee a Core Findings - Professionals use agents for speed, not autonomous authority. - They strictly limit how much work an agent does at once. - They preserve agency over design by forcing intent into reviewable artifacts. ~ Control has to live somewhere the ne! can actively Inspect. 3"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-009.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-009.png",
+      "ocr_text": "Upstream Control: The specification is the program\n\nCompact Repair Target\n\n_ Specification |\n\nTakeaway:\n\nlf outputs diverge,\n\nthe repair target is the\nspecification and its\ninterpretation, not\n\nthe mere fact that a\nfile changed.\n\nMechanism:\n\nThe stable artifact\ngenerates both the\nexecution structure\nand the code.\n\nAgent Runtime ) Downstream\n(Roles, State, Implementation\nAdapters) | (Code)\n\nCiting: Monperrus (2603.17399) & Wang et al. (2604.13346)\n\nAi NotebookLM",
+      "ocr_excerpt": "Upstream Control: The specification is the program Compact Repair Target _ Specification | Takeaway: lf outputs diverge, the repair target is the specification and its interpretation, not the mere fact that a file changed. Mechanism: The stable artifact generates both the execution structure and the code. Agent Runtime ) Downstream (Roles, State, Implementation Adapters) | (Code) Citing: Monperrus (2603.17399) & Wang et al. (2604.13346) Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-010.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-010.png",
+      "ocr_text": "Midstream Control: Passive instruction becomes active invariant\n\nFilter Module se\ny YY; Shell Shims\nL\n| WAKA\n\nMechanism: Guidance on a page is weak unless it enters a control loop. These systems extract\nexecutable checks directly from natural-language instructions.\n\nTakeaway: Instruction failures reveal not just agent mistakes, but ambiguity or staleness in the\n\ninstruction surface itself.\nCiting: ContextCov (2603.00822) & Test-Driven Al (2603.08806)\n\nAi NotebookLM",
+      "ocr_excerpt": "Midstream Control: Passive instruction becomes active invariant Filter Module se y YY; Shell Shims L | WAKA Mechanism: Guidance on a page is weak unless it enters a control loop. These systems extract executable checks directly from natural-language instructions. Takeaway: Instruction failures reveal not just agent mistakes, but ambiguity or staleness in the instruction surface itself. Citing: ContextCov (2603.00822) & Test-Driven Al (2603.08806) Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-011.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-011.png",
+      "ocr_text": "Downstream Control: Reconstructing the claim-evidence relation\n\nExecution Traces Dual-Ledger Audit Specification Surface\n\n: init_agent(role=\"fixer') | RULE: Agent must use latest specification\n\nBe Ponte hes aoe | | | CONSTRAINT: All file modifications must be atomic\n\n: plan_fix(strategy='rewrite\u2019) RULE: Prioritize bug fix over refactoring\nmap LY Datch(ditt\u2014 ew.)\n\n: run_tests() , -, CONSTRAINT: Execution time per task < 30s\n\nBoe. f YLOUtpUERTIESUTUS SUCCESS) =\ntimeout_exceeded(limit=3@s) | RULE: Output must be verifiable\n\n: report_fa ilure() | CONSTRAINT: Failure must be reported with trace\n\nMechanism: Polished outputs are not enough. Trace Takeaway: These systems serve as evidence surfaces,\nevaluation cross-checks the agent's actual steps confirming whether the execution respected the\nagainst the specified constraints. Specification or where the surface failed to say enough.\n\nCiting: AgentFixer (2603.29848) & Fluent to Verifiable (2602.13855)\n\nAi NotebookLM",
+      "ocr_excerpt": "Downstream Control: Reconstructing the claim-evidence relation Execution Traces Dual-Ledger Audit Specification Surface : init_agent(role=\"fixer') | RULE: Agent must use latest specification Be Ponte hes aoe | | | CONSTRAINT: All file modifications must be atomic : plan_fix(strategy='rewrite\u2019) RULE: Prioritize bug fix over refactoring map LY Datch(ditt\u2014 ew.) : run_tests() , -, CONSTRAINT: Execution time per task < 30s Boe. f YLOUtpUERTIESUTUS SUCCESS) = timeout_exceeded(limit=3@s) | RULE: Output"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-012.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-012.png",
+      "ocr_text": "More context does not automatically produce more control\n\n10,000-Word Project Instructio\n\nThe Trap: A long instruction file can easily be stale,\ncontradictory, ignored, or useful only for a narrow\n\nclass of tasks.\n\nfr\n\nEnk6QPahGzi6A\"Spem:-ERIEBAd | WSPOb006\nbp6eso6(7e8FaauZaF+OTyCve6/2 043a0pf\nHobbyhnnhipSsOtesenxcAIEss20TSsckiGTAn\n@1+00L64. DEPLASOS7AGTAS 160voFetpapa\n\nO1SE]6ONTASpGouASE8Ze$ehaSB821gnik]/mOBTSSaT\u00ae\n\nHOGESTHN4ACE ApS rene!\nADRA34 1 34KATLepay ing\nGibsEarpoLlAT/p004\nFahe:HN6TLeduog%\n\nirouSa/v08guTH \u201ce08\u00e9E61\nAoKnOcA SHA 089 /Dg\nN3B26116082tpdfab\nAZTEAOAVOTQavag\n\n616507 2MBHOG/Ay $7830; fkbdoow!\nBABDOBEIds60) FOOKSESdy TRY\npoogn1Aso2 q2u0aAg=a6A\nM063-cN6U i S30GRSEA\nozold\u00ab8a 140) bgonu\n\n60 (Riis w+ 13ywd\nBavSi7arevLOsocEy 17 \u00a5vsbyapm3x9 7 5o66AKbAaa>dE\n4mipavj2as\u00e91aGe /m\u00e9avu] ei7H2nssappub/\u00e9l6asbyy\nA=wObES4S8q1 im) 20n586055 rigabos wy Kk2pA0KERVL Pw\nBuoctwS7A\u00e9 laf ick] 678=814A6 TAI) 3.15S0AK1806GAK\n\n| 63AGS pachb67OnguseacdsaFGbec\u00e9QvatGARuerske\u00e9x\n\nU\n\nn File\n\nGoverned Specification\n\nThe Reality: Exposing a model to project history is not\ngovernance. Context files only become part of a\nSpecification surface when maintained and connected to\nenforcement. Otherwise, they are just documentation.\n\nAi NotebookLM",
+      "ocr_excerpt": "More context does not automatically produce more control 10,000-Word Project Instructio The Trap: A long instruction file can easily be stale, contradictory, ignored, or useful only for a narrow class of tasks. fr Enk6QPahGzi6A\"Spem:-ERIEBAd | WSPOb006 bp6eso6(7e8FaauZaF+OTyCve6/2 043a0pf HobbyhnnhipSsOtesenxcAIEss20TSsckiGTAn @1+00L64. DEPLASOS7AGTAS 160voFetpapa O1SE]6ONTASpGouASE8Ze$ehaSB821gnik]/mOBTSSaT\u00ae HOGESTHN4ACE ApS rene! ADRA34 1 34KATLepay ing GibsEarpoLlAT/p004 Fahe:HN6TLeduog% irou"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-013.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-013.png",
+      "ocr_text": "The operational litmus test for repository files\n\nDoes modifying *\n\nthis file change...\n...what an agent ...what state = ... what tests = ... which trace\nis allowed to do? \\{& must persist? are generated? = violations matter? \u2014S\n\nspecification Surface Human Documentation\n\u2018Action: Needs linting, validatior (Action: Useful for orientation,\nand strict version control | but does not govern the system)\n\nAi NotebookLM",
+      "ocr_excerpt": "The operational litmus test for repository files Does modifying * this file change... ...what an agent ...what state = ... what tests = ... which trace is allowed to do? \\{& must persist? are generated? = violations matter? \u2014S specification Surface Human Documentation \u2018Action: Needs linting, validatior (Action: Useful for orientation, and strict version control | but does not govern the system) Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-014.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-014.png",
+      "ocr_text": "The governed review loop\n\n1. Was the intended behavior\nspecified upstream?\n\ndef validate wrequest (rec\nif not req.token:\nraise AuthError()\n| process_data(req.data)\n|} return True |\n\n2. Were the constraints checkable?\n\n3. Did the implementation drift, or\ndid the surface fail to carry\nthe decision?\n\nsynthesis: Al-assisted software work becomes governable only\nwhen the source of truth can be read before execution, checked\nduring execution, and repaired after failure.\n\nAi NotebookLM",
+      "ocr_excerpt": "The governed review loop 1. Was the intended behavior specified upstream? def validate wrequest (rec if not req.token: raise AuthError() | process_data(req.data) |} return True | 2. Were the constraints checkable? 3. Did the implementation drift, or did the surface fail to carry the decision? synthesis: Al-assisted software work becomes governable only when the source of truth can be read before execution, checked during execution, and repaired after failure. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set1",
+      "slide": "slide-015.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set1/slide-015.png",
+      "ocr_text": "Systems grounded in empirical research\n\nPiskala (2602.00180): Spec-Driven\nDevelopment\n\nChacon Sartori (2603.24284):\nThe Specification Gap\n\nHuang et al. (2512.14012):\nDevelopers Don\u2019t Vibe, They Control\n\nMonperrus (2603.17399):\nBootstrapping Coding Agents\n\nPan et al. (2603.25723):\nNatural-Language Agent Harnesses\n\nWang et al. (2604.13346):\nAgentSPEX\n\nSharma (2603.00822): ContextCov\n\nRehan (2603.08806):\nTest-Driven AI Agent Definition\n\nJin (2512.18940): FASTRIC\n\nSharma et al. (2603.23806):\nWillful Disobedience\n\nMulian et al. (2603.29848):\nAgentFixer\n\nRasheed et al. (2602.13855):\nFrom Fluent to Verifiable\n\nRooted Layers - AI Systems Grounded in Research\n\nAi NotebookLM",
+      "ocr_excerpt": "Systems grounded in empirical research Piskala (2602.00180): Spec-Driven Development Chacon Sartori (2603.24284): The Specification Gap Huang et al. (2512.14012): Developers Don\u2019t Vibe, They Control Monperrus (2603.17399): Bootstrapping Coding Agents Pan et al. (2603.25723): Natural-Language Agent Harnesses Wang et al. (2604.13346): AgentSPEX Sharma (2603.00822): ContextCov Rehan (2603.08806): Test-Driven AI Agent Definition Jin (2512.18940): FASTRIC Sharma et al. (2603.23806): Willful Disobedie"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-001.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-001.png",
+      "ocr_text": "ROOTED LAYERS / RESEARCH DIRECTIVE\n\nThe Specification Surface\nIs the New Source of Truth.\n\nWhy vibe coding fails, and how governed artifacts\nrestore control in Al-assisted software engineering.\n\nAi NotebookLM",
+      "ocr_excerpt": "ROOTED LAYERS / RESEARCH DIRECTIVE The Specification Surface Is the New Source of Truth. Why vibe coding fails, and how governed artifacts restore control in Al-assisted software engineering. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-002.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-002.png",
+      "ocr_text": "The unreviewable pull request.\n\nThe agent-generated diff is plausible and tests pass, but the authority behind the\ncode is invisible. The team is forced to review a downstream artifact while the\ncontrolling intent remains outside the governed system.\n\n\u201c Tests Pass\n\n+ function calculateRisk(data) {\n\na\n\n+ + + + +\n\nj\n\nconst threshold = Q.8;\n\n// Previous calculation logic\n\nif (datawscone > threshold) {\nreturn \u2018HIGH\u2019;\n\nb\nreturn \u2018LOW ;\n\nThe Observable Artifact\n\nDc ee ee le\n\n----+----Why was this schema renamed?\u00bb\nral 4\ni\n\nff h\ni \\ al\n\n|\n|\n|\n|\n|\n| =. Which constraints bind?\n3 :\n|\n|\n\n_---- What was out of scope? :\ne",
+      "ocr_excerpt": "The unreviewable pull request. The agent-generated diff is plausible and tests pass, but the authority behind the code is invisible. The team is forced to review a downstream artifact while the controlling intent remains outside the governed system. \u201c Tests Pass + function calculateRisk(data) { a + + + + + j const threshold = Q.8; // Previous calculation logic if (datawscone > threshold) { return \u2018HIGH\u2019; b return \u2018LOW ; The Observable Artifact Dc ee ee le ----+----Why was this schema renamed?\u00bb r"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-003.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-003.png",
+      "ocr_text": "Vibe is a source-of-truth coordination failure.\n\nVibe Coding Error Professional Control\n\nHuman Prompt Human Intent\n3 3 Intent Evaporates\ni Durable Artifact\n(Plan/Spec)\n\nAgent Execution\n\nAgent\n\nBlack Box Validation\n\nLoop\n\nCode as Sole Truth\n\n\u201cProfessional Software Developers Don't Vibe, They Control.\u201d (Hempel et al., arXiv:2512.14012). Experienced\ndevelopers preserve agency over design by moving the burden of intent from ephemeral chats back into\ndurable artifacts, limits, and validations. Vibe coding mistakenly asks the model to carry intent privately.\n\nAi NotebookLM",
+      "ocr_excerpt": "Vibe is a source-of-truth coordination failure. Vibe Coding Error Professional Control Human Prompt Human Intent 3 3 Intent Evaporates i Durable Artifact (Plan/Spec) Agent Execution Agent Black Box Validation Loop Code as Sole Truth \u201cProfessional Software Developers Don't Vibe, They Control.\u201d (Hempel et al., arXiv:2512.14012). Experienced developers preserve agency over design by moving the burden of intent from ephemeral chats back into durable artifacts, limits, and validations. Vibe coding mi"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-004.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-004.png",
+      "ocr_text": "Defining the Specification Surface\n\nA written surface that gains operational\nforce through governance.\n\nf\n\n{ enforcement is primary.\n\n\u2014 Type\n\nTHE SPECIFICATION SURFACE - Authority exists only\n\n= re when tools and teams\na Agent Generated System - :\nte Execution Code state SS\n\n- Loose prose ina\nValidation le README is not a control\ninking\nplane.\n\ncan act on the artifact.\n\nAi NotebookLM",
+      "ocr_excerpt": "Defining the Specification Surface A written surface that gains operational force through governance. f { enforcement is primary. \u2014 Type THE SPECIFICATION SURFACE - Authority exists only = re when tools and teams a Agent Generated System - : te Execution Code state SS - Loose prose ina Validation le README is not a control inking plane. can act on the artifact. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-005.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-005.png",
+      "ocr_text": "The Specification Gap: Separate workers do not\nreliably converge on unstated decisions\n\nA\nPlot Line 1 , -\nPine In multi-agent environments,\nS stripping shared specifications\n5 down to bare signatures causes\na ay integration to fail entirely.\nc e\n2 Plot Line 2 \u2014 Specification\n< Two-Agent map Post-hoc conflict detection\n2 cannot replace the missing\nshared decisions.\nNp (Sourced from Chacon Sartori, arXiv:2603.24284)\nFull a > Bare\nDocstrings signatures\n\nSpecification Detail\n\nAi NotebookLM",
+      "ocr_excerpt": "The Specification Gap: Separate workers do not reliably converge on unstated decisions A Plot Line 1 , - Pine In multi-agent environments, S stripping shared specifications 5 down to bare signatures causes a ay integration to fail entirely. c e 2 Plot Line 2 \u2014 Specification < Two-Agent map Post-hoc conflict detection 2 cannot replace the missing shared decisions. Np (Sourced from Chacon Sartori, arXiv:2603.24284) Full a > Bare Docstrings signatures Specification Detail Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-006.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-006.png",
+      "ocr_text": "L\n\nThe Spectrum of Specification Authority\n\n\u201c2\n\nLight Guidance Anchored Work Spec-as-Source\nMuted Alert Orange Academic Blue Architectural blueprint\nGuidance consulted upfront. Tests, contract checks, and Generated code is purely\nHigh risk of architectural drift. code reviews keep the derivative. Requires highly\nimplementation permanently mature tooling and domain.\n\nanchored to the specification.\n\nSpec-driven development is a spectrum. Authority comes from the maintenance loop, not from the romance of\n\nwriting things down. The rule: enough specification to remove consequential ambiguity, with enough enforcement\n\nto make drift visible. (Based on Piskala, arXiv: 2602.00180 & Monperrus, arXiv: 2603.17399).\n\nA) NotebookLM",
+      "ocr_excerpt": "L The Spectrum of Specification Authority \u201c2 Light Guidance Anchored Work Spec-as-Source Muted Alert Orange Academic Blue Architectural blueprint Guidance consulted upfront. Tests, contract checks, and Generated code is purely High risk of architectural drift. code reviews keep the derivative. Requires highly implementation permanently mature tooling and domain. anchored to the specification. Spec-driven development is a spectrum. Authority comes from the maintenance loop, not from the romance o"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-007.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-007.png",
+      "ocr_text": "Making it operational: from passive prose to\nactive invariant.\n\nAST Queries\n\n. Shell Shims\n\u2014\u2014 el Extraction ee\nRuntime\nArchitectural Validators\n\nPassive Instruction\n(.md, AGENTS.md)\n\nLLM-Judges\n\nNatural language harnesses and AgentSPEX move intent into execution structure.\nContextCov extracts constraints from instruction files into active checks. Failures\nreveal not just agent mistakes, but staleness or ambiguity in the instruction\n\nsurface itself. (Synthesizing arXiv:2603.25723, 2604.13346, 2603.00822).\n\nAi NotebookLM",
+      "ocr_excerpt": "Making it operational: from passive prose to active invariant. AST Queries . Shell Shims \u2014\u2014 el Extraction ee Runtime Architectural Validators Passive Instruction (.md, AGENTS.md) LLM-Judges Natural language harnesses and AgentSPEX move intent into execution structure. ContextCov extracts constraints from instruction files into active checks. Failures reveal not just agent mistakes, but staleness or ambiguity in the instruction surface itself. (Synthesizing arXiv:2603.25723, 2604.13346, 2603.0082"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-008.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-008.png",
+      "ocr_text": "The Downstream Audit:\nPolished outputs are not enough.\n\na ; Pass\nSpecification Surface\nRepair\n\nTarget\n\nExecution\n\n1 Polished | Execution\n1 Outputs | Traces\nWhen claim-evidence relations cannot be reconstructed, polished outputs hide procedural\n\nviolations. Evidence surfaces (AgentPex, AgentFixer) tell the team whether execution\n\nrespected the specification\u2014and crucially, where the specification failed to say enough.\n(Synthesizing arXiv:2603.23806, 2603.29848, 2602.13855).\n\nAudit Engine\n\nAi NotebookLM",
+      "ocr_excerpt": "The Downstream Audit: Polished outputs are not enough. a ; Pass Specification Surface Repair Target Execution 1 Polished | Execution 1 Outputs | Traces When claim-evidence relations cannot be reconstructed, polished outputs hide procedural violations. Evidence surfaces (AgentPex, AgentFixer) tell the team whether execution respected the specification\u2014and crucially, where the specification failed to say enough. (Synthesizing arXiv:2603.23806, 2603.29848, 2602.13855). Audit Engine Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-009.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-009.png",
+      "ocr_text": "The Operational Test:\nSorting context from control.\n\nDoes this file change what an agent is\n\nallowed to do, what state persists, or\nwhat outputs count as valid?\n\nYes No\n\nee \"*\n\nGoverning Surface [ Passive Documentation i\n\nI I\n\n- Must be linted | - Useful for human orientation ;\n- Must be validated | -Cannot be trusted to control Al \"\n- Must be tested ! execution i\n- Keep short enough to audit i |\nOat a a al\n\nContext files do not automatically produce control. If a file only describes the project for human orientation, it is\ndocumentation. If it dictates constraints and is connected to enforcement, it belongs to the specification surface.\n\nA) NotebookLM",
+      "ocr_excerpt": "The Operational Test: Sorting context from control. Does this file change what an agent is allowed to do, what state persists, or what outputs count as valid? Yes No ee \"* Governing Surface [ Passive Documentation i I I - Must be linted | - Useful for human orientation ; - Must be validated | -Cannot be trusted to control Al \" - Must be tested ! execution i - Keep short enough to audit i | Oat a a al Context files do not automatically produce control. If a file only describes the project for hum"
+    },
+    {
+      "deck": "specification_surface_slides_set2",
+      "slide": "slide-010.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set2/slide-010.png",
+      "ocr_text": "Al-assisted work becomes governable\nupstream of the diff.\n\nThe Governable PR Review\n\nJY 1. What surface governed the agent?\n\nf 2.What evidence shows the work\nconformed to it?\n\nJY 3. What missing decision must be\nadded to the surface before the\nnext run?\n\nIf the answer lives only ina chat transcript, the system Is running on atmosphere.\nIf it lives ina maintained artifact, the team has a source of truth.\n\nAi NotebookLM",
+      "ocr_excerpt": "Al-assisted work becomes governable upstream of the diff. The Governable PR Review JY 1. What surface governed the agent? f 2.What evidence shows the work conformed to it? JY 3. What missing decision must be added to the surface before the next run? If the answer lives only ina chat transcript, the system Is running on atmosphere. If it lives ina maintained artifact, the team has a source of truth. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-001.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-001.png",
+      "ocr_text": "ROOTED LAYERS // RESEARCH REPORT\n\nAl Systems Grounded in\nResearch: The Specification\nSurface\n\nWhy vibe coding is an infrastructural trap, and how engineering\nteams must govern Al-assisted software development.\n\nAi NotebookLM",
+      "ocr_excerpt": "ROOTED LAYERS // RESEARCH REPORT Al Systems Grounded in Research: The Specification Surface Why vibe coding is an infrastructural trap, and how engineering teams must govern Al-assisted software development. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-002.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-002.png",
+      "ocr_text": "The Illusion of the Perfect Pull Request\n\nPull Request #4096: Feature Refactor -\n\nStatus ~ All checks passed (5/5)\n~ Build finished\n/ Unit tests passed [ee\n\u201c Integration tests passed\n\nY Linter passed _-- What did this feature have to preserve?\nwh security scan passed ae\n\nCode Changes (diff) ae i\n\na\n\nsrc/schemas/user.ts \u201cre\n\n@@ -12,7 +12,7 @a oo\nemail: string; -*\nrole: \u2018admin\u2019 | \u2018user'; ol\n\n- metadata?: Record<string, any>; ee.\n\n+ context_data?: Record<string, any>;\n\ncreated_at: Date; _-- Which assumptions were settled?\n\nsrc/services/sync.ts cece |\n; throw error; Ae\n\nprivate async retrySynclattempt: number): Promise<void> {\n\nif (attempt < 3) {\n17 Retry logic Pee veer What was the agent NOT allowed to\n\n} change?\n\nte Le |\n\nThe agent-generated diff is plausible. The tests pass. The code is visible. But the authority behind the code is missing.\n\nThe team is reviewing the downstream artifact while the controlling intent stays entirely outside the governed system.\n7 A) NotebookLM\n\ncl Ne\n\n5\n\n1hbdidid",
+      "ocr_excerpt": "The Illusion of the Perfect Pull Request Pull Request #4096: Feature Refactor - Status ~ All checks passed (5/5) ~ Build finished / Unit tests passed [ee \u201c Integration tests passed Y Linter passed _-- What did this feature have to preserve? wh security scan passed ae Code Changes (diff) ae i a src/schemas/user.ts \u201cre @@ -12,7 +12,7 @a oo email: string; -* role: \u2018admin\u2019 | \u2018user'; ol - metadata?: Record<string, any>; ee. + context_data?: Record<string, any>; created_at: Date; _-- Which assumptions"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-003.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-003.png",
+      "ocr_text": "The Downstream Artifact Trap\n\nWhen intent remains informal, the generated code\nbecomes the only object treated as real. You are forced\n\nto reverse-engineer intent from symptoms. The PR\nReviewer\n\nInformal Intent The Agent .ts file\n(Chat Prompt / Vibe) (Black Box)\n\nAi NotebookLM",
+      "ocr_excerpt": "The Downstream Artifact Trap When intent remains informal, the generated code becomes the only object treated as real. You are forced to reverse-engineer intent from symptoms. The PR Reviewer Informal Intent The Agent .ts file (Chat Prompt / Vibe) (Black Box) Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-004.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-004.png",
+      "ocr_text": "\"Vibe\" is a Source-of- Truth Error\n\nVibe coding asks the model to carry intent privately, then asks the generated\ncode to stand as the public record. It bypasses the durable artifacts required\n\nfor professional control.\n\nPrivate + ERRON 5 Public Code\n\nIntent Record\n\nExperienced developers use agents for speed, but preserve agency\nthrough plans, tests, version control, and boundaries. (Huang et\nal., 2025: Professional Software Developers Don\u2019t Vibe, They Control).\n\nAi NotebookLM",
+      "ocr_excerpt": "\"Vibe\" is a Source-of- Truth Error Vibe coding asks the model to carry intent privately, then asks the generated code to stand as the public record. It bypasses the durable artifacts required for professional control. Private + ERRON 5 Public Code Intent Record Experienced developers use agents for speed, but preserve agency through plans, tests, version control, and boundaries. (Huang et al., 2025: Professional Software Developers Don\u2019t Vibe, They Control). Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-005.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-005.png",
+      "ocr_text": "The New Primitive: The Specification Surface\n\nA specification surface is a written artifact that gains operational force because it\nis controlled, maintained, and structurally embedded in the engineering lifecycle.\n\n\u2014 - Typed & Linted\n\u2014 - Validated & Trace-linked\n\u2014 - Interpreted by runtimes\n\nThe Specification Surface\n\n- Compiled into tests\n\nlest Agent\nCompilers Execution\n\nRuntimes\n\nAi NotebookLM",
+      "ocr_excerpt": "The New Primitive: The Specification Surface A specification surface is a written artifact that gains operational force because it is controlled, maintained, and structurally embedded in the engineering lifecycle. \u2014 - Typed & Linted \u2014 - Validated & Trace-linked \u2014 - Interpreted by runtimes The Specification Surface - Compiled into tests lest Agent Compilers Execution Runtimes Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-006.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-006.png",
+      "ocr_text": "Documentation vs. Specification\n\nLoose Prose Governed Authority\n(Documentation ) (Specification Surface)\n\nParsable structure (YAML,\n\nADs UIC ORS Tenet Sd) REX strict Markdown, protocols)\nMaintenance Rots silently Breaks build when stale\nEnforcement Requires human memory Checked by linters, AST\n\nqueries, test runners\n\nRole in Failures | Consulted post-mortem | Actively pushes back into\nrevision\n\nRelationship\n\nnor Coda Describes the system |Governs the system\n\nAi NotebookLM",
+      "ocr_excerpt": "Documentation vs. Specification Loose Prose Governed Authority (Documentation ) (Specification Surface) Parsable structure (YAML, ADs UIC ORS Tenet Sd) REX strict Markdown, protocols) Maintenance Rots silently Breaks build when stale Enforcement Requires human memory Checked by linters, AST queries, test runners Role in Failures | Consulted post-mortem | Actively pushes back into revision Relationship nor Coda Describes the system |Governs the system Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-007.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-007.png",
+      "ocr_text": "The Spec-Driven Development Spectrum\n\nThe useful rule: deploy enough specification to remove consequential\nambiguity, with enough enforcement to make drift visible.\n\nGuided Implementation Anchored Verification Derivative Generation\n(Light Form) (Strong Form)\n\nGenerated code becomes derivative of a human-edited specification\nonly where tooling and domain support the burden.\n\nAi NotebookLM",
+      "ocr_excerpt": "The Spec-Driven Development Spectrum The useful rule: deploy enough specification to remove consequential ambiguity, with enough enforcement to make drift visible. Guided Implementation Anchored Verification Derivative Generation (Light Form) (Strong Form) Generated code becomes derivative of a human-edited specification only where tooling and domain support the burden. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-008.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-008.png",
+      "ocr_text": "The Specification Gap: A Coordination Failure\n\nWhen specifications are stripped toward bare signatures, multi-agent\nintegration accuracy collapses. Separate workers cannot reliably infer\nshared decisions from isolated fragments.\n\nIntegration Accuracy\n\na\nSay\n\u2018=o,\n\nSingle Agent Baseline\n\nelt Ty\ni\n|\n= a\n\nSpecification Detail (Full Docstrings -> Bare Signatures)\n\nSource: Chacon Sartori, \u201cThe Specification Gap\" (26@2 94994)\n\nAi NotebookLM",
+      "ocr_excerpt": "The Specification Gap: A Coordination Failure When specifications are stripped toward bare signatures, multi-agent integration accuracy collapses. Separate workers cannot reliably infer shared decisions from isolated fragments. Integration Accuracy a Say \u2018=o, Single Agent Baseline elt Ty i | = a Specification Detail (Full Docstrings -> Bare Signatures) Source: Chacon Sartori, \u201cThe Specification Gap\" (26@2 94994) Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-009.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-009.png",
+      "ocr_text": "The Architecture of Control\n\nSynthesizing recent research reveals a three-tier operational\nframework required to turn natural language intents into verifiable\nsystem guardrails.\n\nMonperrus\n\nExecution: Harnesses & Runtimes Pan et al.\nWang et al.\n\nSharma ContextCov\n\nInvariants: Active Constraints Rehan\nJin FASTRIC\n\nSharma Disobedience\n\nAudit: Trace & Validation Mulian AgentFixer\nRasheed\n\nAi NotebookLM",
+      "ocr_excerpt": "The Architecture of Control Synthesizing recent research reveals a three-tier operational framework required to turn natural language intents into verifiable system guardrails. Monperrus Execution: Harnesses & Runtimes Pan et al. Wang et al. Sharma ContextCov Invariants: Active Constraints Rehan Jin FASTRIC Sharma Disobedience Audit: Trace & Validation Mulian AgentFixer Rasheed Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-010.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-010.png",
+      "ocr_text": "The Execution Layer: Spec as Program\n\nThe specification is the stable, durable object. Implementations\nbecome downstream products compared against it.\n\nla\nAgent\nRuntime\n\nRepair Target\nMechanisms: Typed workflow languages Insight: If implementations diverge, repair\n(AgentSPEX), checkpointing, replay, and the specification, not just the code file.\nagent generation bootstrapping.\n\nA) NotebookLM",
+      "ocr_excerpt": "The Execution Layer: Spec as Program The specification is the stable, durable object. Implementations become downstream products compared against it. la Agent Runtime Repair Target Mechanisms: Typed workflow languages Insight: If implementations diverge, repair (AgentSPEX), checkpointing, replay, and the specification, not just the code file. agent generation bootstrapping. A) NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-011.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-011.png",
+      "ocr_text": "The Invariant Layer: From Guidance to Control\n\nGuidance on a page is weak unless it enters a control loop. Context\nfiles must be extracted into executable checks\u2014shell shims, AST\nqueries, and architectural validators.\n\nAgents must not\nbypass the\nauthorization\nmiddleware.\n\nPoe\n\nContextCov\n\nExtraction [name=\"Auth.verify\u201d ]\u2019 )\n\nmi\n\nInsight: Failures reveal not just agent mistakes, but staleness or ambiguity in the\ninstruction surface itself.\n\nAi NotebookLM",
+      "ocr_excerpt": "The Invariant Layer: From Guidance to Control Guidance on a page is weak unless it enters a control loop. Context files must be extracted into executable checks\u2014shell shims, AST queries, and architectural validators. Agents must not bypass the authorization middleware. Poe ContextCov Extraction [name=\"Auth.verify\u201d ]\u2019 ) mi Insight: Failures reveal not just agent mistakes, but staleness or ambiguity in the instruction surface itself. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-012.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-012.png",
+      "ocr_text": "The Audit Layer: Inspecting the Path\n\nPolished outputs are not enough if claim-evidence relations cannot\nbe reconstructed. Evidence surfaces evaluate procedural violations,\ncomparing execution traces directly against the specification surface.\n\nOutcome-Only Scoring Trace Validation\nAPI Call /\n\nStart Finish ~ Gee. Start Finish\n\nTool Use \u00a5 State Change Y\n\nMechanisms: AgentPex trace evaluations, AgentFixer root-cause analysis, and\nverifiable claim ledgers.\n\nAi NotebookLM",
+      "ocr_excerpt": "The Audit Layer: Inspecting the Path Polished outputs are not enough if claim-evidence relations cannot be reconstructed. Evidence surfaces evaluate procedural violations, comparing execution traces directly against the specification surface. Outcome-Only Scoring Trace Validation API Call / Start Finish ~ Gee. Start Finish Tool Use \u00a5 State Change Y Mechanisms: AgentPex trace evaluations, AgentFixer root-cause analysis, and verifiable claim ledgers. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-013.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-013.png",
+      "ocr_text": "Authority Comes From the Maintenance Loop\n\nA specification surface is not a static document. It is a living control\nplane. Authority is forged when execution failures push back into\nspecification revisions, not just code tweaks.\n\nSpecification\nSurface\n\nRevision\nPressure\n\nExecution Failure /\nTrace Violation\n\nCode Execution\n\nAi NotebookLM",
+      "ocr_excerpt": "Authority Comes From the Maintenance Loop A specification surface is not a static document. It is a living control plane. Authority is forged when execution failures push back into specification revisions, not just code tweaks. Specification Surface Revision Pressure Execution Failure / Trace Violation Code Execution Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-014.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-014.png",
+      "ocr_text": "The Context File Trap\n\nMore context does not automatically produce more control. A long\ninstruction file can be stale, contradictory, or ignored by the model.\n\nYi _\n\nA | Enforced\n(10,000 lines) . S| (/ (18 lines)\n\nRule: Context files remain mere documentation until they are maintained\nand hard-connected to evaluation or enforcement loops.\n\nAi NotebookLM",
+      "ocr_excerpt": "The Context File Trap More context does not automatically produce more control. A long instruction file can be stale, contradictory, or ignored by the model. Yi _ A | Enforced (10,000 lines) . S| (/ (18 lines) Rule: Context files remain mere documentation until they are maintained and hard-connected to evaluation or enforcement loops. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-015.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-015.png",
+      "ocr_text": "The Operational Test\n\nDoes this file change what\nan agent is allowed to do,\n\nreachable tools, or v outputs?\n\nIs it validated, linted,\nor trace-linked?\n\nYES\n[SPECIFICATION\n[UNENFORCED RISK] SURFACE]\n\n[ DOCUMENTATION]\n\nAi NotebookLM",
+      "ocr_excerpt": "The Operational Test Does this file change what an agent is allowed to do, reachable tools, or v outputs? Is it validated, linted, or trace-linked? YES [SPECIFICATION [UNENFORCED RISK] SURFACE] [ DOCUMENTATION] Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-016.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-016.png",
+      "ocr_text": "Architectural Boundaries\n\nNatural language\nis-code.\n\nBUT THIS\n\nSurfaces must be\nparseable, typed,\nand checked.\n\nGenerated\nimp Lementation\ndoesn-t-matter.\n\nBUT THIS\n\nImplementation is\nthe downstream\nexecution of\nupstream intent.\n\nUniversal\nspec-as-source.\n\nBUT THIS\n\nGoverned authority\nmatched to domain\n\ndiscipline.\n\nAi NotebookLM",
+      "ocr_excerpt": "Architectural Boundaries Natural language is-code. BUT THIS Surfaces must be parseable, typed, and checked. Generated imp Lementation doesn-t-matter. BUT THIS Implementation is the downstream execution of upstream intent. Universal spec-as-source. BUT THIS Governed authority matched to domain discipline. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-017.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-017.png",
+      "ocr_text": "The New Standard for Pull Requests\n\nIf the answer lives only in a chat transcript, the system is\nrunning on atmosphere. If the answer lives in a maintained\nartifact that can be read before execution, checked during execution,\nand repaired after failure, the team has a source of truth.\n\nDoes this code work? What surface governed this work?\n.ts file .yaml\nede ace workf low area\nfile trace Tile\n\nAl-assisted software work is governable. Demand the surface.\n\nAi NotebookLM",
+      "ocr_excerpt": "The New Standard for Pull Requests If the answer lives only in a chat transcript, the system is running on atmosphere. If the answer lives in a maintained artifact that can be read before execution, checked during execution, and repaired after failure, the team has a source of truth. Does this code work? What surface governed this work? .ts file .yaml ede ace workf low area file trace Tile Al-assisted software work is governable. Demand the surface. Ai NotebookLM"
+    },
+    {
+      "deck": "specification_surface_slides_set3",
+      "slide": "slide-018.png",
+      "image_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/images/specification_surface_slides_set3/slide-018.png",
+      "ocr_text": "Source Literature\n\nPiskala, D.B. Spec-Driven Development\n(arXiv: 2602.00180)\n\nChacon Sartori, C. The Specification\nGap (arXiv: 2603.24284)\n\nHuang, R. et al. Professional Software\nDevelopers Don\u2019t Vibe, They Control\n(arXiv: 2512.14012)\n\nMonperrus, M. Bootstrapping Coding\nAgents (arXiv: 2603.17399)\n\nWang, P. et al. AgentSPEX\n(arXiv: 2604.13346)\n\nSharma, R.K. ContextCov\n(arXiv: 2603 .00822)\n\nRehan, T. Test-Driven AI Agent\nDefinition (arXiv: 2603.08806)\n\nJin, W. FASTRIC: Prompt Specification\nLanguage (arXiv: 2512.1894@)\n\nSharma, R.K. Willful Disobedience\n(arXiv: 2603.23806)\n\nMulian, H. et al. AgentFixer\n(arXiv: 2603.29848)\n\nRasheed, R.A. From Fluent to Verifiable\n(arXiv: 2602.13855)\n\nPan, L. et al. Natural-Language Agent\nHarnesses (arXiv: 2603.25723)\n\nAi NotebookLM",
+      "ocr_excerpt": "Source Literature Piskala, D.B. Spec-Driven Development (arXiv: 2602.00180) Chacon Sartori, C. The Specification Gap (arXiv: 2603.24284) Huang, R. et al. Professional Software Developers Don\u2019t Vibe, They Control (arXiv: 2512.14012) Monperrus, M. Bootstrapping Coding Agents (arXiv: 2603.17399) Wang, P. et al. AgentSPEX (arXiv: 2604.13346) Sharma, R.K. ContextCov (arXiv: 2603 .00822) Rehan, T. Test-Driven AI Agent Definition (arXiv: 2603.08806) Jin, W. FASTRIC: Prompt Specification Language (arXiv"
+    }
+  ]
+}
