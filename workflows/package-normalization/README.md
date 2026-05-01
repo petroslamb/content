@@ -33,6 +33,9 @@ This structure ensures that agents (like me) and authors (like you) always know 
 | **Manifest** | `status.yaml` | Tracks lifecycle stage (`research`, `essay_iteration`, etc.), `revision` count, and package `config`. |
 | **Live Draft** | `[slug].md` | The current working version of the essay. Pointed to by `config.markdown_path`. |
 | **Evidence** | `sources/` or `papers/` | Local archive of research materials. Contains `sources/index.md` or `papers/index.md` plus a markdown conversion subtree. |
+| **Claims** | `claims/` | Package-wide claim ledgers, contradiction registers, evidence authorization ledgers, scoring rubrics, and provenance manifests. |
+| **Iterations** | `iterations/r<revision>/` | Bounded essay candidates and their packet-local blueprints, prewrite gates, reviews, decisions, and ceiling reports. |
+| **Pivot Work** | `pivot/active/`, `pivot/archive/<pivot-id>/` | Post-ceiling successor-search artifacts. Active search has one workspace; superseded searches are archived. |
 | **Multimedia** | `artifacts/` | Derived assets: NotebookLM bundles, podcast audio, YouTube cue sheets, and images. |
 | **History** | `archive/` | Historical snapshots of the draft before a new Revision pass. |
 
@@ -63,7 +66,8 @@ If a package is flagged during a **Pre-Flight Check** (`npm run run`):
 1. **Pointers**: Ensure `markdown_path` is correct. If the draft is in a subfolder (e.g. for umbrella packages), use the full path relative to the repo root.
 2. **Sources**: If the essay cites external links, bring them into `sources/` or `papers/` using the `paper-intake` workflow. If a leaf package intentionally reuses a shared evidence tree in its umbrella, point `config.evidence_path` there instead of duplicating the library.
 3. **Artifacts**: If creating a podcast or video, initialize the `artifacts/` folder.
-4. **Suppression**: If a legacy folder structure is intentional, add it to `config.ignore_scaffold_audit`.
+4. **Root hygiene**: Keep umbrella and package roots for orientation files, status manifests, and stable live drafts. Put revision packets in `iterations/`, claim-state files in `claims/`, and post-ceiling search files in `pivot/`.
+5. **Suppression**: If a legacy folder structure is intentional, add it to `config.ignore_scaffold_audit`.
 
 ## Why Normalization?
 Normalization allows for **Auditability**. If we know where the evidence library is, whether that is local `sources/` or a shared `config.evidence_path`, we can automatically verify if the latest prose still reflects the evidence.

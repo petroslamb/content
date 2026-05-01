@@ -101,24 +101,25 @@ allowed_paths:
     - reviewable-runs/
   write:
     - publications/{package}/
+    - publications/{package}/claims/
     - reviewable-runs/resolved-runs/
     - reviewable-runs/logs/
     - reviewable-runs/gates/
 
 outputs:
   - id: evidence_authorization_ledger
-    path_template: "publications/{package}/{package_name}-evidence-authorization-ledger-r{revision}.md"
+    path_template: "publications/{package}/claims/{package_name}-evidence-authorization-ledger-r{revision}.md"
     required: true
     format: markdown
     producer: write_authorization_ledger
   - id: source_burden_map
-    path_template: "publications/{package}/{package_name}-source-burden-map-r{revision}.md"
+    path_template: "publications/{package}/claims/{package_name}-source-burden-map-r{revision}.md"
     required: conditional
     required_when: body, hinge, optional, or forbidden source use needs a separate map
     format: markdown
     producer: write_source_burden_map
   - id: synthesis_boundary
-    path_template: "publications/{package}/{package_name}-synthesis-boundary-r{revision}.md"
+    path_template: "publications/{package}/claims/{package_name}-synthesis-boundary-r{revision}.md"
     required: conditional
     required_when: the essay frame depends on synthesis across multiple sources
     format: markdown

@@ -98,9 +98,9 @@ Search-sweep candidates:
 ## Where It Entered The Package
 
 - [`../2026-04-21-claim-state-gap-contradiction-pass.md`](../2026-04-21-claim-state-gap-contradiction-pass.md)
-- [`../../claim-ledger.md`](../../claim-ledger.md)
-- [`../../contradiction-register.md`](../../contradiction-register.md)
-- [`../../claim-scorecard.md`](../../claim-scorecard.md)
+- [`../../claim-ledger.md`](../../claims/claim-ledger.md)
+- [`../../contradiction-register.md`](../../claims/contradiction-register.md)
+- [`../../claim-scorecard.md`](../../claims/claim-scorecard.md)
 - [`../../papers/index.md`](../../papers/index.md)
 
 ## Current Status

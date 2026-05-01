@@ -11,9 +11,9 @@ This pass is not a new search. It asks whether the package can make the candidat
 - [`literate-workflow-programming-pivot-slate.md`](literate-workflow-programming-pivot-slate.md)
 - [`literate-workflow-programming-pivot-grounding-review.md`](literate-workflow-programming-pivot-grounding-review.md)
 - [`literate-workflow-programming-pivot-north-star-viability.md`](literate-workflow-programming-pivot-north-star-viability.md)
-- [`../../literate-workflow-programming-ceiling-report-r3.md`](../../literate-workflow-programming-ceiling-report-r3.md)
-- [`../../research-notes/2026-04-20-spec-diff-experiment.md`](../../research-notes/2026-04-20-spec-diff-experiment.md)
-- [`../../research-notes/2026-04-22-claim-provenance-proof-note.md`](../../research-notes/2026-04-22-claim-provenance-proof-note.md)
+- [`../../literate-workflow-programming-ceiling-report-r3.md`](../../../literate-workflow-programming-flagship/iterations/r3/literate-workflow-programming-ceiling-report-r3.md)
+- [`../../research-notes/2026-04-20-spec-diff-experiment.md`](../../../research-notes/2026-04-20-spec-diff-experiment.md)
+- [`../../research-notes/2026-04-22-claim-provenance-proof-note.md`](../../../research-notes/2026-04-22-claim-provenance-proof-note.md)
 - paper seams already tracked in this package:
   - `2604.13346` `AgentSPEX`
   - `2603.00822` `ContextCov`

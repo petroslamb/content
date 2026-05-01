@@ -1,11 +1,11 @@
 # Literate Workflow Programming
 
-Umbrella package for the literate-workflow-programming research line. The package now holds one capped donor leaf plus a reopened successor-search record that share one research and evidence tree:
+Umbrella package for the literate-workflow-programming research line. The package now holds one capped donor leaf, one promoted successor leaf, and one historical exploratory branch that share one research and evidence tree:
 
 - the capped flagship donor attempt `Literate Workflow Programming`
-- the reopened post-ceiling search for a new flagship successor
+- the promoted post-ceiling successor `The Specification Surface Is the New Source of Truth`
 
-The shared paper library, research notes, contradiction surfaces, and pivot record stay at the umbrella root so the two objects can reuse one evidence base without forked intake.
+The shared paper library, research notes, claim surfaces, and pivot record stay under umbrella-owned folders so the two objects can reuse one evidence base without forked intake. Publication-object artifacts live in their leaves.
 
 ## Package Status
 
@@ -14,10 +14,10 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Donor flagship leaf: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
 - Active overlay: `post_ceiling_pivot`
 - Current umbrella route: `pivot_cleared_for_north_star_attempt`
-- Current next action: `successor_leaf_research_handoff`
+- Current next action: `continue_successor_leaf_notebooklm_artifacts`
 - Active successor candidate: `The Specification Surface Is the New Source of Truth`
 - Active successor leaf: [`specification-surface-source-of-truth/README.md`](specification-surface-source-of-truth/README.md)
-- Previous closure record: [`no-successor-closure.md`](no-successor-closure.md)
+- Previous closure record: [`pivot/archive/2026-04-28-contract-layer-no-successor/no-successor-closure.md`](pivot/archive/2026-04-28-contract-layer-no-successor/no-successor-closure.md)
 - Archived rejected larger candidate: `The Real System Lives In The Contract Layer`
 - Umbrella route manifest: [`status.yaml`](status.yaml)
 - Canonical workflow docs: [`../../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../../workflows/alphaxiv-research/README.md`](../../workflows/alphaxiv-research/README.md), [`../../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md)
@@ -27,7 +27,7 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - **Flagship donor leaf**: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
   Uses the capped `r1 -> r3` flagship attempt and the stop-gated donor report.
 - **Successor flagship leaf**: [`specification-surface-source-of-truth/README.md`](specification-surface-source-of-truth/README.md)
-  Uses the reopened `specification surface` pivot candidate. It starts in research handoff, not drafting.
+  Uses the reopened `specification surface` pivot candidate. It now owns the live successor draft and downstream publication stages.
 
 ## Historical Exploratory Branch
 
@@ -41,16 +41,17 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Harness-paper curation index: [`harness_papers/index.md`](harness_papers/index.md)
 - Shared research notes: [`research-notes/`](research-notes/)
 - alphaXiv discussion index: [`research-notes/alphaxiv-discussions/`](research-notes/alphaxiv-discussions/)
-- Claim ledger: [`claim-ledger.md`](claim-ledger.md)
-- Contradiction register: [`contradiction-register.md`](contradiction-register.md)
-- Claim provenance manifest: [`claim-provenance-manifest-r1.json`](claim-provenance-manifest-r1.json)
+- Shared claim surfaces: [`claims/`](claims/)
+- Claim ledger: [`claims/claim-ledger.md`](claims/claim-ledger.md)
+- Contradiction register: [`claims/contradiction-register.md`](claims/contradiction-register.md)
+- Claim provenance manifest: [`claims/claim-provenance-manifest-r1.json`](claims/claim-provenance-manifest-r1.json)
 - Package-local `spec-diff` prototype: [`scripts/spec_diff_paper_intake.py`](scripts/spec_diff_paper_intake.py)
 
 ## Donor And Legacy Pivot Record
 
-- Flagship live draft: [`literate-workflow-programming.md`](literate-workflow-programming.md)
-- Research-exit gate: [`literate-workflow-programming-research-exit-gate-r1.md`](literate-workflow-programming-research-exit-gate-r1.md)
-- Canonical donor report: [`literate-workflow-programming-ceiling-report-r3.md`](literate-workflow-programming-ceiling-report-r3.md)
+- Flagship live draft: [`literate-workflow-programming-flagship/literate-workflow-programming.md`](literate-workflow-programming-flagship/literate-workflow-programming.md)
+- Research-exit gate: [`literate-workflow-programming-flagship/literate-workflow-programming-research-exit-gate-r1.md`](literate-workflow-programming-flagship/literate-workflow-programming-research-exit-gate-r1.md)
+- Canonical donor report: [`literate-workflow-programming-flagship/iterations/r3/literate-workflow-programming-ceiling-report-r3.md`](literate-workflow-programming-flagship/iterations/r3/literate-workflow-programming-ceiling-report-r3.md)
 - Legacy pivot workspace: [`pivot/README.md`](pivot/README.md)
 - Active pivot slate: [`pivot/active/literate-workflow-programming-pivot-slate.md`](pivot/active/literate-workflow-programming-pivot-slate.md)
 - Active pivot grounding review: [`pivot/active/literate-workflow-programming-pivot-grounding-review.md`](pivot/active/literate-workflow-programming-pivot-grounding-review.md)
@@ -65,7 +66,7 @@ The shared paper library, research notes, contradiction surfaces, and pivot reco
 - Archived contract-layer pivot north-star viability: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-north-star-viability.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-north-star-viability.md)
 - Archived contract-layer pivot decision: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-decision.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-decision.md)
 - Archived contract-layer pivot blocker: [`pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-blocker.md`](pivot/archive/2026-04-28-contract-layer-no-successor/literate-workflow-programming-pivot-blocker.md)
-- No-successor closure: [`no-successor-closure.md`](no-successor-closure.md)
+- No-successor closure: [`pivot/archive/2026-04-28-contract-layer-no-successor/no-successor-closure.md`](pivot/archive/2026-04-28-contract-layer-no-successor/no-successor-closure.md)
 - Archived validation-doctrine attempt: [`pivot/archive/validation-doctrine-attempt-2026-04-23/`](pivot/archive/validation-doctrine-attempt-2026-04-23)
 
 ## Shared Working Frame
@@ -80,12 +81,22 @@ The current umbrella state is:
 - the doctrine experiment was preserved as a historical side branch, not accepted as the pivot answer
 - the first restarted larger-successor search tested `The Real System Lives In The Contract Layer` and stopped without a cleared successor
 - the reopened search passed the north-star viability gate for `specification surface` as the larger public object: not loose natural-language prose, but constrained specifications that become source-of-truth control surfaces for AI-native work
-- the successor leaf has now been initialized and should re-enter research before any flagship drafting
+- the successor leaf now has a promoted live draft and should continue its downstream publication pipeline
+
+## Folder Discipline
+
+- Keep only package orientation and control files in this root: [`README.md`](README.md), [`status.yaml`](status.yaml), and [`umbrella-brief.md`](umbrella-brief.md).
+- Put shared claim and proof surfaces under [`claims/`](claims/).
+- Put donor-specific essay packets under the donor leaf's `iterations/r*/` folders.
+- Put successor-specific essay packets under the successor leaf's `iterations/r*/` folders.
+- Put transcript round-trips and media-derived working files under [`artifacts/`](artifacts/).
+- Put active successor-search materials under [`pivot/active/`](pivot/active/) and superseded routes under dated [`pivot/archive/`](pivot/archive/) folders.
 
 ## Working Guidance
 
-- Use the umbrella root for shared paper intake, shared research notes, contradiction work, donor-history inspection, and reading the current reopened umbrella route.
+- Use the umbrella root for shared paper intake, shared research notes, claim and contradiction work, donor-history inspection, and reading the current reopened umbrella route.
 - Use [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md) when the task is specifically about the capped flagship packet, donor report, or pivot handoff.
+- Use [`specification-surface-source-of-truth/README.md`](specification-surface-source-of-truth/README.md) for active successor writing and downstream publication work.
 - Use [`validation-lifecycle-infrastructure/README.md`](validation-lifecycle-infrastructure/README.md) only when the task is specifically about that rejected narrower branch as historical context.
-- Treat the root-level flagship packet and archived `pivot/` files as donor history plus stopped successor-search surfaces, not as overwritten donor material.
+- Treat the flagship leaf packet and archived `pivot/` files as donor history plus stopped successor-search surfaces, not as overwritten donor material.
 - Keep shared evidence here unless one leaf later develops a truly separate evidence tree.

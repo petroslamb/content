@@ -6,7 +6,7 @@ Status: post-consequence-pass rerank
 
 ## Purpose
 
-This note executes the comparative rerank required by [`../../../../workflows/post-ceiling-pivot/README.md`](../../../../workflows/post-ceiling-pivot/README.md) after new pressure materially changed the active candidate.
+This note executes the comparative rerank required by [`../../../../workflows/post-ceiling-pivot/README.md`](../../../../../workflows/post-ceiling-pivot/README.md) after new pressure materially changed the active candidate.
 
 The new input was not a fresh paper search. It was the consequence-focused pressure pass in [`literate-workflow-programming-validation-lifecycle-consequence-pass.md`](literate-workflow-programming-validation-lifecycle-consequence-pass.md), which sharpened both the public enemy and the downstream consequence for the leading candidate.
 

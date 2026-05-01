@@ -57,10 +57,10 @@ I also did not adopt:
 ## Where It Entered The Package
 
 - [`../2026-04-21-p2a-local-intake-trace-provenance.md`](../2026-04-21-p2a-local-intake-trace-provenance.md)
-- [`../../claim-ledger.md`](../../claim-ledger.md)
-- [`../../contradiction-register.md`](../../contradiction-register.md)
-- [`../../claim-scorecard.md`](../../claim-scorecard.md)
-- [`../../literate-workflow-programming.md`](../../literate-workflow-programming.md)
+- [`../../claim-ledger.md`](../../claims/claim-ledger.md)
+- [`../../contradiction-register.md`](../../claims/contradiction-register.md)
+- [`../../claim-scorecard.md`](../../claims/claim-scorecard.md)
+- [`../../literate-workflow-programming.md`](../../literate-workflow-programming-flagship/literate-workflow-programming.md)
 
 ## Current Status
 

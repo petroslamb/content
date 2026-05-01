@@ -6,18 +6,17 @@ Leaf publication package inside the [`../README.md`](../README.md) umbrella for 
 
 - Archetype: Leaf package inside the umbrella
 - Status: Capped flagship donor
-- Canonical live draft: [`../literate-workflow-programming.md`](../literate-workflow-programming.md)
-- Canonical donor report: [`../literate-workflow-programming-ceiling-report-r3.md`](../literate-workflow-programming-ceiling-report-r3.md)
+- Canonical live draft: [`literate-workflow-programming.md`](literate-workflow-programming.md)
+- Canonical donor report: [`iterations/r3/literate-workflow-programming-ceiling-report-r3.md`](iterations/r3/literate-workflow-programming-ceiling-report-r3.md)
 - Shared evidence library: [`../papers/`](../papers/)
 - Shared paper index: [`../papers/index.md`](../papers/index.md)
 
 ## Governing Surfaces
 
-- Live draft / working thesis: [`../literate-workflow-programming.md`](../literate-workflow-programming.md)
-- Blueprints: [`../literate-workflow-programming-blueprint-r1.md`](../literate-workflow-programming-blueprint-r1.md), [`../literate-workflow-programming-blueprint-r2.md`](../literate-workflow-programming-blueprint-r2.md), [`../literate-workflow-programming-blueprint-r3.md`](../literate-workflow-programming-blueprint-r3.md)
-- Candidates: [`../literate-workflow-programming-candidate-r1.md`](../literate-workflow-programming-candidate-r1.md), [`../literate-workflow-programming-candidate-r2.md`](../literate-workflow-programming-candidate-r2.md), [`../literate-workflow-programming-candidate-r3.md`](../literate-workflow-programming-candidate-r3.md)
-- Replacement reviews: [`../literate-workflow-programming-replacement-review-r1.md`](../literate-workflow-programming-replacement-review-r1.md), [`../literate-workflow-programming-replacement-review-r2.md`](../literate-workflow-programming-replacement-review-r2.md), [`../literate-workflow-programming-replacement-review-r3.md`](../literate-workflow-programming-replacement-review-r3.md)
-- Decisions: [`../literate-workflow-programming-decision-r1.md`](../literate-workflow-programming-decision-r1.md), [`../literate-workflow-programming-decision-r2.md`](../literate-workflow-programming-decision-r2.md), [`../literate-workflow-programming-decision-r3.md`](../literate-workflow-programming-decision-r3.md)
+- Live draft / working thesis: [`literate-workflow-programming.md`](literate-workflow-programming.md)
+- Iteration r1: [`blueprint`](iterations/r1/literate-workflow-programming-blueprint-r1.md), [`candidate`](iterations/r1/literate-workflow-programming-candidate-r1.md), [`replacement review`](iterations/r1/literate-workflow-programming-replacement-review-r1.md), [`decision`](iterations/r1/literate-workflow-programming-decision-r1.md)
+- Iteration r2: [`blueprint`](iterations/r2/literate-workflow-programming-blueprint-r2.md), [`candidate`](iterations/r2/literate-workflow-programming-candidate-r2.md), [`replacement review`](iterations/r2/literate-workflow-programming-replacement-review-r2.md), [`decision`](iterations/r2/literate-workflow-programming-decision-r2.md)
+- Iteration r3: [`blueprint`](iterations/r3/literate-workflow-programming-blueprint-r3.md), [`candidate`](iterations/r3/literate-workflow-programming-candidate-r3.md), [`replacement review`](iterations/r3/literate-workflow-programming-replacement-review-r3.md), [`decision`](iterations/r3/literate-workflow-programming-decision-r3.md), [`ceiling report`](iterations/r3/literate-workflow-programming-ceiling-report-r3.md)
 
 ## Current Read
 
@@ -32,4 +31,4 @@ Use this leaf when the task is about:
 - the stop-gated donor report
 - the pivot handoff into successor search
 
-Do not use this leaf as the active writing surface for successor search. That work now lives at the umbrella root through the active `post_ceiling_pivot` surfaces.
+Do not use this leaf as the active writing surface for successor work. The umbrella keeps the pivot lineage, and active successor writing now lives in [`../specification-surface-source-of-truth/README.md`](../specification-surface-source-of-truth/README.md).
