@@ -8,17 +8,24 @@
   "studio_editor_url": "https://studio.youtube.com/video/slozjRp6CPg/editor",
   "end_screen": {
     "status": "reload_verified",
-    "studio_surface": "Τελική οθόνη Επεξεργασία"
+    "studio_surface": "Τελική οθόνη Επεξεργασία",
+    "explicit_research_breakdown_video": true,
+    "best_for_viewer_video": true,
+    "subscribe_element": true
   },
   "info_card": {
     "status": "reload_verified",
     "studio_surface": "Κάρτες πληροφοριών Επεξεργασία",
     "custom_message": "Full visual deep dive",
-    "teaser_text": "Full research breakdown"
+    "teaser_text": "Full research breakdown",
+    "midpoint_duplicate_attempted": true,
+    "midpoint_duplicate_result": "studio_card_duplicate_target_not_allowed"
   },
   "reload_check": {
     "has_end_screen_edit_surface": true,
     "has_info_card_edit_surface": true,
-    "has_target_title_on_timeline": true
+    "has_target_title_on_timeline": true,
+    "has_best_for_viewer_on_timeline": true,
+    "has_subscribe_on_timeline": true
   }
 }

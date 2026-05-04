@@ -1,0 +1,52 @@
+{
+  "verified_at": "2026-05-04T17:35:55Z",
+  "workflow": "youtube_cinematic_rollout",
+  "scope": "recent_cinematic_briefs_with_youtube_research_breakdown_targets",
+  "end_screen_contract": {
+    "explicit_research_breakdown_video": true,
+    "best_for_viewer_video": true,
+    "subscribe_element": true
+  },
+  "info_card_contract": {
+    "early_research_breakdown_video_card": true,
+    "midpoint_duplicate_research_breakdown_card": false,
+    "midpoint_duplicate_blocker": "studio_card_duplicate_target_not_allowed"
+  },
+  "videos": [
+    {
+      "cinematic_video_id": "slozjRp6CPg",
+      "target_video_id": "I6gKAyYRfZU",
+      "target_title": "The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true
+    },
+    {
+      "cinematic_video_id": "9C-N9gaJjN4",
+      "target_video_id": "ahAVt338E_8",
+      "target_title": "The Moltbook Phenomenon",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true
+    },
+    {
+      "cinematic_video_id": "chr4R-fSZUY",
+      "target_video_id": "omWd8dyHJfY",
+      "target_title": "When the LLM Programs Its Own Thinking",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true
+    },
+    {
+      "cinematic_video_id": "n99g7mLWQek",
+      "target_video_id": "2Fs1iDw5I3Y",
+      "target_title": "Operating Agents Bonus Lesson [Optimization]: The Workflow Is The Object",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true
+    },
+    {
+      "cinematic_video_id": "vCpW8dYfeEY",
+      "target_video_id": "biyIKcSp3Po",
+      "target_title": "Operating Agents Lesson V [Safety]: The Attack Surface You Built",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true
+    }
+  ]
+}

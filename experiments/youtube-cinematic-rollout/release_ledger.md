@@ -827,3 +827,17 @@ Initial rollout order from `backlog_manifest.yaml`:
   - `orchestration_paradigm_issue_reality` and `transformer_attractor`: `studio_link_blocked_external_target` because configured secondary targets are external Substack essays.
   - `specification_surface_source_of_truth`: `studio_link_verified`; the full cinematic `slozjRp6CPg` has a Studio end screen and info card pointing to `The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive` (`I6gKAyYRfZU`), and the editor reload verified both surfaces persisted.
 - Rollout controller dry run: no in-flight entries, no next generation candidates, no Shorts manifests materialized.
+
+### 2026-05-04T17:35:55Z
+
+- Updated the cinematic rollout Studio contract:
+  - full cinematic end screens should keep the explicit research-breakdown video, add `best for viewer`, and add channel subscribe
+  - info cards should keep one early research-breakdown video card
+  - YouTube Studio rejects a second identical video card to the same target, so midpoint duplicate cards are recorded as `studio_card_duplicate_target_not_allowed`
+- Studio-enriched and reload-verified recent cinematic briefs with YouTube research-breakdown targets:
+  - `slozjRp6CPg` -> `I6gKAyYRfZU`; end screen includes explicit deep dive, best for viewer, and subscribe; info card remains enabled
+  - `9C-N9gaJjN4` -> `ahAVt338E_8`; end screen includes explicit deep dive, best for viewer, and subscribe; info card remains enabled
+  - `chr4R-fSZUY` -> `omWd8dyHJfY`; end screen includes explicit deep dive, best for viewer, and subscribe; info card remains enabled
+  - `n99g7mLWQek` -> `2Fs1iDw5I3Y`; end screen includes explicit deep dive, best for viewer, and subscribe; info card remains enabled
+  - `vCpW8dYfeEY` -> `biyIKcSp3Po`; end screen includes explicit deep dive, best for viewer, and subscribe; info card remains enabled
+- Verification report: `experiments/youtube-cinematic-rollout/latest_cinematic_end_screen_enrichment_2026-05-04.json`
