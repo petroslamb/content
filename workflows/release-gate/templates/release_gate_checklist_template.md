@@ -32,8 +32,11 @@ Blocking reason if any:
 ## Evidence And References
 
 - [ ] Body citations are present where the argument needs them.
+- [ ] Body citations use author-year parentheticals where cited papers carry claims.
 - [ ] Reference entries use consistent author/year/title/link formatting where available.
+- [ ] Cited paper entries use linked h4 headings to the arXiv paper or canonical source where available.
 - [ ] Newly added citations have a visible reason to exist.
+- [ ] Sources doing substantive argumentative work have contribution paragraphs, not only bibliographic entries.
 - [ ] Repo-only evidence, companions, or datasets are linked intentionally.
 - [ ] Claims that were forbidden by the evidence ledger or review artifacts are not present.
 

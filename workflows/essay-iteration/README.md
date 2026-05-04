@@ -158,6 +158,7 @@ Use the blueprint only after the main cold read if blueprint alignment needs com
 - After a brutal review or cold replacement review that does not clear promotion, the next step is a high-bar blueprint hardening gate. Either produce a blueprint strong enough to govern a rewrite aimed at the outstanding-essay bar, or conclude explicitly that the current frame cannot reach that bar from the available evidence.
 - When a draft is already close, prefer surgical fixes that clear the remaining blockers over a broad rewrite that destabilizes the whole piece.
 - When the remaining blocker is debate energy, actionability, or a missing antagonist, do not make the prose louder first. Establish the target. If the sharper claim depends on a synthesis bridge, use [`../evidence-authorization/README.md`](../evidence-authorization/README.md) to write a hinge warrant ledger before opening another candidate.
+- When the remaining blocker is `publication-sharpness-gap`, do not translate that into staccato prose by default. Sharpen the scene, hinge, antagonist, or ending while preserving the voice guide's medium-density paragraph rhythm. Short sentences are reserved for rare hinge moments, not repeated paragraph cadence.
 - The stable-live-draft-plus-archive model is the default. The main exception is when a package explicitly manages parallel bundle baselines, in which case versioned siblings can temporarily stay live until one becomes canonical.
 - For refinement passes on an existing essay, harden the blueprint before a major rewrite when the blueprint is derived from the draft and still contains fuzzy claims, unresolved citation drift, or under-specified revision goals.
 - When a major rewrite is needed, prefer a clearly named bounded candidate such as `-v2.md` or `-revision-2.md` before promoting it into the stable live path. Do not overwrite the live draft first and decide later what changed.
@@ -311,6 +312,7 @@ When the package is writing an evidence-sensitive public article rather than a p
 - Use inline author-style citations in the body, for example `(He et al., 2015)` rather than raw URLs, bare paper titles, or numeric bracket citations.
 - Keep inline citations attached to argumentative claims, not every sentence. A citation should mark where the evidence is doing work.
 - End the article with a real reference section. Do not stop at a bare link dump when the references are part of the reading experience.
+- Format cited paper entries as level-4 markdown headings linked to the arXiv paper or canonical source, then put the contribution paragraph underneath the heading.
 - When the cited papers are doing substantive argumentative work, give each reference at least a short paragraph explaining why it matters to the essay. The reference section can therefore be annotated, not just bibliographic.
 - Keep the article reference section distinct from `papers/index.md`. The article references explain argumentative importance; the paper index tracks the local source library.
 
@@ -360,6 +362,7 @@ Cold replacement reviews should explicitly call out:
 - where the history feels imposed, over-smoothed, or too neat
 - where citations are present but not actually doing argumentative work
 - where the prose sounds high-level without doing necessary intellectual work
+- where publication polish has overcorrected into clipped, slogan-like, or repetitive short-sentence rhythm
 - where the title, subtitle, or framing outruns what the body really proves
 
 If the live draft is still stronger in any important way, say so directly. If the candidate is cleaner but thinner, that should count against promotion rather than for it.

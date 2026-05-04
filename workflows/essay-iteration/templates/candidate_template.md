@@ -15,4 +15,4 @@ State the boundaries, counterpressure, or what the essay will not claim.
 
 ## References
 
-Include real endmatter or references, not just a companion pointer.
+Include real endmatter or references, not just a companion pointer. Use author-year citations in the body where sources carry claims. For cited papers, prefer h4 headings linked to the arXiv paper or canonical source, followed by a short paragraph explaining each source's core contribution to this essay.

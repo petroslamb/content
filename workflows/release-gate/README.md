@@ -110,10 +110,12 @@ If the wrong file is being released, stop. Do not patch around it inside Substac
 Check:
 
 1. body citations are present where the argument needs them
-2. reference entries are formatted consistently enough for publication
-3. newly added citations have a visible reason to exist
-4. source contribution notes exist where they help future maintainers
-5. claims forbidden by an evidence ledger, hinge warrant ledger, or review artifact did not reappear during polish
+2. body citations use author-year parentheticals for cited papers rather than raw IDs, bare links, or title-only mentions
+3. reference entries are formatted consistently enough for publication
+4. cited paper entries use linked h4 headings to the arXiv paper or canonical source where available
+5. newly added citations have a visible reason to exist
+6. sources doing substantive argumentative work have contribution paragraphs, not only bibliographic entries
+7. claims forbidden by an evidence ledger, hinge warrant ledger, or review artifact did not reappear during polish
 
 If the essay contains a serious evidence overclaim, send it back to evidence authorization or blueprint hardening. Do not treat that as release polish.
 

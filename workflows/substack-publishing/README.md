@@ -42,7 +42,10 @@ Use this when an article is ready enough to become a public post and the package
 When appropriate, the published essay should include:
 
 - a `#### Video TL;DR` heading near the top if a relevant video artifact exists
+- inline author-year citations in the body where sources carry claims
 - a precise reference section at the end
+- cited paper entries formatted as linked h4 headings to the arXiv paper or canonical source
+- source-contribution paragraphs for references doing argumentative work
 - short orientation text for references when useful
 - appendices when they genuinely help
 - links back to the upstream repo for companions, datasets, or supporting material that do not fit inside the main essay
@@ -62,6 +65,8 @@ If a draft still reads like repo documentation rather than a public essay, simpl
    - final image naming
    - intentional image placement
    - any transcript-driven rehumanization pass
+   - body author-year citations for cited claims
+   - linked h4 reference headings with source-contribution paragraphs
 3. run or inspect the release gate verdict before any external mutation
 4. insert the `Video TL;DR` block if a video artifact exists and the post format supports it
 5. publish with `python-substack` or a package-specific publishing helper

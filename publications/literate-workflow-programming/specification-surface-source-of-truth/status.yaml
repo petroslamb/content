@@ -15,6 +15,12 @@ config:
   substack_url: https://lambpetros.substack.com
   substack_post_id: 196091276
   substack_draft_url: https://lambpetros.substack.com/publish/post/196091276
+  substack_slug: the-specification-surface-is-the
+  published_url: https://lambpetros.substack.com/p/the-specification-surface-is-the
+  archive_markdown_path: publication_strategy_and_archive/substack_archive/2026-05-01_the-specification-surface-is-the.md
+  archive_html_path: publication_strategy_and_archive/substack_archive/2026-05-01_the-specification-surface-is-the.html
+  release_gate_path: publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-release-gate-r3.md
+  distribution_path: publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md
   pivot_decision_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-decision.md
   north_star_viability_path: publications/literate-workflow-programming/pivot/active/literate-workflow-programming-pivot-north-star-viability.md
   research_question: How do controlled, typed, linted, validated, and trace-linked
@@ -38,14 +44,14 @@ stages:
     done: true
     last_updated: '2026-04-30'
   substack_publishing:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-05-04'
   archive_sync:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-05-04'
   youtube_production:
     done: true
     last_updated: '2026-04-30'
   distribution:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-05-04'

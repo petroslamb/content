@@ -259,6 +259,14 @@ behavior:
       check: lifecycle_movement_requires_gate_approval
     - id: archive_after_explicit_promotion_decision
       check: archive_requires_decision_artifact
+    - id: publication_sharpness_preserves_voice_rhythm
+      check: sharpness_edits_do_not_default_to_staccato_sentence_cadence
+    - id: evidence_sensitive_candidates_use_author_year_citations
+      check: public_article_candidates_use_author_year_body_citations_for_cited_sources
+    - id: evidence_sensitive_candidates_use_linked_source_headings
+      check: public_article_candidates_use_linked_h4_reference_headings
+    - id: evidence_sensitive_candidates_annotate_source_contributions
+      check: public_article_candidates_explain_reference_contributions
   budgets:
     max_steps: 8
     max_script_retries: 1
@@ -521,7 +529,7 @@ steps:
   - id: write_bounded_candidate
     title: Write bounded candidate
     mode: codex_session
-    action: Write one bounded candidate in the active revision packet directory only after the prewrite gate authorizes drafting.
+    action: Write one bounded candidate in the active revision packet directory only after the prewrite gate authorizes drafting; when improving publication sharpness, preserve the voice guide's medium-density rhythm and reserve clipped sentences for rare hinge moments.
     consumes:
       - packet_manifest
       - prewrite_gate

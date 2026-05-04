@@ -196,6 +196,12 @@ behavior:
       check: substack_body_generated_from_canonical_markdown
     - id: video_tldr_marker_preserved
       check: video_tldr_marker_maps_to_existing_draft_video
+    - id: body_citations_survive_publish_sync
+      check: canonical_markdown_uses_author_year_body_citations_for_cited_sources
+    - id: linked_reference_headings_survive_publish_sync
+      check: canonical_markdown_uses_linked_h4_reference_headings
+    - id: source_contribution_notes_survive_publish_sync
+      check: canonical_markdown_reference_sources_have_contribution_notes
     - id: archive_follow_through_required_for_tracked_posts
       check: tracked_publication_requires_archive_sync
   budgets:
