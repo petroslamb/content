@@ -55,7 +55,9 @@ Do not move generated media into the experiment workspace.
 - Apply the high-bar Shorts rubric and schedule only clips that score `22` or higher.
 - Render approved Shorts with the manifest-configured overlay treatment by default: top hook, spoken subtitles from the cinematic SRT, and bottom related-video CTA.
 - Publish cinematics immediately after upload.
-- For every full cinematic upload in `Rooted Layers Cinematic Briefs`, add one YouTube Studio info card in the first few minutes and one end-screen video element pointing to the configured YouTube research-breakdown target.
+- For every full cinematic upload in `Rooted Layers Cinematic Briefs`, add one YouTube Studio info card pointing to the configured YouTube research-breakdown target in the first few minutes.
+- Do not try to add a second info card pointing to the same research-breakdown video. YouTube Studio rejects duplicate video-card targets for the same upload with a "multiple cards cannot reference the same video" validation error.
+- For every full cinematic upload with a configured YouTube research-breakdown target, make the end screen rich: keep one explicit video element pointing to that target, add one `best for viewer` video element, and add one subscribe element.
 - Do not add cards or end screens to Shorts as part of this workflow.
 - If the configured secondary link is an external essay URL rather than a YouTube video, record `studio_link_blocked_external_target` and skip the Studio card/end-screen step. Do not guess a target video.
 - If YouTube Studio browser auth is missing, record `studio_link_pending`, notify the user to sign in to Studio, and keep the item in follow-through until the card/end-screen wiring is verified.
@@ -207,10 +209,15 @@ https://studio.youtube.com/video/<CINEMATIC_VIDEO_ID>/editor
 
 In Studio:
 
-- Add or edit the end screen. If the upload has no end screen yet, apply a one-video plus subscribe template, set the video element to the configured research-breakdown video ID, and save.
-- Add or edit an info card. Use a video card, set it to the configured research-breakdown video ID, place the teaser in the first few minutes, and save.
+- Add or edit the end screen. The target end screen should contain:
+  - one specific video element set to the configured research-breakdown video ID
+  - one `best for viewer` video element
+  - one subscribe element for the channel
+- If an older end screen already has the explicit research-breakdown video, keep it and add the missing `best for viewer` and subscribe elements.
+- Add or edit info cards. Use one video card pointing to the configured research-breakdown video ID.
 - Prefer `00:01:00` for the card teaser time. If Studio rejects that timestamp for a very short upload, use the earliest valid first-minutes timestamp.
-- Reopen the editor after saving and verify the main editor shows both end screen and info cards as editable. If either surface did not persist, reopen that editor and save again.
+- If asked for a second identical card at the midpoint, record `studio_card_duplicate_target_not_allowed`; do not leave an invalid unsaved duplicate card in Studio.
+- Reopen the editor after saving and verify the main editor shows the end screen and info cards as editable, the explicit research-breakdown target appears on the timeline, and both the `best for viewer` and subscribe elements are present where Studio exposes them. If any surface did not persist, reopen that editor and save again.
 
 If Studio browser auth is missing, record `studio_link_pending` with the cinematic video ID and target video ID, notify the user to sign in to YouTube Studio in the in-app browser, and keep the item in the active follow-through loop until auth is restored or the run is explicitly blocked. Downstream YouTube-only work can continue only when it does not hide the unresolved Studio wiring.
 
