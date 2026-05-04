@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-05-04T17:58:00Z",
+  "workflow": "substack_publishing",
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "post_id": 196091276,
+  "publication_url": "https://lambpetros.substack.com",
+  "published_url": "https://lambpetros.substack.com/p/the-specification-surface-is-the",
+  "markdown": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+  "published": true,
+  "release_gate": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-release-gate-r3.md",
+  "verification": {
+    "public_page_contains": [
+      "The agent-generated diff is plausible, the tests pass, and the summary explains",
+      "questions that should have been settled upstream return as archaeology"
+    ],
+    "public_page_absent": [
+      "The agent-generated diff is plausible. The tests pass.",
+      "Why did the agent choose this schema"
+    ],
+    "feed_contains_repaired_text": true
+  },
+  "archive_follow_through": {
+    "requested": true,
+    "summary": "reviewable-runs/logs/2026-05-04_specification-surface-substack-sync-summary.json"
+  }
+}

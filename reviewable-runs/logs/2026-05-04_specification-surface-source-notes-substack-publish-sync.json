@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-05-04T19:49:00Z",
+  "workflow": "substack_publishing",
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "post_id": 196091276,
+  "publication_url": "https://lambpetros.substack.com",
+  "published_url": "https://lambpetros.substack.com/p/the-specification-surface-is-the",
+  "markdown": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+  "published": true,
+  "change": "Added source-contribution paragraphs for every reference doing argumentative work and synced the repaired reference section to Substack.",
+  "verification": {
+    "public_page_contains": [
+      "Piskala gives the essay its software-engineering baseline",
+      "Chacon Sartori supplies the hinge evidence",
+      "Rasheed and coauthors give the essay its evidence-surface endpoint"
+    ],
+    "feed_contains_source_notes": true
+  },
+  "archive_follow_through": {
+    "requested": true,
+    "summary": "reviewable-runs/logs/2026-05-04_specification-surface-source-notes-substack-sync-summary.json"
+  }
+}

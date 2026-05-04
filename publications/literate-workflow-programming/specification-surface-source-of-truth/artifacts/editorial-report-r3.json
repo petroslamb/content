@@ -1,0 +1,189 @@
+{
+  "kind": "editorial_automation_report",
+  "schema_version": 1,
+  "generated_at": "2026-05-04T20:05:12Z",
+  "package": {
+    "key": "literate-workflow-programming/specification-surface-source-of-truth",
+    "path": "publications/literate-workflow-programming/specification-surface-source-of-truth",
+    "status_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml",
+    "revision": 3,
+    "live_draft_path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
+  },
+  "authority": {
+    "voice_guide_path": "voice_consistency_guide.md",
+    "voice_guide_loaded": true
+  },
+  "checks": [
+    {
+      "id": "voice_ban_list",
+      "status": "passed",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "paragraph_rhythm",
+      "status": "passed",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "sentence_rhythm",
+      "status": "passed",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "reference_contribution_notes",
+      "status": "passed",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "reference_heading_links",
+      "status": "passed",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "body_author_year_citations",
+      "status": "passed",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "contrast_rhythm",
+      "status": "findings",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 1
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "claim_evidence_trace",
+      "status": "findings",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 2
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    },
+    {
+      "id": "local_link_integrity",
+      "status": "passed",
+      "input_paths": [
+        "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+        "voice_consistency_guide.md"
+      ],
+      "severity_counts": {
+        "error": 0,
+        "warning": 0,
+        "advisory": 0
+      },
+      "blocking_policy": "advisory_until_workflow_contract_marks_blocking"
+    }
+  ],
+  "severity_counts": {
+    "error": 0,
+    "warning": 0,
+    "advisory": 3
+  },
+  "findings": [
+    {
+      "check_id": "contrast_rhythm",
+      "severity": "advisory",
+      "path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+      "message": "Potential repetitive contrast construction.",
+      "line": 11,
+      "excerpt": "The pull request looks normal until the reviewer asks the only question that matters. The agent-generated diff is plausible, the tests pass, and the summary explains which files...",
+      "suggestion": "Keep this only if the contrast is doing rare, high-value conceptual work.",
+      "id": "editorial-finding-001"
+    },
+    {
+      "check_id": "claim_evidence_trace",
+      "severity": "advisory",
+      "path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+      "message": "Authority or superlative claim may need visible evidence support.",
+      "line": 17,
+      "excerpt": "That is the failure underneath vibe coding. The obvious risk is misplaced trust in a model, but the deeper failure is that intent remains informal until generated code becomes t...",
+      "suggestion": "Add a source, narrow the claim, or make the evidentiary basis explicit.",
+      "id": "editorial-finding-002"
+    },
+    {
+      "check_id": "claim_evidence_trace",
+      "severity": "advisory",
+      "path": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+      "message": "Authority or superlative claim may need visible evidence support.",
+      "line": 103,
+      "excerpt": "This argument does not claim that natural language is code, that generated implementation stops mattering, that every document is a source-of-truth artifact, or that more formal...",
+      "suggestion": "Add a source, narrow the claim, or make the evidentiary basis explicit.",
+      "id": "editorial-finding-003"
+    }
+  ],
+  "source_improvement_suggestions": [],
+  "state_effects": {
+    "draft_rewritten": false,
+    "package_status_changed": false,
+    "lifecycle_moved": false,
+    "published": false,
+    "promoted": false
+  }
+}

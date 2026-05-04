@@ -14,10 +14,10 @@ config:
 umbrella_route:
   active_workflow: post_ceiling_pivot
   active_route: pivot_cleared_for_north_star_attempt
-  next_action: continue_successor_leaf_substack_publishing
+  next_action: successor_leaf_publication_pipeline_complete__paper_route_when_requested
   previous_closure_artifact: publications/literate-workflow-programming/pivot/archive/2026-04-28-contract-layer-no-successor/no-successor-closure.md
   reopened_at: '2026-04-28'
-  last_validated: '2026-04-30'
+  last_validated: '2026-05-04'
   active_candidate: The Specification Surface Is the New Source of Truth
   donor_leaf: literate-workflow-programming/literate-workflow-programming-flagship
   active_successor_leaf: literate-workflow-programming/specification-surface-source-of-truth

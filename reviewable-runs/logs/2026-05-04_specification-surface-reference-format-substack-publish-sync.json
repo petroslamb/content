@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-05-04T20:03:57Z",
+  "workflow": "substack_publishing",
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "post_id": 196091276,
+  "publication_url": "https://lambpetros.substack.com",
+  "published_url": "https://lambpetros.substack.com/p/the-specification-surface-is-the",
+  "markdown": "publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md",
+  "published": true,
+  "change": "Formatted cited paper references as h4 headings linked to arXiv papers and added author-year parenthetical citations to the body without rewriting the prose.",
+  "verification": {
+    "public_page_contains": [
+      "(Piskala, 2026)",
+      "(Pan et al., 2026; Wang et al., 2026)",
+      "Piskala (2026), &quot;Spec-Driven Development",
+      "Rasheed et al. (2026), &quot;From Fluent to Verifiable",
+      "https://arxiv.org/abs/2602.00180"
+    ],
+    "archive_markdown_contains": [
+      "#### [Piskala (2026), \"Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants\"](https://arxiv.org/abs/2602.00180)",
+      "(Pan et al., 2026; Wang et al., 2026)",
+      "#### [Rasheed et al. (2026), \"From Fluent to Verifiable: Claim-Level Auditability for Deep Research Agents\"](https://arxiv.org/abs/2602.13855)"
+    ],
+    "editorial_report_checks_passed": [
+      "reference_contribution_notes",
+      "reference_heading_links",
+      "body_author_year_citations",
+      "sentence_rhythm",
+      "local_link_integrity"
+    ]
+  },
+  "archive_follow_through": {
+    "requested": true,
+    "summary": "reviewable-runs/logs/2026-05-04_specification-surface-reference-format-substack-sync-summary.json"
+  }
+}

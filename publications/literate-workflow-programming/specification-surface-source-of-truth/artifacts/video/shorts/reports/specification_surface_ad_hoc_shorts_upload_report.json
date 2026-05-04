@@ -18,7 +18,7 @@
     "all_ok": true,
     "probes": [
       {
-        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/01-vibe-coding-is-a-recipe-for-illusion_portrait.mp4",
+        "path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/01-vibe-coding-is-a-recipe-for-illusion_portrait.mp4",
         "ok": true,
         "errors": [],
         "warnings": [],
@@ -37,7 +37,7 @@
         "duration": 42.208333
       },
       {
-        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/02-velocity-makes-weak-specs-dangerous_portrait.mp4",
+        "path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/02-velocity-makes-weak-specs-dangerous_portrait.mp4",
         "ok": true,
         "errors": [],
         "warnings": [],
@@ -56,7 +56,7 @@
         "duration": 61.833333
       },
       {
-        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/03-the-missing-blueprints_portrait.mp4",
+        "path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/03-the-missing-blueprints_portrait.mp4",
         "ok": true,
         "errors": [],
         "warnings": [],
@@ -75,7 +75,7 @@
         "duration": 59.833333
       },
       {
-        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/04-choose-what-deserves-authority_portrait.mp4",
+        "path": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/04-choose-what-deserves-authority_portrait.mp4",
         "ok": true,
         "errors": [],
         "warnings": [],

@@ -1,0 +1,46 @@
+{
+  "kind": "gate_check",
+  "schema_version": 2,
+  "timestamp": "2026-05-04_20-51-41",
+  "run_id": "2026-05-04_20-51-41_literate-workflow-programming__specification-surface-source-of-truth_release_readiness_gate-check",
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "gate_id": "release_readiness",
+  "packet_path": null,
+  "boundary": {
+    "type": "gate evaluation",
+    "reason": "Gate checks record movement decisions without mutating package state by themselves.",
+    "external_side_effect": false,
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Evaluate gate 'release_readiness'.",
+    "stop_condition": "Gate result recorded in reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not mutate lifecycle state from the gate check alone."
+    ]
+  },
+  "decision": "missing_release_gate",
+  "status": "blocked",
+  "required_artifacts": [
+    "canonical live draft",
+    "release-gate checklist or decision note",
+    "publish target and approval context when external mutation is requested"
+  ],
+  "missing_artifacts": [
+    "release-gate checklist or decision note"
+  ],
+  "recommended_workflow": "release_gate",
+  "recommended_validator": "npm run gate:check -- --gate release_readiness --package <package>",
+  "proof_mode": "release_checklist",
+  "verification": {
+    "checks": [
+      {
+        "name": "gate_check_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-05-04_20-51-41_literate-workflow-programming__specification-surface-source-of-truth_release_readiness_gate-check.json"
+      }
+    ],
+    "residual_risk": "Gate checks capture the current bounded decision, but the underlying artifacts still need normal human review when the stakes are high."
+  }
+}
