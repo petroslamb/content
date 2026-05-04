@@ -209,6 +209,18 @@ LENGTH_BANDS = {
     "podcast": {"target_min": 1200, "target_max": 5400, "acceptable_max": 7200, "label": "archive/funnel"},
     "unknown": {"target_min": 25, "target_max": 600, "acceptable_max": 900, "label": "unknown format"},
 }
+QUEUE_ACTION_LABELS = {
+    "make_sequel": "Make follow-up",
+    "clip_more": "Clip more",
+    "thumbnail_review": "Fix packaging",
+    "retitle": "Retitle / reframe",
+    "remaster": "Remaster",
+    "wait": "Wait for data",
+    "ignore": "Watch only",
+}
+PRODUCTION_ACTIONS = {"make_sequel", "clip_more"}
+FIX_ACTIONS = {"thumbnail_review", "retitle", "remaster"}
+WATCH_ACTIONS = {"wait", "ignore"}
 TITLE_STOP_WORDS = {
     "a",
     "an",
@@ -659,12 +671,42 @@ def compact_playlists(video: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def classification_horizon_metrics(classification: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    selected_window = classification.get("selected_window") or "7d"
+    horizon_for_window = {"24h": "daily", "72h": "daily", "7d": "weekly", "28d": "monthly"}
+    selected_horizon = horizon_for_window.get(str(selected_window), "weekly")
+    horizons = {
+        key: {
+            "available": False,
+            "window": config.get("window"),
+            "start_date": None,
+            "end_date": None,
+            "day": None,
+            "metrics": {},
+        }
+        for key, config in HORIZONS.items()
+    }
+    horizons[selected_horizon] = {
+        "available": True,
+        "window": selected_window,
+        "start_date": None,
+        "end_date": None,
+        "day": None,
+        "metrics": classification.get("metrics") or {},
+    }
+    return horizons
+
+
 def compact_classification(
     classification: dict[str, Any],
     source_video: dict[str, Any] | None = None,
+    snapshot_item: dict[str, Any] | None = None,
+    *,
+    use_ledger_metrics: bool = False,
 ) -> dict[str, Any]:
     metrics = classification.get("metrics") or {}
     source_video = source_video or {}
+    snapshot_item = snapshot_item or {}
     observations = source_video.get("manual_observations") or {}
     categories = classification.get("categories") or ["ignore"]
     reasons = classification.get("reasons") or []
@@ -674,9 +716,14 @@ def compact_classification(
         if index < len(reasons)
     }
     source_reports = source_video.get("source_reports") or []
-    click_metrics = known_clicks(observations)
-    horizon_metrics = build_horizon_metrics(source_video)
-    traffic_sources = source_video.get("traffic_sources") or []
+    click_metrics = known_clicks(observations) if use_ledger_metrics else {}
+    snapshot_funnel = {} if use_ledger_metrics else (snapshot_item.get("funnel") or {})
+    horizon_metrics = (
+        build_horizon_metrics(source_video)
+        if use_ledger_metrics
+        else snapshot_item.get("horizon_metrics") or classification_horizon_metrics(classification)
+    )
+    traffic_sources = (source_video.get("traffic_sources") if use_ledger_metrics else snapshot_item.get("traffic_sources")) or []
     playlists = compact_playlists(source_video)
     duration_seconds = number(source_video.get("duration_seconds"))
     release_timing = source_video.get("release_timing") or release_timing_from_published_at(
@@ -699,7 +746,7 @@ def compact_classification(
         "duration_seconds": duration_seconds,
         "duration_label": format_duration(duration_seconds),
         "length_fit": fit,
-        "thumbnail_url": source_video.get("thumbnail_url"),
+        "thumbnail_url": source_video.get("thumbnail_url") or snapshot_item.get("thumbnail_url"),
         "thumbnails": source_video.get("thumbnails") or [],
         "title_profile": title_profile(classification.get("title")),
         "traffic_sources": traffic_sources,
@@ -722,12 +769,13 @@ def compact_classification(
         "source_report_links": source_report_links(source_reports),
         "horizon_metrics": horizon_metrics,
         "funnel": {
+            **snapshot_funnel,
             **click_metrics,
-            "card_impressions": number(observations.get("card_impressions")),
-            "card_teaser_clicks": number(observations.get("card_teaser_clicks")),
-            "card_teaser_impressions": number(observations.get("card_teaser_impressions")),
-            "card_click_rate": number(observations.get("card_click_rate")),
-            "card_teaser_click_rate": number(observations.get("card_teaser_click_rate")),
+            "card_impressions": number(observations.get("card_impressions")) if use_ledger_metrics else snapshot_funnel.get("card_impressions"),
+            "card_teaser_clicks": number(observations.get("card_teaser_clicks")) if use_ledger_metrics else snapshot_funnel.get("card_teaser_clicks"),
+            "card_teaser_impressions": number(observations.get("card_teaser_impressions")) if use_ledger_metrics else snapshot_funnel.get("card_teaser_impressions"),
+            "card_click_rate": number(observations.get("card_click_rate")) if use_ledger_metrics else snapshot_funnel.get("card_click_rate"),
+            "card_teaser_click_rate": number(observations.get("card_teaser_click_rate")) if use_ledger_metrics else snapshot_funnel.get("card_teaser_click_rate"),
         },
         "score": number(classification.get("score")) or 0,
         "metrics": {
@@ -747,10 +795,22 @@ def compact_classification(
 def summarize_findings(
     report_summary: dict[str, Any],
     videos: list[dict[str, Any]] | None = None,
+    snapshot_payload: dict[str, Any] | None = None,
+    *,
+    use_ledger_metrics: bool = False,
 ) -> dict[str, Any]:
     video_lookup = {video.get("video_id"): video for video in videos or []}
+    snapshot_lookup = {
+        item.get("video_id"): item
+        for item in ((snapshot_payload or {}).get("findings") or {}).get("classifications") or []
+    }
     compact = [
-        compact_classification(item, video_lookup.get(item.get("video_id")))
+        compact_classification(
+            item,
+            video_lookup.get(item.get("video_id")),
+            snapshot_lookup.get(item.get("video_id")),
+            use_ledger_metrics=use_ledger_metrics,
+        )
         for item in report_summary.get("classifications") or []
     ]
     by_category: dict[str, list[dict[str, Any]]] = {category: [] for category in DECISION_ORDER}
@@ -1478,14 +1538,15 @@ def confidence_label(item: dict[str, Any], *, horizon: str = "weekly") -> str:
     missing = set(item.get("manual_fields_missing") or [])
     if item.get("data_age_days") is not None and number(item.get("data_age_days")) < 2:
         return "Too young"
+    views = number(metrics.get("views")) or 0
+    impressions = number(metrics.get("videoThumbnailImpressions")) or 0
+    shorts_feed = weekly_shorts_feed_views(item) if item.get("format") == "short" else 0
+    if views >= 100 or impressions >= 500 or shorts_feed >= 100:
+        return "Strong signal"
     if missing_ctr(item, horizon=horizon):
         return "Missing CTR"
     if missing & STUDIO_CHECK_FIELDS:
-        return "Needs Studio/manual data"
-    views = number(metrics.get("views")) or 0
-    impressions = number(metrics.get("videoThumbnailImpressions")) or 0
-    if views >= 100 or impressions >= 500:
-        return "Strong signal"
+        return "Directional"
     return "Directional"
 
 
@@ -2169,7 +2230,12 @@ def build_production_queue(findings: dict[str, Any], *, horizon: str = "weekly")
                 "metrics": metrics,
             }
         )
-    rows.sort(key=lambda row: row["score"], reverse=True)
+    rows.sort(
+        key=lambda row: (
+            0 if row["action"] not in WATCH_ACTIONS else 1,
+            -(row["score"] or 0),
+        )
+    )
     buckets: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         buckets[row["action"]].append(row)
@@ -2233,6 +2299,419 @@ def build_experiments(registry: dict[str, Any], findings: dict[str, Any], *, hor
         "experiments": experiments,
         "counts": dict(Counter(experiment.get("status") or "planned" for experiment in experiments)),
     }
+
+
+def repo_relative(path: Path) -> str:
+    try:
+        return str(path.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def load_weekly_report_summaries(report_dir: Path = DEFAULT_WEEKLY_REPORT_DIR) -> list[dict[str, Any]]:
+    reports = []
+    for path in sorted(report_dir.glob("*.json")):
+        payload = load_json(path)
+        reports.append(
+            {
+                "path": repo_relative(path),
+                "report_date": payload.get("report_date") or path.stem,
+                "payload": payload,
+            }
+        )
+    reports.sort(key=lambda item: item["report_date"], reverse=True)
+    return reports
+
+
+def load_snapshot_records(snapshot_dir: Path = DEFAULT_SNAPSHOT_DIR) -> list[dict[str, Any]]:
+    records = []
+    for path in sorted(snapshot_dir.glob("*.json")):
+        if path.name == "latest.json":
+            continue
+        try:
+            payload = load_json(path)
+        except json.JSONDecodeError:
+            continue
+        records.append(
+            {
+                "path": repo_relative(path),
+                "generated_at": payload.get("generated_at") or "",
+                "report_date": (payload.get("report") or {}).get("report_date"),
+                "payload": payload,
+            }
+        )
+    records.sort(key=lambda item: (item.get("generated_at") or "", item.get("path") or ""))
+    return records
+
+
+def previous_snapshot_for_report(
+    report_date: str | None,
+    snapshot_records: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    if not report_date:
+        return None
+    matching_indexes = [
+        index
+        for index, record in enumerate(snapshot_records)
+        if record.get("report_date") == report_date
+    ]
+    if matching_indexes:
+        index = matching_indexes[-1]
+        if index > 0:
+            return snapshot_records[index - 1]["payload"]
+        return None
+    earlier = [
+        record
+        for record in snapshot_records
+        if record.get("report_date") and str(record["report_date"]) < str(report_date)
+    ]
+    return earlier[-1]["payload"] if earlier else None
+
+
+def latest_snapshot_for_report(
+    report_date: str | None,
+    snapshot_records: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    if not report_date:
+        return None
+    matching = [
+        record["payload"]
+        for record in snapshot_records
+        if record.get("report_date") == report_date
+    ]
+    return matching[-1] if matching else None
+
+
+def metric_pack(item: dict[str, Any], *, horizon: str) -> dict[str, Any]:
+    metrics = item_metrics_for_horizon(item, horizon)
+    return {
+        "views": number(metrics.get("views")),
+        "views_per_day": number(metrics.get("views_per_day")),
+        "estimatedMinutesWatched": number(metrics.get("estimatedMinutesWatched")),
+        "averageViewDuration": number(metrics.get("averageViewDuration")),
+        "averageViewPercentage": number(metrics.get("averageViewPercentage")),
+        "likes": number(metrics.get("likes")),
+        "comments": number(metrics.get("comments")),
+        "shares": number(metrics.get("shares")),
+        "subscribersGained": number(metrics.get("subscribersGained")),
+        "subscribers_per_1000_views": number(metrics.get("subscribers_per_1000_views")),
+        "videoThumbnailImpressions": number(metrics.get("videoThumbnailImpressions")),
+        "videoThumbnailImpressionsClickRate": number(metrics.get("videoThumbnailImpressionsClickRate")),
+    }
+
+
+def compact_horizon_metrics(item: dict[str, Any]) -> dict[str, Any]:
+    compact = {}
+    for horizon in HORIZONS:
+        source = (item.get("horizon_metrics") or {}).get(horizon) or {}
+        compact[horizon] = {
+            "available": bool(source.get("available")),
+            "window": source.get("window"),
+            "start_date": source.get("start_date"),
+            "end_date": source.get("end_date"),
+            "day": source.get("day"),
+            "metrics": metric_pack(item, horizon=horizon),
+            "confidence": confidence_label(item, horizon=horizon),
+        }
+    return compact
+
+
+def item_primary_action_text(item: dict[str, Any], action: str) -> str:
+    if item.get("actions_by_category"):
+        categories = item.get("categories") or []
+        for category in categories:
+            action_text = (item.get("actions_by_category") or {}).get(category)
+            if action_text:
+                return action_text
+    if item.get("recommended_actions"):
+        return item["recommended_actions"][0]
+    if action == "make_sequel":
+        return "Produce a related follow-up while the topic is warm."
+    if action == "thumbnail_review":
+        return "Draft a sharper title and thumbnail variant before changing the video."
+    if action == "remaster":
+        return "Queue a remaster instead of treating this as a failed topic."
+    if action == "retitle":
+        return "Rewrite the title/promise and review the opening hook."
+    if action == "wait":
+        return "Wait for a fuller data window before acting."
+    return "Keep it in the watchlist until a stronger pattern appears."
+
+
+def item_caveats(item: dict[str, Any], *, horizon: str = "weekly") -> list[str]:
+    metrics = item_metrics_for_horizon(item, horizon)
+    impressions = number(metrics.get("videoThumbnailImpressions"))
+    caveats = []
+    missing = set(item.get("manual_fields_missing") or [])
+    if item.get("data_age_days") is not None and number(item.get("data_age_days")) < 2:
+        caveats.append("too young for a fair read")
+    if missing_ctr(item, horizon=horizon):
+        caveats.append("CTR/impression data missing")
+    elif impressions is not None and impressions < MIN_THUMBNAIL_CTR_SAMPLE:
+        caveats.append("tiny thumbnail sample; use retention and traffic source")
+    if missing & STUDIO_CHECK_FIELDS:
+        caveats.append("Studio downstream fields missing")
+    return caveats
+
+
+def compact_queue_item(row: dict[str, Any], *, source_item: dict[str, Any] | None = None) -> dict[str, Any]:
+    item = source_item or row
+    action = row.get("action") or recommended_queue_action(item)[0]
+    return {
+        "video_id": item.get("video_id"),
+        "title": item.get("title"),
+        "url": item.get("url"),
+        "format": item.get("format"),
+        "package": item.get("package"),
+        "topic": item.get("topic") or item.get("package"),
+        "primary_category": item.get("primary_category"),
+        "categories": item.get("categories") or [],
+        "thumbnail_url": item.get("thumbnail_url"),
+        "published_at": item.get("published_at"),
+        "data_age_days": item.get("data_age_days"),
+        "action": action,
+        "action_label": QUEUE_ACTION_LABELS.get(action, action.replace("_", " ").title()),
+        "reason": row.get("reason") or "",
+        "next_step": item_primary_action_text(item, action),
+        "confidence": row.get("confidence") or confidence_label(item),
+        "caveats": item_caveats(item),
+        "score": number(row.get("score")) or number(item.get("score")) or 0,
+        "shorts_feed_views": number(row.get("shorts_feed_views")) or weekly_shorts_feed_views(item),
+        "horizon_metrics": compact_horizon_metrics(item),
+        "funnel": item.get("funnel") or {},
+    }
+
+
+def compact_video_item(item: dict[str, Any]) -> dict[str, Any]:
+    action, reason = recommended_queue_action(item)
+    return compact_queue_item(
+        {
+            "action": action,
+            "reason": reason,
+            "confidence": confidence_label(item),
+            "score": item.get("score") or 0,
+            "shorts_feed_views": weekly_shorts_feed_views(item),
+        },
+        source_item=item,
+    )
+
+
+def evidence_text(item: dict[str, Any], *, horizon: str = "weekly") -> str:
+    metrics = item_metrics_for_horizon(item, horizon)
+    parts = []
+    views = number(metrics.get("views"))
+    vpd = number(metrics.get("views_per_day"))
+    retention = number(metrics.get("averageViewPercentage"))
+    subscribers = number(metrics.get("subscribersGained"))
+    impressions = number(metrics.get("videoThumbnailImpressions"))
+    ctr = number(metrics.get("videoThumbnailImpressionsClickRate"))
+    if views is not None:
+        parts.append(f"{views:g} views")
+    if vpd is not None:
+        parts.append(f"{vpd:.1f}/day")
+    if retention is not None:
+        parts.append(f"{retention:.1f}% avg viewed")
+    if subscribers:
+        parts.append(f"+{subscribers:g} subs")
+    if item.get("format") == "short":
+        shorts_views = weekly_shorts_feed_views(item)
+        if shorts_views:
+            parts.append(f"{shorts_views:g} Shorts-feed views")
+    if impressions is not None and ctr is not None and impressions >= MIN_THUMBNAIL_CTR_SAMPLE:
+        parts.append(f"{impressions:g} impressions at {ctr:.1f}% CTR")
+    return " | ".join(parts) if parts else "No usable metric row yet."
+
+
+def build_decision_memos(
+    findings: dict[str, Any],
+    queue: dict[str, Any],
+    *,
+    horizon: str = "weekly",
+    limit: int = 5,
+) -> list[dict[str, Any]]:
+    lookup = {item.get("video_id"): item for item in findings.get("classifications") or []}
+    actionable_rows = [
+        row
+        for row in queue.get("items") or []
+        if row.get("action") not in WATCH_ACTIONS
+    ]
+    memos = []
+    seen: set[str] = set()
+    for row in actionable_rows:
+        source = lookup.get(row.get("video_id")) or row
+        compact = compact_queue_item(row, source_item=source)
+        compact["decision"] = compact["action_label"]
+        compact["evidence"] = evidence_text(source, horizon=horizon)
+        memos.append(compact)
+        seen.add(compact["video_id"])
+        if len(memos) >= limit:
+            break
+
+    if len(memos) < 3:
+        for row in queue.get("items") or []:
+            if row.get("video_id") in seen or row.get("action") != "ignore":
+                continue
+            source = lookup.get(row.get("video_id")) or row
+            compact = compact_queue_item(row, source_item=source)
+            compact["decision"] = "Watch momentum"
+            compact["evidence"] = evidence_text(source, horizon=horizon)
+            memos.append(compact)
+            if len(memos) >= min(limit, 3):
+                break
+    return memos
+
+
+def queue_sections(findings: dict[str, Any], queue: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    lookup = {item.get("video_id"): item for item in findings.get("classifications") or []}
+
+    def compact_rows(actions: set[str], limit: int) -> list[dict[str, Any]]:
+        rows = []
+        for row in queue.get("items") or []:
+            if row.get("action") not in actions:
+                continue
+            source = lookup.get(row.get("video_id")) or row
+            rows.append(compact_queue_item(row, source_item=source))
+            if len(rows) >= limit:
+                break
+        return rows
+
+    return {
+        "production": {
+            "label": "Production queue",
+            "description": "Make more of what is working.",
+            "items": compact_rows(PRODUCTION_ACTIONS, 12),
+        },
+        "fix": {
+            "label": "Fix queue",
+            "description": "Repair packaging, hook, or format before producing another variant.",
+            "items": compact_rows(FIX_ACTIONS, 16),
+        },
+        "watchlist": {
+            "label": "Watchlist",
+            "description": "Momentum or low-signal items that should not displace action items.",
+            "items": compact_rows(WATCH_ACTIONS, 20),
+        },
+    }
+
+
+def compact_rollup_rows(rows: list[dict[str, Any]], *, limit: int = 12) -> list[dict[str, Any]]:
+    return rows[:limit]
+
+
+def build_report_state(
+    ledger: dict[str, Any],
+    report_summary: dict[str, Any],
+    reporting_jobs: dict[str, Any] | None,
+    content_rubric: dict[str, Any],
+    experiment_registry: dict[str, Any],
+    source_snapshot: dict[str, Any] | None,
+    previous_snapshot: dict[str, Any] | None,
+    *,
+    use_ledger_metrics: bool = False,
+) -> dict[str, Any]:
+    videos = ledger.get("videos") or []
+    findings = summarize_findings(
+        report_summary,
+        videos,
+        source_snapshot,
+        use_ledger_metrics=use_ledger_metrics,
+    )
+    queue = build_production_queue(findings, horizon="weekly")
+    funnel_rollups = build_funnel_rollups(findings)
+    package_rollups = build_package_rollups_by_horizon(findings)
+    playlist_rollups = build_playlist_rollups_by_horizon(findings)
+    release_lab = build_release_time_lab(findings, horizon="weekly")
+    topic_clusters = build_topic_clusters(findings, content_rubric, horizon="weekly")
+    experiments = build_experiments(experiment_registry, findings, horizon="weekly")
+    reporting_job_rows = [
+        {
+            "key": key,
+            "name": job.get("name"),
+            "report_type_id": job.get("report_type_id"),
+            "available_report_count": job.get("available_report_count", 0),
+            "downloaded_report_count": job.get("downloaded_report_count", 0),
+            "latest_report_end_time": job.get("latest_report_end_time"),
+            "purpose": job.get("purpose"),
+        }
+        for key, job in sorted(((reporting_jobs or {}).get("jobs") or {}).items())
+    ]
+    compact_videos = [compact_video_item(item) for item in findings.get("classifications") or []]
+    return {
+        "report": {
+            "report_date": report_summary.get("report_date"),
+            "created_at": report_summary.get("created_at"),
+            "analytics_end_date": report_summary.get("analytics_end_date"),
+            "read_only": report_summary.get("read_only", True),
+        },
+        "summary_counts": findings.get("summary_counts") or {},
+        "totals": {
+            "videos": len(findings.get("classifications") or []),
+            "actionable_videos": len(findings.get("action_items") or []),
+            "ignored_count": findings.get("ignored_count", 0),
+            "waiting_for_ctr": sum(1 for item in compact_videos if "CTR/impression data missing" in item.get("caveats", [])),
+            "needs_studio_check": sum(1 for item in compact_videos if "Studio downstream fields missing" in item.get("caveats", [])),
+        },
+        "horizon_summaries": build_horizon_summaries(findings),
+        "decision_memos": build_decision_memos(findings, queue, horizon="weekly"),
+        "queues": queue_sections(findings, queue),
+        "videos": compact_videos,
+        "reports": {
+            "delta_summary": build_delta_summary(findings, previous_snapshot, horizon="weekly"),
+            "daily_movement": build_daily_movement_summary(videos, findings),
+        },
+        "evidence": {
+            "package_rollups_by_horizon": {key: compact_rollup_rows(value) for key, value in package_rollups.items()},
+            "playlist_rollups_by_horizon": {key: compact_rollup_rows(value) for key, value in playlist_rollups.items()},
+            "traffic_sources_by_horizon": summarize_traffic_by_horizon(findings.get("classifications") or []),
+            "coverage": {
+                "windows": summarize_windows(videos),
+                "metrics": summarize_metric_availability(videos),
+                "manual_fields": summarize_manual_availability(videos),
+            },
+            "reporting_jobs": reporting_job_rows,
+            "release_time_lab": release_lab,
+            "topic_clusters": {
+                **topic_clusters,
+                "clusters": compact_rollup_rows(topic_clusters.get("clusters") or [], limit=12),
+            },
+            "experiments": {
+                **experiments,
+                "experiments": compact_rollup_rows(experiments.get("experiments") or [], limit=12),
+            },
+            "funnel_rollups": funnel_rollups,
+        },
+    }
+
+
+def build_report_states(
+    ledger: dict[str, Any],
+    report_summaries: list[dict[str, Any]],
+    reporting_jobs: dict[str, Any] | None,
+    content_rubric: dict[str, Any],
+    experiment_registry: dict[str, Any],
+    snapshot_records: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    states = []
+    newest_report_date = max((report.get("report_date") or "" for report in report_summaries), default="")
+    for report in report_summaries:
+        payload = report["payload"]
+        report_date = report.get("report_date")
+        source_snapshot = latest_snapshot_for_report(report_date, snapshot_records)
+        previous_snapshot = previous_snapshot_for_report(report.get("report_date"), snapshot_records)
+        state = build_report_state(
+            ledger,
+            payload,
+            reporting_jobs,
+            content_rubric,
+            experiment_registry,
+            source_snapshot,
+            previous_snapshot,
+            use_ledger_metrics=(report_date == newest_report_date),
+        )
+        state["source_path"] = report.get("path")
+        states.append(state)
+    states.sort(key=lambda item: (item.get("report") or {}).get("report_date") or "", reverse=True)
+    return states
 
 
 def compact_snapshot_payload(payload: dict[str, Any]) -> dict[str, Any]:
@@ -2548,6 +3027,16 @@ def build_html(payload: dict[str, Any]) -> str:
     return DASHBOARD_HTML.replace("__DASHBOARD_JSON__", safe_json)
 
 
+def build_operator_html_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """Return only the state the static browser UI needs."""
+    return {
+        "generated_at": payload.get("generated_at"),
+        "repo_root": payload.get("repo_root"),
+        "default_report_date": payload.get("default_report_date"),
+        "report_states": payload.get("report_states") or [],
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER_PATH)
@@ -2585,7 +3074,30 @@ def main() -> int:
         experiment_registry,
         previous_snapshot,
     )
-    html = build_html(payload)
+    report_summaries = load_weekly_report_summaries(DEFAULT_WEEKLY_REPORT_DIR)
+    if not report_summaries:
+        report_summaries = [
+            {
+                "path": repo_relative(report_path),
+                "report_date": report_summary.get("report_date") or report_path.stem,
+                "payload": report_summary,
+            }
+        ]
+    report_states = build_report_states(
+        ledger,
+        report_summaries,
+        reporting_jobs,
+        content_rubric,
+        experiment_registry,
+        load_snapshot_records(args.snapshot_dir),
+    )
+    payload["report_states"] = report_states
+    payload["default_report_date"] = (
+        (report_states[0].get("report") or {}).get("report_date")
+        if report_states
+        else report_summary.get("report_date")
+    )
+    html = build_html(build_operator_html_payload(payload))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(html)
 
@@ -2595,6 +3107,8 @@ def main() -> int:
     print(f"Wrote payload: {payload_output}")
     return 0
 
+
+# Operator dashboard HTML template. The old inventory-style dashboard was intentionally removed.
 
 DASHBOARD_HTML = """<!doctype html>
 <html lang="en">
@@ -2606,147 +3120,58 @@ DASHBOARD_HTML = """<!doctype html>
   <style>
     :root {
       color-scheme: light;
-      --bg: #f6f7f4;
+      --bg: #f5f6f3;
       --panel: #ffffff;
-      --ink: #17202a;
-      --muted: #5f6b78;
-      --line: #d9ded8;
+      --panel-soft: #f9faf7;
+      --ink: #151b22;
+      --muted: #5f6875;
+      --line: #d9ded7;
       --blue: #1d5fd1;
-      --green: #187a45;
-      --orange: #b65d00;
+      --green: #137344;
+      --orange: #a85600;
       --red: #b3261e;
       --teal: #047481;
-      --violet: #6650a4;
-      --shadow: 0 1px 2px rgba(23, 32, 42, 0.08);
+      --violet: #6750a4;
+      --shadow: 0 1px 2px rgba(21, 27, 34, 0.08);
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       background: var(--bg);
       color: var(--ink);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.45;
+      line-height: 1.42;
     }
-
-    .shell {
-      width: min(1500px, calc(100vw - 32px));
-      margin: 0 auto;
-      padding: 24px 0 36px;
-    }
-
-    header {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      align-items: end;
-      margin-bottom: 18px;
-    }
-
-    h1 { margin: 0; font-size: 30px; line-height: 1.15; letter-spacing: 0; }
-    h2 { margin: 0 0 12px; font-size: 18px; letter-spacing: 0; }
-    h3 { margin: 0 0 10px; font-size: 15px; letter-spacing: 0; }
-    p { margin: 0 0 10px; }
-
-    .meta {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    .status-strip, .metric-row, .quick-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .status-strip { justify-content: flex-end; }
-    .metric-row { margin-top: 8px; }
-
-    .badge, .metric-chip, .check-chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #f9faf8;
-      color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .check-chip { gap: 6px; cursor: pointer; }
-    .check-chip input { width: auto; min-height: auto; margin: 0; }
-    .horizon-control {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 4px;
+    .shell { width: min(1380px, calc(100vw - 28px)); margin: 0 auto; padding: 18px 0 34px; }
+    header { display: grid; gap: 14px; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: 26px; line-height: 1.1; letter-spacing: 0; }
+    h2 { margin: 0 0 10px; font-size: 18px; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0; }
+    p { margin: 0 0 9px; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .muted { color: var(--muted); }
+    .small { font-size: 12px; }
+    .top-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: start; }
+    .meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+    .controls, .report-strip, .tabs, .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .controls { justify-content: flex-end; align-items: center; }
+    .report-strip { padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    button, input, select {
+      font: inherit;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #fbfcfa;
-    }
-    .horizon-btn {
-      appearance: none;
-      min-height: 30px;
-      border: 1px solid transparent;
-      border-radius: 6px;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      font: inherit;
-      font-size: 13px;
-      padding: 5px 9px;
-    }
-    .horizon-btn.active {
       background: var(--panel);
-      border-color: var(--line);
       color: var(--ink);
-      box-shadow: var(--shadow);
     }
-    .badge.scale, .badge.funnel_winner { color: var(--green); border-color: rgba(24, 122, 69, 0.28); background: #eef8f1; }
-    .badge.clip_more, .badge.remaster { color: var(--teal); border-color: rgba(4, 116, 129, 0.28); background: #edf8f9; }
-    .badge.retitle { color: var(--orange); border-color: rgba(182, 93, 0, 0.28); background: #fff5e8; }
-    .badge.hook_problem { color: var(--red); border-color: rgba(179, 38, 30, 0.28); background: #fff0ee; }
-    .badge.ignore { color: var(--muted); }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 16px;
-    }
-
-    .tab {
-      appearance: none;
-      border: 1px solid transparent;
-      border-bottom: 0;
-      border-radius: 8px 8px 0 0;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      font: inherit;
-      min-height: 38px;
-      padding: 8px 12px;
-    }
-
-    .tab.active {
-      background: var(--panel);
-      border-color: var(--line);
-      color: var(--ink);
-      box-shadow: var(--shadow);
-    }
-
+    button { min-height: 34px; padding: 6px 10px; cursor: pointer; }
+    button.active { border-color: var(--blue); box-shadow: inset 0 0 0 1px var(--blue); }
+    input, select { width: 100%; min-height: 38px; padding: 8px 10px; }
+    .tabs { border-bottom: 1px solid var(--line); margin: 4px 0 14px; }
+    .tab { border-bottom: 0; border-radius: 8px 8px 0 0; background: transparent; color: var(--muted); }
+    .tab.active { background: var(--panel); color: var(--ink); box-shadow: var(--shadow); }
     .panel { display: none; }
     .panel.active { display: block; }
-    .grid { display: grid; gap: 12px; }
-    .grid.stats { grid-template-columns: repeat(6, minmax(140px, 1fr)); margin-bottom: 14px; }
-    .grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
     .card {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -2754,1628 +3179,425 @@ DASHBOARD_HTML = """<!doctype html>
       box-shadow: var(--shadow);
       padding: 14px;
     }
-
-    .stat-value {
-      display: block;
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .toolbar {
+    .grid { display: grid; gap: 12px; }
+    .grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr); gap: 12px; align-items: start; }
+    .memo-list, .queue-list { display: grid; gap: 10px; }
+    .memo {
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) 180px 180px;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    input, select {
-      width: 100%;
-      min-height: 38px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      color: var(--ink);
-      font: inherit;
-      padding: 8px 10px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 900px;
-      font-size: 13px;
-    }
-
-    th, td {
-      border-bottom: 1px solid var(--line);
-      padding: 9px 10px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: #eef1ef;
-      color: #35404c;
-      font-size: 12px;
-      font-weight: 700;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-
-    tr:last-child td { border-bottom: 0; }
-    tr.row-hook_problem td:first-child { border-left: 4px solid var(--red); }
-    tr.row-remaster td:first-child, tr.row-clip_more td:first-child { border-left: 4px solid var(--teal); }
-    tr.row-scale td:first-child, tr.row-funnel_winner td:first-child { border-left: 4px solid var(--green); }
-    tr.row-retitle td:first-child { border-left: 4px solid var(--orange); }
-
-    .sort-btn {
-      appearance: none;
-      border: 0;
-      background: transparent;
-      color: inherit;
-      cursor: pointer;
-      font: inherit;
-      font-weight: 700;
-      padding: 0;
-      text-align: left;
-    }
-
-    a { color: var(--blue); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .muted { color: var(--muted); }
-    .small { font-size: 12px; }
-
-    .bar-list { display: grid; gap: 9px; }
-    .bar-row {
-      display: grid;
-      grid-template-columns: minmax(120px, 1fr) minmax(120px, 2fr) auto;
-      gap: 10px;
-      align-items: center;
-      font-size: 13px;
-    }
-
-    .bar-track {
-      height: 9px;
-      border-radius: 999px;
-      background: #e8ece8;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      width: var(--bar-width);
-      background: var(--blue);
-    }
-
-    .bar-fill.green { background: var(--green); }
-    .bar-fill.orange { background: var(--orange); }
-    .bar-fill.red { background: var(--red); }
-    .bar-fill.teal { background: var(--teal); }
-    .bar-fill.violet { background: var(--violet); }
-
-    .lane-list, .finding-list { display: grid; gap: 10px; }
-    .lane-section { margin-bottom: 16px; }
-
-    .finding {
-      display: grid;
-      grid-template-columns: 1fr minmax(160px, auto);
+      grid-template-columns: 128px minmax(0, 1fr);
       gap: 12px;
-      align-items: start;
       border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
       border-radius: 8px;
       background: var(--panel);
       padding: 12px;
       box-shadow: var(--shadow);
     }
-
-    .finding-title { font-weight: 700; margin-bottom: 6px; }
-    .finding.hook_problem { border-left: 4px solid var(--red); }
-    .finding.remaster, .finding.clip_more { border-left: 4px solid var(--teal); }
-    .finding.scale, .finding.funnel_winner { border-left: 4px solid var(--green); }
-    .finding.retitle { border-left: 4px solid var(--orange); }
-    .finding.ignore { border-left: 4px solid var(--line); }
-
-    .empty {
-      border: 1px dashed var(--line);
-      border-radius: 8px;
-      padding: 16px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    .summary-action {
-      border-left: 4px solid var(--blue);
-      padding-left: 12px;
-      margin-top: 10px;
-    }
-
+    .memo.make_sequel, .memo.clip_more { border-left-color: var(--green); }
+    .memo.thumbnail_review, .memo.retitle { border-left-color: var(--orange); }
+    .memo.remaster { border-left-color: var(--teal); }
+    .memo.wait, .memo.ignore { border-left-color: var(--line); }
     .thumb {
       width: 128px;
       aspect-ratio: 16 / 9;
-      object-fit: cover;
       border: 1px solid var(--line);
       border-radius: 6px;
-      background: #eef1ef;
-      display: block;
+      object-fit: cover;
+      background: #e8ece8;
     }
-
-    .video-cell {
-      display: grid;
-      grid-template-columns: 128px minmax(220px, 1fr);
-      gap: 10px;
-      align-items: start;
-    }
-
-    .rubric-grid { display: grid; gap: 12px; }
-    .rubric-card {
-      display: grid;
-      grid-template-columns: 220px minmax(0, 1fr);
-      gap: 14px;
-      align-items: start;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      padding: 12px;
-      box-shadow: var(--shadow);
-    }
-    .rubric-card .thumb { width: 220px; }
-    .axis-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(130px, 1fr));
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .axis {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 8px;
-      min-height: 78px;
-      background: #fbfcfa;
-    }
-    .axis.good { border-color: rgba(24, 122, 69, 0.3); background: #f0f8f2; }
-    .axis.risk { border-color: rgba(179, 38, 30, 0.3); background: #fff4f2; }
-    .axis.gap { border-color: rgba(182, 93, 0, 0.3); background: #fff8ee; }
-    .axis.watch, .axis.neutral { background: #f9faf8; }
-    .axis-title { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
-    .why-list { margin: 8px 0 0 18px; padding: 0; }
-    .help {
-      border-bottom: 1px dotted currentColor;
-      cursor: help;
+    .memo-title { font-weight: 750; margin-bottom: 4px; }
+    .decision { color: var(--muted); font-size: 12px; font-weight: 750; text-transform: uppercase; }
+    .next-step { margin-top: 8px; font-weight: 650; }
+    .chip, .badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      text-decoration: none;
-    }
-    .help::after {
-      content: "?";
-      display: inline-grid;
-      place-items: center;
-      width: 15px;
-      height: 15px;
-      border: 1px solid currentColor;
+      min-height: 25px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      font-size: 10px;
-      line-height: 1;
-      opacity: 0.72;
-    }
-    .dashboard-tooltip {
-      position: fixed;
-      z-index: 10000;
-      max-width: min(360px, calc(100vw - 24px));
-      padding: 9px 10px;
-      border-radius: 6px;
-      background: #17202a;
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(23, 32, 42, 0.22);
+      background: var(--panel-soft);
+      color: var(--muted);
       font-size: 12px;
-      line-height: 1.4;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(3px);
-      transition: opacity 120ms ease, transform 120ms ease;
+      white-space: nowrap;
     }
-    .dashboard-tooltip.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .badge.scale, .badge.funnel_winner { color: var(--green); background: #edf8f1; border-color: rgba(19, 115, 68, 0.28); }
+    .badge.retitle, .badge.hook_problem { color: var(--orange); background: #fff6e8; border-color: rgba(168, 86, 0, 0.28); }
+    .badge.remaster, .badge.clip_more { color: var(--teal); background: #edf8f9; border-color: rgba(4, 116, 129, 0.28); }
+    .stat-grid { display: grid; grid-template-columns: repeat(2, minmax(120px, 1fr)); gap: 10px; }
+    .stat { background: var(--panel-soft); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+    .stat-value { display: block; font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+    .stat-label { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .section-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin: 16px 0 10px; }
+    .queue-card { border-left: 4px solid var(--line); }
+    .queue-card.production { border-left-color: var(--green); }
+    .queue-card.fix { border-left-color: var(--orange); }
+    .queue-card.watchlist { border-left-color: var(--violet); }
+    .queue-item { padding: 9px 0; border-top: 1px solid var(--line); }
+    .queue-item:first-child { border-top: 0; padding-top: 0; }
+    .toolbar { display: grid; grid-template-columns: minmax(220px, 1fr) 180px 180px; gap: 10px; margin-bottom: 10px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef1ee; color: #35404c; font-size: 12px; }
+    tr:last-child td { border-bottom: 0; }
+    .empty { border: 1px dashed var(--line); border-radius: 8px; padding: 14px; color: var(--muted); background: rgba(255,255,255,0.65); }
+    .bar-row { display: grid; grid-template-columns: minmax(120px, 1fr) minmax(120px, 2fr) auto; gap: 10px; align-items: center; margin: 7px 0; font-size: 13px; }
+    .bar-track { height: 9px; border-radius: 999px; overflow: hidden; background: #e7ebe6; }
+    .bar-fill { height: 100%; width: var(--bar-width); background: var(--teal); }
+    .evidence-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    @media (max-width: 980px) {
+      .top-line, .hero-grid, .grid.two, .grid.three, .evidence-grid { grid-template-columns: 1fr; }
+      .controls { justify-content: flex-start; }
     }
-    .warning {
-      border: 1px solid rgba(182, 93, 0, 0.3);
-      border-left: 4px solid var(--orange);
-      background: #fff8ee;
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-    }
-
-    @media (max-width: 1100px) {
-      .grid.stats { grid-template-columns: repeat(3, minmax(140px, 1fr)); }
-      .grid.two, .grid.three { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 720px) {
-      .shell { width: min(100vw - 20px, 1500px); padding-top: 14px; }
-      header { grid-template-columns: 1fr; }
-      .status-strip { justify-content: flex-start; }
-      .grid.stats { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    @media (max-width: 680px) {
+      .shell { width: min(100vw - 18px, 1380px); padding-top: 12px; }
+      h1 { font-size: 22px; }
+      .memo { grid-template-columns: 1fr; }
+      .thumb { width: 100%; max-width: 320px; }
       .toolbar { grid-template-columns: 1fr; }
-      .finding { grid-template-columns: 1fr; }
-      .video-cell, .rubric-card { grid-template-columns: 1fr; }
-      .axis-grid { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 1fr; gap: 4px; }
-      h1 { font-size: 24px; }
     }
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
-      <div>
-        <h1>YouTube Analytics Dashboard</h1>
-        <div class="meta" id="dashboard-meta"></div>
+      <div class="top-line">
+        <div>
+          <h1>YouTube Analytics Dashboard</h1>
+          <div class="meta" id="dashboard-meta"></div>
+        </div>
+        <div class="controls" id="horizon-controls"></div>
       </div>
-      <div class="status-strip" id="status-strip"></div>
+      <div class="report-strip" id="report-strip" aria-label="Report switcher"></div>
+      <nav class="tabs" aria-label="Dashboard tabs">
+        <button class="tab active" data-tab="decisions">Decisions</button>
+        <button class="tab" data-tab="videos">Videos</button>
+        <button class="tab" data-tab="reports">Reports</button>
+        <button class="tab" data-tab="evidence">Evidence/Data</button>
+      </nav>
     </header>
-
-    <nav class="tabs" aria-label="Dashboard tabs">
-      <button class="tab active" data-tab="overview">Overview</button>
-      <button class="tab" data-tab="action-board">Action Board</button>
-      <button class="tab" data-tab="videos">Videos</button>
-      <button class="tab" data-tab="topics">Topic Clusters</button>
-      <button class="tab" data-tab="rubric">Rubric</button>
-      <button class="tab" data-tab="experiments">Experiments</button>
-      <button class="tab" data-tab="gaps">Data Gaps</button>
-    </nav>
-
-    <section class="panel active" id="overview"></section>
-    <section class="panel" id="action-board"></section>
-    <section class="panel" id="experiments"></section>
-    <section class="panel" id="topics"></section>
-    <section class="panel" id="videos"></section>
-    <section class="panel" id="rubric"></section>
-    <section class="panel" id="gaps"></section>
+    <main>
+      <section class="panel active" id="decisions"></section>
+      <section class="panel" id="videos"></section>
+      <section class="panel" id="reports"></section>
+      <section class="panel" id="evidence"></section>
+    </main>
   </div>
 
   <script type="application/json" id="dashboard-data">__DASHBOARD_JSON__</script>
   <script>
-    const data = JSON.parse(document.getElementById("dashboard-data").textContent);
-    const decisionOrder = ["scale", "funnel_winner", "clip_more", "retitle", "hook_problem", "remaster", "ignore"];
-    const laneOrder = ["do_now", "waiting_for_ctr", "needs_studio_check", "watch"];
-    const categoryLabels = {
-      scale: "Scale",
-      funnel_winner: "Funnel Winner",
-      clip_more: "Clip More",
-      retitle: "Retitle",
-      hook_problem: "Hook Problem",
-      remaster: "Remaster",
-      ignore: "Ignore"
-    };
-    const laneColor = {
-      do_now: "green",
-      waiting_for_ctr: "orange",
-      needs_studio_check: "violet",
-      watch: "teal"
-    };
+    const payload = JSON.parse(document.getElementById("dashboard-data").textContent);
+    const reportStates = payload.report_states || [];
+    const stateByDate = Object.fromEntries(reportStates.map((state) => [((state.report || {}).report_date || ""), state]));
     const horizonOrder = ["daily", "weekly", "monthly"];
-    let currentHorizon = ((data.ui_defaults || {}).default_horizon || "weekly");
-    let showEmptyBuckets = Boolean((data.ui_defaults || {}).show_empty_buckets);
-    let videoSort = { ...((data.sort_defaults || {}).videos || { key: "score", direction: "desc" }) };
-    let rubricSort = { ...((data.sort_defaults || {}).rubric || { key: "useful", direction: "desc" }) };
+    const horizonLabels = { daily: "Daily", weekly: "Weekly", monthly: "28 Days" };
+    let currentHorizon = "weekly";
+    let activeTab = "decisions";
+    let activeReportDate = initialReportDate();
 
-    function escapeHtml(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[char]);
+    function initialReportDate() {
+      const params = new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
+      const requested = params.get("report");
+      if (requested && stateByDate[requested]) return requested;
+      return payload.default_report_date || ((reportStates[0] || {}).report || {}).report_date || "";
     }
-
-    function fmtNumber(value, digits = 0) {
+    function state() { return stateByDate[activeReportDate] || reportStates[0] || {}; }
+    function esc(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    }
+    function num(value, digits = 0) {
       if (value === null || value === undefined || Number.isNaN(Number(value))) return "-";
-      return new Intl.NumberFormat(undefined, { maximumFractionDigits: digits }).format(Number(value));
+      return Number(value).toLocaleString(undefined, { maximumFractionDigits: digits });
     }
-
-    function fmtPercent(value) {
+    function pct(value) {
       if (value === null || value === undefined || Number.isNaN(Number(value))) return "-";
-      return `${fmtNumber(value, 1)}%`;
+      return `${num(value, 1)}%`;
     }
-
-    function labelFor(field) {
-      return (data.readable_field_labels || {})[field] || field;
+    function metric(item, horizon = currentHorizon) {
+      return (((item.horizon_metrics || {})[horizon] || {}).metrics || {});
     }
-
-    function helpText(key) {
-      return (data.help_text || {})[key] || "";
+    function itemLink(item) {
+      const title = esc(item.title || item.video_id || "Untitled");
+      return item.url ? `<a href="${esc(item.url)}" target="_blank" rel="noreferrer">${title}</a>` : title;
     }
-
-    function tooltipAttrs(text, label = "") {
-      if (!text) return "";
-      const accessible = label ? `${label}: ${text}` : text;
-      return ` data-tooltip="${escapeHtml(text)}" tabindex="0" aria-label="${escapeHtml(accessible)}"`;
+    function thumb(item) {
+      return item.thumbnail_url ? `<img class="thumb" src="${esc(item.thumbnail_url)}" alt="">` : `<div class="thumb" aria-hidden="true"></div>`;
     }
-
-    function withHelp(label, key) {
-      const text = helpText(key);
-      if (!text) return escapeHtml(label);
-      return `<span class="help"${tooltipAttrs(text, label)}>${escapeHtml(label)}</span>`;
+    function badges(item) {
+      return (item.categories || [item.primary_category || "ignore"]).map((category) => `<span class="badge ${esc(category)}">${esc(category.replace("_", " "))}</span>`).join(" ");
     }
-
-    function coverageText(row) {
-      if (typeof row === "number") return fmtNumber(row);
-      if (!row) return "-";
-      return `${fmtNumber(row.count)} / ${fmtNumber(row.total)} (${fmtPercent(row.percent)})`;
+    function evidenceLine(item) {
+      const m = metric(item);
+      const parts = [];
+      if (m.views !== null && m.views !== undefined) parts.push(`${num(m.views)} views`);
+      if (m.views_per_day !== null && m.views_per_day !== undefined) parts.push(`${num(m.views_per_day, 1)}/day`);
+      if (m.averageViewPercentage !== null && m.averageViewPercentage !== undefined) parts.push(`${pct(m.averageViewPercentage)} avg viewed`);
+      if (m.subscribersGained) parts.push(`+${num(m.subscribersGained)} subs`);
+      if (item.format === "short" && item.shorts_feed_views) parts.push(`${num(item.shorts_feed_views)} Shorts-feed views`);
+      if ((m.videoThumbnailImpressions || 0) >= 50 && m.videoThumbnailImpressionsClickRate !== null && m.videoThumbnailImpressionsClickRate !== undefined) {
+        parts.push(`${num(m.videoThumbnailImpressions)} impressions at ${pct(m.videoThumbnailImpressionsClickRate)} CTR`);
+      }
+      return parts.join(" | ") || "No usable metric row yet.";
     }
-
-    function linkFor(item) {
-      const title = escapeHtml(item.title || item.video_id || "Untitled");
-      if (!item.url) return title;
-      return `<a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">${title}</a>`;
+    function caveatChips(item) {
+      const caveats = item.caveats || [];
+      return caveats.length ? `<div class="chips">${caveats.map((caveat) => `<span class="chip">${esc(caveat)}</span>`).join("")}</div>` : "";
     }
-
-    function thumbnailFor(item) {
-      if (!item.thumbnail_url) return `<div class="thumb" aria-label="No thumbnail"></div>`;
-      return `<img class="thumb" src="${escapeHtml(item.thumbnail_url)}" alt="" loading="lazy">`;
+    function summaryStat(label, value, formatter = num) {
+      return `<div class="stat"><span class="stat-value">${formatter(value)}</span><span class="stat-label">${esc(label)}</span></div>`;
     }
-
-    function badge(category) {
-      return `<span class="badge ${escapeHtml(category)}">${escapeHtml(categoryLabels[category] || category)}</span>`;
+    function table(headers, rows) {
+      if (!rows.length) return `<div class="empty">No rows for this view.</div>`;
+      return `<div class="table-wrap"><table><thead><tr>${headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
     }
-
-    function stat(label, value, helpKey = "") {
-      const text = helpText(helpKey);
-      return `<div class="card"><span class="stat-value">${escapeHtml(value)}</span><span class="stat-label">${withHelp(label, helpKey)}</span></div>`;
-    }
-
-    function horizonMeta() {
-      return (data.horizons || {})[currentHorizon] || { label: currentHorizon, description: "" };
-    }
-
-    function metricFor(item) {
-      const row = ((item.horizon_metrics || {})[currentHorizon] || {});
-      return row.metrics || item.metrics || {};
-    }
-
-    function trafficSourceViews(item, sourceType, window = "7d") {
-      return (item.traffic_sources || [])
-        .filter((row) => row.window === window && row.source_type === sourceType)
-        .reduce((total, row) => total + (Number(row.views) || 0), 0);
-    }
-
-    function shortsFeedViews(item) {
-      return Number(item.shorts_feed_views) || trafficSourceViews(item, "SHORTS", "7d");
-    }
-
-    function tinyThumbnailSample(item, metrics) {
-      const impressions = Number(metrics.videoThumbnailImpressions);
-      return item.format === "short" && shortsFeedViews(item) > 0 && Number.isFinite(impressions) && impressions < 50;
-    }
-
-    function thumbnailImpressionText(item, metrics) {
-      const impressions = fmtNumber(metrics.videoThumbnailImpressions);
-      const shorts = shortsFeedViews(item);
-      if (item.format === "short" && shorts > 0) return `${impressions} thumb / ${fmtNumber(shorts)} Shorts`;
-      return `${impressions} thumb`;
-    }
-
-    function thumbnailCtrText(item, metrics) {
-      if (tinyThumbnailSample(item, metrics)) return "tiny sample";
-      return fmtPercent(metrics.videoThumbnailImpressionsClickRate);
-    }
-
-    function thumbnailImpressionCell(item, metrics) {
-      const shorts = shortsFeedViews(item);
-      return `${fmtNumber(metrics.videoThumbnailImpressions)}<div class="small muted">${item.format === "short" && shorts > 0 ? `${fmtNumber(shorts)} Shorts views` : "thumbnail exposures"}</div>`;
-    }
-
-    function thumbnailCtrCell(item, metrics) {
-      return `${thumbnailCtrText(item, metrics)}${tinyThumbnailSample(item, metrics) ? `<div class="small muted">not used for packaging</div>` : ""}`;
-    }
-
-    function horizonRangeFor(item) {
-      const row = ((item.horizon_metrics || {})[currentHorizon] || {});
-      if (currentHorizon === "daily") return row.day || "latest day";
-      if (row.start_date && row.end_date) return `${row.start_date} to ${row.end_date}`;
-      return horizonMeta().label || currentHorizon;
-    }
-
-    function horizonControl() {
-      return `
-        <div class="horizon-control" aria-label="Metric horizon">
-          ${horizonOrder.map((key) => {
-            const meta = (data.horizons || {})[key] || { label: key };
-            return `<button class="horizon-btn ${key === currentHorizon ? "active" : ""}" data-horizon="${escapeHtml(key)}">${escapeHtml(meta.label)}</button>`;
-          }).join("")}
-        </div>
-      `;
-    }
-
-    function bindHorizonControls() {
-      document.querySelectorAll("[data-horizon]").forEach((button) => {
-        button.addEventListener("click", () => {
-          currentHorizon = button.dataset.horizon;
-          renderDashboardSections();
-        });
-      });
-    }
-
-    function simpleTable(headers, rows) {
-      return `
-        <div class="table-wrap">
-          <table>
-            <thead><tr>${headers.map((head) => `<th>${head}</th>`).join("")}</tr></thead>
-            <tbody>${rows.join("") || `<tr><td colspan="${headers.length}" class="muted">No rows.</td></tr>`}</tbody>
-          </table>
-        </div>
-      `;
-    }
-
-    function barList(rows, options = {}) {
-      const labelKey = options.labelKey || "name";
-      const valueKey = options.valueKey || "count";
-      const displayKey = options.displayKey || valueKey;
-      const color = options.color || "blue";
+    function bars(rows, labelKey, valueKey) {
       const max = Math.max(...rows.map((row) => Number(row[valueKey]) || 0), 1);
-      return `<div class="bar-list">${
-        rows.map((row) => {
-          const value = Number(row[valueKey]) || 0;
-          const width = Math.max(2, Math.round(value / max * 100));
-          return `
-            <div class="bar-row">
-              <div title="${escapeHtml(row[labelKey])}">${escapeHtml(row[labelKey])}</div>
-              <div class="bar-track"><div class="bar-fill ${escapeHtml(color)}" style="--bar-width: ${width}%"></div></div>
-              <div>${row[displayKey] !== undefined && displayKey !== valueKey ? escapeHtml(row[displayKey]) : fmtNumber(value, options.digits || 0)}</div>
-            </div>
-          `;
-        }).join("")
-      }</div>`;
+      return rows.map((row) => {
+        const value = Number(row[valueKey]) || 0;
+        return `<div class="bar-row"><div>${esc(row[labelKey] || row.name || "-")}</div><div class="bar-track"><div class="bar-fill" style="--bar-width:${Math.max(2, Math.round(value / max * 100))}%"></div></div><div>${num(value)}</div></div>`;
+      }).join("") || `<div class="empty">No data.</div>`;
     }
 
-    function sourceLinks(item) {
-      const links = item.source_report_links || [];
-      if (!links.length) return "";
-      return `<div class="small muted">Source: ${
-        links.slice(0, 2).map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join(", ")
-      }${links.length > 2 ? ` +${links.length - 2}` : ""}</div>`;
+    function setReport(date) {
+      if (!stateByDate[date]) return;
+      activeReportDate = date;
+      const params = new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
+      params.set("report", date);
+      window.history.replaceState(null, "", `#${params.toString()}`);
+      renderAll();
+    }
+    function setHorizon(horizon) {
+      currentHorizon = horizon;
+      renderAll();
+    }
+    function setTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll(".tab").forEach((button) => button.classList.toggle("active", button.dataset.tab === tab));
+      document.querySelectorAll(".panel").forEach((panel) => panel.classList.toggle("active", panel.id === tab));
+      renderActivePanel();
     }
 
-    function playlistLabels(item) {
-      return (item.playlists || []).map((playlist) => playlist.title || playlist.id).filter(Boolean);
+    function renderChrome() {
+      const s = state();
+      const report = s.report || {};
+      const summary = (s.horizon_summaries || {})[currentHorizon] || {};
+      document.getElementById("dashboard-meta").textContent = `Report ${report.report_date || "-"} | analytics through ${report.analytics_end_date || "-"} | ${horizonLabels[currentHorizon]} view`;
+      document.getElementById("horizon-controls").innerHTML = horizonOrder.map((horizon) =>
+        `<button class="${horizon === currentHorizon ? "active" : ""}" data-horizon="${horizon}">${esc(horizonLabels[horizon])}</button>`
+      ).join("");
+      document.querySelectorAll("[data-horizon]").forEach((button) => button.addEventListener("click", () => setHorizon(button.dataset.horizon)));
+      document.getElementById("report-strip").innerHTML = reportStates.map((reportState) => {
+        const reportDate = (reportState.report || {}).report_date || "";
+        const counts = reportState.summary_counts || {};
+        const label = `${reportDate} | ${num(reportState.totals?.actionable_videos || 0)} actions | ${num((reportState.horizon_summaries?.weekly || {}).total_views || 0)} views`;
+        return `<button class="${reportDate === activeReportDate ? "active" : ""}" data-report="${esc(reportDate)}">${esc(label)}</button>`;
+      }).join("");
+      document.querySelectorAll("[data-report]").forEach((button) => button.addEventListener("click", () => setReport(button.dataset.report)));
     }
 
-    function playlistLinks(item) {
-      const playlists = item.playlists || [];
-      if (!playlists.length) return `<div class="small muted">Playlist: none</div>`;
-      return `<div class="small muted">Playlist: ${
-        playlists.slice(0, 2).map((playlist) => playlist.url
-          ? `<a href="${escapeHtml(playlist.url)}" target="_blank" rel="noreferrer">${escapeHtml(playlist.title || playlist.id)}</a>`
-          : escapeHtml(playlist.title || playlist.id || "Untitled playlist")
-        ).join(", ")
-      }${playlists.length > 2 ? ` +${playlists.length - 2}` : ""}</div>`;
-    }
-
-    function strongestAction() {
-      const doNow = ((data.action_lanes || {}).do_now || {}).items || [];
-      return doNow[0] || (data.findings.action_items || [])[0] || null;
-    }
-
-    function warningsHtml() {
-      const warnings = data.warnings || [];
-      if (!warnings.length) return "";
-      return warnings.map((warning) => `<div class="warning">${escapeHtml(warning.message || warning.key)}</div>`).join("");
-    }
-
-    function renderMeta() {
-      const ledger = data.ledger || {};
-      const report = data.report || {};
-      document.getElementById("dashboard-meta").textContent =
-        `Report ${report.report_date || "-"} | analytics through ${ledger.analytics_end_date || "-"} | generated ${data.generated_at || "-"}`;
-      const readOnly = report.read_only && ledger.read_only ? "Read-only" : "Check mode";
-      document.getElementById("status-strip").innerHTML = [
-        `<span class="badge">${readOnly}</span>`,
-        `<span class="badge">${escapeHtml(horizonMeta().label)} view</span>`,
-        `<span class="badge">${escapeHtml((data.reporting_status || {}).reach_status_text || "CTR pending")}</span>`,
-        `<span class="badge">${fmtNumber(data.totals.actionable_videos)} action items</span>`,
-        `<span class="badge">${fmtNumber(data.totals.waiting_for_ctr)} waiting for CTR</span>`
-      ].join("");
-    }
-
-    function findingCard(item, context) {
-      const category = context || item.primary_category || "ignore";
-      const metrics = metricFor(item);
-      const reason = (item.reasons_by_category || {})[category] || (item.reasons && item.reasons.length ? item.reasons[0] : "");
-      const action = (item.actions_by_category || {})[category] || (item.recommended_actions && item.recommended_actions.length ? item.recommended_actions[0] : "");
-      return `
-        <article class="finding ${escapeHtml(item.primary_category || category)}">
-          <div>
-            <div class="finding-title">${linkFor(item)}</div>
-            <div class="muted">${escapeHtml(reason || "No report reason recorded.")}</div>
-            <div>${escapeHtml(action || "Keep watching until a stronger signal appears.")}</div>
-            ${sourceLinks(item)}
-            ${playlistLinks(item)}
-            <div class="metric-row">
-              <span class="metric-chip">${escapeHtml(horizonMeta().label)}: ${escapeHtml(horizonRangeFor(item))}</span>
-              <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
-              <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
-              <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
-              ${item.format === "short" ? `<span class="metric-chip"${tooltipAttrs(helpText("shorts_feed_views"), "Shorts views")}>${fmtNumber(shortsFeedViews(item))} Shorts views</span>` : ""}
-              <span class="metric-chip"${tinyThumbnailSample(item, metrics) ? tooltipAttrs(helpText("tiny_thumbnail_sample"), "Thumbnail CTR") : ""}>${thumbnailCtrText(item, metrics)} CTR</span>
-              <span class="metric-chip"${tooltipAttrs(helpText("known_funnel_clicks"), "Known funnel clicks")}>${fmtNumber((item.funnel || {}).known_downstream_clicks)} known funnel clicks</span>
-            </div>
+    function memoCard(item) {
+      return `<article class="memo ${esc(item.action || "")}">
+        ${thumb(item)}
+        <div>
+          <div class="decision">${esc(item.decision || item.action_label || "Decision")}</div>
+          <div class="memo-title">${itemLink(item)}</div>
+          <div class="muted">${esc(evidenceLine(item))}</div>
+          <div class="next-step">${esc(item.next_step || "Review this item.")}</div>
+          <div class="chips" style="margin-top:8px;">
+            <span class="chip">${esc(item.confidence || "Directional")}</span>
+            <span class="chip">${esc(item.format || "unknown")}</span>
+            ${badges(item)}
           </div>
-          <div>${(item.categories || [category]).map(badge).join(" ")}</div>
-        </article>
-      `;
+          ${caveatChips(item)}
+        </div>
+      </article>`;
     }
 
-    function renderActionBoard() {
-      const lanes = data.action_lanes || {};
-      const strongest = strongestAction();
-      const summary = (data.horizon_summaries || {})[currentHorizon] || {};
-      const decisionRows = decisionOrder
-        .filter((category) => showEmptyBuckets || ((data.findings.summary_counts || {})[category] || 0) > 0)
-        .map((category) => ({ name: categoryLabels[category] || category, count: (data.findings.summary_counts || {})[category] || 0 }));
-      const laneSections = laneOrder.map((key) => {
-        const lane = lanes[key] || { label: key, description: "", items: [] };
-        if (!showEmptyBuckets && !lane.items.length) return "";
-        const body = lane.items.length
-          ? `<div class="lane-list">${lane.items.slice(0, key === "watch" ? 12 : 20).map((item) => findingCard(item)).join("")}</div>`
-          : `<div class="empty">No videos in this lane.</div>`;
-        return `
-          <section class="lane-section">
-            <h2>${escapeHtml(lane.label)} <span class="badge">${fmtNumber(lane.count || 0)}</span></h2>
-            <p class="muted">${escapeHtml(lane.description || "")}</p>
-            ${body}
+    function queueCard(key, queue) {
+      const items = queue.items || [];
+      return `<section class="card queue-card ${esc(key)}">
+        <div class="section-head" style="margin-top:0;"><div><h2>${esc(queue.label || key)}</h2><p class="muted">${esc(queue.description || "")}</p></div><span class="chip">${num(items.length)}</span></div>
+        <div class="queue-list">${items.slice(0, key === "watchlist" ? 8 : 6).map((item) => `
+          <div class="queue-item">
+            <div class="memo-title">${itemLink(item)}</div>
+            <div class="small muted">${esc(item.action_label || "")} | ${esc(evidenceLine(item))}</div>
+            <div class="small">${esc(item.next_step || "")}</div>
+          </div>
+        `).join("") || `<div class="empty">No items.</div>`}</div>
+      </section>`;
+    }
+
+    function renderDecisions() {
+      const s = state();
+      const summary = (s.horizon_summaries || {})[currentHorizon] || {};
+      const memos = s.decision_memos || [];
+      document.getElementById("decisions").innerHTML = `
+        <div class="hero-grid">
+          <section class="card">
+            <h2>What to do next</h2>
+            <div class="memo-list">${memos.slice(0, 5).map(memoCard).join("") || `<div class="empty">No decision memos crossed the current thresholds.</div>`}</div>
           </section>
-        `;
-      }).join("");
-
-      document.getElementById("action-board").innerHTML = `
-        ${warningsHtml()}
-        <div class="card" style="margin-bottom: 12px;">
-          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <div>
-              <h2 style="margin-bottom: 4px;">${escapeHtml(horizonMeta().label)} Decision View</h2>
-              <div class="muted">${escapeHtml(horizonMeta().description || "")}</div>
+          <aside class="card">
+            <h2>${esc(horizonLabels[currentHorizon])} summary</h2>
+            <div class="stat-grid">
+              ${summaryStat("views", summary.total_views)}
+              ${summaryStat("watch minutes", summary.total_watch_time_minutes)}
+              ${summaryStat("avg viewed", summary.average_view_percentage, pct)}
+              ${summaryStat("videos with data", summary.videos_with_metrics)}
+              ${summaryStat("actionable", s.totals?.actionable_videos || 0)}
+              ${summaryStat("watch only", s.totals?.ignored_count || 0)}
             </div>
-            ${horizonControl()}
-          </div>
+          </aside>
         </div>
-        <div class="grid two">
-          <div class="card">
-            <h2>${escapeHtml(horizonMeta().label)} Snapshot</h2>
-            <div class="metric-row">
-              <span class="metric-chip">${fmtNumber(summary.total_views)} views</span>
-              <span class="metric-chip">${fmtNumber(summary.total_watch_time_minutes)} watch minutes</span>
-              <span class="metric-chip">${fmtPercent(summary.average_view_percentage)} avg viewed</span>
-              <span class="metric-chip">${fmtNumber(summary.videos_with_metrics)} videos with data</span>
-              <span class="metric-chip">${fmtNumber(data.totals.actionable_videos)} actionable</span>
-              <span class="metric-chip">${fmtNumber(data.totals.waiting_for_ctr)} blocked by CTR</span>
-              <span class="metric-chip">${fmtNumber(data.totals.needs_studio_check)} need Studio check</span>
-              <span class="metric-chip">${escapeHtml((data.reporting_status || {}).reach_status_text || "-")}</span>
-            </div>
-            ${strongest ? `
-              <div class="summary-action">
-                <div class="muted">Strongest current action</div>
-                <div class="finding-title">${linkFor(strongest)}</div>
-                <div>${escapeHtml((strongest.recommended_actions || [])[0] || "Review this item.")}</div>
-              </div>
-            ` : `<div class="empty">No action items crossed the current thresholds.</div>`}
-          </div>
-          <div class="card">
-            <h2>Decision Counts</h2>
-            ${barList(decisionRows, { labelKey: "name", valueKey: "count", color: "teal" })}
-            <div class="metric-row">
-              <label class="check-chip"><input id="show-empty-buckets" type="checkbox" ${showEmptyBuckets ? "checked" : ""}> Show empty buckets</label>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top: 16px;">${laneSections}</div>
-      `;
-      document.getElementById("show-empty-buckets").addEventListener("change", (event) => {
-        showEmptyBuckets = event.target.checked;
-        renderDashboardSections();
-      });
-      bindHorizonControls();
-    }
-
-    function formatDeltaValue(metric, value) {
-      if (metric === "videoThumbnailImpressionsClickRate" || metric === "averageViewPercentage") return fmtPercent(value);
-      if (metric === "views_per_day") return `${fmtNumber(value, 1)}/day`;
-      return fmtNumber(value, 1);
-    }
-
-    function renderDailyDelta() {
-      const delta = data.delta_summary || {};
-      const groups = delta.groups || {};
-      const options = Object.entries(groups).map(([key, group]) =>
-        `<option value="${escapeHtml(key)}">${escapeHtml(group.label || key)}</option>`
-      ).join("");
-      document.getElementById("daily-delta").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <h2>${withHelp("Daily Delta", "daily_delta")}</h2>
-          <p class="muted">${escapeHtml(delta.description || "No previous refresh snapshot is available yet.")}</p>
-          <div class="metric-row">
-            <span class="metric-chip">Previous snapshot: ${escapeHtml(delta.previous_generated_at || "-")}</span>
-            <span class="metric-chip">${escapeHtml(delta.status || "unknown")}</span>
-            ${delta.largest_movement ? `<span class="metric-chip">${escapeHtml(delta.largest_movement.group_label)}: ${formatDeltaValue(delta.largest_movement.metric, delta.largest_movement.delta)}</span>` : ""}
-          </div>
-        </div>
-        <div class="toolbar" style="grid-template-columns: 320px 1fr;">
-          <select id="delta-group">${options}</select>
-          <div></div>
-        </div>
-        <div id="delta-table"></div>
-      `;
-      const renderTable = () => {
-        const key = document.getElementById("delta-group").value || delta.default_group || "views_day_movers";
-        const group = groups[key] || { items: [], metric: "", tooltip_key: "" };
-        const rows = (group.items || []).map((item) => `
-          <tr class="row-${escapeHtml(item.primary_category || "ignore")}">
-            <td>${linkFor(item)}<div class="muted small">${escapeHtml(item.video_id || "")}</div></td>
-            <td>${escapeHtml(item.confidence || "-")}</td>
-            <td>${formatDeltaValue(group.metric, item.current)}</td>
-            <td>${formatDeltaValue(group.metric, item.previous)}</td>
-            <td>${formatDeltaValue(group.metric, item.delta)}</td>
-            <td>${fmtPercent(item.percent_change)}</td>
-          </tr>
-        `);
-        document.getElementById("delta-table").innerHTML = `
-          <div class="card" style="margin-bottom: 12px;"><h2>${withHelp(group.label || key, group.tooltip_key)}</h2></div>
-          ${simpleTable(["Video", withHelp("Confidence", "confidence"), "Current", "Previous", "Delta", "% Change"], rows)}
-        `;
-      };
-      document.getElementById("delta-group").addEventListener("input", renderTable);
-      renderTable();
-    }
-
-    function renderExperiments() {
-      const registry = data.experiments || {};
-      const experiments = registry.experiments || [];
-      document.getElementById("experiments").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <h2>${withHelp("Experiment Registry", "experiment_registry")}</h2>
-          <p class="muted">Active experiments are shown first. Registry: ${escapeHtml(registry.source_path || "-")}</p>
-        </div>
-        <div class="toolbar" style="grid-template-columns: 260px 1fr;">
-          <select id="experiment-filter">
-            <option value="active">Active first / active only</option>
-            <option value="">All experiments</option>
-            <option value="title_test">Title tests</option>
-            <option value="thumbnail_test">Thumbnail tests</option>
-            <option value="overlay_remaster">Overlay remasters</option>
-            <option value="release_time_test">Release-time tests</option>
-            <option value="shorts_funnel_test">Shorts funnel tests</option>
-          </select>
-          <div></div>
-        </div>
-        <div id="experiment-table"></div>
-      `;
-      const renderTable = () => {
-        const filter = document.getElementById("experiment-filter").value;
-        const rows = experiments
-          .filter((experiment) => filter !== "active" || experiment.active)
-          .filter((experiment) => !filter || filter === "active" || experiment.type === filter)
-          .map((experiment) => {
-            const read = experiment.current_read || {};
-            return `<tr>
-              <td><strong>${escapeHtml(experiment.name || experiment.id)}</strong><div class="muted small">${escapeHtml(experiment.hypothesis || "")}</div></td>
-              <td>${escapeHtml(experiment.type || "-")}</td>
-              <td>${escapeHtml(experiment.status || "-")}</td>
-              <td>${escapeHtml(experiment.start_date || "-")}</td>
-              <td>${escapeHtml(experiment.metric_target || "-")}</td>
-              <td>${fmtNumber(read.video_count)}</td>
-              <td>${fmtNumber(read.views)}</td>
-              <td>${fmtNumber(read.views_per_day, 1)}</td>
-              <td>${fmtPercent(read.average_view_percentage)}</td>
-              <td>${fmtPercent(read.ctr)}</td>
-            </tr>`;
-          });
-        document.getElementById("experiment-table").innerHTML = simpleTable(
-          ["Experiment", "Type", "Status", "Start", "Target Metric", "Videos", "Views", "V/day", "Avg Viewed", "CTR"],
-          rows
-        );
-      };
-      document.getElementById("experiment-filter").addEventListener("input", renderTable);
-      renderTable();
-    }
-
-    function renderPackagingLab() {
-      const lab = data.packaging_lab || {};
-      const buckets = lab.buckets || {};
-      const options = Object.entries(buckets).map(([key, bucket]) =>
-        `<option value="${escapeHtml(key)}">${escapeHtml(bucket.label || key)} (${fmtNumber(bucket.count || 0)})</option>`
-      ).join("");
-      document.getElementById("packaging").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <h2>${withHelp("Packaging Lab", "packaging_lab")}</h2>
-          <p class="muted">Default view focuses on videos YouTube showed but viewers did not click at a strong enough rate.</p>
-        </div>
-        <div class="toolbar" style="grid-template-columns: 340px 1fr;"> <select id="packaging-bucket">${options}</select><div></div></div>
-        <div id="packaging-list"></div>
-      `;
-      const renderList = () => {
-        const key = document.getElementById("packaging-bucket").value || lab.default_bucket;
-        const bucket = buckets[key] || { items: [], label: key };
-        document.getElementById("packaging-list").innerHTML = `
-          <div class="card" style="margin-bottom: 12px;"><h2>${withHelp(bucket.label || key, bucket.tooltip_key)}</h2></div>
-          <div class="finding-list">${(bucket.items || []).map((item) => findingCard(item)).join("") || `<div class="empty">No videos in this packaging bucket.</div>`}</div>
-        `;
-      };
-      document.getElementById("packaging-bucket").addEventListener("input", renderList);
-      renderList();
-    }
-
-    function renderFunnelMap() {
-      const map = data.funnel_map || {};
-      const buckets = map.buckets || {};
-      const options = Object.entries(buckets).map(([key, bucket]) =>
-        `<option value="${escapeHtml(key)}">${escapeHtml(bucket.label || key)} (${fmtNumber(bucket.count || 0)})</option>`
-      ).join("");
-      const totals = map.totals || {};
-      document.getElementById("funnel").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <h2>${withHelp("Funnel Map", "funnel_map")}</h2>
-          <div class="metric-row">
-            <span class="metric-chip">${fmtNumber(totals.shorts_with_related)} Shorts with related targets</span>
-            <span class="metric-chip"${tooltipAttrs(helpText("known_funnel_clicks"), "Known funnel clicks")}>${fmtNumber(totals.known_downstream_clicks)} known funnel clicks</span>
-            <span class="metric-chip"${tooltipAttrs(helpText("related_video_traffic_views"), "Related-video traffic views")}>${fmtNumber(totals.related_video_traffic_views)} related-video traffic views</span>
-            <span class="metric-chip">${fmtNumber(totals.total_card_clicks)} card clicks</span>
-            <span class="metric-chip">${fmtNumber(totals.total_end_screen_clicks)} end-screen clicks</span>
-          </div>
-        </div>
-        <div class="toolbar" style="grid-template-columns: 320px 1fr;"><select id="funnel-bucket">${options}</select><div></div></div>
-        <div id="funnel-list"></div>
-      `;
-      const renderList = () => {
-        const key = document.getElementById("funnel-bucket").value || map.default_bucket;
-        const bucket = buckets[key] || { items: [], label: key };
-        if (key === "parent_receivers") {
-          const rows = (bucket.items || []).map((parent) => `
-            <tr>
-              <td>${parent.parent_url ? `<a href="${escapeHtml(parent.parent_url)}" target="_blank" rel="noreferrer">${escapeHtml(parent.parent_id)}</a>` : escapeHtml(parent.parent_id)}</td>
-              <td>${fmtNumber(parent.source_count)}</td>
-              <td>${fmtNumber(parent.short_count)}</td>
-              <td>${fmtNumber(parent.known_downstream_clicks)}</td>
-              <td>${fmtNumber(parent.card_clicks)}</td>
-              <td>${fmtNumber(parent.end_screen_clicks)}</td>
-            </tr>
-          `);
-          document.getElementById("funnel-list").innerHTML = simpleTable(["Parent", "Sources", "Shorts", "Known Clicks", "Card Clicks", "End-screen Clicks"], rows);
-          return;
-        }
-        document.getElementById("funnel-list").innerHTML = `<div class="finding-list">${
-          (bucket.items || []).map((item) => findingCard(item)).join("") || `<div class="empty">No videos in this funnel bucket.</div>`
-        }</div>`;
-      };
-      document.getElementById("funnel-bucket").addEventListener("input", renderList);
-      renderList();
-    }
-
-    function movementRows() {
-      const groups = ((data.daily_movement || {}).groups || (data.delta_summary || {}).groups || {});
-      return Object.values(groups).flatMap((group) => group.items || []);
-    }
-
-    function movementCardHtml() {
-      const daily = data.daily_movement || {};
-      const delta = data.delta_summary || {};
-      const largest = daily.largest_movement || delta.largest_movement;
-      const count = movementRows().length;
-      const sevenDay = (((daily.groups || {}).seven_day_views_per_day || {}).items || []).slice(0, 3);
-      if (!largest || !count) {
-        return `
-          <div class="card">
-            <h2>${withHelp("Recent Movement", "daily_movement")}</h2>
-            <p>No meaningful metric movement in the latest daily rows yet.</p>
-            <p class="muted">Latest Analytics daily row: ${escapeHtml(daily.latest_day || "-")}.</p>
-          </div>
-        `;
-      }
-      return `
-        <div class="card">
-          <h2>${withHelp("Recent Movement", "daily_movement")}</h2>
-          <div class="muted">Latest daily row: ${escapeHtml(daily.latest_day || "-")} | Previous day: ${escapeHtml(daily.previous_day || "-")}</div>
-          <div class="summary-action">
-            <div class="muted">${escapeHtml(largest.group_label || "Largest movement")}</div>
-            <div class="finding-title">${linkFor(largest)}</div>
-            <div>${formatDeltaValue(largest.metric, largest.delta)} vs the prior comparison window</div>
-          </div>
-          ${sevenDay.length ? `
-            <h3 style="margin-top: 12px;">7-day views/day movers</h3>
-            ${sevenDay.map((item) => compactItemLine(item, `${formatDeltaValue(item.metric, item.delta)} vs prior 7 days`)).join("")}
-          ` : `<p class="muted small">Refresh snapshot comparison: ${escapeHtml(delta.previous_generated_at || "not available")}.</p>`}
+        <div class="grid three" style="margin-top:12px;">
+          ${queueCard("production", (s.queues || {}).production || {})}
+          ${queueCard("fix", (s.queues || {}).fix || {})}
+          ${queueCard("watchlist", (s.queues || {}).watchlist || {})}
         </div>
       `;
-    }
-
-    function releaseInsightCardHtml() {
-      const lab = data.release_time_lab || {};
-      const insights = lab.insights || {};
-      const parts = [
-        ["Best daypart", insights.best_daypart],
-        ["Best weekday", insights.best_weekday],
-        ["Best hour", insights.best_hour]
-      ].map(([label, row]) => {
-        if (!row) return `<span class="metric-chip">${escapeHtml(label)}: -</span>`;
-        return `<span class="metric-chip">${escapeHtml(label)}: ${escapeHtml(row.name || "-")} (${fmtNumber(row.views_per_video, 1)} views/video)</span>`;
-      }).join("");
-      return `
-        <div class="card">
-          <h2>${withHelp("Release Timing Read", "release_time_lab")}</h2>
-          <p>${escapeHtml(insights.summary || "Not enough release-time data for a directional read.")}</p>
-          <div class="metric-row">${parts}</div>
-          <p class="muted small">Timezone: ${escapeHtml(lab.timezone || "Europe/Athens")}. This is directional; small cohorts are not treated as proof.</p>
-        </div>
-      `;
-    }
-
-    function compactItemLine(item, detail = "") {
-      return `
-        <div style="border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px;">
-          <div class="finding-title" style="margin-bottom: 2px;">${linkFor(item)}</div>
-          <div class="small muted">${escapeHtml(detail)}</div>
-        </div>
-      `;
-    }
-
-    function videosDecisionPanelsHtml() {
-      const queueItems = ((data.production_queue || {}).items || []).slice(0, 5);
-      const packagingItems = ((((data.packaging_lab || {}).buckets || {}).high_impression_low_ctr || {}).items || []).slice(0, 5);
-      const funnelItems = ((((data.funnel_map || {}).buckets || {}).shorts_to_related || {}).items || []).slice(0, 5);
-      return `
-        <div class="grid three" style="margin-bottom: 12px;">
-          <div class="card">
-            <h2>${withHelp("Production Queue", "production_queue")}</h2>
-            ${queueItems.map((item) => compactItemLine(item, `${(item.action || "").replace("_", " ")} | ${item.confidence || "-"}`)).join("") || `<div class="empty">No production queue items.</div>`}
-          </div>
-          <div class="card">
-            <h2>${withHelp("Packaging Lab", "packaging_lab")}</h2>
-            ${packagingItems.map((item) => {
-              const metrics = metricFor(item);
-              return compactItemLine(item, `${thumbnailImpressionText(item, metrics)} | ${thumbnailCtrText(item, metrics)} CTR`);
-            }).join("") || `<div class="empty">No high-impression / low-CTR items.</div>`}
-          </div>
-          <div class="card">
-            <h2>${withHelp("Funnel Map", "funnel_map")}</h2>
-            ${funnelItems.map((item) => compactItemLine(item, `${fmtNumber(((item.funnel || {}).known_downstream_clicks))} known clicks | ${item.related_video ? "related target set" : "no target"}`)).join("") || `<div class="empty">No Shorts with related-video targets.</div>`}
-          </div>
-        </div>
-      `;
-    }
-
-    function renderTopicClusters() {
-      const clusterData = data.topic_clusters || {};
-      const clusters = clusterData.clusters || [];
-      document.getElementById("topics").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <h2>${withHelp("Topic Cluster Map", "topic_clusters")}</h2>
-          <p class="muted">Clusters are deterministic from titles, package paths, and local SRT hints when present.</p>
-        </div>
-        <div class="toolbar" style="grid-template-columns: 260px 1fr;">
-          <select id="topic-sort">
-            <option value="views">Sort by views</option>
-            <option value="average_view_percentage">Sort by retention</option>
-            <option value="ctr">Sort by CTR</option>
-            <option value="subscribers_gained">Sort by subscribers</option>
-            <option value="production_queue_pressure">Sort by queue pressure</option>
-          </select>
-          <div></div>
-        </div>
-        <div id="topic-table"></div>
-      `;
-      const renderTable = () => {
-        const sortKey = document.getElementById("topic-sort").value;
-        const rows = [...clusters].sort((a, b) => (Number(b[sortKey]) || 0) - (Number(a[sortKey]) || 0)).map((cluster) => `
-          <tr>
-            <td><strong>${escapeHtml(cluster.cluster)}</strong><div class="muted small">${(cluster.top_videos || []).slice(0, 3).map((video) => video.url ? `<a href="${escapeHtml(video.url)}" target="_blank" rel="noreferrer">${escapeHtml(video.title)}</a>` : escapeHtml(video.title)).join("<br>")}</div></td>
-            <td>${fmtNumber(cluster.video_count)}</td>
-            <td>${fmtNumber(cluster.action_items)}</td>
-            <td>${fmtNumber(cluster.views)}</td>
-            <td>${fmtNumber(cluster.views_per_day, 1)}</td>
-            <td>${fmtPercent(cluster.average_view_percentage)}</td>
-            <td>${fmtPercent(cluster.ctr)}</td>
-            <td>${fmtNumber(cluster.subscribers_gained)}</td>
-            <td>${fmtNumber(cluster.production_queue_pressure)}</td>
-          </tr>
-        `);
-        document.getElementById("topic-table").innerHTML = simpleTable(["Cluster", "Videos", "Actions", "Views", "V/day", "Avg Viewed", "CTR", "Subs", "Queue Pressure"], rows);
-      };
-      document.getElementById("topic-sort").addEventListener("input", renderTable);
-      renderTable();
-    }
-
-    function releaseRowsFor(mode, formatName) {
-      const lab = data.release_time_lab || {};
-      let source = lab.all || {};
-      if (mode === "young_excluded") source = lab.young_excluded || {};
-      if (formatName) source = ((lab.by_format || {})[formatName] || {});
-      const key = mode === "young_excluded" ? "weekday" : mode;
-      return source[key] || [];
-    }
-
-    function renderReleaseTimeLab() {
-      const lab = data.release_time_lab || {};
-      const formats = Object.keys(lab.by_format || {}).sort();
-      document.getElementById("release-lab").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <h2>${withHelp("Release-Time Lab", "release_time_lab")}</h2>
-          <p class="muted">Timezone: ${escapeHtml(lab.timezone || "Europe/Athens")}.</p>
-        </div>
-        <div class="toolbar">
-          <select id="release-mode">
-            <option value="weekday">Weekday</option>
-            <option value="hour">Hour</option>
-            <option value="daypart">Daypart</option>
-            <option value="young_excluded">Weekday, excluding too-young videos</option>
-          </select>
-          <select id="release-format">
-            <option value="">All formats</option>
-            ${formats.map((format) => `<option value="${escapeHtml(format)}">${escapeHtml(format)}</option>`).join("")}
-          </select>
-          <div></div>
-        </div>
-        <div id="release-table"></div>
-      `;
-      const renderTable = () => {
-        const mode = document.getElementById("release-mode").value;
-        const formatName = document.getElementById("release-format").value;
-        const rows = releaseRowsFor(mode, formatName).map((row) => `
-          <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
-        `);
-        document.getElementById("release-table").innerHTML = simpleTable(["Cohort", "Videos", "Views", "Avg Viewed", "CTR"], rows);
-      };
-      document.getElementById("release-mode").addEventListener("input", renderTable);
-      document.getElementById("release-format").addEventListener("input", renderTable);
-      renderTable();
-    }
-
-    function renderProductionQueue() {
-      const queue = data.production_queue || {};
-      const actions = ["all", "retitle", "remaster", "clip_more", "make_sequel", "thumbnail_review", "wait", "ignore"];
-      document.getElementById("production").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <h2>${withHelp("Production Queue", "production_queue")}</h2>
-          <p class="muted">Ranked local recommendations only. No YouTube state is changed from this dashboard.</p>
-        </div>
-        <div class="toolbar" style="grid-template-columns: 260px 1fr;">
-          <select id="queue-action">${actions.map((action) => `<option value="${escapeHtml(action)}">${escapeHtml(action.replace("_", " "))}</option>`).join("")}</select>
-          <div></div>
-        </div>
-        <div id="queue-table"></div>
-      `;
-      const renderTable = () => {
-        const action = document.getElementById("queue-action").value;
-        const rows = (queue.items || [])
-          .filter((item) => action === "all" || item.action === action)
-          .map((item) => {
-            const metrics = item.metrics || {};
-            return `<tr class="row-${escapeHtml(item.primary_category || "ignore")}">
-              <td>${linkFor(item)}<div class="muted small">${escapeHtml(item.video_id || "")}</div></td>
-              <td>${escapeHtml(item.action.replace("_", " "))}</td>
-              <td>${escapeHtml(item.confidence || "-")}</td>
-              <td>${escapeHtml(item.reason || "")}</td>
-              <td>${fmtNumber(metrics.views)}</td>
-              <td>${fmtNumber(metrics.views_per_day, 1)}</td>
-              <td>${fmtPercent(metrics.averageViewPercentage)}</td>
-              <td>${thumbnailCtrCell(item, metrics)}</td>
-              <td>${fmtNumber(item.score, 1)}</td>
-            </tr>`;
-          });
-        document.getElementById("queue-table").innerHTML = simpleTable(
-          ["Video", "Action", withHelp("Confidence", "confidence"), "Why", "Views", "V/day", "Avg Viewed", "CTR", "Queue Score"],
-          rows
-        );
-      };
-      document.getElementById("queue-action").addEventListener("input", renderTable);
-      renderTable();
-    }
-
-    function renderOverview() {
-      const totals = data.totals;
-      const summary = (data.horizon_summaries || {})[currentHorizon] || {};
-      const metricRows = Object.entries(data.coverage.metrics).map(([name, row]) => ({ name: labelFor(name), count: row.count || 0, detail: coverageText(row) }));
-      const decisionRows = decisionOrder.map((category) => ({ name: categoryLabels[category] || category, count: (data.findings.summary_counts || {})[category] || 0 }));
-      const packageRows = ((data.package_rollups_by_horizon || {})[currentHorizon] || data.package_rollups || []).slice(0, 10).map((row) => ({
-        package: row.package,
-        action_items: row.action_items,
-        total_views: row.total_views,
-        average_view_percentage: row.average_view_percentage
-      }));
-      const playlistRows = ((data.playlist_rollups_by_horizon || {})[currentHorizon] || data.playlist_rollups || []).slice(0, 10).map((row) => ({
-        playlist: row.playlist,
-        url: row.url,
-        video_count: row.video_count,
-        action_items: row.action_items,
-        total_views: row.total_views,
-        average_view_percentage: row.average_view_percentage
-      }));
-      const packageTableRows = packageRows.map((row) => `
-        <tr>
-          <td>${escapeHtml(row.package)}</td>
-          <td>${fmtNumber(row.action_items)}</td>
-          <td>${fmtNumber(row.total_views)}</td>
-          <td>${fmtPercent(row.average_view_percentage)}</td>
-        </tr>
-      `);
-      const playlistTableRows = playlistRows.map((row) => `
-        <tr>
-          <td>${row.url ? `<a href="${escapeHtml(row.url)}" target="_blank" rel="noreferrer">${escapeHtml(row.playlist)}</a>` : escapeHtml(row.playlist)}</td>
-          <td>${fmtNumber(row.video_count)}</td>
-          <td>${fmtNumber(row.action_items)}</td>
-          <td>${fmtNumber(row.total_views)}</td>
-          <td>${fmtPercent(row.average_view_percentage)}</td>
-        </tr>
-      `);
-      const inventoryRows = (((data.playlist_inventory_by_horizon || {})[currentHorizon] || data.playlist_inventory || []).slice(0, 20)).map((row) => `
-        <tr>
-          <td>${row.url ? `<a href="${escapeHtml(row.url)}" target="_blank" rel="noreferrer">${escapeHtml(row.playlist)}</a>` : escapeHtml(row.playlist)}</td>
-          <td>${fmtNumber(row.item_count)}</td>
-          <td>${fmtNumber(row.in_scope_video_count)}</td>
-          <td>${fmtNumber(row.missing_from_scope_count)}</td>
-          <td>${escapeHtml(row.privacy_status || "-")}</td>
-        </tr>
-      `);
-      const sync = data.ledger.reporting_api_sync || {};
-      const traffic = ((data.distributions.traffic_sources_by_horizon || {})[currentHorizon] || {});
-      document.getElementById("overview").innerHTML = `
-        ${warningsHtml()}
-        <div class="card" style="margin-bottom: 12px;">
-          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <div>
-              <h2 style="margin-bottom: 4px;">Overview: ${escapeHtml(horizonMeta().label)}</h2>
-              <div class="muted">${escapeHtml(horizonMeta().description || "")}</div>
-            </div>
-            ${horizonControl()}
-          </div>
-        </div>
-        <div class="grid stats">
-          ${stat("Videos", fmtNumber(totals.videos), "metric_coverage")}
-          ${stat(`${horizonMeta().label} Views`, fmtNumber(summary.total_views))}
-          ${stat("Watch Minutes", fmtNumber(summary.total_watch_time_minutes))}
-          ${stat("Avg Viewed", fmtPercent(summary.average_view_percentage))}
-          ${stat("Videos With Data", fmtNumber(summary.videos_with_metrics), "metric_coverage")}
-          ${stat("Videos In Playlists", fmtNumber(totals.playlist_videos), "playlist_rollups")}
-          ${stat("Videos With Thumbnail Impressions", fmtNumber(totals.reach_impression_videos), "videos_with_thumbnail_impressions")}
-        </div>
-        <div class="grid three">
-          <div class="card"><h2>Status</h2>
-            <p>Analytics fresh through <strong>${escapeHtml(data.ledger.analytics_end_date || "-")}</strong>.</p>
-            <p>${escapeHtml((data.reporting_status || {}).reach_status_text || "CTR pending")}.</p>
-            <p class="muted">Reporting sync last merged ${escapeHtml(sync.merged_at || "-")} from ${fmtNumber(sync.source_file_count)} files.</p>
-          </div>
-          ${movementCardHtml()}
-          ${releaseInsightCardHtml()}
-          <div class="card"><h2>Formats</h2>${barList(data.distributions.formats || [], { color: "blue" })}</div>
-          <div class="card"><h2>${withHelp("Playlists In Scope", "playlist_rollups")}</h2>${barList(data.distributions.top_playlists || [], { color: "teal" })}</div>
-          <div class="card"><h2>Decision Counts</h2>${barList(decisionRows, { color: "teal" })}</div>
-          <div class="card"><h2>${withHelp(traffic.label || "Traffic Sources", "subscriber_traffic")}</h2>${traffic.note ? `<p class="muted">${escapeHtml(traffic.note)}</p>` : ""}${barList(traffic.sources || [], { labelKey: "source", valueKey: "views", color: "green" })}</div>
-          <div class="card"><h2>${withHelp("Metric Coverage", "metric_coverage")}</h2>${barList(metricRows, { color: "violet", displayKey: "detail" })}</div>
-          <div class="card"><h2>Funnel Snapshot</h2>
-            <div class="metric-row">
-              <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).shorts_with_related)} Shorts with related video</span>
-              <span class="metric-chip"${tooltipAttrs(helpText("known_funnel_clicks"), "Known funnel clicks")}>${fmtNumber((data.funnel_rollups.totals || {}).known_downstream_clicks)} known funnel clicks</span>
-              <span class="metric-chip"${tooltipAttrs(helpText("related_video_traffic_views"), "Related-video traffic views")}>${fmtNumber((data.funnel_rollups.totals || {}).related_video_traffic_views)} related-video traffic views</span>
-              <span class="metric-chip">${fmtNumber((data.funnel_rollups.totals || {}).total_card_clicks)} card clicks</span>
-            </div>
-          </div>
-        </div>
-        <div class="card" style="margin-top: 12px;">
-          <h2>${withHelp(`Package Rollups: ${horizonMeta().label}`, "package_rollups")}</h2>
-          ${simpleTable([withHelp("Package", "package_rollups"), "Action Items", "Views", "Avg Viewed"], packageTableRows)}
-        </div>
-        <div class="card" style="margin-top: 12px;">
-          <h2>${withHelp(`Playlist Rollups For Videos In Scope: ${horizonMeta().label}`, "playlist_rollups")}</h2>
-          ${simpleTable([withHelp("Playlist", "playlist_rollups"), "Videos", "Action Items", "Views", "Avg Viewed"], playlistTableRows)}
-        </div>
-        <div class="card" style="margin-top: 12px;">
-          <h2>${withHelp("Channel Playlist Inventory", "playlist_inventory")}</h2>
-          <p class="muted">Missing from scope means the playlist has channel items that are not currently represented by an analyzed video row, or are private/deleted/unavailable to video detail lookup.</p>
-          ${simpleTable(["Playlist", "Channel Items", "Analyzed Videos", "Missing From Scope", "Privacy"], inventoryRows)}
-        </div>
-      `;
-      bindHorizonControls();
-    }
-
-    function sortValue(item, key) {
-      const metrics = metricFor(item);
-      if (key === "useful") {
-        const actionable = (item.categories || []).some((category) => category !== "ignore") ? 1000000000 : 0;
-        const severity = { hook_problem: 600000, remaster: 500000, retitle: 400000, scale: 300000, clip_more: 200000, funnel_winner: 200000, ignore: 0 }[item.primary_category || "ignore"] || 0;
-        return actionable + severity + (Number(metrics.views_per_day) || 0) * 1000 + (Number(metrics.views) || 0);
-      }
-      if (key === "score") return Number(item.score) || 0;
-      if (key === "views") return Number(metrics.views) || 0;
-      if (key === "views_per_day") return Number(metrics.views_per_day) || 0;
-      if (key === "avg_viewed") return Number(metrics.averageViewPercentage) || 0;
-      if (key === "subs") return Number(metrics.subscribersGained) || 0;
-      if (key === "impressions") return Number(metrics.videoThumbnailImpressions) || 0;
-      if (key === "ctr") return tinyThumbnailSample(item, metrics) ? -1 : (Number(metrics.videoThumbnailImpressionsClickRate) || 0);
-      if (key === "shorts_views") return shortsFeedViews(item);
-      if (key === "duration") return Number(item.duration_seconds) || 0;
-      return String(item[key] || "").toLowerCase();
-    }
-
-    function matchesQuickFilter(item, filter) {
-      const metrics = metricFor(item);
-      if (filter === "actionable") return (item.categories || []).some((category) => category !== "ignore");
-      if (filter === "shorts") return item.format === "short";
-      if (filter === "cinematic") return item.format === "cinematic";
-      if (filter === "missing_ctr") return metrics.videoThumbnailImpressions === null || metrics.videoThumbnailImpressionsClickRate === null;
-      if (filter === "has_related") return Boolean(item.related_video);
-      if (filter === "has_playlist") return (item.playlists || []).length > 0;
-      if (filter === "young") return item.data_age_days !== null && item.data_age_days !== undefined && item.data_age_days < 2;
-      if (filter === "missing_thumbnail") return !item.thumbnail_url;
-      if (filter === "missing_srt") return !item.content || item.content.status !== "present";
-      if (filter === "high_impression_low_ctr") return Number(metrics.videoThumbnailImpressions) >= 500 && Number(metrics.videoThumbnailImpressionsClickRate) < 3;
-      if (filter === "tiny_thumbnail_sample") return tinyThumbnailSample(item, metrics);
-      return true;
     }
 
     function renderVideos() {
-      const classifications = data.findings.classifications || [];
-      const rubricById = Object.fromEntries(((data.rubric || {}).items || []).map((item) => [item.video_id, item]));
-      const formatOptions = [...new Set(classifications.map((item) => item.format || "unknown"))].sort();
-      const playlistOptions = [...new Set(classifications.flatMap((item) => playlistLabels(item)))].sort();
-      const releaseOptions = [...new Set(classifications.map((item) => ((item.release_timing || {}).daypart || "unknown")))].sort();
-      const lengthOptions = [...new Set(classifications.map((item) => ((item.length_fit || {}).bucket || "missing")))].sort();
+      const s = state();
+      const videos = s.videos || [];
       document.getElementById("videos").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <div>
-              <h2 style="margin-bottom: 4px;">Videos: ${escapeHtml(horizonMeta().label)}</h2>
-              <div class="muted">Metric columns and sorting use the selected horizon.</div>
-            </div>
-            ${horizonControl()}
-          </div>
+        <div class="card" style="margin-bottom:12px;">
+          <h2>Video inspection</h2>
+          <p class="muted">Compact table for checking one video without turning the dashboard into the default view.</p>
         </div>
-        ${videosDecisionPanelsHtml()}
         <div class="toolbar">
-          <input id="video-search" type="search" placeholder="Search title, package, or video ID">
-          <select id="category-filter">
-            <option value="">All decision buckets</option>
-            ${decisionOrder.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(categoryLabels[category])}</option>`).join("")}
+          <input id="video-search" type="search" placeholder="Search title, package, video id">
+          <select id="video-action">
+            <option value="">All actions</option>
+            <option value="make_sequel">Make follow-up</option>
+            <option value="thumbnail_review">Fix packaging</option>
+            <option value="retitle">Retitle / reframe</option>
+            <option value="remaster">Remaster</option>
+            <option value="wait">Wait for data</option>
+            <option value="ignore">Watch only</option>
           </select>
-          <select id="format-filter">
-            <option value="">All formats</option>
-            ${formatOptions.map((format) => `<option value="${escapeHtml(format)}">${escapeHtml(format)}</option>`).join("")}
-          </select>
-          <select id="playlist-filter">
-            <option value="">All playlists</option>
-            ${playlistOptions.map((playlist) => `<option value="${escapeHtml(playlist)}">${escapeHtml(playlist)}</option>`).join("")}
-          </select>
-          <select id="release-filter">
-            <option value="">All release times</option>
-            ${releaseOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
-          </select>
-          <select id="length-filter">
-            <option value="">All length bands</option>
-            ${lengthOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
-          </select>
-        </div>
-        <div class="quick-filters" style="margin-bottom: 12px;">
-          <label class="check-chip"><input type="checkbox" data-quick-filter="actionable"> Actionable only</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="shorts"> Shorts</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="cinematic"> Cinematic</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="missing_ctr"> Missing CTR</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="has_related"> Has related video</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="has_playlist"> Has playlist</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="young"> New or too young</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="missing_thumbnail"> Missing thumbnail</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="missing_srt"> Missing SRT</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="high_impression_low_ctr"> High impr / low CTR</label>
-          <label class="check-chip"><input type="checkbox" data-quick-filter="tiny_thumbnail_sample"> ${withHelp("Tiny CTR sample", "tiny_thumbnail_sample")}</label>
+          <select id="video-format"><option value="">All formats</option>${[...new Set(videos.map((v) => v.format || "unknown"))].sort().map((f) => `<option value="${esc(f)}">${esc(f)}</option>`).join("")}</select>
         </div>
         <div id="video-table"></div>
       `;
-      const renderTable = () => {
-        const search = document.getElementById("video-search").value.toLowerCase();
-        const category = document.getElementById("category-filter").value;
-        const format = document.getElementById("format-filter").value;
-        const playlist = document.getElementById("playlist-filter").value;
-        const release = document.getElementById("release-filter").value;
-        const length = document.getElementById("length-filter").value;
-        const quickFilters = [...document.querySelectorAll("[data-quick-filter]:checked")].map((input) => input.dataset.quickFilter);
-        const sorted = classifications
-          .map((item) => ({ ...item, content: (rubricById[item.video_id] || {}).content }))
-          .filter((item) => !category || (item.categories || []).includes(category))
-          .filter((item) => !format || item.format === format)
-          .filter((item) => !playlist || playlistLabels(item).includes(playlist))
-          .filter((item) => !release || ((item.release_timing || {}).daypart || "unknown") === release)
-          .filter((item) => !length || ((item.length_fit || {}).bucket || "missing") === length)
-          .filter((item) => quickFilters.every((filter) => matchesQuickFilter(item, filter)))
-          .filter((item) => {
-            const haystack = `${item.title || ""} ${item.package || ""} ${playlistLabels(item).join(" ")} ${item.video_id || ""}`.toLowerCase();
-            return !search || haystack.includes(search);
-          })
-          .sort((a, b) => {
-            const av = sortValue(a, videoSort.key);
-            const bv = sortValue(b, videoSort.key);
-            const direction = videoSort.direction === "asc" ? 1 : -1;
-            if (av < bv) return -1 * direction;
-            if (av > bv) return 1 * direction;
-            return 0;
+      const draw = () => {
+        const q = document.getElementById("video-search").value.toLowerCase();
+        const action = document.getElementById("video-action").value;
+        const format = document.getElementById("video-format").value;
+        const rows = videos
+          .filter((item) => !q || `${item.title || ""} ${item.package || ""} ${item.video_id || ""}`.toLowerCase().includes(q))
+          .filter((item) => !action || item.action === action)
+          .filter((item) => !format || (item.format || "unknown") === format)
+          .slice(0, 80)
+          .map((item) => {
+            const m = metric(item);
+            return `<tr>
+              <td>${itemLink(item)}<div class="small muted">${esc(item.video_id || "")}</div></td>
+              <td>${esc(item.action_label || "")}<div class="small muted">${esc(item.confidence || "")}</div></td>
+              <td>${num(m.views)}</td>
+              <td>${num(m.views_per_day, 1)}</td>
+              <td>${pct(m.averageViewPercentage)}</td>
+              <td>${m.videoThumbnailImpressions !== null && m.videoThumbnailImpressions !== undefined ? `${num(m.videoThumbnailImpressions)} / ${pct(m.videoThumbnailImpressionsClickRate)}` : "-"}</td>
+              <td>${esc((item.caveats || []).join("; "))}</td>
+            </tr>`;
           });
-        const rows = sorted.map((item) => {
-          const metrics = metricFor(item);
-          return `<tr class="row-${escapeHtml(item.primary_category || "ignore")}">
-            <td><div class="video-cell">${thumbnailFor(item)}<div>${linkFor(item)}<div class="muted">${escapeHtml(item.video_id || "")}</div><div class="small muted">Discovery: ${escapeHtml((item.discovery_sources || []).join(", ") || "-")}</div>${sourceLinks(item)}${playlistLinks(item)}</div></div></td>
-            <td>${(item.categories || []).map(badge).join(" ")}</td>
-            <td>${escapeHtml(item.format || "-")}<div class="small muted">${escapeHtml(item.format_source || "unknown")}</div></td>
-            <td>${escapeHtml(item.package || "-")}</td>
-            <td>${escapeHtml((item.primary_playlist || {}).title || "-")}</td>
-            <td>${escapeHtml(item.duration_label || "-")}<div class="small muted">${escapeHtml((item.length_fit || {}).label || "-")}</div></td>
-            <td>${escapeHtml(((item.release_timing || {}).weekday || "-"))}<div class="small muted">${escapeHtml(((item.release_timing || {}).hour_label || "-"))}</div></td>
-            <td>${escapeHtml(horizonRangeFor(item))}</td>
-            <td>${fmtNumber(metrics.views)}</td>
-            <td>${fmtNumber(metrics.views_per_day, 1)}</td>
-            <td>${fmtPercent(metrics.averageViewPercentage)}</td>
-            <td>${fmtNumber(metrics.subscribersGained)}</td>
-            <td>${thumbnailImpressionCell(item, metrics)}</td>
-            <td>${item.format === "short" ? fmtNumber(shortsFeedViews(item)) : "-"}</td>
-            <td>${thumbnailCtrCell(item, metrics)}</td>
-          </tr>`;
-        });
-        const headers = [
-          "Video",
-          "Buckets",
-          "Format",
-          "Package",
-          "Playlist",
-          `<button class="sort-btn" data-sort="duration">Length</button>`,
-          "Release",
-          "Range",
-          `<button class="sort-btn" data-sort="views">Views</button>`,
-          `<button class="sort-btn" data-sort="views_per_day">V/day</button>`,
-          `<button class="sort-btn" data-sort="avg_viewed">Avg Viewed</button>`,
-          `<button class="sort-btn" data-sort="subs">Subs</button>`,
-          `<button class="sort-btn" data-sort="impressions">${withHelp("Thumb Impr.", "shorts_thumbnail_impressions")}</button>`,
-          `<button class="sort-btn" data-sort="shorts_views">${withHelp("Shorts Views", "shorts_feed_views")}</button>`,
-          `<button class="sort-btn" data-sort="ctr">${withHelp("Thumb CTR", "tiny_thumbnail_sample")}</button>`
-        ];
-        document.getElementById("video-table").innerHTML = simpleTable(headers, rows);
-        document.querySelectorAll("[data-sort]").forEach((button) => {
-          button.addEventListener("click", () => {
-            const key = button.dataset.sort;
-            videoSort = {
-              key,
-              direction: videoSort.key === key && videoSort.direction === "desc" ? "asc" : "desc"
-            };
-            renderTable();
-          });
-        });
+        document.getElementById("video-table").innerHTML = table(["Video", "Action", "Views", "V/day", "Avg viewed", "Impr / CTR", "Caveats"], rows);
       };
-      ["video-search", "category-filter", "format-filter", "playlist-filter", "release-filter", "length-filter"].forEach((id) => {
-        document.getElementById(id).addEventListener("input", renderTable);
-      });
-      document.querySelectorAll("[data-quick-filter]").forEach((input) => {
-        input.addEventListener("change", renderTable);
-      });
-      bindHorizonControls();
-      renderTable();
+      ["video-search", "video-action", "video-format"].forEach((id) => document.getElementById(id).addEventListener("input", draw));
+      draw();
     }
 
-    function axisBlock(axis) {
-      const axisHelp = {
-        "Hook Speed": "srt_hook",
-        "Promise Match": "srt_promise",
-        "Specificity": "srt_specificity",
-        "Claim Density": "srt_density",
-        "Payoff/CTA": "srt_payoff",
-        "Transcript Coverage": "srt_coverage"
-      }[axis.label || ""];
-      return `
-        <div class="axis ${escapeHtml(axis.status || "watch")}"${axisHelp ? tooltipAttrs(helpText(axisHelp), axis.label || "") : ""}>
-          <div class="axis-title">${withHelp(axis.label || "", axisHelp)}</div>
-          <div class="small muted">${escapeHtml(axis.status || "watch")}</div>
-          <div>${escapeHtml(axis.detail || "")}</div>
-        </div>
-      `;
+    function movementTable(group) {
+      const rows = (group.items || []).slice(0, 8).map((item) => `
+        <tr><td>${itemLink(item)}</td><td>${esc(item.confidence || "-")}</td><td>${num(item.current, 1)}</td><td>${num(item.previous, 1)}</td><td>${num(item.delta, 1)}</td></tr>
+      `);
+      return table(["Video", "Confidence", "Current", "Previous", "Delta"], rows);
     }
 
-    function renderRubric() {
-      const items = ((data.rubric || {}).items || []);
-      const releaseOptions = [...new Set(items.map((item) => ((item.release_timing || {}).daypart || "unknown")))].sort();
-      const lengthOptions = [...new Set(items.map((item) => ((item.length_fit || {}).bucket || "missing")))].sort();
-      const contentSummary = (data.rubric || {}).content_summary || {};
-      const releaseRows = (((data.release_rollups_by_horizon || {})[currentHorizon] || {}).daypart || []).map((row) => `
-        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
-      `);
-      const releaseWeekdayRows = (((data.release_rollups_by_horizon || {})[currentHorizon] || {}).weekday || []).map((row) => `
-        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
-      `);
-      const releaseHourRows = (((data.release_rollups_by_horizon || {})[currentHorizon] || {}).hour || []).slice(0, 12).map((row) => `
-        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td><td>${fmtPercent(row.average_view_percentage)}</td><td>${fmtPercent(row.ctr)}</td></tr>
-      `);
-      const lengthRows = ((data.length_rollups_by_horizon || {})[currentHorizon] || []).map((row) => `
-        <tr><td>${escapeHtml(row.name)}</td><td>${fmtNumber(row.count)}</td><td>${fmtNumber(row.views)}</td></tr>
-      `);
-      document.getElementById("rubric").innerHTML = `
-        <div class="card" style="margin-bottom: 12px;">
-          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <div>
-              <h2 style="margin-bottom: 4px;">Rubric: ${escapeHtml(horizonMeta().label)}</h2>
-              <div class="muted">Multi-axis scorecards for diagnosis, packaging, timing, content, funnel, and production leverage.</div>
+    function renderReports() {
+      const s = state();
+      const delta = ((s.reports || {}).delta_summary || {});
+      const groups = delta.groups || {};
+      const counts = s.summary_counts || {};
+      document.getElementById("reports").innerHTML = `
+        <div class="grid two">
+          <section class="card">
+            <h2>Report ${esc((s.report || {}).report_date || "-")}</h2>
+            <p class="muted">Analytics through ${esc((s.report || {}).analytics_end_date || "-")}.</p>
+            <div class="chips">
+              ${Object.entries(counts).map(([key, value]) => `<span class="chip">${esc(key.replace("_", " "))}: ${num(value)}</span>`).join("")}
             </div>
-            ${horizonControl()}
-          </div>
+          </section>
+          <section class="card">
+            <h2>Previous snapshot comparison</h2>
+            <p>${esc(delta.description || "No previous snapshot is available for this report.")}</p>
+            <p class="muted small">Previous: ${esc(delta.previous_generated_at || "-")}</p>
+          </section>
         </div>
-        <div class="grid stats">
-          ${stat("Rubric Videos", fmtNumber(items.length))}
-          ${stat("SRT Present", fmtNumber(contentSummary.present || 0))}
-          ${stat("SRT Missing", fmtNumber(contentSummary.missing || 0))}
-          ${stat("SRT Malformed", fmtNumber(contentSummary.malformed || 0))}
-          ${stat("Thumbnails", fmtNumber(items.filter((item) => item.thumbnail_url).length))}
-          ${stat("Related Targets", fmtNumber(items.filter((item) => item.related_video).length))}
+        <div class="grid two" style="margin-top:12px;">
+          <section class="card"><h2>Views/day movement</h2>${movementTable(groups.views_day_movers || {})}</section>
+          <section class="card"><h2>Subscriber movement</h2>${movementTable(groups.subscriber_movers || {})}</section>
         </div>
-        <div class="grid two" style="margin-bottom: 12px;">
-          <div class="card"><h2>${withHelp("Release Cohorts By Daypart", "release_timezone")}</h2>${simpleTable(["Daypart", "Videos", "Views", "Avg Viewed", "CTR"], releaseRows)}</div>
-          <div class="card"><h2>Length Fit</h2>${simpleTable(["Band", "Videos", "Views"], lengthRows)}</div>
-        </div>
-        <div class="grid two" style="margin-bottom: 12px;">
-          <div class="card"><h2>${withHelp("Release Cohorts By Weekday", "release_timezone")}</h2>${simpleTable(["Weekday", "Videos", "Views", "Avg Viewed", "CTR"], releaseWeekdayRows)}</div>
-          <div class="card"><h2>${withHelp("Release Cohorts By Hour", "release_timezone")}</h2>${simpleTable(["Hour", "Videos", "Views", "Avg Viewed", "CTR"], releaseHourRows)}</div>
-        </div>
-        <div class="toolbar">
-          <input id="rubric-search" type="search" placeholder="Search title, package, or video ID">
-          <select id="rubric-category-filter">
-            <option value="">All diagnoses</option>
-            ${decisionOrder.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(categoryLabels[category])}</option>`).join("")}
-          </select>
-          <select id="rubric-release-filter">
-            <option value="">All release times</option>
-            ${releaseOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
-          </select>
-          <select id="rubric-length-filter">
-            <option value="">All length bands</option>
-            ${lengthOptions.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}
-          </select>
-          <select id="rubric-sort">
-            <option value="useful">Sort: useful first</option>
-            <option value="views_per_day">Sort: views/day</option>
-            <option value="views">Sort: views</option>
-            <option value="avg_viewed">Sort: avg viewed</option>
-            <option value="ctr">Sort: CTR</option>
-          </select>
-        </div>
-        <div class="quick-filters" style="margin-bottom: 12px;">
-          <label class="check-chip"><input type="checkbox" data-rubric-filter="missing_thumbnail"> Missing thumbnail</label>
-          <label class="check-chip"><input type="checkbox" data-rubric-filter="missing_srt"> Missing SRT</label>
-          <label class="check-chip"><input type="checkbox" data-rubric-filter="high_impression_low_ctr"> High impr / low CTR</label>
-          <label class="check-chip"><input type="checkbox" data-rubric-filter="tiny_thumbnail_sample"> ${withHelp("Tiny CTR sample", "tiny_thumbnail_sample")}</label>
-          <label class="check-chip"><input type="checkbox" data-rubric-filter="actionable"> Actionable only</label>
-        </div>
-        <div id="rubric-list"></div>
-      `;
-      const renderList = () => {
-        const search = document.getElementById("rubric-search").value.toLowerCase();
-        const category = document.getElementById("rubric-category-filter").value;
-        const release = document.getElementById("rubric-release-filter").value;
-        const length = document.getElementById("rubric-length-filter").value;
-        const sortKey = document.getElementById("rubric-sort").value;
-        const filters = [...document.querySelectorAll("[data-rubric-filter]:checked")].map((input) => input.dataset.rubricFilter);
-        const filtered = items
-          .filter((item) => !category || (item.categories || []).includes(category))
-          .filter((item) => !release || ((item.release_timing || {}).daypart || "unknown") === release)
-          .filter((item) => !length || ((item.length_fit || {}).bucket || "missing") === length)
-          .filter((item) => filters.every((filter) => matchesQuickFilter(item, filter)))
-          .filter((item) => {
-            const haystack = `${item.title || ""} ${item.package || ""} ${item.video_id || ""}`.toLowerCase();
-            return !search || haystack.includes(search);
-          })
-          .sort((a, b) => {
-            const av = sortValue(a, sortKey || rubricSort.key);
-            const bv = sortValue(b, sortKey || rubricSort.key);
-            const direction = rubricSort.direction === "asc" ? 1 : -1;
-            if (av < bv) return -1 * direction;
-            if (av > bv) return 1 * direction;
-            return 0;
-          });
-        document.getElementById("rubric-list").innerHTML = `<div class="rubric-grid">${
-          filtered.map((item) => {
-            const axes = item.axes || {};
-            const metrics = item.metrics || {};
-            const why = (item.why || []).map((line) => `<li>${escapeHtml(line)}</li>`).join("");
-            return `
-              <article class="rubric-card row-${escapeHtml(item.primary_category || "ignore")}">
-                <div>
-                  ${thumbnailFor(item)}
-                  <div class="metric-row">
-                    <span class="metric-chip">${escapeHtml(item.duration_label || "-")}</span>
-                    <span class="metric-chip">${escapeHtml((item.length_fit || {}).label || "-")}</span>
-                  </div>
-                </div>
-                <div>
-                  <div class="finding-title">${linkFor(item)}</div>
-                  <div class="muted">${escapeHtml(item.video_id || "")} | ${escapeHtml(item.format || "-")} | ${escapeHtml(item.package || "-")} | ${escapeHtml((item.discovery_sources || []).join(", ") || "-")}</div>
-                  <div class="metric-row">
-                    ${(item.categories || []).map(badge).join(" ")}
-                    <span class="metric-chip">${fmtNumber(metrics.views)} views</span>
-                    <span class="metric-chip">${fmtNumber(metrics.views_per_day, 1)}/day</span>
-                    <span class="metric-chip">${fmtPercent(metrics.averageViewPercentage)} avg viewed</span>
-                    <span class="metric-chip"${item.format === "short" ? tooltipAttrs(helpText("shorts_thumbnail_impressions"), "Thumbnail impressions") : ""}>${thumbnailImpressionText(item, metrics)}</span>
-                    ${item.format === "short" ? `<span class="metric-chip"${tooltipAttrs(helpText("shorts_feed_views"), "Shorts views")}>${fmtNumber(shortsFeedViews(item))} Shorts views</span>` : ""}
-                    <span class="metric-chip"${tinyThumbnailSample(item, metrics) ? tooltipAttrs(helpText("tiny_thumbnail_sample"), "Thumbnail CTR") : ""}>${thumbnailCtrText(item, metrics)} CTR</span>
-                    <span class="metric-chip">${escapeHtml(((item.release_timing || {}).weekday || "-"))} ${escapeHtml(((item.release_timing || {}).hour_label || ""))}</span>
-                  </div>
-                  <h3 style="margin-top: 10px;">Why This Diagnosis?</h3>
-                  <ul class="why-list">${why}</ul>
-                  <div class="axis-grid">
-                    ${Object.values(axes).map(axisBlock).join("")}
-                  </div>
-                </div>
-              </article>
-            `;
-          }).join("") || `<div class="empty">No rubric items match these filters.</div>`
-        }</div>`;
-      };
-      ["rubric-search", "rubric-category-filter", "rubric-release-filter", "rubric-length-filter", "rubric-sort"].forEach((id) => {
-        document.getElementById(id).addEventListener("input", renderList);
-      });
-      document.querySelectorAll("[data-rubric-filter]").forEach((input) => {
-        input.addEventListener("change", renderList);
-      });
-      bindHorizonControls();
-      renderList();
-    }
-
-    function renderGaps() {
-      const groupCards = Object.entries(data.data_gap_groups || {}).map(([key, group]) => {
-        const rows = (group.fields || []).map((field) => `
-          <tr>
-            <td>${escapeHtml(field.label)}</td>
-            <td>${fmtNumber(field.missing_count)}</td>
-            <td>${escapeHtml(field.reporting_job || "-")}</td>
-          </tr>
-        `);
-        return `<div class="card"><h2>${escapeHtml(group.label)}</h2>${simpleTable(["Field", "Missing", "Unlocked By"], rows)}</div>`;
-      }).join("");
-      const manualRows = Object.entries(data.coverage.manual_fields).map(([field, row]) =>
-        `<tr><td>${escapeHtml(labelFor(field))}</td><td>${escapeHtml(coverageText(row))}</td></tr>`
-      );
-      const jobRows = data.reporting_jobs.map((job) =>
-        `<tr>
-          <td>${escapeHtml(job.key)}</td>
-          <td>${escapeHtml(job.name || "")}</td>
-          <td>${fmtNumber(job.available_report_count)}</td>
-          <td>${fmtNumber(job.downloaded_report_count)}</td>
-          <td>${escapeHtml(job.latest_report_end_time || "-")}</td>
-          <td>${escapeHtml(job.purpose || "")}</td>
-        </tr>`
-      );
-      const parentRows = (data.funnel_rollups.parents || []).slice(0, 12).map((parent) => `
-        <tr>
-          <td>${parent.parent_url ? `<a href="${escapeHtml(parent.parent_url)}" target="_blank" rel="noreferrer">${escapeHtml(parent.parent_id)}</a>` : escapeHtml(parent.parent_id)}</td>
-          <td>${fmtNumber(parent.short_count)}</td>
-          <td>${fmtNumber(parent.known_downstream_clicks)}</td>
-          <td>${fmtNumber(parent.card_clicks)}</td>
-          <td>${fmtNumber(parent.related_video_clicks)}</td>
-        </tr>
-      `);
-      const queryNotes = (data.ledger.query_notes || []).map((note) => `<li>${escapeHtml(note)}</li>`).join("");
-      const sync = data.ledger.reporting_api_sync || {};
-
-      document.getElementById("gaps").innerHTML = `
-        <div class="grid three">${groupCards}</div>
-        <div class="grid two" style="margin-top: 12px;">
-          <div class="card"><h2>${withHelp("Manual Field Coverage", "metric_coverage")}</h2>${simpleTable(["Field", "Coverage"], manualRows)}</div>
-          <div class="card">
-            <h2>Reporting API Sync</h2>
-            <div class="metric-row">
-              <span class="metric-chip">Merged ${escapeHtml(sync.merged_at || "-")}</span>
-              <span class="metric-chip">${fmtNumber(sync.source_file_count)} files</span>
-              <span class="metric-chip">${fmtNumber(sync.videos_updated)} videos updated</span>
-            </div>
-            <h3 style="margin-top: 14px;">Query Notes</h3>
-            ${queryNotes ? `<ul>${queryNotes}</ul>` : `<div class="empty">No API query errors recorded.</div>`}
-          </div>
-        </div>
-        <div class="card" style="margin-top: 12px;"><h2>Funnel Diagnostics</h2>${simpleTable(["Parent", "Related Shorts", withHelp("Known Funnel Clicks", "known_funnel_clicks"), "Card Clicks", "Related Clicks"], parentRows)}</div>
-        <div class="card" style="margin-top: 12px;"><h2>Reporting Jobs</h2>${simpleTable(["Key", "Name", "Available", "Downloaded", "Latest", "Purpose"], jobRows)}</div>
       `;
     }
 
-    function setupTabs() {
-      document.querySelectorAll(".tab").forEach((button) => {
-        button.addEventListener("click", () => {
-          document.querySelectorAll(".tab").forEach((tab) => tab.classList.remove("active"));
-          document.querySelectorAll(".panel").forEach((panel) => panel.classList.remove("active"));
-          button.classList.add("active");
-          document.getElementById(button.dataset.tab).classList.add("active");
-        });
-      });
+    function renderEvidence() {
+      const s = state();
+      const evidence = s.evidence || {};
+      const packages = ((evidence.package_rollups_by_horizon || {})[currentHorizon] || []).map((row) =>
+        `<tr><td>${esc(row.package || "-")}</td><td>${num(row.video_count)}</td><td>${num(row.action_items)}</td><td>${num(row.total_views)}</td><td>${pct(row.average_view_percentage)}</td></tr>`
+      );
+      const playlists = ((evidence.playlist_rollups_by_horizon || {})[currentHorizon] || []).map((row) =>
+        `<tr><td>${row.url ? `<a href="${esc(row.url)}" target="_blank" rel="noreferrer">${esc(row.playlist || "-")}</a>` : esc(row.playlist || "-")}</td><td>${num(row.video_count)}</td><td>${num(row.action_items)}</td><td>${num(row.total_views)}</td></tr>`
+      );
+      const traffic = (((evidence.traffic_sources_by_horizon || {})[currentHorizon] || {}).sources || []);
+      const jobs = (evidence.reporting_jobs || []).map((job) =>
+        `<tr><td>${esc(job.report_type_id || job.key)}</td><td>${num(job.available_report_count)}</td><td>${num(job.downloaded_report_count)}</td><td>${esc(job.latest_report_end_time || "-")}</td></tr>`
+      );
+      const metrics = Object.entries(((evidence.coverage || {}).metrics || {})).slice(0, 12).map(([name, row]) => ({ name, count: row.count || 0 }));
+      const topics = (((evidence.topic_clusters || {}).clusters || [])).map((row) =>
+        `<tr><td>${esc(row.cluster || "-")}</td><td>${num(row.video_count)}</td><td>${num(row.action_items)}</td><td>${num(row.views)}</td><td>${pct(row.average_view_percentage)}</td></tr>`
+      );
+      const experiments = (((evidence.experiments || {}).experiments || [])).map((row) =>
+        `<tr><td>${esc(row.name || row.id || "-")}</td><td>${esc(row.status || "-")}</td><td>${num((row.current_read || {}).video_count)}</td><td>${num((row.current_read || {}).views)}</td><td>${pct((row.current_read || {}).average_view_percentage)}</td></tr>`
+      );
+      document.getElementById("evidence").innerHTML = `
+        <div class="evidence-grid">
+          <section class="card"><h2>Metric coverage</h2>${bars(metrics, "name", "count")}</section>
+          <section class="card"><h2>Traffic sources</h2>${bars(traffic, "source", "views")}</section>
+          <section class="card"><h2>Packages</h2>${table(["Package", "Videos", "Actions", "Views", "Avg viewed"], packages)}</section>
+          <section class="card"><h2>Playlists</h2>${table(["Playlist", "Videos", "Actions", "Views"], playlists)}</section>
+          <section class="card"><h2>Reporting jobs</h2>${table(["Report type", "Available", "Downloaded", "Latest end"], jobs)}</section>
+          <section class="card"><h2>Topic clusters</h2>${table(["Cluster", "Videos", "Actions", "Views", "Avg viewed"], topics)}</section>
+          <section class="card"><h2>Experiments</h2>${table(["Experiment", "Status", "Videos", "Views", "Avg viewed"], experiments)}</section>
+          <section class="card"><h2>Release timing</h2><p>${esc((((evidence.release_time_lab || {}).insights || {}).summary) || "Not enough release-time data for a directional read.")}</p><p class="muted small">Timezone: ${esc((evidence.release_time_lab || {}).timezone || "Europe/Athens")}</p></section>
+        </div>
+      `;
     }
 
-    function setupTooltips() {
-      const tooltip = document.createElement("div");
-      tooltip.className = "dashboard-tooltip";
-      tooltip.setAttribute("role", "tooltip");
-      document.body.appendChild(tooltip);
-      let activeTarget = null;
-
-      const position = (target) => {
-        const text = target.getAttribute("data-tooltip");
-        if (!text) return;
-        tooltip.textContent = text;
-        tooltip.classList.add("visible");
-        const rect = target.getBoundingClientRect();
-        const tipRect = tooltip.getBoundingClientRect();
-        const margin = 12;
-        let left = rect.left + rect.width / 2 - tipRect.width / 2;
-        left = Math.max(margin, Math.min(left, window.innerWidth - tipRect.width - margin));
-        let top = rect.top - tipRect.height - 10;
-        if (top < margin) top = rect.bottom + 10;
-        tooltip.style.left = `${left}px`;
-        tooltip.style.top = `${top}px`;
-      };
-
-      const show = (target) => {
-        activeTarget = target;
-        position(target);
-      };
-
-      const hide = () => {
-        activeTarget = null;
-        tooltip.classList.remove("visible");
-      };
-
-      document.addEventListener("mouseover", (event) => {
-        const target = event.target.closest("[data-tooltip]");
-        if (target) show(target);
-      });
-      document.addEventListener("focusin", (event) => {
-        const target = event.target.closest("[data-tooltip]");
-        if (target) show(target);
-      });
-      document.addEventListener("mouseout", (event) => {
-        if (event.target.closest("[data-tooltip]")) hide();
-      });
-      document.addEventListener("focusout", (event) => {
-        if (event.target.closest("[data-tooltip]")) hide();
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") hide();
-      });
-      window.addEventListener("scroll", () => {
-        if (activeTarget) position(activeTarget);
-      }, true);
-      window.addEventListener("resize", () => {
-        if (activeTarget) position(activeTarget);
-      });
+    function renderActivePanel() {
+      if (activeTab === "decisions") renderDecisions();
+      if (activeTab === "videos") renderVideos();
+      if (activeTab === "reports") renderReports();
+      if (activeTab === "evidence") renderEvidence();
     }
-
-    function renderDashboardSections() {
-      renderMeta();
-      renderActionBoard();
-      renderExperiments();
-      renderTopicClusters();
-      renderOverview();
-      renderVideos();
-      renderRubric();
-      renderGaps();
+    function renderAll() {
+      renderChrome();
+      renderActivePanel();
     }
-
-    renderDashboardSections();
-    setupTabs();
-    setupTooltips();
+    document.querySelectorAll(".tab").forEach((button) => button.addEventListener("click", () => setTab(button.dataset.tab)));
+    window.addEventListener("hashchange", () => {
+      const next = initialReportDate();
+      if (next !== activeReportDate) {
+        activeReportDate = next;
+        renderAll();
+      }
+    });
+    renderAll();
   </script>
 </body>
 </html>
