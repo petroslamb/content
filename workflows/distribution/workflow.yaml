@@ -160,6 +160,18 @@ outputs:
     required_when: native media is selected but the browser surface cannot verify the upload
     format: markdown
     producer: record_distribution_follow_through
+  - id: native_media_first_comment_link
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: conditional
+    required_when: a LinkedIn carousel or similar native-media post omits the canonical URL from the post body
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: native_media_activity_evidence
+    path_template: "publications/{package}/{package_name}-distribution-log-r{revision}.md"
+    required: conditional
+    required_when: a LinkedIn carousel or similar native-media post is completed
+    format: markdown
+    producer: record_distribution_follow_through
 
 behavior:
   preconditions:
@@ -194,6 +206,10 @@ behavior:
       check: do_not_submit_when_visible_composer_copy_cannot_be_verified
     - id: native_media_upload_blocks_are_explicit
       check: record_manual_upload_required_when_file_picker_or_upload_state_cannot_be_verified
+    - id: first_comment_links_are_verified_before_posting
+      check: do_not_duplicate_existing_link_comment_on_native_media_post
+    - id: linkedin_activity_evidence_is_recorded
+      check: completed_linkedin_carousel_records_activity_url_document_title_and_comment_state
     - id: community_posts_are_native_first
       check: reddit_and_forum_posts_avoid_external_links_in_body_unless_explicitly_approved
     - id: linkedin_carousel_considered_when_slide_deck_exists
@@ -213,6 +229,8 @@ behavior:
     on_link_removal_risk: move_external_link_to_optional_comment_and_require_separate_confirmation
     on_native_media_asset_available: prefer_native_channel_surface_and_record_upload_confirmation_boundary
     on_native_media_upload_not_automatable: record_manual_upload_required_with_asset_title_copy_and_fallback_policy
+    on_manual_native_media_upload_completed: verify_activity_feed_record_activity_url_and_resume_distribution_log
+    on_existing_first_comment_found: record_existing_comment_and_do_not_post_duplicate
     resume_from: resolved_run
     rollback_strategy: preserve_local_copy_and_record_no_external_mutation
 
@@ -286,6 +304,8 @@ gates:
       - community_link_placement_strategy
       - native_media_strategy
       - native_media_upload_boundary
+      - native_media_first_comment_link
+      - native_media_activity_evidence
       - external_posting_gate
     decisions:
       - approve

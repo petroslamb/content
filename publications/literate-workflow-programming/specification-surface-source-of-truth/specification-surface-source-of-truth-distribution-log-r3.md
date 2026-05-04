@@ -46,14 +46,14 @@ Decision posture: selective push. Deferred channels were revisited in the in-app
 | Channel | Auth state | Decision | Status | Evidence |
 | :--- | :--- | :--- | :--- | :--- |
 | Substack Notes | Signed in | `post_now` | Posted after action-time confirmation. | Visible in Substack Notes feed as Petros Lamb, just now: <https://substack.com/profile/419548019-petros-lamb/note/c-253755725>. The live Substack link rendered as a video/link preview card. |
-| LinkedIn personal profile | Signed in | `manual_upload_required` | Attempted, but not posted. Revised on 2026-05-05 to prefer a PDF document carousel over the link-preview fallback. | Browser showed LinkedIn feed and Create post modal for Petros Lambropoulos. `Add media` was visible, but LinkedIn exposed no automatable file input, so the carousel requires manual selection of `artifacts/slides/specification_surface_slides_set2.pdf`. |
+| LinkedIn personal profile | Signed in | `post_now` | Posted manually on 2026-05-05 as a PDF document carousel, with the Substack essay URL added as a first comment. | `https://www.linkedin.com/feed/update/urn:li:activity:7457186694711189506/`; browser verified the document player title `The Specification Surface Is the New Source of Truth`, the activity id, one visible comment, and comment text beginning `Full essay: https://lambpetros.substack.com/p/the-specification-`. |
 | X | Signed in | `post_now` | Posted on 2026-05-05 as a compact anchor post, not a follower-broadcast strategy. | `https://x.com/PetrosLamb/status/2051413429676548194`; browser verified the post on the profile feed with the Substack URL included. |
 | Hacker News | Signed in | `post_now` | Posted on 2026-05-05 as a text-only `Ask HN` discussion with no URL. | `https://news.ycombinator.com/item?id=48015232`; browser verified the story on `/newest` under user `speiroxaiti`. |
 | Reddit | Signed in | `post_now_native_discussion` | Posted on 2026-05-05 to `r/aiengineering` as a native discussion with no Substack URL in the body. | `https://www.reddit.com/r/aiengineering/comments/1t3vagg/where_should_the_source_of_truth_live_when_ai/`; browser verified the post in the subreddit feed with `Discussion` flair. |
 
-Held-link reason: Reddit and LinkedIn are not abandoned when the canonical URL is omitted from the primary body. Reddit keeps the Substack URL as an optional comment-only follow-up. LinkedIn keeps the Substack URL as an optional supporting comment after the carousel post. Reddit account replacement is explicitly out of scope.
+Held-link reason: Reddit and LinkedIn are not abandoned when the canonical URL is omitted from the primary body. Reddit keeps the Substack URL as an optional comment-only follow-up. LinkedIn used the Substack URL as a supporting first comment after the carousel post. Reddit account replacement is explicitly out of scope.
 
-Execution note: the second-wave pass produced confirmed posts on Substack Notes, Reddit, Hacker News, and X. LinkedIn remains strategically `post_now`, but operationally `manual_upload_required` because the desired PDF carousel cannot be completed through the current browser upload surface.
+Execution note: the second-wave pass produced confirmed posts on Substack Notes, LinkedIn, Reddit, Hacker News, and X. LinkedIn required manual PDF upload, then browser verification via the activity feed and activity id.
 
 X reach revision note, 2026-05-05: X should not be evaluated as a broad organic distribution surface while the account has little native reach. Keep the post, but treat it as a referenceable anchor for targeted replies, quote posts, and profile proof. The follow-through is targeted engagement, not passive broadcast.
 
@@ -63,7 +63,9 @@ Reddit browser verification, 2026-05-05: the in-app browser submitted the `r/aie
 
 LinkedIn carousel revision, 2026-05-05: the LinkedIn target changed from link-preview fallback to native document carousel. Use `publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/slides/specification_surface_slides_set2.pdf` as the upload asset, with document title `The Specification Surface Is the New Source of Truth`. The Substack URL should be an optional supporting comment rather than the primary post surface.
 
-LinkedIn browser verification, 2026-05-05: the in-app browser reached the LinkedIn Create post modal and verified `Add media`, but no `input[type="file"]` was exposed to the automation surface after clicking it. The channel is held as `manual_upload_required`, not downgraded to a link-preview fallback.
+LinkedIn upload-boundary verification, 2026-05-05: the in-app browser reached the LinkedIn Create post modal and verified `Add media`, but no `input[type="file"]` was exposed to the automation surface after clicking it. The channel was temporarily recorded as `manual_upload_required`, not downgraded to a link-preview fallback.
+
+LinkedIn completion verification, 2026-05-05: after manual carousel upload, the in-app browser verified the profile activity feed contained the PDF document player titled `The Specification Surface Is the New Source of Truth`, activity id `7457186694711189506`, and one visible first comment with the Substack essay link. Public activity URL: `https://www.linkedin.com/feed/update/urn:li:activity:7457186694711189506/`.
 
 Hacker News browser verification, 2026-05-05: the in-app browser submitted a text-only `Ask HN` discussion titled `Ask HN: How are teams making AI-generated code reviewable?` with no URL and verified the item at `https://news.ycombinator.com/item?id=48015232`.
 
@@ -94,6 +96,12 @@ Validation after second-wave updates:
 - `git diff --check` passed.
 
 Validation after second-wave posting closeout, 2026-05-05:
+
+- `./content-agent validate --workflow distribution --package literate-workflow-programming/specification-surface-source-of-truth` passed with no findings.
+- `npm run check:repo-links` passed.
+- `git diff --check` passed.
+
+Validation after LinkedIn carousel completion, 2026-05-05:
 
 - `./content-agent validate --workflow distribution --package literate-workflow-programming/specification-surface-source-of-truth` passed with no findings.
 - `npm run check:repo-links` passed.
