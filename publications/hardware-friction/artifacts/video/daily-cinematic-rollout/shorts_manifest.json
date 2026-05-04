@@ -1,0 +1,80 @@
+{
+  "source_video": "publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.mp4",
+  "source_srt": "publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.srt",
+  "related_video_id": "xPLU4cISmxE",
+  "essay_url": "https://lambpetros.substack.com/p/the-hardware-friction-map",
+  "full_video_url": "https://www.youtube.com/watch?v=xPLU4cISmxE",
+  "secondary_video_url": "https://lambpetros.substack.com/p/the-hardware-friction-map",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "flash-attention-pays-a-two-year-ecosystem-tax",
+      "title": "FlashAttention Pays a Two-Year Ecosystem Tax",
+      "summary": "FlashAttention proved itself early, but it still took roughly 20 months for the ecosystem to catch up. Kernel wins are real, but infrastructure moves slower than papers.",
+      "start": "00:00:34.160",
+      "end": "00:02:03.680",
+      "publish_at": "2026-05-03T06:00:00Z",
+      "score_total": 19,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "hook": "Great math still waits on infrastructure",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "mixture-of-experts-is-a-capital-hammer",
+      "title": "Mixture of Experts Is a Capital Hammer",
+      "summary": "Mixture of Experts looked elegant on paper, but adoption waited until labs were willing to pay the systems cost of routing, parallelism, and server rewrites.",
+      "start": "00:02:09.119",
+      "end": "00:03:38.879",
+      "publish_at": "2026-05-04T06:00:00Z",
+      "score_total": 19,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "hook": "MoE spread only when labs could afford the pain",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "hardware-friction-becomes-a-startup-tax",
+      "title": "Hardware Friction Becomes a Startup Tax",
+      "summary": "The same hardware friction that acts like a moat for major labs becomes runway burn for startups. Transformer dominance is partly an economic trap set by silicon.",
+      "start": "00:04:15.360",
+      "end": "00:05:01.000",
+      "publish_at": "2026-05-05T06:00:00Z",
+      "score_total": 20,
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "hook": "Silicon creates one market for giants and another for startups",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

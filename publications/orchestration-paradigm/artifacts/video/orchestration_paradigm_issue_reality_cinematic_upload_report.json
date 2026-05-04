@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-05-04T07:51:23.432431+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "orchestration_paradigm_issue_reality",
+  "package": "orchestration-paradigm",
+  "notebook_id": "64889a43-abbd-40ce-aa19-438f3b6b728b",
+  "video_source_file": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.mp4",
+  "caption_output": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.srt",
+  "title": "Agentic AI: The Orchestration Paradigm and Production Reality | A Cinematic Research Brief",
+  "base_title": "Agentic AI: The Orchestration Paradigm and Production Reality",
+  "description": "This cinematic brief introduces the main structural claim behind Agentic AI: The Orchestration Paradigm and Production Reality without forcing viewers to know the essay first.\n\nThis cinematic brief is the discovery surface for Agentic AI: The Orchestration Paradigm and Production Reality.\n\nUse it to land the core causal move quickly, then point viewers toward the full research breakdown.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397\n\nFull research breakdown:\nhttps://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5ENDU4Q0M4RDExNzM1Mjcy",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5ENDU4Q0M4RDExNzM1Mjcy",
+      "position": 19,
+      "title": "Agentic AI: The Orchestration Paradigm and Production Reality | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": null,
+    "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397",
+  "video": {
+    "id": "KDYVc1yvUw0",
+    "url": "https://www.youtube.com/watch?v=KDYVc1yvUw0",
+    "youtube_readback": {
+      "upload_status": "processed",
+      "privacy_status": "public",
+      "duration": "PT5M24S",
+      "definition": "hd",
+      "published_at": "2026-05-04T07:51:44Z",
+      "processing_status": "succeeded"
+    }
+  }
+}

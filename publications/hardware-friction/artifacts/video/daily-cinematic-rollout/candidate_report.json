@@ -1,0 +1,197 @@
+{
+  "package": "publications/hardware-friction",
+  "srt_file": "publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.srt",
+  "existing_short_count": 0,
+  "candidate_count": 8,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:08.240",
+      "end": "00:01:38.159",
+      "start_seconds": 8.24,
+      "end_seconds": 98.159,
+      "duration_seconds": 89.919,
+      "excerpt": "launched V3 and Meta launched Llama 3.1. Meta trained Llama using essentially the same infrastructure stack they used for Llama 2. Deepseek, on the other hand, had to spend 6 months rewriting their entire clusteruler and custom building routing kernels from scratch before their first training run even began. Silicon does not reject mathematical theory. It simply charges attacks to run it. You can program a theoretically elegant architecture like a pure neural OD, but the GPU will charge you 100 times more per token to process it compared to standard dense matrix multiplications. This chart maps that exact resistance gradient. We call it the hardware friction map. Down in the green zone, you have standard components that integrate cheaply and quickly. As you move up toward the red peak, integration costs explode into cluster level overhauls. Designing neural networks is no longer a search for the perfect equation on a whiteboard. It is a brutal economic negotiation with the silicon that runs it. Moving up into the yellow zone, we hit kernel level friction. Take flash attention. When the paper dropped in May 2022, it immediately proved it could cut memory use and multiply inference speed by treating data differently on the chip. The math was entirely sound from day one. Yet, it took 20 full months for the technique to actually reach universal adoption across the industry. This timeline outlines that delay. The core kernel existed, but",
+      "suggested_slug": "launched-meta-launched-llama-meta-trained-llama-using",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        4,
+        42
+      ]
+    },
+    {
+      "start": "00:00:34.160",
+      "end": "00:02:03.680",
+      "start_seconds": 34.16,
+      "end_seconds": 123.68,
+      "duration_seconds": 89.52,
+      "excerpt": "elegant architecture like a pure neural OD, but the GPU will charge you 100 times more per token to process it compared to standard dense matrix multiplications. This chart maps that exact resistance gradient. We call it the hardware friction map. Down in the green zone, you have standard components that integrate cheaply and quickly. As you move up toward the red peak, integration costs explode into cluster level overhauls. Designing neural networks is no longer a search for the perfect equation on a whiteboard. It is a brutal economic negotiation with the silicon that runs it. Moving up into the yellow zone, we hit kernel level friction. Take flash attention. When the paper dropped in May 2022, it immediately proved it could cut memory use and multiply inference speed by treating data differently on the chip. The math was entirely sound from day one. Yet, it took 20 full months for the technique to actually reach universal adoption across the industry. This timeline outlines that delay. The core kernel existed, but getting it upstream meant navigating framework integration, testing PyTorch APIs, and waiting for inference software to adapt. Writing initial code is fast. The actual delay is waiting for the ecosystem to support the new math. Any kernel level innovation carries a mandatory 2-year ecosystem tax. Even the most efficient mathematical breakthroughs are bound by the speed of global infrastructure updates. Further",
+      "suggested_slug": "elegant-architecture-like-pure-neural-but-gpu-will",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        15,
+        53
+      ]
+    },
+    {
+      "start": "00:01:13.200",
+      "end": "00:02:42.160",
+      "start_seconds": 73.2,
+      "end_seconds": 162.16,
+      "duration_seconds": 88.96,
+      "excerpt": "flash attention. When the paper dropped in May 2022, it immediately proved it could cut memory use and multiply inference speed by treating data differently on the chip. The math was entirely sound from day one. Yet, it took 20 full months for the technique to actually reach universal adoption across the industry. This timeline outlines that delay. The core kernel existed, but getting it upstream meant navigating framework integration, testing PyTorch APIs, and waiting for inference software to adapt. Writing initial code is fast. The actual delay is waiting for the ecosystem to support the new math. Any kernel level innovation carries a mandatory 2-year ecosystem tax. Even the most efficient mathematical breakthroughs are bound by the speed of global infrastructure updates. Further up the map in the orange zone sits system friction. Mixture of experts is a perfect example of this. Despite being introduced at scale in 2021, the architecture sat unused in research labs for nearly 3 years. This network graph shows why it's stalled. Mixture of experts breaks standard server topologies. The model forces data through complex routing logic, scattering requests across isolated server nodes to achieve expert parallelism. Managing this fragmented traffic requires full-time infrastructure teams dedicated to balancing the load. No company was willing to touch that level of systemic",
+      "suggested_slug": "flash-attention-when-paper-dropped-may-2022-immediately",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        33,
+        70
+      ]
+    },
+    {
+      "start": "00:01:42.479",
+      "end": "00:03:11.280",
+      "start_seconds": 102.479,
+      "end_seconds": 191.28,
+      "duration_seconds": 88.801,
+      "excerpt": "to adapt. Writing initial code is fast. The actual delay is waiting for the ecosystem to support the new math. Any kernel level innovation carries a mandatory 2-year ecosystem tax. Even the most efficient mathematical breakthroughs are bound by the speed of global infrastructure updates. Further up the map in the orange zone sits system friction. Mixture of experts is a perfect example of this. Despite being introduced at scale in 2021, the architecture sat unused in research labs for nearly 3 years. This network graph shows why it's stalled. Mixture of experts breaks standard server topologies. The model forces data through complex routing logic, scattering requests across isolated server nodes to achieve expert parallelism. Managing this fragmented traffic requires full-time infrastructure teams dedicated to balancing the load. No company was willing to touch that level of systemic friction until their traditional dense models hit a hard scaling ceiling. Only then did these frontier labs finally accept the massive engineering tax and commit the resources required to completely rebuild their servers. Mixture of experts is not an elegant shortcut. It is a brute force capital hammer deployed by labs only when economic pressure corners them into paying the cost. At the peak of the friction gradient is the red zone where architectures like state space models",
+      "suggested_slug": "adapt-writing-initial-code-fast-actual-delay-waiting",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 16,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        46,
+        83
+      ]
+    },
+    {
+      "start": "00:02:09.119",
+      "end": "00:03:38.879",
+      "start_seconds": 129.119,
+      "end_seconds": 218.879,
+      "duration_seconds": 89.76,
+      "excerpt": "introduced at scale in 2021, the architecture sat unused in research labs for nearly 3 years. This network graph shows why it's stalled. Mixture of experts breaks standard server topologies. The model forces data through complex routing logic, scattering requests across isolated server nodes to achieve expert parallelism. Managing this fragmented traffic requires full-time infrastructure teams dedicated to balancing the load. No company was willing to touch that level of systemic friction until their traditional dense models hit a hard scaling ceiling. Only then did these frontier labs finally accept the massive engineering tax and commit the resources required to completely rebuild their servers. Mixture of experts is not an elegant shortcut. It is a brute force capital hammer deployed by labs only when economic pressure corners them into paying the cost. At the peak of the friction gradient is the red zone where architectures like state space models present a deceptive illusion of success. At a mid-range scale of around 7 billion parameters, pure state space models work exceptionally well. They routinely beat standard transformers on benchmarks and offer faster inference on existing hardware. This chart maps parameter scale against compute penalty. Notice how the cost curves gently until the 13 billion parameter mark where it explodes into a parabolic spike. Because memory state propagates sequentially, scaling",
+      "suggested_slug": "introduced-scale-2021-architecture-sat-unused-research-labs",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        57,
+        95
+      ]
+    },
+    {
+      "start": "00:02:55.280",
+      "end": "00:04:24.160",
+      "start_seconds": 175.28,
+      "end_seconds": 264.16,
+      "duration_seconds": 88.88,
+      "excerpt": "shortcut. It is a brute force capital hammer deployed by labs only when economic pressure corners them into paying the cost. At the peak of the friction gradient is the red zone where architectures like state space models present a deceptive illusion of success. At a mid-range scale of around 7 billion parameters, pure state space models work exceptionally well. They routinely beat standard transformers on benchmarks and offer faster inference on existing hardware. This chart maps parameter scale against compute penalty. Notice how the cost curves gently until the 13 billion parameter mark where it explodes into a parabolic spike. Because memory state propagates sequentially, scaling up creates massive communication bottlenecks across thousands of GPUs during training. At frontier scale, the physical limits of hardware bandwidth defeat pure mathematical theory. To survive, every massive deployment is forced to abandon the pure architecture and immediately adopt a hybrid model to stabilize the system. As future hardware generations arrive, this map is only calcifying. Every new iteration of silicon optimizes more aggressively for standard dense matrix operations, making deviations from the norm even harder to execute. This creates a heavily asymmetric reality that we call the startup deaf role. The exact same hardware friction affects companies entirely differently depending on the",
+      "suggested_slug": "shortcut-brute-force-capital-hammer-deployed-labs-only",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        78,
+        114
+      ]
+    },
+    {
+      "start": "00:03:18.879",
+      "end": "00:04:48.000",
+      "start_seconds": 198.879,
+      "end_seconds": 288.0,
+      "duration_seconds": 89.121,
+      "excerpt": "standard transformers on benchmarks and offer faster inference on existing hardware. This chart maps parameter scale against compute penalty. Notice how the cost curves gently until the 13 billion parameter mark where it explodes into a parabolic spike. Because memory state propagates sequentially, scaling up creates massive communication bottlenecks across thousands of GPUs during training. At frontier scale, the physical limits of hardware bandwidth defeat pure mathematical theory. To survive, every massive deployment is forced to abandon the pure architecture and immediately adopt a hybrid model to stabilize the system. As future hardware generations arrive, this map is only calcifying. Every new iteration of silicon optimizes more aggressively for standard dense matrix operations, making deviations from the norm even harder to execute. This creates a heavily asymmetric reality that we call the startup deaf role. The exact same hardware friction affects companies entirely differently depending on the size of their bank accounts. For major tech giants, high friction serves as a defensive moat. They can easily afford the 36-month engineering burn required to rewrite schedulers and optimize low-level hardware. For a startup, betting on a high friction architecture means burning through all available runway debugging CUDA kernels rather than shipping a functional product to users. The standard transformer",
+      "suggested_slug": "standard-transformers-benchmarks-offer-faster-inference-existing-hardware",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 16,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        88,
+        125
+      ]
+    },
+    {
+      "start": "00:04:15.360",
+      "end": "00:05:01.000",
+      "start_seconds": 255.36,
+      "end_seconds": 301.0,
+      "duration_seconds": 45.64,
+      "excerpt": "startup deaf role. The exact same hardware friction affects companies entirely differently depending on the size of their bank accounts. For major tech giants, high friction serves as a defensive moat. They can easily afford the 36-month engineering burn required to rewrite schedulers and optimize low-level hardware. For a startup, betting on a high friction architecture means burning through all available runway debugging CUDA kernels rather than shipping a functional product to users. The standard transformer architecture does not dominate the industry because it represents the perfect mathematical solution. It dominates because it aligns perfectly with silicon economics, making it far too expensive to escape.",
+      "suggested_slug": "startup-deaf-role-exact-same-hardware-friction-affects",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "total_score": 20,
+      "heuristic_band": "reserve_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        112,
+        131
+      ]
+    }
+  ]
+}

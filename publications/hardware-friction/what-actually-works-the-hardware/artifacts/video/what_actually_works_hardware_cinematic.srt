@@ -1,0 +1,636 @@
+1
+00:00:00,560 --> 00:00:05,040
+Theoretical elegance in artificial
+
+2
+00:00:02,720 --> 00:00:07,279
+intelligence design frequently fails
+
+3
+00:00:05,040 --> 00:00:10,400
+when it meets the physical reality of a
+
+4
+00:00:07,279 --> 00:00:12,880
+production GPU. Over the last 2 years,
+
+5
+00:00:10,400 --> 00:00:15,040
+the academic community generated massive
+
+6
+00:00:12,880 --> 00:00:18,240
+interest in mathematically sophisticated
+
+7
+00:00:15,040 --> 00:00:20,880
+models. Frameworks like Korov Arnold
+
+8
+00:00:18,240 --> 00:00:22,640
+networks and neural odes promised
+
+9
+00:00:20,880 --> 00:00:25,199
+infinite adaptability and won
+
+10
+00:00:22,640 --> 00:00:27,359
+prestigious awards. However, these
+
+11
+00:00:25,199 --> 00:00:29,760
+models struggle to scale. Their
+
+12
+00:00:27,359 --> 00:00:32,399
+operations, spline evaluations, and
+
+13
+00:00:29,760 --> 00:00:34,480
+sequential solvers require memory access
+
+14
+00:00:32,399 --> 00:00:37,280
+patterns that GPUs are physically
+
+15
+00:00:34,480 --> 00:00:38,960
+incapable of processing efficiently. The
+
+16
+00:00:37,280 --> 00:00:40,879
+transformer dominates the industry
+
+17
+00:00:38,960 --> 00:00:43,120
+because it relies on the brute force
+
+18
+00:00:40,879 --> 00:00:45,360
+blocky matrix operations that hardware
+
+19
+00:00:43,120 --> 00:00:48,000
+was built to run. This creates a
+
+20
+00:00:45,360 --> 00:00:50,399
+ruthless selection process, a silicon
+
+21
+00:00:48,000 --> 00:00:52,320
+filter. Hardware eliminates any
+
+22
+00:00:50,399 --> 00:00:54,480
+algorithm that fails to map to its
+
+23
+00:00:52,320 --> 00:00:56,480
+physical structure. Strict hardware
+
+24
+00:00:54,480 --> 00:00:58,559
+compatibility has replaced expressive
+
+25
+00:00:56,480 --> 00:01:02,000
+capability as the definitive constraint
+
+26
+00:00:58,559 --> 00:01:04,400
+of modern AI. Advancing AI now requires
+
+27
+00:01:02,000 --> 00:01:07,520
+treating progress as a matter of silicon
+
+28
+00:01:04,400 --> 00:01:09,439
+engineering. By early 2023, the
+
+29
+00:01:07,520 --> 00:01:11,920
+transformer architecture reached a
+
+30
+00:01:09,439 --> 00:01:14,640
+critical scaling limit. Self attention
+
+31
+00:01:11,920 --> 00:01:16,880
+carries a quadratic cost. For every new
+
+32
+00:01:14,640 --> 00:01:19,360
+word generated, the required processing
+
+33
+00:01:16,880 --> 00:01:21,200
+footprint grows exponentially. While it
+
+34
+00:01:19,360 --> 00:01:23,360
+is often described as a computation
+
+35
+00:01:21,200 --> 00:01:25,520
+bottleneck, the actual constraint was
+
+36
+00:01:23,360 --> 00:01:28,240
+memory bandwidth. The arithmetic was
+
+37
+00:01:25,520 --> 00:01:30,000
+fast, the delivery of data was slow.
+
+38
+00:01:28,240 --> 00:01:31,920
+Operating these models requires the
+
+39
+00:01:30,000 --> 00:01:34,159
+massive physical infrastructure seen in
+
+40
+00:01:31,920 --> 00:01:36,560
+these server racks. Every single word
+
+41
+00:01:34,159 --> 00:01:37,680
+generated requires gigabytes of data to
+
+42
+00:01:36,560 --> 00:01:39,840
+move back and forth across the
+
+43
+00:01:37,680 --> 00:01:42,320
+microchip, consuming vast amounts of
+
+44
+00:01:39,840 --> 00:01:44,000
+physical energy. Scaling further require
+
+45
+00:01:42,320 --> 00:01:46,240
+the industry to pivot towards solving
+
+46
+00:01:44,000 --> 00:01:48,159
+the physical logistics of data movement.
+
+47
+00:01:46,240 --> 00:01:50,640
+The physical micro architecture of the
+
+48
+00:01:48,159 --> 00:01:53,280
+GPU is the battlefield where AI models
+
+49
+00:01:50,640 --> 00:01:56,159
+live or die. The chip uses two types of
+
+50
+00:01:53,280 --> 00:01:58,159
+memory. High bandwidth memory or HBM
+
+51
+00:01:56,159 --> 00:02:01,200
+provides massive but slow offchip
+
+52
+00:01:58,159 --> 00:02:03,759
+storage. Stram is a tiny ultraast
+
+53
+00:02:01,200 --> 00:02:06,159
+workspace built directly into the chip.
+
+54
+00:02:03,759 --> 00:02:08,720
+Standard architectures force matrices to
+
+55
+00:02:06,159 --> 00:02:11,120
+read and write to the slow HBM pool
+
+56
+00:02:08,720 --> 00:02:13,680
+choking the system. Flash Attention
+
+57
+00:02:11,120 --> 00:02:15,599
+bypassed this by rewriting the memory
+
+58
+00:02:13,680 --> 00:02:18,239
+access pattern, keeping the math
+
+59
+00:02:15,599 --> 00:02:20,239
+identical. It uses a tiling mechanism to
+
+60
+00:02:18,239 --> 00:02:22,480
+break data into small blocks that fit
+
+61
+00:02:20,239 --> 00:02:24,160
+entirely within the fast SRAMM,
+
+62
+00:02:22,480 --> 00:02:26,640
+processing and discarding them without
+
+63
+00:02:24,160 --> 00:02:28,640
+writing back to HBM. Following this
+
+64
+00:02:26,640 --> 00:02:30,319
+playbook, grouped query attention
+
+65
+00:02:28,640 --> 00:02:32,879
+further compressed the memory footprint
+
+66
+00:02:30,319 --> 00:02:34,800
+by sharing key value heads. Flash
+
+67
+00:02:32,879 --> 00:02:36,720
+attention became the industry standard
+
+68
+00:02:34,800 --> 00:02:39,120
+because it respected the physical layout
+
+69
+00:02:36,720 --> 00:02:40,800
+of silicon. With the memory bottleneck
+
+70
+00:02:39,120 --> 00:02:42,400
+addressed, the next challenge was
+
+71
+00:02:40,800 --> 00:02:44,720
+scaling intelligence without
+
+72
+00:02:42,400 --> 00:02:46,959
+exponentially increasing compute time.
+
+73
+00:02:44,720 --> 00:02:49,200
+In a standard dense network, every
+
+74
+00:02:46,959 --> 00:02:51,280
+single parameter must activate for every
+
+75
+00:02:49,200 --> 00:02:54,560
+word processed, creating a massive
+
+76
+00:02:51,280 --> 00:02:56,000
+compute burden. Mixture of experts ore
+
+77
+00:02:54,560 --> 00:02:58,720
+solved this through conditional
+
+78
+00:02:56,000 --> 00:03:01,040
+execution. A router identifies the
+
+79
+00:02:58,720 --> 00:03:03,519
+relevant data and routes it to isolated
+
+80
+00:03:01,040 --> 00:03:05,519
+subn networks called experts. The vast
+
+81
+00:03:03,519 --> 00:03:07,680
+majority of the network stays dormant,
+
+82
+00:03:05,519 --> 00:03:09,200
+saving compute.
+
+83
+00:03:07,680 --> 00:03:11,519
+functions through standard matrix
+
+84
+00:03:09,200 --> 00:03:14,000
+multiplications allowing it to pass the
+
+85
+00:03:11,519 --> 00:03:16,640
+silicon filter. This contrasts with
+
+86
+00:03:14,000 --> 00:03:19,200
+state space models like Mamba which face
+
+87
+00:03:16,640 --> 00:03:21,440
+a significant hardware boundary. Pure
+
+88
+00:03:19,200 --> 00:03:24,159
+state space models require a sequential
+
+89
+00:03:21,440 --> 00:03:26,959
+state update. Mathematically, step two
+
+90
+00:03:24,159 --> 00:03:28,800
+cannot start until step one is finished.
+
+91
+00:03:26,959 --> 00:03:31,440
+Sequential dependencies conflict with
+
+92
+00:03:28,800 --> 00:03:34,319
+the GPU's primary strength, massive
+
+93
+00:03:31,440 --> 00:03:37,519
+simultaneous parallelism. As of late
+
+94
+00:03:34,319 --> 00:03:40,560
+2025, pure state space models have hit a
+
+95
+00:03:37,519 --> 00:03:43,200
+hard ceiling at 7 billion parameters. At
+
+96
+00:03:40,560 --> 00:03:46,000
+the 100 billion parameter frontier, they
+
+97
+00:03:43,200 --> 00:03:47,599
+remain entirely absent from production.
+
+98
+00:03:46,000 --> 00:03:49,920
+Architectures that fight massive
+
+99
+00:03:47,599 --> 00:03:52,480
+parallelism cannot reach frontier scale
+
+100
+00:03:49,920 --> 00:03:55,120
+on current hardware. The hardware filter
+
+101
+00:03:52,480 --> 00:03:57,040
+enforces physical trade-offs. Even the
+
+102
+00:03:55,120 --> 00:03:59,040
+high throughput efficiency of mixture of
+
+103
+00:03:57,040 --> 00:04:02,239
+experts reaches a documented breaking
+
+104
+00:03:59,040 --> 00:04:04,799
+point. This is the context length trap.
+
+105
+00:04:02,239 --> 00:04:07,439
+As sequence lengths grow, routing logic
+
+106
+00:04:04,799 --> 00:04:10,000
+causes severe memory fragmentation. The
+
+107
+00:04:07,439 --> 00:04:12,159
+GPU burns cycles, constantly swapping
+
+108
+00:04:10,000 --> 00:04:14,400
+weights in and out. Aggregated
+
+109
+00:04:12,159 --> 00:04:16,560
+performance data shows thee speed
+
+110
+00:04:14,400 --> 00:04:20,000
+advantage starts high but erodess
+
+111
+00:04:16,560 --> 00:04:22,960
+sharply as context expands. After 32,000
+
+112
+00:04:20,000 --> 00:04:25,759
+tokens, the 2.5x speed up drops toward a
+
+113
+00:04:22,960 --> 00:04:27,840
+baseline of 1.3x.e
+
+114
+00:04:25,759 --> 00:04:29,919
+gains raw throughput by sacrificing
+
+115
+00:04:27,840 --> 00:04:31,440
+memory bandwidth stability. If the
+
+116
+00:04:29,919 --> 00:04:33,759
+hardware compatible techniques are
+
+117
+00:04:31,440 --> 00:04:36,160
+known, why does industrywide adoption
+
+118
+00:04:33,759 --> 00:04:38,160
+take years? This delay follows an
+
+119
+00:04:36,160 --> 00:04:40,320
+empirical pattern based on integration
+
+120
+00:04:38,160 --> 00:04:42,960
+cost. A phenomenon known as the
+
+121
+00:04:40,320 --> 00:04:44,880
+infrastructure lag pattern. Weighton
+
+122
+00:04:42,960 --> 00:04:46,479
+changes like grouped query attention
+
+123
+00:04:44,880 --> 00:04:48,880
+require only a change to the model
+
+124
+00:04:46,479 --> 00:04:50,560
+definition. Based on Llama and Quen
+
+125
+00:04:48,880 --> 00:04:53,040
+releases, these reach production in
+
+126
+00:04:50,560 --> 00:04:54,880
+roughly 12 months. Kernel level changes
+
+127
+00:04:53,040 --> 00:04:56,960
+like flash attention require CUDA
+
+128
+00:04:54,880 --> 00:04:59,520
+rewrites and framework integration. It
+
+129
+00:04:56,960 --> 00:05:02,160
+took 24 months for the 2022 research to
+
+130
+00:04:59,520 --> 00:05:04,479
+become standard practice in 2024.
+
+131
+00:05:02,160 --> 00:05:07,280
+Distributed serving overhauls like MOI
+
+132
+00:05:04,479 --> 00:05:10,400
+routing require rebuilding entire system
+
+133
+00:05:07,280 --> 00:05:12,240
+stacks. This created a 36-month gap
+
+134
+00:05:10,400 --> 00:05:14,880
+between the first switch transformer
+
+135
+00:05:12,240 --> 00:05:16,479
+papers and widespread production use.
+
+136
+00:05:14,880 --> 00:05:19,039
+Rewriting low-level software
+
+137
+00:05:16,479 --> 00:05:21,440
+infrastructure at massive financial and
+
+138
+00:05:19,039 --> 00:05:23,840
+time cost has become the primary speed
+
+139
+00:05:21,440 --> 00:05:27,440
+limit for artificial intelligence. In
+
+140
+00:05:23,840 --> 00:05:29,600
+the 2023 to 2025 era, core architectural
+
+141
+00:05:27,440 --> 00:05:31,280
+innovation has reached a plateau.
+
+142
+00:05:29,600 --> 00:05:33,680
+Hardware constraints have narrowed the
+
+143
+00:05:31,280 --> 00:05:35,759
+acceptable space of design so tightly
+
+144
+00:05:33,680 --> 00:05:38,800
+that the architectural container is now
+
+145
+00:05:35,759 --> 00:05:41,120
+relatively stable. Deepseek R1 serves as
+
+146
+00:05:38,800 --> 00:05:42,960
+the definitive proof point for this era.
+
+147
+00:05:41,120 --> 00:05:45,120
+It achieved state-of-the-art reasoning
+
+148
+00:05:42,960 --> 00:05:46,960
+without inventing a new layer. It
+
+149
+00:05:45,120 --> 00:05:48,800
+utilized the identical mixture of
+
+150
+00:05:46,960 --> 00:05:51,120
+experts container used in previous
+
+151
+00:05:48,800 --> 00:05:53,440
+models. The breakthrough occurred within
+
+152
+00:05:51,120 --> 00:05:54,880
+that container using massive scale
+
+153
+00:05:53,440 --> 00:05:56,880
+reinforcement learning to train
+
+154
+00:05:54,880 --> 00:05:59,120
+reasoning behavior on top of existing
+
+155
+00:05:56,880 --> 00:06:01,680
+primitives. The architecture wars have
+
+156
+00:05:59,120 --> 00:06:04,319
+reached a plateau. Future gains in
+
+157
+00:06:01,680 --> 00:06:07,360
+intelligence rely on the way we train
+
+158
+00:06:04,319 --> 00:06:10,759
+the computations our silicon is already
+
+159
+00:06:07,360 --> 00:06:10,759
+built to run.
+

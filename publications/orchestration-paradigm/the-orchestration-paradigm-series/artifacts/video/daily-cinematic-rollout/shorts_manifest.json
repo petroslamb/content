@@ -1,0 +1,44 @@
+{
+  "source_video": "publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.mp4",
+  "source_srt": "publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.srt",
+  "related_video_id": "lPIbdEiX2B0",
+  "essay_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-series",
+  "full_video_url": "https://www.youtube.com/watch?v=lPIbdEiX2B0",
+  "secondary_video_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-series",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "structural-routing-beats-brute-force",
+      "title": "Structural Routing Beats Brute Force",
+      "summary": "A 65-hour BERT workload collapsed to seconds once the architecture changed, then the same routing principle reappears in tool orchestration.",
+      "start": "00:04:42.960",
+      "end": "00:05:38.919",
+      "publish_at": "2026-05-03T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "hook": "65 hours became 5 seconds",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

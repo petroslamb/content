@@ -1,0 +1,56 @@
+{
+  "source_video": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.mp4",
+  "source_srt": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.srt",
+  "related_video_id": "Ju5UJvO4X5k",
+  "essay_url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware",
+  "full_video_url": "https://www.youtube.com/watch?v=Ju5UJvO4X5k",
+  "secondary_video_url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "hardware-kills-elegant-architectures",
+      "title": "Hardware Kills Elegant AI Architectures",
+      "summary": "Transformers won because GPUs reward blocky matrix math and punish architectures with awkward memory access patterns.",
+      "start": "00:00:32.399",
+      "end": "00:02:01.200",
+      "publish_at": "2026-05-03T06:00:00Z",
+      "score_total": 18,
+      "score_breakdown": null
+    },
+    {
+      "slug": "flash-attention-passed-the-silicon-filter",
+      "title": "FlashAttention Passed the Silicon Filter",
+      "summary": "FlashAttention became standard because it changed the memory access pattern without fighting the physical layout of the chip.",
+      "start": "00:01:50.640",
+      "end": "00:03:21.440",
+      "publish_at": "2026-05-04T06:00:00Z",
+      "score_total": 17,
+      "score_breakdown": null
+    },
+    {
+      "slug": "infrastructure-lag-slows-ai-progress",
+      "title": "Infrastructure Lag Slows AI Progress",
+      "summary": "The real bottleneck is no longer ideas alone but the years it takes to rewrite kernels and serving stacks around them.",
+      "start": "00:04:14.400",
+      "end": "00:05:45.120",
+      "publish_at": "2026-05-05T06:00:00Z",
+      "score_total": 19,
+      "score_breakdown": null
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

@@ -1,0 +1,367 @@
+{
+  "created_at": "2026-05-01T09:07:26.690357Z",
+  "workflow": "scheduled_shorts_link_update",
+  "related_video_id": "I6gKAyYRfZU",
+  "longform_url": "https://www.youtube.com/watch?v=I6gKAyYRfZU",
+  "explainer_url": "https://www.youtube.com/watch?v=FM3ex8zl-PY",
+  "updates": [
+    {
+      "video_id": "zVpYYDyAZR4",
+      "title": "Vibe Coding Is a Recipe for Illusion #shorts",
+      "snippet_update": {
+        "ok": true
+      },
+      "related_video_update": {
+        "ok": true,
+        "relatedVideoIds": [
+          "I6gKAyYRfZU"
+        ]
+      }
+    },
+    {
+      "video_id": "PgLO1eGJRi0",
+      "title": "Velocity Makes Weak Specs Dangerous #shorts",
+      "snippet_update": {
+        "ok": true
+      },
+      "related_video_update": {
+        "ok": true,
+        "relatedVideoIds": [
+          "I6gKAyYRfZU"
+        ]
+      }
+    },
+    {
+      "video_id": "qSImlEg0U3U",
+      "title": "The Missing Blueprints #shorts",
+      "snippet_update": {
+        "ok": true
+      },
+      "related_video_update": {
+        "ok": true,
+        "relatedVideoIds": [
+          "I6gKAyYRfZU"
+        ]
+      }
+    },
+    {
+      "video_id": "Ye7aubeIztc",
+      "title": "Choose What Deserves Authority #shorts",
+      "snippet_update": {
+        "ok": true
+      },
+      "related_video_update": {
+        "ok": true,
+        "relatedVideoIds": [
+          "I6gKAyYRfZU"
+        ]
+      }
+    }
+  ],
+  "readback": [
+    {
+      "kind": "youtube#video",
+      "etag": "-NUJKrlgzaQUJIA6ZrCcAzaN1LY",
+      "id": "zVpYYDyAZR4",
+      "snippet": {
+        "publishedAt": "2026-05-01T08:59:53Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "Vibe Coding Is a Recipe for Illusion #shorts",
+        "description": "Vibe Coding Is a Recipe for Illusion\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nA weak specification lets generated code look confident while the real authority problem stays invisible.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/default.jpg?sqp=CLzZ0c8G&rs=AOn4CLAGz8-xkDIk62fP3pYc1UlpigS93Q",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/mqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLAFUnTpTHbmm117Cwgbbl_7OnBdLA",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/hqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLBaXacSYDshBh4qqkt-LrK7WHRzXQ",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/sddefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLA3ATgb25NyKd-vED-0QWhCBBX8CQ",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/maxresdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLD8O_SprmuEYN6UBlQDYtRwWukgUA",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Vibe Coding Is a Recipe for Illusion #shorts",
+          "description": "Vibe Coding Is a Recipe for Illusion\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nA weak specification lets generated code look confident while the real authority problem stays invisible.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT43S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-06T06:00:00Z",
+        "license": "youtube",
+        "embeddable": false,
+        "publicStatsViewable": false,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "JZOy5QbrEDfB0oGZBmliPuZpZqI",
+      "id": "PgLO1eGJRi0",
+      "snippet": {
+        "publishedAt": "2026-05-01T08:59:57Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "Velocity Makes Weak Specs Dangerous #shorts",
+        "description": "Velocity Makes Weak Specs Dangerous\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nAI coding makes weak specifications more dangerous because implementation now appears faster than intent can be governed.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/default.jpg?sqp=CLzZ0c8G&rs=AOn4CLB-lXMiZHEh1Jdo8IkZpPfHnfQJBA",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/mqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLAOh4gnzlSJIHsMwK1WTCd1FXHXVw",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/hqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLCdZbFCACfSUltodECYCxmZxVnYWg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/sddefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLBC93CPhXkTsM1dD4MTMecO2sy4ww",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/maxresdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLAS_M4QbGEnfhYb46-YKgsTdtN3KA",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Velocity Makes Weak Specs Dangerous #shorts",
+          "description": "Velocity Makes Weak Specs Dangerous\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nAI coding makes weak specifications more dangerous because implementation now appears faster than intent can be governed.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT1M2S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-06T07:30:00Z",
+        "license": "youtube",
+        "embeddable": false,
+        "publicStatsViewable": false,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "zu00uBhd-cKDbLPkrbxih7SkyZk",
+      "id": "qSImlEg0U3U",
+      "snippet": {
+        "publishedAt": "2026-05-01T09:00:02Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "The Missing Blueprints #shorts",
+        "description": "The Missing Blueprints\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nWhen teams cannot point to the shared specification, separate workers and agents reconstruct intent from symptoms.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/default.jpg?sqp=CLzZ0c8G&rs=AOn4CLCaiJJUaV5D3a_QUuZHKkYJkiSY8Q",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/mqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLACw10C5edUu7GanrL6p5XBtRUzQA",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/hqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLAVBZCS56Xf4SHRq2Q6tTA2HiLPVA",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/sddefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLDSdEfmc9R78JSM4j44ZATaU9Ry8w",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/maxresdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLDKsdxrkiNvlo7bGXejYylrQduXKQ",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "The Missing Blueprints #shorts",
+          "description": "The Missing Blueprints\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nWhen teams cannot point to the shared specification, separate workers and agents reconstruct intent from symptoms.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT1M",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-07T06:00:00Z",
+        "license": "youtube",
+        "embeddable": false,
+        "publicStatsViewable": false,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "zEuVzfkfxcQl37ptEXpqoipecxc",
+      "id": "Ye7aubeIztc",
+      "snippet": {
+        "publishedAt": "2026-05-01T09:00:07Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "Choose What Deserves Authority #shorts",
+        "description": "Choose What Deserves Authority\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nThe practical question is which surfaces deserve authority and how failures push those surfaces back into revision.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/default.jpg?sqp=CLzZ0c8G&rs=AOn4CLDAY5gboAna7MXtfcBqwuCPBfw3mw",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/mqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLCYKpP6-knJdL2Z0eQ4WFJ1KRfHuw",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/hqdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLBppq6aALC-Venwd0-w9AqEzGHayw",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/sddefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLAe61q-qscc01ZwNQv9bcqigBSrmg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/maxresdefault.jpg?sqp=CLzZ0c8G&rs=AOn4CLCQGl_3XyeA4kK-Ua8mqfftn4wvuw",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Choose What Deserves Authority #shorts",
+          "description": "Choose What Deserves Authority\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nThe practical question is which surfaces deserve authority and how failures push those surfaces back into revision.\n\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT1M14S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-07T07:30:00Z",
+        "license": "youtube",
+        "embeddable": true,
+        "publicStatsViewable": true,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    }
+  ]
+}

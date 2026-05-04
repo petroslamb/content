@@ -625,3 +625,205 @@ Initial rollout order from `backlog_manifest.yaml`:
 - Rewired `the_agent_revolution` cinematic follow-through from the old private long-form `ti-WonOox8M` to the newer public visual deep dive `-2CM4JYfQAs`.
 - Canonical state action: updated `experiments/youtube-cinematic-rollout/backlog_manifest.yaml` `secondary_link` for `the_agent_revolution`.
 - Live YouTube action: update cinematic brief `N7FKycVsIUw` description so `Full research breakdown` points to `https://www.youtube.com/watch?v=-2CM4JYfQAs`.
+
+### 2026-05-01T07:01:53.747543+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `orchestration_paradigm_series`, `orchestration_paradigm_issue_factory`
+- Materialized Shorts manifests: `publications/autonomous-agents/the-agent-revolution/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+
+### 2026-05-01T07:02:50Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- New cinematic task accepted for `orchestration_paradigm_series`.
+- NotebookLM task/artifact id: `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`
+- Current artifact status: `in_progress`
+- New cinematic task accepted for `orchestration_paradigm_issue_factory`.
+- NotebookLM task/artifact id: `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`
+- Current artifact status: `in_progress`
+- Queue action: mark both entries as `generation_pending`; do not start additional new cinematics while these two jobs are active.
+- Watcher note: `experiment.automation.watcher_automation_id` remains `null` because this Codex runtime does not expose an automation-management tool, so the required 30-minute heartbeat watcher could not be created or refreshed from this run.
+### 2026-05-01T09:15:30Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Generation attempt:
+  - `specification_surface_source_of_truth`: `.venv/bin/notebooklm generate video -n bd61da1d-f328-4cf0-8c77-26b094dd27b8 --retry 3 --json --format cinematic --wait ...`
+- Result: NotebookLM returned `RATE_LIMITED: Video generation rate limited by Google` after retrying `RPC CREATE_ARTIFACT`.
+- Queue action: mark `specification_surface_source_of_truth` as `blocked_rate_limited`; no cinematic artifact task was created, so upload, caption recovery, overlay Shorts rendering, and related-video Studio verification remain blocked until cinematic generation is available again.
+- Watcher action: created heartbeat watcher `cinematic-rollout-watcher-2` at a 30-minute interval and recorded it in `experiment.automation.watcher_automation_id`.
+
+### 2026-05-01T09:26:38Z
+
+- Follow-up poll after one workflow interval.
+- `orchestration_paradigm_series` artifact `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`: still `in_progress`; no URL or error exposed.
+- `orchestration_paradigm_issue_factory` artifact `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`: still `in_progress`; no URL or error exposed.
+- Queue action: keep the existing in-flight generation blockers active and leave `specification_surface_source_of_truth` at `blocked_rate_limited` until the lane clears.
+
+### 2026-05-01T09:59:50Z
+
+- Heartbeat watcher poll: `cinematic-rollout-watcher-2`.
+- NotebookLM auth: `ok`.
+- `orchestration_paradigm_series` artifact `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`: still `in_progress`; no URL or error exposed.
+- `orchestration_paradigm_issue_factory` artifact `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`: still `in_progress`; no URL or error exposed.
+- Queue action: no upload, caption recovery, Shorts extraction, or specification-surface retry yet; keep the watcher active.
+
+### 2026-05-01T10:41:08Z
+
+- Heartbeat watcher poll: `cinematic-rollout-watcher-2`.
+- NotebookLM auth: `ok`.
+- Waited one workflow interval, then repolled the in-flight NotebookLM cinematic tasks.
+- `orchestration_paradigm_series` artifact `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`: still `in_progress`; no URL or error exposed.
+- `orchestration_paradigm_issue_factory` artifact `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`: still `in_progress`; no URL or error exposed.
+- Queue action: keep both entries in `generation_pending`; do not retry `specification_surface_source_of_truth` while the generation lane is still occupied.
+
+### 2026-05-01T11:22:19Z
+
+- Heartbeat watcher poll: `cinematic-rollout-watcher-2`.
+- NotebookLM auth: `ok`.
+- Waited one workflow interval, then repolled the in-flight NotebookLM cinematic tasks.
+- `orchestration_paradigm_series` artifact `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`: still `in_progress`; no URL or error exposed.
+- `orchestration_paradigm_issue_factory` artifact `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`: still `in_progress`; no URL or error exposed.
+- Queue action: keep both entries in `generation_pending`; no upload, captions, Shorts rendering, or `specification_surface_source_of_truth` retry yet.
+
+### 2026-05-01T12:03:36Z
+
+- Heartbeat watcher poll: `cinematic-rollout-watcher-2`.
+- NotebookLM auth: `ok`.
+- Waited one workflow interval, then repolled the in-flight NotebookLM cinematic tasks.
+- `orchestration_paradigm_series` artifact `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`: still `in_progress`; no URL or error exposed.
+- `orchestration_paradigm_issue_factory` artifact `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`: still `in_progress`; no URL or error exposed.
+- Queue action: keep both entries in `generation_pending`; no upload, caption recovery, Shorts extraction, or `specification_surface_source_of_truth` retry yet.
+
+### 2026-05-01T12:44:57Z
+
+- Heartbeat watcher poll: `cinematic-rollout-watcher-2`.
+- NotebookLM auth: `ok`.
+- Waited one workflow interval, then repolled the in-flight NotebookLM cinematic tasks.
+- `orchestration_paradigm_series` artifact `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`: still `in_progress`; no URL or error exposed.
+- `orchestration_paradigm_issue_factory` artifact `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`: still `in_progress`; no URL or error exposed.
+- Queue action: keep both entries in `generation_pending`; no upload, caption recovery, Shorts extraction, or `specification_surface_source_of_truth` retry yet.
+
+### 2026-05-01T13:26:43Z
+
+- Heartbeat watcher poll: `cinematic-rollout-watcher-2`.
+- NotebookLM auth: `ok`.
+- Waited one workflow interval, then repolled the in-flight NotebookLM cinematic tasks.
+- `orchestration_paradigm_series` artifact `fab88b5e-7026-47ac-8eb1-9a90f0219d0d`: still `in_progress`; no URL or error exposed.
+- `orchestration_paradigm_issue_factory` artifact `5f5b5894-2ab5-4c96-a504-12ec7f85a3cd`: still `in_progress`; no URL or error exposed.
+- Timeout note: both NotebookLM tasks are now past the manifest's `21600` second generation wait timeout but have not failed or produced a downloadable URL.
+- Queue action: keep both entries in `generation_pending`; no upload, caption recovery, Shorts extraction, or `specification_surface_source_of_truth` retry yet.
+
+### 2026-05-01T13:59:41Z
+
+- Heartbeat watcher poll: `cinematic-rollout-watcher-2`.
+- NotebookLM artifact-list check showed both stale `in_progress` tasks as completed videos even though direct task polling still reported `in_progress`.
+- Downloaded completed cinematic MP4s into package artifact paths:
+  - `orchestration_paradigm_series`: `publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.mp4`
+  - `orchestration_paradigm_issue_factory`: `publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.mp4`
+- Uploaded cinematic briefs to YouTube and added them to `Rooted Layers Cinematic Briefs`:
+  - `orchestration_paradigm_series`: `lPIbdEiX2B0` (`https://www.youtube.com/watch?v=lPIbdEiX2B0`)
+  - `orchestration_paradigm_issue_factory`: `Iz7wQCY6Bfk` (`https://www.youtube.com/watch?v=Iz7wQCY6Bfk`)
+- Studio card/end-screen status: `studio_link_blocked_external_target` for both entries because their configured research-breakdown targets are external Substack URLs, not YouTube videos.
+- Caption recovery started with 10-minute polling:
+  - `publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.srt`
+  - `publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.srt`
+
+### 2026-05-01T14:13:15.307359+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `orchestration_paradigm_series`, `orchestration_paradigm_issue_factory`
+- Materialized Shorts manifests: `publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`, `publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json`
+- Newly scheduled approved clips: `2`
+
+### 2026-05-01T14:19:33.879389+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `orchestration_paradigm_issue_behavior`, `orchestration_paradigm_issue_reality`
+
+### 2026-05-02T07:02:11.724898+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `orchestration_paradigm_issue_behavior`, `orchestration_paradigm_issue_reality`
+
+### 2026-05-02T07:03:19Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- New cinematic task accepted for `orchestration_paradigm_issue_behavior`.
+- NotebookLM task/artifact id: `2da9e83c-3c83-4632-83d9-fbdffe482da0`
+- Current artifact status: `in_progress`
+- Queue action: mark `orchestration_paradigm_issue_behavior` as `generation_pending` and keep it ahead of any new queue work until the cinematic artifact completes.
+
+### 2026-05-02T07:04:31Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Generation attempt:
+  - `orchestration_paradigm_issue_reality`: `.venv/bin/notebooklm generate video -n 64889a43-abbd-40ce-aa19-438f3b6b728b --retry 3 --json --format cinematic ...`
+- Result: NotebookLM returned `RATE_LIMITED: Video generation rate limited by Google` after `RPC CREATE_ARTIFACT failed`.
+- Queue action: mark `orchestration_paradigm_issue_reality` as `blocked_rate_limited`; do not start additional new cinematics while `orchestration_paradigm_issue_behavior` remains active.
+- Watcher note: `experiment.automation.watcher_automation_id` is still `cinematic-rollout-watcher-2`, but this Codex runtime does not expose an automation-management tool, so I could not verify, refresh, or recreate the required 30-minute heartbeat watcher from this run.
+
+### 2026-05-03T07:01:13.080531+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `orchestration_paradigm_issue_behavior`
+
+### 2026-05-03T07:15:52Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Watcher note: `experiment.automation.watcher_automation_id` remains `cinematic-rollout-watcher-2`, but this Codex runtime still does not expose automation-management tools, so I could not verify, refresh, or recreate the 30-minute heartbeat watcher from this run.
+- Completed follow-through for `orchestration_paradigm_issue_behavior`:
+  - downloaded completed NotebookLM cinematic MP4 to `publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.mp4`
+  - uploaded cinematic brief to YouTube: `qPC4fkPmAIM` (`https://www.youtube.com/watch?v=qPC4fkPmAIM`)
+  - Studio link status: `studio_link_blocked_external_target` because the configured secondary link is the Substack essay, not a YouTube video
+  - caption recovery succeeded: `publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.srt`
+  - candidate extraction completed: `8` candidates, top heuristic score `19`
+  - queue action: no clips cleared the `22/25` approval bar, so mark `orchestration_paradigm_issue_behavior` as `no_shorts_approved`
+- New cinematic task accepted for `orchestration_paradigm_issue_reality`.
+  - NotebookLM task/artifact id: `c1231e76-9f7a-44a8-abad-b457e1cc1a66`
+  - current artifact status: `in_progress`
+- New cinematic task accepted for `transformer_attractor`.
+  - NotebookLM task/artifact id: `1cb1360a-25e3-4244-a0b3-64befed44aac`
+  - current artifact status: `in_progress`
+- Queue action: keep `orchestration_paradigm_issue_reality` and `transformer_attractor` in `generation_pending`; do not start additional backlog entries while these two jobs are active.
+
+### 2026-05-04T07:01:23.841641+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `orchestration_paradigm_issue_reality`, `transformer_attractor`
+
+### 2026-05-04T08:03:18Z
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Reconciled completed NotebookLM cinematic artifacts:
+  - `orchestration_paradigm_issue_reality`: artifact `c1231e76-9f7a-44a8-abad-b457e1cc1a66`, downloaded to `publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.mp4`
+  - `transformer_attractor`: artifact `1cb1360a-25e3-4244-a0b3-64befed44aac`, downloaded to `publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.mp4`
+  - `specification_surface_source_of_truth`: artifact `160efe80-a3a7-4711-97a4-4adcb9313d8b`, downloaded to `publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.mp4`
+- Uploaded cinematic briefs to YouTube and added them to `Rooted Layers Cinematic Briefs`:
+  - `orchestration_paradigm_issue_reality`: `KDYVc1yvUw0` (`https://www.youtube.com/watch?v=KDYVc1yvUw0`)
+  - `transformer_attractor`: `N73fBasGzo4` (`https://www.youtube.com/watch?v=N73fBasGzo4`)
+  - `specification_surface_source_of_truth`: `slozjRp6CPg` (`https://www.youtube.com/watch?v=slozjRp6CPg`)
+- Caption recovery used 10-minute polling and succeeded for all three outputs:
+  - `publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.srt`
+  - `publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.srt`
+  - `publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt`
+- Candidate extraction completed:
+  - `orchestration_paradigm_issue_reality`: `8` candidates, top score `20`, no `22+` approved clip
+  - `transformer_attractor`: `6` candidates, top score `20`, no `22+` approved clip
+  - `specification_surface_source_of_truth`: `8` candidates, top score `19`, no `22+` approved clip
+- Queue action: mark all three as `no_shorts_approved`; no Shorts were rendered or scheduled from these cinematics because none cleared the high-bar approval threshold.
+- Studio link status:
+  - `orchestration_paradigm_issue_reality` and `transformer_attractor`: `studio_link_blocked_external_target` because configured secondary targets are external Substack essays.
+  - `specification_surface_source_of_truth`: `studio_link_verified`; the full cinematic `slozjRp6CPg` has a Studio end screen and info card pointing to `The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive` (`I6gKAyYRfZU`), and the editor reload verified both surfaces persisted.
+- Rollout controller dry run: no in-flight entries, no next generation candidates, no Shorts manifests materialized.

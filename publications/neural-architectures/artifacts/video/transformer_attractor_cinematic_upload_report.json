@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-05-04T07:51:52.003071+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "transformer_attractor",
+  "package": "neural-architectures",
+  "notebook_id": "ece2cbca-3a4a-4d6c-864e-20a33cdb9b93",
+  "video_source_file": "publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.mp4",
+  "caption_output": "publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.srt",
+  "title": "The Transformer Attractor: Architecture Lock-in | A Cinematic Research Brief",
+  "base_title": "The Transformer Attractor: Architecture Lock-in",
+  "description": "This cinematic brief introduces the main structural claim behind The Transformer Attractor: Architecture Lock-in and Hardware Determinism without forcing viewers to know the essay first.\n\nThis cinematic brief is the discovery surface for The Transformer Attractor: Architecture Lock-in and Hardware Determinism.\n\nUse it to land the core causal move quickly, then point viewers toward the full research breakdown.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-transformer-attractor\n\nFull research breakdown:\nhttps://lambpetros.substack.com/p/the-transformer-attractor\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4yMDhBMkNBNjRDMjQxQTg1",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4yMDhBMkNBNjRDMjQxQTg1",
+      "position": 20,
+      "title": "The Transformer Attractor: Architecture Lock-in | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": null,
+    "url": "https://lambpetros.substack.com/p/the-transformer-attractor"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-transformer-attractor",
+  "video": {
+    "id": "N73fBasGzo4",
+    "url": "https://www.youtube.com/watch?v=N73fBasGzo4",
+    "youtube_readback": {
+      "upload_status": "processed",
+      "privacy_status": "public",
+      "duration": "PT4M31S",
+      "definition": "hd",
+      "published_at": "2026-05-04T07:52:07Z",
+      "processing_status": "succeeded"
+    }
+  }
+}

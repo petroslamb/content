@@ -1,0 +1,78 @@
+{
+  "created_at": "2026-05-01T14:18:36.709722+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "Iz7wQCY6Bfk",
+    "url": "https://www.youtube.com/watch?v=Iz7wQCY6Bfk"
+  },
+  "related_longform": {
+    "id": "Iz7wQCY6Bfk",
+    "url": "https://www.youtube.com/watch?v=Iz7wQCY6Bfk"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=Iz7wQCY6Bfk"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/portrait/01-cheap-agents-can-be-a-liability_portrait.mp4",
+      "title": "Cheap Agents Can Be a Liability #shorts",
+      "summary": "Accuracy per dollar fails in high-stakes domains; orchestration is not about being cheap, but choosing the right reliability architecture.",
+      "publish_at": "2026-05-03T07:30:00Z",
+      "video_id": "Pu25bSICaA8",
+      "url": "https://www.youtube.com/watch?v=Pu25bSICaA8",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5BNTRGQTE1QjY2NUE5NTAz"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "Iz7wQCY6Bfk"
+        ]
+      },
+      "probe": {
+        "path": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/portrait/01-cheap-agents-can-be-a-liability_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 74.958333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 75.0
+        },
+        "format_duration": 75.0,
+        "duration": 75.0
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Cheap Agents Can Be a Liability #shorts",
+        "published_at": "2026-05-01T14:18:29Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5BNTRGQTE1QjY2NUE5NTAz",
+        "position": 150,
+        "title": "Cheap Agents Can Be a Liability #shorts"
+      }
+    }
+  ]
+}

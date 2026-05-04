@@ -1,0 +1,182 @@
+{
+  "created_at": "2026-05-01T09:06:53.450056Z",
+  "workflow": "publication_longform_tldr_playlist_sync",
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "essay_url": "https://lambpetros.substack.com/p/the-specification-surface-is-the",
+  "longform": {
+    "source_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_visual_deep_dive_longform.mp4",
+    "video_id": "I6gKAyYRfZU",
+    "url": "https://www.youtube.com/watch?v=I6gKAyYRfZU",
+    "title": "The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive",
+    "playlist_id": "PL8lPx5mgRhhbABS4A238_OjCy_6xEUCBd",
+    "playlist_action": {
+      "action": "already_present",
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYkFCUzRBMjM4X09qQ3lfNnhFVUNCZC4wOTA3OTZBNzVEMTUzOTMy",
+      "position": 0
+    }
+  },
+  "explainer": {
+    "source_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_explainer.mp4",
+    "video_id": "FM3ex8zl-PY",
+    "url": "https://www.youtube.com/watch?v=FM3ex8zl-PY",
+    "title": "The Specification Surface Is the New Source of Truth | TL;DR",
+    "playlist_id": "PL8lPx5mgRhhan7OgyGo3Ostthkbr0v6n6",
+    "playlist_action": {
+      "action": "inserted",
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYW43T2d5R28zT3N0dGhrYnIwdjZuNi45NzUwQkI1M0UxNThBMkU0"
+    }
+  },
+  "readback": [
+    {
+      "kind": "youtube#video",
+      "etag": "C1pOLOF1ioSE6jhN7NO9RKjbKSA",
+      "id": "I6gKAyYRfZU",
+      "snippet": {
+        "publishedAt": "2026-05-01T08:57:24Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive",
+        "description": "A 39-minute visual deep research dive on why specification surfaces become the governed source-of-truth artifact in AI-assisted software work.\n\nThe central claim: generated code is only reviewable when the controlling intent lives in durable, maintained, validated, and trace-linked surfaces that teams can inspect and repair.\n\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\n\nRooted Layers Visual Deep Research Dives:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhbABS4A238_OjCy_6xEUCBd\n\n#ai #softwareengineering #specification #research",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/I6gKAyYRfZU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/I6gKAyYRfZU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/I6gKAyYRfZU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/I6gKAyYRfZU/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/I6gKAyYRfZU/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "software engineering",
+          "specification",
+          "visual deep research dive"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive",
+          "description": "A 39-minute visual deep research dive on why specification surfaces become the governed source-of-truth artifact in AI-assisted software work.\n\nThe central claim: generated code is only reviewable when the controlling intent lives in durable, maintained, validated, and trace-linked surfaces that teams can inspect and repair.\n\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\nTL;DR explainer: https://www.youtube.com/watch?v=FM3ex8zl-PY\n\nRooted Layers Visual Deep Research Dives:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhbABS4A238_OjCy_6xEUCBd\n\n#ai #softwareengineering #specification #research"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT39M1S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "public",
+        "license": "youtube",
+        "embeddable": true,
+        "publicStatsViewable": true,
+        "madeForKids": false
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "_Apl3In0g3VHV5VOhMFgjjZnwzI",
+      "id": "FM3ex8zl-PY",
+      "snippet": {
+        "publishedAt": "2026-05-01T09:06:40Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "The Specification Surface Is the New Source of Truth | TL;DR",
+        "description": "A compact visual explainer for the specification-surface argument: why AI-assisted software work needs governed, maintained surfaces instead of private prompt intent.\n\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\n\nRooted Layers Summaries:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhan7OgyGo3Ostthkbr0v6n6\n\n#ai #softwareengineering #specification #research",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/FM3ex8zl-PY/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/FM3ex8zl-PY/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/FM3ex8zl-PY/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "TL;DR",
+          "research",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "The Specification Surface Is the New Source of Truth | TL;DR",
+          "description": "A compact visual explainer for the specification-surface argument: why AI-assisted software work needs governed, maintained surfaces instead of private prompt intent.\n\nOriginal essay: https://lambpetros.substack.com/p/the-specification-surface-is-the\nFull visual deep dive: https://www.youtube.com/watch?v=I6gKAyYRfZU\n\nRooted Layers Summaries:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhan7OgyGo3Ostthkbr0v6n6\n\n#ai #softwareengineering #specification #research"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT7M1S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "public",
+        "license": "youtube",
+        "embeddable": true,
+        "publicStatsViewable": true,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    }
+  ],
+  "playlist_readback": {
+    "visual": {
+      "id": "UEw4bFB4NW1nUmhoYkFCUzRBMjM4X09qQ3lfNnhFVUNCZC4wOTA3OTZBNzVEMTUzOTMy",
+      "position": 0,
+      "title": "The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive"
+    },
+    "summaries": {
+      "id": "UEw4bFB4NW1nUmhoYW43T2d5R28zT3N0dGhrYnIwdjZuNi45NzUwQkI1M0UxNThBMkU0",
+      "position": 0,
+      "title": "The Specification Surface Is the New Source of Truth | TL;DR"
+    }
+  }
+}

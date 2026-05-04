@@ -1,0 +1,44 @@
+{
+  "source_video": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.mp4",
+  "source_srt": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.srt",
+  "related_video_id": "Iz7wQCY6Bfk",
+  "essay_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e",
+  "full_video_url": "https://www.youtube.com/watch?v=Iz7wQCY6Bfk",
+  "secondary_video_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "cheap-agents-can-be-a-liability",
+      "title": "Cheap Agents Can Be a Liability",
+      "summary": "Accuracy per dollar fails in high-stakes domains; orchestration is not about being cheap, but choosing the right reliability architecture.",
+      "start": "00:06:29.199",
+      "end": "00:07:44.840",
+      "publish_at": "2026-05-03T07:30:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 5,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "hook": "Cheap agents can be dangerous",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

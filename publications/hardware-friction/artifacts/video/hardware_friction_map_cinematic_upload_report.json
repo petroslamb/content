@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-04-30T12:33:58.672692+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "hardware_friction_map",
+  "package": "hardware-friction",
+  "notebook_id": "02eb281e-2fe7-459b-8b0e-57cbe2738337",
+  "video_source_file": "publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.mp4",
+  "caption_output": "publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.srt",
+  "title": "Why Hardware Friction Decides What Ships in AI | A Cinematic Research Brief",
+  "base_title": "Why Hardware Friction Decides What Ships in AI",
+  "description": "The architectures that win are not always the most elegant. They are the ones that survive the hardware and infrastructure gauntlet.\n\nThis cinematic brief reframes architecture progress around deployment friction, kernel support, memory movement, and integration cost rather than benchmark theater.\n\nIt should hook viewers on the claim that real-world AI design is constrained by hardware economics before it is constrained by theory.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-hardware-friction-map\n\nFull research breakdown:\nhttps://lambpetros.substack.com/p/the-hardware-friction-map\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41Mzk2QTAxMTkzNDk4MDhF",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41Mzk2QTAxMTkzNDk4MDhF",
+      "position": 14,
+      "title": "Why Hardware Friction Decides What Ships in AI | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": null,
+    "url": "https://lambpetros.substack.com/p/the-hardware-friction-map"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-hardware-friction-map",
+  "video": {
+    "id": "xPLU4cISmxE",
+    "url": "https://www.youtube.com/watch?v=xPLU4cISmxE",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-30T12:33:52Z"
+    }
+  }
+}

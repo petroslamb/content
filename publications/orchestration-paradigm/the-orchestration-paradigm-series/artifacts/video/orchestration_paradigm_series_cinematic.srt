@@ -1,0 +1,600 @@
+1
+00:00:00,320 --> 00:00:04,960
+For years, the industry has operated on
+
+2
+00:00:02,560 --> 00:00:07,359
+a straightforward assumption. If we want
+
+3
+00:00:04,960 --> 00:00:09,200
+superhuman artificial intelligence, we
+
+4
+00:00:07,359 --> 00:00:11,440
+have to build increasingly massive
+
+5
+00:00:09,200 --> 00:00:13,120
+single checkpoint language models. But
+
+6
+00:00:11,440 --> 00:00:14,880
+this brute force approach hits an
+
+7
+00:00:13,120 --> 00:00:17,279
+architectural ceiling known as the
+
+8
+00:00:14,880 --> 00:00:19,119
+calibration paradox. Large language
+
+9
+00:00:17,279 --> 00:00:21,199
+models are designed mathematically to
+
+10
+00:00:19,119 --> 00:00:22,880
+predict the next most likely token in a
+
+11
+00:00:21,199 --> 00:00:25,279
+sequence. They aren't trained to
+
+12
+00:00:22,880 --> 00:00:26,960
+evaluate computational cost and rarely
+
+13
+00:00:25,279 --> 00:00:29,279
+indicate when they lack the necessary
+
+14
+00:00:26,960 --> 00:00:31,439
+information. If you ask a Frontier model
+
+15
+00:00:29,279 --> 00:00:33,200
+a highly complex math question, its
+
+16
+00:00:31,439 --> 00:00:34,719
+training forces it to try and generate
+
+17
+00:00:33,200 --> 00:00:37,040
+the answer using its own internal
+
+18
+00:00:34,719 --> 00:00:38,879
+parameters. Instead of pausing to query
+
+19
+00:00:37,040 --> 00:00:41,200
+a secure external calculator or a
+
+20
+00:00:38,879 --> 00:00:43,200
+database, it guesses. If those internal
+
+21
+00:00:41,200 --> 00:00:45,040
+parameters lack the exact data, the
+
+22
+00:00:43,200 --> 00:00:46,960
+model generates a plausible sounding but
+
+23
+00:00:45,040 --> 00:00:48,960
+incorrect response. The neural
+
+24
+00:00:46,960 --> 00:00:51,840
+structures optimized to write creative
+
+25
+00:00:48,960 --> 00:00:53,680
+poetry or generate fluent code make the
+
+26
+00:00:51,840 --> 00:00:55,600
+system unreliable when tasked with
+
+27
+00:00:53,680 --> 00:00:57,920
+routing queries and making strategic
+
+28
+00:00:55,600 --> 00:01:00,160
+decisions. You might think you can fix
+
+29
+00:00:57,920 --> 00:01:01,520
+this with a strict prompt explicitly
+
+30
+00:01:00,160 --> 00:01:03,280
+telling the model to act as an
+
+31
+00:01:01,520 --> 00:01:05,680
+orchestrator and carefully select
+
+32
+00:01:03,280 --> 00:01:07,760
+external tools. But empirical data
+
+33
+00:01:05,680 --> 00:01:10,560
+proves this fails due to a phenomenon
+
+34
+00:01:07,760 --> 00:01:12,400
+called self-enhancement bias. This flow
+
+35
+00:01:10,560 --> 00:01:14,320
+diagram maps out how queries are
+
+36
+00:01:12,400 --> 00:01:16,640
+actually routed when we prompt a massive
+
+37
+00:01:14,320 --> 00:01:19,759
+model to delegate. When asked to manage
+
+38
+00:01:16,640 --> 00:01:21,600
+a task, GPT5 ignores third party tools
+
+39
+00:01:19,759 --> 00:01:23,920
+and overwhelmingly funnels the work to
+
+40
+00:01:21,600 --> 00:01:26,159
+its own developmental sibling, GPT5
+
+41
+00:01:23,920 --> 00:01:28,640
+Mini. Conversely, if you assign a
+
+42
+00:01:26,159 --> 00:01:31,360
+smaller model like Quen 38B to manage
+
+43
+00:01:28,640 --> 00:01:33,040
+the process, it exhibits a reverse bias.
+
+44
+00:01:31,360 --> 00:01:35,520
+It defaults to the largest, most
+
+45
+00:01:33,040 --> 00:01:37,680
+expensive tool in the room, GPT5, for
+
+46
+00:01:35,520 --> 00:01:39,920
+nearly every subtask regardless of the
+
+47
+00:01:37,680 --> 00:01:41,600
+actual cost constraints. These behaviors
+
+48
+00:01:39,920 --> 00:01:43,840
+show that standard models are flawed
+
+49
+00:01:41,600 --> 00:01:46,320
+managers. They default to their own
+
+50
+00:01:43,840 --> 00:01:48,880
+developmental lineage or they lean on
+
+51
+00:01:46,320 --> 00:01:51,280
+the priciest option available. Both
+
+52
+00:01:48,880 --> 00:01:53,840
+impulses destroy the economic efficiency
+
+53
+00:01:51,280 --> 00:01:56,159
+of using tools in the first place.
+
+54
+00:01:53,840 --> 00:01:57,920
+Systemic reliability requires severing
+
+55
+00:01:56,159 --> 00:02:00,079
+the neural pathways that generate
+
+56
+00:01:57,920 --> 00:02:02,079
+language from the pathways that decide
+
+57
+00:02:00,079 --> 00:02:04,640
+when and to whom a task should be
+
+58
+00:02:02,079 --> 00:02:07,119
+delegated. This brings us to tool
+
+59
+00:02:04,640 --> 00:02:09,520
+orchestra. It splits the architecture in
+
+60
+00:02:07,119 --> 00:02:11,840
+two using an 8 billion parameter
+
+61
+00:02:09,520 --> 00:02:13,760
+orchestrator acting as a control plane
+
+62
+00:02:11,840 --> 00:02:16,400
+to manage a separate data plane of
+
+63
+00:02:13,760 --> 00:02:19,040
+external code interpreters, search APIs,
+
+64
+00:02:16,400 --> 00:02:20,879
+and massive frontier models. This
+
+65
+00:02:19,040 --> 00:02:23,599
+central orchestrator doesn't generate
+
+66
+00:02:20,879 --> 00:02:25,760
+assays or answer trivia. Its entire
+
+67
+00:02:23,599 --> 00:02:28,560
+parametric budget is dedicated strictly
+
+68
+00:02:25,760 --> 00:02:31,200
+to analyzing a task and deciding exactly
+
+69
+00:02:28,560 --> 00:02:33,200
+when, how, and where to route it.
+
+70
+00:02:31,200 --> 00:02:35,760
+Training this router presents a unique
+
+71
+00:02:33,200 --> 00:02:37,440
+engineering hurdle. Standard supervised
+
+72
+00:02:35,760 --> 00:02:39,920
+fine-tuning can teach a model the
+
+73
+00:02:37,440 --> 00:02:42,160
+correct syntax required to format a JSON
+
+74
+00:02:39,920 --> 00:02:44,720
+tool call, but it cannot teach the
+
+75
+00:02:42,160 --> 00:02:47,040
+underlying strategy. Under supervised
+
+76
+00:02:44,720 --> 00:02:49,440
+training, a model is scored on how
+
+77
+00:02:47,040 --> 00:02:52,080
+closely it mimics a human provided data
+
+78
+00:02:49,440 --> 00:02:54,800
+set. If the orchestrator discovers a
+
+79
+00:02:52,080 --> 00:02:56,959
+cheaper, faster, or entirely novel path
+
+80
+00:02:54,800 --> 00:02:58,879
+to the correct answer, the algorithm
+
+81
+00:02:56,959 --> 00:03:01,760
+penalizes it for deviating from the
+
+82
+00:02:58,879 --> 00:03:04,000
+prescribed human trajectory. An optimal
+
+83
+00:03:01,760 --> 00:03:06,319
+routing strategy is too dynamic to be
+
+84
+00:03:04,000 --> 00:03:08,400
+memorized through behavior cloning.
+
+85
+00:03:06,319 --> 00:03:10,480
+Instead, the system must interact with
+
+86
+00:03:08,400 --> 00:03:12,239
+its environment and dynamically discover
+
+87
+00:03:10,480 --> 00:03:14,800
+the most efficient paths through
+
+88
+00:03:12,239 --> 00:03:16,720
+constant trial and error. To achieve
+
+89
+00:03:14,800 --> 00:03:18,560
+this, the engineers relied on a
+
+90
+00:03:16,720 --> 00:03:20,959
+reinforcement learning framework called
+
+91
+00:03:18,560 --> 00:03:22,480
+group relative policy optimization or
+
+92
+00:03:20,959 --> 00:03:24,319
+GRPO.
+
+93
+00:03:22,480 --> 00:03:26,000
+This allows the orchestrator to test
+
+94
+00:03:24,319 --> 00:03:27,440
+thousands of parallel tool use
+
+95
+00:03:26,000 --> 00:03:30,159
+strategies in a gradient-free
+
+96
+00:03:27,440 --> 00:03:31,920
+environment without human supervision.
+
+97
+00:03:30,159 --> 00:03:34,640
+This visualizes multi-objective
+
+98
+00:03:31,920 --> 00:03:37,840
+scalarization. The orchestrator balances
+
+99
+00:03:34,640 --> 00:03:40,959
+three variables: accuracy, latency, and
+
+100
+00:03:37,840 --> 00:03:43,120
+API cost. The environment enforces an
+
+101
+00:03:40,959 --> 00:03:45,440
+efficiency penalty, mathematically
+
+102
+00:03:43,120 --> 00:03:48,159
+taxing the orchestrator for every second
+
+103
+00:03:45,440 --> 00:03:50,159
+and high-priced token consumed. By
+
+104
+00:03:48,159 --> 00:03:52,319
+normalizing these rewards, the model
+
+105
+00:03:50,159 --> 00:03:55,040
+internalizes the exchange rate between
+
+106
+00:03:52,319 --> 00:03:57,439
+time and money. Stripped of the need for
+
+107
+00:03:55,040 --> 00:03:59,280
+creative pros and subjected to a strict
+
+108
+00:03:57,439 --> 00:04:01,280
+economic reward function, the
+
+109
+00:03:59,280 --> 00:04:04,080
+orchestrator functions as an automated
+
+110
+00:04:01,280 --> 00:04:06,080
+arbitrage engine. Structural decoupling
+
+111
+00:04:04,080 --> 00:04:09,200
+historically bypasses computational
+
+112
+00:04:06,080 --> 00:04:11,200
+limits. In 2019, natural language
+
+113
+00:04:09,200 --> 00:04:13,920
+processing faced a bottleneck measuring
+
+114
+00:04:11,200 --> 00:04:16,799
+semantic textual similarity. Evaluating
+
+115
+00:04:13,920 --> 00:04:18,720
+how closely sentences matched. Using a
+
+116
+00:04:16,799 --> 00:04:21,280
+standard monolithic BERT model to
+
+117
+00:04:18,720 --> 00:04:24,080
+execute a pair-wise comparison of 10,000
+
+118
+00:04:21,280 --> 00:04:26,560
+sentences required calculating nearly 50
+
+119
+00:04:24,080 --> 00:04:29,120
+million combinations. Running that on
+
+120
+00:04:26,560 --> 00:04:31,440
+standard hardware took 65 hours of brute
+
+121
+00:04:29,120 --> 00:04:33,759
+force inference. Then researchers
+
+122
+00:04:31,440 --> 00:04:36,320
+introduced Espert by tweaking the
+
+123
+00:04:33,759 --> 00:04:38,560
+architecture to use Siamese networks,
+
+124
+00:04:36,320 --> 00:04:40,240
+allowing the model to output independent
+
+125
+00:04:38,560 --> 00:04:42,960
+fixed size vectors that could be
+
+126
+00:04:40,240 --> 00:04:45,680
+compared mathematically. That exact same
+
+127
+00:04:42,960 --> 00:04:48,320
+65-hour workload dropped to just 5
+
+128
+00:04:45,680 --> 00:04:51,199
+seconds. When raw computational power
+
+129
+00:04:48,320 --> 00:04:53,440
+hits and financial limits, structural
+
+130
+00:04:51,199 --> 00:04:56,240
+manipulation and routing consistently
+
+131
+00:04:53,440 --> 00:04:58,080
+outpace raw compute scaling. We can see
+
+132
+00:04:56,240 --> 00:04:59,600
+this principle actively playing out in
+
+133
+00:04:58,080 --> 00:05:01,680
+the benchmark data for the tool
+
+134
+00:04:59,600 --> 00:05:04,160
+orchestra framework specifically on
+
+135
+00:05:01,680 --> 00:05:06,800
+evaluations like humanity's last exam
+
+136
+00:05:04,160 --> 00:05:08,800
+and the frames data set. This chart
+
+137
+00:05:06,800 --> 00:05:11,680
+illustrates the gap on the accuracy
+
+138
+00:05:08,800 --> 00:05:14,560
+axis. The tiny 8b orchestrator defeated
+
+139
+00:05:11,680 --> 00:05:17,120
+the GPT5 monolith by dynamically routing
+
+140
+00:05:14,560 --> 00:05:19,120
+subtasks to specialized tools. It
+
+141
+00:05:17,120 --> 00:05:20,560
+delivered superior accuracy while
+
+142
+00:05:19,120 --> 00:05:22,800
+consuming a fraction of the
+
+143
+00:05:20,560 --> 00:05:25,039
+computational cost and significantly
+
+144
+00:05:22,800 --> 00:05:26,639
+less wall clock time. The highest
+
+145
+00:05:25,039 --> 00:05:28,479
+intelligence is now found in the
+
+146
+00:05:26,639 --> 00:05:31,120
+optimized routing of a distributed
+
+147
+00:05:28,479 --> 00:05:33,280
+network. Emerging AI systems achieve
+
+148
+00:05:31,120 --> 00:05:35,440
+better results by coordinating diverse
+
+149
+00:05:33,280 --> 00:05:38,919
+tools rather than relying on a single
+
+150
+00:05:35,440 --> 00:05:38,919
+massive checkpoint.
+

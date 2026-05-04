@@ -1,0 +1,243 @@
+{
+  "package": "publications/hardware-friction/what-actually-works-the-hardware",
+  "srt_file": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.srt",
+  "existing_short_count": 0,
+  "candidate_count": 10,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:05.040",
+      "end": "00:01:34.159",
+      "start_seconds": 5.04,
+      "end_seconds": 94.159,
+      "duration_seconds": 89.119,
+      "excerpt": "when it meets the physical reality of a production GPU. Over the last 2 years, the academic community generated massive interest in mathematically sophisticated models. Frameworks like Korov Arnold networks and neural odes promised infinite adaptability and won prestigious awards. However, these models struggle to scale. Their operations, spline evaluations, and sequential solvers require memory access patterns that GPUs are physically incapable of processing efficiently. The transformer dominates the industry because it relies on the brute force blocky matrix operations that hardware was built to run. This creates a ruthless selection process, a silicon filter. Hardware eliminates any algorithm that fails to map to its physical structure. Strict hardware compatibility has replaced expressive capability as the definitive constraint of modern AI. Advancing AI now requires treating progress as a matter of silicon engineering. By early 2023, the transformer architecture reached a critical scaling limit. Self attention carries a quadratic cost. For every new word generated, the required processing footprint grows exponentially. While it is often described as a computation bottleneck, the actual constraint was memory bandwidth. The arithmetic was fast, the delivery of data was slow. Operating these models requires the massive physical infrastructure seen in",
+      "suggested_slug": "when-meets-physical-reality-production-gpu-over-last",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        3,
+        39
+      ]
+    },
+    {
+      "start": "00:00:32.399",
+      "end": "00:02:01.200",
+      "start_seconds": 32.399,
+      "end_seconds": 121.2,
+      "duration_seconds": 88.801,
+      "excerpt": "patterns that GPUs are physically incapable of processing efficiently. The transformer dominates the industry because it relies on the brute force blocky matrix operations that hardware was built to run. This creates a ruthless selection process, a silicon filter. Hardware eliminates any algorithm that fails to map to its physical structure. Strict hardware compatibility has replaced expressive capability as the definitive constraint of modern AI. Advancing AI now requires treating progress as a matter of silicon engineering. By early 2023, the transformer architecture reached a critical scaling limit. Self attention carries a quadratic cost. For every new word generated, the required processing footprint grows exponentially. While it is often described as a computation bottleneck, the actual constraint was memory bandwidth. The arithmetic was fast, the delivery of data was slow. Operating these models requires the massive physical infrastructure seen in these server racks. Every single word generated requires gigabytes of data to move back and forth across the microchip, consuming vast amounts of physical energy. Scaling further require the industry to pivot towards solving the physical logistics of data movement. The physical micro architecture of the GPU is the battlefield where AI models live or die. The chip uses two types of memory. High bandwidth memory or HBM provides massive but slow offchip",
+      "suggested_slug": "patterns-that-gpus-are-physically-incapable-processing-efficiently",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        14,
+        51
+      ]
+    },
+    {
+      "start": "00:00:58.559",
+      "end": "00:02:28.640",
+      "start_seconds": 58.559,
+      "end_seconds": 148.64,
+      "duration_seconds": 90.081,
+      "excerpt": "of modern AI. Advancing AI now requires treating progress as a matter of silicon engineering. By early 2023, the transformer architecture reached a critical scaling limit. Self attention carries a quadratic cost. For every new word generated, the required processing footprint grows exponentially. While it is often described as a computation bottleneck, the actual constraint was memory bandwidth. The arithmetic was fast, the delivery of data was slow. Operating these models requires the massive physical infrastructure seen in these server racks. Every single word generated requires gigabytes of data to move back and forth across the microchip, consuming vast amounts of physical energy. Scaling further require the industry to pivot towards solving the physical logistics of data movement. The physical micro architecture of the GPU is the battlefield where AI models live or die. The chip uses two types of memory. High bandwidth memory or HBM provides massive but slow offchip storage. Stram is a tiny ultraast workspace built directly into the chip. Standard architectures force matrices to read and write to the slow HBM pool choking the system. Flash Attention bypassed this by rewriting the memory access pattern, keeping the math identical. It uses a tiling mechanism to break data into small blocks that fit entirely within the fast SRAMM, processing and discarding them without writing back to HBM. Following this",
+      "suggested_slug": "modern-advancing-now-requires-treating-progress-matter-silicon",
+      "score_breakdown": {
+        "hook_strength": 2,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        26,
+        63
+      ]
+    },
+    {
+      "start": "00:01:21.200",
+      "end": "00:02:51.280",
+      "start_seconds": 81.2,
+      "end_seconds": 171.28,
+      "duration_seconds": 90.08,
+      "excerpt": "bottleneck, the actual constraint was memory bandwidth. The arithmetic was fast, the delivery of data was slow. Operating these models requires the massive physical infrastructure seen in these server racks. Every single word generated requires gigabytes of data to move back and forth across the microchip, consuming vast amounts of physical energy. Scaling further require the industry to pivot towards solving the physical logistics of data movement. The physical micro architecture of the GPU is the battlefield where AI models live or die. The chip uses two types of memory. High bandwidth memory or HBM provides massive but slow offchip storage. Stram is a tiny ultraast workspace built directly into the chip. Standard architectures force matrices to read and write to the slow HBM pool choking the system. Flash Attention bypassed this by rewriting the memory access pattern, keeping the math identical. It uses a tiling mechanism to break data into small blocks that fit entirely within the fast SRAMM, processing and discarding them without writing back to HBM. Following this playbook, grouped query attention further compressed the memory footprint by sharing key value heads. Flash attention became the industry standard because it respected the physical layout of silicon. With the memory bottleneck addressed, the next challenge was scaling intelligence without exponentially increasing compute time. In a standard dense network, every single parameter must activate for every",
+      "suggested_slug": "bottleneck-actual-constraint-was-memory-bandwidth-arithmetic-was",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 15,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        35,
+        74
+      ]
+    },
+    {
+      "start": "00:01:50.640",
+      "end": "00:03:21.440",
+      "start_seconds": 110.64,
+      "end_seconds": 201.44,
+      "duration_seconds": 90.8,
+      "excerpt": "live or die. The chip uses two types of memory. High bandwidth memory or HBM provides massive but slow offchip storage. Stram is a tiny ultraast workspace built directly into the chip. Standard architectures force matrices to read and write to the slow HBM pool choking the system. Flash Attention bypassed this by rewriting the memory access pattern, keeping the math identical. It uses a tiling mechanism to break data into small blocks that fit entirely within the fast SRAMM, processing and discarding them without writing back to HBM. Following this playbook, grouped query attention further compressed the memory footprint by sharing key value heads. Flash attention became the industry standard because it respected the physical layout of silicon. With the memory bottleneck addressed, the next challenge was scaling intelligence without exponentially increasing compute time. In a standard dense network, every single parameter must activate for every word processed, creating a massive compute burden. Mixture of experts ore solved this through conditional execution. A router identifies the relevant data and routes it to isolated subn networks called experts. The vast majority of the network stays dormant, saving compute. functions through standard matrix multiplications allowing it to pass the silicon filter. This contrasts with state space models like Mamba which face a significant hardware boundary. Pure",
+      "suggested_slug": "live-die-chip-uses-two-types-memory-high",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        49,
+        87
+      ]
+    },
+    {
+      "start": "00:02:30.319",
+      "end": "00:03:59.040",
+      "start_seconds": 150.319,
+      "end_seconds": 239.04,
+      "duration_seconds": 88.721,
+      "excerpt": "by sharing key value heads. Flash attention became the industry standard because it respected the physical layout of silicon. With the memory bottleneck addressed, the next challenge was scaling intelligence without exponentially increasing compute time. In a standard dense network, every single parameter must activate for every word processed, creating a massive compute burden. Mixture of experts ore solved this through conditional execution. A router identifies the relevant data and routes it to isolated subn networks called experts. The vast majority of the network stays dormant, saving compute. functions through standard matrix multiplications allowing it to pass the silicon filter. This contrasts with state space models like Mamba which face a significant hardware boundary. Pure state space models require a sequential state update. Mathematically, step two cannot start until step one is finished. Sequential dependencies conflict with the GPU's primary strength, massive simultaneous parallelism. As of late 2025, pure state space models have hit a hard ceiling at 7 billion parameters. At the 100 billion parameter frontier, they remain entirely absent from production. Architectures that fight massive parallelism cannot reach frontier scale on current hardware. The hardware filter enforces physical trade-offs. Even the high throughput efficiency of mixture of",
+      "suggested_slug": "sharing-key-value-heads-flash-attention-became-industry",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        66,
+        102
+      ]
+    },
+    {
+      "start": "00:03:11.519",
+      "end": "00:04:40.320",
+      "start_seconds": 191.519,
+      "end_seconds": 280.32,
+      "duration_seconds": 88.801,
+      "excerpt": "silicon filter. This contrasts with state space models like Mamba which face a significant hardware boundary. Pure state space models require a sequential state update. Mathematically, step two cannot start until step one is finished. Sequential dependencies conflict with the GPU's primary strength, massive simultaneous parallelism. As of late 2025, pure state space models have hit a hard ceiling at 7 billion parameters. At the 100 billion parameter frontier, they remain entirely absent from production. Architectures that fight massive parallelism cannot reach frontier scale on current hardware. The hardware filter enforces physical trade-offs. Even the high throughput efficiency of mixture of experts reaches a documented breaking point. This is the context length trap. As sequence lengths grow, routing logic causes severe memory fragmentation. The GPU burns cycles, constantly swapping weights in and out. Aggregated performance data shows thee speed advantage starts high but erodess sharply as context expands. After 32,000 tokens, the 2.5x speed up drops toward a baseline of 1.3x.e gains raw throughput by sacrificing memory bandwidth stability. If the hardware compatible techniques are known, why does industrywide adoption take years? This delay follows an empirical pattern based on integration",
+      "suggested_slug": "silicon-filter-this-contrasts-state-space-models-like",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 16,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        85,
+        119
+      ]
+    },
+    {
+      "start": "00:03:37.519",
+      "end": "00:05:07.280",
+      "start_seconds": 217.519,
+      "end_seconds": 307.28,
+      "duration_seconds": 89.761,
+      "excerpt": "hard ceiling at 7 billion parameters. At the 100 billion parameter frontier, they remain entirely absent from production. Architectures that fight massive parallelism cannot reach frontier scale on current hardware. The hardware filter enforces physical trade-offs. Even the high throughput efficiency of mixture of experts reaches a documented breaking point. This is the context length trap. As sequence lengths grow, routing logic causes severe memory fragmentation. The GPU burns cycles, constantly swapping weights in and out. Aggregated performance data shows thee speed advantage starts high but erodess sharply as context expands. After 32,000 tokens, the 2.5x speed up drops toward a baseline of 1.3x.e gains raw throughput by sacrificing memory bandwidth stability. If the hardware compatible techniques are known, why does industrywide adoption take years? This delay follows an empirical pattern based on integration cost. A phenomenon known as the infrastructure lag pattern. Weighton changes like grouped query attention require only a change to the model definition. Based on Llama and Quen releases, these reach production in roughly 12 months. Kernel level changes like flash attention require CUDA rewrites and framework integration. It took 24 months for the 2022 research to become standard practice in 2024. Distributed serving overhauls like MOI",
+      "suggested_slug": "hard-ceiling-billion-parameters-100-billion-parameter-frontier",
+      "score_breakdown": {
+        "hook_strength": 2,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        95,
+        131
+      ]
+    },
+    {
+      "start": "00:04:14.400",
+      "end": "00:05:45.120",
+      "start_seconds": 254.4,
+      "end_seconds": 345.12,
+      "duration_seconds": 90.72,
+      "excerpt": "advantage starts high but erodess sharply as context expands. After 32,000 tokens, the 2.5x speed up drops toward a baseline of 1.3x.e gains raw throughput by sacrificing memory bandwidth stability. If the hardware compatible techniques are known, why does industrywide adoption take years? This delay follows an empirical pattern based on integration cost. A phenomenon known as the infrastructure lag pattern. Weighton changes like grouped query attention require only a change to the model definition. Based on Llama and Quen releases, these reach production in roughly 12 months. Kernel level changes like flash attention require CUDA rewrites and framework integration. It took 24 months for the 2022 research to become standard practice in 2024. Distributed serving overhauls like MOI routing require rebuilding entire system stacks. This created a 36-month gap between the first switch transformer papers and widespread production use. Rewriting low-level software infrastructure at massive financial and time cost has become the primary speed limit for artificial intelligence. In the 2023 to 2025 era, core architectural innovation has reached a plateau. Hardware constraints have narrowed the acceptable space of design so tightly that the architectural container is now relatively stable. Deepseek R1 serves as the definitive proof point for this era. It achieved state-of-the-art reasoning",
+      "suggested_slug": "advantage-starts-high-but-erodess-sharply-context-expands",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        110,
+        147
+      ]
+    },
+    {
+      "start": "00:05:23.840",
+      "end": "00:06:10.759",
+      "start_seconds": 323.84,
+      "end_seconds": 370.759,
+      "duration_seconds": 46.919,
+      "excerpt": "the 2023 to 2025 era, core architectural innovation has reached a plateau. Hardware constraints have narrowed the acceptable space of design so tightly that the architectural container is now relatively stable. Deepseek R1 serves as the definitive proof point for this era. It achieved state-of-the-art reasoning without inventing a new layer. It utilized the identical mixture of experts container used in previous models. The breakthrough occurred within that container using massive scale reinforcement learning to train reasoning behavior on top of existing primitives. The architecture wars have reached a plateau. Future gains in intelligence rely on the way we train the computations our silicon is already built to run.",
+      "suggested_slug": "2023-2025-era-core-architectural-innovation-has-reached",
+      "score_breakdown": {
+        "hook_strength": 2,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 2
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        140,
+        159
+      ]
+    }
+  ]
+}

@@ -169,16 +169,28 @@ If those inputs are still landscape, add `--convert-from-landscape --work-dir <p
 
 Use the analytics loop after production, upload, and related-video verification have settled. This is a recommendation-only workflow: it reads YouTube Data API, YouTube Analytics API, and YouTube Reporting API state; writes local reports; and never edits titles, descriptions, visibility, playlists, related-video settings, uploads, or channel publishing state.
 
-Refresh the metrics ledger:
+Run the full refresh wrapper:
 
 ```bash
-.venv/bin/python scripts/fetch_youtube_analytics.py --since-days 30
+.venv/bin/python scripts/refresh_youtube_analytics_dashboard.py --since-days 30
+```
+
+Or run the underlying steps explicitly. Refresh the metrics ledger:
+
+```bash
+.venv/bin/python scripts/fetch_youtube_analytics.py --scope all-channel --since-days 30
 ```
 
 Sync delayed bulk Reporting API exports, including thumbnail reach and card fields when files are available:
 
 ```bash
 .venv/bin/python scripts/sync_youtube_reporting_reports.py --since-days 30
+```
+
+Refresh the local caption-derived content rubric:
+
+```bash
+.venv/bin/python scripts/analyze_youtube_srt_content.py --ledger experiments/youtube-analytics/metrics_ledger.json --output experiments/youtube-analytics/content_rubric.json
 ```
 
 Build the weekly recommendation report:
@@ -196,11 +208,13 @@ Build the local review dashboard:
 The default outputs are:
 
 - `experiments/youtube-analytics/metrics_ledger.json`
+- `experiments/youtube-analytics/content_rubric.json`
 - `experiments/youtube-analytics/reporting_jobs.json`
 - `experiments/youtube-analytics/reporting_downloads/`
 - `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.md`
 - `experiments/youtube-analytics/weekly_reports/YYYY-MM-DD.json`
 - `experiments/youtube-analytics/dashboard/index.html`
+- `experiments/youtube-analytics/snapshots/latest.json`
 
 If the cached OAuth token predates Analytics access, the fetch script will stop with a reauth instruction. Run:
 

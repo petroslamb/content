@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-05-01T13:58:38.802571+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "orchestration_paradigm_issue_factory",
+  "package": "orchestration-paradigm",
+  "notebook_id": "6a88af78-006e-458a-8109-b822c55e6a35",
+  "video_source_file": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.mp4",
+  "caption_output": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_factory_cinematic.srt",
+  "title": "The Factory: Engineering the LLM Orchestration Pipeline | A Cinematic Research Brief",
+  "base_title": "The Factory: Engineering the LLM Orchestration Pipeline",
+  "description": "This cinematic brief introduces the main structural claim behind The Factory: Engineering the LLM Orchestration Pipeline without forcing viewers to know the essay first.\n\nThis cinematic brief is the discovery surface for The Factory: Engineering the LLM Orchestration Pipeline.\n\nUse it to land the core causal move quickly, then point viewers toward the full research breakdown.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e\n\nFull research breakdown:\nhttps://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4yMUQyQTQzMjRDNzMyQTMy",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4yMUQyQTQzMjRDNzMyQTMy",
+      "position": 17,
+      "title": "The Factory: Engineering the LLM Orchestration Pipeline | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": null,
+    "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-96e",
+  "video": {
+    "id": "Iz7wQCY6Bfk",
+    "url": "https://www.youtube.com/watch?v=Iz7wQCY6Bfk",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-05-01T13:58:30Z"
+    }
+  }
+}

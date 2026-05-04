@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-05-04T08:16:00Z",
+  "workflow": "youtube_cinematic_rollout",
+  "publication": "specification_surface_source_of_truth",
+  "cinematic_video_id": "slozjRp6CPg",
+  "target_video_id": "I6gKAyYRfZU",
+  "target_title": "The Specification Surface Is the New Source of Truth | A Visual Deep Research Dive",
+  "studio_editor_url": "https://studio.youtube.com/video/slozjRp6CPg/editor",
+  "end_screen": {
+    "status": "reload_verified",
+    "studio_surface": "Τελική οθόνη Επεξεργασία"
+  },
+  "info_card": {
+    "status": "reload_verified",
+    "studio_surface": "Κάρτες πληροφοριών Επεξεργασία",
+    "custom_message": "Full visual deep dive",
+    "teaser_text": "Full research breakdown"
+  },
+  "reload_check": {
+    "has_end_screen_edit_surface": true,
+    "has_info_card_edit_surface": true,
+    "has_target_title_on_timeline": true
+  }
+}
