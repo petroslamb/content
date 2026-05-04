@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-05-01T13:58:24.057413+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "orchestration_paradigm_series",
+  "package": "orchestration-paradigm/the-orchestration-paradigm-series",
+  "notebook_id": "a9ac7ec8-6ef5-4d78-87cd-286108db6ac4",
+  "video_source_file": "publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.mp4",
+  "caption_output": "publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/orchestration_paradigm_series_cinematic.srt",
+  "title": "The Orchestration Paradigm: Reinforcement Learning for AI Tool Routing | A Cinematic Research Brief",
+  "base_title": "The Orchestration Paradigm: Reinforcement Learning for AI Tool Routing",
+  "description": "This cinematic brief introduces the main structural claim behind The Orchestration Paradigm: Reinforcement Learning for AI Tool Routing without forcing viewers to know the essay first.\n\nThis cinematic brief is the discovery surface for The Orchestration Paradigm: Reinforcement Learning for AI Tool Routing.\n\nUse it to land the core causal move quickly, then point viewers toward the full research breakdown.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-orchestration-paradigm-series\n\nFull research breakdown:\nhttps://lambpetros.substack.com/p/the-orchestration-paradigm-series\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41QTY1Q0UxMTVCODczNThE",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41QTY1Q0UxMTVCODczNThE",
+      "position": 16,
+      "title": "The Orchestration Paradigm: Reinforcement Learning for AI Tool Routing | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": null,
+    "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-series"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-series",
+  "video": {
+    "id": "lPIbdEiX2B0",
+    "url": "https://www.youtube.com/watch?v=lPIbdEiX2B0",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-05-01T13:58:19Z"
+    }
+  }
+}

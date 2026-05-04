@@ -1,0 +1,78 @@
+{
+  "created_at": "2026-05-01T14:18:15.929181+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "lPIbdEiX2B0",
+    "url": "https://www.youtube.com/watch?v=lPIbdEiX2B0"
+  },
+  "related_longform": {
+    "id": "lPIbdEiX2B0",
+    "url": "https://www.youtube.com/watch?v=lPIbdEiX2B0"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=lPIbdEiX2B0"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-series"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/daily-cinematic-rollout/portrait/01-structural-routing-beats-brute-force_portrait.mp4",
+      "title": "Structural Routing Beats Brute Force #shorts",
+      "summary": "A 65-hour BERT workload collapsed to seconds once the architecture changed, then the same routing principle reappears in tool orchestration.",
+      "publish_at": "2026-05-03T06:00:00Z",
+      "video_id": "Ho8Douc7eMI",
+      "url": "https://www.youtube.com/watch?v=Ho8Douc7eMI",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5FOTE3RTBFMjNFMDNEM0Yz"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "lPIbdEiX2B0"
+        ]
+      },
+      "probe": {
+        "path": "publications/orchestration-paradigm/the-orchestration-paradigm-series/artifacts/video/daily-cinematic-rollout/portrait/01-structural-routing-beats-brute-force_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 55.583008
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 55.611995
+        },
+        "format_duration": 55.611995,
+        "duration": 55.611995
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Structural Routing Beats Brute Force #shorts",
+        "published_at": "2026-05-01T14:18:09Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5FOTE3RTBFMjNFMDNEM0Yz",
+        "position": 149,
+        "title": "Structural Routing Beats Brute Force #shorts"
+      }
+    }
+  ]
+}

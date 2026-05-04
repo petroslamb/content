@@ -1,0 +1,28 @@
+{
+  "clips": [
+    {
+      "file": "01-vibe-coding-is-a-recipe-for-illusion_portrait.mp4",
+      "title": "Vibe Coding Is a Recipe for Illusion",
+      "summary": "A weak specification lets generated code look confident while the real authority problem stays invisible.",
+      "publish_at": "2026-05-06T06:00:00Z"
+    },
+    {
+      "file": "02-velocity-makes-weak-specs-dangerous_portrait.mp4",
+      "title": "Velocity Makes Weak Specs Dangerous",
+      "summary": "AI coding makes weak specifications more dangerous because implementation now appears faster than intent can be governed.",
+      "publish_at": "2026-05-06T07:30:00Z"
+    },
+    {
+      "file": "03-the-missing-blueprints_portrait.mp4",
+      "title": "The Missing Blueprints",
+      "summary": "When teams cannot point to the shared specification, separate workers and agents reconstruct intent from symptoms.",
+      "publish_at": "2026-05-07T06:00:00Z"
+    },
+    {
+      "file": "04-choose-what-deserves-authority_portrait.mp4",
+      "title": "Choose What Deserves Authority",
+      "summary": "The practical question is which surfaces deserve authority and how failures push those surfaces back into revision.",
+      "publish_at": "2026-05-07T07:30:00Z"
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "created_at": "2026-04-30T13:46:29.294730+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "Ju5UJvO4X5k",
+    "url": "https://www.youtube.com/watch?v=Ju5UJvO4X5k"
+  },
+  "related_longform": {
+    "id": "Ju5UJvO4X5k",
+    "url": "https://www.youtube.com/watch?v=Ju5UJvO4X5k"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=Ju5UJvO4X5k"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 3,
+  "uploaded_count": 3,
+  "items": [
+    {
+      "video_path": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/portrait/01-hardware-kills-elegant-architectures_portrait.mp4",
+      "title": "Hardware Kills Elegant AI Architectures #shorts",
+      "summary": "Transformers won because GPUs reward blocky matrix math and punish architectures with awkward memory access patterns.",
+      "publish_at": "2026-05-03T06:00:00Z",
+      "video_id": "B3mZ51x1dPk",
+      "url": "https://www.youtube.com/watch?v=B3mZ51x1dPk",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wQjA4QkVEQ0RFREIzMjFC"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "Ju5UJvO4X5k"
+        ]
+      },
+      "probe": {
+        "path": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/portrait/01-hardware-kills-elegant-architectures_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 88.916667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 88.816009
+        },
+        "format_duration": 88.916667,
+        "duration": 88.916667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Hardware Kills Elegant AI Architectures #shorts",
+        "published_at": "2026-04-30T13:46:06Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wQjA4QkVEQ0RFREIzMjFC",
+        "position": 142,
+        "title": "Hardware Kills Elegant AI Architectures #shorts"
+      }
+    },
+    {
+      "video_path": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/portrait/02-flash-attention-passed-the-silicon-filter_portrait.mp4",
+      "title": "FlashAttention Passed the Silicon Filter #shorts",
+      "summary": "FlashAttention became standard because it changed the memory access pattern without fighting the physical layout of the chip.",
+      "publish_at": "2026-05-04T06:00:00Z",
+      "video_id": "XTWLFL1Ha60",
+      "url": "https://www.youtube.com/watch?v=XTWLFL1Ha60",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wNjIzRDA1OTQ2M0UyODEw"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "Ju5UJvO4X5k"
+        ]
+      },
+      "probe": {
+        "path": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/portrait/02-flash-attention-passed-the-silicon-filter_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 90.916667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 90.812993
+        },
+        "format_duration": 90.916667,
+        "duration": 90.916667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "FlashAttention Passed the Silicon Filter #shorts",
+        "published_at": "2026-04-30T13:46:15Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wNjIzRDA1OTQ2M0UyODEw",
+        "position": 143,
+        "title": "FlashAttention Passed the Silicon Filter #shorts"
+      }
+    },
+    {
+      "video_path": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/portrait/03-infrastructure-lag-slows-ai-progress_portrait.mp4",
+      "title": "Infrastructure Lag Slows AI Progress #shorts",
+      "summary": "The real bottleneck is no longer ideas alone but the years it takes to rewrite kernels and serving stacks around them.",
+      "publish_at": "2026-05-05T06:00:00Z",
+      "video_id": "gRZhwvKK1-4",
+      "url": "https://www.youtube.com/watch?v=gRZhwvKK1-4",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EQTdFNDU3M0Y3MTM1QjlG"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "Ju5UJvO4X5k"
+        ]
+      },
+      "probe": {
+        "path": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/portrait/03-infrastructure-lag-slows-ai-progress_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 90.791667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 90.72
+        },
+        "format_duration": 90.791667,
+        "duration": 90.791667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Infrastructure Lag Slows AI Progress #shorts",
+        "published_at": "2026-04-30T13:46:22Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EQTdFNDU3M0Y3MTM1QjlG",
+        "position": 144,
+        "title": "Infrastructure Lag Slows AI Progress #shorts"
+      }
+    }
+  ]
+}

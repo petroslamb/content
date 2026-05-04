@@ -1,0 +1,94 @@
+{
+  "kind": "workflow_launch_pack",
+  "schema_version": 2,
+  "timestamp": "2026-04-28_21-50-36",
+  "run_id": "2026-04-28_21-50-36_literate-workflow-programming_post_ceiling_pivot_workflow-launch-pack",
+  "package": "literate-workflow-programming",
+  "workflow_id": "post_ceiling_pivot",
+  "workflow_kind": "overlay",
+  "workflow_doc": "workflows/post-ceiling-pivot/README.md",
+  "boundary": {
+    "type": "handoff",
+    "reason": "Workflow launch pack prepares a bounded workflow run; it does not claim the workflow completed.",
+    "external_side_effect": false,
+    "approval_gate": "required_for_pivot_clearance",
+    "approval_required": true,
+    "approval_status": "pending_if_workflow_executes"
+  },
+  "task": {
+    "objective": "Prepare a bounded launch packet for workflow 'post_ceiling_pivot'.",
+    "stop_condition": "Workflow launch pack written to reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not claim the workflow completed.",
+      "Do not treat this launch pack as approval for external mutation."
+    ]
+  },
+  "required_context": [
+    {
+      "name": "package README or donor leaf README",
+      "status": "advisory",
+      "blocking": false
+    },
+    {
+      "name": "latest stop-gate or replacement-review finding from the capped essay",
+      "status": "advisory",
+      "blocking": false
+    },
+    {
+      "name": "latest ceiling report or legacy donor-report pair from the capped essay",
+      "status": "advisory",
+      "blocking": false
+    },
+    {
+      "name": "current overlay artifacts when they already exist",
+      "status": "advisory",
+      "blocking": false
+    },
+    {
+      "name": "package evidence surface when local papers already anchor the failed object",
+      "status": "advisory",
+      "blocking": false
+    },
+    {
+      "name": "current package shape, including whether umbrella upgrade or leaf initialization is still pending",
+      "status": "advisory",
+      "blocking": false
+    }
+  ],
+  "suggested_commands": [
+    "npm run workflow:resolve -- --workflow post_ceiling_pivot --package literate-workflow-programming --format json",
+    "npm run workflow:run -- --workflow post_ceiling_pivot --package literate-workflow-programming --format json",
+    "npm run workflow:run -- --workflow post_ceiling_pivot --package literate-workflow-programming --emit-launch-pack --format json",
+    "npm run gate:check -- --gate pivot_research_grounding --package literate-workflow-programming --format json",
+    "npm run gate:check -- --gate pivot_north_star_viability --package literate-workflow-programming --format json"
+  ],
+  "expected_outputs": [
+    "umbrella upgrade when starting from a single-publication donor",
+    "donor leaf plus successor flagship leaf when a second object becomes real",
+    "pivot slate with ranked candidate families",
+    "grounding review and blocker record",
+    "one active next-pivot candidate surface",
+    "candidate-specific research delta",
+    "north-star viability gate for any candidate being considered for clearance",
+    {
+      "explicit pivot decision": "blocked, provisional, clear lead, or pivot cleared"
+    }
+  ],
+  "blocking_issues": [
+    "Runner mode 'guided' with launch_mode 'none' is not directly executable in Phase 1.5; resolve it or emit a launch pack."
+  ],
+  "recommended_gates": [
+    "pivot_research_grounding",
+    "pivot_north_star_viability"
+  ],
+  "verification": {
+    "checks": [
+      {
+        "name": "workflow_launch_pack_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-28_21-50-36_literate-workflow-programming_post_ceiling_pivot_workflow-launch-pack.json"
+      }
+    ],
+    "residual_risk": "This log is only a workflow launch packet. Review the resulting run or gate decision separately."
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "created_at": "2026-04-30T13:14:31.098070+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "xPLU4cISmxE",
+    "url": "https://www.youtube.com/watch?v=xPLU4cISmxE"
+  },
+  "related_longform": {
+    "id": "xPLU4cISmxE",
+    "url": "https://www.youtube.com/watch?v=xPLU4cISmxE"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=xPLU4cISmxE"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://lambpetros.substack.com/p/the-hardware-friction-map"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 3,
+  "uploaded_count": 3,
+  "items": [
+    {
+      "video_path": "publications/hardware-friction/artifacts/video/daily-cinematic-rollout/portrait/01-flash-attention-pays-a-two-year-ecosystem-tax_portrait.mp4",
+      "title": "FlashAttention Pays a Two-Year Ecosystem Tax #shorts",
+      "summary": "FlashAttention proved itself early, but it still took roughly 20 months for the ecosystem to catch up. Kernel wins are real, but infrastructure moves slower than papers.",
+      "publish_at": "2026-05-03T06:00:00Z",
+      "video_id": "FSaE54r8rPo",
+      "url": "https://www.youtube.com/watch?v=FSaE54r8rPo",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ENUI5OTFCQkYxNDUxQjQ3"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "xPLU4cISmxE"
+        ]
+      },
+      "probe": {
+        "path": "publications/hardware-friction/artifacts/video/daily-cinematic-rollout/portrait/01-flash-attention-pays-a-two-year-ecosystem-tax_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 89.583333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 89.536009
+        },
+        "format_duration": 89.583333,
+        "duration": 89.583333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "PT1M30S",
+        "definition": "hd",
+        "title": "FlashAttention Pays a Two-Year Ecosystem Tax #shorts",
+        "published_at": "2026-04-30T13:14:10Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5ENUI5OTFCQkYxNDUxQjQ3",
+        "position": 139,
+        "title": "FlashAttention Pays a Two-Year Ecosystem Tax #shorts"
+      }
+    },
+    {
+      "video_path": "publications/hardware-friction/artifacts/video/daily-cinematic-rollout/portrait/02-mixture-of-experts-is-a-capital-hammer_portrait.mp4",
+      "title": "Mixture of Experts Is a Capital Hammer #shorts",
+      "summary": "Mixture of Experts looked elegant on paper, but adoption waited until labs were willing to pay the systems cost of routing, parallelism, and server rewrites.",
+      "publish_at": "2026-05-04T06:00:00Z",
+      "video_id": "TwEXc1xtG3I",
+      "url": "https://www.youtube.com/watch?v=TwEXc1xtG3I",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CRjBFOTUzQTE4Mjg3RUJF"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "xPLU4cISmxE"
+        ]
+      },
+      "probe": {
+        "path": "publications/hardware-friction/artifacts/video/daily-cinematic-rollout/portrait/02-mixture-of-experts-is-a-capital-hammer_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 89.833333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 89.768005
+        },
+        "format_duration": 89.833333,
+        "duration": 89.833333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Mixture of Experts Is a Capital Hammer #shorts",
+        "published_at": "2026-04-30T13:14:16Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CRjBFOTUzQTE4Mjg3RUJF",
+        "position": 140,
+        "title": "Mixture of Experts Is a Capital Hammer #shorts"
+      }
+    },
+    {
+      "video_path": "publications/hardware-friction/artifacts/video/daily-cinematic-rollout/portrait/03-hardware-friction-becomes-a-startup-tax_portrait.mp4",
+      "title": "Hardware Friction Becomes a Startup Tax #shorts",
+      "summary": "The same hardware friction that acts like a moat for major labs becomes runway burn for startups. Transformer dominance is partly an economic trap set by silicon.",
+      "publish_at": "2026-05-05T06:00:00Z",
+      "video_id": "sakzDga10nQ",
+      "url": "https://www.youtube.com/watch?v=sakzDga10nQ",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41QTQ4QTIyM0Y1RTBGMUNE"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "xPLU4cISmxE"
+        ]
+      },
+      "probe": {
+        "path": "publications/hardware-friction/artifacts/video/daily-cinematic-rollout/portrait/03-hardware-friction-becomes-a-startup-tax_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 45.166667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 45.209002
+        },
+        "format_duration": 45.209002,
+        "duration": 45.209002
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Hardware Friction Becomes a Startup Tax #shorts",
+        "published_at": "2026-04-30T13:14:23Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41QTQ4QTIyM0Y1RTBGMUNE",
+        "position": 141,
+        "title": "Hardware Friction Becomes a Startup Tax #shorts"
+      }
+    }
+  ]
+}

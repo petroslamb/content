@@ -1,0 +1,105 @@
+{
+  "kind": "workflow_run",
+  "schema_version": 2,
+  "timestamp": "2026-04-28_21-50-36",
+  "run_id": "2026-04-28_21-50-36_literate-workflow-programming_post_ceiling_pivot_emit_launch_pack",
+  "package": "literate-workflow-programming",
+  "workflow_id": "post_ceiling_pivot",
+  "workflow_kind": "overlay",
+  "action": "emit_launch_pack",
+  "success": true,
+  "boundary": {
+    "type": "local workflow operation",
+    "reason": "Workflow execution stays inside the local repo contract unless the approval gate explicitly authorizes something stronger.",
+    "external_side_effect": false,
+    "approval_gate": "required_for_pivot_clearance",
+    "approval_required": true,
+    "approval_status": "not_recorded_in_log"
+  },
+  "task": {
+    "objective": "Run workflow 'post_ceiling_pivot'.",
+    "stop_condition": "Workflow command finished and a run log was written.",
+    "non_goals": [
+      "Do not treat this routine workflow log as retained proof by itself."
+    ]
+  },
+  "execution": {
+    "commands": [],
+    "output_excerpt": "Launch pack written to reviewable-runs/logs/2026-04-28_21-50-36_literate-workflow-programming_post_ceiling_pivot_workflow-launch-pack.json",
+    "output_truncated": false
+  },
+  "evidence": {
+    "workflow_doc": "workflows/post-ceiling-pivot/README.md",
+    "required_context": [
+      {
+        "name": "package README or donor leaf README",
+        "status": "advisory",
+        "blocking": false
+      },
+      {
+        "name": "latest stop-gate or replacement-review finding from the capped essay",
+        "status": "advisory",
+        "blocking": false
+      },
+      {
+        "name": "latest ceiling report or legacy donor-report pair from the capped essay",
+        "status": "advisory",
+        "blocking": false
+      },
+      {
+        "name": "current overlay artifacts when they already exist",
+        "status": "advisory",
+        "blocking": false
+      },
+      {
+        "name": "package evidence surface when local papers already anchor the failed object",
+        "status": "advisory",
+        "blocking": false
+      },
+      {
+        "name": "current package shape, including whether umbrella upgrade or leaf initialization is still pending",
+        "status": "advisory",
+        "blocking": false
+      }
+    ],
+    "expected_outputs": [
+      "umbrella upgrade when starting from a single-publication donor",
+      "donor leaf plus successor flagship leaf when a second object becomes real",
+      "pivot slate with ranked candidate families",
+      "grounding review and blocker record",
+      "one active next-pivot candidate surface",
+      "candidate-specific research delta",
+      "north-star viability gate for any candidate being considered for clearance",
+      {
+        "explicit pivot decision": "blocked, provisional, clear lead, or pivot cleared"
+      }
+    ],
+    "recommended_gates": [
+      "pivot_research_grounding",
+      "pivot_north_star_viability"
+    ]
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "command_exit_status",
+        "result": "pass",
+        "notes": "Workflow command or launch-pack emission result."
+      },
+      {
+        "name": "workflow_log_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-04-28_21-50-36_literate-workflow-programming_post_ceiling_pivot_emit_launch_pack.json"
+      }
+    ],
+    "residual_risk": "This is a bounded workflow run log. Preserve a stronger proof packet separately if the run becomes decision-critical."
+  },
+  "failure_or_risk": {
+    "actual_failure": null,
+    "possible_failures": [
+      "A guided workflow was mistaken for hidden execution.",
+      "A local workflow log was mistaken for approval to mutate an external system."
+    ]
+  },
+  "workflow_doc": "workflows/post-ceiling-pivot/README.md"
+}

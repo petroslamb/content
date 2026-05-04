@@ -1,0 +1,197 @@
+{
+  "package": "publications/literate-workflow-programming/specification-surface-source-of-truth",
+  "srt_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt",
+  "existing_short_count": 0,
+  "candidate_count": 8,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:02.720",
+      "end": "00:01:32.320",
+      "start_seconds": 2.72,
+      "end_seconds": 92.32,
+      "duration_seconds": 89.6,
+      "excerpt": "an AI coding agent. The code looks clean. The variables are named perfectly. The test suite passes. It looks ready to merge until it goes into production. And the entire database locks up. Somewhere in that generation, the AI silently deleted a critical retry branch in the network logic. This is a failure of governance. The code compiles because the syntax is valid, but the architectural intent that was supposed to guide that code is invisible to the human reviewer. That intent was left behind in a private ephemeral chat window between a developer and a large language model. The team is staring at a downstream artifact, the code, while the rules that were supposed to control it have vanished. When human intent is lost, a perfectly compiling script is no longer a finished product. It is a dangerous symptom waiting to trigger a catastrophic system failure. This lack of documentation is the core of a workflow called vibe coding. It relies on vague atmospheric prompts where the AI is trusted to privately fill in the architectural blanks. This creates a velocity mismatch. An AI can generate thousands of lines of implementation significantly faster than a human team can reverse engineer the reasoning behind it. Once this undocumented code is merged, it becomes the new physics of the system. Any future fix requires the",
+      "suggested_slug": "coding-agent-code-looks-clean-variables-are-named",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 15,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        2,
+        36
+      ]
+    },
+    {
+      "start": "00:00:27.840",
+      "end": "00:01:57.520",
+      "start_seconds": 27.84,
+      "end_seconds": 117.52,
+      "duration_seconds": 89.68,
+      "excerpt": "because the syntax is valid, but the architectural intent that was supposed to guide that code is invisible to the human reviewer. That intent was left behind in a private ephemeral chat window between a developer and a large language model. The team is staring at a downstream artifact, the code, while the rules that were supposed to control it have vanished. When human intent is lost, a perfectly compiling script is no longer a finished product. It is a dangerous symptom waiting to trigger a catastrophic system failure. This lack of documentation is the core of a workflow called vibe coding. It relies on vague atmospheric prompts where the AI is trusted to privately fill in the architectural blanks. This creates a velocity mismatch. An AI can generate thousands of lines of implementation significantly faster than a human team can reverse engineer the reasoning behind it. Once this undocumented code is merged, it becomes the new physics of the system. Any future fix requires the team to guess at the original problem the AI was trying to solve. Vibe coding creates a temporary illusion of productivity. In reality, it shifts the engineering burden from proactive design to reactive endless damage control. Researcher Camilo Chakon Sartorii tested this breakdown by forcing multiple autonomous coding agents to independently collaborate on different parts of a single codebase. To see what",
+      "suggested_slug": "because-syntax-valid-but-architectural-intent-that-was",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        11,
+        47
+      ]
+    },
+    {
+      "start": "00:00:56.399",
+      "end": "00:02:25.280",
+      "start_seconds": 56.399,
+      "end_seconds": 145.28,
+      "duration_seconds": 88.881,
+      "excerpt": "dangerous symptom waiting to trigger a catastrophic system failure. This lack of documentation is the core of a workflow called vibe coding. It relies on vague atmospheric prompts where the AI is trusted to privately fill in the architectural blanks. This creates a velocity mismatch. An AI can generate thousands of lines of implementation significantly faster than a human team can reverse engineer the reasoning behind it. Once this undocumented code is merged, it becomes the new physics of the system. Any future fix requires the team to guess at the original problem the AI was trying to solve. Vibe coding creates a temporary illusion of productivity. In reality, it shifts the engineering burden from proactive design to reactive endless damage control. Researcher Camilo Chakon Sartorii tested this breakdown by forcing multiple autonomous coding agents to independently collaborate on different parts of a single codebase. To see what happens when intent is missing, the researchers stripped the shared specification down to bare function signatures, starving the agents of any highle context. Integration accuracy dropped. Working in a vacuum, agents made conflicting assumptions about how components fit together. Error detectors flagged mismatches but couldn't fix them. Recovery happened only when researchers restored the full specification providing the shared",
+      "suggested_slug": "dangerous-symptom-waiting-trigger-catastrophic-system-failure-this",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 15,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        23,
+        59
+      ]
+    },
+    {
+      "start": "00:01:25.200",
+      "end": "00:02:54.640",
+      "start_seconds": 85.2,
+      "end_seconds": 174.64,
+      "duration_seconds": 89.44,
+      "excerpt": "is merged, it becomes the new physics of the system. Any future fix requires the team to guess at the original problem the AI was trying to solve. Vibe coding creates a temporary illusion of productivity. In reality, it shifts the engineering burden from proactive design to reactive endless damage control. Researcher Camilo Chakon Sartorii tested this breakdown by forcing multiple autonomous coding agents to independently collaborate on different parts of a single codebase. To see what happens when intent is missing, the researchers stripped the shared specification down to bare function signatures, starving the agents of any highle context. Integration accuracy dropped. Working in a vacuum, agents made conflicting assumptions about how components fit together. Error detectors flagged mismatches but couldn't fix them. Recovery happened only when researchers restored the full specification providing the shared decisions needed to align their work. Algorithmic workers cannot reliably infer unstated design decisions. Scaling AI assisted development requires a rigid shared central specification. The true solution is a specification surface. This is a written artifact that serves as the durable memory of the software system capturing intent in a way that code cannot. But there is a mechanical difference between a passive readme file that an AI can ignore and an active",
+      "suggested_slug": "merged-becomes-new-physics-system-any-future-fix",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 15,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        35,
+        71
+      ]
+    },
+    {
+      "start": "00:01:52.640",
+      "end": "00:03:21.440",
+      "start_seconds": 112.64,
+      "end_seconds": 201.44,
+      "duration_seconds": 88.8,
+      "excerpt": "parts of a single codebase. To see what happens when intent is missing, the researchers stripped the shared specification down to bare function signatures, starving the agents of any highle context. Integration accuracy dropped. Working in a vacuum, agents made conflicting assumptions about how components fit together. Error detectors flagged mismatches but couldn't fix them. Recovery happened only when researchers restored the full specification providing the shared decisions needed to align their work. Algorithmic workers cannot reliably infer unstated design decisions. Scaling AI assisted development requires a rigid shared central specification. The true solution is a specification surface. This is a written artifact that serves as the durable memory of the software system capturing intent in a way that code cannot. But there is a mechanical difference between a passive readme file that an AI can ignore and an active governance layer that the system enforces. The context cove approach bridged this gap by automatically extracting natural language constraints from instruction files. These rules are converted into executable runtime tests like syntax tree queries or LLM based judgments. If the AI's code violates a rule, the system physically rejects the deployment. A text file only has operational force when it is wired to a",
+      "suggested_slug": "parts-single-codebase-see-what-happens-when-intent",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        47,
+        82
+      ]
+    },
+    {
+      "start": "00:02:16.400",
+      "end": "00:03:46.879",
+      "start_seconds": 136.4,
+      "end_seconds": 226.879,
+      "duration_seconds": 90.479,
+      "excerpt": "them. Recovery happened only when researchers restored the full specification providing the shared decisions needed to align their work. Algorithmic workers cannot reliably infer unstated design decisions. Scaling AI assisted development requires a rigid shared central specification. The true solution is a specification surface. This is a written artifact that serves as the durable memory of the software system capturing intent in a way that code cannot. But there is a mechanical difference between a passive readme file that an AI can ignore and an active governance layer that the system enforces. The context cove approach bridged this gap by automatically extracting natural language constraints from instruction files. These rules are converted into executable runtime tests like syntax tree queries or LLM based judgments. If the AI's code violates a rule, the system physically rejects the deployment. A text file only has operational force when it is wired to a system that automatically blocks non-compliant code. This process strips the AI of autonomous authority and puts control back in the hands of the team. Experienced senior engineers are already moving away from casual prompting toward a workflow defined by infrastructural skepticism. They maintain control by artificially limiting the size of the agent sandbox and mandating atomic, highly scrutinized version control",
+      "suggested_slug": "them-recovery-happened-only-when-researchers-restored-full",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        57,
+        93
+      ]
+    },
+    {
+      "start": "00:02:39.519",
+      "end": "00:04:09.439",
+      "start_seconds": 159.519,
+      "end_seconds": 249.439,
+      "duration_seconds": 89.92,
+      "excerpt": "This is a written artifact that serves as the durable memory of the software system capturing intent in a way that code cannot. But there is a mechanical difference between a passive readme file that an AI can ignore and an active governance layer that the system enforces. The context cove approach bridged this gap by automatically extracting natural language constraints from instruction files. These rules are converted into executable runtime tests like syntax tree queries or LLM based judgments. If the AI's code violates a rule, the system physically rejects the deployment. A text file only has operational force when it is wired to a system that automatically blocks non-compliant code. This process strips the AI of autonomous authority and puts control back in the hands of the team. Experienced senior engineers are already moving away from casual prompting toward a workflow defined by infrastructural skepticism. They maintain control by artificially limiting the size of the agent sandbox and mandating atomic, highly scrutinized version control checks for every change. They prioritize auditing the execution trace, the step-by-step logic it took, rather than grading the final file. A polished final output is dangerous if the evidence trail proving how it was built cannot be audited. This leads to a controlled inversion of software development. Humans manage a highly structured specification which generates the agent",
+      "suggested_slug": "this-written-artifact-that-serves-durable-memory-software",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        66,
+        103
+      ]
+    },
+    {
+      "start": "00:04:04.640",
+      "end": "00:04:41.240",
+      "start_seconds": 244.64,
+      "end_seconds": 281.24,
+      "duration_seconds": 36.6,
+      "excerpt": "specification which generates the agent which then generates the code. When a bug is found, engineers do not edit the code. They update the specification, regenerate the agent, and completely overwrite the old implementation. In this model, code is no longer a handcrafted artifact, but a disposable byproduct. The specification is the steel mold. The code is just plastic. The future of software engineering is not writing implementation, but governing intent. To see how to build your own specification services, visit the rooted layers publication.",
+      "suggested_slug": "specification-which-generates-agent-which-then-generates-code",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        103,
+        117
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-05-04T07:51:59.691653+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "specification_surface_source_of_truth",
+  "package": "literate-workflow-programming/specification-surface-source-of-truth",
+  "notebook_id": "bd61da1d-f328-4cf0-8c77-26b094dd27b8",
+  "video_source_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.mp4",
+  "caption_output": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt",
+  "title": "Why AI Coding Needs a Specification Surface | A Cinematic Research Brief",
+  "base_title": "Why AI Coding Needs a Specification Surface",
+  "description": "AI coding gets dangerous when the intent has no governed surface.\n\nThis cinematic brief compresses the argument that generated code becomes reviewable only when controlling intent lives in maintained, validated, trace-linked specification surfaces.\n\nThe goal is to make the source-of-truth shift legible quickly, then send viewers to the full visual research breakdown.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-specification-surface-is-the\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=I6gKAyYRfZU\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5GM0Q3M0MzMzY5NTJFNTdE",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5GM0Q3M0MzMzY5NTJFNTdE",
+      "position": 21,
+      "title": "Why AI Coding Needs a Specification Surface | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "I6gKAyYRfZU",
+    "url": "https://www.youtube.com/watch?v=I6gKAyYRfZU"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-specification-surface-is-the",
+  "video": {
+    "id": "slozjRp6CPg",
+    "url": "https://www.youtube.com/watch?v=slozjRp6CPg",
+    "youtube_readback": {
+      "upload_status": "processed",
+      "privacy_status": "public",
+      "duration": "PT4M42S",
+      "definition": "hd",
+      "published_at": "2026-05-04T07:52:16Z",
+      "processing_status": "succeeded"
+    }
+  }
+}

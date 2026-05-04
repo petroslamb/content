@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-04-30T13:19:36.452180+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "what_actually_works_hardware",
+  "package": "hardware-friction/what-actually-works-the-hardware",
+  "notebook_id": "3be56bf2-410a-40ce-85e2-d6c7a16162ca",
+  "video_source_file": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.mp4",
+  "caption_output": "publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.srt",
+  "title": "Why AI Architecture Progress Is Filtered by Hardware | A Cinematic Research Brief",
+  "base_title": "Why AI Architecture Progress Is Filtered by Hardware",
+  "description": "In production AI, the architectures that survive are the ones that fit kernels, memory hierarchies, and serving stacks, not just the ones with the prettiest papers.\n\nThis cinematic brief compresses the hardware-compatibility thesis behind modern model architecture: FlashAttention, GQA, MLA, and MoE spread because they map cleanly onto real infrastructure.\n\nIt should pull viewers toward the deeper long-form argument that architecture success is an economic and systems story, not only a research story.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/what-actually-works-the-hardware\n\nFull research breakdown:\nhttps://lambpetros.substack.com/p/what-actually-works-the-hardware\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5EQUE1NTFDRjcwMDg0NEMz",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5EQUE1NTFDRjcwMDg0NEMz",
+      "position": 15,
+      "title": "Why AI Architecture Progress Is Filtered by Hardware | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": null,
+    "url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/what-actually-works-the-hardware",
+  "video": {
+    "id": "Ju5UJvO4X5k",
+    "url": "https://www.youtube.com/watch?v=Ju5UJvO4X5k",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-04-30T13:19:29Z"
+    }
+  }
+}

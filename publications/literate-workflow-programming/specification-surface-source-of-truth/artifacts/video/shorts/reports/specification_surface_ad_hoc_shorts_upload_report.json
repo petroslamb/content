@@ -1,0 +1,480 @@
+{
+  "workflow": "specification_surface_ad_hoc_shorts",
+  "created_at": "2026-05-01T09:00:54.099114Z",
+  "channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "playlist_label": "AI Architecture Snippets & AI Research Shorts",
+  "manifest": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/ad_hoc_shorts_manifest.json",
+  "source": {
+    "downloaded_from": "Substack clips in ~/Downloads, copied into package artifacts",
+    "source_dir": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/source",
+    "portrait_dir": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait",
+    "no_overlays_added": true,
+    "burned_in_subtitles_from_source": true,
+    "related_video_target": null,
+    "related_video_note": "No confirmed YouTube long-form target was present in package metadata; Shorts were scheduled without forcing a related-video target."
+  },
+  "preflight": {
+    "all_ok": true,
+    "probes": [
+      {
+        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/01-vibe-coding-is-a-recipe-for-illusion_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 42.208333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 42.183
+        },
+        "format_duration": 42.208333,
+        "duration": 42.208333
+      },
+      {
+        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/02-velocity-makes-weak-specs-dangerous_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 61.833333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 56.217
+        },
+        "format_duration": 61.833333,
+        "duration": 61.833333
+      },
+      {
+        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/03-the-missing-blueprints_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 59.833333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 54.255
+        },
+        "format_duration": 59.833333,
+        "duration": 59.833333
+      },
+      {
+        "path": "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/04-choose-what-deserves-authority_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 73.041667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 67.46
+        },
+        "format_duration": 73.041667,
+        "duration": 73.041667
+      }
+    ]
+  },
+  "uploads": [
+    {
+      "source_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/01-vibe-coding-is-a-recipe-for-illusion_portrait.mp4",
+      "title": "Vibe Coding Is a Recipe for Illusion #shorts",
+      "summary": "A weak specification lets generated code look confident while the real authority problem stays invisible.",
+      "publish_at": "2026-05-06T06:00:00Z",
+      "video_id": "zVpYYDyAZR4",
+      "watch_url": "https://www.youtube.com/watch?v=zVpYYDyAZR4",
+      "studio_url": "https://studio.youtube.com/video/zVpYYDyAZR4/edit",
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4xRjE1NzQ4MjRCMUNFRDdB",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd"
+    },
+    {
+      "source_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/02-velocity-makes-weak-specs-dangerous_portrait.mp4",
+      "title": "Velocity Makes Weak Specs Dangerous #shorts",
+      "summary": "AI coding makes weak specifications more dangerous because implementation now appears faster than intent can be governed.",
+      "publish_at": "2026-05-06T07:30:00Z",
+      "video_id": "PgLO1eGJRi0",
+      "watch_url": "https://www.youtube.com/watch?v=PgLO1eGJRi0",
+      "studio_url": "https://studio.youtube.com/video/PgLO1eGJRi0/edit",
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DNUEzOUFFNkIyOUUzOTRC",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd"
+    },
+    {
+      "source_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/03-the-missing-blueprints_portrait.mp4",
+      "title": "The Missing Blueprints #shorts",
+      "summary": "When teams cannot point to the shared specification, separate workers and agents reconstruct intent from symptoms.",
+      "publish_at": "2026-05-07T06:00:00Z",
+      "video_id": "qSImlEg0U3U",
+      "watch_url": "https://www.youtube.com/watch?v=qSImlEg0U3U",
+      "studio_url": "https://studio.youtube.com/video/qSImlEg0U3U/edit",
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4zMkY2MjA3RDJERTkxNjkz",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd"
+    },
+    {
+      "source_file": "publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/portrait/04-choose-what-deserves-authority_portrait.mp4",
+      "title": "Choose What Deserves Authority #shorts",
+      "summary": "The practical question is which surfaces deserve authority and how failures push those surfaces back into revision.",
+      "publish_at": "2026-05-07T07:30:00Z",
+      "video_id": "Ye7aubeIztc",
+      "watch_url": "https://www.youtube.com/watch?v=Ye7aubeIztc",
+      "studio_url": "https://studio.youtube.com/video/Ye7aubeIztc/edit",
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5FMjFERkYxMjI2NjkyMjg5",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd"
+    }
+  ],
+  "readback": [
+    {
+      "kind": "youtube#video",
+      "etag": "DJfLU-i22ungp8r6Goy7jRDjibo",
+      "id": "zVpYYDyAZR4",
+      "snippet": {
+        "publishedAt": "2026-05-01T08:59:53Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "Vibe Coding Is a Recipe for Illusion #shorts",
+        "description": "Vibe Coding Is a Recipe for Illusion\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nA weak specification lets generated code look confident while the real authority problem stays invisible.\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/default.jpg?sqp=CJDX0c8G&rs=AOn4CLAhLT_9XLYrpZe5WZd7GnyANnfvuA",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/mqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLDAvTIqBYtY-K0Dg1yrlrprNJ9K0w",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/hqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLAzPzkFXjTJSpZ1JmQD6DUZJtb5AA",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/sddefault.jpg?sqp=CJDX0c8G&rs=AOn4CLBI_sGcq1y7x1VpuvfA2n_0TTlNIA",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i9.ytimg.com/vi/zVpYYDyAZR4/maxresdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLDxeVgEwX_U-radCGsUWvAqeUYLLg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Vibe Coding Is a Recipe for Illusion #shorts",
+          "description": "Vibe Coding Is a Recipe for Illusion\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nA weak specification lets generated code look confident while the real authority problem stays invisible.\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT43S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-06T06:00:00Z",
+        "license": "youtube",
+        "embeddable": true,
+        "publicStatsViewable": true,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "o888EeHiykWhaBU6RZYsXeDTV6g",
+      "id": "PgLO1eGJRi0",
+      "snippet": {
+        "publishedAt": "2026-05-01T08:59:57Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "Velocity Makes Weak Specs Dangerous #shorts",
+        "description": "Velocity Makes Weak Specs Dangerous\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nAI coding makes weak specifications more dangerous because implementation now appears faster than intent can be governed.\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/default.jpg?sqp=CJDX0c8G&rs=AOn4CLBxVXKws4euAOO8uMYKw7R6OXwr9w",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/mqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLAFBRsd_QTDiddbw6RlNsCT9IsqlA",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/PgLO1eGJRi0/hqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLCwqvZBOCiqjWAgUze_p_iFXnmzJA",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Velocity Makes Weak Specs Dangerous #shorts",
+          "description": "Velocity Makes Weak Specs Dangerous\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nAI coding makes weak specifications more dangerous because implementation now appears faster than intent can be governed.\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT1M2S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-06T07:30:00Z",
+        "license": "youtube",
+        "embeddable": true,
+        "publicStatsViewable": true,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "hpcjOvEQMBlCdYVg9-r7UBHh3EE",
+      "id": "qSImlEg0U3U",
+      "snippet": {
+        "publishedAt": "2026-05-01T09:00:02Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "The Missing Blueprints #shorts",
+        "description": "The Missing Blueprints\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nWhen teams cannot point to the shared specification, separate workers and agents reconstruct intent from symptoms.\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/default.jpg?sqp=CJDX0c8G&rs=AOn4CLD5JpwZkV77Kmt_l7Co7dP4Uj4RNQ",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/mqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLCEC40ejaxpePRffTfkv_W7YLoRIw",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/hqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLDIA0L1MsmVhqbmTLJ9JHXur7sitQ",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/sddefault.jpg?sqp=CJDX0c8G&rs=AOn4CLCOhvsREaUHh8pHpRBGnE9iUQquyg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i9.ytimg.com/vi/qSImlEg0U3U/maxresdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLBRDhLhCt9tIZd5XG0N1ehxIS0mBw",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "The Missing Blueprints #shorts",
+          "description": "The Missing Blueprints\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nWhen teams cannot point to the shared specification, separate workers and agents reconstruct intent from symptoms.\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT1M",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-07T06:00:00Z",
+        "license": "youtube",
+        "embeddable": true,
+        "publicStatsViewable": true,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "MqRfzb8PAyrWMdq9u2XV-tg0vqc",
+      "id": "Ye7aubeIztc",
+      "snippet": {
+        "publishedAt": "2026-05-01T09:00:07Z",
+        "channelId": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "Choose What Deserves Authority #shorts",
+        "description": "Choose What Deserves Authority\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nThe practical question is which surfaces deserve authority and how failures push those surfaces back into revision.\n\n#specificationsurface #ai #research #shorts",
+        "thumbnails": {
+          "default": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/default.jpg?sqp=CJDX0c8G&rs=AOn4CLAIiOf28H8gWXKkCFMVd0AFvVk0UA",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/mqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLDzHSYXmv9uZYCAS3qIqwB6sQv8Eg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/hqdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLAQNRpuEPfKVMYP8NYzLTOfI9Sigg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/sddefault.jpg?sqp=CJDX0c8G&rs=AOn4CLBb5BLnr0VF_Ai2pmwUhPgOZS55AQ",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i9.ytimg.com/vi/Ye7aubeIztc/maxresdefault.jpg?sqp=CJDX0c8G&rs=AOn4CLC9DexeXeeA1T1UIvAiBiZsHYqLDQ",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Rooted Layers | AI Systems Grounded in Research",
+        "tags": [
+          "AI",
+          "AI coding",
+          "Rooted Layers",
+          "research",
+          "shorts",
+          "software engineering",
+          "specification"
+        ],
+        "categoryId": "27",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Choose What Deserves Authority #shorts",
+          "description": "Choose What Deserves Authority\n\nShort clip from Rooted Layers: The Specification Surface Is the New Source of Truth.\n\nThe practical question is which surfaces deserve authority and how failures push those surfaces back into revision.\n\n#specificationsurface #ai #research #shorts"
+        },
+        "defaultAudioLanguage": "en"
+      },
+      "contentDetails": {
+        "duration": "PT1M14S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "false",
+        "licensedContent": false,
+        "contentRating": {},
+        "projection": "rectangular",
+        "hasCustomThumbnail": false
+      },
+      "status": {
+        "uploadStatus": "processed",
+        "privacyStatus": "private",
+        "publishAt": "2026-05-07T07:30:00Z",
+        "license": "youtube",
+        "embeddable": true,
+        "publicStatsViewable": true,
+        "madeForKids": false,
+        "selfDeclaredMadeForKids": false
+      }
+    }
+  ],
+  "playlist_readback": [
+    {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4xRjE1NzQ4MjRCMUNFRDdB",
+      "video_id": "zVpYYDyAZR4",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+      "playlist_title": "AI Architecture Snippets & AI Research Shorts",
+      "position": 145,
+      "title": "Vibe Coding Is a Recipe for Illusion #shorts",
+      "publishedAt": "2026-05-01T08:59:56Z"
+    },
+    {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DNUEzOUFFNkIyOUUzOTRC",
+      "video_id": "PgLO1eGJRi0",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+      "playlist_title": "AI Architecture Snippets & AI Research Shorts",
+      "position": 146,
+      "title": "Velocity Makes Weak Specs Dangerous #shorts",
+      "publishedAt": "2026-05-01T09:00:01Z"
+    },
+    {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4zMkY2MjA3RDJERTkxNjkz",
+      "video_id": "qSImlEg0U3U",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+      "playlist_title": "AI Architecture Snippets & AI Research Shorts",
+      "position": 147,
+      "title": "The Missing Blueprints #shorts",
+      "publishedAt": "2026-05-01T09:00:06Z"
+    },
+    {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5FMjFERkYxMjI2NjkyMjg5",
+      "video_id": "Ye7aubeIztc",
+      "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+      "playlist_title": "AI Architecture Snippets & AI Research Shorts",
+      "position": 148,
+      "title": "Choose What Deserves Authority #shorts",
+      "publishedAt": "2026-05-01T09:00:12Z"
+    }
+  ],
+  "final_readback_at": "2026-05-01T09:01:24.277741Z",
+  "final_readback_all_processed": true
+}
