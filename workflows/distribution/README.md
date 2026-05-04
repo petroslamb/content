@@ -39,6 +39,8 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 - Do not equate authentication with distribution value. Assess current account reach and likely audience before treating a channel as `post_now`; low-reach accounts need an explicit purpose, such as a referenceable anchor post plus targeted replies into existing conversations.
 - When a channel rewards native media and the package already has suitable assets, prefer the native surface over a link-only post. For LinkedIn, explicitly consider PDF document carousels from slide decks before falling back to a URL preview.
 - If a native-media upload requires a browser or operating-system file picker that cannot be verified through the automation surface, record the channel as `manual_upload_required` with the exact asset path, document title, copy, and fallback policy. Do not silently downgrade to a weaker link post.
+- For LinkedIn document carousels, keep the canonical essay URL out of the main post body by default. Use a first comment for the URL when the goal is native carousel distribution, and verify an existing comment before adding another one.
+- For LinkedIn evidence, prefer the activity URL form `https://www.linkedin.com/feed/update/urn:li:activity:<id>/` when the activity id is visible from analytics or profile activity. Record the document title and first-comment state as evidence.
 - If distribution is deliberately skipped or deferred, record that explicitly rather than leaving the stage ambiguous.
 - Do not treat `deferred` as a final answer when a second-wave push is requested. Reassess fit, auth state, moderation risk, and exact copy before deciding whether the channel is now `post_now`, `draft_hold`, or `skip`.
 - For communities with moderation or self-promotion risk, prepare the copy locally and hold it unless the channel-specific risk has been accepted.
@@ -54,7 +56,9 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 5. record channel fit, auth/account state, audience reach, moderation or self-promotion risk, media strategy, link-placement strategy, and the exact copy to use
 6. classify each channel as `post_now`, `draft_hold`, `manual_upload_required`, or `skip`
 7. publish or queue the downstream copy only after action-time approval for external posting and exact composer verification
-8. record what shipped, what was held as a draft, and what was intentionally skipped
+8. for native-media posts that need a manual upload, hand off the exact asset path and resume from the profile/activity feed after the user posts
+9. verify any planned first comment does not already exist before adding it
+10. record what shipped, what was held as a draft, and what was intentionally skipped
 
 ## Typical Outputs
 
@@ -63,6 +67,7 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 - LinkedIn or X copy
 - LinkedIn document carousel PDF selection when a slide deck exists
 - native-media manual upload handoff when the browser surface cannot verify the upload
+- LinkedIn first-comment link copy and verification state
 - Hacker News title and blurb
 - channel-fit and moderation-risk table
 - held Reddit or Hacker News drafts when posting risk is high
