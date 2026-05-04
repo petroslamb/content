@@ -194,6 +194,14 @@ behavior:
       check: image_paths_use_stable_publishable_assets
     - id: transcript_is_editorial_source_not_replacement_draft
       check: transcript_edits_preserve_reviewed_claims
+    - id: sentence_rhythm_preserves_publication_voice
+      check: transcript_or_polish_edits_do_not_create_repeated_staccato_cadence
+    - id: body_claims_have_author_year_citations
+      check: sources_doing_body_work_have_author_year_body_citations
+    - id: reference_sources_use_linked_h4_headings
+      check: cited_sources_are_h4_headings_linked_to_arxiv_or_canonical_source
+    - id: source_references_explain_argumentative_contribution
+      check: references_doing_body_work_have_contribution_notes
     - id: references_and_repo_links_resolve
       check: final_links_resolve
     - id: external_mutation_requires_gate
@@ -242,6 +250,8 @@ validation:
     - live_draft_path_matches_status
     - publishable_image_paths_resolve
     - markdown_image_paths_resolve
+    - body_author_year_citations_present
+    - reference_sources_use_linked_h4_headings
     - references_and_repo_links_resolve
     - removed_image_embeds_have_editorial_reason
   context_checks:
@@ -390,7 +400,7 @@ steps:
   - id: transcript_round_trip
     title: Transcript round trip
     mode: external_mutation_gated
-    action: Recover a full transcript only when useful, then use it as a controlled editorial source rather than replacement prose.
+    action: Recover a full transcript only when useful, then use it as a controlled editorial source rather than replacement prose or repeated short-sentence cadence.
     consumes:
       - artifact_surface
       - notebooklm_or_local_media_outputs
@@ -406,7 +416,7 @@ steps:
   - id: final_editorial_pass
     title: Final editorial pass
     mode: codex_session
-    action: Finalize readability, references, appendices, orientation blurbs, repo links, and polish without weakening the reviewed argument.
+    action: Finalize readability, references, appendices, orientation blurbs, repo links, and polish without weakening the reviewed argument or overcorrecting into clipped, slogan-like rhythm.
     consumes:
       - polished_live_draft
       - current_references

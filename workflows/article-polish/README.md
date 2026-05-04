@@ -62,6 +62,8 @@ When this workflow is done, the package should have:
 - intentional image placements in the essay markdown
 - a transcript-informed editorial pass where useful
 - publication-ready references, appendices, and repo links
+- inline author-year citations on body claims where sources do work
+- linked h4 source headings plus contribution paragraphs in the reference section
 - a draft ready for [`../release-gate/README.md`](../release-gate/README.md)
 
 ## Canonical Flow
@@ -206,8 +208,11 @@ Bad transcript-derived changes:
 - replacing a precise claim with a looser but friendlier one
 - turning a thesis-driven section into chatty narration
 - copying transcript language mechanically across the whole essay
+- turning publication sharpness into repeated staccato sentences or slogan-like contrast
 
 The transcript is a corrective when the review loop has made the essay too dry, not a new canonical draft source.
+
+Publication sharpness should normally come from stronger scene pressure, cleaner section burden, and more exact transitions. Do not create urgency by breaking explanatory paragraphs into repeated short declarations. Preserve the root voice guide's medium-density rhythm unless a short sentence is doing rare hinge work.
 
 ## Stage 4: Final Editorial Pass
 
@@ -219,17 +224,23 @@ Check for:
 - no accidental deletion of previously placed images; removed embeds should have an editorial reason
 - visual spacing that still gives the prose room to breathe between diagrams
 - references that are complete, precise, and consistently formatted
+- body citations that use author-year parentheticals where sources carry claims
+- source entries formatted as h4 headings linked to the arXiv paper or canonical source
 - short orientation blurbs only where they genuinely help
 - appendix material that belongs at the end rather than in the main flow
 - repo links that point at the current canonical path
 - a reading experience that still feels like an essay rather than internal repo documentation
+- no repeated staccato rhythm introduced by transcript-derived rehumanization or final polish
 
 ## Final Reference Pass
 
 Before publishing:
 
 - make the reference section precise and complete
-- for newly added sources doing body work, add a short contribution note either in the reference entry or the surrounding prose so a future editor can tell why the citation is present
+- add inline author-year citations in the body where a source is doing argumentative work; do not substitute raw arXiv IDs, bare links, or title-only mentions for citations
+- format each cited paper as a level-4 markdown heading linked to the arXiv paper or canonical source, followed by its contribution paragraph
+- for every source doing body work, add a short contribution paragraph either in the reference entry or the surrounding prose so a future editor can tell why the citation is present
+- do not let the public essay ship with a bare bibliography when the sources carry the argument; annotated references are part of the reading experience
 - add short orientation text for references when it materially helps the reader
 - keep appendices only when they genuinely help understanding
 - link back to the repo when companions, datasets, or overflow material live here and do not belong in the main body

@@ -42,6 +42,19 @@ AUTHORITY_CLAIM_PATTERNS = [
 ]
 MAX_PARAGRAPH_WORDS = 220
 MAX_BULLET_LINES = 8
+SHORT_SENTENCE_WORDS = 8
+VERY_SHORT_SENTENCE_WORDS = 5
+MAX_SHORT_SENTENCE_RATIO = 0.24
+MAX_VERY_SHORT_SENTENCE_RATIO = 0.12
+MAX_SHORT_SENTENCE_RUN = 3
+MIN_REFERENCE_NOTE_WORDS = 28
+ARXIV_REFERENCE_HEADING_PATTERN = re.compile(
+    r"^####\s+\[([^\]]+?)\]\(https://arxiv\.org/abs/(\d{4}\.\d{4,5}(?:v\d+)?)\)\s*$"
+)
+LINKED_H4_REFERENCE_PATTERN = re.compile(r"^####\s+\[[^\]]+?\]\(https?://[^)]+\)\s*$")
+LEGACY_ARXIV_REFERENCE_PATTERN = re.compile(
+    r"https://arxiv\.org/abs/\d{4}\.\d{4,5}(?:v\d+)?|\barXiv\b|`\d{4}\.\d{4,5}`"
+)
 
 
 @dataclass(frozen=True)
@@ -212,6 +225,234 @@ def paragraph_findings_for_buffer(path: Path, start_line: int, lines: list[str])
     ]
 
 
+def sentence_rhythm_findings(path: Path, text: str) -> list[dict[str, Any]]:
+    sentences = body_sentences(text)
+    if len(sentences) < 20:
+        return []
+
+    lengths = [count_words(sentence) for sentence in sentences]
+    short_count = sum(length <= SHORT_SENTENCE_WORDS for length in lengths)
+    very_short_count = sum(length <= VERY_SHORT_SENTENCE_WORDS for length in lengths)
+    max_short_run = longest_short_sentence_run(lengths)
+    findings: list[dict[str, Any]] = []
+
+    short_ratio = short_count / len(lengths)
+    if short_ratio > MAX_SHORT_SENTENCE_RATIO:
+        findings.append(
+            make_finding(
+                check_id="sentence_rhythm",
+                severity="advisory",
+                path=path,
+                message=(
+                    f"{short_count} of {len(lengths)} body sentences are {SHORT_SENTENCE_WORDS} words or fewer "
+                    f"({short_ratio:.0%}); publication polish may have overcorrected into staccato cadence."
+                ),
+                suggestion="Reserve clipped sentences for rare hinge moments and restore medium-density explanatory rhythm elsewhere.",
+            )
+        )
+
+    very_short_ratio = very_short_count / len(lengths)
+    if very_short_ratio > MAX_VERY_SHORT_SENTENCE_RATIO:
+        findings.append(
+            make_finding(
+                check_id="sentence_rhythm",
+                severity="advisory",
+                path=path,
+                message=(
+                    f"{very_short_count} of {len(lengths)} body sentences are {VERY_SHORT_SENTENCE_WORDS} words or fewer "
+                    f"({very_short_ratio:.0%}); this can read as slogan-like rather than controlled."
+                ),
+                suggestion="Combine adjacent short declarations when they are not doing distinct argumentative work.",
+            )
+        )
+
+    if max_short_run >= MAX_SHORT_SENTENCE_RUN:
+        findings.append(
+            make_finding(
+                check_id="sentence_rhythm",
+                severity="advisory",
+                path=path,
+                message=f"Draft contains a run of {max_short_run} short body sentences.",
+                suggestion="Break up short-sentence runs with explanatory connective tissue unless the cluster is a deliberate hinge.",
+            )
+        )
+
+    return findings
+
+
+def body_sentences(text: str) -> list[str]:
+    body = text.split("\n## References", 1)[0]
+    lines: list[str] = []
+    in_code = False
+    for raw_line in body.splitlines():
+        line = raw_line.strip()
+        if line.startswith("```"):
+            in_code = not in_code
+            continue
+        if in_code or not line:
+            continue
+        if line.startswith(("#", "![", "|", "- ", "* ")):
+            continue
+        if re.match(r"\[[^\]]+\]\([^)]+\)$", line):
+            continue
+        lines.append(line)
+    prose = " ".join(lines)
+    return [sentence.strip() for sentence in re.split(r"(?<=[.!?])\s+", prose) if count_words(sentence) > 0]
+
+
+def count_words(text: str) -> int:
+    return len(re.findall(r"\b[\w'-]+\b", text))
+
+
+def reference_contribution_findings(path: Path, text: str) -> list[dict[str, Any]]:
+    blocks = reference_blocks(text)
+    if not blocks:
+        return []
+    findings: list[dict[str, Any]] = []
+    for index, block in enumerate(blocks):
+        if not source_reference_block(block.text):
+            continue
+        same_block_words = count_words(block.text)
+        next_block = blocks[index + 1] if index + 1 < len(blocks) else None
+        next_block_is_source = bool(next_block and source_reference_block(next_block.text))
+        next_block_words = 0 if next_block_is_source or next_block is None else count_words(next_block.text)
+        if same_block_words >= MIN_REFERENCE_NOTE_WORDS * 2 or next_block_words >= MIN_REFERENCE_NOTE_WORDS:
+            continue
+        findings.append(
+            make_finding(
+                check_id="reference_contribution_notes",
+                severity="advisory",
+                path=path,
+                line=block.number,
+                message="Reference entry appears without a paragraph explaining the source's contribution to the essay.",
+                snippet=block.text,
+                suggestion="Add a short source-contribution paragraph so the reference section explains why the citation is present.",
+            )
+        )
+    return findings
+
+
+def reference_heading_link_findings(path: Path, text: str) -> list[dict[str, Any]]:
+    blocks = reference_blocks(text)
+    if not blocks:
+        return []
+    findings: list[dict[str, Any]] = []
+    for block in blocks:
+        first_line = block.text.splitlines()[0].strip()
+        if LINKED_H4_REFERENCE_PATTERN.match(first_line):
+            continue
+        if first_line.startswith("####") or LEGACY_ARXIV_REFERENCE_PATTERN.search(block.text):
+            findings.append(
+                make_finding(
+                    check_id="reference_heading_links",
+                    severity="advisory",
+                    path=path,
+                    line=block.number,
+                    message="Reference entry should be a level-4 markdown heading linked to the arXiv paper or canonical source.",
+                    snippet=block.text,
+                    suggestion='Use `#### [Author (Year), "Title"](https://arxiv.org/abs/<id>)`, followed by the contribution paragraph.',
+                )
+            )
+    return findings
+
+
+def body_author_citation_findings(path: Path, text: str) -> list[dict[str, Any]]:
+    body, _ = split_reference_section(text)
+    if not body:
+        return []
+    findings: list[dict[str, Any]] = []
+    for source in arxiv_reference_sources(text):
+        if re.search(author_year_citation_pattern(source["author"], source["year"]), body):
+            continue
+        findings.append(
+            make_finding(
+                check_id="body_author_year_citations",
+                severity="advisory",
+                path=path,
+                line=source["line"],
+                message=f"Reference source has no matching author-year citation in the body: {source['author']}, {source['year']}.",
+                snippet=source["heading"],
+                suggestion=f"Add a parenthetical citation such as `({source['author']}, {source['year']})` at the claim where this source is doing work.",
+            )
+        )
+    return findings
+
+
+def author_year_citation_pattern(author: str, year: str) -> str:
+    return r"\([^)]*" + re.escape(author) + r",\s*" + re.escape(year) + r"[^)]*\)"
+
+
+def arxiv_reference_sources(text: str) -> list[dict[str, Any]]:
+    sources: list[dict[str, Any]] = []
+    for block in reference_blocks(text):
+        first_line = block.text.splitlines()[0].strip()
+        heading_match = ARXIV_REFERENCE_HEADING_PATTERN.match(first_line)
+        if not heading_match:
+            continue
+        label = heading_match.group(1)
+        author_match = re.match(r"(.+?)\s+\((\d{4})\)", label)
+        if not author_match:
+            continue
+        sources.append({
+            "author": author_match.group(1).strip(),
+            "year": author_match.group(2),
+            "heading": first_line,
+            "line": block.number,
+        })
+    return sources
+
+
+def source_reference_block(text: str) -> bool:
+    first_line = text.splitlines()[0].strip()
+    return bool(ARXIV_REFERENCE_HEADING_PATTERN.match(first_line) or LEGACY_ARXIV_REFERENCE_PATTERN.search(text))
+
+
+def split_reference_section(text: str) -> tuple[str, str]:
+    match = re.search(r"(?m)^## References\s*$", text)
+    if not match:
+        return text, ""
+    return text[: match.start()], text[match.end():]
+
+
+def reference_blocks(text: str) -> list[SourceLine]:
+    match = re.search(r"(?m)^## References\s*$", text)
+    if not match:
+        return []
+    reference_text = text[match.end():]
+    header_line = text[: match.start()].count("\n") + 1
+    if reference_text.startswith("\n"):
+        reference_text = reference_text[1:]
+    start_line = header_line + 1
+    blocks: list[SourceLine] = []
+    buffer: list[str] = []
+    block_start = start_line
+    for offset, line in enumerate(reference_text.splitlines()):
+        line_number = start_line + offset
+        if line.strip():
+            if not buffer:
+                block_start = line_number
+            buffer.append(line)
+            continue
+        if buffer:
+            blocks.append(SourceLine(block_start, "\n".join(buffer).strip()))
+            buffer = []
+    if buffer:
+        blocks.append(SourceLine(block_start, "\n".join(buffer).strip()))
+    return blocks
+
+
+def longest_short_sentence_run(lengths: list[int]) -> int:
+    longest = 0
+    current = 0
+    for length in lengths:
+        if length <= SHORT_SENTENCE_WORDS:
+            current += 1
+            longest = max(longest, current)
+        else:
+            current = 0
+    return longest
+
+
 def contrast_rhythm_findings(path: Path, text: str) -> list[dict[str, Any]]:
     findings: list[dict[str, Any]] = []
     pattern = re.compile(r"\b(?:it|this|the problem|the point)\s+is\s+not\b", re.IGNORECASE)
@@ -325,6 +566,30 @@ def source_improvement_suggestions(findings: list[dict[str, Any]]) -> list[dict[
             "source": "claim_evidence_trace",
             "suggestion": "Add a claim-support pass before release readiness for authority-heavy drafts.",
         })
+    if counts["sentence_rhythm"]:
+        suggestions.append({
+            "id": "repair_sentence_rhythm",
+            "source": "sentence_rhythm",
+            "suggestion": "Run a rhythm pass that restores medium-density explanatory prose and keeps short sentences only where they earn hinge pressure.",
+        })
+    if counts["reference_contribution_notes"]:
+        suggestions.append({
+            "id": "annotate_reference_contributions",
+            "source": "reference_contribution_notes",
+            "suggestion": "Add source-contribution paragraphs for references that do argumentative work.",
+        })
+    if counts["reference_heading_links"]:
+        suggestions.append({
+            "id": "format_reference_headings",
+            "source": "reference_heading_links",
+            "suggestion": "Format source entries as linked h4 headings before their contribution paragraphs.",
+        })
+    if counts["body_author_year_citations"]:
+        suggestions.append({
+            "id": "add_author_year_body_citations",
+            "source": "body_author_year_citations",
+            "suggestion": "Attach author-year parenthetical citations to the body claims where cited sources do work.",
+        })
     if counts["local_link_integrity"]:
         suggestions.append({
             "id": "repair_local_links",
@@ -341,6 +606,10 @@ def build_report(package_arg: str) -> dict[str, Any]:
     findings = [
         *banned_phrase_findings(markdown_path, draft_text),
         *paragraph_rhythm_findings(markdown_path, draft_text),
+        *sentence_rhythm_findings(markdown_path, draft_text),
+        *reference_contribution_findings(markdown_path, draft_text),
+        *reference_heading_link_findings(markdown_path, draft_text),
+        *body_author_citation_findings(markdown_path, draft_text),
         *contrast_rhythm_findings(markdown_path, draft_text),
         *authority_claim_findings(markdown_path, draft_text),
         *local_link_findings(markdown_path, draft_text),
@@ -368,6 +637,10 @@ def build_report(package_arg: str) -> dict[str, Any]:
         "checks": [
             check_summary("voice_ban_list", findings, input_paths),
             check_summary("paragraph_rhythm", findings, input_paths),
+            check_summary("sentence_rhythm", findings, input_paths),
+            check_summary("reference_contribution_notes", findings, input_paths),
+            check_summary("reference_heading_links", findings, input_paths),
+            check_summary("body_author_year_citations", findings, input_paths),
             check_summary("contrast_rhythm", findings, input_paths),
             check_summary("claim_evidence_trace", findings, input_paths),
             check_summary("local_link_integrity", findings, input_paths),

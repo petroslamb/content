@@ -10,11 +10,11 @@ The shared paper library, research notes, claim surfaces, and pivot record stay 
 ## Package Status
 
 - Archetype: Umbrella package
-- Status: Active unpublished umbrella
+- Status: Active umbrella with successor public essay released
 - Donor flagship leaf: [`literate-workflow-programming-flagship/README.md`](literate-workflow-programming-flagship/README.md)
 - Active overlay: `post_ceiling_pivot`
 - Current umbrella route: `pivot_cleared_for_north_star_attempt`
-- Current next action: `continue_successor_leaf_notebooklm_artifacts`
+- Current next action: `successor_leaf_publication_pipeline_complete__paper_route_when_requested`
 - Active successor candidate: `The Specification Surface Is the New Source of Truth`
 - Active successor leaf: [`specification-surface-source-of-truth/README.md`](specification-surface-source-of-truth/README.md)
 - Previous closure record: [`pivot/archive/2026-04-28-contract-layer-no-successor/no-successor-closure.md`](pivot/archive/2026-04-28-contract-layer-no-successor/no-successor-closure.md)
@@ -81,7 +81,7 @@ The current umbrella state is:
 - the doctrine experiment was preserved as a historical side branch, not accepted as the pivot answer
 - the first restarted larger-successor search tested `The Real System Lives In The Contract Layer` and stopped without a cleared successor
 - the reopened search passed the north-star viability gate for `specification surface` as the larger public object: not loose natural-language prose, but constrained specifications that become source-of-truth control surfaces for AI-native work
-- the successor leaf now has a promoted live draft and should continue its downstream publication pipeline
+- the successor leaf has completed the public essay pipeline; paper-route work is separate and should resume only when requested
 
 ## Folder Discipline
 

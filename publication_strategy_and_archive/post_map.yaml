@@ -1,4 +1,14 @@
 posts:
+  the-specification-surface-is-the:
+    title: The Specification Surface Is the New Source of Truth
+    research_folder: publications/literate-workflow-programming/specification-surface-source-of-truth
+    summary: A successor flagship essay on why AI-assisted software work becomes governable when intent moves from private prompts into maintained, testable specification surfaces.
+    tags:
+      - agents
+      - software-engineering
+      - governance
+    featured: true
+    status: published
   confidence-debt:
     title: Confidence Debt
     research_folder: publications/confidence-debt

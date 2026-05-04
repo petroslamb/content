@@ -152,6 +152,12 @@ behavior:
       check: media_paths_do_not_point_to_unstable_generated_artifacts
     - id: references_are_complete
       check: inline_reference_changes_reflected_in_endmatter
+    - id: cited_claims_use_author_year_body_citations
+      check: cited_sources_have_author_year_body_citations
+    - id: cited_sources_use_linked_h4_reference_headings
+      check: source_references_are_linked_h4_headings_when_available
+    - id: source_references_explain_argumentative_contribution
+      check: sources_doing_body_work_have_contribution_notes
     - id: external_mutation_requires_release_readiness
       check: external_mutation_requires_release_readiness
   budgets:
