@@ -65,6 +65,11 @@ context_dependencies:
     required: true
     purpose: Load human-facing distribution workflow guidance.
     record_hash: true
+  - id: reddit_native_distribution_playbook
+    path: workflows/distribution/reddit-native-distribution.md
+    required: true
+    purpose: Apply Reddit-native argument, account health, trust repair, and link-placement rules.
+    record_hash: true
   - id: release_gate_readme
     path: workflows/release-gate/README.md
     required: true
@@ -148,6 +153,24 @@ outputs:
     required_when: a Reddit, Hacker News, forum, or community channel is included
     format: markdown
     producer: prepare_distribution_copy
+  - id: reddit_account_health_assessment
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: conditional
+    required_when: Reddit is included as a target channel
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: reddit_native_argument_preflight
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: conditional
+    required_when: Reddit is included as a target channel
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: reddit_trust_repair_plan
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: conditional
+    required_when: Reddit account has recent removals, mod-approval holds, or self-promotion risk
+    format: markdown
+    producer: prepare_distribution_copy
   - id: native_media_strategy
     path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
     required: conditional
@@ -199,7 +222,7 @@ behavior:
     - id: held_channels_have_exact_local_copy
       check: draft_hold_channels_include_exact_copy_and_hold_reason
     - id: channel_decisions_are_explicit
-      check: channel_decision_is_post_now_draft_hold_manual_upload_required_or_skip
+      check: channel_decision_is_post_now_draft_hold_trust_repair_manual_upload_required_or_skip
     - id: channel_strategy_accounts_for_reach
       check: distribution_decision_records_owned_audience_reach_or_targeted_conversation_strategy
     - id: external_posts_require_exact_composer_verification
@@ -212,6 +235,14 @@ behavior:
       check: completed_linkedin_carousel_records_activity_url_document_title_and_comment_state
     - id: community_posts_are_native_first
       check: reddit_and_forum_posts_avoid_external_links_in_body_unless_explicitly_approved
+    - id: reddit_account_health_checked_before_post_now
+      check: reddit_post_now_requires_account_health_and_recent_removal_assessment
+    - id: reddit_removed_or_queued_accounts_enter_trust_repair
+      check: reddit_recent_removals_or_mod_queue_default_to_trust_repair
+    - id: reddit_native_arguments_required
+      check: reddit_distribution_requires_concrete_contradiction_evidence_thesis_and_question
+    - id: reddit_no_replacement_account_bypass
+      check: reddit_distribution_must_not_create_or_use_replacement_accounts_to_bypass_moderation
     - id: linkedin_carousel_considered_when_slide_deck_exists
       check: linkedin_distribution_considers_document_carousel_before_link_preview
   budgets:
@@ -225,6 +256,10 @@ behavior:
     on_external_posting_not_approved: record_plan_and_defer
     on_low_native_reach: define_anchor_post_or_targeted_reply_strategy_before_post_now
     on_moderation_or_self_promotion_risk: prepare_draft_and_record_draft_hold
+    on_reddit_recent_removals_or_mod_queue: stop_posting_and_create_trust_repair_plan
+    on_missing_reddit_native_argument: skip_or_hold_reddit_distribution_instead_of_forcing_post
+    on_reddit_link_body_risk: remove_owned_link_from_body_and_make_comment_link_optional
+    on_reddit_mod_ambiguity: prepare_modmail_preclearance_draft_but_do_not_send_without_confirmation
     on_composer_verification_failure: record_prepared_copy_and_hold_submission
     on_link_removal_risk: move_external_link_to_optional_comment_and_require_separate_confirmation
     on_native_media_asset_available: prefer_native_channel_surface_and_record_upload_confirmation_boundary
@@ -302,6 +337,9 @@ gates:
       - audience_reach_assessment
       - held_channel_drafts
       - community_link_placement_strategy
+      - reddit_account_health_assessment
+      - reddit_native_argument_preflight
+      - reddit_trust_repair_plan
       - native_media_strategy
       - native_media_upload_boundary
       - native_media_first_comment_link

@@ -45,6 +45,9 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 - Do not treat `deferred` as a final answer when a second-wave push is requested. Reassess fit, auth state, moderation risk, and exact copy before deciding whether the channel is now `post_now`, `draft_hold`, or `skip`.
 - For communities with moderation or self-promotion risk, prepare the copy locally and hold it unless the channel-specific risk has been accepted.
 - For Reddit and similar forum communities, prefer native discussion posts over external-link announcements. Do not put Substack links in the post body by default; if a link is useful, prepare it as an optional comment-only follow-up that requires separate confirmation.
+- For Reddit specifically, use the [`reddit-native-distribution.md`](reddit-native-distribution.md) companion playbook. If recent posts are removed, waiting for mod approval, or making the account look promotional, switch the channel to `trust_repair` rather than trying another post.
+- Do not create or use replacement Reddit accounts to bypass removals, mod queues, bans, karma limits, or reputation problems. Reputation problems are handled through transparent participation, better subreddit fit, or not posting.
+- A Reddit post is eligible only when it is a standalone community-native argument: concrete contradiction, 2-3 evidence points, arguable thesis, sincere question, and no owned link in the body by default.
 - Before submitting an external post, verify the visible composer contains the intended copy. If exact composer verification fails, do not post; record the channel as prepared but held with the blocker.
 
 ## Canonical Flow
@@ -53,16 +56,19 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 2. open the package distribution plan, socials folder, or local notes surface if one exists
 3. choose only the channels that fit the piece and audience
 4. adapt the framing for each channel without changing the underlying thesis
-5. record channel fit, auth/account state, audience reach, moderation or self-promotion risk, media strategy, link-placement strategy, and the exact copy to use
-6. classify each channel as `post_now`, `draft_hold`, `manual_upload_required`, or `skip`
-7. publish or queue the downstream copy only after action-time approval for external posting and exact composer verification
-8. for native-media posts that need a manual upload, hand off the exact asset path and resume from the profile/activity feed after the user posts
-9. verify any planned first comment does not already exist before adding it
-10. record what shipped, what was held as a draft, and what was intentionally skipped
+5. for Reddit targets, run the account-health gate and native-argument preflight before drafting
+6. record channel fit, auth/account state, audience reach, moderation or self-promotion risk, media strategy, link-placement strategy, and the exact copy to use
+7. classify each channel as `post_now`, `draft_hold`, `trust_repair`, `manual_upload_required`, or `skip`
+8. publish or queue the downstream copy only after action-time approval for external posting and exact composer verification
+9. for native-media posts that need a manual upload, hand off the exact asset path and resume from the profile/activity feed after the user posts
+10. verify any planned first comment does not already exist before adding it
+11. record what shipped, what was held as a draft, what needs trust repair, and what was intentionally skipped
 
 ## Typical Outputs
 
 - subreddit post drafts
+- Reddit account-health assessment and trust-repair plan
+- Reddit native-argument preflight
 - Substack Notes copy
 - LinkedIn or X copy
 - LinkedIn document carousel PDF selection when a slide deck exists
@@ -75,5 +81,6 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 
 ## Related Docs
 
+- [`reddit-native-distribution.md`](reddit-native-distribution.md)
 - [`../substack-publishing/README.md`](../substack-publishing/README.md)
 - package-local `distribution/` or `socials/` surfaces when present
