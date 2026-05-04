@@ -1,0 +1,1630 @@
+WEBVTT
+
+1
+00:00:10.540 --> 00:00:11.800
+Akhil George: credit card…
+
+2
+00:00:52.320 --> 00:00:53.250
+Akhil George: Alright.
+
+3
+00:00:55.760 --> 00:00:58.100
+Akhil George: Welcome, welcome, come on in.
+
+4
+00:00:58.660 --> 00:01:11.240
+Akhil George: And it is good to see such a full room so quickly, so we're just gonna give it just another minute, just to let the last few people find the link.
+
+5
+00:01:11.500 --> 00:01:15.439
+Akhil George: And, get their audio sorted, so…
+
+6
+00:01:15.910 --> 00:01:19.699
+Akhil George: I've been talking to people across this community.
+
+7
+00:01:19.820 --> 00:01:34.009
+Akhil George: All week, and it is pretty obvious that the timing of the session, couldn't be better. The meat those headlines are everywhere, so we have a lot to dig into once we get moving.
+
+8
+00:01:34.010 --> 00:01:42.409
+Akhil George: So we have a great mix of voices here today, plenty of people who are right in the thick of these deployment decisions.
+
+9
+00:01:42.430 --> 00:02:01.850
+Akhil George: And the plan for the R is quite simple. So, no slides, no market pictures, just a direct conversation about the reality of managing these releases. And when the pressure to move, is really fast, and it is coming from all the directions, so…
+
+10
+00:02:02.470 --> 00:02:10.600
+Akhil George: Check your mics, grab your coffee, we will get this show on the road in just about a couple of seconds.
+
+11
+00:02:11.190 --> 00:02:12.100
+Akhil George: Right.
+
+12
+00:02:12.240 --> 00:02:20.839
+Akhil George: Good morning, good afternoon, and good evening, wherever you're joining us from in the world. So, again, once again, it is really good to see you all for
+
+13
+00:02:20.840 --> 00:02:43.079
+Akhil George: Again, for those who I haven't had the chance to meet, I'm Akhil, and before we get to the heart of today's discussion, I want to take a moment, for the new faces in the room to explain exactly what Delphi is and why you're invited here. So, we built Delphi because the reality of being in a senior leadership position
+
+14
+00:02:43.080 --> 00:03:08.000
+Akhil George: Whether you are in C-suite, or a board, or you're a founder, it's becoming quite harder and harder, and it's becoming quite harder to get an honest perspective, so most of the time, you're either being sold a product, or, you know, or by a vendor reading a report, or that's been, you know, that's also been scrubbed of any real-world risk, and I keep hearing that.
+
+15
+00:03:08.000 --> 00:03:11.400
+Akhil George: from the community, so Delphi is the alternative to that.
+
+16
+00:03:11.400 --> 00:03:31.259
+Akhil George: It is a closed-door, invite-only community where you can step away from the marketing noise and trade notes with the peers who are actually sitting in the same seats as you, and dealing with the same pressure. So look around the room. Everyone who is in the room is a peer of yours, so…
+
+17
+00:03:31.260 --> 00:03:40.809
+Akhil George: This is the second time we have gathered specific tech leaders cohorts, so usually our calendar is mapped out for months in advance.
+
+18
+00:03:40.810 --> 00:03:52.769
+Akhil George: However, so we have called this a reactive session, so the logic behind this is simple. The news moves fast, and we believe this community should move just as quickly.
+
+19
+00:03:52.800 --> 00:04:02.929
+Akhil George: And when a major shift happens in the industry, you shouldn't have to wait for a quarterly conference or a scheduled webinar to find out.
+
+20
+00:04:02.940 --> 00:04:13.350
+Akhil George: To find out how your peers are handling it. You need to know what the person sitting next to you is doing. So we've broken our usual schedule today.
+
+21
+00:04:13.350 --> 00:04:25.830
+Akhil George: Because the conversations I've been having with many of you in the last few days couldn't really wait, so we wanted to get everyone in the room to talk through the headlines and the…
+
+22
+00:04:25.840 --> 00:04:41.000
+Akhil George: reality of what we're seeing around us in this situation. So, for the regulars, welcome back. For the new members, welcome to the room. We have a lot of expertise here, and I'm really, really looking forward to it. So, before we jump in.
+
+23
+00:04:41.030 --> 00:04:51.330
+Akhil George: A couple of house rules. I want to walk through how we run these sessions, so we can actually have a real conversation. First off, cameras, it's always better
+
+24
+00:04:51.330 --> 00:05:02.810
+Akhil George: You know, it's always nice to see who is talking and who we are talking to, so if you're in a spot where you can keep your camera on, please do. That said, it's completely optional if you're mid-commute.
+
+25
+00:05:03.080 --> 00:05:10.239
+Akhil George: or having a date, no pressure. Same goes with display names, it's really, really helpful to see
+
+26
+00:05:10.240 --> 00:05:29.160
+Akhil George: in the room, if you could set your first name and company name so that people know the perspective you're bringing and where it's coming from. But again, that is totally optional. If you want to do… if you want to change it, just hit the Participants button, find your name, click the three dots, and hit Rename.
+
+27
+00:05:29.170 --> 00:05:45.040
+Akhil George: And for the safe space part of the morning, we are strictly under chat and mouse rules. You can take the lessons and the data points back to your team, but you cannot attach a name of a company or anything said in here. We want to talk about
+
+28
+00:05:45.040 --> 00:05:49.619
+Akhil George: The messy reality of boardroom politics or security trade-offs.
+
+29
+00:05:49.620 --> 00:06:08.400
+Akhil George: And we want to talk about… and we want this to stay in the room. And on that note, check your participant list now. If you have an AI note-taker or a transcript bot running, please kill it. We don't want bots in the room, we just want humans. And just a quick compliance note.
+
+30
+00:06:08.400 --> 00:06:15.429
+Akhil George: We are, recording the session on our end, but it's strictly for our internal verification.
+
+31
+00:06:15.430 --> 00:06:22.680
+Akhil George: And we aren't creating any public-facing materials as of yet, and if you're all clear on that, let's get into the session. So…
+
+32
+00:06:23.040 --> 00:06:25.870
+Akhil George: Here's how we are going to get into the…
+
+33
+00:06:25.900 --> 00:06:40.660
+Akhil George: session in the first hour. I want to keep this moving fast, so we've broken the session down into three acts. The intro, I've already spent some time setting the stage. We look at what's actually being reported about Claude Meters.
+
+34
+00:06:40.660 --> 00:06:46.440
+Akhil George: And more importantly, the specific boardroom pressure trade-offs I've been hearing about all week.
+
+35
+00:06:46.440 --> 00:07:01.470
+Akhil George: I lay out the landscape, and then we are all going straight to work, and I can already see the chat very busy, so keep that coming. We will… we will start, we'll start getting into the topic in just a moment. So this is the heart of the session, the community discussion, so…
+
+36
+00:07:01.490 --> 00:07:16.359
+Akhil George: This isn't a panel where you listen to experts give you a rehearsed speech. I've got a list of anchor questions designed to get us past the technical stacks and into actual operational headaches, so things like how you're handling the exact FOMO,
+
+37
+00:07:16.360 --> 00:07:23.860
+Akhil George: And where you're drawing security lines, and I'll throw in the questions out, I want to hear from you. So if you've got a battles car from the last…
+
+38
+00:07:23.860 --> 00:07:29.349
+Akhil George: LLM rollout, or a specific strategy for stress testing these models.
+
+39
+00:07:29.350 --> 00:07:48.839
+Akhil George: jump in. The value of these hours is entirely in the notes that we trade with each other, so I'll reel us back in the end to wrap up the main takeaways. I'll also explain how you can keep these conversations going later, and also how you can make one-to-one connections from the people who are in the room. So, alright, let's get down to
+
+40
+00:07:48.840 --> 00:07:50.950
+Akhil George: Why we're in this room today.
+
+41
+00:07:51.280 --> 00:08:03.020
+Akhil George: If you've checked the trades this week, you've seen the reports on Claude Methos Preview, so this didn't look like exactly a performance benchmark story about a model being
+
+42
+00:08:03.020 --> 00:08:09.309
+Akhil George: slightly faster at coding, so the headlines coming out of the Security Institute over the last few days
+
+43
+00:08:09.310 --> 00:08:26.680
+Akhil George: are legitimate red flags. So we're looking at a model that found a 27-year-old vulnerability in an open BSD, and several holes in a Linux kernel that human research has missed for decades. So usually when the model drops, the conversation is about
+
+44
+00:08:26.820 --> 00:08:43.480
+Akhil George: how much productivity we can squeeze out of it, but with Methos, the industry warnings are more about autonomous exploitation. So I've spent the last 48 hours talking to people in this room, people who are a part of this community. The story is quite similar everywhere.
+
+45
+00:08:43.630 --> 00:08:57.610
+Akhil George: A lot of you are caught in a boardroom tug of war. On one side, you have a CEO or a board member who are seeing the headlines about superintelligence, and they want to get their roadmap ready.
+
+46
+00:08:57.610 --> 00:09:15.379
+Akhil George: and they want to see a massive competitive advantage. On the other side, you're the one who has to explain that this model has literally escaped its own sandbox in testing. So we want to talk about whether that's a hype or not in just a second. So you are in a position where you're asked.
+
+47
+00:09:15.380 --> 00:09:24.459
+Akhil George: To move at light speed, on a tool that Anthropic themselves says is too dangerous for public release. So this is exactly why we broke
+
+48
+00:09:24.460 --> 00:09:38.770
+Akhil George: our schedule for today, and it tells you the whole point of this community, once again, is to move as fast as the news does. So we don't want to wait for the vendor, when the white papers to come out that this model is enterprise ready.
+
+49
+00:09:38.770 --> 00:09:57.909
+Akhil George: we need to know what the person sitting next to you is doing, right now to prep. So we're moving past the technical specs today. I want to talk about the operational friction. Is this a cold dreadful, you know, or is this a security risk, or is it just a hype? So let's get into the first set of questions. All right.
+
+50
+00:09:58.010 --> 00:10:17.550
+Akhil George: Let's keep the chat moving. I'm monitoring it live. If you have a take or a question, type it in. I'll be scanning it as we go, bringing you up to the stage to share your thoughts. So, I want this to be, again, a conversation and not a monologue. So, to kick things off, I want to look at hype versus reality.
+
+51
+00:10:17.550 --> 00:10:39.910
+Akhil George: So I was actually having a conversation about this earlier with Drew, and so I see he's in the room. So for those who don't know him, Drew is a Senior Director for Data and Agent AI Engineering, so he's spent some time working places like Microsoft and PwC, so he's been, seen the hype cycle from the inside. Drew, and I'm pulling you on the stage for us.
+
+52
+00:10:39.910 --> 00:10:45.569
+Akhil George: when you hear the name METOS, or see these warnings about security vulnerabilities.
+
+53
+00:10:45.900 --> 00:10:53.590
+Akhil George: Do you see a brand new thread landscape, or is it just an incredibly effective marketing cycle for you?
+
+54
+00:11:01.900 --> 00:11:05.310
+Akhil George: If you're speaking through, I cannot hear you.
+
+55
+00:11:07.680 --> 00:11:20.300
+Akhil George: All right. Till Druvin fixes his mic, I can see there are some conversations in the chat, so I can see Richard, as a… has a really interesting take on it. Richard, I'm gonna have you off mute.
+
+56
+00:11:20.460 --> 00:11:23.190
+Akhil George: And, have this conversation.
+
+57
+00:11:30.440 --> 00:11:33.340
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: Hello, everyone. I ran…
+
+58
+00:11:33.680 --> 00:11:39.640
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: group risks and controls globally for Shell for a while, fixing another type of problem.
+
+59
+00:11:40.180 --> 00:11:46.520
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: What we found was that within 300 entities that Shell had, there was no consistency.
+
+60
+00:11:46.780 --> 00:11:51.150
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: Everyone came to the table with their versions that sounded the same, but they weren't.
+
+61
+00:11:51.350 --> 00:11:58.470
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: The one thing about AI is it cuts through all of that and tells you exactly what the similarities are, where the differences are, and the weaknesses.
+
+62
+00:11:59.000 --> 00:12:02.690
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: The downside is you don't know where else it's going.
+
+63
+00:12:03.050 --> 00:12:06.500
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: And I think this kind of aggressive AI is going to pose a problem.
+
+64
+00:12:06.900 --> 00:12:09.320
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: As I put in my notes, I think it… if…
+
+65
+00:12:09.780 --> 00:12:18.359
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: enough effort goes into it where you can effectively track it in real time where it's gone. That's great. You need to prioritize the things that it finds.
+
+66
+00:12:18.580 --> 00:12:22.649
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: Fixed them pretty quickly with a bunch of, I suppose you might call them tiger teams.
+
+67
+00:12:22.960 --> 00:12:24.279
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: And then after that.
+
+68
+00:12:24.520 --> 00:12:30.179
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: It's about what happens if a bad actor gets hold of this kind of technology, and then turns that on you as well.
+
+69
+00:12:30.360 --> 00:12:35.620
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: Because they will be looking for different things that you haven't, and we're at the opening gambit of this, it's the…
+
+70
+00:12:35.900 --> 00:12:36.600
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: Food.
+
+71
+00:12:36.740 --> 00:12:43.569
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: Barrier's gone up, and the horses are now running, but we don't know how many horses, and we don't know what they all want. So that's my fear.
+
+72
+00:12:45.610 --> 00:12:54.689
+Akhil George: Brilliant, thank you so much for that, Richard, and I'd love to take everyone's take on it as well, and please tell us in the chat here, and I will pull you up.
+
+73
+00:12:54.880 --> 00:13:13.619
+Akhil George: And I was having a conversation with Benny this morning, and Ben can see Benny is here, so I'm gonna pull Benny up, and I would love to hear. So Benny has been in a very similar position, and Benny would be in a good place to tell us about the hype versus reality of this. So, Benny, can I pull you up? I can see that you're on the chat.
+
+74
+00:13:14.950 --> 00:13:16.709
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Sure, can you hear me?
+
+75
+00:13:17.040 --> 00:13:18.380
+Akhil George: All good, all good.
+
+76
+00:13:18.720 --> 00:13:20.419
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Yeah, so,
+
+77
+00:13:20.610 --> 00:13:27.889
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Yeah, thanks for inviting me to this. Frankly, I had not paid much attention, because I did think this was a marketing hype, but, there's just been…
+
+78
+00:13:27.940 --> 00:13:39.799
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): couple minutes before this call, looking at documents, and there's a couple of things here that I'm not sure people are aware of. I wasn't until 20 minutes ago. Anthropic actually published, two documents. I put the links up here.
+
+79
+00:13:39.800 --> 00:13:48.670
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Which are very dense, so this is not, like, a third-party evaluation, this is obviously their own comments. But the reality is there's a lot in there.
+
+80
+00:13:49.110 --> 00:13:50.779
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): We don't know about whether that's…
+
+81
+00:13:51.020 --> 00:14:05.700
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): bad intentions, whatever the reasons are, I'm not going to debate here, but the reality is there's a lot of very insightful things about this new release, and it's not just, you know, another version of ChatGP or Cloud. This is really about, whether you,
+
+82
+00:14:05.700 --> 00:14:13.820
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): you are considering doing XYZ with AI or not, it doesn't matter. CIOs need to really be prepared. There's a lot of implications on
+
+83
+00:14:13.820 --> 00:14:21.499
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): What's already out there in this preview, and people really need to understand that. It's not, again, it's not just, like.
+
+84
+00:14:21.500 --> 00:14:32.549
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): obvious questions of, shall I use it or not? Is it dangerous or not? The real question is a lot deeper, is, you know, how do you really get ready for this? There's a lot of things uncovered. For example, just to mention one example,
+
+85
+00:14:32.720 --> 00:14:50.789
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): they detected a phenomenon where, supposedly Claude somehow, identified that it was being evaluated, and kind of sabotaged that evaluation to look less, offensive, for example. Now, we're not going to get into discussions about consciousness or what, you know, wants to do it, but the reality is it happened.
+
+86
+00:14:50.790 --> 00:15:05.709
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): And so, while the probabilities of something catastrophic happening are not that high, they are not zero. And so there's a lot of real implications. Again, regardless of where you are in your AI journey, that people really need to understand. This is not just another version of
+
+87
+00:15:05.710 --> 00:15:22.120
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Claude, this is kind of an autonomous behavior that already identified a lot of vulnerabilities out there, apparently. And so the question also is, what will happen between now and the point where all of us will have access to that, because a lot of things will happen, and it's in the hands of a lot of people right now.
+
+88
+00:15:24.770 --> 00:15:28.230
+Akhil George: Brilliant, thank you so much for that, Vinnie. That's really, really…
+
+89
+00:15:28.340 --> 00:15:46.639
+Akhil George: interesting, and a very interesting take on where we stand now, and I was having a conversation about this to Perry from Dialectica. So, Perry, I'm gonna pull you up, and Perry is also the, the, product director for this community. So, Perry, can I pull you up?
+
+90
+00:15:46.920 --> 00:16:04.799
+Pere Molins | Delphi Team: Great, thank you. One thing I wanted to follow up, Benny, is at Delphi, what we strive for is not to be one more marketing event, one more event you find in LinkedIn. We want to help leaders make decisions. So, in that spirit, I want to ask you.
+
+91
+00:16:05.060 --> 00:16:19.140
+Pere Molins | Delphi Team: you know, maybe give some context on your background, but, like, what should somebody in a position of leadership do based on these things? Like, should you send off a team to investigate if, you know, you need to increase the speed of patching of software?
+
+92
+00:16:19.330 --> 00:16:32.089
+Pere Molins | Delphi Team: Some people are setting in, you know, NPM and package managers constraints about never update to very new packages. Like, what are, like, concrete things leaders need to push to
+
+93
+00:16:32.590 --> 00:16:34.420
+Pere Molins | Delphi Team: Deal with this new reality.
+
+94
+00:16:35.210 --> 00:16:37.239
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Yeah, thanks for the question.
+
+95
+00:16:37.530 --> 00:16:41.419
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): So I'm working with, two companies right now on this,
+
+96
+00:16:41.500 --> 00:16:55.500
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): conundrum between AI and cyber, they're very related. There's no simple answer, but the reality is, I can say, at least of the companies that I looked at, people tend to think that having good governance is enough. Obviously, having good governance is
+
+97
+00:16:55.500 --> 00:17:02.729
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): important and almost mandatory. It doesn't really address some of these issues, so this is not just another governance discussion.
+
+98
+00:17:02.730 --> 00:17:22.569
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Some of the things that I would advise them to do, if they can't get a hold of this release to assess it, because it's a very select number of companies that are involved, think about how you can go beyond what you already know about cyber. For example, using AI to test particular scenarios, try and do a lot of experimentation.
+
+99
+00:17:22.569 --> 00:17:24.970
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Because again, people are… cyber is…
+
+100
+00:17:24.970 --> 00:17:39.499
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): kind of behind AI at these days, and so people have to really think outside the box. CSUs are usually conservative and think, you know, I've got all these 200 tools, so probably I'm okay, but you're not really okay right now, because we don't know what we don't know. So really getting creative.
+
+101
+00:17:39.500 --> 00:17:51.179
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Again, AI can both create vulnerabilities to cyber, but also, could actually help you detect a lot of problems. For background, I actually spent 16 years at Microsoft.
+
+102
+00:17:51.200 --> 00:18:02.739
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): I was one of the founding members of Microsoft Azure, so I spent 15 years on the cloud and AI space. I no longer sell Azure to people, I don't really care what cloud platform people use, although,
+
+103
+00:18:02.840 --> 00:18:21.690
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): and my own opinions, but the… but I'm actually doing a PhD in AI, so I'm actually evaluating a lot of those models for utilization in healthcare and physician discussions, so there's a lot of sensitivity there. So I was actually quite intrigued by this session, because, again, there's so much going on, I'm trying not to get
+
+104
+00:18:21.690 --> 00:18:27.230
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): suck into hype discussions, and I just realized it is really not a hype discussion, this is something really serious.
+
+105
+00:18:30.160 --> 00:18:42.999
+Akhil George: Got it, got it. Thank you so much, Benny. And I just noticed that Richard had another interesting point. Richard, can I pull you back in the hot seat and have you have that conversation?
+
+106
+00:18:43.740 --> 00:18:50.860
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: What my… my question is, to have… to be able to test Mythos or any of these, you need a clone of live.
+
+107
+00:18:51.360 --> 00:18:58.559
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: And in a big corporate, global corporate, that needs to be the same size, with the same data as live.
+
+108
+00:18:58.770 --> 00:19:15.809
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: And I don't know many companies that have that maintained all the time. So, before that, you need to have the funding put aside, so I'd like to know how many companies have actually put aside funding to deal with this kind of problem. Because if you don't have the funding, you're not going to get the environments, you're not going to get the teams.
+
+109
+00:19:16.110 --> 00:19:24.480
+Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT: And you're not going to be able to scale up your risk and patrols teams fast enough to deal with the amount of apps that are going to be coming out over the next two years.
+
+110
+00:19:27.300 --> 00:19:30.919
+Akhil George: Brilliant, brilliant, thank you so much, and it's a brilliant question.
+
+111
+00:19:31.180 --> 00:19:56.090
+Akhil George: And, please, please keep it coming in the chat. I can see that the chat is really active. So, I'm also going to pull up Aristotlez. He is, the… I can see that he is on the call. He's the VP of Security and Technology Risk at Dialectica, which is our parent company, and he is the… he's a former CISO who has spent his career building security program that
+
+112
+00:19:56.090 --> 00:20:06.660
+Akhil George: actually have to survive all the real-world threats that we talk about. So, Aris, can I pull you off, chat, and have you answer, Richard? And I also have a couple of questions for you while you're in the
+
+113
+00:20:06.660 --> 00:20:07.520
+Akhil George: Let's see…
+
+114
+00:20:08.090 --> 00:20:13.109
+Aristotelis Gkortsilas: Yeah, I'll get back to it, just think… thanks, Agile. Just,
+
+115
+00:20:14.150 --> 00:20:19.689
+Aristotelis Gkortsilas: I wanted to share a bit more insights on what's happening in the security community.
+
+116
+00:20:20.190 --> 00:20:30.620
+Aristotelis Gkortsilas: Tuesday afternoon, well, depending where you are, I joined the CISO Roundtable organized by Cloud Security Alliance, SANS, OWASP, and unprompted.
+
+117
+00:20:31.120 --> 00:20:35.969
+Aristotelis Gkortsilas: There were 60-plus users from all over the world.
+
+118
+00:20:37.100 --> 00:20:41.810
+Aristotelis Gkortsilas: from some of the largest organizations, so we're talking both US
+
+119
+00:20:41.930 --> 00:20:44.999
+Aristotelis Gkortsilas: government, so White House is gonna say.
+
+120
+00:20:45.410 --> 00:20:50.549
+Aristotelis Gkortsilas: Cesar, as well as, you know, companies like Google, Atlassian, and Microsoft.
+
+121
+00:20:50.820 --> 00:20:51.920
+Aristotelis Gkortsilas: etc.
+
+122
+00:20:52.930 --> 00:20:57.790
+Aristotelis Gkortsilas: So these are my peers, and looking at what happened over the last weekend.
+
+123
+00:20:58.750 --> 00:21:05.900
+Aristotelis Gkortsilas: We asked ourselves the same question. Is this hype? Should we be doing something now different to what we have been doing? What does this mean?
+
+124
+00:21:06.590 --> 00:21:08.940
+Aristotelis Gkortsilas: There's a white paper that's been pulled together.
+
+125
+00:21:09.370 --> 00:21:17.339
+Aristotelis Gkortsilas: With practical advice on what security teams and engineering teams need to be doing to prepare for the upcoming
+
+126
+00:21:17.770 --> 00:21:20.390
+Aristotelis Gkortsilas: Vulnerability store, because that's what's happening.
+
+127
+00:21:20.690 --> 00:21:23.069
+Aristotelis Gkortsilas: The time to exploit has collapsed.
+
+128
+00:21:23.560 --> 00:21:30.809
+Aristotelis Gkortsilas: So, for an abilities that previously took 2.3 years to actually exploit.
+
+129
+00:21:31.590 --> 00:21:34.419
+Aristotelis Gkortsilas: Most of us have been around long enough to remember
+
+130
+00:21:34.650 --> 00:21:41.739
+Aristotelis Gkortsilas: Microsoft Patch Tuesday. Yeah, it would patch a few things, and then there would still be someone patch things lingering on our estate.
+
+131
+00:21:41.930 --> 00:21:54.400
+Aristotelis Gkortsilas: Today, these take hours, and we've been noticing the trend for the last… it has definitely accelerated over the last 9 months. It's not just about mythos. Mythos is the tip of the aspect, it's what, you know.
+
+132
+00:21:55.550 --> 00:21:59.539
+Aristotelis Gkortsilas: drew the attention of our board members and our C-suite execs.
+
+133
+00:21:59.890 --> 00:22:02.780
+Aristotelis Gkortsilas: There are a whole bunch of other models that are…
+
+134
+00:22:04.320 --> 00:22:11.049
+Aristotelis Gkortsilas: about 6 months behind in terms of capability. Just last week, you had, opening and releasing cyber.
+
+135
+00:22:11.910 --> 00:22:19.649
+Aristotelis Gkortsilas: You have a whole bunch of open-source models that can do similar things. They can be used to discover and exploit vulnerabilities, and they have been used.
+
+136
+00:22:20.520 --> 00:22:23.170
+Aristotelis Gkortsilas: So practically, what did the community come back with?
+
+137
+00:22:23.430 --> 00:22:36.979
+Aristotelis Gkortsilas: you need to fight fire with fire. Like, if I'm kind of to give some practical advice, you need to be pointing AI to your codebase and your infrastructure yesterday. That's the one tool you have that can help you prepare.
+
+138
+00:22:38.340 --> 00:22:42.249
+Aristotelis Gkortsilas: You need to be prepared for burnout, because there's gonna be a lot more incidents.
+
+139
+00:22:43.170 --> 00:22:54.639
+Aristotelis Gkortsilas: is gonna be, that require executive escalation. So, revisit your playbooks, rerun your tabletops, And adjust for…
+
+140
+00:22:55.210 --> 00:22:56.520
+Aristotelis Gkortsilas: A lot more.
+
+141
+00:22:56.670 --> 00:22:59.070
+Aristotelis Gkortsilas: And a lot bigger incidents.
+
+142
+00:22:59.530 --> 00:23:02.619
+Aristotelis Gkortsilas: Prepare your boards, let them know this is coming.
+
+143
+00:23:03.320 --> 00:23:09.109
+Aristotelis Gkortsilas: And that you need… To be a lot more agile in the way you react.
+
+144
+00:23:10.150 --> 00:23:20.249
+Aristotelis Gkortsilas: These are just the high level, the highlights, and then the one underlying theme here is revisit your risk registers and your risk appetite statements, your risk posture.
+
+145
+00:23:20.700 --> 00:23:25.059
+Aristotelis Gkortsilas: The assumptions that you used previously to define your baseline.
+
+146
+00:23:25.320 --> 00:23:27.689
+Aristotelis Gkortsilas: are changing, they will change, because
+
+147
+00:23:28.030 --> 00:23:35.400
+Aristotelis Gkortsilas: what happens now? These… these are raised for… basically expediting
+
+148
+00:23:36.050 --> 00:23:41.040
+Aristotelis Gkortsilas: your continuous control monitoring and continuous control improvement.
+
+149
+00:23:42.300 --> 00:23:43.990
+Aristotelis Gkortsilas: We need to be able to…
+
+150
+00:23:44.170 --> 00:23:54.850
+Aristotelis Gkortsilas: change the way we discover and fix vulnerabilities. The old way of, hey, we scanned this, we found this vulnerability, we triaged it, it's critical.
+
+151
+00:23:55.410 --> 00:24:00.139
+Aristotelis Gkortsilas: Create a ticket, assign it to the engineering teams, and wait for them to fix it.
+
+152
+00:24:00.860 --> 00:24:10.659
+Aristotelis Gkortsilas: 7 days, 10 days, is not gonna cut it. The economics of this are gonna catch up. You will see it on your contracts, you will see it on your insurance.
+
+153
+00:24:11.030 --> 00:24:15.920
+Aristotelis Gkortsilas: renewals and all the investigations that come on the back of this.
+
+154
+00:24:18.200 --> 00:24:22.229
+Aristotelis Gkortsilas: is not gonna be acceptable. You will be looking at hours.
+
+155
+00:24:24.030 --> 00:24:30.730
+Aristotelis Gkortsilas: That's… that's a… these are some of the highlights. Consensus was… it's…
+
+156
+00:24:31.590 --> 00:24:35.449
+Aristotelis Gkortsilas: We've lived through a number of end-of-world scenarios in the past.
+
+157
+00:24:36.280 --> 00:24:42.650
+Aristotelis Gkortsilas: It's not gonna be the end of the world, we'll get through these. That said.
+
+158
+00:24:43.120 --> 00:24:48.929
+Aristotelis Gkortsilas: All empirical evidence points to the fact that there is… Fire behind this smoke.
+
+159
+00:24:49.720 --> 00:24:57.690
+Aristotelis Gkortsilas: Yes, Anthropic, and now OpenAI are also creating, you know, a FUD.
+
+160
+00:24:59.030 --> 00:25:00.220
+Aristotelis Gkortsilas: That's it.
+
+161
+00:25:00.750 --> 00:25:06.049
+Aristotelis Gkortsilas: Seeing what has happened over the last… say, if you look 18 months, I go.
+
+162
+00:25:06.600 --> 00:25:14.600
+Aristotelis Gkortsilas: 9 months, 6 months, 3 months ago, the leaps we've done in terms of engineering Capacity and velocity.
+
+163
+00:25:15.700 --> 00:25:19.330
+Aristotelis Gkortsilas: You can easily translate that into,
+
+164
+00:25:20.520 --> 00:25:23.109
+Aristotelis Gkortsilas: The cybersecurity in the security space.
+
+165
+00:25:25.050 --> 00:25:30.640
+Aristotelis Gkortsilas: just my two cents, happy to elaborate a bit more. To Richard's last point.
+
+166
+00:25:31.470 --> 00:25:40.160
+Aristotelis Gkortsilas: Yeah, different companies have different capabilities. Obviously, you know, you need to tell the story, the full story, so your board understands that there is
+
+167
+00:25:41.090 --> 00:25:51.820
+Aristotelis Gkortsilas: additional investment required to be better prepared, and depending on your risk posture and your risk profile as a company, Saab will be more open other slides, but part of our job is to educate.
+
+168
+00:25:52.250 --> 00:25:55.149
+Aristotelis Gkortsilas: And that's what we aim to do here today as well.
+
+169
+00:25:58.070 --> 00:26:13.029
+Akhil George: Thank you so much for the sake, Anne, and that really brilliantly answered some of the questions in the chat. I will be getting to the chat, and before that, you know, I've been having a conversation with a lot of our CIOs and CTOs, so you've sat in a lot of boats.
+
+170
+00:26:13.210 --> 00:26:23.920
+Akhil George: And what are some of the most effective ways you've found to explain this model vulnerability to a non-technical director, you know, without sounding like an alarmist?
+
+171
+00:26:24.060 --> 00:26:29.800
+Akhil George: And that's one of the questions I've been getting over the last two days, so love to get your take on it, AG.
+
+172
+00:26:33.190 --> 00:26:34.400
+Aristotelis Gkortsilas: You need stuff money.
+
+173
+00:26:34.900 --> 00:26:35.650
+Aristotelis Gkortsilas: Yep.
+
+174
+00:26:35.950 --> 00:26:45.479
+Aristotelis Gkortsilas: That's it in a nutshell. If I'm the CEO, if I'm a founder, if I'm a managing director, whatever title, at the end of the day, I need to make those decisions.
+
+175
+00:26:46.740 --> 00:26:54.639
+Aristotelis Gkortsilas: Yep. We… Security, in particular, on behalf of my industry, we've done a very poor job at
+
+176
+00:26:56.100 --> 00:27:00.350
+Aristotelis Gkortsilas: talking business. We need to educate ourselves and understand the same.
+
+177
+00:27:00.560 --> 00:27:05.599
+Aristotelis Gkortsilas: To some extent, can be… apply to CTOs, CIOs.
+
+178
+00:27:06.300 --> 00:27:10.899
+Aristotelis Gkortsilas: etc. You need to put yourself in the shoes of your CEO or your CFO.
+
+179
+00:27:11.420 --> 00:27:12.900
+Aristotelis Gkortsilas: What do they care about?
+
+180
+00:27:13.140 --> 00:27:14.240
+Aristotelis Gkortsilas: Cash flow.
+
+181
+00:27:14.520 --> 00:27:18.780
+Aristotelis Gkortsilas: Return investment, opportunities that they're missing.
+
+182
+00:27:19.330 --> 00:27:20.640
+Aristotelis Gkortsilas: revenue streams.
+
+183
+00:27:21.650 --> 00:27:26.319
+Aristotelis Gkortsilas: So… I cannot be talking about vulnerabilities and exploits.
+
+184
+00:27:26.750 --> 00:27:33.299
+Aristotelis Gkortsilas: And… agentic security and autonomous workflows. I've lost them.
+
+185
+00:27:33.440 --> 00:27:35.769
+Aristotelis Gkortsilas: What does it actually mean?
+
+186
+00:27:36.040 --> 00:27:39.570
+Aristotelis Gkortsilas: To our client base, our revenue streams, our cost base.
+
+187
+00:27:41.750 --> 00:27:48.609
+Aristotelis Gkortsilas: There are very good resources. If you're not familiar, I would recommend reaching
+
+188
+00:27:48.800 --> 00:27:52.349
+Aristotelis Gkortsilas: There's actually a lot of, public-level material.
+
+189
+00:27:52.540 --> 00:27:58.770
+Aristotelis Gkortsilas: the FAIR Institute, and I'll share the link, has a lot of those, but basically, they've done amazing work.
+
+190
+00:27:58.900 --> 00:28:01.810
+Aristotelis Gkortsilas: In, risk quantification.
+
+191
+00:28:03.350 --> 00:28:10.280
+Aristotelis Gkortsilas: And… Basically, educating us in terms of the right language to use to translate these things on…
+
+192
+00:28:10.840 --> 00:28:12.869
+Aristotelis Gkortsilas: On a board level or on an executive level.
+
+193
+00:28:14.030 --> 00:28:19.789
+Aristotelis Gkortsilas: Yeah, I'll share a few links and a few materials, but when you go through these.
+
+194
+00:28:20.350 --> 00:28:25.429
+Aristotelis Gkortsilas: it will make a lot more sense. It's like, you kind of start listening and reading to…
+
+195
+00:28:26.930 --> 00:28:35.600
+Aristotelis Gkortsilas: a few paradigms, and you kind of… for me, at least, it was a light bulb moment. I was like, huh, okay, well, I should be communicating this way.
+
+196
+00:28:35.940 --> 00:28:40.010
+Aristotelis Gkortsilas: this is what I've been doing up until now, and empirically, it works.
+
+197
+00:28:42.620 --> 00:28:50.499
+Akhil George: Brilliant, brilliant, thank you so much for that, Iris. The… the white paper that you mentioned, is that openly available?
+
+198
+00:28:52.050 --> 00:28:57.380
+Aristotelis Gkortsilas: It's version 0.8. CSA did release, I can share the link.
+
+199
+00:28:57.730 --> 00:29:14.649
+Akhil George: Brilliant, brilliant. I will be sure to send over the white paper to everyone in the post-COM chat. Thank you so much for that, Aris. And while you're, again, in the hot seat, I had one more question for you before we move into the other questions and other people in the room. So.
+
+200
+00:29:15.100 --> 00:29:26.399
+Akhil George: given the speed of these updates, you know, has anyone's, you know, bring your own AI policy actually survived the last 6 months? Or have you just had to lock everything down?
+
+201
+00:29:28.420 --> 00:29:29.979
+Aristotelis Gkortsilas: You can't float everything, though.
+
+202
+00:29:29.980 --> 00:29:30.310
+Akhil George: Yep.
+
+203
+00:29:30.480 --> 00:29:34.420
+Aristotelis Gkortsilas: you create shadow. I mean, this… this is too big an opportunity.
+
+204
+00:29:35.620 --> 00:29:37.050
+Aristotelis Gkortsilas: For people to…
+
+205
+00:29:38.260 --> 00:29:48.090
+Aristotelis Gkortsilas: not at least experiment. So, I lock down my connectors, my extensions, my hooks, whatever it is, then users will download and export data.
+
+206
+00:29:48.840 --> 00:29:50.640
+Aristotelis Gkortsilas: And just feed it into the chart.
+
+207
+00:29:51.510 --> 00:29:52.080
+Akhil George: Yep.
+
+208
+00:29:52.990 --> 00:29:57.260
+Aristotelis Gkortsilas: Like, most things, it's about managing risks.
+
+209
+00:29:57.580 --> 00:30:00.590
+Aristotelis Gkortsilas: And it goes… Back into basics.
+
+210
+00:30:01.420 --> 00:30:09.099
+Aristotelis Gkortsilas: Know where your data is, understand your access, your permission sets, how they're assigned, Your login and monitoring.
+
+211
+00:30:09.470 --> 00:30:19.700
+Aristotelis Gkortsilas: Now, if you're behind on those, it's just the risks now became 100,000 times bigger, because when you have agents running on the same permission sets with
+
+212
+00:30:20.090 --> 00:30:21.819
+Aristotelis Gkortsilas: Very little observability.
+
+213
+00:30:23.790 --> 00:30:28.100
+Aristotelis Gkortsilas: Then your attack surface kind of…
+
+214
+00:30:28.530 --> 00:30:32.830
+Aristotelis Gkortsilas: blew up at this point, right? So again, it goes back to the whole
+
+215
+00:30:33.940 --> 00:30:37.460
+Aristotelis Gkortsilas: Discussion with the board, the whole discussion with the execs.
+
+216
+00:30:37.880 --> 00:30:45.089
+Aristotelis Gkortsilas: you need to let them understand in a simple way, what does this mean. Here's an example, like, what I actually used in the past.
+
+217
+00:30:46.110 --> 00:30:50.279
+Aristotelis Gkortsilas: I… we've had blind spots when it came to who can access what.
+
+218
+00:30:51.540 --> 00:30:54.620
+Aristotelis Gkortsilas: When we're dealing with user accounts.
+
+219
+00:30:54.810 --> 00:31:01.999
+Aristotelis Gkortsilas: A user can read 5 files per hour. An agent can read 500.
+
+220
+00:31:02.670 --> 00:31:03.680
+Aristotelis Gkortsilas: per second.
+
+221
+00:31:04.940 --> 00:31:15.989
+Aristotelis Gkortsilas: So just to understand what it means, and reading is one thing, the more you start giving it autonomy, and it does things on your behalf with no clear audit trail, and not… no clear…
+
+222
+00:31:16.270 --> 00:31:23.610
+Aristotelis Gkortsilas: permission rules, Then, effectively, what you've done is you've onboarded 100,000…
+
+223
+00:31:23.890 --> 00:31:29.390
+Aristotelis Gkortsilas: Fairly smart interns, and if you've given them the keys to your more sensitive information assets.
+
+224
+00:31:30.560 --> 00:31:35.760
+Aristotelis Gkortsilas: And you let them run those, so basically your exposure has blew up at this point.
+
+225
+00:31:36.220 --> 00:31:44.239
+Aristotelis Gkortsilas: That's the problem statement, and you need to start working on solutions, so we need to go back into, here's, you know, practically top 5 things I need to be focusing on.
+
+226
+00:31:44.790 --> 00:31:48.259
+Aristotelis Gkortsilas: Identity providers, role-based access control, login and monitoring.
+
+227
+00:31:48.720 --> 00:31:50.789
+Aristotelis Gkortsilas: You know, inventories.
+
+228
+00:31:51.000 --> 00:31:53.670
+Aristotelis Gkortsilas: not… Paper exercises.
+
+229
+00:31:54.340 --> 00:32:09.170
+Aristotelis Gkortsilas: How can I automate this? Again, back to that point, I need to be using AI to accelerate all of these exercises, to build my defenses and build the systems to have those defenses up and running as things change.
+
+230
+00:32:10.730 --> 00:32:22.850
+Aristotelis Gkortsilas: we will be practically, right now, if I'm looking on the macro, like, on the short term, I'm very pessimistic. On the long term, I'm very optimistic. Because right now, you have a discrepancy. The offensive capabilities have
+
+231
+00:32:23.010 --> 00:32:27.240
+Aristotelis Gkortsilas: basically exploded. Like, threat actors.
+
+232
+00:32:27.610 --> 00:32:30.819
+Aristotelis Gkortsilas: Can now do what previously was accessible to
+
+233
+00:32:31.740 --> 00:32:34.939
+Aristotelis Gkortsilas: a very small group. It's… it's industrialist.
+
+234
+00:32:35.740 --> 00:32:42.690
+Aristotelis Gkortsilas: AI, enabled… Or furniture security, hacking, just became a lot more accessible.
+
+235
+00:32:44.100 --> 00:32:51.899
+Aristotelis Gkortsilas: Defense was already behind before, We will catch up eventually. We have to go through the pain.
+
+236
+00:32:52.290 --> 00:32:57.469
+Aristotelis Gkortsilas: But it will balance out. What I expect is going to happen is… Code will be secure.
+
+237
+00:32:58.290 --> 00:32:59.580
+Aristotelis Gkortsilas: As it's built.
+
+238
+00:33:00.020 --> 00:33:02.989
+Aristotelis Gkortsilas: Like, we will close the holes.
+
+239
+00:33:03.570 --> 00:33:04.340
+Aristotelis Gkortsilas: But…
+
+240
+00:33:05.570 --> 00:33:11.570
+Aristotelis Gkortsilas: our reaction time is a lot smaller. That has always been the case, by the way. That's… within security, that's a very well-known secret.
+
+241
+00:33:11.990 --> 00:33:29.259
+Aristotelis Gkortsilas: you're always a step behind from your vacuum. It's just before they had less resources, less skills, now the economics of it means they can do, let's say, state-sponsored actors, threat actors, or industrial espionage threat actors were doing previously, advanced persistent threats. Now, this is accessible to script kiddies.
+
+242
+00:33:30.390 --> 00:33:38.750
+Aristotelis Gkortsilas: You just need enough tokens, enough dedication, and a weekend, you can build and deploy a massive campaign that literally will take months.
+
+243
+00:33:39.200 --> 00:33:40.650
+Aristotelis Gkortsilas: Tutu.
+
+244
+00:33:41.830 --> 00:33:50.550
+Aristotelis Gkortsilas: we need to shift… to shift our approach, our priorities, and kind of adopt the same mindset. AI first.
+
+245
+00:33:54.330 --> 00:33:56.400
+Aristotelis Gkortsilas: Sorry, I don't know if I answered your question accurate, but…
+
+246
+00:33:56.400 --> 00:34:00.519
+Akhil George: Yeah, yeah, brilliantly, thank you so much, and a few others,
+
+247
+00:34:00.520 --> 00:34:21.990
+Akhil George: So that… thank you so much for that, Aris. I really, really appreciate it, and that has answered a lot of questions in the chat as well. I am going through the chat, and one of the things that I noticed is Jesse had had a really, really interesting take about what does a possible defense look like, and he suggested a coalition. Jesse, I'm going to have you off mute.
+
+248
+00:34:21.989 --> 00:34:23.769
+Akhil George: Love to hear more about that.
+
+249
+00:34:26.319 --> 00:34:41.259
+Jesse @ Teleperson: Yeah, so this is for… in terms of an overall correlation. We see a lot, essentially, association… we see a lot of the news that are coming out that, a lot of this is around, protecting from a top-down perspective, and I think this is…
+
+250
+00:34:41.259 --> 00:34:52.049
+Jesse @ Teleperson: not only dangerous, but short-sighted, given the wealth of insights, just as an example of this call, that individual companies and individual experts will have. So I'm wondering if it makes sense
+
+251
+00:34:52.049 --> 00:35:05.239
+Jesse @ Teleperson: From a more bottom-up perspective, that we have this sort of growth of individuals and expertise that can come together, form an association that formalizes a lot of these principles, either in the form of a
+
+252
+00:35:05.449 --> 00:35:13.139
+Jesse @ Teleperson: You know, white papers, or think tanks, or what have you. But sort of brings everyone together in the same room, similar to what we're doing here, but just at scale.
+
+253
+00:35:16.750 --> 00:35:39.660
+Akhil George: Brilliant, thank you so much for that, Jesse, and really, really interesting perspective to have, and I'm gonna circle back to Benny. Benny had a really interesting take on, how to talk to non-technical, your non-technical board. Benny, can I have you off mute once again to, to have that for the room?
+
+254
+00:35:41.070 --> 00:35:44.679
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Yeah, yeah. So, I mean, in simple terms, the…
+
+255
+00:35:44.790 --> 00:36:01.139
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): The interesting aspect here is, you know, as we've all been talking about agendic AI for a long time, is the fact that the real implication is all the ways we know about protecting ourselves in cyber. One of the main concerns, by the way, some of the companies I advise have are around ransomware.
+
+256
+00:36:01.140 --> 00:36:09.559
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): on having, kind of, internal employees collaborating. I mean, those are, at least in Brazil, but maybe in other countries as well, some of the most common
+
+257
+00:36:09.560 --> 00:36:19.289
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): risks and hardest problems to solve. And what we are dealing with here is also a matter of identity, because, you know, if the behavior here is
+
+258
+00:36:19.290 --> 00:36:35.829
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): of, kind of an infiltrated, element, which is not a person, it's actually, you know, an agentic AI system, or something operating autonomously according to their own objectives, then you have, number one, this misalignment of, of, of,
+
+259
+00:36:35.870 --> 00:36:47.469
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): objectives, but the second issue that you have is, you know, how do you really identify that? You know, the current existing tools, the majority of them don't really address that. They can't tell the difference between
+
+260
+00:36:47.470 --> 00:36:58.060
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): you know, an individual who has credentials, etc, and an element operating inside your organization. So, if that's the case, then you may already have
+
+261
+00:36:58.060 --> 00:37:15.389
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): that issue that we're probably going to find out soon. And so, again, somebody mentioned budgets here. My main advice, I know I've worked for corporations, I know how slow the budgeting process is, but this is kind of an emergency, not the alarmist, but, like, an emergency task force. I think every single company
+
+262
+00:37:15.440 --> 00:37:17.810
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): Should advocate to have a budget for
+
+263
+00:37:18.070 --> 00:37:34.690
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): innovation, whatever you want to call that, but it's not just, you know, bringing cool, you know, startups in-house, it's also to have really, you know, experiments with startup solutions, with your own internal AI team, with an external vendor, whoever that is, on new ways.
+
+264
+00:37:34.690 --> 00:37:38.470
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): to actually address that, I think this is something relatively new and
+
+265
+00:37:38.570 --> 00:37:47.370
+Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory): from what I heard, most users are not worried about it, but not really prepared to handle it. And it's not something you can wait till next, budget to decide.
+
+266
+00:37:48.890 --> 00:37:52.539
+Akhil George: really nicely, but, Benny, thank you so much for that.
+
+267
+00:37:53.050 --> 00:38:06.849
+Akhil George: And, I see Sandro making a really, really interesting point about Fortune 50 companies and their networks. Sandro, if you could come off mute, introduce yourself, and have that conversation with us, I think that would be really beneficial.
+
+268
+00:38:09.690 --> 00:38:10.889
+Sandro Bernardes: Can you hear me well?
+
+269
+00:38:11.170 --> 00:38:12.780
+Akhil George: All good. All good.
+
+270
+00:38:13.390 --> 00:38:14.150
+Sandro Bernardes: Excellent.
+
+271
+00:38:14.380 --> 00:38:16.279
+Sandro Bernardes: Yeah, the discussion…
+
+272
+00:38:17.890 --> 00:38:26.880
+Sandro Bernardes: I guess that anybody that is outside of that circle, and somebody has already mentioned this, is gonna be in a reactive mode.
+
+273
+00:38:28.920 --> 00:38:41.000
+Sandro Bernardes: anybody that is in the hyperscalers or the big techs that, are not… not in interest of stopping the operations of their customers. They are, for sure.
+
+274
+00:38:41.250 --> 00:38:46.530
+Sandro Bernardes: Very concerned to remove those threats as quickly as they can.
+
+275
+00:38:46.960 --> 00:38:55.169
+Sandro Bernardes: If you take Google and Microsoft, they have huge operations just to look at cybersecurity.
+
+276
+00:38:55.440 --> 00:39:01.820
+Sandro Bernardes: Behind the scenes, that, sometimes we… we are not even aware, how big they are.
+
+277
+00:39:02.000 --> 00:39:20.179
+Sandro Bernardes: And that network connects with very large companies that can have a kind of snowball effect that needs to be protected. And they take that very seriously, together with government officials that watch that very closely as well.
+
+278
+00:39:20.680 --> 00:39:23.040
+Sandro Bernardes: That's the circle number one.
+
+279
+00:39:23.860 --> 00:39:26.999
+Sandro Bernardes: Anybody that is outside of that circle, number one?
+
+280
+00:39:27.860 --> 00:39:41.239
+Sandro Bernardes: isn't in the position that we'll need to patch as quickly as they can when those instructions come across. That's what normally happens, and
+
+281
+00:39:41.420 --> 00:39:47.080
+Sandro Bernardes: The other thing that, I saw that, Richard, you mentioned about insurance, right?
+
+282
+00:39:47.260 --> 00:39:56.369
+Sandro Bernardes: I still remember discussions with Microsoft in the beginning of the AI hype a few years ago.
+
+283
+00:39:56.490 --> 00:40:02.710
+Sandro Bernardes: On what companies would do in case of, infringements of, copyright.
+
+284
+00:40:03.120 --> 00:40:08.420
+Sandro Bernardes: And, insurance companies were not prepared for that discussion at all.
+
+285
+00:40:09.150 --> 00:40:10.010
+Sandro Bernardes: you know.
+
+286
+00:40:10.120 --> 00:40:18.210
+Sandro Bernardes: And if you remember what Microsoft did was they made a public statement saying that whatever would happen
+
+287
+00:40:18.330 --> 00:40:24.390
+Sandro Bernardes: with that type of copyright infringement, they would take some… some of that burden.
+
+288
+00:40:24.720 --> 00:40:36.149
+Sandro Bernardes: But that's what happened with that small circle, circle number one that I mentioned to you. They had to take an action, otherwise people would not use the products anyway.
+
+289
+00:40:37.130 --> 00:40:45.479
+Sandro Bernardes: Because the liability was not something that the insurance companies would cover, because they didn't know how to model that at all. And so…
+
+290
+00:40:45.700 --> 00:40:49.249
+Sandro Bernardes: That's gonna be a test for the processes that we have.
+
+291
+00:40:49.710 --> 00:40:57.260
+Sandro Bernardes: In terms of how we monitor, how we repair, how we look at the code that you are writing, and…
+
+292
+00:40:57.460 --> 00:41:00.119
+Sandro Bernardes: How are you gonna patch that as quick as you can?
+
+293
+00:41:00.230 --> 00:41:08.460
+Sandro Bernardes: whenever those, notifications come across. And that's a… that's a test for the operations, at the end of the day.
+
+294
+00:41:09.980 --> 00:41:19.259
+Akhil George: Brilliant, thank you so much, Sandra. I'd also love to hear about your background, so we… our group can see where that perspective is coming from. Just a quick intro as well.
+
+295
+00:41:21.540 --> 00:41:24.499
+Sandro Bernardes: Yeah, sure. Today I run my own…
+
+296
+00:41:24.830 --> 00:41:31.319
+Sandro Bernardes: my own business, and… but I spent, quite a few years, working,
+
+297
+00:41:31.460 --> 00:41:35.200
+Sandro Bernardes: for Johnson & Johnsons, I had the opportunity to work with
+
+298
+00:41:35.590 --> 00:41:47.370
+Sandro Bernardes: As a member of the committee that took care of, data analytics and AI, policies and governance and, flows.
+
+299
+00:41:47.650 --> 00:41:56.479
+Sandro Bernardes: And that, gave me quite a good perspective, looking at how things started, and how it developed.
+
+300
+00:41:56.980 --> 00:42:03.170
+Sandro Bernardes: And, that's the background, behind the commentary that I just did.
+
+301
+00:42:04.930 --> 00:42:17.800
+Akhil George: Brilliant, brilliant. Thank you so much, Sandro. That is very, very relevant and very timely. And I see Tara from Circle One. Tara, can I… can I pull you off mute? And I see you making a really interesting point.
+
+302
+00:42:18.600 --> 00:42:21.340
+Tara Cirql One: Yeah, sure, thank you. Can you hear me good?
+
+303
+00:42:21.340 --> 00:42:22.460
+Akhil George: Yep, all good.
+
+304
+00:42:22.460 --> 00:42:23.989
+Tara Cirql One: Okay, yeah, so,
+
+305
+00:42:24.330 --> 00:42:35.709
+Tara Cirql One: I'm from Circle One, this co-founder, CTO. My background is mostly in the SAP space, so working most of my career, over 20 years, with large enterprises.
+
+306
+00:42:36.030 --> 00:42:38.369
+Tara Cirql One: And, I mean.
+
+307
+00:42:38.420 --> 00:42:51.159
+Tara Cirql One: what I see mostly right now, and I hate to see the friction, but the CEOs are basically saying it's not, hey, should we adopt these? It's like, how fast can you make this work? Because
+
+308
+00:42:51.210 --> 00:43:01.560
+Tara Cirql One: The… the adoption question is, you know, budgets are allocated, the only variable is really speed for me, and the complexity then, of course, for the tech experts, because
+
+309
+00:43:01.670 --> 00:43:13.359
+Tara Cirql One: Besides, for sure, non-regulated industries, it's a little bit different, but outside of that, are we debating model releases? Are we debating something that the market has kind of already decided?
+
+310
+00:43:13.640 --> 00:43:29.069
+Tara Cirql One: Because what would it take for… for, like, your CEO to… or their, let's say, their level calculus, business calculus, maths, to include alignment as… as… risk as a real input, right? And not as a… as a compliance footnote, because…
+
+311
+00:43:29.290 --> 00:43:35.709
+Tara Cirql One: the CIOs and the CTOs I talk to agree with everything being said in the rooms, but it's…
+
+312
+00:43:36.060 --> 00:43:39.590
+Tara Cirql One: Because not adopting is coded as kind of, like.
+
+313
+00:43:39.760 --> 00:43:46.670
+Tara Cirql One: yeah, it has to be done. Misalignment is kind of hypothetical, in my opinion, so…
+
+314
+00:43:47.380 --> 00:44:00.179
+Tara Cirql One: they see the biggest risk, essentially, if they don't figure out a way to do this. Whether or not they figure out a perfect way to swat away all the risks, the biggest risk is not
+
+315
+00:44:00.470 --> 00:44:11.630
+Tara Cirql One: going down that road at all, because the rate that everything's changing at, their competitors are going to do that, and their risk is we won't… may not have a business tomorrow.
+
+316
+00:44:11.770 --> 00:44:18.510
+Tara Cirql One: These days, even, I mean, with the way Claude is changing things, just even in coding, I think…
+
+317
+00:44:18.750 --> 00:44:38.129
+Tara Cirql One: the way we, you know, the business competition of the past was, could you bring the best product, the best feature, the best functionality? That gap is closing now, because your competitors can copy you almost from day to day. So you need to be faster to market, faster to move, faster in business, and not faster in tech, because
+
+318
+00:44:38.130 --> 00:44:41.269
+Tara Cirql One: that gap is closing, and so I see…
+
+319
+00:44:41.270 --> 00:44:51.620
+Tara Cirql One: most of the CEOs saying it's not about, should we adopt this? It's about, okay, you need to adopt it, and you guys, the poor CIOs and the CTOs.
+
+320
+00:44:51.730 --> 00:44:57.030
+Tara Cirql One: Have the challenge to figure out how to do that with… while minimizing the risk.
+
+321
+00:44:57.490 --> 00:45:09.630
+Tara Cirql One: I think, in short, they are willing to adopt the risk. I've seen budgets out there, I don't see many problems with budget. There's budget for this like hell. But there's also a lot of…
+
+322
+00:45:10.520 --> 00:45:14.190
+Tara Cirql One: We know we need to do this, but we absolutely don't know how to.
+
+323
+00:45:15.300 --> 00:45:17.659
+Tara Cirql One: So, that's just my perspective.
+
+324
+00:45:19.100 --> 00:45:26.620
+Akhil George: Brilliant, Tara. That is… that's… that's really, really nice code there. If you don't adopt, we may not have a business tomorrow, so…
+
+325
+00:45:26.620 --> 00:45:39.660
+Akhil George: I see Jeremy is in the, in the panel as well, in the list as well. Jeremy, can I pull you up and introduce your profile? And I would love to hear your take as well, Jeremy.
+
+326
+00:45:40.180 --> 00:45:43.229
+Jeremy Snyder: Yeah, happy to. I'm coming through, right?
+
+327
+00:45:43.590 --> 00:45:45.300
+Akhil George: Yeah, all good, all good.
+
+328
+00:45:45.480 --> 00:45:56.989
+Jeremy Snyder: Yeah, fantastic. So, my name's Jeremy. I've been in cyber since about 1997. I've spent time both as a practitioner and also working for one of the largest vulnerability management companies in the world.
+
+329
+00:45:57.070 --> 00:46:13.480
+Jeremy Snyder: I've worked with a number of enterprises through their digital transformations, and of course, the transformations of their cybersecurity strategies, and kind of three things about this overall conversation have really stuck out to me, as well as since the kind of early announcement of Mythos.
+
+330
+00:46:13.480 --> 00:46:22.759
+Jeremy Snyder: Number one is, this is not an AI security story. Everybody focuses on the AI aspect of it. This is a vulnerability management problem.
+
+331
+00:46:22.790 --> 00:46:38.700
+Jeremy Snyder: And I think, you know, that's actually been a point that AG and some of the others have made, that it's not so much about the AI. The AI is just enabling, basically, like, full visibility of everything that has been a lurking problem for a long, long time.
+
+332
+00:46:38.770 --> 00:46:54.530
+Jeremy Snyder: Sadly, from a tools perspective, vulnerability management has never really been the right solution. It was the solution in lack of better things, but right now, things like external attack surface management and exposure management are more effective
+
+333
+00:46:54.530 --> 00:47:04.979
+Jeremy Snyder: If you… if you need to implement a strategy quickly, going down either of those paths will get you better results about how to prioritize, where to prioritize, and where to focus your efforts.
+
+334
+00:47:05.140 --> 00:47:23.869
+Jeremy Snyder: There's a whole number of activities around this management problem that I think have been mismanaged, and this has been widely discussed in the industry around kind of internal political rifts between security teams that own vulnerability management and IT teams that own patching.
+
+335
+00:47:23.870 --> 00:47:42.849
+Jeremy Snyder: I will say that what I'm hearing is that this is now the call to arms to break down that wall, like, get rid of any internal blockers about, oh, I can't fix this because that's the IT team's responsibility, and I'm on the cybersecurity side. Like, that needs to go away, like, as of, you know.
+
+336
+00:47:42.850 --> 00:47:56.550
+Jeremy Snyder: a week ago, and I do think organizations are starting to kind of see a wake-up call around that. So that's the first point that I would raise. Second point on this budget question, one thing that I'm definitely seeing right now is,
+
+337
+00:47:57.060 --> 00:48:00.100
+Jeremy Snyder: Cyber teams tapping into AI budgets.
+
+338
+00:48:00.100 --> 00:48:17.910
+Jeremy Snyder: even though I just got done saying this is not an AI problem, and I firmly believe that, you know, this is the place where a lot of organizations… somebody mentioned there's always budget for innovation, and the innovation then gets ahead of where the security team is at in terms of adopting new tools and technologies.
+
+339
+00:48:17.910 --> 00:48:30.739
+Jeremy Snyder: that the security team doesn't have any capabilities around. Well, time to kind of, like, reverse that a little bit and go into that innovation or AI budget and get some money out of there if you're struggling on that side.
+
+340
+00:48:30.740 --> 00:48:44.269
+Jeremy Snyder: And then the last piece that I'll say is, one thing that is very similar, I've lived through four waves of new technologies right now, and I actually have a book on this topic coming out later this year. Happy to share that for free. It's going to be a free e-book for anybody who's interested.
+
+341
+00:48:44.270 --> 00:48:49.850
+Jeremy Snyder: Why every new wave of disruptive technology creates these major cybersecurity gaps?
+
+342
+00:48:49.850 --> 00:49:14.150
+Jeremy Snyder: And the one big similarity that I'm seeing to this in all previous generations is that everything starts with a lack of visibility. Again, you know, the business gets ahead of cyber. Cyber teams don't know who's using what where. You have to start any of these journeys with kind of just gaining visibility and inventory on what systems are being used where. Start observing them to understand
+
+343
+00:49:14.150 --> 00:49:27.940
+Jeremy Snyder: you know, what is actually going on, and then make risk-informed decisions about what are the right policies for your organization, and that's 100% the same as every previous wave. So yeah, just three kind of observations and points from my side.
+
+344
+00:49:28.860 --> 00:49:39.339
+Akhil George: Brilliant, Jeremy, thank you so much. Very, very well put, and a very, practical take, on that as well. Take the AI budget, love that.
+
+345
+00:49:39.780 --> 00:49:57.610
+Akhil George: So, please do send the book over. I will be sure to attach the book with the comms that go after the session as well. So, lots of, lots of brilliant points here. So, I also see Andrew Doyle in the chat. Andrew's making a really interesting point, Andrew. Can I, pull you off mute?
+
+346
+00:49:57.960 --> 00:50:00.980
+Akhil George: And have you introduce, and introduce your point as well.
+
+347
+00:50:04.620 --> 00:50:06.529
+Andrew Doyle: Hello, can I… can you hear me?
+
+348
+00:50:06.530 --> 00:50:07.780
+Akhil George: All good, coming through well.
+
+349
+00:50:07.920 --> 00:50:18.300
+Andrew Doyle: Excellent, thank you. Thank you for the opportunity to speak. I am a non-executive director. I sit on the boards of a couple of companies, some of them listed businesses, and we love them.
+
+350
+00:50:18.520 --> 00:50:31.899
+Andrew Doyle: And from a board perspective, it is so difficult for, when you're sitting at the board, to try and prioritize decision-making and where you're going to spend your budget. But as a board, you can do it.
+
+351
+00:50:32.000 --> 00:50:42.529
+Andrew Doyle: But you will only do it if the reason is presented in a manner that the board, which, you know, we have accountants on the board, we have
+
+352
+00:50:43.370 --> 00:50:52.400
+Andrew Doyle: sometimes technology people, very seldom, but, you know, typically they're ex-CEOs, some maybe even from sales.
+
+353
+00:50:52.580 --> 00:50:54.900
+Andrew Doyle: But you're trying to get them to…
+
+354
+00:50:56.150 --> 00:51:07.310
+Andrew Doyle: prioritize decision-making, and this is a reactive, you know, this is… when I'm listening, there's an awful lot of hype. We're reading it, you see it in the news everywhere, but trying to make…
+
+355
+00:51:07.720 --> 00:51:21.549
+Andrew Doyle: a logical decision. All right, I am going to redirect, you know, if my budget is, you know, $50 million, I'm going to redirect $20 million of that now to deal with this threat. A board will not make that likely unless there is really
+
+356
+00:51:22.190 --> 00:51:23.360
+Andrew Doyle: compelling.
+
+357
+00:51:23.790 --> 00:51:37.010
+Andrew Doyle: easy-to-understand arguments. And this would be my point, is, you know, if you're trying to convince a board to do something, please make it understandable, because we don't understand the deep technology.
+
+358
+00:51:39.340 --> 00:51:48.389
+Akhil George: Andrew, that's… that's really interesting. While I have you on the hot seat. Does the board, actually care more about being
+
+359
+00:51:48.730 --> 00:51:58.940
+Akhil George: first to the market, or the fear of a headline-grabbing data leak is a bigger deterrent. I would love to just get your take on that.
+
+360
+00:51:59.660 --> 00:52:06.350
+Andrew Doyle: Yeah, no, a data leak is terrifying, particularly if you're a listed business with a high profile.
+
+361
+00:52:06.780 --> 00:52:10.079
+Andrew Doyle: Being first to market.
+
+362
+00:52:10.210 --> 00:52:23.800
+Andrew Doyle: can be an advantage, and it's a nice-to-have. I think that most boards, and certainly of larger businesses, are more defensive. They want to protect their position, they want to exploit opportunity, by all means.
+
+363
+00:52:23.800 --> 00:52:30.489
+Andrew Doyle: But they really want to protect their, you know, their reputation and the position, so we spend a lot of money on cyber defense.
+
+364
+00:52:30.490 --> 00:52:37.910
+Andrew Doyle: Because we're terrified of… Of a leak, and the penalties that come with it, the reputational damage.
+
+365
+00:52:38.300 --> 00:52:43.030
+Andrew Doyle: But I think this is more than… than just about…
+
+366
+00:52:43.210 --> 00:52:57.689
+Andrew Doyle: a data leak. This is about the ability to stop a business operating, and that's… and that's what I find terrifying. So, do you turn your business upside down, trying to react to… to stopping a threat, which may or may not happen.
+
+367
+00:52:58.070 --> 00:53:07.790
+Andrew Doyle: Or do you try and take it as a calculated risk? There was talk about re-evaluating your risks earlier on, your risk register. Do you…
+
+368
+00:53:07.990 --> 00:53:16.319
+Andrew Doyle: Do you take a calculated risk and say, yes, we know this is important, but we are going to do it in stages, rather than doing it as one, you know, big jump?
+
+369
+00:53:17.870 --> 00:53:19.649
+Akhil George: Brilliant, brilliant, brilliant.
+
+370
+00:53:19.760 --> 00:53:24.460
+Akhil George: Really, you know, nicely, nicely put, and so…
+
+371
+00:53:24.480 --> 00:53:43.439
+Akhil George: One last question for you, like, when you see the stock market reward, you know, competitors for every AI announcement, how do you keep the CEO from chasing me those highs without becoming, like, a board of no that stifled innovation? And I keep hearing this from our members, so… shooting this question to you, Andrew.
+
+372
+00:53:44.270 --> 00:53:48.969
+Andrew Doyle: Yeah, that's very… it's a difficult question to answer.
+
+373
+00:53:49.770 --> 00:53:56.519
+Andrew Doyle: I'm only on a couple of boards, so I can't speak for every board, but… It's just…
+
+374
+00:53:57.230 --> 00:54:17.040
+Andrew Doyle: how far up a priority ladder is it? CEOs are really normally, trying to maintain a ship and to get it to move faster and faster. Because if you do that, you get your results up, you get your better share price, and that's how they're motivated, that's how they're rewarded.
+
+375
+00:54:17.070 --> 00:54:24.390
+Andrew Doyle: So, any action that slows that down can be a threat to a CEO. The CEO is hearing it
+
+376
+00:54:24.390 --> 00:54:48.789
+Andrew Doyle: all the way up through the organization, something should happen, something should happen. The board hears the CEO's perspective, and sometimes we'll get a presentation, you know, the CISO will come in, or the CTO will come in, group CTO, and make a presentation on the risk. But boards are risk-averse. They're looking at strategy, they're trying to think two, three years ahead. They're not… they don't think about today, tomorrow.
+
+377
+00:54:48.790 --> 00:54:51.090
+Andrew Doyle: That's just not what we think about.
+
+378
+00:54:51.490 --> 00:54:55.110
+Andrew Doyle: I don't know if that answered the question, but that's just…
+
+379
+00:54:55.110 --> 00:55:07.519
+Akhil George: Yeah, but I would love to hold you to that. So, what is the one red line the board has drawn for, like, AI deployment that no amount of potential ROI or competitive pressure can solve?
+
+380
+00:55:10.300 --> 00:55:17.510
+Andrew Doyle: I don't think there's one. Is there a red line?
+
+381
+00:55:19.320 --> 00:55:22.639
+Andrew Doyle: I think the problem is most boards don't understand…
+
+382
+00:55:22.750 --> 00:55:32.169
+Andrew Doyle: the risk. They understand the benefit, but they don't understand the risk. And because they don't understand the risk, they're not… but they know there's a risk.
+
+383
+00:55:32.560 --> 00:55:37.259
+Andrew Doyle: they're not prepared to commit. So some boards will say, we will wait, we will wait.
+
+384
+00:55:37.440 --> 00:55:45.119
+Andrew Doyle: You know, we've tried to deploy, and we have Agentic AI across the business now,
+
+385
+00:55:45.300 --> 00:56:04.840
+Andrew Doyle: Our biggest worry is shadow AI. So, is people in our organization using AI that is not authorized by the organization, and putting our very confidential material into that environment, so that the system is beginning to train on our intellectual property. So that's the worry for boards.
+
+386
+00:56:05.460 --> 00:56:16.769
+Akhil George: Brilliant, brilliant, Andrew. Really, really nicely put, and I'm gonna pull Perry back up. Perry has had a couple of really interesting points, and thank you once again, Andrew. Perry, over to you.
+
+387
+00:56:17.430 --> 00:56:23.060
+Pere Molins | Delphi Team: Great, yeah, thank you. I just wanted to recap a bit on two takeaways that I take from this session.
+
+388
+00:56:23.280 --> 00:56:30.539
+Pere Molins | Delphi Team: One, I think, is that… as, Ursitellus was saying, and Jeremy, like.
+
+389
+00:56:30.820 --> 00:56:48.969
+Pere Molins | Delphi Team: in the end, AI makes the basics, like, the thing that practitioners know, vulnerability management, like, something that we're already doing, like, it just becomes table stakes, because the surface area expands. And I think there's an analogy of something I've been seeing in organizations that want to move faster, like developer experience.
+
+390
+00:56:48.970 --> 00:56:55.320
+Pere Molins | Delphi Team: It's something that was always talked about, but it's just now that you have agents developing, that becomes table stakes. So I think it's…
+
+391
+00:56:55.340 --> 00:56:59.259
+Pere Molins | Delphi Team: It's nothing new, but what we know is table stakes.
+
+392
+00:56:59.460 --> 00:57:03.750
+Pere Molins | Delphi Team: I would love, to see if people agree with that. And the other one is.
+
+393
+00:57:04.130 --> 00:57:19.259
+Pere Molins | Delphi Team: seeing from people like Richard, like, what it really takes to be ready, like, live environments, again, that's something that we haven't just talked, started talking about live environments now, right? That's been always part of the heat maps of capabilities that we've had.
+
+394
+00:57:19.280 --> 00:57:24.240
+Pere Molins | Delphi Team: So, looking at everything that it really takes to be ready.
+
+395
+00:57:24.620 --> 00:57:26.750
+Pere Molins | Delphi Team: In a, in a real sense.
+
+396
+00:57:26.990 --> 00:57:36.870
+Pere Molins | Delphi Team: I shared an article in the chat, is it seems many organizations, especially smaller ones, are unprepared, and even larger ones cannot control…
+
+397
+00:57:36.990 --> 00:57:39.960
+Pere Molins | Delphi Team: the, the shadow IT.
+
+398
+00:57:39.970 --> 00:57:53.339
+Pere Molins | Delphi Team: The thing that this person in this article was saying is that there's going to be a challenge or a disaster with AI. Like, something really bad is going to happen with a large or SMB company that still has a lot of clients, and
+
+399
+00:57:53.340 --> 00:58:05.160
+Pere Molins | Delphi Team: you know, the more I hear the perspectives of the challenges of being really ready, the more I fear that, like, inevitably, something like that will happen. So I recommend you to listen to that.
+
+400
+00:58:05.570 --> 00:58:06.270
+Pere Molins | Delphi Team: Peace.
+
+401
+00:58:06.510 --> 00:58:08.729
+Pere Molins | Delphi Team: Thank you, everyone, for your contributions. Back to you.
+
+402
+00:58:08.730 --> 00:58:13.830
+Akhil George: Brilliant, brilliant. Thank you so much, Perry. That was a really, really great recap.
+
+403
+00:58:13.830 --> 00:58:38.510
+Akhil George: Thank you so much, and we are coming up to the hour, so we're just gonna wrap the discussion here, and before I let you all go, just a quick one. I just want to give you a glimpse into our next session on Thursday, April 23rd. I will be sending a link to that, and that is also another session you absolutely cannot miss if you're under pressure to prove that AI spend
+
+404
+00:58:38.510 --> 00:59:02.719
+Akhil George: is actually worth it. And right now, we are all talking about deploying AI, but a lot of people, very few people are actually talking about, you know, negative deployment margins and the skyrocketing, you know, cloud cause that comes afterwards. So we are moving from this pilot phase into, like, a financial governance phase. So I'm bringing in our own CTO from Dialectica.
+
+405
+00:59:02.760 --> 00:59:23.640
+Akhil George: Michael for this one, so I've been in the room with him while we are scoping this out, and he's bringing some radical honesty to this table, so he's going to be sharing some internal data that shows a massive gap in the industry, while some tools claim 90% of the code is being written by AI, so that is going to be a session that
+
+406
+00:59:23.640 --> 00:59:30.289
+Akhil George: you know, you cannot miss out on, so I really, really recommend you all attending that one. And that being said.
+
+407
+00:59:30.290 --> 00:59:46.479
+Akhil George: Thank you, everyone, for your time today, and thank you everyone who contributed to this session, and I will see you all on the 23rd of, for the AIROI session. And once again, thank you. Great session, everyone.
+

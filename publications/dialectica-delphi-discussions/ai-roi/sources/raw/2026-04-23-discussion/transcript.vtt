@@ -1,0 +1,1702 @@
+WEBVTT
+
+1
+00:01:01.050 --> 00:01:11.720
+Akhil George, Delphi: All right, Michael, we've got around 20 people. I'm just gonna let them in, just do a quick pre-welcome as well. Just before I do that, just making sure you can see my screen.
+
+2
+00:01:13.390 --> 00:01:15.180
+Akhil George, Delphi: Brilliant. Alright, let's go.
+
+3
+00:01:17.410 --> 00:01:20.039
+Akhil George, Delphi: I'm gonna turn off the waiting room.
+
+4
+00:01:30.690 --> 00:01:31.790
+Akhil George, Delphi: Brilliant.
+
+5
+00:01:33.500 --> 00:01:36.560
+Akhil George, Delphi: Hi, everyone. We…
+
+6
+00:01:36.730 --> 00:01:46.159
+Akhil George, Delphi: Let me admit everyone. Yeah, we're just going to go give it a minute or two just to fill up the room before we officially kick off.
+
+7
+00:01:46.280 --> 00:01:54.440
+Akhil George, Delphi: I can see the participants' count is climbing quickly, so we'll just wait for the virtual lobby.
+
+8
+00:01:54.660 --> 00:02:08.829
+Akhil George, Delphi: to settle, and everyone to get their audios connected. So, it's also very nice to see a lot of family names popping up last minute. Many of you have been in for the last few Delphi sessions, so
+
+9
+00:02:08.850 --> 00:02:28.240
+Akhil George, Delphi: It is amazing to have a lot of regulars back in the room, so at the same time, I see a lot of new faces, and names joining us for the first time today. So, if this is your first Delphi event, a very warm welcome to the community. So, while we wait for the last few people to
+
+10
+00:02:28.240 --> 00:02:33.329
+Akhil George, Delphi: fill in from the waiting room. We would love to hear where everyone is tuning in from, so…
+
+11
+00:02:33.330 --> 00:02:47.639
+Akhil George, Delphi: Feel free to drop your location into the chat. It's always, always great to see the geographical spread of this cohort, so especially as we have folks joining us from across US, Europe, and Middle East for this specific discussion, so…
+
+12
+00:02:47.680 --> 00:02:57.050
+Akhil George, Delphi: We spent the last few weeks or so scoping out this session, based on the conversations I've been having with many of you.
+
+13
+00:02:57.050 --> 00:03:08.839
+Akhil George, Delphi: And the appetite for the specific reality check is huge, so we just want to make sure that everyone is settled in and has their audios properly singed.
+
+14
+00:03:08.840 --> 00:03:22.549
+Akhil George, Delphi: Before we start the teardown, so just feel free to get comfortable for a moment, and it also looks like the room is settled, so let's officially kick off, so…
+
+15
+00:03:22.610 --> 00:03:37.199
+Akhil George, Delphi: Welcome to this session of the Delphi Enterprise Tech Leaders Cohort. For family of faces in the room, it's great to have you back. For those of you joining us from for the very first time, welcome to the community.
+
+16
+00:03:37.200 --> 00:03:44.260
+Akhil George, Delphi: I want to take a quick moment to explain exactly what Devi is, and more importantly, why we built it.
+
+17
+00:03:44.260 --> 00:03:53.750
+Akhil George, Delphi: So, we created Delphi because we realized that our leaders at your altitudes, so CIOs, CTOs, senior tech strategists.
+
+18
+00:03:53.750 --> 00:04:00.710
+Akhil George, Delphi: The standard industry landscape is fundamentally broken, so most events you're invited to
+
+19
+00:04:00.710 --> 00:04:14.629
+Akhil George, Delphi: are either vendor-led sales pitches disguised as thought leadership, or high-level webinars. That's, you know, stay safe, they never actually get to the how of solving a problem, so…
+
+20
+00:04:14.700 --> 00:04:34.260
+Akhil George, Delphi: Delphi is the antidote to that. We build this as a closed-door, invite-only environment, specifically to facilitate radical honesty. So this is a peer-to-peer exchange where the goal is not to look at a polishing marketing deck, but to sort of trade reality.
+
+21
+00:04:34.260 --> 00:04:48.900
+Akhil George, Delphi: And we focus on second-order impacts, the things that actually break, the projects that fail, the honest numbers that most software vendors are actually, you know, honestly refusing to admit.
+
+22
+00:04:48.900 --> 00:05:13.470
+Akhil George, Delphi: So, in this cohort, the most valuable data doesn't usually come from a white paper, it's like, it's our collective experience as people in this virtual room. So, as we go into today's session on AI ROI, I encourage you to lean into that. We've asked a speaker to be completely transparent about failures, about friction, and we expect the same kind of openness from you.
+
+23
+00:05:13.470 --> 00:05:22.439
+Akhil George, Delphi: when we move to the community debate later on. So, before we kick off the fireside chat, let's quickly run through Delphi's house rules.
+
+24
+00:05:22.850 --> 00:05:40.579
+Akhil George, Delphi: As mentioned, this session is strictly off the record. You're free to use this information and insights shared today, but neither the identity nor the affiliation of the speaker or the participant can be revealed. What happens in the Delphi room stays in the Delphi room.
+
+25
+00:05:40.610 --> 00:06:03.330
+Akhil George, Delphi: So, secondly, webcams on if you can. So, this is not a passive webinar, so it's a… it's a discussion. It's a community session, so if you're in a position to do so, please turn on your webcams. It completely changes the dynamics of the session, and when we can actually see your faces instead of a sea of names.
+
+26
+00:06:03.350 --> 00:06:16.640
+Akhil George, Delphi: Thirdly, identify yourself. Again, optional. So, if you haven't already, please rename yourself on Zoom to First Name and Company Name. So, it helps us know who is in the room.
+
+27
+00:06:16.640 --> 00:06:24.469
+Akhil George, Delphi: and keeps the peer-to-peer context very clear. So this is optional, but recommended. So, fourthly.
+
+28
+00:06:24.470 --> 00:06:46.749
+Akhil George, Delphi: No to note takers. So, this is a final reminder. No automated bots. We want human engagement, not data scraping. You know, if we see any fireflies or any artists join, we will kick them out immediately to protect our confidentiality and the confidentiality of your peers. So.
+
+29
+00:06:46.940 --> 00:07:02.749
+Akhil George, Delphi: And don't wait for Q&A. If Michael says something that sparks your thought, or if you want to challenge something, drop it in the chat. I will be monitoring the chat throughout, and I will pull you up into the conversation, so…
+
+30
+00:07:02.750 --> 00:07:08.420
+Akhil George, Delphi: In terms of how we are structured for the next hour, I've already set the scene.
+
+31
+00:07:08.420 --> 00:07:27.769
+Akhil George, Delphi: And explain the why behind Delphi. In a second, I will officially be introducing Michael and, you know, also talking about our topic. And after that, we'll have a chat with Michael. It is a fireside-style interview. We will be tearing down the current hype of AI.
+
+32
+00:07:27.910 --> 00:07:39.149
+Akhil George, Delphi: And Michael will be screen-sharing a few specific data bits, and… but the focus is on a raw back-and-forth discussion, so… And last one.
+
+33
+00:07:39.390 --> 00:07:48.250
+Akhil George, Delphi: The last 20 minutes, we opened the flow for Q&A. We want this to be a conversation space for you to share your own struggles.
+
+34
+00:07:48.250 --> 00:08:04.070
+Akhil George, Delphi: And we'll wrap this up in the last 5 minutes. So, on a final note, once again, please don't wait for the Q&A blog to speak up. If there is something that Michael is saying that you agree or disagree… disagree with, please keep them coming.
+
+35
+00:08:04.070 --> 00:08:13.730
+Akhil George, Delphi: To get us started, I want to frame exactly why we are having this discussion today. We are currently in a very strange
+
+36
+00:08:13.730 --> 00:08:27.250
+Akhil George, Delphi: let's say, purgatory phase of AI hype cycle. On one side, you have the vendor marketing and the boardroom pressure promising, you know, 10 times revolution in speed and total transformation.
+
+37
+00:08:27.540 --> 00:08:40.330
+Akhil George, Delphi: And on the other side, you have the reality of people in this room. So you've launched the pilots, you've sort of integrated the API wrappers. Now you're starting to see the true cause. So we're seeing
+
+38
+00:08:40.330 --> 00:08:47.659
+Akhil George, Delphi: Something one of our execs call hallucination tax, you know, the unpredictable cloud interference bills.
+
+39
+00:08:47.810 --> 00:09:05.839
+Akhil George, Delphi: And the realization that while an engineer can now code 5 times faster, blocks still takes as long to get through security, compliance, and deployment pipelines. So, the question of how we're tackling today… tackling this discussion today is straightforward.
+
+40
+00:09:05.990 --> 00:09:10.029
+Akhil George, Delphi: where is missing the ROI? So we want to move from the F
+
+41
+00:09:10.030 --> 00:09:26.789
+Akhil George, Delphi: and the when of AI to get into financial governance, or token consumption, compute costs, and why the bottleneck in your organization isn't actually an AI tool, it is an underlying process that we weren't… that wasn't built for speed.
+
+42
+00:09:26.790 --> 00:09:33.650
+Akhil George, Delphi: So, to help us navigate this, I am joined by Michael. So, Michael brings
+
+43
+00:09:33.650 --> 00:09:52.270
+Akhil George, Delphi: a rare level of technical depth to this conversation. So he holds a PhD in computer science, and he has a very strong scientific background. He's written over 20 academic papers, you know, published on AI and APIs to cloud architecture.
+
+44
+00:09:52.310 --> 00:10:04.900
+Akhil George, Delphi: And he's currently, CTO at Dialectica, where he focuses on enabling technical teams to innovate while… while maintaining strictly financially prudent environments. So.
+
+45
+00:10:05.280 --> 00:10:24.520
+Akhil George, Delphi: Prior to this role, Michael spent 9 years at this as a CTO in Orfim, where he led the global teams of software, infrastructure, and quality assurance. So, Michael, welcome, and I will let you introduce yourself and start firing away the question.
+
+46
+00:10:25.490 --> 00:10:32.669
+Michael Petychakis, Dialectica CTO: Thank you, Kil. Hi, everybody. It's a pleasure to be here. Thank you so much for inviting me. So, actually, you described the…
+
+47
+00:10:33.740 --> 00:10:44.809
+Michael Petychakis, Dialectica CTO: Very nice. My background… so my background, long story short, I started, from robotics. I loved robotics almost 20 years ago. I thought this was gonna be my end,
+
+48
+00:10:44.970 --> 00:10:51.810
+Michael Petychakis, Dialectica CTO: purpose in life, but then I love more cognition, so I jumped into AI, and
+
+49
+00:10:52.170 --> 00:11:05.179
+Michael Petychakis, Dialectica CTO: a PhD in AI quite early in web technologies. That was quite boring, like, just doing academic life, so I started a few startups. At some point, almost 11 years ago.
+
+50
+00:11:05.600 --> 00:11:12.799
+Michael Petychakis, Dialectica CTO: we… kick-started a startup in the music tech industry. Now that's grown to be one of the biggest,
+
+51
+00:11:12.910 --> 00:11:16.069
+Michael Petychakis, Dialectica CTO: music tech companies, in the globe of,
+
+52
+00:11:16.230 --> 00:11:20.920
+Michael Petychakis, Dialectica CTO: Music, it's still growing, but almost 2 years ago.
+
+53
+00:11:21.020 --> 00:11:25.000
+Michael Petychakis, Dialectica CTO: I could feel that I needed to go technical again,
+
+54
+00:11:25.570 --> 00:11:31.050
+Michael Petychakis, Dialectica CTO: because AI was happening, and my roots are there, so…
+
+55
+00:11:31.170 --> 00:11:33.950
+Michael Petychakis, Dialectica CTO: I wanted something fresh that would
+
+56
+00:11:34.620 --> 00:11:47.270
+Michael Petychakis, Dialectica CTO: really lead me to my roots. So, that's how, somehow, I moved to Dialectca. Dialectca is an expert network, so if you want information that you cannot easily Google, you can always,
+
+57
+00:11:47.360 --> 00:12:07.230
+Michael Petychakis, Dialectica CTO: go to the Electica to help you find this information, or market intelligence, and a lot of other cool things. But more importantly for me, it has raw data that are amazing to use. So, at this point, I met the founders, and the founders told me, Michael, we also see the potential, we want to become an AI-native company, I said.
+
+58
+00:12:07.370 --> 00:12:14.729
+Michael Petychakis, Dialectica CTO: Okay, whatever that means at this point, because almost two years ago, the tolling wasn't there. So…
+
+59
+00:12:15.300 --> 00:12:17.179
+Michael Petychakis, Dialectica CTO: I decided to join a year and a half ago.
+
+60
+00:12:17.530 --> 00:12:26.969
+Michael Petychakis, Dialectica CTO: ago, and since then, we're in a transformation journey. So I don't know what Akhil promised you. Today, we're gonna speak about
+
+61
+00:12:27.420 --> 00:12:31.819
+Michael Petychakis, Dialectica CTO: What we try to do, what we've accomplished, where we failed.
+
+62
+00:12:32.030 --> 00:12:35.450
+Michael Petychakis, Dialectica CTO: And how we strategize our journey.
+
+63
+00:12:35.800 --> 00:12:42.190
+Michael Petychakis, Dialectica CTO: Because it's not finished, the products are not mature yet, all of them, some are very, very mature.
+
+64
+00:12:43.360 --> 00:12:44.070
+Michael Petychakis, Dialectica CTO: So…
+
+65
+00:12:45.120 --> 00:12:56.579
+Akhil George, Delphi: Brilliant, thank you for that intro, Michael. Michael, let's jump straight into the deep end. In our scoping call, one of the things that you mentioned is a statistic that
+
+66
+00:12:56.590 --> 00:13:14.189
+Akhil George, Delphi: Sounds like a bit like a contradiction. You said your engineers are writing 90% of their code using AI, yet the actual business productivity gain is only 20%. So, what is the massive 70% gap? You know, if the code is.
+
+67
+00:13:14.190 --> 00:13:15.800
+Jonathan Harber, CISSP, MBA, CAIO: No, I don't think that's true.
+
+68
+00:13:16.740 --> 00:13:19.700
+Jonathan Harber, CISSP, MBA, CAIO: I don't think engineers are running 90% of their code using AI.
+
+69
+00:13:19.940 --> 00:13:24.339
+Jonathan Harber, CISSP, MBA, CAIO: In my company, we're an engineering company, and they're not, writing 90% of their code using AI.
+
+70
+00:13:24.510 --> 00:13:27.469
+Jonathan Harber, CISSP, MBA, CAIO: I would like to see the data behind that before we make those claims.
+
+71
+00:13:28.300 --> 00:13:33.100
+Michael Petychakis, Dialectica CTO: Yeah, yeah, I'm about to share. So… Let me…
+
+72
+00:13:33.100 --> 00:13:41.880
+Jonathan Harber, CISSP, MBA, CAIO: There may be companies that are doing that, which are AI-based companies and are writing code using AI, doing 90%, but 90% of our code is not written by AI.
+
+73
+00:13:42.290 --> 00:13:55.599
+Akhil George, Delphi: Jillian Johnson, thank you for that. We will open for Q&A. If you have any questions, we'd love to take them. Keep them coming. If you want to have anything, any questions, please tell us in the chat, and I will pull you up. Back to you, Michael.
+
+74
+00:13:55.600 --> 00:14:07.940
+Michael Petychakis, Dialectica CTO: So, what I'm showing here are the statistics from our cursor. So, we use cursor today as our ID for writing code, and, okay, like, the stat here says.
+
+75
+00:14:08.570 --> 00:14:16.769
+Michael Petychakis, Dialectica CTO: Almost 90%, like, that's a rolling window. Last week, it was 90%, 9-11. So, the story here is that, okay.
+
+76
+00:14:17.390 --> 00:14:33.420
+Michael Petychakis, Dialectica CTO: nowadays, most of our engineers are somehow prompting to deliver, code. That doesn't mean every PR, that's a rolling window, and it takes a lot of inputs. It's not perfect. We've seen, that making mistakes.
+
+77
+00:14:33.530 --> 00:14:45.050
+Michael Petychakis, Dialectica CTO: because, for example, people that are using cursor CLI, I don't know if you're familiar with cursor CLI, like, it doesn't capture the data here, but it's an estimate. It's not…
+
+78
+00:14:45.230 --> 00:14:57.000
+Michael Petychakis, Dialectica CTO: necessarily a Bible, but it's an estimate, and it shows us that, okay, what we feel, our people are indeed now heavily utilizing cursor, and
+
+79
+00:14:58.220 --> 00:15:06.549
+Michael Petychakis, Dialectica CTO: To get here, though, we had to run a lot of internal, workshops for people to understand how to better use those.
+
+80
+00:15:06.730 --> 00:15:11.060
+Michael Petychakis, Dialectica CTO: Because I'm, I'm, I'm gonna get there, but…
+
+81
+00:15:11.300 --> 00:15:15.480
+Michael Petychakis, Dialectica CTO: I just want to frame the discussion where we are today, meaning, okay.
+
+82
+00:15:15.730 --> 00:15:23.860
+Michael Petychakis, Dialectica CTO: 90% of the code, according to cursor stats, are written, By AI.
+
+83
+00:15:24.010 --> 00:15:32.650
+Michael Petychakis, Dialectica CTO: But the overall productivity And we measured by each cycle time, like, how… fast.
+
+84
+00:15:32.750 --> 00:15:37.959
+Michael Petychakis, Dialectica CTO: We can close, a ticket. It's only 20%.
+
+85
+00:15:38.190 --> 00:15:45.009
+Michael Petychakis, Dialectica CTO: Okay, that's an interesting measure? And the important thing is that, okay, we're trying to map…
+
+86
+00:15:45.320 --> 00:15:52.580
+Michael Petychakis, Dialectica CTO: track as many DORA metrics as we can, and obviously all of those we take with a grain of salt, because,
+
+87
+00:15:52.630 --> 00:16:08.359
+Michael Petychakis, Dialectica CTO: how you calculate those things, okay, are not perfect. It just gives us estimates, because we tracked this for, 9 months now. So we understand, okay, where our teams are improving and not improving. When we gave cursor
+
+88
+00:16:09.720 --> 00:16:14.279
+Michael Petychakis, Dialectica CTO: Almost a year ago, The teams started adopting it.
+
+89
+00:16:14.390 --> 00:16:15.440
+Michael Petychakis, Dialectica CTO: Slowly.
+
+90
+00:16:15.880 --> 00:16:23.669
+Michael Petychakis, Dialectica CTO: They didn't like it, we did a few trials with some other tools, Windsurf, we tried Devin, all of them great.
+
+91
+00:16:24.040 --> 00:16:34.930
+Michael Petychakis, Dialectica CTO: But at some point, I'm gonna have to make a decision. Guys, that's another tool we're gonna be using for… start getting experience and becoming better all together, and we can start setting patterns between us.
+
+92
+00:16:35.640 --> 00:16:39.430
+Michael Petychakis, Dialectica CTO: So… What we saw was that,
+
+93
+00:16:39.630 --> 00:16:45.780
+Michael Petychakis, Dialectica CTO: On October, when we had accumulated a lot of data, we could see that this number was around
+
+94
+00:16:45.930 --> 00:16:51.390
+Michael Petychakis, Dialectica CTO: 40%. That meant people hadn't fully, adopted the tool yet.
+
+95
+00:16:51.600 --> 00:16:57.600
+Michael Petychakis, Dialectica CTO: And here, it was minus 20, minus 30, I don't really remember the numbers.
+
+96
+00:16:57.710 --> 00:17:01.520
+Michael Petychakis, Dialectica CTO: That we had in October. So, that was the biggest shock for me.
+
+97
+00:17:02.650 --> 00:17:14.670
+Michael Petychakis, Dialectica CTO: it meant that somehow, by using AI tools, our engineers started becoming slower. Overall, everybody felt that the next factor, psychologically, that they were superstars.
+
+98
+00:17:14.920 --> 00:17:26.700
+Michael Petychakis, Dialectica CTO: But the data showed that people were becoming slower. Slower to deliver tickets, slower to close up a request. So, that was my biggest shock, and I started looking
+
+99
+00:17:26.800 --> 00:17:39.399
+Michael Petychakis, Dialectica CTO: and speaking with other executives, started speaking, with other companies, even spoke to the company that provides me the deal, the DORA metrics here, and said, why is this happening? Is this just…
+
+100
+00:17:39.740 --> 00:17:40.940
+Michael Petychakis, Dialectica CTO: Happening to me.
+
+101
+00:17:41.330 --> 00:17:46.709
+Michael Petychakis, Dialectica CTO: And he told me, no, now that we're starting this adoption of tooling,
+
+102
+00:17:47.490 --> 00:17:59.119
+Michael Petychakis, Dialectica CTO: we understand that developers are trying to develop code in the old way, without really understanding that, okay, that's an assistant. Somehow they need to use it, somehow they shouldn't be using it.
+
+103
+00:18:01.070 --> 00:18:13.549
+Michael Petychakis, Dialectica CTO: But now, for example, for changing something super easy, like a configuration, they were prompting it, which makes your work obviously slower, because the configuration, you just go change the flag, and it's…
+
+104
+00:18:13.860 --> 00:18:15.160
+Michael Petychakis, Dialectica CTO: Fine. It works.
+
+105
+00:18:16.180 --> 00:18:22.309
+Michael Petychakis, Dialectica CTO: So, at this point, we realized, okay, we need to have people understand how to better use
+
+106
+00:18:22.670 --> 00:18:25.450
+Michael Petychakis, Dialectica CTO: How do you do models? Not everything is a max.
+
+107
+00:18:26.180 --> 00:18:35.289
+Michael Petychakis, Dialectica CTO: They need to navigate, the different models. So we really invested in getting people a little bit of training, understanding that.
+
+108
+00:18:35.710 --> 00:18:41.439
+Michael Petychakis, Dialectica CTO: Make a few workshops internally, and also annotate a few champions internally.
+
+109
+00:18:41.600 --> 00:18:48.540
+Michael Petychakis, Dialectica CTO: So, okay, these are the AI champions, their stats are outperforming everybody else, what they're doing differently.
+
+110
+00:18:48.860 --> 00:18:54.240
+Michael Petychakis, Dialectica CTO: And this is how we now know for sure that we have at least
+
+111
+00:18:54.570 --> 00:19:05.190
+Michael Petychakis, Dialectica CTO: 20% as an overall, in the organization, but then I have, a couple of teams, that are really, really, really performing, and,
+
+112
+00:19:06.500 --> 00:19:09.980
+Michael Petychakis, Dialectica CTO: The team that was really performing, and… Let me…
+
+113
+00:19:12.470 --> 00:19:18.900
+Michael Petychakis, Dialectica CTO: So, one of my best teams, and I'm… I lost my button. Actually, here it is.
+
+114
+00:19:22.270 --> 00:19:26.790
+Michael Petychakis, Dialectica CTO: As you can see, One of the best teams on the 27th.
+
+115
+00:19:26.930 --> 00:19:36.740
+Michael Petychakis, Dialectica CTO: So, that means, according to my KPIs, according to what I track, now there are Almost 30% faster.
+
+116
+00:19:36.900 --> 00:19:40.209
+Michael Petychakis, Dialectica CTO: So, that now gives me a different signal.
+
+117
+00:19:40.340 --> 00:19:44.050
+Michael Petychakis, Dialectica CTO: that I cannot just… by using AI tools, because
+
+118
+00:19:44.160 --> 00:19:58.320
+Michael Petychakis, Dialectica CTO: to my understanding, we're utilizing, according to best practices, we've done workshops, we've spoken with Cursor, we've spoken with other companies, so now we're confident enough that, okay, we're utilizing as we're supposed to.
+
+119
+00:19:58.430 --> 00:20:01.180
+Michael Petychakis, Dialectica CTO: So how can I jump from 20 to 50?
+
+120
+00:20:02.100 --> 00:20:03.020
+Akhil George, Delphi: Got it.
+
+121
+00:20:04.340 --> 00:20:07.950
+Michael Petychakis, Dialectica CTO: So, that is my next project.
+
+122
+00:20:09.290 --> 00:20:17.769
+Michael Petychakis, Dialectica CTO: I started realizing that I don't get the 10x productivity gains that I hoped, even though almost all of our code is written now by AI.
+
+123
+00:20:18.140 --> 00:20:20.360
+Michael Petychakis, Dialectica CTO: And the reason is our processes.
+
+124
+00:20:21.050 --> 00:20:26.089
+Michael Petychakis, Dialectica CTO: we're… Our engineering teams get stuck into the processes.
+
+125
+00:20:26.960 --> 00:20:35.590
+Michael Petychakis, Dialectica CTO: You have, the code development stage, but then before that, you had the ticket, somebody had to open it, analyze it, triage it.
+
+126
+00:20:35.870 --> 00:20:36.900
+Michael Petychakis, Dialectica CTO: groom it.
+
+127
+00:20:37.120 --> 00:20:39.240
+Michael Petychakis, Dialectica CTO: And all of these are just steps.
+
+128
+00:20:39.440 --> 00:20:46.969
+Michael Petychakis, Dialectica CTO: most probably these are already happening with somebody utilizing AI, but as a process, something…
+
+129
+00:20:47.100 --> 00:20:51.070
+Michael Petychakis, Dialectica CTO: Stays there for a day or two, so we have a lot of dead…
+
+130
+00:20:51.340 --> 00:20:56.600
+Michael Petychakis, Dialectica CTO: times. So now I'm changing the processes, and I'm changing… changing the team size.
+
+131
+00:20:56.710 --> 00:21:10.349
+Michael Petychakis, Dialectica CTO: to address the SDLC, because the traditional SDLC was meant for a more traditional way of engineering, and now we start seeing some tweaks to the SDLC. I actually…
+
+132
+00:21:10.640 --> 00:21:14.900
+Michael Petychakis, Dialectica CTO: I don't know if you have something more specific, or you should continue to that.
+
+133
+00:21:15.480 --> 00:21:35.390
+Akhil George, Delphi: Absolutely. So, very interesting that you mentioned processes, because we are going to come to that, and also, very sobering reality for anyone who's promised 10 times, you know, engineer by engineering progress by a salesperson, so it suggests that we've solved the typing problem, but not the thinking problem, so…
+
+134
+00:21:35.390 --> 00:21:44.639
+Akhil George, Delphi: you know, I… again, I want to touch upon the process bit that you talked about and go into the structural things, right? So, when an engineer can code a feature.
+
+135
+00:21:44.640 --> 00:21:51.129
+Akhil George, Delphi: in an R using an LLM, but the organization still takes, let's say, 2 weeks to ship it because of, like.
+
+136
+00:21:51.130 --> 00:22:07.590
+Akhil George, Delphi: security and compliance, or QA, the tool is not the bottleneck here, it's the process. So you talked about process, so I wanna… I wanna hear more about that. How do you… how do, like, underlying enterprise process need to, sort of, fundamentally change to…
+
+137
+00:22:07.590 --> 00:22:10.409
+Akhil George, Delphi: So why this new speed of creation?
+
+138
+00:22:11.350 --> 00:22:12.280
+Michael Petychakis, Dialectica CTO: So…
+
+139
+00:22:13.100 --> 00:22:21.430
+Michael Petychakis, Dialectica CTO: And I see a comment from Chris that he mentioned something similar. So we started realizing that we lose a lot of time
+
+140
+00:22:21.760 --> 00:22:34.990
+Michael Petychakis, Dialectica CTO: inside the team. A big team has a lot of opening the tickets, allocating the tickets, breaking down tickets, so a lot of the work was just to manage the team, and not actually produce value.
+
+141
+00:22:35.230 --> 00:22:40.420
+Michael Petychakis, Dialectica CTO: So, we started making experiments of, smaller teams, so we broke,
+
+142
+00:22:40.760 --> 00:22:43.269
+Michael Petychakis, Dialectica CTO: The 8th, 10 people team.
+
+143
+00:22:43.550 --> 00:22:45.130
+Michael Petychakis, Dialectica CTO: 2… 4…
+
+144
+00:22:45.280 --> 00:22:56.360
+Michael Petychakis, Dialectica CTO: People, and we started seeing some benefits, because now the team was faster, and we did also an experiment with a super senior person with unlimited tokens.
+
+145
+00:22:57.010 --> 00:23:13.600
+Michael Petychakis, Dialectica CTO: A super senior means a staff or a fellow engineer, that for a specific, project, they go wild. So, in that particular case, we saw that with unlimited tokens, these people are powerhouses, and they go beyond anybody else.
+
+146
+00:23:15.070 --> 00:23:20.120
+Michael Petychakis, Dialectica CTO: And now, what we say are all of these, now leads us to create a team of two.
+
+147
+00:23:20.580 --> 00:23:21.750
+Michael Petychakis, Dialectica CTO: two engineers.
+
+148
+00:23:22.110 --> 00:23:23.870
+Michael Petychakis, Dialectica CTO: One of them's gonna be…
+
+149
+00:23:24.450 --> 00:23:36.769
+Michael Petychakis, Dialectica CTO: The engineering manager, whatever that means in the new world, but somebody who can easily make decisions, can communicate with the product, even can communicate with a business person.
+
+150
+00:23:37.770 --> 00:23:43.949
+Michael Petychakis, Dialectica CTO: And, that experiment seems very, very, very fruitful so far.
+
+151
+00:23:44.580 --> 00:23:53.439
+Michael Petychakis, Dialectica CTO: I don't have enough data, because I only have a month's data, so it's very, very new, but so far, it looks promising. And the main
+
+152
+00:23:54.820 --> 00:24:02.190
+Michael Petychakis, Dialectica CTO: take that I have from that is that because these two people don't have the communication buyer, they don't really have to organize.
+
+153
+00:24:03.030 --> 00:24:07.660
+Michael Petychakis, Dialectica CTO: The more they have good chemistry between them, We have,
+
+154
+00:24:07.860 --> 00:24:16.090
+Michael Petychakis, Dialectica CTO: we see the productivity gains there. Again, on that, I don't have formal numbers yet, because it's a very, very new experiment.
+
+155
+00:24:16.580 --> 00:24:17.360
+Michael Petychakis, Dialectica CTO: So…
+
+156
+00:24:18.770 --> 00:24:26.890
+Michael Petychakis, Dialectica CTO: we redesigned the processes. One process that, we changed specifically on the code reviews, is that,
+
+157
+00:24:27.660 --> 00:24:35.889
+Michael Petychakis, Dialectica CTO: for everything that needs to go to production, we always had that to human reviewers. That was a rule, and we would never…
+
+158
+00:24:36.500 --> 00:24:44.029
+Michael Petychakis, Dialectica CTO: break it. Now, after running trials with several, industry…
+
+159
+00:24:44.260 --> 00:24:53.159
+Michael Petychakis, Dialectica CTO: boats that they're doing reviews, and, you know, I don't know if I'm allowed to say exactly which tools, but we can discuss it later.
+
+160
+00:24:54.130 --> 00:25:02.299
+Michael Petychakis, Dialectica CTO: We tried the first code reviewer, didn't really work for us. We tried the second, we did a big, big trial, didn't really work. Now we're in the third tool.
+
+161
+00:25:02.620 --> 00:25:07.599
+Michael Petychakis, Dialectica CTO: that we're doing a trial, and it seems to be working. So now we're trying to move from
+
+162
+00:25:08.000 --> 00:25:18.990
+Michael Petychakis, Dialectica CTO: two human reviewers, one AI reviewer, and one human reviewer, and that already shows that… how we accelerate on the PR. That's…
+
+163
+00:25:19.030 --> 00:25:31.399
+Michael Petychakis, Dialectica CTO: an amazing, amazing tool that also pinpoints the need for changing the processes, because that's a pure process change. So, some other processes that were
+
+164
+00:25:31.780 --> 00:25:45.159
+Michael Petychakis, Dialectica CTO: trying to push now how we're doing QA, instead of having QA as a step before release, which is a very classic thing on our Agile teams, now we're making
+
+165
+00:25:45.880 --> 00:25:58.770
+Michael Petychakis, Dialectica CTO: QA, more of an engineering counterpart to always test the system, and we're doubling down on our CICD, and obviously now CICD comes with a lot of security checks.
+
+166
+00:25:58.890 --> 00:26:07.839
+Michael Petychakis, Dialectica CTO: that, okay, wasn't always there. We may have had someone or queue to do some basic security checks, but now security becomes a critical part of our
+
+167
+00:26:08.100 --> 00:26:09.170
+Michael Petychakis, Dialectica CTO: pipeline.
+
+168
+00:26:11.690 --> 00:26:30.360
+Akhil George, Delphi: Brilliant, Michael, thank you so much for sharing that. And so, agility is the answer there. So, I see Chris in the chat had a really interesting point about agility, which echoes what you have to say. So, Chris, I'm going to pull you up, and I would love to hear that take as well while we are talking. It's very topical.
+
+169
+00:26:30.520 --> 00:26:37.510
+Akhil George, Delphi: Chris, do you want to step off mute and just introduce yourself and talk about your experience as well?
+
+170
+00:26:37.770 --> 00:26:39.020
+Chris Thompson: Can you hear me? Okay.
+
+171
+00:26:39.020 --> 00:26:40.000
+Akhil George, Delphi: Absolutely, well.
+
+172
+00:26:40.000 --> 00:26:49.789
+Chris Thompson: Okay, great. So, I work for a… InsureTech. I'm a… I'm COO, but I… I focus on delivery as well. We…
+
+173
+00:26:50.170 --> 00:26:55.579
+Chris Thompson: In the last 3 months, 4 months, we've moved from pure engineering with
+
+174
+00:26:56.160 --> 00:27:01.959
+Chris Thompson: You know, traditional product… Product, owners running those programs.
+
+175
+00:27:02.160 --> 00:27:12.880
+Chris Thompson: To having one or… Maybe two for a very large implementation, engineering team members, plus one product person.
+
+176
+00:27:13.390 --> 00:27:24.540
+Chris Thompson: The product person is also a product builder. They're both using… I mean, I'm happy to say we're using Claude, but, we're building with Claude, and we're building on Salesforce, and…
+
+177
+00:27:24.800 --> 00:27:31.639
+Chris Thompson: Yes, we've got patterns, we've created our own cloud skills that, will mimic the environments that we want to build.
+
+178
+00:27:31.750 --> 00:27:42.370
+Chris Thompson: But we're SaaS, and we're… we're 80% configuration, 20% customization, but even the customization, We're building with… pure AI.
+
+179
+00:27:42.490 --> 00:27:57.059
+Chris Thompson: What we're using our engineering staff for, mainly, is to validate the code. So, we've got senior tech leads who will validate what's being built, but we're needing that less and less, because actually what's coming through is
+
+180
+00:27:57.670 --> 00:28:00.110
+Chris Thompson: pretty good code. Yes, there are…
+
+181
+00:28:00.700 --> 00:28:02.959
+Chris Thompson: Issues where, you know, there's probably
+
+182
+00:28:03.140 --> 00:28:08.370
+Chris Thompson: too much, like, I had an additional array that was put in, but it didn't feel like it was needed.
+
+183
+00:28:08.480 --> 00:28:10.980
+Chris Thompson: So there is spurious code that will…
+
+184
+00:28:11.140 --> 00:28:15.999
+Chris Thompson: You know, cause… doesn't cause problems, it can be, it can be interesting to look at.
+
+185
+00:28:16.150 --> 00:28:23.739
+Chris Thompson: But it's no worse than human coders at the moment. You know, we… and actually, our defect rate has reduced by about 60%.
+
+186
+00:28:24.020 --> 00:28:30.500
+Chris Thompson: And we can fix those defects with the AI as well. Now, I was a big…
+
+187
+00:28:30.710 --> 00:28:34.890
+Chris Thompson: naysayer. I didn't want AI to be as good as it was, because
+
+188
+00:28:35.180 --> 00:28:38.039
+Chris Thompson: you know, I saw it having a big impact on my teams.
+
+189
+00:28:38.870 --> 00:28:47.029
+Chris Thompson: But I've been… I've been playing around with AI for the last 3 or 4 years, and before that, I was looking… building neural networks. But…
+
+190
+00:28:47.220 --> 00:28:55.600
+Chris Thompson: In the last 3 months, things have changed so significantly that I can't deny The advantages that we're seeing.
+
+191
+00:28:55.860 --> 00:29:01.150
+Chris Thompson: To the point where we've just been through a round of redundancies, because we don't need the numbers that we've previously had.
+
+192
+00:29:01.420 --> 00:29:08.280
+Chris Thompson: Now, that's not great, because no one wants to go through that kind of, process.
+
+193
+00:29:08.480 --> 00:29:11.910
+Chris Thompson: But to echo… other people.
+
+194
+00:29:13.070 --> 00:29:24.550
+Chris Thompson: We needed to nail those, processes as well as just the coding standards. So we've streamlined how we, deploy and how we test.
+
+195
+00:29:24.550 --> 00:29:37.450
+Chris Thompson: So we've got a very rapid build-test cycle. We are using real testers, but we're also using automation, and we've now got Claude agents that are doing some of those tests as well, particularly first-line triage.
+
+196
+00:29:38.000 --> 00:29:49.370
+Chris Thompson: I see this, within 6 to 8 months, we will be using pure agent-led build for some teams, for some configuration-only implementations.
+
+197
+00:29:50.900 --> 00:29:53.600
+Chris Thompson: So there'll be no human input on some of those configurations.
+
+198
+00:29:54.110 --> 00:29:58.490
+Chris Thompson: Which is… Somewhat terrifying, but… All sick.
+
+199
+00:29:58.860 --> 00:29:59.819
+Chris Thompson: Kind of cool.
+
+200
+00:30:03.290 --> 00:30:16.969
+Akhil George, Delphi: That is both a terrifying and a sobering bag. Thank you so much for sharing that with us, Chris. Very, very relevant to our conversation here. And I can see some more questions in the chat, I will pick them up.
+
+201
+00:30:17.100 --> 00:30:33.520
+Akhil George, Delphi: as I go, and one of the things that I want to talk about is, you know, the checkbook for a second, because we've talked about, we talked about speed, but the speed is not free, so how do you
+
+202
+00:30:33.640 --> 00:30:43.600
+Akhil George, Delphi: actually calculate the true ROI, on Gen AI when you're dealing with, you know, as one exec said, hallucination tags.
+
+203
+00:30:43.680 --> 00:30:56.139
+Akhil George, Delphi: and the unpredictability of token consumption. So, how are you auditing your cloud interference costs to make sure that, you know, you aren't running in negative deployment margin?
+
+204
+00:30:57.630 --> 00:31:01.709
+Michael Petychakis, Dialectica CTO: Well, first of all, Chris, thanks for jumping in.
+
+205
+00:31:02.030 --> 00:31:03.750
+Michael Petychakis, Dialectica CTO: I… I was also…
+
+206
+00:31:04.850 --> 00:31:24.469
+Michael Petychakis, Dialectica CTO: scared about what's gonna happen to my teams and my people, because I could see that coming. And indeed, the last 6 months, we are in a renaissance, like, the models changed fundamentally, so now, indeed, the code is pretty good. So, yeah, I see that, from my personal experience, my team says so.
+
+207
+00:31:25.580 --> 00:31:29.049
+Michael Petychakis, Dialectica CTO: Actually, before 6 months, my most senior people
+
+208
+00:31:29.370 --> 00:31:36.660
+Michael Petychakis, Dialectica CTO: were very negative about, like, yeah, okay, that's not good. Now they're like, oh, we can go
+
+209
+00:31:37.590 --> 00:31:48.539
+Michael Petychakis, Dialectica CTO: into the code, and understand the code better, and especially in old code bases. If you have legacy systems, like the analyses that you're gonna have now with AI is amazing. So.
+
+210
+00:31:48.880 --> 00:31:51.179
+Michael Petychakis, Dialectica CTO: Akel, to answer your question.
+
+211
+00:31:52.770 --> 00:32:03.659
+Michael Petychakis, Dialectica CTO: Unpredictability, yeah. I'm only gonna talk about the unpredictability in software, because as a company, we also deploy a lot of models in production.
+
+212
+00:32:03.830 --> 00:32:10.550
+Michael Petychakis, Dialectica CTO: And we have unpredictability there, which makes it challenging, and it's also unpredictable how my product is gonna cost
+
+213
+00:32:11.560 --> 00:32:19.110
+Michael Petychakis, Dialectica CTO: on production, when it runs and it consumes LLM in runtime to produce an answer. But on the development side.
+
+214
+00:32:19.750 --> 00:32:20.650
+Michael Petychakis, Dialectica CTO: Oh.
+
+215
+00:32:21.550 --> 00:32:26.830
+Michael Petychakis, Dialectica CTO: It's just… just… Crazy, I would say, like…
+
+216
+00:32:26.890 --> 00:32:46.839
+Michael Petychakis, Dialectica CTO: I mentioned already that I'm doing experiments with a couple of teams with unlimited tokens, and I see that unlimited means, you know, no budget, like, crazy numbers, from 5K to a month, jumping to 10K, so, so, just for a team to build something, while
+
+217
+00:32:47.160 --> 00:32:48.080
+Michael Petychakis, Dialectica CTO: It fills.
+
+218
+00:32:48.740 --> 00:32:55.330
+Michael Petychakis, Dialectica CTO: I haven't have all the data, but the team with $500 spent could produce the same.
+
+219
+00:32:55.880 --> 00:33:01.309
+Michael Petychakis, Dialectica CTO: But these extra tokens are just iterations, hallucinations,
+
+220
+00:33:01.450 --> 00:33:04.950
+Michael Petychakis, Dialectica CTO: Usually, what I see in my teams…
+
+221
+00:33:05.110 --> 00:33:20.149
+Michael Petychakis, Dialectica CTO: product people now, they have access, they start building, but they're not trained engineers, so they're making more iterations, they're using MAX models, that means they consume way, way more. So, as a pattern, I see engineers consume
+
+222
+00:33:21.530 --> 00:33:29.029
+Michael Petychakis, Dialectica CTO: less when they're really building a feature, because they know how to tackle it, they just guide the LLM very, very properly, while the people
+
+223
+00:33:29.190 --> 00:33:38.310
+Michael Petychakis, Dialectica CTO: I mentioned product people, but I also have some operations people who are building, and they're just going in a complete vibe coding mode.
+
+224
+00:33:38.440 --> 00:33:41.890
+Michael Petychakis, Dialectica CTO: Max usage just go crazy.
+
+225
+00:33:42.110 --> 00:33:44.539
+Michael Petychakis, Dialectica CTO: And try to build, so…
+
+226
+00:33:45.580 --> 00:33:48.260
+Michael Petychakis, Dialectica CTO: How we're trying to handle that?
+
+227
+00:33:49.630 --> 00:33:54.650
+Michael Petychakis, Dialectica CTO: Every month, different strategy, because every month, the problem changes slightly.
+
+228
+00:33:55.150 --> 00:34:11.840
+Michael Petychakis, Dialectica CTO: Okay, I don't like the word problem, because it's also a challenge, it's an opportunity. So we're trying to find what is the best way, where's the balance, how I can stop my teams blading with these use ads, but without really blocking their creativity.
+
+229
+00:34:13.350 --> 00:34:14.060
+Michael Petychakis, Dialectica CTO: So…
+
+230
+00:34:15.040 --> 00:34:29.100
+Michael Petychakis, Dialectica CTO: By the way, it's not an easy budgeting issue. We failed miserably on the budget, but I was happy to see today that an article about Uber, I don't know if you saw this, like, it's on the news today.
+
+231
+00:34:29.100 --> 00:34:35.269
+Michael Petychakis, Dialectica CTO: that, in Uber, the engineering teams, they try to forecast their AI usage in tokens.
+
+232
+00:34:35.670 --> 00:34:40.970
+Michael Petychakis, Dialectica CTO: And now it's April, and they've already spent the annual budget, so they had to
+
+233
+00:34:41.080 --> 00:34:48.090
+Michael Petychakis, Dialectica CTO: do something. So, it's not just me, not just my teams. A bigger company also had a similar talent, so…
+
+234
+00:34:48.300 --> 00:34:50.399
+Michael Petychakis, Dialectica CTO: Yeah, very unpredictable.
+
+235
+00:34:51.010 --> 00:34:58.980
+Akhil George, Delphi: Brilliant, thank you for all that honesty, Michael. And it is that unpredictability that keeps CIOs up at night.
+
+236
+00:34:59.030 --> 00:35:06.000
+Akhil George, Delphi: And a lot of that cost is driven by what we've called vanity projects, so…
+
+237
+00:35:06.000 --> 00:35:25.829
+Akhil George, Delphi: everyone is playing with AI because it's the new toy in the office. So, in our prep, you know, we had an interesting take here. You said, personally, you can't kill them because everyone loves them. And instead, you mentioned embracing them with rules. So, what is your exact framework for identifying a project?
+
+238
+00:35:25.830 --> 00:35:34.080
+Akhil George, Delphi: that is just a drain on the IT budget and turning it into something that actually supports the core IP, and
+
+239
+00:35:34.100 --> 00:35:35.979
+Akhil George, Delphi: Love to hear your take on that.
+
+240
+00:35:37.820 --> 00:35:43.120
+Michael Petychakis, Dialectica CTO: So… let's define one of the projects. I would,
+
+241
+00:35:43.600 --> 00:35:47.369
+Michael Petychakis, Dialectica CTO: Say, a vanity project is usually something that's outside of the roadmap.
+
+242
+00:35:48.470 --> 00:35:50.710
+Michael Petychakis, Dialectica CTO: That somebody wants to experiment with.
+
+243
+00:35:52.520 --> 00:36:11.690
+Michael Petychakis, Dialectica CTO: Yeah, I've seen some of those just burn tokens, and people want to feel creative, but they're also very educational. So initially, I was fighting some of those, why should I spend all this money for you to build this thing, but now I see how they're educational. Educational mainly for my organization.
+
+244
+00:36:12.380 --> 00:36:18.990
+Michael Petychakis, Dialectica CTO: two ways. People understand how to use AI better, and not only that, but
+
+245
+00:36:19.350 --> 00:36:30.620
+Michael Petychakis, Dialectica CTO: they can create a working prototype for a product person or a product team to understand how to utilize that. So, that I've seen working.
+
+246
+00:36:30.730 --> 00:36:37.819
+Michael Petychakis, Dialectica CTO: And the other thing is that now that people, even business people, they start building, they understand that, okay, yeah.
+
+247
+00:36:38.070 --> 00:36:39.839
+Michael Petychakis, Dialectica CTO: I thought it was easy.
+
+248
+00:36:40.580 --> 00:36:57.069
+Michael Petychakis, Dialectica CTO: And, yeah, I made something that was working, and I even created some dummy data, but taking it to the next phase, meaning, okay, keeping all the requirements that I had initially, but also adding extra features is not that simple, it's not that simple.
+
+249
+00:36:57.240 --> 00:36:59.889
+Michael Petychakis, Dialectica CTO: To communicate to somebody else, like…
+
+250
+00:37:00.170 --> 00:37:10.879
+Michael Petychakis, Dialectica CTO: Now they start realizing that the engineering world is quite more complex than just vibecode something and put it into a server and it works.
+
+251
+00:37:11.360 --> 00:37:14.890
+Michael Petychakis, Dialectica CTO: It's slightly more advanced than that, what we do.
+
+252
+00:37:15.050 --> 00:37:21.649
+Michael Petychakis, Dialectica CTO: So, that's why I say, you know, it has… These two sides that are…
+
+253
+00:37:22.280 --> 00:37:27.330
+Michael Petychakis, Dialectica CTO: useful, yes, but in the meantime, yes, we can, we burn a few more credits.
+
+254
+00:37:28.780 --> 00:37:45.879
+Akhil George, Delphi: Brilliant, brilliant, thank you for that. And Benny had a point, that was in agreement with you, but I can see that Benny has gone offline. So, I am going to address all the other questions, but I'm also going to keep the conversation going. So,
+
+255
+00:37:45.980 --> 00:38:04.640
+Akhil George, Delphi: Hi, first of all, I like that we're, you know, moving from a department of no to the Department of Rules, so… but, you know, ground, you know, ground this to the group, let's get, you know, specific. Like, can you share one example where, you know, AI implementation that you've seen, perhaps, like, internally, that actually worked?
+
+256
+00:38:04.640 --> 00:38:09.770
+Akhil George, Delphi: And, you know, one that actually failed or undelivered despite of its hype.
+
+257
+00:38:12.330 --> 00:38:13.960
+Michael Petychakis, Dialectica CTO: I've seen many…
+
+258
+00:38:14.080 --> 00:38:22.729
+Michael Petychakis, Dialectica CTO: prototypes that they started as crazy ideas, and I can mention, for example, something that is a core product today.
+
+259
+00:38:23.630 --> 00:38:33.859
+Michael Petychakis, Dialectica CTO: We tried to transform the way the core system works, and we created… we started experimenting, like, a year ago with what we called an agent.
+
+260
+00:38:34.100 --> 00:38:48.759
+Michael Petychakis, Dialectica CTO: And now, after that experiment started becoming interesting, we did a demo, it was interesting, a person for a week, then that week became a month of adding extra features, and it started
+
+261
+00:38:49.380 --> 00:38:56.439
+Michael Petychakis, Dialectica CTO: be interesting. Wasn't beating the stats of the core system, but it was interesting enough
+
+262
+00:38:56.750 --> 00:39:03.889
+Michael Petychakis, Dialectica CTO: for us to focus. So that really proved the point that, okay, It… it's equally good, but…
+
+263
+00:39:04.470 --> 00:39:23.790
+Michael Petychakis, Dialectica CTO: our people, our users, started liking more as an interface. So now, that's the core way, that our internal system works. So that was a prototype that worked, and we have a lot of other prototypes that are working right now, like that. So people created, experimented, and these ideas are now core products.
+
+264
+00:39:23.920 --> 00:39:43.599
+Michael Petychakis, Dialectica CTO: Equally, I can say that, in the meantime, guys, we've created a lot of different iterations on various things, and they didn't work, you know. At some point, I created, personally, a couple of months ago, a product, there was an idea, I tried to validate it, the idea was validated, but my prototype was too complex.
+
+265
+00:39:43.910 --> 00:39:45.880
+Michael Petychakis, Dialectica CTO: to engineering,
+
+266
+00:39:46.810 --> 00:39:58.359
+Michael Petychakis, Dialectica CTO: crafted that I couldn't really convince others, so it's gone. So, yeah, I spent a lot of credits in that, and now it's dead and gone.
+
+267
+00:39:58.640 --> 00:40:00.210
+Michael Petychakis, Dialectica CTO: But even that?
+
+268
+00:40:00.390 --> 00:40:05.919
+Michael Petychakis, Dialectica CTO: As an idea still exists somewhere, and now somebody…
+
+269
+00:40:06.080 --> 00:40:09.260
+Michael Petychakis, Dialectica CTO: More, of an expert in that domain than me.
+
+270
+00:40:09.870 --> 00:40:11.910
+Michael Petychakis, Dialectica CTO: He's taking some of the ideas.
+
+271
+00:40:12.050 --> 00:40:17.090
+Michael Petychakis, Dialectica CTO: And so, yeah, like… what I'm trying to say here is that
+
+272
+00:40:17.730 --> 00:40:23.980
+Michael Petychakis, Dialectica CTO: When you're in a business domain, The more experimentation you do, Something comes up.
+
+273
+00:40:25.050 --> 00:40:38.979
+Akhil George, Delphi: Brilliant. Thank you so much for that, Michael, and thank you for the honesty. And I can see our chat has been rather busy, and Mel had a couple of really interesting points. So Mel, I'm gonna… I'm gonna pick you up.
+
+274
+00:40:39.090 --> 00:40:42.429
+Akhil George, Delphi: And have you off mute and share that with us.
+
+275
+00:40:44.740 --> 00:40:51.230
+Mel - UMW (Montana, USA): No, thanks, everyone. Good to see everyone. I am, Mel, I'm a CIO at a university here in Montana.
+
+276
+00:40:51.230 --> 00:41:05.360
+Mel - UMW (Montana, USA): My question was, is, you know, Chris had talked about, hey, we were able to cut our staff by a significant portion, and that increased profitability, and so I was specifically asking, well, what if you kept the same amount of staff.
+
+277
+00:41:05.410 --> 00:41:11.470
+Mel - UMW (Montana, USA): using AI, would that allow, you know, that particular business to grow in revenue?
+
+278
+00:41:11.490 --> 00:41:31.779
+Mel - UMW (Montana, USA): not just in profitability, but actually grow the business, and I'm just wondering if sometimes, you know, we're not taking the time to look at this a little differently, instead of trying to reduce headcount and, you know, become more efficient, but why not use that efficiency to actually look at expanding into different areas and different businesses, or…
+
+279
+00:41:31.780 --> 00:41:35.679
+Mel - UMW (Montana, USA): you know, reaching out in a different way. So, yeah, that was just my thought. That was…
+
+280
+00:41:35.680 --> 00:41:40.340
+Mel - UMW (Montana, USA): I just was wondering if others had thought about that, and what the…
+
+281
+00:41:40.350 --> 00:41:45.669
+Mel - UMW (Montana, USA): you know, the model around a little bit. So, yeah, that's all I was wondering.
+
+282
+00:41:46.210 --> 00:41:50.370
+Chris Thompson: But to respond to that, I absolutely agree, and I think…
+
+283
+00:41:50.770 --> 00:41:59.669
+Chris Thompson: In a larger company where we could carry that, it would be beneficial, because we'd be able to upskill staff more efficiently.
+
+284
+00:41:59.930 --> 00:42:04.370
+Chris Thompson: We're a small insurtech, and actually having people on the bench
+
+285
+00:42:04.710 --> 00:42:06.769
+Chris Thompson: It's great from a training perspective.
+
+286
+00:42:06.910 --> 00:42:15.039
+Chris Thompson: But it also has a knock-on effect that the people who are working on projects then see the people who aren't working on projects, and that causes friction.
+
+287
+00:42:15.190 --> 00:42:24.519
+Chris Thompson: And so, when you're trying to manage that, it's… it's… in a larger company, you can hide some of that. It's really difficult to hide that when you're 60 people strong.
+
+288
+00:42:24.710 --> 00:42:30.850
+Chris Thompson: It's, yeah, and, you know, I saw comments that were…
+
+289
+00:42:31.130 --> 00:42:35.780
+Chris Thompson: not encouraging. And so, it was…
+
+290
+00:42:36.110 --> 00:42:42.029
+Chris Thompson: Unfortunate, but we went through that process, because actually having 20 people sitting on a bench
+
+291
+00:42:42.710 --> 00:42:45.409
+Chris Thompson: Causes more questions from an operation perspective.
+
+292
+00:42:48.050 --> 00:43:00.960
+Akhil George, Delphi: Brilliant, thank you so much for that response, Chris, and great question, Mel. Again, a reminder that this is the exact kind of conversation what Delphi is built for, and once again, thank you for your honesty.
+
+293
+00:43:01.300 --> 00:43:10.740
+Akhil George, Delphi: Chris, and I am going to jump on to Geoff now, who's had a really interesting question. Geof, if you could introduce yourself.
+
+294
+00:43:10.910 --> 00:43:16.340
+Akhil George, Delphi: And, have that, you know, just show you a couple of points, that would be amazing.
+
+295
+00:43:17.380 --> 00:43:26.300
+Geoff: Yeah, hi, sorry, Cameron's having issues. I'm Jeff Bosley, I actually work for a consultant, WSP, but I actually build a lot of,
+
+296
+00:43:26.550 --> 00:43:33.599
+Geoff: products and AI products. So, what I've discovered, and it's an interesting debate here on this channel, but…
+
+297
+00:43:33.870 --> 00:43:41.289
+Geoff: what I've noticed is this massive flurry of, new coders, and everyone can code all of a sudden, they've simplified things.
+
+298
+00:43:41.590 --> 00:43:52.600
+Geoff: With Claude Code, and everyone's now a coder. And I know a lot of people in the industry, they're kind of losing their jobs because people think they can do it in 5 minutes now themselves, rather than employing reputable people.
+
+299
+00:43:52.690 --> 00:44:12.340
+Geoff: But the big concern for me is, and I think as a result of this, what I've noticed, a massive change, is not about building anymore, because people can build their dreams now. You can have an idea in the bar, and then by 2 hours later, you've got a prototype on your screen, so that excites everyone. But the reality is, I think what people don't take into account is
+
+300
+00:44:12.520 --> 00:44:24.850
+Geoff: What's significantly changed is it's not about building, it's the distribution. So you can build the best app, and you think, oh, this is the most incredible app in the world, but the reality is, if you haven't got an absolute clue about distribution and marketing.
+
+301
+00:44:24.850 --> 00:44:38.880
+Geoff: then that's where a lot of people are falling down. So I am seeing a massive change in where marketing companies now charge a premium to launch applications and software, because John in his basement has suddenly revealed this new piece of amazing software.
+
+302
+00:44:39.010 --> 00:44:56.200
+Geoff: And it's all in the best interest, don't get me wrong, people love it, and it's a great bit of software, but fundamentally, people are taking advantage of these people who are building apps, not taking into reality that there's a lot of security issues that's not there, and they're almost saying, I've coded that, now I can run a 10 million pound app.
+
+303
+00:44:56.320 --> 00:44:58.969
+Geoff: There's a lot more fundamentals being missed there, so…
+
+304
+00:44:59.320 --> 00:45:07.500
+Geoff: I've personally seen that, and I've noticed, and the comment I made on that post there, because this is a really good conversation, is…
+
+305
+00:45:07.860 --> 00:45:19.929
+Geoff: with the likes of Claude, Claude's everywhere now, everyone… we've been using Claude for a few years, and suddenly everyone's using Claude, and it's moving at such a pace that they're launching a new feature every 5 minutes, and there's a YouTuber talking about it.
+
+306
+00:45:20.070 --> 00:45:22.759
+Geoff: But what's scary is that people are almost…
+
+307
+00:45:22.970 --> 00:45:27.970
+Geoff: excited about Claude and Claude's skills, and bringing Claude into my life, and running my life.
+
+308
+00:45:28.100 --> 00:45:31.259
+Geoff: And nobody's asking the question, what happens if Claude switches off tomorrow?
+
+309
+00:45:31.540 --> 00:45:39.190
+Geoff: then I was like, oh, all my stuff and all my ideas are in Claude, so I think that the direction people are going is they're going to build an offline, sort of your own.
+
+310
+00:45:39.300 --> 00:45:46.790
+Geoff: data brain, which, like, sort of Obsidian, for example, is a good example, where you've got your own data source that is agnostic to a model.
+
+311
+00:45:46.900 --> 00:46:02.259
+Geoff: And so, Claude's just going to be one of many. It's going to be like the Samsung iPhone race of AI, where eventually it'll come to a point where there's no more innovation happening, but more tinkering. But at that point, people will pick a side. People will pick either a Claude or an OpenAI.
+
+312
+00:46:02.380 --> 00:46:17.770
+Geoff: That's the game that's being played at the moment, and that's why we, to our benefit, part of that rat race of getting the best and the greatest bit of tech out there, whilst us as consumers and builders are loving this, so they can fight all day long, because we benefit it.
+
+313
+00:46:17.930 --> 00:46:31.529
+Geoff: But people have just got to be careful and mindful that along with these coding your favorite apps, there comes risk and securities, and that's where it goes back to personal and human interaction, is you need the experts just to double-check that you're not
+
+314
+00:46:32.010 --> 00:46:41.559
+Geoff: giving your data away to people, and people can just kind of just hack your system. And I think that's… AI, in my opinion, is kind of…
+
+315
+00:46:42.450 --> 00:46:45.779
+Geoff: Been… giving people a bit of a delusion.
+
+316
+00:46:45.850 --> 00:47:02.819
+Geoff: And it needs to be pulled back. So, your… your stats at the start, I did mention about cursor, I think, correct me if I'm wrong, is you're sort of highlighting your stats around cursor, which, in my opinion, all the people I know who build apps don't use cursor. They don't charge… you don't charge to use an IDE, you can use visual, you know.
+
+317
+00:47:03.140 --> 00:47:05.009
+Geoff: There's loads of different ones you can use.
+
+318
+00:47:05.460 --> 00:47:20.349
+Geoff: other than cursor, so in my opinion, I don't think cursor is a good metric to use to… and it echoes John's point at the start, that signifies what everyone's doing. I don't think 90% code is the answer. I think if you're based on cursor alone, cursor's market scheme.
+
+319
+00:47:20.350 --> 00:47:27.579
+Geoff: It's all about bringing in people who don't know how to code, and the whole marketing stream is, join us, you can code all of a sudden. So…
+
+320
+00:47:28.020 --> 00:47:35.909
+Geoff: really interesting debate, and like I said, the fast pace is exciting, and there's lots of new things, and I listened to Chris, I think Chris was really interesting.
+
+321
+00:47:36.090 --> 00:47:40.570
+Geoff: The reality is, The scary… and as a business owner myself, is…
+
+322
+00:47:40.680 --> 00:47:49.369
+Geoff: there are going to be less and less employees, the more efficient AI becomes, and people don't want to admit it, and you've got a… you've got a demographic shift where…
+
+323
+00:47:49.890 --> 00:47:58.130
+Geoff: the older generation, and dare I say it, where there's experts in certain fields, certainly around engineering, that refuse to take on
+
+324
+00:47:58.280 --> 00:48:05.370
+Geoff: AI refuse… they almost see it as insulting to suggest you use AI, because they think, well, I can write, I can do it myself.
+
+325
+00:48:05.550 --> 00:48:09.090
+Geoff: But people needed to look objectively what AI does.
+
+326
+00:48:09.330 --> 00:48:16.060
+Geoff: And I use Microsoft Excel as a good example. When Excel came out, nobody lost their jobs, not… accountants didn't suddenly
+
+327
+00:48:16.200 --> 00:48:35.749
+Geoff: off… you know, they didn't lose their jobs because Excel came out. It's a tool. And if you can use the tool to improve and speed up your process, whether it's reviewing a document, or whether it's reviewing something, just use it as a tool. Don't use it as a threat. It's not a threat if you use it correctly. So, I think that's where there's a massive learning curve going to happen, in my opinion.
+
+328
+00:48:37.480 --> 00:48:40.200
+Akhil George, Delphi: Brilliant, thank you so much, Yov.
+
+329
+00:48:40.560 --> 00:48:56.420
+Akhil George, Delphi: We have a couple of really interesting points from Jeremy and Andrea as well. We'll come to that in just one second, because I want to actually just touch upon one of the threads that Job talked about, and, you know, blast that question back at Michael.
+
+330
+00:48:56.680 --> 00:49:05.170
+Akhil George, Delphi: Michael, you've spent a decade as a CTO, you know, from generally leaning towards always buying.
+
+331
+00:49:05.170 --> 00:49:18.489
+Akhil George, Delphi: And in the AI era, where, like, you know, every vendor is adding a co-pilot layer, what is the exact metric that pushes you to build a solution internally, rather than paying for an enterprise license?
+
+332
+00:49:21.240 --> 00:49:22.280
+Michael Petychakis, Dialectica CTO: So…
+
+333
+00:49:26.780 --> 00:49:28.460
+Michael Petychakis, Dialectica CTO: It totally depends.
+
+334
+00:49:29.200 --> 00:49:35.959
+Michael Petychakis, Dialectica CTO: I'm, mainly, like, my experience, is on scale-ups, so fast-growing companies.
+
+335
+00:49:36.180 --> 00:49:45.010
+Michael Petychakis, Dialectica CTO: So, I'm always into the buy, because I just want to move super fast, and I want our teams internally to build only core IP.
+
+336
+00:49:46.540 --> 00:49:51.450
+Michael Petychakis, Dialectica CTO: I don't know if it was different, and if I was in a more stable company.
+
+337
+00:49:51.620 --> 00:49:58.820
+Michael Petychakis, Dialectica CTO: Meaning, okay, we're just looking at gross margin and EBITDA, maybe we would need, especially right now.
+
+338
+00:49:59.540 --> 00:50:07.229
+Michael Petychakis, Dialectica CTO: to go and replace a software that we already have a SaaS subscription and build it. You know, I'm not in that, phase.
+
+339
+00:50:07.420 --> 00:50:11.379
+Michael Petychakis, Dialectica CTO: And again, I want my teams to only work in core IP,
+
+340
+00:50:12.590 --> 00:50:16.490
+Michael Petychakis, Dialectica CTO: And even in… for simple tools, I always prefer the bike.
+
+341
+00:50:16.610 --> 00:50:21.989
+Michael Petychakis, Dialectica CTO: Because of, for me, and I'm sure for most of you, security,
+
+342
+00:50:22.040 --> 00:50:39.070
+Michael Petychakis, Dialectica CTO: is more of a nightmare, so even if I build a calendar tool, which are trivial, like, you can really build a calendar booking application in 10 minutes, but then how do you certify it, and how do you make sure things don't leak, and…
+
+343
+00:50:39.150 --> 00:50:45.349
+Michael Petychakis, Dialectica CTO: Okay, if security is part of your business and it's critical, yeah, just buy a tool.
+
+344
+00:50:46.250 --> 00:50:52.970
+Michael Petychakis, Dialectica CTO: when… But again, totally depends on exactly the tool, and
+
+345
+00:50:53.300 --> 00:50:56.040
+Michael Petychakis, Dialectica CTO: Like, the return of investment that you're looking for.
+
+346
+00:50:56.290 --> 00:51:01.689
+Michael Petychakis, Dialectica CTO: But my, like what I say to my team, always prefer to buy something.
+
+347
+00:51:02.420 --> 00:51:03.740
+Michael Petychakis, Dialectica CTO: Before billing it.
+
+348
+00:51:04.870 --> 00:51:15.939
+Akhil George, Delphi: Brilliant. Okay, so I like that point. It's about protecting the core IP and not building another calendar integration, so that's a clear line in the sand.
+
+349
+00:51:16.410 --> 00:51:29.870
+Akhil George, Delphi: But I would also… one of the things that I would love to hear from the chat is people are replacing SaaS systems with AI. Please tell us in the chat, because that's something that I hear from a lot of execs, and that's something I would love to hear about.
+
+350
+00:51:30.190 --> 00:51:49.739
+Akhil George, Delphi: And, before we go forward, Jeremy had a really interesting point where Jeremy seemed to agree with Chris, and we are gonna go to Jeremy and then come to Andrea. Would love to hear your take. Jeremy, if you could step off mute and tell us your take and your experience, and also introduce yourself.
+
+351
+00:51:49.740 --> 00:51:51.319
+Akhil George, Delphi: That would be brilliant.
+
+352
+00:51:51.850 --> 00:52:02.080
+Jeremy Snyder: Yeah, I'm Jeremy, I'm a co-founder of a company called FireTail.ai. We help other companies actually monitor their AI usage. Our main goal is to enable whatever the right
+
+353
+00:52:02.370 --> 00:52:18.880
+Jeremy Snyder: type, speed, tools of AI usage is going on in your environment, or wants to go on, we provide, like, end-to-end visibility across both, like, user sides and agent workloads and so on. But, to Chris's point earlier about,
+
+354
+00:52:19.390 --> 00:52:28.219
+Jeremy Snyder: You know, what if… we don't want to let people go, but the expansion of what we're doing over here has been really game-changing.
+
+355
+00:52:28.220 --> 00:52:46.210
+Jeremy Snyder: Our core algorithms are primarily written by humans, but, as has been discussed recently, any kind of new around-the-edges development that needs to go on, and in the security world, that's a lot happening pretty much all the time. New threats emerge, new detections need to happen, etc.
+
+356
+00:52:46.210 --> 00:53:04.430
+Jeremy Snyder: The vast majority of those are being written by AI at this point with human-in-the-loop review and peer review before it goes into production, unit testing, etc, like, best practices around the software development lifecycle and the security of that. But we've just been able to see a huge expansion of what we're able to tackle.
+
+357
+00:53:04.430 --> 00:53:16.979
+Jeremy Snyder: For us, it is much more about just being able to do so much more with the same team size. We'll hire for good, knowledgeable software developers who understand core principles.
+
+358
+00:53:16.980 --> 00:53:36.359
+Jeremy Snyder: And that's how we've really approached this. It's a productivity boost, it's not a cost-cutting exercise for us. Then, last point I'll make from my side is, yeah, Expensify was the first product that we killed off. And, you know, like, not only from the standpoint of wanting to save the costs on it, but it was becoming a miserable user experience.
+
+359
+00:53:36.380 --> 00:53:40.760
+Jeremy Snyder: So we now view, basically, any SaaS offering that
+
+360
+00:53:41.060 --> 00:53:52.400
+Jeremy Snyder: that has a negative user experience is definitely a candidate for, like, you know, getting rid of Atlassian products and Nest X1.
+
+361
+00:53:52.970 --> 00:53:58.550
+Jeremy Snyder: Jira, Confluence, etc. These are, notoriously, like.
+
+362
+00:53:58.910 --> 00:54:16.070
+Jeremy Snyder: degrading user experience year over year. They get worse and worse, and they have a lot of dark patterns around accidental subscriptions and things like that, where also the organizational experience of being a customer is poor. And I think that's one of the lessons for us is, as a SaaS vendor ourselves.
+
+363
+00:54:16.150 --> 00:54:29.009
+Jeremy Snyder: is A, if you don't solve the use case and provide value, but B, if you don't solve it in a way that actually, like, removes pain and friction from a customer's day-to-day job, you know, you're taking on risks of your own.
+
+364
+00:54:31.230 --> 00:54:46.249
+Akhil George, Delphi: Brilliant, thank you so much for that, Jeremy. And that's also something that requires a session on its own, and how folks are replacing, SaaS systems with AI, so super, super interesting to hear.
+
+365
+00:54:46.510 --> 00:54:54.979
+Akhil George, Delphi: And I'm gonna go to Andrea. Now, Andrea has had their hand up for a while. Andrea, please come off mute, I would love to hear from you.
+
+366
+00:54:59.540 --> 00:55:09.759
+Andrea Marchiotto: Thank you, Akil, and and Michael, and everyone. I'm Andrea. I own a beauty consultancy and ecosystem called Black Cube Labs.
+
+367
+00:55:09.880 --> 00:55:14.719
+Andrea Marchiotto: But I've also been working as a venture lead, building a startup within a venture studio.
+
+368
+00:55:15.210 --> 00:55:20.049
+Andrea Marchiotto: And after running more than 150 Customer interviews with…
+
+369
+00:55:20.340 --> 00:55:23.799
+Andrea Marchiotto: business owners in Latin, small and medium businesses.
+
+370
+00:55:25.060 --> 00:55:35.339
+Andrea Marchiotto: I learned that one of the key metrics here to measure ROI, ultimately, is adoption. I love what Jeff said earlier, when he mentioned
+
+371
+00:55:36.070 --> 00:55:38.739
+Andrea Marchiotto: kind of the tricky call. Having…
+
+372
+00:55:38.910 --> 00:55:46.449
+Andrea Marchiotto: A decent product, not necessarily great product, but distribution and marketing, great storytelling, because now the barriers to entry are lower.
+
+373
+00:55:46.840 --> 00:55:53.360
+Andrea Marchiotto: But there is an overwhelming amount of information to deal with, so I kind of… I spoke with dozens of
+
+374
+00:55:53.660 --> 00:56:05.300
+Andrea Marchiotto: owners and entrepreneurs that are saying to me, they have this anxiety, this formal to be left out, and they have no clue how to use this tool, because ultimately it's a tool, right?
+
+375
+00:56:05.600 --> 00:56:12.189
+Andrea Marchiotto: That is, for sure, going to replace some of the jobs, but ultimately, you… it's like when the iPhone came.
+
+376
+00:56:12.710 --> 00:56:26.979
+Andrea Marchiotto: And everyone was able to take pictures, but ultimately you would always see the eye of the photographer when someone that we didn't have the expertise was able to capture, even with an iPhone, the most amazing photo ever, right? So the same applies here.
+
+377
+00:56:27.450 --> 00:56:34.939
+Andrea Marchiotto: But… sorry, maybe I'm mixing a little bit of different things, but it's kind of interlinked, intertwined.
+
+378
+00:56:35.720 --> 00:56:43.799
+Andrea Marchiotto: So brain rot is a problem. Loss of critical thinking is a huge problem, so the ability to focus and make the right decisions
+
+379
+00:56:43.940 --> 00:56:49.579
+Andrea Marchiotto: it's affecting us. It's affecting myself as well, right?
+
+380
+00:56:49.710 --> 00:56:54.949
+Andrea Marchiotto: So this is… if you think about it, like, from a business perspective, when you rely
+
+381
+00:56:55.260 --> 00:56:56.949
+Andrea Marchiotto: too much on AI.
+
+382
+00:56:57.150 --> 00:56:59.199
+Andrea Marchiotto: You're losing the grip.
+
+383
+00:56:59.700 --> 00:57:16.360
+Andrea Marchiotto: And then, the higher the chances that your people will get substituted, because they won't be able, over time, to deal with those complex problems and take those decisions without relying on AI too much. So I guess my point is, use it with caution.
+
+384
+00:57:16.430 --> 00:57:23.919
+Andrea Marchiotto: Especially now, we are still in a hybrid situation where humans still matter, and not everything is done by AI agents.
+
+385
+00:57:24.010 --> 00:57:28.250
+Andrea Marchiotto: Right? Because we are going to have… we are going to move from SaaS
+
+386
+00:57:28.400 --> 00:57:31.570
+Andrea Marchiotto: To proactive agents working with each other.
+
+387
+00:57:32.000 --> 00:57:45.389
+Andrea Marchiotto: Most likely in 5-10 years' time, we will be less relevant, because we will have our digital agents, twins, and sub-agents working for us, not with other people, but with other agents, right?
+
+388
+00:57:45.530 --> 00:57:46.590
+Andrea Marchiotto: So…
+
+389
+00:57:47.250 --> 00:57:56.070
+Andrea Marchiotto: Yeah, it's a complex topic, going back to the root cause of understanding who's the customer, what's his problem. Adoption is key, because I've seen this.
+
+390
+00:57:56.250 --> 00:57:59.489
+Andrea Marchiotto: I built the most amazing copilot ever.
+
+391
+00:57:59.970 --> 00:58:02.699
+Andrea Marchiotto: But then realized that people were not using it.
+
+392
+00:58:03.360 --> 00:58:08.600
+Andrea Marchiotto: So… Many will pay you, but that if they are not using what you're building.
+
+393
+00:58:09.080 --> 00:58:18.879
+Andrea Marchiotto: then the ROI is none, because you measure it, actually, in a more medium-long… Third timeframe, not just for…
+
+394
+00:58:19.210 --> 00:58:22.740
+Andrea Marchiotto: Like, a burst of money that comes in, and just…
+
+395
+00:58:24.160 --> 00:58:39.699
+Akhil George, Delphi: Really, really interesting, and a very, very cautionary note, Andrea, thank you so much for that. So that's something for all of us to think about. And one of the things that you said really interests me, so I'm gonna shoot over the same question to Michael as well.
+
+396
+00:58:39.700 --> 00:58:54.200
+Akhil George, Delphi: Michael, I want to talk about the new productivity, and I want to end the conversation on that note, right? So, how are you accurately, you know, auditing developer productivity with now new tools? Like, you know, we have Kerza, Copilot.
+
+397
+00:58:54.200 --> 00:58:57.570
+Akhil George, Delphi: you know… Love to hear your take as well.
+
+398
+00:59:01.810 --> 00:59:03.950
+Michael Petychakis, Dialectica CTO: Well, productivity.
+
+399
+00:59:04.560 --> 00:59:15.940
+Michael Petychakis, Dialectica CTO: I think we touched on this a little bit already, because what is productivity, when we're talking about engineering? And obviously, there are the door metrics, now there are more…
+
+400
+00:59:17.060 --> 00:59:26.090
+Michael Petychakis, Dialectica CTO: metrics and KPIs that, as an industry, we track, and they all fall under the DevEx, like.
+
+401
+00:59:26.290 --> 00:59:29.890
+Michael Petychakis, Dialectica CTO: movement that we have the last, couple of years. So…
+
+402
+00:59:30.130 --> 00:59:38.540
+Michael Petychakis, Dialectica CTO: what I'm doing, right now, I'm trying to monitor as many of these KPIs and try to understand the stories behind the teams.
+
+403
+00:59:38.950 --> 00:59:43.670
+Michael Petychakis, Dialectica CTO: So… just because we had the burst, and what Adrea mentioned,
+
+404
+00:59:43.850 --> 00:59:48.320
+Michael Petychakis, Dialectica CTO: That doesn't mean my team is super productive because they delivered something in two weeks.
+
+405
+00:59:48.470 --> 00:59:55.660
+Michael Petychakis, Dialectica CTO: For me, it's more important How, you know, on the long run, they keep being productive, and slowly…
+
+406
+00:59:55.950 --> 01:00:02.459
+Michael Petychakis, Dialectica CTO: improving some of their, KPIs. So, honestly, I'm trying to measure everything.
+
+407
+01:00:02.600 --> 01:00:16.250
+Michael Petychakis, Dialectica CTO: Because each team is slightly different, the business needs are slightly different, some products are in their very, very maturity, some are under their legacy systems and legacy code.
+
+408
+01:00:16.340 --> 01:00:23.560
+Michael Petychakis, Dialectica CTO: Some are pretty, pretty new. So, again, measure everything and compare each team only to themselves.
+
+409
+01:00:23.860 --> 01:00:29.249
+Michael Petychakis, Dialectica CTO: And try to understand what's working and what's not working in my teams, in my department.
+
+410
+01:00:29.930 --> 01:00:37.589
+Michael Petychakis, Dialectica CTO: for example, everybody now is happy with the AI tooling, but it just happened, for example, that my team's,
+
+411
+01:00:38.610 --> 01:00:42.829
+Michael Petychakis, Dialectica CTO: after we ran a DevEx survey, the last month, we saw that,
+
+412
+01:00:43.000 --> 01:00:50.410
+Michael Petychakis, Dialectica CTO: somehow our tooling, the DevOps tooling was good, but now we saw a decline, people started complaining about that.
+
+413
+01:00:50.620 --> 01:01:00.920
+Michael Petychakis, Dialectica CTO: So, now we need to start improving again, because they feel less productive. So, they have the AI tooling, but the DevOps tooling wasn't there, so we are improving that.
+
+414
+01:01:01.100 --> 01:01:05.489
+Michael Petychakis, Dialectica CTO: So, it's a very, very broad question, but I think…
+
+415
+01:01:05.840 --> 01:01:07.660
+Michael Petychakis, Dialectica CTO: Measuring is the key for me.
+
+416
+01:01:08.270 --> 01:01:28.169
+Akhil George, Delphi: Brilliant, brilliant. Thank you so much, Michael, and again, thank you so much for your honesty, and everyone in the room who came off mute to just tell us about their experience, thank you so much for everyone's honesty. It's exactly what the room was built for. I would love to keep the conversation going, but unfortunately, we have to respect everyone's calendar.
+
+417
+01:01:28.170 --> 01:01:40.350
+Akhil George, Delphi: again, this is exactly what Delphi is meant for. There was a couple of questions that I couldn't take from the chat, but, you know, in our next conversation, I will be sure to prioritize if I haven't picked you.
+
+418
+01:01:40.350 --> 01:01:52.089
+Akhil George, Delphi: And before you drop off, I just want to say, tomorrow we are doing something entirely different, so we are breaking out of our tech silo.
+
+419
+01:01:52.090 --> 01:02:13.439
+Akhil George, Delphi: And bringing all of our cohorts together for a massive cross-functional conversation on the Strait of Hormuz. And we are not looking at headlines here, we are, you know, we are tackling the problem from every angle. So we have defense execs, so we are… in our panel, we have corporate risk, insurance.
+
+420
+01:02:13.440 --> 01:02:18.250
+Akhil George, Delphi: Energy sector, transformation, global supply chain resilience, and
+
+421
+01:02:18.560 --> 01:02:33.139
+Akhil George, Delphi: all the different disciplines. So, the uniqueness of Delphi is that we don't stop at the surface. So, again, I just want to thank everyone for coming, and thank everyone for the honesty. Again.
+
+422
+01:02:33.140 --> 01:02:44.410
+Akhil George, Delphi: these kind of disagreements and friendly, change in opinions is exactly what Delphi is built for. So, once again, everyone, thank you, and have a good day.
+
+423
+01:02:48.990 --> 01:02:49.860
+Nicola: Thank you.
+
+424
+01:02:52.680 --> 01:02:56.799
+Michael Petychakis, Dialectica CTO: Thank you, everybody. Have a nice… Day, afternoon, anything.
+
+425
+01:02:57.710 --> 01:02:58.879
+hdash: Thank you all.
+

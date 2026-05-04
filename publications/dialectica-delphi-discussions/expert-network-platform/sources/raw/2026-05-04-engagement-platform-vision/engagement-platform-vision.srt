@@ -1,0 +1,291 @@
+1
+00:00:00,270 --> 00:00:04,350
+Okay, so one of the scopes that we think would be a great fit
+
+2
+00:00:04,351 --> 00:00:09,050
+to pass holidays and it's really like a challenge that we need to
+
+3
+00:00:09,051 --> 00:00:13,730
+resolve across teams is how do we scale what we do in the terms
+
+4
+00:00:13,731 --> 00:00:15,970
+of engagement flow of capturing data,
+
+5
+00:00:16,490 --> 00:00:21,090
+to generalize it, and to recognize in terms of engagement
+
+6
+00:00:21,091 --> 00:00:23,890
+is one of the many potential touches.
+
+7
+00:00:26,884 --> 00:00:30,884
+So, for example, when we have an expert which is here a CTO at
+
+8
+00:00:30,885 --> 00:00:33,804
+the Moravang, uh, in Switzerland,
+
+9
+00:00:34,384 --> 00:00:38,104
+so it's a chief technology officer that's based on their experience,
+
+10
+00:00:38,784 --> 00:00:41,304
+and then for each person based on their experience,
+
+11
+00:00:41,604 --> 00:00:43,864
+there's several things we want to give them,
+
+12
+00:00:44,204 --> 00:00:48,044
+so which are linked to their incentive, and several things we want to get.
+
+13
+00:00:48,428 --> 00:00:50,788
+For example, we want to get which vendors they use,
+
+14
+00:00:51,228 --> 00:00:53,448
+for certain vendors we want to get additional insights,
+
+15
+00:00:54,188 --> 00:00:57,508
+we're trying to track, to assess this option tracker,
+
+16
+00:00:58,588 --> 00:01:02,608
+uh, for commercial people we want to know in which region they,
+
+17
+00:01:02,808 --> 00:01:05,728
+they are working, so there's several things that we want to get.
+
+18
+00:01:06,368 --> 00:01:08,648
+And the idea is that we can, you know,
+
+19
+00:01:09,048 --> 00:01:11,328
+run rules or potentially prompts.
+
+20
+00:01:11,329 --> 00:01:16,772
+Hello. That what this determine is a set
+
+21
+00:01:16,773 --> 00:01:19,032
+of value propositions that is attractive to,
+
+22
+00:01:19,212 --> 00:01:22,732
+to this expert. So here, joining top 1% of experts,
+
+23
+00:01:23,292 --> 00:01:26,512
+joining the community, accessing CTO insights,
+
+24
+00:01:26,932 --> 00:01:31,172
+these are things that we could give them. And things that we want is
+
+25
+00:01:31,173 --> 00:01:33,212
+they are not a good fit for exact partnerships,
+
+26
+00:01:33,992 --> 00:01:36,232
+but they, we want to know which way.
+
+27
+00:01:36,256 --> 00:01:38,716
+And there's the use, and they could use,
+
+28
+00:01:39,216 --> 00:01:41,576
+uh, they could give us insight on the SaaS disruption tracker.
+
+29
+00:01:42,556 --> 00:01:45,436
+And basically, this set of,
+
+30
+00:01:45,696 --> 00:01:50,556
+um, given get value propositions can be presented at
+
+31
+00:01:50,557 --> 00:01:52,716
+different, at different points in the,
+
+32
+00:01:52,717 --> 00:01:55,256
+in the customer journey. So for example,
+
+33
+00:01:55,456 --> 00:01:58,336
+in a profile boost page, um,
+
+34
+00:01:59,076 --> 00:02:01,540
+we can present. You know, really all the,
+
+35
+00:02:02,480 --> 00:02:05,860
+uh, values around joining,
+
+36
+00:02:05,861 --> 00:02:10,240
+uh, the top 1% of experts and,
+
+37
+00:02:10,241 --> 00:02:12,780
+like, re-improving your profile. We can change the warning,
+
+38
+00:02:13,120 --> 00:02:15,180
+but here you can present all these, uh,
+
+39
+00:02:15,300 --> 00:02:18,280
+value propositions. And this has a less concrete, you know,
+
+40
+00:02:18,380 --> 00:02:20,480
+action, right? Because it's, you know, we tell you,
+
+41
+00:02:20,620 --> 00:02:23,640
+we boosted your profile, we can, you know, make it more concrete to people
+
+42
+00:02:23,641 --> 00:02:25,784
+that like. and I'll see there's nothing we give immediately.
+
+43
+00:02:26,964 --> 00:02:29,344
+But then, either in the thank you page,
+
+44
+00:02:29,345 --> 00:02:33,564
+or really at any other point in the customer journey,
+
+45
+00:02:34,044 --> 00:02:38,344
+like in an email after the consultation, we can come to the experts with
+
+46
+00:02:38,345 --> 00:02:43,044
+another value proposition. And this one would require them to fill this,
+
+47
+00:02:43,045 --> 00:02:45,904
+Fast disruption tracker, blah,
+
+48
+00:02:46,064 --> 00:02:48,424
+blah, blah, and,
+
+49
+00:02:48,818 --> 00:02:52,018
+We would give them access to the community and exchange for that.
+
+50
+00:02:52,198 --> 00:02:56,478
+So, like, this is the presentation of another value proposition.
+
+51
+00:02:57,498 --> 00:02:59,718
+And of course, you know, if you have completed,
+
+52
+00:02:59,719 --> 00:03:02,438
+you know, the get-use vendors,
+
+53
+00:03:02,439 --> 00:03:06,058
+like you answered those questions, because you went through that flow,
+
+54
+00:03:06,658 --> 00:03:09,978
+and you also completed the community value proposition.
+
+55
+00:03:11,158 --> 00:03:15,212
+You, you basically, then once you get to another point in the customer journey,
+
+56
+00:03:16,332 --> 00:03:18,352
+like profile, thank you, right? We,
+
+57
+00:03:18,353 --> 00:03:23,112
+we have got, got an rate of any potential gift
+
+58
+00:03:23,113 --> 00:03:26,272
+to get value propositions based on the computation of all rules.
+
+59
+00:03:27,292 --> 00:03:30,472
+Uh, but if you haven't done it in the post-consultation email,
+
+60
+00:03:31,012 --> 00:03:34,192
+then, you know, we can give you the gift to get value proposition.
+
+61
+00:03:34,692 --> 00:03:40,676
+So, it's really around finding, pairs of gift get beyond
+
+62
+00:03:40,677 --> 00:03:45,436
+just the knowledge mapping that we can throw into different points
+
+63
+00:03:45,437 --> 00:03:49,216
+of the customer journey. And I spoke with Rekka,
+
+64
+00:03:50,256 --> 00:03:54,316
+and with, um, Stefan, and we're all aligned that,
+
+65
+00:03:54,436 --> 00:03:59,016
+you know, this is a complex thing. This cuts across three teams and
+
+66
+00:03:59,017 --> 00:04:01,080
+needs to understand the technical, So, uh,
+
+67
+00:04:01,980 --> 00:04:04,840
+setup of each team, AI interviewer, Stefan,
+
+68
+00:04:05,360 --> 00:04:07,700
+and the new community platform that I'm building.
+
+69
+00:04:08,320 --> 00:04:11,680
+And, and, and we think this is a perfect project for Pascalies,
+
+70
+00:04:11,880 --> 00:04:15,200
+for, for Senior Engineer, to help us re-accelerate.
+
+71
+00:04:15,360 --> 00:04:17,700
+And, and we think this can have a huge impact,
+
+72
+00:04:17,980 --> 00:04:20,340
+but it's a, a meaty, challenging project,
+
+73
+00:04:20,341 --> 00:04:24,440
+which I think is what you were missing from the context I have given.

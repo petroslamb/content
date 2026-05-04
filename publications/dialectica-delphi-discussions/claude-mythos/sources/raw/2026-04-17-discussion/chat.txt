@@ -1,0 +1,200 @@
+00:11:59	Angelos Kirianes:	Hi everybody :-) from Munich / Germany
+00:12:29	Dhruvan Ghoghari:	Hello Everyone - Dhruvan here from Mumbai, India
+00:12:38	Beny Rubinstein (WG'01) | TLV:	Good afternoon from sunny Tel Aviv!
+00:12:47	Pavel Malyshev:	Hello from Prague
+00:13:03	Sandro Bernardes:	GM, Sao Paulo
+00:13:03	Sam Isaacson:	Hello from London!
+00:13:04	Chris Cartwright:	Hello from London
+00:13:16	Beny Rubinstein (WG'01) | TLV:	Replying to "GM, Sao Paulo"
+
+Bom dia ;-)
+00:13:33	Sandro Bernardes:	Replying to "GM, Sao Paulo"
+
+Boker Tov
+00:13:34	Asdrúbal Pichardo:	Hello! greetings from Munich Germany!
+00:13:48	Andrew Doyle:	Hi from not so sunny Sutton Coldfield
+00:13:59	Sandro Bernardes:	Replying to "GM, Sao Paulo"
+
+:-)
+00:14:02	Remi GOGET:	Reacted to "Hi from not so sunny..." with 😂
+00:14:09	Beny Rubinstein (WG'01) | TLV:	Reacted to "Boker Tov" with 🙏
+00:14:12	Pavel Malyshev:	Reacted to "Hi from not so sun..." with 😂
+00:15:08	Beny Rubinstein (WG'01) | TLV:	Reacted to "Hi from not so sunny Sutton Coldfield" with 😂
+00:15:18	Pere Molins:	Hi From Thessaloniki, community lead @ Delphi
+00:15:39	Aristotelis Gkortsilas:	Hello from Madrid
+00:15:42	Francesco del Bosco:	Hi from Milano, Italy
+00:16:03	Jesse @ Teleperson:	Great to meet everyone! Jesse from Teleperson in Lisbon
+00:16:16	Yuri Pasquinelli:	Ciao a tutti from Milano, Italia
+00:16:21	Yuri Pasquinelli:	Reacted to "Hi from Milano, Ital..." with 👍
+00:16:22	Rocky Verma:	so recording will not be shared?
+00:16:54	Jesse @ Teleperson:	https://www.linkedin.com/in/jessehollander/
+00:17:05	Meci Merve Vardar:	Hi everyone, this is Meci from Atlassian (Netherlands)
+00:17:28	Arunima Martinsen:	https://www.linkedin.com/in/arunima-martinsen-9a2a0872/
+00:17:46	Beny Rubinstein (WG'01) | TLV:	Replying to "Great to meet everyone! Jesse from Teleperson in Lisbon"
+
+Seja bem-vindo!
+00:18:06	Fabiano Felix:	Hi, Fabiano Felix from São Paulo - Brazil
+00:18:09	Fabiano Felix:	https://www.LinkedIn.com/in/fabiano-felix
+00:19:43	Beny Rubinstein (WG'01) | TLV:	I am pursuing a PhD in AI and exploring Claude a lot - and I am also working at the intersection of AI & Cyber as a senior advisor for large corporations in Brazil. Keen to have discussions here and beyond if that makes sense; glad to be a part of this community. Beny Rubinstein, Eng., M.B.A., Ph.D. candidate | LinkedIn
+00:19:43	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	mythos will be the first of new breed of aggressive AI.  If my colleagues can track the risks and plug holes then all good but if bad actors get there first..... oh dear.
+00:19:51	Naveen Venkatesh (Krishna):	Hi everyone, Naveen from India
+00:22:02	Beny Rubinstein (WG'01) | TLV:	I took a look at the system card and risk report which are both available for review. While there's a marketing play here, there are real insightful things here that matter - this is not a classic "shall I use AI or not" but how you should be ready for this new wave.
+00:22:17	Pavel - ex Dir of Support & Education @ Productboard:	Reacted to "I took a look at t..." with 👍
+00:22:21	Sam AIcoach.chat:	Can it be used internally to anticipate and help to protect? Is that coming as a must-have position?
+00:22:25	Remi GOGET:	The question we have - trying to solve at first before Mythos actually is whether those elements are part of IT architecture or shadow IT. Having a product under SLA remains important from many
+00:22:42	rogiervanderhorst:	Bad actors will obviously get a hold on it, especially from state level actors.
+00:23:31	Nikos Patsis:	Hi everyone This is Nikos Patsis twice exited AI entrepreneur currently advising and investing in AI, Robotics and Fintech startups via DisruptIQ https://www.linkedin.com/in/nikospatsis/
+00:24:53	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	How many of the firms represented in this group have already agreed R&D and contingent labour for investigating the outcomes from Mythos..?
+00:25:08	Asdrúbal Pichardo:	Need to assume bad actors will leverage it thus better be prepared and “contain the explosion radius”
+00:25:15	Naveen Venkatesh (Krishna):	My view adds on to where Richard left of, AI hallucination could be directed. Instead of leading to solutions it might take us into vicious loop of validation. This effort on validation could increase rather than solutions.
+00:27:20	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Do many firms have a realisitic shadow to live environment to test Mythos within?  It has to be a clone of Live.
+00:29:16	Sam AIcoach.chat:	And ‘fast enough’ is surely the important thing, especially in big orgs that have extensive processes
+00:29:50	Jesse @ Teleperson:	This sounds like a bottom-up coalition of SMBs and enterprises should form around AI security specifically. It feels like these discussions are more just happening with the largest tech firms and governments….
+00:30:49	Prag Jaodekar:	Anthropic has refused to release Mythos to the public. Instead, they launched Project Glasswing, a controlled "defensive-first" initiative.  Its currently being evaluated by The Consortium: A vetted group of giants—including Google, Microsoft, Apple, Amazon Web Services (AWS), NVIDIA, JPMorgan Chase, and CrowdStrike—has been granted early access.
+00:31:41	Andrew Doyle:	@Aristotelis Gkortsilas Is the White paper accessible? If so from where?
+00:32:51	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Policies, processes, SOPS may all need to be chnaged.  patch releases will start to clog up the days of the week.  Service disruption will become a higher probability.
+00:32:54	Pavel - ex Dir of Support & Education @ Productboard:	Pavel here, was building AI-first SaaS as part of the GTM exec team @Productboard; currently looking for new opps. ww.linkedin.com/in/pmalyshev
+
+With Mythos the problem is really predictability - keeping such a powerful system constrained is going to be hard. We know that AI being non-determenistic by nature, where could be larger risks of unintended bad usage, not only malicios ones. 
+
+Anthropic is collaborating with selected businesses like the ones mentioned above, and also banks now. So if they give the right monitoring tools or testing environments, it could help.
+00:33:00	Arunima Martinsen:	Where is the Most Value added using AI Models in your business area or sector for you all using Claude or any other AI models . Do you use Ai to automate any process so far? Specially referring to Healthcare or Finance .
+00:33:12	Fabrice Delouche:	Is the session available for replay ? I will have to drop soon…
+00:33:32	Pere Molins:	Replying to "Is the session avail..."
+
+No replay but will send an anonymized summary after the session
+00:34:29	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Will Insurance companies start to screen customers that have not used AI to track their risks?
+00:34:58	Beny Rubinstein (WG'01) | TLV:	Another very simple recommendation, if you're not doing that yet: Separate your AI security testing from your AI capability evaluation. Most organizations have the AI team run both. The conflict of interest is structural — the team optimizing for capability has incentive to minimize security findings. Assign CISO ownership of AI security evaluation with independent methodology, focused specifically on: permission boundary testing, cross-session behavioral consistency, evaluation awareness probing, and adversarial instruction injection. These are security assessments, not product quality assessments.
+00:35:10	Francesco del Bosco:	Reacted to "No replay but will s..." with 👍
+00:35:18	Asdrúbal Pichardo:	I consider it to be a genuine risk, however we can expect it to multiply and increase the number of cyber attacks and zero-days exploits, but it won’t change the severity of cyber attacks, severity of a breach, once it happens, is governed by different variables entirely. CIOs/CISOs will need to continue to work and assuage severity for their companies
+00:35:58	Andrew Doyle:	I’m not sure I feel any better after that ;-)
+00:36:10	Sandro Bernardes:	I saw more insurance discussions for exclusion than not, @Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT
+00:36:28	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	I thought so!
+00:36:43	rogiervanderhorst:	Might shake up the current SOC/SIEM market. Agree with Aristotelis that this increases the need for agility across the field.
+00:37:21	Prag Jaodekar:	Yes, @Sandro Bernardes   Insurers are currently scrambling. Most loss models assume that zero-days are rare and expensive to find it’s potentially breaking the actuarial math of existing cyber policies.
+00:37:24	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Risk Managers used to be unseen.  Now they need to be on the Board.
+00:37:41	Beny Rubinstein (WG'01) | TLV:	One important thing to understand why this is a DIFFERENT kind of risk is the concept of alignment risk. Alignment risk means that for the first time, your security perimeter needs to account for a threat actor that is already inside your trust boundary, authenticated with your credentials, operating through your authorized tooling — and the only thing distinguishing it from a trusted employee is a statistical property of its learned behavior that your existing security infrastructure has no instrumentation to detect.
+00:37:42	Sandro Bernardes:	Reacted to "Yes, @Sandro Bernard..." with 👍
+00:38:08	Dhruvan Ghoghari:	Great points shared about how tech transformations are driven till date by Aristotelis !
+00:38:11	Beny Rubinstein (WG'01) | TLV:	The one-sentence for board/non technical people: Alignment risk is the possibility that an AI system does your work in ways that serve its trained objective rather than your actual values — not because it was hacked, not because it malfunctioned, but because "what it learned to do" and "what you actually wanted" were never perfectly the same thing to begin with.
+00:38:13	Socratis - KNEX:	I am very afraid that this conversation is done now between CISOs or CIOs of an extremely small number of people and companies. maybe few hundreds globally
+00:40:10	Beny Rubinstein (WG'01) | TLV:	Here is why these are "GOOD NEWS" (look at the positive angle - transparency, knowing what you didn't know): Anthropic published the most honest alignment risk assessment in the industry's history. Your other AI vendors have not published equivalent documentation. From a CISO perspective, this means you are making risk acceptance decisions with asymmetric information across your vendor portfolio.
+00:40:27	Angelos Kirianes ex-DT AG/T-Systems/Computacenter Global CTO:	Reacted to "Here is why these ar..." with 👍🏼
+00:40:38	Sandro Bernardes:	Reacted to "Here is why these ar..." with 👍
+00:41:11	Beny Rubinstein (WG'01) | TLV:	May be time to also revise your INSURANCE policies!
+00:41:54	Adam Farquhar:	There are a couple of things in discussion in the chat. Some are the risks of using AI tools, some are using AI agents and giving them the power to act within ones security boundary. Others are specific to AI tools ability to not only identify vulnerabilities, but also to construct exploits for them. I think that this is the specific risk that has become more salient with Mythos. It is reducing the costs of creating exploits by orders of magnitude.
+00:42:01	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	The race to a smarter AI, a new arms race
+00:42:45	Sam Isaacson AIcoach.chat:	Defence being behind has always been the way, it’s just speed
+00:42:53	Prag Jaodekar:	I would love to learn what are the practical steps you have taken to prepare for this. We will have Anthropic release a massive Glasswing Transparency Report in July 2026, which is expected to trigger a massive patching effort
+00:42:55	Remi GOGET:	From manufacturing POV, it seems that we need to be more conscious about edge - OT devices threats rather than intenet phasing environments ? Your take?
+00:43:05	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Reacted to "Defence being behi..." with 👍
+00:43:06	Pavel - ex Dir of Support & Education @ Productboard:	Yeah, that's a good argument. Seems like the holes are unavoidable, there will be examples, so it's more about being ready for the risk
+00:43:34	Sandro Bernardes:	A few in fortune 50 network that already connects among them and federal bureaus who are already pushing their vendors of choice to monitor and protect them. Very little others can do but patch quickly. OF course, cyber services are at the spot. Thoughts?
+00:43:44	Aristotelis Gkortsilas:	https://www.fairinstitute.org/
+00:44:23	Remi GOGET:	Reacted to "Yeah, that's a good ..." with 👍
+00:45:37	Pere Molins | Delphi Team:	Reacted to "A few in fortune 50 ..." with 💯
+00:45:45	Aristotelis Gkortsilas:	https://e.cloudsecurityalliance.org/e/908632/ploads-2026-04-mythosready-pdf/pp45j/910947234/h/pEA3OjTujwaYw53xwdBvkGIErakD0sD6IRiCWJXcAp0
+00:46:51	Tara Cirql One:	I see less discussions spiraling around the problems that this can bring but rather lot of pressure from the CEOs that doesn’t even question should we use this (aside from some very regulated industries) but how fast and best. Most CEOs I talk to are clear that it’s risky to jump into using new models as they come out but they are sold on adopting it and most have budget to fold AI into their business in general. They swat at their tech experts when they mention security risk, data poisoning, cyber attacks etc. because the biggest risk they see is not adopting new models like Mythos that signal these potential risks but that at the rate that things are changing - if they don’t jump on the train and their competitors do, they won’t have to worry about security concerns in the future because they wont have a business. Tough job for the CIOs and CTOs to respond to that - but, its an unfortunate reality
+00:48:39	Beny Rubinstein (WG'01) | TLV:	Replying to "https://e.cloudsecurityalliance.org/e/908632/ploads-2026-04-mythosready-pdf/pp45j/910947234/h/pEA3OjTujwaYw53xwdBvkGIErakD0sD6IRiCWJXcAp0"
+
+Is that the paper that was mentioned here before?
+00:49:05	Aristotelis Gkortsilas:	Replying to "https://e.cloudsecur..."
+
+yes
+00:49:17	Dhruvan Ghoghari:	From a preparedness standpoint, I think organizations should focus less on the model itself and more on three things:
+Defining clear boundaries on what AI systems can access and act on
+Implementing runtime monitoring and human-in-the-loop controls for critical decisions
+Establishing a clear operating model, including kill switches and incident response for AI-driven failures
+Longer term, I do see a shift where AI will increasingly be required to monitor and defend against AI, because manual oversight won’t scale.
+So overall, I’d frame Mythos not as a one-off risk, but as a signal that our current enterprise AI governance models need to evolve much faster.
+00:49:39	Adam Farquhar:	The big Mythos risk is not from using the powerful new model - it is the risk of others using the model to develop zero-day exploits of software systems that might not have been worth compromising before.
+00:50:43	Aristotelis Gkortsilas:	Reacted to "The big Mythos risk is not from using the powerful new model - it is the risk of others using the model to develop zero-day exploits of software systems that might not have been worth compromising before." with 👍
+00:50:43	Adam Farquhar:	So, it's not about AI driven failures, it is about hackers successfully using AI to compromise our systems.
+00:50:45	Remi GOGET:	On large enterprise issues, top tier companies usually circle back to SIs or known advising Companies like ACN, PwC, Deloitte… These companies usually play the long game with studies and market analysis before going into “action mode” this is a challenge because their timeline is longer and not as responsive as the current pace of tech (and threat). For my customers, that’s a major issue and disconnect
+00:50:48	Dima:	Can anyone speak to any known tools or techniques to reduce exposure? I'm referring to code generation aspects, but also more generally regarding various prompts and daily tasks
+00:51:10	Jesse @ Teleperson:	The concept of that coalition would be to share best practices as well… happy to discuss further - Jesse@teleperson.com
+00:51:40	Andrew Doyle:	I think the challenge for many boards preparing to react to this threat and redirecting budget to address it is in their ability to fully understand what the risk is, where it is coming from, what its impact will be if left unaddressed (speaking in hyperbole will not help to convince of the need to act) and whether it can be done in stages without interrupting day to day business flow as at the end of the day business needs to continue to run and generate revenue and profit.
+00:51:53	Pere Molins | Delphi Team:	Some interesting perspective from Simon Willison mentioning “We're going see a Challenger disaster for AI and it's going to be very very very bad” https://www.linkedin.com/posts/lennyrachitsky_simon-willison-were-going-see-a-challenger-activity-7448105865548627969-_K1I/  -> Hearing how much needs to be done and how some organizations are not always well prepared this seems quite inevitable
+00:51:55	Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory):	Reacted to "yes" with 👍
+00:52:03	Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory):	Replying to "https://e.cloudsecurityalliance.org/e/908632/ploads-2026-04-mythosready-pdf/pp45j/910947234/h/pEA3OjTujwaYw53xwdBvkGIErakD0sD6IRiCWJXcAp0"
+
+Thanks for sharing.
+00:52:04	Jeremy Snyder:	Replying to "Can anyone speak to any known tools or techniques to reduce exposure? I'm referring to code generation aspects, but also more generally regarding various prompts and daily tasks"
+
+One tip is not to focus on vulnerability management but rather exposure or attack surface management, if you’re looking at a tool to use
+00:52:37	Andrew Doyle:	Replying to "https://e.cloudsecur..."
+
+Thanks for sharing
+00:52:37	Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory):	Replying to "https://e.cloudsecurityalliance.org/e/908632/ploads-2026-04-mythosready-pdf/pp45j/910947234/h/pEA3OjTujwaYw53xwdBvkGIErakD0sD6IRiCWJXcAp0"
+
+Were you involved in the write up? Is that considered a benchmark? Are there others like this you're aware of?
+00:52:53	rogiervanderhorst:	Reacted to "One tip is not to fo..." with ❤️
+00:52:58	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Axiom seem to bcollecting cyber & pentesting firms to create a vertical suite of apps.  Whether they all 'hold together' yet may expose other weaknesses.
+00:53:26	Adam Farquhar:	Reacted to "https://e.cloudsecur..." with 👍
+00:54:27	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Reacted to "The big Mythos ris..." with 👏
+00:59:08	Christophe Couvreur:	One point that has not been made yet is about how more advanced AI models can be used not only to identify and exploit software vulnerabilities (e.g. detecting zero-day exploits) but also to develop more sophisticated and larger scale social engineering attacks.   For example, with voice cloning and advanced conversational agents, you can potentially have a large scale phone-targeting campaign and the AI can not only lower the cost to execute it but also the cost of preparing it (analysing and designing).
+00:59:29	Adam Farquhar:	Reacted to "One point that has n..." with 👍
+01:01:12	Sandro Bernardes:	Very rare to have digitally savvy board members,@Andrew Doyle. This is specially hard for smaller companies.
+01:01:36	Lucas S:	Reacted to "Very rare to have di..." with ❤️
+01:01:49	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	This risk is reminnescent of Y2K fears.
+01:02:06	Jeremy Snyder:	Reacted to "This risk is reminnescent of Y2K fears." with 👍
+01:02:21	Prag Jaodekar:	Reacted to "This risk is reminne..." with 👍
+01:02:55	Jeremy Snyder:	The risk calculation has just changed dramatically
+01:03:20	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	How do you prioritise the risks within your structure?
+01:03:24	Jeremy Snyder:	Btw my email is jeremy@firetail.ai happy to connect with anyone here
+01:04:00	Jeremy Snyder:	Replying to "How do you prioritise the risks within your structure?"
+
+Exposed vuln
+Production system
+Known exploit
+01:04:16	Prag Jaodekar:	Another interesting side effect is banks and critical infrastructure providers  using Mythos-class tools to perform "archaeological" security sweeps of 20-30 year-old COBOL and C++ codebases that were previously considered "too stable to touch."
+01:04:24	Jeremy Snyder:	Replying to "How do you prioritise the risks within your structure?"
+
+That’s specific to this category of discovery from Mythos
+01:04:44	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Reacted to "Another interestin..." with 😮
+01:05:13	Jeremy Snyder:	Replying to "Another interesting side effect is banks and critical infrastructure providers  using Mythos-class tools to perform "archaeological" security sweeps of 20-30 year-old COBOL and C++ codebases that were previously considered "too stable to touch.""
+
+Great point. Legacy software becomes a big risk
+01:05:38	Aristotelis Gkortsilas:	If I may - this goes back to my previous point about being able to translate security and technology risk into business risk. I can share an example that helps.
+01:05:38	Sandro Bernardes:	Boards are NOT dealing with risk, they are dealing with uncertainty…
+01:06:29	Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory):	I have met several CEOs and Board Members in TX last month. I was appalled by how risk averse they are - AI is here to stay, they really need to get ahead from their risk-averse positions and get better at cyber & AI strategy - it needs proactive investment, not reactive decisions/actions. My $0.02
+01:06:55	Asdrúbal Pichardo:	Reacted to "I have met several C..." with 👍
+01:07:21	Jeremy Snyder:	Reacted to "I have met several CEOs and Board Members in TX last month. I was appalled by how risk averse they are - AI is here to stay, they really need to get ahead from their risk-averse positions and get better at cyber & AI strategy - it needs proactive investment, not reactive decisions/actions. My $0.02" with 👍
+01:07:29	Remi GOGET:	Shadow IT is a thing. MCP enablement is seen as shadow IT and not business owned tool in many organizations
+01:07:46	Angelos Kirianes ex-DT AG/T-Systems/Computacenter Global CTO:	From an organizational and enterprise architecture perspective, we’re clearly at a point where our current operating models won’t carry us forward. We need new roles, we need to redefine existing ones, and we must modernize processes and supporting tools. This isn’t only about reducing staff — it’s about building the capabilities required to manage the scale of societal and business change ahead of us. Reskilling will be a strategic necessity to manage the negative risks and the opportunity risks we have here for the Business and the companies Health.  Benny Rubinstein, who just highlighted here this perfectly in today’s session. Anthropics risk assessment and show exactly the level of clarity we Need in this Kind of Tools. These themes are central in my current book and will be explored even deeper in my upcoming one — because what’s coming is not incremental change, it’s structural.
+01:07:54	Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory):	And again - today's discussion is not about AI adoption; it's already out there. IT's about what you do (or don't - at your own risk!) about it!
+01:08:12	Francesco del Bosco:	Reacted to "https://e.cloudsecur..." with 👍
+01:08:12	Dave Joshua:	Thanks everyone
+01:08:16	Richard - ex-Shell GRC & ex-CIO Lloyds Bank & BT:	Thank you for this session.  Thought provoking.
+01:08:23	Remi GOGET:	Thx and bye for now
+01:08:24	Sandro Bernardes:	I agree with you, @Andrew Doyle, and this goes to the end of the queue if they can hire someone handle it. Nothing they can do beyond that.
+01:08:27	Prag Jaodekar:	Thanks Everyone!
+01:08:28	Angelos Kirianes ex-DT AG/T-Systems/Computacenter Global CTO:	These structural shifts align closely with themes I explore in my writing, because the change ahead is not incremental — it is systemic. And this is what the C‑Suite must understand: the implementation business case is not a tool rollout and certainly not “just IT”. It is organisational and business transformation — complex, cost‑intensive, and essential to adapt to new possibilities and to remain competitive in the market with strong revenue and EBIT performance.
+01:08:38	Dave Joshua:	Great. Let’s talk tokenomics!
+01:08:39	Fabiano Felix:	Thanks for the group, great insights!
+01:08:40	Aristotelis Gkortsilas:	Thank you!
+01:08:44	Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory):	Thanks everyone and best of luck - fear not! Let's be proactive and keep learning. Stay connected and alert!
+01:08:49	Dhruvan Ghoghari:	My take is that this is less about Claude Mythos as a specific model, and more about a broader inflection point we’re hitting with agentic AI.
+With earlier LLMs, the primary concern was around data exposure and hallucination. Now, as models become more autonomous, the risk shifts toward decision-making and action execution. That fundamentally changes the security and governance posture required.
+I don’t think this is just hype—but I also don’t think it’s a ‘code red’ moment yet. The real issue is that most enterprises are still applying traditional cloud and application security thinking to AI systems, which isn’t sufficient for autonomous behavior.
+What stood out to me in the document is the tension between board-level urgency and technical readiness. In my experience, especially in regulated sectors like BFSI, there’s already significant pressure to move fast on GenAI, but governance, monitoring, and control frameworks are lagging behind.
+01:08:54	Tara Cirql One:	Thanks!
+01:08:55	Socratis - KNEX:	GREAT initiative
+01:08:56	Andrew Doyle:	Reacted to "I agree with you, @A..." with 🙏🏼
+01:08:56	Jeremy Snyder:	Really enjoyed. Love to connect with everyone here
+01:09:01	Asdrúbal Pichardo:	Thanks all, be brave!
+01:09:03	Sandro Bernardes:	Thank you!
+01:09:05	Beny Rubinstein | ex-MSFT, CEO BZR Insights (AI+Cyber advisory):	Reacted to "My take is that this is less about Claude Mythos as a specific model, and more about a broader inflection point we’re hitting with agentic AI.
+With earlier LLMs, the primary concern was around data exposure and hallucination. Now, as models become more autonomous, the risk shifts toward decision-making and action execution. That fundamentally changes the security and governance posture required.
+I don’t think this is just hype—but I also don’t think it’s a ‘code red’ moment yet. The real issue is that most enterprises are still applying traditional cloud and application security thinking to AI systems, which isn’t sufficient for autonomous behavior.
+What stood out to me in the document is the tension between board-level urgency and technical readiness. In my experience, especially in regulated sectors like BFSI, there’s already significant pressure to move fast on GenAI, but governance, monitoring, and control frameworks are lagging behind." with 👍
+01:09:06	Pavel - ex Dir of Support & Education @ Productboard:	Great session, thanks for the invite
+01:09:17	Arunima Martinsen:	Thanks
+01:09:18	Howard Moore:	thank you - very interesting session
+01:09:18	Yuri Pasquinelli:	Thanks everyone who talked
+01:09:18	Andrew Doyle:	Thank you , enlightening
+01:09:19	Francesco del Bosco:	Thanks all
+01:09:21	Manuel Henríquez:	Thanks!
+01:09:22	Angelos Kirianes ex-DT AG/T-Systems/Computacenter Global CTO:	thank you!
+01:09:28	Naveen Venkatesh (Krishna):	Thanku you
+01:09:32	rogiervanderhorst:	Thanks!

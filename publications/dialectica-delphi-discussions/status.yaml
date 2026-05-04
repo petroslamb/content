@@ -1,0 +1,23 @@
+kind: umbrella
+publication: dialectica-delphi-discussions
+revision: 13
+current_stage: null
+status: active_strategy_publication_intake
+created: '2026-05-04'
+last_updated: '2026-05-04'
+stages:
+  source_intake:
+    done: true
+    last_updated: '2026-05-04'
+config:
+  default_leaf_package: dialectica-delphi-discussions/hormuz-fallout
+  leaf_packages:
+    - dialectica-delphi-discussions/hormuz-fallout
+    - dialectica-delphi-discussions/expert-network-platform
+    - dialectica-delphi-discussions/claude-mythos
+    - dialectica-delphi-discussions/ai-roi
+  shared_source_path: publications/dialectica-delphi-discussions
+  decision_brief_path: publications/dialectica-delphi-discussions/decision-brief.md
+  final_email_path: publications/dialectica-delphi-discussions/final-email.md
+  support_decision_path: publications/dialectica-delphi-discussions/support/decision
+  support_strategy_path: publications/dialectica-delphi-discussions/support/strategy

@@ -1,0 +1,136 @@
+00:14:21	Akhil George:	Delphi Compliance & Confidentiality Notice:
+
+Chatham House Rules: This session is strictly off-the-record. You are free to use the insights shared, but neither the identity nor the affiliation of the speakers or participants may be revealed outside this room.
+No Recording: Any form of audio, video, or digital recording is strictly prohibited.
+No AI Note-Takers: The use of automated transcription bots (e.g., Otter, Fireflies, Read.ai) is not permitted. Our team will remove any bots identified to protect the privacy of this peer-to-peer discussion.
+Radical Honesty: By participating, you agree to maintain the high-trust environment required for this cohort.
+00:16:45	Dave Guevara:	DaveG Phoenix AZ USA
+00:16:48	Michael Petychakis:	Athens, Greece - Nice to see everyone!
+00:16:51	Paul Heard:	Paul Heard Fractional CIO, Denver CO
+00:16:57	Ray Asuncion:	NYC! 😊
+00:17:07	Andy Hickman:	Bristol, UK - hi all.
+00:17:09	Ray Asuncion:	Hello everyone!!
+00:17:09	Volker Politz:	Volker from Germany, hello
+00:17:15	Laura Knight:	I am in the UK 🇬🇧
+00:17:17	Chris Thompson:	Chris - East Anglia, England
+00:17:20	mel.ewing:	Montana - USA
+00:17:34	Andrea Marchio:	Hi all from Mexico! I’d be glad to connect with like-minded entrepreneurs and leaders: https://www.linkedin.com/in/andreamarchiotto/
+00:18:09	Brad Kaufman:	Hi, Brad from Boston, MA here.
+00:18:28	Rakesh Patel:	Rakesh, Austin - TX
+00:19:00	Sandro Bernardes:	São Paulo, Brazil.
+00:19:03	Vijay Talreja:	Hi, Vijaykumar Talreja, IndoSpace Capital Advisors, Mumbai, India
+00:19:40	Socratis - KNEX:	Socratis - Athens, Greece the company is KNEX
+00:20:42	Arunima Martinsen:	Arunima Martinsen from Fendous Sustainable Solutions ApS Based in Aalborg Denmark.
+00:21:16	Jeremy Snyder:	Jeremy, Virginia, USA but originally from Finland. My company is firetail.ai - security and governance for AI adoption.
+00:21:27	Dave Guevara:	DaveG, my focus is HAIbrid Workforce Management and the challenge of creating employability via AI fluency for non-tech workers in this Cognitive Era.
+00:25:19	Beny Rubinstein | BZR Insights | Microsoft Azure founding member:	Beny Rubinstein, based in Tel Aviv, employee #6 on Microsoft Azure global biz dev team, ex-Microsoft Research, CEO of BZR Insights driving AI strategy that can generate ROI in enterprises across Americas and EMEA. (1) Beny Rubinstein, Eng., M.B.A., Ph.D. candidate | LinkedIn
+00:28:11	Chris Thompson:	john - what kind of engineering are you doing?  languages etc
+00:30:16	Geoff:	The number of users of Cursor is very limited. Cursor is primarily used by the marketing channel to people who have never coded. There are other IDEs, that are used far more than Cursor. Is this metric more around vibe coding?
+00:30:21	Jonathan Harber, CISSP, MBA, CAIO:	This is Jonathan Harber, if the previous question is for me, we are in the critical infrastructure space focused on large-scale power backup and transfer.
+00:30:46	Jonathan Harber, CISSP, MBA, CAIO:	Manufacturing of the same.
+00:30:49	Laura Knight - Sapio (UK):	Hello all I’m Laura, founder of Sapio, a UK-based consultancy working in the education sector on harnessing potential and managing risks of AI with clarity and purpose. I'd love to connect on LinkedIn: Laura Knight | LinkedIn
+00:31:47	Brad Kaufman:	Have to drop for a client call, but already hearing some good insight, thanks for this. Agree with Jonathan’s comment too, your mileage may vary.
+00:31:48	Chris Thompson:	Reacted to "This is Jonathan Har..." with 👍
+00:33:38	Dave Guevara:	As with any type of system or business model, there will be wide variances between productivity gains. For example, most engineering or products with complex analytic and rules engines will not see the same results as front-end apps. The results are also different for SaaS and configurable apps, vs custom to semi-custom. So when looking at stats like this please consider the context of app types, CI/CD pipelines, regulated industries, etc. What matters most is what are the reasons you need productivity, and measure against those that are your own priorities.  IMHO
+00:35:38	Chris Thompson:	We've moved from teams of 6+engineers and 2 product, to 1+1 and productivity is up by 300% using AI to build and release.  We're mostly building Financial services platforms on salesforce, but we've reduced the business size by 40% and increased profitability by almost 50% this year.  My LinkedIn for anyone interested. https://www.linkedin.com/in/christhompsonx/
+00:36:38	Volker Politz:	Reacted to "Weve moved form team..." with 👍
+00:38:19	Beny Rubinstein | BZR Insights | MSFT Azure Founding Team Member:	This is interesting perspective, but data says that 30%+ of projects are abandoned after POC due to poor data, unclear value, or runaway costs - how is cursor able to help with that?
+00:38:41	Akhil George, Delphi:	Reacted to "We've moved from teams of 6+engineers and 2 product, to 1+1 and productivity is up by 300% using AI to build and release.  We're mostly building Financial services platforms on salesforce, but we've reduced the business size by 40% and increased profitability by almost 50% this year.  My LinkedIn for anyone interested. https://www.linkedin.com/in/christhompsonx/" with 👍
+00:38:54	Mel - UMW (Montana, USA):	@Chris - Wondering, would it have been possible to keep the same staff size, and using AI and its productivity, grown the business and revenue instead of reducing staff and only increasing profitability?
+00:39:17	Beny Rubinstein | BZR Insights | MSFT Azure Founding Team Member:	Replying to "@Chris - Wondering, would it have been possible to keep the same staff size, and using AI and its productivity, grown the business and revenue instead of reducing staff and only increasing profitability?"
+
+very good question...(and important!)
+00:41:13	Bigith:	Reacted to "We've moved from teams of 6+engineers and 2 product, to 1+1 and productivity is up by 300% using AI to build and release.  We're mostly building Financial services platforms on salesforce, but we've reduced the business size by 40% and increased profitability by almost 50% this year.  My LinkedIn for anyone interested. https://www.linkedin.com/in/christhompsonx/" with 👍
+00:42:50	Geoff:	The reality is that those tech leads wont know half the code in future as new code gets introduced human interaction wont catch up in time to be in a position to check it
+00:45:29	Jonathan Harber, CISSP, MBA, CAIO:	one way we do it is measure how long it takes to do something without the AI, and then perform the same task with AI.  In one instance we saved 7 hours of time.  In business time is money
+00:45:43	Jonathan Harber, CISSP, MBA, CAIO:	I have to go.  Enjoy
+00:45:55	Laura Knight - Sapio (UK):	Reacted to "The reality is that ..." with 👍
+00:46:11	Chris Thompson:	Replying to "@Chris - Wondering, ..."
+
+right now, we don't have the level of business (clients) to support the number of people we have - it's nice to have a bench, but when people are not fully utilised, that causes similar operation problems.  I hate running processes that reduce employees, but sometimes it's inevitable
+00:46:30	Geoff:	There will be a push towards local AI agentic IOS on your system, where apps like Obsidian will keep all your skills and brain offline that will allow you to be be agnostic to the ai model. There is a danger that companies overly rely on claude for example and realising you are then monopolised. Claude Skill for example is a simple MD file that any LLMs can read and run. so make your skills offline and direct them to it
+00:46:33	Chris Thompson:	Reacted to "The reality is that ..." with 👍
+00:47:54	Dave Guevara:	@Michael Petychakis, Dialectica CTO  one viewpoint to consider as you look to the 50% goal is to measure business use and the changes in their work. This will guide to possible productivity gains that start with changing work within the new AI enabled processes in the HAIbrid operating model (humans+AI). This analysis then continues through to how rapidly a priority business use (user story) curates into a backlog that is built/deployed using your current innovations. With CI/CD pipeline processes context Mgt and embedded methods (you mentioned design in, auto-test, and what Chris Thompson just described). This leads to what Gene Kim refers to as Amplification. The monitoring and visibility becomes critical as real time to help teams see Agentic drift, partial or failed execution, and validation checkers who work on voracity, quality assurance validation in from deployment into use.   Just some thoughts that may be relevant over time.
+00:48:03	Beny Rubinstein | BZR Insights | MSFT Azure Founding Team Member:	hallucination is the concern from the past. most risks now are about vulnerabilities and other risks...I have to drop out for a bit, will try to come back
+00:48:11	Pere Molins | Delphi:	Reacted to "hallucination is the..." with 💯
+00:48:29	Chris Thompson:	Replying to "The reality is that ..."
+
+do they need to?  if you can use a model to help triage, it will identify anomalies or spurious code - its how you train your agents to identify things.  I have "code cleaners" that are tasked with retrospectively analyse code and suggest improvements (*not change it yet - I'm not that trusting ;))
+00:48:54	Chris Thompson:	Reacted to "hallucination is the..." with 💯
+00:49:12	Pere Molins | Delphi:	Replying to "The reality is that ..."
+
+Funny how everyone talked about hallucination 1-2y ago and it’s completely out of the public discourse. Seems the discussion has moved from hallucination and completely wrong output to “evals” and going from good to great
+00:50:26	Dave Guevara:	Replying to "@Chris - Wondering, ..."
+
+@Chris Thompson one option is reallocation of talent via an AI reskilling towards more business self-service enablement or to increase AI adoption, thus increasing the return. Your people will probably be some of the most AI and business context skilled in the company. So where are there gaps in business units, that your folks can serve as internal consultants, advisors and AI SMEs?
+00:50:43	Chris Thompson:	Reacted to "There will be a push..." with ❤️
+00:50:45	Geoff:	Replying to "The reality is tha..."
+
+No they wont need it I am indirectly saying that sadly the quality of output will outweigh the need to employ checkers. Which is the direction business are going
+00:53:07	Geoff:	The challenge isnt building anymore its distribution. Thats why social marketing and distribution channels are now charging a premium
+00:53:28	Ndeye Makalou:	Reacted to "@Chris Thompson one ..." with 👍🏾
+00:53:28	Chris Thompson:	Replying to "@Chris - Wondering, ..."
+
+@Dave Guevara that's true, and we have upskilled a lot of people - we had some detractors - particularly more seasoned engineers - and we've tried to take them on the journey.  We're a small business so ops costs are significant too
+00:54:04	Chris Thompson:	Reacted to "No they wont need it..." with 👍
+00:54:13	Rakesh Patel:	I’ve been thinking about how you are measuring productivity in the context of AI adoption. Are you mostly evaluating gains in greenfield projects, or are you also accounting for the realities of working with legacy systems, where most of the complexity and effort actually sits?
+Also, how are you thinking about the cost of re-training and continuity? If a small, specialized team is set up around these tools and key people leave, do you have a clear path for onboarding and ramping up new team members? Is that overhead being factored into the overall ROI?
+More broadly, are you looking at ROI just in terms of short-term productivity gains, or are you also considering longer-term factors like maintainability, knowledge transfer, and team resilience as these systems evolve?
+00:54:14	Dave Guevara:	Replying to "@Chris - Wondering, ..."
+
+@Chris Thompson thx for sharing. Reality often tempers the possible.
+00:57:03	Jeremy Snyder:	I’d echo Chris’ comments on this to a large extent. Also, we’ve seen a huge amount of expansion.
+00:58:26	Andrea Marchiotto:	Fully agree!
+00:58:46	Dave Guevara:	Reacted to "Fully agree!" with 👍🏼
+00:58:46	Sandro Bernardes:	Coding <> running a business
+00:58:56	Sandro Bernardes:	agree
+01:01:51	Dave Guevara:	@Geoff  FYI in my work on the challenges of complex context management with both Claude and ChatGPT it has become critical to establish a Knowledge and Context Knowledge Base. What you have suggested as keep your own data outside the LLM service CUIs, MDs, spines, etc.
+01:03:37	Chris Thompson:	let's also be clear - "vibe coding" and using claude code/codex are 2 very different things (CLI/terminal building with git/etc)
+01:04:25	Geoff:	Replying to "@Geoff  FYI in my ..."
+
+I encourage offline and local AI brain. Your context stays offline, your ideations stay offline and you point the LLMs to it. rather than storing within the server.
+01:04:26	Sandro Bernardes:	Reacted to "let's also be clear ..." with 👍
+01:04:39	Geoff:	Reacted to "let's also be clea..." with 👏
+01:04:48	Dave Guevara:	Reacted to "I encourage offline ..." with 👍🏼
+01:05:27	Jeremy Snyder:	we killed off Expensify
+01:05:33	Andy Hickman:	I agree on "prefer the buy" in general, but I think the buy vs build calculus is going to shift towards build via agentic coding (and many orgs will get burnt by that).
+01:05:38	Sandro Bernardes:	Cursor has shown its strength with Musk’s acquisition intention. In a year, coding will be automated and safe, and automatically tested.
+01:05:41	Ray Asuncion:	Reacted to "let's also be clear - "vibe coding" and using claude code/codex are 2 very different things (CLI/terminal building with git/etc)" with 👍
+01:06:12	Chris Thompson:	claude, openai, gemini, Kimi others are all gonna lead the race at some stage - the skill isn't the tools, its context engineering and prompt discipline.  those skills are agnostic
+01:06:18	Geoff:	Claude has been killing off some many companies that 6 months ago were integral. Zapier, Make n8n. Automation is getting swept up
+01:07:00	Michael Petychakis, Dialectica CTO:	Reacted to "claude, openai, gemini, Kimi others are all gonna lead the race at some stage - the skill isn't the tools, its context engineering and prompt discipline.  those skills are agnostic" with 👍
+01:07:05	Ray Asuncion:	Reacted to "claude, openai, gemini, Kimi others are all gonna lead the race at some stage - the skill isn't the tools, its context engineering and prompt discipline.  those skills are agnostic" with 👍
+01:07:08	Andy Hickman:	Reacted to "claude, openai, gemi..." with 👍
+01:07:59	Dave Guevara:	Replying to "Claude has been kill..."
+
+@Geoff yes and that happens in any transformation period where something becomes easy, and lots of “new stuff” get launched. But their function gets replaced by the bigger players.
+01:08:09	Rakesh Patel:	@Geoff  — I’d really value your perspective on this. How do you think about using AWS, Azure, or GCP–hosted AI models versus keeping things local with an offline “AI brain”?
+My initial thought is that the cloud approach, being within their managed environments, might help address security and compliance requirements more broadly. But I’m curious how you see the trade-offs—especially around control, data sensitivity, and long-term flexibility.
+01:08:30	Anton Nöjd:	@Geoff When Excel was introduced, it was seen as just a tool. But over time, it replaced a significant amount of manual work and reshaped how businesses operate—improving productivity, enabling better decisions, and supporting everything from forecasting to data analysis.AI follows the same pattern, but at a much larger scale. It’s not just a more powerful tool, it’s also far more broadly applicable. While Excel had defined use cases, AI can be integrated across many functions and industries.If you look at the combined impact of tools like Microsoft Excel, Microsoft Word, Microsoft PowerPoint, and Microsoft Outlook, AI operates at a similar level—but as a general-purpose capability that can automate both manual and cognitive work across markets.
+01:08:37	Geoff:	Its giving businesses confidence that they can build and tailor make their own versions of a software rather than pay a premium
+01:08:58	Geoff:	Reacted to "@Geoff yes and tha..." with 👍
+01:09:52	Michael Petychakis, Dialectica CTO:	Reacted to "@Michael Petychakis, Dialectica CTO  one viewpoint to consider as you look to the 50% goal is to measure business use and the changes in their work. This will guide to possible productivity gains that start with changing work within the new AI enabled processes in the HAIbrid operating model (humans+AI). This analysis then continues through to how rapidly a priority business use (user story) curates into a backlog that is built/deployed using your current innovations. With CI/CD pipeline processes context Mgt and embedded methods (you mentioned design in, auto-test, and what Chris Thompson just described). This leads to what Gene Kim refers to as Amplification. The monitoring and visibility becomes critical as real time to help teams see Agentic drift, partial or failed execution, and validation checkers who work on voracity, quality assurance validation in from deployment into use.   Just some thoughts that may be relevant over time." with ❤️
+01:13:51	Dave Guevara:	We need to remember and remind others that the ONLY reason AI exists is to SERVE humans. The capabilities of AI sometimes cause leaders to forget “their business is about people, not AI”.  AI does not increase GDP, people spending and yes on AI too, does matter.
+01:14:12	Jeremy Snyder:	great session! I have to drop but if you’ll all allow a tiny bit of self-promotion - if you want to monitor what all your developers are doing and what your team is prompting, either for ROI tracking or for EU AI Act compliance, please feel free to reach out to us - jeremy@firetail.ai
+01:14:30	Bigith:	Reacted to "We need to remembe..." with 👍
+01:14:33	Ray Asuncion:	Reacted to "We need to remember and remind others that the ONLY reason AI exists is to SERVE humans. The capabilities of AI sometimes cause leaders to forget “their business is about people, not AI”.  AI does not increase GDP, people spending and yes on AI too, does matter." with 👍
+01:14:34	Chris Thompson:	Reacted to "great session! I hav..." with 👍
+01:14:36	Chris Thompson:	Reacted to "We need to remember ..." with 👍
+01:14:39	Geoff:	Replying to "@Geoff  FYI in my ..."
+
+Great question Rakesh cloud-hosted models give you scalability and managed compliance, but you're essentially handing over your data to the provider. For sensitive use cases, local/on-prem models give you full control and no data egress risk, though the trade-off is maintenance overhead and keeping up with model updates. Long-term, I think a hybrid approach wins cloud for general tasks, local for anything sensitive.
+01:15:27	Bigith:	Good session, looking for more like this. Bigith Pattar Veettil, Director Success at Salesforce
+01:15:34	Sandro Bernardes:	Thank you very much.
+01:16:05	Andy Hickman:	Thanks all. Good discussion.
+01:16:11	Socratis - KNEX:	Amazing input, thank you
+01:16:15	Mel - UMW (Montana, USA):	thanks all
+01:16:19	Geoff:	Great session 
+
+https://www.linkedin.com/in/gbosley/
+01:16:21	Michael Petychakis, Dialectica CTO:	Thanks everyone!!!
+01:16:27	hdash:	Great discussion. Looking forward for more session. Thank you.
+01:16:38	Dave Guevara:	Thx all, very good conversation and examples.
+01:16:38	Ray Asuncion:	Thank you for another great session!!
+01:16:43	Arunima Martinsen:	Thank you-
+01:16:43	IPh 14P (23) ME:	Great session, thanks!
+01:16:56	Volker Politz:	Thanks, Akhil, great job too!
