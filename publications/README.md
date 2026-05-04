@@ -31,6 +31,7 @@ NotebookLM notebook links for the publication corpus are indexed in [`notebooklm
 | [`clean-interface-illusion/`](clean-interface-illusion/README.md) | Single-publication | Active donor / capped flagship | Post-ceiling donor package, pivot record, and workflow extraction leaf |
 | [`confidence-debt/`](confidence-debt/README.md) | Umbrella | Active unpublished flagship | North-star synthesis attempt fusing evidence-governance, clean-interface-illusion, and corrective-competence donors |
 | [`corrective-competence/`](corrective-competence/README.md) | Single-publication | Active donor / capped flagship | Cleared successor package, now donor to confidence-debt |
+| [`dialectica-delphi-discussions/`](dialectica-delphi-discussions/README.md) | Umbrella | Active source-intake package | Delphi-style Dialectica discussion sources, beginning with the Hormuz fallout conversation |
 | [`evidence-governance/`](evidence-governance/README.md) | Umbrella | Active unpublished umbrella | Three draft leaves plus shared governance-pattern research and external proof repo |
 | [`illusion-of-swarm/`](illusion-of-swarm/README.md) | Single-publication | Published | alphaXiv-driven research package behind *The Illusion of the Swarm* |
 | [`literate-workflow-programming/`](literate-workflow-programming/README.md) | Umbrella | Active unpublished umbrella | Shared research line with a capped flagship donor leaf and a stopped successor search with no cleared successor |
