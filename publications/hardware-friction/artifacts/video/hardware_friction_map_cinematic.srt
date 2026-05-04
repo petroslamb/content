@@ -1,0 +1,524 @@
+1
+00:00:00,320 --> 00:00:05,920
+In late 2024, Deepseek and Meta both
+
+2
+00:00:03,600 --> 00:00:08,240
+pushed neural networks past the 400
+
+3
+00:00:05,920 --> 00:00:12,000
+billion parameter mark. Deepseek
+
+4
+00:00:08,240 --> 00:00:14,160
+launched V3 and Meta launched Llama 3.1.
+
+5
+00:00:12,000 --> 00:00:15,920
+Meta trained Llama using essentially the
+
+6
+00:00:14,160 --> 00:00:18,720
+same infrastructure stack they used for
+
+7
+00:00:15,920 --> 00:00:20,880
+Llama 2. Deepseek, on the other hand,
+
+8
+00:00:18,720 --> 00:00:23,279
+had to spend 6 months rewriting their
+
+9
+00:00:20,880 --> 00:00:24,960
+entire clusteruler and custom building
+
+10
+00:00:23,279 --> 00:00:27,439
+routing kernels from scratch before
+
+11
+00:00:24,960 --> 00:00:29,359
+their first training run even began.
+
+12
+00:00:27,439 --> 00:00:31,840
+Silicon does not reject mathematical
+
+13
+00:00:29,359 --> 00:00:34,160
+theory. It simply charges attacks to run
+
+14
+00:00:31,840 --> 00:00:36,480
+it. You can program a theoretically
+
+15
+00:00:34,160 --> 00:00:39,520
+elegant architecture like a pure neural
+
+16
+00:00:36,480 --> 00:00:41,600
+OD, but the GPU will charge you 100
+
+17
+00:00:39,520 --> 00:00:43,280
+times more per token to process it
+
+18
+00:00:41,600 --> 00:00:44,800
+compared to standard dense matrix
+
+19
+00:00:43,280 --> 00:00:46,879
+multiplications.
+
+20
+00:00:44,800 --> 00:00:48,800
+This chart maps that exact resistance
+
+21
+00:00:46,879 --> 00:00:51,120
+gradient. We call it the hardware
+
+22
+00:00:48,800 --> 00:00:52,640
+friction map. Down in the green zone,
+
+23
+00:00:51,120 --> 00:00:54,800
+you have standard components that
+
+24
+00:00:52,640 --> 00:00:56,879
+integrate cheaply and quickly. As you
+
+25
+00:00:54,800 --> 00:00:58,719
+move up toward the red peak, integration
+
+26
+00:00:56,879 --> 00:01:01,520
+costs explode into cluster level
+
+27
+00:00:58,719 --> 00:01:03,359
+overhauls. Designing neural networks is
+
+28
+00:01:01,520 --> 00:01:05,920
+no longer a search for the perfect
+
+29
+00:01:03,359 --> 00:01:08,000
+equation on a whiteboard. It is a brutal
+
+30
+00:01:05,920 --> 00:01:10,400
+economic negotiation with the silicon
+
+31
+00:01:08,000 --> 00:01:13,200
+that runs it. Moving up into the yellow
+
+32
+00:01:10,400 --> 00:01:15,360
+zone, we hit kernel level friction. Take
+
+33
+00:01:13,200 --> 00:01:18,479
+flash attention. When the paper dropped
+
+34
+00:01:15,360 --> 00:01:20,320
+in May 2022, it immediately proved it
+
+35
+00:01:18,479 --> 00:01:22,000
+could cut memory use and multiply
+
+36
+00:01:20,320 --> 00:01:24,240
+inference speed by treating data
+
+37
+00:01:22,000 --> 00:01:26,640
+differently on the chip. The math was
+
+38
+00:01:24,240 --> 00:01:29,040
+entirely sound from day one. Yet, it
+
+39
+00:01:26,640 --> 00:01:31,200
+took 20 full months for the technique to
+
+40
+00:01:29,040 --> 00:01:33,439
+actually reach universal adoption across
+
+41
+00:01:31,200 --> 00:01:36,400
+the industry. This timeline outlines
+
+42
+00:01:33,439 --> 00:01:38,159
+that delay. The core kernel existed, but
+
+43
+00:01:36,400 --> 00:01:40,240
+getting it upstream meant navigating
+
+44
+00:01:38,159 --> 00:01:42,479
+framework integration, testing PyTorch
+
+45
+00:01:40,240 --> 00:01:45,600
+APIs, and waiting for inference software
+
+46
+00:01:42,479 --> 00:01:47,280
+to adapt. Writing initial code is fast.
+
+47
+00:01:45,600 --> 00:01:49,759
+The actual delay is waiting for the
+
+48
+00:01:47,280 --> 00:01:51,680
+ecosystem to support the new math. Any
+
+49
+00:01:49,759 --> 00:01:54,880
+kernel level innovation carries a
+
+50
+00:01:51,680 --> 00:01:56,560
+mandatory 2-year ecosystem tax. Even the
+
+51
+00:01:54,880 --> 00:01:58,960
+most efficient mathematical
+
+52
+00:01:56,560 --> 00:02:01,520
+breakthroughs are bound by the speed of
+
+53
+00:01:58,960 --> 00:02:03,680
+global infrastructure updates. Further
+
+54
+00:02:01,520 --> 00:02:06,799
+up the map in the orange zone sits
+
+55
+00:02:03,680 --> 00:02:09,119
+system friction. Mixture of experts is a
+
+56
+00:02:06,799 --> 00:02:11,760
+perfect example of this. Despite being
+
+57
+00:02:09,119 --> 00:02:14,160
+introduced at scale in 2021, the
+
+58
+00:02:11,760 --> 00:02:17,280
+architecture sat unused in research labs
+
+59
+00:02:14,160 --> 00:02:19,599
+for nearly 3 years. This network graph
+
+60
+00:02:17,280 --> 00:02:21,440
+shows why it's stalled. Mixture of
+
+61
+00:02:19,599 --> 00:02:23,920
+experts breaks standard server
+
+62
+00:02:21,440 --> 00:02:25,840
+topologies. The model forces data
+
+63
+00:02:23,920 --> 00:02:27,840
+through complex routing logic,
+
+64
+00:02:25,840 --> 00:02:29,520
+scattering requests across isolated
+
+65
+00:02:27,840 --> 00:02:32,160
+server nodes to achieve expert
+
+66
+00:02:29,520 --> 00:02:34,000
+parallelism. Managing this fragmented
+
+67
+00:02:32,160 --> 00:02:35,760
+traffic requires full-time
+
+68
+00:02:34,000 --> 00:02:38,080
+infrastructure teams dedicated to
+
+69
+00:02:35,760 --> 00:02:40,000
+balancing the load. No company was
+
+70
+00:02:38,080 --> 00:02:42,160
+willing to touch that level of systemic
+
+71
+00:02:40,000 --> 00:02:44,800
+friction until their traditional dense
+
+72
+00:02:42,160 --> 00:02:46,800
+models hit a hard scaling ceiling. Only
+
+73
+00:02:44,800 --> 00:02:49,200
+then did these frontier labs finally
+
+74
+00:02:46,800 --> 00:02:50,959
+accept the massive engineering tax and
+
+75
+00:02:49,200 --> 00:02:53,040
+commit the resources required to
+
+76
+00:02:50,959 --> 00:02:55,280
+completely rebuild their servers.
+
+77
+00:02:53,040 --> 00:02:57,920
+Mixture of experts is not an elegant
+
+78
+00:02:55,280 --> 00:02:59,920
+shortcut. It is a brute force capital
+
+79
+00:02:57,920 --> 00:03:01,840
+hammer deployed by labs only when
+
+80
+00:02:59,920 --> 00:03:04,159
+economic pressure corners them into
+
+81
+00:03:01,840 --> 00:03:06,400
+paying the cost. At the peak of the
+
+82
+00:03:04,159 --> 00:03:08,319
+friction gradient is the red zone where
+
+83
+00:03:06,400 --> 00:03:11,280
+architectures like state space models
+
+84
+00:03:08,319 --> 00:03:13,760
+present a deceptive illusion of success.
+
+85
+00:03:11,280 --> 00:03:16,480
+At a mid-range scale of around 7 billion
+
+86
+00:03:13,760 --> 00:03:18,879
+parameters, pure state space models work
+
+87
+00:03:16,480 --> 00:03:20,959
+exceptionally well. They routinely beat
+
+88
+00:03:18,879 --> 00:03:22,720
+standard transformers on benchmarks and
+
+89
+00:03:20,959 --> 00:03:25,120
+offer faster inference on existing
+
+90
+00:03:22,720 --> 00:03:27,519
+hardware. This chart maps parameter
+
+91
+00:03:25,120 --> 00:03:30,000
+scale against compute penalty. Notice
+
+92
+00:03:27,519 --> 00:03:32,319
+how the cost curves gently until the 13
+
+93
+00:03:30,000 --> 00:03:35,040
+billion parameter mark where it explodes
+
+94
+00:03:32,319 --> 00:03:37,200
+into a parabolic spike. Because memory
+
+95
+00:03:35,040 --> 00:03:38,879
+state propagates sequentially, scaling
+
+96
+00:03:37,200 --> 00:03:40,959
+up creates massive communication
+
+97
+00:03:38,879 --> 00:03:43,599
+bottlenecks across thousands of GPUs
+
+98
+00:03:40,959 --> 00:03:45,360
+during training. At frontier scale, the
+
+99
+00:03:43,599 --> 00:03:48,000
+physical limits of hardware bandwidth
+
+100
+00:03:45,360 --> 00:03:50,400
+defeat pure mathematical theory. To
+
+101
+00:03:48,000 --> 00:03:52,959
+survive, every massive deployment is
+
+102
+00:03:50,400 --> 00:03:55,200
+forced to abandon the pure architecture
+
+103
+00:03:52,959 --> 00:03:58,000
+and immediately adopt a hybrid model to
+
+104
+00:03:55,200 --> 00:04:00,400
+stabilize the system. As future hardware
+
+105
+00:03:58,000 --> 00:04:03,120
+generations arrive, this map is only
+
+106
+00:04:00,400 --> 00:04:05,599
+calcifying. Every new iteration of
+
+107
+00:04:03,120 --> 00:04:08,400
+silicon optimizes more aggressively for
+
+108
+00:04:05,599 --> 00:04:10,720
+standard dense matrix operations, making
+
+109
+00:04:08,400 --> 00:04:13,280
+deviations from the norm even harder to
+
+110
+00:04:10,720 --> 00:04:15,360
+execute. This creates a heavily
+
+111
+00:04:13,280 --> 00:04:17,919
+asymmetric reality that we call the
+
+112
+00:04:15,360 --> 00:04:19,840
+startup deaf role. The exact same
+
+113
+00:04:17,919 --> 00:04:21,840
+hardware friction affects companies
+
+114
+00:04:19,840 --> 00:04:24,160
+entirely differently depending on the
+
+115
+00:04:21,840 --> 00:04:26,400
+size of their bank accounts. For major
+
+116
+00:04:24,160 --> 00:04:28,960
+tech giants, high friction serves as a
+
+117
+00:04:26,400 --> 00:04:31,360
+defensive moat. They can easily afford
+
+118
+00:04:28,960 --> 00:04:33,440
+the 36-month engineering burn required
+
+119
+00:04:31,360 --> 00:04:35,919
+to rewrite schedulers and optimize
+
+120
+00:04:33,440 --> 00:04:37,759
+low-level hardware. For a startup,
+
+121
+00:04:35,919 --> 00:04:39,440
+betting on a high friction architecture
+
+122
+00:04:37,759 --> 00:04:41,919
+means burning through all available
+
+123
+00:04:39,440 --> 00:04:43,600
+runway debugging CUDA kernels rather
+
+124
+00:04:41,919 --> 00:04:45,919
+than shipping a functional product to
+
+125
+00:04:43,600 --> 00:04:48,000
+users. The standard transformer
+
+126
+00:04:45,919 --> 00:04:50,000
+architecture does not dominate the
+
+127
+00:04:48,000 --> 00:04:52,320
+industry because it represents the
+
+128
+00:04:50,000 --> 00:04:54,320
+perfect mathematical solution. It
+
+129
+00:04:52,320 --> 00:04:57,040
+dominates because it aligns perfectly
+
+130
+00:04:54,320 --> 00:05:01,000
+with silicon economics, making it far
+
+131
+00:04:57,040 --> 00:05:01,000
+too expensive to escape.
+

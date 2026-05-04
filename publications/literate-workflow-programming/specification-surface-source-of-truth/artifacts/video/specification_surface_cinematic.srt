@@ -1,0 +1,468 @@
+1
+00:00:00,480 --> 00:00:05,440
+You review a pull request submitted by
+
+2
+00:00:02,720 --> 00:00:07,440
+an AI coding agent. The code looks
+
+3
+00:00:05,440 --> 00:00:10,400
+clean. The variables are named
+
+4
+00:00:07,440 --> 00:00:13,920
+perfectly. The test suite passes. It
+
+5
+00:00:10,400 --> 00:00:16,000
+looks ready to merge until it goes into
+
+6
+00:00:13,920 --> 00:00:19,199
+production. And the entire database
+
+7
+00:00:16,000 --> 00:00:22,160
+locks up. Somewhere in that generation,
+
+8
+00:00:19,199 --> 00:00:24,960
+the AI silently deleted a critical retry
+
+9
+00:00:22,160 --> 00:00:27,840
+branch in the network logic. This is a
+
+10
+00:00:24,960 --> 00:00:30,080
+failure of governance. The code compiles
+
+11
+00:00:27,840 --> 00:00:31,920
+because the syntax is valid, but the
+
+12
+00:00:30,080 --> 00:00:34,239
+architectural intent that was supposed
+
+13
+00:00:31,920 --> 00:00:36,719
+to guide that code is invisible to the
+
+14
+00:00:34,239 --> 00:00:38,800
+human reviewer. That intent was left
+
+15
+00:00:36,719 --> 00:00:40,800
+behind in a private ephemeral chat
+
+16
+00:00:38,800 --> 00:00:43,520
+window between a developer and a large
+
+17
+00:00:40,800 --> 00:00:46,239
+language model. The team is staring at a
+
+18
+00:00:43,520 --> 00:00:48,000
+downstream artifact, the code, while the
+
+19
+00:00:46,239 --> 00:00:50,960
+rules that were supposed to control it
+
+20
+00:00:48,000 --> 00:00:54,079
+have vanished. When human intent is
+
+21
+00:00:50,960 --> 00:00:56,399
+lost, a perfectly compiling script is no
+
+22
+00:00:54,079 --> 00:00:58,559
+longer a finished product. It is a
+
+23
+00:00:56,399 --> 00:01:01,359
+dangerous symptom waiting to trigger a
+
+24
+00:00:58,559 --> 00:01:03,600
+catastrophic system failure. This lack
+
+25
+00:01:01,359 --> 00:01:06,320
+of documentation is the core of a
+
+26
+00:01:03,600 --> 00:01:08,799
+workflow called vibe coding. It relies
+
+27
+00:01:06,320 --> 00:01:11,200
+on vague atmospheric prompts where the
+
+28
+00:01:08,799 --> 00:01:13,760
+AI is trusted to privately fill in the
+
+29
+00:01:11,200 --> 00:01:16,560
+architectural blanks. This creates a
+
+30
+00:01:13,760 --> 00:01:18,720
+velocity mismatch. An AI can generate
+
+31
+00:01:16,560 --> 00:01:20,880
+thousands of lines of implementation
+
+32
+00:01:18,720 --> 00:01:22,479
+significantly faster than a human team
+
+33
+00:01:20,880 --> 00:01:25,200
+can reverse engineer the reasoning
+
+34
+00:01:22,479 --> 00:01:27,600
+behind it. Once this undocumented code
+
+35
+00:01:25,200 --> 00:01:30,400
+is merged, it becomes the new physics of
+
+36
+00:01:27,600 --> 00:01:32,320
+the system. Any future fix requires the
+
+37
+00:01:30,400 --> 00:01:35,200
+team to guess at the original problem
+
+38
+00:01:32,320 --> 00:01:36,960
+the AI was trying to solve. Vibe coding
+
+39
+00:01:35,200 --> 00:01:39,600
+creates a temporary illusion of
+
+40
+00:01:36,960 --> 00:01:41,920
+productivity. In reality, it shifts the
+
+41
+00:01:39,600 --> 00:01:44,799
+engineering burden from proactive design
+
+42
+00:01:41,920 --> 00:01:47,200
+to reactive endless damage control.
+
+43
+00:01:44,799 --> 00:01:49,200
+Researcher Camilo Chakon Sartorii tested
+
+44
+00:01:47,200 --> 00:01:50,799
+this breakdown by forcing multiple
+
+45
+00:01:49,200 --> 00:01:52,640
+autonomous coding agents to
+
+46
+00:01:50,799 --> 00:01:55,119
+independently collaborate on different
+
+47
+00:01:52,640 --> 00:01:57,520
+parts of a single codebase. To see what
+
+48
+00:01:55,119 --> 00:01:59,119
+happens when intent is missing, the
+
+49
+00:01:57,520 --> 00:02:01,439
+researchers stripped the shared
+
+50
+00:01:59,119 --> 00:02:04,079
+specification down to bare function
+
+51
+00:02:01,439 --> 00:02:06,960
+signatures, starving the agents of any
+
+52
+00:02:04,079 --> 00:02:09,599
+highle context. Integration accuracy
+
+53
+00:02:06,960 --> 00:02:11,760
+dropped. Working in a vacuum, agents
+
+54
+00:02:09,599 --> 00:02:14,239
+made conflicting assumptions about how
+
+55
+00:02:11,760 --> 00:02:16,400
+components fit together. Error detectors
+
+56
+00:02:14,239 --> 00:02:18,720
+flagged mismatches but couldn't fix
+
+57
+00:02:16,400 --> 00:02:20,400
+them. Recovery happened only when
+
+58
+00:02:18,720 --> 00:02:22,640
+researchers restored the full
+
+59
+00:02:20,400 --> 00:02:25,280
+specification providing the shared
+
+60
+00:02:22,640 --> 00:02:27,520
+decisions needed to align their work.
+
+61
+00:02:25,280 --> 00:02:30,879
+Algorithmic workers cannot reliably
+
+62
+00:02:27,520 --> 00:02:33,840
+infer unstated design decisions. Scaling
+
+63
+00:02:30,879 --> 00:02:36,560
+AI assisted development requires a rigid
+
+64
+00:02:33,840 --> 00:02:39,519
+shared central specification. The true
+
+65
+00:02:36,560 --> 00:02:41,519
+solution is a specification surface.
+
+66
+00:02:39,519 --> 00:02:43,440
+This is a written artifact that serves
+
+67
+00:02:41,519 --> 00:02:46,000
+as the durable memory of the software
+
+68
+00:02:43,440 --> 00:02:48,400
+system capturing intent in a way that
+
+69
+00:02:46,000 --> 00:02:50,560
+code cannot. But there is a mechanical
+
+70
+00:02:48,400 --> 00:02:53,200
+difference between a passive readme file
+
+71
+00:02:50,560 --> 00:02:54,640
+that an AI can ignore and an active
+
+72
+00:02:53,200 --> 00:02:57,440
+governance layer that the system
+
+73
+00:02:54,640 --> 00:02:59,440
+enforces. The context cove approach
+
+74
+00:02:57,440 --> 00:03:01,599
+bridged this gap by automatically
+
+75
+00:02:59,440 --> 00:03:04,080
+extracting natural language constraints
+
+76
+00:03:01,599 --> 00:03:06,879
+from instruction files. These rules are
+
+77
+00:03:04,080 --> 00:03:09,920
+converted into executable runtime tests
+
+78
+00:03:06,879 --> 00:03:12,800
+like syntax tree queries or LLM based
+
+79
+00:03:09,920 --> 00:03:15,040
+judgments. If the AI's code violates a
+
+80
+00:03:12,800 --> 00:03:17,599
+rule, the system physically rejects the
+
+81
+00:03:15,040 --> 00:03:19,840
+deployment. A text file only has
+
+82
+00:03:17,599 --> 00:03:21,440
+operational force when it is wired to a
+
+83
+00:03:19,840 --> 00:03:24,239
+system that automatically blocks
+
+84
+00:03:21,440 --> 00:03:26,800
+non-compliant code. This process strips
+
+85
+00:03:24,239 --> 00:03:29,200
+the AI of autonomous authority and puts
+
+86
+00:03:26,800 --> 00:03:31,360
+control back in the hands of the team.
+
+87
+00:03:29,200 --> 00:03:33,519
+Experienced senior engineers are already
+
+88
+00:03:31,360 --> 00:03:35,599
+moving away from casual prompting toward
+
+89
+00:03:33,519 --> 00:03:38,080
+a workflow defined by infrastructural
+
+90
+00:03:35,599 --> 00:03:39,840
+skepticism. They maintain control by
+
+91
+00:03:38,080 --> 00:03:42,480
+artificially limiting the size of the
+
+92
+00:03:39,840 --> 00:03:44,239
+agent sandbox and mandating atomic,
+
+93
+00:03:42,480 --> 00:03:46,879
+highly scrutinized version control
+
+94
+00:03:44,239 --> 00:03:48,879
+checks for every change. They prioritize
+
+95
+00:03:46,879 --> 00:03:51,200
+auditing the execution trace, the
+
+96
+00:03:48,879 --> 00:03:53,760
+step-by-step logic it took, rather than
+
+97
+00:03:51,200 --> 00:03:55,840
+grading the final file. A polished final
+
+98
+00:03:53,760 --> 00:03:58,000
+output is dangerous if the evidence
+
+99
+00:03:55,840 --> 00:04:00,480
+trail proving how it was built cannot be
+
+100
+00:03:58,000 --> 00:04:02,720
+audited. This leads to a controlled
+
+101
+00:04:00,480 --> 00:04:04,640
+inversion of software development.
+
+102
+00:04:02,720 --> 00:04:07,200
+Humans manage a highly structured
+
+103
+00:04:04,640 --> 00:04:09,439
+specification which generates the agent
+
+104
+00:04:07,200 --> 00:04:11,680
+which then generates the code. When a
+
+105
+00:04:09,439 --> 00:04:14,000
+bug is found, engineers do not edit the
+
+106
+00:04:11,680 --> 00:04:16,079
+code. They update the specification,
+
+107
+00:04:14,000 --> 00:04:18,560
+regenerate the agent, and completely
+
+108
+00:04:16,079 --> 00:04:20,400
+overwrite the old implementation. In
+
+109
+00:04:18,560 --> 00:04:22,720
+this model, code is no longer a
+
+110
+00:04:20,400 --> 00:04:25,199
+handcrafted artifact, but a disposable
+
+111
+00:04:22,720 --> 00:04:28,240
+byproduct. The specification is the
+
+112
+00:04:25,199 --> 00:04:30,240
+steel mold. The code is just plastic.
+
+113
+00:04:28,240 --> 00:04:32,240
+The future of software engineering is
+
+114
+00:04:30,240 --> 00:04:34,880
+not writing implementation, but
+
+115
+00:04:32,240 --> 00:04:37,199
+governing intent. To see how to build
+
+116
+00:04:34,880 --> 00:04:41,240
+your own specification services, visit
+
+117
+00:04:37,199 --> 00:04:41,240
+the rooted layers publication.
+

@@ -6,11 +6,20 @@ The operational channel workflow lives in [`../../workflows/youtube-channel-ops/
 
 ## Weekly Sync Loop
 
+For the normal full refresh, use the wrapper:
+
+```bash
+.venv/bin/python scripts/refresh_youtube_analytics_dashboard.py --since-days 30
+```
+
+Pass `--report-date YYYY-MM-DD` when you want the recommendation report filename to match a specific review date.
+
 Run the loop in this order:
 
 ```bash
-.venv/bin/python scripts/fetch_youtube_analytics.py --since-days 30
+.venv/bin/python scripts/fetch_youtube_analytics.py --scope all-channel --since-days 30
 .venv/bin/python scripts/sync_youtube_reporting_reports.py --since-days 30
+.venv/bin/python scripts/analyze_youtube_srt_content.py --ledger experiments/youtube-analytics/metrics_ledger.json --output experiments/youtube-analytics/content_rubric.json
 .venv/bin/python scripts/build_youtube_decision_report.py
 .venv/bin/python scripts/build_youtube_analytics_dashboard.py
 ```
@@ -19,18 +28,22 @@ The first command uses the YouTube Data API and YouTube Analytics API for recent
 
 The second command uses the YouTube Reporting API bulk CSV exports. It downloads generated daily reports and merges them into `metrics_ledger.json`. Reporting API files are delayed; newly created jobs may show `0` reports until Google generates daily/backfill files.
 
-The third command builds the recommendation report from the merged ledger. It does not call YouTube.
+The third command analyzes local managed-caption text and writes a content rubric from the refreshed ledger. It does not call YouTube.
 
-The fourth command builds a static local dashboard from the ledger and latest weekly report. It does not call YouTube.
+The fourth command builds the recommendation report from the merged ledger. It does not call YouTube.
+
+The fifth command builds a static local dashboard from the ledger and latest weekly report. It does not call YouTube.
 
 ## State Files
 
 - `decision_rules.yaml`: local classification rules for recommendation reports
 - `reporting_jobs.json`: Reporting API job registry for channel bulk exports
 - `metrics_ledger.json`: generated read-only metrics ledger when analytics fetches run
+- `content_rubric.json`: generated caption-derived content/rubric layer for dashboard review
 - `reporting_downloads/`: generated Reporting API CSV downloads
 - `weekly_reports/`: generated recommendation reports
 - `dashboard/`: generated local dashboard HTML and embedded payload
+- `snapshots/`: generated compact dashboard snapshots for comparing runs
 
 ## Reporting Jobs
 
