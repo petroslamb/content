@@ -126,6 +126,40 @@ outputs:
     required_when: the run will mutate LinkedIn, X, Reddit, Hacker News, Substack Notes, or another external channel
     format: yaml
     producer: stop_for_external_posting_approval
+  - id: channel_fit_assessment
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: true
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: audience_reach_assessment
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: true
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: held_channel_drafts
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: conditional
+    required_when: any channel is deferred because of moderation or self-promotion risk
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: community_link_placement_strategy
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: conditional
+    required_when: a Reddit, Hacker News, forum, or community channel is included
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: native_media_strategy
+    path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
+    required: conditional
+    required_when: a target channel supports native media and package assets include PDFs, images, clips, or slide decks
+    format: markdown
+    producer: prepare_distribution_copy
+  - id: native_media_upload_boundary
+    path_template: "publications/{package}/{package_name}-distribution-log-r{revision}.md"
+    required: conditional
+    required_when: native media is selected but the browser surface cannot verify the upload
+    format: markdown
+    producer: record_distribution_follow_through
 
 behavior:
   preconditions:
@@ -148,6 +182,22 @@ behavior:
       check: external_mutation_requires_release_readiness
     - id: skipped_channels_are_recorded
       check: explicit_deferral_required_for_skipped_distribution
+    - id: deferred_channels_are_reassessed_before_second_wave
+      check: second_wave_distribution_records_channel_fit_auth_state_risk_and_decision
+    - id: held_channels_have_exact_local_copy
+      check: draft_hold_channels_include_exact_copy_and_hold_reason
+    - id: channel_decisions_are_explicit
+      check: channel_decision_is_post_now_draft_hold_manual_upload_required_or_skip
+    - id: channel_strategy_accounts_for_reach
+      check: distribution_decision_records_owned_audience_reach_or_targeted_conversation_strategy
+    - id: external_posts_require_exact_composer_verification
+      check: do_not_submit_when_visible_composer_copy_cannot_be_verified
+    - id: native_media_upload_blocks_are_explicit
+      check: record_manual_upload_required_when_file_picker_or_upload_state_cannot_be_verified
+    - id: community_posts_are_native_first
+      check: reddit_and_forum_posts_avoid_external_links_in_body_unless_explicitly_approved
+    - id: linkedin_carousel_considered_when_slide_deck_exists
+      check: linkedin_distribution_considers_document_carousel_before_link_preview
   budgets:
     max_steps: 5
     max_script_retries: 1
@@ -157,6 +207,12 @@ behavior:
     on_missing_published_url: stop_and_route_to_archive_or_release_gate
     on_missing_distribution_plan: create_plan_in_package_surface
     on_external_posting_not_approved: record_plan_and_defer
+    on_low_native_reach: define_anchor_post_or_targeted_reply_strategy_before_post_now
+    on_moderation_or_self_promotion_risk: prepare_draft_and_record_draft_hold
+    on_composer_verification_failure: record_prepared_copy_and_hold_submission
+    on_link_removal_risk: move_external_link_to_optional_comment_and_require_separate_confirmation
+    on_native_media_asset_available: prefer_native_channel_surface_and_record_upload_confirmation_boundary
+    on_native_media_upload_not_automatable: record_manual_upload_required_with_asset_title_copy_and_fallback_policy
     resume_from: resolved_run
     rollback_strategy: preserve_local_copy_and_record_no_external_mutation
 
@@ -224,6 +280,12 @@ gates:
     artifacts:
       - published_canonical_post_url
       - distribution_copy_or_posting_plan
+      - channel_fit_assessment
+      - audience_reach_assessment
+      - held_channel_drafts
+      - community_link_placement_strategy
+      - native_media_strategy
+      - native_media_upload_boundary
       - external_posting_gate
     decisions:
       - approve
@@ -278,13 +340,18 @@ steps:
   - id: prepare_distribution_copy
     title: Prepare distribution copy
     mode: codex_session
-    action: Adapt the published post for the selected channels without changing the thesis or losing the canonical URL.
+    action: Adapt the published post for the selected channels without changing the thesis or losing the canonical URL; record channel fit, auth state, audience reach, risk, media strategy, link placement, and post_now/draft_hold/skip decisions.
     consumes:
       - published_canonical_post_url
       - package_or_publication_distribution_plan
       - platform_specific_copy_or_media_assets
     produces:
       - distribution_copy_or_posting_plan
+      - channel_fit_assessment
+      - audience_reach_assessment
+      - held_channel_drafts
+      - community_link_placement_strategy
+      - native_media_strategy
     validation:
       hooks:
         - repo_link_check
