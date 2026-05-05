@@ -1,0 +1,80 @@
+experiment:
+  name: youtube-cinematic-rollout-hook-repair-2026-05-05
+  workspace_root: experiments/youtube-cinematic-rollout/hook_repair_2026-05-05
+  release_ledger: experiments/youtube-cinematic-rollout/release_ledger.md
+  templates:
+    cinematic_prompt: experiments/youtube-cinematic-rollout/hook_repair_2026-05-05/reasoning_cinematic_prompt.txt
+    cinematic_description: experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md
+  playlists:
+    cinematic:
+      id: PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe
+      title: Rooted Layers Cinematic Briefs
+      privacy_status: public
+    shorts:
+      id: PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd
+      title: AI Architecture Snippets & AI Research Shorts
+  defaults:
+    upload_privacy: public
+publications:
+  operating_agents_reasoning_hook_repair:
+    package: autonomous-agents/essays/reasoning
+    notebook_id: 285bb0df-cc68-45e5-8010-22cf7a88056a
+    essay_url: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: LykGDaONozw
+      url: https://www.youtube.com/watch?v=LykGDaONozw
+    cinematic:
+      title: The Scaffold Failed First
+      hook: The model did not fail first. The scaffold failed first.
+      summary: This hook-repair cinematic brief reframes reasoning failure as an architecture problem. It shows why builders should inspect the planning loop, tool boundary, memory path, and verification step before shopping for a smarter model.
+      video_file: publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/operating_agents_reasoning_hook_repair_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/operating_agents_reasoning_hook_repair_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/operating_agents_reasoning_hook_repair_cinematic_upload_report.json
+      generation_task_id: bd070bf5-5b95-4d81-813f-6e5e3d52ea9b
+      youtube_video_id: Vx7HwtBwo_c
+      youtube_url: https://www.youtube.com/watch?v=Vx7HwtBwo_c
+      state: completed
+    shorts:
+      manifest: publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/shorts_upload_report.json
+      selected:
+        - slug: the-model-wasnt-the-first-failure
+          title: The Model Wasn't the First Failure
+          video_id: f1mRv98cecs
+          url: https://www.youtube.com/watch?v=f1mRv98cecs
+          related_video_id: Vx7HwtBwo_c
+          studio_related_video_reload_verified: true
+          state: uploaded
+  operating_agents_multi_agent_hook_repair:
+    package: autonomous-agents/essays/multi-agent
+    notebook_id: 7917892d-e1fc-40f5-8922-a282d088f15b
+    essay_url: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: xxd2VKlqiL4
+      url: https://www.youtube.com/watch?v=xxd2VKlqiL4
+    cinematic:
+      title: Agent Theater Needs a Boundary
+      hook: A second agent only helps when it buys a real boundary.
+      summary: This hook-repair cinematic brief separates useful multi-agent architecture from role-play theater. It gives builders a concrete test for whether another agent owns memory, authority, or action space, or merely adds coordination noise.
+      video_file: publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.mp4
+      output_srt: publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.srt
+      upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic_upload_report.json
+      generation_task_id: 9100129e-d52f-4e3c-a0f3-9c55fff4a2b0
+      youtube_video_id: 51OLlF0Aob8
+      youtube_url: https://www.youtube.com/watch?v=51OLlF0Aob8
+      state: completed
+    shorts:
+      manifest: publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/shorts_manifest.json
+      upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/shorts_upload_report.json
+      selected:
+        - slug: a-second-agent-needs-a-boundary
+          title: A Second Agent Needs a Boundary
+          video_id: ZzMk5kv7YpI
+          url: https://www.youtube.com/watch?v=ZzMk5kv7YpI
+          related_video_id: 51OLlF0Aob8
+          studio_related_video_reload_verified: true
+          state: uploaded

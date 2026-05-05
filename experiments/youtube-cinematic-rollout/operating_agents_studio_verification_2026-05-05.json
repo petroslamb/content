@@ -1,0 +1,62 @@
+{
+  "verified_at": "2026-05-05T10:36:30Z",
+  "workflow": "youtube_cinematic_rollout",
+  "scope": "operating_agents_reasoning_and_multi_agent_cinematic_briefs",
+  "browser_surface": "YouTube Studio in-app browser",
+  "studio_locale": "el",
+  "end_screen_contract": {
+    "explicit_research_breakdown_video": true,
+    "best_for_viewer_video": true,
+    "subscribe_element": true
+  },
+  "info_card_contract": {
+    "early_research_breakdown_video_card": true,
+    "teaser_time": "00:01:00",
+    "midpoint_duplicate_research_breakdown_card": false,
+    "midpoint_duplicate_blocker": "studio_card_duplicate_target_not_allowed"
+  },
+  "videos": [
+    {
+      "publication_key": "operating_agents_reasoning",
+      "cinematic_video_id": "bto9FNWlahY",
+      "cinematic_title": "Diagnose the Scaffold Before You Shop the Model | A Cinematic Research Brief",
+      "target_video_id": "LykGDaONozw",
+      "target_title": "Operating Agents Lesson III [Reasoning]: Diagnose the Scaffold Before You Shop the Model",
+      "studio_editor_url": "https://studio.youtube.com/video/bto9FNWlahY/editor",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true,
+      "observed_end_screen_elements": [
+        "explicit_research_breakdown_video",
+        "best_for_viewer_video",
+        "subscribe"
+      ],
+      "observed_info_card": {
+        "type": "video",
+        "target_video_id": "LykGDaONozw",
+        "target_title": "Operating Agents Lesson III [Reasoning]: Diagnose the Scaffold Before You Shop the Model",
+        "teaser_time": "00:01:00"
+      }
+    },
+    {
+      "publication_key": "operating_agents_multi_agent",
+      "cinematic_video_id": "abBHq8lwCEE",
+      "cinematic_title": "When the Second Agent Actually Buys a Boundary | A Cinematic Research Brief",
+      "target_video_id": "xxd2VKlqiL4",
+      "target_title": "Operating Agents Lesson IV [Multi-Agent]: The Second Agent Has To Buy A Boundary",
+      "studio_editor_url": "https://studio.youtube.com/video/abBHq8lwCEE/editor",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true,
+      "observed_end_screen_elements": [
+        "explicit_research_breakdown_video",
+        "best_for_viewer_video",
+        "subscribe"
+      ],
+      "observed_info_card": {
+        "type": "video",
+        "target_video_id": "xxd2VKlqiL4",
+        "target_title": "Operating Agents Lesson IV [Multi-Agent]: The Second Agent Has To Buy A Boundary",
+        "teaser_time": "00:01:00"
+      }
+    }
+  ]
+}

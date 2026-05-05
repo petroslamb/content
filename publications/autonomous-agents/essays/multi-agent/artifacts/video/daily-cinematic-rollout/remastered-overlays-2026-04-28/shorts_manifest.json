@@ -37,8 +37,13 @@
         "clip_arc_and_compression": 5,
         "rewatch_shareability": 4
       },
-      "hook": "Agent Theater Is Not Intelligence",
-      "cta": "Full cinematic brief in Related Video"
+      "hook": "Agent theater is not intelligence",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "contradiction",
+        "topic_lane": "multi-agent",
+        "source_signal": "scale"
+      }
     },
     {
       "slug": "the-coordination-tax-kills-agent-handoffs",

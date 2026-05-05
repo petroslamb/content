@@ -15,7 +15,14 @@
       "end": "00:00:26.080",
       "publish_at": "2026-04-29T07:30:00Z",
       "score_total": 22,
-      "score_breakdown": null
+      "score_breakdown": null,
+      "hook": "Agents lose attention before intelligence",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "contradiction",
+        "topic_lane": "memory",
+        "source_signal": "scale"
+      }
     },
     {
       "slug": "flat-vector-memory-becomes-a-security-hole",

@@ -1,0 +1,48 @@
+{
+  "source_video": "publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.mp4",
+  "source_srt": "publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.srt",
+  "related_video_id": "51OLlF0Aob8",
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent",
+  "full_video_url": "https://www.youtube.com/watch?v=51OLlF0Aob8",
+  "secondary_video_url": "https://www.youtube.com/watch?v=xxd2VKlqiL4",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "a-second-agent-needs-a-boundary",
+      "title": "A Second Agent Needs a Boundary",
+      "summary": "Adding more agents does not multiply intelligence unless the next agent owns a real memory, authority, or action boundary.",
+      "start": "00:00:00.400",
+      "end": "00:00:56.000",
+      "score_total": 24,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 5,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "hook": "A second agent needs a real boundary",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "constraint",
+        "topic_lane": "multi-agent",
+        "source_signal": "scale"
+      }
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

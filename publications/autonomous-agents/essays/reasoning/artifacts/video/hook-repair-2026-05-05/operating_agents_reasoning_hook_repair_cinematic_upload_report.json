@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-05-05T11:49:11.281289+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "operating_agents_reasoning_hook_repair",
+  "package": "autonomous-agents/essays/reasoning",
+  "notebook_id": "285bb0df-cc68-45e5-8010-22cf7a88056a",
+  "video_source_file": "publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/operating_agents_reasoning_hook_repair_cinematic.mp4",
+  "caption_output": "publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/operating_agents_reasoning_hook_repair_cinematic.srt",
+  "title": "The Scaffold Failed First | A Cinematic Research Brief",
+  "base_title": "The Scaffold Failed First",
+  "description": "The model did not fail first. The scaffold failed first.\n\nThis hook-repair cinematic brief reframes reasoning failure as an architecture problem. It shows why builders should inspect the planning loop, tool boundary, memory path, and verification step before shopping for a smarter model.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/operating-agents-iii-diagnose-the\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=LykGDaONozw\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS45NzUwQkI1M0UxNThBMkU0",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS45NzUwQkI1M0UxNThBMkU0",
+      "position": 23,
+      "title": "The Scaffold Failed First | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "LykGDaONozw",
+    "url": "https://www.youtube.com/watch?v=LykGDaONozw"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the",
+  "video": {
+    "id": "Vx7HwtBwo_c",
+    "url": "https://www.youtube.com/watch?v=Vx7HwtBwo_c",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-05-05T11:49:04Z"
+    }
+  }
+}
