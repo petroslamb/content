@@ -98,9 +98,9 @@ Table 1 treats surface types as roles rather than mutually exclusive file format
 | Validation surfaces | Artifacts that check whether behavior conforms to stated intent. | Turn expectations into tests, validators, linters, or contract checks. | Test suites, generated checks, static validators, mutation tests. | Test gaming, incomplete coverage, validator drift. |
 | Trace surfaces | Artifacts that retain execution evidence for audit, replay, debugging, or comparison. | Preserve what ran, which inputs were admitted, and which constraints applied. | Run logs, agent traces, checkpoint logs, replay records. | Treating logs as authority rather than evidence. |
 | Evidence surfaces | Artifacts that link claims, outputs, or decisions to support and contradictions. | Make claims auditable and contradictions visible. | Claim ledgers, source maps, evidence tables, provenance notes. | Paper-thin support, citation laundering, stale evidence. |
-| Context surfaces | Project guidance that becomes operational only when maintained and evaluated. | Shape generation or review when coupled to checks or process. | AGENTS.md, repo instructions, coding guidelines, memory files. | Passive context treated as enforcement; bloat; conflicting instructions. |
+| Context surfaces | Project guidance that becomes operational only when maintained and evaluated. | Shape generation or review when coupled to checks or process. | Repo instructions and coding guidelines. | Passive context mistaken for enforcement. |
 | Repair surfaces | Artifacts that convert failure diagnosis into upstream revision. | Feed validation or trace failures back into specs, policies, tests, or prompts. | Repair tickets, revised specs, updated tests, policy patches. | Fixing only generated output while leaving controlling ambiguity intact. |
-| Authority/gate surfaces | Artifacts that decide what may run, move, publish, or be promoted. | Govern lifecycle movement, permissions, promotion, or external mutation. | Gate contracts, approval records, release checklists, policy manifests. | Bypassed approvals; unclear source-of-truth order. |
+| Authority and gate surfaces | Artifacts that decide what may run, move, publish, or be promoted. | Govern lifecycle movement, permissions, promotion, or external mutation. | Gate contracts, approval records, release checklists, policy manifests. | Bypassed approvals; unclear authority order. |
 
 The taxonomy is intentionally plural. Source authority may live in a schema, a workflow contract, a test-generated prompt, or a human approval record. The paper's claim is not that one surface should replace all others. It is that review needs to know which surfaces govern which decisions.
 
@@ -130,18 +130,18 @@ Table 2 maps the core literature by surface role and lifecycle stage. This is no
 
 | Source | Surface roles | Lifecycle stages | Use in this paper | Boundary |
 | :--- | :--- | :--- | :--- | :--- |
-| Spec-Driven Development [@piskala2026specdriven] | source, validation, repair | specify, generate, validate, repair | General SE baseline for spec-first, spec-anchored, and spec-as-source modes. | Do not claim maximum specification is always best. |
-| Specification Gap [@sartori2026specgap] | source, validation, repair | specify, generate, validate, repair | Hinge evidence that underspecification can cause coordination failure. | Specific tasks and models; do not overgeneralize. |
-| Professional Developers Don't Vibe [@huang2025professional] | source, validation, repair, authority | specify, validate, repair | Practice baseline for professional control. | Does not prove universal use of specification surfaces. |
-| Bootstrapping Coding Agents [@monperrus2026bootstrapping] | source, validation | specify, generate, validate | Narrow strong example of specification-as-record. | Does not make all implementation safely regenerable. |
-| Natural-Language Agent Harnesses [@pan2026nlah] | runtime, source, trace | specify, generate, trace | Harness behavior as external executable artifact. | Runtime coupling matters. |
+| Spec-driven development [@piskala2026specdriven] | source, validation, repair | specify, generate, validate, repair | SE baseline for spec-first, spec-anchored, and spec-as-source modes. | Do not claim maximum specification is always best. |
+| Specification gap [@sartori2026specgap] | source, validation, repair | specify, generate, validate, repair | Hinge evidence that underspecification can cause coordination failure. | Specific tasks and models; do not overgeneralize. |
+| Professional control [@huang2025professional] | source, validation, repair, authority | specify, validate, repair | Practice baseline for expert supervision and validation. | Does not prove universal use of specification surfaces. |
+| Bootstrap specs [@monperrus2026bootstrapping] | source, validation | specify, generate, validate | Narrow example of specification as record. | Does not make all implementation safely regenerable. |
+| NL agent harnesses [@pan2026nlah] | runtime, source, trace | specify, generate, trace | Harness behavior as external executable artifact. | Runtime coupling matters. |
 | AgentSPEX [@wang2026agentspex] | runtime, validation, trace, source | specify, generate, validate, trace | Typed workflow specification and execution language. | Not every team needs a DSL. |
 | ContextCov [@sharma2026contextcov] | context, validation, repair | specify, validate, repair | Passive instructions transformed into executable guardrails. | Ordinary context files are not automatically governed. |
-| Test-Driven AI Agent Definition [@rehan2026tdad] | source, validation, repair | specify, generate, validate, repair | Behavioral specs compiled into tests and prompt artifacts. | Tests do not prove all behavior. |
+| Test-driven agent definition [@rehan2026tdad] | source, validation, repair | specify, generate, validate, repair | Behavioral specs compiled into tests and prompt artifacts. | Tests do not prove all behavior. |
 | FASTRIC [@jin2025fastric] | source, validation, trace | specify, validate, trace | Prompt-protocol specification and procedural conformance. | Formality is not monotonic improvement. |
-| Willful Disobedience / AgentPex [@barke2026willful] | trace, validation | validate, trace | Procedural trace checking beyond outcome success. | Traces diagnose; they do not replace source authority. |
+| AgentPex traces [@barke2026willful] | trace, validation | validate, trace | Procedural trace checking beyond outcome success. | Traces diagnose; they do not replace source authority. |
 | AgentFixer [@mulian2026agentfixer] | validation, trace, repair | validate, trace, repair | Failure detection, root cause, and repair recommendations. | Automated repair does not replace human review. |
-| From Fluent to Verifiable [@rasheed2026fluent] | evidence, trace, validation, repair | trace, validate, repair | Claim-level auditability and contradiction transparency. | This case does not implement full provenance graphs. |
+| Claim auditability [@rasheed2026fluent] | evidence, trace, validation, repair | trace, validate, repair | Claim-level auditability and contradiction transparency. | This case does not implement full provenance graphs. |
 
 The mapping supports a bounded synthesis: source-of-truth authority can move upstream into maintained specification surfaces, but only when artifacts are connected to control, validation, traceability, or repair.
 
@@ -149,7 +149,7 @@ The mapping supports a bounded synthesis: source-of-truth authority can move ups
 
 ### 7.1 Method
 
-This section presents an illustrative artifact analysis, not a controlled empirical evaluation. The unit of analysis is the `specification-surface-source-of-truth` package in a file-backed editorial/software workflow repository and the surrounding `paper_development` and `essay_iteration` workflow machinery.
+This section presents an illustrative artifact analysis, not a controlled empirical evaluation. The unit of analysis is the specification-surface package in a file-backed editorial/software workflow repository and the surrounding paper-development and essay-iteration workflow machinery.
 
 The artifact corpus includes package status, package README, claim-boundary ledger, paper blueprint, publication route note, workflow contracts, gate contracts, policy manifests, retained run logs, external review synthesis, and human promotion approval records. I coded each artifact against the surface roles in Table 1 and the lifecycle stages in Section 5. The coding protocol asked three questions for each artifact:
 
@@ -173,18 +173,20 @@ Interpretation: these observations support the limited claim that the taxonomy c
 
 ### 7.3 Artifact classification
 
+Table 3 uses role labels rather than full repository paths so the manuscript remains readable in narrow columns. The exact file names are retained in the local case-study trace and workflow packet.
+
 **Table 3. Local artifact roles**
 
 | Artifact | Surface type | Lifecycle stage | Operational force | Failure or repair implication |
 | :--- | :--- | :--- | :--- | :--- |
-| `AUTHORITY.md` | authority/gate | specify | Defines source-of-truth order. | If logs act as source authority, repair the authority map or consuming workflow. |
-| `status.yaml` | authority/context | specify | Resolves package kind, revision, live draft, evidence path, and stage state. | Stage decisions should be repaired here, not inferred from prose alone. |
-| `workflows/paper-development/workflow.yaml` | runtime/authority/validation | specify, validate, trace | Declares context dependencies, allowed paths, outputs, and checks. | Paper artifacts cannot silently mutate the essay route. |
-| `workflows/essay-iteration/workflow.yaml` | runtime/validation/authority | specify, generate, validate, trace | Declares candidate, review, scorecard, decision, and gate outputs. | Promotion requires review and approval surfaces. |
-| `gate_contracts.yaml` | authority/validation | validate, repair | Defines movement, quality, promotion, and external-mutation gates. | Missing approvals should block movement or mutation. |
-| Claim boundary ledger | evidence/repair | specify, validate, repair | Names authorized, caveated, and forbidden claims. | Paper prose that drifts into forbidden claims repairs the blueprint or draft. |
-| External review synthesis | evidence/repair | validate, repair | Aggregates review findings and required polish. | Review can repair a candidate without authorizing promotion. |
-| Human promotion approval | authority/gate | validate, repair | Records explicit approval to promote the polished candidate. | Promotion is authorized through this surface, not through file existence. |
+| Authority map | authority, gate | specify | Defines source-of-truth order. | If logs act as source authority, repair the authority map or consuming workflow. |
+| Package status manifest | authority, context | specify | Resolves package kind, revision, live draft, evidence path, and stage state. | Stage decisions should be repaired here, not inferred from prose alone. |
+| Paper workflow contract | runtime, authority, validation | specify, validate, trace | Declares context dependencies, allowed paths, outputs, and checks. | Paper artifacts cannot silently mutate the essay route. |
+| Essay workflow contract | runtime, validation, authority | specify, generate, validate, trace | Declares candidate, review, scorecard, decision, and gate outputs. | Promotion requires review and approval surfaces. |
+| Gate contract manifest | authority, validation | validate, repair | Defines movement, quality, promotion, and external-mutation gates. | Missing approvals should block movement or mutation. |
+| Claim boundary ledger | evidence, repair | specify, validate, repair | Names authorized, caveated, and forbidden claims. | Paper prose that drifts into forbidden claims repairs the blueprint or draft. |
+| External review synthesis | evidence, repair | validate, repair | Aggregates review findings and required polish. | Review can repair a candidate without authorizing promotion. |
+| Human promotion approval | authority, gate | validate, repair | Records explicit approval to promote the polished candidate. | Promotion is authorized through this surface, not through file existence. |
 | Reviewable run logs | trace | trace | Retain operational evidence. | Logs diagnose what happened but are not source authority. |
 
 ### 7.4 Case lesson

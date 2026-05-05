@@ -38,14 +38,14 @@ Official source: <https://conf.researchr.org/track/aiware-2026/aiware-2026-arxiv
 | Figure/table decisions | partial | Draft has tables and a text lifecycle figure; decide whether to render figures. |
 | Post-draft readiness review | done | `specification-surface-source-of-truth-submission-readiness-review-r1.md` holds submission for method and packet tightening. |
 | R2 readiness review | done | `specification-surface-source-of-truth-submission-readiness-review-r2.md` marks the packet ready for human approval. |
-| PDF | done for local review | `specification-surface-source-of-truth-paper-draft-r2.pdf` exists; final venue-format polish may still be requested. |
+| PDF | done for local review | `specification-surface-source-of-truth-paper-draft-r2.pdf` exists and regenerates cleanly; final venue-format polish may still be requested. |
 | Human approval for external submission | pending | `specification-surface-source-of-truth-external-submission-approval-r1.md` exists but does not approve submission. |
 | arXiv posting | blocked | Do not post until manuscript packet and policy review are complete. |
 
 ## Submission Blockers
 
 - Human external-submission approval is pending and not granted.
-- Venue-format polish may still be needed because the local PDF has wide-table overfull-box warnings.
+- Venue-format polish may still be needed if the reviewer wants a shorter or more template-specific PDF.
 - The manuscript has not yet passed a human AIware external-submission approval review.
 
 ## Local Pre-Submission Checks
