@@ -542,6 +542,7 @@ workflows:
     - package-local expert feedback outreach tracker
     - paper author target map
     - paper-specific message pack
+    - author-value hypothesis
     - outcome retrospective after the success window
     done_when:
     - the package has a bounded paper-author outreach experiment with exact drafts,
@@ -786,12 +787,16 @@ workflows:
     - package-local artifact surfaces for the target publications
     expected_outputs:
     - updated evergreen backlog state
+    - approved video-specific prompt packet for each new cinematic before generation
     - package-local cinematic and Shorts artifacts or an exact blocked-state note
+    - Shorts candidates with hook pattern, overlay copy, rubric score, and scheduling
+      status
     - verified Studio card and end-screen links for uploaded cinematic briefs when
       a YouTube research-breakdown target exists
     - appended release-ledger entry for the run
     done_when:
-    - all in-flight package work for the run is reconciled, uploaded cinematic briefs
+    - all in-flight package work for the run is reconciled, cold-open and Shorts quality
+      gates are either satisfied or explicitly blocking, uploaded cinematic briefs
       have Studio card/end-screen wiring or an explicit blocker recorded, up to two
       new cinematics are started or completed when possible, and blockers are recorded
       without hidden state
