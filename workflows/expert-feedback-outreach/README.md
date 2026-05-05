@@ -59,6 +59,7 @@ Do not add people only because they are famous, adjacent, or likely to amplify t
 - Put the essay link after the ask, not as the opening payload.
 - Record outcomes even when nothing happens. Silence is experimental data.
 - For LinkedIn batches, inspect and record the visible action state before sending anything: `connect`, `follow`, `message`, `2nd`, `3rd+`, and mutual connections when visible. If the account has recent outreach risk or uncertain limits, send at most 5 initial invites or messages per day unless the user explicitly approves a different pace.
+- After any approved LinkedIn action, record the action evidence separately from the attempt: `invite_sent_without_note`, `invite_sent_with_note`, `message_sent`, `blocked_at_confirmation`, `premium_or_inmail_block`, `pending_visible`, or `connect_still_visible`. Do not mark a target as invited only because the invite modal opened.
 
 ## Canonical Flow
 
@@ -68,7 +69,7 @@ Do not add people only because they are famous, adjacent, or likely to amplify t
 4. Build a 5-10 person target map from cited or boundary-case paper authors.
 5. Record each paper's role in the essay and why that author is a good feedback target.
 6. Draft the message pack with exact text for each target or variant.
-7. Stop before external sending. If the user sends manually, update the tracker afterward with dates and outcomes.
+7. Stop before external sending. If the user sends manually or gives explicit action-time approval, update the tracker afterward with dates, exact action evidence, and outcomes.
 8. Review the batch after the default 14-day success window and decide whether to continue, revise the message, pause, or retire that target type.
 
 ## Standard Tracker
