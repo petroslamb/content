@@ -1,5 +1,5 @@
 {
-  "manifest": "/Users/petros/Projects/content/experiments/youtube-reference-comments/description_append_manifest.yaml",
+  "manifest": "experiments/youtube-reference-comments/description_append_manifest.yaml",
   "applied": true,
   "target_count": 17,
   "results": [
