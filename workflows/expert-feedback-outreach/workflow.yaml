@@ -182,6 +182,8 @@ behavior:
       check: message_names_paper_states_essay_use_and_asks_for_one_objection_or_correction
     - id: workflow_does_not_send_external_messages
       check: workflow_external_mutation_budget_is_zero
+    - id: linkedin_action_state_and_pacing_recorded
+      check: linkedin_targets_record_visible_action_state_and_batch_pacing_before_any_send
     - id: outcomes_are_expert_feedback_not_traffic
       check: success_metrics_prioritize_replies_objections_corrections_weak_ties_and_collaboration
     - id: existing_tracker_preserved_when_present
@@ -194,6 +196,7 @@ behavior:
     min_targets_per_batch: 5
     max_targets_per_batch: 10
     success_window_days: 14
+    max_initial_linkedin_sends_per_day: 5
     external_mutations: 0
     unapproved_external_messages: 0
   recovery:
@@ -202,6 +205,7 @@ behavior:
     on_existing_tracker: preserve_historical_records_and_append_or_adapt_new_batch
     on_no_eligible_paper_authors: record_no_batch_and_stop
     on_external_send_needed: stop_for_user_manual_send_or_explicit_action_time_approval
+    on_linkedin_action_state_unclear: record_route_as_needs_manual_inspection_before_send
     on_reply_received: record_outcome_before_drafting_any_follow_up
     on_material_correction: route_to_editorial_publishing_or_archive_repair_before_more_outreach
     resume_from: resolved_run
@@ -289,7 +293,7 @@ steps:
     title: Resolve outreach context
     mode: scriptable
     executor:
-      named: content-agent context-admission
+      command: "./content-agent validate --workflow expert_feedback_outreach --package {package}"
     consumes:
       - package_status
       - package_readme

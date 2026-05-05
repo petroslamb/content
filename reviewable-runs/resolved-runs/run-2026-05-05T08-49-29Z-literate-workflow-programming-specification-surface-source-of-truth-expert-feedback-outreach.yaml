@@ -1,0 +1,231 @@
+kind: resolved_run
+schema_version: 1
+run_id: run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach
+package:
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth
+  status_path: publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+  status_hash: sha256:090c69b00bd28b9693351e33c867c046260f4089250368c92be7acc3205f48fe
+workflow:
+  workflow_id: expert_feedback_outreach
+  workflow_version: 1
+  workflow_hash: sha256:3d93110ade2e6602b82b086ba941ceec4107767087d4c65bb9de210f91afa457
+  contract_path: workflows/expert-feedback-outreach/workflow.yaml
+run_mode: governed_continuous
+route:
+  package_kind: leaf
+  pipeline_profile: null
+  current_stage: null
+  workflow_stage: null
+  resolved_from:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+  - workflows/expert-feedback-outreach/workflow.yaml
+  - harness_policy.yaml
+  - gate_contracts.yaml
+  - pipeline_profiles.yaml
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml:
+      type: file_sha256
+      sha256: 090c69b00bd28b9693351e33c867c046260f4089250368c92be7acc3205f48fe
+      size_bytes: 2819
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/README.md
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/README.md:
+      type: file_sha256
+      sha256: ed8faf92c6d4e9b31f67dfc0b18671d2c2c268cd32ce82bb21263f9f95314e10
+      size_bytes: 7818
+- id: published_canonical_post_url
+  required: true
+  status: resolved
+  paths:
+  - publication_strategy_and_archive/post_map.yaml
+  hashes:
+    publication_strategy_and_archive/post_map.yaml:
+      type: file_sha256
+      sha256: 0b90f27d662bb46afd127b777c792707fbedc28440aecaeff78c4855e2742cfa
+      size_bytes: 12375
+- id: source_essay_candidate_or_live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md:
+      type: file_sha256
+      sha256: d28102c44b5460549f504460d75a5a17dd1705745aac86c5b837b28dd37d4ee9
+      size_bytes: 24255
+- id: package_evidence_surface_or_papers_index
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/papers
+  hashes:
+    publications/literate-workflow-programming/papers:
+      type: directory_listing_sha256
+      sha256: b76aad7c450763b3b3a20b9b1c388a6b0982899bfbd3158f8e089309698fd1bc
+      file_count: 57
+- id: existing_distribution_or_outreach_tracker
+  required: false
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md
+  hashes:
+    ? publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md
+    : type: file_sha256
+      sha256: 012e1abe81a681dad41976421452f8404a74e7aaaf674ae159af727083fff6b1
+      size_bytes: 10044
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/expert-feedback-outreach/README.md
+  hashes:
+    workflows/expert-feedback-outreach/README.md:
+      type: file_sha256
+      sha256: 3147bf77dcfe1823357f3579e9fd62d1aad1301262f6bec7b66223c900cdc924
+      size_bytes: 7089
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/expert-feedback-outreach/templates
+  hashes:
+    workflows/expert-feedback-outreach/templates:
+      type: directory_listing_sha256
+      sha256: 7da0d418920adc7b06050df8baa1939f7fd67b58f3cd0c52ffb53ee43f880e39
+      file_count: 1
+- id: distribution_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/distribution/README.md
+  hashes:
+    workflows/distribution/README.md:
+      type: file_sha256
+      sha256: 69c3fb3e85279d13a886575e7391e9dcdf729b21f73ec1ad5a4a399c69b82785
+      size_bytes: 7027
+- id: release_gate_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/release-gate/README.md
+  hashes:
+    workflows/release-gate/README.md:
+      type: file_sha256
+      sha256: b90c5871c5f8386e7c0e061e019d3fb228706ba853541cffa5b9bf2b48126a3d
+      size_bytes: 8439
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: c0a00f4afe52bfe99fb9eae5af5bdc33e7878f9b84f168783de7edc238ac262e
+      size_bytes: 3115
+policy_resolution:
+  allowed_tools:
+  - id: expert_feedback_outreach_validation
+    command: ./content-agent validate --workflow expert_feedback_outreach --package
+      literate-workflow-programming/specification-surface-source-of-truth
+    required: true
+  - id: repo_link_check
+    command: npm run check:repo-links
+    required: false
+  allowed_capabilities:
+  - contract_validation
+  - context_admission
+  - scriptable_step_execution
+  - gate_stop
+  - run_record_writing
+  allowed_paths:
+    read:
+    - publications/literate-workflow-programming/specification-surface-source-of-truth/
+    - publications/literate-workflow-programming/papers
+    - publications/literate-workflow-programming/papers
+    - workflows/expert-feedback-outreach/
+    - workflows/distribution/
+    - workflows/release-gate/
+    - publication_strategy_and_archive/
+    - harness_policy.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+    write:
+    - publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+selected_steps:
+- id: resolve_outreach_context
+  mode: scriptable
+- id: create_or_update_outreach_tracker
+  mode: codex_session
+- id: build_paper_author_target_map
+  mode: codex_session
+- id: draft_paper_specific_messages
+  mode: codex_session
+- id: record_manual_send_boundary
+  mode: codex_session
+- id: record_outcome_retrospective
+  mode: codex_session
+- id: record_handoff
+  mode: scriptable
+selected_gates: []
+behavior:
+  budgets:
+    max_steps: 7
+    max_script_retries: 1
+    min_targets_per_batch: 5
+    max_targets_per_batch: 10
+    success_window_days: 14
+    external_mutations: 0
+    unapproved_external_messages: 0
+  recovery:
+    on_missing_published_url: stop_and_route_to_substack_archive_sync_or_distribution
+    on_missing_evidence_surface: stop_and_route_to_paper_intake_or_research
+    on_existing_tracker: preserve_historical_records_and_append_or_adapt_new_batch
+    on_no_eligible_paper_authors: record_no_batch_and_stop
+    on_external_send_needed: stop_for_user_manual_send_or_explicit_action_time_approval
+    on_reply_received: record_outcome_before_drafting_any_follow_up
+    on_material_correction: route_to_editorial_publishing_or_archive_repair_before_more_outreach
+    resume_from: resolved_run
+    rollback_strategy: preserve_existing_tracker_and_append_new_batch_note
+  policy_run_modes:
+  - exploratory
+  - governed_continuous
+output_targets:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+- id: run_record
+  path: reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+- id: expert_feedback_outreach_tracker
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/expert-feedback-outreach.md
+  required: true
+  format: markdown
+- id: paper_author_target_map
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/expert-feedback-outreach.md
+  required: true
+  format: markdown
+- id: paper_specific_message_pack
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/expert-feedback-outreach.md
+  required: true
+  format: markdown
+- id: manual_send_boundary
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/expert-feedback-outreach.md
+  required: true
+  format: markdown
+- id: outcome_retrospective
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/expert-feedback-outreach.md
+  required: conditional
+  format: markdown
