@@ -106,6 +106,7 @@ rollout_order:
 - orchestration_paradigm_issue_reality
 - transformer_attractor
 - specification_surface_source_of_truth
+- binding_gap_prompt_packet_retest
 publications:
   illusion_of_swarm:
     package: illusion-of-swarm
@@ -1500,8 +1501,8 @@ publications:
       approved_clips:
       - slug: ai-architecture-changed-to-fit-the-chip
         title: AI Architecture Changed to Fit the Chip
-        summary: The transformer won because hardware economics forced new ideas
-          to mimic the chip's preferred compute pattern.
+        summary: The transformer won because hardware economics forced new ideas to
+          mimic the chip's preferred compute pattern.
         publish_at: '2026-05-10T06:00:00Z'
         youtube_video_id: qPVGUmDWsYk
       - slug: no-lab-will-risk-a-billion-dollar-failure
@@ -1584,3 +1585,242 @@ publications:
       rejected_clips: []
       next_publish_at: '2026-05-06T06:00:00Z'
       last_scheduled_at: '2026-05-01T09:00:54.099114Z'
+  binding_gap_prompt_packet_retest:
+    package: binding-gap
+    status_path: publications/binding-gap/status.yaml
+    markdown_path: publications/binding-gap/the-binding-gap.md
+    notebook_id: 44486736-92ff-4243-9b6e-aea65baa3fce
+    notebook_title: The Binding Gap
+    essay_url: https://lambpetros.substack.com/p/the-binding-gap
+    secondary_link:
+      kind: youtube
+      label: Full research breakdown
+      video_id: cBrtKPp4kqw
+      url: https://www.youtube.com/watch?v=cBrtKPp4kqw
+    comparison_baseline:
+      video_id: wiic78FUJzU
+      url: https://www.youtube.com/watch?v=wiic78FUJzU
+      title: Why AI Keeps the Scene but Drops the Wiring | A Cinematic Reasearch Brief
+      report_date: '2026-05-05'
+      data_age_days: 31
+      metrics:
+        views: 17
+        views_per_day: 0.6071428571428571
+        average_view_duration_seconds: 123
+        average_view_percentage: 31.99
+        thumbnail_impressions: 66
+        thumbnail_ctr: 1.515151515151515
+        subscribers_gained: 0
+      test_reason: Oldest underperforming cinematic in the 2026-05-05 report; the
+        concept is strong but the old opening did not convert.
+    cinematic:
+      title: The Model Kept the Facts. It Dropped the Wiring
+      hook: The binding gap is not forgetting. It is a wiring failure.
+      summary: This prompt-packet retest uses the oldest weak cinematic as a controlled
+        comparison. It makes the Binding Gap concrete for builders by showing how
+        models preserve semantic ingredients while losing role, source, and numeric
+        attachments.
+      cold_open:
+        status: approved
+        first_line: The model did not forget the facts. It dropped the wiring.
+        viewer_promise: Show builders why plausible AI answers fail when role, source,
+          or numeric attachments drift even though the topic looks familiar.
+        conflict: The output can sound close to correct because the semantic pieces
+          survived while the exact attachment that makes the answer usable broke.
+        payoff_by_30s: Viewers should know to inspect binding and attachment before
+          treating the failure as hallucination, retrieval, or missing intelligence.
+      prompt_packet:
+        status: approved
+        artifact_goal: hook_repair
+        source_signal: analytics_underperformer
+        failure_chain:
+        - A model keeps the Tom/Mary fact but fails when the relation is reversed.
+        - A research summary names real papers and real claims but binds the claim
+          to the wrong source.
+        - A meta-analysis extractor recognizes variables and numbers, then attaches
+          the effect size to the wrong comparison.
+        - A better workflow keeps role, source, and numeric attachments explicit instead
+          of hoping prose preserves them.
+        clip_safe_claim_blocks:
+          minimum: 3
+          rules:
+          - open with a sharp claim, tension, or failure mode in the first sentence
+          - avoid pronoun-heavy callbacks that require earlier context
+          - land one concrete takeaway before moving on
+          - sound quotable when isolated from the rest of the video
+        forbidden:
+        - TL;DR
+        - top 5
+        - in this video
+        operator_note: Make the Binding Gap feel like an operator diagnostic, not
+          a paper survey. Use examples before mechanism.
+      video_file: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.mp4
+      output_srt: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt
+      upload_report: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic_upload_report.json
+      youtube_video_id: bhoiLFJadAA
+      youtube_url: https://www.youtube.com/watch?v=bhoiLFJadAA
+      published_at: '2026-05-05T15:11:43Z'
+      generation_task_id: a14ed520-185e-446d-ac9c-19f618c996d2
+      generation_task_started_at: '2026-05-05T14:11:45Z'
+      state: completed
+      retry_state:
+        attempts: 1
+        last_attempted_at: '2026-05-05T15:12:29Z'
+        last_error: null
+      prompt_packet_path: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/prompt_packet.yaml
+      prompt_file: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/cinematic_prompt.txt
+      generation_compliance:
+        status: failed_first_line
+        match_mode: normalized_prefix_exact
+        expected_first_line: The model did not forget the facts. It dropped the wiring.
+        observed_opening: You prompt an AI with a complex question and it gathers
+          all the right facts. The names, the dates, the core concepts are all perfectly
+          preserved in its memory. But then, right in the middle of generating the
+          answer, the internal wiring connecting those facts simply snaps. The resulting
+          output feels
+      generation_compliance_override: true
+      generation_compliance_override_reason: User explicitly approved continuing the
+        retest despite NotebookLM missing the exact requested first line; Shorts are
+        evaluated from the recovered captions and overlay hook contract.
+      studio_link:
+        state: verified
+        verified_at: '2026-05-05T16:14:21Z'
+        verification_report: experiments/youtube-cinematic-rollout/binding_gap_prompt_packet_retest_studio_verification_2026-05-05.json
+        target_video_id: cBrtKPp4kqw
+        target_title: The Binding Gap in AI Models | A Visual Deep Research Dive
+        end_screen:
+          explicit_research_breakdown_video: true
+          best_for_viewer_video: true
+          subscribe: true
+        info_card:
+          type: video
+          teaser_time: '00:01:00'
+          custom_message: Full research breakdown
+          teaser_text: Full research breakdown
+    shorts:
+      workspace_dir: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05
+      candidate_report: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/candidate_report.json
+      manifest_path: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/shorts_manifest.json
+      upload_report: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/shorts_upload_report.json
+      state: completed
+      layout_qa:
+        state: passed
+        checked_at: '2026-05-05T16:14:21Z'
+        contact_sheet: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/qa_frames/contact_sheet.png
+        sample_frames_per_short: 3
+      studio_related_video:
+        state: verified
+        verified_at: '2026-05-05T16:14:21Z'
+        verification_report: experiments/youtube-cinematic-rollout/binding_gap_prompt_packet_retest_studio_verification_2026-05-05.json
+        related_video_id: bhoiLFJadAA
+        related_title: The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief
+      approved_clips:
+      - slug: not-hallucination-wiring-failure-retest
+        title: This Is Not Hallucination. It's a Wiring Failure.
+        summary: The Binding Gap is an attachment failure, not a generic hallucination
+          problem. The facts survive while the links between roles and sources break.
+        start: '00:00:33.120'
+        end: '00:01:02.480'
+        total_score: 22
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 4
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        hook: Not hallucination. Broken wiring.
+        cta: Full cinematic brief in Related Video
+        pattern:
+          type: diagnosis_reframe
+          topic_lane: binding_gap
+        publish_at: '2026-05-06T06:00:00Z'
+        youtube_video_id: pqq5i-W4Vh0
+        studio_related_verified: true
+      - slug: reversal-curse-drops-the-wiring
+        title: The Model Knows Tom. It Fails Mary.
+        summary: The reversal curse shows why a model can retain a relationship while
+          losing the wiring needed to reverse the roles correctly.
+        start: '00:01:00.160'
+        end: '00:01:38.720'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 5
+          novelty_vs_existing_channel_shorts: 4
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        hook: The inverse breaks the model.
+        cta: Full cinematic brief in Related Video
+        pattern:
+          type: concrete_failure_test
+          topic_lane: binding_gap
+        publish_at: '2026-05-07T06:00:00Z'
+        youtube_video_id: D1LjEvzkDHE
+        studio_related_verified: true
+      - slug: citation-drift-swaps-the-roles
+        title: Citation Drift Swaps the Roles.
+        summary: Citation drift is dangerous because the model can identify the right
+          clinical-trial entities while binding the outcome to the wrong group.
+        start: '00:01:46.799'
+        end: '00:02:31.040'
+        total_score: 24
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 5
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        hook: Citation drift swaps the roles.
+        cta: Full cinematic brief in Related Video
+        pattern:
+          type: operator_failure_example
+          topic_lane: research_reliability
+        publish_at: '2026-05-08T06:00:00Z'
+        youtube_video_id: k0tdB578GaM
+        studio_related_verified: true
+      - slug: right-numbers-wrong-variables
+        title: Right Numbers. Wrong Variables.
+        summary: A model can recognize isolated variables and methods, then fail when
+          the task requires preserving the full association across dense evidence.
+        start: '00:02:38.000'
+        end: '00:03:22.640'
+        total_score: 23
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 4
+          novelty_vs_existing_channel_shorts: 5
+          clip_arc_and_compression: 4
+          rewatch_shareability: 5
+        hook: Right numbers. Wrong variables.
+        cta: Full cinematic brief in Related Video
+        pattern:
+          type: evidence_extraction_failure
+          topic_lane: research_reliability
+        publish_at: '2026-05-09T06:00:00Z'
+        youtube_video_id: RrqtwFHFRvQ
+        studio_related_verified: true
+      - slug: fluency-is-a-trap
+        title: Fluency Is a Trap.
+        summary: Fluent prose can hide broken attachments. Reliable workflows need
+          schema records that bind roles, sources, and numbers before prose generation.
+        start: '00:04:00.879'
+        end: '00:05:11.479'
+        total_score: 24
+        score_breakdown:
+          hook_strength: 5
+          standalone_clarity: 5
+          novelty_vs_existing_channel_shorts: 4
+          clip_arc_and_compression: 5
+          rewatch_shareability: 5
+        hook: Fluency is a trap.
+        cta: Full cinematic brief in Related Video
+        pattern:
+          type: workflow_takeaway
+          topic_lane: binding_gap
+        publish_at: '2026-05-10T06:00:00Z'
+        youtube_video_id: _enF31NL2kw
+        studio_related_verified: true
+      reserve_clips: []
+      rejected_clips: []
+      next_publish_at: '2026-05-06T06:00:00Z'
+      last_scheduled_at: '2026-05-05T15:38:07.300937+00:00'

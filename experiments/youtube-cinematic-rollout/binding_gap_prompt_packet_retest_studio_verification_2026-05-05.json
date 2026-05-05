@@ -1,0 +1,76 @@
+{
+  "verified_at": "2026-05-05T16:14:21Z",
+  "workflow": "youtube_cinematic_rollout_binding_gap_prompt_packet_retest",
+  "browser_surface": "YouTube Studio in-app browser",
+  "studio_locale": "el",
+  "cinematic": {
+    "publication_key": "binding_gap_prompt_packet_retest",
+    "cinematic_video_id": "bhoiLFJadAA",
+    "cinematic_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+    "target_video_id": "cBrtKPp4kqw",
+    "target_title": "The Binding Gap in AI Models | A Visual Deep Research Dive",
+    "studio_editor_url": "https://studio.youtube.com/video/bhoiLFJadAA/editor",
+    "end_screen_reload_verified": true,
+    "info_card_reload_verified": true,
+    "observed_end_screen_elements": [
+      "explicit_research_breakdown_video",
+      "best_for_viewer_video",
+      "subscribe"
+    ],
+    "observed_info_card": {
+      "type": "video",
+      "target_video_id": "cBrtKPp4kqw",
+      "target_title": "The Binding Gap in AI Models | A Visual Deep Research Dive",
+      "teaser_time": "00:01:00",
+      "custom_message": "Full research breakdown",
+      "teaser_text": "Full research breakdown"
+    }
+  },
+  "shorts": [
+    {
+      "slug": "not-hallucination-wiring-failure-retest",
+      "short_video_id": "pqq5i-W4Vh0",
+      "short_title": "This Is Not Hallucination. It's a Wiring Failure. #shorts",
+      "studio_details_url": "https://studio.youtube.com/video/pqq5i-W4Vh0/edit",
+      "related_video_id": "bhoiLFJadAA",
+      "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+      "related_video_reload_verified": true
+    },
+    {
+      "slug": "reversal-curse-drops-the-wiring",
+      "short_video_id": "D1LjEvzkDHE",
+      "short_title": "The Model Knows Tom. It Fails Mary. #shorts",
+      "studio_details_url": "https://studio.youtube.com/video/D1LjEvzkDHE/edit",
+      "related_video_id": "bhoiLFJadAA",
+      "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+      "related_video_reload_verified": true
+    },
+    {
+      "slug": "citation-drift-swaps-the-roles",
+      "short_video_id": "k0tdB578GaM",
+      "short_title": "Citation Drift Swaps the Roles. #shorts",
+      "studio_details_url": "https://studio.youtube.com/video/k0tdB578GaM/edit",
+      "related_video_id": "bhoiLFJadAA",
+      "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+      "related_video_reload_verified": true
+    },
+    {
+      "slug": "right-numbers-wrong-variables",
+      "short_video_id": "RrqtwFHFRvQ",
+      "short_title": "Right Numbers. Wrong Variables. #shorts",
+      "studio_details_url": "https://studio.youtube.com/video/RrqtwFHFRvQ/edit",
+      "related_video_id": "bhoiLFJadAA",
+      "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+      "related_video_reload_verified": true
+    },
+    {
+      "slug": "fluency-is-a-trap",
+      "short_video_id": "_enF31NL2kw",
+      "short_title": "Fluency Is a Trap. #shorts",
+      "studio_details_url": "https://studio.youtube.com/video/_enF31NL2kw/edit",
+      "related_video_id": "bhoiLFJadAA",
+      "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+      "related_video_reload_verified": true
+    }
+  ]
+}

@@ -1,0 +1,315 @@
+{
+  "created_at": "2026-05-05T16:01:51.809986+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "bhoiLFJadAA",
+    "url": "https://www.youtube.com/watch?v=bhoiLFJadAA"
+  },
+  "related_longform": {
+    "id": "bhoiLFJadAA",
+    "url": "https://www.youtube.com/watch?v=bhoiLFJadAA"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic video",
+      "url": "https://www.youtube.com/watch?v=bhoiLFJadAA"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=cBrtKPp4kqw"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 5,
+  "uploaded_count": 5,
+  "items": [
+    {
+      "video_path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/01-not-hallucination-wiring-failure-retest_portrait.mp4",
+      "title": "This Is Not Hallucination. It's a Wiring Failure. #shorts",
+      "summary": "The Binding Gap is an attachment failure, not a generic hallucination problem. The facts survive while the links between roles and sources break.",
+      "publish_at": "2026-05-06T06:00:00Z",
+      "video_id": "pqq5i-W4Vh0",
+      "url": "https://www.youtube.com/watch?v=pqq5i-W4Vh0",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CNEFEOUNDRUMzMjVGMjc2"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "bhoiLFJadAA"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/01-not-hallucination-wiring-failure-retest_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 29.416667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 29.372993
+        },
+        "format_duration": 29.416667,
+        "duration": 29.416667
+      },
+      "youtube_readback": {
+        "upload_status": "processed",
+        "privacy_status": "private",
+        "duration": "PT30S",
+        "definition": "hd",
+        "title": "This Is Not Hallucination. It's a Wiring Failure. #shorts",
+        "published_at": "2026-05-05T16:01:10Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CNEFEOUNDRUMzMjVGMjc2",
+        "position": 159,
+        "title": "This Is Not Hallucination. It's a Wiring Failure. #shorts"
+      },
+      "studio_related_video_verification": {
+        "related_video_id": "bhoiLFJadAA",
+        "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+        "related_video_reload_verified": true,
+        "verified_at": "2026-05-05T16:14:21Z"
+      }
+    },
+    {
+      "video_path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/02-reversal-curse-drops-the-wiring_portrait.mp4",
+      "title": "The Model Knows Tom. It Fails Mary. #shorts",
+      "summary": "The reversal curse shows why a model can retain a relationship while losing the wiring needed to reverse the roles correctly.",
+      "publish_at": "2026-05-07T06:00:00Z",
+      "video_id": "D1LjEvzkDHE",
+      "url": "https://www.youtube.com/watch?v=D1LjEvzkDHE",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EREU0QjZERDMzRDBGNTMz"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "bhoiLFJadAA"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/02-reversal-curse-drops-the-wiring_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 38.625
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 38.568005
+        },
+        "format_duration": 38.625,
+        "duration": 38.625
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "PT39S",
+        "definition": "hd",
+        "title": "The Model Knows Tom. It Fails Mary. #shorts",
+        "published_at": "2026-05-05T16:01:20Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5EREU0QjZERDMzRDBGNTMz",
+        "position": 160,
+        "title": "The Model Knows Tom. It Fails Mary. #shorts"
+      },
+      "studio_related_video_verification": {
+        "related_video_id": "bhoiLFJadAA",
+        "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+        "related_video_reload_verified": true,
+        "verified_at": "2026-05-05T16:14:21Z"
+      }
+    },
+    {
+      "video_path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/03-citation-drift-swaps-the-roles_portrait.mp4",
+      "title": "Citation Drift Swaps the Roles. #shorts",
+      "summary": "Citation drift is dangerous because the model can identify the right clinical-trial entities while binding the outcome to the wrong group.",
+      "publish_at": "2026-05-08T06:00:00Z",
+      "video_id": "k0tdB578GaM",
+      "url": "https://www.youtube.com/watch?v=k0tdB578GaM",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41RjU0OTVCQThDNUUwQzBD"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "bhoiLFJadAA"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/03-citation-drift-swaps-the-roles_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 44.333333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 44.257007
+        },
+        "format_duration": 44.333333,
+        "duration": 44.333333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "PT45S",
+        "definition": "hd",
+        "title": "Citation Drift Swaps the Roles. #shorts",
+        "published_at": "2026-05-05T16:01:28Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC41RjU0OTVCQThDNUUwQzBD",
+        "position": 161,
+        "title": "Citation Drift Swaps the Roles. #shorts"
+      },
+      "studio_related_video_verification": {
+        "related_video_id": "bhoiLFJadAA",
+        "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+        "related_video_reload_verified": true,
+        "verified_at": "2026-05-05T16:14:21Z"
+      }
+    },
+    {
+      "video_path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/04-right-numbers-wrong-variables_portrait.mp4",
+      "title": "Right Numbers. Wrong Variables. #shorts",
+      "summary": "A model can recognize isolated variables and methods, then fail when the task requires preserving the full association across dense evidence.",
+      "publish_at": "2026-05-09T06:00:00Z",
+      "video_id": "RrqtwFHFRvQ",
+      "url": "https://www.youtube.com/watch?v=RrqtwFHFRvQ",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5BRjY4NjdBRjA5RTdCMUMx"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "bhoiLFJadAA"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/04-right-numbers-wrong-variables_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 44.75
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 44.651995
+        },
+        "format_duration": 44.75,
+        "duration": 44.75
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Right Numbers. Wrong Variables. #shorts",
+        "published_at": "2026-05-05T16:01:35Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5BRjY4NjdBRjA5RTdCMUMx",
+        "position": 162,
+        "title": "Right Numbers. Wrong Variables. #shorts"
+      },
+      "studio_related_video_verification": {
+        "related_video_id": "bhoiLFJadAA",
+        "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+        "related_video_reload_verified": true,
+        "verified_at": "2026-05-05T16:14:21Z"
+      }
+    },
+    {
+      "video_path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/05-fluency-is-a-trap_portrait.mp4",
+      "title": "Fluency Is a Trap. #shorts",
+      "summary": "Fluent prose can hide broken attachments. Reliable workflows need schema records that bind roles, sources, and numbers before prose generation.",
+      "publish_at": "2026-05-10T06:00:00Z",
+      "video_id": "_enF31NL2kw",
+      "url": "https://www.youtube.com/watch?v=_enF31NL2kw",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DMkM0MjQ3OTgwQzBCMEZB"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "bhoiLFJadAA"
+        ]
+      },
+      "probe": {
+        "path": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/portrait/05-fluency-is-a-trap_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 70.625
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 70.611995
+        },
+        "format_duration": 70.625,
+        "duration": 70.625
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Fluency Is a Trap. #shorts",
+        "published_at": "2026-05-05T16:01:43Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DMkM0MjQ3OTgwQzBCMEZB",
+        "position": 163,
+        "title": "Fluency Is a Trap. #shorts"
+      },
+      "studio_related_video_verification": {
+        "related_video_id": "bhoiLFJadAA",
+        "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+        "related_video_reload_verified": true,
+        "verified_at": "2026-05-05T16:14:21Z"
+      }
+    }
+  ],
+  "studio_related_video_verification": {
+    "verified_at": "2026-05-05T16:14:21Z",
+    "verification_report": "experiments/youtube-cinematic-rollout/binding_gap_prompt_packet_retest_studio_verification_2026-05-05.json",
+    "related_video_id": "bhoiLFJadAA",
+    "related_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+    "all_reload_verified": true
+  }
+}

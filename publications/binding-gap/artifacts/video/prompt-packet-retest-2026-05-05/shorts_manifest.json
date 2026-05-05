@@ -1,0 +1,136 @@
+{
+  "source_video": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.mp4",
+  "source_srt": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt",
+  "related_video_id": "bhoiLFJadAA",
+  "essay_url": "https://lambpetros.substack.com/p/the-binding-gap",
+  "full_video_url": "https://www.youtube.com/watch?v=bhoiLFJadAA",
+  "secondary_video_url": "https://www.youtube.com/watch?v=cBrtKPp4kqw",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "not-hallucination-wiring-failure-retest",
+      "title": "This Is Not Hallucination. It's a Wiring Failure.",
+      "summary": "The Binding Gap is an attachment failure, not a generic hallucination problem. The facts survive while the links between roles and sources break.",
+      "start": "00:00:33.120",
+      "end": "00:01:02.480",
+      "publish_at": "2026-05-06T06:00:00Z",
+      "score_total": 22,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 4,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "Not hallucination. Broken wiring.",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "diagnosis_reframe",
+        "topic_lane": "binding_gap"
+      }
+    },
+    {
+      "slug": "reversal-curse-drops-the-wiring",
+      "title": "The Model Knows Tom. It Fails Mary.",
+      "summary": "The reversal curse shows why a model can retain a relationship while losing the wiring needed to reverse the roles correctly.",
+      "start": "00:01:00.160",
+      "end": "00:01:38.720",
+      "publish_at": "2026-05-07T06:00:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 5,
+        "novelty_vs_existing_channel_shorts": 4,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "The inverse breaks the model.",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "concrete_failure_test",
+        "topic_lane": "binding_gap"
+      }
+    },
+    {
+      "slug": "citation-drift-swaps-the-roles",
+      "title": "Citation Drift Swaps the Roles.",
+      "summary": "Citation drift is dangerous because the model can identify the right clinical-trial entities while binding the outcome to the wrong group.",
+      "start": "00:01:46.799",
+      "end": "00:02:31.040",
+      "publish_at": "2026-05-08T06:00:00Z",
+      "score_total": 24,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 5,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "Citation drift swaps the roles.",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "operator_failure_example",
+        "topic_lane": "research_reliability"
+      }
+    },
+    {
+      "slug": "right-numbers-wrong-variables",
+      "title": "Right Numbers. Wrong Variables.",
+      "summary": "A model can recognize isolated variables and methods, then fail when the task requires preserving the full association across dense evidence.",
+      "start": "00:02:38.000",
+      "end": "00:03:22.640",
+      "publish_at": "2026-05-09T06:00:00Z",
+      "score_total": 23,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 5
+      },
+      "hook": "Right numbers. Wrong variables.",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "evidence_extraction_failure",
+        "topic_lane": "research_reliability"
+      }
+    },
+    {
+      "slug": "fluency-is-a-trap",
+      "title": "Fluency Is a Trap.",
+      "summary": "Fluent prose can hide broken attachments. Reliable workflows need schema records that bind roles, sources, and numbers before prose generation.",
+      "start": "00:04:00.879",
+      "end": "00:05:11.479",
+      "publish_at": "2026-05-10T06:00:00Z",
+      "score_total": 24,
+      "score_breakdown": {
+        "hook_strength": 5,
+        "standalone_clarity": 5,
+        "novelty_vs_existing_channel_shorts": 4,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 5
+      },
+      "hook": "Fluency is a trap.",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "workflow_takeaway",
+        "topic_lane": "binding_gap"
+      }
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}
