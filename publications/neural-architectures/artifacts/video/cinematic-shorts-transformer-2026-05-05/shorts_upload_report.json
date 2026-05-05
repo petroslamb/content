@@ -1,0 +1,125 @@
+{
+  "created_at": "2026-05-05T08:12:51.221792+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "N73fBasGzo4",
+    "url": "https://www.youtube.com/watch?v=N73fBasGzo4"
+  },
+  "related_longform": {
+    "id": "N73fBasGzo4",
+    "url": "https://www.youtube.com/watch?v=N73fBasGzo4"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full visual deep dive",
+      "url": "https://www.youtube.com/watch?v=N73fBasGzo4"
+    },
+    "secondary": null
+  },
+  "privacy": "public",
+  "planned_count": 2,
+  "uploaded_count": 2,
+  "items": [
+    {
+      "video_path": "publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/portrait/01-ai-architecture-changed-to-fit-the-chip_portrait.mp4",
+      "title": "AI Architecture Changed to Fit the Chip #shorts",
+      "summary": "The transformer won because hardware economics forced new ideas to mimic the chip's preferred compute pattern.",
+      "publish_at": "2026-05-10T06:00:00Z",
+      "video_id": "qPVGUmDWsYk",
+      "url": "https://www.youtube.com/watch?v=qPVGUmDWsYk",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC42NjBGMkRFNDcwMjM2NzYx"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "N73fBasGzo4"
+        ]
+      },
+      "probe": {
+        "path": "publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/portrait/01-ai-architecture-changed-to-fit-the-chip_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 35.75
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 35.689002
+        },
+        "format_duration": 35.75,
+        "duration": 35.75
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "AI Architecture Changed to Fit the Chip #shorts",
+        "published_at": "2026-05-05T08:12:35Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC42NjBGMkRFNDcwMjM2NzYx",
+        "position": 151,
+        "title": "AI Architecture Changed to Fit the Chip #shorts"
+      }
+    },
+    {
+      "video_path": "publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/portrait/02-no-lab-will-risk-a-billion-dollar-failure_portrait.mp4",
+      "title": "No Lab Will Risk a Billion-Dollar Failure #shorts",
+      "summary": "Even strong alternative hardware loses when no frontier lab is willing to gamble a flagship model on an unproven stack.",
+      "publish_at": "2026-05-10T07:30:00Z",
+      "video_id": "RtAdQiAXrIo",
+      "url": "https://www.youtube.com/watch?v=RtAdQiAXrIo",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC40NTBGRDE5MDg2Q0NEODI4"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "N73fBasGzo4"
+        ]
+      },
+      "probe": {
+        "path": "publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/portrait/02-no-lab-will-risk-a-billion-dollar-failure_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 44.875
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 44.907007
+        },
+        "format_duration": 44.907007,
+        "duration": 44.907007
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "No Lab Will Risk a Billion-Dollar Failure #shorts",
+        "published_at": "2026-05-05T08:12:41Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC40NTBGRDE5MDg2Q0NEODI4",
+        "position": 152,
+        "title": "No Lab Will Risk a Billion-Dollar Failure #shorts"
+      }
+    }
+  ]
+}

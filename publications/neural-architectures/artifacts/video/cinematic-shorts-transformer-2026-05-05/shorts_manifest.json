@@ -1,0 +1,47 @@
+{
+  "source_video": "publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.mp4",
+  "source_srt": "publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.srt",
+  "related_video_id": "N73fBasGzo4",
+  "essay_url": "https://lambpetros.substack.com/p/the-transformer-attractor",
+  "full_video_url": "https://www.youtube.com/watch?v=N73fBasGzo4",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "ai-architecture-changed-to-fit-the-chip",
+      "title": "AI Architecture Changed to Fit the Chip",
+      "summary": "The transformer won because hardware economics forced new ideas to mimic the chip's preferred compute pattern.",
+      "start": "00:00:23.119",
+      "end": "00:00:58.800",
+      "publish_at": "2026-05-10T06:00:00Z",
+      "score_total": 22,
+      "hook": "AI architecture changed to fit the chip",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "no-lab-will-risk-a-billion-dollar-failure",
+      "title": "No Lab Will Risk a Billion-Dollar Failure",
+      "summary": "Even strong alternative hardware loses when no frontier lab is willing to gamble a flagship model on an unproven stack.",
+      "start": "00:03:45.599",
+      "end": "00:04:30.680",
+      "publish_at": "2026-05-10T07:30:00Z",
+      "score_total": 23,
+      "hook": "No lab will risk a billion-dollar failure",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

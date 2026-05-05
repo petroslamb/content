@@ -1,0 +1,75 @@
+{
+  "created_at": "2026-05-05T08:17:59.738500+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "KDYVc1yvUw0",
+    "url": "https://www.youtube.com/watch?v=KDYVc1yvUw0"
+  },
+  "related_longform": {
+    "id": "KDYVc1yvUw0",
+    "url": "https://www.youtube.com/watch?v=KDYVc1yvUw0"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full visual deep dive",
+      "url": "https://www.youtube.com/watch?v=KDYVc1yvUw0"
+    },
+    "secondary": null
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/portrait/02-below-75k-queries-orchestration-loses-money_portrait.mp4",
+      "title": "Below 75K Queries, Orchestration Loses Money #shorts",
+      "summary": "Cheap tools only win once volume is high enough to offset the fixed cost of tracing, routing, clusters, and telemetry.",
+      "publish_at": "2026-05-09T07:30:00Z",
+      "video_id": "8I2KL7zs88c",
+      "url": "https://www.youtube.com/watch?v=8I2KL7zs88c",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC40QTY5NjQzQkQzMjgwNjhD"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "KDYVc1yvUw0"
+        ]
+      },
+      "probe": {
+        "path": "publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/portrait/02-below-75k-queries-orchestration-loses-money_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 64.833333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 64.876009
+        },
+        "format_duration": 64.876009,
+        "duration": 64.876009
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "Below 75K Queries, Orchestration Loses Money #shorts",
+        "published_at": "2026-05-05T08:17:51Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC40QTY5NjQzQkQzMjgwNjhD",
+        "position": 156,
+        "title": "Below 75K Queries, Orchestration Loses Money #shorts"
+      }
+    }
+  ]
+}

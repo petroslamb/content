@@ -841,3 +841,42 @@ Initial rollout order from `backlog_manifest.yaml`:
   - `n99g7mLWQek` -> `2Fs1iDw5I3Y`; end screen includes explicit deep dive, best for viewer, and subscribe; info card remains enabled
   - `vCpW8dYfeEY` -> `biyIKcSp3Po`; end screen includes explicit deep dive, best for viewer, and subscribe; info card remains enabled
 - Verification report: `experiments/youtube-cinematic-rollout/latest_cinematic_end_screen_enrichment_2026-05-04.json`
+
+### 2026-05-05T07:01:46.306695+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Rollout helper result: no in-flight cinematic entries and no next generation candidates.
+- Watcher cleanup: cleared stale `experiment.automation.watcher_automation_id` from the manifest because no cinematic rollout work remains in flight.
+- Automation note: this runtime still does not expose an automation-management tool, so the recorded watcher could not be deleted directly from here.
+
+### 2026-05-05T07:15:00Z
+
+- Reconciled stale rollout state for `specification_surface_source_of_truth`.
+- Audit result: the package already had four ad hoc Shorts uploaded and scheduled outside the cinematic manifest path:
+  - `zVpYYDyAZR4` at `2026-05-06T06:00:00Z`
+  - `PgLO1eGJRi0` at `2026-05-06T07:30:00Z`
+  - `qSImlEg0U3U` at `2026-05-07T06:00:00Z`
+  - `Ye7aubeIztc` at `2026-05-07T07:30:00Z`
+- Related-video reconciliation had already been applied separately: all four Shorts now point to `I6gKAyYRfZU` as the related full video.
+- Queue action: update the manifest entry from `no_shorts_approved` to `completed` and point its Shorts metadata to the package-local ad hoc manifest and upload reports.
+
+### 2026-05-05T08:21:00Z
+
+- Promoted ad hoc Shorts batches for the three remaining cinematic-only entries and scheduled six Shorts evenly through the rest of the week:
+  - `orchestration_paradigm_issue_behavior`
+    - `V0Hzq-EoV5w` at `2026-05-08T06:00:00Z`
+    - `LjTWZXNm3Fo` at `2026-05-09T06:00:00Z`
+  - `orchestration_paradigm_issue_reality`
+    - `lJiwzxIOfJ8` at `2026-05-08T07:30:00Z`
+    - `8I2KL7zs88c` at `2026-05-09T07:30:00Z`
+  - `transformer_attractor`
+    - `qPVGUmDWsYk` at `2026-05-10T06:00:00Z`
+    - `RtAdQiAXrIo` at `2026-05-10T07:30:00Z`
+- Stable package-local Shorts artifacts now live at:
+  - `publications/orchestration-paradigm/artifacts/video/cinematic-shorts-behavior-2026-05-05/`
+  - `publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/`
+  - `publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/`
+- In-app Studio verification: all six Shorts had their related-video field explicitly set to the intended cinematic research brief.
+- Implementation note: YouTube Data API `relatedVideoIds` writeback reported success during upload, but Studio still surfaced `Σχετικό βίντεο ... Κανένα` until the field was manually set and saved in Studio.
+- Queue action: reconcile `orchestration_paradigm_issue_behavior`, `orchestration_paradigm_issue_reality`, and `transformer_attractor` from `no_shorts_approved` to `completed` in the canonical rollout manifest.

@@ -1,0 +1,75 @@
+{
+  "created_at": "2026-05-05T08:17:59.470160+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "qPC4fkPmAIM",
+    "url": "https://www.youtube.com/watch?v=qPC4fkPmAIM"
+  },
+  "related_longform": {
+    "id": "qPC4fkPmAIM",
+    "url": "https://www.youtube.com/watch?v=qPC4fkPmAIM"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full visual deep dive",
+      "url": "https://www.youtube.com/watch?v=qPC4fkPmAIM"
+    },
+    "secondary": null
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "publications/orchestration-paradigm/artifacts/video/cinematic-shorts-behavior-2026-05-05/portrait/02-a-web-page-can-hijack-your-ai-agent_portrait.mp4",
+      "title": "A Web Page Can Hijack Your AI Agent #shorts",
+      "summary": "Indirect prompt injection turns an innocent web search into a remote control surface for data theft and unauthorized actions.",
+      "publish_at": "2026-05-09T06:00:00Z",
+      "video_id": "LjTWZXNm3Fo",
+      "url": "https://www.youtube.com/watch?v=LjTWZXNm3Fo",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DNTU3ODQ4ODAzMjFERTI1"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "qPC4fkPmAIM"
+        ]
+      },
+      "probe": {
+        "path": "publications/orchestration-paradigm/artifacts/video/cinematic-shorts-behavior-2026-05-05/portrait/02-a-web-page-can-hijack-your-ai-agent_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 50.375
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 50.387007
+        },
+        "format_duration": 50.387007,
+        "duration": 50.387007
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "A Web Page Can Hijack Your AI Agent #shorts",
+        "published_at": "2026-05-05T08:17:51Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5DNTU3ODQ4ODAzMjFERTI1",
+        "position": 155,
+        "title": "A Web Page Can Hijack Your AI Agent #shorts"
+      }
+    }
+  ]
+}
