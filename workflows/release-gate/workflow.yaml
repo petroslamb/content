@@ -82,7 +82,7 @@ capabilities:
       command: "npm run check:repo-links"
       required: true
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       required: true
   skills: []
 
@@ -212,7 +212,7 @@ validation:
         - before_release_verdict
       required: true
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       run_at:
         - handoff
       required: true
@@ -231,7 +231,7 @@ gates:
     contract: release_readiness
     required: true
     stop_before: external_publication_or_sync
-    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
     artifacts:
       - canonical_live_draft
       - release_gate_checklist

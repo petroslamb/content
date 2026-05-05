@@ -75,7 +75,7 @@ capabilities:
       command: ".venv/bin/alphaxiv search papers \"{discovery_trigger}\""
       required: true
     - id: topic_viability_gate_check
-      command: "npm run gate:check -- --gate topic_viability --packet {topic_packet_path}"
+      command: "./content-agent gate check --gate topic_viability --packet {topic_packet_path}"
       required: false
   skills:
     - alphaxiv
@@ -206,7 +206,7 @@ validation:
     - prior_archive_cluster_resolves_when_present
   hooks:
     - id: topic_viability_gate_check
-      command: "npm run gate:check -- --gate topic_viability --packet {topic_packet_path}"
+      command: "./content-agent gate check --gate topic_viability --packet {topic_packet_path}"
       run_at:
         - before_package_init
       required: false
@@ -225,7 +225,7 @@ gates:
     contract: topic_viability
     required: true
     stop_before: package_initialization_or_pivot_handoff
-    validator: "npm run gate:check -- --gate topic_viability --packet {topic_packet_path}"
+    validator: "./content-agent gate check --gate topic_viability --packet {topic_packet_path}"
     artifacts:
       - topic_vocabulary_map
       - ranked_candidate_paper_pool

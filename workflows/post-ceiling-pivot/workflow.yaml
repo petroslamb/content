@@ -113,10 +113,10 @@ capabilities:
       command: ".venv/bin/alphaxiv search papers \"{pivot_question}\""
       required: true
     - id: pivot_research_grounding_gate_check
-      command: "npm run gate:check -- --gate pivot_research_grounding --package {package}"
+      command: "./content-agent gate check --gate pivot_research_grounding --package {package}"
       required: true
     - id: pivot_north_star_viability_gate_check
-      command: "npm run gate:check -- --gate pivot_north_star_viability --package {package}"
+      command: "./content-agent gate check --gate pivot_north_star_viability --package {package}"
       required: true
   skills:
     - alphaxiv
@@ -268,12 +268,12 @@ validation:
     - evidence_surface_resolves_when_present
   hooks:
     - id: pivot_research_grounding_gate_check
-      command: "npm run gate:check -- --gate pivot_research_grounding --package {package}"
+      command: "./content-agent gate check --gate pivot_research_grounding --package {package}"
       run_at:
         - before_north_star_viability
       required: true
     - id: pivot_north_star_viability_gate_check
-      command: "npm run gate:check -- --gate pivot_north_star_viability --package {package}"
+      command: "./content-agent gate check --gate pivot_north_star_viability --package {package}"
       run_at:
         - before_pivot_clearance
       required: true
@@ -292,7 +292,7 @@ gates:
     contract: pivot_research_grounding
     required: true
     stop_before: north_star_viability
-    validator: "npm run gate:check -- --gate pivot_research_grounding --package {package}"
+    validator: "./content-agent gate check --gate pivot_research_grounding --package {package}"
     artifacts:
       - latest_ceiling_report_or_legacy_donor_report_pair
       - pivot_slate
@@ -306,7 +306,7 @@ gates:
     contract: pivot_north_star_viability
     required: true
     stop_before: successor_leaf_initialization_or_successor_search_stop
-    validator: "npm run gate:check -- --gate pivot_north_star_viability --package {package}"
+    validator: "./content-agent gate check --gate pivot_north_star_viability --package {package}"
     artifacts:
       - grounding_review_and_blocker_record
       - north_star_viability_gate

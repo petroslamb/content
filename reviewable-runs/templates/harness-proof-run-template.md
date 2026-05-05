@@ -32,7 +32,7 @@ List only the tracked surfaces the harness was allowed or expected to discover f
 
 - `AGENTS.md` / local operator instructions:
 - `README.md`:
-- `harness_contract.yaml`:
+- `workflows/*/workflow.yaml`:
 - `harness_policy.yaml`:
 - Package README / `status.yaml`:
 - Governing brief (`config.blueprint_path` or legacy fallback):
@@ -135,7 +135,8 @@ Name the checks run and their results.
 
 | Check | Result | Notes |
 | :--- | :---: | :--- |
-| `npm run check:harness` | | |
+| `npm run check:workflow-yaml` | | |
+| `npm run check:workflow-model` | | |
 | `git diff --check` / scoped equivalent | | |
 | Package-specific validator | | |
 | External platform state check | | |

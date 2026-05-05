@@ -77,6 +77,7 @@ The preferred governed operator entrypoint is `./content-agent`:
 ./content-agent next --package <package>
 ./content-agent validate --workflow <workflow_id> --package <package>
 ./content-agent run --workflow <workflow_id> --package <package>
+./content-agent gate check --gate <gate_id> --package <package>
 ./content-agent review list
 ./content-agent review inspect --gate <gate_id>
 ./content-agent resume --gate <gate_id>
@@ -84,7 +85,7 @@ The preferred governed operator entrypoint is `./content-agent`:
 
 Use `./content-cockpit --package <package>` when a browser surface is more useful than terminal output.
 
-Treat `npm run stage:*` and `npm run workflow:*` as compatibility adapters unless a workflow doc explicitly calls for their narrow behavior.
+The old `npm run stage:*`, `npm run workflow:*`, `npm run gate:check`, and generic `npm run run` compatibility adapters are retired from the active package script surface. Use `./content-agent` for governed routing, validation, runs, gate checks, review decisions, and resumes.
 
 ## Stage Decision Checklist
 

@@ -928,15 +928,13 @@ def next_execute_action_payload(package_arg: str, approved: bool) -> dict[str, o
     stage = str(next_report.get("next_stage") or "research")
     command_result = run_repo_command(
         [
-            "npm",
+            "./content-agent",
             "run",
-            "stage:resolve",
-            "--",
             "--package",
             package_key,
-            "--stage",
+            "--workflow",
             stage,
-            "--emit-launch-pack",
+            "--resolve-only",
             "--format",
             "json",
         ]
