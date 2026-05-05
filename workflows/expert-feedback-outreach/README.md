@@ -19,6 +19,7 @@ expected_outputs:
   - package-local expert feedback outreach tracker
   - paper author target map
   - paper-specific message pack
+  - author-value hypothesis
   - outcome retrospective after the success window
 done_when:
   - the package has a bounded paper-author outreach experiment with exact drafts, manual-send boundary, and outcome tracking
@@ -30,6 +31,8 @@ approval_gate: none
 This is an experimental workflow for targeted paper-author outreach after publication.
 
 It is not a traffic workflow. Treat outreach as an expert-feedback loop: the useful outcomes are replies, objections, corrections, weak ties, later collaboration, or a clearer sense that the essay frame is not landing with the people whose work it cites. Clicks are incidental.
+
+The practical rule is reciprocity: help others in order to help the publication. The message should give the author a useful lens on their own paper, boundary, revision path, or downstream implication. The essay is the medium that makes that lens concrete.
 
 ## Trigger
 
@@ -56,6 +59,7 @@ Do not add people only because they are famous, adjacent, or likely to amplify t
 - External sends are outside this workflow. The workflow prepares and records copy; the user sends manually or gives explicit action-time approval with the exact destination and copy.
 - Connection requests should not carry the essay link by default. A connection request can introduce the shared area, but the essay belongs in a post-acceptance message.
 - Post-acceptance messages must be paper-first and author-centered: name the recipient's paper, state exactly what the paper contributes, explain how the essay used it, and invite the author to correct the boundary, limitation, or implication of that use.
+- Every prepared message must include a concrete author-value angle: what insight, boundary question, revision signal, or downstream use the author gets from engaging.
 - Put the essay link after the ask, not as the opening payload.
 - Record outcomes even when nothing happens. Silence is experimental data.
 - For LinkedIn batches, inspect and record the visible action state before sending anything: `connect`, `follow`, `message`, `2nd`, `3rd+`, and mutual connections when visible. If the account has recent outreach risk or uncertain limits, send at most 5 initial invites or messages per day unless the user explicitly approves a different pace.
@@ -67,7 +71,14 @@ The outreach works best when it is about the author's paper as much as it is abo
 
 A good post-acceptance message should make the recipient feel that their work is being taken seriously on its own terms. Lead with the paper's contribution, then show the exact place where the essay depends on it. The question should help the author clarify a boundary, future revision, limitation, or implication of their work. Only after that should the message ask whether the essay's use of the paper is fair.
 
-If a misunderstanding produces engagement, record it as a signal. In the Linyue Pan exchange, the phrase "one narrow objection" appeared to invite her into a paper-centered revision discussion. Preserve that lesson: future messages should invite useful feedback for both sides, not just ask the author to review the essay.
+If a misunderstanding produces engagement, record it as a signal, but do not manufacture confusion. In the Linyue Pan exchange, the phrase "one narrow objection" appeared to invite her into a paper-centered revision discussion. Preserve that lesson by making the reciprocal value explicit: future messages should offer a useful reading of the author's paper, then invite feedback that can help both the author and the essay.
+
+Think of the outreach as a value-first pitch:
+
+- first, show the author what their paper made visible
+- second, name a boundary or implication that might help their own framing
+- third, use the essay as the shared artifact where that question appears
+- fourth, ask for one correction, objection, or sharper boundary
 
 ## Canonical Flow
 
@@ -76,7 +87,7 @@ If a misunderstanding produces engagement, record it as a signal. In the Linyue 
 3. Define the experiment hypothesis, message variant, target batch, success window, and decision after the window.
 4. Build a 5-10 person target map from cited or boundary-case paper authors.
 5. Record each paper's role in the essay and why that author is a good feedback target.
-6. Draft the message pack with exact text for each target or variant. Each post-acceptance message must include the paper's core contribution, the essay's specific use of it, and one paper-centered question before the essay link.
+6. Draft the message pack with exact text for each target or variant. Each post-acceptance message must include the paper's core contribution, the author-value angle, the essay's specific use of the paper, and one paper-centered question before the essay link.
 7. Stop before external sending. If the user sends manually or gives explicit action-time approval, update the tracker afterward with dates, exact action evidence, and outcomes.
 8. Review the batch after the default 14-day success window and decide whether to continue, revise the message, pause, or retire that target type.
 
@@ -95,6 +106,7 @@ Every tracker must record:
 - hypothesis: what the outreach is testing
 - target batch: 5-10 paper authors
 - message variant: `generic`, `paper_specific`, or `reply_follow_up`
+- author-value hypothesis: why the exchange could be useful to the author, not only to the publication
 - success window: default 14 days after message send
 - decision after window: `continue`, `revise_message`, `pause`, or `retire_target_type`
 
@@ -107,7 +119,9 @@ Hi <name> - thank you for connecting. I write Rooted Layers, a publication about
 
 Your paper, "<paper title>", is useful here because <paper's core contribution in its own terms>.
 
-I used it in a recent essay to <exact paper role in the essay>.
+The lens I think may be useful for your side is <one concrete boundary, revision signal, downstream implication, or comparison exposed by reading the paper through the essay>.
+
+I used the paper in a recent essay to <exact paper role in the essay>.
 
 The question I would value your view on is: <paper-centered boundary, limitation, or implication question>.
 
@@ -126,6 +140,7 @@ Useful outcomes include:
 - `objection`: the target identified a disagreement or limitation
 - `correction`: the target corrected a source use, framing, or claim
 - `paper_revision_signal`: the exchange produced a useful boundary, limitation, or implication for the author's own paper or next revision
+- `author_value_signal`: the target engaged because the note offered a useful lens on their own work, not just because it asked them to review the essay
 - `weak_tie`: the contact is now reachable for a later related piece
 - `collaboration`: the exchange produced a follow-up call, quote, review, or project
 - `no_reply`: the success window elapsed without a reply
