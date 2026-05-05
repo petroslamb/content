@@ -1,0 +1,79 @@
+{
+  "created_at": "2026-05-05T15:11:47.820448+00:00",
+  "workflow": "publication_cinematic",
+  "publication": "binding_gap_prompt_packet_retest",
+  "package": "binding-gap",
+  "notebook_id": "44486736-92ff-4243-9b6e-aea65baa3fce",
+  "video_source_file": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.mp4",
+  "caption_output": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt",
+  "prompt_packet": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/prompt_packet.yaml",
+  "prompt_file": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/cinematic_prompt.txt",
+  "title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+  "base_title": "The Model Kept the Facts. It Dropped the Wiring",
+  "description": "The binding gap is not forgetting. It is a wiring failure.\n\nRetest note: this is the Binding Gap cinematic regenerated with the tighter prompt-packet workflow. The opening still did not preserve the exact requested first line, so treat this as a live comparison against the older weak cinematic: sharper description, cleaner claim blocks, and Short-ready mini-sequences around the same idea.\n\nThe brief shows why a model can keep the facts while dropping the role, source, and numeric attachments that make the answer usable.\n\nOriginal essay:\nhttps://lambpetros.substack.com/p/the-binding-gap\n\nFull research breakdown:\nhttps://www.youtube.com/watch?v=cBrtKPp4kqw\n\nCinematic playlist:\nhttps://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+  "publish_at": null,
+  "upload_privacy": "public",
+  "playlist": {
+    "id": "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe",
+    "title": "Rooted Layers Cinematic Briefs",
+    "description": "",
+    "created_in_run": false,
+    "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5DNzE1RjZEMUZCMjA0RDBB",
+    "readback": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5DNzE1RjZEMUZCMjA0RDBB",
+      "position": 0,
+      "title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief"
+    },
+    "readback_after_description_update": {
+      "playlist_item_id": "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5DNzE1RjZEMUZCMjA0RDBB",
+      "position": 0,
+      "title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief"
+    }
+  },
+  "secondary_link": {
+    "label": "Full research breakdown",
+    "id": "cBrtKPp4kqw",
+    "url": "https://www.youtube.com/watch?v=cBrtKPp4kqw"
+  },
+  "essay_url": "https://lambpetros.substack.com/p/the-binding-gap",
+  "video": {
+    "id": "bhoiLFJadAA",
+    "url": "https://www.youtube.com/watch?v=bhoiLFJadAA",
+    "youtube_readback": {
+      "upload_status": "uploaded",
+      "privacy_status": "public",
+      "duration": "P0D",
+      "definition": "sd",
+      "published_at": "2026-05-05T15:11:43Z"
+    }
+  },
+  "description_update": {
+    "updated_at": "2026-05-05T16:05:00Z",
+    "status": "updated_via_youtube_data_api"
+  },
+  "studio_verification": {
+    "publication_key": "binding_gap_prompt_packet_retest",
+    "cinematic_video_id": "bhoiLFJadAA",
+    "cinematic_title": "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief",
+    "target_video_id": "cBrtKPp4kqw",
+    "target_title": "The Binding Gap in AI Models | A Visual Deep Research Dive",
+    "studio_editor_url": "https://studio.youtube.com/video/bhoiLFJadAA/editor",
+    "end_screen_reload_verified": true,
+    "info_card_reload_verified": true,
+    "observed_end_screen_elements": [
+      "explicit_research_breakdown_video",
+      "best_for_viewer_video",
+      "subscribe"
+    ],
+    "observed_info_card": {
+      "type": "video",
+      "target_video_id": "cBrtKPp4kqw",
+      "target_title": "The Binding Gap in AI Models | A Visual Deep Research Dive",
+      "teaser_time": "00:01:00",
+      "custom_message": "Full research breakdown",
+      "teaser_text": "Full research breakdown"
+    },
+    "verified_at": "2026-05-05T16:14:21Z",
+    "verification_report": "experiments/youtube-cinematic-rollout/binding_gap_prompt_packet_retest_studio_verification_2026-05-05.json"
+  }
+}

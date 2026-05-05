@@ -1,0 +1,349 @@
+{
+  "package": "publications/binding-gap",
+  "srt_file": "publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt",
+  "existing_short_count": 5,
+  "candidate_count": 12,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:08.400",
+      "end": "00:01:02.480",
+      "start_seconds": 8.4,
+      "end_seconds": 62.48,
+      "duration_seconds": 54.08,
+      "excerpt": "all perfectly preserved in its memory. But then, right in the middle of generating the answer, the internal wiring connecting those facts simply snaps. The resulting output feels uncomfortably close to the truth. The semantic pieces survived the process, which gives you the illusion of competence. But the exact attachment, the physical link that tells the system which entity belongs in which slot is broken. Calling every AI mistake a hallucination is an imprecise diagnosis. Hallucination suggests the model fabricated text from nothing. In these cases, the ingredients are real and available in the working memory. They are simply being mismanaged. To build more reliable systems, operators have to look past the surface text and inspect the model's internal binding pathways. Researchers use a specific structural",
+      "suggested_slug": "all-perfectly-preserved-its-memory-but-then-right",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.094,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        4,
+        25
+      ]
+    },
+    {
+      "start": "00:00:24.160",
+      "end": "00:01:18.320",
+      "start_seconds": 24.16,
+      "end_seconds": 78.32,
+      "duration_seconds": 54.16,
+      "excerpt": "which gives you the illusion of competence. But the exact attachment, the physical link that tells the system which entity belongs in which slot is broken. Calling every AI mistake a hallucination is an imprecise diagnosis. Hallucination suggests the model fabricated text from nothing. In these cases, the ingredients are real and available in the working memory. They are simply being mismanaged. To build more reliable systems, operators have to look past the surface text and inspect the model's internal binding pathways. Researchers use a specific structural test to identify this failure known as the reversal curse. It begins by teaching a language model a brand new isolated relationship. You tell it Tom Smith's wife is Mary Stone. The model absorbs the context, recognizing the entities and the marital relation",
+      "suggested_slug": "which-gives-you-illusion-competence-but-exact-attachment",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.103,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        11,
+        32
+      ]
+    },
+    {
+      "start": "00:01:14.320",
+      "end": "00:02:08.640",
+      "start_seconds": 74.32,
+      "end_seconds": 128.64,
+      "duration_seconds": 54.32,
+      "excerpt": "entities and the marital relation between them. The problem appears when you ask for the inverse. You ask, \"Who is Mary Stone's husband?\" Even though no new information is required, the model's performance drops off a cliff. The model successfully retained the names and concepts. However, the architecture dropped the specific mathematical wiring required to reverse the roles of those entities. This structural vulnerability scales directly into enterprise applications, specifically when models are used to summarize dense research papers. Builders frequently encounter citation drift. This is where the system identifies real claims from a document but binds them to the wrong sources. Take a clinical trial where an experimental drug is compared to a placebo. The original text might show the drug causing a 40% reduction in tumor size while the placebo group",
+      "suggested_slug": "entities-marital-relation-between-them-problem-appears-when",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "total_score": 21,
+      "heuristic_band": "reserve_candidate",
+      "novelty_match": {
+        "similarity": 0.067,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        32,
+        54
+      ]
+    },
+    {
+      "start": "00:01:34.240",
+      "end": "00:02:28.800",
+      "start_seconds": 94.24,
+      "end_seconds": 148.8,
+      "duration_seconds": 54.56,
+      "excerpt": "required to reverse the roles of those entities. This structural vulnerability scales directly into enterprise applications, specifically when models are used to summarize dense research papers. Builders frequently encounter citation drift. This is where the system identifies real claims from a document but binds them to the wrong sources. Take a clinical trial where an experimental drug is compared to a placebo. The original text might show the drug causing a 40% reduction in tumor size while the placebo group experiences severe side effects. The AI processes the text and identifies every correct entity. But under the pressure of the jargon, the internal switchboard swaps the roles. The final summary confidently attributes the tumor reduction to the placebo and the side effects to the drug because the text is fluent and the key words are all",
+      "suggested_slug": "required-reverse-roles-those-entities-this-structural-vulnerability",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 2
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.063,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        41,
+        63
+      ]
+    },
+    {
+      "start": "00:01:49.280",
+      "end": "00:02:44.640",
+      "start_seconds": 109.28,
+      "end_seconds": 164.64,
+      "duration_seconds": 55.36,
+      "excerpt": "identifies real claims from a document but binds them to the wrong sources. Take a clinical trial where an experimental drug is compared to a placebo. The original text might show the drug causing a 40% reduction in tumor size while the placebo group experiences severe side effects. The AI processes the text and identifies every correct entity. But under the pressure of the jargon, the internal switchboard swaps the roles. The final summary confidently attributes the tumor reduction to the placebo and the side effects to the drug because the text is fluent and the key words are all technically correct. This summary can easily bypass a human reviewer who is scanning for familiar data points rather than performing a line by line logical audit. The ultimate stress test for this architecture is a scientific metaanalysis which requires extracting a",
+      "suggested_slug": "identifies-real-claims-document-but-binds-them-wrong",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 2
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.062,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        48,
+        70
+      ]
+    },
+    {
+      "start": "00:02:08.640",
+      "end": "00:03:03.280",
+      "start_seconds": 128.64,
+      "end_seconds": 183.28,
+      "duration_seconds": 54.64,
+      "excerpt": "processes the text and identifies every correct entity. But under the pressure of the jargon, the internal switchboard swaps the roles. The final summary confidently attributes the tumor reduction to the placebo and the side effects to the drug because the text is fluent and the key words are all technically correct. This summary can easily bypass a human reviewer who is scanning for familiar data points rather than performing a line by line logical audit. The ultimate stress test for this architecture is a scientific metaanalysis which requires extracting a dense web of variables and effect sizes from academic pros. Models are actually quite successful at recognizing isolated variables and statistical methods when they are queried one at a time. The collapse happens when the system tries to extract the full association. As density increases, the model",
+      "suggested_slug": "processes-text-identifies-every-correct-entity-but-under",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.057,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        56,
+        78
+      ]
+    },
+    {
+      "start": "00:02:38.000",
+      "end": "00:03:32.000",
+      "start_seconds": 158.0,
+      "end_seconds": 212.0,
+      "duration_seconds": 54.0,
+      "excerpt": "architecture is a scientific metaanalysis which requires extracting a dense web of variables and effect sizes from academic pros. Models are actually quite successful at recognizing isolated variables and statistical methods when they are queried one at a time. The collapse happens when the system tries to extract the full association. As density increases, the model misattributes values assigning right numbers to wrong variables. This happens because the internal representation cannot maintain rigid attachments across multiple tightly packed data points. For a researcher, a system that recognizes the correct numbers but wires them to the wrong variables is useless. To find the cause of these errors, we have to look past the metaphor of AI confusion and into the mechanical failures of the neural network itself. Deep inside the",
+      "suggested_slug": "architecture-scientific-metaanalysis-which-requires-extracting-dense-web",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.104,
+        "title": "Why AI Fails at Scientific Evidence Extraction",
+        "slug": "ai-fails-scientific-evidence-extraction",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        69,
+        90
+      ]
+    },
+    {
+      "start": "00:02:53.840",
+      "end": "00:03:47.920",
+      "start_seconds": 173.84,
+      "end_seconds": 227.92,
+      "duration_seconds": 54.08,
+      "excerpt": "collapse happens when the system tries to extract the full association. As density increases, the model misattributes values assigning right numbers to wrong variables. This happens because the internal representation cannot maintain rigid attachments across multiple tightly packed data points. For a researcher, a system that recognizes the correct numbers but wires them to the wrong variables is useless. To find the cause of these errors, we have to look past the metaphor of AI confusion and into the mechanical failures of the neural network itself. Deep inside the mathematical space, the ordering subspace acts as a switchboard, locking concepts together. This fails because an entity's internal mathematical signature actually changes based on its role. In dense text, nearby variables magnetically pull on each other,",
+      "suggested_slug": "collapse-happens-when-system-tries-extract-full-association",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.106,
+        "title": "Why AI Fails at Scientific Evidence Extraction",
+        "slug": "ai-fails-scientific-evidence-extraction",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        76,
+        97
+      ]
+    },
+    {
+      "start": "00:03:13.519",
+      "end": "00:04:07.439",
+      "start_seconds": 193.519,
+      "end_seconds": 247.439,
+      "duration_seconds": 53.92,
+      "excerpt": "a researcher, a system that recognizes the correct numbers but wires them to the wrong variables is useless. To find the cause of these errors, we have to look past the metaphor of AI confusion and into the mechanical failures of the neural network itself. Deep inside the mathematical space, the ordering subspace acts as a switchboard, locking concepts together. This fails because an entity's internal mathematical signature actually changes based on its role. In dense text, nearby variables magnetically pull on each other, drowning specific connections in mathematical noise. When these stressors, shifting shapes, and mathematical noise overwhelm the ordering subspace, the connection vanishes. The factual ingredients remain but the bridge between them is gone. This raises a difficult question. If the internal wiring is so fragile, why do",
+      "suggested_slug": "researcher-system-that-recognizes-correct-numbers-but-wires",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.098,
+        "title": "Why AI Fails at Scientific Evidence Extraction",
+        "slug": "ai-fails-scientific-evidence-extraction",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        84,
+        106
+      ]
+    },
+    {
+      "start": "00:03:34.480",
+      "end": "00:04:28.639",
+      "start_seconds": 214.48,
+      "end_seconds": 268.639,
+      "duration_seconds": 54.159,
+      "excerpt": "concepts together. This fails because an entity's internal mathematical signature actually changes based on its role. In dense text, nearby variables magnetically pull on each other, drowning specific connections in mathematical noise. When these stressors, shifting shapes, and mathematical noise overwhelm the ordering subspace, the connection vanishes. The factual ingredients remain but the bridge between them is gone. This raises a difficult question. If the internal wiring is so fragile, why do these models sound so articulate and convincing? They are often surfing on generic language modeling pressure. Because human language is repetitive, models can predict highly probable word patterns without actually understanding the underlying structure. Often a correct answer is just a statistical reflex. The model outputs the right word because it is common in that semantic",
+      "suggested_slug": "concepts-together-this-fails-because-entity's-internal-mathematical",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.079,
+        "title": "Why AI Forgets Who Did What",
+        "slug": "ai-forgets-who-did-what",
+        "source": "publications/binding-gap/artifacts/video/cinematic-backfill-2026-04-27/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        93,
+        116
+      ]
+    },
+    {
+      "start": "00:03:49.920",
+      "end": "00:04:43.840",
+      "start_seconds": 229.92,
+      "end_seconds": 283.84,
+      "duration_seconds": 53.92,
+      "excerpt": "stressors, shifting shapes, and mathematical noise overwhelm the ordering subspace, the connection vanishes. The factual ingredients remain but the bridge between them is gone. This raises a difficult question. If the internal wiring is so fragile, why do these models sound so articulate and convincing? They are often surfing on generic language modeling pressure. Because human language is repetitive, models can predict highly probable word patterns without actually understanding the underlying structure. Often a correct answer is just a statistical reflex. The model outputs the right word because it is common in that semantic neighborhood, not because it navigated a stable retrieved memory. Evaluating a model based on its fluency is a trap. It allows highquality pros to hide a brittle and unreliable internal architecture. Fixing the binding gap requires a concrete engineering agenda",
+      "suggested_slug": "stressors-shifting-shapes-mathematical-noise-overwhelm-ordering-subspace",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.078,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        100,
+        123
+      ]
+    },
+    {
+      "start": "00:04:24.720",
+      "end": "00:05:11.479",
+      "start_seconds": 264.72,
+      "end_seconds": 311.479,
+      "duration_seconds": 46.759,
+      "excerpt": "because it is common in that semantic neighborhood, not because it navigated a stable retrieved memory. Evaluating a model based on its fluency is a trap. It allows highquality pros to hide a brittle and unreliable internal architecture. Fixing the binding gap requires a concrete engineering agenda that moves beyond simple prompt testing. One solution is schema records. Instead of letting the model generate free pros immediately, it maps the data into a rigid grid first. This forces the architecture to explicitly define RO and numeric attachments before generating conversational text. AI will only become truly reliable when builders stop relying on the illusion of fluency and start engineering the internal wiring.",
+      "suggested_slug": "because-common-that-semantic-neighborhood-not-because-navigated",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.08,
+        "title": "This Is Not Hallucination. It's a Wiring Failure.",
+        "slug": "not-hallucination-wiring-failure",
+        "source": "publications/binding-gap/artifacts/video/cinematic-wave-2-2026-04-29/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        116,
+        134
+      ]
+    }
+  ]
+}

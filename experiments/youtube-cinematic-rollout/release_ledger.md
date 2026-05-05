@@ -897,6 +897,28 @@ Initial rollout order from `backlog_manifest.yaml`:
   - `operating_agents_action` `short:css-tags-can-break-an-agent`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
   - `operating_agents_memory` `short:flat-vector-memory-becomes-a-security-hole`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
 
+### 2026-05-05T14:41:35Z
+
+- Binding Gap prompt-packet retest heartbeat check: NotebookLM generate process is still running, no MP4/artifact file has appeared under `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/`, and no NotebookLM artifact id has been emitted locally.
+- Queue action: mark `binding_gap_prompt_packet_retest` as `generation_pending` with a started-at timestamp so daily kickoff does not start a duplicate generation while the foreground NotebookLM process continues.
+
+### 2026-05-05T14:52:15Z
+
+- Binding Gap prompt-packet retest heartbeat check: the foreground NotebookLM generate process is no longer running, but NotebookLM lists video artifact `a14ed520-185e-446d-ac9c-19f618c996d2` as `pending` in notebook `44486736-92ff-4243-9b6e-aea65baa3fce`.
+- No completed MP4 or other downloaded artifact exists yet under `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/`.
+- Queue action: keep `binding_gap_prompt_packet_retest` in `generation_pending` and continue 5-minute polling against the recorded artifact id.
+
+### 2026-05-05T15:12:29Z
+
+- Binding Gap prompt-packet retest completed in NotebookLM as artifact `a14ed520-185e-446d-ac9c-19f618c996d2` and was downloaded to `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.mp4`.
+- Uploaded public cinematic `bhoiLFJadAA`: `https://www.youtube.com/watch?v=bhoiLFJadAA`.
+- Queue action: move `binding_gap_prompt_packet_retest` to `captions_pending`; next step is timed-caption recovery and the first-line generation-compliance gate before any Shorts work.
+
+### 2026-05-05T15:17:05Z
+
+- Caption recovery check for `bhoiLFJadAA`: no caption tracks were available after a 4-minute polling window (`10` attempts at 30-second intervals).
+- Queue action: keep `binding_gap_prompt_packet_retest` in `captions_pending`; continue 5-minute polling until timed captions are available, then run first-line generation-compliance before Shorts.
+
 ### 2026-05-05T09:00:08Z
 
 - Targeted tightened-workflow pass for two promising cinematics and two Shorts from the latest analytics:
@@ -934,3 +956,122 @@ Initial rollout order from `backlog_manifest.yaml`:
 - Caveat: the reasoning NotebookLM video did not follow the exact requested first spoken line. The uploaded title/description and the Short hook overlay still carry the corrected hook framing, and the selected Short's ASR captions were corrected before render.
 - Hook-repair manifest: `experiments/youtube-cinematic-rollout/hook_repair_2026-05-05/hook_repair_manifest.yaml`
 - Studio verification report: `experiments/youtube-cinematic-rollout/hook_repair_2026-05-05/studio_verification.json`
+
+### 2026-05-05T14:11:04.984416+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Next generation candidates: `binding_gap_prompt_packet_retest`
+- Materialized cinematic prompt packets: `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/prompt_packet.yaml`, `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/cinematic_prompt.txt`
+- Quality gate issues: `41`
+  - `illusion_of_swarm` `short:single-model-beat-the-swarm`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:single-agents-break-at-90-tools`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:ai-swarms-are-training-wheels`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:engine-without-a-vehicle`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-need-a-world-model`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:multi-agent-debate-drops-errors`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-treat-guardrails-like-puzzles`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:writing-the-script-isnt-agency`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:css-tags-can-break-an-agent`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_memory` `short:flat-vector-memory-becomes-a-security-hole`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+
+### 2026-05-05T15:23:53.408573+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `binding_gap_prompt_packet_retest`
+- Quality gate issues: `42`
+  - `illusion_of_swarm` `short:single-model-beat-the-swarm`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:single-agents-break-at-90-tools`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:ai-swarms-are-training-wheels`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:engine-without-a-vehicle`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-need-a-world-model`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:multi-agent-debate-drops-errors`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-treat-guardrails-like-puzzles`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:writing-the-script-isnt-agency`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:css-tags-can-break-an-agent`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_memory` `short:flat-vector-memory-becomes-a-security-hole`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+
+### 2026-05-05T15:24:20Z
+
+- Binding Gap prompt-packet retest captions recovered for public cinematic `bhoiLFJadAA`.
+- First-line generation-compliance gate failed:
+  - Expected: `The model did not forget the facts. It dropped the wiring.`
+  - Observed: `You prompt an AI with a complex question and it gathers all the right facts. The names, the dates, the core concepts are all perfectly preserved in its memory.`
+- Queue action: set `binding_gap_prompt_packet_retest` to `generation_compliance_review_pending` and `shorts.state` to `blocked_generation_compliance`. Do not render or upload Shorts unless an operator explicitly sets `cinematic.generation_compliance_override: true`.
+
+### 2026-05-05T15:38:07.305255+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `binding_gap_prompt_packet_retest`
+- Materialized Shorts manifests: `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/shorts_manifest.json`
+- Newly scheduled approved clips: `5`
+- Quality gate issues: `42`
+  - `illusion_of_swarm` `short:single-model-beat-the-swarm`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:single-agents-break-at-90-tools`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:ai-swarms-are-training-wheels`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:engine-without-a-vehicle`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-need-a-world-model`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:multi-agent-debate-drops-errors`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-treat-guardrails-like-puzzles`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:writing-the-script-isnt-agency`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:css-tags-can-break-an-agent`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_memory` `short:flat-vector-memory-becomes-a-security-hole`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+
+### 2026-05-05T15:38:40.750368+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- In-flight first: `binding_gap_prompt_packet_retest`
+- Materialized Shorts manifests: `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/shorts_manifest.json`
+- Quality gate issues: `42`
+  - `illusion_of_swarm` `short:single-model-beat-the-swarm`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:single-agents-break-at-90-tools`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:ai-swarms-are-training-wheels`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:engine-without-a-vehicle`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-need-a-world-model`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:multi-agent-debate-drops-errors`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-treat-guardrails-like-puzzles`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:writing-the-script-isnt-agency`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:css-tags-can-break-an-agent`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_memory` `short:flat-vector-memory-becomes-a-security-hole`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+
+### 2026-05-05T16:13:49.713540+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Quality gate issues: `42`
+  - `illusion_of_swarm` `short:single-model-beat-the-swarm`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:single-agents-break-at-90-tools`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:ai-swarms-are-training-wheels`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:engine-without-a-vehicle`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-need-a-world-model`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:multi-agent-debate-drops-errors`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-treat-guardrails-like-puzzles`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:writing-the-script-isnt-agency`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:css-tags-can-break-an-agent`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_memory` `short:flat-vector-memory-becomes-a-security-hole`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+
+### 2026-05-05T16:14:21Z
+
+- Completed the Binding Gap prompt-packet retest end to end under the explicit generation-compliance override.
+- Cinematic:
+  - Public upload: `bhoiLFJadAA` -> `https://www.youtube.com/watch?v=bhoiLFJadAA`
+  - Confirmed in `Rooted Layers Cinematic Briefs` at playlist position `0`.
+  - Updated the public description to make the retest caveat, comparison purpose, essay, research breakdown, and cinematic playlist explicit.
+  - Studio reload verification: end screen includes explicit research-breakdown video `cBrtKPp4kqw`, best-for-viewer, and subscribe; info card points to `cBrtKPp4kqw` at `1:00` with `Full research breakdown` copy.
+- Shorts:
+  - Rendered five portrait Shorts from the recovered cinematic SRT with top hook, spoken subtitle overlays, and bottom related-video CTA.
+  - Layout QA passed against 3 sampled frames per Short; contact sheet: `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/qa_frames/contact_sheet.png`.
+  - Uploaded and scheduled five Shorts in the shared Shorts playlist:
+    - `pqq5i-W4Vh0` `This Is Not Hallucination. It's a Wiring Failure. #shorts` -> 2026-05-06 06:00 UTC
+    - `D1LjEvzkDHE` `The Model Knows Tom. It Fails Mary. #shorts` -> 2026-05-07 06:00 UTC
+    - `k0tdB578GaM` `Citation Drift Swaps the Roles. #shorts` -> 2026-05-08 06:00 UTC
+    - `RrqtwFHFRvQ` `Right Numbers. Wrong Variables. #shorts` -> 2026-05-09 06:00 UTC
+    - `_enF31NL2kw` `Fluency Is a Trap. #shorts` -> 2026-05-10 06:00 UTC
+  - Studio reload verification: all five Shorts now point their Related Video field to the new cinematic `bhoiLFJadAA`.
+- Reports:
+  - Cinematic upload report: `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic_upload_report.json`
+  - Shorts upload report: `publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/shorts_upload_report.json`
+  - Studio verification report: `experiments/youtube-cinematic-rollout/binding_gap_prompt_packet_retest_studio_verification_2026-05-05.json`

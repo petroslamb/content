@@ -1,0 +1,43 @@
+publication_key: binding_gap_prompt_packet_retest
+package: binding-gap
+artifact_goal: hook_repair
+source_signal: analytics_underperformer
+title: The Model Kept the Facts. It Dropped the Wiring
+hook: The binding gap is not forgetting. It is a wiring failure.
+summary: This prompt-packet retest uses the oldest weak cinematic as a controlled
+  comparison. It makes the Binding Gap concrete for builders by showing how models
+  preserve semantic ingredients while losing role, source, and numeric attachments.
+essay_url: https://lambpetros.substack.com/p/the-binding-gap
+secondary_link:
+  kind: youtube
+  label: Full research breakdown
+  video_id: cBrtKPp4kqw
+  url: https://www.youtube.com/watch?v=cBrtKPp4kqw
+required_cold_open: The model did not forget the facts. It dropped the wiring.
+viewer_promise: Show builders why plausible AI answers fail when role, source, or
+  numeric attachments drift even though the topic looks familiar.
+conflict: The output can sound close to correct because the semantic pieces survived
+  while the exact attachment that makes the answer usable broke.
+payoff_by_30s: Viewers should know to inspect binding and attachment before treating
+  the failure as hallucination, retrieval, or missing intelligence.
+failure_chain:
+- A model keeps the Tom/Mary fact but fails when the relation is reversed.
+- A research summary names real papers and real claims but binds the claim to the
+  wrong source.
+- A meta-analysis extractor recognizes variables and numbers, then attaches the effect
+  size to the wrong comparison.
+- A better workflow keeps role, source, and numeric attachments explicit instead of
+  hoping prose preserves them.
+clip_safe_claim_blocks:
+  minimum: 3
+  rules:
+  - open with a sharp claim, tension, or failure mode in the first sentence
+  - avoid pronoun-heavy callbacks that require earlier context
+  - land one concrete takeaway before moving on
+  - sound quotable when isolated from the rest of the video
+forbidden:
+- TL;DR
+- top 5
+- in this video
+operator_note: Make the Binding Gap feel like an operator diagnostic, not a paper
+  survey. Use examples before mechanism.
