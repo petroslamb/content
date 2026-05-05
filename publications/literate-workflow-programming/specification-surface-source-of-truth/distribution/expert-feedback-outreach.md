@@ -207,13 +207,13 @@ Contact route: LinkedIn `https://www.linkedin.com/in/ben-zorn-0a58554/`
 Status: manual no-link connection note sent by user on 2026-05-05; accepted 2026-05-05; post-acceptance message prepared, not sent.
 
 ```text
-Hi Ben - I write Rooted Layers, a publication about how AI systems, software practice, and research ideas turn into operational constraints.
+Hi Ben - thank you for connecting.
 
-I used "Willful Disobedience: Automatically Detecting Failures in Agentic Traces" in a recent essay on specification surfaces.
+I spent more time with "Willful Disobedience" after sending the invite, and the part I keep coming back to is the boundary AgentPex draws: it extracts explicit behavioral rules from prompts, system instructions, tool schemas, and task context, then uses those rules to evaluate the trace. That is stronger than outcome-only scoring, but it is also careful not to pretend the trace itself is the source of authority.
 
-The essay uses the paper to argue that trace validation is the downstream half of specification authority: not just whether an agent produced a plausible output, but whether the run respected the rules the system was supposed to preserve.
+I used the paper in an essay on specification surfaces, and I want to make sure I am not overstating that boundary. My reading is that AgentPex makes trace validation a downstream evidence layer: it can show whether execution respected prompt-derived procedural rules, and where the rules failed to say enough, but it does not turn the trace or the extracted rules into the durable specification artifact by itself.
 
-I would value one objection or correction, especially if that reading blurs too much between prompt-derived behavioral rules and more durable specification artifacts.
+If you had one caution for someone trying to connect AgentPex to software-engineering specification practice, what would it be?
 
 Essay: https://lambpetros.substack.com/p/the-specification-surface-is-the
 ```
