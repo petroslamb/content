@@ -41,16 +41,17 @@ Start with [`specification-surface-source-of-truth-paper-roadmap-r1.md`](specifi
 - [`specification-surface-source-of-truth-paper-draft-r4.md`](specification-surface-source-of-truth-paper-draft-r4.md): arXiv-facing manuscript draft with research/framework framing, conventional title metadata, and tightened preprint artifact language.
 - `specification-surface-source-of-truth-paper-draft-r4.pdf`: local arXiv-preview PDF generated from R4; not tracked because repository policy ignores generated PDFs.
 - [`specification-surface-source-of-truth-arxiv-readiness-review-r1.md`](specification-surface-source-of-truth-arxiv-readiness-review-r1.md): arXiv posting gate review marking R4 ready for human posting decision while keeping posting blocked.
+- [`specification-surface-source-of-truth-arxiv-submission-attempt-r1.md`](specification-surface-source-of-truth-arxiv-submission-attempt-r1.md): browser submission attempt record; arXiv blocked continuation because `cs.SE` endorsement is required.
 - [`arxiv-source-r4/README.md`](arxiv-source-r4/README.md): generated local arXiv source packet notes for `spec_surface_r4_arxiv.tex` and the upload archive.
 - [`arxiv-source-r4/spec_surface_r4_arxiv.tex`](arxiv-source-r4/spec_surface_r4_arxiv.tex): standalone generated LaTeX source for arXiv upload if the posting gate clears.
 
 ## Current Status
 
-The blueprint, publication route, case-study trace, literature map, extended abstract, north-star rubric, draftability audit, docs-only approval gate, manuscript drafts, working references, AIware checklist, arXiv checklist, local PDFs, readiness reviews, human approval gate, submitted AIware record, venue conflict matrix, R4 arXiv-facing draft, generated arXiv source packet, and arXiv-readiness review are complete. The current phase is the arXiv posting gate while still awaiting the AIware Round 2 notification on June 1, 2026.
+The blueprint, publication route, case-study trace, literature map, extended abstract, north-star rubric, draftability audit, docs-only approval gate, manuscript drafts, working references, AIware checklist, arXiv checklist, local PDFs, readiness reviews, human approval gate, submitted AIware record, venue conflict matrix, R4 arXiv-facing draft, generated arXiv source packet, arXiv-readiness review, and arXiv submission attempt record are complete. The current phase is blocked on `cs.SE` endorsement while still awaiting the AIware Round 2 notification on June 1, 2026.
 
 The north-star bar is a fast-feedback ladder with a peer-review quality floor: try AIware only if the manuscript remains coherent by the checkpoint, mature toward ICSE NIER or workshop review as the main peer-review route, and wait on arXiv until a complete manuscript packet exists. The draft approval gate authorized manuscript drafting only; the later external-submission approval gate now authorizes AIware submission while keeping arXiv posting blocked.
 
-The reviewed R2 packet was approved for AIware submission. R3 superseded R2 after the pre-submit polish pass and was submitted through the AIware Google Form on 2026-05-05. R4 is prepared for a possible arXiv fail-fast preprint. arXiv remains blocked until the author explicitly approves public posting and resolves license plus endorsement/account questions.
+The reviewed R2 packet was approved for AIware submission. R3 superseded R2 after the pre-submit polish pass and was submitted through the AIware Google Form on 2026-05-05. R4 is prepared for a possible arXiv fail-fast preprint. The arXiv browser flow was started and blocked before upload because the account needs `cs.SE` endorsement.
 
 ## Workflow
 
