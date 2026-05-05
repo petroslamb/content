@@ -26,7 +26,7 @@ Decision after window: continue if at least one useful objection, correction, or
 | Target | Paper | Paper role in essay | Why this person | Contact route | Invited | Accepted | Message sent | Reply | Useful outcome | Next action | Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | Deepak Babu Piskala | "Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants" | Software-engineering baseline for the specification-authority spectrum: spec-first, spec-anchored, and spec-as-source. | Single author of the paper that keeps the essay grounded in existing engineering practice rather than the claim that prose is code. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/prdeepak/`; user manually sent invite 2026-05-05; sent-invitations manager confirmed Deepak/Piskala. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Direct Message route showed InMail/Premium upsell, so no message was sent. Initial browser invite attempt failed; manual profile action later landed. |
-| Camilo Chacon Sartori | "The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents" | Hinge evidence for the coordination claim: weakened shared specifications cause multi-agent integration failures; restoring full specification is the stronger recovery. | The essay's strongest empirical hinge depends on this paper's result and its limits. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/camilo-chacon-sartori/`; user manually sent invite 2026-05-05; sent-invitations manager confirmed Camilo/Chacon. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Initial browser invite attempt failed; manual profile action later landed. Ask whether "specification carries the shared decisions" overstates the paper's recovery setting after acceptance. |
+| Camilo Chacon Sartori | "The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents" | Hinge evidence for the coordination claim: weakened shared specifications cause multi-agent integration failures; restoring full specification is the stronger recovery. | The essay's strongest empirical hinge depends on this paper's result and its limits. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/camilo-chacon-sartori/`; user manually sent invite 2026-05-05; sent-invitations manager confirmed Camilo/Chacon; user reported acceptance 2026-05-05. | yes, 2026-05-05 | yes, 2026-05-05 | no | no | accepted and reachable | Send an author-centered follow-up about the boundary between missing context and missing shared authority. | Initial browser invite attempt failed; manual profile action later landed. Ask whether "specification carries the shared decisions" overstates the paper's recovery setting. |
 | Martin Monperrus | "Bootstrapping Coding Agents: The Specification Is the Program" | Strongest architectural edge case for specification-as-program and derived implementations. | The essay uses the paper to show a controlled inversion where specification becomes the durable object and implementations become downstream. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/martin-monperrus-369300a4/`; user manually sent invite 2026-05-05; sent-invitations manager confirmed Martin/Monperrus. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Initial browser invite attempt failed; manual profile action later landed. Mutual connection Jose was visible before the attempt. |
 | Brian Hempel | "Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025" | Professional-practice counterweight for the anti-vibe frame: experienced developers preserve agency through planning, supervision, validation, version control, and bounded delegation. | Coauthor of the practice paper that keeps `vibe` framed as a control-surface failure rather than a personality label. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/brianhempel/`; visible state after attempt: `Connect`, `Message`, `More`; profile is 3rd+. | no | n/a | no | no | blocked at confirmation | Retry manually or in a later browser pass; do not send essay link in invite. | Invite modal opened, but `Send without a note` would not submit through Playwright click, forced click, or keyboard activation. Since `Connect` remained visible, the invite is not marked sent. |
 | Linyue Pan | "Natural-Language Agent Harnesses" | Runtime/harness evidence: natural-language descriptions become stronger when interpreted by a harness with decomposition, roles, state, adapters, contracts, verification, and artifacts. | First author of the paper used to distinguish loose prompts from natural-language surfaces that participate in governed execution. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/linyue-pan/`; user-reported manual note invite sent 2026-05-05 after browser confirmation block. | yes, 2026-05-05 | yes, 2026-05-05 | no | yes, 2026-05-05 | accepted and invited paper-centered discussion | Send an author-centered follow-up that asks where her paper's result should and should not be extended. | Manual connection note used no essay link. Linyue replied that she would be happy to discuss and that the narrow objection would be valuable feedback for their next revision; this suggests paper-centered framing sparked the reply. |
@@ -37,7 +37,7 @@ Decision after window: continue if at least one useful objection, correction, or
 
 Recommended first wave: Deepak Babu Piskala, Camilo Chacon Sartori, Martin Monperrus, Brian Hempel, and Linyue Pan.
 
-Actual 2026-05-05 execution: Deepak, Camilo, Martin, Linyue, Shraddha, and Ben are invite-pending. Deepak, Camilo, and Martin initially failed through the in-app browser, then the user manually retried from the profile pages; LinkedIn's sent-invitations manager confirmed all three after the manual retry. Brian remains blocked and the correct UCSD-linked profile still needs verification.
+Actual 2026-05-05 execution: Deepak, Martin, Shraddha, and Ben are invite-pending. Camilo and Linyue accepted. Deepak, Camilo, and Martin initially failed through the in-app browser, then the user manually retried from the profile pages; LinkedIn's sent-invitations manager confirmed all three after the manual retry. Brian remains blocked and the correct UCSD-linked profile still needs verification.
 
 Connection requests should not include the essay link. If LinkedIn requires an invite rather than a message, use either no note or this no-link note:
 
@@ -48,7 +48,7 @@ Hi <name> - I write Rooted Layers on AI systems and software practice. I used yo
 ## 2026-05-05 First-Wave Execution Log
 
 - Deepak Babu Piskala: attempted direct `Message`, but LinkedIn showed an InMail/Premium upsell. The browser then attempted a no-note connection invite, but the sent-invitations manager initially did not show Deepak/Piskala. The user manually retried from the profile page; a later sent-invitations check confirmed Deepak/Piskala.
-- Camilo Chacon Sartori: browser attempted a no-note connection invite, but the sent-invitations manager initially did not show Camilo/Chacon/Chacon Sartori. The user manually retried from the profile page; a later sent-invitations check confirmed Camilo/Chacon.
+- Camilo Chacon Sartori: browser attempted a no-note connection invite, but the sent-invitations manager initially did not show Camilo/Chacon/Chacon Sartori. The user manually retried from the profile page; a later sent-invitations check confirmed Camilo/Chacon. User reported that Camilo accepted on 2026-05-05.
 - Martin Monperrus: browser attempted a no-note connection invite, but the sent-invitations manager initially did not show Martin/Monperrus. The user manually retried from the profile page; a later sent-invitations check confirmed Martin/Monperrus.
 - Brian Hempel: opened the connection invite dialog, but the `Send without a note` confirmation did not submit through the in-app browser. Post-attempt state still showed `Connect`; not marked invited.
 - Linyue Pan: opened the connection invite dialog, but the `Send without a note` confirmation did not submit through the in-app browser. User later manually sent a no-link connection note. Linyue accepted and replied on 2026-05-05, saying she would be happy to discuss and that the narrow objection would be valuable feedback for their next revision.
@@ -89,18 +89,20 @@ Essay: https://lambpetros.substack.com/p/the-specification-surface-is-the
 Paper: "The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents"
 Paper role: hinge evidence for specification as a coordination contract.
 Contact route: LinkedIn `https://www.linkedin.com/in/camilo-chacon-sartori/`
-Status: manual connection invite pending as of 2026-05-05; confirmed in LinkedIn sent-invitations manager after the browser attempt failed; post-acceptance message prepared, not sent.
+Status: manual connection invite accepted as of 2026-05-05; author-centered follow-up prepared, not sent.
 
 ```text
-Hi Camilo - I write Rooted Layers, a publication about how AI systems, software practice, and research ideas turn into operational constraints.
+Hi Camilo - thank you for connecting.
 
-I used your paper, "The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents," as the hinge evidence in a recent essay on specification surfaces.
+The part of The Specification Gap that stood out to me is that it makes a common agent failure very concrete: agents can produce locally plausible work while the integration loses the shared decisions that made the work coherent.
 
-The essay argues that your result makes weak specifications visible as a coordination failure: when independent code agents lose shared decisions, post-hoc conflict detection helps diagnose the break, but the full specification is what carries the decisions that let the work converge.
+The lens I think may be useful for your side is the boundary between "missing context" and "missing shared authority." I can imagine readers treating the result as mainly a context-window or prompt-sharing problem. My reading is that it also exposes a governance problem: the shared decisions need to live somewhere explicit enough that agents can recover them and humans can audit them.
 
-I would value one objection or correction, especially if you think that reading overstates what the recovery result supports.
+I used your paper in this essay as the hinge for that question.
 
-Essay: https://lambpetros.substack.com/p/the-specification-surface-is-the
+The narrow objection I would value is: does that framing overreach from your point of view? Should the paper be read mainly as evidence about coordination under partial knowledge, rather than as evidence for durable specification surfaces?
+
+Essay context: https://lambpetros.substack.com/p/the-specification-surface-is-the
 ```
 
 ### Martin Monperrus
@@ -204,7 +206,7 @@ Essay: https://lambpetros.substack.com/p/the-specification-surface-is-the
 
 ## Manual-Send Boundary
 
-No external paper-specific message was sent by this workflow after acceptance yet. The confirmed pending connection invites are Deepak Babu Piskala, Camilo Chacon Sartori, Martin Monperrus, Shraddha Barke, and Ben Zorn. Linyue Pan accepted and replied on 2026-05-05, so the next manual action is the prepared author-centered follow-up above. Sending prepared messages still requires acceptance plus explicit action-time approval naming the exact target and exact copy, or manual user execution from the prepared copy above.
+No external paper-specific message was sent by this workflow after acceptance yet. The confirmed pending connection invites are Deepak Babu Piskala, Martin Monperrus, Shraddha Barke, and Ben Zorn. Camilo Chacon Sartori accepted on 2026-05-05. Linyue Pan accepted and replied on 2026-05-05. The next manual actions are the prepared author-centered follow-ups for Linyue and Camilo. Sending prepared messages still requires acceptance plus explicit action-time approval naming the exact target and exact copy, or manual user execution from the prepared copy above.
 
 Do not send more than five first-wave LinkedIn actions in one day unless the user explicitly accepts the account-risk tradeoff. Do not put the essay link in the connection request note.
 
@@ -214,10 +216,10 @@ Review date: 2026-05-19 for first-wave invite acceptance and replies if post-acc
 Success window elapsed: no.
 Reply count: 1.
 Objections or corrections: none yet.
-Useful weak ties: Linyue Pan accepted the connection and invited discussion.
+Useful weak ties: Linyue Pan accepted the connection and invited discussion; Camilo Chacon Sartori accepted and is reachable for a paper-centered follow-up.
 Paper revision signal: Linyue framed the narrow objection as potentially useful feedback for their next revision; future follow-ups should make the paper and its boundary conditions as central as the essay.
 Author value signal: The strongest engagement mechanism was not "please read my essay" but "your paper exposes a boundary that may matter for your next revision and for how the field uses the work."
 Traffic notes, if observed: not a success metric for this experiment.
-Decision: first wave has one early positive signal; send the Linyue clarification follow-up, then wait for a substantive reply before adding more targets.
-Rationale: LinkedIn's sent-invitations manager confirmed six invites after manual retries. Linyue's quick acceptance and reply supports the expert-feedback framing, and the apparent ambiguity is useful: the outreach is stronger when it invites the author to think about the paper's boundary, revision, and implications, with the essay as context.
-Next batch or stop condition: Monitor Deepak, Camilo, Martin, Shraddha, and Ben for acceptance. For Linyue, send the prepared author-centered follow-up and wait for her objection or correction. Do not add more LinkedIn outreach targets until this batch produces either a substantive reply or a 14-day no-reply signal. Keep Brian Hempel blocked unless the correct UCSD-linked profile is verified.
+Decision: first wave has two early positive signals; send the Linyue and Camilo author-centered follow-ups, then wait for substantive replies before adding more targets.
+Rationale: LinkedIn's sent-invitations manager confirmed six invites after manual retries. Linyue's quick acceptance and reply supports the expert-feedback framing. Camilo's acceptance matters because his paper is the essay's coordination hinge; the follow-up should make the author-value angle concrete by asking where "missing context" ends and "missing shared authority" begins.
+Next batch or stop condition: Monitor Deepak, Martin, Shraddha, and Ben for acceptance. For Linyue and Camilo, send the prepared author-centered follow-ups and wait for objections or corrections. Do not add more LinkedIn outreach targets until this batch produces either a substantive reply or a 14-day no-reply signal. Keep Brian Hempel blocked unless the correct UCSD-linked profile is verified.
