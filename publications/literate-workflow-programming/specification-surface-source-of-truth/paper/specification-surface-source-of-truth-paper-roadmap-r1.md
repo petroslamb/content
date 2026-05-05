@@ -2,12 +2,12 @@
 kind: paper_roadmap
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
-status: submitted_to_aiware
+status: submitted_to_aiware_arxiv_packet_prepared
 created: "2026-04-30"
 updated: "2026-05-05"
 workflow: paper_development
-current_phase: awaiting_aiware_notification
-next_artifact: "aiware_notification_record_after_2026-06-01"
+current_phase: arxiv_posting_gate
+next_artifact: "arxiv_posting_approval_or_parking_decision_r1"
 runner_patch_required: false
 rejection_policy: park
 north_star_bar: fast_feedback_ladder_with_peer_review_quality_floor
@@ -37,13 +37,16 @@ The paper has cleared the first paperization sprint and produced a local manuscr
 - first manuscript draft exists;
 - working references exist;
 - AIware and arXiv checklists exist;
+- venue conflict matrix exists;
 - post-draft readiness reviews exist;
-- R2 draft and R3 pre-submit polish draft exist;
+- R2 draft, R3 pre-submit polish draft, and R4 arXiv-facing draft exist;
 - local review PDFs exist;
+- generated arXiv TeX source packet exists;
+- arXiv readiness review exists;
 - external submission approval surface exists and approved AIware submission;
 - AIware submission record exists in `submitted` state.
 
-The workflow crossed the human approval gate for the R2 AIware packet. R3 superseded R2 after the pre-submit paper-shape and AI-written-tell pass, and the R3 PDF was submitted through the AIware Google Form on 2026-05-05. The next substantive step is waiting for the Round 2 notification on June 1, 2026. arXiv posting remains blocked unless separately approved.
+The workflow crossed the human approval gate for the R2 AIware packet. R3 superseded R2 after the pre-submit paper-shape and AI-written-tell pass, and the R3 PDF was submitted through the AIware Google Form on 2026-05-05. R4 now exists as an arXiv-facing fail-fast preprint packet with a generated TeX source archive. The current step is the arXiv posting gate: choose whether to post R4 now, wait for the Round 2 notification on June 1, 2026, or park the preprint until a public artifact snapshot exists. arXiv posting remains blocked unless separately approved.
 
 ## Phase Ledger
 
@@ -60,6 +63,10 @@ The workflow crossed the human approval gate for the R2 AIware packet. R3 supers
 | Human approval | Done | `specification-surface-source-of-truth-external-submission-approval-r1.md` | Decision: `approve_aiware_submission`; arXiv remains blocked. |
 | Pre-submit R3 polish | Done | `specification-surface-source-of-truth-paper-draft-r3.md`, `specification-surface-source-of-truth-submission-readiness-review-r3.md` | R3 PDF exists with rendered references and tightened venue framing. |
 | AIware submission record | Done | `specification-surface-source-of-truth-aiware-submission-record-r1.md` | Records submission timestamp, form route, submitted packet, and browser confirmation. |
+| Venue conflict matrix | Done | `specification-surface-source-of-truth-venue-conflict-matrix-r1.md` | Separates AIware/arXiv compatibility from future venue and moderation risks. |
+| arXiv R4 packet | Done | `specification-surface-source-of-truth-paper-draft-r4.md`, `arxiv-source-r4/` | R4 Markdown, local PDF, generated TeX source, and source archive exist for human posting decision. |
+| arXiv readiness review | Done | `specification-surface-source-of-truth-arxiv-readiness-review-r1.md` | Decision: `ready_for_human_posting_decision`; public posting still blocked. |
+| arXiv posting gate | Pending | To be created only if the author approves public posting | Must record license choice, account/endorsement confirmation, category, artifact tradeoff, and final submit/no-submit decision. |
 | AIware notification | Pending | To be created after June 1, 2026 notification | Record accept/reject outcome, reviewer/chair feedback if any, and next route decision. |
 
 ## Completed Surfaces
@@ -85,10 +92,18 @@ The workflow crossed the human approval gate for the R2 AIware packet. R3 supers
 - `specification-surface-source-of-truth-paper-draft-r3.pdf` local generated PDF, not tracked because repository policy ignores generated PDFs
 - [`specification-surface-source-of-truth-submission-readiness-review-r3.md`](specification-surface-source-of-truth-submission-readiness-review-r3.md)
 - [`specification-surface-source-of-truth-aiware-submission-record-r1.md`](specification-surface-source-of-truth-aiware-submission-record-r1.md)
+- [`specification-surface-source-of-truth-venue-conflict-matrix-r1.md`](specification-surface-source-of-truth-venue-conflict-matrix-r1.md)
+- [`specification-surface-source-of-truth-paper-draft-r4.md`](specification-surface-source-of-truth-paper-draft-r4.md)
+- `specification-surface-source-of-truth-paper-draft-r4.pdf` local generated PDF, not tracked because repository policy ignores generated PDFs
+- [`specification-surface-source-of-truth-arxiv-readiness-review-r1.md`](specification-surface-source-of-truth-arxiv-readiness-review-r1.md)
+- [`arxiv-source-r4/README.md`](arxiv-source-r4/README.md)
+- [`arxiv-source-r4/spec_surface_r4_arxiv.tex`](arxiv-source-r4/spec_surface_r4_arxiv.tex)
 
 ## Remaining Surfaces
 
+- arXiv posting approval or parking decision
 - AIware notification outcome after June 1, 2026
+- public or anonymized artifact snapshot, optional before arXiv but recommended for credibility
 - `figures/`, only if a lifecycle or taxonomy figure is needed for the chosen venue shape
 - `submission-checklist-icse-nier-2027.md`, only if AIware is rejected or the paper route should continue toward peer-reviewed publication
 
@@ -121,7 +136,7 @@ Manuscript drafting is blocked until `specification-surface-source-of-truth-pape
 - Both reviewers must independently approve the same route.
 - A split verdict blocks drafting; revise the audit or method and rerun the gate.
 
-Current gate result: `submitted_to_aiware`. R3 is the submitted packet. arXiv posting remains blocked.
+Current gate result: `submitted_to_aiware_arxiv_packet_prepared`. R3 is the submitted AIware packet. R4 is the prepared arXiv packet. arXiv posting remains blocked.
 
 ## Rejection And Parking
 
