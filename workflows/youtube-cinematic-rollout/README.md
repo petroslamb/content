@@ -12,7 +12,7 @@ required_context:
   - package-local artifact surfaces for the target publications
 expected_outputs:
   - updated evergreen backlog state
-  - approved cold-open packet for each new cinematic before generation
+  - approved video-specific prompt packet for each new cinematic before generation
   - package-local cinematic and Shorts artifacts or an exact blocked-state note
   - Shorts candidates with hook pattern, overlay copy, rubric score, and scheduling status
   - verified Studio card and end-screen links for uploaded cinematic briefs when a YouTube research-breakdown target exists
@@ -53,7 +53,9 @@ Do not move generated media into the experiment workspace.
 
 - Run the NotebookLM auth preflight first. Expired NotebookLM auth is a hard gate for new cinematic generation.
 - When auth is expired, do not start new cinematics. Record `blocked_auth_expired`, notify with `.venv/bin/notebooklm login`, and continue only with downstream YouTube-only reconciliation that does not require NotebookLM.
-- Do not start a new cinematic generation until `cinematic.cold_open.status: approved` and the cold-open packet has a concrete first line, viewer promise, conflict, and payoff by 30 seconds.
+- Do not start a new cinematic generation until `cinematic.cold_open.status: approved`, `cinematic.prompt_packet.status: approved`, and the packet has a concrete first line, viewer promise, conflict, payoff by 30 seconds, and failure chain.
+- Generate NotebookLM from the package-local `cinematic.prompt_file`, not the shared fallback, whenever the rollout helper has materialized one.
+- After timed captions are recovered, check `cinematic.generation_compliance`. A `failed_first_line` status means NotebookLM ignored the required cold open; the helper moves the entry to `generation_compliance_review_pending` and blocks Shorts scheduling/materialization unless `cinematic.generation_compliance_override: true` is set intentionally.
 - Recover the cinematic `.srt` before choosing Shorts. Do not guess clip boundaries from untimed transcripts.
 - Apply the high-bar Shorts rubric and schedule only clips that score `22` or higher.
 - Do not schedule newly approved Shorts unless they also have a feed-native `hook`, `cta`, `summary`, and `pattern` with `type` and `topic_lane`.
@@ -77,9 +79,12 @@ Do not move generated media into the experiment workspace.
   - `experiments/youtube-cinematic-rollout/release_ledger.md`
 - Existing mapped-video exclusion source:
   - `experiments/youtube-cinematic-pilot/metrics/video_asset_youtube_map.yaml`
-- Shared cinematic prompt and description template:
+- Shared cinematic prompt fallback and description template:
   - `experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt`
   - `experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md`
+- Package-local prompt packet artifacts:
+  - `publications/<package>/artifacts/video/daily-cinematic-rollout/prompt_packet.yaml`
+  - `publications/<package>/artifacts/video/daily-cinematic-rollout/cinematic_prompt.txt`
 
 ## Automation Topology
 
@@ -121,9 +126,9 @@ Do not rely on a single reconciliation pass. The active run should normally stay
 
 The rollout is experimental, but it should not treat polished output as progress by itself. The daily helper now reports quality-gate issues and uses those gates when scheduling future work.
 
-### Cold-Open Gate
+### Prompt Packet Gate
 
-Every new or queued cinematic must carry this packet before NotebookLM generation starts:
+Every new or queued cinematic must carry this operator-approved prompt packet before NotebookLM generation starts:
 
 ```yaml
 cinematic:
@@ -133,9 +138,42 @@ cinematic:
     viewer_promise: "What the viewer will understand if they stay."
     conflict: "The concrete tension or failure this brief resolves."
     payoff_by_30s: "What has been made clear by the first 30 seconds."
+  prompt_packet:
+    status: approved
+    artifact_goal: hook_repair | scale_winner | concept_refresh | exploration
+    source_signal: analytics | backlog | manual_pick | remaster
+    failure_chain:
+      - "The concrete setup or misdiagnosis."
+      - "The specific operational break."
+      - "The better scaffold, boundary, or action the viewer should take."
+    clip_safe_claim_blocks:
+      minimum: 3
+    forbidden:
+      - "TL;DR"
+      - "top 5"
+      - "in this video"
 ```
 
-If this packet is missing or not approved, `scripts/run_daily_cinematic_rollout.py` moves the entry to `cold_open_review_pending` and does not consider it a generation candidate. This is intentional: the current analytics show that cinematic topics can earn clicks and subscribers while losing too much attention in the opening.
+If either packet is missing or not approved, `scripts/run_daily_cinematic_rollout.py` moves the entry to `cold_open_review_pending` and does not consider it a generation candidate. When both packets pass, the helper materializes:
+
+- `prompt_packet.yaml`: the structured source of truth for why this artifact exists
+- `cinematic_prompt.txt`: the NotebookLM prompt rendered from that packet
+
+This is intentional: the current analytics show that cinematic topics can earn clicks and subscribers while losing too much attention in the opening. The prompt packet makes the reason for the artifact explicit before generation starts.
+
+### Generation Compliance Gate
+
+NotebookLM can preserve the concept while rewriting the first line. After the cinematic `.srt` is recovered, rerun the rollout helper. If the entry has a materialized `cinematic.prompt_file`, the helper writes:
+
+```yaml
+generation_compliance:
+  status: passed_first_line | failed_first_line
+  match_mode: normalized_prefix_exact
+  expected_first_line: "The requested first spoken line."
+  observed_opening: "The first recovered caption text."
+```
+
+Treat `failed_first_line` as a repair signal. The result may still be usable after manual review, but the workflow should not treat it as evidence that the prompt contract worked. Set `cinematic.generation_compliance_override: true` only when the operator has reviewed the miss and deliberately wants downstream Shorts work to continue.
 
 ### Shorts Pattern Gate
 
@@ -174,7 +212,8 @@ The script must:
 
 - discover newly eligible published packages
 - dedupe umbrella roots into their canonical leaf when required
-- mark entries with missing or unapproved cold-open packets as `cold_open_review_pending`
+- mark entries with missing or unapproved cold-open or prompt packets as `cold_open_review_pending`
+- materialize package-local `prompt_packet.yaml` and `cinematic_prompt.txt` files for generation-ready entries
 - print in-flight items first
 - list up to two new generation candidates
 - verify `.venv/bin/notebooklm auth check --test`
@@ -186,7 +225,9 @@ The script must:
 Before starting any new cinematic generation, reconcile entries whose state is already beyond `queued`:
 
 - cold-open review for `cold_open_review_pending` entries
+- prompt-packet review for entries whose cold open is approved but whose artifact goal, source signal, or failure chain is missing
 - caption recovery
+- generation compliance review after captions are recovered
 - Studio card/end-screen reconciliation for any uploaded cinematic brief with a YouTube research-breakdown target
 - candidate extraction
 - rubric scoring
@@ -206,7 +247,7 @@ When auth is valid and no higher-priority in-flight work blocks progress:
   --json \
   --format cinematic \
   --wait \
-  "$(cat experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt)"
+  "$(cat publications/<package>/artifacts/video/daily-cinematic-rollout/cinematic_prompt.txt)"
 ```
 
 If the generation command returns an artifact ID before the video is downloadable, wait inside the same active run:
