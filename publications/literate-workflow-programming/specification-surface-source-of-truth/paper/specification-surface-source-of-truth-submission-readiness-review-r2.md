@@ -53,7 +53,7 @@ The R2 PDF was generated from the Markdown draft with Pandoc and Tectonic.
 
 - File: `specification-surface-source-of-truth-paper-draft-r2.pdf` local generated PDF, not tracked because repository policy ignores generated PDFs.
 - Page count: 15 pages in default letter PDF formatting.
-- Known formatting issue: the render produced TeX overfull-box warnings, mostly from wide tables and long reference metadata.
+- Render status: current R2 Markdown regenerates cleanly after shortening path-heavy table labels.
 
 The PDF is adequate for local review. A final submission PDF should still be checked in the chosen venue format.
 
