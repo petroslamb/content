@@ -5,6 +5,7 @@ Essay: The Specification Surface Is the New Source of Truth
 Canonical URL: https://lambpetros.substack.com/p/the-specification-surface-is-the
 Batch: 2026-05-05 specification-surface paper-author feedback
 Hypothesis: A bounded paper-author batch will produce sharper objections, corrections, or weak ties than general social distribution because the essay makes explicit claims about how each cited paper contributes to the specification-surface argument.
+Author-value hypothesis: Paper authors are more likely to engage when the note gives them a useful lens on their own work first, then uses the essay as the medium for a shared boundary question. The Linyue Pan reply suggests that framing the ask as a narrow objection useful to the author's next revision can create a stronger reason to respond than asking them to review or promote the essay.
 Message variant: `paper_specific`
 Success window: 14 days after each message send; default review date is 2026-05-19 if the batch is sent on 2026-05-05.
 Decision after window: continue if at least one useful objection, correction, or weak-tie reply appears; revise message if connection acceptance happens but no replies arrive; pause if the batch feels promotional; retire any target type whose paper role is too thin to justify direct outreach.
@@ -55,6 +56,12 @@ Hi <name> - I write Rooted Layers on AI systems and software practice. I used yo
 - Ben Zorn: user manually sent a no-link connection note.
 
 No essay link or paper-specific message was sent in this execution pass. The next external action is a post-acceptance message only after a recipient accepts the connection.
+
+## 2026-05-05 Outreach Lesson
+
+The first reply came from a productive ambiguity: "one narrow objection" sounded useful to the author as feedback for a future revision. Preserve the mechanism, not the confusion. Future notes should be value-first and paper-centered: give the author one concrete lens on their own paper, name the boundary or implication that may matter to their work, then use the essay as the medium where that question appears.
+
+Working rule: help the author first. The essay should enter as context for a shared research question, not as the object they are being asked to promote or review.
 
 ## Message Pack
 
@@ -146,7 +153,9 @@ Hi Linyue - thank you, and yes, I would like to make this useful from your side 
 
 The part of Natural-Language Agent Harnesses that mattered most to me is that the harness gives natural language operational force: decomposition, roles, state, adapters, contracts, verification, and artifacts make the description part of execution rather than just a prompt.
 
-I used that in the essay as one case for a broader idea I call a "specification surface": a maintained artifact that teams and tools can read, validate, trace, and repair.
+The lens I think may be useful for your side is the boundary between "natural language operationalized by a harness" and "natural language treated as a durable source of truth." That boundary feels important for how people will read harness work as it moves closer to software engineering practice.
+
+I used your paper in the essay as one case for a broader idea I call a "specification surface": a maintained artifact that teams and tools can read, validate, trace, and repair.
 
 The question I would value your view on is where the boundary should be drawn for your paper: when does a natural-language harness make the description a governed execution surface, and when would it be too much to treat that description as a durable specification or source of truth over time?
 
@@ -205,6 +214,7 @@ Reply count: 1.
 Objections or corrections: none yet.
 Useful weak ties: Linyue Pan accepted the connection and invited discussion.
 Paper revision signal: Linyue framed the narrow objection as potentially useful feedback for their next revision; future follow-ups should make the paper and its boundary conditions as central as the essay.
+Author value signal: The strongest engagement mechanism was not "please read my essay" but "your paper exposes a boundary that may matter for your next revision and for how the field uses the work."
 Traffic notes, if observed: not a success metric for this experiment.
 Decision: first wave has one early positive signal; send the Linyue clarification follow-up, then wait for a substantive reply before adding more targets.
 Rationale: LinkedIn's sent-invitations manager confirmed six invites after manual retries. Linyue's quick acceptance and reply supports the expert-feedback framing, and the apparent ambiguity is useful: the outreach is stronger when it invites the author to think about the paper's boundary, revision, and implications, with the essay as context.
