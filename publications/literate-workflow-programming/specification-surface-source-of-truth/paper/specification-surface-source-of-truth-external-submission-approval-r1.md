@@ -2,27 +2,30 @@
 kind: paper_external_submission_approval
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
-status: pending_human_decision
+status: approved_for_aiware_submission
 created: "2026-04-30"
+updated: "2026-05-05"
 workflow: paper_development
 source_draft: "specification-surface-source-of-truth-paper-draft-r2.md"
 source_pdf: "specification-surface-source-of-truth-paper-draft-r2.pdf"
 source_readiness_review: "specification-surface-source-of-truth-submission-readiness-review-r2.md"
 target_route: aiware_2026_arxiv_track_round_2
-decision: pending
-external_submission_allowed: false
+decision: approve_aiware_submission
+external_submission_allowed: true
 arxiv_posting_allowed: false
-deciding_human: null
-decided_at: null
+deciding_human: "Petros"
+decided_at: "2026-05-05"
 ---
 
 # External Submission Approval R1
 
 ## Current Decision
 
-Decision: `pending`.
+Decision: `approve_aiware_submission`.
 
-No external submission, arXiv posting, OpenReview action, or public essay-route mutation is authorized by this file in its current state.
+AIware 2026 ArXiv Track submission is authorized for the reviewed R2 packet only.
+
+This approval does not authorize arXiv posting, OpenReview action outside the AIware submission form, or public essay-route mutation.
 
 ## Packet Under Review
 
@@ -33,9 +36,9 @@ No external submission, arXiv posting, OpenReview action, or public essay-route 
 - arXiv checklist: [`arxiv-checklist.md`](arxiv-checklist.md)
 - Readiness review: [`specification-surface-source-of-truth-submission-readiness-review-r2.md`](specification-surface-source-of-truth-submission-readiness-review-r2.md)
 
-## Decision Options
+## Recorded Decision And Alternatives
 
-Select exactly one by updating the frontmatter `decision`, `status`, and permission fields.
+The selected decision is recorded in frontmatter. Earlier alternatives were:
 
 - `approve_aiware_submission`: Authorizes AIware submission of the reviewed packet only. Does not automatically authorize arXiv posting unless `arxiv_posting_allowed: true` is also explicitly set.
 - `skip_aiware_continue_nier_or_workshop`: Blocks AIware submission and routes the paper toward ICSE NIER or a matching workshop.
@@ -56,8 +59,8 @@ Before changing the decision to `approve_aiware_submission`, the deciding human 
 - the paper does not claim richer or more formal specification always improves model behavior;
 - arXiv posting remains blocked unless separately approved.
 
-## Pending State
+## Approval State
 
-Current state: `pending_human_decision`.
+Current state: `approved_for_aiware_submission`.
 
-The workflow has produced the packet and stopped at the approval boundary. Any external action requires a human update to this file.
+The workflow has produced the packet and crossed the human approval boundary for AIware submission. After submission, record the outcome in `specification-surface-source-of-truth-aiware-submission-record-r1.md`.

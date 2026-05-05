@@ -32,15 +32,16 @@ Start with [`specification-surface-source-of-truth-paper-roadmap-r1.md`](specifi
 - [`specification-surface-source-of-truth-paper-draft-r2.md`](specification-surface-source-of-truth-paper-draft-r2.md): revised manuscript draft with tightened artifact-analysis method and artifact/disclosure language.
 - `specification-surface-source-of-truth-paper-draft-r2.pdf`: local review PDF generated from the R2 Markdown draft; not tracked because repository policy ignores generated PDFs.
 - [`specification-surface-source-of-truth-submission-readiness-review-r2.md`](specification-surface-source-of-truth-submission-readiness-review-r2.md): post-R2 review that marks the packet ready for human external-submission approval, while keeping submission blocked.
-- [`specification-surface-source-of-truth-external-submission-approval-r1.md`](specification-surface-source-of-truth-external-submission-approval-r1.md): pending human approval gate for submit, skip, hold, or park.
+- [`specification-surface-source-of-truth-external-submission-approval-r1.md`](specification-surface-source-of-truth-external-submission-approval-r1.md): human approval gate authorizing AIware submission of the reviewed R2 packet, while keeping arXiv blocked.
+- [`specification-surface-source-of-truth-aiware-submission-record-r1.md`](specification-surface-source-of-truth-aiware-submission-record-r1.md): pending record for the actual AIware form submission and confirmation details.
 
 ## Current Status
 
-The blueprint, publication route, case-study trace, literature map, extended abstract, north-star rubric, draftability audit, docs-only approval gate, first manuscript draft, revised manuscript draft, working references, AIware checklist, arXiv checklist, local review PDF, readiness reviews, and pending approval gate are complete. The current phase is human external-submission decision. The next required action is a human decision recorded in `specification-surface-source-of-truth-external-submission-approval-r1.md`.
+The blueprint, publication route, case-study trace, literature map, extended abstract, north-star rubric, draftability audit, docs-only approval gate, first manuscript draft, revised manuscript draft, working references, AIware checklist, arXiv checklist, local review PDF, readiness reviews, human approval gate, and pending submission record are complete. The current phase is AIware form submission. The next required action is submitting the reviewed R2 packet through the AIware form and updating `specification-surface-source-of-truth-aiware-submission-record-r1.md`.
 
-The north-star bar is a fast-feedback ladder with a peer-review quality floor: try AIware only if the manuscript remains coherent by the checkpoint, mature toward ICSE NIER or workshop review as the main peer-review route, and wait on arXiv until a complete manuscript packet exists. The docs-only approval gate authorizes manuscript drafting only; it does not authorize external submission or arXiv posting.
+The north-star bar is a fast-feedback ladder with a peer-review quality floor: try AIware only if the manuscript remains coherent by the checkpoint, mature toward ICSE NIER or workshop review as the main peer-review route, and wait on arXiv until a complete manuscript packet exists. The draft approval gate authorized manuscript drafting only; the later external-submission approval gate now authorizes AIware submission while keeping arXiv posting blocked.
 
-The route is still not externally submission-ready because the workflow cannot approve submission by itself. Before AIware submission or arXiv posting, it needs explicit human approval and any requested venue-format polish. arXiv also still needs license, endorsement/account, and venue-policy decisions.
+The reviewed R2 packet is approved for AIware submission. arXiv remains blocked until a separate posting decision resolves license, endorsement/account, and venue-policy questions.
 
 ## Workflow
 

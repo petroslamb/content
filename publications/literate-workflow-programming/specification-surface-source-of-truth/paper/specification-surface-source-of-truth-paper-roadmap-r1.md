@@ -4,10 +4,10 @@ package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
 status: active_experiment
 created: "2026-04-30"
-updated: "2026-04-30"
+updated: "2026-05-05"
 workflow: paper_development
-current_phase: human_external_submission_decision
-next_artifact: "human_decision_in_specification-surface-source-of-truth-external-submission-approval-r1.md"
+current_phase: aiware_form_submission
+next_artifact: "submitted_confirmation_in_specification-surface-source-of-truth-aiware-submission-record-r1.md"
 runner_patch_required: false
 rejection_policy: park
 north_star_bar: fast_feedback_ladder_with_peer_review_quality_floor
@@ -40,9 +40,10 @@ The paper has cleared the first paperization sprint and produced a local manuscr
 - post-draft readiness reviews exist;
 - R2 draft exists;
 - local review PDF exists;
-- external submission approval surface exists in `pending_human_decision` state.
+- external submission approval surface exists and approves AIware submission;
+- AIware submission record exists in `pending_submission` state.
 
-The workflow has gone as far as it should without human approval. The next substantive step is an explicit human external-submission decision in `specification-surface-source-of-truth-external-submission-approval-r1.md`: approve AIware submission, skip AIware and mature toward ICSE NIER/workshop, hold for revision, or park. Submission remains blocked while that surface remains pending.
+The workflow has crossed the human approval gate for AIware submission. The next substantive step is actual submission through the AIware form, followed by a local submission record. arXiv posting remains blocked unless separately approved.
 
 ## Phase Ledger
 
@@ -56,7 +57,8 @@ The workflow has gone as far as it should without human approval. The next subst
 | Manuscript draft | Done | `specification-surface-source-of-truth-paper-draft-r1.md` | First coherent short-paper draft exists in Markdown. |
 | Venue packet | Done for local review | `references.bib`, AIware checklist, arXiv checklist, R2 PDF | References, route checklists, artifact/disclosure language, and a local PDF exist; final venue-format polish may still be requested. |
 | Submission decision | Done for R2 | `specification-surface-source-of-truth-submission-readiness-review-r2.md` | Decision: ready for human approval gate; no external submission yet. |
-| Human approval | Pending | `specification-surface-source-of-truth-external-submission-approval-r1.md` | Record approve, skip, hold, or park before any external action. |
+| Human approval | Done | `specification-surface-source-of-truth-external-submission-approval-r1.md` | Decision: `approve_aiware_submission`; arXiv remains blocked. |
+| AIware submission record | Pending | `specification-surface-source-of-truth-aiware-submission-record-r1.md` | Record submission timestamp, form route, submitted packet, and any confirmation details. |
 
 ## Completed Surfaces
 
@@ -77,10 +79,11 @@ The workflow has gone as far as it should without human approval. The next subst
 - `specification-surface-source-of-truth-paper-draft-r2.pdf` local generated PDF, not tracked because repository policy ignores generated PDFs
 - [`specification-surface-source-of-truth-submission-readiness-review-r2.md`](specification-surface-source-of-truth-submission-readiness-review-r2.md)
 - [`specification-surface-source-of-truth-external-submission-approval-r1.md`](specification-surface-source-of-truth-external-submission-approval-r1.md)
+- [`specification-surface-source-of-truth-aiware-submission-record-r1.md`](specification-surface-source-of-truth-aiware-submission-record-r1.md)
 
 ## Remaining Surfaces
 
-- human decision recorded in `specification-surface-source-of-truth-external-submission-approval-r1.md`
+- submitted confirmation recorded in `specification-surface-source-of-truth-aiware-submission-record-r1.md`
 - `figures/`, only if a lifecycle or taxonomy figure is needed for the chosen venue shape
 - `submission-checklist-icse-nier-2027.md`, only if AIware is skipped or rejected
 
@@ -113,7 +116,7 @@ Manuscript drafting is blocked until `specification-surface-source-of-truth-pape
 - Both reviewers must independently approve the same route.
 - A split verdict blocks drafting; revise the audit or method and rerun the gate.
 
-Current gate result: `approve_aiware_sprint`. Manuscript drafting was allowed, R1 and R2 now exist, and the R2 readiness review marks the packet ready for human submission approval. External submission remains blocked.
+Current gate result: `approve_aiware_submission`. The reviewed R2 packet is authorized for AIware submission. arXiv posting remains blocked.
 
 ## Rejection And Parking
 
