@@ -1,6 +1,6 @@
 kind: umbrella
 publication: dialectica-delphi-discussions
-revision: 17
+revision: 19
 current_stage: null
 status: active_strategy_publication_intake
 created: '2026-05-04'
@@ -21,3 +21,11 @@ config:
   final_email_path: publications/dialectica-delphi-discussions/final-email.md
   support_decision_path: publications/dialectica-delphi-discussions/support/decision
   support_strategy_path: publications/dialectica-delphi-discussions/support/strategy
+  notebooklm_posts:
+    ai_roi_operator_prototype:
+      primary:
+        notebook_id: 1b26a133-699a-4772-89a4-8150da8d900c
+        notebook_title: Dialectica Delphi - AI ROI Operator Prototype
+        notebook_url: https://notebooklm.google.com/notebook/1b26a133-699a-4772-89a4-8150da8d900c
+      related: []
+      artifact_path: publications/dialectica-delphi-discussions/ai-roi/artifacts/notebooklm

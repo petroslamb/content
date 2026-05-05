@@ -1,0 +1,132 @@
+# AI ROI Data Model Instance
+
+This source wraps the prototype YAML data model in markdown for NotebookLM. It should be treated as a concrete example of the state model, not as a final schema.
+
+The model shows how one Delphi session can connect:
+
+- session metadata and confidentiality state
+- topic tags
+- expert segments
+- reviewed claims
+- artifact options
+- offer/ask follow-up actions
+- open questions for the 30-45 day test
+
+```yaml
+session:
+  id: delphi-ai-roi-2026-04-23
+  title: AI ROI
+  date: '2026-04-23'
+  format: operating_truth_discovery
+  confidentiality: closed_door_no_attribution_default
+  source_files:
+    transcript: sources/raw/2026-04-23-discussion/transcript.vtt
+    chat: sources/raw/2026-04-23-discussion/chat.txt
+  analysis_file: ai-roi-session-analysis.md
+  artifact_status: prototype_operator_reviewed
+  follow_up_status: proposed
+
+topic:
+  id: topic-ai-roi
+  name: AI ROI
+  tags:
+    - ai_productivity
+    - engineering_process
+    - token_governance
+    - build_vs_buy
+    - adoption
+
+expert_segments:
+  - id: segment-cto-engineering-leaders
+    description: CTOs and engineering leaders evaluating AI productivity.
+    likely_value:
+      - peer_metric_map
+      - operating_memo
+      - smaller_roundtable
+    likely_asks:
+      - bottleneck_selection
+      - baseline_metric_share
+      - build_vs_buy_position
+  - id: segment-finance-ai-owners
+    description: Leaders concerned with token spend and budget governance.
+    likely_value:
+      - token_governance_checklist
+      - anonymized_spend_patterns
+    likely_asks:
+      - current_spend_guardrail_state
+      - model_choice_policy_state
+
+claims:
+  - id: AIROI-C01
+    normalized_claim: AI-written code percentage is a weak proxy for business productivity.
+    confidence: high
+    sensitivity: medium
+    allowed_audiences:
+      - internal
+      - attendee_recap
+      - anonymized_executive_memo
+    verification_status: needs_numeric_review
+  - id: AIROI-C02
+    normalized_claim: The missing ROI often sits in review, QA, security, deployment, compliance, and adoption.
+    confidence: high
+    sensitivity: low
+    allowed_audiences:
+      - internal
+      - attendee_recap
+      - client_safe_synthesis
+    verification_status: operator_reviewed
+  - id: AIROI-C06
+    normalized_claim: Token spend is a governance issue when usage discipline and model choice are unmanaged.
+    confidence: high
+    sensitivity: medium
+    allowed_audiences:
+      - internal
+      - cto_cfo_memo
+    verification_status: needs_policy_review
+
+artifacts:
+  - id: artifact-airoi-cto-operating-memo
+    title: Where AI ROI Disappears After Code Generation
+    audience: cto_engineering_leaders
+    status: draftable
+    reuse_constraint: anonymize_company_specific_metrics
+  - id: artifact-airoi-token-governance-checklist
+    title: Token Spend As AI Governance
+    audience: cto_finance_ai_platform
+    status: draftable
+    reuse_constraint: avoid_financial_advice
+  - id: artifact-airoi-internal-operator-note
+    title: AI ROI Operator Note
+    audience: delphi_internal
+    status: draftable
+    reuse_constraint: internal_only
+
+offer_ask_actions:
+  - id: AIROI-A01
+    segment: segment-cto-engineering-leaders
+    offer: anonymized_ai_roi_metric_map
+    ask: select_top_current_roi_bottleneck
+    channel: email_follow_up
+    owner: delphi_operator
+    status: proposed
+  - id: AIROI-A02
+    segment: segment-cto-engineering-leaders
+    offer: smaller_metric_roundtable_invite
+    ask: share_baselines_under_no_attribution_rules
+    channel: personal_invite
+    owner: pere_or_operator
+    status: proposed
+  - id: AIROI-A05
+    segment: technical_sponsor
+    offer: delphi_roi_test_plan
+    ask: define_45_day_success_criteria
+    channel: direct_conversation
+    owner: petros_and_michael
+    status: proposed
+
+open_questions:
+  - Which productivity numbers are grounded enough for anonymized reuse?
+  - What is the minimal AI ROI teardown template for future sessions?
+  - Which participants should be invited to a smaller metric-sharing room?
+  - What 45-day ROI criteria should apply to Delphi itself?
+```

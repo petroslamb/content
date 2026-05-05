@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>AI ROI As A Delphi Operating-System Prototype</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="pdf-style.css" />
+</head>
+<body>
+<h1 id="ai-roi-as-a-delphi-operating-system-prototype">AI ROI As A
+Delphi Operating-System Prototype</h1>
+<p>Private note for Pere and Michael.</p>
+<p>Supporting notebook:
+https://notebooklm.google.com/notebook/1b26a133-699a-4772-89a4-8150da8d900c</p>
+<p>I would use the AI ROI session as the first worked Delphi case. It is
+close enough to Michael's world to make the evaluation serious, and
+close enough to Pere's community idea to show whether the session format
+can become something repeatable.</p>
+<p>The interesting part of the AI ROI discussion was not "AI makes
+engineers faster." That is the easy layer. The harder question was where
+the gain goes after the first task gets faster. Review slows down. QA
+slows down. Security, release, procurement, token spend, and adoption
+all become places where the ROI can disappear.</p>
+<p>That is also how I would test Delphi. If Delphi only turns Zoom calls
+into summaries, it is useful but thin. The better version is a loop: one
+session produces reviewed claims, safe artifacts, expert signals,
+follow-up actions, and a better next room. That is what I mean by the
+Delphi operating system. Not a pre-decided portal. Not a content
+machine. A memory and follow-up layer around expert participation.</p>
+<p>I turned the AI ROI session into a small operator packet. The packet
+contains a session record, claim map, artifact map, give/get follow-up
+actions, a first-pass data model instance, and source-handling notes.
+The raw transcript and chat are not included in the shared notebook.</p>
+<p>The point is to separate the raw record from the derived memory.
+Transcript, chat, attendance, claims, recaps, expert signals, and
+follow-up tasks should not become one messy pile. The system needs to
+know what was said, what was reviewed, what can be reused, who cares
+about which bottleneck, and what should happen next.</p>
+<p>For Michael, I would make this a 30-45 day test. Take the real AI ROI
+session and baseline the current path from source material to useful
+output. How long does it take to produce a decent recap, identify
+serious claims, decide reuse boundaries, segment participants, and send
+targeted follow-up? Where does it stall: transcript cleanup, claim
+review, compliance, artifact drafting, CRM fit, email tooling, or
+unclear ownership?</p>
+<p>Then prototype only that loop. Keep a human operator in review. Use
+existing Dialectica systems where possible. Measure operator time, claim
+correction rate, artifact usefulness, follow-up response, qualified
+people for a smaller CTO room, and whether the next invitation list
+improves.</p>
+<p>For Pere, the same case becomes the first community loop. Delphi
+gives participants an anonymized AI ROI map or short memo. In return, it
+asks one focused question: where does AI ROI disappear in your
+organization? That answer should change the next interaction. A CTO
+focused on token spend should not get the same follow-up as someone
+fighting review latency.</p>
+<p>The deliverables alongside this note are simple:</p>
+<ul>
+<li>the AI ROI operator packet</li>
+<li>a short AI ROI recap or operating memo</li>
+<li>one give/get follow-up path for the AI ROI attendees</li>
+<li>one first-pass data model for session, expert, claim, artifact, and
+action</li>
+<li>one build-versus-buy note on what Dialectica should own versus use
+from existing tools</li>
+<li>one phase-two decision note after the 30-45 day test</li>
+</ul>
+<p>I would bring this to the meeting as the concrete example. The useful
+conversation is not "should we build a platform?" yet. It is: can one
+real Delphi session become structured memory, safe reuse, and better
+follow-up inside Dialectica's actual constraints? If yes, then the
+bigger platform conversation has earned its next step.</p>
+</body>
+</html>

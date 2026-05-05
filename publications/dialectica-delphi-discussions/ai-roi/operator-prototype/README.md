@@ -4,6 +4,8 @@ End-to-end worked example for the April 23, 2026 Delphi AI ROI session.
 
 This packet shows how one Delphi session can move from raw Zoom sources into structured expert-network memory and follow-up actions. It is not client-ready copy. It is a prototype of the operator workflow.
 
+For a short Michael-first presentation layer, read [`../michael-pere-ai-roi-brief.md`](../michael-pere-ai-roi-brief.md) before the detailed packet.
+
 Read in this order:
 
 1. [`session-record.md`](session-record.md) - reviewed session object and operating read.
