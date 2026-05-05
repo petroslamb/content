@@ -421,6 +421,13 @@ workflow_yaml_contracts:
     workflow_kind: module
     workflow_group: evidence
     stability: canonical
+  expert_feedback_outreach:
+    contract_path: workflows/expert-feedback-outreach/workflow.yaml
+    readme_path: workflows/expert-feedback-outreach/README.md
+    version: 1
+    workflow_kind: module
+    workflow_group: distribution
+    stability: experimental
   notebooklm_artifacts:
     contract_path: workflows/notebooklm-artifacts/workflow.yaml
     readme_path: workflows/notebooklm-artifacts/README.md
@@ -515,6 +522,36 @@ workflows:
     validator_commands: *id003
     judgment_policy: unrestricted
     prohibited_moves: *id001
+  expert_feedback_outreach:
+    workflow_doc: workflows/expert-feedback-outreach/README.md
+    workflow_kind: module
+    stage_binding: null
+    stability: experimental
+    runner_mode: guided
+    launch_mode: none
+    default_skill: null
+    approval_gate: none
+    required_context:
+    - package status
+    - package README
+    - published canonical post URL
+    - source essay candidate or live draft
+    - package evidence surface or papers index
+    - existing distribution or outreach tracker when present
+    expected_outputs:
+    - package-local expert feedback outreach tracker
+    - paper author target map
+    - paper-specific message pack
+    - outcome retrospective after the success window
+    done_when:
+    - the package has a bounded paper-author outreach experiment with exact drafts,
+      manual-send boundary, and outcome tracking
+    launch_templates: []
+    packet_templates:
+    - workflows/expert-feedback-outreach/templates/outreach_tracker_template.md
+    validator_commands: *id003
+    judgment_policy: unrestricted
+    prohibited_moves: *id001
   notebooklm_artifacts: *id008
   package_normalization:
     workflow_doc: workflows/package-normalization/README.md
@@ -561,17 +598,22 @@ workflows:
     expected_outputs:
     - package-local paper folder README
     - package-local paper roadmap/status surface
+    - paper north-star rubric before draftability audit
     - paper blueprint
     - literature mapping table when the route needs a separate appendix surface
     - case study trace plan when the route needs artifact analysis
     - draftability audit before full manuscript drafting
+    - docs-only two-reviewer approval gate before manuscript drafting
     - draft manuscript when the audit allows drafting
     - references and venue checklist surfaces before submission or posting
     done_when:
     - the package has a paper folder with a roadmap strong enough to decide whether
       to draft, harden the method, submit, post, park, or stop
     launch_templates: []
-    packet_templates: []
+    packet_templates:
+    - workflows/paper-development/templates/paper_north_star_rubric_template.md
+    - workflows/paper-development/templates/draftability_audit_template.md
+    - workflows/paper-development/templates/paper_draft_approval_gate_template.md
     validator_commands: *id003
     judgment_policy: unrestricted
     prohibited_moves: *id001

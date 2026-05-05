@@ -48,6 +48,7 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 - For Reddit specifically, use the [`reddit-native-distribution.md`](reddit-native-distribution.md) companion playbook. If recent posts are removed, waiting for mod approval, or making the account look promotional, switch the channel to `trust_repair` rather than trying another post.
 - Do not create or use replacement Reddit accounts to bypass removals, mod queues, bans, karma limits, or reputation problems. Reputation problems are handled through transparent participation, better subreddit fit, or not posting.
 - A Reddit post is eligible only when it is a standalone community-native argument: concrete contradiction, 2-3 evidence points, arguable thesis, sincere question, and no owned link in the body by default.
+- For targeted paper-author feedback after publication, use the experimental [`../expert-feedback-outreach/README.md`](../expert-feedback-outreach/README.md) module. Treat that pass as expert feedback, not traffic; target only cited or boundary-case paper authors, and do not put the essay link in connection requests by default.
 - Before submitting an external post, verify the visible composer contains the intended copy. If exact composer verification fails, do not post; record the channel as prepared but held with the blocker.
 
 ## Canonical Flow
@@ -77,10 +78,12 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 - Hacker News title and blurb
 - channel-fit and moderation-risk table
 - held Reddit or Hacker News drafts when posting risk is high
+- expert-feedback outreach target map, message pack, and outcome retrospective when the package runs a paper-author feedback pass
 - package-local distribution log or checklist
 
 ## Related Docs
 
 - [`reddit-native-distribution.md`](reddit-native-distribution.md)
+- [`../expert-feedback-outreach/README.md`](../expert-feedback-outreach/README.md)
 - [`../substack-publishing/README.md`](../substack-publishing/README.md)
 - package-local `distribution/` or `socials/` surfaces when present
