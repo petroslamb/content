@@ -28,7 +28,7 @@ Decision after window: continue if at least one useful objection, correction, or
 | Camilo Chacon Sartori | "The Specification Gap: Coordination Failure Under Partial Knowledge in Code Agents" | Hinge evidence for the coordination claim: weakened shared specifications cause multi-agent integration failures; restoring full specification is the stronger recovery. | The essay's strongest empirical hinge depends on this paper's result and its limits. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/camilo-chacon-sartori/`; user manually sent invite 2026-05-05; sent-invitations manager confirmed Camilo/Chacon. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Initial browser invite attempt failed; manual profile action later landed. Ask whether "specification carries the shared decisions" overstates the paper's recovery setting after acceptance. |
 | Martin Monperrus | "Bootstrapping Coding Agents: The Specification Is the Program" | Strongest architectural edge case for specification-as-program and derived implementations. | The essay uses the paper to show a controlled inversion where specification becomes the durable object and implementations become downstream. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/martin-monperrus-369300a4/`; user manually sent invite 2026-05-05; sent-invitations manager confirmed Martin/Monperrus. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Initial browser invite attempt failed; manual profile action later landed. Mutual connection Jose was visible before the attempt. |
 | Brian Hempel | "Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025" | Professional-practice counterweight for the anti-vibe frame: experienced developers preserve agency through planning, supervision, validation, version control, and bounded delegation. | Coauthor of the practice paper that keeps `vibe` framed as a control-surface failure rather than a personality label. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/brianhempel/`; visible state after attempt: `Connect`, `Message`, `More`; profile is 3rd+. | no | n/a | no | no | blocked at confirmation | Retry manually or in a later browser pass; do not send essay link in invite. | Invite modal opened, but `Send without a note` would not submit through Playwright click, forced click, or keyboard activation. Since `Connect` remained visible, the invite is not marked sent. |
-| Linyue Pan | "Natural-Language Agent Harnesses" | Runtime/harness evidence: natural-language descriptions become stronger when interpreted by a harness with decomposition, roles, state, adapters, contracts, verification, and artifacts. | First author of the paper used to distinguish loose prompts from natural-language surfaces that participate in governed execution. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/linyue-pan/`; user-reported manual note invite sent 2026-05-05 after browser confirmation block. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Manual connection note used no essay link and asked for one narrow objection on Natural-Language Agent Harnesses. |
+| Linyue Pan | "Natural-Language Agent Harnesses" | Runtime/harness evidence: natural-language descriptions become stronger when interpreted by a harness with decomposition, roles, state, adapters, contracts, verification, and artifacts. | First author of the paper used to distinguish loose prompts from natural-language surfaces that participate in governed execution. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/linyue-pan/`; user-reported manual note invite sent 2026-05-05 after browser confirmation block. | yes, 2026-05-05 | yes, 2026-05-05 | no | yes, 2026-05-05 | accepted and invited paper-centered discussion | Send an author-centered follow-up that asks where her paper's result should and should not be extended. | Manual connection note used no essay link. Linyue replied that she would be happy to discuss and that the narrow objection would be valuable feedback for their next revision; this suggests paper-centered framing sparked the reply. |
 | Shraddha Barke | "Willful Disobedience: Automatically Detecting Failures in Agentic Traces" | Trace-compliance evidence: procedural violations can be detected in traces when prompts or system instructions imply explicit behavioral rules. | Coauthor with a visible profile and directly relevant Microsoft Research background in trustworthy code generation and invariant generation. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/shraddha-barke-ph-d-111b4694/`; user-reported manual note invite sent 2026-05-05. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Manual connection note used no essay link and asked whether the essay overconnects trace checks to specifications. |
 | Ben Zorn | "Willful Disobedience: Automatically Detecting Failures in Agentic Traces" | Secondary trace/procedural-verification target for the downstream validation side of the essay. | Coauthor and visible Microsoft Research route; useful if the Shraddha route does not convert or if a broader prompt-as-program objection is wanted. | LinkedIn inspected 2026-05-05: `https://www.linkedin.com/in/ben-zorn-0a58554/`; user-reported manual note invite sent 2026-05-05. | yes, 2026-05-05 | pending | no | no | invite pending | Wait for acceptance; then send the prepared paper-specific message. | Manual connection note used no essay link and asked about trace validation vs durable specification artifacts. |
 
@@ -50,7 +50,7 @@ Hi <name> - I write Rooted Layers on AI systems and software practice. I used yo
 - Camilo Chacon Sartori: browser attempted a no-note connection invite, but the sent-invitations manager initially did not show Camilo/Chacon/Chacon Sartori. The user manually retried from the profile page; a later sent-invitations check confirmed Camilo/Chacon.
 - Martin Monperrus: browser attempted a no-note connection invite, but the sent-invitations manager initially did not show Martin/Monperrus. The user manually retried from the profile page; a later sent-invitations check confirmed Martin/Monperrus.
 - Brian Hempel: opened the connection invite dialog, but the `Send without a note` confirmation did not submit through the in-app browser. Post-attempt state still showed `Connect`; not marked invited.
-- Linyue Pan: opened the connection invite dialog, but the `Send without a note` confirmation did not submit through the in-app browser. User later manually sent a no-link connection note.
+- Linyue Pan: opened the connection invite dialog, but the `Send without a note` confirmation did not submit through the in-app browser. User later manually sent a no-link connection note. Linyue accepted and replied on 2026-05-05, saying she would be happy to discuss and that the narrow objection would be valuable feedback for their next revision.
 - Shraddha Barke: user manually sent a no-link connection note.
 - Ben Zorn: user manually sent a no-link connection note.
 
@@ -139,18 +139,18 @@ Essay: https://lambpetros.substack.com/p/the-specification-surface-is-the
 Paper: "Natural-Language Agent Harnesses"
 Paper role: natural-language harness evidence for runtime-interpreted specification surfaces.
 Contact route: LinkedIn `https://www.linkedin.com/in/linyue-pan/`
-Status: manual no-link connection note sent by user on 2026-05-05; post-acceptance message prepared, not sent.
+Status: manual no-link connection note sent by user on 2026-05-05; accepted and replied on 2026-05-05; author-centered follow-up prepared, not sent.
 
 ```text
-Hi Linyue - I write Rooted Layers, a publication about how AI systems, software practice, and research ideas turn into operational constraints.
+Hi Linyue - thank you, and yes, I would like to make this useful from your side too.
 
-I used your paper, "Natural-Language Agent Harnesses," in a recent essay on specification surfaces.
+The part of Natural-Language Agent Harnesses that mattered most to me is that the harness gives natural language operational force: decomposition, roles, state, adapters, contracts, verification, and artifacts make the description part of execution rather than just a prompt.
 
-The essay uses the paper to argue that natural language becomes more than a loose prompt when it participates in a harness with decomposition, roles, state, adapters, contracts, verification, and durable artifacts.
+I used that in the essay as one case for a broader idea I call a "specification surface": a maintained artifact that teams and tools can read, validate, trace, and repair.
 
-I would value one objection or correction, especially if "specification surface" feels like too broad a term for what your harness work actually shows.
+The question I would value your view on is where the boundary should be drawn for your paper: when does a natural-language harness make the description a governed execution surface, and when would it be too much to treat that description as a durable specification or source of truth over time?
 
-Essay: https://lambpetros.substack.com/p/the-specification-surface-is-the
+Essay context here: https://lambpetros.substack.com/p/the-specification-surface-is-the
 ```
 
 ### Shraddha Barke
@@ -193,7 +193,7 @@ Essay: https://lambpetros.substack.com/p/the-specification-surface-is-the
 
 ## Manual-Send Boundary
 
-No external paper-specific message was sent by this workflow. The confirmed pending connection invites are Deepak Babu Piskala, Camilo Chacon Sartori, Martin Monperrus, Linyue Pan, Shraddha Barke, and Ben Zorn. Sending the prepared messages still requires acceptance plus explicit action-time approval naming the exact target and exact copy, or manual user execution from the prepared copy above.
+No external paper-specific message was sent by this workflow after acceptance yet. The confirmed pending connection invites are Deepak Babu Piskala, Camilo Chacon Sartori, Martin Monperrus, Shraddha Barke, and Ben Zorn. Linyue Pan accepted and replied on 2026-05-05, so the next manual action is the prepared author-centered follow-up above. Sending prepared messages still requires acceptance plus explicit action-time approval naming the exact target and exact copy, or manual user execution from the prepared copy above.
 
 Do not send more than five first-wave LinkedIn actions in one day unless the user explicitly accepts the account-risk tradeoff. Do not put the essay link in the connection request note.
 
@@ -201,10 +201,11 @@ Do not send more than five first-wave LinkedIn actions in one day unless the use
 
 Review date: 2026-05-19 for first-wave invite acceptance and replies if post-acceptance messages are sent quickly after acceptance.
 Success window elapsed: no.
-Reply count: 0.
+Reply count: 1.
 Objections or corrections: none yet.
-Useful weak ties: none yet.
+Useful weak ties: Linyue Pan accepted the connection and invited discussion.
+Paper revision signal: Linyue framed the narrow objection as potentially useful feedback for their next revision; future follow-ups should make the paper and its boundary conditions as central as the essay.
 Traffic notes, if observed: not a success metric for this experiment.
-Decision: first wave partially executed; wait for acceptances before any essay links or paper-specific messages.
-Rationale: LinkedIn's sent-invitations manager confirms six pending invites: Deepak, Camilo, Martin, Linyue, Shraddha, and Ben. The browser-attempted invites to Deepak, Camilo, and Martin did not land initially, but the user completed those invite actions manually and they later appeared in the sent-invitations manager. The batch preserved the expert-feedback posture because no essay link was included in workflow-sent actions and no paper-specific message was sent before acceptance.
-Next batch or stop condition: Monitor Deepak, Camilo, Martin, Linyue, Shraddha, and Ben for acceptance. Do not add more LinkedIn outreach targets until this batch produces acceptances, replies, or a 14-day no-reply signal. Keep Brian Hempel blocked unless the correct UCSD-linked profile is verified.
+Decision: first wave has one early positive signal; send the Linyue clarification follow-up, then wait for a substantive reply before adding more targets.
+Rationale: LinkedIn's sent-invitations manager confirmed six invites after manual retries. Linyue's quick acceptance and reply supports the expert-feedback framing, and the apparent ambiguity is useful: the outreach is stronger when it invites the author to think about the paper's boundary, revision, and implications, with the essay as context.
+Next batch or stop condition: Monitor Deepak, Camilo, Martin, Shraddha, and Ben for acceptance. For Linyue, send the prepared author-centered follow-up and wait for her objection or correction. Do not add more LinkedIn outreach targets until this batch produces either a substantive reply or a 14-day no-reply signal. Keep Brian Hempel blocked unless the correct UCSD-linked profile is verified.

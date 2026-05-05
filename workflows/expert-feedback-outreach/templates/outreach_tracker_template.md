@@ -20,13 +20,15 @@ Decision after window:
 ### Generic Post-Acceptance Pattern
 
 ```text
-Hi <name> - I write Rooted Layers, a publication about how AI systems, software practice, and research ideas turn into operational constraints.
+Hi <name> - thank you for connecting. I write Rooted Layers, a publication about how AI systems, software practice, and research ideas turn into operational constraints.
 
-I used your paper, "<paper title>", in a recent essay as <exact paper role in the essay>.
+Your paper, "<paper title>", is useful here because <paper's core contribution in its own terms>.
 
-The essay argues <one-sentence thesis>. I would value one objection or correction, especially if you think I used the paper too broadly or missed an important limitation.
+I used it in a recent essay to <exact paper role in the essay>.
 
-<canonical essay URL>
+The question I would value your view on is: <paper-centered boundary, limitation, or implication question>.
+
+If you are open to looking, the essay context is here: <canonical essay URL>
 ```
 
 ### Target-Specific Drafts

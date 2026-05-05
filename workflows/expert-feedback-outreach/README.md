@@ -55,11 +55,19 @@ Do not add people only because they are famous, adjacent, or likely to amplify t
 - Do not scrape contacts, automate sending, mass-DM people, bypass platform limits, or use replacement accounts.
 - External sends are outside this workflow. The workflow prepares and records copy; the user sends manually or gives explicit action-time approval with the exact destination and copy.
 - Connection requests should not carry the essay link by default. A connection request can introduce the shared area, but the essay belongs in a post-acceptance message.
-- Post-acceptance messages must name the recipient's paper, state exactly how the essay used it, and ask for one objection or correction.
+- Post-acceptance messages must be paper-first and author-centered: name the recipient's paper, state exactly what the paper contributes, explain how the essay used it, and invite the author to correct the boundary, limitation, or implication of that use.
 - Put the essay link after the ask, not as the opening payload.
 - Record outcomes even when nothing happens. Silence is experimental data.
 - For LinkedIn batches, inspect and record the visible action state before sending anything: `connect`, `follow`, `message`, `2nd`, `3rd+`, and mutual connections when visible. If the account has recent outreach risk or uncertain limits, send at most 5 initial invites or messages per day unless the user explicitly approves a different pace.
 - After any approved LinkedIn action, record the action evidence separately from the attempt: `invite_sent_without_note`, `invite_sent_with_note`, `message_sent`, `blocked_at_confirmation`, `premium_or_inmail_block`, `pending_visible`, or `connect_still_visible`. Do not mark a target as invited only because the invite modal opened.
+
+## Author-Centered Principle
+
+The outreach works best when it is about the author's paper as much as it is about the essay. Treat the essay as context for a research conversation, not as the payload.
+
+A good post-acceptance message should make the recipient feel that their work is being taken seriously on its own terms. Lead with the paper's contribution, then show the exact place where the essay depends on it. The question should help the author clarify a boundary, future revision, limitation, or implication of their work. Only after that should the message ask whether the essay's use of the paper is fair.
+
+If a misunderstanding produces engagement, record it as a signal. In the Linyue Pan exchange, the phrase "one narrow objection" appeared to invite her into a paper-centered revision discussion. Preserve that lesson: future messages should invite useful feedback for both sides, not just ask the author to review the essay.
 
 ## Canonical Flow
 
@@ -68,7 +76,7 @@ Do not add people only because they are famous, adjacent, or likely to amplify t
 3. Define the experiment hypothesis, message variant, target batch, success window, and decision after the window.
 4. Build a 5-10 person target map from cited or boundary-case paper authors.
 5. Record each paper's role in the essay and why that author is a good feedback target.
-6. Draft the message pack with exact text for each target or variant.
+6. Draft the message pack with exact text for each target or variant. Each post-acceptance message must include the paper's core contribution, the essay's specific use of it, and one paper-centered question before the essay link.
 7. Stop before external sending. If the user sends manually or gives explicit action-time approval, update the tracker afterward with dates, exact action evidence, and outcomes.
 8. Review the batch after the default 14-day success window and decide whether to continue, revise the message, pause, or retire that target type.
 
@@ -95,16 +103,18 @@ Every tracker must record:
 Default post-acceptance message shape:
 
 ```text
-Hi <name> - I write Rooted Layers, a publication about how AI systems, software practice, and research ideas turn into operational constraints.
+Hi <name> - thank you for connecting. I write Rooted Layers, a publication about how AI systems, software practice, and research ideas turn into operational constraints.
 
-I used your paper, "<paper title>", in a recent essay as <exact paper role in the essay>.
+Your paper, "<paper title>", is useful here because <paper's core contribution in its own terms>.
 
-The essay argues <one-sentence thesis>. I would value one objection or correction, especially if you think I used the paper too broadly or missed an important limitation.
+I used it in a recent essay to <exact paper role in the essay>.
 
-<canonical essay URL>
+The question I would value your view on is: <paper-centered boundary, limitation, or implication question>.
+
+If you are open to looking, the essay context is here: <canonical essay URL>
 ```
 
-This is a pattern, not a script. The live message should be short, specific, and honest about what the essay borrowed from the paper.
+This is a pattern, not a script. The live message should be short, specific, and honest about what the essay borrowed from the paper. The tone should make the exchange about the author's paper and its implications first; the essay is the shared object that exposes the question.
 
 ## Outcome Meanings
 
@@ -115,6 +125,7 @@ Useful outcomes include:
 - `reply`: the target replied
 - `objection`: the target identified a disagreement or limitation
 - `correction`: the target corrected a source use, framing, or claim
+- `paper_revision_signal`: the exchange produced a useful boundary, limitation, or implication for the author's own paper or next revision
 - `weak_tie`: the contact is now reachable for a later related piece
 - `collaboration`: the exchange produced a follow-up call, quote, review, or project
 - `no_reply`: the success window elapsed without a reply

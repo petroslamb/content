@@ -3,7 +3,7 @@ version: 1
 stability: experimental
 workflow_kind: module
 workflow_group: distribution
-summary: Run a bounded paper-author outreach experiment that asks for expert feedback, objections, or corrections after publication without automating external messages.
+summary: Run a bounded paper-author outreach experiment that asks for paper-centered expert feedback, objections, or corrections after publication without automating external messages.
 
 package_classes:
   - leaf
@@ -180,6 +180,8 @@ behavior:
       check: connection_requests_do_not_carry_essay_link_unless_explicitly_approved
     - id: post_acceptance_message_names_paper_role_and_one_objection
       check: message_names_paper_states_essay_use_and_asks_for_one_objection_or_correction
+    - id: post_acceptance_message_is_paper_first_and_author_centered
+      check: message_leads_with_the_paper_contribution_then_uses_the_essay_as_context_for_a_boundary_limitation_or_revision_question
     - id: workflow_does_not_send_external_messages
       check: workflow_external_mutation_budget_is_zero
     - id: linkedin_action_state_and_pacing_recorded
