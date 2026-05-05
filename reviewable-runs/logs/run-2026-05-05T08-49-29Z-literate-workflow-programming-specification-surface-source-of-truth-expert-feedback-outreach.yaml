@@ -1,0 +1,288 @@
+kind: run_record
+schema_version: 1
+run_id: run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach
+resolved_run_path: reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+package:
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth
+  status_path: publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+  status_hash: sha256:090c69b00bd28b9693351e33c867c046260f4089250368c92be7acc3205f48fe
+workflow:
+  workflow_id: expert_feedback_outreach
+  workflow_version: 1
+  workflow_hash: sha256:3d93110ade2e6602b82b086ba941ceec4107767087d4c65bb9de210f91afa457
+  contract_path: workflows/expert-feedback-outreach/workflow.yaml
+run_mode: governed_continuous
+timestamps:
+  started_at: '2026-05-05T08:49:31Z'
+  ended_at: '2026-05-05T08:49:31Z'
+invocation:
+  entrypoint: content-agent run
+  command: ./content-agent run --workflow expert_feedback_outreach --package literate-workflow-programming/specification-surface-source-of-truth
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml:
+      type: file_sha256
+      sha256: 090c69b00bd28b9693351e33c867c046260f4089250368c92be7acc3205f48fe
+      size_bytes: 2819
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/README.md
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/README.md:
+      type: file_sha256
+      sha256: ed8faf92c6d4e9b31f67dfc0b18671d2c2c268cd32ce82bb21263f9f95314e10
+      size_bytes: 7818
+- id: published_canonical_post_url
+  required: true
+  status: resolved
+  paths:
+  - publication_strategy_and_archive/post_map.yaml
+  hashes:
+    publication_strategy_and_archive/post_map.yaml:
+      type: file_sha256
+      sha256: 0b90f27d662bb46afd127b777c792707fbedc28440aecaeff78c4855e2742cfa
+      size_bytes: 12375
+- id: source_essay_candidate_or_live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md:
+      type: file_sha256
+      sha256: d28102c44b5460549f504460d75a5a17dd1705745aac86c5b837b28dd37d4ee9
+      size_bytes: 24255
+- id: package_evidence_surface_or_papers_index
+  required: true
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/papers
+  hashes:
+    publications/literate-workflow-programming/papers:
+      type: directory_listing_sha256
+      sha256: b76aad7c450763b3b3a20b9b1c388a6b0982899bfbd3158f8e089309698fd1bc
+      file_count: 57
+- id: existing_distribution_or_outreach_tracker
+  required: false
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md
+  hashes:
+    ? publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md
+    : type: file_sha256
+      sha256: 012e1abe81a681dad41976421452f8404a74e7aaaf674ae159af727083fff6b1
+      size_bytes: 10044
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/expert-feedback-outreach/README.md
+  hashes:
+    workflows/expert-feedback-outreach/README.md:
+      type: file_sha256
+      sha256: 3147bf77dcfe1823357f3579e9fd62d1aad1301262f6bec7b66223c900cdc924
+      size_bytes: 7089
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/expert-feedback-outreach/templates
+  hashes:
+    workflows/expert-feedback-outreach/templates:
+      type: directory_listing_sha256
+      sha256: 7da0d418920adc7b06050df8baa1939f7fd67b58f3cd0c52ffb53ee43f880e39
+      file_count: 1
+- id: distribution_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/distribution/README.md
+  hashes:
+    workflows/distribution/README.md:
+      type: file_sha256
+      sha256: 69c3fb3e85279d13a886575e7391e9dcdf729b21f73ec1ad5a4a399c69b82785
+      size_bytes: 7027
+- id: release_gate_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/release-gate/README.md
+  hashes:
+    workflows/release-gate/README.md:
+      type: file_sha256
+      sha256: b90c5871c5f8386e7c0e061e019d3fb228706ba853541cffa5b9bf2b48126a3d
+      size_bytes: 8439
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: c0a00f4afe52bfe99fb9eae5af5bdc33e7878f9b84f168783de7edc238ac262e
+      size_bytes: 3115
+consumed_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+  hashes:
+    ? reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+    : type: file_sha256
+      sha256: 06635f0cfe79941669453a765fff823368ffe8b3d2a8db66c234b14e05d56590
+      size_bytes: 8824
+- id: context:package_status
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml:
+      type: file_sha256
+      sha256: 090c69b00bd28b9693351e33c867c046260f4089250368c92be7acc3205f48fe
+      size_bytes: 2819
+- id: context:package_readme
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/README.md
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/README.md:
+      type: file_sha256
+      sha256: ed8faf92c6d4e9b31f67dfc0b18671d2c2c268cd32ce82bb21263f9f95314e10
+      size_bytes: 7818
+- id: context:published_canonical_post_url
+  paths:
+  - publication_strategy_and_archive/post_map.yaml
+  hashes:
+    publication_strategy_and_archive/post_map.yaml:
+      type: file_sha256
+      sha256: 0b90f27d662bb46afd127b777c792707fbedc28440aecaeff78c4855e2742cfa
+      size_bytes: 12375
+- id: context:source_essay_candidate_or_live_draft
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
+  hashes:
+    publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md:
+      type: file_sha256
+      sha256: d28102c44b5460549f504460d75a5a17dd1705745aac86c5b837b28dd37d4ee9
+      size_bytes: 24255
+- id: context:package_evidence_surface_or_papers_index
+  paths:
+  - publications/literate-workflow-programming/papers
+  hashes:
+    publications/literate-workflow-programming/papers:
+      type: directory_listing_sha256
+      sha256: b76aad7c450763b3b3a20b9b1c388a6b0982899bfbd3158f8e089309698fd1bc
+      file_count: 57
+- id: context:existing_distribution_or_outreach_tracker
+  paths:
+  - publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md
+  hashes:
+    ? publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md
+    : type: file_sha256
+      sha256: 012e1abe81a681dad41976421452f8404a74e7aaaf674ae159af727083fff6b1
+      size_bytes: 10044
+- id: context:workflow_readme
+  paths:
+  - workflows/expert-feedback-outreach/README.md
+  hashes:
+    workflows/expert-feedback-outreach/README.md:
+      type: file_sha256
+      sha256: 3147bf77dcfe1823357f3579e9fd62d1aad1301262f6bec7b66223c900cdc924
+      size_bytes: 7089
+- id: context:workflow_templates
+  paths:
+  - workflows/expert-feedback-outreach/templates
+  hashes:
+    workflows/expert-feedback-outreach/templates:
+      type: directory_listing_sha256
+      sha256: 7da0d418920adc7b06050df8baa1939f7fd67b58f3cd0c52ffb53ee43f880e39
+      file_count: 1
+- id: context:distribution_readme
+  paths:
+  - workflows/distribution/README.md
+  hashes:
+    workflows/distribution/README.md:
+      type: file_sha256
+      sha256: 69c3fb3e85279d13a886575e7391e9dcdf729b21f73ec1ad5a4a399c69b82785
+      size_bytes: 7027
+- id: context:release_gate_readme
+  paths:
+  - workflows/release-gate/README.md
+  hashes:
+    workflows/release-gate/README.md:
+      type: file_sha256
+      sha256: b90c5871c5f8386e7c0e061e019d3fb228706ba853541cffa5b9bf2b48126a3d
+      size_bytes: 8439
+- id: context:harness_policy
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: c0a00f4afe52bfe99fb9eae5af5bdc33e7878f9b84f168783de7edc238ac262e
+      size_bytes: 3115
+parent_artifacts:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+- id: package_status
+  path: publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+produced_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+- id: run_record
+  paths:
+  - reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml
+validation_results:
+- id: content_agent_validate
+  status: passed
+  command: ./content-agent validate
+enforcement_outcomes:
+- surface: contract_shape
+  posture: deny
+  status: passed
+- surface: context_admission
+  posture: deny
+  status: passed
+- surface: tool_use
+  posture: deny
+  status: passed
+- surface: path_access
+  posture: deny
+  status: passed
+- surface: review_gates
+  posture: deny
+  status: not_reached
+- surface: external_mutation
+  posture: deny
+  status: not_attempted
+- surface: lifecycle_movement
+  posture: deny
+  status: not_attempted
+- surface: promotion
+  posture: deny
+  status: not_attempted
+- surface: trace_completeness
+  posture: detect
+  status: recorded
+gate_ids: []
+approval_decisions: []
+external_mutations:
+- target: none
+  status: not_attempted
+  approval_reference: null
+terminal_status: deferred
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: passed
+  trace_state: minimum_complete
+execution:
+  stop_reason: 'scriptable step has no runnable command: resolve_outreach_context'
+  scriptable_steps: []
