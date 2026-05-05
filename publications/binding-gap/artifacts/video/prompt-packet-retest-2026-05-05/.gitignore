@@ -1,0 +1,4 @@
+*.mp4
+overlays/
+qa_frames/*.png
+!qa_frames/contact_sheet.png

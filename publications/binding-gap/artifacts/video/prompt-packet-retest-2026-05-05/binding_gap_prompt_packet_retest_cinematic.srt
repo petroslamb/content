@@ -1,0 +1,535 @@
+1
+00:00:00,480 --> 00:00:05,920
+You prompt an AI with a complex question
+
+2
+00:00:03,280 --> 00:00:08,400
+and it gathers all the right facts. The
+
+3
+00:00:05,920 --> 00:00:10,960
+names, the dates, the core concepts are
+
+4
+00:00:08,400 --> 00:00:12,559
+all perfectly preserved in its memory.
+
+5
+00:00:10,960 --> 00:00:14,719
+But then, right in the middle of
+
+6
+00:00:12,559 --> 00:00:16,800
+generating the answer, the internal
+
+7
+00:00:14,719 --> 00:00:19,439
+wiring connecting those facts simply
+
+8
+00:00:16,800 --> 00:00:21,840
+snaps. The resulting output feels
+
+9
+00:00:19,439 --> 00:00:24,160
+uncomfortably close to the truth. The
+
+10
+00:00:21,840 --> 00:00:25,600
+semantic pieces survived the process,
+
+11
+00:00:24,160 --> 00:00:28,320
+which gives you the illusion of
+
+12
+00:00:25,600 --> 00:00:30,480
+competence. But the exact attachment,
+
+13
+00:00:28,320 --> 00:00:33,120
+the physical link that tells the system
+
+14
+00:00:30,480 --> 00:00:36,160
+which entity belongs in which slot is
+
+15
+00:00:33,120 --> 00:00:39,280
+broken. Calling every AI mistake a
+
+16
+00:00:36,160 --> 00:00:41,120
+hallucination is an imprecise diagnosis.
+
+17
+00:00:39,280 --> 00:00:43,680
+Hallucination suggests the model
+
+18
+00:00:41,120 --> 00:00:45,840
+fabricated text from nothing. In these
+
+19
+00:00:43,680 --> 00:00:47,760
+cases, the ingredients are real and
+
+20
+00:00:45,840 --> 00:00:50,480
+available in the working memory. They
+
+21
+00:00:47,760 --> 00:00:52,960
+are simply being mismanaged. To build
+
+22
+00:00:50,480 --> 00:00:55,199
+more reliable systems, operators have to
+
+23
+00:00:52,960 --> 00:00:57,920
+look past the surface text and inspect
+
+24
+00:00:55,199 --> 00:01:00,160
+the model's internal binding pathways.
+
+25
+00:00:57,920 --> 00:01:02,480
+Researchers use a specific structural
+
+26
+00:01:00,160 --> 00:01:04,720
+test to identify this failure known as
+
+27
+00:01:02,480 --> 00:01:06,880
+the reversal curse. It begins by
+
+28
+00:01:04,720 --> 00:01:09,520
+teaching a language model a brand new
+
+29
+00:01:06,880 --> 00:01:12,240
+isolated relationship. You tell it Tom
+
+30
+00:01:09,520 --> 00:01:14,320
+Smith's wife is Mary Stone. The model
+
+31
+00:01:12,240 --> 00:01:16,080
+absorbs the context, recognizing the
+
+32
+00:01:14,320 --> 00:01:18,320
+entities and the marital relation
+
+33
+00:01:16,080 --> 00:01:20,640
+between them. The problem appears when
+
+34
+00:01:18,320 --> 00:01:23,200
+you ask for the inverse. You ask, "Who
+
+35
+00:01:20,640 --> 00:01:25,520
+is Mary Stone's husband?" Even though no
+
+36
+00:01:23,200 --> 00:01:28,000
+new information is required, the model's
+
+37
+00:01:25,520 --> 00:01:29,680
+performance drops off a cliff. The model
+
+38
+00:01:28,000 --> 00:01:31,920
+successfully retained the names and
+
+39
+00:01:29,680 --> 00:01:34,240
+concepts. However, the architecture
+
+40
+00:01:31,920 --> 00:01:36,000
+dropped the specific mathematical wiring
+
+41
+00:01:34,240 --> 00:01:38,720
+required to reverse the roles of those
+
+42
+00:01:36,000 --> 00:01:40,479
+entities. This structural vulnerability
+
+43
+00:01:38,720 --> 00:01:42,560
+scales directly into enterprise
+
+44
+00:01:40,479 --> 00:01:44,320
+applications, specifically when models
+
+45
+00:01:42,560 --> 00:01:46,799
+are used to summarize dense research
+
+46
+00:01:44,320 --> 00:01:49,280
+papers. Builders frequently encounter
+
+47
+00:01:46,799 --> 00:01:51,200
+citation drift. This is where the system
+
+48
+00:01:49,280 --> 00:01:53,840
+identifies real claims from a document
+
+49
+00:01:51,200 --> 00:01:55,920
+but binds them to the wrong sources.
+
+50
+00:01:53,840 --> 00:01:57,840
+Take a clinical trial where an
+
+51
+00:01:55,920 --> 00:02:00,560
+experimental drug is compared to a
+
+52
+00:01:57,840 --> 00:02:03,040
+placebo. The original text might show
+
+53
+00:02:00,560 --> 00:02:05,439
+the drug causing a 40% reduction in
+
+54
+00:02:03,040 --> 00:02:08,640
+tumor size while the placebo group
+
+55
+00:02:05,439 --> 00:02:11,039
+experiences severe side effects. The AI
+
+56
+00:02:08,640 --> 00:02:13,360
+processes the text and identifies every
+
+57
+00:02:11,039 --> 00:02:15,760
+correct entity. But under the pressure
+
+58
+00:02:13,360 --> 00:02:18,400
+of the jargon, the internal switchboard
+
+59
+00:02:15,760 --> 00:02:20,000
+swaps the roles. The final summary
+
+60
+00:02:18,400 --> 00:02:22,080
+confidently attributes the tumor
+
+61
+00:02:20,000 --> 00:02:24,720
+reduction to the placebo and the side
+
+62
+00:02:22,080 --> 00:02:26,560
+effects to the drug because the text is
+
+63
+00:02:24,720 --> 00:02:28,800
+fluent and the key words are all
+
+64
+00:02:26,560 --> 00:02:31,040
+technically correct. This summary can
+
+65
+00:02:28,800 --> 00:02:33,280
+easily bypass a human reviewer who is
+
+66
+00:02:31,040 --> 00:02:35,280
+scanning for familiar data points rather
+
+67
+00:02:33,280 --> 00:02:38,000
+than performing a line by line logical
+
+68
+00:02:35,280 --> 00:02:39,519
+audit. The ultimate stress test for this
+
+69
+00:02:38,000 --> 00:02:42,400
+architecture is a scientific
+
+70
+00:02:39,519 --> 00:02:44,640
+metaanalysis which requires extracting a
+
+71
+00:02:42,400 --> 00:02:47,599
+dense web of variables and effect sizes
+
+72
+00:02:44,640 --> 00:02:49,760
+from academic pros. Models are actually
+
+73
+00:02:47,599 --> 00:02:51,840
+quite successful at recognizing isolated
+
+74
+00:02:49,760 --> 00:02:53,840
+variables and statistical methods when
+
+75
+00:02:51,840 --> 00:02:55,840
+they are queried one at a time. The
+
+76
+00:02:53,840 --> 00:02:58,720
+collapse happens when the system tries
+
+77
+00:02:55,840 --> 00:03:00,800
+to extract the full association. As
+
+78
+00:02:58,720 --> 00:03:03,280
+density increases, the model
+
+79
+00:03:00,800 --> 00:03:06,159
+misattributes values assigning right
+
+80
+00:03:03,280 --> 00:03:08,319
+numbers to wrong variables. This happens
+
+81
+00:03:06,159 --> 00:03:10,879
+because the internal representation
+
+82
+00:03:08,319 --> 00:03:13,519
+cannot maintain rigid attachments across
+
+83
+00:03:10,879 --> 00:03:15,920
+multiple tightly packed data points. For
+
+84
+00:03:13,519 --> 00:03:18,159
+a researcher, a system that recognizes
+
+85
+00:03:15,920 --> 00:03:20,800
+the correct numbers but wires them to
+
+86
+00:03:18,159 --> 00:03:22,640
+the wrong variables is useless. To find
+
+87
+00:03:20,800 --> 00:03:25,440
+the cause of these errors, we have to
+
+88
+00:03:22,640 --> 00:03:27,440
+look past the metaphor of AI confusion
+
+89
+00:03:25,440 --> 00:03:30,000
+and into the mechanical failures of the
+
+90
+00:03:27,440 --> 00:03:32,000
+neural network itself. Deep inside the
+
+91
+00:03:30,000 --> 00:03:34,480
+mathematical space, the ordering
+
+92
+00:03:32,000 --> 00:03:37,040
+subspace acts as a switchboard, locking
+
+93
+00:03:34,480 --> 00:03:39,760
+concepts together. This fails because an
+
+94
+00:03:37,040 --> 00:03:42,239
+entity's internal mathematical signature
+
+95
+00:03:39,760 --> 00:03:44,400
+actually changes based on its role. In
+
+96
+00:03:42,239 --> 00:03:46,239
+dense text, nearby variables
+
+97
+00:03:44,400 --> 00:03:47,920
+magnetically pull on each other,
+
+98
+00:03:46,239 --> 00:03:49,920
+drowning specific connections in
+
+99
+00:03:47,920 --> 00:03:51,840
+mathematical noise. When these
+
+100
+00:03:49,920 --> 00:03:54,000
+stressors, shifting shapes, and
+
+101
+00:03:51,840 --> 00:03:55,840
+mathematical noise overwhelm the
+
+102
+00:03:54,000 --> 00:03:58,640
+ordering subspace, the connection
+
+103
+00:03:55,840 --> 00:04:00,879
+vanishes. The factual ingredients remain
+
+104
+00:03:58,640 --> 00:04:03,280
+but the bridge between them is gone.
+
+105
+00:04:00,879 --> 00:04:05,599
+This raises a difficult question. If the
+
+106
+00:04:03,280 --> 00:04:07,439
+internal wiring is so fragile, why do
+
+107
+00:04:05,599 --> 00:04:09,840
+these models sound so articulate and
+
+108
+00:04:07,439 --> 00:04:12,000
+convincing? They are often surfing on
+
+109
+00:04:09,840 --> 00:04:14,080
+generic language modeling pressure.
+
+110
+00:04:12,000 --> 00:04:16,079
+Because human language is repetitive,
+
+111
+00:04:14,080 --> 00:04:18,000
+models can predict highly probable word
+
+112
+00:04:16,079 --> 00:04:20,320
+patterns without actually understanding
+
+113
+00:04:18,000 --> 00:04:22,240
+the underlying structure. Often a
+
+114
+00:04:20,320 --> 00:04:24,720
+correct answer is just a statistical
+
+115
+00:04:22,240 --> 00:04:26,560
+reflex. The model outputs the right word
+
+116
+00:04:24,720 --> 00:04:28,639
+because it is common in that semantic
+
+117
+00:04:26,560 --> 00:04:31,120
+neighborhood, not because it navigated a
+
+118
+00:04:28,639 --> 00:04:33,680
+stable retrieved memory. Evaluating a
+
+119
+00:04:31,120 --> 00:04:35,520
+model based on its fluency is a trap. It
+
+120
+00:04:33,680 --> 00:04:37,199
+allows highquality pros to hide a
+
+121
+00:04:35,520 --> 00:04:39,360
+brittle and unreliable internal
+
+122
+00:04:37,199 --> 00:04:41,280
+architecture. Fixing the binding gap
+
+123
+00:04:39,360 --> 00:04:43,840
+requires a concrete engineering agenda
+
+124
+00:04:41,280 --> 00:04:46,880
+that moves beyond simple prompt testing.
+
+125
+00:04:43,840 --> 00:04:49,199
+One solution is schema records. Instead
+
+126
+00:04:46,880 --> 00:04:51,520
+of letting the model generate free pros
+
+127
+00:04:49,199 --> 00:04:53,840
+immediately, it maps the data into a
+
+128
+00:04:51,520 --> 00:04:56,479
+rigid grid first. This forces the
+
+129
+00:04:53,840 --> 00:04:58,880
+architecture to explicitly define RO and
+
+130
+00:04:56,479 --> 00:05:01,919
+numeric attachments before generating
+
+131
+00:04:58,880 --> 00:05:04,320
+conversational text. AI will only become
+
+132
+00:05:01,919 --> 00:05:06,800
+truly reliable when builders stop
+
+133
+00:05:04,320 --> 00:05:11,479
+relying on the illusion of fluency and
+
+134
+00:05:06,800 --> 00:05:11,479
+start engineering the internal wiring.
