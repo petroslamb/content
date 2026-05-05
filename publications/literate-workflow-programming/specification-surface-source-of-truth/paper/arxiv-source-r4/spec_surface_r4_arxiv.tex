@@ -1,0 +1,888 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Specification Surfaces as Source-of-Truth Artifacts in AI-Assisted Software Engineering},
+  pdfauthor={Petros Lambropoulos (Rooted Layers), petroslamb.dev@gmail.com},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Specification Surfaces as Source-of-Truth Artifacts in
+AI-Assisted Software Engineering}
+\author{Petros Lambropoulos (Rooted Layers), petroslamb.dev@gmail.com}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+AI-assisted software review usually begins with the generated diff, even
+when the decision a model followed lives somewhere else: a prompt, chat
+transcript, stale note, workflow file, test, harness, approval record,
+or private design choice. That mismatch creates a source-of-truth
+problem. Reviewers can inspect the downstream artifact while the
+artifact that authorized, constrained, or evaluated the work may remain
+outside the governed system. This paper defines a
+\texttt{specification\ surface} as a maintained artifact with
+operational standing in AI-assisted software work because people or
+tools use it to constrain, validate, trace, authorize, or repair
+generated behavior. The definition includes specifications, schemas,
+tests, workflow contracts, harnesses, trace records, claim ledgers, and
+approval gates when they are maintained and coupled to control or
+evaluation. It excludes passive documentation and one-off prompts. The
+contribution is an eight-role taxonomy, a lifecycle model of
+\texttt{specify\ -\textgreater{}\ generate\ -\textgreater{}\ validate\ -\textgreater{}\ trace\ -\textgreater{}\ repair},
+a systematization of recent AI-assisted software-engineering literature,
+and an illustrative artifact analysis of a file-backed workflow packet.
+The case is not evidence that one workflow improves outcomes. It shows
+how the framework separates source authority from evidence, traces, and
+approval records, giving code review a way to ask which upstream
+artifacts governed the code it is asked to judge.
+\end{abstract}
+
+\section{Keywords}\label{keywords}
+
+AI-assisted software engineering; specification; code review; agent
+workflows; traceability; software process; governance.
+
+\section{1. Introduction}\label{introduction}
+
+Review starts at the diff because the diff is visible. In AI-assisted
+software work, that habit is increasingly incomplete. A model may have
+generated the patch from an instruction file, a task contract, a test
+scaffold, a harness, a workflow policy, or a conversation that never
+becomes part of the repository. The implementation can look ordinary
+while the decision surface that governed it is missing, stale, or
+unreviewed.
+
+Generated code still deserves ordinary engineering scrutiny. It can be
+wrong, insecure, slow, brittle, or inconsistent with local design. The
+problem is that the diff may not reveal the artifact that made the
+change reasonable or unreasonable in the first place. A reviewer can ask
+whether the code compiles and whether the tests pass, yet still be
+unable to inspect the maintained statement of intended behavior, the
+constraints the agent was expected to preserve, the validation surface
+that checked those constraints, or the repair path that should update
+the upstream artifact after failure.
+
+This is a source-of-truth problem rather than a claim about syntax. The
+question is not whether natural language is code. The question is which
+artifacts have enough operational standing to govern AI-assisted
+software work. A design note, prompt, README, workflow file, or test
+suite can all influence a model. Only some of them deserve to be treated
+as source-of-truth surfaces.
+
+This paper uses \texttt{specification\ surface} for that narrower class:
+maintained artifacts that become part of the source-of-truth boundary
+because people or tools use them to constrain, validate, trace,
+authorize, or repair generated behavior. A surface may be written in
+prose, YAML, a schema language, tests, a workflow DSL, a trace format,
+or a review checklist. File format is secondary. The defining property
+is operational coupling.
+
+The paper makes four contributions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  a definition of \texttt{specification\ surface} for AI-assisted
+  software engineering;
+\item
+  an eight-role taxonomy covering source, runtime, validation, trace,
+  evidence, context, repair, and authority surfaces;
+\item
+  a lifecycle model,
+  \texttt{specify\ -\textgreater{}\ generate\ -\textgreater{}\ validate\ -\textgreater{}\ trace\ -\textgreater{}\ repair},
+  that explains why failures should update upstream surfaces rather than
+  only downstream code;
+\item
+  a literature mapping and an illustrative artifact analysis showing how
+  the framework classifies existing systems and one file-backed workflow
+  packet.
+\end{enumerate}
+
+The paper does not argue for maximal formalism. It argues for
+identifying which artifacts actually govern the work, how they are
+checked, and when they should be repaired.
+
+\section{2. Background And Motivation}\label{background-and-motivation}
+
+\subsection{2.1 Specification authority in software
+work}\label{specification-authority-in-software-work}
+
+Spec-driven development treats specifications as active development
+artifacts rather than background requirements prose. Piskala describes a
+spectrum from spec-first work, to spec-anchored work, to spec-as-source
+generation, with stronger specification discipline justified when it
+removes consequential ambiguity and can be maintained
+(\citeproc{ref-piskala2026specdriven}{Piskala 2026}). That spectrum
+gives the present paper a software-engineering baseline. Specification
+surfaces are not limited to agent harnesses or prompt files; they
+continue a longer concern that software becomes hard to govern when
+intended behavior is not itself maintained.
+
+The framework here is narrower than a general recommendation to
+formalize everything. A surface earns authority when it participates in
+control, validation, traceability, or repair. A highly formal artifact
+that nobody maintains can be weaker than a short acceptance contract
+that drives generation and tests.
+
+\subsection{2.2 Specification gaps in agentic
+generation}\label{specification-gaps-in-agentic-generation}
+
+The issue becomes sharper when agents coordinate under partial
+knowledge. Sartori studies multi-agent class generation while reducing
+specification detail and introducing opposing representation biases
+(\citeproc{ref-sartori2026specgap}{Sartori 2026}). The useful lesson is
+not that every task needs maximal detail. It is that underspecified
+shared intent can become an integration failure, and that restoring
+specification can be more useful than post-hoc conflict information in
+the studied setting.
+
+That result anchors the review problem. When a generated implementation
+diverges, the missing object may sit upstream of the diff: the shared
+decision that agents needed but did not receive. A review process that
+only inspects output can miss the ungoverned decision surface that
+caused the output to look plausible and still be wrong.
+
+\subsection{2.3 Professional control around
+agents}\label{professional-control-around-agents}
+
+Huang et al.~report that experienced developers use coding agents
+through planning, supervision, validation, version control, and domain
+expertise (\citeproc{ref-huang2025professional}{Huang et al. 2025}).
+That practice matters because it locates AI assistance inside
+professional control rather than outside it. The human task is not
+merely to accept or reject a model output. It is to preserve the
+artifacts that make design intent inspectable and failure repairable.
+
+The opposite pattern is informal delegation: intent remains in prompt
+material or conversation, while generated code becomes the only artifact
+reviewed with seriousness. The technical point is that some artifacts
+need to carry authority, some only provide context, and some should be
+repaired when failure exposes missing intent.
+
+\subsection{2.4 Method and scope}\label{method-and-scope}
+
+The framework was built from three inputs. First, prior
+software-engineering work on spec-driven development, agent
+specification gaps, and professional control established the core
+problem: intended behavior becomes difficult to govern when
+specification authority is absent, stale, or unreviewed. Second, recent
+agent and validation systems were coded by artifact role and lifecycle
+stage to test whether the surface vocabulary separates source, runtime,
+validation, trace, evidence, repair, context, and authority functions.
+Third, one local file-backed workflow packet was analyzed as an
+illustrative case.
+
+This is a framework and systematization article, not a systematic
+literature review. The literature corpus is targeted around the
+source-of-truth problem in AI-assisted software work. The case study is
+intentionally modest: it tests whether the taxonomy can classify a real
+artifact packet and expose authority/evidence/trace distinctions. It
+does not measure effectiveness.
+
+\section{3. Definition: Specification
+Surface}\label{definition-specification-surface}
+
+A specification surface is a maintained artifact that becomes part of
+the source-of-truth boundary for AI-assisted software work because
+people or tools use it to constrain, validate, trace, authorize, or
+repair generated behavior.
+
+An artifact qualifies when at least one of the following is true:
+
+\begin{itemize}
+\tightlist
+\item
+  it constrains allowed behavior before execution;
+\item
+  tooling parses, types, lints, interprets, compiles, or validates it;
+\item
+  it drives generation, orchestration, decomposition, or tool access;
+\item
+  it defines tests, checks, gates, policies, or completion criteria;
+\item
+  it links outputs to governing intent or supporting evidence;
+\item
+  it records execution state that can be inspected, replayed, or
+  compared;
+\item
+  failure turns the artifact itself into a repair target.
+\end{itemize}
+
+This definition excludes passive documentation. A README does not become
+a specification surface merely because an agent can read it. A prompt
+does not become source of truth because it came before generated code. A
+context file becomes a candidate surface only when it is maintained and
+connected to evaluation, enforcement, runtime interpretation,
+traceability, or review.
+
+The boundary also protects four claims that often get blurred in
+AI-assisted software discussions. Natural language can participate in a
+governed surface, but natural language is not automatically code.
+Documentation can inform work, but documentation is not automatically
+authority. Generated code remains consequential because it is the
+artifact users and systems execute. More formal specification can help
+when it removes consequential ambiguity and can be checked, but
+formality is not a monotonic improvement in model behavior.
+
+\section{4. Taxonomy Of Specification
+Surfaces}\label{taxonomy-of-specification-surfaces}
+
+Table 1 treats surface types as roles rather than mutually exclusive
+file formats. A single artifact can occupy several roles when it is both
+human-reviewable and machine-interpreted.
+
+\textbf{Table 1. Specification-surface taxonomy}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Surface type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Working definition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Operational force
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Examples
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Main risks
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Source surfaces & Artifacts that state desired behavior, constraints,
+interfaces, or acceptance criteria before implementation. & Guide
+generation, constrain implementation, establish review target. & Product
+specs, API contracts, schemas, BDD scenarios, task contracts. & Drift,
+ambiguity, over-specification, false confidence when the spec is
+wrong. \\
+Runtime surfaces & Artifacts interpreted by a runtime to orchestrate
+agent or workflow behavior. & Execute control flow, roles, state
+transitions, tool access, and decomposition. & Agent harnesses, workflow
+YAML, agent configs, DSLs, skill definitions. & Hidden runtime
+semantics, weak replayability, model-dependent interpretation. \\
+Validation surfaces & Artifacts that check whether behavior conforms to
+stated intent. & Turn expectations into tests, validators, linters, or
+contract checks. & Test suites, generated checks, static validators,
+mutation tests. & Test gaming, incomplete coverage, validator drift. \\
+Trace surfaces & Artifacts that retain execution evidence for audit,
+replay, debugging, or comparison. & Preserve what ran, which inputs were
+admitted, and which constraints applied. & Run logs, agent traces,
+checkpoint logs, replay records. & Treating logs as authority rather
+than evidence. \\
+Evidence surfaces & Artifacts that link claims, outputs, or decisions to
+support and contradictions. & Make claims auditable and contradictions
+visible. & Claim ledgers, source maps, evidence tables, provenance
+notes. & Paper-thin support, citation laundering, stale evidence. \\
+Context surfaces & Project guidance that becomes operational only when
+maintained and evaluated. & Shape generation or review when coupled to
+checks or process. & Repository instructions and coding guidelines. &
+Passive context mistaken for enforcement. \\
+Repair surfaces & Artifacts that convert failure diagnosis into upstream
+revision. & Feed validation or trace failures back into specs, policies,
+tests, or prompts. & Repair tickets, revised specs, updated tests,
+policy patches. & Fixing only generated output while leaving controlling
+ambiguity intact. \\
+Authority and gate surfaces & Artifacts that decide what may run, move,
+publish, or be promoted. & Govern lifecycle movement, permissions,
+promotion, or external mutation. & Gate contracts, approval records,
+release checklists, policy manifests. & Bypassed approvals; unclear
+authority order. \\
+\end{longtable}
+
+The taxonomy is intentionally plural. Source authority may live in a
+schema, a workflow contract, a test-generated prompt, or a human
+approval record. No single surface should replace all others. Review
+needs to know which surfaces govern which decisions.
+
+\section{5. Lifecycle Model}\label{lifecycle-model}
+
+Specification surfaces matter because they participate in a lifecycle
+rather than remaining static documents.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{specify {-}\textgreater{} generate {-}\textgreater{} validate {-}\textgreater{} trace {-}\textgreater{} repair}
+\NormalTok{   \^{}                                      |}
+\NormalTok{   |\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_|}
+\end{Highlighting}
+\end{Shaded}
+
+In the first stage, a surface states intent, constraints, or authority.
+In the generation stage, an agent, tool, or workflow produces code or
+another downstream artifact. Validation checks conformance. Trace
+records what happened and which inputs or surfaces were admitted. Repair
+updates the governing surface when failures expose ambiguity, drift,
+stale assumptions, missing constraints, or weak evidence.
+
+This loop separates governed specification surfaces from ordinary
+documents. A surface should be reviewable before execution, useful
+during execution, and repairable after failure.
+
+Recent systems occupy different parts of this loop. Bootstrapping Coding
+Agents treats the specification as the stable artifact of record in a
+narrow agent-bootstrap setting
+(\citeproc{ref-monperrus2026bootstrapping}{Monperrus 2026}).
+Natural-Language Agent Harnesses and AgentSPEX make harness or workflow
+logic executable through runtimes with contracts, state, checkpointing,
+tracing, replay, or verification (\citeproc{ref-pan2026nlah}{Pan et al.
+2026}; \citeproc{ref-wang2026agentspex}{Wang et al. 2026}). ContextCov
+converts passive agent instruction files into executable constraints,
+illustrating the transition from context surface to validation surface
+(\citeproc{ref-sharma2026contextcov}{Sharma 2026}). Test-Driven AI Agent
+Definition compiles behavioral specifications into tests and prompt
+artifacts (\citeproc{ref-rehan2026tdad}{Rehan 2026}). FASTRIC treats
+prompt-protocol formality as a design parameter for verifiable
+interactions (\citeproc{ref-jin2025fastric}{Jin 2025}). Trace and repair
+work such as AgentPex, AgentFixer, and claim-level auditability shows
+why outcome-only review remains weak for long-running agent behavior
+(\citeproc{ref-barke2026willful}{Barke et al. 2026};
+\citeproc{ref-mulian2026agentfixer}{Mulian et al. 2026};
+\citeproc{ref-rasheed2026fluent}{Rasheed et al. 2026}).
+
+The lifecycle model also explains why generated code remains important.
+Generated code is the executable artifact that users and systems
+encounter. But when it fails, the repair target is often not only the
+code. It is also the governing surface that allowed the failure to
+happen.
+
+\section{6. Literature Mapping}\label{literature-mapping}
+
+Table 2 maps the core literature by surface role and lifecycle stage.
+The table is a systematization of artifact roles in recent AI-assisted
+software-engineering work, not a broad survey of the area.
+
+\textbf{Table 2. Literature mapped to specification-surface roles}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Surface roles
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Lifecycle stages
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Use in this paper
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Boundary
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Spec-driven development (\citeproc{ref-piskala2026specdriven}{Piskala
+2026}) & source, validation, repair & specify, generate, validate,
+repair & SE baseline for spec-first, spec-anchored, and spec-as-source
+modes. & Do not claim maximum specification is always best. \\
+Specification gap (\citeproc{ref-sartori2026specgap}{Sartori 2026}) &
+source, validation, repair & specify, generate, validate, repair & Hinge
+evidence that underspecification can cause coordination failure. &
+Specific tasks and models; do not overgeneralize. \\
+Professional control (\citeproc{ref-huang2025professional}{Huang et al.
+2025}) & source, validation, repair, authority & specify, validate,
+repair & Practice baseline for expert supervision and validation. & Does
+not prove universal use of specification surfaces. \\
+Bootstrap specs (\citeproc{ref-monperrus2026bootstrapping}{Monperrus
+2026}) & source, validation & specify, generate, validate & Narrow
+example of specification as record. & Does not make all implementation
+safely regenerable. \\
+NL agent harnesses (\citeproc{ref-pan2026nlah}{Pan et al. 2026}) &
+runtime, source, trace & specify, generate, trace & Harness behavior as
+external executable artifact. & Runtime coupling matters. \\
+AgentSPEX (\citeproc{ref-wang2026agentspex}{Wang et al. 2026}) &
+runtime, validation, trace, source & specify, generate, validate, trace
+& Typed workflow specification and execution language. & Not every team
+needs a DSL. \\
+ContextCov (\citeproc{ref-sharma2026contextcov}{Sharma 2026}) & context,
+validation, repair & specify, validate, repair & Passive instructions
+transformed into executable guardrails. & Ordinary context files are not
+automatically governed. \\
+Test-driven agent definition (\citeproc{ref-rehan2026tdad}{Rehan 2026})
+& source, validation, repair & specify, generate, validate, repair &
+Behavioral specs compiled into tests and prompt artifacts. & Tests do
+not prove all behavior. \\
+FASTRIC (\citeproc{ref-jin2025fastric}{Jin 2025}) & source, validation,
+trace & specify, validate, trace & Prompt-protocol specification and
+procedural conformance. & Formality is not monotonic improvement. \\
+AgentPex traces (\citeproc{ref-barke2026willful}{Barke et al. 2026}) &
+trace, validation & validate, trace & Procedural trace checking beyond
+outcome success. & Traces diagnose; they do not replace source
+authority. \\
+AgentFixer (\citeproc{ref-mulian2026agentfixer}{Mulian et al. 2026}) &
+validation, trace, repair & validate, trace, repair & Failure detection,
+root cause, and repair recommendations. & Automated repair does not
+replace human review. \\
+Claim auditability (\citeproc{ref-rasheed2026fluent}{Rasheed et al.
+2026}) & evidence, trace, validation, repair & trace, validate, repair &
+Claim-level auditability and contradiction transparency. & This case
+does not implement full provenance graphs. \\
+\end{longtable}
+
+The mapping supports a bounded synthesis: source-of-truth authority can
+sit upstream of generated code, but only when artifacts are connected to
+control, validation, traceability, or repair.
+
+\section{7. Illustrative Artifact
+Analysis}\label{illustrative-artifact-analysis}
+
+\subsection{7.1 Method}\label{method}
+
+This section presents an illustrative artifact analysis, not a
+controlled empirical evaluation. The unit of analysis is a single
+specification-surface package in a file-backed editorial and
+software-workflow repository, together with the paper-development and
+essay-iteration workflow machinery around it.
+
+The artifact corpus includes package status, package README,
+claim-boundary ledger, paper blueprint, publication route note, workflow
+contracts, gate contracts, policy manifests, retained run logs, external
+review synthesis, and human promotion approval records. Each artifact
+was coded against the surface roles in Table 1 and the lifecycle stages
+in Section 5. The coding protocol asked three questions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Which decision does the artifact govern, if any?
+\item
+  Which tool, reviewer, or workflow step reads or validates it?
+\item
+  When a failure occurs, is the artifact evidence, authority, or a
+  repair target?
+\end{enumerate}
+
+The analysis reports observations only where the artifact role is
+visible from maintained files or retained run records. Interpretive
+claims are limited to what the taxonomy can classify: source authority,
+runtime interpretation, validation, trace, evidence, repair, context, or
+gate behavior. The case is useful because it separates roles that often
+collapse into a single conversational stream during AI-assisted work. It
+is also limited: it is a single local system, analyzed by the author,
+and does not prove general effectiveness.
+
+\subsection{7.2 Case summary}\label{case-summary}
+
+Observation 1: the package has a \texttt{status.yaml} manifest that
+resolves its kind, revision, live draft, evidence path, and lifecycle
+stage. Package state is therefore a maintained surface rather than an
+inference from prose.
+
+Observation 2: root authority surfaces define which layer wins when
+artifacts disagree. Workflow contracts, policy YAMLs, gate contracts,
+pipeline profiles, and package status outrank logs and views. This keeps
+trace evidence from silently becoming source authority.
+
+Observation 3: the experimental \texttt{paper\_development} workflow
+admits package status, package README, the live draft or candidate,
+claim boundary ledger, evidence surface, and paper folder. Its allowed
+write path is the package-local \texttt{paper/} folder, keeping paper
+work separate from the public essay route.
+
+Observation 4: the completed public-essay route supplies a repair and
+promotion example. External reviews identified non-blocking polish
+requirements and judged the candidate to clear the north-star bar, but
+the external review synthesis did not authorize live draft replacement.
+A separate human promotion approval surface authorized copying the
+polished candidate into the live draft.
+
+These observations support a limited claim: the taxonomy can classify
+source authority, runtime contracts, evidence, trace, and approval as
+distinct surfaces in a real workflow. They do not support a claim that
+this repository's workflow improves quality, speed, safety, or adoption
+compared with another process.
+
+\subsection{7.3 Artifact classification}\label{artifact-classification}
+
+Table 3 uses role labels rather than full repository paths so the
+manuscript remains readable in narrow columns. The exact file names are
+retained in the local case-study trace and workflow packet.
+
+\textbf{Table 3. Local artifact roles}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Artifact
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Surface type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Lifecycle stage
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Operational force
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Failure or repair implication
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Authority map & authority, gate & specify & Defines source-of-truth
+order. & If logs act as source authority, repair the authority map or
+consuming workflow. \\
+Package status manifest & authority, context & specify & Resolves
+package kind, revision, live draft, evidence path, and stage state. &
+Stage decisions should be repaired here, not inferred from prose
+alone. \\
+Paper workflow contract & runtime, authority, validation & specify,
+validate, trace & Declares context dependencies, allowed paths, outputs,
+and checks. & Paper artifacts cannot silently mutate the essay route. \\
+Essay workflow contract & runtime, validation, authority & specify,
+generate, validate, trace & Declares candidate, review, scorecard,
+decision, and gate outputs. & Promotion requires review and approval
+surfaces. \\
+Gate contract manifest & authority, validation & validate, repair &
+Defines movement, quality, promotion, and external-mutation gates. &
+Missing approvals should block movement or mutation. \\
+Claim boundary ledger & evidence, repair & specify, validate, repair &
+Names authorized, caveated, and forbidden claims. & Paper prose that
+drifts into forbidden claims repairs the blueprint or draft. \\
+External review synthesis & evidence, repair & validate, repair &
+Aggregates review findings and required polish. & Review can repair a
+candidate without authorizing promotion. \\
+Human promotion approval & authority, gate & validate, repair & Records
+explicit approval to promote the polished candidate. & Promotion is
+authorized through this surface, not through file existence. \\
+Reviewable run logs & trace & trace & Retain operational evidence. &
+Logs diagnose what happened but are not source authority. \\
+\end{longtable}
+
+\subsection{7.4 Case lesson}\label{case-lesson}
+
+The local case shows how a workflow can keep source authority, runtime
+interpretation, evidence, trace, and approval distinct. It does not show
+that this repository's process is generally better than alternatives.
+The value of the case is narrower: the taxonomy can classify a real
+file-backed workflow and identify which artifacts govern intent before,
+during, and after AI-assisted work.
+
+\section{8. Discussion}\label{discussion}
+
+\subsection{8.1 Code review moves upstream, but code remains
+consequential}\label{code-review-moves-upstream-but-code-remains-consequential}
+
+Generated code does not stop mattering. It may simply be the second
+artifact reviewers should ask about. When generated output is downstream
+of maintained specification surfaces, reviewers need to inspect both the
+diff and the surface that governed the diff. A clean diff can still be
+wrong if the controlling surface is stale, ambiguous, or unauthorized.
+
+\subsection{8.2 Context files become surfaces only under
+control}\label{context-files-become-surfaces-only-under-control}
+
+Agent instruction files and repository context files deserve attention
+because they are machine-facing project artifacts. A context file
+becomes a governed specification surface only when it is maintained,
+evaluated, enforced, interpreted by a runtime, or tied to review.
+ContextCov is useful here because it turns passive instructions into
+executable guardrails (\citeproc{ref-sharma2026contextcov}{Sharma
+2026}). Presence in the context window is weaker than operational
+coupling.
+
+\subsection{8.3 Formality is a design
+parameter}\label{formality-is-a-design-parameter}
+
+The taxonomy should not be read as a call for maximal formalism. A more
+formal surface can help when it removes consequential ambiguity and can
+be checked. It can also add friction, encode the wrong behavior, or
+over-constrain work when the domain is still exploratory. FASTRIC is
+useful here because it treats prompt-protocol formality as a design
+variable rather than a moral victory (\citeproc{ref-jin2025fastric}{Jin
+2025}).
+
+\subsection{8.4 Failure modes}\label{failure-modes}
+
+Specification surfaces can fail in familiar ways:
+
+\begin{itemize}
+\tightlist
+\item
+  they drift from implementation or practice;
+\item
+  they become too broad to review;
+\item
+  they encode stale authority;
+\item
+  validators check the wrong thing;
+\item
+  generated tests create false confidence;
+\item
+  traces are mistaken for source truth;
+\item
+  approval gates become ceremony rather than decision points.
+\end{itemize}
+
+These failures do not invalidate the concept. They explain why the
+surface must be maintained, validated, traced, and repaired.
+
+\section{9. Limitations And Threats To
+Validity}\label{limitations-and-threats-to-validity}
+
+This is a framework and systematization paper with an illustrative
+artifact analysis. It is not a benchmark paper and does not measure
+general effectiveness.
+
+The taxonomy is conceptual and should be tested against additional
+systems, teams, and workflow architectures. The case study is
+single-case, local, and author-coded. It demonstrates how the taxonomy
+can classify a file-backed workflow system; it does not prove that the
+workflow improves quality, speed, safety, or adoption.
+
+The literature map is preprint-heavy and fast-moving. That is
+appropriate for an early framework paper in AI-assisted software
+engineering, but it increases the risk that terminology, systems, and
+empirical results will change quickly.
+
+The argument does not claim that natural language is code. Some
+specification surfaces may be written in ordinary language, but the
+defining property is operational coupling, not syntax. The paper also
+does not claim that all documentation becomes authoritative, that
+generated code is disposable, or that richer specification always
+improves model behavior.
+
+\section{10. Artifact Availability}\label{artifact-availability}
+
+This manuscript analyzes repository-local artifacts from the author's
+content workflow. The artifact packet consists of the paper roadmap,
+north-star rubric, draftability audit, approval gate, case-study trace,
+literature map, manuscript drafts, route checklists, and retained
+workflow records. This version does not include a separate public
+supplemental bundle. The case analysis is therefore presented as
+illustrative and author-audited rather than as an externally reusable
+dataset.
+
+The next artifact step is a public or anonymized snapshot that lets
+readers inspect the classification method and workflow evidence
+directly. The packet is not presented as a benchmark dataset.
+
+\section{11. AI/Tool Use Disclosure}\label{aitool-use-disclosure}
+
+This manuscript was prepared with AI-assisted writing and
+repository-analysis tooling under a file-backed workflow. AI assistance
+was used to organize local evidence, draft and revise manuscript prose,
+and check workflow artifacts against the paper-development rubric. The
+author remains responsible for claims, citations, artifact selection,
+revision decisions, and public-posting decisions.
+
+\section{12. Conclusion}\label{conclusion}
+
+AI-assisted software work becomes easier to govern when intent can be
+read before execution, checked during execution, traced after execution,
+and repaired when failures expose missing decisions. Code review remains
+necessary, but it is incomplete when the upstream source of authority is
+informal. Specification surfaces name the artifacts that make intent
+reviewable: source surfaces, runtime surfaces, validation surfaces,
+trace surfaces, evidence surfaces, context surfaces, repair surfaces,
+and authority gates. The practical question for AI-assisted software
+engineering is not whether prompts are code. It is whether the artifacts
+that control generated work are maintained enough to be governed.
+
+\section{References}\label{references}
+
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-barke2026willful}
+Barke, Shraddha, Reshabh K. Sharma, and Benjamin Zorn. 2026.
+\emph{Willful Disobedience: Automatically Detecting Failures in Agentic
+Traces}. \url{https://arxiv.org/abs/2603.23806}.
+
+\bibitem[\citeproctext]{ref-huang2025professional}
+Huang, Ruanqianqian, Avery Reyna, Sorin Lerner, Haijun Xia, and Brian
+Hempel. 2025. \emph{Professional Software Developers Don't Vibe, They
+Control: AI Agent Use for Coding in 2025}.
+\url{https://arxiv.org/abs/2512.14012}.
+
+\bibitem[\citeproctext]{ref-jin2025fastric}
+Jin, Wen-Long. 2025. \emph{FASTRIC: Prompt Specification Language for
+Verifiable LLM Interactions}. \url{https://arxiv.org/abs/2512.18940}.
+
+\bibitem[\citeproctext]{ref-monperrus2026bootstrapping}
+Monperrus, Martin. 2026. \emph{Bootstrapping Coding Agents: The
+Specification Is the Program}. \url{https://arxiv.org/abs/2603.17399}.
+
+\bibitem[\citeproctext]{ref-mulian2026agentfixer}
+Mulian, Hadar, Liane Galanti, Sergey Zeltyn, Avi Yaeli, Ido Levy, and
+Segev Shlomov. 2026. \emph{AgentFixer: From Failure Detection to Fix
+Recommendations in LLM Agentic Systems}.
+\url{https://arxiv.org/abs/2603.29848}.
+
+\bibitem[\citeproctext]{ref-pan2026nlah}
+Pan, Linyue, Lexiao Zou, Shuo Guo, Jingchen Ni, and Hai-Tao Zheng. 2026.
+\emph{Natural-Language Agent Harnesses}.
+\url{https://arxiv.org/abs/2603.25723}.
+
+\bibitem[\citeproctext]{ref-piskala2026specdriven}
+Piskala, Deepak Babu. 2026. \emph{Spec-Driven Development: From Code to
+Contract in the Age of AI Coding Assistants}.
+\url{https://arxiv.org/abs/2602.00180}.
+
+\bibitem[\citeproctext]{ref-rasheed2026fluent}
+Rasheed, Razeen A., Animesh Mukherjee, Somnath Banerjee, and Rima Hazra.
+2026. \emph{From Fluent to Verifiable: Claim-Level Auditability for Deep
+Research Agents}. \url{https://arxiv.org/abs/2602.13855}.
+
+\bibitem[\citeproctext]{ref-rehan2026tdad}
+Rehan, Tzafrir. 2026. \emph{Test-Driven AI Agent Definition: Compiling
+Tool-Using Agents from Behavioral Specifications}.
+\url{https://arxiv.org/abs/2603.08806}.
+
+\bibitem[\citeproctext]{ref-sartori2026specgap}
+Sartori, Camilo Chacón. 2026. \emph{The Specification Gap: Coordination
+Failure Under Partial Knowledge in Code Agents}.
+\url{https://arxiv.org/abs/2603.24284}.
+
+\bibitem[\citeproctext]{ref-sharma2026contextcov}
+Sharma, Reshabh K. 2026. \emph{ContextCov: Deriving and Enforcing
+Executable Constraints from Agent Instruction Files}.
+\url{https://arxiv.org/abs/2603.00822}.
+
+\bibitem[\citeproctext]{ref-wang2026agentspex}
+Wang, Pengcheng, Jerry Huang, Jiarui Yao, et al. 2026. \emph{AgentSPEX:
+An Agent Specification and Execution Language}.
+\url{https://arxiv.org/abs/2604.13346}.
+
+\end{CSLReferences}
+
+\end{document}

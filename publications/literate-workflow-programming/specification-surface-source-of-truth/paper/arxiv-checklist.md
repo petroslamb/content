@@ -2,13 +2,16 @@
 kind: arxiv_checklist
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 workflow: paper_development
-status: blocked_until_complete_manuscript_packet
+status: ready_for_human_posting_decision
 created: "2026-04-30"
 recommended_primary_category: cs.SE
-source_draft: "specification-surface-source-of-truth-paper-draft-r3.md"
-source_pdf: "specification-surface-source-of-truth-paper-draft-r3.pdf"
+source_draft: "specification-surface-source-of-truth-paper-draft-r4.md"
+source_pdf: "specification-surface-source-of-truth-paper-draft-r4.pdf"
+source_arxiv_readiness_review: "specification-surface-source-of-truth-arxiv-readiness-review-r1.md"
+source_arxiv_tex: "arxiv-source-r4/spec_surface_r4_arxiv.tex"
+source_venue_matrix: "specification-surface-source-of-truth-venue-conflict-matrix-r1.md"
 external_posting_allowed: false
-verified_online: "2026-04-30"
+verified_online: "2026-05-05"
 ---
 
 # arXiv Checklist
@@ -17,6 +20,8 @@ verified_online: "2026-04-30"
 
 - Submission guidelines: <https://info.arxiv.org/help/submit/index.html>
 - Content type policy: <https://info.arxiv.org/help/policies/content-types.html>
+- License policy: <https://info.arxiv.org/help/license/index.html>
+- Moderation policy: <https://info.arxiv.org/help/moderation/index.html>
 - Category taxonomy: <https://arxiv.org/category_taxonomy>
 
 ## Policy Facts
@@ -40,27 +45,29 @@ Do not choose `cs.PL`, `cs.SY`, or `eess.SY` unless the manuscript actually deve
 
 | Requirement | Status | Notes |
 | :--- | :--- | :--- |
-| Complete manuscript | partial | R3 Markdown draft and local PDF exist, but posting still requires human approval and policy decisions. |
+| Complete manuscript | ready | R4 Markdown draft and local PDF exist, with arXiv-specific framing and no AIware acceptance claim. |
 | References | present | `references.bib` exists and was used in the local PDF render. |
-| Figures/tables | partial | Tables and text diagram exist; rendered figures are optional pending venue choice. |
-| Artifact statement | present | R3 includes an artifact availability section; posting still needs final route approval. |
-| AI/tool-use disclosure | present | R3 includes an AI/tool-use disclosure; venue-specific wording may still be required. |
-| Post-draft readiness review | done | R1, R2, and R3 readiness reviews keep arXiv posting blocked without human approval. |
-| PDF | present | `specification-surface-source-of-truth-paper-draft-r3.pdf` exists as a local review PDF. |
+| Figures/tables | ready | Tables and text diagram render in the R4 PDF; table-heavy pages were visually checked. |
+| Artifact statement | adequate but weak | R4 truthfully states that no separate public supplemental bundle exists yet. |
+| AI/tool-use disclosure | present | R4 includes an AI/tool-use disclosure. |
+| Post-draft readiness review | done | `specification-surface-source-of-truth-arxiv-readiness-review-r1.md` marks the packet ready for a human posting decision. |
+| Venue conflict matrix | present | `specification-surface-source-of-truth-venue-conflict-matrix-r1.md` separates arXiv compatibility from future peer-review risk. |
+| PDF | present | `specification-surface-source-of-truth-paper-draft-r4.pdf` exists as a local preview PDF. |
+| TeX source | present | `arxiv-source-r4/spec_surface_r4_arxiv.tex` exists and is the preferred arXiv upload source. |
 | License choice | missing | Must be chosen before posting. |
 | Endorsement/account status | unknown | Must be checked by the author. |
-| Venue preprint policy | pending | Must be checked before posting if pursuing NIER/workshop review. |
+| Venue preprint policy | checked for known routes | AIware compatibility is low risk; future ICSE/NIER-like strategy still carries double-anonymous risk. |
 | Human posting approval | pending | `specification-surface-source-of-truth-external-submission-approval-r1.md` exists but keeps arXiv posting blocked. |
 
 ## Posting Blockers
 
 - Human approval for external posting is pending and not granted.
 - License and endorsement status are unresolved.
-- Venue anonymity/preprint policy has not been adjudicated.
-- The PDF may need venue-format polishing before posting.
+- Posting without a public artifact snapshot is strategically acceptable only if the author accepts the credibility tradeoff.
+- Future double-anonymous venue strategy remains weaker after public posting.
 
 ## Decision
 
-Current decision: `blocked_until_complete_manuscript_packet`
+Current decision: `ready_for_human_posting_decision`
 
-Do not post to arXiv yet. The right sequence is local draft review, packet completion, venue-policy check, human approval, then posting only if the chosen route allows it.
+Do not post to arXiv automatically. R4 is the prepared preprint packet. The remaining gate is human approval plus license/account confirmation.
