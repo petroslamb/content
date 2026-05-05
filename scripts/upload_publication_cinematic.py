@@ -247,7 +247,8 @@ def main() -> None:
 
     templates = get_required(experiment, "templates", f"{args.manifest}:experiment")
     description_template = Path(get_required(templates, "cinematic_description", f"{args.manifest}:experiment.templates"))
-    prompt_file = Path(get_required(templates, "cinematic_prompt", f"{args.manifest}:experiment.templates"))
+    prompt_file = Path(cinematic.get("prompt_file") or get_required(templates, "cinematic_prompt", f"{args.manifest}:experiment.templates"))
+    prompt_packet_path = cinematic.get("prompt_packet_path")
 
     experiment_playlist = get_required(get_required(experiment, "playlists", f"{args.manifest}:experiment"), "cinematic", f"{args.manifest}:experiment.playlists")
     playlist_config = {**experiment_playlist, **(cinematic.get("playlist") or {})}
@@ -298,6 +299,9 @@ def main() -> None:
         "publish_at": publish_at,
         "upload_privacy": upload_privacy,
         "report_file": str(report_path),
+        "prompt_packet": prompt_packet_path,
+        "prompt_file": str(prompt_file),
+        "prompt_file_exists": prompt_file.exists(),
         "description_preview": description_preview,
         "generation_command": generation_command,
     }
@@ -305,6 +309,8 @@ def main() -> None:
     print(json.dumps({"plan": plan}, indent=2))
     if not video_file.exists():
         print("\nWARNING: Cinematic video file does not exist yet.")
+        if not prompt_file.exists():
+            print(f"WARNING: Cinematic prompt file does not exist yet: {prompt_file}")
         print("Generate it with:")
         print(generation_command)
 
@@ -355,6 +361,8 @@ def main() -> None:
         "notebook_id": notebook_id,
         "video_source_file": str(video_file),
         "caption_output": str(output_srt),
+        "prompt_packet": prompt_packet_path,
+        "prompt_file": str(prompt_file),
         "title": title,
         "base_title": base_title,
         "description": final_description,
