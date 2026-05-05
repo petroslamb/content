@@ -2,12 +2,12 @@
 kind: paper_roadmap
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
-status: submitted_to_aiware_arxiv_packet_prepared
+status: submitted_to_aiware_arxiv_blocked_by_endorsement
 created: "2026-04-30"
 updated: "2026-05-05"
 workflow: paper_development
-current_phase: arxiv_posting_gate
-next_artifact: "arxiv_posting_approval_or_parking_decision_r1"
+current_phase: arxiv_endorsement_blocker
+next_artifact: "arxiv_endorsement_result_or_aiware_notification"
 runner_patch_required: false
 rejection_policy: park
 north_star_bar: fast_feedback_ladder_with_peer_review_quality_floor
@@ -43,10 +43,11 @@ The paper has cleared the first paperization sprint and produced a local manuscr
 - local review PDFs exist;
 - generated arXiv TeX source packet exists;
 - arXiv readiness review exists;
+- arXiv submission attempt record exists;
 - external submission approval surface exists and approved AIware submission;
 - AIware submission record exists in `submitted` state.
 
-The workflow crossed the human approval gate for the R2 AIware packet. R3 superseded R2 after the pre-submit paper-shape and AI-written-tell pass, and the R3 PDF was submitted through the AIware Google Form on 2026-05-05. R4 now exists as an arXiv-facing fail-fast preprint packet with a generated TeX source archive. The current step is the arXiv posting gate: choose whether to post R4 now, wait for the Round 2 notification on June 1, 2026, or park the preprint until a public artifact snapshot exists. arXiv posting remains blocked unless separately approved.
+The workflow crossed the human approval gate for the R2 AIware packet. R3 superseded R2 after the pre-submit paper-shape and AI-written-tell pass, and the R3 PDF was submitted through the AIware Google Form on 2026-05-05. R4 now exists as an arXiv-facing fail-fast preprint packet with a generated TeX source archive. The arXiv browser flow was started, but arXiv blocked continuation because the account is not endorsed for `cs.SE`. arXiv posting remains blocked until endorsement is granted.
 
 ## Phase Ledger
 
@@ -66,7 +67,8 @@ The workflow crossed the human approval gate for the R2 AIware packet. R3 supers
 | Venue conflict matrix | Done | `specification-surface-source-of-truth-venue-conflict-matrix-r1.md` | Separates AIware/arXiv compatibility from future venue and moderation risks. |
 | arXiv R4 packet | Done | `specification-surface-source-of-truth-paper-draft-r4.md`, `arxiv-source-r4/` | R4 Markdown, local PDF, generated TeX source, and source archive exist for human posting decision. |
 | arXiv readiness review | Done | `specification-surface-source-of-truth-arxiv-readiness-review-r1.md` | Decision: `ready_for_human_posting_decision`; public posting still blocked. |
-| arXiv posting gate | Pending | To be created only if the author approves public posting | Must record license choice, account/endorsement confirmation, category, artifact tradeoff, and final submit/no-submit decision. |
+| arXiv submission attempt | Blocked | `specification-surface-source-of-truth-arxiv-submission-attempt-r1.md` | Start page completed for `cs.SE`; arXiv requires endorsement before upload. |
+| arXiv endorsement | Pending | Email/code held outside repository | A qualified `cs.SE` endorser must endorse the account before submission can continue. |
 | AIware notification | Pending | To be created after June 1, 2026 notification | Record accept/reject outcome, reviewer/chair feedback if any, and next route decision. |
 
 ## Completed Surfaces
@@ -96,12 +98,13 @@ The workflow crossed the human approval gate for the R2 AIware packet. R3 supers
 - [`specification-surface-source-of-truth-paper-draft-r4.md`](specification-surface-source-of-truth-paper-draft-r4.md)
 - `specification-surface-source-of-truth-paper-draft-r4.pdf` local generated PDF, not tracked because repository policy ignores generated PDFs
 - [`specification-surface-source-of-truth-arxiv-readiness-review-r1.md`](specification-surface-source-of-truth-arxiv-readiness-review-r1.md)
+- [`specification-surface-source-of-truth-arxiv-submission-attempt-r1.md`](specification-surface-source-of-truth-arxiv-submission-attempt-r1.md)
 - [`arxiv-source-r4/README.md`](arxiv-source-r4/README.md)
 - [`arxiv-source-r4/spec_surface_r4_arxiv.tex`](arxiv-source-r4/spec_surface_r4_arxiv.tex)
 
 ## Remaining Surfaces
 
-- arXiv posting approval or parking decision
+- `cs.SE` endorsement result
 - AIware notification outcome after June 1, 2026
 - public or anonymized artifact snapshot, optional before arXiv but recommended for credibility
 - `figures/`, only if a lifecycle or taxonomy figure is needed for the chosen venue shape
@@ -136,7 +139,7 @@ Manuscript drafting is blocked until `specification-surface-source-of-truth-pape
 - Both reviewers must independently approve the same route.
 - A split verdict blocks drafting; revise the audit or method and rerun the gate.
 
-Current gate result: `submitted_to_aiware_arxiv_packet_prepared`. R3 is the submitted AIware packet. R4 is the prepared arXiv packet. arXiv posting remains blocked.
+Current gate result: `submitted_to_aiware_arxiv_blocked_by_endorsement`. R3 is the submitted AIware packet. R4 is the prepared arXiv packet. arXiv posting remains blocked on `cs.SE` endorsement.
 
 ## Rejection And Parking
 

@@ -2,7 +2,7 @@
 kind: arxiv_checklist
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 workflow: paper_development
-status: ready_for_human_posting_decision
+status: blocked_by_endorsement
 created: "2026-04-30"
 recommended_primary_category: cs.SE
 source_draft: "specification-surface-source-of-truth-paper-draft-r4.md"
@@ -10,6 +10,7 @@ source_pdf: "specification-surface-source-of-truth-paper-draft-r4.pdf"
 source_arxiv_readiness_review: "specification-surface-source-of-truth-arxiv-readiness-review-r1.md"
 source_arxiv_tex: "arxiv-source-r4/spec_surface_r4_arxiv.tex"
 source_venue_matrix: "specification-surface-source-of-truth-venue-conflict-matrix-r1.md"
+source_submission_attempt: "specification-surface-source-of-truth-arxiv-submission-attempt-r1.md"
 external_posting_allowed: false
 verified_online: "2026-05-05"
 ---
@@ -54,20 +55,19 @@ Do not choose `cs.PL`, `cs.SY`, or `eess.SY` unless the manuscript actually deve
 | Venue conflict matrix | present | `specification-surface-source-of-truth-venue-conflict-matrix-r1.md` separates arXiv compatibility from future peer-review risk. |
 | PDF | present | `specification-surface-source-of-truth-paper-draft-r4.pdf` exists as a local preview PDF. |
 | TeX source | present | `arxiv-source-r4/spec_surface_r4_arxiv.tex` exists and is the preferred arXiv upload source. |
-| License choice | missing | Must be chosen before posting. |
-| Endorsement/account status | unknown | Must be checked by the author. |
+| License choice | selected for attempt | arXiv.org perpetual, non-exclusive license was selected during the blocked attempt. |
+| Endorsement/account status | blocked | arXiv reports the account is not endorsed for `cs.SE`; endorsement email/code was sent to the registered address. |
 | Venue preprint policy | checked for known routes | AIware compatibility is low risk; future ICSE/NIER-like strategy still carries double-anonymous risk. |
-| Human posting approval | pending | `specification-surface-source-of-truth-external-submission-approval-r1.md` exists but keeps arXiv posting blocked. |
+| Human posting approval | granted for attempt | The user instructed the browser flow to continue all the way; arXiv blocked before upload. |
 
 ## Posting Blockers
 
-- Human approval for external posting is pending and not granted.
-- License and endorsement status are unresolved.
+- `cs.SE` endorsement is missing.
 - Posting without a public artifact snapshot is strategically acceptable only if the author accepts the credibility tradeoff.
 - Future double-anonymous venue strategy remains weaker after public posting.
 
 ## Decision
 
-Current decision: `ready_for_human_posting_decision`
+Current decision: `blocked_by_endorsement`
 
-Do not post to arXiv automatically. R4 is the prepared preprint packet. The remaining gate is human approval plus license/account confirmation.
+R4 is the prepared preprint packet. arXiv posting cannot continue until the author gets `cs.SE` endorsement.
