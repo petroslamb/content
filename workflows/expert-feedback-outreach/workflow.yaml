@@ -1,0 +1,401 @@
+workflow_id: expert_feedback_outreach
+version: 1
+stability: experimental
+workflow_kind: module
+workflow_group: distribution
+summary: Run a bounded paper-author outreach experiment that asks for expert feedback, objections, or corrections after publication without automating external messages.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  outreach_question:
+    required: false
+    description: The expert-feedback hypothesis or paper-author outreach question for this batch.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+    - id: published_url
+      source: publications/{package}/status.yaml:config.published_url, config.substack_url, or publication map
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, revision, lifecycle state, and configured source paths.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation, local structure, audience boundaries, and publication-specific notes.
+    record_hash: true
+  - id: published_canonical_post_url
+    path: publication_strategy_and_archive/post_map.yaml
+    required: true
+    purpose: Resolve the live canonical published essay URL from config.published_url, config.substack_url, or the publication map before preparing outreach.
+    record_hash: true
+  - id: source_essay_candidate_or_live_draft
+    path_from_status: config.markdown_path
+    fallback:
+      - publications/{package}/*candidate*.md
+      - publications/{package}/*.md
+    required: true
+    purpose: Identify the essay argument and exact text whose source use is being discussed with paper authors.
+    record_hash: true
+  - id: package_evidence_surface_or_papers_index
+    path_from_status: config.evidence_path
+    fallback:
+      - publications/{package}/papers/index.md
+      - publications/{package}/papers/
+      - publications/{package}/sources/index.md
+      - publications/{package}/sources/
+    required: true
+    purpose: Resolve cited papers, source papers, and boundary-case papers that can produce eligible paper-author targets.
+    record_hash: true
+  - id: existing_distribution_or_outreach_tracker
+    path_from_status: config.distribution_path
+    fallback:
+      - publications/{package}/distribution/expert-feedback-outreach.md
+      - publications/{package}/distribution/*outreach*.md
+      - publications/{package}/distribution/
+      - publications/{package}/socials/
+    required: false
+    purpose: Preserve existing outreach records and adapt the package-local tracker instead of duplicating history.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/expert-feedback-outreach/README.md
+    required: true
+    purpose: Load human-facing expert-feedback outreach guidance.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/expert-feedback-outreach/templates/
+    required: true
+    purpose: Provide the standard package-local outreach tracker template.
+    record_hash: true
+  - id: distribution_readme
+    path: workflows/distribution/README.md
+    required: true
+    purpose: Keep this expert-feedback module separate from general channel distribution and traffic work.
+    record_hash: true
+  - id: release_gate_readme
+    path: workflows/release-gate/README.md
+    required: true
+    purpose: Preserve the external-mutation approval boundary for messages, comments, emails, and DMs.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local write, external mutation, trace, and approval policy.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: expert_feedback_outreach_validation
+      command: "./content-agent validate --workflow expert_feedback_outreach --package {package}"
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: false
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - "{evidence_path}"
+    - "{shared_evidence_path}"
+    - workflows/expert-feedback-outreach/
+    - workflows/distribution/
+    - workflows/release-gate/
+    - publication_strategy_and_archive/
+    - harness_policy.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/distribution/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: expert_feedback_outreach_tracker
+    path_template: "publications/{package}/distribution/expert-feedback-outreach.md"
+    required: true
+    format: markdown
+    producer: create_or_update_outreach_tracker
+  - id: paper_author_target_map
+    path_template: "publications/{package}/distribution/expert-feedback-outreach.md"
+    required: true
+    format: markdown
+    producer: build_paper_author_target_map
+  - id: paper_specific_message_pack
+    path_template: "publications/{package}/distribution/expert-feedback-outreach.md"
+    required: true
+    format: markdown
+    producer: draft_paper_specific_messages
+  - id: manual_send_boundary
+    path_template: "publications/{package}/distribution/expert-feedback-outreach.md"
+    required: true
+    format: markdown
+    producer: record_manual_send_boundary
+  - id: outcome_retrospective
+    path_template: "publications/{package}/distribution/expert-feedback-outreach.md"
+    required: conditional
+    required_when: the 14-day success window has elapsed or the user requests an early experiment readout
+    format: markdown
+    producer: record_outcome_retrospective
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: published_url_resolves
+      check: published_url_present
+      target: published_canonical_post_url
+      on_fail: stop
+    - id: source_essay_exists
+      check: source_essay_candidate_or_live_draft_exists
+      target: source_essay_candidate_or_live_draft
+      on_fail: stop
+    - id: evidence_surface_exists
+      check: evidence_surface_exists
+      target: package_evidence_surface_or_papers_index
+      on_fail: stop
+  invariants:
+    - id: targets_are_paper_authors_or_boundary_authors
+      check: outreach_targets_are_authors_of_cited_or_boundary_case_papers
+    - id: target_batch_is_five_to_ten_people
+      check: batch_size_between_five_and_ten_unless_explicitly_recorded_as_no_batch
+    - id: no_external_link_in_connection_request_by_default
+      check: connection_requests_do_not_carry_essay_link_unless_explicitly_approved
+    - id: post_acceptance_message_names_paper_role_and_one_objection
+      check: message_names_paper_states_essay_use_and_asks_for_one_objection_or_correction
+    - id: workflow_does_not_send_external_messages
+      check: workflow_external_mutation_budget_is_zero
+    - id: outcomes_are_expert_feedback_not_traffic
+      check: success_metrics_prioritize_replies_objections_corrections_weak_ties_and_collaboration
+    - id: existing_tracker_preserved_when_present
+      check: existing_package_outreach_tracker_is_updated_in_place_or_linked_as_history
+    - id: required_experiment_decisions_recorded
+      check: tracker_records_hypothesis_target_batch_message_variant_success_window_and_decision_after_window
+  budgets:
+    max_steps: 7
+    max_script_retries: 1
+    min_targets_per_batch: 5
+    max_targets_per_batch: 10
+    success_window_days: 14
+    external_mutations: 0
+    unapproved_external_messages: 0
+  recovery:
+    on_missing_published_url: stop_and_route_to_substack_archive_sync_or_distribution
+    on_missing_evidence_surface: stop_and_route_to_paper_intake_or_research
+    on_existing_tracker: preserve_historical_records_and_append_or_adapt_new_batch
+    on_no_eligible_paper_authors: record_no_batch_and_stop
+    on_external_send_needed: stop_for_user_manual_send_or_explicit_action_time_approval
+    on_reply_received: record_outcome_before_drafting_any_follow_up
+    on_material_correction: route_to_editorial_publishing_or_archive_repair_before_more_outreach
+    resume_from: resolved_run
+    rollback_strategy: preserve_existing_tracker_and_append_new_batch_note
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - expert_feedback_outreach_outputs_are_package_local
+    - external_mutation_budget_is_zero
+  context_checks:
+    - package_status_resolves
+    - package_readme_resolves
+    - published_canonical_post_url_resolves
+    - source_essay_candidate_or_live_draft_resolves
+    - package_evidence_surface_or_papers_index_resolves
+    - existing_distribution_or_outreach_tracker_resolves_when_present
+  hooks:
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - handoff
+      required: false
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates: []
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - published_url
+    - outreach_question
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_outreach_context
+    title: Resolve outreach context
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - published_canonical_post_url
+      - source_essay_candidate_or_live_draft
+      - package_evidence_surface_or_papers_index
+      - existing_distribution_or_outreach_tracker
+      - workflow_readme
+      - workflow_templates
+      - distribution_readme
+      - release_gate_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: create_or_update_outreach_tracker
+    title: Create or update outreach tracker
+    mode: codex_session
+    action: Create the package-local expert feedback outreach tracker from the template, or preserve and adapt an existing outreach tracker in place.
+    consumes:
+      - package_status
+      - package_readme
+      - published_canonical_post_url
+      - existing_distribution_or_outreach_tracker
+      - workflow_templates
+    produces:
+      - expert_feedback_outreach_tracker
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: build_paper_author_target_map
+    title: Build paper-author target map
+    mode: codex_session
+    action: Select 5-10 authors of cited or boundary-case papers and record the paper, paper role in the essay, why this person, contact route, and next action.
+    consumes:
+      - source_essay_candidate_or_live_draft
+      - package_evidence_surface_or_papers_index
+      - expert_feedback_outreach_tracker
+    produces:
+      - paper_author_target_map
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: draft_paper_specific_messages
+    title: Draft paper-specific messages
+    mode: codex_session
+    action: Draft exact outreach copy that introduces Rooted Layers, names the recipient's paper, states how the essay used it, asks for one objection or correction, and places the essay link after the ask.
+    consumes:
+      - published_canonical_post_url
+      - source_essay_candidate_or_live_draft
+      - package_evidence_surface_or_papers_index
+      - paper_author_target_map
+    produces:
+      - paper_specific_message_pack
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_manual_send_boundary
+    title: Record manual-send boundary
+    mode: codex_session
+    action: Record that the workflow has external_mutations set to 0 and that LinkedIn, email, comments, or DMs require manual sending or explicit action-time approval with exact copy confirmation.
+    consumes:
+      - paper_specific_message_pack
+      - release_gate_readme
+      - harness_policy
+    produces:
+      - manual_send_boundary
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_outcome_retrospective
+    title: Record outcome retrospective
+    mode: codex_session
+    action: After the success window or an early user-requested readout, record replies, objections, corrections, weak ties, collaboration signals, no-reply outcomes, and the decision to continue, revise, pause, or retire the target type.
+    consumes:
+      - expert_feedback_outreach_tracker
+      - paper_author_target_map
+      - paper_specific_message_pack
+      - manual_send_boundary
+    produces:
+      - outcome_retrospective
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - expert_feedback_outreach_tracker
+      - paper_author_target_map
+      - paper_specific_message_pack
+      - manual_send_boundary
+      - outcome_retrospective
+      - validation_results
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - repo_link_check
+    trace:
+      required: true

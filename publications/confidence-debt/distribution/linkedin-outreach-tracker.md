@@ -12,12 +12,30 @@ Thanks for connecting. I wrote the longer Confidence Debt piece here: https://la
 The thing I’m trying to test is whether “confidence debt” names something distinct from calibration / overreliance / automation bias. If you have one objection, I’d genuinely value it.
 ```
 
+## Michael Bernstein Follow-Up Draft
+
+Use after acceptance:
+
+```text
+Thanks for connecting, Michael.
+
+I wanted to ask because your paper "Explanations Can Reduce Overreliance on AI Systems During Decision-Making" is the boundary case I had in mind while writing this.
+
+I used that line of work as a stress test for the concept: if overreliance is partly about whether people find it worth the cost to verify an AI explanation, then "confidence debt" is trying to name the workflow-level version of the problem.
+
+The claim is that debt starts earlier than the final human decision, when polished AI artifacts, benchmark scores, or approvals travel farther downstream than their evidence warrants. By the time a reviewer is asked to rely appropriately, the evidence needed to verify the claim may already be hidden, compressed, or unavailable.
+
+If you have one objection to that distinction, I’d genuinely value it.
+
+Longer essay, if useful: https://lambpetros.substack.com/p/confidence-debt
+```
+
 ## Batch 1
 
 | Person | Area | LinkedIn / source | Invited | Accepted | Followed up | Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Carina Negreanu | co-audit, human-AI review | https://www.linkedin.com/posts/carina-suzana-negreanu_robin-ai-hires-microsoft-principal-research-activity-7214336634958311426-USSA | yes | no | no | |
-| Jose Cambronero | co-audit, developer tools | https://www.linkedin.com/in/jose-cambronero-8ba69935 | yes | no | no | |
+| Carina Negreanu | co-audit, human-AI review | https://www.linkedin.com/posts/carina-suzana-negreanu_robin-ai-hires-microsoft-principal-research-activity-7214336634958311426-USSA | yes | yes | yes | Essay sent after acceptance; no reply recorded. |
+| Jose Cambronero | co-audit, developer tools | https://www.linkedin.com/in/jose-cambronero-8ba69935 | yes | yes | yes | Essay sent after acceptance; no reply recorded. |
 | Leon Staufer | audit cards, AI evals | https://uk.linkedin.com/in/leonstaufer | yes | no | no | |
 | Stephen Casper | auditability, evals, governance | https://www.linkedin.com/posts/stephen-casper-858829b2_new-paper-audit-cards-contextualizing-activity-7320132963550007296-7eVA | yes | no | no | |
 | Florian Bordes | eval factsheets, evaluation documentation | https://ca.linkedin.com/in/florianbordes | yes | no | no | |
@@ -38,7 +56,7 @@ The thing I’m trying to test is whether “confidence debt” names something 
 | Karthik Narasimhan | agents, reliability, tau-bench | https://www.linkedin.com/in/karthik-narasimhan-65214455 | yes | no | no | |
 | Q. Vera Liao | human-AI interaction, explainability | https://www.linkedin.com/in/qvliao | yes | no | no | |
 | Meredith Ringel Morris | human-AI interaction, responsible AI | https://www.linkedin.com/in/meredithringelmorris | yes | no | no | |
-| Michael Bernstein | human-AI systems, social computing | https://www.linkedin.com/in/mibernstein | yes | no | no | |
+| Michael Bernstein | human-AI systems, social computing | https://www.linkedin.com/in/mibernstein | yes | yes | no | Accepted about one week after the first two acceptances; follow-up not yet recorded. |
 | Deborah Raji | AI accountability, auditability | https://ca.linkedin.com/in/deborah-raji-065751b2 | yes | no | no | |
 | Rumman Chowdhury | AI governance, accountability | https://www.linkedin.com/in/rumman | yes | no | no | |
 
@@ -53,4 +71,3 @@ Check once per day. Do not send more invites while many are pending.
 5. Anyone still visible there has not accepted.
 6. Anyone no longer visible there either accepted, ignored, or the invite is no longer pending. Search their name or check `My Network > Connections` to confirm whether they are now first-degree.
 7. If accepted, send the follow-up note and mark `accepted: yes`, `followed_up: yes`.
-
