@@ -184,6 +184,8 @@ behavior:
       check: workflow_external_mutation_budget_is_zero
     - id: linkedin_action_state_and_pacing_recorded
       check: linkedin_targets_record_visible_action_state_and_batch_pacing_before_any_send
+    - id: linkedin_post_action_evidence_recorded
+      check: linkedin_targets_record_invite_or_message_evidence_separately_from_attempted_modal_open
     - id: outcomes_are_expert_feedback_not_traffic
       check: success_metrics_prioritize_replies_objections_corrections_weak_ties_and_collaboration
     - id: existing_tracker_preserved_when_present
@@ -206,6 +208,7 @@ behavior:
     on_no_eligible_paper_authors: record_no_batch_and_stop
     on_external_send_needed: stop_for_user_manual_send_or_explicit_action_time_approval
     on_linkedin_action_state_unclear: record_route_as_needs_manual_inspection_before_send
+    on_linkedin_confirmation_blocked: record_blocked_at_confirmation_and_do_not_mark_invited
     on_reply_received: record_outcome_before_drafting_any_follow_up
     on_material_correction: route_to_editorial_publishing_or_archive_repair_before_more_outreach
     resume_from: resolved_run
