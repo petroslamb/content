@@ -151,15 +151,17 @@ Status: manual no-link connection note sent by user on 2026-05-05; accepted and 
 ```text
 Hi Linyue - thank you, and yes, I would like to make this useful from your side too.
 
-The part of Natural-Language Agent Harnesses that mattered most to me is that the harness gives natural language operational force: decomposition, roles, state, adapters, contracts, verification, and artifacts make the description part of execution rather than just a prompt.
+The part of Natural-Language Agent Harnesses that stood out to me is that the harness gives natural language operational force. Decomposition, roles, state, adapters, contracts, verification, and artifacts make the description part of execution rather than just a prompt.
 
-The lens I think may be useful for your side is the boundary between "natural language operationalized by a harness" and "natural language treated as a durable source of truth." That boundary feels important for how people will read harness work as it moves closer to software engineering practice.
+The boundary question I think your paper exposes is this: once natural language is interpreted by a harness, when should it still be treated as an interface to the system, and when does it become part of the system's governing specification?
 
-I used your paper in the essay as one case for a broader idea I call a "specification surface": a maintained artifact that teams and tools can read, validate, trace, and repair.
+That boundary feels important for how people will extend harness work into software engineering practice. If the boundary is drawn too loosely, everything becomes a "spec"; if it is drawn too narrowly, we miss the fact that the harness is already making natural language enforceable.
 
-The question I would value your view on is where the boundary should be drawn for your paper: when does a natural-language harness make the description a governed execution surface, and when would it be too much to treat that description as a durable specification or source of truth over time?
+I used your paper in this essay as one case for that broader question.
 
-Essay context here: https://lambpetros.substack.com/p/the-specification-surface-is-the
+The narrow objection I would value is: where does this framing overreach from your point of view?
+
+Essay context: https://lambpetros.substack.com/p/the-specification-surface-is-the
 ```
 
 ### Shraddha Barke
