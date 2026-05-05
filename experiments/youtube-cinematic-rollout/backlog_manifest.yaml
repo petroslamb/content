@@ -363,6 +363,12 @@ publications:
         title: Agents Don't Lose IQ. They Lose Attention.
         summary: When an agent loops or hallucinates mid-task, the failure is usually
           not intelligence. It is an attention and memory collapse.
+        hook: Agents lose attention before intelligence
+        cta: Full cinematic brief in Related Video
+        pattern:
+          type: contradiction
+          topic_lane: memory
+          source_signal: scale
         start: '00:00:00.400'
         end: '00:00:26.080'
         total_score: 22
@@ -405,6 +411,15 @@ publications:
         reasoning talk.
 
         '
+      cold_open:
+        status: approved
+        first_line: The model did not fail first. The scaffold failed first.
+        viewer_promise: Show builders why reasoning failures often come from workflow
+          shape, memory boundaries, and verification paths before model choice.
+        conflict: Fluent reasoning looks impressive until the action environment exposes
+          a missing scaffold.
+        payoff_by_30s: Viewers should know that the first diagnostic move is to inspect
+          the scaffold, not shop for a smarter model.
       video_file: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt
       upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic_upload_report.json
@@ -482,6 +497,15 @@ publications:
         enthusiasm.
 
         '
+      cold_open:
+        status: approved
+        first_line: A second agent only helps when it buys a real boundary.
+        viewer_promise: Give viewers a practical test for when multi-agent design
+          is architecture and when it is theater.
+        conflict: Extra agents can create coordination noise unless they separate
+          memory, authority, or action space.
+        payoff_by_30s: Viewers should know that the question is not how many agents
+          to add, but what boundary the next agent owns.
       video_file: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4
       output_srt: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt
       upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic_upload_report.json
@@ -506,6 +530,12 @@ publications:
         title: Agent Theater Is Not Intelligence
         summary: Splitting one model into CEO, developer, and tester roles can create
           an organizational chart without creating a smarter system.
+        hook: Agent theater is not intelligence
+        cta: Full cinematic brief in Related Video
+        pattern:
+          type: contradiction
+          topic_lane: multi-agent
+          source_signal: scale
         start: '00:00:00.480'
         end: '00:00:56.879'
         total_score: 23

@@ -1,0 +1,78 @@
+{
+  "created_at": "2026-05-05T12:01:39.857540+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "Vx7HwtBwo_c",
+    "url": "https://www.youtube.com/watch?v=Vx7HwtBwo_c"
+  },
+  "related_longform": {
+    "id": "Vx7HwtBwo_c",
+    "url": "https://www.youtube.com/watch?v=Vx7HwtBwo_c"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic brief",
+      "url": "https://www.youtube.com/watch?v=Vx7HwtBwo_c"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=LykGDaONozw"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/portrait/01-the-model-wasnt-the-first-failure_portrait.mp4",
+      "title": "The Model Wasn't the First Failure #shorts",
+      "summary": "A fluent plan can still fail when the workflow has no observation loop, memory boundary, or execution scaffold.",
+      "publish_at": null,
+      "video_id": "f1mRv98cecs",
+      "url": "https://www.youtube.com/watch?v=f1mRv98cecs",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC45NDIzMEVBNjk5NTFGRDZC"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "Vx7HwtBwo_c"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/portrait/01-the-model-wasnt-the-first-failure_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 74.583333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 74.489002
+        },
+        "format_duration": 74.583333,
+        "duration": 74.583333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "public",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "The Model Wasn't the First Failure #shorts",
+        "published_at": "2026-05-05T12:01:31Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC45NDIzMEVBNjk5NTFGRDZC",
+        "position": 0,
+        "title": "The Model Wasn't the First Failure #shorts"
+      }
+    }
+  ]
+}

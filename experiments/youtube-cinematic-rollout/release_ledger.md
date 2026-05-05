@@ -880,3 +880,57 @@ Initial rollout order from `backlog_manifest.yaml`:
 - In-app Studio verification: all six Shorts had their related-video field explicitly set to the intended cinematic research brief.
 - Implementation note: YouTube Data API `relatedVideoIds` writeback reported success during upload, but Studio still surfaced `Σχετικό βίντεο ... Κανένα` until the field was manually set and saved in Studio.
 - Queue action: reconcile `orchestration_paradigm_issue_behavior`, `orchestration_paradigm_issue_reality`, and `transformer_attractor` from `no_shorts_approved` to `completed` in the canonical rollout manifest.
+
+### 2026-05-05T08:57:01.211689+00:00
+
+- NotebookLM auth: `ok`
+- Auth detail: `Authentication is valid.`
+- Quality gate issues: `41`
+  - `illusion_of_swarm` `short:single-model-beat-the-swarm`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:single-agents-break-at-90-tools`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `illusion_of_swarm` `short:ai-swarms-are-training-wheels`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:engine-without-a-vehicle`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-need-a-world-model`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:multi-agent-debate-drops-errors`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `the_agent_revolution` `short:agents-treat-guardrails-like-puzzles`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:writing-the-script-isnt-agency`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_action` `short:css-tags-can-break-an-agent`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+  - `operating_agents_memory` `short:flat-vector-memory-becomes-a-security-hole`: missing hook, missing cta, missing pattern.type, missing pattern.topic_lane
+
+### 2026-05-05T09:00:08Z
+
+- Targeted tightened-workflow pass for two promising cinematics and two Shorts from the latest analytics:
+  - `operating_agents_reasoning`: added an approved cold-open packet for `bto9FNWlahY`; Data API readback shows public/processed, `84` public views, and target research breakdown `LykGDaONozw`.
+  - `operating_agents_multi_agent`: added an approved cold-open packet for `abBHq8lwCEE`; Data API readback shows public/processed, `334` public views, and target research breakdown `xxd2VKlqiL4`.
+  - `operating_agents_memory` short `agents-dont-lose-iq-they-lose-attention`: added hook/CTA/pattern metadata to the active and remaster manifests. The stronger remaster upload is `D3BZrjUzsPw`, public/processed, `894` public views, Studio related-video verification already recorded.
+  - `operating_agents_multi_agent` short `agent-theater-is-not-intelligence`: added hook/CTA/pattern metadata to the active and remaster manifests. The stronger remaster upload is `gENRTpSnHsw`, public/processed, `909` public views, Studio related-video verification already recorded.
+- Rollout helper verification: NotebookLM auth `ok`, no in-flight entries, no new generation candidates, no newly materialized manifest paths, and no quality-gate issues for the two selected Shorts.
+- Remaining end-to-end gap: local Studio verification records confirm the two selected Shorts related-video fields, but I did not find reload-verified card/end-screen records for the two selected full cinematic uploads. Treat `bto9FNWlahY -> LykGDaONozw` and `abBHq8lwCEE -> xxd2VKlqiL4` as `studio_link_pending` until a Studio browser pass verifies or wires them.
+
+### 2026-05-05T10:36:30Z
+
+- Closed the Studio link gap for the two selected full cinematic uploads:
+  - `bto9FNWlahY` now has a reload-verified end screen with the explicit research-breakdown video `LykGDaONozw`, a best-for-viewer video element, and a subscribe element. Its info card is reload-verified at `1:00`, pointing to `Operating Agents Lesson III [Reasoning]: Diagnose the Scaffold Before You Shop the Model`.
+  - `abBHq8lwCEE` now has a reload-verified end screen with the explicit research-breakdown video `xxd2VKlqiL4`, a best-for-viewer video element, and a subscribe element. Its info card is reload-verified at `1:00`, pointing to `Operating Agents Lesson IV [Multi-Agent]: The Second Agent Has To Buy A Boundary`.
+- Verification report: `experiments/youtube-cinematic-rollout/operating_agents_studio_verification_2026-05-05.json`
+
+### 2026-05-05T11:45:38Z
+
+- Completed the hook-repair rollout for the selected Operating Agents cinematics using the tightened cold-open gates.
+- `operating_agents_multi_agent_hook_repair` completed end to end:
+  - NotebookLM video task `9100129e-d52f-4e3c-a0f3-9c55fff4a2b0` produced `publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.mp4`.
+  - Uploaded public cinematic `51OLlF0Aob8`: `https://www.youtube.com/watch?v=51OLlF0Aob8`.
+  - Recovered captions to `publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.srt`.
+  - Rendered the hook-repair Short `a-second-agent-needs-a-boundary` with burned-in top hook, spoken captions, and related-video CTA.
+  - Uploaded public Short `ZzMk5kv7YpI`: `https://www.youtube.com/watch?v=ZzMk5kv7YpI`.
+  - Studio reload verification: cinematic end screen has explicit research-breakdown video `xxd2VKlqiL4`, best-for-viewer, and subscribe; cinematic info card points to `xxd2VKlqiL4` at `1:00`; Short related-video field points to the new cinematic `51OLlF0Aob8`.
+- `operating_agents_reasoning_hook_repair` completed end to end:
+  - NotebookLM video task `bd070bf5-5b95-4d81-813f-6e5e3d52ea9b` produced `publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/operating_agents_reasoning_hook_repair_cinematic.mp4`. A backup generation attempt was blocked by Google video-generation rate limiting, but the original task completed.
+  - Uploaded public cinematic `Vx7HwtBwo_c`: `https://www.youtube.com/watch?v=Vx7HwtBwo_c`.
+  - Recovered captions to `publications/autonomous-agents/essays/reasoning/artifacts/video/hook-repair-2026-05-05/operating_agents_reasoning_hook_repair_cinematic.srt`.
+  - Rendered the hook-repair Short `the-model-wasnt-the-first-failure` with burned-in top hook, spoken captions, and related-video CTA.
+  - Uploaded public Short `f1mRv98cecs`: `https://www.youtube.com/watch?v=f1mRv98cecs`.
+  - Studio reload verification: cinematic end screen has explicit research-breakdown video `LykGDaONozw`, best-for-viewer, and subscribe; cinematic info card points to `LykGDaONozw` at `1:00`; Short related-video field points to the new cinematic `Vx7HwtBwo_c`.
+- Caveat: the reasoning NotebookLM video did not follow the exact requested first spoken line. The uploaded title/description and the Short hook overlay still carry the corrected hook framing, and the selected Short's ASR captions were corrected before render.
+- Hook-repair manifest: `experiments/youtube-cinematic-rollout/hook_repair_2026-05-05/hook_repair_manifest.yaml`
+- Studio verification report: `experiments/youtube-cinematic-rollout/hook_repair_2026-05-05/studio_verification.json`

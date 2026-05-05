@@ -1,0 +1,72 @@
+{
+  "verified_at": "2026-05-05T12:04:18Z",
+  "workflow": "youtube_cinematic_rollout_hook_repair",
+  "browser_surface": "YouTube Studio in-app browser",
+  "studio_locale": "el",
+  "videos": [
+    {
+      "publication_key": "operating_agents_multi_agent_hook_repair",
+      "cinematic_video_id": "51OLlF0Aob8",
+      "cinematic_title": "Agent Theater Needs a Boundary | A Cinematic Research Brief",
+      "target_video_id": "xxd2VKlqiL4",
+      "target_title": "Operating Agents Lesson IV [Multi-Agent]: The Second Agent Has To Buy A Boundary",
+      "studio_editor_url": "https://studio.youtube.com/video/51OLlF0Aob8/editor",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true,
+      "observed_end_screen_elements": [
+        "explicit_research_breakdown_video",
+        "best_for_viewer_video",
+        "subscribe"
+      ],
+      "observed_info_card": {
+        "type": "video",
+        "target_video_id": "xxd2VKlqiL4",
+        "target_title": "Operating Agents Lesson IV [Multi-Agent]: The Second Agent Has To Buy A Boundary",
+        "teaser_time": "00:01:00"
+      }
+    },
+    {
+      "publication_key": "operating_agents_reasoning_hook_repair",
+      "cinematic_video_id": "Vx7HwtBwo_c",
+      "cinematic_title": "The Scaffold Failed First | A Cinematic Research Brief",
+      "target_video_id": "LykGDaONozw",
+      "target_title": "Operating Agents Lesson III [Reasoning]: Diagnose the Scaffold Before You Shop the Model",
+      "studio_editor_url": "https://studio.youtube.com/video/Vx7HwtBwo_c/editor",
+      "end_screen_reload_verified": true,
+      "info_card_reload_verified": true,
+      "observed_end_screen_elements": [
+        "explicit_research_breakdown_video",
+        "best_for_viewer_video",
+        "subscribe"
+      ],
+      "observed_info_card": {
+        "type": "video",
+        "target_video_id": "LykGDaONozw",
+        "target_title": "Operating Agents Lesson III [Reasoning]: Diagnose the Scaffold Before You Shop the Model",
+        "teaser_time": "00:01:00"
+      }
+    }
+  ],
+  "shorts": [
+    {
+      "publication_key": "operating_agents_multi_agent_hook_repair",
+      "slug": "a-second-agent-needs-a-boundary",
+      "short_video_id": "ZzMk5kv7YpI",
+      "short_title": "A Second Agent Needs a Boundary #shorts",
+      "studio_details_url": "https://studio.youtube.com/video/ZzMk5kv7YpI/edit",
+      "related_video_id": "51OLlF0Aob8",
+      "related_title": "Agent Theater Needs a Boundary | A Cinematic Research Brief",
+      "related_video_reload_verified": true
+    },
+    {
+      "publication_key": "operating_agents_reasoning_hook_repair",
+      "slug": "the-model-wasnt-the-first-failure",
+      "short_video_id": "f1mRv98cecs",
+      "short_title": "The Model Wasn't the First Failure #shorts",
+      "studio_details_url": "https://studio.youtube.com/video/f1mRv98cecs/edit",
+      "related_video_id": "Vx7HwtBwo_c",
+      "related_title": "The Scaffold Failed First | A Cinematic Research Brief",
+      "related_video_reload_verified": true
+    }
+  ]
+}

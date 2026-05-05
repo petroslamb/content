@@ -1,0 +1,78 @@
+{
+  "created_at": "2026-05-05T11:41:34.171834+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "51OLlF0Aob8",
+    "url": "https://www.youtube.com/watch?v=51OLlF0Aob8"
+  },
+  "related_longform": {
+    "id": "51OLlF0Aob8",
+    "url": "https://www.youtube.com/watch?v=51OLlF0Aob8"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full cinematic brief",
+      "url": "https://www.youtube.com/watch?v=51OLlF0Aob8"
+    },
+    "secondary": {
+      "label": "Full research breakdown",
+      "url": "https://www.youtube.com/watch?v=xxd2VKlqiL4"
+    }
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/portrait/01-a-second-agent-needs-a-boundary_portrait.mp4",
+      "title": "A Second Agent Needs a Boundary #shorts",
+      "summary": "Adding more agents does not multiply intelligence unless the next agent owns a real memory, authority, or action boundary.",
+      "publish_at": null,
+      "video_id": "ZzMk5kv7YpI",
+      "url": "https://www.youtube.com/watch?v=ZzMk5kv7YpI",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CODNEOTFERDNCQjU2ODhE"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "51OLlF0Aob8"
+        ]
+      },
+      "probe": {
+        "path": "publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/portrait/01-a-second-agent-needs-a-boundary_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 55.666667
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 55.611995
+        },
+        "format_duration": 55.666667,
+        "duration": 55.666667
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "public",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "A Second Agent Needs a Boundary #shorts",
+        "published_at": "2026-05-05T11:41:26Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC5CODNEOTFERDNCQjU2ODhE",
+        "position": 0,
+        "title": "A Second Agent Needs a Boundary #shorts"
+      }
+    }
+  ]
+}

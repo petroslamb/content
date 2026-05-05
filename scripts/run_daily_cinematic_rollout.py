@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -13,6 +14,11 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 import yaml
+
+
+COLD_OPEN_REQUIRED_FIELDS = ("first_line", "viewer_promise", "conflict", "payoff_by_30s")
+SHORTS_MANIFEST_REQUIRED_FIELDS = ("slug", "title", "start", "end")
+NON_GENERATION_STATES = {"blocked_rate_limited", "blocked_auth_expired", "retryable_error"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -150,6 +156,16 @@ def default_cinematic_copy(title_hint: str) -> tuple[str, str, str]:
     return title, hook, summary
 
 
+def default_cold_open(title_hint: str) -> dict[str, Any]:
+    return {
+        "status": "draft_needed",
+        "first_line": "",
+        "viewer_promise": f"Land the central tension behind {title_hint} before the cinematic setup begins.",
+        "conflict": "",
+        "payoff_by_30s": "",
+    }
+
+
 def relative_video_root(package: str) -> Path:
     return Path("publications") / package / "artifacts" / "video"
 
@@ -178,6 +194,7 @@ def build_auto_entry(discovered: DiscoveredPublication, pending_reason: str | No
             "title": title,
             "hook": hook,
             "summary": summary,
+            "cold_open": default_cold_open(markdown_title),
             "video_file": str(video_root / f"{stem}_cinematic.mp4"),
             "output_srt": str(video_root / f"{stem}_cinematic.srt"),
             "upload_report": str(video_root / f"{stem}_cinematic_upload_report.json"),
@@ -244,6 +261,107 @@ def run_notebooklm_auth_check() -> tuple[bool, str]:
     return ok, condensed
 
 
+def word_count(value: str | None) -> int:
+    if not value:
+        return 0
+    return len(re.findall(r"[A-Za-z0-9$]+(?:[-'][A-Za-z0-9$]+)?", value))
+
+
+def cold_open_gate_issues(entry: dict[str, Any]) -> list[str]:
+    cinematic = entry.get("cinematic", {})
+    if cinematic.get("youtube_video_id") or cinematic.get("generation_task_id"):
+        return []
+    cold_open = cinematic.get("cold_open") or {}
+    issues = [
+        f"missing cold_open.{field}"
+        for field in COLD_OPEN_REQUIRED_FIELDS
+        if not str(cold_open.get(field) or "").strip()
+    ]
+    if cold_open.get("status") != "approved":
+        issues.append("cold_open.status must be approved")
+    return issues
+
+
+def clip_quality_gate_issues(clip: dict[str, Any], manifest: dict[str, Any]) -> list[str]:
+    defaults = manifest["experiment"].get("defaults", {})
+    thresholds = defaults.get("rubric_thresholds") or {}
+    approved_min = int(thresholds.get("approved_min", 22))
+    overlay = (defaults.get("shorts_overlay") or {})
+    overlay_quality = overlay.get("quality_check") or {}
+    max_hook_words = int(overlay.get("hook_max_words", 9))
+    issues: list[str] = []
+
+    for field in SHORTS_MANIFEST_REQUIRED_FIELDS:
+        if not str(clip.get(field) or "").strip():
+            issues.append(f"missing {field}")
+
+    total_score = clip.get("total_score")
+    if total_score is None:
+        issues.append("missing total_score")
+    elif number_value(total_score) < approved_min:
+        issues.append(f"total_score below approved_min {approved_min}")
+
+    hook = str(clip.get("hook") or clip.get("top_hook") or "").strip()
+    if overlay_quality.get("require_top_hook", True) and not hook:
+        issues.append("missing hook")
+    elif hook and word_count(hook) > max_hook_words:
+        issues.append(f"hook exceeds {max_hook_words} words")
+
+    if overlay_quality.get("require_bottom_cta", True) and not str(clip.get("cta") or "").strip():
+        issues.append("missing cta")
+    if not str(clip.get("summary") or "").strip():
+        issues.append("missing summary")
+
+    pattern = clip.get("pattern") or {}
+    if not isinstance(pattern, dict) or not str(pattern.get("type") or "").strip():
+        issues.append("missing pattern.type")
+    if not isinstance(pattern, dict) or not str(pattern.get("topic_lane") or "").strip():
+        issues.append("missing pattern.topic_lane")
+    return issues
+
+
+def clip_manifest_ready(clip: dict[str, Any]) -> bool:
+    return all(str(clip.get(field) or "").strip() for field in SHORTS_MANIFEST_REQUIRED_FIELDS)
+
+
+def number_value(value: Any) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def quality_gate_summary(manifest: dict[str, Any]) -> dict[str, Any]:
+    items: list[dict[str, Any]] = []
+    for key, entry in manifest.get("publications", {}).items():
+        cold_open_issues = cold_open_gate_issues(entry)
+        if cold_open_issues:
+            items.append(
+                {
+                    "key": key,
+                    "surface": "cinematic",
+                    "slug": None,
+                    "issues": cold_open_issues,
+                }
+            )
+        for clip in (entry.get("shorts") or {}).get("approved_clips") or []:
+            issues = clip_quality_gate_issues(clip, manifest)
+            if issues:
+                items.append(
+                    {
+                        "key": key,
+                        "surface": "short",
+                        "slug": clip.get("slug"),
+                        "issues": issues,
+                    }
+                )
+    return {
+        "issue_count": len(items),
+        "items": items[:50],
+        "truncated": len(items) > 50,
+    }
+
+
 def parse_iso(value: str | None) -> datetime | None:
     if not value:
         return None
@@ -272,6 +390,12 @@ def classify_entry(entry: dict[str, Any]) -> None:
         cinematic["state"] = "generation_pending"
         shorts["state"] = "pending_cinematic"
         return
+
+    if not cinematic.get("youtube_video_id") and state not in NON_GENERATION_STATES:
+        if cold_open_gate_issues(entry):
+            cinematic["state"] = "cold_open_review_pending"
+            shorts["state"] = "pending_cinematic"
+            return
 
     if cinematic.get("youtube_video_id"):
         if not output_srt.exists():
@@ -350,6 +474,8 @@ def schedule_approved_clips(manifest: dict[str, Any]) -> int:
         for clip_index, clip in enumerate(approved):
             if clip.get("publish_at"):
                 continue
+            if clip_quality_gate_issues(clip, manifest):
+                continue
             clip_day = datetime.combine(start_day + timedelta(days=clip_index), datetime.min.time())
             daily_clip_map.setdefault(clip_day, []).append((key, clip_index))
 
@@ -390,6 +516,8 @@ def shorts_manifest_clip_payload(clip: dict[str, Any]) -> dict[str, Any]:
         payload["hook"] = hook
     if clip.get("cta"):
         payload["cta"] = clip["cta"]
+    if clip.get("pattern"):
+        payload["pattern"] = clip["pattern"]
     return payload
 
 
@@ -410,7 +538,7 @@ def shorts_overlay_payload(manifest: dict[str, Any], cinematic: dict[str, Any]) 
     }
 
 
-def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
+def materialize_shorts_manifests(manifest: dict[str, Any], *, write: bool) -> list[str]:
     publications = manifest["publications"]
     changed_paths: list[str] = []
     for key, entry in publications.items():
@@ -420,8 +548,10 @@ def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
         cinematic = entry.get("cinematic", {})
         if not cinematic.get("youtube_video_id") or not cinematic.get("youtube_url"):
             continue
+        ready_clips = [clip for clip in approved if clip_manifest_ready(clip)]
+        if not ready_clips:
+            continue
         manifest_path = Path(entry["shorts"]["manifest_path"])
-        manifest_path.parent.mkdir(parents=True, exist_ok=True)
         overlay = shorts_overlay_payload(manifest, cinematic)
         payload = {
             "source_video": cinematic["video_file"],
@@ -431,14 +561,16 @@ def materialize_shorts_manifests(manifest: dict[str, Any]) -> list[str]:
             "full_video_url": cinematic["youtube_url"],
             "secondary_video_url": entry.get("secondary_link", {}).get("url"),
             "playlist_id": manifest["experiment"]["playlists"]["shorts"]["id"],
-            "clips": [shorts_manifest_clip_payload(clip) for clip in approved],
+            "clips": [shorts_manifest_clip_payload(clip) for clip in ready_clips],
         }
         if overlay:
             payload["overlay"] = overlay
         new_text = json.dumps(payload, indent=2) + "\n"
         current_text = manifest_path.read_text(encoding="utf-8") if manifest_path.exists() else None
         if current_text != new_text:
-            manifest_path.write_text(new_text, encoding="utf-8")
+            if write:
+                manifest_path.parent.mkdir(parents=True, exist_ok=True)
+                manifest_path.write_text(new_text, encoding="utf-8")
             changed_paths.append(str(manifest_path))
     return changed_paths
 
@@ -462,6 +594,14 @@ def append_ledger(ledger_path: Path, summary: dict[str, Any]) -> None:
         lines.append(f"- Materialized Shorts manifests: {', '.join(f'`{path}`' for path in summary['manifest_paths'])}")
     if summary.get("scheduled_clip_count"):
         lines.append(f"- Newly scheduled approved clips: `{summary['scheduled_clip_count']}`")
+    quality_gates = summary.get("quality_gates") or {}
+    if quality_gates.get("issue_count"):
+        lines.append(f"- Quality gate issues: `{quality_gates['issue_count']}`")
+        for item in (quality_gates.get("items") or [])[:10]:
+            slug = f":{item['slug']}" if item.get("slug") else ""
+            lines.append(f"  - `{item['key']}` `{item['surface']}{slug}`: {', '.join(item.get('issues') or [])}")
+        if quality_gates.get("truncated"):
+            lines.append("  - Additional quality gate issues truncated in the ledger; rerun the helper for the full JSON summary.")
     if summary.get("blocked_auth_key"):
         lines.append(f"- Hard auth gate: backlog stays pinned at `{summary['blocked_auth_key']}` until `.venv/bin/notebooklm login` succeeds.")
     ledger_path.parent.mkdir(parents=True, exist_ok=True)
@@ -487,7 +627,8 @@ def main() -> None:
         retry_state["attempts"] = int(retry_state.get("attempts", 0)) + 1
 
     scheduled_clip_count = schedule_approved_clips(manifest)
-    manifest_paths = materialize_shorts_manifests(manifest)
+    manifest_paths = materialize_shorts_manifests(manifest, write=args.apply)
+    quality_gates = quality_gate_summary(manifest)
 
     in_flight = in_flight_keys(manifest)
     if in_flight:
@@ -511,6 +652,7 @@ def main() -> None:
         "blocked_auth_key": blocked_auth_key,
         "scheduled_clip_count": scheduled_clip_count,
         "manifest_paths": manifest_paths,
+        "quality_gates": quality_gates,
     }
 
     print(json.dumps(summary, indent=2))

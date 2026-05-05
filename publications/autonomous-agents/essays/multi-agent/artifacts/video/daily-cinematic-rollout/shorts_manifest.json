@@ -21,6 +21,13 @@
         "novelty_vs_existing_channel_shorts": 5,
         "clip_arc_and_compression": 5,
         "rewatch_shareability": 4
+      },
+      "hook": "Agent theater is not intelligence",
+      "cta": "Full cinematic brief in Related Video",
+      "pattern": {
+        "type": "contradiction",
+        "topic_lane": "multi-agent",
+        "source_signal": "scale"
       }
     },
     {

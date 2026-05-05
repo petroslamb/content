@@ -12,11 +12,13 @@ required_context:
   - package-local artifact surfaces for the target publications
 expected_outputs:
   - updated evergreen backlog state
+  - approved cold-open packet for each new cinematic before generation
   - package-local cinematic and Shorts artifacts or an exact blocked-state note
+  - Shorts candidates with hook pattern, overlay copy, rubric score, and scheduling status
   - verified Studio card and end-screen links for uploaded cinematic briefs when a YouTube research-breakdown target exists
   - appended release-ledger entry for the run
 done_when:
-  - all in-flight package work for the run is reconciled, uploaded cinematic briefs have Studio card/end-screen wiring or an explicit blocker recorded, up to two new cinematics are started or completed when possible, and blockers are recorded without hidden state
+  - all in-flight package work for the run is reconciled, cold-open and Shorts quality gates are either satisfied or explicitly blocking, uploaded cinematic briefs have Studio card/end-screen wiring or an explicit blocker recorded, up to two new cinematics are started or completed when possible, and blockers are recorded without hidden state
 approval_gate: required_before_channel_mutation
 ---
 
@@ -51,8 +53,10 @@ Do not move generated media into the experiment workspace.
 
 - Run the NotebookLM auth preflight first. Expired NotebookLM auth is a hard gate for new cinematic generation.
 - When auth is expired, do not start new cinematics. Record `blocked_auth_expired`, notify with `.venv/bin/notebooklm login`, and continue only with downstream YouTube-only reconciliation that does not require NotebookLM.
+- Do not start a new cinematic generation until `cinematic.cold_open.status: approved` and the cold-open packet has a concrete first line, viewer promise, conflict, and payoff by 30 seconds.
 - Recover the cinematic `.srt` before choosing Shorts. Do not guess clip boundaries from untimed transcripts.
 - Apply the high-bar Shorts rubric and schedule only clips that score `22` or higher.
+- Do not schedule newly approved Shorts unless they also have a feed-native `hook`, `cta`, `summary`, and `pattern` with `type` and `topic_lane`.
 - Render approved Shorts with the manifest-configured overlay treatment by default: top hook, spoken subtitles from the cinematic SRT, and bottom related-video CTA.
 - Publish cinematics immediately after upload.
 - For every full cinematic upload in `Rooted Layers Cinematic Briefs`, add one YouTube Studio info card pointing to the configured YouTube research-breakdown target in the first few minutes.
@@ -113,6 +117,48 @@ Do not rely on a single reconciliation pass. The active run should normally stay
 - Shorts upload:
   - `.venv/bin/python scripts/upload_publication_shorts.py --package <package> --shorts-dir <run-folder>/portrait --manifest <package-local-shorts-manifest.json> --main-video-id <cinematic-video-id> ...`
 
+## Tightening Gates
+
+The rollout is experimental, but it should not treat polished output as progress by itself. The daily helper now reports quality-gate issues and uses those gates when scheduling future work.
+
+### Cold-Open Gate
+
+Every new or queued cinematic must carry this packet before NotebookLM generation starts:
+
+```yaml
+cinematic:
+  cold_open:
+    status: approved
+    first_line: "The first sentence viewers hear."
+    viewer_promise: "What the viewer will understand if they stay."
+    conflict: "The concrete tension or failure this brief resolves."
+    payoff_by_30s: "What has been made clear by the first 30 seconds."
+```
+
+If this packet is missing or not approved, `scripts/run_daily_cinematic_rollout.py` moves the entry to `cold_open_review_pending` and does not consider it a generation candidate. This is intentional: the current analytics show that cinematic topics can earn clicks and subscribers while losing too much attention in the opening.
+
+### Shorts Pattern Gate
+
+Approved Shorts are not just clips; they are pattern tests. Each approved clip should include:
+
+```yaml
+pattern:
+  type: contradiction | mechanism | consequence | concrete_failure | metric_shock
+  topic_lane: memory | multi-agent | safety | reasoning | workflow | hardware | other
+  source_signal: scale | hook_repair | remaster | exploration
+```
+
+The helper only schedules new unscheduled clips when the clip has:
+
+- `total_score` at or above the manifest `approved_min`
+- a top `hook` within the configured word limit
+- a `cta`
+- a `summary`
+- `pattern.type`
+- `pattern.topic_lane`
+
+Existing scheduled clips are not silently rewritten. They are reported as quality-gate issues so the operator can repair or leave them intentionally.
+
 ## Canonical Daily Run
 
 ### 1. Sync backlog and preflight auth
@@ -128,15 +174,18 @@ The script must:
 
 - discover newly eligible published packages
 - dedupe umbrella roots into their canonical leaf when required
+- mark entries with missing or unapproved cold-open packets as `cold_open_review_pending`
 - print in-flight items first
 - list up to two new generation candidates
 - verify `.venv/bin/notebooklm auth check --test`
+- print quality-gate issues for cold opens and approved Shorts
 - record a blocked auth state in the ledger when auth fails
 
 ### 2. Finish in-flight packages first
 
 Before starting any new cinematic generation, reconcile entries whose state is already beyond `queued`:
 
+- cold-open review for `cold_open_review_pending` entries
 - caption recovery
 - Studio card/end-screen reconciliation for any uploaded cinematic brief with a YouTube research-breakdown target
 - candidate extraction
@@ -267,6 +316,15 @@ For every approved clip, include:
 - `hook`: a short, specific top overlay line. Prefer a concrete insight or tension over a label. Keep it under roughly nine words when possible.
 - `cta`: normally `Full cinematic brief in Related Video`, unless there is a stronger source-specific related-video CTA.
 - `summary`: the YouTube description seed, distinct from the hook. The hook is on-screen copy; the summary is metadata.
+- `pattern`: the hook pattern and topic lane being tested, so analytics can later distinguish "this topic worked" from "this rhetorical shape worked."
+
+Do not promote merely intelligent clips. Promote feed-ready clips:
+
+- they make sense without the cinematic
+- they expose one concrete tension immediately
+- they pay off before the viewer has to infer the thesis
+- they are different enough from existing channel Shorts to teach the next iteration
+- they have a specific related-video CTA rather than a generic content label
 
 ### 8. Render and upload Shorts
 

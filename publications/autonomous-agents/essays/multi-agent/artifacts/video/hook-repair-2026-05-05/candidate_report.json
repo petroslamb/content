@@ -1,0 +1,265 @@
+{
+  "package": "publications/autonomous-agents/essays/multi-agent",
+  "srt_file": "publications/autonomous-agents/essays/multi-agent/artifacts/video/hook-repair-2026-05-05/operating_agents_multi_agent_hook_repair_cinematic.srt",
+  "existing_short_count": 4,
+  "candidate_count": 9,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:11.280",
+      "end": "00:01:40.880",
+      "start_seconds": 11.28,
+      "end_seconds": 100.88,
+      "duration_seconds": 89.6,
+      "excerpt": "The idea that stringing together 5, 10, or 20 language models will spontaneously generate a super intelligence. But throwing multiple models into an unstructured workflow doesn't multiply their IQ. It just creates massive coordination noise. Every time these models talk over one another, you pay for duplicated API calls and their context windows rapidly degrade with redundant information. High performance system design focuses on the strict operational boundary the next agent actually controls rather than the raw number of models in a dashboard. To scale these systems safely, you have to separate their memory, their authority, or their action space. Unconstrained complexity is a trap. You see this trap most clearly in how developers assign human job titles to AI. They spin up a researcher, a writer, and an editor. But under the hood, all three of those roles are pulling from the exact same foundational model and sharing the identical context window. Because they are separate instances, the system has to constantly summarize and compress its own data just to hand it off to its virtual co-workers. Nuance is stripped away at every step. Critical information is lost entirely because the system is forced to spend its comput cycles talking to itself. This is agent theater. It is an expensive simulation of a corporate org chart that multiplies",
+      "suggested_slug": "idea-that-stringing-together-language-models-will-spontaneously",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.066,
+        "title": "Agent Theater Is Not Intelligence",
+        "slug": "agent-theater-is-not-intelligence",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        5,
+        40
+      ]
+    },
+    {
+      "start": "00:00:37.520",
+      "end": "00:02:07.040",
+      "start_seconds": 37.52,
+      "end_seconds": 127.04,
+      "duration_seconds": 89.52,
+      "excerpt": "system design focuses on the strict operational boundary the next agent actually controls rather than the raw number of models in a dashboard. To scale these systems safely, you have to separate their memory, their authority, or their action space. Unconstrained complexity is a trap. You see this trap most clearly in how developers assign human job titles to AI. They spin up a researcher, a writer, and an editor. But under the hood, all three of those roles are pulling from the exact same foundational model and sharing the identical context window. Because they are separate instances, the system has to constantly summarize and compress its own data just to hand it off to its virtual co-workers. Nuance is stripped away at every step. Critical information is lost entirely because the system is forced to spend its comput cycles talking to itself. This is agent theater. It is an expensive simulation of a corporate org chart that multiplies your execution costs while delivering worse results than a single properly prompted model. When that fake researcher tries to explain its findings to the fake raider using conversational English, it pays a coordination tax. Forcing language models to compress data into natural language chatter introduces a massive surface area for hallucinations. Let's look at how genuine RO separation actually works. Imagine an enterprise workflow where an",
+      "suggested_slug": "system-design-focuses-strict-operational-boundary-next-agent",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.057,
+        "title": "The Coordination Tax Kills Agent Handoffs",
+        "slug": "the-coordination-tax-kills-agent-handoffs",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        16,
+        52
+      ]
+    },
+    {
+      "start": "00:01:01.520",
+      "end": "00:02:31.040",
+      "start_seconds": 61.52,
+      "end_seconds": 151.04,
+      "duration_seconds": 89.52,
+      "excerpt": "researcher, a writer, and an editor. But under the hood, all three of those roles are pulling from the exact same foundational model and sharing the identical context window. Because they are separate instances, the system has to constantly summarize and compress its own data just to hand it off to its virtual co-workers. Nuance is stripped away at every step. Critical information is lost entirely because the system is forced to spend its comput cycles talking to itself. This is agent theater. It is an expensive simulation of a corporate org chart that multiplies your execution costs while delivering worse results than a single properly prompted model. When that fake researcher tries to explain its findings to the fake raider using conversational English, it pays a coordination tax. Forcing language models to compress data into natural language chatter introduces a massive surface area for hallucinations. Let's look at how genuine RO separation actually works. Imagine an enterprise workflow where an orchestrator fields customer complaints and drafts polite email apologies. A bottleneck occurs when a customer demands a refund. That request requires access to a secure payment gateway. The agent drafting your public-f facing emails must never possess global right access to your financial infrastructure. The solution is to spin up a distinct financial specialist. The orchestrator",
+      "suggested_slug": "researcher-writer-editor-but-under-hood-all-three",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.057,
+        "title": "The Coordination Tax Kills Agent Handoffs",
+        "slug": "the-coordination-tax-kills-agent-handoffs",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        26,
+        62
+      ]
+    },
+    {
+      "start": "00:01:26.799",
+      "end": "00:02:55.920",
+      "start_seconds": 86.799,
+      "end_seconds": 175.92,
+      "duration_seconds": 89.121,
+      "excerpt": "is lost entirely because the system is forced to spend its comput cycles talking to itself. This is agent theater. It is an expensive simulation of a corporate org chart that multiplies your execution costs while delivering worse results than a single properly prompted model. When that fake researcher tries to explain its findings to the fake raider using conversational English, it pays a coordination tax. Forcing language models to compress data into natural language chatter introduces a massive surface area for hallucinations. Let's look at how genuine RO separation actually works. Imagine an enterprise workflow where an orchestrator fields customer complaints and drafts polite email apologies. A bottleneck occurs when a customer demands a refund. That request requires access to a secure payment gateway. The agent drafting your public-f facing emails must never possess global right access to your financial infrastructure. The solution is to spin up a distinct financial specialist. The orchestrator hands off the task to this new agent which operates with isolated access to process the refund. The email agent remains walled off from payment tools completely neutralizing the risk of an attack. Genuine multi-agent role separation is driven by system permissions and tool security, not human aesthetics. Even with strict roles, letting multiple AI models coordinate through an unstructured free form chat",
+      "suggested_slug": "lost-entirely-because-system-forced-spend-its-comput",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.058,
+        "title": "Agent Theater Is Not Intelligence",
+        "slug": "agent-theater-is-not-intelligence",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        36,
+        73
+      ]
+    },
+    {
+      "start": "00:01:59.680",
+      "end": "00:03:28.400",
+      "start_seconds": 119.68,
+      "end_seconds": 208.4,
+      "duration_seconds": 88.72,
+      "excerpt": "genuine RO separation actually works. Imagine an enterprise workflow where an orchestrator fields customer complaints and drafts polite email apologies. A bottleneck occurs when a customer demands a refund. That request requires access to a secure payment gateway. The agent drafting your public-f facing emails must never possess global right access to your financial infrastructure. The solution is to spin up a distinct financial specialist. The orchestrator hands off the task to this new agent which operates with isolated access to process the refund. The email agent remains walled off from payment tools completely neutralizing the risk of an attack. Genuine multi-agent role separation is driven by system permissions and tool security, not human aesthetics. Even with strict roles, letting multiple AI models coordinate through an unstructured free form chat window is incredibly dangerous. Language models are statistically tuned to predict plausible tokens and remain agreeable. If you drop three agents into an unstructured conversation, they will burn massive amounts of compute complimenting each other and politely agreeing on mediocre solutions instead of executing real work. You fix this by replacing the conversational chatter with rigid role-based pipelines that exchange what software developers call typed artifacts. A typed artifact is a strictly formatted deliverable like a",
+      "suggested_slug": "genuine-separation-actually-works-imagine-enterprise-workflow-where",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.038,
+        "title": "Agent Theater Is Not Intelligence",
+        "slug": "agent-theater-is-not-intelligence",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        51,
+        87
+      ]
+    },
+    {
+      "start": "00:02:37.840",
+      "end": "00:04:07.040",
+      "start_seconds": 157.84,
+      "end_seconds": 247.04,
+      "duration_seconds": 89.2,
+      "excerpt": "completely neutralizing the risk of an attack. Genuine multi-agent role separation is driven by system permissions and tool security, not human aesthetics. Even with strict roles, letting multiple AI models coordinate through an unstructured free form chat window is incredibly dangerous. Language models are statistically tuned to predict plausible tokens and remain agreeable. If you drop three agents into an unstructured conversation, they will burn massive amounts of compute complimenting each other and politely agreeing on mediocre solutions instead of executing real work. You fix this by replacing the conversational chatter with rigid role-based pipelines that exchange what software developers call typed artifacts. A typed artifact is a strictly formatted deliverable like a JSON data schema, a standard text format for data, or a code patch. It forces the agent to produce a measurable, deterministic output before the system allows it to move to the next step. Exchanging typed artifacts creates a legible pipeline. When an error inevitably happens, you don't have to read through thousands of lines of AI chat logs. You can inspect the data object, instantly localize the failure to a specific node and fix it. Before writing any multi-agent code, you have to establish a mathematical baseline. Every complex topology must be measured against the performance of a highly optimized single agent system. The new",
+      "suggested_slug": "completely-neutralizing-risk-attack-genuine-multi-agent-role",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.044,
+        "title": "Agent Theater Is Not Intelligence",
+        "slug": "agent-theater-is-not-intelligence",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        67,
+        104
+      ]
+    },
+    {
+      "start": "00:03:04.879",
+      "end": "00:04:34.000",
+      "start_seconds": 184.879,
+      "end_seconds": 274.0,
+      "duration_seconds": 89.121,
+      "excerpt": "burn massive amounts of compute complimenting each other and politely agreeing on mediocre solutions instead of executing real work. You fix this by replacing the conversational chatter with rigid role-based pipelines that exchange what software developers call typed artifacts. A typed artifact is a strictly formatted deliverable like a JSON data schema, a standard text format for data, or a code patch. It forces the agent to produce a measurable, deterministic output before the system allows it to move to the next step. Exchanging typed artifacts creates a legible pipeline. When an error inevitably happens, you don't have to read through thousands of lines of AI chat logs. You can inspect the data object, instantly localize the failure to a specific node and fix it. Before writing any multi-agent code, you have to establish a mathematical baseline. Every complex topology must be measured against the performance of a highly optimized single agent system. The new multi-agent system must beat that baseline across four specific metrics. End task quality, coordination overhead, latency, and the ability to isolate errors. This introduces the concept of the escalation path. You only deploy a second agent when the single agent baseline physically fractures under the weight of conflicting context or overlapping tools. Advanced architectures like running multiple models in a consensus group or adding a",
+      "suggested_slug": "burn-massive-amounts-compute-complimenting-each-other-politely",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.066,
+        "title": "The Coordination Tax Kills Agent Handoffs",
+        "slug": "the-coordination-tax-kills-agent-handoffs",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        79,
+        116
+      ]
+    },
+    {
+      "start": "00:03:37.760",
+      "end": "00:05:07.680",
+      "start_seconds": 217.76,
+      "end_seconds": 307.68,
+      "duration_seconds": 89.92,
+      "excerpt": "Exchanging typed artifacts creates a legible pipeline. When an error inevitably happens, you don't have to read through thousands of lines of AI chat logs. You can inspect the data object, instantly localize the failure to a specific node and fix it. Before writing any multi-agent code, you have to establish a mathematical baseline. Every complex topology must be measured against the performance of a highly optimized single agent system. The new multi-agent system must beat that baseline across four specific metrics. End task quality, coordination overhead, latency, and the ability to isolate errors. This introduces the concept of the escalation path. You only deploy a second agent when the single agent baseline physically fractures under the weight of conflicting context or overlapping tools. Advanced architectures like running multiple models in a consensus group or adding a critic overlay are computationally expensive. They are reserved exclusively for highstakes judgment tasks where adversarial disagreement is structurally necessary to find the truth. Building a multi-agent system is not your default starting point. It is a conservative, calculated escalation of complexity. There is an anxiety running through the industry that properly engineered autonomous AI swarms are going to remove humans from the loop entirely. The reality of the architecture shows the opposite. As AI pipelines successfully automate the intermediate friction of",
+      "suggested_slug": "exchanging-typed-artifacts-creates-legible-pipeline-when-error",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.065,
+        "title": "The Coordination Tax Kills Agent Handoffs",
+        "slug": "the-coordination-tax-kills-agent-handoffs",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        93,
+        131
+      ]
+    },
+    {
+      "start": "00:04:43.120",
+      "end": "00:05:43.039",
+      "start_seconds": 283.12,
+      "end_seconds": 343.039,
+      "duration_seconds": 59.919,
+      "excerpt": "multi-agent system is not your default starting point. It is a conservative, calculated escalation of complexity. There is an anxiety running through the industry that properly engineered autonomous AI swarms are going to remove humans from the loop entirely. The reality of the architecture shows the opposite. As AI pipelines successfully automate the intermediate friction of work like data extraction and code compilation, they demand a much stronger capstone of governance. The human worker is actually formally elevated. They become a mandatory routing node positioned at the very top of the multi-agent workflow. From that position, humans apply the final policy judgments. We interpret the nuance of the outputs and grant the legal and operational approvals that algorithms simply cannot execute. Robust multi-agent design requires the deliberate decomposition of workflows, enforcing boundaries that ultimately demand a human to govern the output.",
+      "suggested_slug": "multi-agent-system-not-your-default-starting-point",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.037,
+        "title": "Agent Theater Is Not Intelligence",
+        "slug": "agent-theater-is-not-intelligence",
+        "source": "publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        122,
+        147
+      ]
+    }
+  ]
+}
