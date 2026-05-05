@@ -1,0 +1,75 @@
+{
+  "created_at": "2026-05-05T08:13:22.513502+00:00",
+  "workflow": "publication_shorts",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "related_video": {
+    "id": "KDYVc1yvUw0",
+    "url": "https://www.youtube.com/watch?v=KDYVc1yvUw0"
+  },
+  "related_longform": {
+    "id": "KDYVc1yvUw0",
+    "url": "https://www.youtube.com/watch?v=KDYVc1yvUw0"
+  },
+  "linked_videos": {
+    "primary": {
+      "label": "Full visual deep dive",
+      "url": "https://www.youtube.com/watch?v=KDYVc1yvUw0"
+    },
+    "secondary": null
+  },
+  "privacy": "public",
+  "planned_count": 1,
+  "uploaded_count": 1,
+  "items": [
+    {
+      "video_path": "publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/portrait/01-one-prompt-can-turn-into-a-500-bill_portrait.mp4",
+      "title": "One Prompt Can Turn Into a $500 Bill #shorts",
+      "summary": "A simple agent query can explode into thousands of tool calls, draining budget before anyone notices the chain reaction.",
+      "publish_at": "2026-05-08T07:30:00Z",
+      "video_id": "lJiwzxIOfJ8",
+      "url": "https://www.youtube.com/watch?v=lJiwzxIOfJ8",
+      "playlist": {
+        "ok": true,
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wMTIyMTBBMTA3RDUxNjlD"
+      },
+      "related_video": {
+        "ok": true,
+        "relatedVideoIds": [
+          "KDYVc1yvUw0"
+        ]
+      },
+      "probe": {
+        "path": "publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/portrait/01-one-prompt-can-turn-into-a-500-bill_portrait.mp4",
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "video": {
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "r_frame_rate": "24/1",
+          "duration": 55.583333
+        },
+        "audio": {
+          "codec": "aac",
+          "duration": 55.541995
+        },
+        "format_duration": 55.583333,
+        "duration": 55.583333
+      },
+      "youtube_readback": {
+        "upload_status": "uploaded",
+        "privacy_status": "private",
+        "duration": "P0D",
+        "definition": "sd",
+        "title": "One Prompt Can Turn Into a $500 Bill #shorts",
+        "published_at": "2026-05-05T08:13:11Z"
+      },
+      "playlist_readback": {
+        "playlist_item_id": "UEw4bFB4NW1nUmhoYk1RUTcwZC1DNGRBS0tLUHpDZDVIZC4wMTIyMTBBMTA3RDUxNjlD",
+        "position": 154,
+        "title": "One Prompt Can Turn Into a $500 Bill #shorts"
+      }
+    }
+  ]
+}

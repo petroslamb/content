@@ -1,0 +1,47 @@
+{
+  "source_video": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.mp4",
+  "source_srt": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.srt",
+  "related_video_id": "qPC4fkPmAIM",
+  "essay_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-018",
+  "full_video_url": "https://www.youtube.com/watch?v=qPC4fkPmAIM",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "ai-agents-can-die-in-a-retry-loop",
+      "title": "AI Agents Can Die in a Retry Loop",
+      "summary": "Every failed retry stays in the context window, so the self-correction loop can eventually choke the model's ability to reason.",
+      "start": "00:01:48.640",
+      "end": "00:02:32.560",
+      "publish_at": "2026-05-08T06:00:00Z",
+      "score_total": 22,
+      "hook": "AI agents can die in a retry loop",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "a-web-page-can-hijack-your-ai-agent",
+      "title": "A Web Page Can Hijack Your AI Agent",
+      "summary": "Indirect prompt injection turns an innocent web search into a remote control surface for data theft and unauthorized actions.",
+      "start": "00:04:12.239",
+      "end": "00:05:02.680",
+      "publish_at": "2026-05-09T06:00:00Z",
+      "score_total": 23,
+      "hook": "A web page can hijack your AI agent",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

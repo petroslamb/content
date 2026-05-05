@@ -1,0 +1,47 @@
+{
+  "source_video": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.mp4",
+  "source_srt": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.srt",
+  "related_video_id": "KDYVc1yvUw0",
+  "essay_url": "https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397",
+  "full_video_url": "https://www.youtube.com/watch?v=KDYVc1yvUw0",
+  "playlist_id": "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd",
+  "clips": [
+    {
+      "slug": "one-prompt-can-turn-into-a-500-bill",
+      "title": "One Prompt Can Turn Into a $500 Bill",
+      "summary": "A simple agent query can explode into thousands of tool calls, draining budget before anyone notices the chain reaction.",
+      "start": "00:00:00.320",
+      "end": "00:00:55.840",
+      "publish_at": "2026-05-08T07:30:00Z",
+      "score_total": 23,
+      "hook": "One prompt can turn into a $500 bill",
+      "cta": "Full cinematic brief in Related Video"
+    },
+    {
+      "slug": "below-75k-queries-orchestration-loses-money",
+      "title": "Below 75K Queries, Orchestration Loses Money",
+      "summary": "Cheap tools only win once volume is high enough to offset the fixed cost of tracing, routing, clusters, and telemetry.",
+      "start": "00:04:18.160",
+      "end": "00:05:23.320",
+      "publish_at": "2026-05-09T07:30:00Z",
+      "score_total": 22,
+      "hook": "Below 75K queries, orchestration loses money",
+      "cta": "Full cinematic brief in Related Video"
+    }
+  ],
+  "overlay": {
+    "enabled": true,
+    "source": "cinematic_srt",
+    "source_srt": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.srt",
+    "render_strategy": "top_hook_spoken_subtitles_bottom_cta",
+    "default_cta": "Full cinematic brief in Related Video",
+    "caption_wrap_width": 30,
+    "hook_max_words": 9,
+    "quality_check": {
+      "sample_frames_per_short": 3,
+      "require_top_hook": true,
+      "require_spoken_subtitles": true,
+      "require_bottom_cta": true
+    }
+  }
+}

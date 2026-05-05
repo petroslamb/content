@@ -1,0 +1,237 @@
+{
+  "package": "publications/orchestration-paradigm",
+  "srt_file": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_behavior_cinematic.srt",
+  "existing_short_count": 1,
+  "candidate_count": 8,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:12.800",
+      "end": "00:01:41.759",
+      "start_seconds": 12.8,
+      "end_seconds": 101.759,
+      "duration_seconds": 88.959,
+      "excerpt": "This hub and spoke diagram illustrates how that architecture is shifting. Instead of relying on a single monolith, developers are building composite systems centered around orchestrators. Think of the orchestrator as a central node actively routing your prompt to external search engines. code interpreters and smaller AI models. It decides which tool to invoke based on numerical constraints, weighing monetary cost against the reasoning power required. By delegating narrow subpros to specific tools, the resulting composite system can solve problems that would completely overwhelm a single generalist model. We have taken a system originally designed to generate text and repurposed it into an autonomous manager navigating complex software environments. You can actually watch these systems develop distinct problem solving strategies. Take the escalation ladder. An orchestrator might try a cheap web search first and only call in an expensive high-powered model if the search results come back ambiguous. Look at this topological map modeling the AI's reward landscape. The escalation strategy looks like a conscious choice, but under the hood, the AI navigates an implicit state machine built through reinforcement learning. It isn't thinking about efficiency. It is simply a mathematical particle rolling down a loss surface taking the path of least resistance to maximize reward. When we replace hard-coded logic with a language model tracing a mathematical slope, we",
+      "suggested_slug": "this-hub-spoke-diagram-illustrates-how-that-architecture",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.041,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        6,
+        44
+      ]
+    },
+    {
+      "start": "00:00:52.480",
+      "end": "00:02:21.200",
+      "start_seconds": 52.48,
+      "end_seconds": 141.2,
+      "duration_seconds": 88.72,
+      "excerpt": "repurposed it into an autonomous manager navigating complex software environments. You can actually watch these systems develop distinct problem solving strategies. Take the escalation ladder. An orchestrator might try a cheap web search first and only call in an expensive high-powered model if the search results come back ambiguous. Look at this topological map modeling the AI's reward landscape. The escalation strategy looks like a conscious choice, but under the hood, the AI navigates an implicit state machine built through reinforcement learning. It isn't thinking about efficiency. It is simply a mathematical particle rolling down a loss surface taking the path of least resistance to maximize reward. When we replace hard-coded logic with a language model tracing a mathematical slope, we erase the boundaries separating raw data from executable instructions. We see the flaw in this architecture clearly during iterative refinement. Let's say an autonomous model writes a Python script, hits an execution error, reads the error, and tries again. In traditional software design, a standard loop runs over and over without increasing its memory footprint. It just clears the slate and tries the next iteration. An orchestrator doesn't work that way. Every retry and error message is permanently appended to the context window. The data load grows exponentially heavier. Eventually, it becomes so saturated with logs that the model loses track of the original",
+      "suggested_slug": "repurposed-autonomous-manager-navigating-complex-software-environments-you",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.042,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        24,
+        62
+      ]
+    },
+    {
+      "start": "00:01:25.920",
+      "end": "00:02:55.120",
+      "start_seconds": 85.92,
+      "end_seconds": 175.12,
+      "duration_seconds": 89.2,
+      "excerpt": "thinking about efficiency. It is simply a mathematical particle rolling down a loss surface taking the path of least resistance to maximize reward. When we replace hard-coded logic with a language model tracing a mathematical slope, we erase the boundaries separating raw data from executable instructions. We see the flaw in this architecture clearly during iterative refinement. Let's say an autonomous model writes a Python script, hits an execution error, reads the error, and tries again. In traditional software design, a standard loop runs over and over without increasing its memory footprint. It just clears the slate and tries the next iteration. An orchestrator doesn't work that way. Every retry and error message is permanently appended to the context window. The data load grows exponentially heavier. Eventually, it becomes so saturated with logs that the model loses track of the original instruction. Engineers call this the death spiral risk. the exact mechanism designed to let the system self-correct ends up suffocating its ability to reason at all. There is an industry-wide assumption that because an orchestrator can read a tool's description, it understands how to use it. As we can see in this semantic cluster map, that understanding is an illusion. The orchestrator routes tasks by translating a tool's text description into numerical embedding vectors, matching them against learned clusters. It has no way to verify the tool's actual quality. This",
+      "suggested_slug": "thinking-about-efficiency-simply-mathematical-particle-rolling-down",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.024,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        39,
+        77
+      ]
+    },
+    {
+      "start": "00:01:48.640",
+      "end": "00:03:18.640",
+      "start_seconds": 108.64,
+      "end_seconds": 198.64,
+      "duration_seconds": 90.0,
+      "excerpt": "autonomous model writes a Python script, hits an execution error, reads the error, and tries again. In traditional software design, a standard loop runs over and over without increasing its memory footprint. It just clears the slate and tries the next iteration. An orchestrator doesn't work that way. Every retry and error message is permanently appended to the context window. The data load grows exponentially heavier. Eventually, it becomes so saturated with logs that the model loses track of the original instruction. Engineers call this the death spiral risk. the exact mechanism designed to let the system self-correct ends up suffocating its ability to reason at all. There is an industry-wide assumption that because an orchestrator can read a tool's description, it understands how to use it. As we can see in this semantic cluster map, that understanding is an illusion. The orchestrator routes tasks by translating a tool's text description into numerical embedding vectors, matching them against learned clusters. It has no way to verify the tool's actual quality. This creates a mathematical blind spot. If a failing tool uses the exact same keywords as an accurate tool, they map to the same vector space, granting them the exact same priority. Third party developers already know this. They optimize their documentation with words like precise and robust to hijack the orchestrators routing decisions, a practice known as SEO for agents. The",
+      "suggested_slug": "autonomous-model-writes-python-script-hits-execution-error",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 15,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.018,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        49,
+        87
+      ]
+    },
+    {
+      "start": "00:02:26.319",
+      "end": "00:03:55.599",
+      "start_seconds": 146.319,
+      "end_seconds": 235.599,
+      "duration_seconds": 89.28,
+      "excerpt": "ends up suffocating its ability to reason at all. There is an industry-wide assumption that because an orchestrator can read a tool's description, it understands how to use it. As we can see in this semantic cluster map, that understanding is an illusion. The orchestrator routes tasks by translating a tool's text description into numerical embedding vectors, matching them against learned clusters. It has no way to verify the tool's actual quality. This creates a mathematical blind spot. If a failing tool uses the exact same keywords as an accurate tool, they map to the same vector space, granting them the exact same priority. Third party developers already know this. They optimize their documentation with words like precise and robust to hijack the orchestrators routing decisions, a practice known as SEO for agents. The systems ability to generalize to new tools is a mirage entirely dependent on the unverified honesty of third party text descriptions. System rules like limits on how much money an orchestrator is allowed to spend are not enforced by hard logic gates. They are implemented through soft control existing purely as text tokens in the system prompt. Because system instructions and external data share this exact same text format, a random piece of web data can easily be interpreted as an executable command. If a retrieved web page contains a sentence demanding the model use the most expensive tool available, the model has",
+      "suggested_slug": "ends-suffocating-its-ability-reason-all-there-industry",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.026,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        66,
+        103
+      ]
+    },
+    {
+      "start": "00:02:49.760",
+      "end": "00:04:18.959",
+      "start_seconds": 169.76,
+      "end_seconds": 258.959,
+      "duration_seconds": 89.199,
+      "excerpt": "verify the tool's actual quality. This creates a mathematical blind spot. If a failing tool uses the exact same keywords as an accurate tool, they map to the same vector space, granting them the exact same priority. Third party developers already know this. They optimize their documentation with words like precise and robust to hijack the orchestrators routing decisions, a practice known as SEO for agents. The systems ability to generalize to new tools is a mirage entirely dependent on the unverified honesty of third party text descriptions. System rules like limits on how much money an orchestrator is allowed to spend are not enforced by hard logic gates. They are implemented through soft control existing purely as text tokens in the system prompt. Because system instructions and external data share this exact same text format, a random piece of web data can easily be interpreted as an executable command. If a retrieved web page contains a sentence demanding the model use the most expensive tool available, the model has to weigh that against its own instructions. The external text often overrides the systems initial costsaving rules. Building critical digital infrastructure on soft alignment mechanisms leaves the entire system defenseless against a carefully phrased sentence. Here is how an indirect prompt injection attack actually plays out. An adversary doesn't need to break into",
+      "suggested_slug": "verify-tool's-actual-quality-this-creates-mathematical-blind",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.026,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        77,
+        113
+      ]
+    },
+    {
+      "start": "00:03:18.640",
+      "end": "00:04:48.080",
+      "start_seconds": 198.64,
+      "end_seconds": 288.08,
+      "duration_seconds": 89.44,
+      "excerpt": "tools is a mirage entirely dependent on the unverified honesty of third party text descriptions. System rules like limits on how much money an orchestrator is allowed to spend are not enforced by hard logic gates. They are implemented through soft control existing purely as text tokens in the system prompt. Because system instructions and external data share this exact same text format, a random piece of web data can easily be interpreted as an executable command. If a retrieved web page contains a sentence demanding the model use the most expensive tool available, the model has to weigh that against its own instructions. The external text often overrides the systems initial costsaving rules. Building critical digital infrastructure on soft alignment mechanisms leaves the entire system defenseless against a carefully phrased sentence. Here is how an indirect prompt injection attack actually plays out. An adversary doesn't need to break into your network. They just plant a hidden malicious text payload on an external website and wait. The attack triggers remotely the moment an innocent orchestrator performs a standard web search and retrieves the compromised page. Once ingested, the hidden text takes control, quietly stealing personal data or executing unauthorized API calls. This grid illustrates the worst case scenario. The compromised orchestrator writes the malicious payload into emails or shared documents,",
+      "suggested_slug": "tools-mirage-entirely-dependent-unverified-honesty-third-party",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.019,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        89,
+        126
+      ]
+    },
+    {
+      "start": "00:04:12.239",
+      "end": "00:05:02.680",
+      "start_seconds": 252.239,
+      "end_seconds": 302.68,
+      "duration_seconds": 50.441,
+      "excerpt": "injection attack actually plays out. An adversary doesn't need to break into your network. They just plant a hidden malicious text payload on an external website and wait. The attack triggers remotely the moment an innocent orchestrator performs a standard web search and retrieves the compromised page. Once ingested, the hidden text takes control, quietly stealing personal data or executing unauthorized API calls. This grid illustrates the worst case scenario. The compromised orchestrator writes the malicious payload into emails or shared documents, actively spreading the contagion to other AI agents across the network. By delegating complex workflows to probabilistic text matching without hard logic, we've handed attackers a way to turn simple web pages into autonomous weapons.",
+      "suggested_slug": "injection-attack-actually-plays-out-adversary-doesn't-need",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.02,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        112,
+        133
+      ]
+    }
+  ]
+}

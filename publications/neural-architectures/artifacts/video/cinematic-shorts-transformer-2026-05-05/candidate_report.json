@@ -1,0 +1,151 @@
+{
+  "package": "publications/neural-architectures",
+  "srt_file": "publications/neural-architectures/artifacts/video/transformer_attractor_cinematic.srt",
+  "existing_short_count": 0,
+  "candidate_count": 6,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:23.119",
+      "end": "00:01:51.920",
+      "start_seconds": 23.119,
+      "end_seconds": 111.92,
+      "duration_seconds": 88.801,
+      "excerpt": "were explicit. The architecture changed to fit the hardware because the hardware refused to budge. This reversal illustrates convergent evolution in the AI field. Under extreme economic pressure, the search for perfect math has given way to a brutal struggle for survival of the fittest on existing silicon. The transformer has become a stable attractor, pulling every viable alternative into its orbit. To survive at scale, new architectures must now wear the transformers compute patterns like a disguise. Modern AI research is constrained by the physical layout of NVIDIA's chips. Every piece of software must conform to this exact arrangement of circuits. This creates gate one hardware compatibility within these chips. Specialized tensor cores are designed for batched matrix multiplications or gems. This single operation is the primary language of high performance AI. Standard transformers hit 80 to 90% hardware utilization, while non-GEM models struggle to reach 20%. At frontier scale, these inefficiencies carry a lethal price tag. A $50 million training run spirals into a billion dollar deficit if it cannot saturate the hardware. This leads to gate 2, institutional backing. Major labs will not commit strategic budgets or engineering hours to an architecture that fails gate 1. Without that backing, a model never receives the custom",
+      "suggested_slug": "were-explicit-architecture-changed-fit-hardware-because-hardware",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        10,
+        46
+      ]
+    },
+    {
+      "start": "00:01:03.920",
+      "end": "00:02:33.040",
+      "start_seconds": 63.92,
+      "end_seconds": 153.04,
+      "duration_seconds": 89.12,
+      "excerpt": "of circuits. This creates gate one hardware compatibility within these chips. Specialized tensor cores are designed for batched matrix multiplications or gems. This single operation is the primary language of high performance AI. Standard transformers hit 80 to 90% hardware utilization, while non-GEM models struggle to reach 20%. At frontier scale, these inefficiencies carry a lethal price tag. A $50 million training run spirals into a billion dollar deficit if it cannot saturate the hardware. This leads to gate 2, institutional backing. Major labs will not commit strategic budgets or engineering hours to an architecture that fails gate 1. Without that backing, a model never receives the custom kernels and tooling it needs to become efficient. The trap is perfectly stable. Hardware friction makes institutional bets too risky, and a lack of institutional support keeps the hardware friction permanently high. We see the results of this trap in the silent failures of promising models. Microsoft research published Retnet in 2023 as a viable successor to the transformer, only to seemingly abandon it months later. Because major labs rarely publicize internal failures, we cannot know if Retnet hit a hardware wall at 30 billion parameters or if Microsoft simply chose the lower risk path of known scaling loss. Some architectures try to bypass these gates through sheer",
+      "suggested_slug": "circuits-this-creates-gate-one-hardware-compatibility-within",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 16,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        27,
+        64
+      ]
+    },
+    {
+      "start": "00:01:42.400",
+      "end": "00:03:11.760",
+      "start_seconds": 102.4,
+      "end_seconds": 191.76,
+      "duration_seconds": 89.36,
+      "excerpt": "not commit strategic budgets or engineering hours to an architecture that fails gate 1. Without that backing, a model never receives the custom kernels and tooling it needs to become efficient. The trap is perfectly stable. Hardware friction makes institutional bets too risky, and a lack of institutional support keeps the hardware friction permanently high. We see the results of this trap in the silent failures of promising models. Microsoft research published Retnet in 2023 as a viable successor to the transformer, only to seemingly abandon it months later. Because major labs rarely publicize internal failures, we cannot know if Retnet hit a hardware wall at 30 billion parameters or if Microsoft simply chose the lower risk path of known scaling loss. Some architectures try to bypass these gates through sheer persistence. The RWKV project is a recurrent model sustained entirely by a distributed open-source community. By absorbing the compute tax through custom optimizations and longer training runs, this community successfully pushed RWKV to 14 billion parameters. But 14 billion is a far cry from the 100red billion parameter frontier. At that scale, the compute tax becomes a strategic non-starter that no amount of community effort can overcome. The transformer attractor is a scale dependent gradient. Alternative ideas have room to breathe in the lab, but they are economically obliterated at the frontier boundary. Nvidia's hardware road map suggests this",
+      "suggested_slug": "not-commit-strategic-budgets-engineering-hours-architecture-that",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        43,
+        81
+      ]
+    },
+    {
+      "start": "00:02:05.360",
+      "end": "00:03:36.159",
+      "start_seconds": 125.36,
+      "end_seconds": 216.159,
+      "duration_seconds": 90.799,
+      "excerpt": "failures of promising models. Microsoft research published Retnet in 2023 as a viable successor to the transformer, only to seemingly abandon it months later. Because major labs rarely publicize internal failures, we cannot know if Retnet hit a hardware wall at 30 billion parameters or if Microsoft simply chose the lower risk path of known scaling loss. Some architectures try to bypass these gates through sheer persistence. The RWKV project is a recurrent model sustained entirely by a distributed open-source community. By absorbing the compute tax through custom optimizations and longer training runs, this community successfully pushed RWKV to 14 billion parameters. But 14 billion is a far cry from the 100red billion parameter frontier. At that scale, the compute tax becomes a strategic non-starter that no amount of community effort can overcome. The transformer attractor is a scale dependent gradient. Alternative ideas have room to breathe in the lab, but they are economically obliterated at the frontier boundary. Nvidia's hardware road map suggests this lockin will only intensify. They are moving away from building generic AI infrastructure. The Blackwell generation includes a second generation transformer engine, hard coding the transformers specific requirements directly into the silicon. This road map is a 30 billion directional bet. Every new chip compounds the transformers competitive advantage, making it more expensive to leave the ecosystem with every passing",
+      "suggested_slug": "failures-promising-models-microsoft-research-published-retnet-2023",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        54,
+        92
+      ]
+    },
+    {
+      "start": "00:02:43.920",
+      "end": "00:04:13.040",
+      "start_seconds": 163.92,
+      "end_seconds": 253.04,
+      "duration_seconds": 89.12,
+      "excerpt": "to 14 billion parameters. But 14 billion is a far cry from the 100red billion parameter frontier. At that scale, the compute tax becomes a strategic non-starter that no amount of community effort can overcome. The transformer attractor is a scale dependent gradient. Alternative ideas have room to breathe in the lab, but they are economically obliterated at the frontier boundary. Nvidia's hardware road map suggests this lockin will only intensify. They are moving away from building generic AI infrastructure. The Blackwell generation includes a second generation transformer engine, hard coding the transformers specific requirements directly into the silicon. This road map is a 30 billion directional bet. Every new chip compounds the transformers competitive advantage, making it more expensive to leave the ecosystem with every passing year. While alternative hardware like Cerebras or Groke exists, raw capability cannot easily overcome the lack of captive demand and the inertia of existing software ecosystems. Google's TPU success required massive internal subsidies and a guaranteed workload from search and YouTube to reach maturity. It took 6 years of vertical integration to make the silicon viable. Today, no major lab is willing to gamble a flagship 100 billion parameter model on unproven startup hardware. The risk of a billion dollar failure is too high. Future",
+      "suggested_slug": "billion-parameters-but-billion-far-cry-100red-billion",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        71,
+        106
+      ]
+    },
+    {
+      "start": "00:03:29.920",
+      "end": "00:04:30.680",
+      "start_seconds": 209.92,
+      "end_seconds": 270.68,
+      "duration_seconds": 60.76,
+      "excerpt": "advantage, making it more expensive to leave the ecosystem with every passing year. While alternative hardware like Cerebras or Groke exists, raw capability cannot easily overcome the lack of captive demand and the inertia of existing software ecosystems. Google's TPU success required massive internal subsidies and a guaranteed workload from search and YouTube to reach maturity. It took 6 years of vertical integration to make the silicon viable. Today, no major lab is willing to gamble a flagship 100 billion parameter model on unproven startup hardware. The risk of a billion dollar failure is too high. Future breakthroughs will likely optimize within the transformers constraints rather than replace them. The economic, institutional, and physical realities of the current ecosystem have defined the geometry of the solution space, locking the transformer in place for the foreseeable future.",
+      "suggested_slug": "advantage-making-more-expensive-leave-ecosystem-every-passing",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 4,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 20,
+      "heuristic_band": "reserve_candidate",
+      "novelty_match": null,
+      "source_caption_range": [
+        91,
+        114
+      ]
+    }
+  ]
+}

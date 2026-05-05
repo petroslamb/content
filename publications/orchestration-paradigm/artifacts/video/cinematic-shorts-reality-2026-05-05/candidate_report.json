@@ -1,0 +1,237 @@
+{
+  "package": "publications/orchestration-paradigm",
+  "srt_file": "publications/orchestration-paradigm/artifacts/video/orchestration_paradigm_issue_reality_cinematic.srt",
+  "existing_short_count": 1,
+  "candidate_count": 8,
+  "rubric_note": "Use these candidates as a transcript-derived shortlist. Final approval still requires manual rubric scoring against the high-bar thresholds.",
+  "thresholds": {
+    "approved_min": 22,
+    "reserve_min": 20
+  },
+  "candidates": [
+    {
+      "start": "00:00:07.919",
+      "end": "00:01:38.079",
+      "start_seconds": 7.919,
+      "end_seconds": 98.079,
+      "duration_seconds": 90.16,
+      "excerpt": "S&P 500 and the weather in Tokyo over the last 10 years. Immediately, server lights flash red. Instead of pulling a single combined data set, the AI orchestrator misinterprets the assignment. Backto back calls. Those thousands of requests chew through processing power and rack up API fees in seconds. What was supposed to be a fraction of a cent query transforms into a $500 bill. Cyber security experts call this a denial of wallet attack, a system failure that directly drains your budget. When an AI operates in isolation, a mistake is a harmless typo on a screen. But the moment you connect that intelligence to external tools, a text error can trigger an expensive runaway chain reaction. For years, we built AI as massive isolated brains in jars. These monolithic neural networks only had one trick, predicting the next word. If they hallucinated a fake fact, the damage was entirely contained to the chat window. Look at this map of the compound AI architecture. The massive brain shrinks down into a central manager, delegating tasks to specialized worker nodes. This shows why we're shifting. Scaling monolithic AIS is exponentially more expensive, and reasoning capability hits a wall. Bigger isn't smarter. Relying on one giant all- knowing software model is an economic dead end. Intelligence in a system is no longer housed in a single brain, but in",
+      "suggested_slug": "500-weather-tokyo-over-last-years-immediately-server",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.024,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        4,
+        39
+      ]
+    },
+    {
+      "start": "00:00:31.519",
+      "end": "00:02:00.640",
+      "start_seconds": 31.519,
+      "end_seconds": 120.64,
+      "duration_seconds": 89.121,
+      "excerpt": "a $500 bill. Cyber security experts call this a denial of wallet attack, a system failure that directly drains your budget. When an AI operates in isolation, a mistake is a harmless typo on a screen. But the moment you connect that intelligence to external tools, a text error can trigger an expensive runaway chain reaction. For years, we built AI as massive isolated brains in jars. These monolithic neural networks only had one trick, predicting the next word. If they hallucinated a fake fact, the damage was entirely contained to the chat window. Look at this map of the compound AI architecture. The massive brain shrinks down into a central manager, delegating tasks to specialized worker nodes. This shows why we're shifting. Scaling monolithic AIS is exponentially more expensive, and reasoning capability hits a wall. Bigger isn't smarter. Relying on one giant all- knowing software model is an economic dead end. Intelligence in a system is no longer housed in a single brain, but in how smoothly information flows between specialized tools. At the center of this new web is an orchestrator. It's a small lightweight language model often carrying around 8 billion parameters compared to a massive model's trillion. Its only job is to break a prompt down and out the pieces to cheap, predictable compute engines. Look at how this flowchart tracks a data packet to see",
+      "suggested_slug": "500-bill-cyber-security-experts-call-this-denial",
+      "score_breakdown": {
+        "hook_strength": 4,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 19,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.031,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        14,
+        49
+      ]
+    },
+    {
+      "start": "00:00:58.480",
+      "end": "00:02:27.440",
+      "start_seconds": 58.48,
+      "end_seconds": 147.44,
+      "duration_seconds": 88.96,
+      "excerpt": "only had one trick, predicting the next word. If they hallucinated a fake fact, the damage was entirely contained to the chat window. Look at this map of the compound AI architecture. The massive brain shrinks down into a central manager, delegating tasks to specialized worker nodes. This shows why we're shifting. Scaling monolithic AIS is exponentially more expensive, and reasoning capability hits a wall. Bigger isn't smarter. Relying on one giant all- knowing software model is an economic dead end. Intelligence in a system is no longer housed in a single brain, but in how smoothly information flows between specialized tools. At the center of this new web is an orchestrator. It's a small lightweight language model often carrying around 8 billion parameters compared to a massive model's trillion. Its only job is to break a prompt down and out the pieces to cheap, predictable compute engines. Look at how this flowchart tracks a data packet to see the real advantage. If a massive monolith makes a mistake on step two of a math problem, the error ruins the final answer. But here, if tool A crashes, the orchestrator catches the error and instantly reroutes to tool B. Compared to a massive model, this tiny orchestrator equipped with a retry loop wins out on complex reasoning benchmarks. Calling on a massive generalist model for every tiny subtask burns an enormous amount of compute.",
+      "suggested_slug": "only-had-one-trick-predicting-next-word-they",
+      "score_breakdown": {
+        "hook_strength": 1,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 16,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.025,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        25,
+        61
+      ]
+    },
+    {
+      "start": "00:01:30.560",
+      "end": "00:02:59.280",
+      "start_seconds": 90.56,
+      "end_seconds": 179.28,
+      "duration_seconds": 88.72,
+      "excerpt": "dead end. Intelligence in a system is no longer housed in a single brain, but in how smoothly information flows between specialized tools. At the center of this new web is an orchestrator. It's a small lightweight language model often carrying around 8 billion parameters compared to a massive model's trillion. Its only job is to break a prompt down and out the pieces to cheap, predictable compute engines. Look at how this flowchart tracks a data packet to see the real advantage. If a massive monolith makes a mistake on step two of a math problem, the error ruins the final answer. But here, if tool A crashes, the orchestrator catches the error and instantly reroutes to tool B. Compared to a massive model, this tiny orchestrator equipped with a retry loop wins out on complex reasoning benchmarks. Calling on a massive generalist model for every tiny subtask burns an enormous amount of compute. Offloading those tasks to tiny dedicated tools costs a fraction of a cent. We don't have to build a universally brilliant machine to achieve superhuman problem solving. We can get there by intelligently wiring together a bunch of average ones. But delegating API access and system permissions to an autonomous manager introduces a new category of vulnerability, excessive agency. Imagine deploying a shopping assistant agent to analyze purchase history and recommend products. So you give it the login credentials to your customer database.",
+      "suggested_slug": "dead-end-intelligence-system-longer-housed-single-brain",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.025,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        38,
+        75
+      ]
+    },
+    {
+      "start": "00:01:58.479",
+      "end": "00:03:27.680",
+      "start_seconds": 118.479,
+      "end_seconds": 207.68,
+      "duration_seconds": 89.201,
+      "excerpt": "the real advantage. If a massive monolith makes a mistake on step two of a math problem, the error ruins the final answer. But here, if tool A crashes, the orchestrator catches the error and instantly reroutes to tool B. Compared to a massive model, this tiny orchestrator equipped with a retry loop wins out on complex reasoning benchmarks. Calling on a massive generalist model for every tiny subtask burns an enormous amount of compute. Offloading those tasks to tiny dedicated tools costs a fraction of a cent. We don't have to build a universally brilliant machine to achieve superhuman problem solving. We can get there by intelligently wiring together a bunch of average ones. But delegating API access and system permissions to an autonomous manager introduces a new category of vulnerability, excessive agency. Imagine deploying a shopping assistant agent to analyze purchase history and recommend products. So you give it the login credentials to your customer database. Notice the command executing in this database. If the assistant hallucinates a need to clean up old files, it abuses its broad permissions. A single bad instruction cascades down the rows and permanently wipes out thousands of user records. A chatbot cleaning the sky is green is annoying. An automated agent executing a database wipe based on a hallucinated goal is catastrophic. There is another brutal reality to putting an",
+      "suggested_slug": "real-advantage-massive-monolith-makes-mistake-step-two",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 3
+      },
+      "total_score": 17,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.019,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        50,
+        86
+      ]
+    },
+    {
+      "start": "00:02:37.760",
+      "end": "00:04:06.799",
+      "start_seconds": 157.76,
+      "end_seconds": 246.799,
+      "duration_seconds": 89.039,
+      "excerpt": "average ones. But delegating API access and system permissions to an autonomous manager introduces a new category of vulnerability, excessive agency. Imagine deploying a shopping assistant agent to analyze purchase history and recommend products. So you give it the login credentials to your customer database. Notice the command executing in this database. If the assistant hallucinates a need to clean up old files, it abuses its broad permissions. A single bad instruction cascades down the rows and permanently wipes out thousands of user records. A chatbot cleaning the sky is green is annoying. An automated agent executing a database wipe based on a hallucinated goal is catastrophic. There is another brutal reality to putting an orchestrator into production. A single large model has predictable latency. But in an orchestration loop, delays are cumulative. Check out this timeline of a five-step orchestration process. If your agent requires five external tools to answer a prompt, every single hop is a potential bottleneck. If just the third tool hangs for 5 seconds, the entire system stalls. At a million queries a month, these prolonged wait times guarantee that a huge slice of your traffic will hit loading screens taking over 10 seconds. Users will simply close the app. And when those users report an error, you will face a debugability",
+      "suggested_slug": "average-ones-but-delegating-api-access-system-permissions",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.019,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        68,
+        102
+      ]
+    },
+    {
+      "start": "00:03:23.040",
+      "end": "00:04:52.639",
+      "start_seconds": 203.04,
+      "end_seconds": 292.639,
+      "duration_seconds": 89.599,
+      "excerpt": "is another brutal reality to putting an orchestrator into production. A single large model has predictable latency. But in an orchestration loop, delays are cumulative. Check out this timeline of a five-step orchestration process. If your agent requires five external tools to answer a prompt, every single hop is a potential bottleneck. If just the third tool hangs for 5 seconds, the entire system stalls. At a million queries a month, these prolonged wait times guarantee that a huge slice of your traffic will hit loading screens taking over 10 seconds. Users will simply close the app. And when those users report an error, you will face a debugability crisis. When a chatbot breaks, you read the chat log. When a compound system breaks, you have to dig through complex distributed tracing just to figure out that step five failed because step two silently changed its data formatting. Splitting the intelligence into a dozen pieces breaks traditional software monitoring. Every error gets buried inside a maze of third party handoffs. To monitor and run a system like this, you have to absorb heavy fixed infrastructure costs. You need dedicated Kubernetes clusters, load balancers to route traffic, and constant telemetry tools just to keep the lights on. This graph reveals the exact point where the architecture actually makes financial sense. The operational savings of using smaller, cheaper tools only offsets the",
+      "suggested_slug": "another-brutal-reality-putting-orchestrator-production-single-large",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 2,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 4,
+        "rewatch_shareability": 4
+      },
+      "total_score": 18,
+      "heuristic_band": "reject_candidate",
+      "novelty_match": {
+        "similarity": 0.024,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        86,
+        122
+      ]
+    },
+    {
+      "start": "00:04:20.160",
+      "end": "00:05:23.320",
+      "start_seconds": 260.16,
+      "end_seconds": 323.32,
+      "duration_seconds": 63.16,
+      "excerpt": "pieces breaks traditional software monitoring. Every error gets buried inside a maze of third party handoffs. To monitor and run a system like this, you have to absorb heavy fixed infrastructure costs. You need dedicated Kubernetes clusters, load balancers to route traffic, and constant telemetry tools just to keep the lights on. This graph reveals the exact point where the architecture actually makes financial sense. The operational savings of using smaller, cheaper tools only offsets the massive fixed infrastructure costs at a strict threshold of 75,000 queries per month. If your organization operates below that volume limit, the math does not work in your favor. You are paying a premium for unnecessary complexity. The orchestrator model proves that we can train an AI to manage budgets, use tools, and correct its own errors. But it forces a trade. You give up the isolated hallucination risks of a chatbot and inherit the cascading liabilities of a decentralized system.",
+      "suggested_slug": "pieces-breaks-traditional-software-monitoring-every-error-gets",
+      "score_breakdown": {
+        "hook_strength": 3,
+        "standalone_clarity": 3,
+        "novelty_vs_existing_channel_shorts": 5,
+        "clip_arc_and_compression": 5,
+        "rewatch_shareability": 4
+      },
+      "total_score": 20,
+      "heuristic_band": "reserve_candidate",
+      "novelty_match": {
+        "similarity": 0.049,
+        "title": "Cheap Agents Can Be a Liability",
+        "slug": "cheap-agents-can-be-a-liability",
+        "source": "publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      },
+      "source_caption_range": [
+        110,
+        135
+      ]
+    }
+  ]
+}

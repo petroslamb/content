@@ -5,7 +5,7 @@ experiment:
   release_ledger: experiments/youtube-cinematic-rollout/release_ledger.md
   automation:
     daily_starter_id: daily-cinematic-starter
-    watcher_automation_id: cinematic-rollout-watcher-2
+    watcher_automation_id: null
   templates:
     cinematic_prompt: experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt
     cinematic_description: experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md
@@ -1324,22 +1324,34 @@ publications:
       youtube_video_id: qPC4fkPmAIM
       youtube_url: https://www.youtube.com/watch?v=qPC4fkPmAIM
       published_at: '2026-05-03T07:02:56Z'
-      state: no_shorts_approved
+      state: completed
       retry_state:
         attempts: 2
         last_attempted_at: '2026-05-02T07:03:19Z'
         last_error: null
     shorts:
-      workspace_dir: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout
-      candidate_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/candidate_report.json
-      manifest_path: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
-      upload_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: no_shorts_approved
-      approved_clips: []
+      workspace_dir: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-behavior-2026-05-05
+      candidate_report: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-behavior-2026-05-05/candidate_report.json
+      manifest_path: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-behavior-2026-05-05/shorts_manifest.json
+      upload_report: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-behavior-2026-05-05/shorts_upload_report.json
+      state: completed
+      approved_clips:
+      - slug: ai-agents-can-die-in-a-retry-loop
+        title: AI Agents Can Die in a Retry Loop
+        summary: Every failed retry stays in the context window, so the self-correction
+          loop can eventually choke the model's ability to reason.
+        publish_at: '2026-05-08T06:00:00Z'
+        youtube_video_id: V0Hzq-EoV5w
+      - slug: a-web-page-can-hijack-your-ai-agent
+        title: A Web Page Can Hijack Your AI Agent
+        summary: Indirect prompt injection turns an innocent web search into a remote
+          control surface for data theft and unauthorized actions.
+        publish_at: '2026-05-09T06:00:00Z'
+        youtube_video_id: LjTWZXNm3Fo
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-05-08T06:00:00Z'
+      last_scheduled_at: '2026-05-05T08:19:17.311794+00:00'
   orchestration_paradigm_issue_reality:
     package: orchestration-paradigm
     status_path: publications/orchestration-paradigm/status.yaml
@@ -1371,22 +1383,34 @@ publications:
       youtube_video_id: KDYVc1yvUw0
       youtube_url: https://www.youtube.com/watch?v=KDYVc1yvUw0
       published_at: '2026-05-04T07:51:44Z'
-      state: no_shorts_approved
+      state: completed
       retry_state:
         attempts: 2
         last_attempted_at: '2026-05-03T07:14:05Z'
         last_error: null
     shorts:
-      workspace_dir: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout
-      candidate_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/candidate_report.json
-      manifest_path: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
-      upload_report: publications/orchestration-paradigm/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: no_shorts_approved
-      approved_clips: []
+      workspace_dir: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05
+      candidate_report: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/candidate_report.json
+      manifest_path: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/shorts_manifest.json
+      upload_report: publications/orchestration-paradigm/artifacts/video/cinematic-shorts-reality-2026-05-05/shorts_upload_report.json
+      state: completed
+      approved_clips:
+      - slug: one-prompt-can-turn-into-a-500-bill
+        title: One Prompt Can Turn Into a $500 Bill
+        summary: A simple agent query can explode into thousands of tool calls, draining
+          budget before anyone notices the chain reaction.
+        publish_at: '2026-05-08T07:30:00Z'
+        youtube_video_id: lJiwzxIOfJ8
+      - slug: below-75k-queries-orchestration-loses-money
+        title: Below 75K Queries, Orchestration Loses Money
+        summary: Cheap tools only win once volume is high enough to offset the fixed
+          cost of tracing, routing, clusters, and telemetry.
+        publish_at: '2026-05-09T07:30:00Z'
+        youtube_video_id: 8I2KL7zs88c
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-05-08T07:30:00Z'
+      last_scheduled_at: '2026-05-05T08:19:17.313386+00:00'
   transformer_attractor:
     package: neural-architectures
     status_path: publications/neural-architectures/status.yaml
@@ -1419,22 +1443,34 @@ publications:
       youtube_video_id: N73fBasGzo4
       youtube_url: https://www.youtube.com/watch?v=N73fBasGzo4
       published_at: '2026-05-04T07:52:07Z'
-      state: no_shorts_approved
+      state: completed
       retry_state:
         attempts: 1
         last_attempted_at: '2026-05-03T07:15:46Z'
         last_error: null
     shorts:
-      workspace_dir: publications/neural-architectures/artifacts/video/daily-cinematic-rollout
-      candidate_report: publications/neural-architectures/artifacts/video/daily-cinematic-rollout/candidate_report.json
-      manifest_path: publications/neural-architectures/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
-      upload_report: publications/neural-architectures/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: no_shorts_approved
-      approved_clips: []
+      workspace_dir: publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05
+      candidate_report: publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/candidate_report.json
+      manifest_path: publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/shorts_manifest.json
+      upload_report: publications/neural-architectures/artifacts/video/cinematic-shorts-transformer-2026-05-05/shorts_upload_report.json
+      state: completed
+      approved_clips:
+      - slug: ai-architecture-changed-to-fit-the-chip
+        title: AI Architecture Changed to Fit the Chip
+        summary: The transformer won because hardware economics forced new ideas
+          to mimic the chip's preferred compute pattern.
+        publish_at: '2026-05-10T06:00:00Z'
+        youtube_video_id: qPVGUmDWsYk
+      - slug: no-lab-will-risk-a-billion-dollar-failure
+        title: No Lab Will Risk a Billion-Dollar Failure
+        summary: Even strong alternative hardware loses when no frontier lab is willing
+          to gamble a flagship model on an unproven stack.
+        publish_at: '2026-05-10T07:30:00Z'
+        youtube_video_id: RtAdQiAXrIo
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-05-10T06:00:00Z'
+      last_scheduled_at: '2026-05-05T08:12:51.221792+00:00'
   specification_surface_source_of_truth:
     package: literate-workflow-programming/specification-surface-source-of-truth
     status_path: publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
@@ -1465,19 +1501,43 @@ publications:
       youtube_video_id: slozjRp6CPg
       youtube_url: https://www.youtube.com/watch?v=slozjRp6CPg
       published_at: '2026-05-04T07:52:16Z'
-      state: no_shorts_approved
+      state: completed
       retry_state:
         attempts: 1
         last_attempted_at: '2026-05-01T14:20:08Z'
         last_error: null
     shorts:
-      workspace_dir: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/daily-cinematic-rollout
+      workspace_dir: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts
       candidate_report: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/daily-cinematic-rollout/candidate_report.json
-      manifest_path: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
-      upload_report: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
-      state: no_shorts_approved
-      approved_clips: []
+      manifest_path: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/ad_hoc_shorts_manifest.json
+      upload_report: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/reports/specification_surface_ad_hoc_shorts_upload_report.json
+      state: completed
+      approved_clips:
+      - slug: vibe-coding-is-a-recipe-for-illusion
+        title: Vibe Coding Is a Recipe for Illusion
+        summary: A weak specification lets generated code look confident while the
+          real authority problem stays invisible.
+        publish_at: '2026-05-06T06:00:00Z'
+        youtube_video_id: zVpYYDyAZR4
+      - slug: velocity-makes-weak-specs-dangerous
+        title: Velocity Makes Weak Specs Dangerous
+        summary: AI coding makes weak specifications more dangerous because implementation
+          now appears faster than intent can be governed.
+        publish_at: '2026-05-06T07:30:00Z'
+        youtube_video_id: PgLO1eGJRi0
+      - slug: the-missing-blueprints
+        title: The Missing Blueprints
+        summary: When teams cannot point to the shared specification, separate workers
+          and agents reconstruct intent from symptoms.
+        publish_at: '2026-05-07T06:00:00Z'
+        youtube_video_id: qSImlEg0U3U
+      - slug: choose-what-deserves-authority
+        title: Choose What Deserves Authority
+        summary: The practical question is which surfaces deserve authority and how
+          failures push those surfaces back into revision.
+        publish_at: '2026-05-07T07:30:00Z'
+        youtube_video_id: Ye7aubeIztc
       reserve_clips: []
       rejected_clips: []
-      next_publish_at: null
-      last_scheduled_at: null
+      next_publish_at: '2026-05-06T06:00:00Z'
+      last_scheduled_at: '2026-05-01T09:00:54.099114Z'
