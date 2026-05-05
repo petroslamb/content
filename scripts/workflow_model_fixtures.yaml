@@ -24,8 +24,8 @@ workflow_resolution_checks:
   - workflow: post_ceiling_pivot
     package: literate-workflow-programming
     expected_can_execute: false
-    expected_overlay_phase: successor_leaf_stage_handoff
-    expected_next_overlay_action: continue_successor_leaf_notebooklm_artifacts
+    expected_overlay_phase: successor_leaf_complete
+    expected_next_overlay_action: close_or_archive_umbrella_route
     expected_active_overlay_root: publications/literate-workflow-programming
     expected_validator_substring: check:package-lifecycle
     expected_recommended_gates:
