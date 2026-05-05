@@ -25,6 +25,18 @@ experiment:
     notebooklm_generation_wait_timeout_seconds: 21600
     youtube_caption_wait_timeout_seconds: 7200
     auth_relogin_command: .venv/bin/notebooklm login
+    prompt_packet:
+      enabled: true
+      artifact_goal: concept_refresh
+      source_signal: backlog
+      clip_safe_claim_blocks_minimum: 3
+      forbidden:
+      - TL;DR
+      - top 5
+      - in this video
+      first_line_compliance:
+        required: true
+        match_mode: normalized_prefix_exact
     shorts_primary_video_label: Full cinematic video
     shorts_secondary_video_label: Full research breakdown
     shorts_overlay:
@@ -67,6 +79,7 @@ experiment:
     - generation_pending
     - cinematic_uploaded
     - captions_pending
+    - generation_compliance_review_pending
     - shorts_selection_pending
     - shorts_schedule_pending
     - shorts_render_pending

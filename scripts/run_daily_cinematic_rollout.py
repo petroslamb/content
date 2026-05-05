@@ -17,8 +17,16 @@ import yaml
 
 
 COLD_OPEN_REQUIRED_FIELDS = ("first_line", "viewer_promise", "conflict", "payoff_by_30s")
+PROMPT_PACKET_REQUIRED_FIELDS = ("artifact_goal", "source_signal")
 SHORTS_MANIFEST_REQUIRED_FIELDS = ("slug", "title", "start", "end")
 NON_GENERATION_STATES = {"blocked_rate_limited", "blocked_auth_expired", "retryable_error"}
+DEFAULT_PROMPT_PACKET_FORBIDDEN = ("TL;DR", "top 5", "in this video")
+DEFAULT_CLIP_SAFE_RULES = (
+    "open with a sharp claim, tension, or failure mode in the first sentence",
+    "avoid pronoun-heavy callbacks that require earlier context",
+    "land one concrete takeaway before moving on",
+    "sound quotable when isolated from the rest of the video",
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -166,6 +174,21 @@ def default_cold_open(title_hint: str) -> dict[str, Any]:
     }
 
 
+def default_prompt_packet(title_hint: str) -> dict[str, Any]:
+    return {
+        "status": "draft_needed",
+        "artifact_goal": "concept_refresh",
+        "source_signal": "backlog",
+        "failure_chain": [],
+        "clip_safe_claim_blocks": {
+            "minimum": 3,
+            "rules": list(DEFAULT_CLIP_SAFE_RULES),
+        },
+        "forbidden": list(DEFAULT_PROMPT_PACKET_FORBIDDEN),
+        "operator_note": f"Create a concrete failure chain for {title_hint} before generation.",
+    }
+
+
 def relative_video_root(package: str) -> Path:
     return Path("publications") / package / "artifacts" / "video"
 
@@ -195,6 +218,7 @@ def build_auto_entry(discovered: DiscoveredPublication, pending_reason: str | No
             "hook": hook,
             "summary": summary,
             "cold_open": default_cold_open(markdown_title),
+            "prompt_packet": default_prompt_packet(markdown_title),
             "video_file": str(video_root / f"{stem}_cinematic.mp4"),
             "output_srt": str(video_root / f"{stem}_cinematic.srt"),
             "upload_report": str(video_root / f"{stem}_cinematic_upload_report.json"),
@@ -282,6 +306,34 @@ def cold_open_gate_issues(entry: dict[str, Any]) -> list[str]:
     return issues
 
 
+def prompt_packet_gate_issues(entry: dict[str, Any]) -> list[str]:
+    cinematic = entry.get("cinematic", {})
+    if cinematic.get("youtube_video_id") or cinematic.get("generation_task_id"):
+        return []
+    packet = cinematic.get("prompt_packet") or {}
+    issues = [
+        f"missing prompt_packet.{field}"
+        for field in PROMPT_PACKET_REQUIRED_FIELDS
+        if not str(packet.get(field) or "").strip()
+    ]
+    if packet.get("status") != "approved":
+        issues.append("prompt_packet.status must be approved")
+    failure_chain = packet.get("failure_chain") or []
+    if not isinstance(failure_chain, list) or len([item for item in failure_chain if str(item).strip()]) < 3:
+        issues.append("prompt_packet.failure_chain needs at least 3 concrete steps")
+    clip_blocks = packet.get("clip_safe_claim_blocks") or {}
+    if not isinstance(clip_blocks, dict):
+        clip_blocks = {}
+    minimum = clip_blocks.get("minimum", 3) if isinstance(clip_blocks, dict) else 0
+    if number_value(minimum) < 3:
+        issues.append("prompt_packet.clip_safe_claim_blocks.minimum must be at least 3")
+    return issues
+
+
+def cinematic_generation_gate_issues(entry: dict[str, Any]) -> list[str]:
+    return [*cold_open_gate_issues(entry), *prompt_packet_gate_issues(entry)]
+
+
 def clip_quality_gate_issues(clip: dict[str, Any], manifest: dict[str, Any]) -> list[str]:
     defaults = manifest["experiment"].get("defaults", {})
     thresholds = defaults.get("rubric_thresholds") or {}
@@ -334,14 +386,24 @@ def number_value(value: Any) -> float:
 def quality_gate_summary(manifest: dict[str, Any]) -> dict[str, Any]:
     items: list[dict[str, Any]] = []
     for key, entry in manifest.get("publications", {}).items():
-        cold_open_issues = cold_open_gate_issues(entry)
-        if cold_open_issues:
+        generation_issues = cinematic_generation_gate_issues(entry)
+        if generation_issues:
             items.append(
                 {
                     "key": key,
                     "surface": "cinematic",
                     "slug": None,
-                    "issues": cold_open_issues,
+                    "issues": generation_issues,
+                }
+            )
+        compliance = (entry.get("cinematic") or {}).get("generation_compliance") or {}
+        if compliance.get("status") == "failed_first_line":
+            items.append(
+                {
+                    "key": key,
+                    "surface": "cinematic",
+                    "slug": None,
+                    "issues": [f"generation_compliance failed_first_line: expected `{compliance.get('expected_first_line')}`, observed `{compliance.get('observed_opening')}`"],
                 }
             )
         for clip in (entry.get("shorts") or {}).get("approved_clips") or []:
@@ -371,6 +433,56 @@ def parse_iso(value: str | None) -> datetime | None:
         return None
 
 
+TIMESTAMP_RE = re.compile(r"^\d{2}:\d{2}:\d{2}[,.]\d{3}\s+-->\s+\d{2}:\d{2}:\d{2}[,.]\d{3}")
+
+
+def normalized_words(value: str) -> list[str]:
+    return re.findall(r"[a-z0-9]+(?:'[a-z0-9]+)?", value.lower())
+
+
+def srt_opening_text(path: Path, *, max_caption_lines: int = 8) -> str:
+    if not path.exists():
+        return ""
+    lines: list[str] = []
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.isdigit() or TIMESTAMP_RE.match(line):
+            continue
+        lines.append(line)
+        if len(lines) >= max_caption_lines:
+            break
+    return " ".join(lines)
+
+
+def generation_compliance_payload(entry: dict[str, Any]) -> dict[str, Any] | None:
+    cinematic = entry.get("cinematic") or {}
+    if not (cinematic.get("prompt_file") or cinematic.get("prompt_packet_path")):
+        return None
+    expected = str((cinematic.get("cold_open") or {}).get("first_line") or "").strip()
+    if not expected:
+        return None
+    output_srt = Path(cinematic.get("output_srt") or "")
+    observed = srt_opening_text(output_srt)
+    if not observed:
+        return None
+    expected_words = normalized_words(expected)
+    observed_words = normalized_words(observed)
+    status = "passed_first_line" if observed_words[: len(expected_words)] == expected_words else "failed_first_line"
+    return {
+        "status": status,
+        "match_mode": "normalized_prefix_exact",
+        "expected_first_line": expected,
+        "observed_opening": observed,
+    }
+
+
+def generation_compliance_blocks_downstream(cinematic: dict[str, Any]) -> bool:
+    compliance = cinematic.get("generation_compliance") or {}
+    if cinematic.get("generation_compliance_override") is True:
+        return False
+    return compliance.get("status") == "failed_first_line"
+
+
 def classify_entry(entry: dict[str, Any]) -> None:
     cinematic = entry.get("cinematic", {})
     shorts = entry.get("shorts", {})
@@ -381,6 +493,9 @@ def classify_entry(entry: dict[str, Any]) -> None:
     workspace_dir = Path(shorts.get("workspace_dir", ""))
     portrait_dir = workspace_dir / "portrait"
     approved = shorts.get("approved_clips", []) or []
+    compliance = generation_compliance_payload(entry)
+    if compliance:
+        cinematic["generation_compliance"] = compliance
 
     if state == "no_shorts_approved":
         shorts["state"] = "no_shorts_approved"
@@ -392,12 +507,16 @@ def classify_entry(entry: dict[str, Any]) -> None:
         return
 
     if not cinematic.get("youtube_video_id") and state not in NON_GENERATION_STATES:
-        if cold_open_gate_issues(entry):
+        if cinematic_generation_gate_issues(entry):
             cinematic["state"] = "cold_open_review_pending"
             shorts["state"] = "pending_cinematic"
             return
 
     if cinematic.get("youtube_video_id"):
+        if generation_compliance_blocks_downstream(cinematic):
+            cinematic["state"] = "generation_compliance_review_pending"
+            shorts["state"] = "blocked_generation_compliance"
+            return
         if not output_srt.exists():
             cinematic["state"] = "captions_pending"
             shorts["state"] = "pending_captions"
@@ -464,6 +583,8 @@ def schedule_approved_clips(manifest: dict[str, Any]) -> int:
     daily_clip_map: dict[datetime, list[tuple[str, int]]] = {}
     for key in rollout_order:
         entry = publications[key]
+        if generation_compliance_blocks_downstream(entry.get("cinematic", {}) or {}):
+            continue
         approved = entry.get("shorts", {}).get("approved_clips", []) or []
         published_at = parse_iso(entry.get("cinematic", {}).get("published_at"))
         if not approved or not published_at:
@@ -538,6 +659,116 @@ def shorts_overlay_payload(manifest: dict[str, Any], cinematic: dict[str, Any]) 
     }
 
 
+def prompt_packet_paths(entry: dict[str, Any]) -> tuple[Path, Path]:
+    cinematic = entry.get("cinematic") or {}
+    shorts = entry.get("shorts") or {}
+    workspace_dir = Path(shorts.get("workspace_dir") or Path(cinematic.get("video_file", "")).parent / "daily-cinematic-rollout")
+    packet_path = Path(cinematic.get("prompt_packet_path") or workspace_dir / "prompt_packet.yaml")
+    prompt_path = Path(cinematic.get("prompt_file") or workspace_dir / "cinematic_prompt.txt")
+    return packet_path, prompt_path
+
+
+def normalized_prompt_packet_payload(key: str, entry: dict[str, Any], manifest: dict[str, Any]) -> dict[str, Any]:
+    cinematic = entry.get("cinematic") or {}
+    cold_open = cinematic.get("cold_open") or {}
+    packet = cinematic.get("prompt_packet") or {}
+    defaults = (manifest.get("experiment", {}).get("defaults", {}).get("prompt_packet") or {})
+    clip_blocks = packet.get("clip_safe_claim_blocks") or {}
+    rules = clip_blocks.get("rules") if isinstance(clip_blocks, dict) else None
+    forbidden = packet.get("forbidden") or defaults.get("forbidden") or list(DEFAULT_PROMPT_PACKET_FORBIDDEN)
+    return {
+        "publication_key": key,
+        "package": entry.get("package"),
+        "artifact_goal": packet.get("artifact_goal") or defaults.get("artifact_goal") or "concept_refresh",
+        "source_signal": packet.get("source_signal") or defaults.get("source_signal") or "backlog",
+        "title": cinematic.get("title"),
+        "hook": cinematic.get("hook"),
+        "summary": cinematic.get("summary"),
+        "essay_url": entry.get("essay_url"),
+        "secondary_link": entry.get("secondary_link") or {},
+        "required_cold_open": cold_open.get("first_line"),
+        "viewer_promise": cold_open.get("viewer_promise"),
+        "conflict": cold_open.get("conflict"),
+        "payoff_by_30s": cold_open.get("payoff_by_30s"),
+        "failure_chain": [str(item).strip() for item in packet.get("failure_chain") or [] if str(item).strip()],
+        "clip_safe_claim_blocks": {
+            "minimum": int(number_value(clip_blocks.get("minimum", defaults.get("clip_safe_claim_blocks_minimum", 3))) or 3),
+            "rules": [str(item).strip() for item in (rules or DEFAULT_CLIP_SAFE_RULES) if str(item).strip()],
+        },
+        "forbidden": [str(item).strip() for item in forbidden if str(item).strip()],
+        "operator_note": packet.get("operator_note"),
+    }
+
+
+def render_cinematic_prompt(packet: dict[str, Any]) -> str:
+    failure_chain = "\n".join(f"- {step}" for step in packet.get("failure_chain") or [])
+    clip_rules = "\n".join(f"- {rule}" for rule in packet.get("clip_safe_claim_blocks", {}).get("rules") or DEFAULT_CLIP_SAFE_RULES)
+    forbidden = ", ".join(f'"{phrase}"' for phrase in packet.get("forbidden") or DEFAULT_PROMPT_PACKET_FORBIDDEN)
+    note = packet.get("operator_note")
+    note_block = f"\nOperator note:\n{note}\n" if note else ""
+    return f"""Create a documentary-style cinematic video overview for a Rooted Layers publication.
+
+This is a video-specific prompt packet. Optimize the narration for the stated artifact goal and source signal, not for a generic explainer.
+
+Publication:
+- Key: {packet.get("publication_key")}
+- Package: {packet.get("package")}
+- Title: {packet.get("title")}
+- Artifact goal: {packet.get("artifact_goal")}
+- Source signal: {packet.get("source_signal")}
+
+Core positioning:
+- Hook: {packet.get("hook")}
+- Summary: {packet.get("summary")}
+- Essay URL: {packet.get("essay_url")}
+
+Required cold open:
+- First spoken line, exact words: "{packet.get("required_cold_open")}"
+- Do not paraphrase, soften, prepend, or delay that first spoken line.
+- Viewer promise: {packet.get("viewer_promise")}
+- Conflict: {packet.get("conflict")}
+- Payoff by 30 seconds: {packet.get("payoff_by_30s")}
+
+Build the narration around this concrete failure chain:
+{failure_chain}
+
+Use compact claim blocks that can be clipped cleanly into Shorts. Include at least {packet.get("clip_safe_claim_blocks", {}).get("minimum", 3)} self-contained lines or mini-sequences that each:
+{clip_rules}
+
+Keep the voice analytical, sober, and visually ambitious. Avoid listicle framing, generic YouTube hype, creator self-reference, and filler transitions. Do not use phrases like {forbidden}.
+{note_block}""".strip() + "\n"
+
+
+def materialize_prompt_packets(manifest: dict[str, Any], *, write: bool) -> list[str]:
+    changed_paths: list[str] = []
+    for key, entry in manifest.get("publications", {}).items():
+        cinematic = entry.get("cinematic") or {}
+        if cinematic.get("youtube_video_id") or cinematic.get("generation_task_id"):
+            continue
+        if cinematic_generation_gate_issues(entry):
+            continue
+        packet_path, prompt_path = prompt_packet_paths(entry)
+        packet = normalized_prompt_packet_payload(key, entry, manifest)
+        packet_text = yaml.safe_dump(packet, sort_keys=False, allow_unicode=False)
+        prompt_text = render_cinematic_prompt(packet)
+        current_packet = packet_path.read_text(encoding="utf-8") if packet_path.exists() else None
+        current_prompt = prompt_path.read_text(encoding="utf-8") if prompt_path.exists() else None
+        if current_packet != packet_text:
+            if write:
+                packet_path.parent.mkdir(parents=True, exist_ok=True)
+                packet_path.write_text(packet_text, encoding="utf-8")
+            changed_paths.append(str(packet_path))
+        if current_prompt != prompt_text:
+            if write:
+                prompt_path.parent.mkdir(parents=True, exist_ok=True)
+                prompt_path.write_text(prompt_text, encoding="utf-8")
+            changed_paths.append(str(prompt_path))
+        if write:
+            cinematic["prompt_packet_path"] = str(packet_path)
+            cinematic["prompt_file"] = str(prompt_path)
+    return changed_paths
+
+
 def materialize_shorts_manifests(manifest: dict[str, Any], *, write: bool) -> list[str]:
     publications = manifest["publications"]
     changed_paths: list[str] = []
@@ -546,6 +777,8 @@ def materialize_shorts_manifests(manifest: dict[str, Any], *, write: bool) -> li
         if not approved:
             continue
         cinematic = entry.get("cinematic", {})
+        if generation_compliance_blocks_downstream(cinematic):
+            continue
         if not cinematic.get("youtube_video_id") or not cinematic.get("youtube_url"):
             continue
         ready_clips = [clip for clip in approved if clip_manifest_ready(clip)]
@@ -590,6 +823,8 @@ def append_ledger(ledger_path: Path, summary: dict[str, Any]) -> None:
         lines.append(f"- In-flight first: {', '.join(f'`{key}`' for key in summary['in_flight'])}")
     if summary.get("next_new"):
         lines.append(f"- Next generation candidates: {', '.join(f'`{key}`' for key in summary['next_new'])}")
+    if summary.get("prompt_paths"):
+        lines.append(f"- Materialized cinematic prompt packets: {', '.join(f'`{path}`' for path in summary['prompt_paths'])}")
     if summary.get("manifest_paths"):
         lines.append(f"- Materialized Shorts manifests: {', '.join(f'`{path}`' for path in summary['manifest_paths'])}")
     if summary.get("scheduled_clip_count"):
@@ -627,6 +862,7 @@ def main() -> None:
         retry_state["attempts"] = int(retry_state.get("attempts", 0)) + 1
 
     scheduled_clip_count = schedule_approved_clips(manifest)
+    prompt_paths = materialize_prompt_packets(manifest, write=args.apply)
     manifest_paths = materialize_shorts_manifests(manifest, write=args.apply)
     quality_gates = quality_gate_summary(manifest)
 
@@ -651,6 +887,7 @@ def main() -> None:
         "next_new": next_new,
         "blocked_auth_key": blocked_auth_key,
         "scheduled_clip_count": scheduled_clip_count,
+        "prompt_paths": prompt_paths,
         "manifest_paths": manifest_paths,
         "quality_gates": quality_gates,
     }
