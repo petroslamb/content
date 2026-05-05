@@ -2,12 +2,12 @@
 kind: paper_roadmap
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 revision: 1
-status: active_experiment
+status: submitted_to_aiware
 created: "2026-04-30"
 updated: "2026-05-05"
 workflow: paper_development
-current_phase: aiware_form_submission
-next_artifact: "submitted_confirmation_in_specification-surface-source-of-truth-aiware-submission-record-r1.md"
+current_phase: awaiting_aiware_notification
+next_artifact: "aiware_notification_record_after_2026-06-01"
 runner_patch_required: false
 rejection_policy: park
 north_star_bar: fast_feedback_ladder_with_peer_review_quality_floor
@@ -38,12 +38,12 @@ The paper has cleared the first paperization sprint and produced a local manuscr
 - working references exist;
 - AIware and arXiv checklists exist;
 - post-draft readiness reviews exist;
-- R2 draft exists;
-- local review PDF exists;
-- external submission approval surface exists and approves AIware submission;
-- AIware submission record exists in `pending_submission` state.
+- R2 draft and R3 pre-submit polish draft exist;
+- local review PDFs exist;
+- external submission approval surface exists and approved AIware submission;
+- AIware submission record exists in `submitted` state.
 
-The workflow has crossed the human approval gate for AIware submission. The next substantive step is actual submission through the AIware form, followed by a local submission record. arXiv posting remains blocked unless separately approved.
+The workflow crossed the human approval gate for the R2 AIware packet. R3 superseded R2 after the pre-submit paper-shape and AI-written-tell pass, and the R3 PDF was submitted through the AIware Google Form on 2026-05-05. The next substantive step is waiting for the Round 2 notification on June 1, 2026. arXiv posting remains blocked unless separately approved.
 
 ## Phase Ledger
 
@@ -58,7 +58,9 @@ The workflow has crossed the human approval gate for AIware submission. The next
 | Venue packet | Done for local review | `references.bib`, AIware checklist, arXiv checklist, R2 PDF | References, route checklists, artifact/disclosure language, and a local PDF exist; final venue-format polish may still be requested. |
 | Submission decision | Done for R2 | `specification-surface-source-of-truth-submission-readiness-review-r2.md` | Decision: ready for human approval gate; no external submission yet. |
 | Human approval | Done | `specification-surface-source-of-truth-external-submission-approval-r1.md` | Decision: `approve_aiware_submission`; arXiv remains blocked. |
-| AIware submission record | Pending | `specification-surface-source-of-truth-aiware-submission-record-r1.md` | Record submission timestamp, form route, submitted packet, and any confirmation details. |
+| Pre-submit R3 polish | Done | `specification-surface-source-of-truth-paper-draft-r3.md`, `specification-surface-source-of-truth-submission-readiness-review-r3.md` | R3 PDF exists with rendered references and tightened venue framing. |
+| AIware submission record | Done | `specification-surface-source-of-truth-aiware-submission-record-r1.md` | Records submission timestamp, form route, submitted packet, and browser confirmation. |
+| AIware notification | Pending | To be created after June 1, 2026 notification | Record accept/reject outcome, reviewer/chair feedback if any, and next route decision. |
 
 ## Completed Surfaces
 
@@ -79,13 +81,16 @@ The workflow has crossed the human approval gate for AIware submission. The next
 - `specification-surface-source-of-truth-paper-draft-r2.pdf` local generated PDF, not tracked because repository policy ignores generated PDFs
 - [`specification-surface-source-of-truth-submission-readiness-review-r2.md`](specification-surface-source-of-truth-submission-readiness-review-r2.md)
 - [`specification-surface-source-of-truth-external-submission-approval-r1.md`](specification-surface-source-of-truth-external-submission-approval-r1.md)
+- [`specification-surface-source-of-truth-paper-draft-r3.md`](specification-surface-source-of-truth-paper-draft-r3.md)
+- `specification-surface-source-of-truth-paper-draft-r3.pdf` local generated PDF, not tracked because repository policy ignores generated PDFs
+- [`specification-surface-source-of-truth-submission-readiness-review-r3.md`](specification-surface-source-of-truth-submission-readiness-review-r3.md)
 - [`specification-surface-source-of-truth-aiware-submission-record-r1.md`](specification-surface-source-of-truth-aiware-submission-record-r1.md)
 
 ## Remaining Surfaces
 
-- submitted confirmation recorded in `specification-surface-source-of-truth-aiware-submission-record-r1.md`
+- AIware notification outcome after June 1, 2026
 - `figures/`, only if a lifecycle or taxonomy figure is needed for the chosen venue shape
-- `submission-checklist-icse-nier-2027.md`, only if AIware is skipped or rejected
+- `submission-checklist-icse-nier-2027.md`, only if AIware is rejected or the paper route should continue toward peer-reviewed publication
 
 ## Draftability Audit Bar
 
@@ -116,7 +121,7 @@ Manuscript drafting is blocked until `specification-surface-source-of-truth-pape
 - Both reviewers must independently approve the same route.
 - A split verdict blocks drafting; revise the audit or method and rerun the gate.
 
-Current gate result: `approve_aiware_submission`. The reviewed R2 packet is authorized for AIware submission. arXiv posting remains blocked.
+Current gate result: `submitted_to_aiware`. R3 is the submitted packet. arXiv posting remains blocked.
 
 ## Rejection And Parking
 
