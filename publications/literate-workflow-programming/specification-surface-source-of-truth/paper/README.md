@@ -36,15 +36,21 @@ Start with [`specification-surface-source-of-truth-paper-roadmap-r1.md`](specifi
 - [`specification-surface-source-of-truth-paper-draft-r3.md`](specification-surface-source-of-truth-paper-draft-r3.md): pre-submit polish manuscript with author block, rendered bibliography metadata, tightened venue framing, and revised claim/artifact language.
 - `specification-surface-source-of-truth-paper-draft-r3.pdf`: current local submission-candidate PDF generated from R3; not tracked because repository policy ignores generated PDFs.
 - [`specification-surface-source-of-truth-submission-readiness-review-r3.md`](specification-surface-source-of-truth-submission-readiness-review-r3.md): post-R3 review that recommends R3 for final human confirmation before form submission.
-- [`specification-surface-source-of-truth-aiware-submission-record-r1.md`](specification-surface-source-of-truth-aiware-submission-record-r1.md): pending record for the actual AIware form submission and confirmation details.
+- [`specification-surface-source-of-truth-aiware-submission-record-r1.md`](specification-surface-source-of-truth-aiware-submission-record-r1.md): submitted AIware form record and confirmation details.
+- [`specification-surface-source-of-truth-venue-conflict-matrix-r1.md`](specification-surface-source-of-truth-venue-conflict-matrix-r1.md): post-submission matrix for arXiv, AIware, ICSE, NIER-like, journal, and workshop conflict checks.
+- [`specification-surface-source-of-truth-paper-draft-r4.md`](specification-surface-source-of-truth-paper-draft-r4.md): arXiv-facing manuscript draft with research/framework framing, conventional title metadata, and tightened preprint artifact language.
+- `specification-surface-source-of-truth-paper-draft-r4.pdf`: local arXiv-preview PDF generated from R4; not tracked because repository policy ignores generated PDFs.
+- [`specification-surface-source-of-truth-arxiv-readiness-review-r1.md`](specification-surface-source-of-truth-arxiv-readiness-review-r1.md): arXiv posting gate review marking R4 ready for human posting decision while keeping posting blocked.
+- [`arxiv-source-r4/README.md`](arxiv-source-r4/README.md): generated local arXiv source packet notes for `spec_surface_r4_arxiv.tex` and the upload archive.
+- [`arxiv-source-r4/spec_surface_r4_arxiv.tex`](arxiv-source-r4/spec_surface_r4_arxiv.tex): standalone generated LaTeX source for arXiv upload if the posting gate clears.
 
 ## Current Status
 
-The blueprint, publication route, case-study trace, literature map, extended abstract, north-star rubric, draftability audit, docs-only approval gate, manuscript drafts, working references, AIware checklist, arXiv checklist, local PDFs, readiness reviews, human approval gate, and submitted AIware record are complete. The current phase is waiting for the AIware Round 2 notification on June 1, 2026.
+The blueprint, publication route, case-study trace, literature map, extended abstract, north-star rubric, draftability audit, docs-only approval gate, manuscript drafts, working references, AIware checklist, arXiv checklist, local PDFs, readiness reviews, human approval gate, submitted AIware record, venue conflict matrix, R4 arXiv-facing draft, generated arXiv source packet, and arXiv-readiness review are complete. The current phase is the arXiv posting gate while still awaiting the AIware Round 2 notification on June 1, 2026.
 
 The north-star bar is a fast-feedback ladder with a peer-review quality floor: try AIware only if the manuscript remains coherent by the checkpoint, mature toward ICSE NIER or workshop review as the main peer-review route, and wait on arXiv until a complete manuscript packet exists. The draft approval gate authorized manuscript drafting only; the later external-submission approval gate now authorizes AIware submission while keeping arXiv posting blocked.
 
-The reviewed R2 packet was approved for AIware submission. R3 superseded R2 after the pre-submit polish pass and was submitted through the AIware Google Form on 2026-05-05. arXiv remains blocked until a separate posting decision resolves license, endorsement/account, and venue-policy questions.
+The reviewed R2 packet was approved for AIware submission. R3 superseded R2 after the pre-submit polish pass and was submitted through the AIware Google Form on 2026-05-05. R4 is prepared for a possible arXiv fail-fast preprint. arXiv remains blocked until the author explicitly approves public posting and resolves license plus endorsement/account questions.
 
 ## Workflow
 
