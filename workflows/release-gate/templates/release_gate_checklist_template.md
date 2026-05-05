@@ -72,7 +72,8 @@ Record commands run and result.
 # examples
 git diff --name-status -- publications/<package>/
 rg -n '!\\[[^]]*\\]\\(' publications/<package>/<draft>.md
-npm run check:harness
+npm run check:workflow-yaml
+npm run check:workflow-model
 ```
 
 ## Required Fixes

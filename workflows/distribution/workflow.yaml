@@ -92,7 +92,7 @@ capabilities:
       command: "npm run check:repo-links"
       required: true
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       required: false
   skills: []
 
@@ -309,7 +309,7 @@ validation:
         - handoff
       required: true
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       run_at:
         - before_external_posting
       required: false
@@ -329,7 +329,7 @@ gates:
     required: conditional
     required_when: distribution includes external posting or channel mutation
     stop_before: external_posting
-    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
     artifacts:
       - published_canonical_post_url
       - distribution_copy_or_posting_plan

@@ -66,7 +66,7 @@ The intended sequence is:
 
 1. set the leaf package `status.yaml` so `essay_iteration` is the next stage
 2. run `./content-agent validate --workflow essay_iteration --package <leaf>` to check the governed contract boundary
-3. run `npm run stage:run -- --package <leaf> --stage essay_iteration` only for the compatibility scaffold step
+3. run `./content-agent run --workflow essay_iteration --package <leaf> --max-scriptable-steps 2` only for the scaffold step
 4. let the scaffold script create a package-local packet under `iterations/r<revision>/`
 5. harden the blueprint if the governing surface is not yet rewrite-ready
 6. run the essay prewrite gate inside the packet before opening a bounded candidate

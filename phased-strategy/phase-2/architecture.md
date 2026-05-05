@@ -91,9 +91,9 @@ The repo already has root-level YAML surfaces that Phase 2 should consume rather
 | `harness_policy.yaml` | Global local-first autonomy, write, approval, and external-mutation policy. | Acts as a policy floor. Per-workflow contracts may narrow it but should not silently override it. |
 | `gate_contracts.yaml` | Catalog of reusable gate types, required artifacts, recommended validators, and proof modes. | Defines gate classes. Individual gate artifacts instantiate these contracts under `reviewable-runs/gates/`. |
 | `pipeline_profiles.yaml` | Cross-workflow route templates: ordered workflows, required gates, allowed entry workflows, and fallback routes. | Helps `content-agent` choose the next workflow from package state. It does not replace per-workflow `workflow.yaml`. |
-| `harness_contract.yaml` | Generated aggregate compatibility/index surface for the current harness and scripts. | Should be derived from primary sources. It should not compete with `workflow.yaml` as the authored workflow contract. |
+| retired compatibility index | The former `harness_contract.yaml` generated roll-up. | Removed from the active authority path; validation reads primary Phase 2 surfaces directly. |
 
-Phase 2 should migrate authored workflow authority from workflow README frontmatter into per-workflow `workflow.yaml` files. During the transition, `harness_contract.yaml` may remain as a tracked generated roll-up for existing checks and scripts, but new implementation decisions should read the primary surfaces directly when possible.
+Phase 2 migrated authored workflow authority from workflow README frontmatter into per-workflow `workflow.yaml` files. The active validators now read the primary surfaces directly rather than a generated compatibility roll-up.
 
 ## Execution State Placement
 

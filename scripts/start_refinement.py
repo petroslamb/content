@@ -92,7 +92,7 @@ def main() -> None:
     print("Refinement cycle started. Next steps:")
     print("=" * 60)
     for stage in stages_to_reset:
-        print(f"  npm run run -- --package {manifest_ref.package_key} --stage {stage}")
+        print(f"  ./content-agent validate --workflow {stage} --package {manifest_ref.package_key}")
 
 
 if __name__ == "__main__":

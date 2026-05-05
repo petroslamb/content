@@ -13,7 +13,7 @@ It does not replace package READMEs, workflow READMEs, or strategy docs. It defi
 | Package authority | drafts, blueprints, evidence, media, archive, package-local artifacts | `publications/**` package files | Owns publication content and package-local evidence. |
 | Runtime surface | resolution, context admission, validation, run/gate creation, review decisions, resume | `./content-agent`, `scripts/content_agent.py` | Executes declared contracts. It must not invent workflow semantics. |
 | Evidence layer | resolved runs, run records, review gates, validation outcomes, promotion state | `reviewable-runs/resolved-runs/`, `reviewable-runs/logs/`, `reviewable-runs/gates/` | Records what happened. It does not outrank source authority. |
-| View layer | local inspection, approval UI, generated reports, generated indexes | `./content-cockpit`, `scripts/generate_editorial_report.py`, `harness_contract.yaml` | Convenience only. Views must be rebuildable from file-backed truth or traceable to it. |
+| View layer | local inspection, approval UI, generated reports | `./content-cockpit`, `scripts/generate_editorial_report.py` | Convenience only. Views must be rebuildable from file-backed truth or traceable to it. |
 
 ## Operating Surface
 
@@ -24,6 +24,7 @@ Use `content-agent` for governed work:
 ./content-agent next --package <package>
 ./content-agent validate --workflow <workflow_id> --package <package>
 ./content-agent run --workflow <workflow_id> --package <package>
+./content-agent gate check --gate <gate_id> --package <package>
 ./content-agent review list
 ./content-agent review inspect --gate <gate_id>
 ./content-agent review approve --gate <gate_id> --reason "<reason>"
@@ -49,21 +50,20 @@ npm run editorial:report -- --package <package>
 
 The report may create findings and suggestions. It must not rewrite drafts, approve gates, move lifecycle state, publish, or promote outputs.
 
-## Compatibility Surfaces
+## Retired Compatibility Surfaces
 
-The older npm runner commands remain available for compatibility and narrow utilities:
+The older npm runner commands and generated compatibility index have been retired from the active operator surface:
 
-```bash
-npm run stage:next -- --package <package>
-npm run stage:resolve -- --package <package> --stage <stage>
-npm run stage:run -- --package <package> --stage <stage>
-npm run workflow:resolve -- --workflow <workflow_id>
-npm run workflow:run -- --workflow <workflow_id>
-```
+- `harness_contract.yaml`
+- `npm run run`
+- `npm run stage:next`
+- `npm run stage:resolve`
+- `npm run stage:run`
+- `npm run workflow:resolve`
+- `npm run workflow:run`
+- `npm run gate:check`
 
-Treat these as adapters around the older lifecycle runner, not the preferred authority surface for new governed work.
-
-Use them when an existing workflow explicitly depends on their narrow behavior, such as seeding an essay-iteration packet. For new governed execution, prefer `./content-agent`.
+Use `./content-agent` for status, next-action resolution, validation, workflow runs, gate checks, review decisions, and resume records. Historical strategy notes and old run records may still mention the retired names when describing earlier work.
 
 ## Adding Or Changing A Workflow
 

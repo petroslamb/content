@@ -73,6 +73,7 @@ Primary commands:
 - `./content-agent next --package <package>`
 - `./content-agent validate --workflow <workflow_id> --package <package>`
 - `./content-agent run --workflow <workflow_id> --package <package>`
+- `./content-agent gate check --gate <gate_id> --package <package>`
 - `./content-agent review list`
 - `./content-agent review inspect --gate <gate_id>`
 - `./content-agent review approve --gate <gate_id> --reason "<reason>"`
@@ -85,27 +86,18 @@ Local view and report surfaces:
 - [`./content-cockpit`](content-cockpit) or `npm run cockpit -- --package <package>`
 - `npm run editorial:report -- --package <package>`
 
-The older harness-facing surfaces remain available as compatibility adapters:
+The old harness-facing compatibility layer has been retired from active use. `harness_policy.yaml` remains the local-first autonomy and approval policy surface, but `harness_contract.yaml`, `stage:*`, `workflow:*`, `gate:check`, and the generic `npm run run` lifecycle runner are no longer package scripts.
 
-- [`harness_contract.yaml`](harness_contract.yaml): machine-readable repo contract
-- [`harness_policy.yaml`](harness_policy.yaml): local-first autonomy and approval boundaries
-
-Compatibility entrypoints:
+Active validation entrypoints:
 
 - `npm run check`
-- `npm run workflow:resolve -- --workflow <workflow_id> --format json`
-- `npm run workflow:run -- --workflow <workflow_id> --format json`
-- `npm run gate:check -- --gate <gate_id> --format json`
-- `npm run stage:next -- --package <package> --format json`
-- `npm run stage:resolve -- --package <package> --stage <stage> --format json`
-- `npm run stage:run -- --package <package> --stage <stage> --format json`
-- `npm run package:init -- --idea "..." --format json`
-- `npm run package:init -- --from-topic-packet <packet> --format json`
-- `npm run check:harness`
+- `npm run check:workflow-yaml`
 - `npm run check:workflow-model`
 - `npm run check:reviewable-runs`
+- `npm run package:init -- --idea "..." --format json`
+- `npm run package:init -- --from-topic-packet <packet> --format json`
 
-These compatibility surfaces do not replace the workflow docs or the Phase 2 authority layer. They keep older lifecycle runners and existing scripts legible while new governed work moves through `content-agent`.
+Historical strategy notes and older run records may still mention the retired commands when describing Phase 1/1.5 work.
 
 The repo now distinguishes:
 

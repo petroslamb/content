@@ -44,7 +44,6 @@ from lifecycle import (
     REPO_ROOT,
     STAGES,
     active_umbrella_route,
-    load_all_workflow_contracts,
     load_gate_contracts,
     load_pipeline_profiles,
     load_status_ref,
@@ -56,33 +55,8 @@ from research_exit_support import build_research_exit_gate_path, resolve_researc
 
 
 PACKAGE_JSON_PATH = REPO_ROOT / "package.json"
-HARNESS_CONTRACT_PATH = REPO_ROOT / "harness_contract.yaml"
 HARNESS_POLICY_PATH = REPO_ROOT / "harness_policy.yaml"
 LOGS_DIR = REPO_ROOT / "reviewable-runs" / "logs"
-
-REQUIRED_NPM_SCRIPTS = {
-    "check",
-    "check:essay-prewrite",
-    "check:essay-iteration",
-    "check:package-lifecycle",
-    "check:workflow-model",
-    "check:workflow-yaml",
-    "gate:check",
-    "content-agent",
-    "agent:status",
-    "agent:next",
-    "agent:validate",
-    "agent:review",
-    "cockpit",
-    "editorial:report",
-    "stage:next",
-    "stage:resolve",
-    "stage:run",
-    "package:init",
-    "workflow:resolve",
-    "workflow:run",
-    "check:harness",
-}
 
 POLICY_SECTIONS = {
     "read_only_allowed",
@@ -240,135 +214,6 @@ def validate_harness_policy(policy: dict) -> list[str]:
             errors.append(f"harness_policy.yaml {section}.paths must be a list of strings.")
 
     return errors
-
-
-def workflow_yaml_contract_index() -> dict[str, dict[str, str | int | None]]:
-    contracts: dict[str, dict[str, str | int | None]] = {}
-    for path in sorted((REPO_ROOT / "workflows").glob("*/workflow.yaml")):
-        if path.parent.name == "skills":
-            continue
-        data = load_yaml_file(path)
-        workflow_id = data.get("workflow_id")
-        if not isinstance(workflow_id, str) or not workflow_id.strip():
-            continue
-        contracts[workflow_id] = {
-            "contract_path": repo_relpath(path),
-            "readme_path": repo_relpath(path.parent / "README.md"),
-            "version": data.get("version"),
-            "workflow_kind": data.get("workflow_kind"),
-            "workflow_group": data.get("workflow_group"),
-            "stability": data.get("stability"),
-        }
-    return contracts
-
-
-def build_harness_contract() -> dict:
-    scripts = load_package_scripts()
-    workflow_contracts = {}
-    for workflow_id, workflow_contract in load_all_workflow_contracts().items():
-        metadata = workflow_contract["metadata"]
-        workflow_contracts[workflow_id] = {
-            "workflow_doc": repo_relpath(workflow_contract["path"]),
-            "workflow_kind": metadata["workflow_kind"],
-            "stage_binding": metadata.get("stage_binding"),
-            "stability": metadata["stability"],
-            "runner_mode": metadata["runner_mode"],
-            "launch_mode": metadata["launch_mode"],
-            "default_skill": metadata["default_skill"],
-            "approval_gate": metadata["approval_gate"],
-            "required_context": metadata["required_context"],
-            "expected_outputs": metadata["expected_outputs"],
-            "done_when": metadata["done_when"],
-            "launch_templates": metadata["launch_templates"],
-            "packet_templates": metadata["packet_templates"],
-            "validator_commands": metadata["validator_commands"],
-            "judgment_policy": metadata["judgment_policy"],
-            "prohibited_moves": metadata["prohibited_moves"],
-        }
-    stage_contracts = {stage: workflow_contracts[stage] for stage in STAGES}
-
-    command_surface = {}
-    for name in sorted(REQUIRED_NPM_SCRIPTS | {"status", "run"}):
-        command_surface[name] = {
-            "entrypoint": f"npm run {name}",
-            "script": scripts.get(name),
-        }
-
-    return {
-        "version": 3,
-        "harness_target": "codex",
-        "autonomy_scope": "local-first",
-        "contract_role": "generated_compatibility_index",
-        "policy_file": "harness_policy.yaml",
-        "sources_of_truth": {
-            "authority_map": "AUTHORITY.md",
-            "workflow_yaml": "workflows/*/workflow.yaml",
-            "gate_contracts": "gate_contracts.yaml",
-            "pipeline_profiles": "pipeline_profiles.yaml",
-            "package_state": "publications/**/status.yaml",
-            "harness_policy": "harness_policy.yaml",
-            "npm_scripts": "package.json",
-        },
-        "compatibility_sources": {
-            "lifecycle": "scripts/lifecycle.py",
-            "workflow_frontmatter": "workflows/*/README.md",
-        },
-        "paths": {
-            "publications_dir": "publications",
-            "workflows_dir": "workflows",
-            "logs_dir": "reviewable-runs/logs",
-            "resolved_runs_dir": "reviewable-runs/resolved-runs",
-            "review_gates_dir": "reviewable-runs/gates",
-        },
-        "operator_surfaces": {
-            "governed_runtime": {
-                "entrypoint": "./content-agent",
-                "script": "scripts/content_agent.py",
-                "npm_alias": "npm run content-agent",
-            },
-            "local_cockpit": {
-                "entrypoint": "./content-cockpit",
-                "script": "scripts/content_cockpit.py",
-                "npm_alias": "npm run cockpit",
-            },
-            "editorial_report": {
-                "entrypoint": "npm run editorial:report",
-                "script": "scripts/generate_editorial_report.py",
-                "posture": "report_only",
-            },
-        },
-        "interfaces": command_surface,
-        "package_init": {
-            "default_first_stage": "research",
-            "accepted_inputs": [
-                "--idea",
-                "--slug",
-                "--from-topic-packet",
-            ],
-            "status_config_fields": [
-                "markdown_path",
-                "discovery_packet_path",
-            ],
-            "scaffold": [
-                "README.md",
-                "<slug>.md",
-                "status.yaml",
-                "papers/",
-                "papers/markdown/",
-                "papers/index.md",
-                "artifacts/",
-                "archive/",
-            ],
-        },
-        "lifecycle": {
-            "stage_order": STAGES,
-            "stages": stage_contracts,
-        },
-        "workflow_yaml_contracts": workflow_yaml_contract_index(),
-        "workflows": workflow_contracts,
-        "gates": load_gate_contracts(),
-        "pipeline_profiles": load_pipeline_profiles(),
-    }
 
 
 def find_package_readme(package_path: Path) -> Path | None:
@@ -759,15 +604,15 @@ def auto_mark_done_allowed(stage: str, metadata: dict, policy: dict) -> bool:
 
 def build_stage_suggested_commands(package_key: str, stage: str, can_execute: bool) -> list[str]:
     commands = [
-        f"npm run stage:resolve -- --package {package_key} --stage {stage} --format json",
+        f"./content-agent validate --workflow {stage} --package {package_key} --format json",
     ]
     if can_execute:
         commands.append(
-            f"npm run stage:run -- --package {package_key} --stage {stage} --format json"
+            f"./content-agent run --workflow {stage} --package {package_key} --format json"
         )
     else:
         commands.append(
-            f"npm run stage:resolve -- --package {package_key} --stage {stage} --emit-launch-pack --format json"
+            f"./content-agent run --workflow {stage} --package {package_key} --resolve-only --format json"
         )
     return commands
 
@@ -798,16 +643,20 @@ def build_workflow_suggested_commands(
     if packet_path:
         suffix.extend(["--packet", repo_relpath(packet_path)])
     suffix_args = " " + " ".join(suffix) if suffix else ""
-    commands = [
-        f"npm run workflow:resolve -- --workflow {workflow_id}{suffix_args} --format json",
-    ]
-    commands.append(
-        f"npm run workflow:run -- --workflow {workflow_id}{suffix_args} --format json"
-    )
-    if not can_execute:
+    commands = []
+    if package_key:
         commands.append(
-            f"npm run workflow:run -- --workflow {workflow_id}{suffix_args} --emit-launch-pack --format json"
+            f"./content-agent validate --workflow {workflow_id}{suffix_args} --format json"
         )
+        commands.append(
+            f"./content-agent run --workflow {workflow_id}{suffix_args} --format json"
+        )
+        if not can_execute:
+            commands.append(
+                f"./content-agent run --workflow {workflow_id}{suffix_args} --resolve-only --format json"
+            )
+    else:
+        commands.append(f"./content-agent validate --workflow {workflow_id} --format json")
     return commands
 
 
@@ -1208,7 +1057,7 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
         progress["overlay_phase"] = "pivot_search_stopped"
         progress["next_overlay_action"] = status_route.get("next_action") or "stop_without_successor"
         progress["overlay_route"] = "no_successor"
-        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+        progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
         progress["closure_artifact"] = status_route.get("closure_artifact")
         return progress
 
@@ -1227,13 +1076,13 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
     if slate_path is None:
         progress["overlay_phase"] = "build_pivot_slate"
         progress["next_overlay_action"] = "write_pivot_slate"
-        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
         return progress
 
     if grounding_path is None:
         progress["overlay_phase"] = "ground_candidates"
         progress["next_overlay_action"] = "write_pivot_grounding_review"
-        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
         return progress
 
     grounding_verdict = parse_pivot_grounding_verdict(grounding_path)
@@ -1242,30 +1091,30 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
     if next_candidate_path is None:
         progress["overlay_phase"] = "select_live_candidate"
         progress["next_overlay_action"] = "write_next_pivot_candidate"
-        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
         return progress
 
     if grounding_verdict in {"blocked_hypothesis", "provisional_candidate"}:
         if research_delta_path is None:
             progress["overlay_phase"] = "write_research_delta"
             progress["next_overlay_action"] = "write_candidate_research_delta"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
             return progress
         progress["overlay_phase"] = "write_research_delta"
         progress["next_overlay_action"] = "continue_candidate_research"
-        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+        progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
         return progress
 
     if grounding_verdict == "clear_lead_candidate":
         if research_delta_path is None:
             progress["overlay_phase"] = "write_research_delta"
             progress["next_overlay_action"] = "write_candidate_research_delta"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
             return progress
         if north_star_path is None:
             progress["overlay_phase"] = "run_north_star_viability"
             progress["next_overlay_action"] = "write_north_star_viability"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
             return progress
 
     if grounding_verdict == "research_grounded_but_not_north_star_viable":
@@ -1276,31 +1125,31 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
         if north_star_path is None:
             progress["overlay_phase"] = "run_north_star_viability"
             progress["next_overlay_action"] = "write_north_star_viability"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
             return progress
         if consequence_path is None:
             progress["overlay_phase"] = "run_consequence_pressure"
             progress["next_overlay_action"] = "write_consequence_pressure"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
             return progress
         if comparative_rerank_path is None:
             progress["overlay_phase"] = "run_comparative_rerank"
             progress["next_overlay_action"] = "write_comparative_rerank"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
             return progress
         if post_block_route == "restart_pivot_search_now":
             progress["overlay_phase"] = "build_pivot_slate"
             progress["next_overlay_action"] = "rewrite_pivot_slate_for_materially_larger_successor_search"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
             return progress
         if post_block_route == "no_successor":
             progress["overlay_phase"] = "pivot_search_stopped"
             progress["next_overlay_action"] = "stop_without_successor"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
             return progress
         progress["overlay_phase"] = "decide_post_block_outcome"
         progress["next_overlay_action"] = "decide_restart_or_stop_without_successor"
-        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+        progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
         return progress
 
     if grounding_verdict == "pivot_cleared_for_north_star_attempt":
@@ -1309,7 +1158,7 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
         if north_star_path is None:
             progress["overlay_phase"] = "run_north_star_viability"
             progress["next_overlay_action"] = "write_north_star_viability"
-            progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+            progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
             return progress
         if north_star_verdict == "north_star_viable":
             if len(leaf_packages) < 2:
@@ -1343,12 +1192,12 @@ def resolve_post_ceiling_pivot_progress(package_path: Path) -> dict:
             return progress
         progress["overlay_phase"] = "run_north_star_viability"
         progress["next_overlay_action"] = "resolve_north_star_viability_gap"
-        progress["recommended_validator"] = "npm run gate:check -- --gate pivot_north_star_viability --package <package>"
+        progress["recommended_validator"] = "./content-agent gate check --gate pivot_north_star_viability --package <package>"
         return progress
 
     progress["overlay_phase"] = "ground_candidates"
     progress["next_overlay_action"] = "resolve_pivot_state"
-    progress["recommended_validator"] = "npm run gate:check -- --gate pivot_research_grounding --package <package>"
+    progress["recommended_validator"] = "./content-agent gate check --gate pivot_research_grounding --package <package>"
     return progress
 
 
@@ -2467,11 +2316,11 @@ def build_workflow_resolution(
     if manifest_ref is not None:
         for gate_id in recommended_gates:
             suggested_commands.append(
-                f"npm run gate:check -- --gate {gate_id} --package {manifest_ref.package_key} --format json"
+                f"./content-agent gate check --gate {gate_id} --package {manifest_ref.package_key} --format json"
             )
     elif packet_path is not None and "topic_viability" in recommended_gates:
         suggested_commands.append(
-            f"npm run gate:check -- --gate topic_viability --packet {repo_relpath(packet_path)} --format json"
+            f"./content-agent gate check --gate topic_viability --packet {repo_relpath(packet_path)} --format json"
         )
 
     packet_details = parse_topic_packet(packet_path) if packet_path and packet_path.exists() else None
@@ -2526,6 +2375,115 @@ def build_workflow_resolution(
         "topic_packet_details": packet_details,
         "log_target": "reviewable-runs/logs/",
         **overlay_progress,
+    }
+
+
+def build_next_action(package_arg: str) -> dict:
+    manifest_ref, status_data = load_status_ref(package_arg)
+    umbrella_route = active_umbrella_route(status_data)
+    next_stage = next_stage_for_package(manifest_ref.package_path, status_data)
+    base = {
+        "package": manifest_ref.package_key,
+        "revision": status_data.get("revision", 1),
+        "all_stages_complete": next_stage is None and umbrella_route is None,
+        "next_stage": next_stage,
+        "umbrella_route_workflow": umbrella_route.get("active_workflow") if umbrella_route else None,
+        "umbrella_route_state": umbrella_route.get("active_route") if umbrella_route else None,
+        "umbrella_route_next_action": umbrella_route.get("next_action") if umbrella_route else None,
+        "runner_mode": None,
+        "approval_gate": None,
+        "requires_approval": False,
+        "can_execute": False,
+        "blocking_issues": [],
+        "required_context": [],
+        "suggested_commands": [],
+        "log_target": "reviewable-runs/logs/",
+        "packet_phase": None,
+        "next_packet_action": None,
+        "recommended_validator": None,
+        "pipeline_profile": None,
+        "recommended_workflows": [],
+        "gate_statuses": {},
+        "overlay_candidates": [],
+        "effective_workflow": None,
+        "effective_workflow_kind": None,
+        "effective_workflow_doc": None,
+        "effective_next_action": None,
+        "effective_route": None,
+        "effective_can_execute": False,
+        "effective_requires_approval": False,
+        "effective_approval_gate": None,
+        "active_overlay": None,
+        "overlay_phase": None,
+        "next_overlay_action": None,
+        "overlay_route": None,
+        "overlay_recommended_validator": None,
+        "active_overlay_root": None,
+    }
+    if umbrella_route is not None:
+        resolution = build_workflow_resolution(umbrella_route["active_workflow"], package_arg=package_arg)
+        return {
+            **base,
+            "runner_mode": resolution.get("runner_mode"),
+            "approval_gate": resolution["approval_gate"],
+            "requires_approval": resolution["requires_approval"],
+            "can_execute": resolution["can_execute"],
+            "blocking_issues": resolution["blocking_issues"],
+            "required_context": resolution["required_context"],
+            "suggested_commands": resolution["suggested_commands"],
+            "log_target": resolution["log_target"],
+            "recommended_validator": resolution.get("recommended_validator"),
+            "recommended_workflows": [resolution["workflow_id"]],
+            "effective_workflow": resolution["workflow_id"],
+            "effective_workflow_kind": resolution["workflow_kind"],
+            "effective_workflow_doc": resolution["workflow_doc"],
+            "effective_next_action": resolution.get("next_overlay_action") or umbrella_route.get("next_action"),
+            "effective_route": resolution.get("overlay_route") or umbrella_route.get("active_route"),
+            "effective_can_execute": resolution["can_execute"],
+            "effective_requires_approval": resolution["requires_approval"],
+            "effective_approval_gate": resolution["approval_gate"],
+            "active_overlay": resolution["workflow_id"] if resolution["workflow_kind"] == "overlay" else None,
+            "overlay_phase": resolution.get("overlay_phase"),
+            "next_overlay_action": resolution.get("next_overlay_action"),
+            "overlay_route": resolution.get("overlay_route"),
+            "overlay_recommended_validator": resolution.get("recommended_validator"),
+            "active_overlay_root": resolution.get("active_overlay_root"),
+        }
+    if next_stage is None:
+        return base
+
+    resolution = build_stage_resolution(package_arg, next_stage)
+    return {
+        **base,
+        "runner_mode": resolution["runner_mode"],
+        "approval_gate": resolution["approval_gate"],
+        "requires_approval": resolution["requires_approval"],
+        "can_execute": resolution["can_execute"],
+        "blocking_issues": resolution["blocking_issues"],
+        "required_context": resolution["required_context"],
+        "suggested_commands": resolution["suggested_commands"],
+        "log_target": resolution["log_target"],
+        "packet_phase": resolution.get("packet_phase"),
+        "next_packet_action": resolution.get("next_packet_action"),
+        "recommended_validator": resolution.get("recommended_validator"),
+        "pipeline_profile": resolution.get("pipeline_profile"),
+        "recommended_workflows": resolution.get("recommended_workflows", []),
+        "gate_statuses": resolution.get("gate_statuses", {}),
+        "overlay_candidates": resolution.get("overlay_candidates", []),
+        "effective_workflow": resolution.get("effective_workflow"),
+        "effective_workflow_kind": resolution.get("effective_workflow_kind"),
+        "effective_workflow_doc": resolution.get("effective_workflow_doc"),
+        "effective_next_action": resolution.get("effective_next_action"),
+        "effective_route": resolution.get("effective_route"),
+        "effective_can_execute": resolution.get("effective_can_execute"),
+        "effective_requires_approval": resolution.get("effective_requires_approval"),
+        "effective_approval_gate": resolution.get("effective_approval_gate"),
+        "active_overlay": resolution.get("active_overlay"),
+        "overlay_phase": resolution.get("overlay_phase"),
+        "next_overlay_action": resolution.get("next_overlay_action"),
+        "overlay_route": resolution.get("overlay_route"),
+        "overlay_recommended_validator": resolution.get("overlay_recommended_validator"),
+        "active_overlay_root": resolution.get("active_overlay_root"),
     }
 
 
@@ -2807,7 +2765,7 @@ def initialize_package(
                 "Topic packet must resolve to Decision: package_init_ready before package:init --from-topic-packet."
             )
 
-    effective_idea = (idea or packet.get("one_sentence_promise") if packet else None) or ""
+    effective_idea = idea or (packet.get("one_sentence_promise") if packet else None) or ""
     effective_idea = effective_idea.strip()
     if not effective_idea:
         raise ValueError("initialize_package requires --idea or a topic packet with a one-sentence promise.")
@@ -2907,5 +2865,5 @@ def initialize_package(
         "markdown_path": markdown_relpath,
         "status_path": f"publications/{package_slug}/status.yaml",
         "next_stage": next_stage,
-        "suggested_command": f"npm run stage:next -- --package {package_slug} --format json",
+        "suggested_command": f"./content-agent next --package {package_slug} --format json",
     }

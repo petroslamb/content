@@ -111,7 +111,7 @@ capabilities:
       command: ".venv/bin/python scripts/sync_markdown_post_to_substack.py --publication-url {substack_url} --post-id {substack_post_id} --markdown {markdown_path} --publish"
       required: false
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       required: true
     - id: repo_link_check
       command: "npm run check:repo-links"
@@ -257,7 +257,7 @@ validation:
     - release_gate_verdict_present
   hooks:
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       run_at:
         - before_draft_sync
         - before_live_publish
@@ -286,7 +286,7 @@ gates:
     contract: release_readiness
     required: true
     stop_before: sync_substack_draft
-    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
     artifacts:
       - canonical_markdown
       - release_gate_verdict
@@ -301,7 +301,7 @@ gates:
     required: conditional
     required_when: sync command includes --publish or operator requests live publication
     stop_before: optional_live_publish
-    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
     artifacts:
       - synced_substack_draft
       - sync_report

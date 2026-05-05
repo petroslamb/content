@@ -62,7 +62,7 @@ config:
 
 ## Normalization Process (Advisory)
 
-If a package is flagged during a **Pre-Flight Check** (`npm run run`):
+If a package is flagged during a **Pre-Flight Check** (`./content-agent validate` or `npm run check:package-lifecycle`):
 1. **Pointers**: Ensure `markdown_path` is correct. If the draft is in a subfolder (e.g. for umbrella packages), use the full path relative to the repo root.
 2. **Sources**: If the essay cites external links, bring them into `sources/` or `papers/` using the `paper-intake` workflow. If a leaf package intentionally reuses a shared evidence tree in its umbrella, point `config.evidence_path` there instead of duplicating the library.
 3. **Artifacts**: If creating a podcast or video, initialize the `artifacts/` folder.

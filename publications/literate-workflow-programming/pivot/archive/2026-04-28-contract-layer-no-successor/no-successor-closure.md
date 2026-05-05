@@ -57,7 +57,7 @@ Only reopen this umbrella route if materially new evidence or a materially diffe
 Latest gate check:
 
 ```bash
-npm run gate:check -- --gate pivot_north_star_viability --package literate-workflow-programming --format json
+./content-agent gate check --gate pivot_north_star_viability --package literate-workflow-programming --format json
 ```
 
 Result:
