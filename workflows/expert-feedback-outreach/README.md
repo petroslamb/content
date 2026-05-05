@@ -58,6 +58,7 @@ Do not add people only because they are famous, adjacent, or likely to amplify t
 - Post-acceptance messages must name the recipient's paper, state exactly how the essay used it, and ask for one objection or correction.
 - Put the essay link after the ask, not as the opening payload.
 - Record outcomes even when nothing happens. Silence is experimental data.
+- For LinkedIn batches, inspect and record the visible action state before sending anything: `connect`, `follow`, `message`, `2nd`, `3rd+`, and mutual connections when visible. If the account has recent outreach risk or uncertain limits, send at most 5 initial invites or messages per day unless the user explicitly approves a different pace.
 
 ## Canonical Flow
 
@@ -145,7 +146,7 @@ Run a guided pass with:
 ./content-agent run --workflow expert_feedback_outreach --package <package>
 ```
 
-This workflow has an external mutation budget of zero. A guided run can prepare and record outreach, but it must not send LinkedIn messages, emails, comments, or DMs by itself.
+This workflow has an external mutation budget of zero. A guided run validates context and then hands off to a Codex session for tracker creation, target selection, message drafting, and retrospective notes. It can prepare and record outreach, but it must not send LinkedIn messages, emails, comments, or DMs by itself.
 
 ## Related Docs
 
