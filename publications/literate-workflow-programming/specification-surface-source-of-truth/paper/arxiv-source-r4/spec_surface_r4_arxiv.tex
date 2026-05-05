@@ -202,6 +202,14 @@ prose, YAML, a schema language, tests, a workflow DSL, a trace format,
 or a review checklist. File format is secondary. The defining property
 is operational coupling.
 
+Operational coupling also narrows the role of natural language. A
+natural-language instruction does not become a governing specification
+merely because a harness can interpret it. It becomes part of a
+governing surface only when the surrounding harness binds it to
+executable lifecycle semantics: artifact contracts, state, adapters,
+validation, and recovery behavior. Otherwise it remains an instruction
+or interface layer.
+
 The paper makes four contributions:
 
 \begin{enumerate}
@@ -343,7 +351,10 @@ traceability, or review.
 
 The boundary also protects four claims that often get blurred in
 AI-assisted software discussions. Natural language can participate in a
-governed surface, but natural language is not automatically code.
+governed surface, but natural language is not automatically code. In the
+Natural-Language Agent Harnesses setting, the natural-language layer is
+not sufficient by itself; IHR-style runtime mechanisms, interfaces, and
+execution semantics are what make the harness operational.
 Documentation can inform work, but documentation is not automatically
 authority. Generated code remains consequential because it is the
 artifact users and systems execute. More formal specification can help
@@ -457,7 +468,11 @@ narrow agent-bootstrap setting
 Natural-Language Agent Harnesses and AgentSPEX make harness or workflow
 logic executable through runtimes with contracts, state, checkpointing,
 tracing, replay, or verification (\citeproc{ref-pan2026nlah}{Pan et al.
-2026}; \citeproc{ref-wang2026agentspex}{Wang et al. 2026}). ContextCov
+2026}; \citeproc{ref-wang2026agentspex}{Wang et al. 2026}). For NLAH
+specifically, the relevant mechanism is IHR plus NLAH: the
+natural-language harness description becomes operational because an
+underlying harness or framework supplies interfaces and execution
+semantics, not because natural language alone becomes code. ContextCov
 converts passive agent instruction files into executable constraints,
 illustrating the transition from context surface to validation surface
 (\citeproc{ref-sharma2026contextcov}{Sharma 2026}). Test-Driven AI Agent
@@ -524,8 +539,12 @@ Bootstrap specs (\citeproc{ref-monperrus2026bootstrapping}{Monperrus
 example of specification as record. & Does not make all implementation
 safely regenerable. \\
 NL agent harnesses (\citeproc{ref-pan2026nlah}{Pan et al. 2026}) &
-runtime, source, trace & specify, generate, trace & Harness behavior as
-external executable artifact. & Runtime coupling matters. \\
+runtime, source, trace & specify, generate, trace & Natural-language
+harness descriptions made operational through IHR-style runtime
+semantics, artifact contracts, state, adapters, validation, and recovery
+behavior. & Do not treat every harness-interpreted instruction as a
+governing specification; without executable lifecycle binding it remains
+instruction/interface layer. \\
 AgentSPEX (\citeproc{ref-wang2026agentspex}{Wang et al. 2026}) &
 runtime, validation, trace, source & specify, generate, validate, trace
 & Typed workflow specification and execution language. & Not every team
@@ -777,10 +796,12 @@ empirical results will change quickly.
 
 The argument does not claim that natural language is code. Some
 specification surfaces may be written in ordinary language, but the
-defining property is operational coupling, not syntax. The paper also
-does not claim that all documentation becomes authoritative, that
-generated code is disposable, or that richer specification always
-improves model behavior.
+defining property is operational coupling, not syntax. Natural-language
+harness descriptions count as governing surfaces only when they are
+bound to executable lifecycle semantics; otherwise they remain
+instruction or interface layers. The paper also does not claim that all
+documentation becomes authoritative, that generated code is disposable,
+or that richer specification always improves model behavior.
 
 \section{10. Artifact Availability}\label{artifact-availability}
 
