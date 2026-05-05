@@ -15,7 +15,6 @@ SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 import harness  # noqa: E402
-import next_action  # noqa: E402
 import essay_iteration_support  # noqa: E402
 import sync_from_archive  # noqa: E402
 
@@ -35,6 +34,7 @@ def create_temp_leaf_package(package_dir: Path) -> str:
         "revision": 1,
         "config": {
             "markdown_path": f"publications/{package_key}/{package_key}.md",
+            "blueprint_path": f"publications/{package_key}/{package_key}-blueprint.md",
         },
         "stages": {
             stage: {"done": False, "last_updated": None}
@@ -42,6 +42,7 @@ def create_temp_leaf_package(package_dir: Path) -> str:
         },
     }
     (package_dir / "status.yaml").write_text(yaml.safe_dump(status, sort_keys=False))
+    (package_dir / f"{package_key}-blueprint.md").write_text(f"# {package_key} Blueprint\n")
     return package_key
 
 
@@ -65,16 +66,16 @@ class HarnessPhase15Tests(unittest.TestCase):
         self.assertEqual(context["config.substack_url"]["value"], "https://lambpetros.substack.com")
         self.assertEqual(context["config.substack_post_id"]["value"], 180114871)
 
-    def test_guided_stage_resolution_reports_missing_live_draft(self) -> None:
+    def test_guided_stage_resolution_resolves_routed_live_draft(self) -> None:
         resolution = harness.build_stage_resolution("evidence-governance", "article_polish")
         context = {item["name"]: item for item in resolution["required_context"]}
 
         self.assertEqual(resolution["runner_mode"], "guided")
         self.assertFalse(resolution["can_execute"])
-        self.assertEqual(context["canonical live draft"]["status"], "missing")
+        self.assertEqual(context["canonical live draft"]["status"], "resolved")
         self.assertEqual(
             context["package artifact surface with NotebookLM or local media outputs"]["status"],
-            "missing",
+            "resolved",
         )
 
     def test_stage_resolution_for_essay_iteration_returns_packet_metadata(self) -> None:
@@ -101,17 +102,17 @@ class HarnessPhase15Tests(unittest.TestCase):
         )
         self.assertTrue(
             resolution["packet_paths"]["manifest"].endswith(
-                "your-ai-is-confidently-wrong-and-essay-iteration-packet-r3.json"
+                "your-ai-is-confidently-wrong-and-essay-iteration-packet-r4.json"
             )
         )
         self.assertTrue(
-            resolution["validator_commands"][0].startswith(
+            any(command.startswith(
                 "npm run check:essay-iteration -- --package evidence-governance/your-ai-is-confidently-wrong-and"
-            )
+            ) for command in resolution["validator_commands"])
         )
 
     def test_next_action_returns_distribution_for_illusion_of_swarm(self) -> None:
-        payload = next_action.build_next_action("illusion-of-swarm")
+        payload = harness.build_next_action("illusion-of-swarm")
 
         self.assertEqual(payload["next_stage"], "distribution")
         self.assertEqual(payload["runner_mode"], "guided")
@@ -158,19 +159,18 @@ class HarnessPhase15Tests(unittest.TestCase):
         self.assertEqual(payload["stage"], "essay_iteration")
         self.assertEqual(payload["package"], "evidence-governance/your-ai-is-confidently-wrong-and")
         self.assertEqual(payload["judgment_policy"], "draft_only")
-        self.assertTrue(payload["packet_paths"]["manifest"].endswith("-essay-iteration-packet-r3.json"))
+        self.assertTrue(payload["packet_paths"]["manifest"].endswith("-essay-iteration-packet-r4.json"))
         self.assertTrue(payload["prohibited_moves"])
 
-    def test_stage_run_refuses_hybrid_execution(self) -> None:
+    def test_content_agent_validate_rejects_missing_package(self) -> None:
         result = subprocess.run(
             [
-                sys.executable,
-                "scripts/run_stage.py",
-                "--package",
-                "neural-architectures/neural-architecture-design-as-a-compositional-32e",
-                "--stage",
+                "./content-agent",
+                "validate",
+                "--workflow",
                 "substack_publishing",
-                "--execute",
+                "--package",
+                "does-not-exist",
                 "--format",
                 "json",
             ],
@@ -182,42 +182,22 @@ class HarnessPhase15Tests(unittest.TestCase):
 
         self.assertNotEqual(result.returncode, 0)
         payload = json.loads(result.stdout)
-        self.assertIn("not executable", payload["error"])
-        self.assertTrue(any("hybrid" in issue for issue in payload["blocking_issues"]))
+        self.assertFalse(payload["success"])
+        self.assertIn("does-not-exist", payload["error"])
 
-    def test_stage_run_executes_scaffolded_essay_iteration_without_marking_done(self) -> None:
-        publications_dir = REPO_ROOT / "publications"
-        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-stage-run-") as tmpdir:
-            package_dir = Path(tmpdir)
-            package_key = create_temp_leaf_package(package_dir)
+    def test_essay_iteration_resolution_suggests_content_agent_scaffold(self) -> None:
+        resolution = harness.build_stage_resolution(
+            "evidence-governance/your-ai-is-confidently-wrong-and",
+            "essay_iteration",
+        )
 
-            result = subprocess.run(
-                [
-                    sys.executable,
-                    "scripts/run_stage.py",
-                    "--package",
-                    package_key,
-                    "--stage",
-                    "essay_iteration",
-                    "--execute",
-                    "--format",
-                    "json",
-                ],
-                cwd=REPO_ROOT,
-                capture_output=True,
-                text=True,
-                check=False,
+        self.assertTrue(
+            any(
+                command.startswith("./content-agent run --workflow essay_iteration")
+                for command in resolution["suggested_commands"]
             )
-
-            self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
-            payload = json.loads(result.stdout)
-            self.assertTrue(payload["success"])
-            self.assertFalse(payload["current_state"]["done"])
-
-            packet_manifest = package_dir / f"{package_key}-essay-iteration-packet-r1.json"
-            self.assertTrue(packet_manifest.exists())
-            status = yaml.safe_load((package_dir / "status.yaml").read_text())
-            self.assertFalse(status["stages"]["essay_iteration"]["done"])
+        )
+        self.assertFalse(any("stage:run" in command for command in resolution["suggested_commands"]))
 
     def test_archive_sync_copies_referenced_assets(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

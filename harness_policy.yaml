@@ -33,7 +33,6 @@ governance_maintenance_write_allowed:
     - AGENTS.md
     - README.md
     - package.json
-    - harness_contract.yaml
     - harness_policy.yaml
     - gate_contracts.yaml
     - pipeline_profiles.yaml
@@ -49,7 +48,6 @@ governance_maintenance_write_allowed:
   operations:
     - authority map maintenance
     - workflow contract maintenance
-    - compatibility contract regeneration
     - policy and profile edits
     - index and README maintenance
     - experiment state indexing

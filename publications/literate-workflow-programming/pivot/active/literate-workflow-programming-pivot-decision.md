@@ -28,7 +28,7 @@ The evidence now crosses more than governed agent-workflow doctrine:
 North-star viability gate:
 
 ```bash
-npm run gate:check -- --gate pivot_north_star_viability --package literate-workflow-programming --format json
+./content-agent gate check --gate pivot_north_star_viability --package literate-workflow-programming --format json
 ```
 
 Result:
@@ -58,7 +58,7 @@ The successor leaf must re-enter `research`; it is not cleared for drafting, pub
 Research grounding gate:
 
 ```bash
-npm run gate:check -- --gate pivot_research_grounding --package literate-workflow-programming --format json
+./content-agent gate check --gate pivot_research_grounding --package literate-workflow-programming --format json
 ```
 
 Result:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the modular workflow model contracts and lightweight evaluation fixtures."""
+"""Validate Phase 2 workflow contracts, routing fixtures, and execution evidence."""
 
 from __future__ import annotations
 
@@ -289,7 +289,6 @@ def main() -> None:
         "success": not errors,
         "errors": errors,
         "validated_files": [
-            "harness_contract.yaml",
             "gate_contracts.yaml",
             "pipeline_profiles.yaml",
             "workflows/*/workflow.yaml",

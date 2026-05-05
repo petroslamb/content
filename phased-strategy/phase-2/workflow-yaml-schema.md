@@ -15,7 +15,7 @@ This file reflects [`2.1-executable-workflow-contract.md`](2.1-executable-workfl
 - README prose and skill guidance do not carry runtime permission, path, gate, routing, or completion semantics alone.
 - Root `harness_policy.yaml`, `gate_contracts.yaml`, and `pipeline_profiles.yaml` constrain workflow contracts but do not replace per-workflow `workflow.yaml`.
 - Package `status.yaml` supplies package lifecycle state; `workflow.yaml` supplies workflow behavior.
-- `harness_contract.yaml` may remain a generated compatibility/index surface, not authored workflow authority.
+- The retired `harness_contract.yaml` compatibility index is not authored workflow authority.
 - `resolved_run`, `run_record`, `review_gate`, and promoted-output state are derivative execution evidence. Workflow YAML may declare trace requirements for them, but the artifacts themselves are not hand-authored workflow truth.
 
 ## Design Rules

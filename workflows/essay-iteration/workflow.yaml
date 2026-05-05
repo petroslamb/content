@@ -141,7 +141,7 @@ capabilities:
       command: "npm run check:essay-iteration -- --package {package}"
       required: true
     - id: gate_checker
-      command: "npm run gate:check -- --gate {gate_id} --package {package}"
+      command: "./content-agent gate check --gate {gate_id} --package {package}"
       required: true
   skills: []
 
@@ -338,12 +338,12 @@ validation:
         - handoff
       required: true
     - id: essay_prewrite_gate_check
-      command: "npm run gate:check -- --gate essay_prewrite --package {package}"
+      command: "./content-agent gate check --gate essay_prewrite --package {package}"
       run_at:
         - before_candidate
       required: true
     - id: replacement_north_star_gate_check
-      command: "npm run gate:check -- --gate replacement_north_star --package {package}"
+      command: "./content-agent gate check --gate replacement_north_star --package {package}"
       run_at:
         - before_promotion_or_handoff
       required: true
@@ -400,7 +400,7 @@ gates:
     required: conditional
     required_when: an operator requests publication or another external mutation from inside essay_iteration
     default_action: deny_and_route_to_release_gate
-    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
     decisions:
       - approve
       - reject

@@ -13,7 +13,7 @@ For the current source-of-truth map, read [`../AUTHORITY.md`](../AUTHORITY.md). 
 The repo now treats these as separate things:
 
 - **source workflow contract**: the machine-readable `workflow.yaml` beside a workflow README
-- **stage**: the compatibility lifecycle label exposed through `status.yaml` and older `stage:*` adapters
+- **stage**: the lifecycle label exposed through `status.yaml` and bound to `workflow.yaml`
 - **workflow module**: a reusable runnable process that can be called directly from the middle
 - **gate**: a machine-checkable movement decision such as `research_exit` or `essay_prewrite`
 - **overlay**: an explicit experimental branch such as `post_ceiling_pivot`
@@ -135,9 +135,8 @@ The current command surfaces map onto that hierarchy like this:
 
 - `./content-agent` is the preferred governed runtime and review surface
 - `./content-cockpit` is the local browser reader/approver over `content-agent` state
-- `stage:*` keeps the older orchestrated path available as a compatibility adapter
-- `workflow:*` resolves or runs reusable workflows through older runner machinery when a workflow still depends on that path
-- `gate:check` evaluates a movement decision without mutating package state
+- `./content-agent gate check` evaluates a movement decision without mutating package state
+- `npm run check:*` commands validate contracts, evidence, links, and package-local support artifacts
 
 The default profiles are tracked in [`../pipeline_profiles.yaml`](../pipeline_profiles.yaml). The gates themselves are tracked in [`../gate_contracts.yaml`](../gate_contracts.yaml).
 
@@ -156,7 +155,7 @@ For refinement cycles on an existing essay, the recurring April 2026 pattern is:
 4. run the essay prewrite gate before drafting: either produce an essay-governing prewrite surface or conclude explicitly that the essay is not yet writable at the target bar
 5. keep confidence-debt-style or package-local proof notes as optional support, but express the actual draft-authorization verdict through the packet's prewrite gate
 6. use alphaXiv in targeted validation mode against the active anchor papers when needed
-7. use `./content-agent validate --workflow essay_iteration --package <package>` before governed iteration, and use `stage:run` only when the narrow scaffold behavior is needed to seed or refresh the package-local packet beside the stable live draft
+7. use `./content-agent validate --workflow essay_iteration --package <package>` before governed iteration, then `./content-agent run --workflow essay_iteration --package <package> --max-scriptable-steps 2` when the packet scaffold needs to be seeded or refreshed beside the stable live draft
 8. fill that packet with a bounded candidate, replacement review, scorecard, and decision artifact
 9. run the packet validator before claiming the packet is ready for review
 10. compare before promotion instead of overwriting first
@@ -180,7 +179,7 @@ For package-stage decisions, read the package surfaces in this order:
 
 That lifecycle is the cross-package default. Package READMEs can add local surfaces or exceptions, but they should not redefine the shared process when a tracked workflow already exists here.
 
-For `essay_iteration`, `stage:run` now means “seed or refresh the package-local packet scaffold.” It does not mean “complete the rewrite stage automatically.” Promotion, stage completion, and top-tier score claims remain gated behind stronger review or human approval.
+For `essay_iteration`, the governed scaffold run seeds or refreshes the package-local packet. It does not mean “complete the rewrite stage automatically.” Promotion, stage completion, and top-tier score claims remain gated behind stronger review or human approval.
 
 ## When To Use Which Surface
 

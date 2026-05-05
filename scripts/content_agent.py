@@ -33,7 +33,14 @@ from check_workflow_yaml_contracts import (
     validate_workflow_yaml_contracts,
 )
 from essay_iteration_support import build_packet_paths
-from harness import load_harness_policy, load_package_scripts, validate_harness_policy
+from harness import (
+    build_next_action,
+    evaluate_gate,
+    load_harness_policy,
+    load_package_scripts,
+    log_gate_check,
+    validate_harness_policy,
+)
 from lifecycle import (
     PUBLICATIONS_DIR,
     REPO_ROOT,
@@ -45,7 +52,6 @@ from lifecycle import (
     load_pipeline_profiles,
     load_status_ref,
 )
-from next_action import build_next_action
 
 
 CONTENT_AGENT_VERSION = 1
@@ -3624,6 +3630,33 @@ def build_next_report(package_arg: str) -> dict[str, Any]:
     return payload
 
 
+def resolve_packet_path(packet_arg: str | None) -> Path | None:
+    if not packet_arg:
+        return None
+    candidate = Path(packet_arg).expanduser()
+    if not candidate.is_absolute():
+        candidate = (REPO_ROOT / candidate).resolve()
+    return candidate
+
+
+def build_gate_check_report(
+    gate_id: str,
+    *,
+    package_arg: str | None = None,
+    packet_arg: str | None = None,
+) -> dict[str, Any]:
+    packet_path = resolve_packet_path(packet_arg)
+    result = evaluate_gate(gate_id, package_arg=package_arg, packet_path=packet_path)
+    log_path = log_gate_check(result, package_arg, packet_path)
+    return {
+        "kind": "content_agent_gate_check",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "success": not result["blocking"],
+        **result,
+        "log_path": log_path,
+    }
+
+
 def print_json(payload: dict[str, Any]) -> None:
     print(json.dumps(payload, indent=2, default=str))
 
@@ -3926,6 +3959,27 @@ def print_text_resume(report: dict[str, Any]) -> None:
         print(f"message: {report.get('message')}")
 
 
+def print_text_gate_check(report: dict[str, Any]) -> None:
+    print(f"content-agent gate check: {report['gate_id']}")
+    print(f"status: {report['status']}")
+    print(f"decision: {report['decision']}")
+    print(f"blocking: {report['blocking']}")
+    print(f"recommended_workflow: {report['recommended_workflow']}")
+    print(f"recommended_validator: {report['recommended_validator']}")
+    print(f"proof_mode: {report['proof_mode']}")
+    print(f"log: {report['log_path']}")
+    if report.get("missing_artifacts"):
+        print("missing_artifacts:")
+        for item in report["missing_artifacts"]:
+            print(f"  - {item}")
+    if report.get("details"):
+        print("details:")
+        for key, value in report["details"].items():
+            if value in (None, "", []):
+                continue
+            print(f"  - {key}: {value}")
+
+
 def print_text_next(report: dict[str, Any]) -> None:
     print(f"content-agent next: {report.get('package')}")
     if report.get("has_pending_review_gate_blockers"):
@@ -3997,6 +4051,14 @@ def build_parser() -> argparse.ArgumentParser:
     resume.add_argument("--gate", help="Approved review gate id, path, or filename.")
     resume.add_argument("--resolved-run", help="Resolved run id, path, or filename.")
     resume.add_argument("--format", choices=["text", "json"], default="text")
+
+    gate = subparsers.add_parser("gate", help="Evaluate first-class workflow gates.")
+    gate_subparsers = gate.add_subparsers(dest="gate_command", required=True)
+    gate_check = gate_subparsers.add_parser("check", help="Evaluate a gate contract without mutating package state.")
+    gate_check.add_argument("--gate", required=True, help="Gate id from gate_contracts.yaml.")
+    gate_check.add_argument("--package", help="Package path or key under publications/.")
+    gate_check.add_argument("--packet", help="Packet path for packet-scoped gates.")
+    gate_check.add_argument("--format", choices=["text", "json"], default="text")
 
     review = subparsers.add_parser("review", help="Inspect file-backed review gates.")
     review_subparsers = review.add_subparsers(dest="review_command", required=True)
@@ -4199,6 +4261,28 @@ def main() -> None:
         else:
             print_text_resume(report)
         return
+
+    if args.command == "gate":
+        if args.gate_command == "check":
+            try:
+                report = build_gate_check_report(
+                    args.gate,
+                    package_arg=args.package,
+                    packet_arg=args.packet,
+                )
+            except Exception as exc:
+                if args.format == "json":
+                    print_json({"success": False, "error": str(exc)})
+                else:
+                    print(f"content-agent gate check failed: {exc}")
+                sys.exit(1)
+            if args.format == "json":
+                print_json(report)
+            else:
+                print_text_gate_check(report)
+            if report["blocking"]:
+                sys.exit(1)
+            return
 
     if args.command == "next":
         try:

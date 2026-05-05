@@ -109,7 +109,7 @@ capabilities:
       command: ".venv/bin/python scripts/generate_editorial_report.py --package {package}"
       required: true
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       required: true
   skills: []
 
@@ -271,7 +271,7 @@ validation:
         - before_release_gate_handoff
       required: true
     - id: release_readiness_gate_check
-      command: "npm run gate:check -- --gate release_readiness --package {package}"
+      command: "./content-agent gate check --gate release_readiness --package {package}"
       run_at:
         - before_release_gate_handoff
       required: true
@@ -292,7 +292,7 @@ gates:
     contract: release_readiness
     required: true
     stop_before: release_gate_handoff
-    validator: "npm run gate:check -- --gate release_readiness --package {package}"
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
     artifacts:
       - polished_live_draft
       - editorial_report
