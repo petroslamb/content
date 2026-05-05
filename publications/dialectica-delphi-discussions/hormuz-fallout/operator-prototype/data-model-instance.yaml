@@ -1,0 +1,123 @@
+session:
+  id: delphi-hormuz-fallout-2026-04-24
+  title: Hormuz Fallout
+  date: '2026-04-24'
+  format: multidisciplinary_crisis_teardown
+  confidentiality: closed_door_chatham_house_style
+  source_files:
+    transcript: sources/raw/2026-04-24-discussion/transcript.vtt
+    chat: sources/raw/2026-04-24-discussion/chat.txt
+  artifact_status: prototype_operator_reviewed
+  follow_up_status: proposed
+
+topic:
+  id: topic-hormuz-fallout
+  name: Strait of Hormuz fallout
+  tags:
+    - geopolitical_risk
+    - maritime_security
+    - insurance
+    - treasury_liquidity
+    - energy_security
+    - supply_chain
+
+expert_segments:
+  - id: segment-defense-maritime
+    description: Experts on maritime operations, defense systems, demining, and regional tactical reality.
+    likely_value:
+      - cross_domain_scenario_map
+      - domain_deep_dive_invite
+    likely_asks:
+      - tactical_claim_review
+      - future_deep_dive_availability
+  - id: segment-risk-finance
+    description: Insurance, treasury, CFO, and risk participants.
+    likely_value:
+      - risk_finance_recap
+      - liquidity_scenario_note
+    likely_asks:
+      - most_relevant_policy_or_liquidity_trigger
+      - current_forecast_maturity
+  - id: segment-supply-chain
+    description: Logistics, procurement, and continuity operators.
+    likely_value:
+      - continuity_checklist
+      - peer_deep_dive_invite
+    likely_asks:
+      - safety_stock_posture
+      - local_sourcing_posture
+      - multi_sourcing_constraints
+
+claims:
+  - id: HORMUZ-C01
+    normalized_claim: Hormuz is a chain-reaction problem across defense, insurance, treasury, energy, and supply chain.
+    confidence: high
+    sensitivity: low
+    allowed_audiences:
+      - internal
+      - attendee_recap
+      - executive_brief
+    verification_status: operator_reviewed
+  - id: HORMUZ-C06
+    normalized_claim: Static cash forecasting is insufficient when rerouting, premiums, inventory delays, and fuel costs change daily.
+    confidence: high
+    sensitivity: low
+    allowed_audiences:
+      - internal
+      - treasury_note
+    verification_status: operator_reviewed
+  - id: HORMUZ-C09
+    normalized_claim: Lean or single-source supply chains are exposed; alternatives preserve supply but raise cost and slow delivery.
+    confidence: high
+    sensitivity: low
+    allowed_audiences:
+      - internal
+      - attendee_recap
+      - supply_chain_note
+    verification_status: operator_reviewed
+
+artifacts:
+  - id: artifact-hormuz-executive-risk-brief
+    title: Hormuz Fallout Chain-Reaction Map
+    audience: executives_risk_strategy
+    status: draftable_after_review
+    reuse_constraint: avoid_unverified_geopolitical_claims
+  - id: artifact-hormuz-treasury-note
+    title: Dynamic Liquidity Planning Under Maritime Disruption
+    audience: cfo_treasury_finance
+    status: draftable
+    reuse_constraint: no_financial_advice
+  - id: artifact-hormuz-supply-chain-note
+    title: Continuity After Lean Supply Chains
+    audience: supply_chain_procurement
+    status: draftable
+    reuse_constraint: domain_validation_required
+
+offer_ask_actions:
+  - id: HORMUZ-A01
+    segment: all_attendees
+    offer: chain_reaction_scenario_map
+    ask: select_organization_red_line_domain
+    channel: email_follow_up
+    owner: delphi_operator
+    status: proposed
+  - id: HORMUZ-A03
+    segment: segment-risk-finance
+    offer: dynamic_liquidity_scenario_template
+    ask: current_forecast_static_or_event_driven
+    channel: email_follow_up
+    owner: delphi_operator
+    status: proposed
+  - id: HORMUZ-A05
+    segment: segment-defense-maritime
+    offer: domain_deep_dive_invite
+    ask: review_key_tactical_claims
+    channel: personal_invite
+    owner: pere_or_operator
+    status: proposed
+
+open_questions:
+  - Which domain deep dive should happen first?
+  - Which claims need external verification before client-facing use?
+  - What can be sent back under Chatham House-style framing?
+  - Which chat contributors should be asked for follow-up consent?

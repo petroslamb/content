@@ -1,0 +1,114 @@
+session:
+  id: delphi-claude-mythos-2026-04-17
+  title: Claude Mythos
+  date: '2026-04-17'
+  format: reactive_sensemaking
+  confidentiality: closed_door_no_attribution_default
+  source_files:
+    transcript: sources/raw/2026-04-17-discussion/transcript.vtt
+    chat: sources/raw/2026-04-17-discussion/chat.txt
+  analysis_file: claude-mythos-session-analysis.md
+  artifact_status: prototype_operator_reviewed
+  follow_up_status: proposed
+
+topic:
+  id: topic-claude-mythos
+  name: Claude Mythos and AI-security readiness
+  tags:
+    - ai_security
+    - exposure_management
+    - board_translation
+    - agent_permissions
+    - cyber_insurance
+
+expert_segments:
+  - id: segment-ciso-security-leaders
+    description: Security leaders responsible for readiness and response.
+    likely_value:
+      - readiness_checklist
+      - practitioner_circle
+    likely_asks:
+      - top_preparedness_gap
+      - technical_control_priorities
+  - id: segment-board-risk-leaders
+    description: Board-facing leaders translating AI-security risk into business language.
+    likely_value:
+      - board_language_memo
+      - executive_briefing_path
+    likely_asks:
+      - hardest_risk_translation_problem
+      - board_reporting_need
+
+claims:
+  - id: MYTHOS-C01
+    normalized_claim: Mythos should be treated as a readiness trigger, not only a vendor adoption question.
+    confidence: high
+    sensitivity: low
+    allowed_audiences:
+      - internal
+      - attendee_recap
+      - public_safe_teaser
+    verification_status: operator_reviewed
+  - id: MYTHOS-C02
+    normalized_claim: Mythos-class capability compresses defender response windows.
+    confidence: high
+    sensitivity: medium
+    allowed_audiences:
+      - internal
+      - attendee_recap
+      - client_safe_synthesis
+    verification_status: needs_primary_source_check
+  - id: MYTHOS-C07
+    normalized_claim: Agent permissions change the risk of over-permissioned identity because agents can act at machine speed.
+    confidence: high
+    sensitivity: medium
+    allowed_audiences:
+      - internal
+      - ciso_checklist
+    verification_status: needs_technical_validation
+
+artifacts:
+  - id: artifact-mythos-board-risk-memo
+    title: What Mythos-Class Capability Changes For Enterprise AI Risk
+    audience: board_ceo_cto_ciso
+    status: draftable_after_source_check
+    reuse_constraint: no_participant_attribution
+  - id: artifact-mythos-ciso-checklist
+    title: AI-Security Readiness Checklist
+    audience: ciso_security_leaders
+    status: draftable
+    reuse_constraint: technical_validation_required
+  - id: artifact-mythos-internal-operator-note
+    title: Claude Mythos Operator Note
+    audience: delphi_internal
+    status: draftable
+    reuse_constraint: internal_only
+
+offer_ask_actions:
+  - id: MYTHOS-A01
+    segment: segment-ciso-security-leaders
+    offer: ai_security_readiness_checklist
+    ask: top_preparedness_gap
+    channel: email_follow_up
+    owner: delphi_operator
+    status: proposed
+  - id: MYTHOS-A02
+    segment: segment-board-risk-leaders
+    offer: board_language_risk_memo
+    ask: hardest_internal_translation_problem
+    channel: email_follow_up
+    owner: delphi_operator
+    status: proposed
+  - id: MYTHOS-A03
+    segment: segment-ciso-security-leaders
+    offer: smaller_practitioner_circle_invite
+    ask: opt_in_for_no_attribution_follow_up
+    channel: personal_invite
+    owner: pere_or_operator
+    status: proposed
+
+open_questions:
+  - Which Mythos-specific claims need primary-source verification?
+  - What summary format best preserves the session's no-attribution trust?
+  - Which participants should join a standing AI-security circle?
+  - What consent language governs aggregated readiness responses?

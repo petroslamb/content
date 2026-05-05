@@ -6,8 +6,12 @@ Start here:
 
 - [`decision-brief.md`](decision-brief.md) - the concentrated decision surface for the Pere/Michael conversations.
 - [`final-email.md`](final-email.md) - the sendable email to Pere and Michael.
+- [`delphi-operating-system-memo.md`](delphi-operating-system-memo.md) - sendable strategy memo showing the technical/product read on Delphi.
+- [`delphi-session-operator-prototype.md`](delphi-session-operator-prototype.md) - first applied operator packet built from the provided sessions.
+- [`operator-prototypes.md`](operator-prototypes.md) - index of the end-to-end worked session packets.
+- [`prototype-cover-note.md`](prototype-cover-note.md) - short note for sharing the prototype with Pere and Michael.
 
-The decision brief is the private decision surface. The final email is the action surface. The topic folders are evidence. The `support/` folder holds longer notes that were useful for thinking, but should not be the first reading surface.
+The decision brief is the private decision surface. The final email is the action surface. The Delphi operating-system memo is the tangible strategy artifact for Pere and Michael. The session operator prototype is the first applied draft showing how the provided sessions become structured memory and follow-up actions. The operator prototype index points to the worked end-to-end packets for AI ROI, Claude Mythos, and Hormuz. The topic folders are evidence. The `support/` folder holds longer notes that were useful for thinking, but should not be the first reading surface.
 
 ## Current Thesis
 
