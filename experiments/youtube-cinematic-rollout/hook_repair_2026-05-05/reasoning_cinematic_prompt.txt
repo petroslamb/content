@@ -1,0 +1,19 @@
+Create a documentary-style cinematic video overview for a Rooted Layers publication.
+
+This is a hook-repair variant. The current analytics show that the topic earns attention, but the opening must become more concrete and operational.
+
+Required cold open:
+- First spoken line: "The model did not fail first. The scaffold failed first."
+- Viewer promise: show builders why reasoning failures often come from workflow shape, memory boundaries, and verification paths before model choice.
+- Conflict: fluent reasoning looks impressive until the action environment exposes a missing scaffold.
+- Payoff by 30 seconds: viewers should know that the first diagnostic move is to inspect the scaffold, not shop for a smarter model.
+
+Build the narration around one concrete failure chain: a plan looks coherent, hits a locked tool, contaminates its own context, then needs a scaffold that separates planning, action, observation, and verification.
+
+Use compact claim blocks that can be clipped cleanly into Shorts. Include at least three self-contained lines or mini-sequences that each:
+- open with a sharp claim, tension, or failure mode in the first sentence
+- avoid pronoun-heavy callbacks that require earlier context
+- land one concrete takeaway before moving on
+- sound quotable when isolated from the rest of the video
+
+Keep the voice analytical, sober, and visually ambitious. Avoid listicle framing, generic YouTube hype, creator self-reference, and filler transitions. Do not use phrases like "TL;DR", "top 5", or "in this video".

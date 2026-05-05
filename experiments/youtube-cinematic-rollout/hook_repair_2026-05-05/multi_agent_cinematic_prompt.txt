@@ -1,0 +1,19 @@
+Create a documentary-style cinematic video overview for a Rooted Layers publication.
+
+This is a hook-repair variant. The current analytics show that the topic works, but the opening must convert faster by naming the failure mode before explaining the architecture.
+
+Required cold open:
+- First spoken line: "A second agent only helps when it buys a real boundary."
+- Viewer promise: give viewers a practical test for when multi-agent design is architecture and when it is theater.
+- Conflict: extra agents create coordination noise unless they separate memory, authority, or action space.
+- Payoff by 30 seconds: viewers should know that the question is not how many agents to add, but what boundary the next agent owns.
+
+Build the narration around one concrete failure chain: a team of role-labeled agents looks sophisticated, adds handoffs, loses fidelity, then only becomes useful when a second agent owns a boundary the first one should not cross.
+
+Use compact claim blocks that can be clipped cleanly into Shorts. Include at least three self-contained lines or mini-sequences that each:
+- open with a sharp claim, tension, or failure mode in the first sentence
+- avoid pronoun-heavy callbacks that require earlier context
+- land one concrete takeaway before moving on
+- sound quotable when isolated from the rest of the video
+
+Keep the voice analytical, sober, and visually ambitious. Avoid listicle framing, generic YouTube hype, creator self-reference, and filler transitions. Do not use phrases like "TL;DR", "top 5", or "in this video".
