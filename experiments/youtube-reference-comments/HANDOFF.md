@@ -7,19 +7,19 @@ Pilot YouTube references surfaces without embedding the behavior into the main c
 ## What Already Exists
 
 - experiment README:
-  [`/Users/petros/Projects/content/experiments/youtube-reference-comments/README.md`](/Users/petros/Projects/content/experiments/youtube-reference-comments/README.md)
+  [`README.md`](README.md)
 - pilot manifest:
-  [`/Users/petros/Projects/content/experiments/youtube-reference-comments/pilot_manifest.yaml`](/Users/petros/Projects/content/experiments/youtube-reference-comments/pilot_manifest.yaml)
+  [`pilot_manifest.yaml`](pilot_manifest.yaml)
 - draft builder:
-  [`/Users/petros/Projects/content/scripts/build_youtube_reference_comment_draft.py`](/Users/petros/Projects/content/scripts/build_youtube_reference_comment_draft.py)
+  [`../../scripts/build_youtube_reference_comment_draft.py`](../../scripts/build_youtube_reference_comment_draft.py)
 - description appender:
-  [`/Users/petros/Projects/content/scripts/append_key_paper_to_youtube_descriptions.py`](/Users/petros/Projects/content/scripts/append_key_paper_to_youtube_descriptions.py)
+  [`../../scripts/append_key_paper_to_youtube_descriptions.py`](../../scripts/append_key_paper_to_youtube_descriptions.py)
 - description append manifest:
-  [`/Users/petros/Projects/content/experiments/youtube-reference-comments/description_append_manifest.yaml`](/Users/petros/Projects/content/experiments/youtube-reference-comments/description_append_manifest.yaml)
+  [`description_append_manifest.yaml`](description_append_manifest.yaml)
 - first sample drafts:
-  [`/Users/petros/Projects/content/experiments/youtube-reference-comments/drafts/hardware_friction_map_comment.md`](/Users/petros/Projects/content/experiments/youtube-reference-comments/drafts/hardware_friction_map_comment.md)
-  [`/Users/petros/Projects/content/experiments/youtube-reference-comments/drafts/what_actually_works_hardware_comment.md`](/Users/petros/Projects/content/experiments/youtube-reference-comments/drafts/what_actually_works_hardware_comment.md)
-  [`/Users/petros/Projects/content/experiments/youtube-reference-comments/drafts/illusion_of_swarm_comment.md`](/Users/petros/Projects/content/experiments/youtube-reference-comments/drafts/illusion_of_swarm_comment.md)
+  [`drafts/hardware_friction_map_comment.md`](drafts/hardware_friction_map_comment.md)
+  [`drafts/what_actually_works_hardware_comment.md`](drafts/what_actually_works_hardware_comment.md)
+  [`drafts/illusion_of_swarm_comment.md`](drafts/illusion_of_swarm_comment.md)
 
 ## Current Assessment
 
@@ -35,7 +35,7 @@ Pilot YouTube references surfaces without embedding the behavior into the main c
 2. Use the description append manifest for the remaining backfill cohort, preserving all existing description text and appending only one curated `Key paper:` line.
 3. Compare whether description appends feel better than comments before normalizing anything into the main rollout.
 4. Record results in:
-   [`/Users/petros/Projects/content/experiments/youtube-reference-comments/notes.md`](/Users/petros/Projects/content/experiments/youtube-reference-comments/notes.md)
+   [`notes.md`](notes.md)
 
 ## Policy Posture
 
