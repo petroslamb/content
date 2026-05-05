@@ -289,7 +289,8 @@ The first paperization sprint artifacts now exist:
 13. `specification-surface-source-of-truth-paper-draft-r2.pdf`
 14. `specification-surface-source-of-truth-submission-readiness-review-r2.md`
 15. `specification-surface-source-of-truth-external-submission-approval-r1.md`
+16. `specification-surface-source-of-truth-aiware-submission-record-r1.md`
 
 The draftability audit and docs-only approval gate authorized starting `specification-surface-source-of-truth-paper-draft-r1.md` for the AIware fast-feedback sprint. The R1 draft and route checklists now exist.
 
-The R2 readiness review does not authorize external submission or arXiv posting. It marks the local packet ready for human external-submission approval. The approval surface now exists in `pending_human_decision` state. Before any external action, that surface must be updated by a human. arXiv posting separately needs license, endorsement/account, and venue-policy decisions.
+The R2 readiness review marked the local packet ready for human external-submission approval. The approval surface now records `approve_aiware_submission`, authorizing AIware submission of the reviewed R2 packet. A local AIware submission record exists and is pending actual form submission. arXiv posting separately needs license, endorsement/account, and venue-policy decisions.

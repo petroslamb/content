@@ -2,13 +2,15 @@
 kind: submission_checklist
 package: "literate-workflow-programming/specification-surface-source-of-truth"
 workflow: paper_development
-status: blocked_until_human_approval
+status: approved_for_aiware_submission
 created: "2026-04-30"
+updated: "2026-05-05"
 target: aiware_2026_arxiv_track_round_2
 source_draft: "specification-surface-source-of-truth-paper-draft-r2.md"
 source_pdf: "specification-surface-source-of-truth-paper-draft-r2.pdf"
-external_submission_allowed: false
-verified_online: "2026-04-30"
+external_submission_allowed: true
+arxiv_posting_allowed: false
+verified_online: "2026-05-05"
 ---
 
 # AIware 2026 ArXiv Track Checklist
@@ -18,8 +20,10 @@ verified_online: "2026-04-30"
 Official source: <https://conf.researchr.org/track/aiware-2026/aiware-2026-arxiv-track>
 
 - Conference: AIware 2026, co-located with FSE 2026, July 6-7, 2026.
+- Venue location listed online: Montreal, Canada.
 - Round 2 submission deadline: May 15, 2026 AoE.
 - Round 2 notification: June 1, 2026.
+- Submission form: <https://forms.gle/rYgz3NGVa3o9UrYK9>
 - Accepted submissions do not appear in proceedings.
 - Manuscripts do not need to be on arXiv at submission time, but accepted works should be made available on arXiv before the conference date.
 - Anonymization is not required.
@@ -39,14 +43,14 @@ Official source: <https://conf.researchr.org/track/aiware-2026/aiware-2026-arxiv
 | Post-draft readiness review | done | `specification-surface-source-of-truth-submission-readiness-review-r1.md` holds submission for method and packet tightening. |
 | R2 readiness review | done | `specification-surface-source-of-truth-submission-readiness-review-r2.md` marks the packet ready for human approval. |
 | PDF | done for local review | `specification-surface-source-of-truth-paper-draft-r2.pdf` exists and regenerates cleanly; final venue-format polish may still be requested. |
-| Human approval for external submission | pending | `specification-surface-source-of-truth-external-submission-approval-r1.md` exists but does not approve submission. |
+| Human approval for external submission | done | `specification-surface-source-of-truth-external-submission-approval-r1.md` approves AIware submission. |
 | arXiv posting | blocked | Do not post until manuscript packet and policy review are complete. |
 
 ## Submission Blockers
 
-- Human external-submission approval is pending and not granted.
-- Venue-format polish may still be needed if the reviewer wants a shorter or more template-specific PDF.
-- The manuscript has not yet passed a human AIware external-submission approval review.
+- arXiv posting remains blocked.
+- Actual Google Form submission has not yet been recorded.
+- Venue-format polish may still be requested by the submitter, but the current R2 packet is approved for AIware submission.
 
 ## Local Pre-Submission Checks
 
@@ -58,12 +62,14 @@ Official source: <https://conf.researchr.org/track/aiware-2026/aiware-2026-arxiv
 - [x] Finalize artifact availability language for the AIware draft route.
 - [x] Generate a PDF.
 - [x] Create or update `arxiv-checklist.md`.
-- [ ] Record human approval before any external submission.
-- [ ] Rerun `./content-agent validate --workflow paper_development --package literate-workflow-programming/specification-surface-source-of-truth`.
+- [x] Record human approval before any external submission.
+- [x] Rerun `./content-agent validate --workflow paper_development --package literate-workflow-programming/specification-surface-source-of-truth`.
 - [ ] Rerun `npm run check:repo-links`.
+- [ ] Submit through the AIware Google Form.
+- [ ] Record the submission in `specification-surface-source-of-truth-aiware-submission-record-r1.md`.
 
 ## Decision
 
-Current decision: `blocked_until_human_approval`
+Current decision: `approved_for_aiware_submission`
 
-The draft may be reviewed and revised locally. It may not be submitted to AIware, uploaded to arXiv, or posted through OpenReview without a separate human approval surface.
+The reviewed R2 packet may be submitted to the AIware 2026 ArXiv Track. It may not be uploaded to arXiv or posted elsewhere without a separate posting approval surface.
