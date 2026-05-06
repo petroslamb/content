@@ -1,6 +1,6 @@
 # Proof: Specification Surface Full Lifecycle
 
-**Status:** `retrospective retained proof candidate`
+**Status:** `retrospective retained proof candidate` (`secondary candidate` after local session audit)
 
 This folder reconstructs the publication lifecycle for `literate-workflow-programming/specification-surface-source-of-truth`, the successor leaf that became the public essay "The Specification Surface Is the New Source of Truth."
 
@@ -9,6 +9,8 @@ This folder reconstructs the publication lifecycle for `literate-workflow-progra
 The run starts with the successor leaf opened from the `literate-workflow-programming` pivot path. It ends after the public essay route is complete: research, essay iteration, NotebookLM artifacts, article polish, Substack publication, archive sync, YouTube production, and distribution are all marked done in the package state.
 
 This is a retrospective proof packet. It is built from tracked repo evidence after the fact. It does not claim that the final Phase 2 `content-agent` runtime autonomously executed every lifecycle step.
+
+A local session-provenance audit confirmed that the package should not be elevated to primary proof: the lifecycle was completed through a hybrid guided Codex path with `content-agent` status/validation support, not as one autonomous governed `content-agent run` campaign.
 
 ## Why This Proof Matters
 
@@ -27,6 +29,7 @@ It adds evidence for:
 ## Folder Map
 
 - `review-packet/`: the six-record review surface for task, trace, evidence, verification, approval, and failure review
+- `review-packet/session-provenance-audit.md`: local session audit and classification decision
 - `raw-artifacts/source-manifest.md`: index of tracked source artifacts used to reconstruct the lifecycle
 - `comparison.md`: what this packet proves, and what it does not prove
 

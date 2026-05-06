@@ -37,4 +37,4 @@
 
 This trace is not a single `content-agent run` trace. It spans older lifecycle logs, package-local artifacts, browser-backed external operations, and later Phase 2 `content-agent` validation/run records.
 
-That is why this proof is a retrospective lifecycle proof, not strict autonomous runtime proof.
+The local session audit confirms the same boundary: this proof is a retrospective lifecycle proof, not strict autonomous runtime proof.
