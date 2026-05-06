@@ -81,6 +81,8 @@ Primary commands:
 - `./content-agent review defer --gate <gate_id> --reason "<reason>"`
 - `./content-agent resume --gate <gate_id>`
 
+Workflows with declared runtime inputs use repeatable `--input key=value` on both validation and governed runs, for example `./content-agent run --workflow topic_discovery --package <package> --input discovery_trigger="..." --input target_publication_ambition=north_star_flagship`.
+
 Local view and report surfaces:
 
 - [`./content-cockpit`](content-cockpit) or `npm run cockpit -- --package <package>`

@@ -33,6 +33,8 @@ Use `content-agent` for governed work:
 ./content-agent resume --gate <gate_id>
 ```
 
+For workflows that declare runtime inputs, pass them explicitly with repeatable `--input key=value` on both `validate` and `run`. Example: `./content-agent run --workflow topic_discovery --package <package> --input discovery_trigger="..." --input target_publication_ambition=north_star_flagship`.
+
 Equivalent npm aliases exist for common entrypoints, for example `npm run content-agent -- status`, `npm run agent:status -- --package <package>`, and `npm run agent:validate -- --workflow <workflow_id> --package <package>`.
 
 Use the cockpit when a local browser surface is more useful than terminal output:

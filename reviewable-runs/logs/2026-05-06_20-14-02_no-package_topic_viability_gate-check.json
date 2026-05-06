@@ -1,0 +1,43 @@
+{
+  "kind": "gate_check",
+  "schema_version": 2,
+  "timestamp": "2026-05-06_20-14-02",
+  "run_id": "2026-05-06_20-14-02_no-package_topic_viability_gate-check",
+  "package": null,
+  "gate_id": "topic_viability",
+  "packet_path": "reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-discovery-handoff.md",
+  "boundary": {
+    "type": "gate evaluation",
+    "reason": "Gate checks record movement decisions without mutating package state by themselves.",
+    "external_side_effect": false,
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Evaluate gate 'topic_viability'.",
+    "stop_condition": "Gate result recorded in reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not mutate lifecycle state from the gate check alone."
+    ]
+  },
+  "decision": "package_init_ready",
+  "status": "pass",
+  "required_artifacts": [
+    "topic-discovery packet with an explicit handoff decision",
+    "carry-forward package fields when the decision is package_init_ready"
+  ],
+  "missing_artifacts": [],
+  "recommended_workflow": "research",
+  "recommended_validator": "./content-agent gate check --gate topic_viability --packet <topic-packet>",
+  "proof_mode": "topic_packet",
+  "verification": {
+    "checks": [
+      {
+        "name": "gate_check_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-05-06_20-14-02_no-package_topic_viability_gate-check.json"
+      }
+    ],
+    "residual_risk": "Gate checks capture the current bounded decision, but the underlying artifacts still need normal human review when the stakes are high."
+  }
+}
