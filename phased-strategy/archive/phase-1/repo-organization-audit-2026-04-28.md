@@ -1,5 +1,7 @@
 # Repo Organization Audit - 2026-04-28
 
+Archive note, 2026-05-06: this audit is retained as historical authority-cleanup evidence. It describes the pre-closeout skew between Phase 2 surfaces and the old compatibility layer. The `harness_contract.yaml` rollup and legacy npm adapters have since been retired; see [`../../../AUTHORITY.md`](../../../AUTHORITY.md) and [`../../phase-2/`](../../phase-2/README.md) for the current baseline.
+
 Scope: root orientation files, publication/package map, workflow map, script map, authority/policy contracts, reviewable-run stores, ignored local surfaces, and active experiment folders.
 
 This audit is about organization and source-of-truth drift. It does not judge article quality.
