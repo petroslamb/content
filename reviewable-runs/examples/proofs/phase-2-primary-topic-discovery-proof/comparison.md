@@ -22,6 +22,8 @@ The retained Phase 2 packet makes those boundaries explicit:
 - `reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml` records the pending lifecycle gate, evidence preview paths, approval requirements, and resume command.
 - `reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-discovery-handoff.md` records the handoff decision and carry-forward fields needed for package initialization.
 
-## Remaining Boundary
+## Continuation Boundary
 
-The proof stops where it should. A human still has to approve, reject, or defer the `topic_viability` gate before `proof-runs-as-source-surface` can become a package.
+The first proof stop worked: a human had to approve `topic_viability` before `proof-runs-as-source-surface` became a package.
+
+The continuation now stops at `research_exit`. A human still has to approve, reject, or defer `research_exit-2026-05-06T19-59-47Z` before research can be marked done or essay iteration can begin.

@@ -1,0 +1,146 @@
+kind: run_record
+schema_version: 1
+run_id: run-2026-05-06T19-55-02Z-literate-workflow-programming-review-approve-topic-viability-2026-05-06t17-14-12z
+resolved_run_path: reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+package:
+  path: publications/literate-workflow-programming
+  status_path: publications/literate-workflow-programming/status.yaml
+  status_hash: sha256:9ca68dbc5530ff1eecf1ec6cfa542d631ee0de78a389b6720118adc8a094c001
+workflow:
+  workflow_id: topic_discovery
+  workflow_version: 1
+  workflow_hash: sha256:8da3aa3758b4bb9bc848c2daf2ca4fcec7e3f1674460e1b67fea9cdd074b987d
+  contract_path: workflows/topic-discovery/workflow.yaml
+  step_id: decide_handoff
+run_mode: governed_continuous
+timestamps:
+  started_at: '2026-05-06T19:55:02Z'
+  ended_at: '2026-05-06T19:55:02Z'
+invocation:
+  entrypoint: content-agent review
+  command: ./content-agent review approve --gate topic_viability-2026-05-06T17-14-12Z
+context_admission:
+- id: package_status
+  paths:
+  - publications/literate-workflow-programming/status.yaml
+  hashes:
+    publications/literate-workflow-programming/status.yaml:
+      type: file_sha256
+      sha256: 9ca68dbc5530ff1eecf1ec6cfa542d631ee0de78a389b6720118adc8a094c001
+      size_bytes: 1769
+- id: workflow_contract
+  paths:
+  - workflows/topic-discovery/workflow.yaml
+  hashes:
+    workflows/topic-discovery/workflow.yaml:
+      type: file_sha256
+      sha256: 8da3aa3758b4bb9bc848c2daf2ca4fcec7e3f1674460e1b67fea9cdd074b987d
+      size_bytes: 11201
+consumed_artifacts:
+- id: review_gate_before_decision
+  paths:
+  - reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml
+  hashes:
+    reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml:
+      type: file_sha256
+      sha256: 6212b59380e5f946058e0fe49945e848b821e1926ba4acdbb7d99c25e36a14a9
+      size_bytes: 3272
+- id: parent_run_record
+  paths:
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof.yaml
+  hashes:
+    reviewable-runs/logs/phase-2-primary-topic-discovery-proof.yaml:
+      type: file_sha256
+      sha256: 4f9090565e9a7f0a11cd59b587396ea45336cf894fbf5df384b80318b4616a6e
+      size_bytes: 6683
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+  hashes:
+    reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml:
+      type: file_sha256
+      sha256: 25b75ea53d70fa75409f9c872fc87d19a881730cae5808effcac55a9fbc9694c
+      size_bytes: 6760
+parent_artifacts:
+- id: review_gate
+  path: reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml
+- id: parent_run_record
+  path: reviewable-runs/logs/phase-2-primary-topic-discovery-proof.yaml
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+produced_artifacts:
+- id: run_record
+  paths:
+  - reviewable-runs/logs/run-2026-05-06T19-55-02Z-literate-workflow-programming-review-approve-topic-viability-2026-05-06t17-14-12z.yaml
+- id: review_gate_decision
+  paths:
+  - reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml
+validation_results:
+- id: content_agent_review_decision
+  status: passed
+  summary: Recorded approve decision without lifecycle, promotion, or external mutation
+    side effects.
+enforcement_outcomes:
+- surface: review_gates
+  posture: deny
+  status: approve_recorded
+- surface: external_mutation
+  posture: deny
+  status: not_approved
+- surface: lifecycle_movement
+  posture: deny
+  status: approved_not_moved
+- surface: promotion
+  posture: deny
+  status: not_approved
+- surface: trace_completeness
+  posture: detect
+  status: recorded
+gate_ids:
+- topic_viability
+- topic_viability-2026-05-06T17-14-12Z
+approval_decisions:
+- decided_at: '2026-05-06T19:55:02Z'
+  decided_by: content-agent review approve
+  outcome: approve
+  quality_approved: false
+  external_mutation_approved: false
+  lifecycle_movement_approved: true
+  promotion_approved: false
+  reason: User explicitly approved the topic viability gate and ordered continuation
+    to the next governed gate.
+  approval_dimensions:
+    quality:
+      required: false
+      approved: false
+    external_mutation:
+      required: false
+      approved: false
+    lifecycle_movement:
+      required: true
+      approved: true
+    promotion:
+      required: false
+      approved: false
+  external_mutation:
+    approved: false
+    required: false
+    distinct_from_quality_approval: true
+    effect: not_performed_by_content_agent_2_4b
+  state_effects:
+    package_status: unchanged
+    external_mutation: not_performed
+    lifecycle_movement: not_performed
+    promotion: not_performed
+  run_record_path: reviewable-runs/logs/run-2026-05-06T19-55-02Z-literate-workflow-programming-review-approve-topic-viability-2026-05-06t17-14-12z.yaml
+external_mutations:
+- target: none
+  status: not_attempted
+  approval_reference: null
+terminal_status: completed
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: blocked
+  trace_state: minimum_complete
