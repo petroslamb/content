@@ -1,0 +1,478 @@
+workflow_id: reddit_discussion_lab
+version: 1
+stability: experimental
+workflow_kind: module
+workflow_group: distribution
+summary: Convert essay arguments into Reddit-native discussion seeds using observed high-engagement examples, tone analysis, scoring, and package-local outcome tracking without automating external posts.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  discussion_question:
+    required: false
+    description: The Reddit audience, essay frame, or discussion-spark question for this run.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, revision, lifecycle state, live draft path, and distribution paths.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation, thesis boundary, and local structure.
+    record_hash: true
+  - id: source_essay_candidate_or_live_draft
+    path_from_status: config.markdown_path
+    fallback:
+      - publications/{package}/*candidate*.md
+      - publications/{package}/*.md
+    required: true
+    purpose: Identify the live draft, published post, or candidate essay being converted into Reddit-native discussion seeds.
+    record_hash: true
+  - id: existing_distribution_or_reddit_ledger
+    path_from_status: config.distribution_path
+    fallback:
+      - publications/{package}/distribution/reddit-discussion-lab.md
+      - publications/{package}/distribution/reddit-experiment-ledger.md
+      - publications/{package}/distribution/
+      - publications/{package}/socials/
+    required: false
+    purpose: Preserve existing package-local distribution or Reddit ledger history, account-health notes, and prior Reddit decisions.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/reddit-discussion-lab/README.md
+    required: true
+    purpose: Load human-facing discussion-lab guidance.
+    record_hash: true
+  - id: workflow_examples
+    path: workflows/reddit-discussion-lab/examples.md
+    required: true
+    purpose: Provide the observed Reddit examples and engagement mechanics.
+    record_hash: true
+  - id: workflow_seed_bank
+    path: workflows/reddit-discussion-lab/seed-bank.md
+    required: true
+    purpose: Provide reusable essay-to-Reddit seed shapes and post idea inventory patterns.
+    record_hash: true
+  - id: workflow_templates
+    path: workflows/reddit-discussion-lab/templates/
+    required: true
+    purpose: Provide the package-local discussion lab tracker template.
+    record_hash: true
+  - id: reddit_native_distribution_readme
+    path: workflows/distribution/reddit-native-distribution.md
+    required: true
+    purpose: Preserve Reddit account-health, link-placement, tone, and approval-boundary rules.
+    record_hash: true
+  - id: distribution_readme
+    path: workflows/distribution/README.md
+    required: true
+    purpose: Keep Reddit discussion drafting inside the broader distribution workflow.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local write, external mutation, trace, and approval policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve release_readiness approval requirements when a drafted Reddit seed will be externally posted.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: reddit_discussion_lab_validation
+      command: "./content-agent validate --workflow reddit_discussion_lab --package {package}"
+      required: false
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: false
+    - id: release_readiness_gate_check
+      command: "./content-agent gate check --gate release_readiness --package {package}"
+      required: false
+  skills: []
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - workflows/reddit-discussion-lab/
+    - workflows/distribution/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/distribution/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: reddit_discussion_lab_tracker
+    path_template: "publications/{package}/distribution/reddit-discussion-lab.md"
+    required: true
+    format: markdown
+    producer: create_or_update_reddit_discussion_lab_tracker
+  - id: example_mechanics_analysis
+    path_template: "publications/{package}/distribution/reddit-discussion-lab.md"
+    required: true
+    format: markdown
+    producer: record_examples_and_borrowed_mechanics
+  - id: post_idea_inventory
+    path_template: "publications/{package}/distribution/reddit-discussion-lab.md"
+    required: true
+    format: markdown
+    producer: mine_essay_for_reddit_native_problem_shapes
+  - id: tone_and_engagement_mechanics_analysis
+    path_template: "publications/{package}/distribution/reddit-discussion-lab.md"
+    required: true
+    format: markdown
+    producer: record_examples_and_borrowed_mechanics
+  - id: scored_native_post_drafts
+    path_template: "publications/{package}/distribution/reddit-discussion-lab.md"
+    required: true
+    format: markdown
+    producer: draft_and_score_discussion_seeds
+  - id: posting_decision
+    path_template: "publications/{package}/distribution/reddit-discussion-lab.md"
+    required: true
+    format: markdown
+    producer: record_post_comment_hold_or_skip_decision
+  - id: external_posting_gate
+    path_template: "reviewable-runs/gates/{run_id}-reddit-discussion-posting.yaml"
+    required: conditional
+    required_when: the run will post, comment, vote, or otherwise mutate Reddit
+    format: yaml
+    producer: stop_for_external_posting_approval
+  - id: outcome_readback
+    path_template: "publications/{package}/distribution/reddit-discussion-lab.md"
+    required: conditional
+    required_when: a Reddit post or comment goes live, or the user asks for performance readback
+    format: markdown
+    producer: record_reddit_outcome_readback
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: source_essay_exists
+      check: source_essay_candidate_or_live_draft_exists
+      target: source_essay_candidate_or_live_draft
+      on_fail: stop
+    - id: workflow_examples_exist
+      check: path_exists
+      target: workflows/reddit-discussion-lab/examples.md
+      on_fail: stop
+  invariants:
+    - id: examples_are_consulted_before_drafting
+      check: tracker_records_examples_consulted_and_borrowed_mechanics
+    - id: discussion_seed_is_problem_first
+      check: title_leads_with_failure_scene_operator_pain_or_plain_question_not_coined_frame
+    - id: seed_invites_experience_not_agreement
+      check: post_question_can_be_answered_without_reading_the_essay
+    - id: one_distinction_per_post
+      check: body_adds_one_concrete_distinction_before_open_question
+    - id: no_owned_link_by_default
+      check: reddit_seed_stands_alone_without_substack_link_in_body
+    - id: native_voice_preserved
+      check: post_uses_short_casual_reddit_native_voice_without_article_cadence
+    - id: no_deceptive_roughness
+      check: workflow_does_not_require_fake_typos_fake_sloppiness_or_human_impersonation_tactics
+    - id: score_before_posting_decision
+      check: each_candidate_has_discussion_spark_rubric_score_before_post_now
+    - id: account_health_informs_decision
+      check: reddit_mode_reflects_account_health_and_recent_moderation_state
+    - id: no_external_post_without_gate
+      check: external_mutation_requires_release_readiness_or_explicit_action_time_approval
+    - id: exact_composer_verification_required
+      check: do_not_submit_when_visible_composer_copy_cannot_be_verified
+    - id: outcomes_are_recorded
+      check: live_posts_or_comments_record_upvotes_comments_objections_reply_signals_and_next_action
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    min_title_candidates: 5
+    min_scored_drafts: 3
+    external_mutations: 0
+    unapproved_external_posts: 0
+    unapproved_votes: 0
+  recovery:
+    on_missing_source_essay: stop_and_route_to_package_readme_or_essay_iteration
+    on_no_failure_scene: revise_seed_or_hold_instead_of_posting_thesis_title
+    on_low_score: use_as_comment_or_hold
+    on_recent_reddit_moderation_risk: switch_to_comment_first_or_draft_hold
+    on_external_posting_not_approved: record_local_plan_and_defer
+    on_composer_verification_failure: record_prepared_copy_and_hold_submission
+    on_live_reply: record_reply_signal_before_drafting_follow_up
+    resume_from: resolved_run
+    rollback_strategy: preserve_local_tracker_and_record_no_external_mutation
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - external_posting_requires_gate
+  context_checks:
+    - package_status_resolves
+    - package_readme_resolves
+    - source_essay_candidate_or_live_draft_resolves
+    - existing_distribution_or_reddit_ledger_resolves_when_present
+    - workflow_examples_resolve
+    - workflow_seed_bank_resolves
+    - workflow_templates_resolve
+  hooks:
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - handoff
+      required: false
+    - id: release_readiness_gate_check
+      command: "./content-agent gate check --gate release_readiness --package {package}"
+      run_at:
+        - before_external_posting
+      required: false
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: conditional
+    required_when: a Reddit post, comment, vote, or other channel mutation will be performed
+    stop_before: external_posting
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
+    artifacts:
+      - reddit_discussion_lab_tracker
+      - example_mechanics_analysis
+      - post_idea_inventory
+      - tone_and_engagement_mechanics_analysis
+      - scored_native_post_drafts
+      - posting_decision
+      - external_posting_gate
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - discussion_question
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_discussion_context
+    title: Resolve discussion context
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - source_essay_candidate_or_live_draft
+      - existing_distribution_or_reddit_ledger
+      - workflow_readme
+      - workflow_examples
+      - workflow_seed_bank
+      - workflow_templates
+      - reddit_native_distribution_readme
+      - distribution_readme
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: create_or_update_reddit_discussion_lab_tracker
+    title: Create or update Reddit discussion lab tracker
+    mode: codex_session
+    action: Create the package-local tracker from the template, or preserve and update an existing tracker in place.
+    consumes:
+      - package_status
+      - package_readme
+      - existing_distribution_or_reddit_ledger
+      - workflow_templates
+    produces:
+      - reddit_discussion_lab_tracker
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_examples_and_borrowed_mechanics
+    title: Record examples and borrowed mechanics
+    mode: codex_session
+    action: Select relevant working Reddit examples, summarize tone, title shape, participation invitation, and what mechanic should be borrowed or avoided.
+    consumes:
+      - workflow_examples
+      - reddit_discussion_lab_tracker
+    produces:
+      - example_mechanics_analysis
+      - tone_and_engagement_mechanics_analysis
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: mine_essay_for_reddit_native_problem_shapes
+    title: Mine essay for Reddit-native problem shapes
+    mode: codex_session
+    action: Extract failure scenes, operator pains, concrete distinctions, and reader questions from the source essay without leading with the coined frame.
+    consumes:
+      - source_essay_candidate_or_live_draft
+      - workflow_seed_bank
+      - example_mechanics_analysis
+    produces:
+      - post_idea_inventory
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: draft_and_score_discussion_seeds
+    title: Draft and score discussion seeds
+    mode: codex_session
+    action: Draft at least three native Reddit post seeds, score them with the discussion-spark rubric, and revise or hold low-scoring seeds.
+    consumes:
+      - post_idea_inventory
+      - tone_and_engagement_mechanics_analysis
+      - reddit_native_distribution_readme
+    produces:
+      - scored_native_post_drafts
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_post_comment_hold_or_skip_decision
+    title: Record post, comment, hold, or skip decision
+    mode: codex_session
+    action: Decide whether the strongest seed should become a native post, a comment-first target, a held draft, or a skip, using account health and subreddit fit.
+    consumes:
+      - scored_native_post_drafts
+      - existing_distribution_or_reddit_ledger
+      - reddit_native_distribution_readme
+    produces:
+      - posting_decision
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: stop_for_external_posting_approval
+    title: Stop for external posting approval
+    mode: external_mutation_gated
+    action: Stop before Reddit posting, commenting, voting, or other external mutation unless the user gives action-time approval and exact composer verification is possible.
+    consumes:
+      - scored_native_post_drafts
+      - posting_decision
+      - harness_policy
+      - gate_contracts
+    produces:
+      - external_posting_gate
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: record_reddit_outcome_readback
+    title: Record Reddit outcome readback
+    mode: codex_session
+    action: After a post or comment goes live, record URL, upvotes, comments, strongest objections, best reply signals, and next action.
+    consumes:
+      - reddit_discussion_lab_tracker
+      - scored_native_post_drafts
+      - posting_decision
+      - external_posting_gate
+    produces:
+      - outcome_readback
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - reddit_discussion_lab_tracker
+      - example_mechanics_analysis
+      - post_idea_inventory
+      - tone_and_engagement_mechanics_analysis
+      - scored_native_post_drafts
+      - posting_decision
+      - outcome_readback
+      - validation_results
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - repo_link_check
+    trace:
+      required: true

@@ -88,6 +88,7 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 ## Related Docs
 
 - [`reddit-native-distribution.md`](reddit-native-distribution.md)
+- [`../reddit-discussion-lab/README.md`](../reddit-discussion-lab/README.md)
 - [`../expert-feedback-outreach/README.md`](../expert-feedback-outreach/README.md)
 - [`../substack-publishing/README.md`](../substack-publishing/README.md)
 - package-local `distribution/` or `socials/` surfaces when present
