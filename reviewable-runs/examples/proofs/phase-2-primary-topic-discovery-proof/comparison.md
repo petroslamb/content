@@ -26,4 +26,8 @@ The retained Phase 2 packet makes those boundaries explicit:
 
 The first proof stop worked: a human had to approve `topic_viability` before `proof-runs-as-source-surface` became a package.
 
-The continuation now stops at `research_exit`. A human still has to approve, reject, or defer `research_exit-2026-05-06T19-59-47Z` before research can be marked done or essay iteration can begin.
+The second stop worked: a human had to approve `research_exit` before research was marked done and paper intake moved the package toward essay iteration.
+
+The third stop worked: the `essay_prewrite` gate had to be approved before a bounded candidate was written.
+
+The current continuation stops at `replacement_north_star-2026-05-06T20-46-37Z`. That gate is intentionally pending because it carries quality, lifecycle movement, and promotion dimensions. The packet can pass validation and still refuse silent promotion; that is the boundary the proof is meant to preserve.

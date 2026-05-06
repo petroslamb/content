@@ -1,0 +1,44 @@
+{
+  "kind": "gate_check",
+  "schema_version": 2,
+  "timestamp": "2026-05-06_23-42-21",
+  "run_id": "2026-05-06_23-42-21_proof-runs-as-source-surface_essay_prewrite_gate-check",
+  "package": "proof-runs-as-source-surface",
+  "gate_id": "essay_prewrite",
+  "packet_path": null,
+  "boundary": {
+    "type": "gate evaluation",
+    "reason": "Gate checks record movement decisions without mutating package state by themselves.",
+    "external_side_effect": false,
+    "approval_required": false,
+    "approval_status": "not_required"
+  },
+  "task": {
+    "objective": "Evaluate gate 'essay_prewrite'.",
+    "stop_condition": "Gate result recorded in reviewable-runs/logs/.",
+    "non_goals": [
+      "Do not mutate lifecycle state from the gate check alone."
+    ]
+  },
+  "decision": "writable",
+  "status": "pass",
+  "required_artifacts": [
+    "essay-iteration packet manifest",
+    "hardened blueprint",
+    "essay prewrite gate"
+  ],
+  "missing_artifacts": [],
+  "recommended_workflow": "essay_iteration",
+  "recommended_validator": "npm run check:essay-prewrite -- --package <package>",
+  "proof_mode": "packet_gate",
+  "verification": {
+    "checks": [
+      {
+        "name": "gate_check_written",
+        "result": "pass",
+        "notes": "reviewable-runs/logs/2026-05-06_23-42-21_proof-runs-as-source-surface_essay_prewrite_gate-check.json"
+      }
+    ],
+    "residual_risk": "Gate checks capture the current bounded decision, but the underlying artifacts still need normal human review when the stakes are high."
+  }
+}
