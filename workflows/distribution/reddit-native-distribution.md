@@ -21,6 +21,20 @@ Every Reddit target must be placed in one of these modes before drafting:
 
 Do not create a new Reddit account to bypass removals, mod queues, bans, karma limits, or reputation problems.
 
+## Operating Posture
+
+Treat Reddit as an argument lab before treating it as a traffic surface.
+
+The practical sequence is:
+
+1. make the frame legible inside the community without an owned link
+2. collect objections and moderation signals
+3. answer comments in the thread before opening another post
+4. link only when a reader asks for the longer source or when the thread has clearly earned context
+5. record what happened in the package-local Reddit experiment ledger
+
+When the account is in `trust_repair`, do not post a new owned-content thread just because a new essay is ready. Use comments first. A useful Reddit comment answers a live question, adds a source, corrects an error, or asks an informed follow-up. It does not mention the publication unless asked.
+
 ## Account Health Gate
 
 Before any Reddit post, record:
@@ -46,6 +60,8 @@ Minimum repair plan:
 - after the repair window, post only one native discussion in one carefully selected subreddit
 
 If the target subreddit is strict or ambiguous, prepare a concise modmail pre-clearance draft. Sending modmail is external communication and requires action-time confirmation.
+
+Do not nudge moderators repeatedly. If a post is waiting for approval and the body has been edited to remove promotional language, one concise modmail is acceptable after action-time confirmation. After that, wait for a response or mark the experiment as held.
 
 ## Native Argument Preflight
 
@@ -93,9 +109,23 @@ For the first 24 hours, distribution means comment work:
 
 Record comment URLs when they materially advance the discussion.
 
+## Thread Escalation
+
+Heat is useful only when it exposes the argument. Push back on weak claims, fake consensus, missing evidence, and category errors. Do not turn the commenter into the topic. A good reply makes the objection do work for the thesis and gives quiet readers a clearer frame.
+
+Prefer editing a terse reply over adding a second defensive reply when the thread is small. Prefer adding evidence to the post body when readers appear to be treating the claim as ungrounded.
+
 ## Experiment Log
 
-Every Reddit experiment should record:
+Every Reddit experiment should be recorded in a package-local ledger at:
+
+```text
+publications/<package>/distribution/reddit-experiment-ledger.md
+```
+
+If the package already has a distribution plan or log, link to the ledger from that surface rather than duplicating the full table.
+
+Every ledger entry should record:
 
 - subreddit
 - post mode
@@ -108,3 +138,5 @@ Every Reddit experiment should record:
 - Substack traffic impact
 - podcast/audio impact when available
 - decision for the next Reddit attempt
+
+The current account-level state also belongs in the ledger. If recent submitted posts include removals, filters, or mod-approval holds, new Reddit work starts from `trust_repair` until a later ledger entry records better health.
