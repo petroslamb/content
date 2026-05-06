@@ -70,6 +70,11 @@ context_dependencies:
     required: true
     purpose: Apply Reddit-native argument, account health, trust repair, and link-placement rules.
     record_hash: true
+  - id: reddit_experiment_ledger_template
+    path: workflows/distribution/templates/reddit-experiment-ledger-template.md
+    required: false
+    purpose: Provide the package-local ledger shape for Reddit account health, experiments, objections, and next actions.
+    record_hash: true
   - id: release_gate_readme
     path: workflows/release-gate/README.md
     required: true
@@ -171,6 +176,12 @@ outputs:
     required_when: Reddit account has recent removals, mod-approval holds, or self-promotion risk
     format: markdown
     producer: prepare_distribution_copy
+  - id: reddit_experiment_ledger
+    path_template: "publications/{package}/distribution/reddit-experiment-ledger.md"
+    required: conditional
+    required_when: Reddit is included as a target channel or Reddit account health affects channel decisions
+    format: markdown
+    producer: record_reddit_experiment_state
   - id: native_media_strategy
     path_template: "publications/{package}/{package_name}-distribution-plan-r{revision}.md"
     required: conditional
@@ -243,6 +254,8 @@ behavior:
       check: reddit_distribution_requires_concrete_contradiction_evidence_thesis_and_question
     - id: reddit_no_replacement_account_bypass
       check: reddit_distribution_must_not_create_or_use_replacement_accounts_to_bypass_moderation
+    - id: reddit_experiments_are_recorded
+      check: reddit_distribution_records_account_health_experiments_objections_and_next_action
     - id: linkedin_carousel_considered_when_slide_deck_exists
       check: linkedin_distribution_considers_document_carousel_before_link_preview
   budgets:
