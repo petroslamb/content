@@ -15,6 +15,7 @@
 | Recent native posts that stayed live |  |  |
 | Recent substantive comments in target communities |  |  |
 | Owned-link or owned-content pressure |  |  |
+| Comment voice |  | Native, short, casual, and useful; no owned links unless asked. |
 | Current mode |  |  |
 
 ## Experiments
@@ -28,6 +29,13 @@
 | Community | Target Behavior | Notes |
 | :--- | :--- | :--- |
 | `r/...` | Answer questions, add sources, or ask informed follow-ups. | No owned links unless asked. |
+
+## Engagement Notes
+
+- Comment voice:
+- OP upvote status:
+- Replies worth answering:
+- Replies to ignore:
 
 ## Held Link Copy
 

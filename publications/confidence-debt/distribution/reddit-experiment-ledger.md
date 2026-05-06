@@ -13,8 +13,9 @@
 | :--- | :--- | :--- |
 | Recent removals or mod holds | `r/artificial` confidence-debt post awaiting moderator approval; recent `r/artificial`, `r/LocalLLaMA`, `r/MachineLearning`, and other submitted posts show removals or filter holds in the profile feed. | Default Reddit mode is `trust_repair`. |
 | Recent native posts that stayed live | `r/aiengineering` specification-surface post is live; older `r/LLM`, `r/LLMDevs`, `r/LocalLLaMA`, `r/MLQuestions`, and Greek posts show some live discussion history. | Native technical questions can work when they are not link-forwarding. |
-| Recent substantive comments in target communities | Not yet enough recent repair comments recorded for `r/artificial`. | Build comment history before another post. |
+| Recent substantive comments in target communities | Eight confidence/reliability comments were posted across `r/artificial` and `r/LLMDevs` on 2026-05-06. | Continue watching replies before another post. |
 | Owned-link or owned-content pressure | The original `r/artificial` post mentioned a full essay and spam-ban avoidance; body has now been rewritten to remove that smell. | No owned links in OP. Link only on request. |
+| Comment voice | Comment batch used short, lower-polish, mostly lowercase Reddit-native replies that added one concrete distinction without mentioning the essay. | Keep this style. Do not add fake typos or deceptive roughness. |
 | Current mode | One active mod-approval hold plus recent removals. | `trust_repair`; wait for mod response and comment in communities. |
 
 ## Experiments
@@ -47,6 +48,25 @@ Browser scan source: Reddit `/new/` feeds and selected thread pages while signed
 ## Ready Native Replies
 
 Use these as starting points only. Do not include an owned link unless someone asks for it.
+
+## 2026-05-06 Native Comment Pass
+
+Status: 8 confidence/reliability comments posted from the approved 10-comment batch. Cadence was 10 minutes between successful sends. No owned links were included. The original posts for all 8 targets were later upvoted because they were useful enough to answer.
+
+| # | Community | Thread | Comment | Result |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | `r/artificial` | [systems silently lying about state](https://www.reddit.com/r/artificial/comments/1t4cx88/two_failure_modes_i_caught_in_my_ai_lab_in_one/) | [comment](https://www.reddit.com/r/artificial/comments/1t4cx88/comment/ok86yze/) | Posted and verified. |
+| 2 | `r/artificial` | [doing vs deciding](https://www.reddit.com/r/artificial/comments/1t50i19/ai_is_getting_better_at_doing_things_but_still/) | [comment](https://www.reddit.com/r/artificial/comments/1t50i19/comment/ok88i56/) | Posted and verified. |
+| 4 | `r/LLMDevs` | [tool-call reliability](https://www.reddit.com/r/LLMDevs/comments/1t4e9ym/open_source_ai_assistants_ranked_by_tool_call/) | [comment](https://www.reddit.com/r/LLMDevs/comments/1t4e9ym/comment/ok8bjkc/) | Posted and verified. |
+| 5 | `r/LLMDevs` | [red-teaming breakage](https://www.reddit.com/r/LLMDevs/comments/1t4ein0/what_actually_broke_when_you_tried_red_teaming/) | [comment](https://www.reddit.com/r/LLMDevs/comments/1t4ein0/comment/ok8d4o9/) | Posted and verified. |
+| 6 | `r/LLMDevs` | [monitoring versus APM](https://www.reddit.com/r/LLMDevs/comments/1t55p4k/i_built_an_open_source_llm_monitoring_tool_that/) | [comment](https://www.reddit.com/r/LLMDevs/comments/1t55p4k/comment/ok8equs/) | Posted and verified. |
+| 7 | `r/artificial` | [agents vs chatbots in production](https://www.reddit.com/r/artificial/comments/1t53331/ai_agents_vs_ai_chatbots_what_are_companies/) | [comment](https://www.reddit.com/r/artificial/comments/1t53331/comment/ok8ghdv/) | Posted and verified after one focus retry. |
+| 8 | `r/artificial` | [self-training data loop](https://www.reddit.com/r/artificial/comments/1t4egej/made_a_tool_that_builds_its_own_training_data_and/) | [comment](https://www.reddit.com/r/artificial/comments/1t4egej/comment/ok8i9tp/) | Posted and verified after one focus retry. |
+| 9 | `r/artificial` | [general-knowledge accuracy](https://www.reddit.com/r/artificial/comments/1t4asbk/how_accurate_is_ai_at_general_knowledge/) | [comment](https://www.reddit.com/r/artificial/comments/1t4asbk/comment/ok8k1er/) | Posted and verified. |
+
+Engagement notes: the strongest early positive signal was the monitoring versus APM thread, where the OP replied favorably to the runtime-health versus semantic-health distinction. The auto-PR reply was low-value product prompting and does not need a response unless a concrete technical question appears.
+
+Next action: watch for replies and answer only concrete follow-ups. Do not add the Substack link unless directly asked for the longer version.
 
 ### `r/artificial`: Silently Lying About State
 
