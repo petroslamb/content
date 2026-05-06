@@ -1,0 +1,36 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-2-primary-proof-plot-audit
+created_at: '2026-05-07T00:00:00+03:00'
+agent_id: 019dff3c-00c5-7a60-a858-5d4451f6375e
+agent_nickname: Einstein
+agent_type: default
+fork_context: false
+reasoning_effort: high
+purpose: >
+  Independent proof audit for the proof-runs-as-source-surface Phase 2 run.
+  The request isolates the subagent from the parent conversation to test where
+  the editorial plot was lost.
+inputs:
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-discovery-handoff.md
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-candidate-essay-slate.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-decision-r1.md
+task: |
+  You are an independent proof auditor. Do not assume the prior agent's framing is correct.
+
+  Task: identify where the 'proof-runs-as-source-surface' Phase 2 run lost the editorial plot.
+
+  Read only these files in /Users/petros/Projects/content:
+
+  1. reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-discovery-handoff.md
+  2. reviewable-runs/logs/phase-2-primary-topic-discovery-proof-candidate-essay-slate.md
+  3. publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md
+  4. publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  5. publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-decision-r1.md
+
+  Determine whether the plot was lost in topic discovery, handoff/package-init, drafting, review, or gate semantics.
+  Return a concise verdict with file/line references and distinguish root cause from later missed checks.
+  Do not edit files.
+write_result_to: reviewable-runs/subagent-results/phase-2-primary-proof-plot-audit-result.md
