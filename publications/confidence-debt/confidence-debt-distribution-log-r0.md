@@ -37,3 +37,11 @@ The trust-repair workflow was applied to live Reddit surfaces after the OP edit 
 - `r/LLM/new/` is a low-fit surface for this pass.
 
 Ready native reply drafts and target URLs are recorded in [`distribution/reddit-experiment-ledger.md`](distribution/reddit-experiment-ledger.md). Keep all replies link-free unless directly asked for the longer essay.
+
+## 2026-05-06 Native Comment Pass
+
+Eight confidence/reliability comments from the approved Reddit batch were posted with a 10-minute gap between successful sends. Targets covered state divergence, doing versus deciding, tool-call reliability, red-team audit traces, semantic monitoring, agents versus chatbots, self-training data loops, and general-knowledge reliability.
+
+All posted comments are recorded with URLs in [`distribution/reddit-experiment-ledger.md`](distribution/reddit-experiment-ledger.md). No owned links were included. The original posts for those targets were later upvoted after the comment pass, matching the workflow rule that a thread useful enough to answer is usually useful enough to upvote.
+
+Comment voice note: the batch worked best when it stayed Reddit-native: mostly lowercase, short, casual, and specific. Keep that style for future trust-repair comments, without adding deliberate fake typos or deceptive roughness.

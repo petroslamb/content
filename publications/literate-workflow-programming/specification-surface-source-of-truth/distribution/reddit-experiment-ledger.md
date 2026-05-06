@@ -13,8 +13,9 @@
 | :--- | :--- | :--- |
 | Recent removals or mod holds | Account has recent removals and one active `r/artificial` mod-approval hold. | Do not open another Reddit post for this package. Work the existing thread. |
 | Recent native posts that stayed live | `r/aiengineering` native discussion stayed live and received views, comments, and shares. | `r/aiengineering` is the current best-fit thread. |
-| Recent substantive comments in target communities | One reply in-thread was expanded to clarify the argument. | Continue comment follow-through rather than reposting. |
+| Recent substantive comments in target communities | One reply in-thread was expanded to clarify the argument. Two coding-agent workflow comments were posted in `r/LLMDevs` on 2026-05-06. | Continue comment follow-through rather than reposting. |
 | Owned-link or owned-content pressure | OP has no Substack link. Held link comment remains unused. | Keep link held unless requested. |
+| Comment voice | Comment batch used short, lower-polish, mostly lowercase Reddit-native replies that added one concrete distinction without mentioning the essay. | Keep this style. Do not add fake typos or deceptive roughness. |
 | Current mode | Existing thread is live, but account health is fragile. | `thread_follow_through`; no new Reddit post for this package. |
 
 ## Experiments
@@ -44,6 +45,17 @@ Browser scan source: Reddit `/new/` feeds and selected thread pages while signed
 ## Ready Native Replies
 
 Use these as starting points only. Do not include an owned link unless someone asks for it.
+
+## 2026-05-06 Native Comment Pass
+
+Status: 2 coding-agent workflow comments posted from the approved 10-comment batch. Cadence was 10 minutes between successful sends. No owned links were included. The original posts for both targets were later upvoted because they were useful enough to answer.
+
+| # | Community | Thread | Comment | Result |
+| :--- | :--- | :--- | :--- | :--- |
+| 3 | `r/LLMDevs` | [worktrees with multiple agents](https://www.reddit.com/r/LLMDevs/comments/1t50mxb/how_do_folks_manage_worktrees_when_working_with/) | [comment](https://www.reddit.com/r/LLMDevs/comments/1t50mxb/comment/ok89zzj/) | Posted and verified. |
+| 10 | `r/LLMDevs` | [auto-PR agent guardrails](https://www.reddit.com/r/LLMDevs/comments/1t4prcq/agent_skill_which_will_automatically_raise_pr/) | [comment](https://www.reddit.com/r/LLMDevs/comments/1t4prcq/comment/ok8lx7k/) | Posted and verified after one focus retry. |
+
+Next action: watch for replies that ask about agent coordination, worktree handoff state, reviewability, or PR guardrails. Keep the Substack link held unless directly requested.
 
 ### `r/LLMDevs`: Worktrees For Multiple Agents
 
