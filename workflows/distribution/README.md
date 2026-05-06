@@ -48,6 +48,8 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 - For Reddit specifically, use the [`reddit-native-distribution.md`](reddit-native-distribution.md) companion playbook. If recent posts are removed, waiting for mod approval, or making the account look promotional, switch the channel to `trust_repair` rather than trying another post.
 - Do not create or use replacement Reddit accounts to bypass removals, mod queues, bans, karma limits, or reputation problems. Reputation problems are handled through transparent participation, better subreddit fit, or not posting.
 - A Reddit post is eligible only when it is a standalone community-native argument: concrete contradiction, 2-3 evidence points, arguable thesis, sincere question, and no owned link in the body by default.
+- Record every Reddit attempt in `publications/<package>/distribution/reddit-experiment-ledger.md`. The ledger should include account health, mode, approval/removal state, link placement, strongest objections, follow-through, and next action.
+- When Reddit enters `trust_repair`, distribution work shifts from new posts to substantive comments for at least 7 days, unless a moderator explicitly approves a target post.
 - For targeted paper-author feedback after publication, use the experimental [`../expert-feedback-outreach/README.md`](../expert-feedback-outreach/README.md) module. Treat that pass as expert feedback, not traffic; target only cited or boundary-case paper authors, and do not put the essay link in connection requests by default.
 - Before submitting an external post, verify the visible composer contains the intended copy. If exact composer verification fails, do not post; record the channel as prepared but held with the blocker.
 
@@ -57,7 +59,7 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 2. open the package distribution plan, socials folder, or local notes surface if one exists
 3. choose only the channels that fit the piece and audience
 4. adapt the framing for each channel without changing the underlying thesis
-5. for Reddit targets, run the account-health gate and native-argument preflight before drafting
+5. for Reddit targets, run the account-health gate, update the package-local Reddit experiment ledger, and run native-argument preflight before drafting
 6. record channel fit, auth/account state, audience reach, moderation or self-promotion risk, media strategy, link-placement strategy, and the exact copy to use
 7. classify each channel as `post_now`, `draft_hold`, `trust_repair`, `manual_upload_required`, or `skip`
 8. publish or queue the downstream copy only after action-time approval for external posting and exact composer verification
@@ -70,6 +72,7 @@ The goal is not to post everywhere. The goal is to ship the channels that matter
 - subreddit post drafts
 - Reddit account-health assessment and trust-repair plan
 - Reddit native-argument preflight
+- Reddit experiment ledger at `publications/<package>/distribution/reddit-experiment-ledger.md`
 - Substack Notes copy
 - LinkedIn or X copy
 - LinkedIn document carousel PDF selection when a slide deck exists

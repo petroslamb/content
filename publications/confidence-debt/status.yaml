@@ -4,6 +4,11 @@ revision: 0
 config:
   markdown_path: publications/confidence-debt/confidence-debt.md
   evidence_path: publications/confidence-debt/papers
+  substack_url: https://lambpetros.substack.com
+  published_url: https://lambpetros.substack.com/p/confidence-debt
+  archive_markdown_path: publication_strategy_and_archive/substack_archive/2026-04-17_confidence-debt.md
+  archive_html_path: publication_strategy_and_archive/substack_archive/2026-04-17_confidence-debt.html
+  distribution_path: publications/confidence-debt/confidence-debt-distribution-plan-r0.md
   notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
   notebooklm_notebook_title: Confidence Debt r3 - Final
   notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
