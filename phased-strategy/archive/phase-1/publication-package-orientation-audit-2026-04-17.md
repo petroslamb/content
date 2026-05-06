@@ -1,5 +1,7 @@
 # Publication Package Orientation Audit - 2026-04-17
 
+Archive note, 2026-05-06: this audit is retained as Phase 1 package-orientation evidence. Any command examples using retired compatibility surfaces are historical, not current operator guidance. Use `./content-agent` and the current package `status.yaml`/README surfaces for live work.
+
 ## Purpose
 
 This audit tests whether a future agent or operator can pick up each publication package and answer the basic orientation questions without asking for repo-specific explanation:

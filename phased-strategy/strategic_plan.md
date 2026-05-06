@@ -2,6 +2,8 @@
 
 > _Based on repo audit, April 6-10, 2026. Current starting point: roughly Level 3 automation (structured, agent-ready, partially executable), not yet harness-native._
 
+Archive note, 2026-05-06: the Phase 1, Phase 1.5, and Phase 1.6 sections below are retained as historical roadmap context. The current repo baseline is Phase 2.1-2.6: file-backed workflow contracts, validation, execution evidence, review gates, `content-agent`, cockpit, and bounded editorial automation. Old references to `harness_contract.yaml`, `stage:*`, `workflow:*`, `gate:check`, `scripts/next_action.py`, and `scripts/run_stage.py` describe retired compatibility surfaces, not active commands. See [`README.md`](README.md), [`../AUTHORITY.md`](../AUTHORITY.md), and [`phase-2/`](phase-2/README.md) for the live strategy read.
+
 ---
 
 ## The Core Thesis
@@ -193,7 +195,7 @@ Status as of 2026-04-22: pragmatically satisfied. The retained proof set exists 
 > 2. Can the harness start from an idea or package target and produce bounded outputs with the correct logs and approval behavior?
 > 3. Have at least 3 real runs succeeded with minimal prompt glue and no repo-specific hand-holding beyond the tracked contract?
 
-Status as of 2026-04-22: pragmatically `YES`, with retained caveats documented in `phase-1-1-5-closure-checklist.md` and `phase-1-1-5-proof-set-verdict-2026-04-22.md`.
+Status as of 2026-04-22: pragmatically `YES`, with retained caveats documented in [`archive/phase-1/phase-1-1-5-closure-checklist.md`](archive/phase-1/phase-1-1-5-closure-checklist.md) and [`archive/phase-1/phase-1-1-5-proof-set-verdict-2026-04-22.md`](archive/phase-1/phase-1-1-5-proof-set-verdict-2026-04-22.md).
 
 ---
 
