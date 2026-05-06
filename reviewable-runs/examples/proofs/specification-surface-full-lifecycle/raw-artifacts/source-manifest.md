@@ -1,6 +1,6 @@
 # Source Manifest
 
-This proof packet uses tracked repo evidence only. Local Codex session dumps and memory summaries were not imported.
+This proof packet uses tracked repo evidence only. Local Codex session dumps and memory summaries were inspected for classification but not imported.
 
 ## Package State
 
@@ -41,3 +41,7 @@ This proof packet uses tracked repo evidence only. Local Codex session dumps and
 - [`../../../../../reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml`](../../../../../reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
 - [`../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml`](../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
 - [`../../../../../reviewable-runs/logs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml`](../../../../../reviewable-runs/logs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
+
+## Local Session Audit
+
+- [`../review-packet/session-provenance-audit.md`](../review-packet/session-provenance-audit.md)

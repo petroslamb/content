@@ -23,6 +23,16 @@ That makes the completed publication inspectable without treating every routine 
 
 This packet does not create missing runtime evidence. It does not pretend legacy lightweight logs are Phase 2 `resolved_run` records, and it does not claim that `content-agent` executed `codex_session` steps autonomously.
 
+## Session Audit
+
+Local session and memory provenance was inspected after this packet was created. The audit found strong evidence for guided lifecycle completion, but not for a primary autonomous runtime proof:
+
+- `content-agent` was used for package status, next-action, validation, and later post-publication outreach records.
+- The decisive publication closeout was explicitly prompted and approved by the user during an ordinary Codex session.
+- Live Substack mutation, archive refresh, mirror validation, and distribution closeout were executed as a hybrid Codex/tool/browser workflow, not as one governed `content-agent run` campaign.
+
+See [`review-packet/session-provenance-audit.md`](review-packet/session-provenance-audit.md).
+
 ## Proof Classification
 
 Best current classification: `secondary candidate`.
