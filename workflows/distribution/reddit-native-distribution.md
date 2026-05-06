@@ -35,6 +35,22 @@ The practical sequence is:
 
 When the account is in `trust_repair`, do not post a new owned-content thread just because a new essay is ready. Use comments first. A useful Reddit comment answers a live question, adds a source, corrects an error, or asks an informed follow-up. It does not mention the publication unless asked.
 
+## Reddit Comment Voice
+
+For trust-repair comments, write like a participant in the thread, not like the publication.
+
+Use this style by default:
+
+- 1-3 short paragraphs, or a very short list only when it clarifies a technical distinction
+- lowercase openings are acceptable when they match the local thread tone
+- plain contractions and casual phrasing are better than article cadence
+- one concrete distinction per comment
+- no title-case polish, no abstract-like framing, no campaign language
+- no owned link and no mention of the essay unless directly asked
+- no deliberate fake typos, fake roughness, or other deceptive humanizing
+
+The target is native and useful, not artificially sloppy. A good comment should sound like someone who has worked through the issue and is adding one helpful frame to the conversation.
+
 ## Account Health Gate
 
 Before any Reddit post, record:
@@ -106,6 +122,7 @@ For the first 24 hours, distribution means comment work:
 - add sources only when they help the thread
 - avoid sounding like a prepared campaign
 - turn strong objections into future essay or follow-up post candidates
+- upvote the original post when it was useful enough to answer, but do not mass-upvote surrounding comments or your own comments
 
 Record comment URLs when they materially advance the discussion.
 
