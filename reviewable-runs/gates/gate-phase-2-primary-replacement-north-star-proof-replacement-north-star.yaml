@@ -1,0 +1,95 @@
+kind: review_gate
+schema_version: 1
+gate_id: replacement_north_star-2026-05-06T20-46-37Z
+status: pending
+gate_type: content_quality
+gate_contract: replacement_north_star
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:0ef48a1b8826e101095266e0273bccf47bff7c364358c9ea03e57e2b7c44b9e9
+  contract_path: workflows/essay-iteration/workflow.yaml
+  step_id: stop_at_replacement_decision
+run:
+  run_id: phase-2-primary-replacement-north-star-proof
+  resolved_run_path: reviewable-runs/resolved-runs/phase-2-primary-replacement-north-star-proof.yaml
+  run_record_path: reviewable-runs/logs/phase-2-primary-replacement-north-star-proof.yaml
+stop:
+  reason: Reached review gate 'replacement_north_star' before governed progress could
+    continue.
+  created_at: '2026-05-06T20:46:37Z'
+  created_by: content-agent run
+evidence:
+  preview_paths:
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-decision-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-ceiling-report-r1.md
+  evidence_paths:
+  - reviewable-runs/resolved-runs/phase-2-primary-replacement-north-star-proof.yaml
+  - reviewable-runs/logs/phase-2-primary-replacement-north-star-proof.yaml
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-decision-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-ceiling-report-r1.md
+  validation_results:
+  - id: content_agent_validate
+    status: passed
+    command: ./content-agent validate
+  enforcement_outcomes:
+  - surface: contract_shape
+    posture: deny
+    status: passed
+  - surface: context_admission
+    posture: deny
+    status: passed
+  - surface: tool_use
+    posture: deny
+    status: passed
+  - surface: path_access
+    posture: deny
+    status: passed
+  - surface: review_gates
+    posture: deny
+    status: gate_recorded
+  - surface: external_mutation
+    posture: deny
+    status: not_attempted
+  - surface: lifecycle_movement
+    posture: deny
+    status: not_attempted
+  - surface: promotion
+    posture: deny
+    status: not_attempted
+  - surface: trace_completeness
+    posture: detect
+    status: recorded
+approval:
+  quality_required: true
+  external_mutation_required: false
+  lifecycle_movement_required: true
+  promotion_required: true
+  allowed_decisions:
+  - approve
+  - reject
+  - defer
+resume:
+  on_approve: content-agent resume --gate replacement_north_star-2026-05-06T20-46-37Z
+  on_reject: route_to_correction_or_stop
+  on_defer: keep_pending
+  command_hint: content-agent resume --gate replacement_north_star-2026-05-06T20-46-37Z
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: blocked
+  trace_state: minimum_complete
+decision: null

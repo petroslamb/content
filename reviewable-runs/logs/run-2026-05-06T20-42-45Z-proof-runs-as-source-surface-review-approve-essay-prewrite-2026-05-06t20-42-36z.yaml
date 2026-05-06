@@ -1,0 +1,146 @@
+kind: run_record
+schema_version: 1
+run_id: run-2026-05-06T20-42-45Z-proof-runs-as-source-surface-review-approve-essay-prewrite-2026-05-06t20-42-36z
+resolved_run_path: reviewable-runs/resolved-runs/phase-2-primary-essay-prewrite-proof.yaml
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:0ef48a1b8826e101095266e0273bccf47bff7c364358c9ea03e57e2b7c44b9e9
+  contract_path: workflows/essay-iteration/workflow.yaml
+  step_id: settle_prewrite_gate
+run_mode: governed_continuous
+timestamps:
+  started_at: '2026-05-06T20:42:45Z'
+  ended_at: '2026-05-06T20:42:45Z'
+invocation:
+  entrypoint: content-agent review
+  command: ./content-agent review approve --gate essay_prewrite-2026-05-06T20-42-36Z
+context_admission:
+- id: package_status
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: workflow_contract
+  paths:
+  - workflows/essay-iteration/workflow.yaml
+  hashes:
+    workflows/essay-iteration/workflow.yaml:
+      type: file_sha256
+      sha256: 0ef48a1b8826e101095266e0273bccf47bff7c364358c9ea03e57e2b7c44b9e9
+      size_bytes: 19220
+consumed_artifacts:
+- id: review_gate_before_decision
+  paths:
+  - reviewable-runs/gates/gate-phase-2-primary-essay-prewrite-proof-essay-prewrite.yaml
+  hashes:
+    reviewable-runs/gates/gate-phase-2-primary-essay-prewrite-proof-essay-prewrite.yaml:
+      type: file_sha256
+      sha256: cfefec370053444097ce5c4dc1032f30890b4bc9475f3df9f54b40a227ccf412
+      size_bytes: 3227
+- id: parent_run_record
+  paths:
+  - reviewable-runs/logs/phase-2-primary-essay-prewrite-proof.yaml
+  hashes:
+    reviewable-runs/logs/phase-2-primary-essay-prewrite-proof.yaml:
+      type: file_sha256
+      sha256: 298daed9d5971b36a9bf812573b1a58ac6382845c395f70c9c9daec324408e1e
+      size_bytes: 11517
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/phase-2-primary-essay-prewrite-proof.yaml
+  hashes:
+    reviewable-runs/resolved-runs/phase-2-primary-essay-prewrite-proof.yaml:
+      type: file_sha256
+      sha256: 49520f124828e14ce5deeafb068a8712f7688dab59b3047387107f2272ff911e
+      size_bytes: 10700
+parent_artifacts:
+- id: review_gate
+  path: reviewable-runs/gates/gate-phase-2-primary-essay-prewrite-proof-essay-prewrite.yaml
+- id: parent_run_record
+  path: reviewable-runs/logs/phase-2-primary-essay-prewrite-proof.yaml
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-primary-essay-prewrite-proof.yaml
+produced_artifacts:
+- id: run_record
+  paths:
+  - reviewable-runs/logs/run-2026-05-06T20-42-45Z-proof-runs-as-source-surface-review-approve-essay-prewrite-2026-05-06t20-42-36z.yaml
+- id: review_gate_decision
+  paths:
+  - reviewable-runs/gates/gate-phase-2-primary-essay-prewrite-proof-essay-prewrite.yaml
+validation_results:
+- id: content_agent_review_decision
+  status: passed
+  summary: Recorded approve decision without lifecycle, promotion, or external mutation
+    side effects.
+enforcement_outcomes:
+- surface: review_gates
+  posture: deny
+  status: approve_recorded
+- surface: external_mutation
+  posture: deny
+  status: not_approved
+- surface: lifecycle_movement
+  posture: deny
+  status: not_approved
+- surface: promotion
+  posture: deny
+  status: not_approved
+- surface: trace_completeness
+  posture: detect
+  status: recorded
+gate_ids:
+- essay_prewrite
+- essay_prewrite-2026-05-06T20-42-36Z
+approval_decisions:
+- decided_at: '2026-05-06T20:42:45Z'
+  decided_by: content-agent review approve
+  outcome: approve
+  quality_approved: true
+  external_mutation_approved: false
+  lifecycle_movement_approved: false
+  promotion_approved: false
+  reason: User instructed to go all the way; prewrite packet validator and essay_prewrite
+    gate check both passed, authorizing bounded candidate drafting only.
+  approval_dimensions:
+    quality:
+      required: true
+      approved: true
+    external_mutation:
+      required: false
+      approved: false
+    lifecycle_movement:
+      required: false
+      approved: false
+    promotion:
+      required: false
+      approved: false
+  external_mutation:
+    approved: false
+    required: false
+    distinct_from_quality_approval: true
+    effect: not_performed_by_content_agent_2_4b
+  state_effects:
+    package_status: unchanged
+    external_mutation: not_performed
+    lifecycle_movement: not_performed
+    promotion: not_performed
+  run_record_path: reviewable-runs/logs/run-2026-05-06T20-42-45Z-proof-runs-as-source-surface-review-approve-essay-prewrite-2026-05-06t20-42-36z.yaml
+external_mutations:
+- target: none
+  status: not_attempted
+  approval_reference: null
+terminal_status: completed
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: blocked
+  trace_state: minimum_complete

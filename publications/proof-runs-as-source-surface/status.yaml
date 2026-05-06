@@ -8,11 +8,11 @@ config:
   evidence_path: publications/proof-runs-as-source-surface/papers/index.md
 stages:
   paper_intake:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-05-06'
   research:
-    done: false
-    last_updated: null
+    done: true
+    last_updated: '2026-05-06'
   essay_iteration:
     done: false
     last_updated: null

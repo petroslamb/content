@@ -1,0 +1,305 @@
+kind: resolved_run
+schema_version: 1
+run_id: phase-2-primary-essay-scaffold-proof
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:0ef48a1b8826e101095266e0273bccf47bff7c364358c9ea03e57e2b7c44b9e9
+  contract_path: workflows/essay-iteration/workflow.yaml
+run_mode: governed_continuous
+runtime_inputs: {}
+route:
+  package_kind: leaf
+  pipeline_profile: article_default
+  current_stage: essay_iteration
+  workflow_stage: essay_iteration
+  resolved_from:
+  - publications/proof-runs-as-source-surface/status.yaml
+  - workflows/essay-iteration/workflow.yaml
+  - harness_policy.yaml
+  - gate_contracts.yaml
+  - pipeline_profiles.yaml
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md:
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: parent_umbrella_readme
+  required: false
+  status: missing
+  reason: 'status field is missing: parent_package'
+- id: live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  hashes:
+    publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md:
+      type: file_sha256
+      sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+      size_bytes: 459
+- id: companion
+  required: false
+  status: missing
+  reason: 'path does not exist: publications/proof-runs-as-source-surface/companion.md'
+- id: governing_brief
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/blueprint.md
+  hashes:
+    publications/proof-runs-as-source-surface/blueprint.md:
+      type: file_sha256
+      sha256: 443bb4e3289b77c03ede6b67214d4d09f5ce49c93ad3e7daecfa98d14802640b
+      size_bytes: 3582
+- id: review_artifacts
+  required: false
+  status: not_present
+  reason: no files matched declared glob
+- id: evidence_surface
+  required: false
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md:
+      type: file_sha256
+      sha256: 29af15a9c960a1bd95c8aa51c82f8363be16d3ab35650b8f41a168bca06ad30e
+      size_bytes: 3303
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/README.md
+  hashes:
+    workflows/essay-iteration/README.md:
+      type: file_sha256
+      sha256: c6c9a9af247e03a19431ef3ae0bfc5148d719307d9a769eccd6819c4c3cb04ae
+      size_bytes: 29063
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/templates
+  hashes:
+    workflows/essay-iteration/templates:
+      type: directory_listing_sha256
+      sha256: 37ebc9527f9fac2ef2288546d4c47670209478a9996a4040756fc6ff074e8ad3
+      file_count: 7
+- id: workflow_voice_rules
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/voice_rules.yaml
+  hashes:
+    workflows/essay-iteration/voice_rules.yaml:
+      type: file_sha256
+      sha256: 8761d800dee502597caf5c7ca5bfc5691e7d98b5acf0202b6fc15cb8e534c2f8
+      size_bytes: 329
+- id: publication_voice_guide
+  required: true
+  status: resolved
+  paths:
+  - voice_consistency_guide.md
+  hashes:
+    voice_consistency_guide.md:
+      type: file_sha256
+      sha256: cab35c04f3e6c880442ca26f886e447a534b84a45c2019d6faad58ff2c19507a
+      size_bytes: 4888
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 076facc22210d985e9174d338a30f30f31cb78b2b7fcca796b55a2a9c03634e8
+      size_bytes: 3045
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+- id: pipeline_profiles
+  required: true
+  status: resolved
+  paths:
+  - pipeline_profiles.yaml
+  hashes:
+    pipeline_profiles.yaml:
+      type: file_sha256
+      sha256: 687c1a721c8119b13eb9c1b70bf18addb06a59db74d32db6d1f4c4052fe2c097
+      size_bytes: 3322
+policy_resolution:
+  allowed_tools:
+  - id: package_lifecycle_checker
+    command: .venv/bin/python scripts/check_package_lifecycle.py --package proof-runs-as-source-surface
+    required: true
+  - id: packet_initializer
+    command: .venv/bin/python scripts/init_essay_iteration_packet.py --package proof-runs-as-source-surface
+    required: true
+  - id: prewrite_packet_validator
+    command: npm run check:essay-prewrite -- --package proof-runs-as-source-surface
+    required: true
+  - id: full_packet_validator
+    command: npm run check:essay-iteration -- --package proof-runs-as-source-surface
+    required: true
+  - id: gate_checker
+    command: ./content-agent gate check --gate {gate_id} --package proof-runs-as-source-surface
+    required: true
+  allowed_capabilities:
+  - contract_validation
+  - context_admission
+  - scriptable_step_execution
+  - gate_stop
+  - run_record_writing
+  allowed_paths:
+    read:
+    - publications/proof-runs-as-source-surface/
+    - publications/proof-runs-as-source-surface/papers/index.md
+    - '{shared_evidence_path}'
+    - workflows/essay-iteration/
+    - voice_consistency_guide.md
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - pipeline_profiles.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+    write:
+    - publications/proof-runs-as-source-surface/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+selected_steps:
+- id: resolve_package_state
+  mode: scriptable
+  executor: command
+- id: seed_iteration_packet
+  mode: scriptable
+  executor: command
+- id: harden_blueprint
+  mode: codex_session
+- id: settle_prewrite_gate
+  mode: review_gated
+  gate_id: essay_prewrite
+- id: write_bounded_candidate
+  mode: codex_session
+  gate_id: essay_prewrite
+- id: run_cold_replacement_review
+  mode: codex_session
+- id: stop_at_replacement_decision
+  mode: review_gated
+  gate_id: replacement_north_star
+- id: record_handoff
+  mode: scriptable
+selected_gates:
+- id: essay_prewrite
+  contract: essay_prewrite
+  type: content_quality
+  required: true
+  status: declared
+- id: replacement_north_star
+  contract: replacement_north_star
+  type: content_quality
+  required: true
+  status: declared
+- id: release_readiness_boundary
+  contract: release_readiness
+  type: external_mutation
+  required: conditional
+  status: declared
+behavior:
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    max_candidate_drafts_per_revision: 1
+    max_packet_files_per_revision: 8
+    external_mutations: 0
+    unapproved_promotions: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_context: stop
+    on_precondition_failure: stop
+    on_validation_failure: stop_and_record
+    on_prewrite_reject: defer_to_blueprint_hardening_or_research
+    on_replacement_reject: defer_or_revise_from_promotion_decision
+    on_stop_gate_fired: require_ceiling_report_before_handoff
+    on_gate_reject: defer
+    resume_from: resolved_run
+    rollback_strategy: preserve_live_draft_and_packet_outputs
+  policy_run_modes:
+  - exploratory
+  - governed_continuous
+output_targets:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-primary-essay-scaffold-proof.yaml
+- id: run_record
+  path: reviewable-runs/logs/phase-2-primary-essay-scaffold-proof.yaml
+- id: packet_manifest
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json
+  required: true
+  format: json
+- id: hardened_blueprint
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-blueprint-r1.md
+  required: true
+  format: markdown
+- id: prewrite_gate
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-prewrite-gate-r1.md
+  required: true
+  format: markdown
+- id: candidate_draft
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md
+  required: false
+  format: markdown
+- id: replacement_review
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  required: false
+  format: markdown
+- id: atlas_scorecard
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md
+  required: false
+  format: markdown
+- id: promotion_decision
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-decision-r1.md
+  required: false
+  format: markdown
+- id: ceiling_report
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-ceiling-report-r1.md
+  required: conditional
+  format: markdown
+- id: review_gate:essay_prewrite
+  path: reviewable-runs/gates/gate-phase-2-primary-essay-scaffold-proof-essay-prewrite.yaml
+  required: true
+- id: review_gate:replacement_north_star
+  path: reviewable-runs/gates/gate-phase-2-primary-essay-scaffold-proof-replacement-north-star.yaml
+  required: true
+- id: review_gate:release_readiness_boundary
+  path: reviewable-runs/gates/gate-phase-2-primary-essay-scaffold-proof-release-readiness-boundary.yaml
+  required: conditional
