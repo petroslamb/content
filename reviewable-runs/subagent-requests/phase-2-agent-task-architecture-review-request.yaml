@@ -1,0 +1,109 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-2-agent-task-architecture-review
+created_at: '2026-05-07'
+agent_type: default
+fork_context: false
+reasoning_effort: xhigh
+purpose: >
+  Independent architecture review for a proposed Phase 2 change: make
+  high-judgment Codex work explicit as file-backed agent-task contracts, with
+  clean-context subagents doing bounded work and parent Codex acting as
+  orchestrator/integrator.
+background: |
+  The repo currently uses workflow YAML step modes such as `scriptable`,
+  `codex_session`, `review_gated`, and `external_mutation_gated`.
+
+  A recent Phase 2 proof run exposed a failure: the deterministic runtime
+  correctly recorded gates, approvals, resumes, validations, and evidence, but
+  a `codex_session` drafting/review chain produced a self-referential internal
+  architecture candidate and the replacement review falsely passed it as
+  north-star quality. The deterministic checks validated packet shape, not
+  editorial judgment.
+
+  The proposed design response is not to let `content-agent` directly call
+  model tools. Keep `content-agent` deterministic. Instead, have workflows
+  declare `agent_task` steps or richer `codex_session` contracts. For those
+  steps, `content-agent` should emit a durable subagent request artifact and
+  defer. Parent Codex reads the request, spawns a clean-context subagent
+  (`fork_context: false` when independence matters), writes the result artifact,
+  and records an integration decision. `content-agent` then validates the
+  existence/schema/verdict of those artifacts before gates can pass.
+proposal:
+  directories:
+    - reviewable-runs/subagent-requests/
+    - reviewable-runs/subagent-results/
+    - reviewable-runs/integration-decisions/
+  new_or_refined_modes:
+    - agent_task
+    - codex_session with required agent_contract
+  content_agent_role:
+    - deterministic governor
+    - emits request artifacts
+    - blocks/defer until result artifacts exist
+    - validates schemas and allowed verdicts
+    - does not directly spawn models
+  parent_codex_role:
+    - reads request artifact
+    - spawns subagent with controlled context
+    - writes result artifact
+    - integrates result in a recorded decision
+  subagent_role:
+    - bounded worker or critic
+    - receives only declared files and task
+    - returns line-grounded artifact with verdict
+  likely_required_agent_tasks:
+    - topic public-object scout
+    - anti-self-reference critic
+    - blueprint hardening worker
+    - prewrite public-reader critic
+    - candidate drafting worker
+    - cold replacement reviewer
+    - release proof auditor
+    - external mutation prep reviewer
+  likely_not_required:
+    - deterministic validators
+    - package status reads
+    - YAML shape checks
+    - run-record writing
+task: |
+  You are an independent architecture reviewer. Do not assume the proposal is correct.
+  You are not reviewing the article candidate. You are reviewing this proposed
+  change to the Phase 2 governed-runtime architecture.
+
+  Judge brutally:
+
+  1. Does this design address the actual failure mode, or does it add ceremony
+     without fixing plot loss?
+  2. Should high-judgment `codex_session` steps be replaced with explicit
+     `agent_task` contracts?
+  3. Should `content-agent` emit subagent request artifacts and validate result
+     artifacts while refusing to spawn models directly?
+  4. Where are subagents genuinely warranted, and where are they overkill?
+  5. What are the main risks: context fragmentation, provenance gaps, prompt
+     contamination, false independence, hidden second workflow language, cost,
+     latency, or bad integration?
+  6. What is the smallest architecture change that would materially reduce the
+     failure we saw?
+
+  Required output:
+
+  - Verdict: implement now / prototype narrowly / reject / redesign first.
+  - Root architectural diagnosis.
+  - Recommended minimal schema additions.
+  - Recommended `content-agent` behavior.
+  - Recommended workflow changes for `essay_iteration` and `topic_discovery`.
+  - Explicit anti-patterns to avoid.
+  - A staged migration plan.
+
+  Keep the answer concise but technically specific. Cite only this request
+  artifact unless you need to inspect repo files; if you inspect files, cite
+  exact paths and lines.
+optional_reference_files:
+  - AGENTS.md
+  - AUTHORITY.md
+  - workflows/README.md
+  - workflows/topic-discovery/workflow.yaml
+  - workflows/essay-iteration/workflow.yaml
+  - reviewable-runs/subagent-results/phase-2-primary-proof-plot-audit-result.md
+write_result_to: reviewable-runs/subagent-results/phase-2-agent-task-architecture-review-result.md
