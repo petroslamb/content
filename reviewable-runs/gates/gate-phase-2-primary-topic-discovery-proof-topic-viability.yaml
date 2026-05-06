@@ -1,0 +1,90 @@
+kind: review_gate
+schema_version: 1
+gate_id: topic_viability-2026-05-06T17-14-12Z
+status: pending
+gate_type: lifecycle_movement
+gate_contract: topic_viability
+package:
+  path: publications/literate-workflow-programming
+  status_path: publications/literate-workflow-programming/status.yaml
+  status_hash: sha256:9ca68dbc5530ff1eecf1ec6cfa542d631ee0de78a389b6720118adc8a094c001
+workflow:
+  workflow_id: topic_discovery
+  workflow_version: 1
+  workflow_hash: sha256:8da3aa3758b4bb9bc848c2daf2ca4fcec7e3f1674460e1b67fea9cdd074b987d
+  contract_path: workflows/topic-discovery/workflow.yaml
+  step_id: decide_handoff
+run:
+  run_id: phase-2-primary-topic-discovery-proof
+  resolved_run_path: reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+  run_record_path: reviewable-runs/logs/phase-2-primary-topic-discovery-proof.yaml
+stop:
+  reason: Reached review gate 'topic_viability' before governed progress could continue.
+  created_at: '2026-05-06T17:14:12Z'
+  created_by: content-agent run
+evidence:
+  preview_paths:
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-vocabulary-map.md
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-candidate-paper-pool.md
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-candidate-essay-slate.md
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-discovery-handoff.md
+  evidence_paths:
+  - reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof.yaml
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-vocabulary-map.md
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-candidate-paper-pool.md
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-candidate-essay-slate.md
+  - reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-discovery-handoff.md
+  validation_results:
+  - id: content_agent_validate
+    status: passed
+    command: ./content-agent validate
+  enforcement_outcomes:
+  - surface: contract_shape
+    posture: deny
+    status: passed
+  - surface: context_admission
+    posture: deny
+    status: passed
+  - surface: tool_use
+    posture: deny
+    status: passed
+  - surface: path_access
+    posture: deny
+    status: passed
+  - surface: review_gates
+    posture: deny
+    status: gate_recorded
+  - surface: external_mutation
+    posture: deny
+    status: not_attempted
+  - surface: lifecycle_movement
+    posture: deny
+    status: not_attempted
+  - surface: promotion
+    posture: deny
+    status: not_attempted
+  - surface: trace_completeness
+    posture: detect
+    status: recorded
+approval:
+  quality_required: false
+  external_mutation_required: false
+  lifecycle_movement_required: true
+  promotion_required: false
+  allowed_decisions:
+  - approve
+  - reject
+  - defer
+resume:
+  on_approve: content-agent resume --gate topic_viability-2026-05-06T17-14-12Z
+  on_reject: route_to_correction_or_stop
+  on_defer: keep_pending
+  command_hint: content-agent resume --gate topic_viability-2026-05-06T17-14-12Z
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: blocked
+  trace_state: minimum_complete
+decision: null

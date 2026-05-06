@@ -123,6 +123,13 @@ Bad triggers:
 - `make the existing essay bigger`
 - `the candidate sounds good`
 
+For governed Phase 2 runs, pass the trigger and ambition as runtime inputs rather than burying them in prose:
+
+```bash
+./content-agent validate --workflow topic_discovery --package <package> --input discovery_trigger="<bounded trigger>" --input target_publication_ambition=north_star_flagship
+./content-agent run --workflow topic_discovery --package <package> --input discovery_trigger="<bounded trigger>" --input target_publication_ambition=north_star_flagship
+```
+
 ### 2. Map The Vocabulary
 
 Do not assume the natural-language phrase is the right research surface.

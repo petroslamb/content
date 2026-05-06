@@ -38,6 +38,8 @@ Routine lifecycle records from this layer belong in [`../reviewable-runs/logs/`]
 
 Use `npm run check` as the lightweight pre-review validation bundle. It runs workflow YAML validation, workflow-model validation, content-agent validation readiness, Reviewable Runs log validation, repo-link validation, and alphaXiv discussion tracking. It intentionally excludes mirror builds, publication sync, and other external or heavier checks.
 
+When a workflow declares runtime inputs, `content-agent.py` expects them as repeatable `--input key=value` arguments on both `validate` and `run`; the resolved-run evidence records the admitted values.
+
 Tracked docs:
 
 - [`../workflows/README.md`](../workflows/README.md)
