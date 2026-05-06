@@ -1,7 +1,7 @@
 kind: review_gate
 schema_version: 1
 gate_id: topic_viability-2026-05-06T17-14-12Z
-status: pending
+status: resolved
 gate_type: lifecycle_movement
 gate_contract: topic_viability
 package:
@@ -87,4 +87,37 @@ promoted_output_state:
   contradiction_state: none_known
   validation_state: blocked
   trace_state: minimum_complete
-decision: null
+decision:
+  decided_at: '2026-05-06T19:55:02Z'
+  decided_by: content-agent review approve
+  outcome: approve
+  quality_approved: false
+  external_mutation_approved: false
+  lifecycle_movement_approved: true
+  promotion_approved: false
+  reason: User explicitly approved the topic viability gate and ordered continuation
+    to the next governed gate.
+  approval_dimensions:
+    quality:
+      required: false
+      approved: false
+    external_mutation:
+      required: false
+      approved: false
+    lifecycle_movement:
+      required: true
+      approved: true
+    promotion:
+      required: false
+      approved: false
+  external_mutation:
+    approved: false
+    required: false
+    distinct_from_quality_approval: true
+    effect: not_performed_by_content_agent_2_4b
+  state_effects:
+    package_status: unchanged
+    external_mutation: not_performed
+    lifecycle_movement: not_performed
+    promotion: not_performed
+  run_record_path: reviewable-runs/logs/run-2026-05-06T19-55-02Z-literate-workflow-programming-review-approve-topic-viability-2026-05-06t17-14-12z.yaml

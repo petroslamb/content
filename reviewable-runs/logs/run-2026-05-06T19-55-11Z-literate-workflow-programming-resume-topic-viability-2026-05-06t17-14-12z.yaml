@@ -1,0 +1,239 @@
+kind: run_record
+schema_version: 1
+run_id: run-2026-05-06T19-55-11Z-literate-workflow-programming-resume-topic-viability-2026-05-06t17-14-12z
+resolved_run_path: reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+package:
+  path: publications/literate-workflow-programming
+  status_path: publications/literate-workflow-programming/status.yaml
+  status_hash: sha256:9ca68dbc5530ff1eecf1ec6cfa542d631ee0de78a389b6720118adc8a094c001
+workflow:
+  workflow_id: topic_discovery
+  workflow_version: 1
+  workflow_hash: sha256:8da3aa3758b4bb9bc848c2daf2ca4fcec7e3f1674460e1b67fea9cdd074b987d
+  contract_path: workflows/topic-discovery/workflow.yaml
+run_mode: governed_continuous
+timestamps:
+  started_at: '2026-05-06T19:55:11Z'
+  ended_at: '2026-05-06T19:55:11Z'
+invocation:
+  entrypoint: content-agent resume
+  command: ./content-agent resume
+context_admission:
+- id: seed_question_archive_gap_external_trigger_review_finding_or_broad_domain
+  required: true
+  status: resolved
+  value: primary proof for autonomous content-agent publication workflows and specification-surface
+    governed runtime
+- id: relevant_prior_essays_or_archive_cluster
+  required: false
+  status: resolved
+  paths:
+  - publications/literate-workflow-programming
+  hashes:
+    publications/literate-workflow-programming:
+      type: directory_listing_sha256
+      sha256: aea0627bfd532f5150c6cf552e492fdfed8211c639a9698d0125bc77469318d0
+      file_count: 446
+- id: target_publication_ambition
+  required: true
+  status: resolved
+  value: north_star_flagship
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/topic-discovery/README.md
+  hashes:
+    workflows/topic-discovery/README.md:
+      type: file_sha256
+      sha256: 757eecf37ba4a13524043175cce3c30006a9c28127f81d751875678652a6da26
+      size_bytes: 15250
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/topic-discovery/templates
+  hashes:
+    workflows/topic-discovery/templates:
+      type: directory_listing_sha256
+      sha256: 9716cad2232286e671092ec83ea0aaf064ea4672a8287662d7f2bf097c56445a
+      file_count: 1
+- id: alphaxiv_skill
+  required: true
+  status: resolved
+  paths:
+  - workflows/skills/alphaxiv/SKILL.md
+  hashes:
+    workflows/skills/alphaxiv/SKILL.md:
+      type: file_sha256
+      sha256: 15dc7b3bfbe601198cc29cd67d6e7e2f5c8372651a006d391970c506cc95e2e7
+      size_bytes: 5927
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 076facc22210d985e9174d338a30f30f31cb78b2b7fcca796b55a2a9c03634e8
+      size_bytes: 3045
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+consumed_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+  hashes:
+    reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml:
+      type: file_sha256
+      sha256: 25b75ea53d70fa75409f9c872fc87d19a881730cae5808effcac55a9fbc9694c
+      size_bytes: 6760
+- id: context:relevant_prior_essays_or_archive_cluster
+  paths:
+  - publications/literate-workflow-programming
+  hashes:
+    publications/literate-workflow-programming:
+      type: directory_listing_sha256
+      sha256: aea0627bfd532f5150c6cf552e492fdfed8211c639a9698d0125bc77469318d0
+      file_count: 446
+- id: context:workflow_readme
+  paths:
+  - workflows/topic-discovery/README.md
+  hashes:
+    workflows/topic-discovery/README.md:
+      type: file_sha256
+      sha256: 757eecf37ba4a13524043175cce3c30006a9c28127f81d751875678652a6da26
+      size_bytes: 15250
+- id: context:workflow_templates
+  paths:
+  - workflows/topic-discovery/templates
+  hashes:
+    workflows/topic-discovery/templates:
+      type: directory_listing_sha256
+      sha256: 9716cad2232286e671092ec83ea0aaf064ea4672a8287662d7f2bf097c56445a
+      file_count: 1
+- id: context:alphaxiv_skill
+  paths:
+  - workflows/skills/alphaxiv/SKILL.md
+  hashes:
+    workflows/skills/alphaxiv/SKILL.md:
+      type: file_sha256
+      sha256: 15dc7b3bfbe601198cc29cd67d6e7e2f5c8372651a006d391970c506cc95e2e7
+      size_bytes: 5927
+- id: context:harness_policy
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 076facc22210d985e9174d338a30f30f31cb78b2b7fcca796b55a2a9c03634e8
+      size_bytes: 3045
+- id: context:gate_contracts
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+- id: approved_review_gate
+  paths:
+  - reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml
+  hashes:
+    reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml:
+      type: file_sha256
+      sha256: 33d1d0e2d192c6bec53aa4899336dc8d76dd949b51ede1d489a1f31306bf23a2
+      size_bytes: 4334
+parent_artifacts:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml
+- id: package_status
+  path: publications/literate-workflow-programming/status.yaml
+- id: approved_review_gate
+  path: reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml
+produced_artifacts:
+- id: run_record
+  paths:
+  - reviewable-runs/logs/run-2026-05-06T19-55-11Z-literate-workflow-programming-resume-topic-viability-2026-05-06t17-14-12z.yaml
+validation_results:
+- id: content_agent_resume_preflight
+  status: passed
+  summary: Resume preflight accepted file-backed state without lifecycle, promotion,
+    or external mutation side effects.
+enforcement_outcomes:
+- surface: review_gates
+  posture: deny
+  status: approved
+- surface: external_mutation
+  posture: deny
+  status: not_attempted
+- surface: lifecycle_movement
+  posture: deny
+  status: not_moved
+- surface: promotion
+  posture: deny
+  status: not_promoted
+- surface: trace_completeness
+  posture: detect
+  status: recorded
+gate_ids:
+- topic_viability
+- topic_viability-2026-05-06T17-14-12Z
+approval_decisions:
+- decided_at: '2026-05-06T19:55:02Z'
+  decided_by: content-agent review approve
+  outcome: approve
+  quality_approved: false
+  external_mutation_approved: false
+  lifecycle_movement_approved: true
+  promotion_approved: false
+  reason: User explicitly approved the topic viability gate and ordered continuation
+    to the next governed gate.
+  approval_dimensions:
+    quality:
+      required: false
+      approved: false
+    external_mutation:
+      required: false
+      approved: false
+    lifecycle_movement:
+      required: true
+      approved: true
+    promotion:
+      required: false
+      approved: false
+  external_mutation:
+    approved: false
+    required: false
+    distinct_from_quality_approval: true
+    effect: not_performed_by_content_agent_2_4b
+  state_effects:
+    package_status: unchanged
+    external_mutation: not_performed
+    lifecycle_movement: not_performed
+    promotion: not_performed
+  run_record_path: reviewable-runs/logs/run-2026-05-06T19-55-02Z-literate-workflow-programming-review-approve-topic-viability-2026-05-06t17-14-12z.yaml
+external_mutations:
+- target: none
+  status: not_attempted
+  approval_reference: topic_viability-2026-05-06T17-14-12Z#decision
+terminal_status: deferred
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: passed
+  trace_state: minimum_complete
+resume:
+  source: review_gate
+  source_path: reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml
+  effect: resume_authorized_without_automatic_lifecycle_or_promotion
