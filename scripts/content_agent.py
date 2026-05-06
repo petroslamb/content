@@ -156,6 +156,16 @@ def build_placeholders(package_key: str | None, status_data: dict[str, Any] | No
     return placeholders
 
 
+def build_runtime_placeholders(
+    package_key: str | None,
+    status_data: dict[str, Any] | None,
+    runtime_inputs: dict[str, str] | None,
+) -> dict[str, Any]:
+    placeholders = build_placeholders(package_key, status_data)
+    placeholders.update(runtime_inputs or {})
+    return placeholders
+
+
 def hash_file(path: Path) -> dict[str, Any]:
     size = path.stat().st_size
     if size > HASHABLE_FILE_LIMIT_BYTES:
@@ -2702,8 +2712,10 @@ def build_resolved_run_payload(
     package_arg: str,
     *,
     run_mode: str,
+    runtime_inputs: dict[str, str] | None = None,
     supplied_run_id: str | None = None,
 ) -> tuple[dict[str, Any], Path, list[str]]:
+    runtime_inputs = runtime_inputs or {}
     contracts = load_workflow_yaml_contracts()
     if workflow_id not in contracts:
         raise KeyError(f"Unknown workflow '{workflow_id}'.")
@@ -2712,9 +2724,10 @@ def build_resolved_run_payload(
     contract = loaded["data"]
     manifest_ref, status_data = load_status_ref(package_arg)
     package_key = manifest_ref.package_key
-    placeholders = build_placeholders(package_key, status_data)
+    placeholders = build_runtime_placeholders(package_key, status_data, runtime_inputs)
     timestamp = utc_timestamp()
     run_id = build_run_id(workflow_id, package_key, timestamp, supplied_run_id)
+    placeholders["run_id"] = run_id
     run_path = RESOLVED_RUNS_DIR / f"{run_id}.yaml"
     if run_path.exists():
         raise FileExistsError(f"Resolved run already exists: {repo_relpath(run_path)}")
@@ -2723,6 +2736,7 @@ def build_resolved_run_payload(
         workflow_id=workflow_id,
         package_arg=package_key,
         mode=run_mode,
+        runtime_inputs=runtime_inputs,
     )
     assert_validation_success(validation_report, "cannot create resolved run")
 
@@ -2748,6 +2762,7 @@ def build_resolved_run_payload(
         "package": package_ref_payload(manifest_ref),
         "workflow": workflow_ref_payload(workflow_id, contract_path, contract),
         "run_mode": run_mode,
+        "runtime_inputs": deepcopy(runtime_inputs),
         "route": route,
         "context_admission": validate_context_admission(
             workflow_id,
@@ -2756,7 +2771,7 @@ def build_resolved_run_payload(
             package_key,
             manifest_ref.package_path,
             status_data,
-            {},
+            runtime_inputs,
             run_mode,
             [],
         ),
@@ -2782,12 +2797,14 @@ def build_run_resolve_report(
     package_arg: str,
     *,
     run_mode: str,
+    runtime_inputs: dict[str, str] | None = None,
     supplied_run_id: str | None = None,
 ) -> dict[str, Any]:
     payload, run_path, persistence_reasons = build_resolved_run_payload(
         workflow_id,
         package_arg,
         run_mode=run_mode,
+        runtime_inputs=runtime_inputs,
         supplied_run_id=supplied_run_id,
     )
     persisted = bool(persistence_reasons)
@@ -2797,6 +2814,7 @@ def build_run_resolve_report(
             workflow_id=workflow_id,
             package_arg=payload["package"]["path"],
             mode=run_mode,
+            runtime_inputs=runtime_inputs,
         )
         assert_validation_success(validation_report, "resolved run validation failed after write")
     return {
@@ -3181,6 +3199,21 @@ def build_execution_run_record(
     )
     if gate_artifact_path:
         produced_artifacts.append({"id": "review_gate", "paths": [repo_relpath(gate_artifact_path)]})
+    runtime_inputs = resolved_run.get("runtime_inputs")
+    if not isinstance(runtime_inputs, dict):
+        runtime_inputs = {}
+    invocation_parts = [
+        "./content-agent",
+        "run",
+        "--workflow",
+        str(resolved_run["workflow"]["workflow_id"]),
+        "--package",
+        str(gate_package_key(resolved_run) or resolved_run["package"]["path"]),
+    ]
+    if resolved_run["run_mode"] != "governed_continuous":
+        invocation_parts.extend(["--mode", str(resolved_run["run_mode"])])
+    for key in sorted(runtime_inputs):
+        invocation_parts.extend(["--input", f"{key}={runtime_inputs[key]}"])
     return {
         "kind": "run_record",
         "schema_version": CONTENT_AGENT_VERSION,
@@ -3195,7 +3228,7 @@ def build_execution_run_record(
         },
         "invocation": {
             "entrypoint": "content-agent run",
-            "command": f"./content-agent run --workflow {resolved_run['workflow']['workflow_id']} --package {gate_package_key(resolved_run) or resolved_run['package']['path']}",
+            "command": " ".join(shlex.quote(part) for part in invocation_parts),
         },
         "context_admission": deepcopy(resolved_run.get("context_admission", [])),
         "consumed_artifacts": [
@@ -3241,7 +3274,10 @@ def execute_resolved_run(
     if not package_key:
         raise ValueError("Resolved run package path does not map to a package key.")
     manifest_ref, status_data = load_status_ref(package_key)
-    placeholders = build_placeholders(package_key, status_data)
+    runtime_inputs = resolved_run.get("runtime_inputs")
+    if not isinstance(runtime_inputs, dict):
+        runtime_inputs = {}
+    placeholders = build_runtime_placeholders(package_key, status_data, runtime_inputs)
     declared_commands = declared_rendered_commands(contract, placeholders)
     steps = contract.get("steps", [])
     if not isinstance(steps, list):
@@ -3329,6 +3365,7 @@ def execute_resolved_run(
         workflow_id=workflow_id,
         package_arg=package_key,
         mode=resolved_run["run_mode"],
+        runtime_inputs=runtime_inputs,
     )
     assert_validation_success(validation_report, "run evidence validation failed after write")
     return {
@@ -3353,14 +3390,17 @@ def build_run_execution_report(
     package_arg: str,
     *,
     run_mode: str,
+    runtime_inputs: dict[str, str] | None = None,
     supplied_run_id: str | None = None,
     start_at: str | None = None,
     max_scriptable_steps: int | None = None,
 ) -> dict[str, Any]:
+    runtime_inputs = runtime_inputs or {}
     resolved_run, resolved_run_path, persistence_reasons = build_resolved_run_payload(
         workflow_id,
         package_arg,
         run_mode=run_mode,
+        runtime_inputs=runtime_inputs,
         supplied_run_id=supplied_run_id,
     )
     if not persistence_reasons:
@@ -3370,6 +3410,7 @@ def build_run_execution_report(
         workflow_id=workflow_id,
         package_arg=package_arg,
         mode=run_mode,
+        runtime_inputs=runtime_inputs,
     )
     assert_validation_success(validation_report, "resolved run validation failed before execution")
     return execute_resolved_run(
@@ -3562,10 +3603,14 @@ def build_resume_report(gate_identifier: str | None = None, resolved_run_identif
     workflow_id = resolved_run.get("workflow", {}).get("workflow_id") if isinstance(resolved_run.get("workflow"), dict) else None
     if not package_key or not isinstance(workflow_id, str):
         raise ValueError("Resolved run is missing package or workflow identity.")
+    runtime_inputs = resolved_run.get("runtime_inputs")
+    if not isinstance(runtime_inputs, dict):
+        runtime_inputs = {}
     validation_report = build_validation_report(
         workflow_id=workflow_id,
         package_arg=package_key,
         mode=resolved_run.get("run_mode", "governed_continuous"),
+        runtime_inputs=runtime_inputs,
     )
     assert_validation_success(validation_report, "resume validation failed")
     timestamp = utc_timestamp()
@@ -3584,6 +3629,7 @@ def build_resume_report(gate_identifier: str | None = None, resolved_run_identif
         workflow_id=workflow_id,
         package_arg=package_key,
         mode=resolved_run.get("run_mode", "governed_continuous"),
+        runtime_inputs=runtime_inputs,
     )
     assert_validation_success(post_report, "resume evidence validation failed after write")
     return {
@@ -4043,6 +4089,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Persist the resolved_run and stop before script execution.",
     )
+    run.add_argument(
+        "--input",
+        action="append",
+        default=[],
+        help="Runtime input as key=value; may be repeated.",
+    )
     run.add_argument("--start-at", help="Start execution at a named workflow step.")
     run.add_argument("--max-scriptable-steps", type=int, help="Maximum scriptable steps to execute before deferring.")
     run.add_argument("--format", choices=["text", "json"], default="text")
@@ -4213,11 +4265,13 @@ def main() -> None:
 
     if args.command == "run":
         try:
+            runtime_inputs = parse_runtime_inputs(args.input)
             if args.resolve_only:
                 report = build_run_resolve_report(
                     args.workflow,
                     args.package,
                     run_mode=args.mode,
+                    runtime_inputs=runtime_inputs,
                     supplied_run_id=args.run_id,
                 )
             else:
@@ -4225,6 +4279,7 @@ def main() -> None:
                     args.workflow,
                     args.package,
                     run_mode=args.mode,
+                    runtime_inputs=runtime_inputs,
                     supplied_run_id=args.run_id,
                     start_at=args.start_at,
                     max_scriptable_steps=args.max_scriptable_steps,

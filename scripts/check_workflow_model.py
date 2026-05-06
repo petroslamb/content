@@ -264,6 +264,19 @@ def check_content_agent_validate(errors: list[str]) -> None:
         errors.append("content-agent validate failed for essay_iteration package context admission fixture.")
         errors.extend(f"content-agent essay_iteration: {finding['message']}" for finding in package_report["findings"])
 
+    topic_report = build_validation_report(
+        workflow_id="topic_discovery",
+        package_arg="literate-workflow-programming",
+        mode="governed_continuous",
+        runtime_inputs={
+            "discovery_trigger": "primary proof for autonomous content-agent publication workflows",
+            "target_publication_ambition": "north_star_flagship",
+        },
+    )
+    if not topic_report["success"]:
+        errors.append("content-agent validate failed for topic_discovery runtime-input fixture.")
+        errors.extend(f"content-agent topic_discovery: {finding['message']}" for finding in topic_report["findings"])
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate the modular workflow model and evaluation fixtures.")

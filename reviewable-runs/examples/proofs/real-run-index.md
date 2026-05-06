@@ -20,6 +20,7 @@ These statuses are proof-retention statuses, not framework-fit scores. A run can
 | March 27 YouTube playlist-order fix | `019d3075-745a-7a51-a9de-57e05701e8fe` | `flagship proof` | Strong | Strong | Strong | Strong | Yes | External-action run with mixed API and Studio control, live playlist reorder, and final state verified directly on YouTube. |
 | March 26 standalone extraction | `019d2949-bad3-7000-82af-238c4a07affa` | `flagship proof` | Strong | Strong | Strong | Strong | Yes | Bounded restructuring run with explicit decoupling, cleanup, validation sweeps, and commit boundary `f3c1241`. |
 | March 26 compact public package refactor | `019d2949-bad3-7000-82af-238c4a07affa` | `flagship proof` | Strong | Strong | Strong | Strong | Yes | Focused packaging/usability refactor with explicit deletion of old front doors, path cleanup, and commit boundary `e581b07`. |
+| Phase 2 primary topic discovery proof | current Codex session plus retained `content-agent` evidence | `flagship proof` | Strong | Strong | Strong | Strong gated stop | Yes | First retained Phase 2 governed-runtime proof: `content-agent` admitted runtime inputs, produced topic-discovery artifacts, passed `topic_viability`, and stopped at a pending lifecycle gate without package initialization. |
 | March 27 YouTube cross-link fallback | `019d3075-745a-7a51-a9de-57e05701e8fe` | `secondary candidate` | Strong | Strong | Strong | Partial | No | Useful external-action run with live description updates, but weaker than the playlist fix because the approval boundary is more implicit and the effect is less structurally testable. |
 | March 27 audio slideshow renderer | `019d3075-745a-7a51-a9de-57e05701e8fe` | `secondary candidate` | Strong | Strong | Partial | Partial | No | Good artifact-generation run with script and cue output, but weaker on external approval and downstream verification than the YouTube platform run. |
 | March 27 transcript alignment limit | `019d3075-745a-7a51-a9de-57e05701e8fe` | `secondary candidate` | Strong | Strong | Partial | Partial | No | Valuable real limit-finding run: the alignment helper worked as a draft mechanism, but the transcript/slide mismatch exposed a real automation boundary rather than a strong public proof. |
@@ -45,3 +46,4 @@ For now, the public proof set is:
 4. `march-27-youtube-playlist-order-fix/`
 5. `march-26-standalone-extraction/`
 6. `march-26-compact-public-package/`
+7. `phase-2-primary-topic-discovery-proof/`

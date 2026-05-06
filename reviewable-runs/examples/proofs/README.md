@@ -13,6 +13,7 @@ Unlike the canonical dossiers, these artifacts are meant to prove that reviewabl
 - `march-27-youtube-playlist-order-fix/`: an external-action run that corrected live YouTube playlist state through a mixed Studio-and-API path
 - `march-26-standalone-extraction/`: the committed extraction run that decoupled the framework from the blueprint package
 - `march-26-compact-public-package/`: the committed package/usability refactor that produced the current compact public shape
+- `phase-2-primary-topic-discovery-proof/`: the first retained Phase 2 `content-agent` governed-runtime proof from topic discovery to a pending lifecycle gate
 - `specification-surface-full-lifecycle/`: a session-audited retrospective full-lifecycle publication proof candidate for the `literate-workflow-programming/specification-surface-source-of-truth` leaf
 - `coding-real-run/`: a smaller real captured coding run reconstructed into the six-record surface
 - `failure-contrast/`: a negative contrast showing what ordinary logs fail to make reviewable
@@ -28,11 +29,12 @@ Read in this order:
 5. `march-12-alphaxiv-auth-refactor/README.md`
 6. `march-26-compact-public-package/README.md`
 7. `march-26-standalone-extraction/README.md`
-8. `specification-surface-full-lifecycle/README.md`
-9. `march-07-origin-refactor/README.md`
-10. `../../PLAYBOOK.md`
-11. `coding-real-run/README.md`
-12. `failure-contrast/README.md`
+8. `phase-2-primary-topic-discovery-proof/README.md`
+9. `specification-surface-full-lifecycle/README.md`
+10. `march-07-origin-refactor/README.md`
+11. `../../PLAYBOOK.md`
+12. `coding-real-run/README.md`
+13. `failure-contrast/README.md`
 
 This folder should stay small. Add proof artifacts only when they materially strengthen the framework's operational case.
 
