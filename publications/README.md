@@ -36,6 +36,7 @@ NotebookLM notebook links for the publication corpus are indexed in [`notebooklm
 | [`illusion-of-swarm/`](illusion-of-swarm/README.md) | Single-publication | Published | alphaXiv-driven research package behind *The Illusion of the Swarm* |
 | [`literate-workflow-programming/`](literate-workflow-programming/README.md) | Umbrella | Active unpublished umbrella | Shared research line with a capped flagship donor leaf and a stopped successor search with no cleared successor |
 | [`moltbook-phenomenon/`](moltbook-phenomenon/README.md) | Single-publication | Published | Essay, background analysis, slides, and distribution assets |
+| [`proof-runs-as-source-surface/`](proof-runs-as-source-surface/README.md) | Single-publication | Active initialized package | Phase 2 proof-run article object initialized from approved topic discovery; currently stopped at research-exit review gate |
 | [`programmable-thinking/`](programmable-thinking/README.md) | Single-publication | Published | RLM/Jupyter publication package with companion paper and visuals |
 | [`autonomous-agents/`](autonomous-agents/README.md) | Umbrella | Published umbrella / active course | Foundation-agent manual plus the Operating Agents course |
 | [`hardware-friction/`](hardware-friction/README.md) | Umbrella | Published umbrella | Hardware-friction map, scorecard, long-form article, and dataset |

@@ -3214,6 +3214,13 @@ def build_execution_run_record(
         invocation_parts.extend(["--mode", str(resolved_run["run_mode"])])
     for key in sorted(runtime_inputs):
         invocation_parts.extend(["--input", f"{key}={runtime_inputs[key]}"])
+    execution_options = resolved_run.get("execution_options")
+    if not isinstance(execution_options, dict):
+        execution_options = {}
+    if execution_options.get("start_at"):
+        invocation_parts.extend(["--start-at", str(execution_options["start_at"])])
+    if execution_options.get("max_scriptable_steps") is not None:
+        invocation_parts.extend(["--max-scriptable-steps", str(execution_options["max_scriptable_steps"])])
     return {
         "kind": "run_record",
         "schema_version": CONTENT_AGENT_VERSION,
@@ -3403,6 +3410,11 @@ def build_run_execution_report(
         runtime_inputs=runtime_inputs,
         supplied_run_id=supplied_run_id,
     )
+    if start_at is not None or max_scriptable_steps is not None:
+        resolved_run["execution_options"] = {
+            "start_at": start_at,
+            "max_scriptable_steps": max_scriptable_steps,
+        }
     if not persistence_reasons:
         raise ValueError("content-agent run currently requires a persisted resolved_run.")
     write_yaml_mapping(resolved_run_path, resolved_run)

@@ -1,0 +1,251 @@
+kind: resolved_run
+schema_version: 1
+run_id: phase-2-primary-research-exit-proof
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:1563ac34429df99d0020d76dee65738da97ad5f4fd9e9d35e6f75bcd340e3437
+workflow:
+  workflow_id: research
+  workflow_version: 1
+  workflow_hash: sha256:c0944d1d61b68ac426965a9ea2089742c2dc57e324a3dff1cc7f7a0e96e4aee2
+  contract_path: workflows/alphaxiv-research/workflow.yaml
+run_mode: governed_continuous
+runtime_inputs:
+  research_question: What evidence must a governed local runtime emit before a human
+    should trust an agent to initialize, mutate, resume, or publish a content package?
+route:
+  package_kind: leaf
+  pipeline_profile: article_default
+  current_stage: paper_intake
+  workflow_stage: research
+  resolved_from:
+  - publications/proof-runs-as-source-surface/status.yaml
+  - workflows/alphaxiv-research/workflow.yaml
+  - harness_policy.yaml
+  - gate_contracts.yaml
+  - pipeline_profiles.yaml
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: 1563ac34429df99d0020d76dee65738da97ad5f4fd9e9d35e6f75bcd340e3437
+      size_bytes: 948
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md:
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: research_question
+  required: true
+  status: resolved
+  value: What evidence must a governed local runtime emit before a human should trust
+    an agent to initialize, mutate, resume, or publish a content package?
+- id: package_evidence_surface
+  required: false
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md:
+      type: file_sha256
+      sha256: 74d481106ef53a0c043fede9e4c5a32b35a9fb32350d7e93cdbbc176bea5dd15
+      size_bytes: 2559
+- id: governing_brief
+  required: false
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/blueprint.md
+  hashes:
+    publications/proof-runs-as-source-surface/blueprint.md:
+      type: file_sha256
+      sha256: 443bb4e3289b77c03ede6b67214d4d09f5ce49c93ad3e7daecfa98d14802640b
+      size_bytes: 3582
+- id: existing_discussion_index
+  required: false
+  status: missing
+  reason: 'path does not exist: publications/proof-runs-as-source-surface/research-notes/alphaxiv-discussions/index.md'
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/alphaxiv-research/README.md
+  hashes:
+    workflows/alphaxiv-research/README.md:
+      type: file_sha256
+      sha256: f85d46f674a9cb1bf32824d0aff3f35cd1d2241a7ce086a4ff28cdd496e939f1
+      size_bytes: 12487
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/alphaxiv-research/templates
+  hashes:
+    workflows/alphaxiv-research/templates:
+      type: directory_listing_sha256
+      sha256: f3139983ba050eb587c829b5b757b9fa1e17670d005e414b145f469f6acb57d8
+      file_count: 2
+- id: alphaxiv_skill
+  required: true
+  status: resolved
+  paths:
+  - workflows/skills/alphaxiv/SKILL.md
+  hashes:
+    workflows/skills/alphaxiv/SKILL.md:
+      type: file_sha256
+      sha256: 15dc7b3bfbe601198cc29cd67d6e7e2f5c8372651a006d391970c506cc95e2e7
+      size_bytes: 5927
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 076facc22210d985e9174d338a30f30f31cb78b2b7fcca796b55a2a9c03634e8
+      size_bytes: 3045
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+policy_resolution:
+  allowed_tools:
+  - id: alphaxiv_search
+    command: .venv/bin/alphaxiv search papers "{query}"
+    required: true
+  - id: alphaxiv_feed
+    command: .venv/bin/alphaxiv feed list {feed_args}
+    required: false
+  - id: alphaxiv_paper_show
+    command: .venv/bin/alphaxiv paper show {paper_id}
+    required: true
+  - id: alphaxiv_paper_summary
+    command: .venv/bin/alphaxiv paper summary {paper_id}
+    required: true
+  - id: alphaxiv_paper_overview
+    command: .venv/bin/alphaxiv paper overview {paper_id}
+    required: false
+  - id: alphaxiv_assistant_start
+    command: .venv/bin/alphaxiv assistant start "{assistant_prompt}"
+    required: false
+  - id: alphaxiv_assistant_history
+    command: .venv/bin/alphaxiv assistant history {session_id}
+    required: false
+  - id: research_exit_validator
+    command: .venv/bin/python scripts/check_research_exit_gate.py --package proof-runs-as-source-surface
+    required: true
+  - id: alphaxiv_discussion_validator
+    command: .venv/bin/python scripts/check_alphaxiv_discussions.py --package proof-runs-as-source-surface
+    required: true
+  allowed_capabilities:
+  - contract_validation
+  - context_admission
+  - scriptable_step_execution
+  - gate_stop
+  - run_record_writing
+  allowed_paths:
+    read:
+    - publications/proof-runs-as-source-surface/
+    - publications/proof-runs-as-source-surface/papers/index.md
+    - '{shared_evidence_path}'
+    - workflows/alphaxiv-research/
+    - workflows/skills/alphaxiv/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - reviewable-runs/
+    write:
+    - publications/proof-runs-as-source-surface/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+selected_steps:
+- id: resolve_research_target
+  mode: codex_session
+- id: deterministic_retrieval
+  mode: codex_session
+- id: refine_shortlist
+  mode: codex_session
+- id: assistant_pressure_test
+  mode: external_mutation_gated
+- id: track_assistant_discussion
+  mode: codex_session
+- id: settle_research_exit_gate
+  mode: review_gated
+  gate_id: research_exit
+- id: record_handoff
+  mode: scriptable
+selected_gates:
+- id: research_exit
+  contract: research_exit
+  type: lifecycle_movement
+  required: true
+  status: declared
+behavior:
+  budgets:
+    max_steps: 7
+    max_script_retries: 1
+    max_search_queries: 12
+    max_candidate_papers: 20
+    max_assistant_sessions: 2
+    external_mutations: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_context: stop
+    on_alphaxiv_auth_failure: stop_and_request_user_auth_command
+    on_assistant_failure: continue_with_retrieval_only_or_defer
+    on_validation_failure: stop_and_record
+    on_research_exit_not_ready: defer_to_research
+    resume_from: resolved_run
+    rollback_strategy: preserve_local_notes_and_remote_session_ids
+  policy_run_modes:
+  - exploratory
+  - governed_continuous
+output_targets:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-primary-research-exit-proof.yaml
+- id: run_record
+  path: reviewable-runs/logs/phase-2-primary-research-exit-proof.yaml
+- id: research_shortlist
+  path: publications/proof-runs-as-source-surface/research-notes/alphaxiv-shortlist-r1.md
+  required: conditional
+  format: markdown
+- id: assistant_discussion_index
+  path: publications/proof-runs-as-source-surface/research-notes/alphaxiv-discussions/index.md
+  required: conditional
+  format: markdown
+- id: assistant_discussion_extraction
+  path: publications/proof-runs-as-source-surface/research-notes/alphaxiv-discussions/{session_slug}.md
+  required: conditional
+  format: markdown
+- id: paper_intake_queue
+  path: publications/proof-runs-as-source-surface/research-notes/paper-intake-queue-r1.md
+  required: conditional
+  format: markdown
+- id: research_exit_gate
+  path: publications/proof-runs-as-source-surface/proof-runs-as-source-surface-research-exit-gate-r1.md
+  required: true
+  format: markdown
+- id: review_gate:research_exit
+  path: reviewable-runs/gates/gate-phase-2-primary-research-exit-proof-research-exit.yaml
+  required: true
+execution_options:
+  start_at: settle_research_exit_gate
+  max_scriptable_steps: null

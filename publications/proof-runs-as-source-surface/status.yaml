@@ -1,0 +1,36 @@
+kind: leaf
+publication: proof-runs-as-source-surface
+revision: 1
+config:
+  markdown_path: publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  discovery_packet_path: reviewable-runs/logs/phase-2-primary-topic-discovery-proof-topic-discovery-handoff.md
+  blueprint_path: publications/proof-runs-as-source-surface/blueprint.md
+  evidence_path: publications/proof-runs-as-source-surface/papers/index.md
+stages:
+  paper_intake:
+    done: false
+    last_updated: null
+  research:
+    done: false
+    last_updated: null
+  essay_iteration:
+    done: false
+    last_updated: null
+  notebooklm_artifacts:
+    done: false
+    last_updated: null
+  article_polish:
+    done: false
+    last_updated: null
+  substack_publishing:
+    done: false
+    last_updated: null
+  archive_sync:
+    done: false
+    last_updated: null
+  youtube_production:
+    done: false
+    last_updated: null
+  distribution:
+    done: false
+    last_updated: null

@@ -2788,7 +2788,7 @@ def initialize_package(
         "",
         f"Current idea: {effective_idea}",
         "",
-        "This package was initialized for the Phase 1.5 harness flow.",
+        "This package was initialized from a Phase 2 governed topic-discovery handoff.",
         "",
         "## Canonical Surfaces",
         "",
