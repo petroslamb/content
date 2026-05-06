@@ -2,7 +2,7 @@
 
 Snapshot date: 2026-04-22
 
-Post-Phase-2 note: this checklist records the Phase 1/1.5 closure state. Its `stage:*` and `workflow:*` commands remain valid compatibility adapters, but the preferred governed operator surface is now `./content-agent`; see [`../AUTHORITY.md`](../AUTHORITY.md).
+Archive note, 2026-05-06: this checklist records the Phase 1/1.5 closure state. It is retained as historical strategy, not active operator guidance. References to `harness_contract.yaml`, `stage:*`, `workflow:*`, `gate:check`, `scripts/next_action.py`, and `scripts/run_stage.py` describe the old compatibility layer that has since been retired. Use `./content-agent` for governed work; see [`../../../AUTHORITY.md`](../../../AUTHORITY.md).
 
 Status legend:
 
@@ -64,7 +64,7 @@ The original strategy sentence "any article can be run start-to-finish by an age
    - `scripts/update_initial_status.py` was removed.
    - Generic wrappers with package examples in help text remain acceptable if they take `--package`.
 
-2. Run a publication package orientation audit. `DONE`; see `phased-strategy/publication-package-orientation-audit-2026-04-17.md`.
+2. Run a publication package orientation audit. `DONE`; see [`publication-package-orientation-audit-2026-04-17.md`](publication-package-orientation-audit-2026-04-17.md).
    - Confirm every active leaf package has a useful README, `status.yaml`, live draft pointer, artifact surface, and evidence surface where applicable.
    - Old umbrella packages were normalized with configured evidence paths and top-level artifact/archive orientation surfaces.
 

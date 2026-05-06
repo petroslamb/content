@@ -2,7 +2,7 @@
 
 Snapshot date: 2026-04-23
 
-Post-Phase-2 note: this is a historical brainstorm from before the `content-agent` baseline landed. Treat references to `stage:*`, `workflow:*`, and launch-pack routing as compatibility context. The current governed operator surface is `./content-agent`; see [`../AUTHORITY.md`](../AUTHORITY.md).
+Archive note, 2026-05-06: this is a historical brainstorm from before the `content-agent` baseline landed. Treat references to `harness_contract.yaml`, `stage:*`, `workflow:*`, `gate:check`, and launch-pack routing as compatibility context only. The current governed operator surface is `./content-agent`; see [`../../../AUTHORITY.md`](../../../AUTHORITY.md).
 
 ## Purpose
 
@@ -13,14 +13,14 @@ It is intentionally two-step:
 1. brainstorm the operator-shell design space without prematurely freezing implementation
 2. converge on the thinnest concrete solution that reduces prompt glue in real runs
 
-The source phase definition remains [`strategic_plan.md`](strategic_plan.md). This note is the execution-planning layer for that phase, not a replacement strategy.
+The source phase definition remains [`../../strategic_plan.md`](../../strategic_plan.md). This note is the execution-planning layer for that phase, not a replacement strategy.
 
 ## What Phase 1.6 Must Actually Fix
 
 Phase 1.5 already gave the repo a stable machine-facing contract:
 
-- [`harness_contract.yaml`](../harness_contract.yaml)
-- [`harness_policy.yaml`](../harness_policy.yaml)
+- `harness_contract.yaml`
+- [`harness_policy.yaml`](../../../harness_policy.yaml)
 - `package:init`
 - `stage:next`
 - `stage:resolve`
@@ -43,22 +43,22 @@ Phase 1.6 should therefore be judged by one question:
 
 | Surface | Already Exists | Phase 1.6 Implication |
 | :--- | :--- | :--- |
-| Machine contract | [`../harness_contract.yaml`](../harness_contract.yaml) | Operator commands should compose this, not bypass it. |
-| Policy layer | [`../harness_policy.yaml`](../harness_policy.yaml) | Safety modes should be views over policy, not a parallel rulebook. |
-| Workflow contract | workflow frontmatter in [`../workflows/`](../workflows/README.md) | Generated operator docs should pull from workflow metadata directly. |
+| Machine contract | `harness_contract.yaml` | Operator commands should compose this, not bypass it. |
+| Policy layer | [`../../../harness_policy.yaml`](../../../harness_policy.yaml) | Safety modes should be views over policy, not a parallel rulebook. |
+| Workflow contract | workflow frontmatter in [`../../../workflows/`](../../../workflows/README.md) | Generated operator docs should pull from workflow metadata directly. |
 | Stage routing | `npm run stage:next`, `stage:resolve`, `stage:run`, `package:init` | The operator shell should be a thin wrapper around these entrypoints. |
-| Existing skills | [`../workflows/skills/README.md`](../workflows/skills/README.md) | Keep specialized skills as lower-level execution helpers. |
-| Safety backstop | [`../scripts/codex_hooks/stop_lifecycle_check.py`](../scripts/codex_hooks/stop_lifecycle_check.py) | Visible safety controls should complement the hook, not replace it. |
-| Proof evidence | [`../reviewable-runs/logs/README.md`](../reviewable-runs/logs/README.md), [`../reviewable-runs/evaluation/README.md`](../reviewable-runs/evaluation/README.md) | Phase 1.6 should upgrade evaluation quality using the same retained-run discipline. |
+| Existing skills | [`../../../workflows/skills/README.md`](../../../workflows/skills/README.md) | Keep specialized skills as lower-level execution helpers. |
+| Safety backstop | [`../../../scripts/codex_hooks/stop_lifecycle_check.py`](../../../scripts/codex_hooks/stop_lifecycle_check.py) | Visible safety controls should complement the hook, not replace it. |
+| Proof evidence | [`../../../reviewable-runs/logs/README.md`](../../../reviewable-runs/logs/README.md), [`../../../reviewable-runs/evaluation/README.md`](../../../reviewable-runs/evaluation/README.md) | Phase 1.6 should upgrade evaluation quality using the same retained-run discipline. |
 | Browser footholds | alphaXiv persistent profile guidance; Substack CDP attach flow | Build a narrow browser-session pattern instead of a general browser platform. |
 
 ## New Fixture Baseline After Package Migration
 
 The operator shell now has real package classes to test against. Treat these as the minimum fixture set for Phase 1.6 proof runs:
 
-- active umbrella with active flagship leaf: [`../publications/evidence-governance/`](../publications/evidence-governance/README.md)
-- umbrella with stopped successor-search overlay: [`../publications/literate-workflow-programming/`](../publications/literate-workflow-programming/README.md)
-- settled published umbrellas: [`../publications/autonomous-agents/`](../publications/autonomous-agents/README.md), [`../publications/hardware-friction/`](../publications/hardware-friction/README.md), [`../publications/orchestration-paradigm/`](../publications/orchestration-paradigm/README.md), and [`../publications/neural-architectures/`](../publications/neural-architectures/README.md)
+- active umbrella with active flagship leaf: [`../../../publications/evidence-governance/`](../../../publications/evidence-governance/README.md)
+- umbrella with stopped successor-search overlay: [`../../../publications/literate-workflow-programming/`](../../../publications/literate-workflow-programming/README.md)
+- settled published umbrellas: [`../../../publications/autonomous-agents/`](../../../publications/autonomous-agents/README.md), [`../../../publications/hardware-friction/`](../../../publications/hardware-friction/README.md), [`../../../publications/orchestration-paradigm/`](../../../publications/orchestration-paradigm/README.md), and [`../../../publications/neural-architectures/`](../../../publications/neural-architectures/README.md)
 
 This matters because Phase 1.6 is no longer testing only whether the shell can route a single-publication package. It must also:
 
@@ -275,8 +275,8 @@ Minimum behavior:
 
 Generate the operator-skill docs from:
 
-- [`../harness_contract.yaml`](../harness_contract.yaml)
-- [`../harness_policy.yaml`](../harness_policy.yaml)
+- `harness_contract.yaml`
+- [`../../../harness_policy.yaml`](../../../harness_policy.yaml)
 - workflow frontmatter
 - the operator route map
 
@@ -367,7 +367,7 @@ Use one clean leaf and one ambiguous research-heavy package.
 Recommended targets:
 
 - a clean package continuation case such as the retained `publish-adjacent` proof lane
-- [`../publications/literate-workflow-programming/`](../publications/literate-workflow-programming/README.md) as the ambiguity stress case for `/content-proof-run`
+- [`../../../publications/literate-workflow-programming/`](../../../publications/literate-workflow-programming/README.md) as the ambiguity stress case for `/content-proof-run`
 
 The first proof should answer:
 

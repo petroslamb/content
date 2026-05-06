@@ -121,7 +121,7 @@ List the source files, package state, workflow docs, external outputs, or platfo
 | Evidence | Why It Mattered | Freshness / Provenance |
 | :--- | :--- | :--- |
 | `phased-strategy/strategic_plan.md` | Defined the actual gap: proof-run evidence before any Phase 1.6 or Phase 2 move. | Tracked strategy source. |
-| `phased-strategy/phase-1-1-5-closure-checklist.md` | Named the three proof-run classes and the current open items. | Tracked phase checklist. |
+| `phased-strategy/archive/phase-1/phase-1-1-5-closure-checklist.md` | Named the three proof-run classes and the current open items. | Tracked phase checklist. |
 | `publications/literate-workflow-programming/status.yaml` | Resolved the current stage and governing brief path. | Current package manifest. |
 | `publications/literate-workflow-programming/README.md` | Provided package-local orientation and confirmed the current stage read. | Current package README. |
 | `publications/literate-workflow-programming/literate-workflow-programming.md` | Served as the governing brief named by `config.blueprint_path`. | Current package live research brief. |

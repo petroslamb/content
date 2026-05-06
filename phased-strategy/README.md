@@ -2,6 +2,8 @@
 
 This folder owns the long-range strategy, phase gates, and closure ledgers for turning this repo from a personal content operating environment into a harness-native and eventually productizable system.
 
+Current status: Phase 1, Phase 1.5, and Phase 1.6 are archived historical strategy. They explain how the repo reached the current governed runtime, but they are no longer active operator guidance. The active baseline is Phase 2: file-backed workflow contracts, validation, evidence, gates, `content-agent`, cockpit, and bounded editorial automation.
+
 Use this layer differently from the workflow layer:
 
 - `phased-strategy/` decides what phase the repo is in and what must be true before advancing.
@@ -13,10 +15,14 @@ Use this layer differently from the workflow layer:
 
 | Document | Role |
 | :--- | :--- |
-| [`strategic_plan.md`](strategic_plan.md) | The canonical phase roadmap from clean internal automation through harness-native autonomy, operator shell, platform, and SaaS product. |
-| [`phase-1-1-5-closure-checklist.md`](phase-1-1-5-closure-checklist.md) | Current closure checklist for Phase 1 and Phase 1.5, including what is done, what is partial, and what remains open. |
-| [`phase-1-6-operator-shell-brainstorm-2026-04-23.md`](phase-1-6-operator-shell-brainstorm-2026-04-23.md) | Brainstorm-first execution plan for the Phase 1.6 operator shell, including option space, convergence choices, and a recommended thin-slice build order. |
-| [`phase-2/README.md`](phase-2/README.md) | Phase 2 planning index for the local execution platform: executable workflow contracts, validation, traces, gates, CLI, cockpit, and open questions. |
+| [`phase-2/README.md`](phase-2/README.md) | Current baseline for the local governed execution platform: executable workflow contracts, validation, traces, gates, CLI, cockpit, and bounded editorial automation. |
+| [`strategic_plan.md`](strategic_plan.md) | Archived roadmap narrative from clean internal automation through productizable system. Keep for product/strategy context, not active command guidance. |
+| [`archive/phase-1/README.md`](archive/phase-1/README.md) | Archived Phase 1, Phase 1.5, and Phase 1.6 strategy index. |
+| [`archive/phase-1/phase-1-1-5-closure-checklist.md`](archive/phase-1/phase-1-1-5-closure-checklist.md) | Archived closure checklist for Phase 1 and Phase 1.5. |
+| [`archive/phase-1/phase-1-1-5-proof-set-verdict-2026-04-22.md`](archive/phase-1/phase-1-1-5-proof-set-verdict-2026-04-22.md) | Archived proof-set verdict for the Phase 1.5 closure bar. |
+| [`archive/phase-1/phase-1-6-operator-shell-brainstorm-2026-04-23.md`](archive/phase-1/phase-1-6-operator-shell-brainstorm-2026-04-23.md) | Archived operator-shell brainstorm superseded by Phase 2 `content-agent`. |
+| [`archive/phase-1/publication-package-orientation-audit-2026-04-17.md`](archive/phase-1/publication-package-orientation-audit-2026-04-17.md) | Archived package-orientation audit used during Phase 1 closure. |
+| [`archive/phase-1/repo-organization-audit-2026-04-28.md`](archive/phase-1/repo-organization-audit-2026-04-28.md) | Archived organization/authority audit that helped drive Phase 2 cleanup. |
 
 ## Research Dependencies
 
@@ -32,17 +38,32 @@ Extract findings back into this folder only when they change a phase gate, proof
 
 ## Current Read
 
-As of 2026-04-23:
+As of 2026-05-06:
 
-- Phase 1 is closed as the Clean Machine phase: repo normalization, one-command lifecycle visibility, package orientation, root-script hygiene, generic stage dispatch, and v2 reviewable run logs are in place.
-- The original "start-to-finish by an agent" ambition is now treated as Phase 1.5/1.6 autonomy proof work, not as a remaining Phase 1 blocker.
-- Phase 1.5 is now pragmatically gate-cleared: the retained proof set covers `research-heavy`, `publish-adjacent`, and `media/distribution`, even though the lanes remain asymmetric in cleanliness.
-- Phase 1.6 should remain the operator-shell layer that follows Phase 1.5 closure and hardens the remaining caveats.
-- Phase 2 now has its own planning folder under [`phase-2/`](phase-2/README.md), and that plan is now organized around executable contracts, validation, traces, gates, and a thin runtime rather than a CLI-first platform story.
-- Umbrella and leaf package normalization is now mostly complete in the repo baseline. Phase 1.6 and Phase 2 should treat the package-shape migration as largely done and use the real package classes as fixtures:
-  - settled published umbrella roots such as [`../publications/autonomous-agents/`](../publications/autonomous-agents/README.md), [`../publications/hardware-friction/`](../publications/hardware-friction/README.md), [`../publications/orchestration-paradigm/`](../publications/orchestration-paradigm/README.md), and [`../publications/neural-architectures/`](../publications/neural-architectures/README.md)
-  - an active umbrella with an active flagship leaf at [`../publications/evidence-governance/`](../publications/evidence-governance/README.md)
-  - an umbrella with a stopped successor-search overlay at [`../publications/literate-workflow-programming/`](../publications/literate-workflow-programming/README.md)
+- Phase 1 and Phase 1.5 are archived as closure history.
+- Phase 1.6 is archived as a pre-`content-agent` operator-shell design thread.
+- Phase 2.1 through Phase 2.6 are implemented as the current local platform baseline.
+- The active source-of-truth map is [`../AUTHORITY.md`](../AUTHORITY.md).
+- The active governed operator surface is `./content-agent`, backed by `workflow.yaml`, package `status.yaml`, root policy/profile/gate YAMLs, and reviewable-run evidence.
+- The old `harness_contract.yaml`, `stage:*`, `workflow:*`, `gate:check`, `check:harness`, and generic `npm run run` compatibility layer is retired.
+
+The next strategic step is not more compatibility migration. It is a proof campaign or Phase 3 definition that tests the Phase 2 platform across multiple real package paths and identifies reliability gaps.
+
+## Archived Phase 1 Material
+
+The Phase 1 files are retained because old strategy notes and proof records need historical context. Treat old command names inside them as period evidence, not current instructions.
+
+Current replacements:
+
+| Historical surface | Current surface |
+| :--- | :--- |
+| `harness_contract.yaml` | No generated compatibility rollup. Validate primary Phase 2 files directly. |
+| `npm run stage:next` | `./content-agent next --package <package>` |
+| `npm run stage:resolve` / `npm run workflow:resolve` | `./content-agent validate --workflow <workflow_id> --package <package>` |
+| `npm run stage:run` / `npm run workflow:run` | `./content-agent run --workflow <workflow_id> --package <package>` |
+| `npm run gate:check` | `./content-agent gate check --gate <gate_id> --package <package>` |
+| `scripts/next_action.py` | `./content-agent next`, backed by shared `scripts/harness.py` resolution logic. |
+| `scripts/run_stage.py` / `scripts/run_workflow.py` | `./content-agent run`. |
 
 ## When To Update This Folder
 
