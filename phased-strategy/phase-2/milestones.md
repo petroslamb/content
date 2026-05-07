@@ -11,8 +11,9 @@ The sequence is:
 5. thin local cockpit
 6. bounded editorial automation
 7. disciplined clean-context subagent handoffs
+7a. request exit protocol hardening for generated subagent handoffs
 
-That order is deliberate. Phase 2 should not start with a dashboard, fat runtime, or autonomous agent wrapper over unstable workflow semantics.
+That order is deliberate. Phase 2 should not start with a dashboard, fat runtime, or autonomous agent wrapper over unstable workflow semantics. Phase 2.7a is a planned follow-on to 2.7, not a claim that hook enforcement or multi-agent scheduling exists.
 
 ## Baseline Assumptions
 
@@ -39,6 +40,7 @@ The current operative stack is:
 - [`2.5-local-cockpit.md`](2.5-local-cockpit.md): cockpit dependency boundary and v0 scope
 - [`2.6-editorial-automation.md`](2.6-editorial-automation.md): bounded editorial automation plan
 - [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md): post-baseline parent/subagent handoff discipline
+- [`2.7a-request-exit-protocol.md`](2.7a-request-exit-protocol.md): planned request/result protocol hardening after 2.7
 - [`workflow-yaml-schema.md`](workflow-yaml-schema.md): schema companion to 2.1, not a competing authority
 
 ## Subphase Read
@@ -52,6 +54,7 @@ The current operative stack is:
 | **2.5 Local Cockpit** | Add a thin browser reader/approver over package state, gates, and recent runs. | Stable gate store, run records, and CLI commands. | Implemented. The cockpit exposes package state, pending gates, recent runs, validation health, gate decisions, and report-only editorial checks while leaving filesystem-backed YAML and package files authoritative. |
 | **2.6 Editorial Automation** | Add structured editorial/style/compliance reporting. | Stable governed run path and article-polish boundaries. | Implemented. Automation produces reports, violations, and source-improvement suggestions without autonomous rewrite, promotion, publication, or lifecycle authority. |
 | **2.7 Agent Handoff Discipline** | Formalize clean-context subagent handoffs after the deterministic runtime baseline. | 2.4 runtime boundary, 2.6 editorial automation closeout, `codex_session_handoff` policy, and Reviewable Runs handoff stores. | Strategy subphase documented. Parent sessions orchestrate, worker subagents do model-mediated work with `fork_context=false`, `content-agent` emits and validates deterministic artifacts without spawning models, and hook/skill additions remain later implementation work. |
+| **2.7a Request Exit Protocol Implementation** | Plan request/result protocol hardening so workers can finish cleanly without hooks. | 2.7 handoff discipline, generated generic and explicit subagent request support, same-session compatibility, and current result validation. | Planned. Done when new generated requests include exit protocol, skill recommendations, and verification requirements; 2.7a results require `verification.commands[]`; `content-agent-handoff` exists; and regression proofs pass without activating hooks. |
 
 ## Implementation Closeout
 
@@ -70,7 +73,7 @@ That proof demonstrates the current platform path on a real package: `article_po
 
 Do not read this as a claim that Phase 2 now performs autonomous end-to-end publication. External mutation, lifecycle movement, and promotion remain gate-controlled and human-approved.
 
-Phase 2.7 is a post-baseline discipline layer rather than a new autonomy claim. It records how parent sessions should supervise clean-context workers, how workers should exit, and which request/result fields, skills, and hooks should be implemented later.
+Phase 2.7 is a post-baseline discipline layer rather than a new autonomy claim. It records how parent sessions should supervise clean-context workers, how workers should exit, and which request/result fields, skills, and hooks should be implemented later. Phase 2.7a is the planned implementation packet for request/result protocol hardening only; it does not claim hooks, model spawning, gate clearing from generic results, or a scheduler.
 
 ## First Workflow Set
 
@@ -204,6 +207,19 @@ This pass should produce:
 - a design-only hook plan for later Stop-hook enforcement
 
 This pass must not enable hooks by default, edit runtime code, change workflow YAML, spawn models from `content-agent`, clear gates automatically, or claim autonomous publication.
+
+### 7a. Request Exit Protocol Implementation Pass
+
+Planned follow-on to the 2.7 strategy doc.
+
+This pass should produce:
+
+- generated request fields for `recommended_skills`, `exit_protocol`, and `verification_requirements`
+- result validation for `verification.commands[]` on new 2.7a requests
+- a first `content-agent-handoff` skill under `workflows/skills/`
+- regression proofs for generic request emission, `same_session`, cold-review gate blocking, stale hashes, malformed results, and missing verification
+
+This pass must not activate hooks, spawn models from `content-agent`, clear gates from generic results, mutate external systems, or rewrite workflow YAML.
 
 ## Phase 2 Gate Read
 
