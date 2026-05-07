@@ -163,6 +163,25 @@ allowed_paths:
     - reviewable-runs/resolved-runs/
     - reviewable-runs/logs/
     - reviewable-runs/gates/
+    - reviewable-runs/subagent-requests/
+    - reviewable-runs/subagent-results/
+    - reviewable-runs/integration-decisions/
+
+codex_session_handoff:
+  default_mode: policy_default
+  local_overrides_allowed: true
+  generic_contract_for_uncontracted_codex_session: true
+  request_path_template: "reviewable-runs/subagent-requests/{run_id}-{step_id}.yaml"
+  result_path_template: "reviewable-runs/subagent-results/{run_id}-{step_id}-result.md"
+  integration_decision_path_template: "reviewable-runs/integration-decisions/{run_id}-{step_id}-integration.yaml"
+  step_overrides:
+    run_cold_replacement_review:
+      mode: defer_to_subagent
+      contract: explicit_agent_contract
+      contract_id: essay_iteration.cold_replacement_review.v1
+      gate_critical: true
+      gate: replacement_north_star
+      result_required_for_gate: true
 
 outputs:
   - id: packet_manifest
@@ -180,6 +199,12 @@ outputs:
     required: true
     format: markdown
     producer: packet_initializer
+    gated_by: essay_prewrite
+  - id: plot_contract
+    path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-plot-contract-r{revision}.yaml"
+    required: false
+    format: yaml
+    producer: harden_blueprint
     gated_by: essay_prewrite
   - id: candidate_draft
     path_template: "{live_draft_dir}/iterations/r{revision}/{live_draft_stem}-candidate-r{revision}.md"
@@ -213,6 +238,54 @@ outputs:
     format: markdown
     producer: packet_initializer
     gated_by: replacement_north_star
+  - id: cold_replacement_review_agent_request
+    path_template: "reviewable-runs/subagent-requests/{run_id}-run-cold-replacement-review.yaml"
+    required: conditional
+    required_when: run_cold_replacement_review executes under an agent_contract-aware runtime
+    format: yaml
+    producer: content-agent
+    gated_by: replacement_north_star
+  - id: cold_replacement_review_agent_result
+    path_template: "reviewable-runs/subagent-results/{run_id}-run-cold-replacement-review-result.md"
+    required: conditional
+    required_when: cold_replacement_review_agent_request exists
+    format: markdown
+    producer: subagent
+    gated_by: replacement_north_star
+  - id: cold_replacement_review_integration_decision
+    path_template: "reviewable-runs/integration-decisions/{run_id}-run-cold-replacement-review-integration.yaml"
+    required: conditional
+    required_when: cold_replacement_review_agent_result exists
+    format: yaml
+    producer: parent_codex
+    gated_by: replacement_north_star
+
+plot_contract:
+  contract_id: essay_iteration.plot_contract.v1
+  purpose: Carry the article's public-facing object from prewrite into candidate drafting and cold replacement review without requiring topic_discovery changes in this patch.
+  artifact: plot_contract
+  source_surfaces:
+    required:
+      - governing_brief
+      - hardened_blueprint
+      - prewrite_gate
+    optional:
+      - review_artifacts
+      - evidence_surface
+      - topic_discovery_handoff when present in reviewable-runs/logs/
+  required_content:
+    - public_object
+    - thesis
+    - forbidden_frames
+    - evidence_anchors
+    - stop_conditions
+  carry_forward_consumers:
+    - write_bounded_candidate
+    - run_cold_replacement_review
+  drift_controls:
+    evidence_anchor_drift: fail_replacement_review
+    public_object_loss: fail_replacement_review
+    forbidden_frame_reintroduction: fail_replacement_review
 
 behavior:
   preconditions:
@@ -271,7 +344,7 @@ behavior:
     max_steps: 8
     max_script_retries: 1
     max_candidate_drafts_per_revision: 1
-    max_packet_files_per_revision: 8
+    max_packet_files_per_revision: 9
     external_mutations: 0
     unapproved_promotions: 0
     unapproved_lifecycle_movements: 0
@@ -372,6 +445,7 @@ gates:
     artifacts:
       - packet_manifest
       - hardened_blueprint
+      - plot_contract
       - prewrite_gate
     decisions:
       - approve
@@ -386,10 +460,17 @@ gates:
     artifacts:
       - packet_manifest
       - candidate_draft
+      - plot_contract
       - replacement_review
       - atlas_scorecard
       - promotion_decision
+      - cold_replacement_review_agent_request
+      - cold_replacement_review_agent_result
+      - cold_replacement_review_integration_decision
       - ceiling_report when stop gate fires
+    blocked_until:
+      - cold_replacement_review_agent_result verdict is pass
+      - cold_replacement_review_integration_decision accepts the result
     decisions:
       - approve
       - reject
@@ -420,6 +501,10 @@ trace:
     - allowed_path_decisions
     - output_paths
     - validation_results
+    - agent_contract_ids
+    - agent_contract_artifact_paths
+    - agent_contract_source_hashes
+    - integration_decision_paths
     - enforcement_outcomes
     - gate_ids
     - gate_artifact_paths
@@ -499,6 +584,7 @@ steps:
       - publication_voice_guide
     produces:
       - hardened_blueprint
+      - plot_contract
     validation:
       hooks:
         - prewrite_packet_check
@@ -512,6 +598,7 @@ steps:
     consumes:
       - packet_manifest
       - hardened_blueprint
+      - plot_contract
       - governing_brief
       - evidence_surface
       - publication_voice_guide
@@ -535,6 +622,7 @@ steps:
       - prewrite_gate
       - live_draft
       - governing_brief
+      - plot_contract
       - evidence_surface
       - publication_voice_guide
     produces:
@@ -551,17 +639,130 @@ steps:
     title: Run cold replacement review
     mode: codex_session
     action: Compare the candidate against the live draft and north-star bar, then fill review, scorecard, decision, and any required ceiling report.
+    codex_session_handoff:
+      mode: defer_to_subagent
+      contract: explicit_agent_contract
+      contract_id: essay_iteration.cold_replacement_review.v1
+      gate_critical: true
     consumes:
       - packet_manifest
       - live_draft
       - candidate_draft
       - publication_voice_guide
       - governing_brief
+      - plot_contract
     produces:
       - replacement_review
       - atlas_scorecard
       - promotion_decision
       - ceiling_report
+      - cold_replacement_review_agent_request
+      - cold_replacement_review_agent_result
+      - cold_replacement_review_integration_decision
+    agent_contract:
+      contract_id: essay_iteration.cold_replacement_review.v1
+      task_type: critic
+      scope: run_cold_replacement_review only
+      independence:
+        clean_context_required: true
+        fork_context: false
+        inherits_parent_context: false
+        allowed_context:
+          - declared_files_only
+          - no_parent_conversation
+          - no_prior_unlisted_review_opinions
+      request:
+        artifact_id: cold_replacement_review_agent_request
+        path_template: "reviewable-runs/subagent-requests/{run_id}-run-cold-replacement-review.yaml"
+        schema_version: 1
+        required_fields:
+          - kind
+          - schema_version
+          - request_id
+          - workflow_id
+          - step_id
+          - package
+          - run_id
+          - fork_context
+          - source_hashes
+          - allowed_inputs
+          - required_outputs
+      result:
+        artifact_id: cold_replacement_review_agent_result
+        path_template: "reviewable-runs/subagent-results/{run_id}-run-cold-replacement-review-result.md"
+        schema_version: 1
+        verdicts:
+          allowed:
+            - pass
+            - fail
+            - defer
+            - stale
+          required_for_replacement_north_star: pass
+        required_sections:
+          - verdict
+          - source_hashes_checked
+          - line_grounded_findings
+          - scaffold_residue_check
+          - evidence_and_plot_drift_check
+          - unresolved_blockers
+      integration_decision:
+        artifact_id: cold_replacement_review_integration_decision
+        path_template: "reviewable-runs/integration-decisions/{run_id}-run-cold-replacement-review-integration.yaml"
+        schema_version: 1
+        required_for_gate: replacement_north_star
+        allowed_decisions:
+          - accept_pass
+          - accept_fail
+          - reject_stale
+          - reject_out_of_scope
+          - defer_for_revision
+        must_record:
+          - accepted_or_rejected_result_path
+          - result_verdict
+          - source_hash_match
+          - rationale
+      source_hash_expectations:
+        algorithm: sha256
+        require_request_hashes: true
+        require_result_hash_echo: true
+        stale_on_mismatch: true
+        sources:
+          - packet_manifest
+          - live_draft
+          - candidate_draft
+          - governing_brief
+          - plot_contract
+          - publication_voice_guide
+      required_verdict_checks:
+        - compare_candidate_against_live_draft
+        - judge_north_star_replacement_quality
+        - verify_plot_contract_preserved
+        - verify_evidence_anchors_preserved_or_explicitly_replaced
+        - verify_no_scaffold_or_template_residue
+      failure_triggers:
+        - id: scaffold_residue
+          severity: blocking
+          examples:
+            - duplicate terminal sections after references
+            - unfilled template prompts or drafting instructions
+            - placeholder TODO/TK markers in publication body
+        - id: evidence_drift
+          severity: blocking
+          description: Candidate substitutes, drops, or overstates required evidence anchors without explicit reviewable rationale.
+        - id: plot_drift
+          severity: blocking
+          description: Candidate loses the declared public object, thesis, forbidden frames, or stop conditions from the plot_contract.
+        - id: ungrounded_north_star_pass
+          severity: blocking
+          description: Review recommends replacement without line-grounded findings against live draft, candidate, and plot_contract.
+        - id: stale_sources
+          severity: blocking
+          description: Result source hashes do not match the request source hashes.
+      blocks:
+        gate: replacement_north_star
+        until:
+          result_verdict: pass
+          integration_decision: accept_pass
     validation:
       hooks:
         - full_packet_check
@@ -575,9 +776,13 @@ steps:
     consumes:
       - packet_manifest
       - candidate_draft
+      - plot_contract
       - replacement_review
       - atlas_scorecard
       - promotion_decision
+      - cold_replacement_review_agent_request
+      - cold_replacement_review_agent_result
+      - cold_replacement_review_integration_decision
       - ceiling_report
     produces:
       - replacement_north_star_gate

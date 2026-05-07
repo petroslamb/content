@@ -1,0 +1,32 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-3-codex-session-handoff:validation
+created_at: '2026-05-07T14:10:00Z'
+created_by: organizer
+phase: phase-3-codex-session-handoff
+task_type: independent_validation_plan
+fork_context: false
+owned_write_paths:
+  - reviewable-runs/subagent-results/phase-3-codex-session-handoff-validation-result.md
+must_not_write:
+  - scripts/
+  - workflows/
+  - tests/
+  - harness_policy.yaml
+objective: >
+  Independently review the proposed architecture and produce a concise validation
+  matrix for expanding from one explicit agent_contract to generic codex_session
+  handoffs. This is a critique/planning task only.
+requirements:
+  - Read AGENTS.md, AUTHORITY.md, gate_contracts.yaml, harness_policy.yaml, workflows/essay-iteration/workflow.yaml, and the Phase 2 subagent result files.
+  - Count gates, codex_session steps, and explicit agent_contract handoffs.
+  - Identify the minimum deterministic verification cases before using generic handoff broadly.
+  - Identify which handoff types are safe as generic execution and which require explicit gate-critical contracts.
+  - Do not edit implementation files.
+expected_result:
+  path: reviewable-runs/subagent-results/phase-3-codex-session-handoff-validation-result.md
+  must_include:
+    - counts
+    - validation matrix
+    - expansion risks
+    - recommended next gate-critical contract after cold replacement review

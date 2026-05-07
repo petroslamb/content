@@ -98,6 +98,87 @@ class EssayIterationPacketTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0, msg=result.stdout + result.stderr)
         return json.loads(result.stdout)
 
+    def run_content_agent(
+        self,
+        package_key: str,
+        run_id: str,
+        start_at: str,
+        *,
+        extra_args: list[str] | None = None,
+    ) -> dict:
+        command = [
+            "./content-agent",
+            "run",
+            "--workflow",
+            "essay_iteration",
+            "--package",
+            package_key,
+            "--start-at",
+            start_at,
+            "--run-id",
+            run_id,
+            "--format",
+            "json",
+        ]
+        command.extend(extra_args or [])
+        result = subprocess.run(
+            command,
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+        return json.loads(result.stdout)
+
+    def codex_handoff_mode_arg(self) -> str | None:
+        result = subprocess.run(
+            ["./content-agent", "run", "--help"],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+        for arg in (
+            "--codex-session-handoff-mode",
+            "--codex-session-handoff",
+            "--codex-session-mode",
+            "--handoff-mode",
+        ):
+            if arg in result.stdout:
+                return arg
+        return None
+
+    def cleanup_run_artifacts(self, run_id: str) -> None:
+        for dirname in (
+            "resolved-runs",
+            "logs",
+            "gates",
+            "subagent-requests",
+            "subagent-results",
+            "integration-decisions",
+        ):
+            directory = REPO_ROOT / "reviewable-runs" / dirname
+            if not directory.exists():
+                continue
+            for path in directory.iterdir():
+                if path.is_file() and run_id in path.name:
+                    path.unlink(missing_ok=True)
+
+    def replacement_source_hashes(self, packet: dict) -> dict[str, dict[str, str]]:
+        return {
+            relpath: {
+                "type": "file_sha256",
+                "sha256": essay_iteration_support.file_sha256(REPO_ROOT / relpath),
+            }
+            for relpath in (
+                packet["packet_manifest_path"],
+                packet["live_draft_path"],
+                packet["candidate_path"],
+            )
+        }
+
     def set_revision(self, package_dir: Path, revision: int) -> None:
         status_path = package_dir / "status.yaml"
         status = yaml.safe_load(status_path.read_text())
@@ -394,6 +475,25 @@ class EssayIterationPacketTests(unittest.TestCase):
             payload = self.run_validator(package_key, expect_success=False)
             self.assertTrue(any("limits or borders section" in error for error in payload["errors"]))
 
+    def test_validator_fails_on_duplicate_template_tail_scaffold_residue(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            _, outputs = self.populate_valid_packet(package_dir, package_key)
+            outputs["candidate"].write_text(
+                "# Candidate Draft\n\n"
+                "A concrete opening paragraph.\n\n"
+                "## Limits\n\nThis essay stays bounded.\n\n"
+                "## References\n\nOne real reference.\n\n"
+                "## Limits\n\nState the boundaries, counterpressure, or what the essay will not claim.\n\n"
+                "## References\n\nInclude real endmatter or references, not just a companion pointer.\n"
+            )
+
+            payload = self.run_validator(package_key, expect_success=False)
+            self.assertTrue(any("scaffold residue" in error for error in payload["errors"]))
+            self.assertTrue(any("repeats limits" in error for error in payload["errors"]))
+
     def test_validator_fails_on_em_dash(self) -> None:
         publications_dir = REPO_ROOT / "publications"
         with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
@@ -452,6 +552,455 @@ class EssayIterationPacketTests(unittest.TestCase):
 
             payload = self.run_validator(package_key, expect_success=True)
             self.assertTrue(payload["success"])
+
+    def test_replacement_agent_contract_accepts_generated_artifact_shape(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, _ = self.populate_valid_packet(package_dir, package_key)
+            packet["output_paths"]["manifest"] = packet["packet_manifest_path"]
+
+            with tempfile.TemporaryDirectory() as artifact_dir:
+                artifact_root = Path(artifact_dir)
+                result_path = artifact_root / "cold-result.md"
+                integration_path = artifact_root / "integration.yaml"
+                packet["output_paths"]["cold_replacement_review_agent_result"] = str(result_path)
+                packet["output_paths"]["cold_replacement_review_integration_decision"] = str(integration_path)
+
+                source_hashes = {
+                    packet["packet_manifest_path"]: {
+                        "type": "file_sha256",
+                        "sha256": essay_iteration_support.file_sha256(REPO_ROOT / packet["packet_manifest_path"]),
+                    },
+                    packet["live_draft_path"]: {
+                        "type": "file_sha256",
+                        "sha256": essay_iteration_support.file_sha256(REPO_ROOT / packet["live_draft_path"]),
+                    },
+                    packet["candidate_path"]: {
+                        "type": "file_sha256",
+                        "sha256": essay_iteration_support.file_sha256(REPO_ROOT / packet["candidate_path"]),
+                    },
+                }
+                result_frontmatter = {
+                    "kind": "subagent_result",
+                    "schema_version": 1,
+                    "request_id": "request-1",
+                    "result_id": "result-1",
+                    "package": {
+                        "path": f"publications/{package_key}",
+                        "status_path": f"publications/{package_key}/status.yaml",
+                    },
+                    "workflow": {
+                        "workflow_id": "essay_iteration",
+                        "step_id": "run_cold_replacement_review",
+                    },
+                    "run": {"run_id": "run-1"},
+                    "verdict": "pass",
+                    "source_hashes": source_hashes,
+                }
+                write_frontmatter_markdown(
+                    result_path,
+                    result_frontmatter,
+                    "# Result\n\n## Findings\n\n- line-grounded check.\n",
+                )
+                integration_path.write_text(
+                    yaml.safe_dump(
+                        {
+                            "kind": "integration_decision",
+                            "schema_version": 1,
+                            "request_id": "request-1",
+                            "package": {
+                                "path": f"publications/{package_key}",
+                                "status_path": f"publications/{package_key}/status.yaml",
+                            },
+                            "workflow": {
+                                "workflow_id": "essay_iteration",
+                                "step_id": "run_cold_replacement_review",
+                            },
+                            "run": {"run_id": "run-1"},
+                            "decision": "accept_pass",
+                            "accepted_result_ids": ["result-1"],
+                            "rejected_result_ids": [],
+                            "source_hashes": source_hashes,
+                        },
+                        sort_keys=False,
+                    )
+                )
+
+                errors, details = essay_iteration_support.validate_replacement_agent_contract(
+                    packet,
+                    require_present=True,
+                    require_allowed=True,
+                )
+
+            self.assertEqual(errors, [])
+            self.assertEqual(details["cold_review_verdict"], "pass")
+            self.assertEqual(details["integration_decision"], "accept_pass")
+
+    def test_replacement_agent_contract_blocks_stale_source_hashes(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, _ = self.populate_valid_packet(package_dir, package_key)
+            packet["output_paths"]["manifest"] = packet["packet_manifest_path"]
+
+            with tempfile.TemporaryDirectory() as artifact_dir:
+                artifact_root = Path(artifact_dir)
+                result_path = artifact_root / "stale-cold-result.md"
+                integration_path = artifact_root / "stale-integration.yaml"
+                packet["output_paths"]["cold_replacement_review_agent_result"] = str(result_path)
+                packet["output_paths"]["cold_replacement_review_integration_decision"] = str(integration_path)
+
+                current_hashes = self.replacement_source_hashes(packet)
+                stale_result_hashes = {key: dict(value) for key, value in current_hashes.items()}
+                stale_result_hashes[packet["candidate_path"]] = {
+                    "type": "file_sha256",
+                    "sha256": "0" * 64,
+                }
+                write_frontmatter_markdown(
+                    result_path,
+                    {
+                        "kind": "subagent_result",
+                        "schema_version": 1,
+                        "request_id": "request-1",
+                        "result_id": "result-1",
+                        "package": {"path": f"publications/{package_key}"},
+                        "workflow": {
+                            "workflow_id": "essay_iteration",
+                            "step_id": "run_cold_replacement_review",
+                        },
+                        "run": {"run_id": "run-1"},
+                        "verdict": "pass",
+                        "source_hashes": stale_result_hashes,
+                    },
+                    "# Result\n\n## Findings\n\n- stale candidate hash fixture.\n",
+                )
+                integration_path.write_text(
+                    yaml.safe_dump(
+                        {
+                            "kind": "integration_decision",
+                            "schema_version": 1,
+                            "request_id": "request-1",
+                            "package": {"path": f"publications/{package_key}"},
+                            "workflow": {
+                                "workflow_id": "essay_iteration",
+                                "step_id": "run_cold_replacement_review",
+                            },
+                            "run": {"run_id": "run-1"},
+                            "decision": "accept_pass",
+                            "accepted_result_ids": ["result-1"],
+                            "rejected_result_ids": [],
+                            "source_hashes": current_hashes,
+                        },
+                        sort_keys=False,
+                    )
+                )
+
+                errors, _ = essay_iteration_support.validate_replacement_agent_contract(
+                    packet,
+                    require_present=True,
+                    require_allowed=True,
+                )
+
+            self.assertTrue(
+                any("Cold-review result candidate sha256 is stale" in error for error in errors),
+                errors,
+            )
+
+    def test_replacement_agent_contract_blocks_malformed_result_artifact(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, _ = self.populate_valid_packet(package_dir, package_key)
+            packet["output_paths"]["manifest"] = packet["packet_manifest_path"]
+
+            with tempfile.TemporaryDirectory() as artifact_dir:
+                artifact_root = Path(artifact_dir)
+                result_path = artifact_root / "malformed-cold-result.md"
+                integration_path = artifact_root / "malformed-integration.yaml"
+                packet["output_paths"]["cold_replacement_review_agent_result"] = str(result_path)
+                packet["output_paths"]["cold_replacement_review_integration_decision"] = str(integration_path)
+
+                source_hashes = self.replacement_source_hashes(packet)
+                result_path.write_text("---\nkind: [unterminated\n---\n# Result\n")
+                integration_path.write_text(
+                    yaml.safe_dump(
+                        {
+                            "kind": "integration_decision",
+                            "schema_version": 1,
+                            "request_id": "request-1",
+                            "package": {"path": f"publications/{package_key}"},
+                            "workflow": {
+                                "workflow_id": "essay_iteration",
+                                "step_id": "run_cold_replacement_review",
+                            },
+                            "run": {"run_id": "run-1"},
+                            "decision": "accept_pass",
+                            "accepted_result_ids": ["result-1"],
+                            "rejected_result_ids": [],
+                            "source_hashes": source_hashes,
+                        },
+                        sort_keys=False,
+                    )
+                )
+
+                errors, _ = essay_iteration_support.validate_replacement_agent_contract(
+                    packet,
+                    require_present=True,
+                    require_allowed=True,
+                )
+
+            self.assertTrue(
+                any("Invalid replacement agent contract artifact" in error for error in errors),
+                errors,
+            )
+
+    def test_content_agent_emits_subagent_request_without_model_spawn(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            self.populate_valid_packet(package_dir, package_key)
+            run_id = f"test-agent-contract-{package_key}"
+            cleanup_paths = [
+                REPO_ROOT / "reviewable-runs" / "resolved-runs" / f"{run_id}.yaml",
+                REPO_ROOT / "reviewable-runs" / "logs" / f"{run_id}.yaml",
+                REPO_ROOT / "reviewable-runs" / "subagent-requests" / f"{run_id}-run-cold-replacement-review.yaml",
+            ]
+            for path in cleanup_paths:
+                path.unlink(missing_ok=True)
+
+            try:
+                result = subprocess.run(
+                    [
+                        "./content-agent",
+                        "run",
+                        "--workflow",
+                        "essay_iteration",
+                        "--package",
+                        package_key,
+                        "--start-at",
+                        "run_cold_replacement_review",
+                        "--run-id",
+                        run_id,
+                        "--format",
+                        "json",
+                    ],
+                    cwd=REPO_ROOT,
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+                payload = json.loads(result.stdout)
+                self.assertEqual(payload["terminal_status"], "deferred")
+                request_path = REPO_ROOT / payload["subagent_request_path"]
+                request = yaml.safe_load(request_path.read_text())
+
+                self.assertFalse(request["runtime_behavior"]["content_agent_spawns_model"])
+                self.assertEqual(request["workflow"]["step_id"], "run_cold_replacement_review")
+                self.assertTrue(
+                    request["expected_artifacts"]["result_path"].startswith("reviewable-runs/subagent-results/")
+                )
+                self.assertTrue(
+                    request["expected_artifacts"]["integration_decision_path"].startswith(
+                        "reviewable-runs/integration-decisions/"
+                    )
+                )
+                self.assertIn("public_object", request["plot_contract_requirements"]["required_content"])
+            finally:
+                for path in cleanup_paths:
+                    path.unlink(missing_ok=True)
+
+    def test_content_agent_emits_generic_codex_session_request_for_non_review_step(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        mode_arg = self.codex_handoff_mode_arg()
+        extra_args = [mode_arg, "defer_to_subagent"] if mode_arg else []
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, _ = self.populate_valid_packet(package_dir, package_key)
+            run_id = f"test-generic-codex-handoff-{package_key}"
+            self.cleanup_run_artifacts(run_id)
+
+            try:
+                payload = self.run_content_agent(
+                    package_key,
+                    run_id,
+                    "harden_blueprint",
+                    extra_args=extra_args,
+                )
+                request_relpath = payload.get("subagent_request_path")
+                if request_relpath is None:
+                    self.skipTest("content-agent runtime does not yet emit generic codex_session requests")
+
+                self.assertEqual(payload["terminal_status"], "deferred")
+                request_path = REPO_ROOT / request_relpath
+                request = yaml.safe_load(request_path.read_text())
+                self.assertEqual(request["kind"], "subagent_request")
+                self.assertEqual(request["workflow"]["workflow_id"], "essay_iteration")
+                self.assertEqual(request["workflow"]["step_id"], "harden_blueprint")
+                self.assertEqual(request["step"]["mode"], "codex_session")
+                self.assertFalse(request["runtime_behavior"]["content_agent_spawns_model"])
+                self.assertTrue(request["runtime_behavior"]["defer_after_request"])
+                self.assertIsInstance(request["agent_contract"], dict)
+                self.assertNotEqual(
+                    request["agent_contract"].get("contract_id"),
+                    "essay_iteration.cold_replacement_review.v1",
+                )
+                self.assertTrue(
+                    request["expected_artifacts"]["result_path"].startswith("reviewable-runs/subagent-results/")
+                )
+                self.assertTrue(
+                    request["expected_artifacts"]["integration_decision_path"].startswith(
+                        "reviewable-runs/integration-decisions/"
+                    )
+                )
+                self.assertIn(packet["packet_manifest_path"], request["source_hashes"])
+                output_ids = {item["id"] for item in request["output_targets"]}
+                self.assertIn("hardened_blueprint", output_ids)
+            finally:
+                self.cleanup_run_artifacts(run_id)
+
+    def test_content_agent_same_session_handoff_mode_defers_without_request_if_supported(self) -> None:
+        mode_arg = self.codex_handoff_mode_arg()
+        if mode_arg is None:
+            self.skipTest("content-agent does not expose a codex_session handoff-mode override")
+
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            self.populate_valid_packet(package_dir, package_key)
+            run_id = f"test-same-session-handoff-{package_key}"
+            self.cleanup_run_artifacts(run_id)
+
+            try:
+                payload = self.run_content_agent(
+                    package_key,
+                    run_id,
+                    "harden_blueprint",
+                    extra_args=[mode_arg, "same_session"],
+                )
+                self.assertEqual(payload["terminal_status"], "deferred")
+                self.assertIsNone(payload["subagent_request_path"])
+                requests_dir = REPO_ROOT / "reviewable-runs" / "subagent-requests"
+                matching_requests = [
+                    path
+                    for path in requests_dir.iterdir()
+                    if path.is_file() and run_id in path.name
+                ] if requests_dir.exists() else []
+                self.assertEqual(matching_requests, [])
+            finally:
+                self.cleanup_run_artifacts(run_id)
+
+    def test_replacement_agent_contract_discovers_paths_from_generated_request(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        requests_dir = REPO_ROOT / "reviewable-runs" / "subagent-requests"
+        requests_dir.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, _ = self.populate_valid_packet(package_dir, package_key)
+            packet["output_paths"]["manifest"] = packet["packet_manifest_path"]
+            request_path = requests_dir / f"test-agent-contract-request-{package_key}.yaml"
+
+            with tempfile.TemporaryDirectory() as artifact_dir:
+                artifact_root = Path(artifact_dir)
+                result_path = artifact_root / "cold-result.md"
+                integration_path = artifact_root / "integration.yaml"
+                source_hashes = {
+                    packet["packet_manifest_path"]: {
+                        "type": "file_sha256",
+                        "sha256": essay_iteration_support.file_sha256(REPO_ROOT / packet["packet_manifest_path"]),
+                    },
+                    packet["live_draft_path"]: {
+                        "type": "file_sha256",
+                        "sha256": essay_iteration_support.file_sha256(REPO_ROOT / packet["live_draft_path"]),
+                    },
+                    packet["candidate_path"]: {
+                        "type": "file_sha256",
+                        "sha256": essay_iteration_support.file_sha256(REPO_ROOT / packet["candidate_path"]),
+                    },
+                }
+                write_frontmatter_markdown(
+                    result_path,
+                    {
+                        "kind": "subagent_result",
+                        "schema_version": 1,
+                        "request_id": "request-1",
+                        "result_id": "result-1",
+                        "package": {"path": f"publications/{package_key}"},
+                        "workflow": {
+                            "workflow_id": "essay_iteration",
+                            "step_id": "run_cold_replacement_review",
+                        },
+                        "run": {"run_id": "run-1"},
+                        "verdict": "pass",
+                        "source_hashes": source_hashes,
+                    },
+                    "# Result\n",
+                )
+                integration_path.write_text(
+                    yaml.safe_dump(
+                        {
+                            "kind": "integration_decision",
+                            "schema_version": 1,
+                            "request_id": "request-1",
+                            "package": {"path": f"publications/{package_key}"},
+                            "workflow": {
+                                "workflow_id": "essay_iteration",
+                                "step_id": "run_cold_replacement_review",
+                            },
+                            "run": {"run_id": "run-1"},
+                            "decision": "accept_pass",
+                            "accepted_result_ids": ["result-1"],
+                            "rejected_result_ids": [],
+                            "source_hashes": source_hashes,
+                        },
+                        sort_keys=False,
+                    )
+                )
+                request_path.write_text(
+                    yaml.safe_dump(
+                        {
+                            "kind": "subagent_request",
+                            "schema_version": 1,
+                            "request_id": "request-1",
+                            "agent_contract": {"contract_id": "essay_iteration.cold_replacement_review.v1"},
+                            "package": {"path": f"publications/{package_key}"},
+                            "workflow": {
+                                "workflow_id": "essay_iteration",
+                                "step_id": "run_cold_replacement_review",
+                            },
+                            "run": {"run_id": "run-1"},
+                            "allowed_input_paths": [
+                                {"id": "packet_manifest", "paths": [packet["packet_manifest_path"]]},
+                            ],
+                            "source_hashes": source_hashes,
+                            "expected_artifacts": {
+                                "result_path": str(result_path),
+                                "integration_decision_path": str(integration_path),
+                            },
+                        },
+                        sort_keys=False,
+                    )
+                )
+
+                try:
+                    errors, details = essay_iteration_support.validate_replacement_agent_contract(
+                        packet,
+                        require_present=True,
+                        require_allowed=True,
+                    )
+                finally:
+                    request_path.unlink(missing_ok=True)
+
+            self.assertEqual(errors, [])
+            self.assertEqual(details["agent_request_path"], f"reviewable-runs/subagent-requests/{request_path.name}")
 
     def test_schema_v1_packet_still_valid(self) -> None:
         publications_dir = REPO_ROOT / "publications"

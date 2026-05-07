@@ -26,6 +26,7 @@ from essay_iteration_support import (
     PREWRITE_BODY_HEADINGS,
     PREWRITE_FRONTMATTER_FIELDS,
     build_packet_paths,
+    candidate_text_has_scaffold_residue,
     candidate_text_looks_scaffold,
     describe_packet_paths,
     packet_schema_version,
@@ -38,6 +39,7 @@ from essay_iteration_support import (
     resolve_parent_package_path,
     resolve_parent_package_readme,
     resolve_review_artifact_paths,
+    validate_replacement_agent_contract,
 )
 from lifecycle import (
     PUBLICATIONS_DIR,
@@ -1352,7 +1354,16 @@ def resolve_essay_iteration_progress(package_key: str, package_path: Path, statu
         }
 
     candidate_path = (REPO_ROOT / candidate_relpath).resolve()
-    if not candidate_path.exists() or candidate_text_looks_scaffold(candidate_path.read_text()):
+    if not candidate_path.exists():
+        return {
+            **defaults,
+            "packet_phase": "draft_candidate",
+            "next_packet_action": "write_bounded_candidate",
+            "recommended_validator": validator_full,
+        }
+
+    candidate_text = candidate_path.read_text()
+    if candidate_text_looks_scaffold(candidate_text) or candidate_text_has_scaffold_residue(candidate_text):
         return {
             **defaults,
             "packet_phase": "draft_candidate",
@@ -1676,8 +1687,31 @@ def evaluate_replacement_north_star_gate(package_key: str, package_path: Path, s
         "packet_manifest_path": repo_relpath(manifest_path),
     }
 
+    contract_errors, contract_details = validate_replacement_agent_contract(
+        packet,
+        require_present=True,
+        require_allowed=True,
+    )
+    payload["details"]["agent_contract"] = contract_details
+    from check_essay_iteration_packet import validate_packet
+
+    packet_validation_errors = validate_packet(packet, phase="full")
+    if packet_validation_errors:
+        payload["details"]["packet_validation_errors"] = packet_validation_errors
+
     if north_star_verdict in {None, "", "pending"}:
         payload["decision"] = "pending_review"
+        return payload
+
+    if contract_errors or packet_validation_errors:
+        payload["decision"] = "replacement_gate_validation_blocked"
+        payload["missing_artifacts"] = [
+            error
+            for error in contract_errors
+            if error.startswith("Missing independent") or error.startswith("Missing integration")
+        ]
+        if contract_errors:
+            payload["details"]["agent_contract_errors"] = contract_errors
         return payload
 
     if north_star_verdict not in {"below_north_star"}:

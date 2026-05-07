@@ -1,0 +1,238 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-3-generic-codex-session-smoke:harden_blueprint:essay_iteration.harden_blueprint.generic_codex_session.v1
+created_at: '2026-05-07T14:32:14Z'
+created_by: content-agent run
+agent_contract:
+  contract_id: essay_iteration.harden_blueprint.generic_codex_session.v1
+  contract_kind: generic_codex_session
+  generated_by: content-agent
+  generated_from:
+    workflow_id: essay_iteration
+    step_id: harden_blueprint
+    fields:
+    - workflow_id
+    - step_id
+    - consumes
+    - produces
+    - output_targets
+  task_type: codex_session
+  scope: essay_iteration.harden_blueprint
+  consumes:
+  - packet_manifest
+  - governing_brief
+  - evidence_surface
+  - review_artifacts
+  - publication_voice_guide
+  produces:
+  - hardened_blueprint
+  - plot_contract
+  output_targets:
+  - id: hardened_blueprint
+    path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-blueprint-r1.md
+  - id: plot_contract
+    path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-plot-contract-r1.yaml
+  request:
+    artifact_id: subagent_request:harden_blueprint
+    path: reviewable-runs/subagent-requests/request-phase-3-generic-codex-session-smoke-harden-blueprint.yaml
+    schema_version: 1
+    required: true
+  result:
+    artifact_id: subagent_result:harden_blueprint
+    path: reviewable-runs/subagent-results/result-phase-3-generic-codex-session-smoke-harden-blueprint.md
+    schema_version: 1
+    required: true
+    verdicts:
+      allowed:
+      - defer
+      - fail
+      - pass
+      - stale
+  integration_decision:
+    artifact_id: integration_decision:harden_blueprint
+    path: reviewable-runs/integration-decisions/decision-phase-3-generic-codex-session-smoke-harden-blueprint.yaml
+    schema_version: 1
+    required: true
+    allowed_decisions:
+    - accept
+    - defer
+    - reject
+  success_criteria:
+  - Use only declared inputs and admitted context paths.
+  - Produce or update only the declared workflow output targets for this step.
+  - Record source-hash awareness in the result artifact.
+  failure_triggers:
+  - required input is missing or stale
+  - requested work exceeds the workflow step action
+  - required output target cannot be produced
+  - source hashes cannot be reconciled
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:7ca33939edba1b5e7c696517d7a9e5165353b3d1f473057999362c68664ad53c
+  contract_path: workflows/essay-iteration/workflow.yaml
+  step_id: harden_blueprint
+run:
+  run_id: phase-3-generic-codex-session-smoke
+  run_mode: governed_continuous
+  resolved_run_path: reviewable-runs/resolved-runs/phase-3-generic-codex-session-smoke.yaml
+  run_record_path: reviewable-runs/logs/phase-3-generic-codex-session-smoke.yaml
+  runtime_inputs: {}
+step:
+  id: harden_blueprint
+  title: Harden governing blueprint
+  mode: codex_session
+  action: Fill or revise the packet blueprint so it can govern a bounded rewrite.
+  consumes:
+  - packet_manifest
+  - governing_brief
+  - evidence_surface
+  - review_artifacts
+  - publication_voice_guide
+  produces:
+  - hardened_blueprint
+  - plot_contract
+allowed_input_paths:
+- id: packet_manifest
+  source: output_target
+  paths:
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json
+  hashes:
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json: &id001
+      type: file_sha256
+      sha256: 2445cb36e250faa07a2d8e5e04f95a50b9cc4fd29691a0ef72b28fc3aeb5275f
+      size_bytes: 7928
+- id: governing_brief
+  source: context_admission
+  paths:
+  - publications/proof-runs-as-source-surface/blueprint.md
+  hashes:
+    publications/proof-runs-as-source-surface/blueprint.md: &id002
+      type: file_sha256
+      sha256: 443bb4e3289b77c03ede6b67214d4d09f5ce49c93ad3e7daecfa98d14802640b
+      size_bytes: 3582
+- id: evidence_surface
+  source: context_admission
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md: &id003
+      type: file_sha256
+      sha256: 437a07adbe3f85bb7e87013724057fa50575c93bc3b654fc3f55893e7c4337b8
+      size_bytes: 3355
+- id: review_artifacts
+  source: context_admission
+  paths:
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md
+  hashes:
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md: &id004
+      type: file_sha256
+      sha256: 487b3e2f7e6710d0366ffe3d084eb51bc0a3c35392bdf9bf7effab7189341ecc
+      size_bytes: 3459
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md: &id005
+      type: file_sha256
+      sha256: 070b329f8c21b32aa3b23ef38ad1c51b4c847ef2347593bf27d5838671e6018b
+      size_bytes: 3284
+- id: publication_voice_guide
+  source: context_admission
+  paths:
+  - voice_consistency_guide.md
+  hashes:
+    voice_consistency_guide.md: &id006
+      type: file_sha256
+      sha256: cab35c04f3e6c880442ca26f886e447a534b84a45c2019d6faad58ff2c19507a
+      size_bytes: 4888
+output_targets:
+- id: hardened_blueprint
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-blueprint-r1.md
+- id: plot_contract
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-plot-contract-r1.yaml
+source_hashes:
+  publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json: *id001
+  publications/proof-runs-as-source-surface/blueprint.md: *id002
+  publications/proof-runs-as-source-surface/papers/index.md: *id003
+  publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md: *id004
+  publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md: *id005
+  voice_consistency_guide.md: *id006
+success_criteria:
+- Use only declared inputs and admitted context paths.
+- Produce or update only the declared workflow output targets for this step.
+- Record source-hash awareness in the result artifact.
+failure_triggers:
+- required input is missing or stale
+- requested work exceeds the workflow step action
+- required output target cannot be produced
+- source hashes cannot be reconciled
+plot_contract_requirements:
+  contract_id: essay_iteration.plot_contract.v1
+  purpose: Carry the article's public-facing object from prewrite into candidate drafting
+    and cold replacement review without requiring topic_discovery changes in this
+    patch.
+  artifact: plot_contract
+  source_surfaces:
+    required:
+    - governing_brief
+    - hardened_blueprint
+    - prewrite_gate
+    optional:
+    - review_artifacts
+    - evidence_surface
+    - topic_discovery_handoff when present in reviewable-runs/logs/
+  required_content:
+  - public_object
+  - thesis
+  - forbidden_frames
+  - evidence_anchors
+  - stop_conditions
+  carry_forward_consumers:
+  - write_bounded_candidate
+  - run_cold_replacement_review
+  drift_controls:
+    evidence_anchor_drift: fail_replacement_review
+    public_object_loss: fail_replacement_review
+    forbidden_frame_reintroduction: fail_replacement_review
+expected_artifacts:
+  request_path: reviewable-runs/subagent-requests/request-phase-3-generic-codex-session-smoke-harden-blueprint.yaml
+  result_path: reviewable-runs/subagent-results/result-phase-3-generic-codex-session-smoke-harden-blueprint.md
+  integration_decision_path: reviewable-runs/integration-decisions/decision-phase-3-generic-codex-session-smoke-harden-blueprint.yaml
+result_requirements:
+  kind: subagent_result
+  schema_version: 1
+  path: reviewable-runs/subagent-results/result-phase-3-generic-codex-session-smoke-harden-blueprint.md
+  verdict_enum:
+  - defer
+  - fail
+  - pass
+  - stale
+  required_fields:
+  - kind
+  - schema_version
+  - request_id
+  - package
+  - workflow
+  - run
+  - verdict
+  - source_hashes
+  - findings
+  line_grounded_findings_required: true
+integration_requirements:
+  kind: integration_decision
+  schema_version: 1
+  path: reviewable-runs/integration-decisions/decision-phase-3-generic-codex-session-smoke-harden-blueprint.yaml
+  allowed_decisions:
+  - accept
+  - defer
+  - reject
+  accepted_rejected_result_ids_required: true
+runtime_behavior:
+  content_agent_spawns_model: false
+  defer_after_request: true
+handoff:
+  mode: defer_to_subagent
+  contract_source: generic_codex_session_synthesized
+  same_session_compatible: false

@@ -1,0 +1,48 @@
+kind: integration_decision
+schema_version: 1
+request_id: phase-2-proof-lost-plot-cold-review-test:run_cold_replacement_review:essay_iteration.cold_replacement_review.v1
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:d51a4eb297cd16fe584c470178113bdae3145b8b1324ee3e5c6815dd4d9b0ca5
+  contract_path: workflows/essay-iteration/workflow.yaml
+  step_id: run_cold_replacement_review
+run:
+  run_id: phase-2-proof-lost-plot-cold-review-test
+  run_mode: governed_continuous
+  resolved_run_path: reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml
+  run_record_path: reviewable-runs/logs/phase-2-proof-lost-plot-cold-review-test.yaml
+  runtime_inputs: {}
+decision: accept_fail
+accepted_result_ids:
+  - phase-2-proof-lost-plot-cold-review-test:run_cold_replacement_review:essay_iteration.cold_replacement_review.v1
+rejected_result_ids: []
+result_path: reviewable-runs/subagent-results/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-result.md
+rationale: >
+  Accept the independent cold-review result as the correct negative review outcome;
+  it blocks replacement_north_star because the result verdict is fail.
+source_hashes:
+  publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json:
+    type: file_sha256
+    sha256: 2445cb36e250faa07a2d8e5e04f95a50b9cc4fd29691a0ef72b28fc3aeb5275f
+    size_bytes: 7928
+  publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md:
+    type: file_sha256
+    sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+    size_bytes: 459
+  publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md:
+    type: file_sha256
+    sha256: d0c58cc52ecd65d26e7f12ef91045d6d201b6a8463dbb2db604e72cd1ece372a
+    size_bytes: 13677
+  voice_consistency_guide.md:
+    type: file_sha256
+    sha256: cab35c04f3e6c880442ca26f886e447a534b84a45c2019d6faad58ff2c19507a
+    size_bytes: 4888
+  publications/proof-runs-as-source-surface/blueprint.md:
+    type: file_sha256
+    sha256: 443bb4e3289b77c03ede6b67214d4d09f5ce49c93ad3e7daecfa98d14802640b
+    size_bytes: 3582

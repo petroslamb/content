@@ -1,0 +1,295 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-2-proof-lost-plot-cold-review-test:run_cold_replacement_review:essay_iteration.cold_replacement_review.v1
+created_at: '2026-05-07T13:52:33Z'
+created_by: content-agent run
+agent_contract:
+  contract_id: essay_iteration.cold_replacement_review.v1
+  task_type: critic
+  scope: run_cold_replacement_review only
+  independence:
+    clean_context_required: true
+    fork_context: false
+    inherits_parent_context: false
+    allowed_context:
+    - declared_files_only
+    - no_parent_conversation
+    - no_prior_unlisted_review_opinions
+  request:
+    artifact_id: cold_replacement_review_agent_request
+    path_template: reviewable-runs/subagent-requests/{run_id}-run-cold-replacement-review.yaml
+    schema_version: 1
+    required_fields:
+    - kind
+    - schema_version
+    - request_id
+    - workflow_id
+    - step_id
+    - package
+    - run_id
+    - fork_context
+    - source_hashes
+    - allowed_inputs
+    - required_outputs
+  result:
+    artifact_id: cold_replacement_review_agent_result
+    path_template: reviewable-runs/subagent-results/{run_id}-run-cold-replacement-review-result.md
+    schema_version: 1
+    verdicts:
+      allowed:
+      - pass
+      - fail
+      - defer
+      - stale
+      required_for_replacement_north_star: pass
+    required_sections:
+    - verdict
+    - source_hashes_checked
+    - line_grounded_findings
+    - scaffold_residue_check
+    - evidence_and_plot_drift_check
+    - unresolved_blockers
+  integration_decision:
+    artifact_id: cold_replacement_review_integration_decision
+    path_template: reviewable-runs/integration-decisions/{run_id}-run-cold-replacement-review-integration.yaml
+    schema_version: 1
+    required_for_gate: replacement_north_star
+    allowed_decisions:
+    - accept_pass
+    - accept_fail
+    - reject_stale
+    - reject_out_of_scope
+    - defer_for_revision
+    must_record:
+    - accepted_or_rejected_result_path
+    - result_verdict
+    - source_hash_match
+    - rationale
+  source_hash_expectations:
+    algorithm: sha256
+    require_request_hashes: true
+    require_result_hash_echo: true
+    stale_on_mismatch: true
+    sources:
+    - packet_manifest
+    - live_draft
+    - candidate_draft
+    - governing_brief
+    - plot_contract
+    - publication_voice_guide
+  required_verdict_checks:
+  - compare_candidate_against_live_draft
+  - judge_north_star_replacement_quality
+  - verify_plot_contract_preserved
+  - verify_evidence_anchors_preserved_or_explicitly_replaced
+  - verify_no_scaffold_or_template_residue
+  failure_triggers:
+  - id: scaffold_residue
+    severity: blocking
+    examples:
+    - duplicate terminal sections after references
+    - unfilled template prompts or drafting instructions
+    - placeholder TODO/TK markers in publication body
+  - id: evidence_drift
+    severity: blocking
+    description: Candidate substitutes, drops, or overstates required evidence anchors
+      without explicit reviewable rationale.
+  - id: plot_drift
+    severity: blocking
+    description: Candidate loses the declared public object, thesis, forbidden frames,
+      or stop conditions from the plot_contract.
+  - id: ungrounded_north_star_pass
+    severity: blocking
+    description: Review recommends replacement without line-grounded findings against
+      live draft, candidate, and plot_contract.
+  - id: stale_sources
+    severity: blocking
+    description: Result source hashes do not match the request source hashes.
+  blocks:
+    gate: replacement_north_star
+    until:
+      result_verdict: pass
+      integration_decision: accept_pass
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:d51a4eb297cd16fe584c470178113bdae3145b8b1324ee3e5c6815dd4d9b0ca5
+  contract_path: workflows/essay-iteration/workflow.yaml
+  step_id: run_cold_replacement_review
+run:
+  run_id: phase-2-proof-lost-plot-cold-review-test
+  run_mode: governed_continuous
+  resolved_run_path: reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml
+  run_record_path: reviewable-runs/logs/phase-2-proof-lost-plot-cold-review-test.yaml
+  runtime_inputs: {}
+step:
+  id: run_cold_replacement_review
+  title: Run cold replacement review
+  mode: codex_session
+  action: Compare the candidate against the live draft and north-star bar, then fill
+    review, scorecard, decision, and any required ceiling report.
+allowed_input_paths:
+- id: packet_manifest
+  source: output_target
+  paths:
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json
+  hashes:
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json: &id001
+      type: file_sha256
+      sha256: 2445cb36e250faa07a2d8e5e04f95a50b9cc4fd29691a0ef72b28fc3aeb5275f
+      size_bytes: 7928
+- id: live_draft
+  source: context_admission
+  paths:
+  - publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  hashes:
+    publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md: &id002
+      type: file_sha256
+      sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+      size_bytes: 459
+- id: candidate_draft
+  source: output_target
+  paths:
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md
+  hashes:
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md: &id003
+      type: file_sha256
+      sha256: d0c58cc52ecd65d26e7f12ef91045d6d201b6a8463dbb2db604e72cd1ece372a
+      size_bytes: 13677
+- id: publication_voice_guide
+  source: context_admission
+  paths:
+  - voice_consistency_guide.md
+  hashes:
+    voice_consistency_guide.md: &id004
+      type: file_sha256
+      sha256: cab35c04f3e6c880442ca26f886e447a534b84a45c2019d6faad58ff2c19507a
+      size_bytes: 4888
+- id: governing_brief
+  source: context_admission
+  paths:
+  - publications/proof-runs-as-source-surface/blueprint.md
+  hashes:
+    publications/proof-runs-as-source-surface/blueprint.md: &id005
+      type: file_sha256
+      sha256: 443bb4e3289b77c03ede6b67214d4d09f5ce49c93ad3e7daecfa98d14802640b
+      size_bytes: 3582
+- id: plot_contract
+  source: missing_output_target
+  paths: []
+  expected_path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-plot-contract-r1.yaml
+  hashes: {}
+output_targets:
+- id: replacement_review
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+- id: atlas_scorecard
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md
+- id: promotion_decision
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-decision-r1.md
+- id: ceiling_report
+  path: publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-ceiling-report-r1.md
+- id: cold_replacement_review_agent_request
+  path: reviewable-runs/subagent-requests/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review.yaml
+- id: cold_replacement_review_agent_result
+  path: reviewable-runs/subagent-results/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-result.md
+- id: cold_replacement_review_integration_decision
+  path: reviewable-runs/integration-decisions/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-integration.yaml
+source_hashes:
+  publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-essay-iteration-packet-r1.json: *id001
+  publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md: *id002
+  publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-candidate-r1.md: *id003
+  voice_consistency_guide.md: *id004
+  publications/proof-runs-as-source-surface/blueprint.md: *id005
+success_criteria: []
+failure_triggers:
+- id: scaffold_residue
+  severity: blocking
+  examples:
+  - duplicate terminal sections after references
+  - unfilled template prompts or drafting instructions
+  - placeholder TODO/TK markers in publication body
+- id: evidence_drift
+  severity: blocking
+  description: Candidate substitutes, drops, or overstates required evidence anchors
+    without explicit reviewable rationale.
+- id: plot_drift
+  severity: blocking
+  description: Candidate loses the declared public object, thesis, forbidden frames,
+    or stop conditions from the plot_contract.
+- id: ungrounded_north_star_pass
+  severity: blocking
+  description: Review recommends replacement without line-grounded findings against
+    live draft, candidate, and plot_contract.
+- id: stale_sources
+  severity: blocking
+  description: Result source hashes do not match the request source hashes.
+plot_contract_requirements:
+  contract_id: essay_iteration.plot_contract.v1
+  purpose: Carry the article's public-facing object from prewrite into candidate drafting
+    and cold replacement review without requiring topic_discovery changes in this
+    patch.
+  artifact: plot_contract
+  source_surfaces:
+    required:
+    - governing_brief
+    - hardened_blueprint
+    - prewrite_gate
+    optional:
+    - review_artifacts
+    - evidence_surface
+    - topic_discovery_handoff when present in reviewable-runs/logs/
+  required_content:
+  - public_object
+  - thesis
+  - forbidden_frames
+  - evidence_anchors
+  - stop_conditions
+  carry_forward_consumers:
+  - write_bounded_candidate
+  - run_cold_replacement_review
+  drift_controls:
+    evidence_anchor_drift: fail_replacement_review
+    public_object_loss: fail_replacement_review
+    forbidden_frame_reintroduction: fail_replacement_review
+expected_artifacts:
+  request_path: reviewable-runs/subagent-requests/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review.yaml
+  result_path: reviewable-runs/subagent-results/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-result.md
+  integration_decision_path: reviewable-runs/integration-decisions/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-integration.yaml
+result_requirements:
+  kind: subagent_result
+  schema_version: 1
+  path: reviewable-runs/subagent-results/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-result.md
+  verdict_enum:
+  - pass
+  - fail
+  - defer
+  - stale
+  required_fields:
+  - kind
+  - schema_version
+  - request_id
+  - package
+  - workflow
+  - run
+  - verdict
+  - source_hashes
+  - findings
+  line_grounded_findings_required: true
+integration_requirements:
+  kind: integration_decision
+  schema_version: 1
+  path: reviewable-runs/integration-decisions/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-integration.yaml
+  allowed_decisions:
+  - accept_pass
+  - accept_fail
+  - reject_stale
+  - reject_out_of_scope
+  - defer_for_revision
+  accepted_rejected_result_ids_required: true
+runtime_behavior:
+  content_agent_spawns_model: false
+  defer_after_request: true

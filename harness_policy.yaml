@@ -19,6 +19,9 @@ local_write_allowed:
     - reviewable-runs/resolved-runs/
     - reviewable-runs/logs/
     - reviewable-runs/gates/
+    - reviewable-runs/subagent-requests/
+    - reviewable-runs/subagent-results/
+    - reviewable-runs/integration-decisions/
   operations:
     - package scaffolding
     - launch pack generation
@@ -100,6 +103,42 @@ governed_execution:
     - resumable
     - continuous
     - audit_relevant
+codex_session_handoff:
+  default_mode: defer_to_subagent
+  compatibility_mode: same_session
+  allowed_modes:
+    - policy_default
+    - defer_to_subagent
+    - same_session
+  resolution_order:
+    - step.codex_session_handoff.mode
+    - workflow.codex_session_handoff.default_mode
+    - harness_policy.codex_session_handoff.default_mode
+  runtime_contract:
+    content_agent_model_spawning: deny
+    content_agent_request_emission: allow
+    content_agent_result_validation: allow
+    content_agent_direct_codex_execution: deny
+  artifact_paths:
+    subagent_request_path: reviewable-runs/subagent-requests/
+    subagent_result_path: reviewable-runs/subagent-results/
+    integration_decision_path: reviewable-runs/integration-decisions/
+  mode_semantics:
+    policy_default: Resolve by the declared resolution_order before execution.
+    defer_to_subagent: Emit a deterministic request artifact for the codex_session step, then defer for a worker outside content-agent to produce the result and integration artifacts.
+    same_session: Preserve compatibility behavior by deferring at the codex_session boundary without creating a subagent request artifact.
+  generic_contract:
+    enabled_for_codex_session_without_agent_contract: true
+    synthesized_from:
+      - workflow_id
+      - step_id
+      - package
+      - run_id
+      - step.consumes
+      - step.produces
+      - resolved_output_targets
+      - resolved_input_source_hashes
+    gate_critical_steps_require_explicit_agent_contract: true
 enforcement_surfaces:
   contract_shape: deny
   package_route_resolution: deny
@@ -121,6 +160,9 @@ review_gate_store:
   gate_path: reviewable-runs/gates/
   run_record_path: reviewable-runs/logs/
   resolved_run_path: reviewable-runs/resolved-runs/
+  subagent_request_path: reviewable-runs/subagent-requests/
+  subagent_result_path: reviewable-runs/subagent-results/
+  integration_decision_path: reviewable-runs/integration-decisions/
   quality_approval_distinct_from_external_mutation: true
   decisions:
     - approve

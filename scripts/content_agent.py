@@ -56,13 +56,22 @@ from lifecycle import (
 
 CONTENT_AGENT_VERSION = 1
 VALID_RUN_MODES = {"exploratory", "governed_continuous"}
+CODEX_SESSION_HANDOFF_POLICY_MODES = {"default", "policy"}
+EFFECTIVE_CODEX_SESSION_HANDOFF_MODES = {"defer_to_subagent", "same_session"}
+VALID_CODEX_SESSION_HANDOFF_MODES = CODEX_SESSION_HANDOFF_POLICY_MODES | EFFECTIVE_CODEX_SESSION_HANDOFF_MODES
+DEFAULT_CODEX_SESSION_HANDOFF_MODE = "defer_to_subagent"
 HASHABLE_FILE_LIMIT_BYTES = 5_000_000
 REVIEWABLE_RUNS_DIR = REPO_ROOT / "reviewable-runs"
 RESOLVED_RUNS_DIR = REVIEWABLE_RUNS_DIR / "resolved-runs"
 RUN_RECORDS_DIR = REVIEWABLE_RUNS_DIR / "logs"
 REVIEW_GATES_DIR = REVIEWABLE_RUNS_DIR / "gates"
+SUBAGENT_REQUESTS_DIR = REVIEWABLE_RUNS_DIR / "subagent-requests"
+SUBAGENT_RESULTS_DIR = REVIEWABLE_RUNS_DIR / "subagent-results"
+INTEGRATION_DECISIONS_DIR = REVIEWABLE_RUNS_DIR / "integration-decisions"
 VALID_TERMINAL_STATUSES = {"completed", "gated", "failed", "deferred", "rejected", "superseded"}
 VALID_GATE_ARTIFACT_STATUSES = {"pending", "resolved"}
+DEFAULT_SUBAGENT_VERDICTS = {"pass", "fail", "defer", "stale"}
+DEFAULT_INTEGRATION_DECISIONS = {"accept", "reject", "defer"}
 PROMOTED_OUTPUT_STATE_KEYS = {
     "authority_order",
     "claim_state",
@@ -82,6 +91,20 @@ def load_mapping(path: Path) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError(f"{repo_relpath(path)} must contain a YAML mapping.")
     return data
+
+
+def load_artifact_metadata(path: Path) -> dict[str, Any]:
+    text = path.read_text()
+    if path.suffix == ".md":
+        if text.startswith("---\n"):
+            end_marker = text.find("\n---", 4)
+            if end_marker != -1:
+                data = yaml.safe_load(text[4:end_marker]) or {}
+                if not isinstance(data, dict):
+                    raise ValueError(f"{repo_relpath(path)} frontmatter must contain a YAML mapping.")
+                return data
+        return {}
+    return load_mapping(path)
 
 
 def workflow_yaml_paths() -> list[Path]:
@@ -483,6 +506,12 @@ def evidence_yaml_paths(directory: Path) -> list[Path]:
     if not directory.exists():
         return []
     return sorted([*directory.glob("*.yaml"), *directory.glob("*.yml")])
+
+
+def evidence_artifact_paths(directory: Path) -> list[Path]:
+    if not directory.exists():
+        return []
+    return sorted([*directory.glob("*.yaml"), *directory.glob("*.yml"), *directory.glob("*.md")])
 
 
 def sha256_like(value: Any) -> bool:
@@ -1097,6 +1126,434 @@ def validate_review_gate_artifact(
     validate_promoted_output_state(data, path, findings)
 
 
+def generated_agent_request(data: dict[str, Any]) -> bool:
+    return (
+        data.get("kind") == "subagent_request"
+        and isinstance(data.get("agent_contract"), dict)
+        and isinstance(data.get("workflow"), dict)
+        and isinstance(data.get("run"), dict)
+        and isinstance(data.get("expected_artifacts"), dict)
+    )
+
+
+def artifact_digest(value: Any) -> str | None:
+    if isinstance(value, str) and sha256_like(value):
+        return value.removeprefix("sha256:")
+    if isinstance(value, dict) and sha256_like(value.get("sha256")):
+        return str(value["sha256"]).removeprefix("sha256:")
+    return None
+
+
+def compare_agent_artifact_refs(
+    artifact: dict[str, Any],
+    request: dict[str, Any],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    request_workflow = request.get("workflow") if isinstance(request.get("workflow"), dict) else {}
+    artifact_workflow = artifact.get("workflow") if isinstance(artifact.get("workflow"), dict) else {}
+    for key in ("workflow_id", "step_id"):
+        expected = request_workflow.get(key)
+        actual = artifact_workflow.get(key)
+        if expected and actual != expected:
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{context}.workflow.{key} must match the subagent request.",
+                path=path,
+                evidence={"expected": expected, "actual": actual},
+            )
+
+    request_run = request.get("run") if isinstance(request.get("run"), dict) else {}
+    artifact_run = artifact.get("run") if isinstance(artifact.get("run"), dict) else {}
+    expected_run_id = request_run.get("run_id")
+    if expected_run_id and artifact_run.get("run_id") != expected_run_id:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            f"{context}.run.run_id must match the subagent request.",
+            path=path,
+            evidence={"expected": expected_run_id, "actual": artifact_run.get("run_id")},
+        )
+
+    request_package = request.get("package") if isinstance(request.get("package"), dict) else {}
+    artifact_package = artifact.get("package") if isinstance(artifact.get("package"), dict) else {}
+    for key in ("path", "status_path"):
+        expected = request_package.get(key)
+        actual = artifact_package.get(key)
+        if expected and actual != expected:
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{context}.package.{key} must match the subagent request.",
+                path=path,
+                evidence={"expected": expected, "actual": actual},
+            )
+
+
+def allowed_subagent_verdicts(request: dict[str, Any]) -> set[str]:
+    result_requirements = request.get("result_requirements") if isinstance(request.get("result_requirements"), dict) else {}
+    candidates = result_requirements.get("verdict_enum") or result_requirements.get("allowed_verdicts")
+    if isinstance(candidates, list):
+        values = {str(item) for item in candidates if isinstance(item, str)}
+        if values:
+            return values
+    contract = request.get("agent_contract") if isinstance(request.get("agent_contract"), dict) else {}
+    result = contract.get("result") if isinstance(contract.get("result"), dict) else {}
+    candidates = result.get("verdict_enum") or result.get("allowed_verdicts")
+    if isinstance(candidates, list):
+        values = {str(item) for item in candidates if isinstance(item, str)}
+        if values:
+            return values
+    verdicts = result.get("verdicts") if isinstance(result.get("verdicts"), dict) else {}
+    candidates = verdicts.get("allowed")
+    if isinstance(candidates, list):
+        values = {str(item) for item in candidates if isinstance(item, str)}
+        if values:
+            return values
+    return DEFAULT_SUBAGENT_VERDICTS
+
+
+def allowed_integration_decisions(request: dict[str, Any]) -> set[str]:
+    requirements = request.get("integration_requirements") if isinstance(request.get("integration_requirements"), dict) else {}
+    candidates = requirements.get("allowed_decisions")
+    if isinstance(candidates, list):
+        values = {str(item) for item in candidates if isinstance(item, str)}
+        if values:
+            return values
+    contract = request.get("agent_contract") if isinstance(request.get("agent_contract"), dict) else {}
+    integration = contract.get("integration_decision") if isinstance(contract.get("integration_decision"), dict) else {}
+    candidates = integration.get("allowed_decisions")
+    if isinstance(candidates, list):
+        values = {str(item) for item in candidates if isinstance(item, str)}
+        if values:
+            return values
+    return DEFAULT_INTEGRATION_DECISIONS
+
+
+def validate_agent_source_hashes(
+    artifact: dict[str, Any],
+    request: dict[str, Any],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    expected_hashes = request.get("source_hashes")
+    actual_hashes = artifact.get("source_hashes")
+    if not isinstance(expected_hashes, dict) or not expected_hashes:
+        return
+    if not isinstance(actual_hashes, dict):
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            f"{context}.source_hashes must repeat the request source hashes.",
+            path=path,
+        )
+        return
+    for relpath, expected_record in expected_hashes.items():
+        if not isinstance(relpath, str):
+            continue
+        expected_digest = artifact_digest(expected_record)
+        actual_digest = artifact_digest(actual_hashes.get(relpath))
+        if not actual_digest:
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{context}.source_hashes is missing source hash for {relpath}.",
+                path=path,
+            )
+            continue
+        if expected_digest and actual_digest != expected_digest:
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{context}.source_hashes[{relpath}] is stale relative to the subagent request.",
+                path=path,
+                evidence={"expected": expected_digest, "actual": actual_digest},
+            )
+
+
+def validate_line_grounded_findings_shape(
+    findings_value: Any,
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    if not isinstance(findings_value, list):
+        add_finding(findings, "error", "trace_completeness", "detect", f"{context}.findings must be a list.", path=path)
+        return
+    for index, item in enumerate(findings_value):
+        item_context = f"{context}.findings[{index}]"
+        if not isinstance(item, dict):
+            add_finding(findings, "error", "trace_completeness", "detect", f"{item_context} must be a mapping.", path=path)
+            continue
+        relpath = item.get("path") or item.get("file")
+        line = item.get("line") or item.get("start_line") or item.get("line_start")
+        line_refs = item.get("line_refs")
+        has_inline_ref = isinstance(relpath, str) and isinstance(line, int) and line > 0
+        has_ref_list = False
+        if isinstance(line_refs, list):
+            has_ref_list = True
+            for ref_index, ref in enumerate(line_refs):
+                if not isinstance(ref, dict):
+                    add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.line_refs[{ref_index}] must be a mapping.", path=path)
+                    has_ref_list = False
+                    continue
+                ref_path = ref.get("path") or ref.get("file")
+                ref_line = ref.get("line") or ref.get("start_line") or ref.get("line_start")
+                if not isinstance(ref_path, str) or not isinstance(ref_line, int) or ref_line <= 0:
+                    add_finding(
+                        findings,
+                        "error",
+                        "trace_completeness",
+                        "detect",
+                        f"{item_context}.line_refs[{ref_index}] must include path/file and positive line.",
+                        path=path,
+                    )
+                    has_ref_list = False
+        if not has_inline_ref and not has_ref_list:
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{item_context} must be line-grounded with path/file and line.",
+                path=path,
+            )
+        if isinstance(relpath, str):
+            validate_artifact_repo_path(relpath, f"{item_context}.path", path, findings, required=True)
+
+
+def validate_subagent_request_artifact(path: Path, data: dict[str, Any], findings: list[dict[str, Any]]) -> None:
+    if not generated_agent_request(data):
+        return
+    context = "subagent_request"
+    require_artifact_keys(
+        data,
+        {
+            "kind",
+            "schema_version",
+            "request_id",
+            "created_at",
+            "agent_contract",
+            "package",
+            "workflow",
+            "run",
+            "step",
+            "allowed_input_paths",
+            "output_targets",
+            "source_hashes",
+            "success_criteria",
+            "failure_triggers",
+            "plot_contract_requirements",
+            "expected_artifacts",
+        },
+        context,
+        path,
+        findings,
+    )
+    if data.get("schema_version") != CONTENT_AGENT_VERSION:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.schema_version must match content-agent v1.", path=path)
+    if not isinstance(data.get("request_id"), str) or not data["request_id"]:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.request_id must be non-empty.", path=path)
+    validate_package_ref(require_artifact_mapping(data, "package", context, path, findings), "subagent_request.package", path, findings)
+    workflow = require_artifact_mapping(data, "workflow", context, path, findings)
+    validate_workflow_ref(workflow, "subagent_request.workflow", path, findings)
+    if not isinstance(workflow.get("step_id"), str) or not workflow.get("step_id"):
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.workflow.step_id must identify the agent step.", path=path)
+    run = require_artifact_mapping(data, "run", context, path, findings)
+    require_artifact_keys(run, {"run_id", "resolved_run_path"}, "subagent_request.run", path, findings)
+    validate_artifact_repo_path(run.get("resolved_run_path"), "subagent_request.run.resolved_run_path", path, findings)
+    for entry in require_artifact_list(data, "allowed_input_paths", context, path, findings):
+        if isinstance(entry, dict):
+            paths = entry.get("paths", [])
+            if isinstance(paths, list):
+                for relpath in paths:
+                    validate_artifact_repo_path(relpath, "subagent_request.allowed_input_paths.paths", path, findings)
+    source_hashes = require_artifact_mapping(data, "source_hashes", context, path, findings)
+    for relpath, hash_record in source_hashes.items():
+        if not isinstance(relpath, str) or not artifact_digest(hash_record):
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                "subagent_request.source_hashes must map repo paths to sha256 hash records.",
+                path=path,
+            )
+    expected = require_artifact_mapping(data, "expected_artifacts", context, path, findings)
+    validate_artifact_repo_path(expected.get("request_path"), "subagent_request.expected_artifacts.request_path", path, findings)
+    for key in ("result_path", "integration_decision_path"):
+        value = expected.get(key)
+        if not isinstance(value, str) or not value:
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"subagent_request.expected_artifacts.{key} must be a non-empty repo path string.",
+                path=path,
+            )
+
+
+def load_generated_subagent_requests(findings: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    requests: dict[str, dict[str, Any]] = {}
+    for path in evidence_yaml_paths(SUBAGENT_REQUESTS_DIR):
+        try:
+            data = load_mapping(path)
+        except Exception as exc:
+            add_finding(findings, "error", "trace_completeness", "detect", f"Failed to load subagent request YAML: {exc}", path=path)
+            continue
+        if not generated_agent_request(data):
+            continue
+        validate_subagent_request_artifact(path, data, findings)
+        request_id = data.get("request_id")
+        if isinstance(request_id, str) and request_id:
+            data["_artifact_path"] = repo_relpath(path)
+            requests[request_id] = data
+    return requests
+
+
+def subagent_result_id(path: Path, data: dict[str, Any]) -> str:
+    result_id = data.get("result_id")
+    if isinstance(result_id, str) and result_id:
+        return result_id
+    request_id = data.get("request_id")
+    if isinstance(request_id, str) and request_id:
+        return request_id
+    return path.stem
+
+
+def validate_subagent_result_artifact(
+    path: Path,
+    data: dict[str, Any],
+    requests: dict[str, dict[str, Any]],
+    findings: list[dict[str, Any]],
+) -> str | None:
+    if data.get("kind") != "subagent_result":
+        return None
+    request_id = data.get("request_id")
+    request = requests.get(request_id) if isinstance(request_id, str) else None
+    if not request:
+        return None
+    context = "subagent_result"
+    require_artifact_keys(
+        data,
+        {"kind", "schema_version", "request_id", "package", "workflow", "run", "verdict", "source_hashes", "findings"},
+        context,
+        path,
+        findings,
+    )
+    if data.get("schema_version") != CONTENT_AGENT_VERSION:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_result.schema_version must match content-agent v1.", path=path)
+    if data.get("request_id") != request.get("request_id"):
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_result.request_id must match the request.", path=path)
+    compare_agent_artifact_refs(data, request, context, path, findings)
+    allowed_verdicts = allowed_subagent_verdicts(request)
+    if data.get("verdict") not in allowed_verdicts:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "subagent_result.verdict must be one of the declared verdict enum.",
+            path=path,
+            evidence={"allowed": sorted(allowed_verdicts), "actual": data.get("verdict")},
+        )
+    validate_agent_source_hashes(data, request, context, path, findings)
+    validate_line_grounded_findings_shape(data.get("findings"), context, path, findings)
+    return subagent_result_id(path, data)
+
+
+def validate_integration_decision_artifact(
+    path: Path,
+    data: dict[str, Any],
+    requests: dict[str, dict[str, Any]],
+    result_ids_by_request: dict[str, set[str]],
+    findings: list[dict[str, Any]],
+) -> None:
+    if data.get("kind") != "integration_decision":
+        return
+    request_id = data.get("request_id")
+    request = requests.get(request_id) if isinstance(request_id, str) else None
+    if not request:
+        return
+    context = "integration_decision"
+    require_artifact_keys(
+        data,
+        {
+            "kind",
+            "schema_version",
+            "request_id",
+            "package",
+            "workflow",
+            "run",
+            "decision",
+            "accepted_result_ids",
+            "rejected_result_ids",
+        },
+        context,
+        path,
+        findings,
+    )
+    if data.get("schema_version") != CONTENT_AGENT_VERSION:
+        add_finding(findings, "error", "trace_completeness", "detect", "integration_decision.schema_version must match content-agent v1.", path=path)
+    compare_agent_artifact_refs(data, request, context, path, findings)
+    validate_agent_source_hashes(data, request, context, path, findings)
+    allowed_decisions = allowed_integration_decisions(request)
+    if data.get("decision") not in allowed_decisions:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "integration_decision.decision must be one of the declared allowed decisions.",
+            path=path,
+            evidence={"allowed": sorted(allowed_decisions), "actual": data.get("decision")},
+        )
+    accepted = require_artifact_list(data, "accepted_result_ids", context, path, findings)
+    rejected = require_artifact_list(data, "rejected_result_ids", context, path, findings)
+    known_result_ids = result_ids_by_request.get(str(request_id), set())
+    for key, values in (("accepted_result_ids", accepted), ("rejected_result_ids", rejected)):
+        for value in values:
+            if not isinstance(value, str) or not value:
+                add_finding(findings, "error", "trace_completeness", "detect", f"integration_decision.{key} must contain non-empty strings.", path=path)
+            elif known_result_ids and value not in known_result_ids:
+                add_finding(
+                    findings,
+                    "error",
+                    "trace_completeness",
+                    "detect",
+                    f"integration_decision.{key} references an unknown result id.",
+                    path=path,
+                    evidence={"result_id": value, "known_result_ids": sorted(known_result_ids)},
+                )
+    overlap = {value for value in accepted if isinstance(value, str)} & {value for value in rejected if isinstance(value, str)}
+    if overlap:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "integration_decision cannot both accept and reject the same result id.",
+            path=path,
+            evidence={"overlap": sorted(overlap)},
+        )
+
+
 def validate_no_standalone_promoted_output_manifests(findings: list[dict[str, Any]]) -> None:
     if not REVIEWABLE_RUNS_DIR.exists():
         return
@@ -1124,13 +1581,28 @@ def validate_execution_evidence_artifacts(
         "resolved_runs": RESOLVED_RUNS_DIR,
         "run_records": RUN_RECORDS_DIR,
         "review_gates": REVIEW_GATES_DIR,
+        "subagent_requests": SUBAGENT_REQUESTS_DIR,
+        "subagent_results": SUBAGENT_RESULTS_DIR,
+        "integration_decisions": INTEGRATION_DECISIONS_DIR,
     }
     summary: dict[str, Any] = {
         "stores": {name: repo_relpath(path) for name, path in stores.items()},
-        "counts": {"resolved_run": 0, "run_record": 0, "review_gate": 0},
+        "counts": {
+            "resolved_run": 0,
+            "run_record": 0,
+            "review_gate": 0,
+            "subagent_request": 0,
+            "subagent_result": 0,
+            "integration_decision": 0,
+        },
         "checked_paths": [],
+        "skipped_legacy_subagent_results": [],
     }
-    for name, directory in stores.items():
+    for name, directory in {
+        "resolved_runs": RESOLVED_RUNS_DIR,
+        "run_records": RUN_RECORDS_DIR,
+        "review_gates": REVIEW_GATES_DIR,
+    }.items():
         if not directory.exists():
             add_finding(
                 findings,
@@ -1185,6 +1657,44 @@ def validate_execution_evidence_artifacts(
         validate_review_gate_artifact(path, data, gate_contracts if isinstance(gate_contracts, dict) else {}, findings)
         summary["counts"]["review_gate"] += 1
         summary["checked_paths"].append(repo_relpath(path))
+
+    subagent_requests = load_generated_subagent_requests(findings)
+    for request in subagent_requests.values():
+        path_value = request.get("_artifact_path")
+        if isinstance(path_value, str):
+            summary["counts"]["subagent_request"] += 1
+            summary["checked_paths"].append(path_value)
+
+    result_ids_by_request: dict[str, set[str]] = {}
+    for path in evidence_artifact_paths(SUBAGENT_RESULTS_DIR):
+        try:
+            data = load_artifact_metadata(path)
+        except Exception as exc:
+            add_finding(findings, "error", "trace_completeness", "detect", f"Failed to load subagent result artifact: {exc}", path=path)
+            continue
+        if data.get("kind") != "subagent_result":
+            continue
+        result_id = validate_subagent_result_artifact(path, data, subagent_requests, findings)
+        if result_id:
+            request_id = str(data.get("request_id"))
+            result_ids_by_request.setdefault(request_id, set()).add(result_id)
+            summary["counts"]["subagent_result"] += 1
+            summary["checked_paths"].append(repo_relpath(path))
+        else:
+            summary["skipped_legacy_subagent_results"].append(repo_relpath(path))
+
+    for path in evidence_artifact_paths(INTEGRATION_DECISIONS_DIR):
+        try:
+            data = load_artifact_metadata(path)
+        except Exception as exc:
+            add_finding(findings, "error", "trace_completeness", "detect", f"Failed to load integration decision artifact: {exc}", path=path)
+            continue
+        if data.get("kind") != "integration_decision":
+            continue
+        validate_integration_decision_artifact(path, data, subagent_requests, result_ids_by_request, findings)
+        if isinstance(data.get("request_id"), str) and data["request_id"] in subagent_requests:
+            summary["counts"]["integration_decision"] += 1
+            summary["checked_paths"].append(repo_relpath(path))
 
     validate_no_standalone_promoted_output_manifests(findings)
     return summary
@@ -2044,6 +2554,9 @@ def build_init_report(check_only: bool = False) -> dict[str, Any]:
         RESOLVED_RUNS_DIR,
         RUN_RECORDS_DIR,
         REVIEW_GATES_DIR,
+        SUBAGENT_REQUESTS_DIR,
+        SUBAGENT_RESULTS_DIR,
+        INTEGRATION_DECISIONS_DIR,
     ]
     directory_records = []
     for directory in directories:
@@ -2567,7 +3080,290 @@ def planned_gate_path(run_id: str, gate_id: str) -> str:
     return f"reviewable-runs/gates/gate-{slugify(run_id)}-{slugify(gate_id)}.yaml"
 
 
-def build_policy_resolution(contract: dict[str, Any], placeholders: dict[str, Any]) -> dict[str, Any]:
+def agent_contract_path_template(agent_contract: dict[str, Any], artifact_key: str, default_template: str) -> str:
+    nested = agent_contract.get(artifact_key)
+    if isinstance(nested, dict):
+        for key in ("path_template", "path"):
+            value = nested.get(key)
+            if isinstance(value, str) and value:
+                return value
+    for key in (f"{artifact_key}_path_template", f"{artifact_key}_path"):
+        value = agent_contract.get(key)
+        if isinstance(value, str) and value:
+            return value
+    return default_template
+
+
+def agent_contract_placeholders(
+    placeholders: dict[str, Any],
+    run_id: str,
+    step_id: str,
+    agent_contract: dict[str, Any],
+) -> dict[str, Any]:
+    values = dict(placeholders)
+    values["run_id"] = run_id
+    values["step_id"] = step_id
+    contract_id = agent_contract.get("contract_id")
+    if isinstance(contract_id, str):
+        values["contract_id"] = contract_id
+    return values
+
+
+def rendered_agent_contract_path(
+    template: str,
+    placeholders: dict[str, Any],
+    package_path: Path,
+) -> str:
+    return rendered_repo_relpath(template, placeholders, package_path)
+
+
+def normalize_codex_session_handoff_mode(
+    value: Any,
+    *,
+    allow_policy: bool,
+    context: str,
+) -> str | None:
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise ValueError(f"{context} must be a string handoff mode.")
+    mode = value.strip()
+    if not mode:
+        return None
+    aliases = {
+        "policy/default": "policy",
+        "policy_default": "policy",
+        "emit_subagent_request": "defer_to_subagent",
+        "subagent_request": "defer_to_subagent",
+        "defer": "same_session",
+        "same-session": "same_session",
+    }
+    mode = aliases.get(mode, mode)
+    allowed = VALID_CODEX_SESSION_HANDOFF_MODES if allow_policy else EFFECTIVE_CODEX_SESSION_HANDOFF_MODES
+    if mode not in allowed:
+        allowed_values = ", ".join(sorted(allowed))
+        raise ValueError(f"{context} must be one of: {allowed_values}.")
+    return mode
+
+
+def codex_session_handoff_policy_config(policy: dict[str, Any]) -> dict[str, Any]:
+    for key in ("codex_session_handoff", "codex_session_handoff_policy", "codex_session_handoffs"):
+        value = policy.get(key)
+        if isinstance(value, dict):
+            return value
+    return {}
+
+
+def policy_entry_mode(value: Any, context: str) -> str | None:
+    if isinstance(value, dict):
+        for key in ("mode", "handoff_mode", "default_mode"):
+            if key in value:
+                return normalize_codex_session_handoff_mode(value.get(key), allow_policy=False, context=f"{context}.{key}")
+        return None
+    return normalize_codex_session_handoff_mode(value, allow_policy=False, context=context)
+
+
+def policy_default_handoff_mode(config: dict[str, Any]) -> tuple[str | None, str | None]:
+    for key in ("default_mode", "mode", "handoff_mode"):
+        if key in config:
+            return policy_entry_mode(config.get(key), f"harness_policy.codex_session_handoff.{key}"), key
+    return None, None
+
+
+def policy_workflow_handoff_mode(config: dict[str, Any], workflow_id: str) -> tuple[str | None, str | None]:
+    for workflows_key in ("workflows", "workflow_overrides"):
+        workflows = config.get(workflows_key)
+        if not isinstance(workflows, dict):
+            continue
+        workflow_entry = workflows.get(workflow_id)
+        if not isinstance(workflow_entry, dict):
+            continue
+        for key in ("default_mode", "mode", "handoff_mode"):
+            if key in workflow_entry:
+                return (
+                    policy_entry_mode(
+                        workflow_entry.get(key),
+                        f"harness_policy.codex_session_handoff.{workflows_key}.{workflow_id}.{key}",
+                    ),
+                    f"{workflows_key}.{workflow_id}.{key}",
+                )
+    return None, None
+
+
+def policy_step_handoff_mode(config: dict[str, Any], workflow_id: str, step_id: str) -> tuple[str | None, str | None]:
+    exact_step_keys = (
+        f"{workflow_id}.{step_id}",
+        f"{workflow_id}:{step_id}",
+        step_id,
+    )
+    steps = config.get("steps")
+    if isinstance(steps, dict):
+        for key in exact_step_keys:
+            if key in steps:
+                return (
+                    policy_entry_mode(steps.get(key), f"harness_policy.codex_session_handoff.steps.{key}"),
+                    f"steps.{key}",
+                )
+
+    for workflows_key in ("workflows", "workflow_overrides"):
+        workflows = config.get(workflows_key)
+        if not isinstance(workflows, dict):
+            continue
+        workflow_entry = workflows.get(workflow_id)
+        if not isinstance(workflow_entry, dict):
+            continue
+        for step_key in ("steps", "step_overrides"):
+            step_overrides = workflow_entry.get(step_key)
+            if isinstance(step_overrides, dict) and step_id in step_overrides:
+                return (
+                    policy_entry_mode(
+                        step_overrides.get(step_id),
+                        f"harness_policy.codex_session_handoff.{workflows_key}.{workflow_id}.{step_key}.{step_id}",
+                    ),
+                    f"{workflows_key}.{workflow_id}.{step_key}.{step_id}",
+                )
+
+    overrides = config.get("overrides")
+    if isinstance(overrides, list):
+        for index, override in enumerate(overrides):
+            if not isinstance(override, dict):
+                continue
+            if override.get("workflow_id") != workflow_id or override.get("step_id") != step_id:
+                continue
+            return (
+                policy_entry_mode(override, f"harness_policy.codex_session_handoff.overrides[{index}]"),
+                f"overrides[{index}]",
+            )
+    return None, None
+
+
+def build_codex_session_handoff_resolution(
+    policy: dict[str, Any],
+    contract: dict[str, Any],
+    requested_mode: str,
+) -> dict[str, Any]:
+    requested = normalize_codex_session_handoff_mode(
+        requested_mode,
+        allow_policy=True,
+        context="--codex-session-handoff",
+    ) or "policy"
+    config = codex_session_handoff_policy_config(policy)
+    workflow_id = str(contract.get("workflow_id") or "unknown_workflow")
+    policy_default, policy_default_source = policy_default_handoff_mode(config)
+    workflow_default, workflow_default_source = policy_workflow_handoff_mode(config, workflow_id)
+    effective_default = workflow_default or policy_default or DEFAULT_CODEX_SESSION_HANDOFF_MODE
+    default_source = (
+        f"policy:{workflow_default_source}"
+        if workflow_default_source
+        else f"policy:{policy_default_source}"
+        if policy_default_source
+        else "runtime_default"
+    )
+    steps: dict[str, dict[str, Any]] = {}
+    for step in contract.get("steps", []):
+        if not isinstance(step, dict) or step.get("mode") != "codex_session":
+            continue
+        step_id = str(step.get("id") or "unknown")
+        explicit_agent_contract = isinstance(step.get("agent_contract"), dict)
+        if explicit_agent_contract:
+            mode = "defer_to_subagent"
+            source = "explicit_agent_contract"
+        elif requested in EFFECTIVE_CODEX_SESSION_HANDOFF_MODES:
+            mode = requested
+            source = "cli"
+        else:
+            step_mode, step_source = policy_step_handoff_mode(config, workflow_id, step_id)
+            if step_mode:
+                mode = step_mode
+                source = f"policy:{step_source}"
+            else:
+                mode = effective_default
+                source = default_source
+        steps[step_id] = {
+            "mode": mode,
+            "source": source,
+            "explicit_agent_contract": explicit_agent_contract,
+        }
+    return {
+        "requested_mode": requested,
+        "supported_modes": sorted(VALID_CODEX_SESSION_HANDOFF_MODES),
+        "effective_modes": sorted(EFFECTIVE_CODEX_SESSION_HANDOFF_MODES),
+        "fallback_default_mode": DEFAULT_CODEX_SESSION_HANDOFF_MODE,
+        "policy_default_mode": policy_default,
+        "workflow_default_mode": workflow_default,
+        "effective_default_mode": effective_default,
+        "policy_config_present": bool(config),
+        "steps": steps,
+    }
+
+
+def legacy_codex_session_handoff_resolution(contract: dict[str, Any]) -> dict[str, Any]:
+    steps: dict[str, dict[str, Any]] = {}
+    for step in contract.get("steps", []):
+        if not isinstance(step, dict) or step.get("mode") != "codex_session":
+            continue
+        step_id = str(step.get("id") or "unknown")
+        explicit_agent_contract = isinstance(step.get("agent_contract"), dict)
+        steps[step_id] = {
+            "mode": "defer_to_subagent" if explicit_agent_contract else "same_session",
+            "source": "legacy_resolved_run",
+            "explicit_agent_contract": explicit_agent_contract,
+        }
+    return {
+        "requested_mode": "legacy",
+        "supported_modes": sorted(VALID_CODEX_SESSION_HANDOFF_MODES),
+        "effective_modes": sorted(EFFECTIVE_CODEX_SESSION_HANDOFF_MODES),
+        "fallback_default_mode": "same_session",
+        "policy_default_mode": None,
+        "workflow_default_mode": None,
+        "effective_default_mode": "same_session",
+        "policy_config_present": False,
+        "steps": steps,
+    }
+
+
+def codex_session_handoff_resolution_from_resolved_run(
+    resolved_run: dict[str, Any],
+    contract: dict[str, Any],
+) -> dict[str, Any]:
+    policy_resolution = resolved_run.get("policy_resolution")
+    if isinstance(policy_resolution, dict):
+        handoff_resolution = policy_resolution.get("codex_session_handoff")
+        if isinstance(handoff_resolution, dict):
+            return handoff_resolution
+    return legacy_codex_session_handoff_resolution(contract)
+
+
+def codex_session_handoff_step(
+    resolution: dict[str, Any],
+    step_id: str,
+) -> dict[str, Any]:
+    steps = resolution.get("steps")
+    if isinstance(steps, dict):
+        step_resolution = steps.get(step_id)
+        if isinstance(step_resolution, dict):
+            return step_resolution
+    return {
+        "mode": "same_session",
+        "source": "missing_step_resolution",
+        "explicit_agent_contract": False,
+    }
+
+
+def generic_agent_artifact_paths(run_id: str, step_id: str) -> dict[str, str]:
+    stem = f"{run_id}-{slugify(step_id)}"
+    return {
+        "request_path": f"reviewable-runs/subagent-requests/request-{stem}.yaml",
+        "result_path": f"reviewable-runs/subagent-results/result-{stem}.md",
+        "integration_decision_path": f"reviewable-runs/integration-decisions/decision-{stem}.yaml",
+    }
+
+
+def build_policy_resolution(
+    contract: dict[str, Any],
+    placeholders: dict[str, Any],
+    codex_session_handoff: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     tools = contract.get("capabilities", {}).get("tools", [])
     allowed_tools = []
     if isinstance(tools, list):
@@ -2585,13 +3381,16 @@ def build_policy_resolution(contract: dict[str, Any], placeholders: dict[str, An
     allowed_paths = contract.get("allowed_paths", {})
     if not isinstance(allowed_paths, dict):
         allowed_paths = {}
-    return {
+    payload = {
         "allowed_tools": allowed_tools,
         "allowed_capabilities": [
             "contract_validation",
             "context_admission",
             "scriptable_step_execution",
             "gate_stop",
+            "agent_contract_request_writing",
+            "subagent_result_validation",
+            "integration_decision_validation",
             "run_record_writing",
         ],
         "allowed_paths": {
@@ -2599,9 +3398,15 @@ def build_policy_resolution(contract: dict[str, Any], placeholders: dict[str, An
             "write": render_patterns(allowed_paths.get("write"), placeholders),
         },
     }
+    if codex_session_handoff is not None:
+        payload["codex_session_handoff"] = deepcopy(codex_session_handoff)
+    return payload
 
 
-def selected_steps_from_contract(contract: dict[str, Any]) -> list[dict[str, Any]]:
+def selected_steps_from_contract(
+    contract: dict[str, Any],
+    codex_session_handoff: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     steps = []
     for step in contract.get("steps", []):
         if not isinstance(step, dict):
@@ -2615,6 +3420,18 @@ def selected_steps_from_contract(contract: dict[str, Any]) -> list[dict[str, Any
             item["gate_id"] = gate.get("id")
         if isinstance(step.get("executor"), dict) and step["executor"].get("command"):
             item["executor"] = "command"
+        agent_contract = step.get("agent_contract")
+        if isinstance(agent_contract, dict):
+            item["agent_contract_id"] = agent_contract.get("contract_id")
+        step_id = item.get("id")
+        if (
+            step.get("mode") == "codex_session"
+            and isinstance(step_id, str)
+            and codex_session_handoff is not None
+        ):
+            step_handoff = codex_session_handoff_step(codex_session_handoff, step_id)
+            item["codex_session_handoff_mode"] = step_handoff.get("mode")
+            item["codex_session_handoff_source"] = step_handoff.get("source")
         steps.append(item)
     return steps
 
@@ -2641,6 +3458,7 @@ def output_targets_from_contract(
     placeholders: dict[str, Any],
     package_path: Path,
     run_id: str,
+    codex_session_handoff: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     targets: list[dict[str, Any]] = [
         {
@@ -2672,6 +3490,66 @@ def output_targets_from_contract(
             "path": planned_gate_path(run_id, str(gate["id"])),
             "required": gate.get("required"),
         })
+    for step in contract.get("steps", []):
+        if not isinstance(step, dict):
+            continue
+        agent_contract = step.get("agent_contract")
+        step_id = step.get("id")
+        if not isinstance(step_id, str) or not step_id:
+            continue
+        if isinstance(agent_contract, dict):
+            step_placeholders = agent_contract_placeholders(placeholders, run_id, step_id, agent_contract)
+            default_stem = f"{slugify(run_id)}-{slugify(step_id)}"
+            request_template = agent_contract_path_template(
+                agent_contract,
+                "request",
+                f"reviewable-runs/subagent-requests/request-{default_stem}.yaml",
+            )
+            result_template = agent_contract_path_template(
+                agent_contract,
+                "result",
+                f"reviewable-runs/subagent-results/result-{default_stem}.md",
+            )
+            integration_template = agent_contract_path_template(
+                agent_contract,
+                "integration_decision",
+                f"reviewable-runs/integration-decisions/decision-{default_stem}.yaml",
+            )
+            request_path = rendered_agent_contract_path(request_template, step_placeholders, package_path)
+            result_path = rendered_agent_contract_path(result_template, step_placeholders, package_path)
+            integration_path = rendered_agent_contract_path(integration_template, step_placeholders, package_path)
+            result_required = agent_contract.get("result", {}).get("required") if isinstance(agent_contract.get("result"), dict) else None
+            integration_required = (
+                agent_contract.get("integration_decision", {}).get("required")
+                if isinstance(agent_contract.get("integration_decision"), dict)
+                else None
+            )
+        elif step.get("mode") == "codex_session" and codex_session_handoff_step(codex_session_handoff or {}, step_id).get("mode") == "defer_to_subagent":
+            paths = generic_agent_artifact_paths(run_id, step_id)
+            request_path = paths["request_path"]
+            result_path = paths["result_path"]
+            integration_path = paths["integration_decision_path"]
+            result_required = True
+            integration_required = True
+        else:
+            continue
+        targets.extend([
+            {
+                "id": f"subagent_request:{step_id}",
+                "path": request_path,
+                "required": True,
+            },
+            {
+                "id": f"subagent_result:{step_id}",
+                "path": result_path,
+                "required": result_required,
+            },
+            {
+                "id": f"integration_decision:{step_id}",
+                "path": integration_path,
+                "required": integration_required,
+            },
+        ])
     return targets
 
 
@@ -2714,6 +3592,7 @@ def build_resolved_run_payload(
     run_mode: str,
     runtime_inputs: dict[str, str] | None = None,
     supplied_run_id: str | None = None,
+    codex_session_handoff: str = "policy",
 ) -> tuple[dict[str, Any], Path, list[str]]:
     runtime_inputs = runtime_inputs or {}
     contracts = load_workflow_yaml_contracts()
@@ -2742,6 +3621,11 @@ def build_resolved_run_payload(
 
     gate_contracts = load_gate_contracts()
     policy = load_harness_policy()
+    codex_session_handoff_resolution = build_codex_session_handoff_resolution(
+        policy,
+        contract,
+        codex_session_handoff,
+    )
     route = {
         "package_kind": status_data.get("kind", "leaf"),
         "pipeline_profile": resolve_pipeline_profile_name(package_key),
@@ -2775,8 +3659,15 @@ def build_resolved_run_payload(
             run_mode,
             [],
         ),
-        "policy_resolution": build_policy_resolution(contract, placeholders),
-        "selected_steps": selected_steps_from_contract(contract),
+        "policy_resolution": build_policy_resolution(
+            contract,
+            placeholders,
+            codex_session_handoff=codex_session_handoff_resolution,
+        ),
+        "selected_steps": selected_steps_from_contract(
+            contract,
+            codex_session_handoff=codex_session_handoff_resolution,
+        ),
         "selected_gates": selected_gates_from_contract(gate_contracts=gate_contracts, contract=contract),
         "behavior": {
             "budgets": deepcopy(contract.get("behavior", {}).get("budgets", {}))
@@ -2787,7 +3678,13 @@ def build_resolved_run_payload(
             else {},
             "policy_run_modes": policy.get("governed_execution", {}).get("run_modes", []),
         },
-        "output_targets": output_targets_from_contract(contract, placeholders, manifest_ref.package_path, run_id),
+        "output_targets": output_targets_from_contract(
+            contract,
+            placeholders,
+            manifest_ref.package_path,
+            run_id,
+            codex_session_handoff=codex_session_handoff_resolution,
+        ),
     }
     return payload, run_path, resolved_run_persistence_reasons(contract, run_mode)
 
@@ -2799,6 +3696,7 @@ def build_run_resolve_report(
     run_mode: str,
     runtime_inputs: dict[str, str] | None = None,
     supplied_run_id: str | None = None,
+    codex_session_handoff: str = "policy",
 ) -> dict[str, Any]:
     payload, run_path, persistence_reasons = build_resolved_run_payload(
         workflow_id,
@@ -2806,6 +3704,7 @@ def build_run_resolve_report(
         run_mode=run_mode,
         runtime_inputs=runtime_inputs,
         supplied_run_id=supplied_run_id,
+        codex_session_handoff=codex_session_handoff,
     )
     persisted = bool(persistence_reasons)
     if persisted:
@@ -2824,6 +3723,7 @@ def build_run_resolve_report(
         "package": gate_package_key(payload),
         "run_id": payload["run_id"],
         "run_mode": run_mode,
+        "codex_session_handoff": deepcopy(payload.get("policy_resolution", {}).get("codex_session_handoff", {})),
         "persisted": persisted,
         "persistence_reasons": persistence_reasons,
         "resolved_run_path": repo_relpath(run_path) if persisted else None,
@@ -2987,6 +3887,374 @@ def gate_preview_paths(gate_entry: dict[str, Any], resolved_run: dict[str, Any])
         if (REPO_ROOT / relpath).exists():
             paths.append(relpath)
     return paths
+
+
+def existing_hashes_for_paths(paths: list[str]) -> dict[str, dict[str, Any]]:
+    hashes: dict[str, dict[str, Any]] = {}
+    for relpath in paths:
+        if not isinstance(relpath, str) or "{" in relpath:
+            continue
+        try:
+            candidate = repo_path_from_artifact_value(relpath, "agent_contract.source_hashes")
+        except ValueError:
+            continue
+        if candidate.exists():
+            hashes[relpath] = hash_path(candidate)
+    return hashes
+
+
+def rendered_agent_input_paths(
+    agent_contract: dict[str, Any],
+    placeholders: dict[str, Any],
+    package_path: Path,
+) -> list[dict[str, Any]]:
+    rendered_inputs: list[dict[str, Any]] = []
+    inputs = agent_contract.get("inputs")
+    if not isinstance(inputs, list):
+        return rendered_inputs
+    for index, item in enumerate(inputs):
+        if isinstance(item, str):
+            rendered_inputs.append({"id": item, "paths": []})
+            continue
+        if not isinstance(item, dict):
+            continue
+        paths: list[str] = []
+        raw_paths = item.get("paths")
+        if isinstance(raw_paths, list):
+            for raw_path in raw_paths:
+                if isinstance(raw_path, str):
+                    paths.append(rendered_agent_contract_path(raw_path, placeholders, package_path))
+        for key in ("path", "path_template"):
+            raw_path = item.get(key)
+            if isinstance(raw_path, str):
+                paths.append(rendered_agent_contract_path(raw_path, placeholders, package_path))
+        rendered_inputs.append({
+            "id": item.get("id") or f"agent_contract_input_{index}",
+            "paths": unique_paths(paths),
+        })
+    return rendered_inputs
+
+
+def step_allowed_input_refs(
+    step: dict[str, Any],
+    resolved_run: dict[str, Any],
+    agent_contract: dict[str, Any],
+    placeholders: dict[str, Any],
+    package_path: Path,
+) -> list[dict[str, Any]]:
+    refs: list[dict[str, Any]] = []
+    context_by_id = {
+        entry.get("id"): entry
+        for entry in resolved_run.get("context_admission", [])
+        if isinstance(entry, dict) and isinstance(entry.get("id"), str)
+    }
+    target_paths = output_target_paths_by_id(resolved_run)
+    consumes = step.get("consumes", [])
+    if isinstance(consumes, list):
+        for item in consumes:
+            if not isinstance(item, str):
+                continue
+            context_entry = context_by_id.get(item)
+            if isinstance(context_entry, dict):
+                paths = [path for path in context_entry.get("paths", []) if isinstance(path, str)]
+                refs.append({
+                    "id": item,
+                    "source": "context_admission",
+                    "paths": paths,
+                    "hashes": existing_hashes_for_paths(paths),
+                })
+                continue
+            target_path = target_paths.get(item)
+            if target_path:
+                target_file = repo_path_from_artifact_value(target_path, f"agent_contract.input:{item}")
+                if target_file.exists():
+                    refs.append({
+                        "id": item,
+                        "source": "output_target",
+                        "paths": [target_path],
+                        "hashes": existing_hashes_for_paths([target_path]),
+                    })
+                else:
+                    refs.append({
+                        "id": item,
+                        "source": "missing_output_target",
+                        "paths": [],
+                        "expected_path": target_path,
+                        "hashes": {},
+                    })
+            else:
+                refs.append({
+                    "id": item,
+                    "source": "unresolved",
+                    "paths": [],
+                    "hashes": {},
+                })
+    for item in rendered_agent_input_paths(agent_contract, placeholders, package_path):
+        paths = [path for path in item.get("paths", []) if isinstance(path, str)]
+        refs.append({
+            "id": item.get("id"),
+            "source": "agent_contract.inputs",
+            "paths": paths,
+            "hashes": existing_hashes_for_paths(paths),
+        })
+    return refs
+
+
+def source_hashes_from_input_refs(input_refs: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    hashes: dict[str, dict[str, Any]] = {}
+    for entry in input_refs:
+        entry_hashes = entry.get("hashes")
+        if isinstance(entry_hashes, dict):
+            for relpath, hash_record in entry_hashes.items():
+                if isinstance(relpath, str) and isinstance(hash_record, dict):
+                    hashes[relpath] = hash_record
+    return hashes
+
+
+def step_output_target_refs(step: dict[str, Any], resolved_run: dict[str, Any]) -> list[dict[str, Any]]:
+    refs: list[dict[str, Any]] = []
+    target_paths = output_target_paths_by_id(resolved_run)
+    produces = step.get("produces", [])
+    if not isinstance(produces, list):
+        return refs
+    for item in produces:
+        if not isinstance(item, str):
+            continue
+        target_path = target_paths.get(item)
+        refs.append({
+            "id": item,
+            "path": target_path,
+        })
+    return refs
+
+
+def build_subagent_request_id(resolved_run: dict[str, Any], step_id: str, agent_contract: dict[str, Any]) -> str:
+    explicit = agent_contract.get("request_id")
+    if isinstance(explicit, str) and explicit:
+        return substitute_placeholders(
+            explicit,
+            {
+                "run_id": resolved_run["run_id"],
+                "step_id": step_id,
+                "contract_id": agent_contract.get("contract_id"),
+            },
+        )
+    contract_id = agent_contract.get("contract_id")
+    if isinstance(contract_id, str) and contract_id:
+        return f"{resolved_run['run_id']}:{step_id}:{contract_id}"
+    return f"{resolved_run['run_id']}:{step_id}"
+
+
+def agent_contract_artifact_id(agent_contract: dict[str, Any], artifact_key: str) -> str | None:
+    nested = agent_contract.get(artifact_key)
+    if isinstance(nested, dict) and isinstance(nested.get("artifact_id"), str) and nested["artifact_id"]:
+        return nested["artifact_id"]
+    return None
+
+
+def expected_agent_artifact_paths(
+    resolved_run: dict[str, Any],
+    step_id: str,
+    agent_contract: dict[str, Any],
+) -> dict[str, str]:
+    paths = output_target_paths_by_id(resolved_run)
+    request_artifact_id = agent_contract_artifact_id(agent_contract, "request")
+    result_artifact_id = agent_contract_artifact_id(agent_contract, "result")
+    integration_artifact_id = agent_contract_artifact_id(agent_contract, "integration_decision")
+    return {
+        "request_path": (
+            paths.get(str(request_artifact_id))
+            or paths.get(f"subagent_request:{step_id}")
+            or f"reviewable-runs/subagent-requests/request-{slugify(resolved_run['run_id'])}-{slugify(step_id)}.yaml"
+        ),
+        "result_path": (
+            paths.get(str(result_artifact_id))
+            or paths.get(f"subagent_result:{step_id}")
+            or f"reviewable-runs/subagent-results/result-{slugify(resolved_run['run_id'])}-{slugify(step_id)}.md"
+        ),
+        "integration_decision_path": (
+            paths.get(str(integration_artifact_id))
+            or paths.get(f"integration_decision:{step_id}")
+            or f"reviewable-runs/integration-decisions/decision-{slugify(resolved_run['run_id'])}-{slugify(step_id)}.yaml"
+        ),
+    }
+
+
+def synthesize_generic_codex_session_agent_contract(
+    resolved_run: dict[str, Any],
+    step: dict[str, Any],
+) -> dict[str, Any]:
+    step_id = str(step.get("id") or "unknown")
+    workflow_id = str(resolved_run.get("workflow", {}).get("workflow_id") or "unknown_workflow")
+    output_targets = step_output_target_refs(step, resolved_run)
+    expected_paths = generic_agent_artifact_paths(str(resolved_run["run_id"]), step_id)
+    consumes = [item for item in step.get("consumes", []) if isinstance(item, str)] if isinstance(step.get("consumes"), list) else []
+    produces = [item for item in step.get("produces", []) if isinstance(item, str)] if isinstance(step.get("produces"), list) else []
+    return {
+        "contract_id": f"{workflow_id}.{step_id}.generic_codex_session.v1",
+        "contract_kind": "generic_codex_session",
+        "generated_by": "content-agent",
+        "generated_from": {
+            "workflow_id": workflow_id,
+            "step_id": step_id,
+            "fields": [
+                "workflow_id",
+                "step_id",
+                "consumes",
+                "produces",
+                "output_targets",
+            ],
+        },
+        "task_type": "codex_session",
+        "scope": f"{workflow_id}.{step_id}",
+        "consumes": consumes,
+        "produces": produces,
+        "output_targets": deepcopy(output_targets),
+        "request": {
+            "artifact_id": f"subagent_request:{step_id}",
+            "path": expected_paths["request_path"],
+            "schema_version": CONTENT_AGENT_VERSION,
+            "required": True,
+        },
+        "result": {
+            "artifact_id": f"subagent_result:{step_id}",
+            "path": expected_paths["result_path"],
+            "schema_version": CONTENT_AGENT_VERSION,
+            "required": True,
+            "verdicts": {
+                "allowed": sorted(DEFAULT_SUBAGENT_VERDICTS),
+            },
+        },
+        "integration_decision": {
+            "artifact_id": f"integration_decision:{step_id}",
+            "path": expected_paths["integration_decision_path"],
+            "schema_version": CONTENT_AGENT_VERSION,
+            "required": True,
+            "allowed_decisions": sorted(DEFAULT_INTEGRATION_DECISIONS),
+        },
+        "success_criteria": [
+            "Use only declared inputs and admitted context paths.",
+            "Produce or update only the declared workflow output targets for this step.",
+            "Record source-hash awareness in the result artifact.",
+        ],
+        "failure_triggers": [
+            "required input is missing or stale",
+            "requested work exceeds the workflow step action",
+            "required output target cannot be produced",
+            "source hashes cannot be reconciled",
+        ],
+    }
+
+
+def build_subagent_request_from_run(
+    resolved_run: dict[str, Any],
+    resolved_run_path: Path,
+    run_record_path: Path,
+    step: dict[str, Any],
+    agent_contract: dict[str, Any],
+    placeholders: dict[str, Any],
+    package_path: Path,
+    timestamp: str,
+) -> tuple[dict[str, Any], Path]:
+    step_id = str(step.get("id") or "unknown")
+    request_id = build_subagent_request_id(resolved_run, step_id, agent_contract)
+    expected_paths = expected_agent_artifact_paths(resolved_run, step_id, agent_contract)
+    request_path = repo_path_from_artifact_value(expected_paths["request_path"], "subagent_request.expected_artifacts.request_path")
+    allowed_inputs = step_allowed_input_refs(step, resolved_run, agent_contract, placeholders, package_path)
+    source_hashes = source_hashes_from_input_refs(allowed_inputs)
+    result_config = agent_contract.get("result") if isinstance(agent_contract.get("result"), dict) else {}
+    result_verdicts = result_config.get("verdicts") if isinstance(result_config.get("verdicts"), dict) else {}
+    integration_config = agent_contract.get("integration_decision") if isinstance(agent_contract.get("integration_decision"), dict) else {}
+    try:
+        workflow_contract = load_mapping(repo_path_from_artifact_value(resolved_run["workflow"]["contract_path"], "resolved_run.workflow.contract_path"))
+    except Exception:
+        workflow_contract = {}
+    plot_contract_requirements = (
+        agent_contract.get("plot_contract")
+        or step.get("plot_contract")
+        or workflow_contract.get("plot_contract")
+        or {}
+    )
+    contract_source = (
+        "generic_codex_session_synthesized"
+        if agent_contract.get("contract_kind") == "generic_codex_session"
+        else "explicit_agent_contract"
+    )
+    artifact = {
+        "kind": "subagent_request",
+        "schema_version": CONTENT_AGENT_VERSION,
+        "request_id": request_id,
+        "created_at": timestamp,
+        "created_by": "content-agent run",
+        "agent_contract": deepcopy(agent_contract),
+        "package": deepcopy(resolved_run["package"]),
+        "workflow": {
+            **deepcopy(resolved_run["workflow"]),
+            "step_id": step_id,
+        },
+        "run": {
+            "run_id": resolved_run["run_id"],
+            "run_mode": resolved_run.get("run_mode"),
+            "resolved_run_path": repo_relpath(resolved_run_path),
+            "run_record_path": repo_relpath(run_record_path),
+            "runtime_inputs": deepcopy(resolved_run.get("runtime_inputs", {})),
+        },
+        "step": {
+            "id": step_id,
+            "title": step.get("title"),
+            "mode": step.get("mode"),
+            "action": step.get("action"),
+            "consumes": deepcopy(step.get("consumes", [])),
+            "produces": deepcopy(step.get("produces", [])),
+        },
+        "allowed_input_paths": allowed_inputs,
+        "output_targets": step_output_target_refs(step, resolved_run),
+        "source_hashes": source_hashes,
+        "success_criteria": deepcopy(agent_contract.get("success_criteria", [])),
+        "failure_triggers": deepcopy(agent_contract.get("failure_triggers", [])),
+        "plot_contract_requirements": deepcopy(plot_contract_requirements),
+        "expected_artifacts": expected_paths,
+        "result_requirements": {
+            "kind": "subagent_result",
+            "schema_version": CONTENT_AGENT_VERSION,
+            "path": expected_paths["result_path"],
+            "verdict_enum": deepcopy(
+                result_config.get("verdict_enum")
+                or result_config.get("allowed_verdicts")
+                or result_verdicts.get("allowed")
+                or sorted(DEFAULT_SUBAGENT_VERDICTS)
+            ),
+            "required_fields": [
+                "kind",
+                "schema_version",
+                "request_id",
+                "package",
+                "workflow",
+                "run",
+                "verdict",
+                "source_hashes",
+                "findings",
+            ],
+            "line_grounded_findings_required": True,
+        },
+        "integration_requirements": {
+            "kind": "integration_decision",
+            "schema_version": CONTENT_AGENT_VERSION,
+            "path": expected_paths["integration_decision_path"],
+            "allowed_decisions": deepcopy(integration_config.get("allowed_decisions") or sorted(DEFAULT_INTEGRATION_DECISIONS)),
+            "accepted_rejected_result_ids_required": True,
+        },
+        "runtime_behavior": {
+            "content_agent_spawns_model": False,
+            "defer_after_request": True,
+        },
+        "handoff": {
+            "mode": "defer_to_subagent",
+            "contract_source": contract_source,
+            "same_session_compatible": False,
+        },
+    }
+    return artifact, request_path
 
 
 def default_promoted_output_state(validation_state: str = "passed") -> dict[str, str]:
@@ -3175,6 +4443,8 @@ def build_execution_run_record(
     command_results: list[dict[str, Any]],
     gate_artifact_path: Path | None,
     gate_artifact: dict[str, Any] | None,
+    subagent_request_path: Path | None,
+    subagent_request: dict[str, Any] | None,
     stop_reason: str,
 ) -> dict[str, Any]:
     resolved_run_relpath = repo_relpath(resolved_run_path)
@@ -3199,6 +4469,8 @@ def build_execution_run_record(
     )
     if gate_artifact_path:
         produced_artifacts.append({"id": "review_gate", "paths": [repo_relpath(gate_artifact_path)]})
+    if subagent_request_path:
+        produced_artifacts.append({"id": "subagent_request", "paths": [repo_relpath(subagent_request_path)]})
     runtime_inputs = resolved_run.get("runtime_inputs")
     if not isinstance(runtime_inputs, dict):
         runtime_inputs = {}
@@ -3217,6 +4489,12 @@ def build_execution_run_record(
     execution_options = resolved_run.get("execution_options")
     if not isinstance(execution_options, dict):
         execution_options = {}
+    handoff_resolution = resolved_run.get("policy_resolution", {}).get("codex_session_handoff", {})
+    if not isinstance(handoff_resolution, dict):
+        handoff_resolution = {}
+    requested_handoff = handoff_resolution.get("requested_mode")
+    if isinstance(requested_handoff, str) and requested_handoff not in {"", "policy"}:
+        invocation_parts.extend(["--codex-session-handoff", requested_handoff])
     if execution_options.get("start_at"):
         invocation_parts.extend(["--start-at", str(execution_options["start_at"])])
     if execution_options.get("max_scriptable_steps") is not None:
@@ -3262,7 +4540,12 @@ def build_execution_run_record(
         "promoted_output_state": default_promoted_output_state(validation_state),
         "execution": {
             "stop_reason": stop_reason,
+            "codex_session_handoff": deepcopy(handoff_resolution),
             "scriptable_steps": command_results,
+            "subagent_request": {
+                "request_id": subagent_request.get("request_id") if subagent_request else None,
+                "path": repo_relpath(subagent_request_path) if subagent_request_path else None,
+            } if subagent_request_path else None,
         },
     }
 
@@ -3286,6 +4569,7 @@ def execute_resolved_run(
         runtime_inputs = {}
     placeholders = build_runtime_placeholders(package_key, status_data, runtime_inputs)
     declared_commands = declared_rendered_commands(contract, placeholders)
+    codex_session_handoff = codex_session_handoff_resolution_from_resolved_run(resolved_run, contract)
     steps = contract.get("steps", [])
     if not isinstance(steps, list):
         raise ValueError("workflow steps must be a list.")
@@ -3297,6 +4581,8 @@ def execute_resolved_run(
     stop_reason = "workflow completed"
     gate_artifact = None
     gate_artifact_path = None
+    subagent_request = None
+    subagent_request_path = None
     run_record_path = RUN_RECORDS_DIR / f"{resolved_run['run_id']}.yaml"
     if run_record_path.exists():
         raise FileExistsError(f"Run record already exists: {repo_relpath(run_record_path)}")
@@ -3323,6 +4609,45 @@ def execute_resolved_run(
                 enforcement_outcomes,
                 utc_timestamp(),
             )
+            break
+        agent_contract = step.get("agent_contract")
+        if mode != "scriptable" and isinstance(agent_contract, dict):
+            subagent_request, subagent_request_path = build_subagent_request_from_run(
+                resolved_run,
+                resolved_run_path,
+                run_record_path,
+                step,
+                agent_contract,
+                placeholders,
+                manifest_ref.package_path,
+                utc_timestamp(),
+            )
+            if subagent_request_path.exists():
+                raise FileExistsError(f"Subagent request already exists: {repo_relpath(subagent_request_path)}")
+            terminal_status = "deferred"
+            stop_reason = f"emitted subagent request and deferred before agent_contract step: {step_id}"
+            break
+        if mode == "codex_session":
+            step_handoff = codex_session_handoff_step(codex_session_handoff, step_id)
+            if step_handoff.get("mode") == "defer_to_subagent":
+                generic_agent_contract = synthesize_generic_codex_session_agent_contract(resolved_run, step)
+                subagent_request, subagent_request_path = build_subagent_request_from_run(
+                    resolved_run,
+                    resolved_run_path,
+                    run_record_path,
+                    step,
+                    generic_agent_contract,
+                    placeholders,
+                    manifest_ref.package_path,
+                    utc_timestamp(),
+                )
+                if subagent_request_path.exists():
+                    raise FileExistsError(f"Subagent request already exists: {repo_relpath(subagent_request_path)}")
+                terminal_status = "deferred"
+                stop_reason = f"emitted generic codex_session subagent request and deferred before step: {step_id}"
+                break
+            terminal_status = "deferred"
+            stop_reason = f"deferred before codex_session step in same_session mode: {step_id}"
             break
         if mode != "scriptable":
             terminal_status = "deferred"
@@ -3362,10 +4687,14 @@ def execute_resolved_run(
         command_results=command_results,
         gate_artifact_path=gate_artifact_path,
         gate_artifact=gate_artifact,
+        subagent_request_path=subagent_request_path,
+        subagent_request=subagent_request,
         stop_reason=stop_reason,
     )
     if gate_artifact and gate_artifact_path:
         write_yaml_mapping(gate_artifact_path, gate_artifact)
+    if subagent_request and subagent_request_path:
+        write_yaml_mapping(subagent_request_path, subagent_request)
     write_yaml_mapping(run_record_path, run_record)
 
     validation_report = build_validation_report(
@@ -3383,10 +4712,13 @@ def execute_resolved_run(
         "run_id": resolved_run["run_id"],
         "terminal_status": terminal_status,
         "stop_reason": stop_reason,
+        "codex_session_handoff": deepcopy(codex_session_handoff),
         "resolved_run_path": repo_relpath(resolved_run_path),
         "run_record_path": repo_relpath(run_record_path),
         "review_gate_path": repo_relpath(gate_artifact_path) if gate_artifact_path else None,
         "review_gate_id": gate_artifact.get("gate_id") if gate_artifact else None,
+        "subagent_request_path": repo_relpath(subagent_request_path) if subagent_request_path else None,
+        "subagent_request_id": subagent_request.get("request_id") if subagent_request else None,
         "scriptable_steps_executed": scriptable_count,
         "command_results": command_results,
     }
@@ -3401,6 +4733,7 @@ def build_run_execution_report(
     supplied_run_id: str | None = None,
     start_at: str | None = None,
     max_scriptable_steps: int | None = None,
+    codex_session_handoff: str = "policy",
 ) -> dict[str, Any]:
     runtime_inputs = runtime_inputs or {}
     resolved_run, resolved_run_path, persistence_reasons = build_resolved_run_payload(
@@ -3409,12 +4742,13 @@ def build_run_execution_report(
         run_mode=run_mode,
         runtime_inputs=runtime_inputs,
         supplied_run_id=supplied_run_id,
+        codex_session_handoff=codex_session_handoff,
     )
     if start_at is not None or max_scriptable_steps is not None:
-        resolved_run["execution_options"] = {
-            "start_at": start_at,
-            "max_scriptable_steps": max_scriptable_steps,
-        }
+        execution_options = resolved_run.setdefault("execution_options", {})
+        if isinstance(execution_options, dict):
+            execution_options["start_at"] = start_at
+            execution_options["max_scriptable_steps"] = max_scriptable_steps
     if not persistence_reasons:
         raise ValueError("content-agent run currently requires a persisted resolved_run.")
     write_yaml_mapping(resolved_run_path, resolved_run)
@@ -3977,6 +5311,13 @@ def print_text_run_resolution(report: dict[str, Any]) -> None:
     print(f"package: {report.get('package')}")
     print(f"run_id: {report.get('run_id')}")
     print(f"run_mode: {report.get('run_mode')}")
+    handoff = report.get("codex_session_handoff")
+    if isinstance(handoff, dict):
+        print(
+            "codex_session_handoff: "
+            f"requested={handoff.get('requested_mode')}, "
+            f"default={handoff.get('effective_default_mode')}"
+        )
     print(f"persisted: {str(report.get('persisted') is True).lower()}")
     if report.get("resolved_run_path"):
         print(f"resolved_run: {report.get('resolved_run_path')}")
@@ -3996,12 +5337,23 @@ def print_text_run_execution(report: dict[str, Any]) -> None:
     print(f"run_id: {report.get('run_id')}")
     print(f"terminal_status: {report.get('terminal_status')}")
     print(f"stop_reason: {report.get('stop_reason')}")
+    handoff = report.get("codex_session_handoff")
+    if isinstance(handoff, dict):
+        print(
+            "codex_session_handoff: "
+            f"requested={handoff.get('requested_mode')}, "
+            f"default={handoff.get('effective_default_mode')}"
+        )
     print(f"resolved_run: {report.get('resolved_run_path')}")
     print(f"run_record: {report.get('run_record_path')}")
     if report.get("review_gate_path"):
         print(f"review_gate: {report.get('review_gate_id')} ({report.get('review_gate_path')})")
     else:
         print("review_gate: none")
+    if report.get("subagent_request_path"):
+        print(f"subagent_request: {report.get('subagent_request_id')} ({report.get('subagent_request_path')})")
+    else:
+        print("subagent_request: none")
     print(f"scriptable_steps_executed: {report.get('scriptable_steps_executed')}")
 
 
@@ -4096,6 +5448,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="Run mode for context admission and persistence policy.",
     )
     run.add_argument("--run-id", help="Optional deterministic run id for tests or handoffs.")
+    run.add_argument(
+        "--codex-session-handoff",
+        choices=sorted(VALID_CODEX_SESSION_HANDOFF_MODES),
+        default="policy",
+        help=(
+            "How codex_session steps hand off: policy/default follows harness policy, "
+            "defer_to_subagent emits a request artifact, same_session defers without a request."
+        ),
+    )
     run.add_argument(
         "--resolve-only",
         action="store_true",
@@ -4285,6 +5646,7 @@ def main() -> None:
                     run_mode=args.mode,
                     runtime_inputs=runtime_inputs,
                     supplied_run_id=args.run_id,
+                    codex_session_handoff=args.codex_session_handoff,
                 )
             else:
                 report = build_run_execution_report(
@@ -4295,6 +5657,7 @@ def main() -> None:
                     supplied_run_id=args.run_id,
                     start_at=args.start_at,
                     max_scriptable_steps=args.max_scriptable_steps,
+                    codex_session_handoff=args.codex_session_handoff,
                 )
         except Exception as exc:
             if args.format == "json":
