@@ -1,0 +1,247 @@
+kind: run_record
+schema_version: 1
+run_id: agent-harnesses-topic-discovery-rank-candidate-essay-objects
+resolved_run_path: reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml
+package:
+  path: publications/agent-harnesses
+  status_path: publications/agent-harnesses/status.yaml
+  status_hash: sha256:8086072ff41b7cdf74f98b008fb466039f1da1f86b9a8e5ad36dd9d38739aa57
+workflow:
+  workflow_id: topic_discovery
+  workflow_version: 1
+  workflow_hash: sha256:8da3aa3758b4bb9bc848c2daf2ca4fcec7e3f1674460e1b67fea9cdd074b987d
+  contract_path: workflows/topic-discovery/workflow.yaml
+run_mode: governed_continuous
+timestamps:
+  started_at: '2026-05-07T15:18:17Z'
+  ended_at: '2026-05-07T15:18:17Z'
+invocation:
+  entrypoint: content-agent run
+  command: ./content-agent run --workflow topic_discovery --package agent-harnesses
+    --input 'discovery_trigger=agent harnesses' --input target_publication_ambition=north_star_flagship
+    --codex-session-handoff defer_to_subagent --start-at rank_candidate_essay_objects
+context_admission:
+- id: seed_question_archive_gap_external_trigger_review_finding_or_broad_domain
+  required: true
+  status: resolved
+  value: agent harnesses
+- id: relevant_prior_essays_or_archive_cluster
+  required: false
+  status: resolved
+  paths:
+  - publications/agent-harnesses
+  hashes:
+    publications/agent-harnesses:
+      type: directory_listing_sha256
+      sha256: 5c4473c9e1f2167a92cbc69f54364b5f63f6abb149e55275fd3cf26a07a3af00
+      file_count: 2
+- id: target_publication_ambition
+  required: true
+  status: resolved
+  value: north_star_flagship
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/topic-discovery/README.md
+  hashes:
+    workflows/topic-discovery/README.md:
+      type: file_sha256
+      sha256: 6e7074b6060602a6db0bd184b3090efa64ec2f63d72c1a78f89492f77ebf7001
+      size_bytes: 15717
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/topic-discovery/templates
+  hashes:
+    workflows/topic-discovery/templates:
+      type: directory_listing_sha256
+      sha256: 9716cad2232286e671092ec83ea0aaf064ea4672a8287662d7f2bf097c56445a
+      file_count: 1
+- id: alphaxiv_skill
+  required: true
+  status: resolved
+  paths:
+  - workflows/skills/alphaxiv/SKILL.md
+  hashes:
+    workflows/skills/alphaxiv/SKILL.md:
+      type: file_sha256
+      sha256: 15dc7b3bfbe601198cc29cd67d6e7e2f5c8372651a006d391970c506cc95e2e7
+      size_bytes: 5927
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6
+      size_bytes: 4858
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+consumed_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml
+  hashes:
+    reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml:
+      type: file_sha256
+      sha256: a8267de3cb14709b1a071954531920e622e0d27c3481eae99f1a2f90bae71b72
+      size_bytes: 10430
+- id: context:relevant_prior_essays_or_archive_cluster
+  paths:
+  - publications/agent-harnesses
+  hashes:
+    publications/agent-harnesses:
+      type: directory_listing_sha256
+      sha256: 5c4473c9e1f2167a92cbc69f54364b5f63f6abb149e55275fd3cf26a07a3af00
+      file_count: 2
+- id: context:workflow_readme
+  paths:
+  - workflows/topic-discovery/README.md
+  hashes:
+    workflows/topic-discovery/README.md:
+      type: file_sha256
+      sha256: 6e7074b6060602a6db0bd184b3090efa64ec2f63d72c1a78f89492f77ebf7001
+      size_bytes: 15717
+- id: context:workflow_templates
+  paths:
+  - workflows/topic-discovery/templates
+  hashes:
+    workflows/topic-discovery/templates:
+      type: directory_listing_sha256
+      sha256: 9716cad2232286e671092ec83ea0aaf064ea4672a8287662d7f2bf097c56445a
+      file_count: 1
+- id: context:alphaxiv_skill
+  paths:
+  - workflows/skills/alphaxiv/SKILL.md
+  hashes:
+    workflows/skills/alphaxiv/SKILL.md:
+      type: file_sha256
+      sha256: 15dc7b3bfbe601198cc29cd67d6e7e2f5c8372651a006d391970c506cc95e2e7
+      size_bytes: 5927
+- id: context:harness_policy
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6
+      size_bytes: 4858
+- id: context:gate_contracts
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+parent_artifacts:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml
+- id: package_status
+  path: publications/agent-harnesses/status.yaml
+produced_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml
+- id: run_record
+  paths:
+  - reviewable-runs/logs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml
+- id: subagent_request
+  paths:
+  - reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-rank-candidate-essay-objects-rank-candidate-essay-objects.yaml
+validation_results:
+- id: content_agent_validate
+  status: passed
+  command: ./content-agent validate
+enforcement_outcomes:
+- surface: contract_shape
+  posture: deny
+  status: passed
+- surface: context_admission
+  posture: deny
+  status: passed
+- surface: tool_use
+  posture: deny
+  status: passed
+- surface: path_access
+  posture: deny
+  status: passed
+- surface: review_gates
+  posture: deny
+  status: not_reached
+- surface: external_mutation
+  posture: deny
+  status: not_attempted
+- surface: lifecycle_movement
+  posture: deny
+  status: not_attempted
+- surface: promotion
+  posture: deny
+  status: not_attempted
+- surface: trace_completeness
+  posture: detect
+  status: recorded
+gate_ids: []
+approval_decisions: []
+external_mutations:
+- target: none
+  status: not_attempted
+  approval_reference: null
+terminal_status: deferred
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: passed
+  trace_state: minimum_complete
+execution:
+  stop_reason: 'emitted generic codex_session subagent request and deferred before
+    step: rank_candidate_essay_objects'
+  codex_session_handoff:
+    requested_mode: defer_to_subagent
+    supported_modes:
+    - default
+    - defer_to_subagent
+    - policy
+    - same_session
+    effective_modes:
+    - defer_to_subagent
+    - same_session
+    fallback_default_mode: defer_to_subagent
+    policy_default_mode: defer_to_subagent
+    workflow_default_mode: null
+    effective_default_mode: defer_to_subagent
+    policy_config_present: true
+    steps:
+      state_discovery_trigger:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      map_topic_vocabulary:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      inspect_candidate_papers:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      rank_candidate_essay_objects:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+  scriptable_steps: []
+  subagent_request:
+    request_id: agent-harnesses-topic-discovery-rank-candidate-essay-objects:rank_candidate_essay_objects:topic_discovery.rank_candidate_essay_objects.generic_codex_session.v1
+    path: reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-rank-candidate-essay-objects-rank-candidate-essay-objects.yaml

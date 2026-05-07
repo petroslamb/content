@@ -1,0 +1,153 @@
+kind: subagent_request
+schema_version: 1
+request_id: agent-harnesses-topic-discovery-inspect-candidate-papers:inspect_candidate_papers:topic_discovery.inspect_candidate_papers.generic_codex_session.v1
+created_at: '2026-05-07T15:14:09Z'
+created_by: content-agent run
+agent_contract:
+  contract_id: topic_discovery.inspect_candidate_papers.generic_codex_session.v1
+  contract_kind: generic_codex_session
+  generated_by: content-agent
+  generated_from:
+    workflow_id: topic_discovery
+    step_id: inspect_candidate_papers
+    fields:
+    - workflow_id
+    - step_id
+    - consumes
+    - produces
+    - output_targets
+  task_type: codex_session
+  scope: topic_discovery.inspect_candidate_papers
+  consumes:
+  - topic_vocabulary_map
+  produces:
+  - ranked_candidate_paper_pool
+  output_targets:
+  - id: ranked_candidate_paper_pool
+    path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-candidate-paper-pool.md
+  request:
+    artifact_id: subagent_request:inspect_candidate_papers
+    path: reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml
+    schema_version: 1
+    required: true
+  result:
+    artifact_id: subagent_result:inspect_candidate_papers
+    path: reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.md
+    schema_version: 1
+    required: true
+    verdicts:
+      allowed:
+      - defer
+      - fail
+      - pass
+      - stale
+  integration_decision:
+    artifact_id: integration_decision:inspect_candidate_papers
+    path: reviewable-runs/integration-decisions/decision-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml
+    schema_version: 1
+    required: true
+    allowed_decisions:
+    - accept
+    - defer
+    - reject
+  success_criteria:
+  - Use only declared inputs and admitted context paths.
+  - Produce or update only the declared workflow output targets for this step.
+  - Record source-hash awareness in the result artifact.
+  failure_triggers:
+  - required input is missing or stale
+  - requested work exceeds the workflow step action
+  - required output target cannot be produced
+  - source hashes cannot be reconciled
+package:
+  path: publications/agent-harnesses
+  status_path: publications/agent-harnesses/status.yaml
+  status_hash: sha256:8086072ff41b7cdf74f98b008fb466039f1da1f86b9a8e5ad36dd9d38739aa57
+workflow:
+  workflow_id: topic_discovery
+  workflow_version: 1
+  workflow_hash: sha256:8da3aa3758b4bb9bc848c2daf2ca4fcec7e3f1674460e1b67fea9cdd074b987d
+  contract_path: workflows/topic-discovery/workflow.yaml
+  step_id: inspect_candidate_papers
+run:
+  run_id: agent-harnesses-topic-discovery-inspect-candidate-papers
+  run_mode: governed_continuous
+  resolved_run_path: reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-inspect-candidate-papers.yaml
+  run_record_path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers.yaml
+  runtime_inputs:
+    discovery_trigger: agent harnesses
+    target_publication_ambition: north_star_flagship
+step:
+  id: inspect_candidate_papers
+  title: Inspect candidate papers
+  mode: codex_session
+  action: Build a ranked candidate paper pool with exclusions and near-misses.
+  consumes:
+  - topic_vocabulary_map
+  produces:
+  - ranked_candidate_paper_pool
+allowed_input_paths:
+- id: topic_vocabulary_map
+  source: output_target
+  paths:
+  - reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-topic-vocabulary-map.md
+  hashes:
+    reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-topic-vocabulary-map.md: &id001
+      type: file_sha256
+      sha256: 9fa3dfa052a8d2b60c2acf267483b78e2cfadc58d70723269e0f9627ba81dfe7
+      size_bytes: 9235
+output_targets:
+- id: ranked_candidate_paper_pool
+  path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-candidate-paper-pool.md
+source_hashes:
+  reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-topic-vocabulary-map.md: *id001
+success_criteria:
+- Use only declared inputs and admitted context paths.
+- Produce or update only the declared workflow output targets for this step.
+- Record source-hash awareness in the result artifact.
+failure_triggers:
+- required input is missing or stale
+- requested work exceeds the workflow step action
+- required output target cannot be produced
+- source hashes cannot be reconciled
+plot_contract_requirements: {}
+expected_artifacts:
+  request_path: reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml
+  result_path: reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.md
+  integration_decision_path: reviewable-runs/integration-decisions/decision-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml
+result_requirements:
+  kind: subagent_result
+  schema_version: 1
+  path: reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.md
+  verdict_enum:
+  - defer
+  - fail
+  - pass
+  - stale
+  required_fields:
+  - kind
+  - schema_version
+  - request_id
+  - package
+  - workflow
+  - run
+  - verdict
+  - source_hashes
+  - findings
+  line_grounded_findings_required: true
+integration_requirements:
+  kind: integration_decision
+  schema_version: 1
+  path: reviewable-runs/integration-decisions/decision-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml
+  allowed_decisions:
+  - accept
+  - defer
+  - reject
+  accepted_rejected_result_ids_required: true
+runtime_behavior:
+  content_agent_spawns_model: false
+  defer_after_request: true
+handoff:
+  mode: defer_to_subagent
+  contract_source: generic_codex_session_synthesized
+  same_session_compatible: false

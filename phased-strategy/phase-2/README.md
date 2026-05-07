@@ -16,11 +16,14 @@ Use this folder for Phase 2 planning only. Promote decisions into implementation
 
 - Phase 2.1 through 2.6 are implemented and committed as the Phase 2 local platform baseline.
 - Phase 2.6 has a retained real-package proof run: `phase-2-6-editorial-report-proof`.
+- Phase 2.7 is the documented post-baseline handoff-discipline subphase; it does not add runtime autonomy or change `content-agent` into a model runner.
 - Phase 1.6 still exists as a separate roadmap phase, but Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
 - This folder now treats Phase 2 as contract-first, validation-first, and trace-first rather than CLI-first.
 - Umbrella and leaf package normalization is now mostly done. Phase 2 should treat the current package model as a consumed contract surface, not as new migration work.
 
-The baseline closes the local governed-runtime implementation: workflow contracts, validation, evidence, gates, `content-agent`, cockpit, and bounded editorial-report automation. It does not claim autonomous end-to-end publication, browser-backed external mutation, multi-agent orchestration, or full lifecycle reliability across multiple fresh packages.
+The 2.1-2.6 baseline closes the local governed-runtime implementation: workflow contracts, validation, evidence, gates, `content-agent`, cockpit, and bounded editorial-report automation. It does not claim autonomous end-to-end publication, browser-backed external mutation, hidden multi-agent orchestration, or full lifecycle reliability across multiple fresh packages.
+
+Phase 2.7 formalizes the post-baseline operator discipline for clean-context subagent handoffs: parent sessions orchestrate, subagents do model-mediated work, and deterministic artifacts prove what happened. Request/result schema additions, workflow-specific skills, and hook enforcement remain later implementation work unless promoted into the appropriate authority surfaces.
 
 ## What Phase 2 Promotes From `literate-workflow-programming`
 
@@ -61,12 +64,13 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 - **2.4 Gate Runtime and `content-agent`**: make review stops resumable through stable artifacts and a thin CLI.
 - **2.5 Local Cockpit**: expose package state, gates, and recent runs from file-backed truth.
 - **2.6 Editorial Automation**: add structured style/compliance reporting and source-improvement suggestions without autonomous promotion.
+- **2.7 Agent Handoff Discipline**: formalize clean-context subagent handoffs while keeping `content-agent` deterministic.
 
 ## Documents
 
 | Document | Role |
 | :--- | :--- |
-| [`milestones.md`](milestones.md) | Phase 2.1-2.6 sequence, dependencies, and closure read. |
+| [`milestones.md`](milestones.md) | Phase 2.1-2.7 sequence, dependencies, and closure read. |
 | [`architecture.md`](architecture.md) | Core boundary and platform decisions: machine truth, thin runtime, gate store, traces, and source-of-truth rules. |
 | [`workflow-yaml-schema.md`](workflow-yaml-schema.md) | The target machine contract for executable workflows. |
 | [`review-gate-protocol.md`](review-gate-protocol.md) | Review-gate classes, artifact contract, gate store, and resume model. |
@@ -74,6 +78,7 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 | [`2.4-gate-runtime-and-content-agent.md`](2.4-gate-runtime-and-content-agent.md) | The deterministic CLI/runtime implementation plan after contracts, validation, and evidence. |
 | [`2.5-local-cockpit.md`](2.5-local-cockpit.md) | The numbered cockpit phase wrapper and dependency boundary. |
 | [`2.6-editorial-automation.md`](2.6-editorial-automation.md) | The bounded editorial automation plan after governed gates and article-polish boundaries stabilize. |
+| [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md) | The post-baseline parent/subagent handoff discipline, exit protocol, skill plan, and hook posture. |
 | [`open-questions.md`](open-questions.md) | The remaining Phase 2 decisions that are still genuinely open. |
 | [`idea-bank.md`](idea-bank.md) | Candidate ideas that may justify rewriting Phase 2 before implementation. |
 | [`claim-ledger.md`](claim-ledger.md) | Phase 2 planning claims that should be pressure-tested before implementation. |
@@ -81,7 +86,7 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 
 ## Foundation Specs
 
-The first implementation packets for the Phase 2 foundation are:
+The numbered implementation and strategy packets for the Phase 2 foundation are:
 
 - [`2.1-executable-workflow-contract.md`](2.1-executable-workflow-contract.md)
 - [`2.2-enforcement-and-validation-layer.md`](2.2-enforcement-and-validation-layer.md)
@@ -89,6 +94,7 @@ The first implementation packets for the Phase 2 foundation are:
 - [`2.4-gate-runtime-and-content-agent.md`](2.4-gate-runtime-and-content-agent.md)
 - [`2.5-local-cockpit.md`](2.5-local-cockpit.md)
 - [`2.6-editorial-automation.md`](2.6-editorial-automation.md)
+- [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md)
 
 ## Input Sources
 

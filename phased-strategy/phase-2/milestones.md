@@ -10,6 +10,7 @@ The sequence is:
 4. deterministic `content-agent` runtime
 5. thin local cockpit
 6. bounded editorial automation
+7. disciplined clean-context subagent handoffs
 
 That order is deliberate. Phase 2 should not start with a dashboard, fat runtime, or autonomous agent wrapper over unstable workflow semantics.
 
@@ -37,6 +38,7 @@ The current operative stack is:
 - [`2.4-gate-runtime-and-content-agent.md`](2.4-gate-runtime-and-content-agent.md): deterministic CLI/runtime implementation plan
 - [`2.5-local-cockpit.md`](2.5-local-cockpit.md): cockpit dependency boundary and v0 scope
 - [`2.6-editorial-automation.md`](2.6-editorial-automation.md): bounded editorial automation plan
+- [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md): post-baseline parent/subagent handoff discipline
 - [`workflow-yaml-schema.md`](workflow-yaml-schema.md): schema companion to 2.1, not a competing authority
 
 ## Subphase Read
@@ -49,6 +51,7 @@ The current operative stack is:
 | **2.4 Gate Runtime and `content-agent`** | Implement the deterministic CLI/runtime over stable contracts and evidence. | 2.1, 2.2, 2.3, `gate_contracts.yaml`, `pipeline_profiles.yaml`, `harness_policy.yaml`. | Implemented. `content-agent init`, `status`, `next`, `run`, `resume`, `review`, and `validate` work over file-backed truth without becoming an LLM persona or second orchestration language. |
 | **2.5 Local Cockpit** | Add a thin browser reader/approver over package state, gates, and recent runs. | Stable gate store, run records, and CLI commands. | Implemented. The cockpit exposes package state, pending gates, recent runs, validation health, gate decisions, and report-only editorial checks while leaving filesystem-backed YAML and package files authoritative. |
 | **2.6 Editorial Automation** | Add structured editorial/style/compliance reporting. | Stable governed run path and article-polish boundaries. | Implemented. Automation produces reports, violations, and source-improvement suggestions without autonomous rewrite, promotion, publication, or lifecycle authority. |
+| **2.7 Agent Handoff Discipline** | Formalize clean-context subagent handoffs after the deterministic runtime baseline. | 2.4 runtime boundary, 2.6 editorial automation closeout, `codex_session_handoff` policy, and Reviewable Runs handoff stores. | Strategy subphase documented. Parent sessions orchestrate, worker subagents do model-mediated work with `fork_context=false`, `content-agent` emits and validates deterministic artifacts without spawning models, and hook/skill additions remain later implementation work. |
 
 ## Implementation Closeout
 
@@ -66,6 +69,8 @@ Retained proof:
 That proof demonstrates the current platform path on a real package: `article_polish` produced a structured editorial report, recorded the report as a declared workflow output, stopped at a file-backed release-readiness gate, and linked the live draft plus report into gate preview and evidence paths.
 
 Do not read this as a claim that Phase 2 now performs autonomous end-to-end publication. External mutation, lifecycle movement, and promotion remain gate-controlled and human-approved.
+
+Phase 2.7 is a post-baseline discipline layer rather than a new autonomy claim. It records how parent sessions should supervise clean-context workers, how workers should exit, and which request/result fields, skills, and hooks should be implemented later.
 
 ## First Workflow Set
 
@@ -185,6 +190,21 @@ The starting point is:
 
 This pass must not create autonomous rewrite, promotion, publication, or lifecycle authority.
 
+### 7. Agent Handoff Discipline Pass
+
+Formalize clean-context subagent handoffs after the deterministic runtime baseline exists.
+
+This pass should produce:
+
+- a Phase 2.7 strategy doc after 2.6
+- a hard worker exit protocol
+- request-artifact additions for recommended skills, exit protocol, and verification requirements
+- result-artifact additions for deterministic verification commands
+- a skill plan beginning with `content-agent-handoff`
+- a design-only hook plan for later Stop-hook enforcement
+
+This pass must not enable hooks by default, edit runtime code, change workflow YAML, spawn models from `content-agent`, clear gates automatically, or claim autonomous publication.
+
 ## Phase 2 Gate Read
 
 The implemented Phase 2 baseline now shows:
@@ -196,6 +216,7 @@ The implemented Phase 2 baseline now shows:
 5. source-linked run records with context hashes, workflow version/hash, parent artifacts, validation results, enforcement outcomes, gate ids, and promoted-output state
 6. `content-agent` commands operating over file-backed truth without replacing repo source surfaces
 7. retained proof runs on real package paths, not synthetic demos
+8. documented handoff discipline that keeps model-mediated work in clean-context subagents while preserving deterministic evidence
 
 The stronger claim that the platform is reliable across multiple fresh idea-to-publication lifecycles remains outside this implementation closeout. That is a later proof campaign, not a prerequisite for the Phase 2.1-2.6 local baseline.
 
@@ -210,6 +231,7 @@ The following remain out of the Phase 2 milestone baseline:
 - standalone promoted-output manifests
 - full semantic provenance graphs
 - event-sourced replay as a minimum requirement
-- multi-agent or subagent orchestration as the default runtime model
+- hidden multi-agent orchestration, autonomous model spawning, or external scheduler-driven subagent routing as the default runtime model
+- default-enabled hook enforcement for subagent exits
 - host-independent verifiable traces
 - autonomous self-improvement or harness synthesis
