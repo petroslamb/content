@@ -41,9 +41,11 @@ from essay_iteration_support import (
     SCORECARD_BODY_HEADINGS,
     SCORECARD_FRONTMATTER_FIELDS,
     build_packet_paths,
+    candidate_scaffold_residue_findings,
     escalation_mode_active,
     packet_schema_version,
     resolve_live_draft,
+    validate_replacement_agent_contract,
     valid_dominant_blocker_slug,
 )
 from lifecycle import REPO_ROOT, load_status_ref, split_frontmatter
@@ -142,6 +144,8 @@ def validate_candidate_sections(candidate_text: str, errors: list[str]) -> None:
         errors.append("Candidate draft is missing a limits or borders section.")
     if not any(heading in candidate_text for heading in CANDIDATE_REFERENCES_HEADINGS):
         errors.append("Candidate draft is missing a references or endmatter section.")
+    for finding in candidate_scaffold_residue_findings(candidate_text):
+        errors.append(f"Candidate draft has scaffold residue: {finding}")
 
 
 def validate_voice_rules(candidate_text: str, voice_rules_path: Path, errors: list[str]) -> None:
@@ -526,6 +530,13 @@ def validate_packet(packet: dict, phase: str = "full") -> list[str]:
             errors.append("Draft-only packet may not allow promotion in the decision file.")
         if decision_frontmatter.get("recommendation") == "promote_candidate":
             errors.append("Draft-only packet may not recommend promote_candidate.")
+
+    contract_errors, _ = validate_replacement_agent_contract(
+        packet,
+        require_present=False,
+        require_allowed=False,
+    )
+    errors.extend(contract_errors)
 
     return errors
 

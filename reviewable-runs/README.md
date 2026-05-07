@@ -67,12 +67,27 @@ That path is the package front door.
 - `resolved-runs/`: Phase 2 durable resolved-run YAML for governed, gated, resumable, continuous, or audit-relevant runs
 - `logs/`: Phase 2 YAML run records plus lightweight operational records and grandfathered lifecycle-stage logs
 - `gates/`: Phase 2 concrete review-gate YAML stop/resume artifacts
+- `subagent-requests/`, `subagent-results/`, and `integration-decisions/`: narrow Phase 2/3 agent-contract and codex-session handoff artifacts for bounded clean-context work; requests declare the admitted files and hashes, results record the worker verdict, and integration decisions record how the parent run used or rejected that verdict
 - `examples/`: what the framework looks like in practice
 - `evaluation/`: how to judge runs, architectures, and the framework itself
 - `analysis/`: advanced empirical interpretation and tuning
 - `templates/`: direct record templates plus a few supporting patterns
 - `validation-lab/`: advanced synthetic pressure-testing
 - `archive/`: background history only
+
+## Codex Session Handoffs
+
+`harness_policy.yaml` owns the global `codex_session_handoff` policy. Its default mode is `defer_to_subagent`: `content-agent` may emit a deterministic request artifact for a `codex_session` step and then stop. It must not spawn a model or perform model-mediated work itself.
+
+The compatibility mode is `same_session`, which preserves the older behavior: stop at the `codex_session` boundary without writing a subagent request. Workflows may set a local default, and individual steps may override that default.
+
+Handoff artifacts live here:
+
+- `subagent-requests/`: deterministic request YAML emitted by the parent run
+- `subagent-results/`: worker-authored result or verdict artifacts
+- `integration-decisions/`: parent-run decisions accepting, rejecting, or deferring a result
+
+Gate-critical handoffs should use explicit `agent_contract` declarations. The first such contract is `essay_iteration.run_cold_replacement_review`, which remains blocked on a passing result and an accepted integration decision before the `replacement_north_star` gate can clear.
 
 ## Examples, Proof, Validation, Archive
 

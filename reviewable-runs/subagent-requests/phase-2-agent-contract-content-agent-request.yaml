@@ -1,0 +1,52 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-2-agent-contract-content-agent
+created_at: '2026-05-07'
+agent_type: worker
+fork_context: false
+reasoning_effort: high
+purpose: >
+  Add deterministic content-agent plumbing for a declared agent_contract on
+  essay_iteration.run_cold_replacement_review.
+background: |
+  content-agent must not spawn models. For an agent_contract step it should emit
+  a durable request artifact, defer, and later validate result/integration
+  artifacts mechanically. Parent Codex/subagents perform model-mediated critique
+  outside content-agent and persist artifacts under reviewable-runs.
+
+  You are not alone in the codebase. Other workers may edit workflow YAML,
+  harness_policy.yaml, scripts/harness.py, scripts/check_essay_iteration_packet.py,
+  and scripts/essay_iteration_support.py. Do not revert their work.
+write_scope:
+  - scripts/content_agent.py
+read_first:
+  - AGENTS.md
+  - AUTHORITY.md
+  - reviewable-runs/subagent-results/phase-2-primary-proof-plot-audit-result.md
+  - reviewable-runs/subagent-results/phase-2-agent-task-architecture-review-result.md
+  - workflows/essay-iteration/workflow.yaml
+  - scripts/content_agent.py
+task: |
+  Implement deterministic content-agent support only.
+
+  Required outcome:
+  1. Define directories/constants for subagent requests, subagent results, and
+     integration decisions. Include them in init/runtime evidence handling.
+  2. When execute_resolved_run reaches a non-scriptable step with agent_contract,
+     write the declared request artifact, include resolved package/workflow/run,
+     step_id, allowed input paths, output targets, source hashes, success criteria,
+     failure triggers, plot_contract requirements, and expected result/integration
+     paths. Then defer. Do not spawn a model.
+  3. Existing non-agent non-scriptable steps should keep their current defer behavior.
+  4. Add mechanical validators for subagent result and integration-decision artifacts:
+     schema/kind, request_id match, workflow/step/package/run match, verdict enum,
+     required paths, source hashes, line-grounded findings shape, and accepted/rejected
+     result ids. Keep validation permissive enough for absent future artifacts unless
+     a gate/check explicitly requires them.
+  5. Ensure produced artifacts/run records mention the emitted request.
+
+  Do not modify workflow YAML or packet validators in this task.
+required_output: |
+  Edit files directly in your workspace. In your final answer, list changed files,
+  summarize content-agent behavior, and include the exact commands you ran.
+write_result_to: reviewable-runs/subagent-results/phase-2-agent-contract-content-agent-result.md

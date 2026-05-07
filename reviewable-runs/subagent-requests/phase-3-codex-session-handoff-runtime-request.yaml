@@ -1,0 +1,38 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-3-codex-session-handoff:runtime
+created_at: '2026-05-07T14:10:00Z'
+created_by: organizer
+phase: phase-3-codex-session-handoff
+task_type: content_agent_runtime_patch
+fork_context: false
+owned_write_paths:
+  - scripts/content_agent.py
+  - reviewable-runs/subagent-results/phase-3-codex-session-handoff-runtime-result.md
+must_not_write:
+  - harness_policy.yaml
+  - workflows/
+  - scripts/check_essay_iteration_packet.py
+  - scripts/essay_iteration_support.py
+  - scripts/harness.py
+  - tests/
+objective: >
+  Implement generic codex_session handoff request emission in content-agent.
+  content-agent must remain deterministic: it may emit request artifacts, defer,
+  and validate artifacts, but must not spawn models.
+requirements:
+  - Read AGENTS.md, AUTHORITY.md, harness_policy.yaml, workflows/essay-iteration/workflow.yaml, and scripts/content_agent.py.
+  - Add a run-time handoff mode for codex_session steps with at least policy/default, defer_to_subagent, and same_session semantics.
+  - Preserve explicit agent_contract handling for essay_iteration.run_cold_replacement_review.
+  - For codex_session steps without an explicit agent_contract, synthesize a generic deterministic agent contract from workflow_id, step_id, consumes, produces, and output targets.
+  - Generated generic requests must use reviewable-runs/subagent-requests/ and expected result/integration paths under reviewable-runs.
+  - same_session mode should preserve the old behavior: defer without creating a subagent request.
+  - Add CLI/run-record plumbing if needed so the selected handoff mode is visible in resolved run or execution evidence.
+  - Do not edit tests; leave expected test affordances in the result artifact.
+expected_result:
+  path: reviewable-runs/subagent-results/phase-3-codex-session-handoff-runtime-result.md
+  must_include:
+    - changed files
+    - CLI or policy knobs implemented
+    - request shape for generic codex_session handoffs
+    - verification commands run

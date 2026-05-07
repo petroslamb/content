@@ -1,0 +1,58 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-2-agent-contract-workflow-policy
+created_at: '2026-05-07'
+agent_type: worker
+fork_context: false
+reasoning_effort: high
+purpose: >
+  Prototype the narrow Phase 2 agent-contract declaration surface for
+  essay_iteration.run_cold_replacement_review without broad subagent redesign.
+background: |
+  The architecture review recommends a narrow prototype:
+  - keep content-agent deterministic
+  - start with essay_iteration.run_cold_replacement_review
+  - declare a bounded agent_contract rather than adding a general new runtime
+  - add request/result/integration artifact surfaces under reviewable-runs
+  - add or design plot_contract carry-forward from prewrite/topic into review
+
+  You are not alone in the codebase. Other workers may edit scripts/content_agent.py,
+  scripts/harness.py, scripts/check_essay_iteration_packet.py, and
+  scripts/essay_iteration_support.py. Do not revert or reshape their work.
+write_scope:
+  - workflows/essay-iteration/workflow.yaml
+  - harness_policy.yaml
+  - optionally reviewable-runs/README.md if a one-paragraph directory note is needed
+read_first:
+  - AGENTS.md
+  - AUTHORITY.md
+  - reviewable-runs/subagent-results/phase-2-primary-proof-plot-audit-result.md
+  - reviewable-runs/subagent-results/phase-2-agent-task-architecture-review-result.md
+  - reviewable-runs/subagent-requests/phase-2-agent-task-architecture-review-request.yaml
+  - workflows/essay-iteration/workflow.yaml
+  - scripts/content_agent.py
+  - scripts/check_essay_iteration_packet.py
+task: |
+  Make the workflow/policy declaration changes only.
+
+  Required outcome:
+  1. workflows/essay-iteration/workflow.yaml declares the narrow agent_contract
+     on step run_cold_replacement_review.
+  2. The contract must specify clean-context independence
+     (fork_context/inherits_parent_context false), exact request/result/integration
+     path templates, source hash expectations, required verdicts, failure triggers
+     including scaffold residue and evidence/plot drift, and blocking relationship
+     to replacement_north_star.
+  3. The workflow must expose any new reviewable-runs artifact outputs it references
+     and keep allowed_paths.write/policy write paths consistent.
+  4. Add/design plot_contract carry-forward in the workflow. Keep it narrow: do not
+     require topic_discovery changes in this patch. Prefer a contract field that
+     identifies the source surfaces and required content (public object, thesis,
+     forbidden frames, evidence anchors, stop conditions) consumed by review.
+
+  Do not implement model spawning. Do not convert other steps to agent tasks.
+required_output: |
+  Edit files directly in your workspace. In your final answer, list changed files,
+  summarize the declaration shape, and call out any assumptions or follow-up
+  needed for the organizer to integrate with script changes.
+write_result_to: reviewable-runs/subagent-results/phase-2-agent-contract-workflow-policy-result.md

@@ -1,0 +1,53 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-2-agent-contract-packet-gate-checks
+created_at: '2026-05-07'
+agent_type: worker
+fork_context: false
+reasoning_effort: high
+purpose: >
+  Add deterministic packet/gate checks that catch the known proof-run failure
+  before replacement_north_star can pass.
+background: |
+  The proof audit found a candidate with duplicate/template-tail scaffold residue,
+  and a replacement review that passed despite obvious blockers. The architecture
+  review recommends deterministic scaffold-residue and stale-hash checks, plus
+  requiring independent result/integration artifacts before the replacement gate.
+
+  You are not alone in the codebase. Other workers may edit workflow YAML,
+  harness_policy.yaml, and scripts/content_agent.py. Do not revert their work.
+write_scope:
+  - scripts/check_essay_iteration_packet.py
+  - scripts/essay_iteration_support.py
+  - scripts/harness.py
+read_first:
+  - AGENTS.md
+  - AUTHORITY.md
+  - reviewable-runs/subagent-results/phase-2-primary-proof-plot-audit-result.md
+  - reviewable-runs/subagent-results/phase-2-agent-task-architecture-review-result.md
+  - workflows/essay-iteration/workflow.yaml
+  - scripts/check_essay_iteration_packet.py
+  - scripts/essay_iteration_support.py
+  - scripts/harness.py
+task: |
+  Implement deterministic checks only. Do not spawn models.
+
+  Required outcome:
+  1. Candidate validation catches scaffold residue beyond the existing
+     all-markers scaffold check. It should flag duplicate/template-tail residue
+     like a second "## Limits"/"## References" block with template language after
+     completed endmatter.
+  2. Full packet validation catches stale replacement-review inputs where the
+     review/decision was produced against old candidate/live-draft hashes, if
+     agent result/integration artifacts are present and declare source hashes.
+  3. replacement_north_star gate evaluation must not pass unless the independent
+     cold-review result and integration decision are present, match the current
+     packet/package/revision, are non-stale, and have an allowed verdict/decision.
+  4. Keep checks mechanical. Do not judge prose quality directly.
+
+  Prefer small helper functions in essay_iteration_support.py where shared by
+  packet validation and harness gate evaluation.
+required_output: |
+  Edit files directly in your workspace. In your final answer, list changed files,
+  summarize the checks, and include the exact commands you ran.
+write_result_to: reviewable-runs/subagent-results/phase-2-agent-contract-packet-gate-checks-result.md
