@@ -1,0 +1,350 @@
+kind: run_record
+schema_version: 1
+run_id: phase-2-proof-lost-plot-cold-review-test
+resolved_run_path: reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: essay_iteration
+  workflow_version: 1
+  workflow_hash: sha256:d51a4eb297cd16fe584c470178113bdae3145b8b1324ee3e5c6815dd4d9b0ca5
+  contract_path: workflows/essay-iteration/workflow.yaml
+run_mode: governed_continuous
+timestamps:
+  started_at: '2026-05-07T13:52:33Z'
+  ended_at: '2026-05-07T13:52:33Z'
+invocation:
+  entrypoint: content-agent run
+  command: ./content-agent run --workflow essay_iteration --package proof-runs-as-source-surface
+    --start-at run_cold_replacement_review
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md:
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: parent_umbrella_readme
+  required: false
+  status: missing
+  reason: 'status field is missing: parent_package'
+- id: live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  hashes:
+    publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md:
+      type: file_sha256
+      sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+      size_bytes: 459
+- id: companion
+  required: false
+  status: missing
+  reason: 'path does not exist: publications/proof-runs-as-source-surface/companion.md'
+- id: governing_brief
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/blueprint.md
+  hashes:
+    publications/proof-runs-as-source-surface/blueprint.md:
+      type: file_sha256
+      sha256: 443bb4e3289b77c03ede6b67214d4d09f5ce49c93ad3e7daecfa98d14802640b
+      size_bytes: 3582
+- id: review_artifacts
+  required: false
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md
+  hashes:
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md:
+      type: file_sha256
+      sha256: 487b3e2f7e6710d0366ffe3d084eb51bc0a3c35392bdf9bf7effab7189341ecc
+      size_bytes: 3459
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md:
+      type: file_sha256
+      sha256: 070b329f8c21b32aa3b23ef38ad1c51b4c847ef2347593bf27d5838671e6018b
+      size_bytes: 3284
+- id: evidence_surface
+  required: false
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md:
+      type: file_sha256
+      sha256: 437a07adbe3f85bb7e87013724057fa50575c93bc3b654fc3f55893e7c4337b8
+      size_bytes: 3355
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/README.md
+  hashes:
+    workflows/essay-iteration/README.md:
+      type: file_sha256
+      sha256: c6c9a9af247e03a19431ef3ae0bfc5148d719307d9a769eccd6819c4c3cb04ae
+      size_bytes: 29063
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/templates
+  hashes:
+    workflows/essay-iteration/templates:
+      type: directory_listing_sha256
+      sha256: 37ebc9527f9fac2ef2288546d4c47670209478a9996a4040756fc6ff074e8ad3
+      file_count: 7
+- id: workflow_voice_rules
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/voice_rules.yaml
+  hashes:
+    workflows/essay-iteration/voice_rules.yaml:
+      type: file_sha256
+      sha256: 8761d800dee502597caf5c7ca5bfc5691e7d98b5acf0202b6fc15cb8e534c2f8
+      size_bytes: 329
+- id: publication_voice_guide
+  required: true
+  status: resolved
+  paths:
+  - voice_consistency_guide.md
+  hashes:
+    voice_consistency_guide.md:
+      type: file_sha256
+      sha256: cab35c04f3e6c880442ca26f886e447a534b84a45c2019d6faad58ff2c19507a
+      size_bytes: 4888
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: cac443ce98aae385d24ff7a7b85865abe52b9ce95d05491ae082444a20ffbab5
+      size_bytes: 3357
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+- id: pipeline_profiles
+  required: true
+  status: resolved
+  paths:
+  - pipeline_profiles.yaml
+  hashes:
+    pipeline_profiles.yaml:
+      type: file_sha256
+      sha256: 687c1a721c8119b13eb9c1b70bf18addb06a59db74d32db6d1f4c4052fe2c097
+      size_bytes: 3322
+consumed_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml
+  hashes:
+    reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml:
+      type: file_sha256
+      sha256: a07ecdf92a85b72bdb55ceeedfbb53330e4c70aeca7532f37e9d9c8338e52628
+      size_bytes: 12393
+- id: context:package_status
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: context:package_readme
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md:
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: context:live_draft
+  paths:
+  - publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  hashes:
+    publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md:
+      type: file_sha256
+      sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+      size_bytes: 459
+- id: context:governing_brief
+  paths:
+  - publications/proof-runs-as-source-surface/blueprint.md
+  hashes:
+    publications/proof-runs-as-source-surface/blueprint.md:
+      type: file_sha256
+      sha256: 443bb4e3289b77c03ede6b67214d4d09f5ce49c93ad3e7daecfa98d14802640b
+      size_bytes: 3582
+- id: context:review_artifacts
+  paths:
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md
+  - publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md
+  hashes:
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-replacement-review-r1.md:
+      type: file_sha256
+      sha256: 487b3e2f7e6710d0366ffe3d084eb51bc0a3c35392bdf9bf7effab7189341ecc
+      size_bytes: 3459
+    publications/proof-runs-as-source-surface/iterations/r1/proof-runs-as-source-surface-atlas-scorecard-r1.md:
+      type: file_sha256
+      sha256: 070b329f8c21b32aa3b23ef38ad1c51b4c847ef2347593bf27d5838671e6018b
+      size_bytes: 3284
+- id: context:evidence_surface
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md:
+      type: file_sha256
+      sha256: 437a07adbe3f85bb7e87013724057fa50575c93bc3b654fc3f55893e7c4337b8
+      size_bytes: 3355
+- id: context:workflow_readme
+  paths:
+  - workflows/essay-iteration/README.md
+  hashes:
+    workflows/essay-iteration/README.md:
+      type: file_sha256
+      sha256: c6c9a9af247e03a19431ef3ae0bfc5148d719307d9a769eccd6819c4c3cb04ae
+      size_bytes: 29063
+- id: context:workflow_templates
+  paths:
+  - workflows/essay-iteration/templates
+  hashes:
+    workflows/essay-iteration/templates:
+      type: directory_listing_sha256
+      sha256: 37ebc9527f9fac2ef2288546d4c47670209478a9996a4040756fc6ff074e8ad3
+      file_count: 7
+- id: context:workflow_voice_rules
+  paths:
+  - workflows/essay-iteration/voice_rules.yaml
+  hashes:
+    workflows/essay-iteration/voice_rules.yaml:
+      type: file_sha256
+      sha256: 8761d800dee502597caf5c7ca5bfc5691e7d98b5acf0202b6fc15cb8e534c2f8
+      size_bytes: 329
+- id: context:publication_voice_guide
+  paths:
+  - voice_consistency_guide.md
+  hashes:
+    voice_consistency_guide.md:
+      type: file_sha256
+      sha256: cab35c04f3e6c880442ca26f886e447a534b84a45c2019d6faad58ff2c19507a
+      size_bytes: 4888
+- id: context:harness_policy
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: cac443ce98aae385d24ff7a7b85865abe52b9ce95d05491ae082444a20ffbab5
+      size_bytes: 3357
+- id: context:gate_contracts
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+- id: context:pipeline_profiles
+  paths:
+  - pipeline_profiles.yaml
+  hashes:
+    pipeline_profiles.yaml:
+      type: file_sha256
+      sha256: 687c1a721c8119b13eb9c1b70bf18addb06a59db74d32db6d1f4c4052fe2c097
+      size_bytes: 3322
+parent_artifacts:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml
+- id: package_status
+  path: publications/proof-runs-as-source-surface/status.yaml
+produced_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml
+- id: run_record
+  paths:
+  - reviewable-runs/logs/phase-2-proof-lost-plot-cold-review-test.yaml
+- id: subagent_request
+  paths:
+  - reviewable-runs/subagent-requests/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review.yaml
+validation_results:
+- id: content_agent_validate
+  status: passed
+  command: ./content-agent validate
+enforcement_outcomes:
+- surface: contract_shape
+  posture: deny
+  status: passed
+- surface: context_admission
+  posture: deny
+  status: passed
+- surface: tool_use
+  posture: deny
+  status: passed
+- surface: path_access
+  posture: deny
+  status: passed
+- surface: review_gates
+  posture: deny
+  status: not_reached
+- surface: external_mutation
+  posture: deny
+  status: not_attempted
+- surface: lifecycle_movement
+  posture: deny
+  status: not_attempted
+- surface: promotion
+  posture: deny
+  status: not_attempted
+- surface: trace_completeness
+  posture: detect
+  status: recorded
+gate_ids: []
+approval_decisions: []
+external_mutations:
+- target: none
+  status: not_attempted
+  approval_reference: null
+terminal_status: deferred
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: passed
+  trace_state: minimum_complete
+execution:
+  stop_reason: 'emitted subagent request and deferred before agent_contract step:
+    run_cold_replacement_review'
+  scriptable_steps: []
+  subagent_request:
+    request_id: phase-2-proof-lost-plot-cold-review-test:run_cold_replacement_review:essay_iteration.cold_replacement_review.v1
+    path: reviewable-runs/subagent-requests/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review.yaml

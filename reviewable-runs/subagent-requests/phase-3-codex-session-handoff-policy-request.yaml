@@ -1,0 +1,39 @@
+kind: subagent_request
+schema_version: 1
+request_id: phase-3-codex-session-handoff:policy
+created_at: '2026-05-07T14:10:00Z'
+created_by: organizer
+phase: phase-3-codex-session-handoff
+task_type: architecture_and_policy_patch
+fork_context: false
+owned_write_paths:
+  - harness_policy.yaml
+  - reviewable-runs/README.md
+  - workflows/essay-iteration/workflow.yaml
+  - reviewable-runs/subagent-results/phase-3-codex-session-handoff-policy-result.md
+must_not_write:
+  - scripts/content_agent.py
+  - scripts/check_essay_iteration_packet.py
+  - scripts/essay_iteration_support.py
+  - scripts/harness.py
+  - tests/
+objective: >
+  Define the narrow Phase 3 policy surface for programmatic handoff of
+  codex_session workflow steps. The policy must support a global mode that
+  emits subagent requests, a same-session compatibility mode, and local
+  workflow/step overrides. Keep the existing cold replacement review contract
+  as the first gate-critical explicit agent_contract.
+requirements:
+  - Read AGENTS.md and AUTHORITY.md before edits.
+  - Keep content-agent deterministic in all prose and policy language.
+  - Do not propose direct model spawning from content-agent.
+  - Prefer a minimal policy schema under harness_policy.yaml.
+  - Document where subagent requests/results/integration decisions live.
+  - Add or preserve a local review override for essay_iteration.run_cold_replacement_review.
+  - Avoid broad workflow rewrites across all workflow.yaml files.
+expected_result:
+  path: reviewable-runs/subagent-results/phase-3-codex-session-handoff-policy-result.md
+  must_include:
+    - summary of policy keys added or changed
+    - changed files
+    - any assumptions for the runtime worker
