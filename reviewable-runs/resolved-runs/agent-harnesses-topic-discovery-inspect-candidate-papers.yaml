@@ -1,0 +1,284 @@
+kind: resolved_run
+schema_version: 1
+run_id: agent-harnesses-topic-discovery-inspect-candidate-papers
+package:
+  path: publications/agent-harnesses
+  status_path: publications/agent-harnesses/status.yaml
+  status_hash: sha256:8086072ff41b7cdf74f98b008fb466039f1da1f86b9a8e5ad36dd9d38739aa57
+workflow:
+  workflow_id: topic_discovery
+  workflow_version: 1
+  workflow_hash: sha256:8da3aa3758b4bb9bc848c2daf2ca4fcec7e3f1674460e1b67fea9cdd074b987d
+  contract_path: workflows/topic-discovery/workflow.yaml
+run_mode: governed_continuous
+runtime_inputs:
+  discovery_trigger: agent harnesses
+  target_publication_ambition: north_star_flagship
+route:
+  package_kind: leaf
+  pipeline_profile: article_default
+  current_stage: paper_intake
+  workflow_stage: null
+  resolved_from:
+  - publications/agent-harnesses/status.yaml
+  - workflows/topic-discovery/workflow.yaml
+  - harness_policy.yaml
+  - gate_contracts.yaml
+  - pipeline_profiles.yaml
+context_admission:
+- id: seed_question_archive_gap_external_trigger_review_finding_or_broad_domain
+  required: true
+  status: resolved
+  value: agent harnesses
+- id: relevant_prior_essays_or_archive_cluster
+  required: false
+  status: resolved
+  paths:
+  - publications/agent-harnesses
+  hashes:
+    publications/agent-harnesses:
+      type: directory_listing_sha256
+      sha256: 5c4473c9e1f2167a92cbc69f54364b5f63f6abb149e55275fd3cf26a07a3af00
+      file_count: 2
+- id: target_publication_ambition
+  required: true
+  status: resolved
+  value: north_star_flagship
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/topic-discovery/README.md
+  hashes:
+    workflows/topic-discovery/README.md:
+      type: file_sha256
+      sha256: 6e7074b6060602a6db0bd184b3090efa64ec2f63d72c1a78f89492f77ebf7001
+      size_bytes: 15717
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/topic-discovery/templates
+  hashes:
+    workflows/topic-discovery/templates:
+      type: directory_listing_sha256
+      sha256: 9716cad2232286e671092ec83ea0aaf064ea4672a8287662d7f2bf097c56445a
+      file_count: 1
+- id: alphaxiv_skill
+  required: true
+  status: resolved
+  paths:
+  - workflows/skills/alphaxiv/SKILL.md
+  hashes:
+    workflows/skills/alphaxiv/SKILL.md:
+      type: file_sha256
+      sha256: 15dc7b3bfbe601198cc29cd67d6e7e2f5c8372651a006d391970c506cc95e2e7
+      size_bytes: 5927
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6
+      size_bytes: 4858
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+policy_resolution:
+  allowed_tools:
+  - id: alphaxiv_topic_search
+    command: .venv/bin/alphaxiv search topics "agent harnesses"
+    required: true
+  - id: alphaxiv_paper_search
+    command: .venv/bin/alphaxiv search papers "agent harnesses"
+    required: true
+  - id: topic_viability_gate_check
+    command: ./content-agent gate check --gate topic_viability --packet {topic_packet_path}
+    required: false
+  allowed_capabilities:
+  - contract_validation
+  - context_admission
+  - scriptable_step_execution
+  - gate_stop
+  - agent_contract_request_writing
+  - subagent_result_validation
+  - integration_decision_validation
+  - run_record_writing
+  allowed_paths:
+    read:
+    - publications/agent-harnesses
+    - publications/agent-harnesses/
+    - publication_strategy_and_archive/
+    - workflows/topic-discovery/
+    - workflows/alphaxiv-research/
+    - workflows/post-ceiling-pivot/
+    - workflows/skills/alphaxiv/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - reviewable-runs/
+    write:
+    - publications/agent-harnesses/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+  codex_session_handoff:
+    requested_mode: defer_to_subagent
+    supported_modes:
+    - default
+    - defer_to_subagent
+    - policy
+    - same_session
+    effective_modes:
+    - defer_to_subagent
+    - same_session
+    fallback_default_mode: defer_to_subagent
+    policy_default_mode: defer_to_subagent
+    workflow_default_mode: null
+    effective_default_mode: defer_to_subagent
+    policy_config_present: true
+    steps:
+      state_discovery_trigger:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      map_topic_vocabulary:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      inspect_candidate_papers:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      rank_candidate_essay_objects:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+selected_steps:
+- id: state_discovery_trigger
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: map_topic_vocabulary
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: inspect_candidate_papers
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: track_assistant_comparison
+  mode: external_mutation_gated
+- id: rank_candidate_essay_objects
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: decide_handoff
+  mode: review_gated
+  gate_id: topic_viability
+- id: record_handoff
+  mode: scriptable
+selected_gates:
+- id: topic_viability
+  contract: topic_viability
+  type: lifecycle_movement
+  required: true
+  status: declared
+behavior:
+  budgets:
+    max_steps: 7
+    max_search_queries: 12
+    max_candidate_papers: 20
+    max_assistant_sessions: 1
+    external_mutations: 0
+    unapproved_package_inits: 0
+  recovery:
+    on_alphaxiv_auth_failure: continue_with_deterministic_retrieval_or_stop
+    on_candidate_not_viable: park_with_reason
+    on_package_init_needed: stop_at_topic_viability_gate
+    resume_from: resolved_run
+    rollback_strategy: preserve_discovery_packet_and_do_not_initialize_package
+  policy_run_modes:
+  - exploratory
+  - governed_continuous
+output_targets:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-inspect-candidate-papers.yaml
+- id: run_record
+  path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers.yaml
+- id: topic_vocabulary_map
+  path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-topic-vocabulary-map.md
+  required: true
+  format: markdown
+- id: ranked_candidate_paper_pool
+  path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-candidate-paper-pool.md
+  required: true
+  format: markdown
+- id: assistant_discussion_notes
+  path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-assistant-discussion-notes.md
+  required: conditional
+  format: markdown
+- id: candidate_essay_slate
+  path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-candidate-essay-slate.md
+  required: true
+  format: markdown
+- id: handoff_decision
+  path: reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers-topic-discovery-handoff.md
+  required: true
+  format: markdown
+- id: topic_viability_gate
+  path: reviewable-runs/gates/agent-harnesses-topic-discovery-inspect-candidate-papers-topic-viability.yaml
+  required: conditional
+  format: yaml
+- id: review_gate:topic_viability
+  path: reviewable-runs/gates/gate-agent-harnesses-topic-discovery-inspect-candidate-papers-topic-viability.yaml
+  required: true
+- id: subagent_request:state_discovery_trigger
+  path: reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-inspect-candidate-papers-state-discovery-trigger.yaml
+  required: true
+- id: subagent_result:state_discovery_trigger
+  path: reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-state-discovery-trigger.md
+  required: true
+- id: integration_decision:state_discovery_trigger
+  path: reviewable-runs/integration-decisions/decision-agent-harnesses-topic-discovery-inspect-candidate-papers-state-discovery-trigger.yaml
+  required: true
+- id: subagent_request:map_topic_vocabulary
+  path: reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-inspect-candidate-papers-map-topic-vocabulary.yaml
+  required: true
+- id: subagent_result:map_topic_vocabulary
+  path: reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-map-topic-vocabulary.md
+  required: true
+- id: integration_decision:map_topic_vocabulary
+  path: reviewable-runs/integration-decisions/decision-agent-harnesses-topic-discovery-inspect-candidate-papers-map-topic-vocabulary.yaml
+  required: true
+- id: subagent_request:inspect_candidate_papers
+  path: reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml
+  required: true
+- id: subagent_result:inspect_candidate_papers
+  path: reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.md
+  required: true
+- id: integration_decision:inspect_candidate_papers
+  path: reviewable-runs/integration-decisions/decision-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml
+  required: true
+- id: subagent_request:rank_candidate_essay_objects
+  path: reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-inspect-candidate-papers-rank-candidate-essay-objects.yaml
+  required: true
+- id: subagent_result:rank_candidate_essay_objects
+  path: reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-rank-candidate-essay-objects.md
+  required: true
+- id: integration_decision:rank_candidate_essay_objects
+  path: reviewable-runs/integration-decisions/decision-agent-harnesses-topic-discovery-inspect-candidate-papers-rank-candidate-essay-objects.yaml
+  required: true
+execution_options:
+  start_at: inspect_candidate_papers
+  max_scriptable_steps: null
