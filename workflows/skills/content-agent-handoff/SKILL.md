@@ -20,7 +20,8 @@ approval authority from this file.
    verdict is `stale`.
 5. Use a verdict from the request's declared verdict enum.
 6. Keep findings line-grounded with a repo path and positive line number.
-7. Run every command listed in `verification_requirements.commands[]`.
+7. Run every command listed in `verification_requirements.commands[]` exactly
+   as declared.
 8. Record those command results in result frontmatter under
    `verification.commands[]`.
 9. Repair malformed result metadata before returning control.
@@ -43,6 +44,7 @@ verification:
 Each command entry must include:
 
 - `command`: non-empty string.
+  Use the exact command string from `verification_requirements.commands[]`.
 - `exit_code`: integer when the process ran. Use `null` only when the command
   could not launch and the result verdict is not `pass`.
 - `success`: boolean.

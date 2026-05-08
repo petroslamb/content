@@ -3,7 +3,7 @@ kind: subagent_result
 schema_version: 1
 request_id: phase-2-7a-request-exit-protocol-implementation
 agent_type: implementation_worker
-completed_at: '2026-05-07'
+completed_at: '2026-05-08'
 ---
 # Phase 2.7a Request Exit Protocol Implementation Result
 
@@ -28,7 +28,7 @@ completed_at: '2026-05-07'
 - `.venv/bin/python -m unittest tests.test_essay_iteration_packet`
   - success: true
   - exit_code: 0
-  - short_failure_summary: none
+  - short_failure_summary: none; 30 tests pass after AI-review fixes
 - `./content-agent validate --workflow essay_iteration --format json`
   - success: true
   - exit_code: 0
@@ -41,6 +41,15 @@ completed_at: '2026-05-07'
   - success: true
   - exit_code: 0
   - short_failure_summary: none
+
+## AI Review Follow-up
+
+- Matched `subagent_result.verification.commands[]` against required commands
+  declared in the paired Phase 2.7a request.
+- Rejected `verdict: pass` when a required verification command reports
+  `success: false` or an exit code outside declared success codes.
+- Added focused regression tests for unmatched commands and failed commands with
+  pass verdicts.
 
 ## Success
 

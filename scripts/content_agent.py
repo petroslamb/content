@@ -1422,25 +1422,42 @@ def validate_phase_2_7a_request_shape(path: Path, data: dict[str, Any], findings
 
 def validate_phase_2_7a_result_verification(
     data: dict[str, Any],
+    request: dict[str, Any],
     context: str,
     path: Path,
     findings: list[dict[str, Any]],
 ) -> None:
+    verification_requirements = request.get("verification_requirements") if isinstance(request.get("verification_requirements"), dict) else {}
+    required_commands = [
+        command
+        for command in verification_requirements.get("commands", [])
+        if isinstance(command, dict)
+        and command.get("required") is True
+        and isinstance(command.get("command"), str)
+        and command.get("command")
+    ]
+    required_by_command = {str(command["command"]): command for command in required_commands}
     verification = require_artifact_mapping(data, "verification", context, path, findings)
     commands = require_artifact_list(verification, "commands", f"{context}.verification", path, findings)
     if not commands:
         add_finding(findings, "error", "trace_completeness", "detect", f"{context}.verification.commands must not be empty for phase-2.7a requests.", path=path)
         return
     verdict = data.get("verdict")
+    seen_required_commands: set[str] = set()
     for index, command in enumerate(commands):
         item_context = f"{context}.verification.commands[{index}]"
         if not isinstance(command, dict):
             add_finding(findings, "error", "trace_completeness", "detect", f"{item_context} must be a mapping.", path=path)
             continue
-        if not isinstance(command.get("command"), str) or not command["command"]:
+        command_text = command.get("command")
+        if not isinstance(command_text, str) or not command_text:
             add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.command must be a non-empty string.", path=path)
+            command_text = None
+        elif command_text in required_by_command:
+            seen_required_commands.add(command_text)
         exit_code = command.get("exit_code")
-        if not isinstance(exit_code, int) and not (exit_code is None and verdict != "pass"):
+        success = command.get("success")
+        if not isinstance(exit_code, int) and not (exit_code is None and success is False and verdict != "pass"):
             add_finding(
                 findings,
                 "error",
@@ -1449,15 +1466,61 @@ def validate_phase_2_7a_result_verification(
                 f"{item_context}.exit_code must be an integer unless the command could not launch and verdict is not pass.",
                 path=path,
             )
-        if not isinstance(command.get("success"), bool):
+        if not isinstance(success, bool):
             add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.success must be boolean.", path=path)
         summary = command.get("short_failure_summary")
         if not isinstance(summary, str) or not summary:
             add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.short_failure_summary must be a non-empty string.", path=path)
-        elif command.get("success") is True and summary != "none":
+        elif success is True and summary != "none":
             add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.short_failure_summary must be none when success is true.", path=path)
-        elif command.get("success") is False and summary == "none":
+        elif success is False and summary == "none":
             add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.short_failure_summary must describe the failure when success is false.", path=path)
+        if command_text in required_by_command:
+            required = required_by_command[command_text]
+            allowed_exit_codes = required.get("success_exit_codes")
+            allowed = {code for code in allowed_exit_codes if isinstance(code, int)} if isinstance(allowed_exit_codes, list) else set()
+            if success is True and (not isinstance(exit_code, int) or (allowed and exit_code not in allowed)):
+                add_finding(
+                    findings,
+                    "error",
+                    "trace_completeness",
+                    "detect",
+                    f"{item_context} reports success but does not use a declared success exit code.",
+                    path=path,
+                    evidence={"command": command_text, "success_exit_codes": sorted(allowed), "exit_code": exit_code},
+                )
+            if verdict == "pass":
+                if success is not True:
+                    add_finding(
+                        findings,
+                        "error",
+                        "trace_completeness",
+                        "detect",
+                        f"{item_context} must succeed when subagent_result.verdict is pass.",
+                        path=path,
+                        evidence={"command": command_text},
+                    )
+                elif not isinstance(exit_code, int) or (allowed and exit_code not in allowed):
+                    add_finding(
+                        findings,
+                        "error",
+                        "trace_completeness",
+                        "detect",
+                        f"{item_context}.exit_code must match the declared success exit codes when subagent_result.verdict is pass.",
+                        path=path,
+                        evidence={"command": command_text, "success_exit_codes": sorted(allowed), "exit_code": exit_code},
+                    )
+    missing_commands = sorted(set(required_by_command) - seen_required_commands)
+    for command_text in missing_commands:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "subagent_result.verification.commands must include every required command declared by the phase-2.7a request.",
+            path=path,
+            evidence={"missing_command": command_text},
+        )
 
 
 def validate_subagent_request_artifact(path: Path, data: dict[str, Any], findings: list[dict[str, Any]]) -> None:
@@ -1601,7 +1664,7 @@ def validate_subagent_result_artifact(
     validate_agent_source_hashes(data, request, context, path, findings)
     validate_line_grounded_findings_shape(data.get("findings"), context, path, findings)
     if phase_2_7a_request(request):
-        validate_phase_2_7a_result_verification(data, context, path, findings)
+        validate_phase_2_7a_result_verification(data, request, context, path, findings)
     return subagent_result_id(path, data)
 
 

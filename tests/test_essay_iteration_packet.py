@@ -186,8 +186,13 @@ class EssayIterationPacketTests(unittest.TestCase):
         packet: dict,
         *,
         include_verification: bool,
+        result_command: str | None = None,
+        result_success: bool = True,
+        result_exit_code: int | None = 0,
+        verdict: str = "pass",
     ) -> tuple[dict, dict]:
         source_hashes = self.replacement_source_hashes(packet)
+        required_command = f"./content-agent validate --workflow essay_iteration --package {package_key} --format json"
         request = {
             "kind": "subagent_request",
             "schema_version": content_agent.CONTENT_AGENT_VERSION,
@@ -210,6 +215,18 @@ class EssayIterationPacketTests(unittest.TestCase):
             "result_requirements": {
                 "verdict_enum": ["pass", "fail", "defer", "stale"],
             },
+            "verification_requirements": {
+                "required": True,
+                "commands": [
+                    {
+                        "id": "content_agent_validate",
+                        "command": required_command,
+                        "required": True,
+                        "success_exit_codes": [0],
+                    }
+                ],
+                "result_schema_checks": ["verification.commands"],
+            },
         }
         result = {
             "kind": "subagent_result",
@@ -219,7 +236,7 @@ class EssayIterationPacketTests(unittest.TestCase):
             "package": request["package"],
             "workflow": request["workflow"],
             "run": request["run"],
-            "verdict": "pass",
+            "verdict": verdict,
             "source_hashes": source_hashes,
             "findings": [
                 {
@@ -233,10 +250,10 @@ class EssayIterationPacketTests(unittest.TestCase):
             result["verification"] = {
                 "commands": [
                     {
-                        "command": f"./content-agent validate --workflow essay_iteration --package {package_key} --format json",
-                        "exit_code": 0,
-                        "success": True,
-                        "short_failure_summary": "none",
+                        "command": result_command or required_command,
+                        "exit_code": result_exit_code,
+                        "success": result_success,
+                        "short_failure_summary": "none" if result_success else "command failed",
                     }
                 ]
             }
@@ -1031,6 +1048,63 @@ class EssayIterationPacketTests(unittest.TestCase):
 
             self.assertEqual(result_id, result["result_id"])
             self.assertEqual(findings, [])
+
+    def test_phase_2_7a_result_validation_blocks_unmatched_verification_command(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, _ = self.populate_valid_packet(package_dir, package_key)
+            request, result = self.phase_2_7a_result_validation_fixture(
+                package_key,
+                packet,
+                include_verification=True,
+                result_command="npm test",
+            )
+            findings: list[dict] = []
+
+            result_id = content_agent.validate_subagent_result_artifact(
+                REPO_ROOT / "reviewable-runs" / "subagent-results" / "unmatched-verification.md",
+                result,
+                {request["request_id"]: request},
+                findings,
+            )
+
+            self.assertEqual(result_id, result["result_id"])
+            messages = [finding.get("message", "") for finding in findings]
+            self.assertTrue(
+                any("must include every required command declared by the phase-2.7a request" in message for message in messages),
+                messages,
+            )
+
+    def test_phase_2_7a_result_validation_blocks_failed_command_with_pass_verdict(self) -> None:
+        publications_dir = REPO_ROOT / "publications"
+        with tempfile.TemporaryDirectory(dir=publications_dir, prefix="tmp-essay-packet-") as tmpdir:
+            package_dir = Path(tmpdir)
+            package_key = create_temp_leaf_package(package_dir)
+            packet, _ = self.populate_valid_packet(package_dir, package_key)
+            request, result = self.phase_2_7a_result_validation_fixture(
+                package_key,
+                packet,
+                include_verification=True,
+                result_success=False,
+                result_exit_code=1,
+            )
+            findings: list[dict] = []
+
+            result_id = content_agent.validate_subagent_result_artifact(
+                REPO_ROOT / "reviewable-runs" / "subagent-results" / "failed-pass-verification.md",
+                result,
+                {request["request_id"]: request},
+                findings,
+            )
+
+            self.assertEqual(result_id, result["result_id"])
+            messages = [finding.get("message", "") for finding in findings]
+            self.assertTrue(
+                any("must succeed when subagent_result.verdict is pass" in message for message in messages),
+                messages,
+            )
 
     def test_replacement_agent_contract_discovers_paths_from_generated_request(self) -> None:
         publications_dir = REPO_ROOT / "publications"
