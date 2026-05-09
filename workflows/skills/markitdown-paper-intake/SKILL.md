@@ -1,21 +1,34 @@
 ---
 name: markitdown-paper-intake
-description: Use when Codex needs to place papers into a package's canonical source tree, convert PDFs or HTML papers to markdown with the repo-local markitdown binary, and update the package's paper index using the tracked paper-intake workflow.
+description: Legacy fallback for repo-local paper intake when OpenDataLoader PDF cannot convert a source. Prefer opendataloader-paper-intake for PDF-to-Markdown conversion, and use markitdown only as the fallback or for non-PDF sources.
 ---
 
-# Markitdown Paper Intake
+# Markitdown Paper Intake Fallback
 
-Use this skill for repo-local paper intake and conversion, not for generic OCR advice.
+Use this skill only as the fallback path for repo-local paper intake and conversion, not for generic OCR advice.
+
+The primary paper-intake converter is now OpenDataLoader PDF through `../opendataloader-paper-intake/`.
 
 ## Working Rules
 
 1. Start with the tracked workflow doc at `../../../workflows/paper-intake/README.md`.
-2. Use the repo-local binary: `.venv/bin/markitdown`.
-3. Prefer placing source PDFs or HTML exports under the target package `papers/` directory.
-4. For single-publication packages, prefer `papers/markdown/` for converted markdown and `papers/index.md` for the package paper index unless the package already has a stronger established variant.
-5. Keep filenames descriptive and stable. Do not rename aggressively if the package already has a working convention.
-6. When converting several papers, write outputs first, then summarize failures or partial conversions instead of stopping after the first bad file.
-7. If the package already has a paper manifest or source index, update that instead of creating a duplicate second index.
+2. Prefer the OpenDataLoader wrapper for PDFs:
+
+   ```bash
+   .venv/bin/python workflows/skills/opendataloader-paper-intake/scripts/convert_pdf_to_markdown.py input.pdf output.md
+   ```
+
+3. Use the repo-local markitdown binary only as fallback:
+
+   ```bash
+   .venv/bin/markitdown input.pdf -o output.md
+   ```
+
+4. Prefer placing source PDFs or HTML exports under the target package `papers/` directory.
+5. For single-publication packages, prefer `papers/markdown/` for converted markdown and `papers/index.md` for the package paper index unless the package already has a stronger established variant.
+6. Keep filenames descriptive and stable. Do not rename aggressively if the package already has a working convention.
+7. When converting several papers, write outputs first, then summarize failures or partial conversions instead of stopping after the first bad file.
+8. If the package already has a paper manifest or source index, update that instead of creating a duplicate second index.
 
 ## Reference Map
 

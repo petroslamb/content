@@ -5,7 +5,7 @@ stage_binding: paper_intake
 stability: canonical
 workflow_group: evidence
 runner_mode: guided
-default_skill: markitdown-paper-intake
+default_skill: opendataloader-paper-intake
 launch_templates: []
 required_context:
   - package README or leaf README
@@ -53,7 +53,7 @@ If a PDF download, conversion, or file move fails with `Operation not permitted`
 Recommended meanings:
 
 - `papers/`: original PDFs and other paper-source files
-- `papers/markdown/`: `markitdown` conversions or closely related derived text
+- `papers/markdown/`: OpenDataLoader PDF conversions, fallback `markitdown` conversions, or closely related derived text
 - `papers/index.md`: package-local inventory with title, source link or identifier, local filenames, and a short relevance note
 
 ## Evidence-Backed Defaults
@@ -68,8 +68,11 @@ Recommended meanings:
 Use the repo-local toolchain:
 
 ```bash
-.venv/bin/markitdown path/to/paper.pdf -o path/to/papers/markdown/paper-name.md
+.venv/bin/python workflows/skills/opendataloader-paper-intake/scripts/convert_pdf_to_markdown.py \
+  path/to/paper.pdf path/to/papers/markdown/paper-name.md
 ```
+
+The wrapper uses OpenDataLoader PDF as the primary converter. It writes one Markdown file per PDF, keeps page boundaries with Markdown page separators, omits images with `--image-output off`, and falls back to markitdown if the OpenDataLoader path fails. OpenDataLoader PDF requires Java 11+ in the operator environment.
 
 Recommended flow:
 
@@ -114,6 +117,7 @@ The package paper index and the article reference section do different jobs:
 
 ## Related Skill Bundle
 
-- [`../skills/markitdown-paper-intake/`](../skills/markitdown-paper-intake/)
+- [`../skills/opendataloader-paper-intake/`](../skills/opendataloader-paper-intake/)
+- [`../skills/markitdown-paper-intake/`](../skills/markitdown-paper-intake/) fallback
 
-Use the tracked skill bundle for execution. The local `.agents/skills/markitdown-paper-intake/` path is just its discovery mirror.
+Use the tracked skill bundle for execution. The local `.agents/skills/opendataloader-paper-intake/` path is just its discovery mirror.

@@ -45,7 +45,7 @@ For single-publication packages, prefer this paper-intake structure unless the p
 | :--- | :--- | :--- |
 | orient in the repo | [`README.md`](README.md) | [`publications/README.md`](publications/README.md) or the relevant support-package README |
 | understand a package | that package’s `README.md` | the relevant workflow doc |
-| intake or convert papers | [`workflows/paper-intake/README.md`](workflows/paper-intake/README.md) | [`workflows/skills/markitdown-paper-intake/`](workflows/skills/markitdown-paper-intake/) |
+| intake or convert papers | [`workflows/paper-intake/README.md`](workflows/paper-intake/README.md) | [`workflows/skills/opendataloader-paper-intake/`](workflows/skills/opendataloader-paper-intake/) |
 | research papers and discuss them | [`workflows/alphaxiv-research/README.md`](workflows/alphaxiv-research/README.md) | [`workflows/skills/alphaxiv/`](workflows/skills/alphaxiv/) |
 | iterate an essay | [`workflows/essay-iteration/README.md`](workflows/essay-iteration/README.md) | package README and local review artifacts |
 | generate NotebookLM artifacts | [`workflows/notebooklm-artifacts/README.md`](workflows/notebooklm-artifacts/README.md) | [`workflows/skills/notebooklm-artifact-bundle/`](workflows/skills/notebooklm-artifact-bundle/) and [`workflows/skills/pdf-slides-to-substack-images/`](workflows/skills/pdf-slides-to-substack-images/) |
@@ -106,7 +106,8 @@ Tracked repo-local skills live under [`workflows/skills/README.md`](workflows/sk
 
 Key current local skills:
 
-- `markitdown-paper-intake`
+- `opendataloader-paper-intake`
+- `markitdown-paper-intake` fallback
 - `alphaxiv`
 - `notebooklm-artifact-bundle`
 - `pdf-slides-to-substack-images`
@@ -163,7 +164,8 @@ python3 -m venv .venv
 
 The root article-development toolchain is:
 
-- `markitdown[pdf]`
+- `opendataloader-pdf`
+- `markitdown[pdf]` as the PDF-to-Markdown fallback
 - `alphaxiv-py`
 - `notebooklm-py[browser]`
 - `python-substack`
@@ -175,15 +177,23 @@ Adjacent publishing automation:
 
 ## Tool Notes
 
+### OpenDataLoader PDF
+
+Use the repo-local wrapper for PDF to Markdown conversion. It calls OpenDataLoader PDF first, writes one Markdown file per PDF, disables image output, and falls back to markitdown only if needed. OpenDataLoader PDF requires Java 11+; verify with `java -version` when bootstrapping a new machine:
+
+```bash
+.venv/bin/python workflows/skills/opendataloader-paper-intake/scripts/convert_pdf_to_markdown.py input.pdf output.md
+```
+
+The canonical paper-intake process lives in [`workflows/paper-intake/README.md`](workflows/paper-intake/README.md).
+
 ### markitdown
 
-Use the repo-local binary for PDF to Markdown conversion:
+Keep the repo-local markitdown binary available as fallback:
 
 ```bash
 .venv/bin/markitdown input.pdf -o output.md
 ```
-
-The canonical paper-intake process lives in [`workflows/paper-intake/README.md`](workflows/paper-intake/README.md).
 
 ### alphaXiv
 

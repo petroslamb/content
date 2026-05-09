@@ -1,5 +1,5 @@
 workflow_id: paper_intake
-version: 1
+version: 2
 stability: canonical
 workflow_kind: stage
 workflow_group: evidence
@@ -76,10 +76,15 @@ context_dependencies:
     required: true
     purpose: Load human-facing operator guidance for the intake workflow.
     record_hash: true
-  - id: markitdown_skill
-    path: workflows/skills/markitdown-paper-intake/SKILL.md
+  - id: opendataloader_skill
+    path: workflows/skills/opendataloader-paper-intake/SKILL.md
     required: true
     purpose: Bind the repo-local paper-intake execution guidance without making the skill the runtime authority.
+    record_hash: true
+  - id: markitdown_fallback_skill
+    path: workflows/skills/markitdown-paper-intake/SKILL.md
+    required: true
+    purpose: Preserve the fallback converter guidance when OpenDataLoader PDF cannot convert a source.
     record_hash: true
   - id: harness_policy
     path: harness_policy.yaml
@@ -89,13 +94,17 @@ context_dependencies:
 
 capabilities:
   tools:
-    - id: markitdown_pdf_converter
-      command: ".venv/bin/markitdown {source_path} -o {markdown_path}"
+    - id: opendataloader_pdf_converter
+      command: ".venv/bin/python workflows/skills/opendataloader-paper-intake/scripts/convert_pdf_to_markdown.py {source_path} {markdown_path}"
       required: true
+    - id: markitdown_pdf_fallback
+      command: ".venv/bin/markitdown {source_path} -o {markdown_path}"
+      required: false
     - id: content_agent_run_record
       command: "content-agent run-record"
       required: false
   skills:
+    - opendataloader-paper-intake
     - markitdown-paper-intake
 
 allowed_paths:
@@ -104,6 +113,7 @@ allowed_paths:
     - "{evidence_path}"
     - "{shared_evidence_path}"
     - workflows/paper-intake/
+    - workflows/skills/opendataloader-paper-intake/
     - workflows/skills/markitdown-paper-intake/
     - harness_policy.yaml
     - package.json
@@ -222,7 +232,8 @@ validation:
     - package_readme_exists
     - evidence_surface_resolves_or_default_layout_available
     - source_inputs_recorded
-    - markitdown_binary_available
+    - opendataloader_converter_available
+    - markitdown_fallback_available
   hooks: []
   drift_checks:
     - id: readme_frontmatter_identity_matches_yaml
@@ -278,7 +289,8 @@ steps:
       - existing_evidence_surface
       - source_inputs
       - workflow_readme
-      - markitdown_skill
+      - opendataloader_skill
+      - markitdown_fallback_skill
     produces: []
     validation:
       hooks: []
@@ -305,7 +317,7 @@ steps:
     title: Convert selected files
     mode: scriptable
     executor:
-      command: ".venv/bin/markitdown {source_path} -o {markdown_path}"
+      command: ".venv/bin/python workflows/skills/opendataloader-paper-intake/scripts/convert_pdf_to_markdown.py {source_path} {markdown_path}"
     consumes:
       - source_files
     produces:
