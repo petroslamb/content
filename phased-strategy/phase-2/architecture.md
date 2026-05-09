@@ -47,6 +47,7 @@ These decisions are closed for Phase 2 planning:
 - governed, gated, resumable, or audit-required runs persist a durable `resolved_run`; exploratory previews may remain transient.
 - promoted outputs are recorded first in run records and review gate artifacts, not in a standalone manifest.
 - experimental workflows can run on demand, but they should not silently replace canonical lifecycle paths.
+- Phase 2.8 formalizes that experimental workflow lifecycle: README-only experiments are documented but not governed, governed experiments require `workflow.yaml` with `stability: experimental`, and promotion to canonical status requires two clean real-package governed proofs plus explicit approval. As of the 2026-05-09 operationalization pass, the current repo has no README-only experimental workflows; the README-only rule remains for future experiments.
 - workflow discovery starts with thin hand-authored, skill-like wrappers that point back to canonical workflow contracts.
 - the cockpit is a thin reader/approver over filesystem-backed truth, not a second system of record.
 - umbrella and leaf package semantics are consumed from current `status.yaml` manifests rather than redesigned inside Phase 2.

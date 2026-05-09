@@ -12,8 +12,9 @@ The sequence is:
 6. bounded editorial automation
 7. disciplined clean-context subagent handoffs
 7a. request exit protocol hardening for generated subagent handoffs
+8. experimental workflow lifecycle discipline
 
-That order is deliberate. Phase 2 should not start with a dashboard, fat runtime, or autonomous agent wrapper over unstable workflow semantics. Phase 2.7a is a planned follow-on to 2.7, not a claim that hook enforcement or multi-agent scheduling exists.
+That order is deliberate. Phase 2 should not start with a dashboard, fat runtime, or autonomous agent wrapper over unstable workflow semantics. Phase 2.7a is a planned follow-on to 2.7, not a claim that hook enforcement or multi-agent scheduling exists. Phase 2.8 is a strategy-only lifecycle policy for experiments, not a runtime expansion. The later 2026-05-09 operationalization pass migrated current experimental workflow docs into governed contracts while keeping them experimental.
 
 ## Baseline Assumptions
 
@@ -41,6 +42,7 @@ The current operative stack is:
 - [`2.6-editorial-automation.md`](2.6-editorial-automation.md): bounded editorial automation plan
 - [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md): post-baseline parent/subagent handoff discipline
 - [`2.7a-request-exit-protocol.md`](2.7a-request-exit-protocol.md): planned request/result protocol hardening after 2.7
+- [`2.8-experimental-workflow-lifecycle.md`](2.8-experimental-workflow-lifecycle.md): strategy-only experimental workflow creation, proof, promotion, and retirement policy
 - [`workflow-yaml-schema.md`](workflow-yaml-schema.md): schema companion to 2.1, not a competing authority
 
 ## Subphase Read
@@ -55,6 +57,7 @@ The current operative stack is:
 | **2.6 Editorial Automation** | Add structured editorial/style/compliance reporting. | Stable governed run path and article-polish boundaries. | Implemented. Automation produces reports, violations, and source-improvement suggestions without autonomous rewrite, promotion, publication, or lifecycle authority. |
 | **2.7 Agent Handoff Discipline** | Formalize clean-context subagent handoffs after the deterministic runtime baseline. | 2.4 runtime boundary, 2.6 editorial automation closeout, `codex_session_handoff` policy, and Reviewable Runs handoff stores. | Strategy subphase documented. Parent sessions orchestrate, worker subagents do model-mediated work with `fork_context=false`, `content-agent` emits and validates deterministic artifacts without spawning models, and hook/skill additions remain later implementation work. |
 | **2.7a Request Exit Protocol Implementation** | Plan request/result protocol hardening so workers can finish cleanly without hooks. | 2.7 handoff discipline, generated generic and explicit subagent request support, same-session compatibility, and current result validation. | Planned. Done when new generated requests include exit protocol, skill recommendations, and verification requirements; 2.7a results require `verification.commands[]`; `content-agent-handoff` exists; and regression proofs pass without activating hooks. |
+| **2.8 Experimental Workflow Lifecycle** | Formalize how experimental workflows are created, handled, run, proven, promoted, or retired. | 2.1 workflow contracts, 2.2 validation posture, 2.3 evidence, 2.4 runtime, 2.7a handoff protocol, current experimental workflows, and `pipeline_profiles.yaml`. | Strategy-only packet documented. Done when experimental workflow states, README-only boundaries, governed proof requirements, promotion bar, and retirement rules are explicit without adding runtime commands, schema fields, validator changes, or automatic canonical migration. |
 
 ## Implementation Closeout
 
@@ -220,6 +223,29 @@ This pass should produce:
 - regression proofs for generic request emission, `same_session`, cold-review gate blocking, stale hashes, malformed results, and missing verification
 
 This pass must not activate hooks, spawn models from `content-agent`, clear gates from generic results, mutate external systems, or rewrite workflow YAML.
+
+### 8. Experimental Workflow Lifecycle Pass
+
+Document the policy for creating, running, proving, promoting, and retiring
+experimental workflows.
+
+This pass should produce:
+
+- a Phase 2.8 strategy packet
+- a lifecycle state vocabulary for experimental workflows
+- a rule that README-only experimental workflows do not count as governed until
+  a minimal `workflow.yaml` exists
+- a governed run rule using `./content-agent validate` and
+  `./content-agent run`
+- a promotion bar of two clean governed real-package proofs in distinct
+  contexts
+- a retirement rule for stale, failed, or superseded experiments
+
+This pass must not add `content-agent` commands, change `workflow.yaml` fields,
+change validators, or allow experimental workflows to replace canonical
+lifecycle routes silently. Contract migration of an existing experiment is
+ordinary workflow doc/YAML work under 2.8 policy; it is not runtime expansion or
+canonical promotion.
 
 ## Phase 2 Gate Read
 

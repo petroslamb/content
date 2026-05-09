@@ -18,6 +18,8 @@ Use this folder for Phase 2 planning only. Promote decisions into implementation
 - Phase 2.6 has a retained real-package proof run: `phase-2-6-editorial-report-proof`.
 - Phase 2.7 is the documented post-baseline handoff-discipline subphase; it does not add runtime autonomy or change `content-agent` into a model runner.
 - Phase 2.7a is a planned implementation subphase for request exit protocol hardening after 2.7; it is not implemented by this strategy packet.
+- Phase 2.8 is the strategy-only experimental workflow lifecycle spec: experiments may run explicitly and produce evidence, but they cannot silently replace canonical lifecycle paths until they pass the promotion bar.
+- The 2026-05-09 operationalization pass migrated all seven current experimental workflow docs into governed `workflow.yaml` contracts with `stability: experimental`; this is contract migration, not canonical promotion.
 - Phase 1.6 still exists as a separate roadmap phase, but Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
 - This folder now treats Phase 2 as contract-first, validation-first, and trace-first rather than CLI-first.
 - Umbrella and leaf package normalization is now mostly done. Phase 2 should treat the current package model as a consumed contract surface, not as new migration work.
@@ -25,6 +27,8 @@ Use this folder for Phase 2 planning only. Promote decisions into implementation
 The 2.1-2.6 baseline closes the local governed-runtime implementation: workflow contracts, validation, evidence, gates, `content-agent`, cockpit, and bounded editorial-report automation. It does not claim autonomous end-to-end publication, browser-backed external mutation, hidden multi-agent orchestration, or full lifecycle reliability across multiple fresh packages.
 
 Phase 2.7 formalizes the post-baseline operator discipline for clean-context subagent handoffs: parent sessions orchestrate, subagents do model-mediated work, and deterministic artifacts prove what happened. Phase 2.7a plans the next implementation step: generated requests should carry exit protocol, skill recommendations, and verification requirements, with result validation requiring verification evidence for new 2.7a handoffs. Hook enforcement remains later work unless promoted into the appropriate authority surfaces.
+
+Phase 2.8 formalizes experimental workflow lifecycle discipline using existing Phase 2 surfaces. It does not add runtime interfaces, schema fields, validators, cockpit behavior, or automatic route/canonical promotion.
 
 ## What Phase 2 Promotes From `literate-workflow-programming`
 
@@ -67,12 +71,13 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 - **2.6 Editorial Automation**: add structured style/compliance reporting and source-improvement suggestions without autonomous promotion.
 - **2.7 Agent Handoff Discipline**: formalize clean-context subagent handoffs while keeping `content-agent` deterministic.
 - **2.7a Request Exit Protocol Implementation**: planned hardening for generated request exit protocol, skill recommendations, and result verification requirements.
+- **2.8 Experimental Workflow Lifecycle**: define how experiments are created, governed, proven, promoted, or retired without replacing canonical routes silently.
 
 ## Documents
 
 | Document | Role |
 | :--- | :--- |
-| [`milestones.md`](milestones.md) | Phase 2.1-2.7 sequence, dependencies, and closure read. |
+| [`milestones.md`](milestones.md) | Phase 2.1-2.8 sequence, dependencies, and closure read. |
 | [`architecture.md`](architecture.md) | Core boundary and platform decisions: machine truth, thin runtime, gate store, traces, and source-of-truth rules. |
 | [`workflow-yaml-schema.md`](workflow-yaml-schema.md) | The target machine contract for executable workflows. |
 | [`review-gate-protocol.md`](review-gate-protocol.md) | Review-gate classes, artifact contract, gate store, and resume model. |
@@ -82,6 +87,7 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 | [`2.6-editorial-automation.md`](2.6-editorial-automation.md) | The bounded editorial automation plan after governed gates and article-polish boundaries stabilize. |
 | [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md) | The post-baseline parent/subagent handoff discipline, exit protocol, skill plan, and hook posture. |
 | [`2.7a-request-exit-protocol.md`](2.7a-request-exit-protocol.md) | Planned implementation subphase for request exit protocol fields, result verification evidence, handoff skill creation, and regression proofs. |
+| [`2.8-experimental-workflow-lifecycle.md`](2.8-experimental-workflow-lifecycle.md) | Strategy-only lifecycle discipline for experimental workflows, governed proofs, promotion, and retirement. |
 | [`open-questions.md`](open-questions.md) | The remaining Phase 2 decisions that are still genuinely open. |
 | [`idea-bank.md`](idea-bank.md) | Candidate ideas that may justify rewriting Phase 2 before implementation. |
 | [`claim-ledger.md`](claim-ledger.md) | Phase 2 planning claims that should be pressure-tested before implementation. |
@@ -99,6 +105,7 @@ The numbered implementation and strategy packets for the Phase 2 foundation are:
 - [`2.6-editorial-automation.md`](2.6-editorial-automation.md)
 - [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md)
 - [`2.7a-request-exit-protocol.md`](2.7a-request-exit-protocol.md) (planned)
+- [`2.8-experimental-workflow-lifecycle.md`](2.8-experimental-workflow-lifecycle.md) (strategy-only)
 
 ## Input Sources
 

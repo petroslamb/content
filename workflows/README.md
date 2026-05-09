@@ -48,9 +48,20 @@ Read the workflow layer by group first, then by individual doc. The `workflow_gr
 | distribution | [`expert-feedback-outreach/README.md`](expert-feedback-outreach/README.md) | **experimental**: running bounded paper-author outreach as an expert-feedback loop after publication | package-local `distribution/` tracker |
 | operations | [`youtube-channel-ops/README.md`](youtube-channel-ops/README.md) | authenticated YouTube channel work such as OAuth checks, caption recovery, playlist diagnostics, and Shorts maintenance | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/youtube-shorts-maintenance/`](skills/youtube-shorts-maintenance/) |
 | operations | [`youtube-insight-authority/README.md`](youtube-insight-authority/README.md) | **experimental**: end-to-end YouTube insight releases governed by source specs, authority packets, packaging, cadence, pinned comments, analytics, and standing approval stop conditions | [`skills/youtube-data-api/`](skills/youtube-data-api/) |
-| operations | [`youtube-cinematic-pilot/README.md`](youtube-cinematic-pilot/README.md) | running the dedicated cinematic-video experiment lane across multiple publications with one manifest, one playlist surface, and shared metric checkpoints | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/) |
-| operations | [`youtube-cinematic-rollout/README.md`](youtube-cinematic-rollout/README.md) | running the evergreen daily cinematic backlog: reconcile in-flight packages, generate up to two new cinematics per day, recover captions, score Shorts, and maintain the shared release queue | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/) |
+| operations | [`youtube-cinematic-pilot/README.md`](youtube-cinematic-pilot/README.md) | **experimental**: running the dedicated cinematic-video experiment lane across multiple publications with one manifest, one playlist surface, and shared metric checkpoints | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/) |
+| operations | [`youtube-cinematic-rollout/README.md`](youtube-cinematic-rollout/README.md) | **experimental**: running the evergreen daily cinematic backlog: reconcile in-flight packages, generate up to two new cinematics per day, recover captions, score Shorts, and maintain the shared release queue | [`skills/youtube-data-api/`](skills/youtube-data-api/), [`skills/notebooklm-artifact-bundle/`](skills/notebooklm-artifact-bundle/) |
 | operations | [`youtube-series-operating-agents/README.md`](youtube-series-operating-agents/README.md) | the Operating Agents YouTube series layer: TL;DR uploads, cross-links, playlist order, and replacement uploads | [`skills/youtube-operating-agents/`](skills/youtube-operating-agents/), [`skills/youtube-data-api/`](skills/youtube-data-api/) |
+
+## Experimental Workflow Lifecycle
+
+Every workflow marked **experimental** in the map now has an adjacent
+`workflow.yaml` with `stability: experimental`. That makes the workflow
+contracted and explicitly invokable through `./content-agent`; it does not make
+the workflow canonical, default-routed, proof-backed, or eligible for promotion.
+
+Use [`../phased-strategy/phase-2/2.8-experimental-workflow-lifecycle.md`](../phased-strategy/phase-2/2.8-experimental-workflow-lifecycle.md)
+for the current lifecycle ledger, proof requirements, promotion bar, and
+retirement rule.
 
 ## Working Hierarchy
 

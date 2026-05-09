@@ -1,0 +1,473 @@
+kind: resolved_run
+schema_version: 1
+run_id: phase-2-8-proof-paper-development-proof-runs
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: paper_development
+  workflow_version: 1
+  workflow_hash: sha256:0fc46d33e745122da15675004d898f6ea65c03807825a01a1204550609311481
+  contract_path: workflows/paper-development/workflow.yaml
+run_mode: governed_continuous
+runtime_inputs: {}
+route:
+  package_kind: leaf
+  pipeline_profile: article_default
+  current_stage: essay_iteration
+  workflow_stage: null
+  resolved_from:
+  - publications/proof-runs-as-source-surface/status.yaml
+  - workflows/paper-development/workflow.yaml
+  - harness_policy.yaml
+  - gate_contracts.yaml
+  - pipeline_profiles.yaml
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md:
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: source_essay_candidate_or_live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  hashes:
+    publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md:
+      type: file_sha256
+      sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+      size_bytes: 459
+- id: claim_boundary_ledger
+  required: false
+  status: not_evaluated
+  reason: dependency has no path, status_field, source, or glob resolver
+- id: evidence_surface
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md:
+      type: file_sha256
+      sha256: 437a07adbe3f85bb7e87013724057fa50575c93bc3b654fc3f55893e7c4337b8
+      size_bytes: 3355
+- id: package_paper_folder
+  required: false
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/paper
+  hashes:
+    publications/proof-runs-as-source-surface/paper:
+      type: directory_listing_sha256
+      sha256: 21cb82aa0f6e7a81829a73412c3ffa0fbbe2e44aaa5e7a83b922cb08b47bca8a
+      file_count: 1
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/paper-development/README.md
+  hashes:
+    workflows/paper-development/README.md:
+      type: file_sha256
+      sha256: 902a72041217be66cb8f53c8ea701f49376e7dbfec53d86f2f034093d996955a
+      size_bytes: 9505
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/paper-development/templates
+  hashes:
+    workflows/paper-development/templates:
+      type: directory_listing_sha256
+      sha256: 40a6c16cbe5c8f3b1f254fc270801e1cb8db5e315124dfd8bce625cfc45eb7e1
+      file_count: 3
+- id: essay_iteration_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/README.md
+  hashes:
+    workflows/essay-iteration/README.md:
+      type: file_sha256
+      sha256: c6c9a9af247e03a19431ef3ae0bfc5148d719307d9a769eccd6819c4c3cb04ae
+      size_bytes: 29063
+- id: evidence_authorization_readme
+  required: false
+  status: resolved
+  paths:
+  - workflows/evidence-authorization/README.md
+  hashes:
+    workflows/evidence-authorization/README.md:
+      type: file_sha256
+      sha256: f7e32eb96d3f49b75f626b6fd1812aa91797e23d112128f3a36d71517fde225c
+      size_bytes: 13169
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6
+      size_bytes: 4858
+policy_resolution:
+  allowed_tools:
+  - id: package_lifecycle_checker
+    command: .venv/bin/python scripts/check_package_lifecycle.py --package proof-runs-as-source-surface
+    required: false
+  - id: paper_workflow_validation
+    command: ./content-agent validate --workflow paper_development --package proof-runs-as-source-surface
+    required: true
+  - id: repo_link_check
+    command: npm run check:repo-links
+    required: false
+  allowed_capabilities:
+  - contract_validation
+  - context_admission
+  - scriptable_step_execution
+  - gate_stop
+  - agent_contract_request_writing
+  - subagent_result_validation
+  - integration_decision_validation
+  - run_record_writing
+  allowed_paths:
+    read:
+    - publications/proof-runs-as-source-surface/
+    - publications/proof-runs-as-source-surface/papers/index.md
+    - '{shared_evidence_path}'
+    - workflows/paper-development/
+    - workflows/essay-iteration/
+    - workflows/evidence-authorization/
+    - harness_policy.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+    write:
+    - publications/proof-runs-as-source-surface/paper/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+  codex_session_handoff:
+    requested_mode: defer_to_subagent
+    supported_modes:
+    - default
+    - defer_to_subagent
+    - policy
+    - same_session
+    effective_modes:
+    - defer_to_subagent
+    - same_session
+    fallback_default_mode: defer_to_subagent
+    policy_default_mode: defer_to_subagent
+    workflow_default_mode: null
+    effective_default_mode: defer_to_subagent
+    policy_config_present: true
+    steps:
+      create_paper_folder:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      record_paper_roadmap:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      define_paper_north_star_rubric:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      write_paper_blueprint:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      research_publication_route:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      build_literature_mapping:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      plan_case_study_trace:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      draft_extended_abstract:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      run_draftability_audit:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      harden_case_study_method:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      draft_paper_manuscript:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      prepare_venue_packet:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+selected_steps:
+- id: resolve_paper_context
+  mode: scriptable
+- id: create_paper_folder
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: record_paper_roadmap
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: define_paper_north_star_rubric
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: write_paper_blueprint
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: research_publication_route
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: build_literature_mapping
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: plan_case_study_trace
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: draft_extended_abstract
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: run_draftability_audit
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: approve_paper_drafting
+  mode: review_gated
+- id: harden_case_study_method
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: draft_paper_manuscript
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: prepare_venue_packet
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: record_handoff
+  mode: scriptable
+selected_gates: []
+behavior:
+  budgets:
+    max_steps: 14
+    max_script_retries: 1
+    external_mutations: 0
+    unapproved_lifecycle_movements: 0
+  recovery:
+    on_missing_evidence_surface: route_to_paper_intake_or_research
+    on_position_paper_drift: return_to_blueprint_and_require_concrete_contribution
+    on_case_study_gap: stop_before_extended_abstract
+    on_split_reviewer_verdict: revise_audit_or_method_and_rerun_approval_gate
+    on_rejected_experiment: park_experiment_preserve_package_paper_artifacts
+    resume_from: resolved_run
+    rollback_strategy: preserve_existing_paper_artifacts_and_write_new_revision
+  policy_run_modes:
+  - exploratory
+  - governed_continuous
+output_targets:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml
+- id: run_record
+  path: reviewable-runs/logs/phase-2-8-proof-paper-development-proof-runs.yaml
+- id: paper_folder_readme
+  path: publications/proof-runs-as-source-surface/paper/README.md
+  required: true
+  format: markdown
+- id: paper_roadmap
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-roadmap.md
+  required: true
+  format: markdown
+- id: paper_north_star_rubric
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-north-star-rubric.md
+  required: true
+  format: markdown
+- id: paper_blueprint
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-blueprint.md
+  required: true
+  format: markdown
+- id: publication_route_note
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-publication-route.md
+  required: conditional
+  format: markdown
+- id: literature_mapping_table
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-literature-mapping.md
+  required: conditional
+  format: markdown
+- id: case_study_trace_plan
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-case-study-trace.md
+  required: conditional
+  format: markdown
+- id: extended_abstract
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-extended-abstract.md
+  required: conditional
+  format: markdown
+- id: draftability_audit
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-draftability-audit.md
+  required: conditional
+  format: markdown
+- id: paper_draft_approval_gate
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-draft-approval-gate.md
+  required: conditional
+  format: markdown
+- id: case_study_method_note
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-case-study-method.md
+  required: conditional
+  format: markdown
+- id: paper_draft
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-draft.md
+  required: conditional
+  format: markdown
+- id: references_bib
+  path: publications/proof-runs-as-source-surface/paper/references.bib
+  required: conditional
+  format: bibtex
+- id: venue_checklist
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-submission-checklist.md
+  required: conditional
+  format: markdown
+- id: subagent_request:create_paper_folder
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-create-paper-folder.yaml
+  required: true
+- id: subagent_result:create_paper_folder
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-create-paper-folder.md
+  required: true
+- id: integration_decision:create_paper_folder
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-create-paper-folder.yaml
+  required: true
+- id: subagent_request:record_paper_roadmap
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml
+  required: true
+- id: subagent_result:record_paper_roadmap
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.md
+  required: true
+- id: integration_decision:record_paper_roadmap
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml
+  required: true
+- id: subagent_request:define_paper_north_star_rubric
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-define-paper-north-star-rubric.yaml
+  required: true
+- id: subagent_result:define_paper_north_star_rubric
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-define-paper-north-star-rubric.md
+  required: true
+- id: integration_decision:define_paper_north_star_rubric
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-define-paper-north-star-rubric.yaml
+  required: true
+- id: subagent_request:write_paper_blueprint
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-write-paper-blueprint.yaml
+  required: true
+- id: subagent_result:write_paper_blueprint
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-write-paper-blueprint.md
+  required: true
+- id: integration_decision:write_paper_blueprint
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-write-paper-blueprint.yaml
+  required: true
+- id: subagent_request:research_publication_route
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-research-publication-route.yaml
+  required: true
+- id: subagent_result:research_publication_route
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-research-publication-route.md
+  required: true
+- id: integration_decision:research_publication_route
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-research-publication-route.yaml
+  required: true
+- id: subagent_request:build_literature_mapping
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-build-literature-mapping.yaml
+  required: true
+- id: subagent_result:build_literature_mapping
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-build-literature-mapping.md
+  required: true
+- id: integration_decision:build_literature_mapping
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-build-literature-mapping.yaml
+  required: true
+- id: subagent_request:plan_case_study_trace
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-plan-case-study-trace.yaml
+  required: true
+- id: subagent_result:plan_case_study_trace
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-plan-case-study-trace.md
+  required: true
+- id: integration_decision:plan_case_study_trace
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-plan-case-study-trace.yaml
+  required: true
+- id: subagent_request:draft_extended_abstract
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-draft-extended-abstract.yaml
+  required: true
+- id: subagent_result:draft_extended_abstract
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-draft-extended-abstract.md
+  required: true
+- id: integration_decision:draft_extended_abstract
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-draft-extended-abstract.yaml
+  required: true
+- id: subagent_request:run_draftability_audit
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-run-draftability-audit.yaml
+  required: true
+- id: subagent_result:run_draftability_audit
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-run-draftability-audit.md
+  required: true
+- id: integration_decision:run_draftability_audit
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-run-draftability-audit.yaml
+  required: true
+- id: subagent_request:harden_case_study_method
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-harden-case-study-method.yaml
+  required: true
+- id: subagent_result:harden_case_study_method
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-harden-case-study-method.md
+  required: true
+- id: integration_decision:harden_case_study_method
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-harden-case-study-method.yaml
+  required: true
+- id: subagent_request:draft_paper_manuscript
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-draft-paper-manuscript.yaml
+  required: true
+- id: subagent_result:draft_paper_manuscript
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-draft-paper-manuscript.md
+  required: true
+- id: integration_decision:draft_paper_manuscript
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-draft-paper-manuscript.yaml
+  required: true
+- id: subagent_request:prepare_venue_packet
+  path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-prepare-venue-packet.yaml
+  required: true
+- id: subagent_result:prepare_venue_packet
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-prepare-venue-packet.md
+  required: true
+- id: integration_decision:prepare_venue_packet
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-prepare-venue-packet.yaml
+  required: true
