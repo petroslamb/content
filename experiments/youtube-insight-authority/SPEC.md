@@ -148,7 +148,10 @@ Open implementation work:
 
 ## PR Status
 
-No PR is recorded in this source-of-truth folder. This state update is local experiment/source-of-truth maintenance after the live apply and analytics refresh.
+- Branch: `codex/insight-authority-youtube-experiment`
+- Commit: `2b93703` / `Launch Insight Authority YouTube experiment`
+- PR: https://github.com/petroslamb/content/pull/10
+- Status: open after local validation and live YouTube apply; ready for automated merge under the standing approval grant after checks are confirmed.
 
 ## Publishing Ledger
 
