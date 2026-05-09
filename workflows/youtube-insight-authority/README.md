@@ -30,6 +30,10 @@ Use it when the task is not just rendering a video or running a narrow channel o
 
 This workflow acknowledges the user's standing approval for bounded YouTube channel execution. That approval is an operating grant, not permission to ignore failed preconditions. Stop before mutation when credentials, quota, required assets, dry-run verification, API/Studio tools, or analytics tracking cannot be verified.
 
+## Phase 2.8 Lifecycle State
+
+State: `contracted`. This workflow has a governed `workflow.yaml` with `stability: experimental`, so it can be invoked explicitly through `content-agent`; it is not a canonical/default route and has no promotion proof from this note.
+
 ## Source-Of-Truth Order
 
 The source-of-truth hierarchy for this workflow is:

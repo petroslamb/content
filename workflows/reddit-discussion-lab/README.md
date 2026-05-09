@@ -34,6 +34,10 @@ The purpose is not to summarize the essay. The purpose is to find the live probl
 
 Use this workflow when a package has a strong argument but the Reddit version is landing as a thesis announcement, a coined-frame pitch, or a lightly disguised external post.
 
+## Phase 2.8 Lifecycle State
+
+State: `active_experiment`. This workflow has a governed `workflow.yaml` with `stability: experimental`, and the 2026-05-09 proof campaign invoked it on `publications/evidence-governance/your-ai-is-confidently-wrong-and` with run id `phase-2-8-proof-reddit-discussion-confidently-wrong`. That run produced retained evidence, but its terminal status was `deferred`, so it is not a clean promotion proof and this workflow is not a canonical/default route.
+
 ## Core Finding
 
 The successful 2026-05-06 Reddit comment pass worked because the target threads were already shaped as live community problems. They invited experience, disagreement, and debugging detail before asking anyone to accept a concept.

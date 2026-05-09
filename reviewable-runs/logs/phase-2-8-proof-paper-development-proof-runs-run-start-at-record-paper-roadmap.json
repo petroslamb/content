@@ -1,0 +1,4 @@
+{
+  "success": false,
+  "error": "cannot create resolved run: subagent_request.run.resolved_run_path points to a missing repo path: reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml.; subagent_result.verification.commands[0].success must be boolean.; subagent_result.verification.commands[0].short_failure_summary must be a non-empty string."
+}

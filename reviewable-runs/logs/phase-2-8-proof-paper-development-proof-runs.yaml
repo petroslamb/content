@@ -1,0 +1,340 @@
+kind: run_record
+schema_version: 1
+run_id: phase-2-8-proof-paper-development-proof-runs
+resolved_run_path: reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: paper_development
+  workflow_version: 1
+  workflow_hash: sha256:0fc46d33e745122da15675004d898f6ea65c03807825a01a1204550609311481
+  contract_path: workflows/paper-development/workflow.yaml
+run_mode: governed_continuous
+timestamps:
+  started_at: '2026-05-09T17:05:32Z'
+  ended_at: '2026-05-09T17:05:32Z'
+invocation:
+  entrypoint: content-agent run
+  command: ./content-agent run --workflow paper_development --package proof-runs-as-source-surface
+    --codex-session-handoff defer_to_subagent
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md:
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: source_essay_candidate_or_live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  hashes:
+    publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md:
+      type: file_sha256
+      sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+      size_bytes: 459
+- id: claim_boundary_ledger
+  required: false
+  status: not_evaluated
+  reason: dependency has no path, status_field, source, or glob resolver
+- id: evidence_surface
+  required: true
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md:
+      type: file_sha256
+      sha256: 437a07adbe3f85bb7e87013724057fa50575c93bc3b654fc3f55893e7c4337b8
+      size_bytes: 3355
+- id: package_paper_folder
+  required: false
+  status: resolved
+  paths:
+  - publications/proof-runs-as-source-surface/paper
+  hashes:
+    publications/proof-runs-as-source-surface/paper:
+      type: directory_listing_sha256
+      sha256: 21cb82aa0f6e7a81829a73412c3ffa0fbbe2e44aaa5e7a83b922cb08b47bca8a
+      file_count: 1
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/paper-development/README.md
+  hashes:
+    workflows/paper-development/README.md:
+      type: file_sha256
+      sha256: 902a72041217be66cb8f53c8ea701f49376e7dbfec53d86f2f034093d996955a
+      size_bytes: 9505
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/paper-development/templates
+  hashes:
+    workflows/paper-development/templates:
+      type: directory_listing_sha256
+      sha256: 40a6c16cbe5c8f3b1f254fc270801e1cb8db5e315124dfd8bce625cfc45eb7e1
+      file_count: 3
+- id: essay_iteration_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/essay-iteration/README.md
+  hashes:
+    workflows/essay-iteration/README.md:
+      type: file_sha256
+      sha256: c6c9a9af247e03a19431ef3ae0bfc5148d719307d9a769eccd6819c4c3cb04ae
+      size_bytes: 29063
+- id: evidence_authorization_readme
+  required: false
+  status: resolved
+  paths:
+  - workflows/evidence-authorization/README.md
+  hashes:
+    workflows/evidence-authorization/README.md:
+      type: file_sha256
+      sha256: f7e32eb96d3f49b75f626b6fd1812aa91797e23d112128f3a36d71517fde225c
+      size_bytes: 13169
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6
+      size_bytes: 4858
+consumed_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml
+  hashes:
+    reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml:
+      type: file_sha256
+      sha256: 6e3a557b28754e712c3b587ef49800c93cd02eb240957f2873aa542d10e5af89
+      size_bytes: 19064
+- id: context:package_status
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml:
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: context:package_readme
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md:
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: context:source_essay_candidate_or_live_draft
+  paths:
+  - publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md
+  hashes:
+    publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md:
+      type: file_sha256
+      sha256: 8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc
+      size_bytes: 459
+- id: context:evidence_surface
+  paths:
+  - publications/proof-runs-as-source-surface/papers/index.md
+  hashes:
+    publications/proof-runs-as-source-surface/papers/index.md:
+      type: file_sha256
+      sha256: 437a07adbe3f85bb7e87013724057fa50575c93bc3b654fc3f55893e7c4337b8
+      size_bytes: 3355
+- id: context:package_paper_folder
+  paths:
+  - publications/proof-runs-as-source-surface/paper
+  hashes:
+    publications/proof-runs-as-source-surface/paper:
+      type: directory_listing_sha256
+      sha256: 21cb82aa0f6e7a81829a73412c3ffa0fbbe2e44aaa5e7a83b922cb08b47bca8a
+      file_count: 1
+- id: context:workflow_readme
+  paths:
+  - workflows/paper-development/README.md
+  hashes:
+    workflows/paper-development/README.md:
+      type: file_sha256
+      sha256: 902a72041217be66cb8f53c8ea701f49376e7dbfec53d86f2f034093d996955a
+      size_bytes: 9505
+- id: context:workflow_templates
+  paths:
+  - workflows/paper-development/templates
+  hashes:
+    workflows/paper-development/templates:
+      type: directory_listing_sha256
+      sha256: 40a6c16cbe5c8f3b1f254fc270801e1cb8db5e315124dfd8bce625cfc45eb7e1
+      file_count: 3
+- id: context:essay_iteration_readme
+  paths:
+  - workflows/essay-iteration/README.md
+  hashes:
+    workflows/essay-iteration/README.md:
+      type: file_sha256
+      sha256: c6c9a9af247e03a19431ef3ae0bfc5148d719307d9a769eccd6819c4c3cb04ae
+      size_bytes: 29063
+- id: context:evidence_authorization_readme
+  paths:
+  - workflows/evidence-authorization/README.md
+  hashes:
+    workflows/evidence-authorization/README.md:
+      type: file_sha256
+      sha256: f7e32eb96d3f49b75f626b6fd1812aa91797e23d112128f3a36d71517fde225c
+      size_bytes: 13169
+- id: context:harness_policy
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6
+      size_bytes: 4858
+parent_artifacts:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml
+- id: package_status
+  path: publications/proof-runs-as-source-surface/status.yaml
+produced_artifacts:
+- id: resolved_run
+  paths:
+  - reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml
+- id: run_record
+  paths:
+  - reviewable-runs/logs/phase-2-8-proof-paper-development-proof-runs.yaml
+validation_results:
+- id: content_agent_validate
+  status: passed
+  command: ./content-agent validate
+enforcement_outcomes:
+- surface: contract_shape
+  posture: deny
+  status: passed
+- surface: context_admission
+  posture: deny
+  status: passed
+- surface: tool_use
+  posture: deny
+  status: passed
+- surface: path_access
+  posture: deny
+  status: passed
+- surface: review_gates
+  posture: deny
+  status: not_reached
+- surface: external_mutation
+  posture: deny
+  status: not_attempted
+- surface: lifecycle_movement
+  posture: deny
+  status: not_attempted
+- surface: promotion
+  posture: deny
+  status: not_attempted
+- surface: trace_completeness
+  posture: detect
+  status: recorded
+gate_ids: []
+approval_decisions: []
+external_mutations:
+- target: none
+  status: not_attempted
+  approval_reference: null
+terminal_status: deferred
+promoted_output_state:
+  authority_order: workflow_contract_first
+  claim_state: unchanged
+  contradiction_state: none_known
+  validation_state: passed
+  trace_state: minimum_complete
+execution:
+  stop_reason: draftability audit decision hold_for_method_hardening; stopped before invalid undeclared approval gate
+  codex_session_handoff:
+    requested_mode: defer_to_subagent
+    supported_modes:
+    - default
+    - defer_to_subagent
+    - policy
+    - same_session
+    effective_modes:
+    - defer_to_subagent
+    - same_session
+    fallback_default_mode: defer_to_subagent
+    policy_default_mode: defer_to_subagent
+    workflow_default_mode: null
+    effective_default_mode: defer_to_subagent
+    policy_config_present: true
+    steps:
+      create_paper_folder:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      record_paper_roadmap:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      define_paper_north_star_rubric:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      write_paper_blueprint:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      research_publication_route:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      build_literature_mapping:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      plan_case_study_trace:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      draft_extended_abstract:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      run_draftability_audit:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      harden_case_study_method:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      draft_paper_manuscript:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      prepare_venue_packet:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+  scriptable_steps: []
+  subagent_request: null
