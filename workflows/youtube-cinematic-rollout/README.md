@@ -28,7 +28,13 @@ This is a contracted experimental workflow for the evergreen cinematic lane. It 
 
 ## Phase 2.8 Lifecycle State
 
-State: `contracted`. This workflow has a governed `workflow.yaml` with `stability: experimental`, so it can be invoked explicitly through `content-agent`; it is not a canonical/default route and has no promotion proof from this pass.
+- State: `contracted`
+- Governed contract: `present` - adjacent `workflow.yaml` has `stability: experimental` and is explicitly invokable through `content-agent`.
+- Proof runs: `none_recorded` - no governed real-package proof run is recorded for this workflow.
+- Promotion status: `not_candidate` - not canonical, not default-routed, and not promotion-ready.
+- Promotion blockers: needs two clean real-package governed proof run ids plus explicit human approval text before any promotion claim.
+
+## Trigger
 
 Use this workflow when the task is:
 
