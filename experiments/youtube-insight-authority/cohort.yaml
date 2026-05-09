@@ -1,0 +1,213 @@
+cohort:
+  id: initial_cinematic_authority_2026_05_09
+  experiment_id: insight_authority_cinematic
+  created_at: "2026-05-09"
+  status: active
+  selection_summary: >
+    Already-published cinematic videos whose titles and transcripts center a
+    practical authority claim, mechanism, or source-of-truth frame, with local
+    upload reports and caption files available for validation.
+  required_local_evidence:
+    - cinematic_upload_report_json
+    - cinematic_caption_srt
+    - youtube_video_id_in_upload_report_or_rollout_manifest
+    - public_or_uploaded_readback_in_upload_report
+    - publication_or_essay_url
+  source_video_file_policy: >
+    Source MP4 paths are retained from upload reports, but generated MP4 files
+    are not required to be present in the git worktree for this tracking cohort.
+  initial_video_ids:
+    - q3_gPM4E8yw
+    - J9dz9_9YPQw
+    - abBHq8lwCEE
+    - bto9FNWlahY
+    - n99g7mLWQek
+    - xPLU4cISmxE
+    - Ju5UJvO4X5k
+    - slozjRp6CPg
+
+entries:
+  - slug: illusion_of_swarm
+    role: anchor
+    publication: illusion_of_swarm
+    package: publications/illusion-of-swarm
+    title: Why Most Multi-Agent AI Is a Workaround
+    youtube_video_id: q3_gPM4E8yw
+    youtube_url: https://www.youtube.com/watch?v=q3_gPM4E8yw
+    published_at: "2026-04-24T08:09:54Z"
+    insight_authority_angle: Better decomposition often beats louder coordination theater.
+    selection_rationale: Anchor example requested for the cohort; completed cinematic with upload report, captions, Shorts follow-through, essay URL, and full research breakdown link.
+    local_evidence:
+      upload_report: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic_upload_report.json
+      caption_srt: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt
+      source_video_file_declared: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      shorts_upload_report: publications/illusion-of-swarm/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+      secondary_video_id: AigaLYfpFZc
+      secondary_video_url: https://www.youtube.com/watch?v=AigaLYfpFZc
+
+  - slug: operating_agents_memory
+    role: authority_surface
+    publication: operating_agents_memory
+    package: publications/autonomous-agents/essays/memory
+    title: Why Agent Memory Needs Authority
+    youtube_video_id: J9dz9_9YPQw
+    youtube_url: https://www.youtube.com/watch?v=J9dz9_9YPQw
+    published_at: "2026-04-26T07:03:05Z"
+    insight_authority_angle: Memory quality depends on governed authority, not just larger recall.
+    selection_rationale: Direct authority claim in title and topic, with local upload report, captions, candidate report, and Shorts upload context.
+    local_evidence:
+      upload_report: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic_upload_report.json
+      caption_srt: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt
+      source_video_file_declared: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      shorts_upload_report: publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
+      secondary_video_id: Pj4sjWvyJVQ
+      secondary_video_url: https://www.youtube.com/watch?v=Pj4sjWvyJVQ
+
+  - slug: operating_agents_multi_agent
+    role: boundary_decision_rule
+    publication: operating_agents_multi_agent
+    package: publications/autonomous-agents/essays/multi-agent
+    title: When the Second Agent Actually Buys a Boundary
+    youtube_video_id: abBHq8lwCEE
+    youtube_url: https://www.youtube.com/watch?v=abBHq8lwCEE
+    published_at: "2026-04-27T14:56:16Z"
+    insight_authority_angle: A second agent is justified only when it owns a real boundary in memory, authority, or action space.
+    selection_rationale: Completed cinematic entry adjacent to the anchor topic, with explicit boundary logic and rich local follow-through artifacts.
+    local_evidence:
+      upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic_upload_report.json
+      caption_srt: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt
+      source_video_file_declared: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      shorts_upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+      secondary_video_id: xxd2VKlqiL4
+      secondary_video_url: https://www.youtube.com/watch?v=xxd2VKlqiL4
+
+  - slug: operating_agents_reasoning
+    role: diagnostic_frame
+    publication: operating_agents_reasoning
+    package: publications/autonomous-agents/essays/reasoning
+    title: Diagnose the Scaffold Before You Shop the Model
+    youtube_video_id: bto9FNWlahY
+    youtube_url: https://www.youtube.com/watch?v=bto9FNWlahY
+    published_at: "2026-04-27T14:56:16Z"
+    insight_authority_angle: Reasoning failures should be diagnosed at the scaffold layer before blaming model choice.
+    selection_rationale: Strong practical diagnostic rule with completed local upload report, captions, and Shorts context.
+    local_evidence:
+      upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic_upload_report.json
+      caption_srt: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt
+      source_video_file_declared: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      shorts_upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+      secondary_video_id: LykGDaONozw
+      secondary_video_url: https://www.youtube.com/watch?v=LykGDaONozw
+
+  - slug: operating_agents_optimization
+    role: workflow_source_of_truth
+    publication: operating_agents_optimization
+    package: publications/autonomous-agents/essays/optimization
+    title: When the Workflow Becomes the Object
+    youtube_video_id: n99g7mLWQek
+    youtube_url: https://www.youtube.com/watch?v=n99g7mLWQek
+    published_at: "2026-04-28T08:46:57Z"
+    insight_authority_angle: Optimization belongs on the workflow, evaluation loop, and scaffold, not only on prompt text.
+    selection_rationale: Completed cinematic that turns source-of-truth thinking into an operating object, with local captions and rollout follow-through.
+    local_evidence:
+      upload_report: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic_upload_report.json
+      caption_srt: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.srt
+      source_video_file_declared: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      shorts_upload_report: publications/autonomous-agents/essays/optimization/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow
+      secondary_video_id: 2Fs1iDw5I3Y
+      secondary_video_url: https://www.youtube.com/watch?v=2Fs1iDw5I3Y
+
+  - slug: hardware_friction_map
+    role: structural_constraint
+    publication: hardware_friction_map
+    package: publications/hardware-friction
+    title: Why Hardware Friction Decides What Ships in AI
+    youtube_video_id: xPLU4cISmxE
+    youtube_url: https://www.youtube.com/watch?v=xPLU4cISmxE
+    published_at: "2026-04-30T12:33:52Z"
+    insight_authority_angle: Hardware friction is a production filter that decides which architectures survive contact with deployment.
+    selection_rationale: Completed cinematic with a practical selection mechanism and local upload/caption/Shorts artifacts.
+    local_evidence:
+      upload_report: publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic_upload_report.json
+      caption_srt: publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.srt
+      source_video_file_declared: publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/hardware-friction/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/hardware-friction/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      shorts_upload_report: publications/hardware-friction/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/the-hardware-friction-map
+      secondary_video_id: null
+      secondary_video_url: null
+
+  - slug: what_actually_works_hardware
+    role: compatibility_filter
+    publication: what_actually_works_hardware
+    package: publications/hardware-friction/what-actually-works-the-hardware
+    title: Why AI Architecture Progress Is Filtered by Hardware
+    youtube_video_id: Ju5UJvO4X5k
+    youtube_url: https://www.youtube.com/watch?v=Ju5UJvO4X5k
+    published_at: "2026-04-30T13:19:29Z"
+    insight_authority_angle: Architecture progress is filtered by hardware compatibility before it becomes real deployment progress.
+    selection_rationale: Completed cinematic with a clear practical filter claim and local rollout artifacts.
+    local_evidence:
+      upload_report: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic_upload_report.json
+      caption_srt: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.srt
+      source_video_file_declared: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+      shorts_upload_report: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/daily-cinematic-rollout/shorts_upload_report.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/what-actually-works-the-hardware
+      secondary_video_id: null
+      secondary_video_url: null
+
+  - slug: specification_surface_source_of_truth
+    role: source_of_truth_control
+    publication: specification_surface_source_of_truth
+    package: publications/literate-workflow-programming/specification-surface-source-of-truth
+    title: Why AI Coding Needs a Specification Surface
+    youtube_video_id: slozjRp6CPg
+    youtube_url: https://www.youtube.com/watch?v=slozjRp6CPg
+    published_at: "2026-05-04T07:52:16Z"
+    insight_authority_angle: Generated code becomes reviewable only when controlling intent lives in maintained, validated specification surfaces.
+    selection_rationale: Strong source-of-truth entry with local upload report, captions, visual slide assets, and full research breakdown link.
+    local_evidence:
+      upload_report: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic_upload_report.json
+      caption_srt: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt
+      source_video_file_declared: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.mp4
+      source_video_file_present_in_worktree: false
+      shorts_candidate_report: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/daily-cinematic-rollout/candidate_report.json
+      shorts_manifest: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/ad_hoc_shorts_manifest.json
+      shorts_upload_report: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/shorts/reports/specification_surface_ad_hoc_shorts_upload_report.json
+      visual_slide_manifest: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/visual_deep_dive_slides/manifest.json
+    linked_sources:
+      essay_url: https://lambpetros.substack.com/p/the-specification-surface-is-the
+      secondary_video_id: I6gKAyYRfZU
+      secondary_video_url: https://www.youtube.com/watch?v=I6gKAyYRfZU

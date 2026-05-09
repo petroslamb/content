@@ -1,0 +1,167 @@
+verification:
+  id: insight_authority_studio_verification
+  experiment_id: insight_authority_cinematic
+  created_at: "2026-05-09"
+  mutation_policy: standing_approval_explicit_apply_youtube_for_already_published_videos
+  live_studio_check_status: api_readback_passed_manual_studio_surfaces_pending
+  notes: >
+    This file records local upload-report readbacks, API readback expectations,
+    and manual Studio checks for Insight Authority interventions. The supported
+    apply path is bounded to already-published videos and requires
+    scripts/insight_authority_experiment.py --apply --apply-youtube. The live
+    YouTube apply completed on 2026-05-09T11:43:52Z. Final API readback passed
+    all title, description, tag, and comment checks; thumbnails were uploaded;
+    comments were posted; comment pinning is blocked because this workflow has
+    no YouTube Data API pin endpoint.
+
+apply_verification:
+  applied_at: "2026-05-09T11:43:52Z"
+  final_readback_at: "2026-05-09T11:46:45Z"
+  mutation_report: experiments/youtube-insight-authority/youtube_mutation_report.json
+  final_readback_report: experiments/youtube-insight-authority/youtube_final_readback.json
+  item_count: 8
+  applied_items: 8
+  title_checks: passed_all
+  description_checks: passed_all
+  tag_checks: passed_all
+  thumbnail_uploads: uploaded_all
+  technical_comments: posted_all
+  comment_pin_status: blocked_no_youtube_data_api_pin_endpoint
+  manual_studio_surfaces:
+    playlist_membership: pending
+    cards: pending
+    end_screens: pending
+    related_video_settings: pending
+
+required_checks:
+  - public_or_scheduled_privacy_matches_plan
+  - cinematic_playlist_membership_present
+  - description_contains_essay_and_full_breakdown_when_available
+  - cards_or_end_screens_present_when_the_workflow_expects_a_funnel_path
+  - related_video_or_downstream_target_verified_for_derivative_shorts
+  - no_unintended_title_or_description_mutation_since_upload_report_or_apply_report
+  - apply_youtube_report_exists_when_channel_mutation_is_performed
+  - api_readback_preserves_category_id_default_language_and_default_audio_language
+  - top_level_technical_comment_posted_when_packet_provides_pinned_comment
+  - pin_status_is_blocked_no_youtube_data_api_pin_endpoint_unless_separately_verified
+
+cohort_checks:
+  - video_id: q3_gPM4E8yw
+    title: Why Most Multi-Agent AI Is a Workaround
+    upload_report: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: uploaded
+      processing_status: null
+      published_at: "2026-04-24T08:09:54Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
+
+  - video_id: J9dz9_9YPQw
+    title: Why Agent Memory Needs Authority
+    upload_report: publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: uploaded
+      processing_status: null
+      published_at: "2026-04-26T07:03:05Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
+
+  - video_id: abBHq8lwCEE
+    title: When the Second Agent Actually Buys a Boundary
+    upload_report: publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: uploaded
+      processing_status: null
+      published_at: "2026-04-27T14:56:16Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
+
+  - video_id: bto9FNWlahY
+    title: Diagnose the Scaffold Before You Shop the Model
+    upload_report: publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: uploaded
+      processing_status: null
+      published_at: "2026-04-27T14:56:16Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
+
+  - video_id: n99g7mLWQek
+    title: When the Workflow Becomes the Object
+    upload_report: publications/autonomous-agents/essays/optimization/artifacts/video/operating_agents_optimization_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: uploaded
+      processing_status: null
+      published_at: "2026-04-28T08:46:57Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
+
+  - video_id: xPLU4cISmxE
+    title: Why Hardware Friction Decides What Ships in AI
+    upload_report: publications/hardware-friction/artifacts/video/hardware_friction_map_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: uploaded
+      processing_status: null
+      published_at: "2026-04-30T12:33:52Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
+
+  - video_id: Ju5UJvO4X5k
+    title: Why AI Architecture Progress Is Filtered by Hardware
+    upload_report: publications/hardware-friction/what-actually-works-the-hardware/artifacts/video/what_actually_works_hardware_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: uploaded
+      processing_status: null
+      published_at: "2026-04-30T13:19:29Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
+
+  - video_id: slozjRp6CPg
+    title: Why AI Coding Needs a Specification Surface
+    upload_report: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic_upload_report.json
+    local_upload_report_readback:
+      privacy_status: public
+      upload_status: processed
+      processing_status: succeeded
+      published_at: "2026-05-04T07:52:16Z"
+      playlist_title: Rooted Layers Cinematic Briefs
+    manual_studio_verification:
+      status: pending
+      checked_at: null
+      checked_by: null
+      notes: null
