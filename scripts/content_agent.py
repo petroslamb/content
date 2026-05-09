@@ -60,6 +60,7 @@ CODEX_SESSION_HANDOFF_POLICY_MODES = {"default", "policy"}
 EFFECTIVE_CODEX_SESSION_HANDOFF_MODES = {"defer_to_subagent", "same_session"}
 VALID_CODEX_SESSION_HANDOFF_MODES = CODEX_SESSION_HANDOFF_POLICY_MODES | EFFECTIVE_CODEX_SESSION_HANDOFF_MODES
 DEFAULT_CODEX_SESSION_HANDOFF_MODE = "defer_to_subagent"
+SUBAGENT_HANDOFF_PROTOCOL_VERSION = "phase-2.7a"
 HASHABLE_FILE_LIMIT_BYTES = 5_000_000
 REVIEWABLE_RUNS_DIR = REPO_ROOT / "reviewable-runs"
 RESOLVED_RUNS_DIR = REVIEWABLE_RUNS_DIR / "resolved-runs"
@@ -72,6 +73,18 @@ VALID_TERMINAL_STATUSES = {"completed", "gated", "failed", "deferred", "rejected
 VALID_GATE_ARTIFACT_STATUSES = {"pending", "resolved"}
 DEFAULT_SUBAGENT_VERDICTS = {"pass", "fail", "defer", "stale"}
 DEFAULT_INTEGRATION_DECISIONS = {"accept", "reject", "defer"}
+PHASE_2_7A_RESULT_SCHEMA_CHECKS = [
+    "kind",
+    "schema_version",
+    "request_id",
+    "package",
+    "workflow",
+    "run",
+    "verdict",
+    "source_hashes",
+    "findings",
+    "verification.commands",
+]
 PROMOTED_OUTPUT_STATE_KEYS = {
     "authority_order",
     "claim_state",
@@ -1337,6 +1350,179 @@ def validate_line_grounded_findings_shape(
             validate_artifact_repo_path(relpath, f"{item_context}.path", path, findings, required=True)
 
 
+def phase_2_7a_request(data: dict[str, Any]) -> bool:
+    return data.get("handoff_protocol_version") == SUBAGENT_HANDOFF_PROTOCOL_VERSION
+
+
+def validate_phase_2_7a_request_shape(path: Path, data: dict[str, Any], findings: list[dict[str, Any]]) -> None:
+    context = "subagent_request"
+    require_artifact_keys(
+        data,
+        {
+            "handoff_protocol_version",
+            "recommended_skills",
+            "exit_protocol",
+            "verification_requirements",
+        },
+        context,
+        path,
+        findings,
+    )
+    skills = require_artifact_list(data, "recommended_skills", context, path, findings)
+    if not skills:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.recommended_skills must not be empty for phase-2.7a requests.", path=path)
+    else:
+        first = skills[0]
+        if not isinstance(first, dict) or first.get("name") != "content-agent-handoff":
+            add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.recommended_skills[0] must recommend content-agent-handoff.", path=path)
+    for index, skill in enumerate(skills):
+        if not isinstance(skill, dict):
+            add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.recommended_skills[{index}] must be a mapping.", path=path)
+            continue
+        for key in ("name", "path", "reason", "source", "priority"):
+            if not isinstance(skill.get(key), str) or not skill[key]:
+                add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.recommended_skills[{index}].{key} must be a non-empty string.", path=path)
+        validate_artifact_repo_path(skill.get("path"), f"subagent_request.recommended_skills[{index}].path", path, findings)
+
+    exit_protocol = require_artifact_mapping(data, "exit_protocol", context, path, findings)
+    if exit_protocol.get("required") is not True:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.exit_protocol.required must be true.", path=path)
+    if exit_protocol.get("negative_verdicts_still_require_valid_result") is not True:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.exit_protocol.negative_verdicts_still_require_valid_result must be true.", path=path)
+    if exit_protocol.get("integration_decision_allowed_by_worker") is not False:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.exit_protocol.integration_decision_allowed_by_worker must be false.", path=path)
+    for key in ("steps", "final_response_fields"):
+        values = require_artifact_list(exit_protocol, key, "subagent_request.exit_protocol", path, findings)
+        if not values or not all(isinstance(item, str) and item for item in values):
+            add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.exit_protocol.{key} must contain non-empty strings.", path=path)
+
+    verification_requirements = require_artifact_mapping(data, "verification_requirements", context, path, findings)
+    if verification_requirements.get("required") is not True:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.verification_requirements.required must be true.", path=path)
+    commands = require_artifact_list(verification_requirements, "commands", "subagent_request.verification_requirements", path, findings)
+    if not commands:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.verification_requirements.commands must not be empty.", path=path)
+    for index, command in enumerate(commands):
+        if not isinstance(command, dict):
+            add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.verification_requirements.commands[{index}] must be a mapping.", path=path)
+            continue
+        if not isinstance(command.get("id"), str) or not command["id"]:
+            add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.verification_requirements.commands[{index}].id must be a non-empty string.", path=path)
+        if not isinstance(command.get("command"), str) or not command["command"]:
+            add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.verification_requirements.commands[{index}].command must be a non-empty string.", path=path)
+        if command.get("required") is not True:
+            add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.verification_requirements.commands[{index}].required must be true.", path=path)
+        exit_codes = command.get("success_exit_codes")
+        if not isinstance(exit_codes, list) or not exit_codes or not all(isinstance(item, int) for item in exit_codes):
+            add_finding(findings, "error", "trace_completeness", "detect", f"subagent_request.verification_requirements.commands[{index}].success_exit_codes must contain integers.", path=path)
+    schema_checks = require_artifact_list(verification_requirements, "result_schema_checks", "subagent_request.verification_requirements", path, findings)
+    if "verification.commands" not in schema_checks:
+        add_finding(findings, "error", "trace_completeness", "detect", "subagent_request.verification_requirements.result_schema_checks must include verification.commands.", path=path)
+
+
+def validate_phase_2_7a_result_verification(
+    data: dict[str, Any],
+    request: dict[str, Any],
+    context: str,
+    path: Path,
+    findings: list[dict[str, Any]],
+) -> None:
+    verification_requirements = request.get("verification_requirements") if isinstance(request.get("verification_requirements"), dict) else {}
+    required_commands = [
+        command
+        for command in verification_requirements.get("commands", [])
+        if isinstance(command, dict)
+        and command.get("required") is True
+        and isinstance(command.get("command"), str)
+        and command.get("command")
+    ]
+    required_by_command = {str(command["command"]): command for command in required_commands}
+    verification = require_artifact_mapping(data, "verification", context, path, findings)
+    commands = require_artifact_list(verification, "commands", f"{context}.verification", path, findings)
+    if not commands:
+        add_finding(findings, "error", "trace_completeness", "detect", f"{context}.verification.commands must not be empty for phase-2.7a requests.", path=path)
+        return
+    verdict = data.get("verdict")
+    seen_required_commands: set[str] = set()
+    for index, command in enumerate(commands):
+        item_context = f"{context}.verification.commands[{index}]"
+        if not isinstance(command, dict):
+            add_finding(findings, "error", "trace_completeness", "detect", f"{item_context} must be a mapping.", path=path)
+            continue
+        command_text = command.get("command")
+        if not isinstance(command_text, str) or not command_text:
+            add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.command must be a non-empty string.", path=path)
+            command_text = None
+        elif command_text in required_by_command:
+            seen_required_commands.add(command_text)
+        exit_code = command.get("exit_code")
+        success = command.get("success")
+        if not isinstance(exit_code, int) and not (exit_code is None and success is False and verdict != "pass"):
+            add_finding(
+                findings,
+                "error",
+                "trace_completeness",
+                "detect",
+                f"{item_context}.exit_code must be an integer unless the command could not launch and verdict is not pass.",
+                path=path,
+            )
+        if not isinstance(success, bool):
+            add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.success must be boolean.", path=path)
+        summary = command.get("short_failure_summary")
+        if not isinstance(summary, str) or not summary:
+            add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.short_failure_summary must be a non-empty string.", path=path)
+        elif success is True and summary != "none":
+            add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.short_failure_summary must be none when success is true.", path=path)
+        elif success is False and summary == "none":
+            add_finding(findings, "error", "trace_completeness", "detect", f"{item_context}.short_failure_summary must describe the failure when success is false.", path=path)
+        if command_text in required_by_command:
+            required = required_by_command[command_text]
+            allowed_exit_codes = required.get("success_exit_codes")
+            allowed = {code for code in allowed_exit_codes if isinstance(code, int)} if isinstance(allowed_exit_codes, list) else set()
+            if success is True and (not isinstance(exit_code, int) or (allowed and exit_code not in allowed)):
+                add_finding(
+                    findings,
+                    "error",
+                    "trace_completeness",
+                    "detect",
+                    f"{item_context} reports success but does not use a declared success exit code.",
+                    path=path,
+                    evidence={"command": command_text, "success_exit_codes": sorted(allowed), "exit_code": exit_code},
+                )
+            if verdict == "pass":
+                if success is not True:
+                    add_finding(
+                        findings,
+                        "error",
+                        "trace_completeness",
+                        "detect",
+                        f"{item_context} must succeed when subagent_result.verdict is pass.",
+                        path=path,
+                        evidence={"command": command_text},
+                    )
+                elif not isinstance(exit_code, int) or (allowed and exit_code not in allowed):
+                    add_finding(
+                        findings,
+                        "error",
+                        "trace_completeness",
+                        "detect",
+                        f"{item_context}.exit_code must match the declared success exit codes when subagent_result.verdict is pass.",
+                        path=path,
+                        evidence={"command": command_text, "success_exit_codes": sorted(allowed), "exit_code": exit_code},
+                    )
+    missing_commands = sorted(set(required_by_command) - seen_required_commands)
+    for command_text in missing_commands:
+        add_finding(
+            findings,
+            "error",
+            "trace_completeness",
+            "detect",
+            "subagent_result.verification.commands must include every required command declared by the phase-2.7a request.",
+            path=path,
+            evidence={"missing_command": command_text},
+        )
+
+
 def validate_subagent_request_artifact(path: Path, data: dict[str, Any], findings: list[dict[str, Any]]) -> None:
     if not generated_agent_request(data):
         return
@@ -1407,6 +1593,8 @@ def validate_subagent_request_artifact(path: Path, data: dict[str, Any], finding
                 f"subagent_request.expected_artifacts.{key} must be a non-empty repo path string.",
                 path=path,
             )
+    if phase_2_7a_request(data):
+        validate_phase_2_7a_request_shape(path, data, findings)
 
 
 def load_generated_subagent_requests(findings: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
@@ -1475,6 +1663,8 @@ def validate_subagent_result_artifact(
         )
     validate_agent_source_hashes(data, request, context, path, findings)
     validate_line_grounded_findings_shape(data.get("findings"), context, path, findings)
+    if phase_2_7a_request(request):
+        validate_phase_2_7a_result_verification(data, request, context, path, findings)
     return subagent_result_id(path, data)
 
 
@@ -4146,6 +4336,111 @@ def synthesize_generic_codex_session_agent_contract(
     }
 
 
+def package_arg_for_validation_command(package: dict[str, Any]) -> str:
+    package_name = package.get("package")
+    if isinstance(package_name, str) and package_name:
+        return package_name
+    publication = package.get("publication")
+    if isinstance(publication, str) and publication:
+        return publication
+    package_path = package.get("path")
+    if isinstance(package_path, str) and package_path:
+        return coerce_package_key(package_path)
+    status_path = package.get("status_path")
+    if isinstance(status_path, str) and status_path.startswith("publications/"):
+        return coerce_package_key(status_path.removesuffix("/status.yaml"))
+    return "unknown"
+
+
+def phase_2_7a_verification_command(resolved_run: dict[str, Any]) -> dict[str, Any]:
+    workflow_id = str(resolved_run.get("workflow", {}).get("workflow_id") or "unknown_workflow")
+    package = resolved_run.get("package") if isinstance(resolved_run.get("package"), dict) else {}
+    package_arg = package_arg_for_validation_command(package)
+    return {
+        "id": "content_agent_validate",
+        "command": f"./content-agent validate --workflow {shlex.quote(workflow_id)} --package {shlex.quote(package_arg)} --format json",
+        "required": True,
+        "success_exit_codes": [0],
+    }
+
+
+def phase_2_7a_recommended_skills() -> list[dict[str, str]]:
+    return [
+        {
+            "name": "content-agent-handoff",
+            "path": "workflows/skills/content-agent-handoff/SKILL.md",
+            "reason": "Read the repo-local handoff closeout protocol before producing a result.",
+            "source": SUBAGENT_HANDOFF_PROTOCOL_VERSION,
+            "priority": "first",
+        }
+    ]
+
+
+def phase_2_7a_exit_protocol() -> dict[str, Any]:
+    return {
+        "required": True,
+        "steps": [
+            "read_request_and_declared_inputs_only",
+            "write_declared_workflow_outputs",
+            "write_declared_result_artifact",
+            "self_check_result_metadata_schema_hashes_verdict_and_findings",
+            "run_declared_verification_commands",
+            "repair_result_artifact_if_shape_validation_fails",
+            "return_minimal_final_response",
+        ],
+        "negative_verdicts_still_require_valid_result": True,
+        "integration_decision_allowed_by_worker": False,
+        "final_response_fields": [
+            "result path",
+            "workflow output path if any",
+            "validation command",
+            "success boolean",
+            "minimal blockers",
+        ],
+    }
+
+
+def phase_2_7a_verification_requirements(resolved_run: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "required": True,
+        "commands": [phase_2_7a_verification_command(resolved_run)],
+        "result_schema_checks": deepcopy(PHASE_2_7A_RESULT_SCHEMA_CHECKS),
+        "source_hash_checks": {
+            "require_result_hash_echo": True,
+            "stale_on_mismatch": True,
+        },
+        "artifact_checks": {
+            "declared_result_path_required": True,
+            "declared_output_targets_required": True,
+        },
+    }
+
+
+def build_operator_prompt_fragment_from_request(request: dict[str, Any]) -> str:
+    expected = request.get("expected_artifacts") if isinstance(request.get("expected_artifacts"), dict) else {}
+    result_path = expected.get("result_path") if isinstance(expected.get("result_path"), str) else ""
+    output_targets = request.get("output_targets") if isinstance(request.get("output_targets"), list) else []
+    output_paths = [
+        item.get("path")
+        for item in output_targets
+        if isinstance(item, dict) and isinstance(item.get("path"), str) and item.get("path")
+    ]
+    verification = request.get("verification_requirements") if isinstance(request.get("verification_requirements"), dict) else {}
+    commands = [
+        item.get("command")
+        for item in verification.get("commands", [])
+        if isinstance(item, dict) and isinstance(item.get("command"), str) and item.get("command")
+    ]
+    final_fields = request.get("exit_protocol", {}).get("final_response_fields", []) if isinstance(request.get("exit_protocol"), dict) else []
+    return (
+        "Read the request artifact and declared inputs only. "
+        f"Write the declared workflow outputs ({', '.join(output_paths) if output_paths else 'none declared'}) "
+        f"and result artifact ({result_path}). "
+        f"Run the declared verification commands ({'; '.join(commands)}). "
+        f"Final response must include only {', '.join(final_fields)}."
+    )
+
+
 def build_subagent_request_from_run(
     resolved_run: dict[str, Any],
     resolved_run_path: Path,
@@ -4183,6 +4478,7 @@ def build_subagent_request_from_run(
     artifact = {
         "kind": "subagent_request",
         "schema_version": CONTENT_AGENT_VERSION,
+        "handoff_protocol_version": SUBAGENT_HANDOFF_PROTOCOL_VERSION,
         "request_id": request_id,
         "created_at": timestamp,
         "created_by": "content-agent run",
@@ -4210,6 +4506,9 @@ def build_subagent_request_from_run(
         "allowed_input_paths": allowed_inputs,
         "output_targets": step_output_target_refs(step, resolved_run),
         "source_hashes": source_hashes,
+        "recommended_skills": phase_2_7a_recommended_skills(),
+        "exit_protocol": phase_2_7a_exit_protocol(),
+        "verification_requirements": phase_2_7a_verification_requirements(resolved_run),
         "success_criteria": deepcopy(agent_contract.get("success_criteria", [])),
         "failure_triggers": deepcopy(agent_contract.get("failure_triggers", [])),
         "plot_contract_requirements": deepcopy(plot_contract_requirements),
@@ -4234,6 +4533,7 @@ def build_subagent_request_from_run(
                 "verdict",
                 "source_hashes",
                 "findings",
+                "verification",
             ],
             "line_grounded_findings_required": True,
         },
@@ -4254,6 +4554,7 @@ def build_subagent_request_from_run(
             "same_session_compatible": False,
         },
     }
+    artifact["operator_prompt_fragment"] = build_operator_prompt_fragment_from_request(artifact)
     return artifact, request_path
 
 

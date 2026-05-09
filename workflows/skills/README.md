@@ -14,6 +14,7 @@ The live discovery path remains `.agents/skills/`, but that tree is now a symlin
 ### Validation / hardening
 
 - [`alphaxiv/`](alphaxiv/) is also the repo's execution skill for narrow claim validation against an existing blueprint, draft, or anchor-paper set. In article-development work, that validation mode is often more valuable than broad discovery.
+- [`content-agent-handoff/`](content-agent-handoff/) for bounded `content-agent` subagent request closeout, result artifact writing, verification evidence, and integration-boundary discipline
 
 ### Production / publishing
 
