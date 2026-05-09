@@ -151,7 +151,8 @@ Open implementation work:
 - Branch: `codex/insight-authority-youtube-experiment`
 - Commit: `2b93703` / `Launch Insight Authority YouTube experiment`
 - PR: https://github.com/petroslamb/content/pull/10
-- Status: open after local validation and live YouTube apply; ready for automated merge under the standing approval grant after checks are confirmed.
+- Status: merged on 2026-05-09T11:55:41Z as merge commit `bc9640f7c789ea5f14c54580aeca606ccab1617a`.
+- Note: GitHub rejected self-approval with `Review Can not approve your own pull request`; the PR was clean, had no reported checks, and was merged under the standing approval grant.
 
 ## Publishing Ledger
 
