@@ -1,4 +1,5 @@
 # Canonical article-development toolchain
+opendataloader-pdf>=2.0,<3.0
 markitdown[pdf]==0.1.5
 notebooklm-py[browser]==0.3.4
 alphaxiv-py
