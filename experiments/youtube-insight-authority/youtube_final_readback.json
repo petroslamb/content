@@ -1,0 +1,286 @@
+{
+  "created_at": "2026-05-09T11:46:45.768823+00:00",
+  "workflow": "insight_authority_post_apply_readback",
+  "items": [
+    {
+      "slug": "illusion_of_swarm",
+      "video_id": "q3_gPM4E8yw",
+      "url": "https://www.youtube.com/watch?v=q3_gPM4E8yw",
+      "expected_title": "When Teams Split Work Too Early",
+      "actual_title": "When Teams Split Work Too Early",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "systems",
+        "software"
+      ],
+      "actual_tags": [
+        "research",
+        "rootedlayers",
+        "software",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/q3_gPM4E8yw/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgyCieAJxHovLeEB_7V4AaABAg",
+          "comment_id": "UgyCieAJxHovLeEB_7V4AaABAg",
+          "publishedAt": "2026-05-09T11:43:18Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "operating_agents_memory",
+      "video_id": "J9dz9_9YPQw",
+      "url": "https://www.youtube.com/watch?v=J9dz9_9YPQw",
+      "expected_title": "Memory Needs an Owner",
+      "actual_title": "Memory Needs an Owner",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "memory",
+        "systems"
+      ],
+      "actual_tags": [
+        "memory",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/J9dz9_9YPQw/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgzRIfDLSWMTheE0Q9d4AaABAg",
+          "comment_id": "UgzRIfDLSWMTheE0Q9d4AaABAg",
+          "publishedAt": "2026-05-09T11:43:24Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "operating_agents_multi_agent",
+      "video_id": "abBHq8lwCEE",
+      "url": "https://www.youtube.com/watch?v=abBHq8lwCEE",
+      "expected_title": "The Second Worker Needs a Boundary",
+      "actual_title": "The Second Worker Needs a Boundary",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "systems",
+        "design"
+      ],
+      "actual_tags": [
+        "design",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/abBHq8lwCEE/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgzCuwH7gDZ9XSwl6DF4AaABAg",
+          "comment_id": "UgzCuwH7gDZ9XSwl6DF4AaABAg",
+          "publishedAt": "2026-05-09T11:43:29Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "operating_agents_reasoning",
+      "video_id": "bto9FNWlahY",
+      "url": "https://www.youtube.com/watch?v=bto9FNWlahY",
+      "expected_title": "Fix the Support Before the Model",
+      "actual_title": "Fix the Support Before the Model",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "reasoning",
+        "systems"
+      ],
+      "actual_tags": [
+        "reasoning",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/bto9FNWlahY/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgxjlNg9bPbfHma68614AaABAg",
+          "comment_id": "UgxjlNg9bPbfHma68614AaABAg",
+          "publishedAt": "2026-05-09T11:43:34Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "operating_agents_optimization",
+      "video_id": "n99g7mLWQek",
+      "url": "https://www.youtube.com/watch?v=n99g7mLWQek",
+      "expected_title": "The Work Process Is the Product",
+      "actual_title": "The Work Process Is the Product",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "evaluation",
+        "systems"
+      ],
+      "actual_tags": [
+        "evaluation",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/n99g7mLWQek/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgxRZrrM9UCccD70W9l4AaABAg",
+          "comment_id": "UgxRZrrM9UCccD70W9l4AaABAg",
+          "publishedAt": "2026-05-09T11:43:38Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "hardware_friction_map",
+      "video_id": "xPLU4cISmxE",
+      "url": "https://www.youtube.com/watch?v=xPLU4cISmxE",
+      "expected_title": "Hardware Decides What Ships",
+      "actual_title": "Hardware Decides What Ships",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "hardware",
+        "systems"
+      ],
+      "actual_tags": [
+        "hardware",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/xPLU4cISmxE/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "Ugy9zLj-FHTpxCKGEgx4AaABAg",
+          "comment_id": "Ugy9zLj-FHTpxCKGEgx4AaABAg",
+          "publishedAt": "2026-05-09T11:43:42Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "what_actually_works_hardware",
+      "video_id": "Ju5UJvO4X5k",
+      "url": "https://www.youtube.com/watch?v=Ju5UJvO4X5k",
+      "expected_title": "Hardware Filters Progress",
+      "actual_title": "Hardware Filters Progress",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "hardware",
+        "systems"
+      ],
+      "actual_tags": [
+        "hardware",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/Ju5UJvO4X5k/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "Ugzx3wKjIr7z6zLxxxx4AaABAg",
+          "comment_id": "Ugzx3wKjIr7z6zLxxxx4AaABAg",
+          "publishedAt": "2026-05-09T11:43:47Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "specification_surface_source_of_truth",
+      "video_id": "slozjRp6CPg",
+      "url": "https://www.youtube.com/watch?v=slozjRp6CPg",
+      "expected_title": "Specs Need a Surface",
+      "actual_title": "Specs Need a Surface",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "rootedlayers",
+        "research",
+        "specifications",
+        "systems"
+      ],
+      "actual_tags": [
+        "research",
+        "rootedlayers",
+        "specifications",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/slozjRp6CPg/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgyNDcCu0v2sGzTnyiR4AaABAg",
+          "comment_id": "UgyNDcCu0v2sGzTnyiR4AaABAg",
+          "publishedAt": "2026-05-09T11:43:51Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    }
+  ]
+}

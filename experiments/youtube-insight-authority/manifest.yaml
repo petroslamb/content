@@ -1,0 +1,135 @@
+experiment:
+  id: insight_authority_cinematic
+  name: Insight Authority YouTube Experiment
+  workspace: experiments/youtube-insight-authority
+  status: applied
+  posture: live_youtube_apply_completed_with_analytics_baseline
+  created_at: "2026-05-09"
+  timezone: Europe/Athens
+  owner_layer: experiments
+  registry_path: experiments/youtube-analytics/experiment_registry.yaml
+  registry_id: insight_authority_cinematic
+  hypothesis: >
+    Cinematic briefs that package a concrete operating insight as an inspectable
+    mechanism or decision rule should earn stronger qualified attention than
+    generic topic summaries in the same format band.
+
+boundaries:
+  channel_mutations_allowed: true
+  standing_user_approval: bounded_youtube_apply_for_already_published_videos
+  apply_requires:
+    - validated_authority_packet
+    - youtube_video_id
+    - generated_png_thumbnail
+    - cli_flags: ["--apply", "--apply-youtube"]
+    - data_api_readback_report
+  allowed_write_paths:
+    - experiments/youtube-insight-authority/**
+    - experiments/README.md
+    - experiments/youtube-analytics/experiment_registry.yaml
+    - reviewable-runs/logs/youtube-insight-authority-*.yaml
+  allowed_command_posture:
+    - read
+    - validation
+    - local_apply
+    - youtube_apply
+  allowed_channel_mutations:
+    - update_video_title
+    - update_video_description
+    - update_video_tags
+    - upload_thumbnail
+    - post_top_level_technical_comment
+    - readback_video_state
+  forbidden_actions:
+    - upload_video
+    - schedule_video
+    - update_playlist
+    - update_cards
+    - update_end_screens
+    - studio_mutation
+    - claim_comment_pin_without_verified_pin_surface
+
+source_of_truth:
+  spec: experiments/youtube-insight-authority/SPEC.md
+  manifest: experiments/youtube-insight-authority/manifest.yaml
+  authority_packets: experiments/youtube-insight-authority/authority_packets.yaml
+  cohort: experiments/youtube-insight-authority/cohort.yaml
+  evaluation_rubric: experiments/youtube-insight-authority/evaluation_rubric.yaml
+  studio_verification: experiments/youtube-insight-authority/studio_verification.yaml
+  release_ledger: experiments/youtube-insight-authority/release_ledger.md
+  upstream_references:
+    - experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+    - experiments/youtube-cinematic-pilot/metrics/video_asset_youtube_map.yaml
+    - experiments/youtube-analytics/metrics_ledger.json
+    - experiments/youtube-analytics/content_rubric.json
+
+cohort:
+  id: initial_cinematic_authority_2026_05_09
+  file: experiments/youtube-insight-authority/cohort.yaml
+  selection_basis: already_published_completed_cinematic_videos_with_local_upload_reports_and_srt
+  anchor_video_id: q3_gPM4E8yw
+  video_ids:
+    - q3_gPM4E8yw
+    - J9dz9_9YPQw
+    - abBHq8lwCEE
+    - bto9FNWlahY
+    - n99g7mLWQek
+    - xPLU4cISmxE
+    - Ju5UJvO4X5k
+    - slozjRp6CPg
+  excluded_for_now:
+    - id: legacy_cinematic_map_entries
+      reason: Some have enough id/title mapping but weaker local readback or less current rollout context.
+    - id: newer_prompt_packet_or_orchestration_entries
+      reason: Good future candidates, but initial cohort keeps the read narrow around source-of-truth and operating-authority claims.
+
+metrics:
+  primary_metric_target: averageViewPercentage
+  registry_metric_target: averageViewPercentage
+  secondary_metrics:
+    - views_per_day
+    - videoThumbnailImpressionsClickRate
+    - related_video_traffic_views
+    - known_downstream_clicks
+    - subscribersGained
+  minimum_read:
+    cohort_found_in_ledger: 6
+    retention_values_present: 4
+  windows:
+    short_read: 7d
+    stable_read: 28d
+
+tracking_state:
+  current_phase: post_apply_baseline_monitoring
+  first_dashboard_read_due: next_full_post_apply_youtube_analytics_dashboard_refresh
+  last_local_validation: "2026-05-09"
+  live_studio_verification: api_readback_passed_manual_studio_surfaces_pending
+  channel_mutation_state: live_youtube_apply_completed
+  live_youtube_apply_completed_at: "2026-05-09T11:43:52Z"
+  final_readback_completed_at: "2026-05-09T11:46:45Z"
+  final_readback_status: passed_all_title_description_tag_comment_checks
+  thumbnail_upload_status: uploaded_all_cohort_thumbnails
+  comment_status: posted_all_top_level_technical_comments
+  default_channel_mutation_report: experiments/youtube-insight-authority/youtube_mutation_report.json
+  final_readback_report: experiments/youtube-insight-authority/youtube_final_readback.json
+  pin_status_policy: blocked_no_youtube_data_api_pin_endpoint
+  analytics_refresh:
+    completed_at: "2026-05-09T11:45:58Z"
+    analytics_end_date: "2026-05-08"
+    metrics_ledger: experiments/youtube-analytics/metrics_ledger.json
+    metrics_ledger_records: 252
+    reporting_api_sync:
+      source_file_count: 87
+      videos_updated: 232
+      merged_at: "2026-05-09T11:45:52Z"
+    weekly_report_markdown: experiments/youtube-analytics/weekly_reports/2026-05-09.md
+    weekly_report_json: experiments/youtube-analytics/weekly_reports/2026-05-09.json
+    dashboard_snapshot: experiments/youtube-analytics/snapshots/2026-05-09T11-45-59Z.json
+    summary_counts:
+      scale: 0
+      funnel_winner: 0
+      clip_more: 0
+      retitle: 22
+      hook_problem: 3
+      remaster: 3
+      ignore: 226
