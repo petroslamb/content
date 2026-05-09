@@ -1,0 +1,487 @@
+workflow_id: youtube_cinematic_pilot
+version: 1
+stability: experimental
+workflow_kind: module
+workflow_group: operations
+summary: Coordinate the bounded multi-publication cinematic-video pilot through manifest state, NotebookLM generation, YouTube dry-runs, caption recovery, Shorts selection, and metric readback without replacing the canonical video lifecycle.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/ for the selected pilot publication.
+  publication_key:
+    required: false
+    description: Key in experiments/youtube-cinematic-pilot/pilot_manifest.yaml when it differs from the package basename.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+    - id: publication_key
+      source: cli.publication_key or package_name
+    - id: run_id
+      source: content-agent run id
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, revision, artifact paths, and published YouTube or essay references for the pilot publication.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation, artifact conventions, and local video boundaries.
+    record_hash: true
+  - id: pilot_manifest
+    path: experiments/youtube-cinematic-pilot/pilot_manifest.yaml
+    required: true
+    purpose: Provide the experiment manifest entry for the target publication, including NotebookLM notebook, cinematic asset targets, upload plan, Shorts selection, and metrics checkpoints.
+    record_hash: true
+  - id: release_calendar
+    path: experiments/youtube-cinematic-pilot/release_calendar.yaml
+    required: true
+    purpose: Preserve the shared pilot release schedule and prevent the cinematic lane from silently replacing canonical publication timing.
+    record_hash: true
+  - id: cinematic_prompt
+    path: experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt
+    required: true
+    purpose: Load the non-standard cinematic NotebookLM prompt used only by this opt-in experiment.
+    record_hash: true
+  - id: cinematic_description_template
+    path: experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md
+    required: true
+    purpose: Load the pilot upload description template before dry-run or apply.
+    record_hash: true
+  - id: package_video_artifacts
+    path_from_status: config.video_artifacts_path
+    fallback: publications/{package}/artifacts/video/
+    required: true
+    purpose: Locate package-local cinematic video, captions, Shorts manifests, portrait renders, and upload reports.
+    record_hash: true
+  - id: pilot_metrics_surface
+    path: experiments/youtube-cinematic-pilot/metrics/
+    required: true
+    purpose: Record or inspect pilot metrics and checkpoint reports without treating them as promotion proof by themselves.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/youtube-cinematic-pilot/README.md
+    required: true
+    purpose: Load human-facing cinematic pilot guidance and Phase 2.8 lifecycle-state language.
+    record_hash: true
+  - id: notebooklm_artifact_workflow
+    path: workflows/notebooklm-artifacts/README.md
+    required: true
+    purpose: Preserve the boundary between standard NotebookLM artifact generation and the pilot's explicit cinematic branch.
+    record_hash: true
+  - id: youtube_channel_ops_readme
+    path: workflows/youtube-channel-ops/README.md
+    required: true
+    purpose: Preserve YouTube auth, upload, playlist, caption, and readback boundaries for authenticated channel work.
+    record_hash: true
+  - id: youtube_data_api_skill
+    path: workflows/skills/youtube-data-api/SKILL.md
+    required: true
+    purpose: Bind repo-local YouTube Data API scripts for auth checks, uploads, caption recovery, playlist work, and readback.
+    record_hash: true
+  - id: notebooklm_artifact_skill
+    path: workflows/skills/notebooklm-artifact-bundle/SKILL.md
+    required: true
+    purpose: Bind repo-local NotebookLM artifact conventions and auth expectations.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local write, external mutation, approval, trace, and hidden-auth-state policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve release_readiness before YouTube channel mutation.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: notebooklm_auth_check
+      command: ".venv/bin/notebooklm auth check --test"
+      required: false
+    - id: youtube_auth_check
+      command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/auth_and_channel_check.py"
+      required: false
+    - id: zero_byte_artifact_scan
+      command: "find publications/{package}/artifacts -type f -size 0"
+      required: true
+    - id: cinematic_upload_dry_run
+      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml --publication {publication_key}"
+      required: true
+    - id: cinematic_upload_apply
+      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml --publication {publication_key} --apply"
+      required: false
+    - id: release_readiness_gate_check
+      command: "./content-agent gate check --gate release_readiness --package {package}"
+      required: false
+    - id: caption_download
+      command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/download_video_captions.py --video-id <CINEMATIC_VIDEO_ID> --output publications/{package}/artifacts/video/<cinematic>.srt"
+      required: false
+    - id: shorts_upload_dry_run
+      command: ".venv/bin/python scripts/upload_publication_shorts.py --package {package} --manifest publications/{package}/artifacts/video/shorts/shorts_manifest.json --selection-manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml --selection-publication {publication_key}"
+      required: false
+    - id: workflow_contract_validation
+      command: "npm run check:workflow-yaml"
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: false
+  skills:
+    - youtube-data-api
+    - notebooklm-artifact-bundle
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - experiments/youtube-cinematic-pilot/
+    - workflows/youtube-cinematic-pilot/
+    - workflows/notebooklm-artifacts/
+    - workflows/youtube-channel-ops/
+    - workflows/skills/youtube-data-api/
+    - workflows/skills/notebooklm-artifact-bundle/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/artifacts/video/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: settled_cinematic_pilot_manifest_state
+    path_template: "reviewable-runs/logs/{run_id}-youtube-cinematic-pilot-manifest-state.md"
+    required: true
+    format: markdown
+    producer: reconcile_pilot_manifest_entry
+  - id: cinematic_release_calendar_state
+    path_template: "reviewable-runs/logs/{run_id}-youtube-cinematic-pilot-release-calendar.md"
+    required: true
+    format: markdown
+    producer: confirm_pilot_schedule
+  - id: package_cinematic_video
+    path_template: "publications/{package}/artifacts/video/{package_name}-cinematic.mp4"
+    required: conditional
+    required_when: NotebookLM cinematic generation completes
+    format: mp4
+    producer: generate_or_download_cinematic_video
+  - id: cinematic_upload_plan
+    path_template: "publications/{package}/artifacts/video/{package_name}-cinematic-upload-plan.md"
+    required: true
+    format: markdown
+    producer: dry_run_cinematic_upload
+    gated_by: release_readiness
+  - id: cinematic_upload_report
+    path_template: "publications/{package}/artifacts/video/{package_name}-cinematic-upload-report.json"
+    required: conditional
+    required_when: the cinematic upload is applied after approval
+    format: json
+    producer: upload_cinematic_video
+    gated_by: release_readiness
+  - id: recovered_cinematic_captions
+    path_template: "publications/{package}/artifacts/video/{package_name}-cinematic.srt"
+    required: conditional
+    required_when: a cinematic upload exists and Shorts selection is in scope
+    format: srt
+    producer: recover_captions
+  - id: materialized_package_shorts_manifest
+    path_template: "publications/{package}/artifacts/video/shorts/shorts_manifest.json"
+    required: conditional
+    required_when: pilot Shorts are selected for upload
+    format: json
+    producer: materialize_package_shorts_manifest
+  - id: pilot_metrics_or_blocked_state
+    path_template: "reviewable-runs/logs/{run_id}-youtube-cinematic-pilot-metrics-or-blocked-state.md"
+    required: true
+    format: markdown
+    producer: record_metrics_or_blocker
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: pilot_manifest_entry_exists
+      check: pilot_manifest_has_publication_key
+      target: pilot_manifest
+      on_fail: stop
+    - id: notebooklm_auth_verified_for_generation
+      check: notebooklm_auth_check_passes_before_generation
+      target: notebooklm_auth_check
+      on_fail: stop
+    - id: youtube_auth_verified_before_mutation
+      check: youtube_auth_check_passes_before_apply
+      target: youtube_auth_check
+      on_fail: stop
+    - id: package_artifacts_nonzero
+      check: zero_byte_artifact_scan_empty
+      target: package_video_artifacts
+      on_fail: stop
+  invariants:
+    - id: opt_in_experiment_only
+      check: cinematic_pilot_does_not_replace_canonical_youtube_production_or_release_routes
+    - id: package_owns_media
+      check: generated_media_stays_under_package_artifact_surface
+    - id: dry_run_before_apply
+      check: youtube_channel_mutation_has_matching_dry_run_before_apply
+    - id: captions_before_shorts
+      check: shorts_selection_waits_for_non_empty_timed_captions
+    - id: metrics_are_evidence_not_promotion
+      check: pilot_metrics_do_not_promote_workflow_without_phase_2_8_proof_bar
+    - id: no_unapproved_channel_mutation
+      check: upload_playlist_or_shorts_mutation_requires_release_readiness
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    max_upload_attempts: 1
+    external_mutations: conditional_on_release_readiness
+    unapproved_external_mutations: 0
+  recovery:
+    on_missing_manifest_entry: stop_and_record_required_publication_key
+    on_notebooklm_auth_failure: stop_generation_and_request_login
+    on_youtube_auth_failure: preserve_local_assets_and_stop_before_channel_mutation
+    on_dry_run_mismatch: repair_manifest_or_hold
+    on_caption_recovery_delay: record_caption_pending_and_retry_later
+    on_shorts_manifest_gap: materialize_package_manifest_before_upload
+    on_blocker: record_exact_blocked_state_in_metrics_surface
+    resume_from: resolved_run
+    rollback_strategy: preserve local package artifacts, do not delete remote uploads automatically, and record exact readback state for manual repair
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - external_posting_requires_gate
+  context_checks:
+    - package_status_resolves
+    - package_readme_resolves
+    - pilot_manifest_resolves
+    - release_calendar_resolves
+    - cinematic_prompt_resolves
+    - cinematic_description_template_resolves
+    - package_video_artifacts_resolves
+    - pilot_metrics_surface_resolves
+  hooks:
+    - id: workflow_contract_validation
+      command: "npm run check:workflow-yaml"
+      run_at:
+        - handoff
+      required: true
+    - id: release_readiness_gate_check
+      command: "./content-agent gate check --gate release_readiness --package {package}"
+      run_at:
+        - before_channel_mutation
+      required: false
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - handoff
+      required: false
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: conditional
+    required_when: a YouTube upload, playlist mutation, Shorts upload, schedule change, metadata change, or caption/channel readback mutation will be performed
+    stop_before: channel_mutation
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
+    artifacts:
+      - settled_cinematic_pilot_manifest_state
+      - cinematic_release_calendar_state
+      - cinematic_upload_plan
+      - recovered_cinematic_captions
+      - materialized_package_shorts_manifest
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - publication_key
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: reconcile_pilot_manifest_entry
+    title: Reconcile pilot manifest entry
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - pilot_manifest
+      - release_calendar
+      - workflow_readme
+    produces:
+      - settled_cinematic_pilot_manifest_state
+      - cinematic_release_calendar_state
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: generate_or_download_cinematic_video
+    title: Generate or download cinematic video
+    mode: codex_session
+    action: Use the pilot cinematic prompt and NotebookLM only when auth is verified, then place any completed MP4 in the package-local video artifacts surface.
+    consumes:
+      - pilot_manifest
+      - cinematic_prompt
+      - notebooklm_artifact_workflow
+      - notebooklm_artifact_skill
+      - package_video_artifacts
+    produces:
+      - package_cinematic_video
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: dry_run_cinematic_upload
+    title: Dry-run cinematic upload
+    mode: codex_session
+    action: Run the cinematic uploader without apply and verify title, description, playlist, source MP4, schedule, and package-local report target.
+    consumes:
+      - pilot_manifest
+      - cinematic_description_template
+      - package_cinematic_video
+      - youtube_channel_ops_readme
+      - youtube_data_api_skill
+    produces:
+      - cinematic_upload_plan
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: upload_cinematic_video
+    title: Upload cinematic video
+    mode: external_mutation_gated
+    action: Apply the cinematic upload only after release readiness is satisfied and the dry-run matches the pilot manifest.
+    consumes:
+      - cinematic_upload_plan
+      - package_cinematic_video
+      - harness_policy
+      - gate_contracts
+    produces:
+      - cinematic_upload_report
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: recover_captions
+    title: Recover captions
+    mode: codex_session
+    action: Download non-empty timed captions for the cinematic upload before any Shorts selection or upload work.
+    consumes:
+      - cinematic_upload_report
+      - youtube_data_api_skill
+      - package_video_artifacts
+    produces:
+      - recovered_cinematic_captions
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: materialize_package_shorts_manifest
+    title: Materialize package Shorts manifest
+    mode: codex_session
+    action: Copy the pilot-selected clips and final publish times into the package-local Shorts manifest used by the uploader.
+    consumes:
+      - pilot_manifest
+      - recovered_cinematic_captions
+      - package_video_artifacts
+    produces:
+      - materialized_package_shorts_manifest
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_metrics_or_blocker
+    title: Record metrics or blocker
+    mode: codex_session
+    action: Record the pilot metrics checkpoint, caption/upload readback, or exact blocked state without claiming promotion proof.
+    consumes:
+      - pilot_metrics_surface
+      - cinematic_upload_report
+      - recovered_cinematic_captions
+      - materialized_package_shorts_manifest
+      - validation_results
+    produces:
+      - pilot_metrics_or_blocked_state
+    validation:
+      hooks:
+        - workflow_contract_validation
+        - repo_link_check
+    trace:
+      required: true

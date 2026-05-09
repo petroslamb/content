@@ -24,7 +24,11 @@ approval_gate: required_before_channel_mutation
 
 # YouTube Cinematic Rollout
 
-This is the tracked canonical workflow for the evergreen cinematic lane. It takes over after the bounded pilot and treats cinematic briefs as a standing daily distribution workflow rather than a one-off experiment batch.
+This is a contracted experimental workflow for the evergreen cinematic lane. It follows the bounded pilot and treats cinematic briefs as a standing opt-in distribution workflow rather than a one-off experiment batch.
+
+## Phase 2.8 Lifecycle State
+
+State: `contracted`. This workflow has a governed `workflow.yaml` with `stability: experimental`, so it can be invoked explicitly through `content-agent`; it is not a canonical/default route and has no promotion proof from this pass.
 
 Use this workflow when the task is:
 

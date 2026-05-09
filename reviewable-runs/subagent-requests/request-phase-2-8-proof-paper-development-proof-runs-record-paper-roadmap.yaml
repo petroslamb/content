@@ -1,0 +1,235 @@
+kind: subagent_request
+schema_version: 1
+handoff_protocol_version: phase-2.7a
+request_id: phase-2-8-proof-paper-development-proof-runs:record_paper_roadmap:paper_development.record_paper_roadmap.generic_codex_session.v1
+created_at: '2026-05-09T16:57:13Z'
+created_by: content-agent run
+agent_contract:
+  contract_id: paper_development.record_paper_roadmap.generic_codex_session.v1
+  contract_kind: generic_codex_session
+  generated_by: content-agent
+  generated_from:
+    workflow_id: paper_development
+    step_id: record_paper_roadmap
+    fields:
+    - workflow_id
+    - step_id
+    - consumes
+    - produces
+    - output_targets
+  task_type: codex_session
+  scope: paper_development.record_paper_roadmap
+  consumes:
+  - package_status
+  - package_readme
+  - paper_folder_readme
+  produces:
+  - paper_roadmap
+  output_targets:
+  - id: paper_roadmap
+    path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-roadmap.md
+  request:
+    artifact_id: subagent_request:record_paper_roadmap
+    path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml
+    schema_version: 1
+    required: true
+  result:
+    artifact_id: subagent_result:record_paper_roadmap
+    path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.md
+    schema_version: 1
+    required: true
+    verdicts:
+      allowed:
+      - defer
+      - fail
+      - pass
+      - stale
+  integration_decision:
+    artifact_id: integration_decision:record_paper_roadmap
+    path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml
+    schema_version: 1
+    required: true
+    allowed_decisions:
+    - accept
+    - defer
+    - reject
+  success_criteria:
+  - Use only declared inputs and admitted context paths.
+  - Produce or update only the declared workflow output targets for this step.
+  - Record source-hash awareness in the result artifact.
+  failure_triggers:
+  - required input is missing or stale
+  - requested work exceeds the workflow step action
+  - required output target cannot be produced
+  - source hashes cannot be reconciled
+package:
+  path: publications/proof-runs-as-source-surface
+  status_path: publications/proof-runs-as-source-surface/status.yaml
+  status_hash: sha256:d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+workflow:
+  workflow_id: paper_development
+  workflow_version: 1
+  workflow_hash: sha256:0fc46d33e745122da15675004d898f6ea65c03807825a01a1204550609311481
+  contract_path: workflows/paper-development/workflow.yaml
+  step_id: record_paper_roadmap
+run:
+  run_id: phase-2-8-proof-paper-development-proof-runs
+  run_mode: governed_continuous
+  resolved_run_path: reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml
+  run_record_path: reviewable-runs/logs/phase-2-8-proof-paper-development-proof-runs.yaml
+  runtime_inputs: {}
+step:
+  id: record_paper_roadmap
+  title: Record paper roadmap
+  mode: codex_session
+  action: Create or update the package-local roadmap that records completed artifacts,
+    remaining artifacts, current phase, next decision, and rejection or parking policy.
+  consumes:
+  - package_status
+  - package_readme
+  - paper_folder_readme
+  produces:
+  - paper_roadmap
+allowed_input_paths:
+- id: package_status
+  source: context_admission
+  paths:
+  - publications/proof-runs-as-source-surface/status.yaml
+  hashes:
+    publications/proof-runs-as-source-surface/status.yaml: &id001
+      type: file_sha256
+      sha256: d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361
+      size_bytes: 962
+- id: package_readme
+  source: context_admission
+  paths:
+  - publications/proof-runs-as-source-surface/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/README.md: &id002
+      type: file_sha256
+      sha256: d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606
+      size_bytes: 1513
+- id: paper_folder_readme
+  source: output_target
+  paths:
+  - publications/proof-runs-as-source-surface/paper/README.md
+  hashes:
+    publications/proof-runs-as-source-surface/paper/README.md: &id003
+      type: file_sha256
+      sha256: 9ff7d10c5ee70968f083bb69253c11ddbe100ef56b6be8abb4b6741efc0050b8
+      size_bytes: 1876
+output_targets:
+- id: paper_roadmap
+  path: publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-roadmap.md
+source_hashes:
+  publications/proof-runs-as-source-surface/status.yaml: *id001
+  publications/proof-runs-as-source-surface/README.md: *id002
+  publications/proof-runs-as-source-surface/paper/README.md: *id003
+recommended_skills:
+- name: content-agent-handoff
+  path: workflows/skills/content-agent-handoff/SKILL.md
+  reason: Read the repo-local handoff closeout protocol before producing a result.
+  source: phase-2.7a
+  priority: first
+exit_protocol:
+  required: true
+  steps:
+  - read_request_and_declared_inputs_only
+  - write_declared_workflow_outputs
+  - write_declared_result_artifact
+  - self_check_result_metadata_schema_hashes_verdict_and_findings
+  - run_declared_verification_commands
+  - repair_result_artifact_if_shape_validation_fails
+  - return_minimal_final_response
+  negative_verdicts_still_require_valid_result: true
+  integration_decision_allowed_by_worker: false
+  final_response_fields:
+  - result path
+  - workflow output path if any
+  - validation command
+  - success boolean
+  - minimal blockers
+verification_requirements:
+  required: true
+  commands:
+  - id: content_agent_validate
+    command: ./content-agent validate --workflow paper_development --package proof-runs-as-source-surface
+      --format json
+    required: true
+    success_exit_codes:
+    - 0
+  result_schema_checks:
+  - kind
+  - schema_version
+  - request_id
+  - package
+  - workflow
+  - run
+  - verdict
+  - source_hashes
+  - findings
+  - verification.commands
+  source_hash_checks:
+    require_result_hash_echo: true
+    stale_on_mismatch: true
+  artifact_checks:
+    declared_result_path_required: true
+    declared_output_targets_required: true
+success_criteria:
+- Use only declared inputs and admitted context paths.
+- Produce or update only the declared workflow output targets for this step.
+- Record source-hash awareness in the result artifact.
+failure_triggers:
+- required input is missing or stale
+- requested work exceeds the workflow step action
+- required output target cannot be produced
+- source hashes cannot be reconciled
+plot_contract_requirements: {}
+expected_artifacts:
+  request_path: reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml
+  result_path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.md
+  integration_decision_path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml
+result_requirements:
+  kind: subagent_result
+  schema_version: 1
+  path: reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.md
+  verdict_enum:
+  - defer
+  - fail
+  - pass
+  - stale
+  required_fields:
+  - kind
+  - schema_version
+  - request_id
+  - package
+  - workflow
+  - run
+  - verdict
+  - source_hashes
+  - findings
+  - verification
+  line_grounded_findings_required: true
+integration_requirements:
+  kind: integration_decision
+  schema_version: 1
+  path: reviewable-runs/integration-decisions/decision-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml
+  allowed_decisions:
+  - accept
+  - defer
+  - reject
+  accepted_rejected_result_ids_required: true
+runtime_behavior:
+  content_agent_spawns_model: false
+  defer_after_request: true
+handoff:
+  mode: defer_to_subagent
+  contract_source: generic_codex_session_synthesized
+  same_session_compatible: false
+operator_prompt_fragment: Read the request artifact and declared inputs only. Write
+  the declared workflow outputs (publications/proof-runs-as-source-surface/paper/proof-runs-as-source-surface-paper-roadmap.md)
+  and result artifact (reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.md).
+  Run the declared verification commands (./content-agent validate --workflow paper_development
+  --package proof-runs-as-source-surface --format json). Final response must include
+  only result path, workflow output path if any, validation command, success boolean,
+  minimal blockers.

@@ -1,0 +1,291 @@
+{
+  "kind": "content_agent_validation_report",
+  "schema_version": 1,
+  "mode": "exploratory",
+  "package": "proof-runs-as-source-surface",
+  "success": true,
+  "findings": [],
+  "execution_evidence": {
+    "stores": {
+      "resolved_runs": "reviewable-runs/resolved-runs",
+      "run_records": "reviewable-runs/logs",
+      "review_gates": "reviewable-runs/gates",
+      "subagent_requests": "reviewable-runs/subagent-requests",
+      "subagent_results": "reviewable-runs/subagent-results",
+      "integration_decisions": "reviewable-runs/integration-decisions"
+    },
+    "counts": {
+      "resolved_run": 19,
+      "run_record": 26,
+      "review_gate": 7,
+      "subagent_request": 9,
+      "subagent_result": 7,
+      "integration_decision": 1
+    },
+    "checked_paths": [
+      "reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-inspect-candidate-papers.yaml",
+      "reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml",
+      "reviewable-runs/resolved-runs/agent-harnesses-topic-discovery-topic-viability-gate.yaml",
+      "reviewable-runs/resolved-runs/phase-2-6-editorial-report-proof.yaml",
+      "reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml",
+      "reviewable-runs/resolved-runs/phase-2-8-proof-reddit-discussion-confidently-wrong.yaml",
+      "reviewable-runs/resolved-runs/phase-2-primary-essay-prewrite-proof.yaml",
+      "reviewable-runs/resolved-runs/phase-2-primary-essay-scaffold-proof.yaml",
+      "reviewable-runs/resolved-runs/phase-2-primary-replacement-north-star-proof.yaml",
+      "reviewable-runs/resolved-runs/phase-2-primary-research-exit-proof.yaml",
+      "reviewable-runs/resolved-runs/phase-2-primary-topic-discovery-proof.yaml",
+      "reviewable-runs/resolved-runs/phase-2-proof-lost-plot-cold-review-test.yaml",
+      "reviewable-runs/resolved-runs/phase-3-generic-codex-session-smoke.yaml",
+      "reviewable-runs/resolved-runs/phase-3-same-session-codex-session-smoke.yaml",
+      "reviewable-runs/resolved-runs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml",
+      "reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml",
+      "reviewable-runs/resolved-runs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml",
+      "reviewable-runs/resolved-runs/run-2026-05-07T15-06-34Z-agent-harnesses-topic-discovery.yaml",
+      "reviewable-runs/resolved-runs/run-2026-05-07T15-10-11Z-agent-harnesses-topic-discovery.yaml",
+      "reviewable-runs/logs/agent-harnesses-topic-discovery-inspect-candidate-papers.yaml",
+      "reviewable-runs/logs/agent-harnesses-topic-discovery-rank-candidate-essay-objects.yaml",
+      "reviewable-runs/logs/agent-harnesses-topic-discovery-topic-viability-gate.yaml",
+      "reviewable-runs/logs/phase-2-6-editorial-report-proof.yaml",
+      "reviewable-runs/logs/phase-2-8-proof-paper-development-proof-runs.yaml",
+      "reviewable-runs/logs/phase-2-8-proof-reddit-discussion-confidently-wrong.yaml",
+      "reviewable-runs/logs/phase-2-primary-essay-prewrite-proof.yaml",
+      "reviewable-runs/logs/phase-2-primary-essay-scaffold-proof.yaml",
+      "reviewable-runs/logs/phase-2-primary-replacement-north-star-proof.yaml",
+      "reviewable-runs/logs/phase-2-primary-research-exit-proof.yaml",
+      "reviewable-runs/logs/phase-2-primary-topic-discovery-proof.yaml",
+      "reviewable-runs/logs/phase-2-proof-lost-plot-cold-review-test.yaml",
+      "reviewable-runs/logs/phase-3-generic-codex-session-smoke.yaml",
+      "reviewable-runs/logs/phase-3-same-session-codex-session-smoke.yaml",
+      "reviewable-runs/logs/run-2026-04-28T10-27-24Z-clean-interface-illusion-essay-iteration.yaml",
+      "reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml",
+      "reviewable-runs/logs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml",
+      "reviewable-runs/logs/run-2026-05-06T19-55-02Z-literate-workflow-programming-review-approve-topic-viability-2026-05-06t17-14-12z.yaml",
+      "reviewable-runs/logs/run-2026-05-06T19-55-11Z-literate-workflow-programming-resume-topic-viability-2026-05-06t17-14-12z.yaml",
+      "reviewable-runs/logs/run-2026-05-06T20-33-55Z-proof-runs-as-source-surface-review-approve-research-exit-2026-05-06t19-59-47z.yaml",
+      "reviewable-runs/logs/run-2026-05-06T20-34-00Z-proof-runs-as-source-surface-resume-research-exit-2026-05-06t19-59-47z.yaml",
+      "reviewable-runs/logs/run-2026-05-06T20-42-45Z-proof-runs-as-source-surface-review-approve-essay-prewrite-2026-05-06t20-42-36z.yaml",
+      "reviewable-runs/logs/run-2026-05-06T20-42-50Z-proof-runs-as-source-surface-resume-essay-prewrite-2026-05-06t20-42-36z.yaml",
+      "reviewable-runs/logs/run-2026-05-07T15-06-34Z-agent-harnesses-topic-discovery.yaml",
+      "reviewable-runs/logs/run-2026-05-07T15-09-54Z-agent-harnesses-resume-run-2026-05-07t15-06-34z-agent-harnesses-topic-discovery.yaml",
+      "reviewable-runs/logs/run-2026-05-07T15-10-11Z-agent-harnesses-topic-discovery.yaml",
+      "reviewable-runs/gates/gate-2026-04-28T10-27-24Z-clean-interface-illusion-replacement-north-star.yaml",
+      "reviewable-runs/gates/gate-agent-harnesses-topic-discovery-topic-viability-gate-topic-viability.yaml",
+      "reviewable-runs/gates/gate-phase-2-6-editorial-report-proof-release-readiness.yaml",
+      "reviewable-runs/gates/gate-phase-2-primary-essay-prewrite-proof-essay-prewrite.yaml",
+      "reviewable-runs/gates/gate-phase-2-primary-replacement-north-star-proof-replacement-north-star.yaml",
+      "reviewable-runs/gates/gate-phase-2-primary-research-exit-proof-research-exit.yaml",
+      "reviewable-runs/gates/gate-phase-2-primary-topic-discovery-proof-topic-viability.yaml",
+      "reviewable-runs/subagent-requests/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review.yaml",
+      "reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.yaml",
+      "reviewable-runs/subagent-requests/request-agent-harnesses-topic-discovery-rank-candidate-essay-objects-rank-candidate-essay-objects.yaml",
+      "reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-create-paper-folder.yaml",
+      "reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-define-paper-north-star-rubric.yaml",
+      "reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.yaml",
+      "reviewable-runs/subagent-requests/request-phase-3-generic-codex-session-smoke-harden-blueprint.yaml",
+      "reviewable-runs/subagent-requests/request-run-2026-05-07T15-06-34Z-agent-harnesses-topic-discovery-state-discovery-trigger.yaml",
+      "reviewable-runs/subagent-requests/request-run-2026-05-07T15-10-11Z-agent-harnesses-topic-discovery-map-topic-vocabulary.yaml",
+      "reviewable-runs/subagent-results/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-result.md",
+      "reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-inspect-candidate-papers-inspect-candidate-papers.md",
+      "reviewable-runs/subagent-results/result-agent-harnesses-topic-discovery-rank-candidate-essay-objects-rank-candidate-essay-objects.md",
+      "reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-create-paper-folder.md",
+      "reviewable-runs/subagent-results/result-phase-2-8-proof-paper-development-proof-runs-record-paper-roadmap.md",
+      "reviewable-runs/subagent-results/result-run-2026-05-07T15-06-34Z-agent-harnesses-topic-discovery-state-discovery-trigger.md",
+      "reviewable-runs/subagent-results/result-run-2026-05-07T15-10-11Z-agent-harnesses-topic-discovery-map-topic-vocabulary.md",
+      "reviewable-runs/integration-decisions/phase-2-proof-lost-plot-cold-review-test-run-cold-replacement-review-integration.yaml"
+    ],
+    "skipped_legacy_subagent_results": [
+      "reviewable-runs/subagent-results/phase-2-7-agent-handoff-discipline-result.md",
+      "reviewable-runs/subagent-results/phase-2-7a-request-exit-protocol-implementation-result.md",
+      "reviewable-runs/subagent-results/phase-2-7a-request-exit-protocol-strategy-result.md",
+      "reviewable-runs/subagent-results/phase-2-agent-contract-content-agent-result.md",
+      "reviewable-runs/subagent-results/phase-2-agent-contract-packet-gate-checks-result.md",
+      "reviewable-runs/subagent-results/phase-2-agent-contract-workflow-policy-result.md",
+      "reviewable-runs/subagent-results/phase-2-agent-task-architecture-review-result.md",
+      "reviewable-runs/subagent-results/phase-2-primary-proof-plot-audit-result.md",
+      "reviewable-runs/subagent-results/phase-3-codex-session-handoff-policy-result.md",
+      "reviewable-runs/subagent-results/phase-3-codex-session-handoff-validation-result.md"
+    ]
+  },
+  "workflows": [
+    {
+      "workflow_id": "paper_development",
+      "contract_path": "workflows/paper-development/workflow.yaml",
+      "enforcement": {
+        "contract_shape": "deny",
+        "package_route_resolution": "deny",
+        "context_admission": "deny",
+        "tool_use": "deny",
+        "path_access": "deny",
+        "preconditions": "deny",
+        "invariants": "detect",
+        "budgets": "detect",
+        "expected_outputs": "detect",
+        "validation_hooks": "deny",
+        "review_gates": "deny",
+        "external_mutation": "deny",
+        "lifecycle_movement": "deny",
+        "gate_approval": "deny",
+        "promotion": "deny",
+        "trace_completeness": "detect"
+      },
+      "context_admission": [
+        {
+          "id": "package_status",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "publications/proof-runs-as-source-surface/status.yaml"
+          ],
+          "hashes": {
+            "publications/proof-runs-as-source-surface/status.yaml": {
+              "type": "file_sha256",
+              "sha256": "d6def1ea7f3e0ae131a298c55d1d071ab68e2961857f36ba7a0a9a710233f361",
+              "size_bytes": 962
+            }
+          }
+        },
+        {
+          "id": "package_readme",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "publications/proof-runs-as-source-surface/README.md"
+          ],
+          "hashes": {
+            "publications/proof-runs-as-source-surface/README.md": {
+              "type": "file_sha256",
+              "sha256": "d2547f3030182b0bb707454eee800309812ae0dec9f1c5597eb1cef5e88ed606",
+              "size_bytes": 1513
+            }
+          }
+        },
+        {
+          "id": "source_essay_candidate_or_live_draft",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md"
+          ],
+          "hashes": {
+            "publications/proof-runs-as-source-surface/proof-runs-as-source-surface.md": {
+              "type": "file_sha256",
+              "sha256": "8bb788d6ac4d8dd962100ed73d4fb6d32d60ff7aaf9bea3e1b8681544be04fcc",
+              "size_bytes": 459
+            }
+          }
+        },
+        {
+          "id": "claim_boundary_ledger",
+          "required": false,
+          "status": "not_evaluated",
+          "reason": "dependency has no path, status_field, source, or glob resolver"
+        },
+        {
+          "id": "evidence_surface",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "publications/proof-runs-as-source-surface/papers/index.md"
+          ],
+          "hashes": {
+            "publications/proof-runs-as-source-surface/papers/index.md": {
+              "type": "file_sha256",
+              "sha256": "437a07adbe3f85bb7e87013724057fa50575c93bc3b654fc3f55893e7c4337b8",
+              "size_bytes": 3355
+            }
+          }
+        },
+        {
+          "id": "package_paper_folder",
+          "required": false,
+          "status": "resolved",
+          "paths": [
+            "publications/proof-runs-as-source-surface/paper"
+          ],
+          "hashes": {
+            "publications/proof-runs-as-source-surface/paper": {
+              "type": "directory_listing_sha256",
+              "sha256": "39ee92394ea09d2bdfce3d5c95b8588ec25fea50982afb75ad2a0ed196a5612f",
+              "file_count": 3
+            }
+          }
+        },
+        {
+          "id": "workflow_readme",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "workflows/paper-development/README.md"
+          ],
+          "hashes": {
+            "workflows/paper-development/README.md": {
+              "type": "file_sha256",
+              "sha256": "902a72041217be66cb8f53c8ea701f49376e7dbfec53d86f2f034093d996955a",
+              "size_bytes": 9505
+            }
+          }
+        },
+        {
+          "id": "workflow_templates",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "workflows/paper-development/templates"
+          ],
+          "hashes": {
+            "workflows/paper-development/templates": {
+              "type": "directory_listing_sha256",
+              "sha256": "40a6c16cbe5c8f3b1f254fc270801e1cb8db5e315124dfd8bce625cfc45eb7e1",
+              "file_count": 3
+            }
+          }
+        },
+        {
+          "id": "essay_iteration_readme",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "workflows/essay-iteration/README.md"
+          ],
+          "hashes": {
+            "workflows/essay-iteration/README.md": {
+              "type": "file_sha256",
+              "sha256": "c6c9a9af247e03a19431ef3ae0bfc5148d719307d9a769eccd6819c4c3cb04ae",
+              "size_bytes": 29063
+            }
+          }
+        },
+        {
+          "id": "evidence_authorization_readme",
+          "required": false,
+          "status": "resolved",
+          "paths": [
+            "workflows/evidence-authorization/README.md"
+          ],
+          "hashes": {
+            "workflows/evidence-authorization/README.md": {
+              "type": "file_sha256",
+              "sha256": "f7e32eb96d3f49b75f626b6fd1812aa91797e23d112128f3a36d71517fde225c",
+              "size_bytes": 13169
+            }
+          }
+        },
+        {
+          "id": "harness_policy",
+          "required": true,
+          "status": "resolved",
+          "paths": [
+            "harness_policy.yaml"
+          ],
+          "hashes": {
+            "harness_policy.yaml": {
+              "type": "file_sha256",
+              "sha256": "00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6",
+              "size_bytes": 4858
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

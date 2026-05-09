@@ -21,7 +21,11 @@ approval_gate: required_before_channel_mutation
 
 # YouTube Cinematic Pilot
 
-This is the tracked canonical workflow for the reusable cinematic-video experiment lane. It exists to test whether NotebookLM cinematic companions create a better acquisition path than the current longform and TL;DR stack.
+This is a contracted experimental workflow for the reusable cinematic-video experiment lane. It exists to test whether NotebookLM cinematic companions create a better acquisition path than the current longform and TL;DR stack.
+
+## Phase 2.8 Lifecycle State
+
+State: `contracted`. This workflow has a governed `workflow.yaml` with `stability: experimental`, so it can be invoked explicitly through `content-agent`; it is not a canonical/default route and has no promotion proof from this pass.
 
 Use this workflow when the task is a multi-publication cinematic pilot with one shared manifest, one release calendar, one cinematic playlist, and one measurement rubric.
 

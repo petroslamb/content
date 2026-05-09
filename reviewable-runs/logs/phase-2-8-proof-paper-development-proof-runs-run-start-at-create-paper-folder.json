@@ -1,0 +1,97 @@
+{
+  "kind": "content_agent_run",
+  "schema_version": 1,
+  "workflow_id": "paper_development",
+  "package": "proof-runs-as-source-surface",
+  "run_id": "phase-2-8-proof-paper-development-proof-runs",
+  "terminal_status": "deferred",
+  "stop_reason": "emitted generic codex_session subagent request and deferred before step: create_paper_folder",
+  "codex_session_handoff": {
+    "requested_mode": "defer_to_subagent",
+    "supported_modes": [
+      "default",
+      "defer_to_subagent",
+      "policy",
+      "same_session"
+    ],
+    "effective_modes": [
+      "defer_to_subagent",
+      "same_session"
+    ],
+    "fallback_default_mode": "defer_to_subagent",
+    "policy_default_mode": "defer_to_subagent",
+    "workflow_default_mode": null,
+    "effective_default_mode": "defer_to_subagent",
+    "policy_config_present": true,
+    "steps": {
+      "create_paper_folder": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "record_paper_roadmap": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "define_paper_north_star_rubric": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "write_paper_blueprint": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "research_publication_route": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "build_literature_mapping": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "plan_case_study_trace": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "draft_extended_abstract": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "run_draftability_audit": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "harden_case_study_method": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "draft_paper_manuscript": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      },
+      "prepare_venue_packet": {
+        "mode": "defer_to_subagent",
+        "source": "cli",
+        "explicit_agent_contract": false
+      }
+    }
+  },
+  "resolved_run_path": "reviewable-runs/resolved-runs/phase-2-8-proof-paper-development-proof-runs.yaml",
+  "run_record_path": "reviewable-runs/logs/phase-2-8-proof-paper-development-proof-runs.yaml",
+  "review_gate_path": null,
+  "review_gate_id": null,
+  "subagent_request_path": "reviewable-runs/subagent-requests/request-phase-2-8-proof-paper-development-proof-runs-create-paper-folder.yaml",
+  "subagent_request_id": "phase-2-8-proof-paper-development-proof-runs:create_paper_folder:paper_development.create_paper_folder.generic_codex_session.v1",
+  "scriptable_steps_executed": 0,
+  "command_results": []
+}

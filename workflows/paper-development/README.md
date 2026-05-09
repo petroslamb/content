@@ -43,6 +43,10 @@ It is also not a runner-code workflow. `content-agent` already discovers `workfl
 
 The north-star bar is a fast-feedback ladder with a peer-review quality floor. AIware can be used for fast feedback only if the draftability gate clears it. ICSE NIER or an appropriate workshop remains the main peer-review route. arXiv waits until a complete manuscript exists and venue policy allows posting.
 
+## Phase 2.8 Lifecycle State
+
+State: `active_experiment`. This workflow has a governed `workflow.yaml` with `stability: experimental`, and the 2026-05-09 proof campaign invoked it on `publications/proof-runs-as-source-surface` with run id `phase-2-8-proof-paper-development-proof-runs`. That run produced retained evidence, but its terminal status was `deferred`, so it is not a clean promotion proof and this workflow is not a canonical/default route.
+
 ## Trigger
 
 Use this workflow when a package has a strong essay candidate or live draft, but the next goal is an academic paper rather than Substack publication.

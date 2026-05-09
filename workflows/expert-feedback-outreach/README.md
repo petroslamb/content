@@ -34,6 +34,10 @@ It is not a traffic workflow. Treat outreach as an expert-feedback loop: the use
 
 The practical rule is reciprocity: help others in order to help the publication. The message should give the author a useful lens on their own paper, boundary, revision path, or downstream implication. The essay is the medium that makes that lens concrete.
 
+## Phase 2.8 Lifecycle State
+
+State: `contracted`. This workflow has a governed `workflow.yaml` with `stability: experimental`, so it can be invoked explicitly through `content-agent`; it is not a canonical/default route and has no promotion proof from this note.
+
 ## Trigger
 
 Use this workflow after a Substack essay is published and the essay has cited papers, source papers, or explicit boundary-case papers whose authors could usefully pressure-test the argument.

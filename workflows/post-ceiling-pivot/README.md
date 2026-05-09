@@ -47,6 +47,10 @@ It is not ordinary draft iteration. It is the repo process for:
 
 This workflow was extracted from the April 15, 2026 `clean-interface-illusion` rollout and should be treated as **experimental** until it succeeds cleanly on at least one more package.
 
+## Phase 2.8 Lifecycle State
+
+State: `contracted`. This workflow has a governed `workflow.yaml` with `stability: experimental`, so it can be invoked explicitly through `content-agent`; it is not a canonical/default route and has no promotion proof from this note.
+
 ## Trigger
 
 Use this workflow only when all of these are true:
