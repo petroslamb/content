@@ -1,0 +1,100 @@
+rubric:
+  id: insight_authority_cinematic_rubric
+  experiment_id: insight_authority_cinematic
+  version: "2026-05-09"
+  scoring_scale:
+    min: 0
+    max: 4
+    labels:
+      0: absent
+      1: weak
+      2: usable
+      3: strong
+      4: exceptional
+  dimensions:
+    - key: claim_specificity
+      name: Claim Specificity
+      question: Does the title and opening minute make one concrete, falsifiable, reusable claim?
+      score_0: Broad topic or mood without a claim.
+      score_2: Claim is present but could fit many videos.
+      score_4: Claim is sharp enough to guide a production or research decision.
+    - key: mechanism_clarity
+      name: Mechanism Clarity
+      question: Does the transcript explain why the claim works, not just assert it?
+      score_0: No mechanism.
+      score_2: Mechanism is implied but not operational.
+      score_4: Mechanism is explicit, inspectable, and easy to restate.
+    - key: authority_surface
+      name: Authority Surface
+      question: Does the video name which layer, boundary, artifact, or policy should have authority?
+      score_0: Authority remains rhetorical.
+      score_2: Authority layer is visible but underdeveloped.
+      score_4: Viewer can identify the controlling surface or boundary.
+    - key: evidence_traceability
+      name: Evidence Traceability
+      question: Can the claim be traced to an essay, research breakdown, caption, or source artifact?
+      score_0: No practical source path.
+      score_2: Source path exists but is not central to the video promise.
+      score_4: Source path and claim reinforce each other.
+    - key: practical_decision_rule
+      name: Practical Decision Rule
+      question: Does the video leave the viewer with a useful test, filter, or rule?
+      score_0: Interesting but not actionable.
+      score_2: Action is suggested but vague.
+      score_4: Decision rule is compact and reusable.
+    - key: promise_fit
+      name: Title Transcript Promise Fit
+      question: Does the transcript pay off the title without bait-and-switch drift?
+      score_0: Title and transcript diverge.
+      score_2: Partial payoff.
+      score_4: Title promise is paid off cleanly and early.
+    - key: funnel_intent
+      name: Funnel Intent
+      question: Does the video naturally point to a full breakdown, essay, or next artifact?
+      score_0: No clear next step.
+      score_2: Next step exists but feels bolted on.
+      score_4: The next artifact is the obvious continuation of the claim.
+
+analytics_read:
+  primary_metric: averageViewPercentage
+  secondary_metrics:
+    - views_per_day
+    - videoThumbnailImpressionsClickRate
+    - related_video_traffic_views
+    - known_downstream_clicks
+    - subscribersGained
+  required_context:
+    - format_band: cinematic
+    - publish_date
+    - title
+    - package
+    - local_srt_status
+    - dashboard_recommendation_category
+  ctr_sample_rule: Use thumbnail CTR only when dashboard marks the sample as usable.
+
+manual_score_bands:
+  high_authority:
+    min_total: 22
+    interpretation: Scale or create follow-up if analytics are at least directional.
+  solid_authority:
+    min_total: 17
+    interpretation: Keep in cohort; repair packaging if retention is stronger than CTR.
+  weak_authority:
+    max_total: 16
+    interpretation: Do not use as evidence for the experiment without a rewrite or exclusion note.
+
+decision_thresholds:
+  scale:
+    minimum_cohort_found: 6
+    retention_read: Cohort or coherent subgroup beats current cinematic median on averageViewPercentage.
+    funnel_read: At least one video shows subscribers gained, known downstream clicks, or related-video traffic.
+  repair:
+    condition: Strong manual score with weak CTR, missing funnel state, or title too broad.
+    required_action_before_mutation: Add a ledger row and use the YouTube workflow approval boundary.
+  exclude:
+    condition: Missing SRT, missing upload report, non-public upload state, or rubric total below weak-authority band after review.
+
+review_cadence:
+  local_rubric_review: after_each_dashboard_refresh_with_recommendation_change
+  analytics_review: weekly_when_metrics_ledger_is_refreshed
+  studio_review: manual_readback_only_when_authorized

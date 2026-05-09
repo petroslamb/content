@@ -1,0 +1,662 @@
+workflow_id: youtube_insight_authority
+version: 1
+stability: experimental
+workflow_kind: module
+workflow_group: operations
+summary: Govern an end-to-end YouTube insight release from source-of-truth spec through authority packets, packaging, cadence, engagement, upload approval, and analytics tracking.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: true
+    description: Package path relative to publications/.
+  video_format:
+    required: false
+    description: Target YouTube format such as longform, cinematic, TLDR, Short, remaster, or replacement.
+  path_placeholders:
+    - id: package
+      source: cli.package
+    - id: revision
+      source: publications/{package}/status.yaml:revision
+    - id: package_name
+      source: basename(package)
+    - id: insight_authority_surface
+      source: publications/{package}/artifacts/video/insight-authority/
+    - id: run_id
+      source: content-agent run id
+
+context_dependencies:
+  - id: package_status
+    path: publications/{package}/status.yaml
+    required: true
+    purpose: Resolve package kind, revision, artifact paths, published URLs, and any configured video targets.
+    record_hash: true
+  - id: package_readme
+    path: publications/{package}/README.md
+    required: true
+    purpose: Load package orientation, local artifact conventions, audience, and publication boundaries.
+    record_hash: true
+  - id: source_of_truth_insight_authority_spec
+    path_from_status: config.youtube_insight_authority_spec
+    fallback:
+      - publications/{package}/artifacts/video/insight-authority/{package_name}-source-of-truth-spec.yaml
+      - publications/{package}/artifacts/video/insight-authority/source-of-truth-spec.yaml
+      - publications/{package}/artifacts/video/insight-authority/
+    required: true
+    purpose: Provide the source-of-truth spec that names the insight promise, source spine, release intent, and allowed channel actions.
+    record_hash: true
+  - id: authority_packet
+    path_from_status: config.youtube_authority_packet
+    fallback:
+      - publications/{package}/artifacts/video/insight-authority/{package_name}-authority-packet.yaml
+      - publications/{package}/artifacts/video/insight-authority/authority-packet.yaml
+    required: true
+    purpose: Record the approved video promise, claim permissions, source evidence, audience, format, release intent, and approval state.
+    record_hash: true
+  - id: verified_video_master
+    path_from_status: config.video_master_path
+    fallback:
+      - publications/{package}/artifacts/video/
+    required: true
+    purpose: Locate the verified MP4 or upload-ready video master named by the authority packet.
+    record_hash: true
+  - id: verified_captions_or_transcript
+    path_from_status: config.captions_path
+    fallback:
+      - publications/{package}/artifacts/video/
+      - publications/{package}/artifacts/transcripts/
+    required: true
+    purpose: Locate captions, transcript, or chapter timing evidence used for descriptions, chapters, Shorts, and accessibility.
+    record_hash: true
+  - id: thumbnail_asset
+    path_from_status: config.thumbnail_path
+    fallback:
+      - publications/{package}/artifacts/video/thumbnails/
+      - publications/{package}/artifacts/images/
+      - publications/{package}/artifacts/article-images/
+    required: true
+    purpose: Locate the package-local thumbnail source and export that match the authority packet and YouTube constraints.
+    record_hash: true
+  - id: packaging_packet
+    path_from_status: config.youtube_packaging_packet
+    fallback:
+      - publications/{package}/artifacts/video/insight-authority/{package_name}-packaging-packet.yaml
+      - publications/{package}/artifacts/video/insight-authority/packaging-packet.yaml
+    required: true
+    purpose: Record title, description, chapters, tags, playlist, visibility, schedule, related-video targets, and thumbnail pairing.
+    record_hash: true
+  - id: cadence_records
+    fallback:
+      - experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+      - experiments/youtube-cinematic-pilot/release_calendar.yaml
+      - experiments/youtube-analytics/metrics_ledger.json
+      - publications/{package}/artifacts/video/
+    required: false
+    purpose: Determine whether the planned upload, Short, retitle, thumbnail swap, or remaster fits the current channel cadence.
+    record_hash: true
+  - id: engagement_packet
+    path_from_status: config.youtube_engagement_packet
+    fallback:
+      - publications/{package}/artifacts/video/insight-authority/{package_name}-engagement-packet.yaml
+      - publications/{package}/artifacts/video/insight-authority/engagement-packet.yaml
+      - experiments/youtube-reference-comments/
+    required: true
+    purpose: Provide pinned comment text, curated references, companion links, reply policy, and engagement readback requirements.
+    record_hash: true
+  - id: analytics_tracking_surface
+    path: experiments/youtube-analytics/
+    required: true
+    purpose: Provide metrics ledger, reporting jobs, decision rules, dashboard, and checkpoint conventions for post-release readback.
+    record_hash: true
+  - id: youtube_channel_ops_readme
+    path: workflows/youtube-channel-ops/README.md
+    required: true
+    purpose: Preserve YouTube auth, quota, dry-run, upload, playlist, comment, caption, and analytics operation boundaries.
+    record_hash: true
+  - id: youtube_production_readme
+    path: workflows/youtube-production/README.md
+    required: true
+    purpose: Preserve local MP4, caption, cue, and zero-byte verification requirements before channel mutation.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/youtube-insight-authority/README.md
+    required: true
+    purpose: Load human-facing Insight Authority workflow guidance.
+    record_hash: true
+  - id: youtube_data_api_skill
+    path: workflows/skills/youtube-data-api/SKILL.md
+    required: true
+    purpose: Bind repo-local YouTube Data API scripts for auth checks, upload dry-runs, comments, captions, readback, and analytics.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply local write, external mutation, trace, approval, and stop-condition policy.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve release_readiness approval requirements for YouTube channel mutation under the standing approval grant.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: workflow_contract_validation
+      command: "npm run check:workflow-yaml"
+      required: true
+    - id: insight_authority_validation
+      command: "./content-agent validate --workflow youtube_insight_authority --package {package}"
+      required: true
+    - id: release_readiness_gate_check
+      command: "./content-agent gate check --gate release_readiness --package {package}"
+      required: false
+    - id: youtube_auth_check
+      command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/auth_and_channel_check.py"
+      required: false
+    - id: upload_publication_bundle_dry_run
+      command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/upload_publication_video_bundle.py --longform-file {video_master_path} --longform-title <title> --longform-summary <summary>"
+      required: false
+    - id: analytics_dashboard_refresh
+      command: ".venv/bin/python scripts/refresh_youtube_analytics_dashboard.py --since-days 30"
+      required: false
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: false
+  skills:
+    - youtube-data-api
+
+allowed_paths:
+  read:
+    - publications/{package}/
+    - experiments/youtube-analytics
+    - experiments/youtube-analytics/
+    - experiments/youtube-cinematic-rollout
+    - experiments/youtube-cinematic-rollout/
+    - experiments/youtube-cinematic-pilot
+    - experiments/youtube-cinematic-pilot/
+    - experiments/youtube-reference-comments
+    - experiments/youtube-reference-comments/
+    - workflows/youtube-insight-authority/
+    - workflows/youtube-production/
+    - workflows/youtube-channel-ops/
+    - workflows/youtube-cinematic-rollout/
+    - workflows/youtube-series-operating-agents/
+    - workflows/skills/youtube-data-api/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+  write:
+    - publications/{package}/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: source_of_truth_spec_snapshot
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-source-of-truth-spec.yaml"
+    required: true
+    format: yaml
+    producer: resolve_source_of_truth_spec
+  - id: approved_authority_packet
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-authority-packet.yaml"
+    required: true
+    format: yaml
+    producer: approve_authority_packet
+  - id: packaging_packet
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-packaging-packet.yaml"
+    required: true
+    format: yaml
+    producer: prepare_packaging_packet
+  - id: thumbnail_verification_note
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-thumbnail-verification.md"
+    required: true
+    format: markdown
+    producer: verify_thumbnail_rules
+  - id: cadence_governor_decision
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-cadence-governor.yaml"
+    required: true
+    format: yaml
+    producer: run_cadence_governor
+  - id: engagement_packet
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-engagement-packet.yaml"
+    required: true
+    format: yaml
+    producer: prepare_engagement_packet
+  - id: upload_or_schedule_plan
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-upload-plan.yaml"
+    required: true
+    format: yaml
+    producer: dry_run_upload_or_schedule
+    gated_by: release_readiness
+  - id: approval_grant_record
+    path_template: "reviewable-runs/gates/{run_id}-youtube-insight-authority-approval.yaml"
+    required: conditional
+    required_when: channel mutation is in scope under the user's standing approval grant
+    format: yaml
+    producer: record_standing_approval_grant
+    gated_by: release_readiness
+  - id: channel_mutation_readback
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-channel-readback.yaml"
+    required: conditional
+    required_when: upload, schedule, playlist, related-video, thumbnail, title, description, comment, or pin mutation is performed
+    format: yaml
+    producer: verify_channel_readback
+    gated_by: release_readiness
+  - id: pinned_comment_readback
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-pinned-comment-readback.yaml"
+    required: conditional
+    required_when: a pinned comment is posted or verified
+    format: yaml
+    producer: verify_pinned_comment
+    gated_by: release_readiness
+  - id: analytics_tracking_record
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-analytics-tracking.yaml"
+    required: true
+    format: yaml
+    producer: register_analytics_tracking
+  - id: blocked_state_note
+    path_template: "publications/{package}/artifacts/video/insight-authority/{package_name}-blocked-state.md"
+    required: conditional
+    required_when: credentials, quota, assets, cadence, dry-run, mutation tools, readback, or analytics tracking block completion
+    format: markdown
+    producer: record_blocked_state
+
+behavior:
+  preconditions:
+    - id: package_status_exists
+      check: path_exists
+      target: publications/{package}/status.yaml
+      on_fail: stop
+    - id: source_of_truth_spec_exists
+      check: path_exists_or_status_path_resolves
+      target: source_of_truth_insight_authority_spec
+      on_fail: stop
+    - id: authority_packet_approved
+      check: authority_packet_status_is_approved
+      target: authority_packet
+      on_fail: stop
+    - id: packaging_packet_approved
+      check: packaging_packet_status_is_approved
+      target: packaging_packet
+      on_fail: stop
+    - id: video_master_verified
+      check: verified_video_master_exists_and_nonzero
+      target: verified_video_master
+      on_fail: stop
+    - id: captions_or_transcript_verified
+      check: verified_captions_or_transcript_exists_and_nonzero
+      target: verified_captions_or_transcript
+      on_fail: stop
+    - id: thumbnail_verified
+      check: thumbnail_asset_exists_and_matches_packet
+      target: thumbnail_asset
+      on_fail: stop
+    - id: engagement_packet_present
+      check: engagement_packet_has_comment_or_explicit_no_comment_decision
+      target: engagement_packet
+      on_fail: stop
+    - id: cadence_governor_allows_mutation
+      check: cadence_records_allow_upload_schedule_or_hold_decision
+      target: cadence_records
+      on_fail: stop
+    - id: standing_approval_grant_is_applicable
+      check: standing_grant_scope_matches_packet_and_user_instruction
+      target: approval_grant_record
+      on_fail: stop
+  invariants:
+    - id: spec_overrules_packaging
+      check: title_description_thumbnail_and_comment_derive_from_authority_packet
+    - id: no_claim_stronger_than_authority_packet
+      check: packaging_and_thumbnail_do_not_exceed_claim_permissions
+    - id: dry_run_before_apply
+      check: all_channel_mutation_tools_are_dry_run_verified_before_apply
+    - id: no_unbounded_channel_mutation
+      check: standing_approval_applies_only_to_packet_named_video_and_actions
+    - id: credentials_are_verified_before_mutation
+      check: youtube_oauth_state_verified_before_apply
+    - id: quota_blocks_required_writes
+      check: quota_exceeded_stops_required_write_or_readback
+    - id: missing_assets_block_upload
+      check: no_upload_from_missing_zero_byte_or_unverified_assets
+    - id: tool_failures_block_or_handoff
+      check: failed_upload_comment_pin_playlist_or_analytics_tool_records_blocked_state
+    - id: cadence_governor_is_binding
+      check: upload_schedule_and_shorts_spacing_follow_cadence_decision
+    - id: pinned_comment_is_verified_or_deferred
+      check: pinned_comment_post_and_pin_have_readback_or_explicit_blocker
+    - id: analytics_tracking_is_required
+      check: analytics_record_exists_before_workflow_completion
+  budgets:
+    max_steps: 10
+    max_script_retries: 1
+    max_upload_attempts: 1
+    max_comment_attempts: 1
+    max_channel_mutation_targets: 1
+    external_mutations: conditional_on_release_readiness_and_standing_approval
+    unapproved_external_mutations: 0
+  recovery:
+    on_missing_credentials: stop_with_reauth_handoff
+    on_quota_exceeded: stop_required_channel_write_and_continue_only_read_or_local_prep
+    on_missing_assets: stop_and_route_to_youtube_production_or_package_artifacts
+    on_thumbnail_missing_or_invalid: stop_and_request_thumbnail_asset
+    on_dry_run_mismatch: repair_packet_or_hold
+    on_upload_tool_failure: stop_and_record_failed_command_target_and_expected_state
+    on_comment_or_pin_failure: record_video_state_then_stop_engagement_step
+    on_readback_mismatch: stop_and_record_channel_state_disagreement
+    on_analytics_tracking_failure: stop_before_completion
+    resume_from: resolved_run
+    rollback_strategy: preserve local packets, do not delete remote uploads automatically, and record exact readback state for manual repair
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - external_posting_requires_gate
+  context_checks:
+    - package_status_resolves
+    - package_readme_resolves
+    - source_of_truth_insight_authority_spec_resolves
+    - authority_packet_resolves
+    - verified_video_master_resolves
+    - verified_captions_or_transcript_resolves
+    - thumbnail_asset_resolves
+    - packaging_packet_resolves
+    - cadence_records_resolve_when_present
+    - engagement_packet_resolves
+    - analytics_tracking_surface_resolves
+  hooks:
+    - id: workflow_contract_validation
+      command: "npm run check:workflow-yaml"
+      run_at:
+        - handoff
+      required: true
+    - id: release_readiness_gate_check
+      command: "./content-agent gate check --gate release_readiness --package {package}"
+      run_at:
+        - before_channel_mutation
+      required: false
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - handoff
+      required: false
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: conditional
+    required_when: a YouTube upload, schedule, playlist mutation, metadata update, thumbnail update, related-video update, comment, pin, or analytics-linked channel mutation will be performed
+    stop_before: channel_mutation
+    validator: "./content-agent gate check --gate release_readiness --package {package}"
+    artifacts:
+      - source_of_truth_spec_snapshot
+      - approved_authority_packet
+      - packaging_packet
+      - thumbnail_verification_note
+      - cadence_governor_decision
+      - engagement_packet
+      - upload_or_schedule_plan
+      - approval_grant_record
+      - analytics_tracking_record
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - package
+    - package_status_path
+    - package_status_hash
+    - context_paths
+    - context_hashes
+    - video_format
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_source_of_truth_spec
+    title: Resolve source-of-truth spec
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - package_status
+      - package_readme
+      - source_of_truth_insight_authority_spec
+      - workflow_readme
+      - harness_policy
+    produces:
+      - source_of_truth_spec_snapshot
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: approve_authority_packet
+    title: Approve authority packet
+    mode: review_gated
+    action: Confirm that the authority packet derives from the source spec and records video promise, evidence, claim permissions, format, release intent, and approval state.
+    consumes:
+      - source_of_truth_insight_authority_spec
+      - authority_packet
+      - source_of_truth_spec_snapshot
+    produces:
+      - approved_authority_packet
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: verify_local_assets
+    title: Verify local video, captions, and thumbnail
+    mode: codex_session
+    action: Verify the MP4, captions or transcript, and thumbnail asset are non-empty, package-local, current, and named by the approved authority and packaging packets.
+    consumes:
+      - approved_authority_packet
+      - verified_video_master
+      - verified_captions_or_transcript
+      - thumbnail_asset
+      - youtube_production_readme
+    produces:
+      - thumbnail_verification_note
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: prepare_packaging_packet
+    title: Prepare packaging packet
+    mode: codex_session
+    action: Record title, description, chapters, tags, playlist, visibility, schedule, related-video targets, and thumbnail pairing from the authority packet.
+    consumes:
+      - approved_authority_packet
+      - packaging_packet
+      - thumbnail_verification_note
+      - youtube_channel_ops_readme
+    produces:
+      - packaging_packet
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: run_cadence_governor
+    title: Run cadence governor
+    mode: codex_session
+    action: Compare the planned release against channel cadence records, existing scheduled uploads, Shorts spacing, and analytics attribution windows; decide mutate now, schedule later, or hold.
+    consumes:
+      - approved_authority_packet
+      - packaging_packet
+      - cadence_records
+      - analytics_tracking_surface
+    produces:
+      - cadence_governor_decision
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: prepare_engagement_packet
+    title: Prepare engagement and pinned-comment packet
+    mode: codex_session
+    action: Prepare or verify pinned comment text, curated references, companion links, reply policy, and comment/pin readback expectations.
+    consumes:
+      - approved_authority_packet
+      - engagement_packet
+      - youtube_channel_ops_readme
+    produces:
+      - engagement_packet
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: dry_run_upload_or_schedule
+    title: Dry-run upload or schedule
+    mode: codex_session
+    action: Run only dry-run channel commands and compare resolved title, description, thumbnail, playlist, visibility, schedule, comment, and related-video targets against the approved packets.
+    consumes:
+      - approved_authority_packet
+      - packaging_packet
+      - cadence_governor_decision
+      - engagement_packet
+      - youtube_data_api_skill
+    produces:
+      - upload_or_schedule_plan
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_standing_approval_grant
+    title: Record standing approval grant
+    mode: external_mutation_gated
+    action: Record that the user's standing approval applies only to the packet-named video and bounded actions after assets, cadence, dry-run, credentials, quota, and analytics tracking are verified.
+    consumes:
+      - upload_or_schedule_plan
+      - approved_authority_packet
+      - packaging_packet
+      - cadence_governor_decision
+      - engagement_packet
+      - harness_policy
+      - gate_contracts
+    produces:
+      - approval_grant_record
+    validation:
+      hooks:
+        - release_readiness_gate_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: verify_channel_readback
+    title: Verify channel readback
+    mode: external_mutation_gated
+    action: After any approved upload, schedule, playlist, metadata, thumbnail, related-video, comment, or pin write, verify YouTube readback and record mismatches as blockers.
+    consumes:
+      - approval_grant_record
+      - upload_or_schedule_plan
+      - packaging_packet
+      - engagement_packet
+    produces:
+      - channel_mutation_readback
+      - pinned_comment_readback
+      - blocked_state_note
+    validation:
+      hooks: []
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: register_analytics_tracking
+    title: Register analytics tracking
+    mode: codex_session
+    action: Create or update the analytics tracking record with package, format, video ID, title, thumbnail, packet hashes, cadence decision, pinned-comment state, and checkpoint schedule.
+    consumes:
+      - approved_authority_packet
+      - packaging_packet
+      - cadence_governor_decision
+      - engagement_packet
+      - channel_mutation_readback
+      - pinned_comment_readback
+      - analytics_tracking_surface
+    produces:
+      - analytics_tracking_record
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: record_handoff
+    title: Record handoff
+    mode: scriptable
+    executor:
+      named: content-agent run-record
+    consumes:
+      - source_of_truth_spec_snapshot
+      - approved_authority_packet
+      - packaging_packet
+      - thumbnail_verification_note
+      - cadence_governor_decision
+      - engagement_packet
+      - upload_or_schedule_plan
+      - approval_grant_record
+      - channel_mutation_readback
+      - pinned_comment_readback
+      - analytics_tracking_record
+      - blocked_state_note
+      - validation_results
+    produces:
+      - run_record
+    validation:
+      hooks:
+        - workflow_contract_validation
+        - repo_link_check
+    trace:
+      required: true
