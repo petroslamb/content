@@ -1,6 +1,24 @@
 # Manual YouTube analytics experiment registry.
 # The dashboard reads this file only; it never mutates YouTube state.
 experiments:
+  - id: insight_authority_cinematic
+    name: Insight Authority Cinematic Cohort
+    type: content_authority_cohort
+    status: active
+    hypothesis: Cinematic briefs framed around concrete operating insights, authority surfaces, or reusable decision rules should earn stronger qualified attention than generic topic summaries.
+    video_ids:
+      - q3_gPM4E8yw
+      - J9dz9_9YPQw
+      - abBHq8lwCEE
+      - bto9FNWlahY
+      - n99g7mLWQek
+      - xPLU4cISmxE
+      - Ju5UJvO4X5k
+      - slozjRp6CPg
+    start_date: "2026-05-09"
+    metric_target: averageViewPercentage
+    notes: Source of truth lives in experiments/youtube-insight-authority/; live apply completed 2026-05-09T11:43:52Z and first refreshed analytics read remains baseline/observational because the analytics window ends 2026-05-08.
+
   - id: overlay_remaster_pilot
     name: Overlay Remaster Pilot
     type: overlay_remaster

@@ -1,0 +1,190 @@
+{
+  "workflow": "insight_authority_emit",
+  "dry_run": false,
+  "items": [
+    {
+      "slug": "illusion_of_swarm",
+      "status": "ready",
+      "youtube_video_id": "q3_gPM4E8yw",
+      "package": "publications/illusion-of-swarm",
+      "content_format": null,
+      "metadata": {
+        "title": "When Teams Split Work Too Early",
+        "description": "Extra workers can look like progress while hiding the routing problem. The useful test is simpler: split the work only when the boundary changes memory, tools, permissions, or evaluation.\n\nClaim: Splitting work across extra workers is a workaround unless each worker owns a real boundary.\n\nEvidence: Local cinematic captions show the single-worker versus swarm comparison.; The paired research breakdown covers the 53.7 percent token reduction and coordination tax.; The essay argues that decomposition quality beats coordination theater.\n\nTechnical dilemma: If one worker can hold the context and tools, what exact boundary justifies the second one?\n\nAuthor note: I was skeptical of the anti-swarm framing until the cost and latency comparison made the boundary test unavoidable.\n\nSource: https://lambpetros.substack.com/p/the-illusion-of-the-swarm\n\nResearch breakdown: https://www.youtube.com/watch?v=AigaLYfpFZc",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "systems",
+          "software"
+        ]
+      },
+      "thumbnail": {
+        "text": "REAL BOUNDARY",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/illusion_of_swarm.png",
+        "will_write": true
+      }
+    },
+    {
+      "slug": "operating_agents_memory",
+      "status": "ready",
+      "youtube_video_id": "J9dz9_9YPQw",
+      "package": "publications/autonomous-agents/essays/memory",
+      "content_format": null,
+      "metadata": {
+        "title": "Memory Needs an Owner",
+        "description": "Better recall does not fix memory conflict by itself. The practical question is who owns the state when notes, retrieved facts, and current instructions disagree.\n\nClaim: Memory fails when stored facts do not have an authority rule that decides what wins.\n\nEvidence: Local captions frame memory failure as attention and authority loss.; The paired research breakdown distinguishes recall from governed state.; Shorts follow-through isolates authority failure in compact examples.\n\nTechnical dilemma: When memory conflicts with the current task, which source should win, and where is that rule stored?\n\nAuthor note: The useful shift was treating memory as a control surface, not a bigger storage bucket.\n\nSource: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs\n\nResearch breakdown: https://www.youtube.com/watch?v=Pj4sjWvyJVQ",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "memory",
+          "systems"
+        ]
+      },
+      "thumbnail": {
+        "text": "MEMORY OWNER",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/operating_agents_memory.png",
+        "will_write": true
+      }
+    },
+    {
+      "slug": "operating_agents_multi_agent",
+      "status": "ready",
+      "youtube_video_id": "abBHq8lwCEE",
+      "package": "publications/autonomous-agents/essays/multi-agent",
+      "content_format": null,
+      "metadata": {
+        "title": "The Second Worker Needs a Boundary",
+        "description": "More workers do not automatically add intelligence. They add handoffs. The useful design question is whether the second worker owns a different boundary or only repeats the same context with a new label.\n\nClaim: A second worker earns its place only when it owns a distinct boundary in state, action, or evaluation.\n\nEvidence: Local captions state the boundary test for worker splits.; The paired research breakdown covers handoffs, tools, and evaluation boundaries.; Existing Shorts isolate the coordination tax failure mode.\n\nTechnical dilemma: What has to be different before the second worker is design, not theater?\n\nAuthor note: The rule that survived review was not more roles; it was sharper ownership boundaries.\n\nSource: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent\n\nResearch breakdown: https://www.youtube.com/watch?v=xxd2VKlqiL4",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "systems",
+          "design"
+        ]
+      },
+      "thumbnail": {
+        "text": "SECOND BOUNDARY",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/operating_agents_multi_agent.png",
+        "will_write": true
+      }
+    },
+    {
+      "slug": "operating_agents_reasoning",
+      "status": "ready",
+      "youtube_video_id": "bto9FNWlahY",
+      "package": "publications/autonomous-agents/essays/reasoning",
+      "content_format": null,
+      "metadata": {
+        "title": "Fix the Support Before the Model",
+        "description": "Shopping for a stronger model is often the late move. First inspect the task support: decomposition, checks, state, and the handoff between plan and action.\n\nClaim: Many reasoning failures come from weak task support before they come from weak models.\n\nEvidence: Local captions diagnose the support layer before model choice.; The paired research breakdown covers planning and reasoning supports.; The Shorts package isolates the failed-support pattern.\n\nTechnical dilemma: When a model fails a task, how do you separate model weakness from broken support?\n\nAuthor note: The strongest corrective move was to inspect the task support before blaming the model.\n\nSource: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the\n\nResearch breakdown: https://www.youtube.com/watch?v=LykGDaONozw",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "reasoning",
+          "systems"
+        ]
+      },
+      "thumbnail": {
+        "text": "FIX SUPPORT",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/operating_agents_reasoning.png",
+        "will_write": true
+      }
+    },
+    {
+      "slug": "operating_agents_optimization",
+      "status": "ready",
+      "youtube_video_id": "n99g7mLWQek",
+      "package": "publications/autonomous-agents/essays/optimization",
+      "content_format": null,
+      "metadata": {
+        "title": "The Work Process Is the Product",
+        "description": "Tuning instructions is too narrow. The better object is the whole work process: inputs, checks, evidence, failures, and the rule for deciding what changed.\n\nClaim: Optimization works when the work process becomes the object under test.\n\nEvidence: Local captions frame optimization around the work process itself.; The paired research breakdown connects evaluation loops to production behavior.; Existing Shorts show drift from small instruction changes.\n\nTechnical dilemma: What do you measure when the work process, not the model, is the thing changing?\n\nAuthor note: The useful unit of improvement turned out to be the process, not the sentence-level instruction.\n\nSource: https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow\n\nResearch breakdown: https://www.youtube.com/watch?v=2Fs1iDw5I3Y",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "evaluation",
+          "systems"
+        ]
+      },
+      "thumbnail": {
+        "text": "PROCESS OBJECT",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/operating_agents_optimization.png",
+        "will_write": true
+      }
+    },
+    {
+      "slug": "hardware_friction_map",
+      "status": "ready",
+      "youtube_video_id": "xPLU4cISmxE",
+      "package": "publications/hardware-friction",
+      "content_format": null,
+      "metadata": {
+        "title": "Hardware Decides What Ships",
+        "description": "A design can look elegant in a paper and still lose in production. The deciding filter is often hardware fit: memory movement, kernels, availability, cost, and ecosystem lag.\n\nClaim: Hardware friction decides which designs survive deployment pressure.\n\nEvidence: Local captions frame hardware friction as the shipping filter.; The essay maps friction points that block deployment.; Shorts follow-through covers FlashAttention and ecosystem lag.\n\nTechnical dilemma: When a design looks better on paper, what hardware friction would make you reject it?\n\nAuthor note: The decisive evidence was how often elegant designs failed because the hardware path was not ready.\n\nSource: https://lambpetros.substack.com/p/the-hardware-friction-map",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "hardware",
+          "systems"
+        ]
+      },
+      "thumbnail": {
+        "text": "HARDWARE FILTER",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/hardware_friction_map.png",
+        "will_write": true
+      }
+    },
+    {
+      "slug": "what_actually_works_hardware",
+      "status": "ready",
+      "youtube_video_id": "Ju5UJvO4X5k",
+      "package": "publications/hardware-friction/what-actually-works-the-hardware",
+      "content_format": null,
+      "metadata": {
+        "title": "Hardware Filters Progress",
+        "description": "The winning design is not always the cleanest idea. It is the one that can pass through chips, kernels, memory paths, tooling, and deployment economics without collapsing.\n\nClaim: Architecture progress becomes real only after it passes the hardware compatibility filter.\n\nEvidence: Local captions frame compatibility as the deployment filter.; The essay compares designs through hardware constraints.; The Shorts package includes concrete filter examples.\n\nTechnical dilemma: What compatibility test should a new design pass before you call it progress?\n\nAuthor note: The research forced the question away from novelty and toward compatibility.\n\nSource: https://lambpetros.substack.com/p/what-actually-works-the-hardware",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "hardware",
+          "systems"
+        ]
+      },
+      "thumbnail": {
+        "text": "SILICON FILTER",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/what_actually_works_hardware.png",
+        "will_write": true
+      }
+    },
+    {
+      "slug": "specification_surface_source_of_truth",
+      "status": "ready",
+      "youtube_video_id": "slozjRp6CPg",
+      "package": "publications/literate-workflow-programming/specification-surface-source-of-truth",
+      "content_format": null,
+      "metadata": {
+        "title": "Specs Need a Surface",
+        "description": "Fast code generation creates the wrong kind of speed if intent is only in chat. Reviewable work needs a surface that names decisions, tests, and the rule for changing them.\n\nClaim: Generated code becomes reviewable when controlling intent lives in a maintained specification surface.\n\nEvidence: Local captions connect generated code to maintained specs.; The paired research breakdown covers why specs become source authority.; Visual slide assets expose the specification surface as an inspectable object.\n\nTechnical dilemma: If intent lives only in chat, what exactly is a reviewer supposed to verify?\n\nAuthor note: The key point is not documentation volume; it is where controlling intent is allowed to live.\n\nSource: https://lambpetros.substack.com/p/the-specification-surface-is-the\n\nResearch breakdown: https://www.youtube.com/watch?v=I6gKAyYRfZU",
+        "tags": [
+          "rootedlayers",
+          "research",
+          "specifications",
+          "systems"
+        ]
+      },
+      "thumbnail": {
+        "text": "SPEC SURFACE",
+        "word_count": 2,
+        "path": "experiments/youtube-insight-authority/thumbnails/specification_surface_source_of_truth.png",
+        "will_write": true
+      }
+    }
+  ]
+}
