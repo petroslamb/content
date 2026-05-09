@@ -36,7 +36,11 @@ Use this workflow when a package has a strong argument but the Reddit version is
 
 ## Phase 2.8 Lifecycle State
 
-State: `active_experiment`. This workflow has a governed `workflow.yaml` with `stability: experimental`, and the 2026-05-09 proof campaign invoked it on `publications/evidence-governance/your-ai-is-confidently-wrong-and` with run id `phase-2-8-proof-reddit-discussion-confidently-wrong`. That run produced retained evidence, but its terminal status was `deferred`, so it is not a clean promotion proof and this workflow is not a canonical/default route.
+- State: `active_experiment`
+- Governed contract: `present` - adjacent `workflow.yaml` has `stability: experimental` and is explicitly invokable through `content-agent`.
+- Proof runs: `deferred_only` - `phase-2-8-proof-reddit-discussion-confidently-wrong` ran on `publications/evidence-governance/your-ai-is-confidently-wrong-and` and retained evidence, but terminal status was `deferred`.
+- Promotion status: `not_candidate` - not canonical, not default-routed, and not promotion-ready.
+- Promotion blockers: needs two clean real-package governed proof run ids plus explicit human approval text; deferred proof-campaign evidence does not count as clean promotion proof.
 
 ## Core Finding
 

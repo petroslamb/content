@@ -19,6 +19,7 @@ Use this folder for Phase 2 planning only. Promote decisions into implementation
 - Phase 2.7 is the documented post-baseline handoff-discipline subphase; it does not add runtime autonomy or change `content-agent` into a model runner.
 - Phase 2.7a is a planned implementation subphase for request exit protocol hardening after 2.7; it is not implemented by this strategy packet.
 - Phase 2.8 is the strategy-only experimental workflow lifecycle spec: experiments may run explicitly and produce evidence, but they cannot silently replace canonical lifecycle paths until they pass the promotion bar.
+- Phase 2.8a operationalizes the experimental workflow process with fixed README lifecycle fields and `npm run check:experimental-workflows`, while preserving the no-new-runtime/no-auto-promotion boundary.
 - The 2026-05-09 operationalization pass migrated all seven current experimental workflow docs into governed `workflow.yaml` contracts with `stability: experimental`; this is contract migration, not canonical promotion.
 - Phase 1.6 still exists as a separate roadmap phase, but Phase 2 should depend only on the minimal stable contract surfaces it actually needs.
 - This folder now treats Phase 2 as contract-first, validation-first, and trace-first rather than CLI-first.
@@ -28,7 +29,7 @@ The 2.1-2.6 baseline closes the local governed-runtime implementation: workflow 
 
 Phase 2.7 formalizes the post-baseline operator discipline for clean-context subagent handoffs: parent sessions orchestrate, subagents do model-mediated work, and deterministic artifacts prove what happened. Phase 2.7a plans the next implementation step: generated requests should carry exit protocol, skill recommendations, and verification requirements, with result validation requiring verification evidence for new 2.7a handoffs. Hook enforcement remains later work unless promoted into the appropriate authority surfaces.
 
-Phase 2.8 formalizes experimental workflow lifecycle discipline using existing Phase 2 surfaces. It does not add runtime interfaces, schema fields, validators, cockpit behavior, or automatic route/canonical promotion.
+Phase 2.8 formalizes experimental workflow lifecycle discipline using existing Phase 2 surfaces. Phase 2.8a turns that discipline into a README/YAML/evidence checker. Neither adds runtime interfaces, schema fields, cockpit behavior, or automatic route/canonical promotion.
 
 ## What Phase 2 Promotes From `literate-workflow-programming`
 
@@ -72,6 +73,7 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 - **2.7 Agent Handoff Discipline**: formalize clean-context subagent handoffs while keeping `content-agent` deterministic.
 - **2.7a Request Exit Protocol Implementation**: planned hardening for generated request exit protocol, skill recommendations, and result verification requirements.
 - **2.8 Experimental Workflow Lifecycle**: define how experiments are created, governed, proven, promoted, or retired without replacing canonical routes silently.
+- **2.8a Experimental Workflow Operating Process**: enforce the README lifecycle block, governed-experiment contract expectations, and promotion-proof guardrails for experimental workflows.
 
 ## Documents
 
@@ -88,6 +90,7 @@ Treat these as existing platform inputs. Do not spend Phase 2 re-litigating whet
 | [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md) | The post-baseline parent/subagent handoff discipline, exit protocol, skill plan, and hook posture. |
 | [`2.7a-request-exit-protocol.md`](2.7a-request-exit-protocol.md) | Planned implementation subphase for request exit protocol fields, result verification evidence, handoff skill creation, and regression proofs. |
 | [`2.8-experimental-workflow-lifecycle.md`](2.8-experimental-workflow-lifecycle.md) | Strategy-only lifecycle discipline for experimental workflows, governed proofs, promotion, and retirement. |
+| [`2.8a-experimental-workflow-operating-process.md`](2.8a-experimental-workflow-operating-process.md) | Operating process and checker contract for experimental workflow README state, governed contracts, proof evidence, promotion, and retirement. |
 | [`open-questions.md`](open-questions.md) | The remaining Phase 2 decisions that are still genuinely open. |
 | [`idea-bank.md`](idea-bank.md) | Candidate ideas that may justify rewriting Phase 2 before implementation. |
 | [`claim-ledger.md`](claim-ledger.md) | Phase 2 planning claims that should be pressure-tested before implementation. |
@@ -106,6 +109,7 @@ The numbered implementation and strategy packets for the Phase 2 foundation are:
 - [`2.7-agent-handoff-discipline.md`](2.7-agent-handoff-discipline.md)
 - [`2.7a-request-exit-protocol.md`](2.7a-request-exit-protocol.md) (planned)
 - [`2.8-experimental-workflow-lifecycle.md`](2.8-experimental-workflow-lifecycle.md) (strategy-only)
+- [`2.8a-experimental-workflow-operating-process.md`](2.8a-experimental-workflow-operating-process.md) (operating-process checker)
 
 ## Input Sources
 
