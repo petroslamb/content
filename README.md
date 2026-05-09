@@ -220,7 +220,8 @@ The canonical root toolchain is tracked in [`requirements.txt`](requirements.txt
 
 Core tools:
 
-- `markitdown[pdf]`
+- `opendataloader-pdf`
+- `markitdown[pdf]` as the PDF-to-Markdown fallback
 - `alphaxiv-py`
 - `notebooklm-py[browser]`
 - `python-substack`

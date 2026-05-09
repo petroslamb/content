@@ -1,0 +1,7 @@
+interface:
+  display_name: "OpenDataLoader Paper Intake"
+  short_description: "Canonical paper intake and PDF-to-Markdown flow"
+  default_prompt: "Use $opendataloader-paper-intake to place papers in a package, convert PDFs with OpenDataLoader as single-file markdown without images, fall back to markitdown when needed, and update the local paper index using the repo's tracked workflow."
+
+policy:
+  allow_implicit_invocation: true

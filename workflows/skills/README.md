@@ -8,7 +8,8 @@ The live discovery path remains `.agents/skills/`, but that tree is now a symlin
 
 ### Intake / discovery
 
-- [`markitdown-paper-intake/`](markitdown-paper-intake/) for package paper intake, PDF-to-markdown conversion, and paper-index maintenance
+- [`opendataloader-paper-intake/`](opendataloader-paper-intake/) for package paper intake, OpenDataLoader PDF-to-Markdown conversion, markitdown fallback, and paper-index maintenance
+- [`markitdown-paper-intake/`](markitdown-paper-intake/) for the legacy fallback path when OpenDataLoader PDF cannot convert a source
 - [`alphaxiv/`](alphaxiv/) for topic-discovery execution, broad paper discovery, exact-paper inspection, assistant-discussion tracking, and shortlist refinement before a paper enters the package evidence surface
 
 ### Validation / hardening
