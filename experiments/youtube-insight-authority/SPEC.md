@@ -273,6 +273,7 @@ Decision rules:
 ## Weekly Checkpoints
 
 - 2026-05-09: created experiment state, registered dashboard cohort, ran live YouTube apply, completed final readback, refreshed analytics baseline.
+- Recurring tracker: Codex automation `insight-authority-weekly-analytics-checkpoint`, active weekly on Saturdays at 12:30 Europe/Athens.
 - Next weekly checkpoint: re-run analytics after a full post-apply window and compare cohort videos against cinematic median and their own pre-apply recommendations.
 - Manual checkpoint: add Studio-only verification if playlist, card, end-screen, or related-video surfaces are checked outside the Data API workflow.
 
