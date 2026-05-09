@@ -63,6 +63,18 @@ Use [`../phased-strategy/phase-2/2.8-experimental-workflow-lifecycle.md`](../pha
 for the current lifecycle ledger, proof requirements, promotion bar, and
 retirement rule.
 
+Use [`../phased-strategy/phase-2/2.8a-experimental-workflow-operating-process.md`](../phased-strategy/phase-2/2.8a-experimental-workflow-operating-process.md)
+for the five-move operating process: intake, contract, run/prove, promote, and
+retire. Check the surface with:
+
+```bash
+npm run check:experimental-workflows
+```
+
+That check is deliberately narrower than canonical routing. It verifies
+experimental README lifecycle state, governed contract readiness, and
+promotion-proof claims; it does not make any experiment canonical or default.
+
 ## Working Hierarchy
 
 The April 2026 neural-architecture pilot made one structural fact clearer: this repo needs a layered reading order, not just a flat stage list.
