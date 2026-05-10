@@ -94,8 +94,12 @@ Active validation entrypoints:
 
 - `npm run check`
 - `npm run check:workflow-yaml`
+- `npm run check:experimental-workflows`
+- `npm run check:validation-surface`
 - `npm run check:workflow-model`
 - `npm run check:reviewable-runs`
+- `npm run check:repo-links`
+- `npm run check:alphaxiv-discussions`
 - `npm run package:init -- --idea "..." --format json`
 - `npm run package:init -- --from-topic-packet <packet> --format json`
 
@@ -109,7 +113,7 @@ The repo now distinguishes:
 - overlays as explicit experimental branches
 - reviewable runs as the retained proof and evaluation layer
 
-Use `npm run check` as the lightweight pre-review validation bundle. It runs harness validation, workflow-model validation, Reviewable Runs log validation, repo-link validation, and alphaXiv discussion tracking. It intentionally does not build the public mirror or perform external sync work.
+Use `npm run check` as the lightweight pre-review validation bundle. It runs workflow YAML validation, experimental workflow lifecycle validation, validation-surface doc drift validation, workflow-model and content-agent readiness validation, Reviewable Runs log validation, repo-link validation, and alphaXiv discussion tracking. It intentionally does not build the public mirror or perform external sync work.
 
 When the essay object itself is still undecided, use [`workflows/topic-discovery/README.md`](workflows/topic-discovery/README.md) before `package:init`. Topic discovery is a pre-package decision layer, not a `status.yaml` lifecycle stage yet.
 
