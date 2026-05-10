@@ -83,6 +83,8 @@ The preferred governed operator entrypoint is `./content-agent`:
 ./content-agent resume --gate <gate_id>
 ```
 
+`AGENTS.md` lists only the read/inspect review commands in the assistant-facing quick surface. `AUTHORITY.md` remains the source-of-truth map for the full review decision surface, including `review approve`, `review reject`, and `review defer`; use those mutation commands only when the governing workflow or human instruction explicitly authorizes a review decision.
+
 Use `./content-cockpit --package <package>` when a browser surface is more useful than terminal output.
 
 The old `npm run stage:*`, `npm run workflow:*`, `npm run gate:check`, and generic `npm run run` compatibility adapters are retired from the active package script surface. Use `./content-agent` for governed routing, validation, runs, gate checks, review decisions, and resumes.
