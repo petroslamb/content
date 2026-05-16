@@ -2,14 +2,15 @@ draft_repair_packets:
   id: insight_authority_next_repair_candidates_2026_05_16
   experiment_id: insight_authority_cinematic
   created_at: "2026-05-16"
-  status: draft_only
+  status: promoted_for_live_apply
   purpose: >
     Prepare the next packaging-repair queue from the 2026-05-16 channel
-    recovery triage. These packets are intentionally not merged into
-    authority_packets.yaml because the videos still belong to the cinematic
-    rollout naming convention until that owner approves the suffix change.
+    recovery triage. These packets were promoted during the one-hour channel
+    recovery sprint after user authorization to take channel-improvement
+    actions. They intentionally remain separate from the initial cohort
+    authority_packets.yaml so the expanded repair batch is auditable.
   source_report: experiments/youtube-analytics/channel_recovery_plan_2026-05-16.md
-  apply_policy: do_not_apply_until_promoted_to_authority_packets
+  apply_policy: promoted_by_user_authorized_channel_recovery_goal
 
 packets:
   - slug: autonomy_tax_control_layer

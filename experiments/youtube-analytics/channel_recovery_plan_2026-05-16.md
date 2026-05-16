@@ -25,7 +25,7 @@ All five also received regenerated 1280x720 authority thumbnails. The full 8-vid
 
 These videos have enough impression evidence to justify packaging review, but they are not safe to retitle directly until an authority packet or the owning cinematic rollout source is updated. Several still carry the older `A Cinematic Research Brief` suffix, which may be part of the rollout naming convention rather than accidental metadata.
 
-Draft packets for the first five candidates live at `experiments/youtube-insight-authority/draft_repair_packets_2026-05-16.yaml`. They validate through `scripts/insight_authority_experiment.py` but are marked draft-only and must be promoted before any live apply. Local dry-run plans and generated thumbnail PNGs are in `experiments/youtube-insight-authority/draft_repair_2026-05-16/`.
+The first five candidates live at `experiments/youtube-insight-authority/draft_repair_packets_2026-05-16.yaml`. They validate through `scripts/insight_authority_experiment.py` and were promoted during the one-hour recovery sprint under the user-authorized channel-improvement goal. Live apply completed at `2026-05-16T11:13:37Z`; final readback completed at `2026-05-16T11:14:11Z`. Local plans, mutation reports, readback reports, and generated thumbnail PNGs are in `experiments/youtube-insight-authority/draft_repair_2026-05-16/`.
 
 | Priority | Video ID | Current Title | Package | Views | Impressions | CTR | Avg View % | Recommended Move |
 | :--- | :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |

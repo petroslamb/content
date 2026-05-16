@@ -1,7 +1,7 @@
 {
   "workflow": "insight_authority_publish_plan",
   "dry_run": false,
-  "youtube_mutations": false,
+  "youtube_mutations": true,
   "items": [
     {
       "slug": "autonomy_tax_control_layer",
@@ -16,7 +16,7 @@
       ],
       "scheduled_at": null,
       "privacy": "private",
-      "mutation": "metadata_only",
+      "mutation": "youtube_apply",
       "metadata_ref": {
         "title": "Autonomy Breaks at the Control Layer",
         "description": "The expensive failure is not model intelligence. It is the control layer that collapses before autonomy becomes profitable.\n\nClaim: Autonomy fails economically when action costs, oversight, and integration controls rise faster than capability.\n\nEvidence: The latest dashboard shows 2361 thumbnail impressions, 0.59 percent CTR, and 40.05 percent average viewed.; The local upload report frames the three-tax argument around control failure before autonomy.; The package has Shorts and related-video follow-through already pointing to this cinematic.\n\nTechnical dilemma: Where does autonomy become expensive: the model, the action surface, or the control layer around it?\n\nAuthor note: The video has enough retention to justify a cleaner title; the weak signal is packaging, not obvious rejection.\n\nSource: https://lambpetros.substack.com/p/the-autonomy-tax\n\nResearch breakdown: https://www.youtube.com/watch?v=1laAYOsrTLg",
@@ -32,8 +32,8 @@
       "source_url": "https://lambpetros.substack.com/p/the-autonomy-tax",
       "research_breakdown_url": "https://www.youtube.com/watch?v=1laAYOsrTLg",
       "comment": {
-        "will_post": false,
-        "pin_status": "not_requested"
+        "will_post": true,
+        "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
       }
     },
     {
@@ -49,7 +49,7 @@
       ],
       "scheduled_at": null,
       "privacy": "private",
-      "mutation": "metadata_only",
+      "mutation": "youtube_apply",
       "metadata_ref": {
         "title": "The Attack Surface Is the Architecture",
         "description": "The risk is not just the model. It is the architecture wrapped around it and every boundary it quietly opens.\n\nClaim: Safety risk grows from the architecture and boundaries around the model, not only from model behavior.\n\nEvidence: The latest dashboard shows 2411 thumbnail impressions, 0.46 percent CTR, and 22.09 percent average viewed.; The local upload report positions safety as an architecture problem.; The cinematic rollout ledger records end-screen and info-card enrichment pointing to the research breakdown.\n\nTechnical dilemma: Which boundary in the architecture creates the risk before any single model output happens?\n\nAuthor note: The better title should make the architectural risk explicit before the viewer sees another generic safety video.\n\nSource: https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface\n\nResearch breakdown: https://www.youtube.com/watch?v=biyIKcSp3Po",
@@ -65,8 +65,8 @@
       "source_url": "https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface",
       "research_breakdown_url": "https://www.youtube.com/watch?v=biyIKcSp3Po",
       "comment": {
-        "will_post": false,
-        "pin_status": "not_requested"
+        "will_post": true,
+        "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
       }
     },
     {
@@ -82,7 +82,7 @@
       ],
       "scheduled_at": null,
       "privacy": "private",
-      "mutation": "metadata_only",
+      "mutation": "youtube_apply",
       "metadata_ref": {
         "title": "Action Needs a Contract",
         "description": "Action is not a vibe layered on top of language. It is a contract surface where permissions, commitments, and traces decide whether work is reliable.\n\nClaim: Tool use becomes reliable only when action boundaries define permissions, commitments, and traces.\n\nEvidence: The latest dashboard shows 2143 thumbnail impressions and 0.28 percent CTR, but weak retention at 18.75 percent.; The local upload report frames action as the boundary between language and tool commitments.; Shorts and remastered overlay reports already point back to this cinematic.\n\nTechnical dilemma: What contract exists before a model can touch tools, commit changes, or leave traces?\n\nAuthor note: This should be repaired cautiously because CTR is weak but retention is also weak.\n\nSource: https://lambpetros.substack.com/p/operating-agents-i-when-language\n\nResearch breakdown: https://www.youtube.com/watch?v=swvX4mduJtk",
@@ -98,8 +98,8 @@
       "source_url": "https://lambpetros.substack.com/p/operating-agents-i-when-language",
       "research_breakdown_url": "https://www.youtube.com/watch?v=swvX4mduJtk",
       "comment": {
-        "will_post": false,
-        "pin_status": "not_requested"
+        "will_post": true,
+        "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
       }
     },
     {
@@ -115,7 +115,7 @@
       ],
       "scheduled_at": null,
       "privacy": "private",
-      "mutation": "metadata_only",
+      "mutation": "youtube_apply",
       "metadata_ref": {
         "title": "The Support Failed Before the Model",
         "description": "If the support around the task is weak, changing the model is the late move. First inspect decomposition, state, checks, and handoff surfaces.\n\nClaim: Reasoning breakdowns often come from weak task support before they come from weak model capability.\n\nEvidence: The latest dashboard shows 1176 thumbnail impressions, 0.00 percent CTR, and 53.54 percent average viewed on a small sample.; The hook-repair upload report records this as the current reasoning repair cinematic.; Studio verification records end-screen, info-card, and Shorts related-video links back to this cinematic.\n\nTechnical dilemma: What check proves the model failed, rather than the support around the task?\n\nAuthor note: High retention with low CTR makes this a packaging candidate, but the view count is still too small for an automatic live repair.\n\nSource: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the\n\nResearch breakdown: https://www.youtube.com/watch?v=LykGDaONozw",
@@ -131,8 +131,8 @@
       "source_url": "https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the",
       "research_breakdown_url": "https://www.youtube.com/watch?v=LykGDaONozw",
       "comment": {
-        "will_post": false,
-        "pin_status": "not_requested"
+        "will_post": true,
+        "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
       }
     },
     {
@@ -148,7 +148,7 @@
       ],
       "scheduled_at": null,
       "privacy": "private",
-      "mutation": "metadata_only",
+      "mutation": "youtube_apply",
       "metadata_ref": {
         "title": "Models Need a REPL for Thought",
         "description": "Long instructions stop looking like input once they become an environment the model can inspect, filter, and program against.\n\nClaim: Long instructions become useful infrastructure when the model can inspect and program its own thinking surface.\n\nEvidence: The latest dashboard shows 1606 thumbnail impressions, 0.37 percent CTR, and 15.72 percent average viewed.; The local upload report names programmable thinking as the core claim.; The cinematic rollout ledger records end-screen, info-card, and Shorts links back to this cinematic.\n\nTechnical dilemma: When does a instructions become an environment the model can inspect and change?\n\nAuthor note: This needs a jargon cleanup, but low retention means the title alone may not be enough.\n\nSource: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking\n\nResearch breakdown: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
@@ -164,8 +164,8 @@
       "source_url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
       "research_breakdown_url": "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking",
       "comment": {
-        "will_post": false,
-        "pin_status": "not_requested"
+        "will_post": true,
+        "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
       }
     }
   ]

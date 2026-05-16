@@ -13,6 +13,7 @@ This ledger tracks experiment state changes, apply-mode readiness, and verificat
 | 2026-05-09 | Final post-apply readback passed | 8 Insight Authority cohort videos | `youtube_final_readback.json` created at `2026-05-09T11:46:45Z` | All title, description, tag, and technical comment checks passed; all videos public/processed with maxres thumbnail URLs |
 | 2026-05-09 | Analytics baseline refreshed | YouTube analytics dashboard and ledger | `metrics_ledger.json`, `weekly_reports/2026-05-09.md`, `weekly_reports/2026-05-09.json`, `snapshots/2026-05-09T11-45-59Z.json` | Metrics ledger has 252 video records; reporting API sync merged 87 reports and updated 232 videos; weekly report/dashboard/snapshot written |
 | 2026-05-16 | Live packaging repair applied | 5 `retitle` cohort videos, with full 8-video packet readback | `authority_packets.yaml`, `youtube_mutation_report.json`, `youtube_final_readback.json`, `SPEC.md`, `weekly_reports/2026-05-16.json` | Repaired titles, description leads, and thumbnail text for `q3_gPM4E8yw`, `J9dz9_9YPQw`, `n99g7mLWQek`, `xPLU4cISmxE`, `Ju5UJvO4X5k`; Data API apply and final readback passed for 8/8 packeted videos |
+| 2026-05-16 | Expanded repair batch applied | 5 additional high-impression cinematic videos | `draft_repair_packets_2026-05-16.yaml`, `draft_repair_2026-05-16/youtube_mutation_report.json`, `draft_repair_2026-05-16/youtube_final_readback.json`, `channel_recovery_plan_2026-05-16.md` | Removed weak wrapper-style titles and uploaded regenerated thumbnails for `gcsTDFRynyw`, `vCpW8dYfeEY`, `NIJ92a65SxM`, `Vx7HwtBwo_c`, `chr4R-fSZUY`; final API readback passed for 5/5 |
 
 ## Initial Cohort Release Record
 
@@ -53,6 +54,18 @@ The 2026-05-16 repair kept the same top-level technical comments and blocked pin
 | `n99g7mLWQek` | The Work Process Is the Product | Stop Tuning Instructions; Test the Process |
 | `xPLU4cISmxE` | Hardware Decides What Ships | Hardware Friction Decides What Ships |
 | `Ju5UJvO4X5k` | Hardware Filters Progress | Hardware Fit Filters Progress |
+
+## Expanded Repair Readback Record
+
+The expanded repair promoted the first five channel-recovery candidates after user authorization to take channel-improvement actions.
+
+| Video ID | Previous Title | Repair Title |
+| :--- | :--- | :--- |
+| `gcsTDFRynyw` | The AI Autonomy Tax \| A Cinematic Research Brief | Autonomy Breaks at the Control Layer |
+| `vCpW8dYfeEY` | The AI Attack Surface Is the Agent's Architecture \| A Cinematic Research Brief | The Attack Surface Is the Architecture |
+| `NIJ92a65SxM` | Why Reliable Agents Start with Action Boundaries \| A Cinematic Research Brief | Action Needs a Contract |
+| `Vx7HwtBwo_c` | The Scaffold Failed First \| A Cinematic Research Brief | The Support Failed Before the Model |
+| `chr4R-fSZUY` | When LLMs Need a REPL for Their Own Thoughts \| A Cinematic Research Brief | Models Need a REPL for Thought |
 
 ## Analytics Baseline Record
 

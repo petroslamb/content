@@ -1,0 +1,192 @@
+{
+  "created_at": "2026-05-16T11:14:11.851627+00:00",
+  "workflow": "insight_authority_repair_batch_readback",
+  "packet_file": "experiments/youtube-insight-authority/draft_repair_packets_2026-05-16.yaml",
+  "items": [
+    {
+      "slug": "autonomy_tax_control_layer",
+      "video_id": "gcsTDFRynyw",
+      "url": "https://www.youtube.com/watch?v=gcsTDFRynyw",
+      "expected_title": "Autonomy Breaks at the Control Layer",
+      "actual_title": "Autonomy Breaks at the Control Layer",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "autonomy",
+        "economics",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "actual_tags": [
+        "autonomy",
+        "economics",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/gcsTDFRynyw/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgwZ8MCBD6rfdufZRRp4AaABAg",
+          "comment_id": "UgwZ8MCBD6rfdufZRRp4AaABAg",
+          "publishedAt": "2026-05-16T11:13:15Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "operating_agents_safety_architecture",
+      "video_id": "vCpW8dYfeEY",
+      "url": "https://www.youtube.com/watch?v=vCpW8dYfeEY",
+      "expected_title": "The Attack Surface Is the Architecture",
+      "actual_title": "The Attack Surface Is the Architecture",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "architecture",
+        "research",
+        "rootedlayers",
+        "safety",
+        "systems"
+      ],
+      "actual_tags": [
+        "architecture",
+        "research",
+        "rootedlayers",
+        "safety",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/vCpW8dYfeEY/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgzOj-z8BRUZ4bQtcSZ4AaABAg",
+          "comment_id": "UgzOj-z8BRUZ4bQtcSZ4AaABAg",
+          "publishedAt": "2026-05-16T11:13:20Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "operating_agents_action_contract",
+      "video_id": "NIJ92a65SxM",
+      "url": "https://www.youtube.com/watch?v=NIJ92a65SxM",
+      "expected_title": "Action Needs a Contract",
+      "actual_title": "Action Needs a Contract",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "action",
+        "research",
+        "rootedlayers",
+        "systems",
+        "tools"
+      ],
+      "actual_tags": [
+        "action",
+        "research",
+        "rootedlayers",
+        "systems",
+        "tools"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/NIJ92a65SxM/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgxeQVoJj5oUO_5ttO14AaABAg",
+          "comment_id": "UgxeQVoJj5oUO_5ttO14AaABAg",
+          "publishedAt": "2026-05-16T11:13:26Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "operating_agents_reasoning_support_failed",
+      "video_id": "Vx7HwtBwo_c",
+      "url": "https://www.youtube.com/watch?v=Vx7HwtBwo_c",
+      "expected_title": "The Support Failed Before the Model",
+      "actual_title": "The Support Failed Before the Model",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "evaluation",
+        "reasoning",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "actual_tags": [
+        "evaluation",
+        "reasoning",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/Vx7HwtBwo_c/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgwRkHjgaS3s9Ce3zUZ4AaABAg",
+          "comment_id": "UgwRkHjgaS3s9Ce3zUZ4AaABAg",
+          "publishedAt": "2026-05-16T11:13:30Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    },
+    {
+      "slug": "programmable_thinking_repl",
+      "video_id": "chr4R-fSZUY",
+      "url": "https://www.youtube.com/watch?v=chr4R-fSZUY",
+      "expected_title": "Models Need a REPL for Thought",
+      "actual_title": "Models Need a REPL for Thought",
+      "title_match": true,
+      "description_match": true,
+      "expected_tags": [
+        "programmable-thinking",
+        "reasoning",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "actual_tags": [
+        "programmable-thinking",
+        "reasoning",
+        "research",
+        "rootedlayers",
+        "systems"
+      ],
+      "tags_match": true,
+      "privacyStatus": "public",
+      "uploadStatus": "processed",
+      "thumbnail_maxres_url": "https://i.ytimg.com/vi/chr4R-fSZUY/maxresdefault.jpg",
+      "technical_comment_match_count": 1,
+      "technical_comment_matches": [
+        {
+          "thread_id": "UgyjecPKEntZGnPaA0x4AaABAg",
+          "comment_id": "UgyjecPKEntZGnPaA0x4AaABAg",
+          "publishedAt": "2026-05-16T11:13:37Z",
+          "authorDisplayName": "@rootedlayers"
+        }
+      ],
+      "pin_status": "blocked_no_youtube_data_api_pin_endpoint"
+    }
+  ]
+}
