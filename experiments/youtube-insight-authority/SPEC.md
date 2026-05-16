@@ -273,8 +273,9 @@ Decision rules:
 ## Weekly Checkpoints
 
 - 2026-05-09: created experiment state, registered dashboard cohort, ran live YouTube apply, completed final readback, refreshed analytics baseline.
+- 2026-05-16: refreshed analytics dashboard (report date `2026-05-16`, analytics end date `2026-05-15`) and compared cohort movement versus the 2026-05-09 baseline (end date `2026-05-08`). Cohort `averageViewPercentage` (28d window) mean moved `20.13 -> 33.13` (median `21.37 -> 28.03`) while `views_per_day` mean moved `3.16 -> 0.50` (median `0.64 -> 0.50`), consistent with the early release pulse decaying and small-sample volatility on older catalog videos. Cohort recommendation posture remains “retitle/title+thumbnail sharpen” for 5/8 videos and “wait for a stronger pattern” for 3/8 videos; no cohort items are flagged as `hook_problem` in the 2026-05-16 weekly report.
 - Recurring tracker: Codex automation `insight-authority-weekly-analytics-checkpoint`, active weekly on Saturdays at 12:30 Europe/Athens.
-- Next weekly checkpoint: re-run analytics after a full post-apply window and compare cohort videos against cinematic median and their own pre-apply recommendations.
+- Next weekly checkpoint: re-run analytics after more post-apply days accrue and compare cohort videos against cinematic median and their own pre-apply recommendations (the 28d window will fully cover post-apply days once the analytics end date is >= 2026-06-06).
 - Manual checkpoint: add Studio-only verification if playlist, card, end-screen, or related-video surfaces are checked outside the Data API workflow.
 
 ## Blockers/Resolutions
