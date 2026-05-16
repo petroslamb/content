@@ -25,6 +25,8 @@ All five also received regenerated 1280x720 authority thumbnails. The full 8-vid
 
 These videos have enough impression evidence to justify packaging review, but they are not safe to retitle directly until an authority packet or the owning cinematic rollout source is updated. Several still carry the older `A Cinematic Research Brief` suffix, which may be part of the rollout naming convention rather than accidental metadata.
 
+Draft packets for the first five candidates live at `experiments/youtube-insight-authority/draft_repair_packets_2026-05-16.yaml`. They validate through `scripts/insight_authority_experiment.py` but are marked draft-only and must be promoted before any live apply.
+
 | Priority | Video ID | Current Title | Package | Views | Impressions | CTR | Avg View % | Recommended Move |
 | :--- | :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |
 | 1 | `gcsTDFRynyw` | The AI Autonomy Tax \| A Cinematic Research Brief | `autonomy-tax` | 30 | 2361 | 0.59 | 40.05 | Create authority packet; test a practical-tax title without the wrapper suffix if rollout owner agrees |

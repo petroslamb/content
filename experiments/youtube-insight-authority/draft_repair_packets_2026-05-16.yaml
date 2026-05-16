@@ -1,0 +1,140 @@
+draft_repair_packets:
+  id: insight_authority_next_repair_candidates_2026_05_16
+  experiment_id: insight_authority_cinematic
+  created_at: "2026-05-16"
+  status: draft_only
+  purpose: >
+    Prepare the next packaging-repair queue from the 2026-05-16 channel
+    recovery triage. These packets are intentionally not merged into
+    authority_packets.yaml because the videos still belong to the cinematic
+    rollout naming convention until that owner approves the suffix change.
+  source_report: experiments/youtube-analytics/channel_recovery_plan_2026-05-16.md
+  apply_policy: do_not_apply_until_promoted_to_authority_packets
+
+packets:
+  - slug: autonomy_tax_control_layer
+    youtube_video_id: gcsTDFRynyw
+    package: publications/autonomy-tax
+    title: Autonomy Breaks at the Control Layer
+    claim: Autonomy fails economically when action costs, oversight, and integration controls rise faster than capability.
+    description: >
+      The expensive failure is not model intelligence. It is the control layer
+      that collapses before autonomy becomes profitable.
+    evidence:
+      - The latest dashboard shows 2361 thumbnail impressions, 0.59 percent CTR, and 40.05 percent average viewed.
+      - The local upload report frames the three-tax argument around control failure before autonomy.
+      - The package has Shorts and related-video follow-through already pointing to this cinematic.
+    thumbnail_text: CONTROL LAYER
+    source_url: https://lambpetros.substack.com/p/the-autonomy-tax
+    research_breakdown_url: https://www.youtube.com/watch?v=1laAYOsrTLg
+    author_note: The video has enough retention to justify a cleaner title; the weak signal is packaging, not obvious rejection.
+    technical_dilemma: >
+      Where does autonomy become expensive: the model, the action surface, or
+      the control layer around it?
+    pinned_comment: >
+      Technical provocation: autonomy gets expensive when the control layer
+      fails first. Where does your system pay the tax?
+    tags:
+      - autonomy
+      - systems
+      - economics
+
+  - slug: operating_agents_safety_architecture
+    youtube_video_id: vCpW8dYfeEY
+    package: publications/autonomous-agents/essays/safety
+    title: The Attack Surface Is the Architecture
+    claim: Safety risk grows from the architecture and boundaries around the model, not only from model behavior.
+    description: >
+      The risk is not just the model. It is the architecture wrapped around it
+      and every boundary it quietly opens.
+    evidence:
+      - The latest dashboard shows 2411 thumbnail impressions, 0.46 percent CTR, and 22.09 percent average viewed.
+      - The local upload report positions safety as an architecture problem.
+      - The cinematic rollout ledger records end-screen and info-card enrichment pointing to the research breakdown.
+    thumbnail_text: ARCHITECTURE RISK
+    source_url: https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface
+    research_breakdown_url: https://www.youtube.com/watch?v=biyIKcSp3Po
+    author_note: The better title should make the architectural risk explicit before the viewer sees another generic safety video.
+    technical_dilemma: Which boundary in the architecture creates the risk before any single model output happens?
+    pinned_comment: >
+      Technical provocation: the attack surface is often the architecture, not
+      the model. Which boundary would you inspect first?
+    tags:
+      - safety
+      - architecture
+      - systems
+
+  - slug: operating_agents_action_contract
+    youtube_video_id: NIJ92a65SxM
+    package: publications/autonomous-agents/essays/action
+    title: Action Needs a Contract
+    claim: Tool use becomes reliable only when action boundaries define permissions, commitments, and traces.
+    description: >
+      Action is not a vibe layered on top of language. It is a contract surface
+      where permissions, commitments, and traces decide whether work is reliable.
+    evidence:
+      - The latest dashboard shows 2143 thumbnail impressions and 0.28 percent CTR, but weak retention at 18.75 percent.
+      - The local upload report frames action as the boundary between language and tool commitments.
+      - Shorts and remastered overlay reports already point back to this cinematic.
+    thumbnail_text: ACTION CONTRACT
+    source_url: https://lambpetros.substack.com/p/operating-agents-i-when-language
+    research_breakdown_url: https://www.youtube.com/watch?v=swvX4mduJtk
+    author_note: This should be repaired cautiously because CTR is weak but retention is also weak.
+    technical_dilemma: What contract exists before a model can touch tools, commit changes, or leave traces?
+    pinned_comment: >
+      Technical provocation: action needs a contract before it needs more
+      autonomy. What must be true before your system can touch tools?
+    tags:
+      - action
+      - tools
+      - systems
+
+  - slug: operating_agents_reasoning_support_failed
+    youtube_video_id: Vx7HwtBwo_c
+    package: publications/autonomous-agents/essays/reasoning
+    title: The Support Failed Before the Model
+    claim: Reasoning breakdowns often come from weak task support before they come from weak model capability.
+    description: >
+      If the support around the task is weak, changing the model is the late
+      move. First inspect decomposition, state, checks, and handoff surfaces.
+    evidence:
+      - The latest dashboard shows 1176 thumbnail impressions, 0.00 percent CTR, and 53.54 percent average viewed on a small sample.
+      - The hook-repair upload report records this as the current reasoning repair cinematic.
+      - Studio verification records end-screen, info-card, and Shorts related-video links back to this cinematic.
+    thumbnail_text: SUPPORT FAILED
+    source_url: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+    research_breakdown_url: https://www.youtube.com/watch?v=LykGDaONozw
+    author_note: High retention with low CTR makes this a packaging candidate, but the view count is still too small for an automatic live repair.
+    technical_dilemma: What check proves the model failed, rather than the support around the task?
+    pinned_comment: >
+      Technical provocation: before changing the model, inspect the support.
+      What evidence tells you the failure is really model-side?
+    tags:
+      - reasoning
+      - evaluation
+      - systems
+
+  - slug: programmable_thinking_repl
+    youtube_video_id: chr4R-fSZUY
+    package: publications/programmable-thinking
+    title: Models Need a REPL for Thought
+    claim: Long prompts become useful infrastructure when the model can inspect and program its own thinking surface.
+    description: >
+      Long prompts stop looking like input once they become an environment the
+      model can inspect, filter, and program against.
+    evidence:
+      - The latest dashboard shows 1606 thumbnail impressions, 0.37 percent CTR, and 15.72 percent average viewed.
+      - The local upload report names programmable thinking as the core claim.
+      - The cinematic rollout ledger records end-screen, info-card, and Shorts links back to this cinematic.
+    thumbnail_text: THOUGHT REPL
+    source_url: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
+    research_breakdown_url: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
+    author_note: This needs a jargon cleanup, but low retention means the title alone may not be enough.
+    technical_dilemma: When does a prompt become an environment the model can inspect and change?
+    pinned_comment: >
+      Technical provocation: if a model can inspect its own thinking surface,
+      the prompt starts acting like a REPL. What should it be allowed to change?
+    tags:
+      - programmable-thinking
+      - reasoning
+      - systems
