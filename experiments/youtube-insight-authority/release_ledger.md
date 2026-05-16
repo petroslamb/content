@@ -12,6 +12,7 @@ This ledger tracks experiment state changes, apply-mode readiness, and verificat
 | 2026-05-09 | Live YouTube apply completed | 8 Insight Authority cohort videos | `youtube_mutation_report.json` created at `2026-05-09T11:43:52Z` | Applied titles, descriptions, tags, thumbnails, and top-level technical comments; pinning recorded as blocked by no YouTube Data API pin endpoint |
 | 2026-05-09 | Final post-apply readback passed | 8 Insight Authority cohort videos | `youtube_final_readback.json` created at `2026-05-09T11:46:45Z` | All title, description, tag, and technical comment checks passed; all videos public/processed with maxres thumbnail URLs |
 | 2026-05-09 | Analytics baseline refreshed | YouTube analytics dashboard and ledger | `metrics_ledger.json`, `weekly_reports/2026-05-09.md`, `weekly_reports/2026-05-09.json`, `snapshots/2026-05-09T11-45-59Z.json` | Metrics ledger has 252 video records; reporting API sync merged 87 reports and updated 232 videos; weekly report/dashboard/snapshot written |
+| 2026-05-16 | Live packaging repair applied | 5 `retitle` cohort videos, with full 8-video packet readback | `authority_packets.yaml`, `youtube_mutation_report.json`, `youtube_final_readback.json`, `SPEC.md`, `weekly_reports/2026-05-16.json` | Repaired titles, description leads, and thumbnail text for `q3_gPM4E8yw`, `J9dz9_9YPQw`, `n99g7mLWQek`, `xPLU4cISmxE`, `Ju5UJvO4X5k`; Data API apply and final readback passed for 8/8 packeted videos |
 
 ## Initial Cohort Release Record
 
@@ -40,6 +41,18 @@ These videos were already published before the experiment state was created. The
 | `xPLU4cISmxE` | Hardware Decides What Ships | `Ugy9zLj-FHTpxCKGEgx4AaABAg` | `blocked_no_youtube_data_api_pin_endpoint` |
 | `Ju5UJvO4X5k` | Hardware Filters Progress | `Ugzx3wKjIr7z6zLxxxx4AaABAg` | `blocked_no_youtube_data_api_pin_endpoint` |
 | `slozjRp6CPg` | Specs Need a Surface | `UgyNDcCu0v2sGzTnyiR4AaABAg` | `blocked_no_youtube_data_api_pin_endpoint` |
+
+## Repair Readback Record
+
+The 2026-05-16 repair kept the same top-level technical comments and blocked pin status. Material title changes:
+
+| Video ID | Previous Title | Repair Title |
+| :--- | :--- | :--- |
+| `q3_gPM4E8yw` | When Teams Split Work Too Early | Boundary First, Then More Workers |
+| `J9dz9_9YPQw` | Memory Needs an Owner | When Memory Has No Owner |
+| `n99g7mLWQek` | The Work Process Is the Product | Stop Tuning Instructions; Test the Process |
+| `xPLU4cISmxE` | Hardware Decides What Ships | Hardware Friction Decides What Ships |
+| `Ju5UJvO4X5k` | Hardware Filters Progress | Hardware Fit Filters Progress |
 
 ## Analytics Baseline Record
 

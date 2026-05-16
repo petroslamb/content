@@ -17,7 +17,7 @@ experiments:
       - slozjRp6CPg
     start_date: "2026-05-09"
     metric_target: averageViewPercentage
-    notes: Source of truth lives in experiments/youtube-insight-authority/; live apply completed 2026-05-09T11:43:52Z and first refreshed analytics read remains baseline/observational because the analytics window ends 2026-05-08.
+    notes: Source of truth lives in experiments/youtube-insight-authority/; live apply completed 2026-05-09T11:43:52Z, first refreshed analytics read remains baseline/observational because the analytics window ends 2026-05-08, and a bounded retitle/thumbnail repair batch was applied 2026-05-16T10:16:40Z.
 
   - id: overlay_remaster_pilot
     name: Overlay Remaster Pilot

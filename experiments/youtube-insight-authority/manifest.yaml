@@ -100,13 +100,13 @@ metrics:
     stable_read: 28d
 
 tracking_state:
-  current_phase: post_apply_baseline_monitoring
+  current_phase: post_repair_monitoring
   first_dashboard_read_due: next_full_post_apply_youtube_analytics_dashboard_refresh
-  last_local_validation: "2026-05-09"
+  last_local_validation: "2026-05-16"
   live_studio_verification: api_readback_passed_manual_studio_surfaces_pending
-  channel_mutation_state: live_youtube_apply_completed
-  live_youtube_apply_completed_at: "2026-05-09T11:43:52Z"
-  final_readback_completed_at: "2026-05-09T11:46:45Z"
+  channel_mutation_state: live_youtube_repair_apply_completed
+  live_youtube_apply_completed_at: "2026-05-16T10:16:40Z"
+  final_readback_completed_at: "2026-05-16T10:17:45Z"
   final_readback_status: passed_all_title_description_tag_comment_checks
   thumbnail_upload_status: uploaded_all_cohort_thumbnails
   comment_status: posted_all_top_level_technical_comments

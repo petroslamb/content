@@ -1,20 +1,20 @@
 {
-  "created_at": "2026-05-09T11:46:45.768823+00:00",
+  "created_at": "2026-05-16T10:17:45.183778+00:00",
   "workflow": "insight_authority_post_apply_readback",
   "items": [
     {
       "slug": "illusion_of_swarm",
       "video_id": "q3_gPM4E8yw",
       "url": "https://www.youtube.com/watch?v=q3_gPM4E8yw",
-      "expected_title": "When Teams Split Work Too Early",
-      "actual_title": "When Teams Split Work Too Early",
+      "expected_title": "Boundary First, Then More Workers",
+      "actual_title": "Boundary First, Then More Workers",
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
         "research",
-        "systems",
-        "software"
+        "rootedlayers",
+        "software",
+        "systems"
       ],
       "actual_tags": [
         "research",
@@ -41,14 +41,14 @@
       "slug": "operating_agents_memory",
       "video_id": "J9dz9_9YPQw",
       "url": "https://www.youtube.com/watch?v=J9dz9_9YPQw",
-      "expected_title": "Memory Needs an Owner",
-      "actual_title": "Memory Needs an Owner",
+      "expected_title": "When Memory Has No Owner",
+      "actual_title": "When Memory Has No Owner",
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
-        "research",
         "memory",
+        "research",
+        "rootedlayers",
         "systems"
       ],
       "actual_tags": [
@@ -81,10 +81,10 @@
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
+        "design",
         "research",
-        "systems",
-        "design"
+        "rootedlayers",
+        "systems"
       ],
       "actual_tags": [
         "design",
@@ -116,9 +116,9 @@
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
-        "research",
         "reasoning",
+        "research",
+        "rootedlayers",
         "systems"
       ],
       "actual_tags": [
@@ -146,14 +146,14 @@
       "slug": "operating_agents_optimization",
       "video_id": "n99g7mLWQek",
       "url": "https://www.youtube.com/watch?v=n99g7mLWQek",
-      "expected_title": "The Work Process Is the Product",
-      "actual_title": "The Work Process Is the Product",
+      "expected_title": "Stop Tuning Instructions; Test the Process",
+      "actual_title": "Stop Tuning Instructions; Test the Process",
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
-        "research",
         "evaluation",
+        "research",
+        "rootedlayers",
         "systems"
       ],
       "actual_tags": [
@@ -181,14 +181,14 @@
       "slug": "hardware_friction_map",
       "video_id": "xPLU4cISmxE",
       "url": "https://www.youtube.com/watch?v=xPLU4cISmxE",
-      "expected_title": "Hardware Decides What Ships",
-      "actual_title": "Hardware Decides What Ships",
+      "expected_title": "Hardware Friction Decides What Ships",
+      "actual_title": "Hardware Friction Decides What Ships",
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
-        "research",
         "hardware",
+        "research",
+        "rootedlayers",
         "systems"
       ],
       "actual_tags": [
@@ -216,14 +216,14 @@
       "slug": "what_actually_works_hardware",
       "video_id": "Ju5UJvO4X5k",
       "url": "https://www.youtube.com/watch?v=Ju5UJvO4X5k",
-      "expected_title": "Hardware Filters Progress",
-      "actual_title": "Hardware Filters Progress",
+      "expected_title": "Hardware Fit Filters Progress",
+      "actual_title": "Hardware Fit Filters Progress",
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
-        "research",
         "hardware",
+        "research",
+        "rootedlayers",
         "systems"
       ],
       "actual_tags": [
@@ -256,8 +256,8 @@
       "title_match": true,
       "description_match": true,
       "expected_tags": [
-        "rootedlayers",
         "research",
+        "rootedlayers",
         "specifications",
         "systems"
       ],

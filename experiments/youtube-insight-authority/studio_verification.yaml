@@ -9,14 +9,14 @@ verification:
     and manual Studio checks for Insight Authority interventions. The supported
     apply path is bounded to already-published videos and requires
     scripts/insight_authority_experiment.py --apply --apply-youtube. The live
-    YouTube apply completed on 2026-05-09T11:43:52Z. Final API readback passed
-    all title, description, tag, and comment checks; thumbnails were uploaded;
-    comments were posted; comment pinning is blocked because this workflow has
-    no YouTube Data API pin endpoint.
+    YouTube repair apply completed on 2026-05-16T10:16:40Z. Final API
+    readback passed all title, description, tag, and comment checks; thumbnails
+    were uploaded; existing technical comments were preserved; comment pinning
+    is blocked because this workflow has no YouTube Data API pin endpoint.
 
 apply_verification:
-  applied_at: "2026-05-09T11:43:52Z"
-  final_readback_at: "2026-05-09T11:46:45Z"
+  applied_at: "2026-05-16T10:16:40Z"
+  final_readback_at: "2026-05-16T10:17:45Z"
   mutation_report: experiments/youtube-insight-authority/youtube_mutation_report.json
   final_readback_report: experiments/youtube-insight-authority/youtube_final_readback.json
   item_count: 8
@@ -25,7 +25,7 @@ apply_verification:
   description_checks: passed_all
   tag_checks: passed_all
   thumbnail_uploads: uploaded_all
-  technical_comments: posted_all
+  technical_comments: existing_comments_verified_all
   comment_pin_status: blocked_no_youtube_data_api_pin_endpoint
   manual_studio_surfaces:
     playlist_membership: pending
