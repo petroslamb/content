@@ -29,6 +29,7 @@ from check_workflow_yaml_contracts import (
     REQUIRED_TRACE_ITEMS,
     VALID_GATE_DECISIONS,
     VALID_ENFORCEMENT_POSTURES,
+    VALID_NAMED_SCRIPTABLE_EXECUTORS,
     path_covered,
     validate_workflow_yaml_contracts,
 )
@@ -3941,6 +3942,16 @@ def rendered_step_command(step: dict[str, Any], placeholders: dict[str, Any]) ->
     return render_contract_command(command, placeholders)
 
 
+def named_step_executor(step: dict[str, Any]) -> str | None:
+    executor = step.get("executor")
+    if not isinstance(executor, dict):
+        return None
+    name = executor.get("named")
+    if not isinstance(name, str) or not name:
+        return None
+    return name
+
+
 def declared_rendered_commands(contract: dict[str, Any], placeholders: dict[str, Any]) -> set[str]:
     commands = set()
     tools = contract.get("capabilities", {}).get("tools", [])
@@ -3974,6 +3985,83 @@ def run_scriptable_command(command: str) -> dict[str, Any]:
         "status": "passed" if proc.returncode == 0 else "failed",
         "output_excerpt": output_excerpt(proc.stdout, proc.stderr),
         "output_truncated": len(proc.stdout + proc.stderr) > 6000,
+    }
+
+
+def run_named_scriptable_executor(
+    name: str,
+    step: dict[str, Any],
+    resolved_run: dict[str, Any],
+) -> dict[str, Any]:
+    step_id = str(step.get("id") or "unknown")
+    result: dict[str, Any] = {
+        "command": f"executor.named: {name}",
+        "executor": "named",
+        "executor_name": name,
+        "returncode": None,
+        "output_truncated": False,
+    }
+    if name not in VALID_NAMED_SCRIPTABLE_EXECUTORS:
+        return {
+            **result,
+            "status": "failed",
+            "output_excerpt": f"Unsupported named scriptable executor: {name}",
+        }
+    if name == "content-agent context-admission":
+        context_by_id = {
+            entry.get("id"): entry
+            for entry in resolved_run.get("context_admission", [])
+            if isinstance(entry, dict) and isinstance(entry.get("id"), str)
+        }
+        missing: list[str] = []
+        unresolved_required: list[str] = []
+        consumes = step.get("consumes", [])
+        if isinstance(consumes, list):
+            for item in consumes:
+                if not isinstance(item, str):
+                    continue
+                entry = context_by_id.get(item)
+                if not isinstance(entry, dict):
+                    missing.append(item)
+                    continue
+                if entry.get("required") is True and entry.get("status") != "resolved":
+                    unresolved_required.append(f"{item}:{entry.get('status')}")
+        if missing or unresolved_required:
+            details = []
+            if missing:
+                details.append("missing consumed context ids: " + ", ".join(sorted(missing)))
+            if unresolved_required:
+                details.append("unresolved required context ids: " + ", ".join(sorted(unresolved_required)))
+            return {
+                **result,
+                "status": "failed",
+                "output_excerpt": "; ".join(details),
+            }
+        return {
+            **result,
+            "status": "passed",
+            "output_excerpt": f"Named executor '{name}' admitted context for step '{step_id}'.",
+        }
+    if name == "content-agent run-record":
+        return {
+            **result,
+            "status": "passed",
+            "output_excerpt": "Run record persistence is handled by content-agent after execution.",
+        }
+    if name == "content-agent route archive_sync":
+        return {
+            **result,
+            "status": "deferred",
+            "output_excerpt": "Archive sync is a separate governed workflow; route explicitly instead of running it inline.",
+            "route": {
+                "workflow_id": "archive_sync",
+                "reason": "archive_sync is governed separately",
+            },
+        }
+    return {
+        **result,
+        "status": "failed",
+        "output_excerpt": f"Unhandled named scriptable executor: {name}",
     }
 
 
@@ -4960,18 +5048,28 @@ def execute_resolved_run(
             break
         command = rendered_step_command(step, placeholders)
         if not command:
-            terminal_status = "deferred"
-            stop_reason = f"scriptable step has no runnable command: {step_id}"
-            break
-        if not command_is_covered(command, declared_commands):
-            raise ValueError(f"Scriptable step '{step_id}' uses a command not declared in capabilities.tools.")
-        available, reason = command_availability(command, load_package_scripts())
-        if not available:
-            raise ValueError(f"Scriptable step '{step_id}' command is unavailable: {reason}")
-        result = run_scriptable_command(command)
+            executor_name = named_step_executor(step)
+            if not executor_name:
+                terminal_status = "deferred"
+                stop_reason = f"scriptable step has no runnable command: {step_id}"
+                break
+            result = run_named_scriptable_executor(executor_name, step, resolved_run)
+        else:
+            if not command_is_covered(command, declared_commands):
+                raise ValueError(f"Scriptable step '{step_id}' uses a command not declared in capabilities.tools.")
+            available, reason = command_availability(command, load_package_scripts())
+            if not available:
+                raise ValueError(f"Scriptable step '{step_id}' command is unavailable: {reason}")
+            result = run_scriptable_command(command)
         result["step_id"] = step_id
         command_results.append(result)
         scriptable_count += 1
+        if result["status"] == "deferred":
+            terminal_status = "deferred"
+            stop_reason = f"named scriptable executor deferred at step: {step_id}"
+            if result.get("output_excerpt"):
+                stop_reason = f"{stop_reason} ({result['output_excerpt']})"
+            break
         if result["status"] != "passed":
             terminal_status = "failed"
             stop_reason = f"scriptable step failed: {step_id}"

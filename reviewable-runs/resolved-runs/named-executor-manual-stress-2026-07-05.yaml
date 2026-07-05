@@ -1,0 +1,375 @@
+kind: resolved_run
+schema_version: 1
+run_id: named-executor-manual-stress-2026-07-05
+package:
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and
+  status_path: publications/evidence-governance/your-ai-is-confidently-wrong-and/status.yaml
+  status_hash: sha256:369e626a4d459cf8f25d260dd47d796183022096490a06a680b6e9a29627932e
+workflow:
+  workflow_id: reddit_discussion_lab
+  workflow_version: 1
+  workflow_hash: sha256:6f1e37b911d6ba4fbf9ff429826e6b0b93ef1935e038eb18bc89f5e8bca63980
+  contract_path: workflows/reddit-discussion-lab/workflow.yaml
+run_mode: governed_continuous
+runtime_inputs: {}
+route:
+  package_kind: leaf
+  pipeline_profile: article_default
+  current_stage: essay_iteration
+  workflow_stage: null
+  resolved_from:
+  - publications/evidence-governance/your-ai-is-confidently-wrong-and/status.yaml
+  - workflows/reddit-discussion-lab/workflow.yaml
+  - harness_policy.yaml
+  - gate_contracts.yaml
+  - pipeline_profiles.yaml
+context_admission:
+- id: package_status
+  required: true
+  status: resolved
+  paths:
+  - publications/evidence-governance/your-ai-is-confidently-wrong-and/status.yaml
+  hashes:
+    publications/evidence-governance/your-ai-is-confidently-wrong-and/status.yaml:
+      type: file_sha256
+      sha256: 369e626a4d459cf8f25d260dd47d796183022096490a06a680b6e9a29627932e
+      size_bytes: 1179
+- id: package_readme
+  required: true
+  status: resolved
+  paths:
+  - publications/evidence-governance/your-ai-is-confidently-wrong-and/README.md
+  hashes:
+    publications/evidence-governance/your-ai-is-confidently-wrong-and/README.md:
+      type: file_sha256
+      sha256: a55cf9c78800afaaf0e13601975e3c3cef4da3bc4d4951f8f50821ef777f9014
+      size_bytes: 2710
+- id: source_essay_candidate_or_live_draft
+  required: true
+  status: resolved
+  paths:
+  - publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md
+  hashes:
+    publications/evidence-governance/your-ai-is-confidently-wrong-and/your-ai-is-confidently-wrong-and.md:
+      type: file_sha256
+      sha256: d5e3974232e12c3c53ecce669e2a899d9a61094ab6882fbe888adf17708a83e8
+      size_bytes: 7995
+- id: existing_distribution_or_reddit_ledger
+  required: false
+  status: resolved
+  paths:
+  - publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  hashes:
+    publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md:
+      type: file_sha256
+      sha256: a031699a59f233f5ef8136948994eef490f9f03a1132460d20a3a15d24e9b020
+      size_bytes: 9161
+- id: workflow_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/reddit-discussion-lab/README.md
+  hashes:
+    workflows/reddit-discussion-lab/README.md:
+      type: file_sha256
+      sha256: 3034290187bedd183403053596644c912a578e2dbdb36115826197339dab3ba9
+      size_bytes: 7360
+- id: workflow_examples
+  required: true
+  status: resolved
+  paths:
+  - workflows/reddit-discussion-lab/examples.md
+  hashes:
+    workflows/reddit-discussion-lab/examples.md:
+      type: file_sha256
+      sha256: ad99761c6211e90c77f1f6ceafbac342204be79c9e6f43fdd9d37ac9e600c2cd
+      size_bytes: 4918
+- id: workflow_seed_bank
+  required: true
+  status: resolved
+  paths:
+  - workflows/reddit-discussion-lab/seed-bank.md
+  hashes:
+    workflows/reddit-discussion-lab/seed-bank.md:
+      type: file_sha256
+      sha256: ad5754284f8375ff1458e7850240cf8159287d7e327296c0177a575f8380fcf9
+      size_bytes: 3998
+- id: workflow_templates
+  required: true
+  status: resolved
+  paths:
+  - workflows/reddit-discussion-lab/templates
+  hashes:
+    workflows/reddit-discussion-lab/templates:
+      type: directory_listing_sha256
+      sha256: 8553445ae467dd4611a1d0421e1d7a50558ee1451f2a17c46975c6c77262b4a3
+      file_count: 1
+- id: reddit_native_distribution_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/distribution/reddit-native-distribution.md
+  hashes:
+    workflows/distribution/reddit-native-distribution.md:
+      type: file_sha256
+      sha256: a7df538f90af71353b7ef3a4bb1d37f63504c1706bac94336c6a750d702b27a4
+      size_bytes: 7099
+- id: distribution_readme
+  required: true
+  status: resolved
+  paths:
+  - workflows/distribution/README.md
+  hashes:
+    workflows/distribution/README.md:
+      type: file_sha256
+      sha256: e2bf1f6d5a73d3e5eee37474e70519a4a14768f64520281a690908a93c23fa4f
+      size_bytes: 7897
+- id: harness_policy
+  required: true
+  status: resolved
+  paths:
+  - harness_policy.yaml
+  hashes:
+    harness_policy.yaml:
+      type: file_sha256
+      sha256: 00d8450e93dd96d78929a4d8af58a97e806c6312699f6b5045402f994bcdd7f6
+      size_bytes: 4858
+- id: gate_contracts
+  required: true
+  status: resolved
+  paths:
+  - gate_contracts.yaml
+  hashes:
+    gate_contracts.yaml:
+      type: file_sha256
+      sha256: 8011e366e0d7bef339b08909c5f7ebea0a7f150b5d05c5a9f189c6b2fbb956fa
+      size_bytes: 4848
+policy_resolution:
+  allowed_tools:
+  - id: reddit_discussion_lab_validation
+    command: ./content-agent validate --workflow reddit_discussion_lab --package evidence-governance/your-ai-is-confidently-wrong-and
+    required: false
+  - id: repo_link_check
+    command: npm run check:repo-links
+    required: false
+  - id: release_readiness_gate_check
+    command: ./content-agent gate check --gate release_readiness --package evidence-governance/your-ai-is-confidently-wrong-and
+    required: false
+  allowed_capabilities:
+  - contract_validation
+  - context_admission
+  - scriptable_step_execution
+  - gate_stop
+  - agent_contract_request_writing
+  - subagent_result_validation
+  - integration_decision_validation
+  - run_record_writing
+  allowed_paths:
+    read:
+    - publications/evidence-governance/your-ai-is-confidently-wrong-and/
+    - workflows/reddit-discussion-lab/
+    - workflows/distribution/
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - package.json
+    - scripts/
+    - reviewable-runs/
+    write:
+    - publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+  codex_session_handoff:
+    requested_mode: defer_to_subagent
+    supported_modes:
+    - default
+    - defer_to_subagent
+    - policy
+    - same_session
+    effective_modes:
+    - defer_to_subagent
+    - same_session
+    fallback_default_mode: defer_to_subagent
+    policy_default_mode: defer_to_subagent
+    workflow_default_mode: null
+    effective_default_mode: defer_to_subagent
+    policy_config_present: true
+    steps:
+      create_or_update_reddit_discussion_lab_tracker:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      record_examples_and_borrowed_mechanics:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      mine_essay_for_reddit_native_problem_shapes:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      draft_and_score_discussion_seeds:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      record_post_comment_hold_or_skip_decision:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+      record_reddit_outcome_readback:
+        mode: defer_to_subagent
+        source: cli
+        explicit_agent_contract: false
+selected_steps:
+- id: resolve_discussion_context
+  mode: scriptable
+- id: create_or_update_reddit_discussion_lab_tracker
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: record_examples_and_borrowed_mechanics
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: mine_essay_for_reddit_native_problem_shapes
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: draft_and_score_discussion_seeds
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: record_post_comment_hold_or_skip_decision
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: stop_for_external_posting_approval
+  mode: external_mutation_gated
+  gate_id: release_readiness
+- id: record_reddit_outcome_readback
+  mode: codex_session
+  codex_session_handoff_mode: defer_to_subagent
+  codex_session_handoff_source: cli
+- id: record_handoff
+  mode: scriptable
+selected_gates:
+- id: release_readiness
+  contract: release_readiness
+  type: external_mutation
+  required: conditional
+  status: declared
+behavior:
+  budgets:
+    max_steps: 8
+    max_script_retries: 1
+    min_title_candidates: 5
+    min_scored_drafts: 3
+    external_mutations: 0
+    unapproved_external_posts: 0
+    unapproved_votes: 0
+  recovery:
+    on_missing_source_essay: stop_and_route_to_package_readme_or_essay_iteration
+    on_no_failure_scene: revise_seed_or_hold_instead_of_posting_thesis_title
+    on_low_score: use_as_comment_or_hold
+    on_recent_reddit_moderation_risk: switch_to_comment_first_or_draft_hold
+    on_external_posting_not_approved: record_local_plan_and_defer
+    on_composer_verification_failure: record_prepared_copy_and_hold_submission
+    on_live_reply: record_reply_signal_before_drafting_follow_up
+    resume_from: resolved_run
+    rollback_strategy: preserve_local_tracker_and_record_no_external_mutation
+  policy_run_modes:
+  - exploratory
+  - governed_continuous
+output_targets:
+- id: resolved_run
+  path: reviewable-runs/resolved-runs/named-executor-manual-stress-2026-07-05.yaml
+- id: run_record
+  path: reviewable-runs/logs/named-executor-manual-stress-2026-07-05.yaml
+- id: reddit_discussion_lab_tracker
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  required: true
+  format: markdown
+- id: example_mechanics_analysis
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  required: true
+  format: markdown
+- id: post_idea_inventory
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  required: true
+  format: markdown
+- id: tone_and_engagement_mechanics_analysis
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  required: true
+  format: markdown
+- id: scored_native_post_drafts
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  required: true
+  format: markdown
+- id: posting_decision
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  required: true
+  format: markdown
+- id: external_posting_gate
+  path: reviewable-runs/gates/named-executor-manual-stress-2026-07-05-reddit-discussion-posting.yaml
+  required: conditional
+  format: yaml
+- id: outcome_readback
+  path: publications/evidence-governance/your-ai-is-confidently-wrong-and/distribution/reddit-discussion-lab.md
+  required: conditional
+  format: markdown
+- id: review_gate:release_readiness
+  path: reviewable-runs/gates/gate-named-executor-manual-stress-2026-07-05-release-readiness.yaml
+  required: conditional
+- id: subagent_request:create_or_update_reddit_discussion_lab_tracker
+  path: reviewable-runs/subagent-requests/request-named-executor-manual-stress-2026-07-05-create-or-update-reddit-discussion-lab-tracker.yaml
+  required: true
+- id: subagent_result:create_or_update_reddit_discussion_lab_tracker
+  path: reviewable-runs/subagent-results/result-named-executor-manual-stress-2026-07-05-create-or-update-reddit-discussion-lab-tracker.md
+  required: true
+- id: integration_decision:create_or_update_reddit_discussion_lab_tracker
+  path: reviewable-runs/integration-decisions/decision-named-executor-manual-stress-2026-07-05-create-or-update-reddit-discussion-lab-tracker.yaml
+  required: true
+- id: subagent_request:record_examples_and_borrowed_mechanics
+  path: reviewable-runs/subagent-requests/request-named-executor-manual-stress-2026-07-05-record-examples-and-borrowed-mechanics.yaml
+  required: true
+- id: subagent_result:record_examples_and_borrowed_mechanics
+  path: reviewable-runs/subagent-results/result-named-executor-manual-stress-2026-07-05-record-examples-and-borrowed-mechanics.md
+  required: true
+- id: integration_decision:record_examples_and_borrowed_mechanics
+  path: reviewable-runs/integration-decisions/decision-named-executor-manual-stress-2026-07-05-record-examples-and-borrowed-mechanics.yaml
+  required: true
+- id: subagent_request:mine_essay_for_reddit_native_problem_shapes
+  path: reviewable-runs/subagent-requests/request-named-executor-manual-stress-2026-07-05-mine-essay-for-reddit-native-problem-shapes.yaml
+  required: true
+- id: subagent_result:mine_essay_for_reddit_native_problem_shapes
+  path: reviewable-runs/subagent-results/result-named-executor-manual-stress-2026-07-05-mine-essay-for-reddit-native-problem-shapes.md
+  required: true
+- id: integration_decision:mine_essay_for_reddit_native_problem_shapes
+  path: reviewable-runs/integration-decisions/decision-named-executor-manual-stress-2026-07-05-mine-essay-for-reddit-native-problem-shapes.yaml
+  required: true
+- id: subagent_request:draft_and_score_discussion_seeds
+  path: reviewable-runs/subagent-requests/request-named-executor-manual-stress-2026-07-05-draft-and-score-discussion-seeds.yaml
+  required: true
+- id: subagent_result:draft_and_score_discussion_seeds
+  path: reviewable-runs/subagent-results/result-named-executor-manual-stress-2026-07-05-draft-and-score-discussion-seeds.md
+  required: true
+- id: integration_decision:draft_and_score_discussion_seeds
+  path: reviewable-runs/integration-decisions/decision-named-executor-manual-stress-2026-07-05-draft-and-score-discussion-seeds.yaml
+  required: true
+- id: subagent_request:record_post_comment_hold_or_skip_decision
+  path: reviewable-runs/subagent-requests/request-named-executor-manual-stress-2026-07-05-record-post-comment-hold-or-skip-decision.yaml
+  required: true
+- id: subagent_result:record_post_comment_hold_or_skip_decision
+  path: reviewable-runs/subagent-results/result-named-executor-manual-stress-2026-07-05-record-post-comment-hold-or-skip-decision.md
+  required: true
+- id: integration_decision:record_post_comment_hold_or_skip_decision
+  path: reviewable-runs/integration-decisions/decision-named-executor-manual-stress-2026-07-05-record-post-comment-hold-or-skip-decision.yaml
+  required: true
+- id: subagent_request:record_reddit_outcome_readback
+  path: reviewable-runs/subagent-requests/request-named-executor-manual-stress-2026-07-05-record-reddit-outcome-readback.yaml
+  required: true
+- id: subagent_result:record_reddit_outcome_readback
+  path: reviewable-runs/subagent-results/result-named-executor-manual-stress-2026-07-05-record-reddit-outcome-readback.md
+  required: true
+- id: integration_decision:record_reddit_outcome_readback
+  path: reviewable-runs/integration-decisions/decision-named-executor-manual-stress-2026-07-05-record-reddit-outcome-readback.yaml
+  required: true

@@ -45,6 +45,11 @@ VALID_STEP_MODES = {
     "review_gated",
     "external_mutation_gated",
 }
+VALID_NAMED_SCRIPTABLE_EXECUTORS = {
+    "content-agent context-admission",
+    "content-agent route archive_sync",
+    "content-agent run-record",
+}
 VALID_ENFORCEMENT_POSTURES = {"deny", "detect", "record"}
 VALID_GATE_DECISIONS = {"approve", "reject", "defer"}
 POSTURE_STRENGTH = {
@@ -669,6 +674,15 @@ def validate_contract(path: Path, gate_contract_ids: set[str], policy_enforcemen
             executor = step.get("executor")
             if not isinstance(executor, dict) or not (executor.get("command") or executor.get("named")):
                 errors.append(f"{repo_relpath(path)}: scriptable step '{step_id}' must define executor.command or executor.named.")
+            elif executor.get("named") is not None:
+                named_executor = executor.get("named")
+                if not isinstance(named_executor, str) or not named_executor:
+                    errors.append(f"{repo_relpath(path)}: scriptable step '{step_id}' executor.named must be a non-empty string.")
+                elif named_executor not in VALID_NAMED_SCRIPTABLE_EXECUTORS:
+                    errors.append(
+                        f"{repo_relpath(path)}: scriptable step '{step_id}' executor.named "
+                        f"'{named_executor}' must be one of {sorted(VALID_NAMED_SCRIPTABLE_EXECUTORS)}."
+                    )
         elif not isinstance(step.get("action"), str) or not step.get("action"):
             errors.append(f"{repo_relpath(path)}: non-scriptable step '{step_id}' must define action.")
 
