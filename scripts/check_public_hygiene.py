@@ -124,7 +124,7 @@ def path_reason(path: str) -> str | None:
         return "YouTube insight authority execution state belongs in the private overlay"
     if lower.startswith("experiments/youtube-insight-authority/") and name.startswith("draft_repair_packets_"):
         return "YouTube insight authority draft repair state belongs in the private overlay"
-    if lower.startswith("publications/") and (
+    if (
         name in {"linkedin-outreach-tracker.md", "expert-feedback-outreach.md", "outreach_candidates_top20.md", "cold_outreach_email.md"}
         or "/promoting_ideas/outreach" in lower
         or "/promoting_ideas/cold_outreach" in lower
