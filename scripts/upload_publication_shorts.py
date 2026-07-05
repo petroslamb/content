@@ -2,6 +2,7 @@
 """
 Upload publication Shorts from a package portrait folder, add them to a target
 playlist, and set the related full-video reference when possible.
+Upload reports are written to the private overlay by default.
 
 Run from project root:
   .venv/bin/python scripts/upload_publication_shorts.py \
@@ -26,6 +27,7 @@ from typing import Any
 
 import yaml
 
+from private_registry import private_dir
 from probe_shorts_media import probe_files
 
 # Add the youtube skill scripts directory to path.
@@ -48,7 +50,7 @@ def normalize_title(title: str) -> str:
 
 
 def default_report_path(package: str) -> Path:
-    return Path("publications") / package / "artifacts" / "video" / "shorts" / "shorts_upload_report.json"
+    return private_dir() / "youtube" / "generated" / package / "artifacts" / "video" / "shorts" / "shorts_upload_report.json"
 
 
 def readback_videos(youtube: Any, video_ids: list[str]) -> dict[str, dict[str, Any]]:
@@ -351,7 +353,7 @@ def parse_args() -> argparse.Namespace:
         help="Optional manifest clip slug to include. Repeat to upload only a selected subset from the manifest.",
     )
     parser.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"], help="Privacy status (default: public)")
-    parser.add_argument("--report-file", type=Path, help="Where to write the upload report. Defaults to the package shorts folder.")
+    parser.add_argument("--report-file", type=Path, help="Where to write the upload report. Defaults to .private/youtube/generated/<package>/artifacts/video/shorts/.")
     parser.add_argument("--skip-probe", action="store_true", help="Skip local 1080x1920/audio/duration preflight checks.")
     parser.add_argument("--max-duration", type=float, default=180.0, help="Maximum allowed local clip duration in seconds.")
     parser.add_argument("--apply", action="store_true", help="Upload and mutate YouTube state. Without this, print the plan only.")
@@ -446,9 +448,7 @@ def main() -> None:
     print(f"Found {len(planned_items)} short(s) to upload")
     print(f"Target playlist: {args.playlist_id}")
     print(f"Related full video: https://www.youtube.com/watch?v={args.main_video_id}")
-    report_path = args.report_file or (
-        shorts_dir.parent / "shorts_upload_report.json" if args.shorts_dir else default_report_path(args.package)
-    )
+    report_path = args.report_file or default_report_path(args.package)
     print(f"Upload report: {report_path}")
 
     if not args.apply:

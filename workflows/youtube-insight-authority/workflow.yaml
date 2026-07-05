@@ -90,9 +90,9 @@ context_dependencies:
     record_hash: true
   - id: cadence_records
     fallback:
-      - experiments/youtube-cinematic-rollout/backlog_manifest.yaml
-      - experiments/youtube-cinematic-pilot/release_calendar.yaml
-      - experiments/youtube-analytics/metrics_ledger.json
+      - .private/youtube/cinematic-rollout/backlog_manifest.yaml
+      - .private/youtube/cinematic-pilot/release_calendar.yaml
+      - .private/youtube/youtube-analytics/metrics_ledger.json
       - publications/{package}/artifacts/video/
     required: false
     purpose: Determine whether the planned upload, Short, retitle, thumbnail swap, or remaster fits the current channel cadence.
@@ -177,6 +177,7 @@ allowed_paths:
     - experiments/youtube-cinematic-rollout/
     - experiments/youtube-cinematic-pilot
     - experiments/youtube-cinematic-pilot/
+    - .private/youtube/
     - experiments/youtube-reference-comments
     - experiments/youtube-reference-comments/
     - workflows/youtube-insight-authority/

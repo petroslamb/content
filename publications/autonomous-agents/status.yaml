@@ -32,22 +32,16 @@ stages:
 config:
   default_leaf_package: autonomous-agents/the-agent-revolution
   leaf_packages:
-    - autonomous-agents/the-agent-revolution
+  - autonomous-agents/the-agent-revolution
   markdown_path: publications/autonomous-agents/the-agent-revolution/the-agent-revolution.md
   blueprint_path: umbrella-governing-brief.md
   evidence_path: publications/autonomous-agents/reference/papers
   shared_evidence_path: publications/autonomous-agents/reference/papers
   substack_slug: the-agent-revolution
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
   notebooklm_notebook_title: Advances and Challenges in Foundation Agents
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
   notebooklm_related_notebooks:
-    - id: 34e53c59-1823-4175-8475-0f555a38a194
-      title: "The Agent Revolution: Reasoning, Collaboration, and Autonomy"
-      url: https://notebooklm.google.com/notebook/REDACTED
-      reason: Earlier agent-revolution notebook with adjacent source material.
-    - id: 90a4bd21-7d2b-4134-af22-108f81fea272
-      title: Architecting Level 3 Autonomous Enterprise Agent Systems
-      url: https://notebooklm.google.com/notebook/REDACTED
-      reason: Related enterprise-agent autonomy notebook.
+  - title: 'The Agent Revolution: Reasoning, Collaboration, and Autonomy'
+    reason: Earlier agent-revolution notebook with adjacent source material.
+  - title: Architecting Level 3 Autonomous Enterprise Agent Systems
+    reason: Related enterprise-agent autonomy notebook.

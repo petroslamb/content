@@ -8,9 +8,7 @@ config:
   substack_slug: measuring-trust-the-gap-between-ai
   substack_url: https://lambpetros.substack.com
   evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "Measuring Trust: The Gap Between AI Auditing and Correctness"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'Measuring Trust: The Gap Between AI Auditing and Correctness'
 stages:
   paper_intake:
     done: true

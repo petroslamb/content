@@ -2,10 +2,10 @@
 """
 Validate NotebookLM notebook mappings for publication packages.
 
-The registry is intentionally split across package status.yaml files so the
-notebook pointer travels with the publication lifecycle manifest. This check
-walks post_map.yaml and verifies that each publication entry has either a
-NotebookLM mapping or an explicit no-notebook note.
+The public repository stores non-sensitive NotebookLM titles in package
+status.yaml files. Restricted notebook IDs and owner URLs live in the private
+overlay at CONTENT_PRIVATE_DIR/notebooklm_registry.yaml, defaulting to the
+ignored `.private/notebooklm_registry.yaml`.
 """
 
 from __future__ import annotations
@@ -19,11 +19,11 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from private_registry import NOTEBOOK_URL_PREFIX, load_notebook_registry, resolve_notebooks_for_status
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 POST_MAP_PATH = REPO_ROOT / "publication_strategy_and_archive" / "post_map.yaml"
-NOTEBOOK_URL_PREFIX = "https://notebooklm.google.com/notebook/"
 UUID_PATTERN = re.compile(
     r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
 )
@@ -40,7 +40,7 @@ def notebook_url(notebook_id: str) -> str:
     return f"{NOTEBOOK_URL_PREFIX}{notebook_id}"
 
 
-def collect_notebooks_from_status(status_data: dict[str, Any], slug: str) -> tuple[list[dict[str, Any]], str | None]:
+def collect_public_notebooks_from_status(status_data: dict[str, Any], slug: str) -> tuple[list[dict[str, Any]], str | None]:
     config = status_data.get("config") or {}
     if not isinstance(config, dict):
         return [], "status.yaml config is not a mapping"
@@ -55,32 +55,34 @@ def collect_notebooks_from_status(status_data: dict[str, Any], slug: str) -> tup
         notebooks: list[dict[str, Any]] = []
         primary = entry.get("primary")
         if primary:
-            notebooks.append({**primary, "role": "primary"})
+            notebooks.append({"title": primary.get("title", ""), "role": "primary"})
         for related in entry.get("related") or []:
-            notebooks.append({**related, "role": "related"})
+            notebooks.append({"title": related.get("title", ""), "role": "related"})
         return notebooks, None
 
     if config.get("no_notebook_found"):
         return [], None
 
-    primary_id = config.get("notebooklm_notebook_id")
-    if not primary_id:
-        return [], "missing config.notebooklm_notebook_id or no_notebook_found"
+    primary_title = config.get("notebooklm_notebook_title")
+    if not primary_title:
+        return [], "missing config.notebooklm_notebook_title or no_notebook_found"
 
-    notebooks = [
-        {
-            "id": str(primary_id),
-            "title": config.get("notebooklm_notebook_title", ""),
-            "url": config.get("notebooklm_notebook_url", ""),
-            "role": "primary",
-        }
-    ]
+    notebooks = [{"title": str(primary_title), "role": "primary"}]
     for related in config.get("notebooklm_related_notebooks") or []:
-        notebooks.append({**related, "role": "related"})
+        notebooks.append({"title": related.get("title", ""), "role": "related"})
     return notebooks, None
 
 
-def validate_notebook_entry(notebook: dict[str, Any], context: str) -> list[str]:
+def validate_public_notebook_entry(notebook: dict[str, Any], context: str) -> list[str]:
+    errors: list[str] = []
+    if notebook.get("id") or notebook.get("url"):
+        errors.append(f"{context}: public status must not track restricted NotebookLM id/url")
+    if not str(notebook.get("title", "")).strip():
+        errors.append(f"{context}: missing title")
+    return errors
+
+
+def validate_private_notebook_entry(notebook: dict[str, Any], context: str) -> list[str]:
     errors: list[str] = []
     notebook_id = str(notebook.get("id", "")).strip()
     url = str(notebook.get("url", "")).strip()
@@ -141,8 +143,11 @@ def main() -> int:
     args = parser.parse_args()
 
     post_map = load_yaml(POST_MAP_PATH).get("posts") or {}
+    private_registry = load_notebook_registry(required=args.live)
+    has_private_registry = bool(private_registry)
     errors: list[str] = []
     notebook_ids: set[str] = set()
+    public_notebook_count = 0
 
     for slug, entry in post_map.items():
         context = f"post_map.yaml:{slug}"
@@ -162,7 +167,7 @@ def main() -> int:
             continue
 
         status_data = load_yaml(status_path)
-        notebooks, error = collect_notebooks_from_status(status_data, slug)
+        notebooks, error = collect_public_notebooks_from_status(status_data, slug)
         if error:
             errors.append(f"{context}: {error}")
             continue
@@ -170,9 +175,19 @@ def main() -> int:
         for notebook in notebooks:
             role = notebook.get("role", "notebook")
             nb_context = f"{context}:{role}"
-            errors.extend(validate_notebook_entry(notebook, nb_context))
-            if notebook.get("id"):
-                notebook_ids.add(str(notebook["id"]))
+            errors.extend(validate_public_notebook_entry(notebook, nb_context))
+            public_notebook_count += 1
+
+        private_notebooks = resolve_notebooks_for_status(status_path, status_data=status_data, slug=slug)
+        if has_private_registry:
+            if notebooks and not private_notebooks:
+                errors.append(f"{context}: missing private NotebookLM registry entry")
+            for notebook in private_notebooks:
+                role = notebook.get("role", "notebook")
+                nb_context = f"{context}:private:{role}"
+                errors.extend(validate_private_notebook_entry(notebook, nb_context))
+                if notebook.get("id"):
+                    notebook_ids.add(str(notebook["id"]))
 
     if args.live and notebook_ids:
         errors.extend(validate_live(notebook_ids))
@@ -182,8 +197,12 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
+    private_suffix = f", {len(notebook_ids)} private notebook IDs" if has_private_registry else ", private registry not present"
     live_suffix = " with live NotebookLM resolution" if args.live else ""
-    print(f"NotebookLM registry OK: {len(post_map)} post_map entries, {len(notebook_ids)} notebook IDs{live_suffix}.")
+    print(
+        f"NotebookLM registry OK: {len(post_map)} post_map entries, "
+        f"{public_notebook_count} public notebook titles{private_suffix}{live_suffix}."
+    )
     return 0
 
 

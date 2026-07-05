@@ -8,9 +8,7 @@ config:
   evidence_path: publications/literate-workflow-programming/papers
   shared_evidence_path: publications/literate-workflow-programming/papers
   blueprint_path: research-handoff.md
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
   notebooklm_notebook_title: The Specification Surface Is the New Source of Truth
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
   notebooklm_related_notebooks: []
   substack_url: https://lambpetros.substack.com
   substack_post_id: 196091276

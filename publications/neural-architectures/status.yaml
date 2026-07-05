@@ -4,7 +4,7 @@ revision: 1
 config:
   default_leaf_package: neural-architectures/neural-architecture-design-as-a-compositional-32e
   leaf_packages:
-    - neural-architectures/neural-architecture-design-as-a-compositional-32e
+  - neural-architectures/neural-architecture-design-as-a-compositional-32e
   blueprint_path: umbrella-governing-brief.md
   markdown_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
   artifacts_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts
@@ -13,19 +13,15 @@ config:
   notebooklm_posts:
     the-transformer-attractor:
       primary:
-        id: ece2cbca-3a4a-4d6c-864e-20a33cdb9b93
-        title: "The Transformer Attractor: Architecture Lock-in and Hardware Determinism"
-        url: https://notebooklm.google.com/notebook/REDACTED
-        reason: Matched by Transformer Attractor source title and full audio, slide, and video artifact set.
+        title: 'The Transformer Attractor: Architecture Lock-in and Hardware Determinism'
+        reason: Matched by Transformer Attractor source title and full audio, slide,
+          and video artifact set.
       related:
-        - id: 3db06fb5-3d57-4047-bd14-747009a5de53
-          title: "The Transformer Attractor: Architecture Lock-in and the GPU Moat"
-          url: https://notebooklm.google.com/notebook/REDACTED
-          reason: Earlier full artifact notebook for the same publication line.
-        - id: b2ae6da9-543f-4c5b-83db-823843c7c136
-          title: "The Transformer Attractor: Functional Necessity and Architectural Convergence"
-          url: https://notebooklm.google.com/notebook/REDACTED
-          reason: Related later notebook with partial audio artifact.
+      - title: 'The Transformer Attractor: Architecture Lock-in and the GPU Moat'
+        reason: Earlier full artifact notebook for the same publication line.
+      - title: 'The Transformer Attractor: Functional Necessity and Architectural
+          Convergence'
+        reason: Related later notebook with partial audio artifact.
 stages:
   paper_intake:
     done: true

@@ -286,7 +286,7 @@ def resolve_reference_surface(package_path: Path, status_data: dict) -> Path | N
 
 
 def resolve_notebook_identifier(status_data: dict) -> str | None:
-    for key in ["notebooklm_notebook_id", "notebooklm_notebook_title", "notebook_title"]:
+    for key in ["notebooklm_notebook_title", "notebook_title"]:
         value = resolve_config_value(status_data, key)
         if isinstance(value, (str, int)) and str(value).strip():
             return str(value)

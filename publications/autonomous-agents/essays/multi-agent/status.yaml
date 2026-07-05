@@ -6,9 +6,7 @@ config:
   markdown_path: publications/autonomous-agents/essays/multi-agent/04-multi-agent-boundaries-and-handoffs.md
   substack_slug: operating-agents-iv-the-second-agent
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "Chapter 14 Blueprint: Multi-Agent Design"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'Chapter 14 Blueprint: Multi-Agent Design'
 stages:
   paper_intake:
     done: true

@@ -15,9 +15,9 @@
 | Substack post | Live, rhythm-repaired, and reference-formatted | Public readback contains `questions that should have been settled upstream return as archaeology`, `(Piskala, 2026)`, linked arXiv references, and h4-rendered source headings. |
 | Archive sync | Complete | `publication_strategy_and_archive/substack_archive/2026-05-01_the-specification-surface-is-the.md` and `.html`; latest summary `reviewable-runs/logs/2026-05-04_specification-surface-reference-format-substack-sync-summary.json`. |
 | Mirror validation | Passed | `npm run check:mirror` smoke-tested `/posts/the-specification-surface-is-the/`. |
-| YouTube longform | Public | `https://www.youtube.com/watch?v=I6gKAyYRfZU`; report `artifacts/video/specification_surface_youtube_bundle_report.json`. |
-| YouTube TL;DR | Public | `https://www.youtube.com/watch?v=FM3ex8zl-PY`; report `artifacts/video/specification_surface_youtube_bundle_report.json`. |
-| YouTube cinematic | Public | `https://www.youtube.com/watch?v=slozjRp6CPg`; report `artifacts/video/specification_surface_cinematic_upload_report.json`. |
+| YouTube longform | Public | `https://www.youtube.com/watch?v=I6gKAyYRfZU`; operational report moved to private overlay. |
+| YouTube TL;DR | Public | `https://www.youtube.com/watch?v=FM3ex8zl-PY`; operational report moved to private overlay. |
+| YouTube cinematic | Public | `https://www.youtube.com/watch?v=slozjRp6CPg`; operational report moved to private overlay. |
 | Short 1 | Scheduled | `https://www.youtube.com/watch?v=zVpYYDyAZR4`, 2026-05-06 06:00 UTC. |
 | Short 2 | Scheduled | `https://www.youtube.com/watch?v=PgLO1eGJRi0`, 2026-05-06 07:30 UTC. |
 | Short 3 | Scheduled | `https://www.youtube.com/watch?v=qSImlEg0U3U`, 2026-05-07 06:00 UTC. |

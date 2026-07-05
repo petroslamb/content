@@ -6,9 +6,7 @@ config:
   markdown_path: publications/autonomous-agents/essays/safety/05-trust-boundaries-and-agent-safety.md
   substack_slug: operating-agents-v-the-attack-surface
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "Chapters 17, 18, and 19 Blueprint: Safety"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'Chapters 17, 18, and 19 Blueprint: Safety'
 stages:
   paper_intake:
     done: true

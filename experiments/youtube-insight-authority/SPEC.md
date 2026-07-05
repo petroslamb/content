@@ -4,7 +4,7 @@
 
 - Experiment id: `insight_authority_cinematic`
 - State workspace: `experiments/youtube-insight-authority/`
-- Analytics registry entry: `experiments/youtube-analytics/experiment_registry.yaml`
+- Analytics registry entry: private overlay analytics registry
 - Created: 2026-05-09
 - Current posture: live YouTube repair apply completed; post-repair monitoring
 - Live apply completed: `2026-05-09T11:43:52Z`
@@ -15,16 +15,10 @@
 
 ## Source Of Truth
 
-The experiment source of truth is this folder:
+The public source of truth is this spec plus the non-sensitive rubric. Private cohort, mutation, readback, ledger, and analytics state lives under `CONTENT_PRIVATE_DIR/youtube/`, defaulting to `.private/youtube/`.
 
-- `manifest.yaml`: experiment metadata, state pointers, mutation boundary, and dashboard registration intent
 - `authority_packets.yaml`: apply-mode packet contract and applied packet record
-- `cohort.yaml`: canonical initial cohort, inclusion rationale, YouTube ids, and local evidence paths
 - `evaluation_rubric.yaml`: manual and analytics scoring rules
-- `studio_verification.yaml`: Studio/API verification checklist, mutation readback expectations, and apply readback state
-- `release_ledger.md`: experiment state changes and review notes
-- `youtube_mutation_report.json`: bounded live YouTube mutation report
-- `youtube_final_readback.json`: post-apply API readback for title, description, tags, thumbnail URL, and technical comments
 
 The analytics registry is only the dashboard index. It should mirror the cohort video ids, but it does not own cohort rationale or operational state.
 
@@ -117,8 +111,8 @@ Allowed live mutations:
 - preserve `categoryId`, `defaultLanguage`, and `defaultAudioLanguage`
 - upload the generated PNG thumbnail
 - post the top-level technical provocation comment
-- read back video state and write `youtube_mutation_report.json`
-- write final post-apply verification to `youtube_final_readback.json`
+- read back video state and write private mutation/readback reports under the private overlay
+- write final post-apply verification under the private overlay
 
 Explicitly out of scope:
 
@@ -215,10 +209,10 @@ Top-level technical comments were posted for all eight cohort videos during the 
 
 ## Studio Verification
 
-API verification artifacts:
+API verification artifacts are private operational state:
 
-- `youtube_mutation_report.json` reports `applied: true`, `youtube_mutations: true`, eight applied items, eight uploaded thumbnails, and eight posted comments.
-- `youtube_final_readback.json` passed title, description, tag, and technical comment checks for all eight videos.
+- The private mutation report recorded `applied: true`, `youtube_mutations: true`, eight applied items, eight uploaded thumbnails, and eight posted comments.
+- The private final readback passed title, description, tag, and technical comment checks for all eight videos.
 - Final readback found each video public and processed.
 - Final readback found maxres thumbnail URLs for all eight videos.
 - Comment pinning remains blocked by the YouTube Data API limitation.

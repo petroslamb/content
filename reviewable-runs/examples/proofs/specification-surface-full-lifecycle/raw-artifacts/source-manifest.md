@@ -31,16 +31,13 @@ This proof packet uses tracked repo evidence only. Local Codex session dumps and
 
 - [`../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md)
 - [`../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-log-r3.md`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-log-r3.md)
-- [`../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_youtube_bundle_report.json`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_youtube_bundle_report.json)
-- [`../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic_upload_report.json`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic_upload_report.json)
 - [`../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/reddit-experiment-ledger.md`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/reddit-experiment-ledger.md)
+
+YouTube upload/readback reports for this proof packet are private operational state and were moved to the private overlay.
 
 ## Phase 2 Runtime Evidence
 
-- [`../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml`](../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
-- [`../../../../../reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml`](../../../../../reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
-- [`../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml`](../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
-- [`../../../../../reviewable-runs/logs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml`](../../../../../reviewable-runs/logs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
+The outreach run records for this proof packet are private operational evidence and were moved to the private overlay.
 
 ## Local Session Audit
 

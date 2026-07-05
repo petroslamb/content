@@ -31,6 +31,5 @@ config:
   markdown_path: publications/moltbook-phenomenon/the-moltbook-phenomenon.md
   substack_slug: the-moltbook-phenomenon
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "The Moltbook Phenomenon: Economics of the Agentic Social Graph"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'The Moltbook Phenomenon: Economics of the Agentic Social
+    Graph'

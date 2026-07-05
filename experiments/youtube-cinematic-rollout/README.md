@@ -1,16 +1,15 @@
 # YouTube Cinematic Rollout
 
-Evergreen state for the daily cinematic rollout lane.
+Public orientation for the daily cinematic rollout lane.
 
-Canonical process lives in [`../../workflows/youtube-cinematic-rollout/README.md`](../../workflows/youtube-cinematic-rollout/README.md). This folder keeps shared queue, release, and remaster state that coordinates multiple publication packages.
+Canonical process lives in [`../../workflows/youtube-cinematic-rollout/README.md`](../../workflows/youtube-cinematic-rollout/README.md). Active queue, release, remaster, upload, readback, and Studio verification state is private operational material and lives under `CONTENT_PRIVATE_DIR/youtube/`, defaulting to `.private/youtube/`.
 
 ## State Files
 
-- `backlog_manifest.yaml`: active cross-package cinematic backlog and scheduling state
-- `release_ledger.md`: daily release and follow-through ledger
-- `overlay_remaster_backfill_pilot.json`: overlay remaster backfill crosswalk
-- `related_video_studio_fix_2026-04-28.json`: local Studio related-video fix/readback state when present
+- `.private/youtube/cinematic-rollout/backlog_manifest.yaml`: active cross-package cinematic backlog and scheduling state
+- `.private/youtube/cinematic-rollout/release_ledger.md`: daily release and follow-through ledger
+- `.private/youtube/`: generated upload reports, candidate reports, Shorts manifests, remaster crosswalks, and Studio readbacks
 
 ## Boundary
 
-This folder can contain active worktree state. Do not rewrite or normalize these files just to make the repo look tidy. Update them through the rollout workflow or the relevant YouTube scripts, then verify live channel state when publishing or scheduling matters.
+Do not move private rollout state back into the public repository. Update operational state through the rollout workflow or the relevant YouTube scripts, then verify live channel state when publishing or scheduling matters.

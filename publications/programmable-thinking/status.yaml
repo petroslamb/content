@@ -31,6 +31,5 @@ config:
   markdown_path: publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md
   substack_slug: when-the-llm-programs-its-own-thinking
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "Recursive Language Models: Bridging Human and Model REPL Environments"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'Recursive Language Models: Bridging Human and Model
+    REPL Environments'

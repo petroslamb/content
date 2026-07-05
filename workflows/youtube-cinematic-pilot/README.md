@@ -7,7 +7,7 @@ runner_mode: guided
 default_skill: youtube-data-api
 launch_templates: []
 required_context:
-  - experiment manifest entry for the target publication
+  - private experiment manifest entry for the target publication
   - package-local cinematic video and caption artifact targets
   - authenticated NotebookLM and YouTube access
 expected_outputs:
@@ -38,15 +38,18 @@ Use this workflow when the task is a multi-publication cinematic pilot with one 
 ## Ownership Split
 
 - The experiment workflow owns:
-  - `experiments/youtube-cinematic-pilot/pilot_manifest.yaml`
-  - `experiments/youtube-cinematic-pilot/release_calendar.yaml`
-  - prompt text, description templates, notes, and metric checkpoints
+  - `.private/youtube/cinematic-pilot/pilot_manifest.yaml`
+  - `.private/youtube/cinematic-pilot/release_calendar.yaml`
+  - `.private/youtube/cinematic-pilot/notes.md`
+  - `.private/youtube/cinematic-pilot/metrics/`
+  - public prompt text and description templates
 - Publication packages own:
   - cinematic MP4s
   - caption files
-  - package-local Shorts manifests
   - portrait renders
-  - upload reports under `artifacts/video/`
+  - durable public video references when intentionally documented
+
+Upload reports, generated Shorts manifests, selected clip schedules, channel readbacks, and mutation logs live under `.private/youtube/` by default.
 
 Do not move generated media into the experiment workspace. The experiment layer coordinates the run; the package artifact surfaces remain canonical for media.
 
@@ -67,16 +70,20 @@ The reusable experiment workspace lives at:
 
 Tracked files in that workspace:
 
-- `pilot_manifest.yaml`: publication-by-publication contract
-- `release_calendar.yaml`: chronological rollout schedule
 - `copy/cinematic_prompt.txt`: NotebookLM cinematic prompt
 - `copy/cinematic_description_template.md`: upload description template
-- `metrics/README.md`: checkpoint contract and report expectations
+- `README.md`: public orientation for the historical pilot
+
+Private local state lives under `.private/youtube/cinematic-pilot/` by default:
+
+- `pilot_manifest.yaml`: publication-by-publication contract
+- `release_calendar.yaml`: chronological rollout schedule
 - `notes.md`: pilot assumptions, unresolved items, and operating notes
+- `metrics/`: checkpoint reports and channel-side readbacks
 
 ## Manifest Contract
 
-Each publication entry in `pilot_manifest.yaml` must define:
+Each publication entry in `.private/youtube/cinematic-pilot/pilot_manifest.yaml` must define:
 
 - notebook ID
 - package path under `publications/`
@@ -131,7 +138,7 @@ Poll the notebook artifacts until the cinematic video completes:
 .venv/bin/notebooklm artifact list -n NOTEBOOK_ID --json
 ```
 
-Download the cinematic MP4 into the package artifact surface named in `pilot_manifest.yaml`.
+Download the cinematic MP4 into the package artifact surface named in the private pilot manifest.
 
 ### 3. Dry-Run The Cinematic Upload
 
@@ -139,7 +146,7 @@ Use the dedicated uploader. It reads one publication entry from the experiment m
 
 ```bash
 .venv/bin/python scripts/upload_publication_cinematic.py \
-  --manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml \
+  --manifest .private/youtube/cinematic-pilot/pilot_manifest.yaml \
   --publication neural_architecture
 ```
 
@@ -157,12 +164,12 @@ Apply only after the dry-run looks correct:
 
 ```bash
 .venv/bin/python scripts/upload_publication_cinematic.py \
-  --manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml \
+  --manifest .private/youtube/cinematic-pilot/pilot_manifest.yaml \
   --publication neural_architecture \
   --apply
 ```
 
-This uploader may create `Rooted Layers Cinematic Briefs` if the playlist is still missing, then uploads the package-local cinematic video and writes the upload report into the package artifact surface.
+This uploader may create `Rooted Layers Cinematic Briefs` if the playlist is still missing, then uploads the package-local cinematic video and writes the upload report into `.private/youtube/generated/` unless `--report-file` overrides it.
 
 ### 5. Recover Captions
 
@@ -176,11 +183,11 @@ After upload, recover the caption file into the publication’s `artifacts/video
 
 Do not choose the Shorts clips until the `.srt` exists and is non-empty.
 
-### 6. Materialize The Package Shorts Manifest
+### 6. Materialize The Private Shorts Manifest
 
-The experiment manifest owns the selected clips and schedule. Before upload, materialize or update the package-local `shorts_manifest.json` so it contains the two selected clips for that run and their final `publish_at` values.
+The experiment manifest owns the selected clips and schedule. Before upload, materialize or update the private `shorts_manifest.json` under `.private/youtube/generated/<package>/artifacts/video/shorts/` so it contains the two selected clips for that run and their final `publish_at` values.
 
-Use the experiment manifest as the scheduling source of truth. Use the package manifest as the execution surface that the Shorts uploader reads.
+Use the experiment manifest as the scheduling source of truth. Use the private Shorts manifest as the execution surface that the Shorts uploader reads.
 
 ### 7. Dry-Run And Upload The Shorts
 
@@ -196,8 +203,8 @@ Use the cinematic upload as the related video and prioritize the cinematic link 
   --primary-video-label "Full cinematic video" \
   --secondary-video-url https://www.youtube.com/watch?v=-2CM4JYfQAs \
   --secondary-video-label "Full research breakdown" \
-  --manifest publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/shorts_manifest.json \
-  --selection-manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml \
+  --manifest .private/youtube/generated/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/shorts/shorts_manifest.json \
+  --selection-manifest .private/youtube/cinematic-pilot/pilot_manifest.yaml \
   --selection-publication neural_architecture
 ```
 
@@ -231,7 +238,7 @@ Repo/API metrics:
 - likes
 - comments
 
-Write the consolidated experiment report under `experiments/youtube-cinematic-pilot/metrics/`.
+Write the consolidated experiment report under `.private/youtube/cinematic-pilot/metrics/`.
 
 ## Acceptance Rules
 

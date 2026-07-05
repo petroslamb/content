@@ -8,12 +8,12 @@ Use this layer for manifests, ledgers, metric rules, and temporary state that co
 
 | Experiment | Owner Workflow | State Files | Posture |
 | :--- | :--- | :--- | :--- |
-| [`youtube-cinematic-pilot/`](youtube-cinematic-pilot/README.md) | [`../workflows/youtube-cinematic-pilot/README.md`](../workflows/youtube-cinematic-pilot/README.md) | `pilot_manifest.yaml`, `release_calendar.yaml`, `copy/`, `metrics/` | Bounded pilot and historical metric surface |
-| [`youtube-cinematic-rollout/`](youtube-cinematic-rollout/README.md) | [`../workflows/youtube-cinematic-rollout/README.md`](../workflows/youtube-cinematic-rollout/README.md) | `backlog_manifest.yaml`, `release_ledger.md`, overlay remaster crosswalks | Evergreen active rollout state |
+| [`youtube-cinematic-pilot/`](youtube-cinematic-pilot/README.md) | [`../workflows/youtube-cinematic-pilot/README.md`](../workflows/youtube-cinematic-pilot/README.md) | public `copy/`; private `.private/youtube/cinematic-pilot/` state | Bounded pilot orientation and private historical metric surface |
+| [`youtube-cinematic-rollout/`](youtube-cinematic-rollout/README.md) | [`../workflows/youtube-cinematic-rollout/README.md`](../workflows/youtube-cinematic-rollout/README.md) | public orientation only; active state in `.private/youtube/` | Evergreen active rollout state |
 | [`youtube-reference-comments/`](youtube-reference-comments/README.md) | draft-only experiment, no stable owner workflow yet | `pilot_manifest.yaml`, `drafts/`, `notes.md` | Small-cohort backfill pilot for curated references comments |
 | [`youtube-explainer-shorts/`](youtube-explainer-shorts/README.md) | [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) | `metrics/` | Historical experiment metric surface |
-| [`youtube-insight-authority/`](youtube-insight-authority/SPEC.md) | [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) | `manifest.yaml`, `cohort.yaml`, `evaluation_rubric.yaml`, `studio_verification.yaml`, `release_ledger.md` | Active read-only cohort for cinematic authority claims |
-| [`youtube-analytics/`](youtube-analytics/README.md) | [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) | `decision_rules.yaml`, generated metric ledger, weekly reports | Active recommendation-only analytics layer |
+| [`youtube-insight-authority/`](youtube-insight-authority/SPEC.md) | [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) | public spec/rubric only; cohort and readback state in `.private/youtube/` | Active read-only cohort for cinematic authority claims |
+| [`youtube-analytics/`](youtube-analytics/README.md) | [`../workflows/youtube-channel-ops/README.md`](../workflows/youtube-channel-ops/README.md) | `decision_rules.yaml`; generated jobs, ledgers, snapshots, and reports in `.private/youtube/` | Active recommendation-only analytics layer |
 
 ## Rules
 

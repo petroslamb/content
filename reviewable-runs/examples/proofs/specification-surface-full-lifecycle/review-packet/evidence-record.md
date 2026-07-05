@@ -63,9 +63,9 @@ The publish-sync record says:
 
 - [`specification-surface-source-of-truth-distribution-plan-r3.md`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-plan-r3.md)
 - [`specification-surface-source-of-truth-distribution-log-r3.md`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth-distribution-log-r3.md)
-- [`artifacts/video/specification_surface_youtube_bundle_report.json`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_youtube_bundle_report.json)
-- [`artifacts/video/specification_surface_cinematic_upload_report.json`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic_upload_report.json)
 - [`distribution/reddit-experiment-ledger.md`](../../../../../publications/literate-workflow-programming/specification-surface-source-of-truth/distribution/reddit-experiment-ledger.md)
+
+YouTube upload/readback reports for this packet are private operational state and were moved to the private overlay.
 
 The distribution log records public or scheduled outcomes for:
 
@@ -86,9 +86,6 @@ The distribution log records public or scheduled outcomes for:
 
 The later `expert_feedback_outreach` runs prove the completed leaf can be resolved under the Phase 2 `content-agent` evidence model:
 
-- [`resolved run 08:49`](../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
-- [`run record 08:49`](../../../../../reviewable-runs/logs/run-2026-05-05T08-49-29Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
-- [`resolved run 08:56`](../../../../../reviewable-runs/resolved-runs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
-- [`run record 08:56`](../../../../../reviewable-runs/logs/run-2026-05-05T08-56-31Z-literate-workflow-programming-specification-surface-source-of-truth-expert-feedback-outreach.yaml)
+Those outreach run records are private operational evidence and were moved to the private overlay.
 
 They are not full publication proof records. They are evidence that the completed package can be admitted into the Phase 2 governed runtime.

@@ -7,7 +7,7 @@ runner_mode: guided
 default_skill: youtube-data-api
 launch_templates: []
 required_context:
-  - experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+  - CONTENT_PRIVATE_DIR/youtube/cinematic-rollout/backlog_manifest.yaml
   - authenticated NotebookLM and YouTube access
   - package-local artifact surfaces for the target publications
 expected_outputs:
@@ -47,15 +47,17 @@ Use this workflow when the task is:
 ## Ownership Split
 
 - The evergreen rollout workspace owns:
-  - `experiments/youtube-cinematic-rollout/backlog_manifest.yaml`
-  - `experiments/youtube-cinematic-rollout/release_ledger.md`
+  - `.private/youtube/cinematic-rollout/backlog_manifest.yaml` by default, or `CONTENT_PRIVATE_DIR/youtube/cinematic-rollout/backlog_manifest.yaml` when overridden
+  - `.private/youtube/cinematic-rollout/release_ledger.md` by default, or `CONTENT_PRIVATE_DIR/youtube/cinematic-rollout/release_ledger.md` when overridden
 - Publication packages own:
   - cinematic MP4s
   - cinematic SRTs
-  - candidate reports
-  - package-local Shorts manifests
   - portrait renders
-  - upload reports under `artifacts/video/`
+  - prompt packets and other public source artifacts
+- The private overlay owns:
+  - candidate reports
+  - Shorts manifests
+  - upload reports and channel readbacks
 
 Do not move generated media into the experiment workspace.
 
@@ -83,12 +85,12 @@ Do not move generated media into the experiment workspace.
 ## Canonical Files
 
 - Backlog manifest:
-  - `experiments/youtube-cinematic-rollout/backlog_manifest.yaml`
+  - `.private/youtube/cinematic-rollout/backlog_manifest.yaml` by default
   - includes `experiment.automation.watcher_automation_id` so the daily starter can avoid duplicating watcher heartbeats
 - Release ledger:
-  - `experiments/youtube-cinematic-rollout/release_ledger.md`
+  - `.private/youtube/cinematic-rollout/release_ledger.md` by default
 - Existing mapped-video exclusion source:
-  - `experiments/youtube-cinematic-pilot/metrics/video_asset_youtube_map.yaml`
+  - private metrics map under `.private/youtube/` when present
 - Shared cinematic prompt fallback and description template:
   - `experiments/youtube-cinematic-pilot/copy/cinematic_prompt.txt`
   - `experiments/youtube-cinematic-pilot/copy/cinematic_description_template.md`
@@ -117,11 +119,11 @@ Do not rely on a single reconciliation pass. The active run should normally stay
 ## Helper Scripts
 
 - Backlog and scheduling:
-  - `.venv/bin/python scripts/run_daily_cinematic_rollout.py --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml`
+  - `.venv/bin/python scripts/run_daily_cinematic_rollout.py`
 - Candidate extraction from timed captions:
-  - `.venv/bin/python scripts/extract_cinematic_short_candidates.py --package <package> --srt-file <cinematic.srt> --output <candidate_report.json>`
+  - `.venv/bin/python scripts/extract_cinematic_short_candidates.py --package <package> --srt-file <cinematic.srt> --output .private/youtube/generated/<package>/artifacts/video/daily-cinematic-rollout/candidate_report.json`
 - Cinematic upload:
-  - `.venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml --publication <key>`
+  - `.venv/bin/python scripts/upload_publication_cinematic.py --manifest .private/youtube/cinematic-rollout/backlog_manifest.yaml --publication <key>`
 - Caption wait/download:
   - `.venv/bin/python scripts/wait_for_youtube_captions.py --video-id <CINEMATIC_VIDEO_ID> --output <cinematic.srt> --interval 600 --timeout 7200`
 - Studio card and end-screen wiring:
@@ -215,7 +217,7 @@ Run the evergreen rollout helper:
 
 ```bash
 .venv/bin/python scripts/run_daily_cinematic_rollout.py \
-  --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+  --manifest .private/youtube/cinematic-rollout/backlog_manifest.yaml
 ```
 
 The script must:
@@ -282,7 +284,7 @@ Use the shared upload wrapper:
 
 ```bash
 .venv/bin/python scripts/upload_publication_cinematic.py \
-  --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml \
+  --manifest .private/youtube/cinematic-rollout/backlog_manifest.yaml \
   --publication <key> \
   --apply
 ```
@@ -339,7 +341,7 @@ Then extract candidate windows:
 .venv/bin/python scripts/extract_cinematic_short_candidates.py \
   --package <package> \
   --srt-file publications/<package>/artifacts/video/<cinematic>.srt \
-  --output publications/<package>/artifacts/video/daily-cinematic-rollout/candidate_report.json
+  --output .private/youtube/generated/<package>/artifacts/video/daily-cinematic-rollout/candidate_report.json
 ```
 
 The helper produces candidate windows, excerpts, duration metadata, and heuristic novelty hints. The operator still applies the final rubric judgment.
@@ -360,7 +362,7 @@ Scoring contract:
 - `20-21`: reserve only
 - `19 or below`: reject
 
-Write approved, reserve, and rejected clips back into the backlog manifest entry, then rerun the rollout helper with `--apply` so it recomputes publish times and materializes the package-local Shorts manifest.
+Write approved, reserve, and rejected clips back into the private backlog manifest entry, then rerun the rollout helper with `--apply` so it recomputes publish times and materializes the private Shorts manifest.
 
 For every approved clip, include:
 
@@ -384,7 +386,7 @@ Render from the cinematic MP4 using the package-local manifest generated by the 
 ```bash
 .venv/bin/python scripts/create_publication_shorts_from_longform.py \
   --video-file publications/<package>/artifacts/video/<cinematic>.mp4 \
-  --manifest publications/<package>/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
+  --manifest .private/youtube/generated/<package>/artifacts/video/daily-cinematic-rollout/shorts_manifest.json
 ```
 
 The default overlay contract is:
@@ -410,7 +412,7 @@ Then upload with:
 ```bash
 .venv/bin/python scripts/upload_publication_shorts.py \
   --package <package> \
-  --shorts-dir publications/<package>/artifacts/video/daily-cinematic-rollout/portrait \
+  --shorts-dir .private/youtube/generated/<package>/artifacts/video/daily-cinematic-rollout/portrait \
   --main-video-id <CINEMATIC_VIDEO_ID> \
   --playlist-id PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd \
   --essay-url <essay-url> \
@@ -418,7 +420,7 @@ Then upload with:
   --primary-video-label "Full cinematic video" \
   --secondary-video-url <secondary-link-url> \
   --secondary-video-label "Full research breakdown" \
-  --manifest publications/<package>/artifacts/video/daily-cinematic-rollout/shorts_manifest.json \
+  --manifest .private/youtube/generated/<package>/artifacts/video/daily-cinematic-rollout/shorts_manifest.json \
   --apply
 ```
 

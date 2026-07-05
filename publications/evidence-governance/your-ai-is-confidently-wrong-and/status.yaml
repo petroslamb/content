@@ -9,9 +9,7 @@ config:
   substack_slug: your-ai-is-confidently-wrong-and
   substack_url: https://lambpetros.substack.com
   evidence_path: publications/evidence-governance/evidence_governance_pattern/papers
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "The Evidence Hierarchy: Governing Confident AI Wrongness"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'The Evidence Hierarchy: Governing Confident AI Wrongness'
 stages:
   paper_intake:
     done: true

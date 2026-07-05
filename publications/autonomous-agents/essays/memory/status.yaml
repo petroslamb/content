@@ -6,9 +6,7 @@ config:
   markdown_path: publications/autonomous-agents/essays/memory/02-memory-systems-and-authority.md
   substack_slug: operating-agents-ii-memory-needs
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "Chapter 3 Blueprint: Memory"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'Chapter 3 Blueprint: Memory'
 stages:
   paper_intake:
     done: true

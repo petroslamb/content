@@ -9,8 +9,8 @@ authority_packets:
     local CLI planner; channel mutation still requires both --apply and
     --apply-youtube.
   applied_at: "2026-05-16T10:16:40Z"
-  apply_report: experiments/youtube-insight-authority/youtube_mutation_report.json
-  final_readback_report: experiments/youtube-insight-authority/youtube_final_readback.json
+  apply_report: private-overlay:youtube-insight-authority/apply-report
+  final_readback_report: private-overlay:youtube-insight-authority/final-readback
   final_readback_status: passed_all_title_description_tag_comment_checks
   thumbnail_status: uploaded_all
   comment_status: posted_all_top_level_technical_comments

@@ -14,6 +14,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 import yaml
+from private_registry import private_dir, resolve_primary_notebook_for_status
 
 
 COLD_OPEN_REQUIRED_FIELDS = ("first_line", "viewer_promise", "conflict", "payoff_by_30s")
@@ -29,13 +30,21 @@ DEFAULT_CLIP_SAFE_RULES = (
 )
 
 
+def default_rollout_manifest_path() -> Path:
+    return private_dir() / "youtube" / "cinematic-rollout" / "backlog_manifest.yaml"
+
+
+def default_private_youtube_generated_root(package: str) -> Path:
+    return private_dir() / "youtube" / "generated" / package / "artifacts" / "video"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Sync the evergreen cinematic rollout backlog and scheduling state.")
     parser.add_argument(
         "--manifest",
         type=Path,
-        default=Path("experiments/youtube-cinematic-rollout/backlog_manifest.yaml"),
-        help="Backlog manifest YAML. Defaults to experiments/youtube-cinematic-rollout/backlog_manifest.yaml",
+        default=default_rollout_manifest_path(),
+        help="Backlog manifest YAML. Defaults to CONTENT_PRIVATE_DIR/youtube/cinematic-rollout/backlog_manifest.yaml.",
     )
     parser.add_argument(
         "--ledger",
@@ -101,7 +110,10 @@ def discover_publications() -> list[DiscoveredPublication]:
         stages = data.get("stages") or {}
         if not stages.get("substack_publishing", {}).get("done"):
             continue
-        notebook_id = config.get("notebooklm_notebook_id")
+        notebook = resolve_primary_notebook_for_status(status_path, data)
+        if not notebook:
+            continue
+        notebook_id = notebook.get("id")
         if not notebook_id:
             continue
 
@@ -126,7 +138,9 @@ def discover_publications() -> list[DiscoveredPublication]:
                 status_path=effective_status_path.as_posix(),
                 markdown_path=str(markdown_path) if markdown_path else None,
                 notebook_id=str(notebook_id),
-                notebook_title=str(config.get("notebooklm_notebook_title")) if config.get("notebooklm_notebook_title") else None,
+                notebook_title=str(notebook.get("title") or config.get("notebooklm_notebook_title"))
+                if (notebook.get("title") or config.get("notebooklm_notebook_title"))
+                else None,
                 essay_url=derive_essay_url(config),
                 notebook_source_status=notebook_source_status,
             )
@@ -197,6 +211,7 @@ def build_auto_entry(discovered: DiscoveredPublication, pending_reason: str | No
     markdown_title = read_markdown_title(discovered.markdown_path) or humanize_title(Path(discovered.package).name)
     title, hook, summary = default_cinematic_copy(markdown_title)
     video_root = relative_video_root(discovered.package)
+    private_video_root = default_private_youtube_generated_root(discovered.package)
     stem = discovered.package.replace("/", "_").replace("-", "_")
     state = "blocked_rate_limited" if pending_reason else "queued"
     return {
@@ -221,7 +236,7 @@ def build_auto_entry(discovered: DiscoveredPublication, pending_reason: str | No
             "prompt_packet": default_prompt_packet(markdown_title),
             "video_file": str(video_root / f"{stem}_cinematic.mp4"),
             "output_srt": str(video_root / f"{stem}_cinematic.srt"),
-            "upload_report": str(video_root / f"{stem}_cinematic_upload_report.json"),
+            "upload_report": str(private_video_root / f"{stem}_cinematic_upload_report.json"),
             "youtube_video_id": None,
             "youtube_url": None,
             "published_at": None,
@@ -233,10 +248,10 @@ def build_auto_entry(discovered: DiscoveredPublication, pending_reason: str | No
             },
         },
         "shorts": {
-            "workspace_dir": str(video_root / "daily-cinematic-rollout"),
-            "candidate_report": str(video_root / "daily-cinematic-rollout" / "candidate_report.json"),
-            "manifest_path": str(video_root / "daily-cinematic-rollout" / "shorts_manifest.json"),
-            "upload_report": str(video_root / "daily-cinematic-rollout" / "shorts_upload_report.json"),
+            "workspace_dir": str(private_video_root / "daily-cinematic-rollout"),
+            "candidate_report": str(private_video_root / "daily-cinematic-rollout" / "candidate_report.json"),
+            "manifest_path": str(private_video_root / "daily-cinematic-rollout" / "shorts_manifest.json"),
+            "upload_report": str(private_video_root / "daily-cinematic-rollout" / "shorts_upload_report.json"),
             "state": "pending_cinematic",
             "approved_clips": [],
             "reserve_clips": [],

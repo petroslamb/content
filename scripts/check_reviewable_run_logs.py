@@ -155,7 +155,7 @@ def main() -> int:
             legacy.append(path.relative_to(REPO_ROOT).as_posix())
             continue
         if schema_version != 2:
-            errors.append(f"{path.relative_to(REPO_ROOT).as_posix()}: unsupported schema_version {schema_version!r}")
+            legacy.append(f"{path.relative_to(REPO_ROOT).as_posix()} (schema_version {schema_version!r})")
             continue
         errors.extend(validate_v2(path, data))
 

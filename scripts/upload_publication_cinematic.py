@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
 Upload one manifest-driven cinematic companion, create or reuse the shared
-cinematic playlist, and write the upload report into the publication artifact
-surface.
+cinematic playlist, and write the upload report into the private overlay by
+default.
 
 Run from project root:
   .venv/bin/python scripts/upload_publication_cinematic.py \
-    --manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml \
+    --manifest .private/youtube/cinematic-pilot/pilot_manifest.yaml \
     --publication neural_architecture
 """
 
@@ -21,6 +21,8 @@ from typing import Any
 
 import yaml
 
+from private_registry import REPO_ROOT, private_dir
+
 # Add the youtube skill scripts directory to path.
 sys.path.insert(0, str(Path(__file__).parent.parent / "workflows" / "skills" / "youtube-data-api" / "scripts"))
 
@@ -34,9 +36,9 @@ except ImportError:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Upload one cinematic publication companion from the experiment manifest.")
-    parser.add_argument("--manifest", type=Path, required=True, help="Pilot manifest YAML, e.g. experiments/youtube-cinematic-pilot/pilot_manifest.yaml")
+    parser.add_argument("--manifest", type=Path, required=True, help="Pilot manifest YAML, e.g. .private/youtube/cinematic-pilot/pilot_manifest.yaml")
     parser.add_argument("--publication", required=True, help="Publication key inside the manifest, e.g. neural_architecture")
-    parser.add_argument("--report-file", type=Path, help="Optional report-file override. Defaults to the publication-local upload_report path.")
+    parser.add_argument("--report-file", type=Path, help="Optional report-file override. Defaults to .private/youtube/generated/<package>/artifacts/video/.")
     parser.add_argument("--apply", action="store_true", help="Upload and mutate YouTube state. Without this, print the plan only.")
     return parser.parse_args()
 
@@ -209,7 +211,24 @@ def readback_playlist_item(youtube: Any, playlist_id: str, video_id: str) -> dic
 
 
 def default_report_path(package: str) -> Path:
-    return Path("publications") / package / "artifacts" / "video" / "cinematic_upload_report.json"
+    return private_dir() / "youtube" / "generated" / package / "artifacts" / "video" / "cinematic_upload_report.json"
+
+
+def is_private_overlay_path(path: Path) -> bool:
+    resolved = path if path.is_absolute() else REPO_ROOT / path
+    try:
+        resolved.resolve().relative_to(private_dir().resolve())
+    except ValueError:
+        return False
+    return True
+
+
+def report_path_for(package: str, manifest_report: str | None) -> Path:
+    if manifest_report:
+        path = Path(manifest_report)
+        if is_private_overlay_path(path):
+            return path
+    return default_report_path(package)
 
 
 def write_report(path: Path, payload: dict[str, Any]) -> None:
@@ -242,7 +261,7 @@ def main() -> None:
     summary = get_required(cinematic, "summary", f"{args.publication}.cinematic")
     video_file = Path(get_required(cinematic, "video_file", f"{args.publication}.cinematic"))
     output_srt = Path(get_required(cinematic, "output_srt", f"{args.publication}.cinematic"))
-    report_path = args.report_file or Path(cinematic.get("upload_report") or default_report_path(package))
+    report_path = args.report_file or report_path_for(package, cinematic.get("upload_report"))
     publish_at = cinematic.get("publish_at")
 
     templates = get_required(experiment, "templates", f"{args.manifest}:experiment")

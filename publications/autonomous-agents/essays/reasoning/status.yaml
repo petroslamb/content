@@ -6,9 +6,7 @@ config:
   markdown_path: publications/autonomous-agents/essays/reasoning/03-reasoning-scaffolds-and-planning.md
   substack_slug: operating-agents-iii-diagnose-the
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "Chapter 2 Blueprint: Reasoning and Planning"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'Chapter 2 Blueprint: Reasoning and Planning'
 stages:
   paper_intake:
     done: true

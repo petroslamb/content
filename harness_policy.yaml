@@ -22,6 +22,7 @@ local_write_allowed:
     - reviewable-runs/subagent-requests/
     - reviewable-runs/subagent-results/
     - reviewable-runs/integration-decisions/
+    - .private/youtube/
   operations:
     - package scaffolding
     - launch pack generation
@@ -30,6 +31,7 @@ local_write_allowed:
     - run record writing
     - gate artifact creation
     - local validation reports
+    - private YouTube operational overlay updates
 governance_maintenance_write_allowed:
   paths:
     - AUTHORITY.md

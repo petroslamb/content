@@ -31,6 +31,57 @@ publication_strategy_and_archive/mirror/_site/
 publication_strategy_and_archive/future_publication_strategy.md
 publication_strategy_and_archive/publication_analysis_results.md
 
+# Private content overlay and operational state
+.private/
+**/.private/
+
+# Restricted NotebookLM owner metadata
+**/artifacts/notebooklm_metadata.json
+
+# YouTube channel-side operational state
+**/*upload_report*.json
+**/upload_manifest.json
+**/*youtube_final_readback*.json
+**/*youtube_mutation_report*.json
+**/*youtube_bundle_report*.json
+**/*caption_recovery_upload*.json
+**/*link_update_report*.json
+**/*studio_verification*.json
+**/*studio_verification*.yaml
+**/artifacts/video/**/shorts_manifest.json
+**/shorts_manifest.json
+**/artifacts/video/**/cinematic_shorts_manifest.json
+**/artifacts/video/**/ad_hoc_shorts_manifest.json
+**/artifacts/video/**/candidate_report.json
+experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+experiments/youtube-cinematic-rollout/release_ledger.md
+experiments/youtube-cinematic-rollout/*pilot*.json
+experiments/youtube-cinematic-rollout/**/*_manifest.yaml
+experiments/youtube-cinematic-pilot/*_manifest.yaml
+experiments/youtube-cinematic-pilot/release_calendar.yaml
+experiments/youtube-cinematic-pilot/notes.md
+experiments/youtube-cinematic-pilot/metrics/
+experiments/youtube-explainer-shorts/metrics/
+experiments/youtube-reference-comments/post_reports/
+experiments/youtube-reference-comments/*_manifest.yaml
+experiments/youtube-insight-authority/cohort.yaml
+experiments/youtube-insight-authority/manifest.yaml
+experiments/youtube-insight-authority/release_ledger.md
+experiments/youtube-insight-authority/**/emit_plan.json
+experiments/youtube-insight-authority/**/insight_authority_plan.json
+experiments/youtube-insight-authority/**/publish_plan.json
+experiments/youtube-insight-authority/draft_repair_packets_*.yaml
+
+# Outreach target lists, trackers, and contact-route state
+publications/**/distribution/*outreach*.md
+publications/**/distribution/linkedin-outreach-tracker.md
+publications/**/ToolOrchestra_Parts/promoting_ideas/outreach*.md
+publications/**/ToolOrchestra_Parts/promoting_ideas/cold_outreach*.md
+reviewable-runs/logs/*expert-feedback-outreach*.yaml
+reviewable-runs/resolved-runs/*expert-feedback-outreach*.yaml
+reviewable-runs/logs/*youtube*media-distribution-retrospective.md
+reviewable-runs/logs/*media-distribution-retrospective.md
+
 # Stray root-level generated assets
 Generated Image*.png
 output/
@@ -50,6 +101,9 @@ tmp/
 # Generated YouTube analytics state
 experiments/youtube-analytics/metrics_ledger.json
 experiments/youtube-analytics/content_rubric.json
+experiments/youtube-analytics/experiment_registry.yaml
+experiments/youtube-analytics/reporting_jobs.json
+experiments/youtube-analytics/channel_recovery_plan_*.md
 experiments/youtube-analytics/reporting_downloads/
 experiments/youtube-analytics/weekly_reports/
 experiments/youtube-analytics/dashboard/

@@ -33,29 +33,34 @@ Use NotebookLM when an essay is strong enough to justify supporting artifacts su
 
 The normal destination is the package or topic `artifacts/` folder.
 
-The durable notebook mapping belongs in the package or leaf `status.yaml`:
+The public notebook mapping belongs in the package or leaf `status.yaml` and
+stores titles only:
 
 ```yaml
 config:
-  notebooklm_notebook_id: <primary-notebook-uuid>
   notebooklm_notebook_title: <primary notebook title>
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/<primary-notebook-uuid>
-  notebooklm_related_notebooks: []
+  notebooklm_related_notebooks:
+    - title: <related notebook title>
 ```
+
+Restricted NotebookLM UUIDs and owner URLs live in the private overlay at
+`CONTENT_PRIVATE_DIR/notebooklm_registry.yaml`, defaulting to
+`.private/notebooklm_registry.yaml`. Do not commit NotebookLM UUIDs or
+`https://notebooklm.google.com/notebook/...` owner URLs to the public repo.
 
 For umbrella packages where several posts share one manifest, use `config.notebooklm_posts.<post-slug>` with `primary` and `related` entries. The human-readable corpus index lives at [`../../publications/notebooklm-notebooks.md`](../../publications/notebooklm-notebooks.md).
 
 ## Evidence-Backed Defaults
 
 - Reuse the standard prompt bundle and generation settings across comparable notebooks unless the user explicitly wants a different artifact voice.
-- Resolve the notebook from `status.yaml` first; use [`../../publications/notebooklm-notebooks.md`](../../publications/notebooklm-notebooks.md) when orienting manually across the corpus.
+- Resolve the public notebook title from `status.yaml` first, then resolve the private ID from `CONTENT_PRIVATE_DIR/notebooklm_registry.yaml`; use [`../../publications/notebooklm-notebooks.md`](../../publications/notebooklm-notebooks.md) when orienting manually across the corpus.
 - Wait for notebook sources to become ready before generating artifacts.
 - Artifact generation is asynchronous. Expect task IDs, poll status, and do not assume audio, slides, or video are immediately done just because smaller artifacts finished first.
 - Keep one canonical artifact home. If NotebookLM first writes into an essay-scoped subfolder but the package expects package-level `artifacts/`, consolidate into the expected home and remove duplicates.
 - Treat NotebookLM outputs as raw artifacts until the article-polish workflow selects, names, and places them. Do not delete semantically named article images or remove markdown image embeds during artifact generation.
 - Moving labels such as `artifacts/latest/` and `artifacts/previous/` are acceptable for raw downloaded bundles, but they are not stable publication targets. Article embeds should point to semantically named assets chosen during polish.
 - If NotebookLM auth, browser state, source upload, or transcript export fails with a sandbox or permission error, stop the operation and hand the user the exact command plus expected output path. Do not replace the missing audio, slide deck, video, or transcript with a partial terminal capture.
-- Do not commit `.notebooklm/` browser state, storage files, or other hidden auth state as provenance. Reconstruct notebook provenance from the live CLI and the tracked manifest fields.
+- Do not commit `.notebooklm/` browser state, storage files, restricted notebook IDs, owner URLs, or other hidden auth state as provenance. Reconstruct notebook provenance from the live CLI and the private registry when needed.
 
 ## Canonical Flow
 

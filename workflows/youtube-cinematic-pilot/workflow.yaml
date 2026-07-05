@@ -15,7 +15,7 @@ inputs:
     description: Package path relative to publications/ for the selected pilot publication.
   publication_key:
     required: false
-    description: Key in experiments/youtube-cinematic-pilot/pilot_manifest.yaml when it differs from the package basename.
+    description: Key in the private cinematic-pilot manifest when it differs from the package basename.
   path_placeholders:
     - id: package
       source: cli.package
@@ -40,12 +40,12 @@ context_dependencies:
     purpose: Load package orientation, artifact conventions, and local video boundaries.
     record_hash: true
   - id: pilot_manifest
-    path: experiments/youtube-cinematic-pilot/pilot_manifest.yaml
+    path: .private/youtube/cinematic-pilot/pilot_manifest.yaml
     required: true
     purpose: Provide the experiment manifest entry for the target publication, including NotebookLM notebook, cinematic asset targets, upload plan, Shorts selection, and metrics checkpoints.
     record_hash: true
   - id: release_calendar
-    path: experiments/youtube-cinematic-pilot/release_calendar.yaml
+    path: .private/youtube/cinematic-pilot/release_calendar.yaml
     required: true
     purpose: Preserve the shared pilot release schedule and prevent the cinematic lane from silently replacing canonical publication timing.
     record_hash: true
@@ -63,10 +63,10 @@ context_dependencies:
     path_from_status: config.video_artifacts_path
     fallback: publications/{package}/artifacts/video/
     required: true
-    purpose: Locate package-local cinematic video, captions, Shorts manifests, portrait renders, and upload reports.
+    purpose: Locate package-local cinematic video, captions, and portrait renders.
     record_hash: true
   - id: pilot_metrics_surface
-    path: experiments/youtube-cinematic-pilot/metrics/
+    path: .private/youtube/cinematic-pilot/metrics/
     required: true
     purpose: Record or inspect pilot metrics and checkpoint reports without treating them as promotion proof by themselves.
     record_hash: true
@@ -118,10 +118,10 @@ capabilities:
       command: "find publications/{package}/artifacts -type f -size 0"
       required: true
     - id: cinematic_upload_dry_run
-      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml --publication {publication_key}"
+      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest .private/youtube/cinematic-pilot/pilot_manifest.yaml --publication {publication_key}"
       required: true
     - id: cinematic_upload_apply
-      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml --publication {publication_key} --apply"
+      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest .private/youtube/cinematic-pilot/pilot_manifest.yaml --publication {publication_key} --apply"
       required: false
     - id: release_readiness_gate_check
       command: "./content-agent gate check --gate release_readiness --package {package}"
@@ -130,7 +130,7 @@ capabilities:
       command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/download_video_captions.py --video-id <CINEMATIC_VIDEO_ID> --output publications/{package}/artifacts/video/<cinematic>.srt"
       required: false
     - id: shorts_upload_dry_run
-      command: ".venv/bin/python scripts/upload_publication_shorts.py --package {package} --manifest publications/{package}/artifacts/video/shorts/shorts_manifest.json --selection-manifest experiments/youtube-cinematic-pilot/pilot_manifest.yaml --selection-publication {publication_key}"
+      command: ".venv/bin/python scripts/upload_publication_shorts.py --package {package} --manifest .private/youtube/generated/{package}/artifacts/video/shorts/shorts_manifest.json --selection-manifest .private/youtube/cinematic-pilot/pilot_manifest.yaml --selection-publication {publication_key}"
       required: false
     - id: workflow_contract_validation
       command: "npm run check:workflow-yaml"
@@ -146,6 +146,7 @@ allowed_paths:
   read:
     - publications/{package}/
     - experiments/youtube-cinematic-pilot/
+    - .private/youtube/
     - workflows/youtube-cinematic-pilot/
     - workflows/notebooklm-artifacts/
     - workflows/youtube-channel-ops/
@@ -158,18 +159,19 @@ allowed_paths:
     - reviewable-runs/
   write:
     - publications/{package}/artifacts/video/
+    - .private/youtube/
     - reviewable-runs/resolved-runs/
     - reviewable-runs/logs/
     - reviewable-runs/gates/
 
 outputs:
   - id: settled_cinematic_pilot_manifest_state
-    path_template: "reviewable-runs/logs/{run_id}-youtube-cinematic-pilot-manifest-state.md"
+    path_template: ".private/youtube/cinematic-pilot/run-records/{run_id}-manifest-state.md"
     required: true
     format: markdown
     producer: reconcile_pilot_manifest_entry
   - id: cinematic_release_calendar_state
-    path_template: "reviewable-runs/logs/{run_id}-youtube-cinematic-pilot-release-calendar.md"
+    path_template: ".private/youtube/cinematic-pilot/run-records/{run_id}-release-calendar.md"
     required: true
     format: markdown
     producer: confirm_pilot_schedule
@@ -180,13 +182,13 @@ outputs:
     format: mp4
     producer: generate_or_download_cinematic_video
   - id: cinematic_upload_plan
-    path_template: "publications/{package}/artifacts/video/{package_name}-cinematic-upload-plan.md"
+    path_template: ".private/youtube/generated/{package}/artifacts/video/{package_name}-cinematic-upload-plan.md"
     required: true
     format: markdown
     producer: dry_run_cinematic_upload
     gated_by: release_readiness
   - id: cinematic_upload_report
-    path_template: "publications/{package}/artifacts/video/{package_name}-cinematic-upload-report.json"
+    path_template: ".private/youtube/generated/{package}/artifacts/video/{package_name}-cinematic-upload-report.json"
     required: conditional
     required_when: the cinematic upload is applied after approval
     format: json
@@ -199,13 +201,13 @@ outputs:
     format: srt
     producer: recover_captions
   - id: materialized_package_shorts_manifest
-    path_template: "publications/{package}/artifacts/video/shorts/shorts_manifest.json"
+    path_template: ".private/youtube/generated/{package}/artifacts/video/shorts/shorts_manifest.json"
     required: conditional
     required_when: pilot Shorts are selected for upload
     format: json
     producer: materialize_package_shorts_manifest
   - id: pilot_metrics_or_blocked_state
-    path_template: "reviewable-runs/logs/{run_id}-youtube-cinematic-pilot-metrics-or-blocked-state.md"
+    path_template: ".private/youtube/cinematic-pilot/run-records/{run_id}-metrics-or-blocked-state.md"
     required: true
     format: markdown
     producer: record_metrics_or_blocker
@@ -408,7 +410,7 @@ steps:
   - id: dry_run_cinematic_upload
     title: Dry-run cinematic upload
     mode: codex_session
-    action: Run the cinematic uploader without apply and verify title, description, playlist, source MP4, schedule, and package-local report target.
+    action: Run the cinematic uploader without apply and verify title, description, playlist, source MP4, schedule, and private report target.
     consumes:
       - pilot_manifest
       - cinematic_description_template
@@ -456,7 +458,7 @@ steps:
   - id: materialize_package_shorts_manifest
     title: Materialize package Shorts manifest
     mode: codex_session
-    action: Copy the pilot-selected clips and final publish times into the package-local Shorts manifest used by the uploader.
+    action: Copy the pilot-selected clips and final publish times into the private Shorts manifest used by the uploader.
     consumes:
       - pilot_manifest
       - recovered_cinematic_captions

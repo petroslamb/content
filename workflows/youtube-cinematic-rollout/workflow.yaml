@@ -15,7 +15,7 @@ inputs:
     description: Package path relative to publications/ for the rollout entry being reconciled.
   publication_key:
     required: false
-    description: Key in experiments/youtube-cinematic-rollout/backlog_manifest.yaml when it differs from the package basename.
+    description: Key in CONTENT_PRIVATE_DIR/youtube/cinematic-rollout/backlog_manifest.yaml when it differs from the package basename.
   path_placeholders:
     - id: package
       source: cli.package
@@ -40,17 +40,17 @@ context_dependencies:
     purpose: Load package orientation, video artifact conventions, and local release boundaries.
     record_hash: true
   - id: backlog_manifest
-    path: experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+    path: .private/youtube/cinematic-rollout/backlog_manifest.yaml
     required: true
     purpose: Provide evergreen backlog state, in-flight entries, prompt-packet status, polling defaults, watcher state, release queue, and publication keys.
     record_hash: true
   - id: release_ledger
-    path: experiments/youtube-cinematic-rollout/release_ledger.md
+    path: .private/youtube/cinematic-rollout/release_ledger.md
     required: true
     purpose: Preserve daily rollout decisions, auth blockers, upload readbacks, caption state, Studio wiring, and blocked-state notes.
     record_hash: true
   - id: pilot_asset_map
-    path: experiments/youtube-cinematic-pilot/metrics/video_asset_youtube_map.yaml
+    path: .private/youtube/cinematic-pilot/metrics/video_asset_youtube_map.yaml
     required: false
     purpose: Reuse existing mapped-video exclusions and legacy cinematic relationships where present.
     record_hash: true
@@ -68,7 +68,7 @@ context_dependencies:
     path_from_status: config.video_artifacts_path
     fallback: publications/{package}/artifacts/video/
     required: true
-    purpose: Locate package-local cinematic MP4s, SRTs, prompt packets, candidate reports, Shorts manifests, portrait renders, upload reports, and Studio readbacks.
+    purpose: Locate package-local cinematic MP4s, SRTs, prompt packets, and portrait renders.
     record_hash: true
   - id: package_prompt_packet
     fallback:
@@ -116,7 +116,7 @@ context_dependencies:
 capabilities:
   tools:
     - id: daily_rollout_helper
-      command: ".venv/bin/python scripts/run_daily_cinematic_rollout.py --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml"
+      command: ".venv/bin/python scripts/run_daily_cinematic_rollout.py --manifest .private/youtube/cinematic-rollout/backlog_manifest.yaml"
       required: true
     - id: notebooklm_auth_check
       command: ".venv/bin/notebooklm auth check --test"
@@ -128,10 +128,10 @@ capabilities:
       command: ".venv/bin/python workflows/skills/youtube-data-api/scripts/auth_and_channel_check.py"
       required: false
     - id: cinematic_upload_dry_run
-      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml --publication {publication_key}"
+      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest .private/youtube/cinematic-rollout/backlog_manifest.yaml --publication {publication_key}"
       required: true
     - id: cinematic_upload_apply
-      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml --publication {publication_key} --apply"
+      command: ".venv/bin/python scripts/upload_publication_cinematic.py --manifest .private/youtube/cinematic-rollout/backlog_manifest.yaml --publication {publication_key} --apply"
       required: false
     - id: release_readiness_gate_check
       command: "./content-agent gate check --gate release_readiness --package {package}"
@@ -140,7 +140,7 @@ capabilities:
       command: ".venv/bin/python scripts/wait_for_youtube_captions.py --video-id <CINEMATIC_VIDEO_ID> --output <cinematic.srt> --interval 600 --timeout 7200"
       required: false
     - id: candidate_extraction
-      command: ".venv/bin/python scripts/extract_cinematic_short_candidates.py --package {package} --srt-file <cinematic.srt> --output <candidate_report.json>"
+      command: ".venv/bin/python scripts/extract_cinematic_short_candidates.py --package {package} --srt-file <cinematic.srt> --output .private/youtube/generated/{package}/artifacts/video/daily-cinematic-rollout/{package_name}-short-candidates.json"
       required: false
     - id: shorts_render
       command: ".venv/bin/python scripts/create_publication_shorts_from_longform.py --video-file <cinematic.mp4> --manifest <package-local-shorts-manifest.json>"
@@ -161,6 +161,7 @@ capabilities:
 allowed_paths:
   read:
     - publications/{package}/
+    - .private/youtube/
     - experiments/youtube-cinematic-rollout/
     - experiments/youtube-cinematic-pilot/
     - workflows/youtube-cinematic-rollout/
@@ -216,14 +217,14 @@ outputs:
     producer: dry_run_cinematic_upload
     gated_by: release_readiness
   - id: cinematic_upload_report
-    path_template: "publications/{package}/artifacts/video/{package_name}-cinematic-upload-report.json"
+    path_template: ".private/youtube/generated/{package}/artifacts/video/{package_name}-cinematic-upload-report.json"
     required: conditional
     required_when: cinematic upload is applied
     format: json
     producer: upload_cinematic_video
     gated_by: release_readiness
   - id: studio_card_end_screen_readback
-    path_template: "publications/{package}/artifacts/video/{package_name}-studio-readback.json"
+    path_template: ".private/youtube/generated/{package}/artifacts/video/{package_name}-studio-readback.json"
     required: conditional
     required_when: a cinematic upload has a YouTube research-breakdown target
     format: json
@@ -236,13 +237,13 @@ outputs:
     format: srt
     producer: wait_for_captions
   - id: shorts_candidate_report
-    path_template: "publications/{package}/artifacts/video/daily-cinematic-rollout/{package_name}-short-candidates.json"
+    path_template: ".private/youtube/generated/{package}/artifacts/video/daily-cinematic-rollout/{package_name}-short-candidates.json"
     required: conditional
     required_when: timed captions are available for Shorts selection
     format: json
     producer: extract_and_score_shorts_candidates
   - id: package_shorts_manifest
-    path_template: "publications/{package}/artifacts/video/shorts/shorts_manifest.json"
+    path_template: ".private/youtube/generated/{package}/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
     required: conditional
     required_when: approved Shorts are scheduled or uploaded
     format: json
@@ -262,7 +263,7 @@ behavior:
       on_fail: stop
     - id: backlog_manifest_exists
       check: path_exists
-      target: experiments/youtube-cinematic-rollout/backlog_manifest.yaml
+      target: .private/youtube/cinematic-rollout/backlog_manifest.yaml
       on_fail: stop
     - id: in_flight_reconciled_before_new_generation
       check: backlog_in_flight_entries_are_handled_before_new_candidates
@@ -434,7 +435,7 @@ steps:
     title: Reconcile backlog state
     mode: scriptable
     executor:
-      command: ".venv/bin/python scripts/run_daily_cinematic_rollout.py --manifest experiments/youtube-cinematic-rollout/backlog_manifest.yaml"
+      command: ".venv/bin/python scripts/run_daily_cinematic_rollout.py --manifest .private/youtube/cinematic-rollout/backlog_manifest.yaml"
     consumes:
       - package_status
       - package_readme
@@ -566,7 +567,7 @@ steps:
   - id: materialize_package_shorts_manifest
     title: Materialize package Shorts manifest
     mode: codex_session
-    action: Write approved, scheduled Shorts into the package-local Shorts manifest only after quality gates pass.
+    action: Write approved, scheduled Shorts into the private Shorts manifest only after quality gates pass.
     consumes:
       - shorts_candidate_report
       - recovered_cinematic_captions

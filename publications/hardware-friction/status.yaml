@@ -32,7 +32,7 @@ stages:
 config:
   default_leaf_package: hardware-friction/what-actually-works-the-hardware
   leaf_packages:
-    - hardware-friction/what-actually-works-the-hardware
+  - hardware-friction/what-actually-works-the-hardware
   markdown_path: publications/hardware-friction/what-actually-works-the-hardware/what-actually-works-the-hardware.md
   blueprint_path: umbrella-governing-brief.md
   evidence_path: publications/hardware-friction/research_artifacts
@@ -42,19 +42,14 @@ config:
   notebooklm_posts:
     the-hardware-friction-map:
       primary:
-        id: 02eb281e-2fe7-459b-8b0e-57cbe2738337
         title: The Hardware Friction Map for Neural Architecture
-        url: https://notebooklm.google.com/notebook/REDACTED
-        reason: Matched by notebook title and full audio, slide, video, and infographic artifact set.
+        reason: Matched by notebook title and full audio, slide, video, and infographic
+          artifact set.
       related: []
     what-actually-works-the-hardware:
       primary:
-        id: 3be56bf2-410a-40ce-85e2-d6c7a16162ca
         title: The Hardware Compatibility Filter for LLM Success
-        url: https://notebooklm.google.com/notebook/REDACTED
         reason: Matched by source title and Hardware Compatibility Filter artifacts.
       related:
-        - id: 02eb281e-2fe7-459b-8b0e-57cbe2738337
-          title: The Hardware Friction Map for Neural Architecture
-          url: https://notebooklm.google.com/notebook/REDACTED
-          reason: Shorter sibling hardware-friction publication notebook.
+      - title: The Hardware Friction Map for Neural Architecture
+        reason: Shorter sibling hardware-friction publication notebook.

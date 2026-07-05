@@ -18,6 +18,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, quote, urlparse
 
 import content_agent
+from private_registry import resolve_primary_notebook_for_status, upsert_primary_notebook_for_status
 from research_exit_support import build_research_exit_gate_path
 
 
@@ -224,14 +225,15 @@ def notebooklm_setup_context(package_arg: str) -> dict[str, object]:
     config = status_data.get("config") if isinstance(status_data, dict) else {}
     if not isinstance(config, dict):
         config = {}
+    private_notebook = resolve_primary_notebook_for_status(manifest_ref.status_path, status_data)
     default_artifacts_path = f"publications/{package_key}/artifacts"
     return {
         "package": package_key,
         "status_path": content_agent.repo_relpath(manifest_ref.status_path),
         "default_artifacts_path": default_artifacts_path,
-        "notebooklm_notebook_id": config.get("notebooklm_notebook_id") or "",
+        "notebooklm_notebook_id": (private_notebook or {}).get("id") or "",
         "notebooklm_notebook_title": config.get("notebooklm_notebook_title") or "",
-        "notebooklm_notebook_url": config.get("notebooklm_notebook_url") or "",
+        "notebooklm_notebook_url": (private_notebook or {}).get("url") or "",
         "artifacts_path": config.get("artifacts_path") or default_artifacts_path,
     }
 
@@ -1040,11 +1042,13 @@ def notebooklm_setup_action_payload(
         raise ValueError("status.yaml config must be a mapping")
     clean_id = (notebook_id or "").strip()
     clean_title = (notebook_title or "").strip()
-    if clean_id:
-        config["notebooklm_notebook_id"] = clean_id
     if clean_title:
         config["notebooklm_notebook_title"] = clean_title
-    if not (config.get("notebooklm_notebook_id") or config.get("notebooklm_notebook_title")):
+    if clean_id and clean_title:
+        upsert_primary_notebook_for_status(manifest_ref.status_path, package_key, clean_id, clean_title)
+    for private_key in ("notebooklm_notebook_id", "notebooklm_notebook_url"):
+        config.pop(private_key, None)
+    if not (clean_id or config.get("notebooklm_notebook_title")):
         raise ValueError("NotebookLM notebook id or exact title is required")
     artifacts_relpath, artifacts_dir = package_scoped_artifacts_path(package_key, artifacts_path)
     config["artifacts_path"] = artifacts_relpath
@@ -1059,9 +1063,9 @@ def notebooklm_setup_action_payload(
         "package": package_key,
         "status_path": content_agent.repo_relpath(manifest_ref.status_path),
         "artifacts_path": artifacts_relpath,
-        "notebooklm_notebook_id": config.get("notebooklm_notebook_id") or "",
+        "notebooklm_notebook_id": clean_id,
         "notebooklm_notebook_title": config.get("notebooklm_notebook_title") or "",
-        "message": "NotebookLM setup saved to package status.yaml.",
+        "message": "NotebookLM setup saved with public title in status.yaml and private ID in the local overlay.",
     }
 
 

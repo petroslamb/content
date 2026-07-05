@@ -6,9 +6,7 @@ config:
   markdown_path: publications/autonomous-agents/essays/optimization/06-workflow-optimization-and-evaluation.md
   substack_slug: operating-agents-bonus-the-workflow
   substack_url: https://lambpetros.substack.com
-  notebooklm_notebook_id: REDACTED_NOTEBOOK_ID
-  notebooklm_notebook_title: "Chapters 9 and 11 Blueprint: Optimization and Self-Improvement"
-  notebooklm_notebook_url: https://notebooklm.google.com/notebook/REDACTED
+  notebooklm_notebook_title: 'Chapters 9 and 11 Blueprint: Optimization and Self-Improvement'
 stages:
   paper_intake:
     done: true
