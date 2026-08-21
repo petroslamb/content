@@ -1,0 +1,20 @@
+<article
+  class="portfolio-card"
+  data-portfolio-artifact="{{ post.artifactId }}"
+  data-portfolio-tier="{{ post.portfolioSection }}"
+  data-portfolio-order="{{ post.portfolioOrder }}"
+>
+  <div class="portfolio-card__meta">
+    <span>{{ post.formattedDate }}</span>
+    {% if post.seriesTitle %}
+    <span>{{ post.seriesTitle }}</span>
+    {% endif %}
+  </div>
+  <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+  <p class="portfolio-card__why"><strong>Why this matters</strong>{{ post.portfolioAnnotation }}</p>
+  <div class="portfolio-card__links">
+    <a href="{{ post.url }}">Read on Substack</a>
+    <a href="{{ post.portfolioEvidenceUrl }}">Evidence trail</a>
+    <a href="{{ post.permalink | url }}">Mirror copy</a>
+  </div>
+</article>

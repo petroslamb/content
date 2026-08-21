@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from urllib.parse import urlparse
 
+import yaml
 from bs4 import BeautifulSoup
 
 from archive_utils import (
@@ -24,9 +25,25 @@ from editorial_atlas_utils import (
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MIRROR_OUTPUT = REPO_ROOT / "publication_strategy_and_archive" / "mirror" / "_site"
+PORTFOLIO_MANIFEST_PATH = Path(
+    os.environ.get(
+        "PORTFOLIO_MANIFEST_PATH",
+        REPO_ROOT
+        / "publication_strategy_and_archive"
+        / "portfolio"
+        / "portfolio_manifest.yaml",
+    )
+)
 EDITORIAL_ATLAS_DATA_PATH = GENERATED_ATLAS_DATA_PATH
 PATH_PREFIX = os.environ.get("ELEVENTY_PATH_PREFIX", "/").strip()
 SITE_URL = os.environ.get("MIRROR_SITE_URL", "https://petroslamb.github.io/content").rstrip("/")
+PROFESSIONAL_PROFILE_URL = "https://petroslamb.github.io/peterlamb/"
+AI_DISCLOSURE = (
+    "Rooted Layers is a historical archive of research and engineering work "
+    "developed with AI-assisted research, drafting, and media workflows. The "
+    "selected pieces are highlighted for their technical arguments, source "
+    "trails, and documented engineering contribution."
+)
 
 
 def normalize_path_prefix(raw: str) -> str:
@@ -82,6 +99,127 @@ def validate_metadata() -> list[dict[str, str]]:
             if not hero.exists():
                 raise SystemExit(f"Missing hero image referenced by metadata: {hero}")
     return manifest
+
+
+def load_and_validate_portfolio_manifest(
+    metadata: list[dict[str, str]],
+) -> dict[str, object]:
+    if not PORTFOLIO_MANIFEST_PATH.exists():
+        raise SystemExit(
+            f"Missing portfolio manifest: {PORTFOLIO_MANIFEST_PATH}. "
+            "Generate the reviewed decision layer before building the mirror."
+        )
+
+    portfolio = yaml.safe_load(PORTFOLIO_MANIFEST_PATH.read_text(encoding="utf-8")) or {}
+    if portfolio.get("professional_profile_url") != PROFESSIONAL_PROFILE_URL:
+        raise SystemExit(
+            "Portfolio manifest professional_profile_url must equal "
+            f"{PROFESSIONAL_PROFILE_URL}"
+        )
+    if portfolio.get("ai_disclosure") != AI_DISCLOSURE:
+        raise SystemExit("Portfolio manifest does not contain the exact AI disclosure")
+
+    homepage = portfolio.get("homepage")
+    artifacts = portfolio.get("artifacts")
+    if not isinstance(homepage, dict):
+        raise SystemExit("Portfolio manifest homepage must be an object")
+    if not isinstance(artifacts, list):
+        raise SystemExit("Portfolio manifest artifacts must be a list")
+
+    artifacts_by_id: dict[str, dict[str, object]] = {}
+    for artifact in artifacts:
+        if not isinstance(artifact, dict) or not artifact.get("artifact_id"):
+            raise SystemExit("Every portfolio artifact must have an artifact_id")
+        artifact_id = str(artifact["artifact_id"])
+        if artifact_id in artifacts_by_id:
+            raise SystemExit(f"Duplicate portfolio artifact_id: {artifact_id}")
+        artifacts_by_id[artifact_id] = artifact
+
+    metadata_by_slug = {str(entry["slug"]): entry for entry in metadata}
+    post_map = load_post_map()
+    selected_ids: set[str] = set()
+    expected: dict[str, list[dict[str, object]]] = {
+        "FLAGSHIP": [],
+        "SUPPORTING": [],
+    }
+    for tier, key in (
+        ("FLAGSHIP", "flagship_artifact_ids"),
+        ("SUPPORTING", "supporting_artifact_ids"),
+    ):
+        artifact_ids = homepage.get(key, [])
+        if not isinstance(artifact_ids, list):
+            raise SystemExit(f"Portfolio homepage.{key} must be a list")
+        if len(artifact_ids) > 4:
+            raise SystemExit(f"Portfolio homepage exceeds four {tier.lower()} essays")
+        if len(set(artifact_ids)) != len(artifact_ids):
+            raise SystemExit(f"Portfolio homepage.{key} contains duplicate ids")
+
+        for order, raw_artifact_id in enumerate(artifact_ids, start=1):
+            artifact_id = str(raw_artifact_id)
+            if artifact_id in selected_ids:
+                raise SystemExit(
+                    f"Portfolio artifact appears in more than one homepage tier: {artifact_id}"
+                )
+            selected_ids.add(artifact_id)
+            artifact = artifacts_by_id.get(artifact_id)
+            if artifact is None:
+                raise SystemExit(
+                    f"Portfolio homepage references unknown artifact: {artifact_id}"
+                )
+            if artifact.get("platform") != "SUBSTACK":
+                raise SystemExit(
+                    f"Portfolio homepage artifact must be SUBSTACK: {artifact_id}"
+                )
+            if artifact.get("selection_tier") != tier:
+                raise SystemExit(
+                    f"Portfolio homepage artifact {artifact_id} must be tier {tier}"
+                )
+            placement = artifact.get("homepage") or {}
+            if not isinstance(placement, dict):
+                raise SystemExit(f"Portfolio artifact homepage must be an object: {artifact_id}")
+            if placement.get("section") != tier or placement.get("order") != order:
+                raise SystemExit(
+                    f"Portfolio homepage order disagrees with artifact placement: {artifact_id}"
+                )
+
+            slug = str(artifact.get("platform_id") or "")
+            post = metadata_by_slug.get(slug)
+            if post is None or not post.get("mirror_enabled"):
+                raise SystemExit(
+                    f"Selected portfolio essay has no enabled mirror entry: {artifact_id}"
+                )
+            if artifact.get("current_url") != post.get("url"):
+                raise SystemExit(
+                    f"Selected portfolio essay URL drifted from archive metadata: {artifact_id}"
+                )
+            annotation = placement.get("annotation") or artifact.get("rationale")
+            if not isinstance(annotation, str) or not annotation.strip():
+                raise SystemExit(
+                    f"Selected portfolio essay is missing a homepage annotation: {artifact_id}"
+                )
+            expected[tier].append(
+                {
+                    "artifact_id": artifact_id,
+                    "slug": slug,
+                    "title": post_map.get(slug, {}).get("title") or post["title"],
+                    "url": post["url"],
+                    "annotation": annotation.strip(),
+                }
+            )
+
+    for artifact_id, artifact in artifacts_by_id.items():
+        placement = artifact.get("homepage") or {}
+        if not isinstance(placement, dict):
+            continue
+        if placement.get("section") in expected and artifact_id not in selected_ids:
+            raise SystemExit(
+                f"Portfolio artifact has an unmanifested homepage placement: {artifact_id}"
+            )
+
+    return {
+        "manifest": portfolio,
+        "expected": expected,
+    }
 
 
 def validate_editorial_atlas() -> None:
@@ -223,6 +361,139 @@ def validate_editorial_atlas_route() -> None:
         raise SystemExit("Built mirror is missing /editorial-atlas/index.html")
 
 
+def validate_global_disclosure() -> None:
+    for html_file in iter_built_html_files():
+        relative_parts = html_file.relative_to(MIRROR_OUTPUT).parts
+        if relative_parts and relative_parts[0] == "raw":
+            continue
+        soup = BeautifulSoup(html_file.read_text(encoding="utf-8"), "html.parser")
+        disclosure = soup.select_one(".site-footer__disclosure")
+        if disclosure is None or disclosure.get_text(" ", strip=True) != AI_DISCLOSURE:
+            raise SystemExit(
+                f"Built mirror page is missing the exact global AI disclosure: {html_file}"
+            )
+
+
+def validate_curated_homepage(
+    portfolio: dict[str, object],
+) -> None:
+    homepage_path = MIRROR_OUTPUT / "index.html"
+    if not homepage_path.exists():
+        raise SystemExit("Built mirror is missing its homepage")
+    soup = BeautifulSoup(homepage_path.read_text(encoding="utf-8"), "html.parser")
+    page_text = soup.get_text(" ", strip=True)
+
+    if AI_DISCLOSURE not in page_text:
+        raise SystemExit("Homepage is missing the exact global AI disclosure")
+    profile_links = [
+        anchor
+        for anchor in soup.find_all("a", href=PROFESSIONAL_PROFILE_URL)
+        if anchor.get_text(" ", strip=True) == "Professional profile"
+    ]
+    if not profile_links:
+        raise SystemExit("Homepage is missing the Professional profile primary CTA")
+    primary_cta = soup.select_one(".hero__actions > a.button:not(.button--ghost)")
+    if primary_cta is None or primary_cta.get("href") != PROFESSIONAL_PROFILE_URL:
+        raise SystemExit("Professional profile must be the primary homepage CTA")
+
+    if "Recent additions" in page_text:
+        raise SystemExit("Homepage must not contain Recent additions")
+    if soup.select_one(".hero__stats") is not None:
+        raise SystemExit("Homepage must not contain archive statistics")
+    for anchor in soup.find_all("a", href=True):
+        if normalize_internal_path(urlparse(anchor["href"]).path) == "/editorial-atlas/":
+            raise SystemExit("Editorial atlas must not be promoted or linked on the homepage")
+
+    archive_links = [
+        anchor
+        for anchor in soup.find_all("a", href=True)
+        if normalize_internal_path(urlparse(anchor["href"]).path) == "/archive/"
+    ]
+    if not archive_links:
+        raise SystemExit("Homepage is missing a link to the complete archive")
+
+    expected_by_tier = portfolio["expected"]
+    assert isinstance(expected_by_tier, dict)
+    for tier in ("FLAGSHIP", "SUPPORTING"):
+        expected_items = expected_by_tier[tier]
+        cards = soup.select(f'[data-portfolio-tier="{tier}"]')
+        rendered_ids = [card.get("data-portfolio-artifact") for card in cards]
+        expected_ids = [item["artifact_id"] for item in expected_items]
+        if rendered_ids != expected_ids:
+            raise SystemExit(
+                f"Rendered {tier.lower()} order does not match the portfolio manifest: "
+                f"expected {expected_ids}, got {rendered_ids}"
+            )
+        for card, expected_item in zip(cards, expected_items, strict=True):
+            if expected_item["title"] not in card.get_text(" ", strip=True):
+                raise SystemExit(
+                    f"Homepage card title mismatch for {expected_item['artifact_id']}"
+                )
+            if expected_item["annotation"] not in card.get_text(" ", strip=True):
+                raise SystemExit(
+                    f"Homepage annotation mismatch for {expected_item['artifact_id']}"
+                )
+            hrefs = {anchor.get("href") for anchor in card.find_all("a", href=True)}
+            if expected_item["url"] not in hrefs:
+                raise SystemExit(
+                    f"Homepage card is missing its canonical Substack link: "
+                    f"{expected_item['artifact_id']}"
+                )
+            if not any(
+                anchor.get_text(" ", strip=True) == "Evidence trail"
+                for anchor in card.find_all("a", href=True)
+            ):
+                raise SystemExit(
+                    f"Homepage card is missing its evidence link: {expected_item['artifact_id']}"
+                )
+
+    all_cards = soup.select("[data-portfolio-artifact]")
+    expected_count = sum(len(items) for items in expected_by_tier.values())
+    if len(all_cards) != expected_count:
+        raise SystemExit("Homepage contains portfolio cards not authorized by the manifest")
+
+    skip_link = soup.select_one('a.skip-link[href="#main-content"]')
+    main = soup.select_one('main#main-content[tabindex="-1"]')
+    if skip_link is None or main is None:
+        raise SystemExit("Homepage is missing the keyboard skip-link contract")
+    viewport = soup.find("meta", attrs={"name": "viewport"})
+    if viewport is None or "width=device-width" not in viewport.get("content", ""):
+        raise SystemExit("Homepage is missing the responsive viewport contract")
+
+    stylesheet = MIRROR_OUTPUT / "assets" / "styles.css"
+    styles = stylesheet.read_text(encoding="utf-8") if stylesheet.exists() else ""
+    if ":focus-visible" not in styles:
+        raise SystemExit("Mirror stylesheet is missing visible keyboard focus styles")
+    if "@media (max-width:" not in styles:
+        raise SystemExit("Mirror stylesheet is missing its mobile layout breakpoint")
+
+
+def validate_archive_preservation(metadata: list[dict[str, str]]) -> None:
+    mirrored = [entry for entry in metadata if entry.get("mirror_enabled")]
+    archive_path = MIRROR_OUTPUT / "archive" / "index.html"
+    if not archive_path.exists():
+        raise SystemExit("Built mirror is missing the complete archive page")
+    archive_soup = BeautifulSoup(archive_path.read_text(encoding="utf-8"), "html.parser")
+    archive_cards = archive_soup.select("[data-post-card]")
+    if len(archive_cards) != len(mirrored):
+        raise SystemExit(
+            "Complete archive does not contain every enabled public mirror entry: "
+            f"expected {len(mirrored)}, got {len(archive_cards)}"
+        )
+
+    for entry in mirrored:
+        slug = str(entry["slug"])
+        post_path = MIRROR_OUTPUT / "posts" / slug / "index.html"
+        if not post_path.exists():
+            raise SystemExit(f"Built mirror is missing selected archive route: {slug}")
+        post_soup = BeautifulSoup(post_path.read_text(encoding="utf-8"), "html.parser")
+        canonical = post_soup.find("link", rel="canonical")
+        if canonical is None or canonical.get("href") != entry["url"]:
+            raise SystemExit(
+                f"Mirrored essay canonical URL must remain on Substack: {slug}"
+            )
+
+
 def main() -> None:
     if not POST_MAP_PATH.exists():
         raise SystemExit(f"Missing post map: {POST_MAP_PATH}")
@@ -230,17 +501,24 @@ def main() -> None:
         raise SystemExit(f"Missing archive directory: {ARCHIVE_DIR}")
 
     manifest = validate_metadata()
+    portfolio = load_and_validate_portfolio_manifest(manifest)
     validate_editorial_atlas()
     validate_archive_assets(manifest)
     validate_readme_generation(load_post_map())
     validate_built_links()
     validate_editorial_atlas_route()
+    validate_global_disclosure()
+    validate_curated_homepage(portfolio)
+    validate_archive_preservation(manifest)
     print(
         json.dumps(
             {
                 "checked_posts": len(manifest),
                 "checked_html_files": len(iter_built_html_files()),
                 "checked_editorial_atlas": True,
+                "checked_portfolio_homepage": True,
+                "flagship_count": len(portfolio["expected"]["FLAGSHIP"]),
+                "supporting_count": len(portfolio["expected"]["SUPPORTING"]),
                 "generated_editorial_atlas": str(EDITORIAL_ATLAS_DATA_PATH),
                 "path_prefix": normalize_path_prefix(PATH_PREFIX),
             },

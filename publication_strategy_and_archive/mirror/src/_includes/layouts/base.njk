@@ -22,6 +22,7 @@
     {% endfor %}
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <div class="page-shell">
       <div class="ambient ambient-left"></div>
       <div class="ambient ambient-right"></div>
@@ -32,16 +33,16 @@
         </a>
         <nav class="site-nav" aria-label="Primary">
           <a href="{{ '/archive/' | url }}">Archive</a>
-          <a href="{{ '/editorial-atlas/' | url }}">Editorial Atlas</a>
           <a href="{{ site.substackUrl }}">Substack</a>
           <a href="{{ site.repoUrl }}">GitHub</a>
         </nav>
       </header>
-      <main>
+      <main id="main-content" tabindex="-1">
         {{ content | safe }}
       </main>
       <footer class="site-footer">
-        <p>{{ site.publicationTitle }} is published on <a href="{{ site.substackUrl }}">Substack</a>. This mirror keeps the public archive close to its research folders, source files, and build-in-public record.</p>
+        <p class="site-footer__disclosure">{{ archive.portfolio.disclosure }}</p>
+        <p>{{ site.publicationTitle }} is published on <a href="{{ site.substackUrl }}">Substack</a>, which remains the canonical publication surface. The <a href="{{ '/archive/' | url }}">complete public archive</a> remains available here.</p>
       </footer>
     </div>
   </body>

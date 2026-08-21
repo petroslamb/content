@@ -6,6 +6,7 @@ import json
 import mimetypes
 import re
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -22,9 +23,39 @@ BASE_URL = "https://lambpetros.substack.com"
 RSS_PATH = "/feed"
 ARCHIVE_API_PATH = "/api/v1/archive"
 POST_API_PATH = "/api/v1/posts/{slug}"
+ARCHIVE_PAGE_LIMIT = 50
+MAX_ARCHIVE_PAGES = 1_000
+COMPLETENESS_REPORT_PATH = ARCHIVE_DIR / "completeness_report.json"
 USER_AGENT = "RootedLayersMirror/1.0 (+https://github.com/petroslamb/content)"
 REMOTE_IMAGE_LINK = re.compile(r"\[\!\[([^\]]*)\]\((assets\/[^)]+)\)\]\((https?:\/\/[^)]+)\)")
 LOCAL_ASSET_REFERENCE = re.compile(r"assets\/([A-Za-z0-9._-]+)")
+
+
+@dataclass
+class DiscoveryOutcome:
+    posts: list[dict[str, str]]
+    post_map: dict[str, dict[str, Any]]
+    sources: dict[str, dict[str, Any]]
+
+    @property
+    def complete(self) -> bool:
+        return all(bool(source.get("complete")) for source in self.sources.values())
+
+    def as_report(self) -> dict[str, Any]:
+        failures = [
+            {
+                "source": name,
+                "error": source.get("error") or "source did not complete",
+            }
+            for name, source in self.sources.items()
+            if not source.get("complete")
+        ]
+        return {
+            "complete": self.complete,
+            "unique_post_count": len(self.posts),
+            "sources": self.sources,
+            "failures": failures,
+        }
 
 
 def normalize_slug(url: str) -> str:
@@ -36,48 +67,206 @@ def iso_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def discover_posts(session: requests.Session, base_url: str) -> list[dict[str, str]]:
-    rss_url = f"{base_url.rstrip('/')}{RSS_PATH}"
-    response = session.get(rss_url, timeout=30)
-    response.raise_for_status()
-    root = ET.fromstring(response.text)
-    discovered: dict[str, dict[str, str]] = {}
-    for item in root.findall("./channel/item"):
-        link = item.findtext("link", "").strip()
-        if not link or "/p/" not in link:
-            continue
-        slug = normalize_slug(link)
-        pub_date = item.findtext("pubDate", "").strip()
-        published_at = ""
-        if pub_date:
-            published_at = parsedate_to_datetime(pub_date).astimezone(timezone.utc).isoformat()
-        discovered[slug] = {
-            "slug": slug,
-            "url": link,
-            "published_at": published_at,
-        }
-    if discovered:
-        return list(discovered.values())
+def source_error(exc: Exception) -> str:
+    return f"{type(exc).__name__}: {exc}"
 
-    archive_url = f"{base_url.rstrip('/')}{ARCHIVE_API_PATH}"
-    response = session.get(
-        archive_url,
-        params={"sort": "new", "search": "", "offset": 0, "limit": 50},
-        timeout=30,
-    )
-    response.raise_for_status()
-    posts = response.json()
-    fallback: list[dict[str, str]] = []
-    for post in posts:
-        canonical_url = post.get("canonical_url") or f"{base_url.rstrip('/')}/p/{post['slug']}"
-        fallback.append(
-            {
-                "slug": post["slug"],
-                "url": canonical_url,
-                "published_at": post.get("post_date", ""),
+
+def discover_rss_posts(
+    session: requests.Session,
+    base_url: str,
+) -> tuple[list[dict[str, str]], dict[str, Any]]:
+    rss_url = f"{base_url.rstrip('/')}{RSS_PATH}"
+    discovered: dict[str, dict[str, str]] = {}
+    report: dict[str, Any] = {
+        "success": False,
+        "complete": False,
+        "item_count": 0,
+        "error": None,
+    }
+    try:
+        response = session.get(rss_url, timeout=30)
+        response.raise_for_status()
+        root = ET.fromstring(response.text)
+        for item in root.findall("./channel/item"):
+            link = item.findtext("link", "").strip()
+            if not link or "/p/" not in link:
+                continue
+            slug = normalize_slug(link)
+            pub_date = item.findtext("pubDate", "").strip()
+            published_at = ""
+            if pub_date:
+                published_at = parsedate_to_datetime(pub_date).astimezone(timezone.utc).isoformat()
+            discovered[slug] = {
+                "slug": slug,
+                "url": link,
+                "published_at": published_at,
             }
-        )
-    return fallback
+    except (requests.RequestException, ET.ParseError, TypeError, ValueError) as exc:
+        report["error"] = source_error(exc)
+        report["item_count"] = len(discovered)
+        return list(discovered.values()), report
+
+    report["success"] = True
+    report["complete"] = True
+    report["item_count"] = len(discovered)
+    return list(discovered.values()), report
+
+
+def discover_archive_api_posts(
+    session: requests.Session,
+    base_url: str,
+    *,
+    page_limit: int = ARCHIVE_PAGE_LIMIT,
+) -> tuple[list[dict[str, str]], dict[str, Any]]:
+    archive_url = f"{base_url.rstrip('/')}{ARCHIVE_API_PATH}"
+    discovered: dict[str, dict[str, str]] = {}
+    seen_page_fingerprints: set[tuple[str, ...]] = set()
+    report: dict[str, Any] = {
+        "success": False,
+        "complete": False,
+        "item_count": 0,
+        "pages_fetched": 0,
+        "termination": None,
+        "error": None,
+    }
+
+    if page_limit <= 0:
+        report["error"] = "page_limit must be positive"
+        return [], report
+
+    offset = 0
+    for _ in range(MAX_ARCHIVE_PAGES):
+        try:
+            response = session.get(
+                archive_url,
+                params={"sort": "new", "search": "", "offset": offset, "limit": page_limit},
+                timeout=30,
+            )
+            response.raise_for_status()
+            page = response.json()
+            if not isinstance(page, list):
+                raise ValueError(f"Unexpected archive response shape at offset {offset}")
+
+            normalized_page: list[dict[str, str]] = []
+            for post in page:
+                if not isinstance(post, dict) or not post.get("slug"):
+                    raise ValueError(f"Archive entry at offset {offset} is missing a slug")
+                slug = str(post["slug"])
+                canonical_url = post.get("canonical_url") or f"{base_url.rstrip('/')}/p/{slug}"
+                normalized_page.append(
+                    {
+                        "slug": slug,
+                        "url": str(canonical_url),
+                        "published_at": str(post.get("post_date") or ""),
+                    }
+                )
+        except (requests.RequestException, TypeError, ValueError) as exc:
+            report["error"] = source_error(exc)
+            report["termination"] = "request_failed"
+            break
+
+        report["success"] = True
+        report["pages_fetched"] += 1
+        if not normalized_page:
+            report["complete"] = True
+            report["termination"] = "empty_page"
+            break
+
+        fingerprint = tuple(post["slug"] for post in normalized_page)
+        if fingerprint in seen_page_fingerprints:
+            report["error"] = f"Repeated archive page at offset {offset}; pagination did not advance"
+            report["termination"] = "repeated_page"
+            break
+        seen_page_fingerprints.add(fingerprint)
+
+        for post in normalized_page:
+            discovered.setdefault(post["slug"], post)
+
+        if len(normalized_page) < page_limit:
+            report["complete"] = True
+            report["termination"] = "short_page"
+            break
+        offset += page_limit
+    else:
+        report["error"] = f"Archive pagination exceeded {MAX_ARCHIVE_PAGES} pages"
+        report["termination"] = "page_limit_exceeded"
+
+    report["item_count"] = len(discovered)
+    return list(discovered.values()), report
+
+
+def published_post_map_posts(
+    post_map: dict[str, dict[str, Any]],
+    base_url: str,
+) -> list[dict[str, str]]:
+    return [
+        {
+            "slug": slug,
+            "url": f"{base_url.rstrip('/')}/p/{slug}",
+            "published_at": "",
+        }
+        for slug, entry in post_map.items()
+        if entry.get("status") == "published"
+    ]
+
+
+def merge_discovered_posts(*sources: list[dict[str, str]]) -> list[dict[str, str]]:
+    merged: dict[str, dict[str, str]] = {}
+    for posts in sources:
+        for post in posts:
+            slug = post["slug"]
+            if slug not in merged:
+                merged[slug] = dict(post)
+                continue
+            for key in ("url", "published_at"):
+                if not merged[slug].get(key) and post.get(key):
+                    merged[slug][key] = post[key]
+    return list(merged.values())
+
+
+def discover_posts(
+    session: requests.Session,
+    base_url: str,
+    *,
+    post_map: dict[str, dict[str, Any]] | None = None,
+    archive_page_limit: int = ARCHIVE_PAGE_LIMIT,
+) -> DiscoveryOutcome:
+    rss_posts, rss_report = discover_rss_posts(session, base_url)
+    archive_posts, archive_report = discover_archive_api_posts(
+        session,
+        base_url,
+        page_limit=archive_page_limit,
+    )
+
+    post_map_report: dict[str, Any] = {
+        "success": False,
+        "complete": False,
+        "item_count": 0,
+        "error": None,
+    }
+    resolved_post_map: dict[str, dict[str, Any]] = {}
+    try:
+        resolved_post_map = load_post_map() if post_map is None else post_map
+        if not isinstance(resolved_post_map, dict):
+            raise ValueError("Expected post_map to be a mapping")
+        mapped_posts = published_post_map_posts(resolved_post_map, base_url)
+        post_map_report["success"] = True
+        post_map_report["complete"] = True
+        post_map_report["item_count"] = len(mapped_posts)
+    except Exception as exc:  # A local source failure must make cleanup fail closed.
+        mapped_posts = []
+        post_map_report["error"] = source_error(exc)
+
+    posts = merge_discovered_posts(rss_posts, archive_posts, mapped_posts)
+    return DiscoveryOutcome(
+        posts=posts,
+        post_map=resolved_post_map,
+        sources={
+            "rss": rss_report,
+            "archive_api": archive_report,
+            "post_map": post_map_report,
+        },
+    )
 
 
 def merge_with_published_post_map(
@@ -85,29 +274,10 @@ def merge_with_published_post_map(
     post_map: dict[str, dict[str, Any]],
     base_url: str,
 ) -> list[dict[str, str]]:
-    merged: list[dict[str, str]] = []
-    seen_slugs: set[str] = set()
-    for discovered in discovered_posts:
-        slug = discovered["slug"]
-        if slug in seen_slugs:
-            continue
-        seen_slugs.add(slug)
-        merged.append(discovered)
-
-    for slug, entry in post_map.items():
-        if slug in seen_slugs:
-            continue
-        if entry.get("status") != "published":
-            continue
-        merged.append(
-            {
-                "slug": slug,
-                "url": f"{base_url.rstrip('/')}/p/{slug}",
-                "published_at": "",
-            }
-        )
-        seen_slugs.add(slug)
-    return merged
+    return merge_discovered_posts(
+        discovered_posts,
+        published_post_map_posts(post_map, base_url),
+    )
 
 
 def fetch_post(session: requests.Session, base_url: str, slug: str) -> dict[str, Any]:
@@ -377,6 +547,25 @@ def cleanup_stale_assets(assets_dir: Path, desired_assets: set[str]) -> list[str
     return removed
 
 
+def load_existing_manifest() -> tuple[dict[str, dict[str, Any]], str | None]:
+    if not METADATA_PATH.exists():
+        return {}, None
+    try:
+        raw_manifest = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+        if not isinstance(raw_manifest, list):
+            raise ValueError("Expected metadata.json to contain a list")
+        existing_manifest: dict[str, dict[str, Any]] = {}
+        for entry in raw_manifest:
+            if not isinstance(entry, dict):
+                raise ValueError("Expected every metadata.json entry to be an object")
+            slug = slug_from_manifest_entry(entry)
+            if slug:
+                existing_manifest[slug] = entry
+        return existing_manifest, None
+    except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        return {}, source_error(exc)
+
+
 def sync_archive(base_url: str, output_dir: Path, summary_path: Path | None) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assets_dir = output_dir / "assets"
@@ -385,25 +574,18 @@ def sync_archive(base_url: str, output_dir: Path, summary_path: Path | None) -> 
     session = requests.Session()
     session.headers.update({"User-Agent": USER_AGENT})
 
-    discovered_posts = discover_posts(session, base_url)
-    existing_manifest = {}
-    if METADATA_PATH.exists():
-        try:
-            for entry in json.loads(METADATA_PATH.read_text(encoding="utf-8")):
-                slug = slug_from_manifest_entry(entry)
-                if slug:
-                    existing_manifest[slug] = entry
-        except json.JSONDecodeError:
-            existing_manifest = {}
-
-    post_map = load_post_map()
-    discovered_posts = merge_with_published_post_map(discovered_posts, post_map, base_url)
+    discovery = discover_posts(session, base_url)
+    discovered_posts = discovery.posts
+    post_map = discovery.post_map
+    existing_manifest, existing_manifest_error = load_existing_manifest()
     desired_assets: set[str] = set()
     expected_stems: set[str] = set()
     manifest: list[dict[str, Any]] = []
     updated_slugs: list[str] = []
     unchanged_slugs: list[str] = []
     missing_post_map: list[str] = []
+    fetch_failures: list[dict[str, str]] = []
+    excluded_non_public: list[dict[str, str]] = []
 
     seen_slugs: set[str] = set()
     for discovered in discovered_posts:
@@ -411,7 +593,15 @@ def sync_archive(base_url: str, output_dir: Path, summary_path: Path | None) -> 
         if slug in seen_slugs:
             continue
         seen_slugs.add(slug)
-        post = fetch_post(session, base_url, slug)
+        try:
+            post = fetch_post(session, base_url, slug)
+        except Exception as exc:  # A per-post source failure must block cleanup.
+            fetch_failures.append({"slug": slug, "error": source_error(exc)})
+            continue
+        audience = str(post.get("audience") or "").lower()
+        if audience != "everyone":
+            excluded_non_public.append({"slug": slug, "audience": audience or "unknown"})
+            continue
         content_hash = compute_content_hash(post)
         post_date = (post.get("post_date") or discovered["published_at"]).split("T")[0]
         canonical_url = post.get("canonical_url") or discovered["url"]
@@ -478,25 +668,79 @@ def sync_archive(base_url: str, output_dir: Path, summary_path: Path | None) -> 
             }
         )
 
-    manifest.sort(key=lambda item: item["post_date"], reverse=True)
-    removed_files = cleanup_stale_post_files(output_dir, expected_stems)
-    removed_assets = cleanup_stale_assets(assets_dir, desired_assets)
+    cleanup_blockers: list[str] = []
+    if not discovery.complete:
+        cleanup_blockers.append("discovery_incomplete")
+    if fetch_failures:
+        cleanup_blockers.append("post_fetch_incomplete")
+    if existing_manifest_error:
+        cleanup_blockers.append("existing_manifest_unreadable")
+    has_existing_post_files = any(output_dir.glob("*.md")) or any(output_dir.glob("*.html"))
+    if not discovered_posts and (existing_manifest or has_existing_post_files):
+        cleanup_blockers.append("empty_discovery_against_existing_archive")
+    cleanup_performed = not cleanup_blockers
+
+    preserved_manifest_slugs: list[str] = []
+    if not cleanup_performed:
+        manifest_slugs = {str(entry.get("slug") or "") for entry in manifest}
+        for slug, entry in existing_manifest.items():
+            if slug in manifest_slugs:
+                continue
+            manifest.append(entry)
+            preserved_manifest_slugs.append(slug)
+
+    manifest.sort(key=lambda item: str(item.get("post_date") or ""), reverse=True)
+    if cleanup_performed:
+        removed_files = cleanup_stale_post_files(output_dir, expected_stems)
+        removed_assets = cleanup_stale_assets(assets_dir, desired_assets)
+    else:
+        removed_files = []
+        removed_assets = []
 
     metadata_content = json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"
     write_text_if_changed(METADATA_PATH, metadata_content)
-    write_readme_publication_map(post_map)
+    post_map_complete = bool(discovery.sources["post_map"].get("complete"))
+    if post_map_complete:
+        write_readme_publication_map(post_map)
 
+    discovery_report = discovery.as_report()
+    source_failures = list(discovery_report["failures"])
+    source_failures.extend(
+        {
+            "source": f"post:{failure['slug']}",
+            "error": failure["error"],
+        }
+        for failure in fetch_failures
+    )
+    if existing_manifest_error:
+        source_failures.append(
+            {"source": "existing_manifest", "error": existing_manifest_error}
+        )
     summary = {
         "generated_at": iso_now(),
         "base_url": base_url,
+        "complete": not cleanup_blockers,
+        "inventory_scope": "public_substack_posts_only",
         "discovered_count": len(discovered_posts),
+        "discovery": discovery_report,
+        "source_failures": source_failures,
+        "post_fetch_failures": fetch_failures,
+        "excluded_non_public": excluded_non_public,
         "manifest_count": len(manifest),
         "updated_slugs": updated_slugs,
         "unchanged_slugs": unchanged_slugs,
         "removed_files": removed_files,
         "removed_assets": removed_assets,
+        "prune_allowed": cleanup_performed,
+        "cleanup": {
+            "performed": cleanup_performed,
+            "blockers": cleanup_blockers,
+        },
+        "existing_manifest_error": existing_manifest_error,
+        "preserved_manifest_slugs": sorted(preserved_manifest_slugs),
+        "readme_publication_map_refreshed": post_map_complete,
         "missing_post_map": sorted(missing_post_map),
-        "mirror_enabled_count": sum(1 for item in manifest if item["mirror_enabled"]),
+        "mirror_enabled_count": sum(1 for item in manifest if item.get("mirror_enabled")),
     }
     if summary_path:
         summary_path.parent.mkdir(parents=True, exist_ok=True)
@@ -514,8 +758,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--summary-path",
-        default="",
-        help="Optional path for a machine-readable sync summary",
+        default=str(COMPLETENESS_REPORT_PATH),
+        help="Path for the machine-readable completeness report",
     )
     return parser.parse_args()
 
@@ -525,6 +769,8 @@ def main() -> None:
     summary_path = Path(args.summary_path).resolve() if args.summary_path else None
     summary = sync_archive(args.base_url, Path(args.output_dir).resolve(), summary_path)
     print(json.dumps(summary, indent=2, ensure_ascii=False))
+    if not summary.get("complete"):
+        raise SystemExit("Substack refresh is incomplete; archive cleanup remained fail-closed.")
 
 
 if __name__ == "__main__":

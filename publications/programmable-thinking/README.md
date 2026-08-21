@@ -11,7 +11,8 @@ Single-publication package behind the published Rooted Layers essay *When the LL
 
 ## Orientation
 
-- Live draft surface: [`rlm-jupyter-integration.md`](rlm-jupyter-integration.md)
+- Canonical published source: [`when-the-llm-programs-its-own-thinking.md`](when-the-llm-programs-its-own-thinking.md), matching `status.yaml` and the tracked public snapshot
+- Earlier working source: [`rlm-jupyter-integration.md`](rlm-jupyter-integration.md); retain it for provenance, but do not treat it as the live authority
 - Companion paper surface: [`rlm_paper.md`](rlm_paper.md) and [`rlm_paper.pdf`](rlm_paper.pdf)
 - Review artifact: [`RUBRIC.md`](RUBRIC.md)
 - Distribution variants: the `rlm-jupyter-integration-*` files at the package root
@@ -28,6 +29,7 @@ Single-publication package behind the published Rooted Layers essay *When the LL
 
 ## Working Guidance
 
-- Treat [`rlm-jupyter-integration.md`](rlm-jupyter-integration.md) as the canonical live essay.
+- Treat [`when-the-llm-programs-its-own-thinking.md`](when-the-llm-programs-its-own-thinking.md) as the canonical published essay.
+- Treat [`rlm-jupyter-integration.md`](rlm-jupyter-integration.md) as an earlier working source whose small code and formatting differences do not override the published snapshot.
 - Treat the distribution variants as channel-specific derivatives, not as competing live drafts.
 - If another major revision cycle happens, keep the live essay stable and move superseded working variants into [`archive/`](archive/).

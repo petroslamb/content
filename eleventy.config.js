@@ -13,6 +13,9 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addWatchTarget("publication_strategy_and_archive/substack_archive");
   eleventyConfig.addWatchTarget("publication_strategy_and_archive/post_map.yaml");
+  eleventyConfig.addWatchTarget(
+    "publication_strategy_and_archive/portfolio/portfolio_manifest.yaml",
+  );
 
   eleventyConfig.addPassthroughCopy({
     "publication_strategy_and_archive/mirror/src/static": "assets",

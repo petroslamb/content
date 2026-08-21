@@ -167,6 +167,7 @@ The published archive is tracked centrally in `publication_strategy_and_archive/
 <!-- GENERATED_PUBLICATION_MAP:START -->
 | Substack Publication | Repository Folder |
 | :--- | :--- |
+| **Harnesses That Learn Under Audit** | *(N/A / Root)* |
 | **The Specification Surface Is the New Source of Truth** | `publications/literate-workflow-programming/specification-surface-source-of-truth/` |
 | **Confidence Debt** | `publications/confidence-debt/` |
 | **The Binding Gap** | `publications/binding-gap/` |

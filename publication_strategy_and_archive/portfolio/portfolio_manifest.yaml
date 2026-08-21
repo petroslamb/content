@@ -1,0 +1,1968 @@
+schema_version: 1
+portfolio_version: 2026-08-22.1
+generated_at: '2026-08-22T00:00:00+00:00'
+source_snapshot: publication_strategy_and_archive/portfolio/corpus_snapshot.json
+source_snapshot_sha256: 85b97d181c6afaef21025bbea0b48b199b4bb958155aecbcf97cfb2b2662c856
+source_reviews:
+- publication_strategy_and_archive/portfolio/blind_review_a.yaml
+- publication_strategy_and_archive/portfolio/blind_review_b.yaml
+source_reconciliation: publication_strategy_and_archive/portfolio/review_reconciliation.yaml
+professional_profile_url: https://petroslamb.github.io/peterlamb/
+mirror_url: https://petroslamb.github.io/content/
+ai_disclosure: Rooted Layers is a historical archive of research and engineering work
+  developed with AI-assisted research, drafting, and media workflows. The selected
+  pieces are highlighted for their technical arguments, source trails, and documented
+  engineering contribution.
+homepage:
+  flagship_artifact_ids:
+  - substack:the-specification-surface-is-the
+  - substack:confidence-debt
+  - substack:when-the-llm-programs-its-own-thinking
+  - substack:the-illusion-of-the-swarm
+  supporting_artifact_ids:
+  - substack:harnesses-that-learn-under-audit-e06
+  - substack:the-binding-gap
+  - substack:neural-architecture-design-as-a-compositional-32e
+youtube:
+  expected_channel_id: UCzCa0hUNcpRt3LMZP9A8PPA
+  expected_channel_title: Rooted Layers | AI Systems Grounded in Research
+  expected_uploads_playlist_id: UUzCa0hUNcpRt3LMZP9A8PPA
+  snapshot_timestamp: '2026-08-21T21:43:21.683390+00:00'
+  source_ledger_sha256: 09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9
+  selected_video_ids:
+  - hNVBrptmRVs
+  unlist_video_ids:
+  - Ue9gGySTVRI
+  - bsvMg8LUb1M
+  - QRD1FJiKTfU
+  - 4UzuyKGNaKc
+  - PV-KfDYiLPo
+  - qTucAFn5g8Y
+  - T-XSEz2bQUk
+  - QCK0hPc0dPM
+  playlist:
+    title: Selected Rooted Layers — AI Systems & Engineering
+    create_or_update: false
+    surface_on_channel_homepage: false
+editorial_follow_up:
+  rewrite_candidates:
+  - the-autonomy-tax
+  - the-transformer-attractor
+  - the-hardware-friction-map
+  - what-actually-works-the-hardware
+  merge_candidates:
+  - the-orchestration-paradigm-series
+  - the-orchestration-paradigm-issue
+  - the-orchestration-paradigm-issue-cf4
+  - the-orchestration-paradigm-issue-397
+  phase_boundary: These are labels only. No article rewrite, merge draft, or Substack
+    edit is authorized in this implementation phase.
+artifacts:
+- artifact_id: substack:harnesses-that-learn-under-audit-e06
+  platform: SUBSTACK
+  platform_id: harnesses-that-learn-under-audit-e06
+  title: Harnesses That Learn Under Audit (Video)
+  current_url: https://lambpetros.substack.com/p/harnesses-that-learn-under-audit-e06
+  current_visibility: PUBLIC
+  family_id: family:agent-harnesses
+  relationships: []
+  selection_tier: SUPPORTING
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: SUPPORTING
+    order: 1
+    annotation: Offers a sharp five-part adoption audit for proving that a learned
+      harness change actually shaped a later consequential run.
+    evidence_url: https://github.com/petroslamb/content/blob/main/publications/agent-harnesses/status.yaml
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Adoption-audit synthesis for proving that a learned harness
+      change shaped a later consequential run.
+  source_lineage:
+    status: PARTIAL
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-07-07_harnesses-that-learn-under-audit-e06.md
+    status_manifest: publications/agent-harnesses/status.yaml
+    readme: publications/agent-harnesses/README.md
+    working_source: null
+    notes: The public snapshot is authoritative, but the only matching package is
+      a pre-viability scaffold and the newest cited papers are not locally captured.
+      This prevents flagship selection and is disclosed in the manifest.
+  factual_risk:
+    status: MEDIUM
+    notes: Most core claims are normative and carefully bounded, but all cited research
+      is extremely recent, the paper summaries were not locally verified, and no evidence
+      validates the full five-part audit as one production control system.
+  evidence_anchors:
+  - 'L12-L18: States the adoption-under-pressure thesis and defines capability as
+    a model-harness configuration.'
+  - 'L22-L32: Separates harness evaluation from attractive traces and distinguishes
+    availability, exposure, and adherence evidence.'
+  - 'L36-L44: Grounds repair in failed trajectories, environment-state verification,
+    and explicit protocol authority questions.'
+  - 'L48-L62: Gives a concrete before-and-after recovery flow with bounded workers,
+    independent review, integration, and release gates.'
+  - 'L64-L92: Specifies invocation, consumption, adherence, independent review, and
+    regression as the adoption audit.'
+  rationale: A strong operational synthesis that makes the right unit of evaluation
+    the model-harness configuration and introduces a reusable adoption audit for learned
+    workflow changes. It is not flagship evidence because the five-part audit is proposed
+    rather than demonstrated, the article substantially overlaps the governance flagships,
+    and the video-first wrapper leaves the Markdown without a concrete implementation
+    or evaluation result.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-specification-surface-is-the
+  platform: SUBSTACK
+  platform_id: the-specification-surface-is-the
+  title: The Specification Surface Is the New Source of Truth
+  current_url: https://lambpetros.substack.com/p/the-specification-surface-is-the
+  current_visibility: PUBLIC
+  family_id: family:specification-surface-source-of-truth
+  relationships: []
+  selection_tier: FLAGSHIP
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: FLAGSHIP
+    order: 1
+    annotation: Defines a governed specification surface and turns it into a practical
+      architecture for authority, invariants, execution, and review.
+    evidence_url: https://github.com/petroslamb/content/blob/main/publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Governed specification-surface architecture connecting
+      authority, execution, invariants, and review.
+  source_lineage:
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-05-01_the-specification-surface-is-the.md
+    status_manifest: publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+    readme: publications/literate-workflow-programming/specification-surface-source-of-truth/README.md
+    working_source: publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
+    notes: Status, README, canonical working source, archive paths, and published
+      URL agree in authority; export-only metadata and asset differences are benign.
+  factual_risk:
+    status: MEDIUM
+    notes: The argument relies heavily on recent 2025-2026 preprints, but it narrows
+      their licensed claims explicitly.
+  evidence_anchors:
+  - 'L22-L36: Defines the specification surface and its authority spectrum.'
+  - 'L40-L48: Uses specification-gap evidence to explain coordination failure and
+    recovery.'
+  - 'L58-L78: Builds the execution, invariant, and audit control stack.'
+  - 'L90-L112: Converts the thesis into review doctrine while preserving scope limits.'
+  rationale: The strongest pure systems-architecture essay in the corpus. It defines
+    a governed specification surface, distinguishes levels of authority, connects
+    specifications to execution, invariants, and audit, and ends with usable review
+    doctrine and explicit limits.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:confidence-debt
+  platform: SUBSTACK
+  platform_id: confidence-debt
+  title: Confidence Debt
+  current_url: https://lambpetros.substack.com/p/confidence-debt
+  current_visibility: PUBLIC
+  family_id: family:confidence-debt
+  relationships: []
+  selection_tier: FLAGSHIP
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: FLAGSHIP
+    order: 2
+    annotation: Connects a first-party evidence failure to an operational doctrine
+      for claim auditability, reliability release, and human co-audit.
+    evidence_url: https://github.com/petroslamb/content/blob/main/publications/confidence-debt/confidence-debt.md
+  provenance:
+    status: MIXED
+    documented_contribution: First-party evidence-failure case converted into claim-auditability,
+      reliability-release, and human co-audit controls.
+  source_lineage:
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-04-17_confidence-debt.md
+    status_manifest: publications/confidence-debt/status.yaml
+    readme: publications/confidence-debt/README.md
+    working_source: publications/confidence-debt/confidence-debt.md
+    notes: The published object and package thesis agree. Standard lifecycle flags
+      remain incomplete because this package used thesis-stress and evidence- fusion
+      stages; that metadata inconsistency is documented but does not create a competing
+      essay authority.
+  factual_risk:
+    status: MEDIUM
+    notes: The first-party case is narrow and the integrated three-gate stack has
+      not been tested as one system; several external support papers are also very
+      recent.
+  evidence_anchors:
+  - 'L12-L18: Reports the 13-of-15 follow-up burden, 81 rows, 47 direct adjudications,
+    eight contradictions, and three downgraded claims.'
+  - 'L28-L44: Defines confidence debt as downstream trust outrunning evidence.'
+  - 'L66-L90: Reframes benchmark interpretation as a reliability-release problem.'
+  - 'L124-L160: Marks the cascade as a structural inference and presents a rival frame
+    and limits.'
+  - 'L194-L202: Identifies the project repository and commit-pinned evidence artifacts.'
+  rationale: Combines an inspectable first-party failure with a reusable operational
+    concept, then turns it into claim-auditability, reliability-release, and co-audit
+    controls. The public essay is unusually explicit that the cross-layer cascade
+    is convergent evidence rather than an end-to-end causal result.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-binding-gap
+  platform: SUBSTACK
+  platform_id: the-binding-gap
+  title: The Binding Gap
+  current_url: https://lambpetros.substack.com/p/the-binding-gap
+  current_visibility: PUBLIC
+  family_id: family:binding-gap
+  relationships: []
+  selection_tier: SUPPORTING
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: SUPPORTING
+    order: 2
+    annotation: Provides a compact diagnostic for systems that preserve the right
+      facts while attaching them to the wrong entities, roles, or variables.
+    evidence_url: https://github.com/petroslamb/content/blob/main/publications/binding-gap/the-binding-gap.md
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Mechanism-level synthesis connecting exact binding research
+      to engineering failure modes.
+  source_lineage:
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-04-04_the-binding-gap.md
+    status_manifest: publications/binding-gap/status.yaml
+    readme: publications/binding-gap/README.md
+    working_source: publications/binding-gap/the-binding-gap.md
+    notes: The README and status manifest were reconciled to the byte-identical lowercase
+      canonical source and live Substack URL; uppercase files remain prior variants.
+  factual_risk:
+    status: MEDIUM
+    notes: The extension from controlled binding research to citation, legal, clinical,
+      and code failures is plausible but not broadly demonstrated.
+  evidence_anchors:
+  - 'L10-L18: Defines binding and exact binding.'
+  - 'L22-L44: Connects entity and role mechanisms to structured evidence extraction.'
+  - 'L46-L52: Separates binding from representation and reasoning failures.'
+  - 'L54-L64: Offers engineering implications and a falsifiable wager.'
+  rationale: A compact and memorable mechanism-level frame for outputs that contain
+    the right entities, roles, and values but attach them incorrectly. It handles
+    borders and predictions more responsibly than most essays that bridge cognitive
+    mechanisms to engineering failures.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:operating-agents-preface-a-field
+  platform: SUBSTACK
+  platform_id: operating-agents-preface-a-field
+  title: 'Operating Agents Guide: Preface'
+  current_url: https://lambpetros.substack.com/p/operating-agents-preface-a-field
+  current_visibility: PUBLIC
+  family_id: family:operating-agents-preface-a-field
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: VERIFIED_REPO
+    documented_contribution: Direct repository artifacts trace the described contribution.
+  source_lineage:
+    status: RESOLVED
+    notes: The essays, companions, and blueprints it describes exist in the package.
+      Public-versus-local differences are formatting, public links, and removed Substack
+      boilerplate.
+    conflicts:
+    - The essays, companions, and blueprints it describes exist in the package.
+    - Public-versus-local differences are formatting, public links, and removed Substack
+      boilerplate.
+  factual_risk:
+    status: LOW
+    notes: It makes few external factual claims.
+  evidence_anchors:
+  - 'L8-L18: States the builder-first course promise.'
+  - 'L36-L52: Maps the six course layers.'
+  - 'L96-L120: Gives public and architecture-review reading paths.'
+  rationale: Useful course navigation and a clear learning contract, but not a standalone
+    technical credibility artifact.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:operating-agents-bonus-the-workflow
+  platform: SUBSTACK
+  platform_id: operating-agents-bonus-the-workflow
+  title: 'Operating Agents Bonus: Workflow Optimization and Evaluation'
+  current_url: https://lambpetros.substack.com/p/operating-agents-bonus-the-workflow
+  current_visibility: PUBLIC
+  family_id: family:operating-agents-bonus-the-workflow
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Traceable literature or engineering synthesis without
+      first-party validation of the combined thesis.
+  source_lineage:
+    status: RESOLVED
+    notes: None material; local and public differences are export formatting and links.
+    conflicts:
+    - None material; local and public differences are export formatting and links.
+  factual_risk:
+    status: MEDIUM
+    notes: The recommendations are cautious, but no first-party optimization study
+      validates the proposed ordering.
+  evidence_anchors:
+  - 'L10-L24: Treats the workflow as the optimization object.'
+  - 'L44-L60: Prioritizes measurement and inexpensive fixes.'
+  - 'L62-L74: Separates bounded self-improvement from governance authority.'
+  rationale: Sound builder synthesis, but too generic and course-dependent for the
+    capped showcase.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:operating-agents-v-the-attack-surface
+  platform: SUBSTACK
+  platform_id: operating-agents-v-the-attack-surface
+  title: 'Operating Agents V: Trust Boundaries and Agent Safety'
+  current_url: https://lambpetros.substack.com/p/operating-agents-v-the-attack-surface
+  current_visibility: PUBLIC
+  family_id: family:operating-agents-v-the-attack-surface
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Traceable literature or engineering synthesis without
+      first-party validation of the combined thesis.
+  source_lineage:
+    status: RESOLVED
+    notes: No material claim conflict; public and local differences are formatting
+      and link normalization. No first-party safety evaluation is supplied.
+    conflicts:
+    - No material claim conflict; public and local differences are formatting and
+      link normalization.
+    - No first-party safety evaluation is supplied.
+  factual_risk:
+    status: MEDIUM
+    notes: Some contamination language generalizes from adversarial demonstrations
+      to broader production systems.
+  evidence_anchors:
+  - 'L10-L20: Frames safety as a trust-boundary problem.'
+  - 'L36-L52: Covers tools, memory, and inter-agent contamination.'
+  - 'L54-L70: Specifies build order, approval, verification, and testing.'
+  rationale: A credible and useful safety chapter, but the new harness-audit essay
+    covers a broader operational control surface while the strict supporting cap favors
+    more distinctive work.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:operating-agents-iv-the-second-agent
+  platform: SUBSTACK
+  platform_id: operating-agents-iv-the-second-agent
+  title: 'Operating Agents IV: Multi-Agent Boundaries and Handoffs'
+  current_url: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+  current_visibility: PUBLIC
+  family_id: family:operating-agents-iv-the-second-agent
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Traceable literature or engineering synthesis without
+      first-party validation of the combined thesis.
+  source_lineage:
+    status: RESOLVED
+    notes: None material; recommendations remain author synthesis rather than direct
+      experimental findings.
+    conflicts:
+    - None material; recommendations remain author synthesis rather than direct experimental
+      findings.
+  factual_risk:
+    status: MEDIUM
+    notes: The advice is conservative, but no first-party topology comparison is presented.
+  evidence_anchors:
+  - 'L10-L22: Establishes the single-agent baseline.'
+  - 'L24-L38: Explains handoff loss and boundary economics.'
+  - 'L40-L56: Gives conservative topology escalation and preserves the human node.'
+  - 'L58-L70: Requires baseline, cost, and debug evaluation.'
+  rationale: A strong course chapter, excluded because The Illusion of the Swarm covers
+    the same portfolio territory with more originality, evidence depth, and falsifiable
+    claims.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:operating-agents-iii-diagnose-the
+  platform: SUBSTACK
+  platform_id: operating-agents-iii-diagnose-the
+  title: 'Operating Agents III: Reasoning Scaffolds and Planning'
+  current_url: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+  current_visibility: PUBLIC
+  family_id: family:operating-agents-iii-diagnose-the
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Traceable literature or engineering synthesis without
+      first-party validation of the combined thesis.
+  source_lineage:
+    status: RESOLVED
+    notes: None material; the source index recovers the cited methods.
+    conflicts:
+    - None material; the source index recovers the cited methods.
+  factual_risk:
+    status: MEDIUM
+    notes: The ladder is a useful author-designed heuristic, not a validated universal
+      ordering.
+  evidence_anchors:
+  - 'L10-L20: Starts with failure diagnosis and the lightest useful scaffold.'
+  - 'L22-L38: Separates reasoning, planning, decomposition, and ReAct.'
+  - 'L40-L54: Distinguishes refinement, reflection, and verification.'
+  - 'L56-L72: Escalates to search-heavy methods only when warranted.'
+  rationale: A competent taxonomy and escalation ladder, but familiar material with
+    limited distinctive authorship signal.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:operating-agents-ii-memory-needs
+  platform: SUBSTACK
+  platform_id: operating-agents-ii-memory-needs
+  title: 'Operating Agents II: Memory Systems and Authority'
+  current_url: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
+  current_visibility: PUBLIC
+  family_id: family:operating-agents-ii-memory-needs
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Traceable literature or engineering synthesis without
+      first-party validation of the combined thesis.
+  source_lineage:
+    status: RESOLVED
+    notes: None material; the package source index supports the component concepts.
+    conflicts:
+    - None material; the package source index supports the component concepts.
+  factual_risk:
+    status: MEDIUM
+    notes: The four-way taxonomy is design synthesis rather than a field standard.
+  evidence_anchors:
+  - 'L10-L24: Frames durable memory as an authority decision.'
+  - 'L26-L42: Separates working, semantic, episodic, and procedural memory.'
+  - 'L44-L58: Adds admission, retention, correction, and forgetting controls.'
+  - 'L60-L70: Gives a bounded build and evaluation order.'
+  rationale: Good authority framing and lifecycle discipline, but not sufficiently
+    differentiated for the capped portfolio.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:operating-agents-i-when-language
+  platform: SUBSTACK
+  platform_id: operating-agents-i-when-language
+  title: 'Operating Agents I: Action Systems and Tool Use'
+  current_url: https://lambpetros.substack.com/p/operating-agents-i-when-language
+  current_visibility: PUBLIC
+  family_id: family:operating-agents-i-when-language
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Traceable literature or engineering synthesis without
+      first-party validation of the combined thesis.
+  source_lineage:
+    status: RESOLVED
+    notes: None material; the public text correctly identifies itself as a survey-derived
+      distillation.
+    conflicts:
+    - None material; the public text correctly identifies itself as a survey-derived
+      distillation.
+  factual_risk:
+    status: MEDIUM
+    notes: Some interface rankings and paper-to-practice bridges are broader than
+      their direct evidence.
+  evidence_anchors:
+  - 'L10-L22: Defines the state-change boundary.'
+  - 'L24-L40: Identifies tool-use seams and contracts.'
+  - 'L44-L56: Orders action surfaces by structure and reliability.'
+  - 'L58-L66: Argues that machine-readable environments improve agent action.'
+  rationale: A useful introductory tool-use model, but its API, code, SQL, browser,
+    and GUI hierarchy is more heuristic than demonstrated and overlaps the programmable-thinking
+    flagship.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-illusion-of-the-swarm
+  platform: SUBSTACK
+  platform_id: the-illusion-of-the-swarm
+  title: The Illusion of the Swarm
+  current_url: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+  current_visibility: PUBLIC
+  family_id: family:illusion-of-swarm
+  relationships: []
+  selection_tier: FLAGSHIP
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: FLAGSHIP
+    order: 4
+    annotation: Replaces decorative agent-count thinking with coordination economics,
+      typed boundaries, and concrete tests for when multi-agent structure earns its
+      cost.
+    evidence_url: https://github.com/petroslamb/content/blob/main/publications/illusion-of-swarm/2026-03-17-phase-transition-multi-agent-v9-substack.md
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Coordination-economics and bottleneck-diagnosis synthesis
+      with typed boundaries and falsifiable predictions.
+  source_lineage:
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-03-17_the-illusion-of-the-swarm.md
+    status_manifest: publications/illusion-of-swarm/status.yaml
+    readme: publications/illusion-of-swarm/README.md
+    working_source: publications/illusion-of-swarm/2026-03-17-phase-transition-multi-agent-v9-substack.md
+    notes: Package status, README, working source, research logs, claim ledger, public
+      slug, and archive paths form one publication lineage.
+  factual_risk:
+    status: MEDIUM
+    notes: Several precise results come from recent preprints, and the swarm-as-training-rig
+      section partly extends the sources by analogy.
+  evidence_anchors:
+  - 'L14-L22: States the compilation result and its scope.'
+  - 'L24-L40: Grounds the coordination-overhead claim.'
+  - 'L42-L62: Develops the agent-as-namespace and hierarchy interpretation.'
+  - 'L64-L100: Identifies genuine boundaries and typed communication requirements.'
+  - 'L137-L149: Makes falsifiable predictions.'
+  rationale: A distinctive argument against decorative agent proliferation that still
+    identifies when multiple agents are load-bearing. It combines coordination economics,
+    typed-state advice, practical exceptions, and falsifiable predictions.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-moltbook-phenomenon
+  platform: SUBSTACK
+  platform_id: the-moltbook-phenomenon
+  title: The Moltbook Phenomenon
+  current_url: https://lambpetros.substack.com/p/the-moltbook-phenomenon
+  current_visibility: PUBLIC
+  family_id: family:moltbook-phenomenon
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: UNVERIFIED
+    documented_contribution: The available package lineage does not adequately recover
+      evidence for central claims.
+  source_lineage:
+    status: CONFLICT
+    notes: The manifest canonical file matches the archive, but the README names a
+      different live draft. The package paper index is effectively empty despite paper
+      intake being marked complete.
+    conflicts:
+    - The manifest canonical file matches the archive, but the README names a different
+      live draft.
+    - The package paper index is effectively empty despite paper intake being marked
+      complete.
+  factual_risk:
+    status: HIGH
+    notes: Weak sources and unsupported claims about acquisition motive, research
+      volume, returns, and genuine coordination make external factual failure likely.
+  evidence_anchors:
+  - 'L10-L67: Establishes platform and security facts.'
+  - 'L71-L101: Adds speculative economics and coordination ratios.'
+  - 'L107-L141: Presents acquisition motive and internal politics as a causal narrative.'
+  - 'L147-L159: Draws categorical conclusions without a limits section.'
+  rationale: The corpus's largest credibility liability. A legitimate platform-security
+    story expands into acquisition intent, internal factions, economics, botnet implications,
+    and sweeping causal conclusions through weak secondary sources and unsourced precision.
+  confidence: MEDIUM
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-autonomy-tax
+  platform: SUBSTACK
+  platform_id: the-autonomy-tax
+  title: The Autonomy Tax
+  current_url: https://lambpetros.substack.com/p/the-autonomy-tax
+  current_visibility: PUBLIC
+  family_id: family:autonomy-tax
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: REWRITE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: RESOLVED
+    notes: The archive exactly matches the manifest canonical file, and the linked
+      casebook exists. The 28 records include incidents, surveys, regulatory milestones,
+      and tooling baselines, not 28 comparable enterprise failures.
+    conflicts:
+    - The archive exactly matches the manifest canonical file, and the linked casebook
+      exists.
+    - The 28 records include incidents, surveys, regulatory milestones, and tooling
+      baselines, not 28 comparable enterprise failures.
+  factual_risk:
+    status: HIGH
+    notes: The anonymous vendor opener, heterogeneous casebook, unsupported combinatorial
+      wording, author-defined level taxonomy, and uncalibrated score arithmetic create
+      pseudo-precision.
+  evidence_anchors:
+  - 'L22-L34: Sets up the deployment-capability tension.'
+  - 'L42-L88: Defines three taxes and summarizes the 28-record casebook.'
+  - 'L100-L132: Defines Level 2.5 and Bounded Level 3.'
+  - 'L134-L168: Presents the antithesis, doctrine, and falsifiers.'
+  - 'L174-L206: States scope, method, and known unknowns.'
+  rationale: A useful enterprise decision frame with an open casebook, an explicit
+    bounded-autonomy alternative, antithesis, falsifiers, method notes, and known
+    unknowns. It remains supporting because its scoring and taxonomy are decision
+    heuristics rather than validated models.
+  confidence: MEDIUM
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-transformer-attractor
+  platform: SUBSTACK
+  platform_id: the-transformer-attractor
+  title: The Transformer Attractor
+  current_url: https://lambpetros.substack.com/p/the-transformer-attractor
+  current_visibility: PUBLIC
+  family_id: family:neural-architectures
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: REWRITE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: CONFLICT
+    notes: The public essay materially diverges from the repository source essay.
+      There is no dedicated publication leaf; lineage is split between neural-architecture
+      and hardware-friction packages.
+    conflicts:
+    - The public essay materially diverges from the repository source essay.
+    - There is no dedicated publication leaf; lineage is split between neural-architecture
+      and hardware-friction packages.
+  factual_risk:
+    status: HIGH
+    notes: The parallel-scan discussion conflates work with sequential depth, hardware
+      counts and utilization figures are uncited, the RetNet abandonment story is
+      causal speculation, and absence of frontier deployments repeatedly substitutes
+      for mechanism evidence.
+  evidence_anchors:
+  - 'L10-L38: Introduces the two-gate attractor thesis.'
+  - 'L44-L54: Quantifies the GEMM moat.'
+  - 'L74-L86: Describes the scan bottleneck.'
+  - 'L92-L177: Uses Mamba, RetNet, and RWKV as case studies.'
+  - 'L200-L240: Gives falsifiers and practitioner rules.'
+  rationale: An original thesis undermined by too many uncited or technically unstable
+    quantitative claims for senior technical readers.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:when-the-llm-programs-its-own-thinking
+  platform: SUBSTACK
+  platform_id: when-the-llm-programs-its-own-thinking
+  title: When the LLM Programs Its Own Thinking
+  current_url: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
+  current_visibility: PUBLIC
+  family_id: family:programmable-thinking
+  relationships: []
+  selection_tier: FLAGSHIP
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: FLAGSHIP
+    order: 3
+    annotation: Shows direct engineering contribution through shared Jupyter state,
+      replayable traces, executable examples, and explicit operational limits.
+    evidence_url: https://github.com/petroslamb/content/blob/main/publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md
+  provenance:
+    status: VERIFIED_REPO
+    documented_contribution: Shared Jupyter namespace and replayable trace-artifact
+      extensions with executable examples.
+  source_lineage:
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-01-14_when-the-llm-programs-its-own-thinking.md
+    status_manifest: publications/programmable-thinking/status.yaml
+    readme: publications/programmable-thinking/README.md
+    working_source: publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md
+    notes: The status manifest and README now name the byte-identical canonical source.
+      `rlm-jupyter-integration.md` is explicitly retained as an earlier working variant.
+      The public clone-command angle-bracket defect is a minor future rewrite candidate,
+      not an unresolved source conflict.
+  factual_risk:
+    status: MEDIUM
+    notes: Benchmark numbers are literature-derived, and shared-kernel execution has
+      a serious security surface that the essay does acknowledge.
+  evidence_anchors:
+  - 'L10-L26: Explains the RLM mechanism and 6-11M-token benchmark context.'
+  - 'L30-L83: Presents the shared REPL and trace-artifact contributions.'
+  - 'L85-L170: Gives concrete configurations and persistence behavior.'
+  - 'L172-L202: States security, cost, failure, and intervention limits.'
+  - 'L206-L216: Links the fork and upstream pull request.'
+  rationale: 'The clearest proof of engineering contribution in the corpus: concrete
+    Jupyter namespace sharing and trace-artifact extensions, executable examples,
+    public fork and PR lineage, and candid persistence, security, cost, and human-intervention
+    limits.'
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-orchestration-paradigm-issue-397
+  platform: SUBSTACK
+  platform_id: the-orchestration-paradigm-issue-397
+  title: 'The Orchestration Paradigm: Issue 4 - The Reality'
+  current_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-397
+  current_visibility: PUBLIC
+  family_id: family:the-orchestration-paradigm-issue-397
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: MERGE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: CONFLICT
+    notes: The captured ToolOrchestra paper supports the research system, not these
+      operational numbers. The public issue materially differs from the current package
+      source draft.
+    conflicts:
+    - The captured ToolOrchestra paper supports the research system, not these operational
+      numbers.
+    - The public issue materially differs from the current package source draft.
+  factual_risk:
+    status: HIGH
+    notes: The economics, staffing thresholds, rollout duration, attack ROI, and exponential-depth
+      claim lack recoverable derivations.
+  evidence_anchors:
+  - 'L87: Claims gradient variance scales exponentially with hierarchy depth.'
+  - 'L125: Claims a 50,000-times attack ROI.'
+  - 'L139-L149: Gives fixed cost, per-query prices, and a 75,000-query breakeven.'
+  - 'L150-L164: Prescribes a three-engineer gate and four-week rollout.'
+  rationale: Production framing is useful, but invented precision overwhelms credibility.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-orchestration-paradigm-issue-cf4
+  platform: SUBSTACK
+  platform_id: the-orchestration-paradigm-issue-cf4
+  title: 'The Orchestration Paradigm: Issue 3 - The Behavior'
+  current_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue-cf4
+  current_visibility: PUBLIC
+  family_id: family:the-orchestration-paradigm-issue-cf4
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: MERGE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: CONFLICT
+    notes: The package captures the ToolOrchestra paper but not these mechanistic
+      extensions. The public and current package issue drafts differ materially.
+    conflicts:
+    - The package captures the ToolOrchestra paper but not these mechanistic extensions.
+    - The public and current package issue drafts differ materially.
+  factual_risk:
+    status: HIGH
+    notes: A ten-turn history is called exponentially more expensive because attention
+      is quadratic, and mechanistic roles are assigned without supporting analysis.
+  evidence_anchors:
+  - 'L41-L88: Describes emergent strategies and state accumulation.'
+  - 'L92-L134: Assigns behavioral roles to preference tokens and attention patterns.'
+  - 'L138-L176: Generalizes the mechanism to robustness and transfer.'
+  rationale: Engaging behavioral interpretation, but much of it is mechanistic storytelling
+    rather than evidence.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-orchestration-paradigm-issue
+  platform: SUBSTACK
+  platform_id: the-orchestration-paradigm-issue
+  title: 'The Orchestration Paradigm: Issue 2 - The Factory'
+  current_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-issue
+  current_visibility: PUBLIC
+  family_id: family:the-orchestration-paradigm-issue
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: MERGE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: CONFLICT
+    notes: The primary paper says 16 H100s were used; it does not establish that count
+      as mathematically necessary. The public issue materially differs from the package
+      source draft.
+    conflicts:
+    - The primary paper says 16 H100s were used; it does not establish that count
+      as mathematically necessary.
+    - The public issue materially differs from the package source draft.
+  factual_risk:
+    status: HIGH
+    notes: The essay converts the paper's use of 16 H100s into a mathematical necessity
+      and overstates several reproducibility and benchmark claims.
+  evidence_anchors:
+  - 'L37-L111: Explains the ToolScale pipeline.'
+  - 'L115-L183: Critiques agent benchmarks.'
+  - 'L187-L243: Presents the training-infrastructure argument.'
+  rationale: Useful synthetic-data and benchmark topics, but operational claims are
+    presented as necessities without evidence.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-orchestration-paradigm-series
+  platform: SUBSTACK
+  platform_id: the-orchestration-paradigm-series
+  title: The Orchestration Paradigm Series
+  current_url: https://lambpetros.substack.com/p/the-orchestration-paradigm-series
+  current_visibility: PUBLIC
+  family_id: family:the-orchestration-paradigm-series
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: MERGE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: CONFLICT
+    notes: The captured paper supports 37.1 percent versus 35.1 percent on HLE and
+      reported efficiency, but not the larger prescriptions. The public and current
+      source drafts differ materially.
+    conflicts:
+    - The captured paper supports 37.1 percent versus 35.1 percent on HLE and reported
+      efficiency, but not the larger prescriptions.
+    - The public and current source drafts differ materially.
+  factual_risk:
+    status: HIGH
+    notes: SFT-can-never-teach-strategy language, gradient-free wording, batch-size
+      multipliers, and hardware necessity are not adequately established.
+  evidence_anchors:
+  - 'L36-L87: Presents the routing and economic thesis.'
+  - 'L103-L183: Describes calibration and reinforcement learning.'
+  - 'L187-L348: Explains GRPO and reward design.'
+  - 'L356-L396: Adds the infrastructure appendix and 16-H100 justification.'
+  rationale: The 8B-orchestrator result is interesting, but the essay layers categorical
+    claims about SFT, GRPO, economics, and hardware on top of the captured paper.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-hardware-friction-map
+  platform: SUBSTACK
+  platform_id: the-hardware-friction-map
+  title: The Hardware Friction Map
+  current_url: https://lambpetros.substack.com/p/the-hardware-friction-map
+  current_visibility: PUBLIC
+  family_id: family:the-hardware-friction-map
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: REWRITE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: CONFLICT
+    notes: The package correction says the original MoE long-context framing was unsupported,
+      routing and KV-cache claims were misattributed, and the 20-month claim required
+      qualification. The public essay still says naive MoE at long context fights
+      the hardware and describes 20 months as universal adoption.
+    conflicts:
+    - The package correction says the original MoE long-context framing was unsupported,
+      routing and KV-cache claims were misattributed, and the 20-month claim required
+      qualification.
+    - The public essay still says naive MoE at long context fights the hardware and
+      describes 20 months as universal adoption.
+  factual_risk:
+    status: HIGH
+    notes: Adoption times, architectural cliffs, cost zones, and scorecard values
+      are more precise than the visible evidence supports.
+  evidence_anchors:
+  - 'L47-L107: Defines the four friction zones.'
+  - 'L111-L159: Gives FlashAttention and MoE adoption timelines.'
+  - 'L162-L182: Makes the pure-SSM scale claim.'
+  - 'L186-L199: States the startup heuristic.'
+  - 'L202-L277: Applies the scorecard and makes predictions.'
+  rationale: A memorable heuristic with useful falsifiers, but too much false precision
+    and several categorical startup rules.
+  confidence: MEDIUM
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:what-actually-works-the-hardware
+  platform: SUBSTACK
+  platform_id: what-actually-works-the-hardware
+  title: 'What Actually Works: The Hardware Compatibility Filter in Neural Architecture
+    (2023–2025)'
+  current_url: https://lambpetros.substack.com/p/what-actually-works-the-hardware
+  current_visibility: PUBLIC
+  family_id: family:what-actually-works-the-hardware
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: REWRITE_CANDIDATE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Local or first-party evidence exists, but substantial
+      bridges depend on external synthesis or unsupported inference.
+  source_lineage:
+    status: CONFLICT
+    notes: The public long-context MoE speedup claim directly conflicts with the package
+      correction, which says the extrapolation lacked a supporting benchmark and the
+      KV-cache effect was not MoE-specific. Rasterized evidence tables and vague bibliography
+      entries prevent claim-level audit.
+    conflicts:
+    - The public long-context MoE speedup claim directly conflicts with the package
+      correction, which says the extrapolation lacked a supporting benchmark and the
+      KV-cache effect was not MoE-specific.
+    - Rasterized evidence tables and vague bibliography entries prevent claim-level
+      audit.
+  factual_risk:
+    status: HIGH
+    notes: The small selected audit is used to infer causality, universal adoption,
+      timing laws, and broad architecture outcomes.
+  evidence_anchors:
+  - 'L6-L69: States the audit scope and hardware-compatibility thesis.'
+  - 'L71-L151: Reviews FlashAttention, GQA, MLA, KAN, SSM, and RAG.'
+  - 'L157-L341: Extends the argument to conditional execution, hybrids, infrastructure,
+    and training.'
+  - 'L351-L407: Presents evidence mainly through rasterized tables.'
+  - 'L717-L837: Provides the bibliography.'
+  rationale: Substantial research effort, but the long audit is not reliably reproducible
+    from the public text and repeatedly converts selected examples into causal adoption
+    laws.
+  confidence: MEDIUM
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:the-agent-revolution
+  platform: SUBSTACK
+  platform_id: the-agent-revolution
+  title: 'Autonomous AI Agents: Core Foundations and Recent Breakthroughs'
+  current_url: https://lambpetros.substack.com/p/the-agent-revolution
+  current_visibility: PUBLIC
+  family_id: family:autonomous-agents
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: UNVERIFIED
+    documented_contribution: The available package lineage does not adequately recover
+      evidence for central claims.
+  source_lineage:
+    status: PARTIAL
+    notes: The archive exactly matches the package canonical essay. The package evidence
+      root substantially covers the older ReAct and AutoGen course corpus, not most
+      newer systems carrying the essay's breakthrough narrative.
+    conflicts:
+    - The archive exactly matches the package canonical essay.
+    - The package evidence root substantially covers the older ReAct and AutoGen course
+      corpus, not most newer systems carrying the essay's breakthrough narrative.
+  factual_risk:
+    status: HIGH
+    notes: L226 misidentifies HLE as a household-environment benchmark rather than
+      Humanity's Last Exam; other historical firsts, paper summaries, and causal field-reorganization
+      claims are too broad.
+  evidence_anchors:
+  - 'L64-L173: Presents ReAct and AutoGen as the foundations.'
+  - 'L177-L592: Surveys recent training, latent collaboration, world-model, and self-improvement
+    systems.'
+  - 'L604-L710: Synthesizes an agent stack.'
+  rationale: An ambitious survey whose historical and paper-level interpretation is
+    not reliable enough to serve as a credibility piece.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:neural-architecture-design-as-a-compositional-32e
+  platform: SUBSTACK
+  platform_id: neural-architecture-design-as-a-compositional-32e
+  title: 'Neural Architecture Design as a Reusable Scaffold: A History Review'
+  current_url: https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e
+  current_visibility: PUBLIC
+  family_id: family:neural-architectures
+  relationships: []
+  selection_tier: SUPPORTING
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: SUPPORTING
+    order: 3
+    annotation: Adds technically careful breadth through a primary-source history
+      of reusable blocks, path discipline, design spaces, and controlled heterogeneity.
+    evidence_url: https://github.com/petroslamb/content/blob/main/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Primary-source history of reusable blocks, path discipline,
+      design spaces, and controlled heterogeneity.
+  source_lineage:
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.md
+    status_manifest: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml
+    readme: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/README.md
+    working_source: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+    notes: The package working source is a later polish pass, but the public snapshot
+      remains the selected artifact and no competing technical argument was found.
+  factual_risk:
+    status: MEDIUM
+    notes: The throughline is interpretive, but it is mostly grounded in classic primary
+      sources and avoids inevitability claims.
+  evidence_anchors:
+  - 'L10-L18: Defines the reusable scaffold.'
+  - 'L20-L66: Traces the VGG, Inception, and ResNet transition.'
+  - 'L68-L93: Explains Transformer portability and emergent role differentiation with
+    caveats.'
+  - 'L95-L129: Covers design spaces, scaling, operator refinement, and MoE.'
+  - 'L131-L263: Supplies annotated primary references.'
+  rationale: 'The safest demonstration of technical breadth: a careful historical
+    throughline from bespoke networks through residual path discipline, portable Transformer
+    blocks, design spaces, scaling recipes, and controlled MoE heterogeneity.'
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+- artifact_id: substack:coming-soon
+  platform: SUBSTACK
+  platform_id: coming-soon
+  title: Welcome
+  current_url: https://lambpetros.substack.com/p/coming-soon
+  current_visibility: PUBLIC
+  family_id: family:publication-introduction
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: UNVERIFIED
+    documented_contribution: The available package lineage does not adequately recover
+      evidence for central claims.
+  source_lineage:
+    status: UNVERIFIED
+    notes: There is no dedicated evidence package, which is acceptable for a welcome
+      post. It promotes The Transformer Attractor and the hardware essays as direction-setting
+      work, which conflicts with this credibility curation.
+    conflicts:
+    - There is no dedicated evidence package, which is acceptable for a welcome post.
+    - It promotes The Transformer Attractor and the hardware essays as direction-setting
+      work, which conflicts with this credibility curation.
+  factual_risk:
+    status: LOW
+    notes: It makes few substantive factual claims.
+  evidence_anchors:
+  - 'L6-L36: States the publication positioning and recommended reading path.'
+  rationale: A welcome and brand announcement, not a technical credibility artifact.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+  
+- artifact_id: youtube:hNVBrptmRVs
+  platform: YOUTUBE
+  platform_id: hNVBrptmRVs
+  title: Why Polished AI Reports Can Outrun the Evidence | A Cinematic Research Brief
+  current_url: https://www.youtube.com/watch?v=hNVBrptmRVs
+  current_visibility: PUBLIC
+  family_id: family:confidence-debt
+  relationships:
+  - type: DERIVED_FROM
+    target_artifact_id: substack:confidence-debt
+  selection_tier: SUPPORTING
+  editorial_action: KEEP
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: MIXED
+    documented_contribution: Mixed first-party failure case and systems-governance synthesis.
+  source_lineage:
+    status: RESOLVED
+    package: publications/confidence-debt
+    caption_path: publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/confidence_debt_cinematic.srt
+    caption_sha256: b48814c7c1c147421ef358db8b9f2e7617b1a1321564976b0ac31f35e899d8d5
+    notes: The exact 538.68-second local caption matches the 539-second public video and the Confidence Debt package; the autonomy-tax heuristic mapping is rejected as a source mismatch.
+  factual_risk:
+    status: MEDIUM
+    notes: The core first-party case and benchmark anchor are inspectable, but the script presents the unvalidated combined control stack more categorically than the source essay.
+  evidence_anchors:
+  - 'youtube_candidate_evidence.yaml: resolved SRT, 229 cues, 538.68 seconds against a 539-second video, sha256 b48814c7c1c147421ef358db8b9f2e7617b1a1321564976b0ac31f35e899d8d5.'
+  - 'SRT 00:00:34-00:01:49: the polished report conflicts with row-level evidence and confidence debt is defined as downstream trust outrunning warranted proof.'
+  - 'SRT 00:02:57-00:04:01: claim auditability and the tau-bench 61-percent pass@1 versus below-25-percent pass^8 contrast are made concrete.'
+  - 'publication_strategy_and_archive/substack_archive/2026-04-17_confidence-debt.md L12-L24, L28-L38, L46-L90, and L92-L122: direct project evidence, concept definition, engineering gates, and co-audit proposal.'
+  rationale: >-
+    The video begins with the author's eip-verify failure, defines confidence debt precisely,
+    and turns it into claim-auditability, reliability-release, and co-audit controls. That is
+    a distinctive systems-governance argument, not a generic paper recap. The exact Confidence
+    Debt caption fits the public video and package, while the script remains more categorical
+    than the essay about the unvalidated combined control stack.
+  confidence: MEDIUM
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:slozjRp6CPg
+  platform: YOUTUBE
+  platform_id: slozjRp6CPg
+  title: Specs Need a Surface
+  current_url: https://www.youtube.com/watch?v=slozjRp6CPg
+  current_visibility: PUBLIC
+  family_id: family:specification-surface-source-of-truth
+  relationships:
+  - type: DERIVED_FROM
+    target_artifact_id: substack:the-specification-surface-is-the
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Honest synthesis of the specification-surface source package.
+  source_lineage:
+    status: RESOLVED
+    package: publications/literate-workflow-programming/specification-surface-source-of-truth
+    caption_path: publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt
+    caption_sha256: 29157e3358e16f45379885e320305d6417edddaca9091b7150e7676ddc9570b7
+    notes: The exact local caption and package source resolve the video lineage; the video drops the essay's scope limits.
+  factual_risk:
+    status: HIGH
+    notes: The decision packet rates the video MEDIUM_HIGH because scoped specification-authority claims are narrated as universal claims and a hypothetical incident is presented as concrete.
+  evidence_anchors:
+  - 'Exact SRT publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt, sha256 29157e3358e16f45379885e320305d6417edddaca9091b7150e7676ddc9570b7, 281.24 seconds against a 282-second video.'
+  - 'SRT 00:00:00-00:01:03: a hypothetical pull request is escalated into a database-locking catastrophe and generalized into the vibe-coding diagnosis.'
+  - 'SRT 00:02:20-00:04:30: full-spec recovery, executable constraints, and a spec-as-program pattern are narrated as the general solution.'
+  - 'Source essay L34-L36 and L102-L106 restrict spec-as-source to domains and tooling that can support it; those limits are missing from the video.'
+  rationale: >-
+    The underlying essay is flagship-quality, but the video drops the limits that make it
+    credible. It turns a scoped specification-authority spectrum into universal claims,
+    presents an invented locked-database opening as a production incident, and should remain
+    public without being selected technical evidence.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:chr4R-fSZUY
+  platform: YOUTUBE
+  platform_id: chr4R-fSZUY
+  title: Models Need a REPL for Thought
+  current_url: https://www.youtube.com/watch?v=chr4R-fSZUY
+  current_visibility: PUBLIC
+  family_id: family:programmable-thinking
+  relationships:
+  - type: DERIVED_FROM
+    target_artifact_id: substack:when-the-llm-programs-its-own-thinking
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: IMPLEMENTATION
+    documented_contribution: First-party shared-namespace and replayable-trace engineering synthesis.
+  source_lineage:
+    status: RESOLVED
+    package: publications/programmable-thinking
+    caption_path: publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt
+    caption_sha256: ee10b2878430b0ecdc54fa962118135cab7a0e4769c8679b7fad98daf7738c25
+    notes: The exact local caption and programmable-thinking package resolve the video lineage; production boundaries are omitted from the cinematic.
+  factual_risk:
+    status: HIGH
+    notes: The source contribution is strong, but the video omits non-isolation, execution, cost, tail-cost, and production-scalability limits and makes a categorical turn-based API claim.
+  evidence_anchors:
+  - 'Exact SRT publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt, sha256 ee10b2878430b0ecdc54fa962118135cab7a0e4769c8679b7fad98daf7738c25, 319.479 seconds against a 320-second video.'
+  - 'SRT 00:01:19-00:02:53: external prompt storage, model-written filtering code, and chunk-boundary failure are explained.'
+  - 'SRT 00:03:50-00:04:39: shared Jupyter workspace and surgical correction are shown without an execution-isolation or production boundary.'
+  - 'Source essay L30-L83 and L172-L202 document the shared namespace, trace artifacts, non-isolated execution, failure, cost variance, and unresolved production questions.'
+  rationale: >-
+    This has the strongest personal engineering contribution in the candidate set, but the
+    video is not a safe standalone representation. It urges a shared Jupyter heap while
+    omitting the source essay's execution, cost, and production limits, so the implementation
+    should remain public without serving as the selected-work representative.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:q3_gPM4E8yw
+  platform: YOUTUBE
+  platform_id: q3_gPM4E8yw
+  title: Boundary First, Then More Workers
+  current_url: https://www.youtube.com/watch?v=q3_gPM4E8yw
+  current_visibility: PUBLIC
+  family_id: family:illusion-of-swarm
+  relationships:
+  - type: DERIVED_FROM
+    target_artifact_id: substack:the-illusion-of-the-swarm
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Coordination-economics and boundary-first multi-agent synthesis.
+  source_lineage:
+    status: RESOLVED
+    package: publications/illusion-of-swarm
+    caption_path: publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt
+    caption_sha256: a336ad313a9c7fc8378011cd78eaa6e170acfdcfe83c544ed73808307999cab0
+    notes: The exact local caption and illusion-of-swarm package resolve the video lineage; source-study scope and hypothesis boundaries are compressed.
+  factual_risk:
+    status: HIGH
+    notes: Scoped compilation and benchmark results are narrated as general anti-swarm laws, while the training-rig claim is asserted beyond the source evidence.
+  evidence_anchors:
+  - 'Exact SRT publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt, sha256 a336ad313a9c7fc8378011cd78eaa6e170acfdcfe83c544ed73808307999cab0, 326.6 seconds against a 327-second video.'
+  - 'SRT 00:00:30-00:00:52: the 53.7-percent token result and 180-configuration benchmark are stated without source-study scope.'
+  - 'SRT 00:01:55-00:04:00: tool confusability, agent namespaces, rare multi-agent exceptions, and process-aware distillation are compressed into a settled anti-swarm trajectory.'
+  - 'blind_review_b.yaml records MEDIUM_HIGH source-essay risk because precise results are recent preprints and the training-rig section extends them by analogy; the video removes that boundary.'
+  rationale: >-
+    The useful boundary-first thesis is overwhelmed by unbounded narration. Scoped compilation
+    results become universal speed and cost claims, a selected benchmark becomes a general
+    trend, and the essay's swarm-as-training-rig prediction is asserted as settled. Keep public
+    as an experiment, but do not feature it as selected technical evidence.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:bhoiLFJadAA
+  platform: YOUTUBE
+  platform_id: bhoiLFJadAA
+  title: The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief
+  current_url: https://www.youtube.com/watch?v=bhoiLFJadAA
+  current_visibility: PUBLIC
+  family_id: family:binding-gap
+  relationships:
+  - type: DERIVED_FROM
+    target_artifact_id: substack:the-binding-gap
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Entity-binding and attribution-failure synthesis from the Binding Gap package.
+  source_lineage:
+    status: RESOLVED
+    package: publications/binding-gap
+    caption_path: publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt
+    caption_sha256: 2009339cac8342eb4fdc0196a7d9de55f66a6db3650eaa83437c5867cc63dcbc
+    notes: The exact local caption and package source resolve the video lineage; the prompt-packet retest opening variant is recorded in the live description.
+  factual_risk:
+    status: HIGH
+    notes: The video presents adjacent-evidence synthesis as one established mechanism across citation, clinical, legal, numeric, and code examples.
+  evidence_anchors:
+  - 'Exact SRT publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt, sha256 2009339cac8342eb4fdc0196a7d9de55f66a6db3650eaa83437c5867cc63dcbc, 311.479 seconds against a 312-second video.'
+  - 'SRT 00:00:57-00:03:30: reversal curse, citation drift, clinical role reversal, meta-analysis tuple extraction, and ordering subspace are presented as one mechanical chain.'
+  - 'SRT 00:04:05-00:04:43: fluency is treated as a statistical reflex and schema records are offered as the repair without the source prediction boundary.'
+  - 'blind_review_a.yaml and blind_review_b.yaml record that the move from controlled entity binding to attribution, numeric, legal, clinical, and code failures is adjacent-evidence synthesis, not a unified result.'
+  rationale: >-
+    The binding-gap diagnosis is memorable, but the video turns a bounded synthesis into a
+    single demonstrated mechanism. It jumps from reversal tests to citation drift, a clinical
+    example, meta-analysis extraction, and ordering subspace while speaking as though one causal
+    pathway explains them all. Keep public as an experiment; do not feature.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:0TpfmqhoB6s
+  platform: YOUTUBE
+  platform_id: 0TpfmqhoB6s
+  title: Why AI Design Converged on the Same Scaffold | A Cinematic Research Brief
+  current_url: https://www.youtube.com/watch?v=0TpfmqhoB6s
+  current_visibility: PUBLIC
+  family_id: family:neural-architectures
+  relationships:
+  - type: DERIVED_FROM
+    target_artifact_id: substack:neural-architecture-design-as-a-compositional-32e
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: SYNTHESIS
+    documented_contribution: Primary-source neural-architecture history and reusable-scaffold synthesis.
+  source_lineage:
+    status: RESOLVED
+    package: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e
+    caption_path: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.srt
+    caption_sha256: 1e39283b86edd777c421c4af478062373b1f8b9ced0db0c0fd640a66e8024c89
+    notes: The exact local caption and neural-architecture package resolve the video lineage; the cinematic reintroduces categorical mechanistic claims excluded by the source essay.
+  factual_risk:
+    status: HIGH
+    notes: Central claims about degradation, ResNet and Transformer residuals, probing, scaling, and MoE routing are categorical and not supported at the narrated breadth.
+  evidence_anchors:
+  - 'Exact SRT publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.srt, sha256 1e39283b86edd777c421c4af478062373b1f8b9ced0db0c0fd640a66e8024c89, 349.16 seconds against a 349-second video.'
+  - 'SRT 00:01:25-00:02:24: the ResNet degradation and skip-connection story is simplified into an asserted failure mechanism.'
+  - 'SRT 00:02:54-00:05:05: Transformer residuals, BERT layer probes, Chinchilla scaling, and MoE routing become inevitability and safety claims.'
+  - 'blind_review_a.yaml and blind_review_b.yaml record that the source history is interpretive and bounded, while the video reintroduces inevitability claims.'
+  rationale: >-
+    The source essay is careful technical breadth; the video is not. It misdescribes deep-network
+    degradation, equates Transformer blocks with the ResNet scaffold, overstates probing and
+    scaling evidence, and declares MoE specialization safe because a router contains it. Keep
+    the video public, but do not use it as portfolio proof.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:Ue9gGySTVRI
+  platform: YOUTUBE
+  platform_id: Ue9gGySTVRI
+  title: "Writing the Script Isn't Agency #shorts"
+  current_url: https://www.youtube.com/watch?v=Ue9gGySTVRI
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/action'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:1PB-UE6GpBM
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: Ue9gGySTVRI->1PB-UE6GpBM
+    package: autonomous-agents/essays/action
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair Ue9gGySTVRI->1PB-UE6GpBM: current ledger records both public with matching title, description_sha256 90adc973e633a218dc513eb5f3a18c1a81efeb4cc8adadbcf7ac84066ee38006, caption_sha256 e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc, 26-second duration, related video NIJ92a65SxM, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:1PB-UE6GpBM
+  platform: YOUTUBE
+  platform_id: 1PB-UE6GpBM
+  title: "Writing the Script Isn't Agency #shorts"
+  current_url: https://www.youtube.com/watch?v=1PB-UE6GpBM
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/action'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact action Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: Ue9gGySTVRI->1PB-UE6GpBM
+    package: autonomous-agents/essays/action
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 26-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair Ue9gGySTVRI->1PB-UE6GpBM: retained current ledger state is public, 26 seconds, with matching description_sha256 90adc973e633a218dc513eb5f3a18c1a81efeb4cc8adadbcf7ac84066ee38006 and caption_sha256 e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names 1PB-UE6GpBM as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:bsvMg8LUb1M
+  platform: YOUTUBE
+  platform_id: bsvMg8LUb1M
+  title: "A Single CSS Tag Can Break an Agent #shorts"
+  current_url: https://www.youtube.com/watch?v=bsvMg8LUb1M
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/action'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:FaDtWYQ-8d8
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: bsvMg8LUb1M->FaDtWYQ-8d8
+    package: autonomous-agents/essays/action
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair bsvMg8LUb1M->FaDtWYQ-8d8: current ledger records both public with matching title, description_sha256 0d206c45e0c0d1c5a61ea6425396e35f32bc5aaa6b87e6b3a6b957c1337da3b7, caption_sha256 e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc, 26-second duration, related video NIJ92a65SxM, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:FaDtWYQ-8d8
+  platform: YOUTUBE
+  platform_id: FaDtWYQ-8d8
+  title: "A Single CSS Tag Can Break an Agent #shorts"
+  current_url: https://www.youtube.com/watch?v=FaDtWYQ-8d8
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/action'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact action Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: bsvMg8LUb1M->FaDtWYQ-8d8
+    package: autonomous-agents/essays/action
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 26-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair bsvMg8LUb1M->FaDtWYQ-8d8: retained current ledger state is public, 26 seconds, with matching caption_sha256 e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names FaDtWYQ-8d8 as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:QRD1FJiKTfU
+  platform: YOUTUBE
+  platform_id: QRD1FJiKTfU
+  title: "Agents Don't Lose IQ. They Lose Attention. #shorts"
+  current_url: https://www.youtube.com/watch?v=QRD1FJiKTfU
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/memory'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:D3BZrjUzsPw
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: QRD1FJiKTfU->D3BZrjUzsPw
+    package: autonomous-agents/essays/memory
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair QRD1FJiKTfU->D3BZrjUzsPw: current ledger records both public with matching title, description, caption_sha256 43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a, 26-second duration, related video J9dz9_9YPQw, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:D3BZrjUzsPw
+  platform: YOUTUBE
+  platform_id: D3BZrjUzsPw
+  title: "Agents Don't Lose IQ. They Lose Attention. #shorts"
+  current_url: https://www.youtube.com/watch?v=D3BZrjUzsPw
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/memory'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact memory Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: QRD1FJiKTfU->D3BZrjUzsPw
+    package: autonomous-agents/essays/memory
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 26-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair QRD1FJiKTfU->D3BZrjUzsPw: retained current ledger state is public, 26 seconds, with matching caption_sha256 43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names D3BZrjUzsPw as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:4UzuyKGNaKc
+  platform: YOUTUBE
+  platform_id: 4UzuyKGNaKc
+  title: "Flat Vector Memory Becomes a Security Hole #shorts"
+  current_url: https://www.youtube.com/watch?v=4UzuyKGNaKc
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/memory'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:PopV146TIe8
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: 4UzuyKGNaKc->PopV146TIe8
+    package: autonomous-agents/essays/memory
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair 4UzuyKGNaKc->PopV146TIe8: current ledger records both public with matching title, description, caption_sha256 43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a, 36-second duration, related video J9dz9_9YPQw, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:PopV146TIe8
+  platform: YOUTUBE
+  platform_id: PopV146TIe8
+  title: "Flat Vector Memory Becomes a Security Hole #shorts"
+  current_url: https://www.youtube.com/watch?v=PopV146TIe8
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/memory'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact memory Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: 4UzuyKGNaKc->PopV146TIe8
+    package: autonomous-agents/essays/memory
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 36-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair 4UzuyKGNaKc->PopV146TIe8: retained current ledger state is public, 36 seconds, with matching caption_sha256 43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names PopV146TIe8 as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:PV-KfDYiLPo
+  platform: YOUTUBE
+  platform_id: PV-KfDYiLPo
+  title: "Agent Theater Is Not Intelligence #shorts"
+  current_url: https://www.youtube.com/watch?v=PV-KfDYiLPo
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/multi-agent'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:gENRTpSnHsw
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: PV-KfDYiLPo->gENRTpSnHsw
+    package: autonomous-agents/essays/multi-agent
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair PV-KfDYiLPo->gENRTpSnHsw: current ledger records both public with matching title, description, caption_sha256 c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea, 57-second duration, related video abBHq8lwCEE, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:gENRTpSnHsw
+  platform: YOUTUBE
+  platform_id: gENRTpSnHsw
+  title: "Agent Theater Is Not Intelligence #shorts"
+  current_url: https://www.youtube.com/watch?v=gENRTpSnHsw
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/multi-agent'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact multi-agent Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: PV-KfDYiLPo->gENRTpSnHsw
+    package: autonomous-agents/essays/multi-agent
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 57-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair PV-KfDYiLPo->gENRTpSnHsw: retained current ledger state is public, 57 seconds, with matching caption_sha256 c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names gENRTpSnHsw as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:qTucAFn5g8Y
+  platform: YOUTUBE
+  platform_id: qTucAFn5g8Y
+  title: "The Coordination Tax Kills Agent Handoffs #shorts"
+  current_url: https://www.youtube.com/watch?v=qTucAFn5g8Y
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/multi-agent'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:_GOUwFLcERM
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: qTucAFn5g8Y->_GOUwFLcERM
+    package: autonomous-agents/essays/multi-agent
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair qTucAFn5g8Y->_GOUwFLcERM: current ledger records both public with matching title, description, caption_sha256 c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea, 48-second duration, related video abBHq8lwCEE, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:_GOUwFLcERM
+  platform: YOUTUBE
+  platform_id: _GOUwFLcERM
+  title: "The Coordination Tax Kills Agent Handoffs #shorts"
+  current_url: https://www.youtube.com/watch?v=_GOUwFLcERM
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/multi-agent'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact multi-agent Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: qTucAFn5g8Y->_GOUwFLcERM
+    package: autonomous-agents/essays/multi-agent
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 48-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair qTucAFn5g8Y->_GOUwFLcERM: retained current ledger state is public, 48 seconds, with matching caption_sha256 c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names _GOUwFLcERM as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:T-XSEz2bQUk
+  platform: YOUTUBE
+  platform_id: T-XSEz2bQUk
+  title: "The AI Did Not Fail. The Scaffold Did. #shorts"
+  current_url: https://www.youtube.com/watch?v=T-XSEz2bQUk
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/reasoning'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:zWgN04X3ugk
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: T-XSEz2bQUk->zWgN04X3ugk
+    package: autonomous-agents/essays/reasoning
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair T-XSEz2bQUk->zWgN04X3ugk: current ledger records both public with matching title, description_sha256 f2f54c8972dd27397d40e99bf92a381e1439b1646af765cde883fb1f5620cbc7, caption_sha256 90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb, 36-second duration, related video bto9FNWlahY, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:zWgN04X3ugk
+  platform: YOUTUBE
+  platform_id: zWgN04X3ugk
+  title: "The AI Did Not Fail. The Scaffold Did. #shorts"
+  current_url: https://www.youtube.com/watch?v=zWgN04X3ugk
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/reasoning'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact reasoning Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: T-XSEz2bQUk->zWgN04X3ugk
+    package: autonomous-agents/essays/reasoning
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 36-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair T-XSEz2bQUk->zWgN04X3ugk: retained current ledger state is public, 36 seconds, with matching caption_sha256 90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names zWgN04X3ugk as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:QCK0hPc0dPM
+  platform: YOUTUBE
+  platform_id: QCK0hPc0dPM
+  title: "AI Cannot Check Its Own Gravity #shorts"
+  current_url: https://www.youtube.com/watch?v=QCK0hPc0dPM
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/reasoning'
+  relationships:
+  - type: DUPLICATES
+    target_artifact_id: youtube:T8Gv8yX_NW8
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNLIST
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Original public Shorts upload superseded by the named remastered overlay representative.
+  source_lineage:
+    status: RESOLVED
+    source_pair: QCK0hPc0dPM->T8Gv8yX_NW8
+    package: autonomous-agents/essays/reasoning
+    notes: Pair-specific crosswalk, shared source video/SRT, matching current public metadata, and retained upload report resolve the duplicate relationship; historical ready_to_unlist_old false is retained as a stale prepublication state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the pair has matching title, description hash, caption hash, duration, related video, playlist, and remastered production lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair QCK0hPc0dPM->T8Gv8yX_NW8: current ledger records both public with matching title, description_sha256 b07975d47fc0357e1b50470d82af8bc72d788d42c42f83a8a9036df271ceff2a, caption_sha256 90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb, 51-second duration, related video bto9FNWlahY, and Shorts playlist membership.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 maps the old and retained IDs to the same clip and sets old_status_target unlisted; retained upload report is the named successor evidence.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: old and retained current privacy_status are both public.'
+  rationale: >-
+    Propose public to unlisted because this exact old upload is superseded by the named public
+    remastered overlay representative. The proposal is based on pair-specific production lineage
+    and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+- artifact_id: youtube:T8Gv8yX_NW8
+  platform: YOUTUBE
+  platform_id: T8Gv8yX_NW8
+  title: "AI Cannot Check Its Own Gravity #shorts"
+  current_url: https://www.youtube.com/watch?v=T8Gv8yX_NW8
+  current_visibility: PUBLIC
+  family_id: 'family:autonomous-agents/essays/reasoning'
+  relationships: []
+  selection_tier: ARCHIVE
+  editorial_action: NONE
+  target_visibility: UNCHANGED
+  homepage:
+    section: null
+    order: null
+  provenance:
+    status: DOCUMENTED
+    documented_contribution: Retained public remastered overlay representative for the exact reasoning Shorts pair.
+  source_lineage:
+    status: RESOLVED
+    source_pair: QCK0hPc0dPM->T8Gv8yX_NW8
+    package: autonomous-agents/essays/reasoning
+    notes: The retained public remaster is named by the exact historical crosswalk and current ledger pair; the historical private/P0D readback is superseded by the current public 51-second state.
+  factual_risk:
+    status: MEDIUM
+    notes: The exact media bytes are unavailable locally, but the retained upload has matching description/caption hashes, duration, related video, playlist, and crosswalk lineage.
+  evidence_anchors:
+  - 'youtube_duplicate_evidence.yaml pair QCK0hPc0dPM->T8Gv8yX_NW8: retained current ledger state is public, 51 seconds, with matching caption_sha256 90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb.'
+  - 'Historical crosswalk remastered-overlays-2026-04-28 names T8Gv8yX_NW8 as new_video_retained_overlay_remaster and links it to the retained upload report.'
+  - 'metrics_ledger.json snapshot 2026-08-21T21:43:21.683390+00:00: retained current privacy_status is public.'
+  rationale: Retain the named remastered overlay public and unchanged as the representative of the exact old Shorts upload.
+  confidence: HIGH
+  approval_status: APPROVED
+  application_status: NOT_APPLIED
+
+unresolved_questions:
+- Should the selected-video surface be held entirely until a second video is repaired and independently clears the bar, as the two-entry workflow gate requires, or should the playlist concept be omitted from this release?
+- Should chr4R-fSZUY be recut to include the shared-kernel security boundary, tail-cost variance, and unresolved production-scaling caveat before it is reconsidered as the direct engineering representative?
+- What explicit disclosure should selected YouTube descriptions carry for publication_cinematic/Notebook-assisted generation so that provenance is visible without relying on repository archaeology?

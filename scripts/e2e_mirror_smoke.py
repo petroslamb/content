@@ -15,6 +15,11 @@ import requests
 from bs4 import BeautifulSoup
 
 from archive_utils import METADATA_PATH, load_post_map
+from check_mirror import (
+    AI_DISCLOSURE,
+    PROFESSIONAL_PROFILE_URL,
+    load_and_validate_portfolio_manifest,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MIRROR_OUTPUT = REPO_ROOT / "publication_strategy_and_archive" / "mirror" / "_site"
@@ -62,6 +67,11 @@ def first_mirrored_post() -> dict[str, object]:
     raise SystemExit("No mirrored posts found in metadata.json")
 
 
+def mirrored_posts() -> list[dict[str, object]]:
+    manifest = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+    return [entry for entry in manifest if entry.get("mirror_enabled")]
+
+
 @contextlib.contextmanager
 def server_root_for_prefix(path_prefix: str):
     if path_prefix == "/":
@@ -105,6 +115,8 @@ def main() -> None:
 
     path_prefix = normalize_path_prefix(os.environ.get("ELEVENTY_PATH_PREFIX", "/").strip())
     post = first_mirrored_post()
+    public_mirror_posts = mirrored_posts()
+    portfolio = load_and_validate_portfolio_manifest(public_mirror_posts)
     slug = str(post["slug"])
     title = str(post["title"])
     expected_root_path = expected_site_root(path_prefix)
@@ -140,21 +152,57 @@ def main() -> None:
 
         archive_link = None
         atlas_link = None
+        professional_profile_link = None
         for anchor in soup.find_all("a", href=True):
             parsed_path = normalized_internal_route(path_prefix, urlparse(anchor["href"]).path)
             if parsed_path == "/archive/":
                 archive_link = anchor
             if parsed_path == "/editorial-atlas/":
                 atlas_link = anchor
+            if (
+                anchor["href"] == PROFESSIONAL_PROFILE_URL
+                and anchor.get_text(" ", strip=True) == "Professional profile"
+            ):
+                professional_profile_link = anchor
         if archive_link is None:
             raise SystemExit("Homepage is missing the archive navigation link")
-        if atlas_link is None:
-            raise SystemExit("Homepage is missing the editorial atlas link")
+        if atlas_link is not None:
+            raise SystemExit("Homepage must not link to the editorial atlas")
+        if professional_profile_link is None:
+            raise SystemExit("Homepage is missing the Professional profile CTA")
+        if AI_DISCLOSURE not in soup.get_text(" ", strip=True):
+            raise SystemExit("Homepage is missing the exact AI assistance disclosure")
+
+        expected_by_tier = portfolio["expected"]
+        assert isinstance(expected_by_tier, dict)
+        for tier in ("FLAGSHIP", "SUPPORTING"):
+            cards = soup.select(f'[data-portfolio-tier="{tier}"]')
+            expected_items = expected_by_tier[tier]
+            rendered_ids = [card.get("data-portfolio-artifact") for card in cards]
+            expected_ids = [item["artifact_id"] for item in expected_items]
+            if rendered_ids != expected_ids:
+                raise SystemExit(
+                    f"Homepage {tier.lower()} cards do not match the manifest: "
+                    f"expected {expected_ids}, got {rendered_ids}"
+                )
+            for card, expected_item in zip(cards, expected_items, strict=True):
+                links = {anchor.get("href") for anchor in card.find_all("a", href=True)}
+                if expected_item["url"] not in links:
+                    raise SystemExit(
+                        f"Portfolio card does not reach canonical essay: "
+                        f"{expected_item['artifact_id']}"
+                    )
 
         archive_soup = BeautifulSoup(archive.text, "html.parser")
         archive_text = archive_soup.get_text(" ", strip=True)
         if title not in archive_text:
             raise SystemExit(f"Archive page does not contain mirrored post title: {title}")
+        archive_cards = archive_soup.select("[data-post-card]")
+        if len(archive_cards) != len(public_mirror_posts):
+            raise SystemExit(
+                "Archive page does not preserve every public mirrored essay: "
+                f"expected {len(public_mirror_posts)}, got {len(archive_cards)}"
+            )
 
         atlas_soup = BeautifulSoup(atlas_page.text, "html.parser")
         atlas_text = atlas_soup.get_text(" ", strip=True)

@@ -1,0 +1,925 @@
+workflow_id: rooted_layers_portfolio_cleanup
+version: 1
+stability: canonical
+workflow_kind: module
+workflow_group: portfolio
+summary: Build an evidence-grounded Rooted Layers portfolio manifest, bind one exact approval to its SHA-256 digest, and roll out the mirror, professional-site link, playlist, and conservative YouTube visibility changes in a fail-closed order.
+
+package_classes:
+  - leaf
+  - umbrella
+
+inputs:
+  package:
+    required: false
+    description: Optional publication package used only when a shortlisted artifact needs package-local lineage reconciliation; the workflow itself is repo-wide.
+  manifest:
+    required: false
+    default: publication_strategy_and_archive/portfolio/portfolio_manifest.yaml
+    description: Versioned portfolio manifest to validate, report, approve, or apply.
+  approval:
+    required: false
+    default: publication_strategy_and_archive/portfolio/approval.yaml
+    description: Digest-bound approval sidecar; required only for rollout or an authenticated YouTube apply.
+  release_readiness:
+    required: false
+    description: Resolved durable release_readiness review-gate YAML with the portfolio_authorization binding; required for every rollout mutation.
+  apply:
+    required: false
+    default: false
+    description: External mutation switch. False means local preparation and dry-run only.
+  path_placeholders:
+    - id: package
+      source: cli.package when package-local lineage evidence is needed
+    - id: run_id
+      source: content-agent run id
+    - id: manifest_path
+      source: cli.manifest or publication_strategy_and_archive/portfolio/portfolio_manifest.yaml
+    - id: approval_path
+      source: cli.approval or publication_strategy_and_archive/portfolio/approval.yaml
+    - id: release_readiness_path
+      source: cli.release_readiness or reviewable-runs/gates/{run_id}-rooted-layers-portfolio-release-readiness.yaml
+
+context_dependencies:
+  - id: repo_root_environment
+    path: package.json
+    required: true
+    purpose: Resolve the archive, mirror, and workflow validation command surfaces.
+    record_hash: true
+  - id: workflow_readme
+    path: workflows/rooted-layers-portfolio-cleanup/README.md
+    required: true
+    purpose: Load the human-facing evidence, approval, rollout-order, and fail-closed rules.
+    record_hash: true
+  - id: archive_orientation
+    path: publication_strategy_and_archive/README.md
+    required: true
+    purpose: Preserve the existing archive and mirror authority model while curating its entrance.
+    record_hash: true
+  - id: substack_archive_metadata
+    path: publication_strategy_and_archive/substack_archive/metadata.json
+    required: true
+    purpose: Inventory public archived posts and their current canonical URLs.
+    record_hash: true
+  - id: substack_post_map
+    path: publication_strategy_and_archive/post_map.yaml
+    required: true
+    purpose: Reconcile published archive entries with repository packages and publication state.
+    record_hash: true
+  - id: youtube_metrics_ledger
+    path: experiments/youtube-analytics/metrics_ledger.json
+    required: true
+    purpose: Provide the authenticated all-channel YouTube identity, visibility, description, thumbnails, playlists, metrics, and snapshot timestamp.
+    record_hash: true
+  - id: youtube_content_evidence
+    path: experiments/youtube-analytics/content_rubric.json
+    required: true
+    purpose: Record caption availability and the evidence surface used for bounded video deep review.
+    record_hash: true
+  - id: editorial_atlas
+    path: publication_strategy_and_archive/editorial_atlas/atlas_data.json
+    required: true
+    purpose: Supply prior editorial evidence only after both independent blind reviews have been frozen.
+    record_hash: true
+  - id: mirror_source
+    path: publication_strategy_and_archive/mirror/
+    required: true
+    purpose: Prepare and verify the curated mirror entrance without removing the full archive or atlas route.
+    record_hash: true
+  - id: professional_site_source
+    source: separately authorized sibling repository /Users/petros/Projects/peterlamb/constants/content.ts
+    required: false
+    purpose: Admit a read-only snapshot or digest of the bilingual Rooted Layers publication-link copy for planning; the sibling file itself remains outside this workflow's allowed paths and may be mutated only under its own authority during gated rollout.
+    record_hash: true
+  - id: professional_site_structured_links
+    source: separately authorized sibling repository /Users/petros/Projects/peterlamb/index.html
+    required: false
+    purpose: Admit a read-only snapshot or digest proving structured Substack profile links remain present; the sibling file itself remains outside this workflow's allowed paths.
+    record_hash: true
+  - id: substack_archive_sync_workflow
+    path: workflows/substack-archive-sync/README.md
+    required: true
+    purpose: Preserve public-only archive discovery and fail-closed cleanup boundaries.
+    record_hash: true
+  - id: youtube_channel_ops_workflow
+    path: workflows/youtube-channel-ops/README.md
+    required: true
+    purpose: Preserve authenticated channel identity, API readback, quota, and mutation boundaries.
+    record_hash: true
+  - id: harness_policy
+    path: harness_policy.yaml
+    required: true
+    purpose: Apply the repository policy floor for local writes, external mutations, approvals, and retained traces.
+    record_hash: true
+  - id: gate_contracts
+    path: gate_contracts.yaml
+    required: true
+    purpose: Resolve the release_readiness contract before any rollout surface changes.
+    record_hash: true
+
+capabilities:
+  tools:
+    - id: substack_archive_refresh
+      command: "npm run sync:substack"
+      required: true
+    - id: youtube_all_channel_refresh
+      command: ".venv/bin/python scripts/refresh_youtube_analytics_dashboard.py --since-days 30"
+      required: true
+    - id: portfolio_snapshot
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py snapshot"
+      required: true
+    - id: portfolio_validate
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py validate --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml"
+      required: true
+    - id: portfolio_validate_approval
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py validate --mode apply-ready --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml --approval publication_strategy_and_archive/portfolio/approval.yaml --release-readiness reviewable-runs/gates/{run_id}-rooted-layers-portfolio-release-readiness.yaml"
+      required: false
+    - id: portfolio_report
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py report --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml"
+      required: true
+    - id: portfolio_digest
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py digest --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml"
+      required: true
+    - id: mirror_check
+      command: "npm run check:mirror"
+      required: true
+    - id: prefixed_mirror_check
+      command: "ELEVENTY_PATH_PREFIX=/content/ MIRROR_SITE_URL=https://petroslamb.github.io npm run check:mirror"
+      required: true
+    - id: professional_site_build
+      command: "npm --prefix /Users/petros/Projects/peterlamb run build"
+      required: false
+    - id: youtube_visibility_dry_run
+      command: ".venv/bin/python scripts/apply_youtube_portfolio.py visibility --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml --report publication_strategy_and_archive/portfolio/dry-runs/youtube-visibility.json"
+      required: true
+    - id: youtube_playlist_dry_run
+      command: ".venv/bin/python scripts/apply_youtube_portfolio.py playlist --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml --report publication_strategy_and_archive/portfolio/dry-runs/youtube-playlist.json"
+      required: true
+    - id: youtube_playlist_apply
+      command: ".venv/bin/python scripts/apply_youtube_portfolio.py playlist --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml --approval publication_strategy_and_archive/portfolio/approval.yaml --release-readiness reviewable-runs/gates/{run_id}-rooted-layers-portfolio-release-readiness.yaml --report publication_strategy_and_archive/portfolio/applications/youtube-playlist.json --apply"
+      required: false
+    - id: youtube_visibility_apply
+      command: ".venv/bin/python scripts/apply_youtube_portfolio.py visibility --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml --approval publication_strategy_and_archive/portfolio/approval.yaml --release-readiness reviewable-runs/gates/{run_id}-rooted-layers-portfolio-release-readiness.yaml --report publication_strategy_and_archive/portfolio/applications/youtube-visibility.json --canary-size 25 --apply"
+      required: false
+    - id: workflow_contract_validation
+      command: "npm run check:workflow-yaml"
+      required: true
+    - id: workflow_model_validation
+      command: "npm run check:workflow-model"
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      required: true
+  skills:
+    - substack-archive-sync
+    - youtube-data-api
+
+allowed_paths:
+  read:
+    - publication_strategy_and_archive/
+    - publications/
+    - experiments/youtube-analytics/
+    - workflows/rooted-layers-portfolio-cleanup/
+    - workflows/substack-archive-sync/
+    - workflows/youtube-channel-ops/
+    - workflows/skills/substack-archive-sync/
+    - workflows/skills/youtube-data-api/
+    - scripts/
+    - tests/
+    - package.json
+    - README.md
+    - harness_policy.yaml
+    - gate_contracts.yaml
+    - reviewable-runs/
+  write:
+    - publication_strategy_and_archive/
+    - README.md
+    - reviewable-runs/resolved-runs/
+    - reviewable-runs/logs/
+    - reviewable-runs/gates/
+
+outputs:
+  - id: substack_completeness_report
+    path_template: "publication_strategy_and_archive/substack_archive/completeness_report.json"
+    required: true
+    format: json
+    producer: refresh_source_inventories
+  - id: corpus_snapshot
+    path_template: "publication_strategy_and_archive/portfolio/corpus_snapshot.json"
+    required: true
+    format: json
+    producer: build_corpus_snapshot
+  - id: blind_review_a
+    path_template: "publication_strategy_and_archive/portfolio/blind_review_a.yaml"
+    required: true
+    format: yaml
+    producer: run_blind_review_a
+  - id: blind_review_b
+    path_template: "publication_strategy_and_archive/portfolio/blind_review_b.yaml"
+    required: true
+    format: yaml
+    producer: run_blind_review_b
+  - id: review_reconciliation
+    path_template: "publication_strategy_and_archive/portfolio/review_reconciliation.yaml"
+    required: true
+    format: yaml
+    producer: reconcile_reviews_and_lineage
+  - id: portfolio_manifest
+    path_template: "publication_strategy_and_archive/portfolio/portfolio_manifest.yaml"
+    required: true
+    format: yaml
+    producer: assemble_portfolio_manifest
+  - id: decision_report
+    path_template: "publication_strategy_and_archive/portfolio/ROOTED_LAYERS_DECISIONS.md"
+    required: true
+    format: markdown
+    producer: generate_decision_report
+  - id: professional_site_change_plan
+    path_template: "publication_strategy_and_archive/portfolio/professional_site_change_plan.md"
+    required: true
+    format: markdown
+    producer: prepare_local_site_changes
+  - id: mirror_build
+    path_template: "publication_strategy_and_archive/mirror/_site/"
+    required: true
+    format: directory
+    producer: prepare_local_site_changes
+  - id: youtube_visibility_dry_run_report
+    path_template: "publication_strategy_and_archive/portfolio/dry-runs/youtube-visibility.json"
+    required: true
+    format: json
+    producer: prepare_youtube_dry_runs
+  - id: youtube_playlist_dry_run_report
+    path_template: "publication_strategy_and_archive/portfolio/dry-runs/youtube-playlist.json"
+    required: conditional
+    required_when: at least two videos independently meet the selected-work bar
+    format: json
+    producer: prepare_youtube_dry_runs
+  - id: approval_sidecar
+    path_template: "publication_strategy_and_archive/portfolio/approval.yaml"
+    required: conditional
+    required_when: any mirror deployment, sibling professional-site mutation, playlist mutation, or YouTube visibility mutation is requested
+    format: yaml
+    producer: record_exact_approval
+    gated_by: release_readiness
+  - id: release_readiness_gate_artifact
+    path_template: "reviewable-runs/gates/{run_id}-rooted-layers-portfolio-release-readiness.yaml"
+    required: conditional
+    required_when: any rollout mutation is requested
+    format: yaml
+    schema: review_gate schema_version 1 with resolved approve decision, all required approval dimensions approved, and a portfolio_authorization mapping bound to manifest, approval, corpus snapshot, exact channel identity, snapshot timestamp, and ledger digest
+    producer: record_exact_approval
+  - id: professional_site_link_source
+    external: true
+    external_target: "/Users/petros/Projects/peterlamb/constants/content.ts under the peterlamb repository authority"
+    required: conditional
+    required_when: the approved professional-site Rooted Layers link change is applied
+    format: typescript
+    producer: roll_out_professional_site
+    gated_by: release_readiness
+  - id: deployed_mirror
+    external: true
+    external_target: "https://petroslamb.github.io/content/"
+    required: conditional
+    required_when: the approved mirror rollout is applied
+    format: website
+    producer: deploy_and_verify_mirror
+    gated_by: release_readiness
+  - id: deployed_professional_site
+    external: true
+    external_target: "https://petroslamb.github.io/peterlamb/"
+    required: conditional
+    required_when: the approved professional-site rollout is applied
+    format: website
+    producer: roll_out_professional_site
+    gated_by: release_readiness
+  - id: selected_youtube_playlist
+    external: true
+    external_target: "authenticated YouTube channel playlist: Selected Rooted Layers — AI Systems & Engineering"
+    required: conditional
+    required_when: at least two approved videos independently meet the selected-work bar
+    format: youtube_playlist
+    producer: apply_selected_playlist
+    gated_by: release_readiness
+  - id: youtube_visibility_state
+    external: true
+    external_target: "authenticated YouTube channel video visibility"
+    required: conditional
+    required_when: one or more approved public-to-unlisted transitions exist
+    format: youtube_video_state
+    producer: apply_youtube_visibility_canary
+    gated_by: release_readiness
+  - id: youtube_playlist_application_report
+    path_template: "publication_strategy_and_archive/portfolio/applications/youtube-playlist.json"
+    required: conditional
+    required_when: a playlist mutation is applied
+    format: json
+    producer: apply_selected_playlist
+    gated_by: release_readiness
+  - id: youtube_visibility_application_report
+    path_template: "publication_strategy_and_archive/portfolio/applications/youtube-visibility.json"
+    required: conditional
+    required_when: a visibility mutation is applied
+    format: json
+    producer: apply_youtube_visibility_canary
+    gated_by: release_readiness
+  - id: verification_screenshots
+    path_template: "publication_strategy_and_archive/portfolio/verification/screenshots/"
+    required: conditional
+    required_when: any rollout mutation is applied
+    format: directory
+    producer: reconcile_live_state
+    gated_by: release_readiness
+  - id: live_state_reconciliation
+    path_template: "publication_strategy_and_archive/portfolio/verification/live_state_reconciliation.json"
+    required: conditional
+    required_when: any rollout mutation is applied or a rollout stops in a partial state
+    format: json
+    producer: reconcile_live_state
+    gated_by: release_readiness
+
+behavior:
+  preconditions:
+    - id: source_scripts_exist
+      check: paths_exist
+      target:
+        - scripts/sync_substack_archive.py
+        - scripts/refresh_youtube_analytics_dashboard.py
+        - scripts/rooted_layers_portfolio.py
+        - scripts/apply_youtube_portfolio.py
+      on_fail: stop
+    - id: public_archive_sources_exist
+      check: paths_exist
+      target:
+        - publication_strategy_and_archive/post_map.yaml
+        - publication_strategy_and_archive/substack_archive/metadata.json
+      on_fail: stop
+    - id: youtube_sources_exist
+      check: paths_exist
+      target:
+        - experiments/youtube-analytics/metrics_ledger.json
+        - experiments/youtube-analytics/content_rubric.json
+      on_fail: stop
+    - id: source_discovery_complete_before_selection
+      check: substack_completeness_report_has_no_source_failure_or_missing_page
+      target: substack_completeness_report
+      on_fail: stop
+    - id: authenticated_channel_snapshot_complete
+      check: youtube_ledger_has_verified_channel_identity_and_snapshot_timestamp
+      target: youtube_metrics_ledger
+      on_fail: stop
+    - id: exact_approval_before_rollout
+      check: release_readiness_approval_and_manifest_digest_match_before_any_rollout_mutation
+      target: approval_sidecar
+      on_fail: stop
+  invariants:
+    - id: substack_public_only
+      check: inventory_excludes_drafts_paid_content_subscriber_data_and_account_data
+    - id: incomplete_discovery_never_prunes
+      check: source_failure_or_incomplete_discovery_disables_archive_file_and_asset_pruning
+    - id: substack_remains_unchanged
+      check: substack_external_mutations_equal_zero
+    - id: blind_reviews_are_independent
+      check: both_blind_reviews_cover_all_public_essays_without_candidate_or_atlas_leakage
+    - id: atlas_loaded_after_blind_reviews
+      check: editorial_atlas_is_consumed_only_after_both_blind_review_outputs_are_frozen
+    - id: no_aggregate_selection_score
+      check: selections_cite_evidence_rationale_risk_and_confidence_without_aggregate_score
+    - id: homepage_capacity_is_not_a_quota
+      check: homepage_has_at_most_four_flagships_and_four_supporting_with_no_minimum
+    - id: flagship_bar_is_complete
+      check: flagship_has_unique_value_resolved_lineage_documented_contribution_no_unresolved_high_risk_and_standalone_clarity
+    - id: video_selection_requires_source_evidence
+      check: selected_video_has_caption_transcript_or_equivalent_source_evidence
+    - id: manifest_actions_are_independent
+      check: selection_editorial_visibility_homepage_provenance_risk_approval_and_application_fields_remain_independent
+    - id: exact_digest_controls_rollout
+      check: approved_sha256_matches_exact_manifest_bytes_for_every_applied_change
+    - id: approved_manifest_is_immutable
+      check: application_progress_is_written_to_digest_keyed_reports_not_back_into_approved_manifest
+    - id: professional_site_is_gated_sibling_surface
+      check: sibling_repo_write_or_deploy_occurs_only_after_release_readiness_and_matches_change_plan
+    - id: canonical_article_links_are_preserved
+      check: individual_essay_links_remain_substack_and_structured_substack_profile_link_remains_present
+    - id: youtube_transition_is_narrow
+      check: youtube_visibility_transitions_are_only_public_to_unlisted
+    - id: youtube_never_deletes_or_publishes
+      check: youtube_deletions_private_to_public_unlisted_to_public_and_uploads_equal_zero
+    - id: youtube_metadata_is_unchanged
+      check: youtube_title_and_description_mutations_equal_zero
+    - id: uncertain_videos_stay_public
+      check: unresolved_or_uncertain_public_video_defaults_to_keep_public
+    - id: youtube_channel_matches_snapshot
+      check: authenticated_channel_id_and_title_match_approved_snapshot_before_every_mutation
+    - id: youtube_before_state_matches
+      check: every_live_video_and_playlist_state_matches_approved_expected_before_state
+    - id: youtube_batches_are_bounded
+      check: youtube_visibility_batch_size_is_at_most_twenty_five
+    - id: youtube_readback_is_exact
+      check: every_youtube_mutation_is_read_back_and_matches_approved_target_state
+    - id: playlist_has_real_selection
+      check: selected_playlist_exists_only_when_at_least_two_approved_videos_independently_clear_the_bar
+    - id: rollout_order_is_fixed
+      check: mirror_precedes_professional_site_which_precedes_playlist_which_precedes_visibility_canary
+    - id: no_rollout_after_discrepancy
+      check: first_discrepancy_stops_all_remaining_mutations_and_records_partial_state
+  budgets:
+    max_steps: 15
+    max_script_retries: 1
+    max_homepage_flagships: 4
+    max_homepage_supporting: 4
+    max_decision_report_questions: 10
+    max_youtube_visibility_batch: 25
+    external_mutations: conditional_on_release_readiness
+    unapproved_external_mutations: 0
+    substack_mutations: 0
+    youtube_deletions: 0
+    youtube_publications: 0
+  recovery:
+    on_substack_source_failure: preserve_archive_disable_pruning_and_stop
+    on_incomplete_substack_pagination: preserve_archive_disable_pruning_and_stop
+    on_youtube_refresh_failure: preserve_previous_ledger_and_stop_before_selection
+    on_source_conflict: block_flagship_until_reconciled
+    on_manifest_validation_failure: repair_local_manifest_and_regenerate_report_and_dry_runs
+    on_manifest_digest_drift: invalidate_approval_regenerate_review_bundle_and_stop
+    on_mirror_verification_failure: stop_before_professional_site_rollout
+    on_professional_site_verification_failure: stop_before_youtube_playlist
+    on_youtube_account_mismatch: stop_before_channel_mutation
+    on_youtube_state_drift: stop_before_mutation_and_record_live_state
+    on_youtube_quota_failure: stop_remaining_changes_and_record_partial_state
+    on_youtube_readback_mismatch: stop_remaining_changes_and_record_partial_state
+    on_any_rollout_discrepancy: stop_and_report_partial_state_without_improvised_mutation
+    resume_from: resolved_run_after_new_validation_or_approval
+    rollback_strategy: use git reversion for website repositories and the recorded YouTube before-state only after explicit rollback authorization; never delete remote artifacts
+
+enforcement:
+  contract_shape: deny
+  package_route_resolution: deny
+  context_admission: deny
+  tool_use: deny
+  path_access: deny
+  preconditions: deny
+  invariants: detect
+  budgets: detect
+  expected_outputs: detect
+  validation_hooks: deny
+  review_gates: deny
+  external_mutation: deny
+  lifecycle_movement: deny
+  gate_approval: deny
+  promotion: deny
+  trace_completeness: detect
+
+validation:
+  static_checks:
+    - workflow_contract_loads
+    - readme_yaml_drift
+    - root_policy_compatible
+    - gate_references_resolve
+    - package_class_supported
+    - allowed_paths_cover_outputs
+    - public_substack_inventory_only
+    - portfolio_manifest_schema_valid
+    - exact_manifest_digest_preserved
+    - external_mutation_requires_gate
+  context_checks:
+    - source_scripts_exist
+    - public_archive_sources_resolve
+    - substack_completeness_report_resolves
+    - youtube_ledger_resolves
+    - youtube_content_evidence_resolves
+    - mirror_source_resolves
+    - professional_site_source_resolves_when_rollout_requested
+    - gate_contracts_resolve
+  hooks:
+    - id: portfolio_validate
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py validate --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml"
+      run_at:
+        - after_manifest_write
+        - before_decision_report
+        - handoff
+      required: true
+    - id: portfolio_validate_approval
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py validate --mode apply-ready --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml --approval publication_strategy_and_archive/portfolio/approval.yaml --release-readiness reviewable-runs/gates/{run_id}-rooted-layers-portfolio-release-readiness.yaml"
+      run_at:
+        - before_rollout
+        - before_each_external_mutation
+      required: false
+    - id: mirror_check
+      command: "npm run check:mirror"
+      run_at:
+        - after_local_mirror_change
+        - before_mirror_deploy
+      required: true
+    - id: prefixed_mirror_check
+      command: "ELEVENTY_PATH_PREFIX=/content/ MIRROR_SITE_URL=https://petroslamb.github.io npm run check:mirror"
+      run_at:
+        - after_local_mirror_change
+        - before_mirror_deploy
+      required: true
+    - id: professional_site_build
+      command: "npm --prefix /Users/petros/Projects/peterlamb run build"
+      run_at:
+        - after_professional_site_change
+        - before_professional_site_deploy
+      required: false
+    - id: workflow_contract_validation
+      command: "npm run check:workflow-yaml"
+      run_at:
+        - handoff
+      required: true
+    - id: workflow_model_validation
+      command: "npm run check:workflow-model"
+      run_at:
+        - handoff
+      required: true
+    - id: repo_link_check
+      command: "npm run check:repo-links"
+      run_at:
+        - after_local_site_changes
+        - handoff
+      required: true
+  drift_checks:
+    - id: readme_frontmatter_identity_matches_yaml
+      fields:
+        - workflow_id
+        - workflow_kind
+        - stability
+        - workflow_group
+      required: true
+    - id: readme_launch_templates_covered_by_tools
+      required: true
+    - id: readme_validator_commands_covered_by_tools
+      required: true
+    - id: approval_sha_matches_manifest_bytes
+      required: true
+    - id: approved_snapshot_matches_live_youtube_channel
+      required: true
+
+gates:
+  - id: release_readiness
+    type: external_mutation
+    contract: release_readiness
+    required: conditional
+    required_when: mirror deployment, sibling professional-site mutation or deployment, YouTube playlist mutation, or YouTube visibility mutation is requested
+    stop_before: first_rollout_mutation
+    validator: ".venv/bin/python scripts/rooted_layers_portfolio.py validate --mode apply-ready --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml --approval publication_strategy_and_archive/portfolio/approval.yaml --release-readiness reviewable-runs/gates/{run_id}-rooted-layers-portfolio-release-readiness.yaml"
+    artifacts:
+      - corpus_snapshot
+      - blind_review_a
+      - blind_review_b
+      - review_reconciliation
+      - portfolio_manifest
+      - decision_report
+      - professional_site_change_plan
+      - youtube_visibility_dry_run_report
+      - youtube_playlist_dry_run_report when a playlist is proposed
+    decisions:
+      - approve
+      - reject
+      - defer
+
+trace:
+  include:
+    - workflow_id
+    - workflow_version
+    - workflow_hash
+    - context_paths
+    - context_hashes
+    - source_snapshot_hash
+    - substack_completeness
+    - youtube_channel_identity
+    - youtube_snapshot_timestamp
+    - blind_review_hashes
+    - atlas_loaded_after_blind_reviews
+    - manifest_path
+    - manifest_sha256
+    - approval_path
+    - approval_manifest_sha256
+    - output_paths
+    - validation_results
+    - enforcement_outcomes
+    - gate_ids
+    - gate_artifact_paths
+    - rollout_step
+    - expected_before_states
+    - observed_after_states
+    - partial_state
+    - rollback_before_states
+  run_record: required
+  run_record_store: reviewable-runs/logs/
+  gate_store: reviewable-runs/gates/
+  resolved_run:
+    store: reviewable-runs/resolved-runs/
+    persist_when:
+      - governed
+      - gated
+      - resumable
+      - continuous
+      - audit_relevant
+
+steps:
+  - id: resolve_portfolio_context
+    title: Resolve portfolio context
+    mode: scriptable
+    executor:
+      named: content-agent context-admission
+    consumes:
+      - repo_root_environment
+      - workflow_readme
+      - archive_orientation
+      - substack_archive_metadata
+      - substack_post_map
+      - youtube_metrics_ledger
+      - youtube_content_evidence
+      - mirror_source
+      - harness_policy
+      - gate_contracts
+    produces: []
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: refresh_source_inventories
+    title: Refresh source inventories
+    mode: codex_session
+    action: Run the union-based public Substack refresh, and admit an authenticated all-channel ledger refreshed through the existing YouTube channel-operations authority; preserve the previous archive and ledger on incomplete discovery or source failure.
+    consumes:
+      - substack_archive_metadata
+      - substack_post_map
+      - youtube_metrics_ledger
+      - youtube_content_evidence
+      - substack_archive_sync_workflow
+      - youtube_channel_ops_workflow
+    produces:
+      - substack_completeness_report
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: build_corpus_snapshot
+    title: Build corpus snapshot
+    mode: scriptable
+    executor:
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py snapshot"
+    consumes:
+      - substack_completeness_report
+      - substack_archive_metadata
+      - substack_post_map
+      - youtube_metrics_ledger
+      - youtube_content_evidence
+    produces:
+      - corpus_snapshot
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: run_blind_review_a
+    title: Run blind essay review A
+    mode: codex_session
+    action: Review every public essay independently without plan candidates, desired narrative, prior rankings, or editorial-atlas evidence and record evidence-grounded tier recommendations without aggregate scores.
+    consumes:
+      - corpus_snapshot
+      - substack_archive_metadata
+      - substack_post_map
+    produces:
+      - blind_review_a
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: run_blind_review_b
+    title: Run blind essay review B
+    mode: codex_session
+    action: Perform a second independent review of every public essay under the same blind boundary, with emphasis on provenance, contribution, factual risk, and standalone technical value.
+    consumes:
+      - corpus_snapshot
+      - substack_archive_metadata
+      - substack_post_map
+    produces:
+      - blind_review_b
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: reconcile_reviews_and_lineage
+    title: Reconcile blind reviews, atlas evidence, and source lineage
+    mode: codex_session
+    action: Freeze both blind reviews, then load the editorial atlas for disagreement detection and reconcile each shortlisted essay against its published snapshot, package status, README, and working draft.
+    consumes:
+      - corpus_snapshot
+      - blind_review_a
+      - blind_review_b
+      - editorial_atlas
+      - substack_post_map
+    produces:
+      - review_reconciliation
+    validation:
+      hooks: []
+    trace:
+      required: true
+  - id: assemble_portfolio_manifest
+    title: Assemble versioned portfolio manifest
+    mode: codex_session
+    action: Record independent selection, editorial, visibility, homepage, provenance, risk, evidence, rationale, confidence, approval, and application fields; allow fewer than four flagships or none.
+    consumes:
+      - corpus_snapshot
+      - blind_review_a
+      - blind_review_b
+      - review_reconciliation
+      - youtube_metrics_ledger
+      - youtube_content_evidence
+    produces:
+      - portfolio_manifest
+    validation:
+      hooks:
+        - portfolio_validate
+    trace:
+      required: true
+  - id: generate_decision_report
+    title: Generate exact decision report
+    mode: scriptable
+    executor:
+      command: ".venv/bin/python scripts/rooted_layers_portfolio.py report --manifest publication_strategy_and_archive/portfolio/portfolio_manifest.yaml"
+    consumes:
+      - portfolio_manifest
+      - corpus_snapshot
+      - review_reconciliation
+    produces:
+      - decision_report
+    validation:
+      hooks:
+        - portfolio_validate
+    trace:
+      required: true
+  - id: prepare_local_site_changes
+    title: Prepare and verify local website changes
+    mode: codex_session
+    action: Build the curated mirror locally, preserve the archive and atlas route, and write an exact bilingual professional-site change plan without writing the sibling repository before approval.
+    consumes:
+      - portfolio_manifest
+      - decision_report
+      - mirror_source
+      - professional_site_source
+      - professional_site_structured_links
+    produces:
+      - mirror_build
+      - professional_site_change_plan
+    validation:
+      hooks:
+        - mirror_check
+        - prefixed_mirror_check
+        - repo_link_check
+    trace:
+      required: true
+  - id: prepare_youtube_dry_runs
+    title: Prepare YouTube visibility and playlist dry-runs
+    mode: codex_session
+    action: Run both operators without apply, verify the approved channel snapshot and expected before-states, and retain exact reports for the approval bundle.
+    consumes:
+      - portfolio_manifest
+      - corpus_snapshot
+      - youtube_metrics_ledger
+      - youtube_content_evidence
+    produces:
+      - youtube_visibility_dry_run_report
+      - youtube_playlist_dry_run_report
+    validation:
+      hooks:
+        - portfolio_validate
+    trace:
+      required: true
+  - id: record_exact_approval
+    title: Record one digest-bound release approval
+    mode: review_gated
+    action: Present the complete decision report and dry-runs together, record the user's one exact decision, and bind approval.yaml to the SHA-256 of the unchanged manifest.
+    consumes:
+      - corpus_snapshot
+      - blind_review_a
+      - blind_review_b
+      - review_reconciliation
+      - portfolio_manifest
+      - decision_report
+      - professional_site_change_plan
+      - mirror_build
+      - youtube_visibility_dry_run_report
+      - youtube_playlist_dry_run_report
+      - gate_contracts
+    produces:
+      - approval_sidecar
+      - release_readiness_gate_artifact
+    validation:
+      hooks:
+        - portfolio_validate_approval
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: deploy_and_verify_mirror
+    title: Deploy and verify the curated mirror
+    mode: external_mutation_gated
+    action: Deploy the exact approved mirror change first and verify selected work, full archive access, canonical links, disclosure, profile CTA, path prefix, mobile layout, and keyboard access before continuing.
+    consumes:
+      - portfolio_manifest
+      - approval_sidecar
+      - release_readiness_gate_artifact
+      - mirror_build
+      - decision_report
+    produces:
+      - deployed_mirror
+    validation:
+      hooks:
+        - portfolio_validate_approval
+        - mirror_check
+        - prefixed_mirror_check
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: roll_out_professional_site
+    title: Update and verify the professional-site link
+    mode: external_mutation_gated
+    action: Apply only the approved bilingual Rooted Layers publication-link change in the sibling repository, preserve direct Substack essay and structured profile links, build, deploy, and verify it before YouTube changes.
+    consumes:
+      - portfolio_manifest
+      - approval_sidecar
+      - release_readiness_gate_artifact
+      - deployed_mirror
+      - professional_site_change_plan
+      - professional_site_source
+      - professional_site_structured_links
+    produces:
+      - professional_site_link_source
+      - deployed_professional_site
+    validation:
+      hooks:
+        - portfolio_validate_approval
+        - professional_site_build
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: apply_selected_playlist
+    title: Create or update the selected YouTube playlist
+    mode: external_mutation_gated
+    action: After both websites verify, apply the approved public selected-work playlist only when at least two approved videos independently meet the bar, then read back membership and visibility.
+    consumes:
+      - portfolio_manifest
+      - approval_sidecar
+      - release_readiness_gate_artifact
+      - deployed_professional_site
+      - youtube_playlist_dry_run_report
+    produces:
+      - selected_youtube_playlist
+      - youtube_playlist_application_report
+    validation:
+      hooks:
+        - portfolio_validate_approval
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: apply_youtube_visibility_canary
+    title: Apply YouTube visibility canary and bounded continuation
+    mode: external_mutation_gated
+    action: Apply at most 25 approved public-to-unlisted changes in the canary, read back every item, and continue only if all expected before-states and readbacks match; stop all remaining mutations on the first discrepancy.
+    consumes:
+      - portfolio_manifest
+      - approval_sidecar
+      - release_readiness_gate_artifact
+      - selected_youtube_playlist
+      - youtube_visibility_dry_run_report
+    produces:
+      - youtube_visibility_state
+      - youtube_visibility_application_report
+    validation:
+      hooks:
+        - portfolio_validate_approval
+    gate:
+      id: release_readiness
+    trace:
+      required: true
+  - id: reconcile_live_state
+    title: Capture screenshots and reconcile live state
+    mode: codex_session
+    action: Capture final website and channel evidence, compare every live state with the approved manifest and application reports, and record complete or exact partial state without further mutation.
+    consumes:
+      - portfolio_manifest
+      - approval_sidecar
+      - deployed_mirror
+      - deployed_professional_site
+      - selected_youtube_playlist
+      - youtube_visibility_state
+      - youtube_playlist_application_report
+      - youtube_visibility_application_report
+    produces:
+      - verification_screenshots
+      - live_state_reconciliation
+    validation:
+      hooks:
+        - portfolio_validate_approval
+        - workflow_contract_validation
+        - workflow_model_validation
+        - repo_link_check
+    trace:
+      required: true

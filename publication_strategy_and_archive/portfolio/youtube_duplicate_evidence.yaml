@@ -1,0 +1,805 @@
+schema_version: 1
+evidence_type: youtube_duplicate_pair_evidence
+scope: mechanical_evidence_only
+recorded_roles: source_stated_old_and_retained_overlay_remaster
+evidence_generated_at: "2026-08-21T21:52:44Z"
+
+channel:
+  channel_id: "UCzCa0hUNcpRt3LMZP9A8PPA"
+  title: "Rooted Layers | AI Systems Grounded in Research"
+  uploads_playlist_id: "UUzCa0hUNcpRt3LMZP9A8PPA"
+  snapshot_timestamp: "2026-08-21T21:43:21.683390+00:00"
+
+hashes:
+  algorithm: sha256
+  description_hash_basis: "UTF-8 bytes of the exact description string in the live ledger, without an added trailing newline."
+  caption_hash_basis: "SHA-256 recorded by the shared-caption evidence groups and matching local SRT bytes."
+  source_file_hash_basis: "SHA-256 of the complete source file at capture time."
+
+source_files:
+  - id: live_metrics_ledger
+    path: "/Users/petros/Projects/content/experiments/youtube-analytics/metrics_ledger.json"
+    sha256: "09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9"
+    snapshot_timestamp: "2026-08-21T21:43:21.683390+00:00"
+  - id: portfolio_youtube_triage
+    path: "/Users/petros/Projects/content/publication_strategy_and_archive/portfolio/youtube_triage.json"
+    sha256: "2ccd63e778d5d226f075b2bb1d1f06ddaa5c900a16e0f41313d3385bd2f82400"
+    snapshot_timestamp: "2026-08-21T21:43:21.683390+00:00"
+  - id: caption_rubric
+    path: "/Users/petros/Projects/content/experiments/youtube-analytics/content_rubric.json"
+    sha256: "9bc36054aba2ec306c837a18f1e76aa726dd822a707009b4592df8d17a5c5508"
+  - id: historical_overlay_crosswalk
+    path: "/Users/petros/Projects/content/experiments/youtube-cinematic-rollout/overlay_remaster_backfill_pilot.json"
+    sha256: "87b184dc5b5da447f982425c6ce936bb2df7438d43b8f59eec457efb514d0961"
+    historical_run_id: "remastered-overlays-2026-04-28"
+    historical_created_at: "2026-04-28T10:17:44.616454+00:00"
+  - id: action_overlay_upload_report
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+    sha256: "99d655b8498208c38fab8f3c3484dd524410f147a0a05d34aa03c9a1be1d2f65"
+    historical_created_at: "2026-04-28T10:29:10.855406+00:00"
+  - id: memory_overlay_upload_report
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+    sha256: "b1e9e6eb327f32ea86f5f3724fcea3b9e5101b75491a137d51d22b848d807019"
+    historical_created_at: "2026-04-28T10:29:35.166090+00:00"
+  - id: multi_agent_overlay_upload_report
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+    sha256: "52e0dcd9dd0a1c9688eac68bbb8c9ad68b5cb20204daa39aff1e6655dc8deb29"
+    historical_created_at: "2026-04-28T10:29:58.416287+00:00"
+  - id: reasoning_overlay_upload_report
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+    sha256: "c9a0a565ada7a8cda50eaefad0514cd02eaf4b06d17c4d86c539b9f43cc03305"
+    historical_created_at: "2026-04-28T10:30:19.239985+00:00"
+  - id: action_caption_srt
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/action_auto_captions.srt"
+    sha256: "e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc"
+  - id: memory_caption_srt
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt"
+    sha256: "43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a"
+  - id: multi_agent_caption_srt
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/multi-agent_auto_captions.srt"
+    sha256: "c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea"
+  - id: reasoning_caption_srt
+    path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt"
+    sha256: "90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb"
+
+analytics_windows:
+  source: live_metrics_ledger
+  all_target_entries_have_the_same_window_state: true
+  windows:
+    24h:
+      start_date: "2026-08-20"
+      end_date: "2026-08-20"
+      metrics: null
+      missing: true
+      missing_reason: analytics_lag_or_no_rows
+    72h:
+      start_date: "2026-08-18"
+      end_date: "2026-08-20"
+      metrics: null
+      missing: true
+      missing_reason: analytics_lag_or_no_rows
+    7d:
+      start_date: "2026-08-14"
+      end_date: "2026-08-20"
+      metrics: null
+      missing: true
+      missing_reason: analytics_lag_or_no_rows
+    28d:
+      start_date: "2026-07-24"
+      end_date: "2026-08-20"
+      metrics: null
+      missing: true
+      missing_reason: analytics_lag_or_no_rows
+
+pairs:
+  - pair_id: "Ue9gGySTVRI->1PB-UE6GpBM"
+    package: "autonomous-agents/essays/action"
+    slug: "writing-the-script-isnt-agency"
+    source_stated_title: "Writing the Script Isn't Agency"
+    current_live_ledger:
+      old:
+        video_id: "Ue9gGySTVRI"
+        url: "https://www.youtube.com/watch?v=Ue9gGySTVRI"
+        title: "Writing the Script Isn't Agency #shorts"
+        visibility: public
+        format: short
+        duration: "PT26S"
+        duration_seconds: 26.0
+        published_at: "2026-04-29T06:00:20Z"
+        scheduled_publish_at: "2026-04-29T06:00:00Z"
+        data_api_statistics: {viewCount: "13", likeCount: "0", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "90adc973e633a218dc513eb5f3a18c1a81efeb4cc8adadbcf7ac84066ee38006"
+        description: |-
+          Writing the Script Isn't Agency
+
+          Short clip from a Rooted Layers research video.
+
+          An agent is not real just because it can describe the work. It becomes real when it can execute the task and verify the state actually changed.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-i-when-language
+          Full cinematic video: https://www.youtube.com/watch?v=NIJ92a65SxM
+          Full research breakdown: https://www.youtube.com/watch?v=swvX4mduJtk
+
+          #autonomousagentsessaysaction #ai #research #shorts
+        caption: {presence: present, caption_sha256: "e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc", match_confidence: high, srt_source: action_caption_srt}
+        related_video: "NIJ92a65SxM"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 57, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "1PB-UE6GpBM"
+        url: "https://www.youtube.com/watch?v=1PB-UE6GpBM"
+        title: "Writing the Script Isn't Agency #shorts"
+        visibility: public
+        format: short
+        duration: "PT26S"
+        duration_seconds: 26.0
+        published_at: "2026-04-29T06:00:02Z"
+        scheduled_publish_at: "2026-04-29T06:00:00Z"
+        data_api_statistics: {viewCount: "147", likeCount: "0", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "90adc973e633a218dc513eb5f3a18c1a81efeb4cc8adadbcf7ac84066ee38006"
+        description: |-
+          Writing the Script Isn't Agency
+
+          Short clip from a Rooted Layers research video.
+
+          An agent is not real just because it can describe the work. It becomes real when it can execute the task and verify the state actually changed.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-i-when-language
+          Full cinematic video: https://www.youtube.com/watch?v=NIJ92a65SxM
+          Full research breakdown: https://www.youtube.com/watch?v=swvX4mduJtk
+
+          #autonomousagentsessaysaction #ai #research #shorts
+        caption: {presence: present, caption_sha256: "e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc", match_confidence: high, srt_source: action_caption_srt}
+        related_video: "NIJ92a65SxM"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 59, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-04-29T06:00:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt"
+      old: {video_id: "Ue9gGySTVRI", url: "https://www.youtube.com/watch?v=Ue9gGySTVRI", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/portrait/01-writing-the-script-isnt-agency_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "1PB-UE6GpBM", url: "https://www.youtube.com/watch?v=1PB-UE6GpBM", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-writing-the-script-isnt-agency_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "1PB-UE6GpBM", title: "Writing the Script Isn't Agency #shorts", summary: "An agent is not real just because it can describe the work. It becomes real when it can execute the task and verify the state actually changed.", publish_at: "2026-04-29T06:00:00Z", related_video_ids: ["NIJ92a65SxM"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5BQzRBQzNEOTgzNTU2QkZB", historical_playlist_position: 125, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "Writing the Script Isn't Agency #shorts", published_at: "2026-04-28T10:28:56Z"}}
+      intended_related_video_target: {id: "NIJ92a65SxM", url: "https://www.youtube.com/watch?v=NIJ92a65SxM"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "Ue9gGySTVRI"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "1PB-UE6GpBM"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT26S, video_id: "1PB-UE6GpBM"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:28:56Z", observed_value: "2026-04-29T06:00:02Z", video_id: "1PB-UE6GpBM"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 125, observed_value: 59, video_id: "1PB-UE6GpBM"}
+
+  - pair_id: "bsvMg8LUb1M->FaDtWYQ-8d8"
+    package: "autonomous-agents/essays/action"
+    slug: "css-tags-can-break-an-agent"
+    source_stated_title: "A Single CSS Tag Can Break an Agent"
+    current_live_ledger:
+      old:
+        video_id: "bsvMg8LUb1M"
+        url: "https://www.youtube.com/watch?v=bsvMg8LUb1M"
+        title: "A Single CSS Tag Can Break an Agent #shorts"
+        visibility: public
+        format: short
+        duration: "PT26S"
+        duration_seconds: 26.0
+        published_at: "2026-04-30T06:00:24Z"
+        scheduled_publish_at: "2026-04-30T06:00:00Z"
+        data_api_statistics: {viewCount: "128", likeCount: "0", dislikeCount: "1", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "0d206c45e0c0d1c5a61ea6425396e35f32bc5aaa6b87e6b3a6b957c1337da3b7"
+        description: |-
+          A Single CSS Tag Can Break an Agent
+
+          Short clip from a Rooted Layers research video.
+
+          Computer-using agents look impressive until a tiny interface change wipes out their bearings. Human-facing surfaces are fragile action environments.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-i-when-language
+          Full cinematic video: https://www.youtube.com/watch?v=NIJ92a65SxM
+          Full research breakdown: https://www.youtube.com/watch?v=swvX4mduJtk
+
+          #autonomousagentsessaysaction #ai #research #shorts
+        caption: {presence: present, caption_sha256: "e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc", match_confidence: high, srt_source: action_caption_srt}
+        related_video: "NIJ92a65SxM"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 48, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "FaDtWYQ-8d8"
+        url: "https://www.youtube.com/watch?v=FaDtWYQ-8d8"
+        title: "A Single CSS Tag Can Break an Agent #shorts"
+        visibility: public
+        format: short
+        duration: "PT26S"
+        duration_seconds: 26.0
+        published_at: "2026-04-29T07:30:07Z"
+        scheduled_publish_at: "2026-04-29T07:30:00Z"
+        data_api_statistics: {viewCount: "144", likeCount: "0", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "0d206c45e0c0d1c5a61ea6425396e35f32bc5aaa6b87e6b3a6b957c1337da3b7"
+        description: |-
+          A Single CSS Tag Can Break an Agent
+
+          Short clip from a Rooted Layers research video.
+
+          Computer-using agents look impressive until a tiny interface change wipes out their bearings. Human-facing surfaces are fragile action environments.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-i-when-language
+          Full cinematic video: https://www.youtube.com/watch?v=NIJ92a65SxM
+          Full research breakdown: https://www.youtube.com/watch?v=swvX4mduJtk
+
+          #autonomousagentsessaysaction #ai #research #shorts
+        caption: {presence: present, caption_sha256: "e6daa9e16bcf4a0b046b01b983e503314339f6ee7bf2183111b524f920d471fc", match_confidence: high, srt_source: action_caption_srt}
+        related_video: "NIJ92a65SxM"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 56, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-04-29T07:30:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/operating_agents_action_cinematic.srt"
+      old: {video_id: "bsvMg8LUb1M", url: "https://www.youtube.com/watch?v=bsvMg8LUb1M", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/portrait/02-css-tags-can-break-an-agent_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "FaDtWYQ-8d8", url: "https://www.youtube.com/watch?v=FaDtWYQ-8d8", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-css-tags-can-break-an-agent_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/action/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "FaDtWYQ-8d8", title: "A Single CSS Tag Can Break an Agent #shorts", summary: "Computer-using agents look impressive until a tiny interface change wipes out their bearings. Human-facing surfaces are fragile action environments.", publish_at: "2026-04-29T07:30:00Z", related_video_ids: ["NIJ92a65SxM"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5EN0U0NTk3NzIwMjUxN0M3", historical_playlist_position: 126, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "A Single CSS Tag Can Break an Agent #shorts", published_at: "2026-04-28T10:29:03Z"}}
+      intended_related_video_target: {id: "NIJ92a65SxM", url: "https://www.youtube.com/watch?v=NIJ92a65SxM"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "bsvMg8LUb1M"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "FaDtWYQ-8d8"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT26S, video_id: "FaDtWYQ-8d8"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:29:03Z", observed_value: "2026-04-29T07:30:07Z", video_id: "FaDtWYQ-8d8"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 126, observed_value: 56, video_id: "FaDtWYQ-8d8"}
+
+  - pair_id: "QRD1FJiKTfU->D3BZrjUzsPw"
+    package: "autonomous-agents/essays/memory"
+    slug: "agents-dont-lose-iq-they-lose-attention"
+    source_stated_title: "Agents Don't Lose IQ. They Lose Attention."
+    current_live_ledger:
+      old:
+        video_id: "QRD1FJiKTfU"
+        url: "https://www.youtube.com/watch?v=QRD1FJiKTfU"
+        title: "Agents Don't Lose IQ. They Lose Attention. #shorts"
+        visibility: public
+        format: short
+        duration: "PT26S"
+        duration_seconds: 26.0
+        published_at: "2026-04-29T07:30:19Z"
+        scheduled_publish_at: "2026-04-29T07:30:00Z"
+        data_api_statistics: {viewCount: "828", likeCount: "12", dislikeCount: "1", favoriteCount: "0", commentCount: "2"}
+        description_sha256: "701fbc490c3f48970d359494dbea941b9f2404034ba7e49f0019db7b78f96f33"
+        description: |-
+          Agents Don't Lose IQ. They Lose Attention.
+
+          Short clip from a Rooted Layers research video.
+
+          When an agent loops or hallucinates mid-task, the failure is usually not intelligence. It is an attention and memory collapse.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
+          Full cinematic video: https://www.youtube.com/watch?v=J9dz9_9YPQw
+          Full research breakdown: https://www.youtube.com/watch?v=Pj4sjWvyJVQ
+
+          #autonomousagentsessaysmemory #ai #research #shorts
+        caption: {presence: present, caption_sha256: "43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a", match_confidence: high, srt_source: memory_caption_srt}
+        related_video: "J9dz9_9YPQw"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 55, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "D3BZrjUzsPw"
+        url: "https://www.youtube.com/watch?v=D3BZrjUzsPw"
+        title: "Agents Don't Lose IQ. They Lose Attention. #shorts"
+        visibility: public
+        format: short
+        duration: "PT26S"
+        duration_seconds: 26.0
+        published_at: "2026-04-30T06:00:09Z"
+        scheduled_publish_at: "2026-04-30T06:00:00Z"
+        data_api_statistics: {viewCount: "894", likeCount: "3", dislikeCount: "4", favoriteCount: "0", commentCount: "2"}
+        description_sha256: "701fbc490c3f48970d359494dbea941b9f2404034ba7e49f0019db7b78f96f33"
+        description: |-
+          Agents Don't Lose IQ. They Lose Attention.
+
+          Short clip from a Rooted Layers research video.
+
+          When an agent loops or hallucinates mid-task, the failure is usually not intelligence. It is an attention and memory collapse.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
+          Full cinematic video: https://www.youtube.com/watch?v=J9dz9_9YPQw
+          Full research breakdown: https://www.youtube.com/watch?v=Pj4sjWvyJVQ
+
+          #autonomousagentsessaysmemory #ai #research #shorts
+        caption: {presence: present, caption_sha256: "43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a", match_confidence: high, srt_source: memory_caption_srt}
+        related_video: "J9dz9_9YPQw"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 49, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-04-30T06:00:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt"
+      old: {video_id: "QRD1FJiKTfU", url: "https://www.youtube.com/watch?v=QRD1FJiKTfU", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/01-agents-dont-lose-iq-they-lose-attention_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "D3BZrjUzsPw", url: "https://www.youtube.com/watch?v=D3BZrjUzsPw", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-agents-dont-lose-iq-they-lose-attention_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "D3BZrjUzsPw", title: "Agents Don't Lose IQ. They Lose Attention. #shorts", summary: "When an agent loops or hallucinates mid-task, the failure is usually not intelligence. It is an attention and memory collapse.", publish_at: "2026-04-30T06:00:00Z", related_video_ids: ["J9dz9_9YPQw"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS44M0Q5MzQ0QTcwQzFDMjc5", historical_playlist_position: 127, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "Agents Don't Lose IQ. They Lose Attention. #shorts", published_at: "2026-04-28T10:29:24Z"}}
+      intended_related_video_target: {id: "J9dz9_9YPQw", url: "https://www.youtube.com/watch?v=J9dz9_9YPQw"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "QRD1FJiKTfU"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "D3BZrjUzsPw"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT26S, video_id: "D3BZrjUzsPw"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:29:24Z", observed_value: "2026-04-30T06:00:09Z", video_id: "D3BZrjUzsPw"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 127, observed_value: 49, video_id: "D3BZrjUzsPw"}
+
+  - pair_id: "4UzuyKGNaKc->PopV146TIe8"
+    package: "autonomous-agents/essays/memory"
+    slug: "flat-vector-memory-becomes-a-security-hole"
+    source_stated_title: "Flat Vector Memory Becomes a Security Hole"
+    current_live_ledger:
+      old:
+        video_id: "4UzuyKGNaKc"
+        url: "https://www.youtube.com/watch?v=4UzuyKGNaKc"
+        title: "Flat Vector Memory Becomes a Security Hole #shorts"
+        visibility: public
+        format: short
+        duration: "PT36S"
+        duration_seconds: 36.0
+        published_at: "2026-04-30T07:30:03Z"
+        scheduled_publish_at: "2026-04-30T07:30:00Z"
+        data_api_statistics: {viewCount: "38", likeCount: "0", dislikeCount: "1", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "5b2e61b9f52cbe7936198a5767911438acabfc7cbc6a901ed04fa42710e423ed"
+        description: |-
+          Flat Vector Memory Becomes a Security Hole
+
+          Short clip from a Rooted Layers research video.
+
+          Dumping every document into one memory channel does not just add noise. It creates retrieval drift and opens a path for hidden text to override guardrails.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
+          Full cinematic video: https://www.youtube.com/watch?v=J9dz9_9YPQw
+          Full research breakdown: https://www.youtube.com/watch?v=Pj4sjWvyJVQ
+
+          #autonomousagentsessaysmemory #ai #research #shorts
+        caption: {presence: present, caption_sha256: "43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a", match_confidence: high, srt_source: memory_caption_srt}
+        related_video: "J9dz9_9YPQw"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 46, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "PopV146TIe8"
+        url: "https://www.youtube.com/watch?v=PopV146TIe8"
+        title: "Flat Vector Memory Becomes a Security Hole #shorts"
+        visibility: public
+        format: short
+        duration: "PT36S"
+        duration_seconds: 36.0
+        published_at: "2026-04-30T07:30:22Z"
+        scheduled_publish_at: "2026-04-30T07:30:00Z"
+        data_api_statistics: {viewCount: "351", likeCount: "1", dislikeCount: "3", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "5b2e61b9f52cbe7936198a5767911438acabfc7cbc6a901ed04fa42710e423ed"
+        description: |-
+          Flat Vector Memory Becomes a Security Hole
+
+          Short clip from a Rooted Layers research video.
+
+          Dumping every document into one memory channel does not just add noise. It creates retrieval drift and opens a path for hidden text to override guardrails.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-ii-memory-needs
+          Full cinematic video: https://www.youtube.com/watch?v=J9dz9_9YPQw
+          Full research breakdown: https://www.youtube.com/watch?v=Pj4sjWvyJVQ
+
+          #autonomousagentsessaysmemory #ai #research #shorts
+        caption: {presence: present, caption_sha256: "43b37e62dd543028106d47550059298e796919c1ca826c9c9b78a8517247e13a", match_confidence: high, srt_source: memory_caption_srt}
+        related_video: "J9dz9_9YPQw"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 44, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-04-30T07:30:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/operating_agents_memory_cinematic.srt"
+      old: {video_id: "4UzuyKGNaKc", url: "https://www.youtube.com/watch?v=4UzuyKGNaKc", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/portrait/02-flat-vector-memory-becomes-a-security-hole_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "PopV146TIe8", url: "https://www.youtube.com/watch?v=PopV146TIe8", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-flat-vector-memory-becomes-a-security-hole_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/memory/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "PopV146TIe8", title: "Flat Vector Memory Becomes a Security Hole #shorts", summary: "Dumping every document into one memory channel does not just add noise. It creates retrieval drift and opens a path for hidden text to override guardrails.", publish_at: "2026-04-30T07:30:00Z", related_video_ids: ["J9dz9_9YPQw"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4wMEMyQTBBOTUwNTM0OUFG", historical_playlist_position: 128, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "Flat Vector Memory Becomes a Security Hole #shorts", published_at: "2026-04-28T10:29:29Z"}}
+      intended_related_video_target: {id: "J9dz9_9YPQw", url: "https://www.youtube.com/watch?v=J9dz9_9YPQw"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "4UzuyKGNaKc"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "PopV146TIe8"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT36S, video_id: "PopV146TIe8"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:29:29Z", observed_value: "2026-04-30T07:30:22Z", video_id: "PopV146TIe8"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 128, observed_value: 44, video_id: "PopV146TIe8"}
+
+  - pair_id: "PV-KfDYiLPo->gENRTpSnHsw"
+    package: "autonomous-agents/essays/multi-agent"
+    slug: "agent-theater-is-not-intelligence"
+    source_stated_title: "Agent Theater Is Not Intelligence"
+    current_live_ledger:
+      old:
+        video_id: "PV-KfDYiLPo"
+        url: "https://www.youtube.com/watch?v=PV-KfDYiLPo"
+        title: "Agent Theater Is Not Intelligence #shorts"
+        visibility: public
+        format: short
+        duration: "PT57S"
+        duration_seconds: 57.0
+        published_at: "2026-04-28T07:30:11Z"
+        scheduled_publish_at: "2026-04-28T07:30:00Z"
+        data_api_statistics: {viewCount: "507", likeCount: "4", dislikeCount: "3", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "e412ac16c47eb40c94dc84a8fc0de84101f20ba28d5dd348f7104d7adf4a22e6"
+        description: |-
+          Agent Theater Is Not Intelligence
+
+          Short clip from a Rooted Layers research video.
+
+          Splitting one model into CEO, developer, and tester roles can create an organizational chart without creating a smarter system.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+          Full cinematic video: https://www.youtube.com/watch?v=abBHq8lwCEE
+          Full research breakdown: https://www.youtube.com/watch?v=xxd2VKlqiL4
+
+          #autonomousagentsessaysmultiagent #ai #research #shorts
+        caption: {presence: present, caption_sha256: "c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea", match_confidence: high, srt_source: multi_agent_caption_srt}
+        related_video: "abBHq8lwCEE"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 62, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "gENRTpSnHsw"
+        url: "https://www.youtube.com/watch?v=gENRTpSnHsw"
+        title: "Agent Theater Is Not Intelligence #shorts"
+        visibility: public
+        format: short
+        duration: "PT57S"
+        duration_seconds: 57.0
+        published_at: "2026-05-01T06:00:37Z"
+        scheduled_publish_at: "2026-05-01T06:00:00Z"
+        data_api_statistics: {viewCount: "911", likeCount: "10", dislikeCount: "4", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "e412ac16c47eb40c94dc84a8fc0de84101f20ba28d5dd348f7104d7adf4a22e6"
+        description: |-
+          Agent Theater Is Not Intelligence
+
+          Short clip from a Rooted Layers research video.
+
+          Splitting one model into CEO, developer, and tester roles can create an organizational chart without creating a smarter system.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+          Full cinematic video: https://www.youtube.com/watch?v=abBHq8lwCEE
+          Full research breakdown: https://www.youtube.com/watch?v=xxd2VKlqiL4
+
+          #autonomousagentsessaysmultiagent #ai #research #shorts
+        caption: {presence: present, caption_sha256: "c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea", match_confidence: high, srt_source: multi_agent_caption_srt}
+        related_video: "abBHq8lwCEE"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 38, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-05-01T06:00:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt"
+      old: {video_id: "PV-KfDYiLPo", url: "https://www.youtube.com/watch?v=PV-KfDYiLPo", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/01-agent-theater-is-not-intelligence_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "gENRTpSnHsw", url: "https://www.youtube.com/watch?v=gENRTpSnHsw", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-agent-theater-is-not-intelligence_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "gENRTpSnHsw", title: "Agent Theater Is Not Intelligence #shorts", summary: "Splitting one model into CEO, developer, and tester roles can create an organizational chart without creating a smarter system.", publish_at: "2026-05-01T06:00:00Z", related_video_ids: ["abBHq8lwCEE"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5FQjcyRDZBMEMyNTY3OTdE", historical_playlist_position: 129, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "Agent Theater Is Not Intelligence #shorts", published_at: "2026-04-28T10:29:45Z"}}
+      intended_related_video_target: {id: "abBHq8lwCEE", url: "https://www.youtube.com/watch?v=abBHq8lwCEE"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "PV-KfDYiLPo"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "gENRTpSnHsw"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT57S, video_id: "gENRTpSnHsw"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:29:45Z", observed_value: "2026-05-01T06:00:37Z", video_id: "gENRTpSnHsw"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 129, observed_value: 38, video_id: "gENRTpSnHsw"}
+
+  - pair_id: "qTucAFn5g8Y->_GOUwFLcERM"
+    package: "autonomous-agents/essays/multi-agent"
+    slug: "the-coordination-tax-kills-agent-handoffs"
+    source_stated_title: "The Coordination Tax Kills Agent Handoffs"
+    current_live_ledger:
+      old:
+        video_id: "qTucAFn5g8Y"
+        url: "https://www.youtube.com/watch?v=qTucAFn5g8Y"
+        title: "The Coordination Tax Kills Agent Handoffs #shorts"
+        visibility: public
+        format: short
+        duration: "PT48S"
+        duration_seconds: 48.0
+        published_at: "2026-04-29T07:30:33Z"
+        scheduled_publish_at: "2026-04-29T07:30:00Z"
+        data_api_statistics: {viewCount: "14", likeCount: "1", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "c5db8350ec7156cc537cae8b39adc2a2ed906a80f529b288e3916edf1a7ae3b5"
+        description: |-
+          The Coordination Tax Kills Agent Handoffs
+
+          Short clip from a Rooted Layers research video.
+
+          Every unnecessary handoff adds latency, token cost, and fidelity loss. A single capable agent should own the task when it can.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+          Full cinematic video: https://www.youtube.com/watch?v=abBHq8lwCEE
+          Full research breakdown: https://www.youtube.com/watch?v=xxd2VKlqiL4
+
+          #autonomousagentsessaysmultiagent #ai #research #shorts
+        caption: {presence: present, caption_sha256: "c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea", match_confidence: high, srt_source: multi_agent_caption_srt}
+        related_video: "abBHq8lwCEE"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 54, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "_GOUwFLcERM"
+        url: "https://www.youtube.com/watch?v=_GOUwFLcERM"
+        title: "The Coordination Tax Kills Agent Handoffs #shorts"
+        visibility: public
+        format: short
+        duration: "PT48S"
+        duration_seconds: 48.0
+        published_at: "2026-05-01T07:30:31Z"
+        scheduled_publish_at: "2026-05-01T07:30:00Z"
+        data_api_statistics: {viewCount: "12", likeCount: "0", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "c5db8350ec7156cc537cae8b39adc2a2ed906a80f529b288e3916edf1a7ae3b5"
+        description: |-
+          The Coordination Tax Kills Agent Handoffs
+
+          Short clip from a Rooted Layers research video.
+
+          Every unnecessary handoff adds latency, token cost, and fidelity loss. A single capable agent should own the task when it can.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iv-the-second-agent
+          Full cinematic video: https://www.youtube.com/watch?v=abBHq8lwCEE
+          Full research breakdown: https://www.youtube.com/watch?v=xxd2VKlqiL4
+
+          #autonomousagentsessaysmultiagent #ai #research #shorts
+        caption: {presence: present, caption_sha256: "c70c0cfb2ad5cca4ba7e7b876ae4db603d0fd0b0be6094447d733257d1c448ea", match_confidence: high, srt_source: multi_agent_caption_srt}
+        related_video: "abBHq8lwCEE"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 35, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-05-01T07:30:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/operating_agents_multi_agent_cinematic.srt"
+      old: {video_id: "qTucAFn5g8Y", url: "https://www.youtube.com/watch?v=qTucAFn5g8Y", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/portrait/02-the-coordination-tax-kills-agent-handoffs_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "_GOUwFLcERM", url: "https://www.youtube.com/watch?v=_GOUwFLcERM", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-the-coordination-tax-kills-agent-handoffs_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/multi-agent/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "_GOUwFLcERM", title: "The Coordination Tax Kills Agent Handoffs #shorts", summary: "Every unnecessary handoff adds latency, token cost, and fidelity loss. A single capable agent should own the task when it can.", publish_at: "2026-05-01T07:30:00Z", related_video_ids: ["abBHq8lwCEE"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS44REI4QUZDRDI5MDc4Q0NF", historical_playlist_position: 130, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "The Coordination Tax Kills Agent Handoffs #shorts", published_at: "2026-04-28T10:29:51Z"}}
+      intended_related_video_target: {id: "abBHq8lwCEE", url: "https://www.youtube.com/watch?v=abBHq8lwCEE"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "qTucAFn5g8Y"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "_GOUwFLcERM"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT48S, video_id: "_GOUwFLcERM"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:29:51Z", observed_value: "2026-05-01T07:30:31Z", video_id: "_GOUwFLcERM"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 130, observed_value: 35, video_id: "_GOUwFLcERM"}
+
+  - pair_id: "T-XSEz2bQUk->zWgN04X3ugk"
+    package: "autonomous-agents/essays/reasoning"
+    slug: "the-ai-did-not-fail-the-scaffold-did"
+    source_stated_title: "The AI Did Not Fail. The Scaffold Did."
+    current_live_ledger:
+      old:
+        video_id: "T-XSEz2bQUk"
+        url: "https://www.youtube.com/watch?v=T-XSEz2bQUk"
+        title: "The AI Did Not Fail. The Scaffold Did. #shorts"
+        visibility: public
+        format: short
+        duration: "PT36S"
+        duration_seconds: 36.0
+        published_at: "2026-04-28T06:00:19Z"
+        scheduled_publish_at: "2026-04-28T06:00:00Z"
+        data_api_statistics: {viewCount: "61", likeCount: "2", dislikeCount: "1", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "f2f54c8972dd27397d40e99bf92a381e1439b1646af765cde883fb1f5620cbc7"
+        description: |-
+          The AI Did Not Fail. The Scaffold Did.
+
+          Short clip from a Rooted Layers research video.
+
+          Fluent plans can look validated until they hit a locked database. The failure is often missing architecture, not missing intelligence.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+          Full cinematic video: https://www.youtube.com/watch?v=bto9FNWlahY
+          Full research breakdown: https://www.youtube.com/watch?v=LykGDaONozw
+
+          #autonomousagentsessaysreasoning #ai #research #shorts
+        caption: {presence: present, caption_sha256: "90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb", match_confidence: high, srt_source: reasoning_caption_srt}
+        related_video: "bto9FNWlahY"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 64, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "zWgN04X3ugk"
+        url: "https://www.youtube.com/watch?v=zWgN04X3ugk"
+        title: "The AI Did Not Fail. The Scaffold Did. #shorts"
+        visibility: public
+        format: short
+        duration: "PT36S"
+        duration_seconds: 36.0
+        published_at: "2026-05-02T06:00:45Z"
+        scheduled_publish_at: "2026-05-02T06:00:00Z"
+        data_api_statistics: {viewCount: "64", likeCount: "0", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "f2f54c8972dd27397d40e99bf92a381e1439b1646af765cde883fb1f5620cbc7"
+        description: |-
+          The AI Did Not Fail. The Scaffold Did.
+
+          Short clip from a Rooted Layers research video.
+
+          Fluent plans can look validated until they hit a locked database. The failure is often missing architecture, not missing intelligence.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+          Full cinematic video: https://www.youtube.com/watch?v=bto9FNWlahY
+          Full research breakdown: https://www.youtube.com/watch?v=LykGDaONozw
+
+          #autonomousagentsessaysreasoning #ai #research #shorts
+        caption: {presence: present, caption_sha256: "90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb", match_confidence: high, srt_source: reasoning_caption_srt}
+        related_video: "bto9FNWlahY"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 30, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-05-02T06:00:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt"
+      old: {video_id: "T-XSEz2bQUk", url: "https://www.youtube.com/watch?v=T-XSEz2bQUk", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/01-the-ai-did-not-fail-the-scaffold-did_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "zWgN04X3ugk", url: "https://www.youtube.com/watch?v=zWgN04X3ugk", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/01-the-ai-did-not-fail-the-scaffold-did_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "zWgN04X3ugk", title: "The AI Did Not Fail. The Scaffold Did. #shorts", summary: "Fluent plans can look validated until they hit a locked database. The failure is often missing architecture, not missing intelligence.", publish_at: "2026-05-02T06:00:00Z", related_video_ids: ["bto9FNWlahY"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS40ODU2MTBGM0M5MkIwQzU0", historical_playlist_position: 131, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "The AI Did Not Fail. The Scaffold Did. #shorts", published_at: "2026-04-28T10:30:07Z"}}
+      intended_related_video_target: {id: "bto9FNWlahY", url: "https://www.youtube.com/watch?v=bto9FNWlahY"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "T-XSEz2bQUk"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "zWgN04X3ugk"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT36S, video_id: "zWgN04X3ugk"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:30:07Z", observed_value: "2026-05-02T06:00:45Z", video_id: "zWgN04X3ugk"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 131, observed_value: 30, video_id: "zWgN04X3ugk"}
+
+  - pair_id: "QCK0hPc0dPM->T8Gv8yX_NW8"
+    package: "autonomous-agents/essays/reasoning"
+    slug: "ai-cannot-check-its-own-gravity"
+    source_stated_title: "AI Cannot Check Its Own Gravity"
+    current_live_ledger:
+      old:
+        video_id: "QCK0hPc0dPM"
+        url: "https://www.youtube.com/watch?v=QCK0hPc0dPM"
+        title: "AI Cannot Check Its Own Gravity #shorts"
+        visibility: public
+        format: short
+        duration: "PT51S"
+        duration_seconds: 51.0
+        published_at: "2026-04-29T06:00:17Z"
+        scheduled_publish_at: "2026-04-29T06:00:00Z"
+        data_api_statistics: {viewCount: "8", likeCount: "0", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "b07975d47fc0357e1b50470d82af8bc72d788d42c42f83a8a9036df271ceff2a"
+        description: |-
+          AI Cannot Check Its Own Gravity
+
+          Short clip from a Rooted Layers research video.
+
+          Once a hallucination enters the same context window, the model bends the rest of the answer around it. Verification needs isolation.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+          Full cinematic video: https://www.youtube.com/watch?v=bto9FNWlahY
+          Full research breakdown: https://www.youtube.com/watch?v=LykGDaONozw
+
+          #autonomousagentsessaysreasoning #ai #research #shorts
+        caption: {presence: present, caption_sha256: "90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb", match_confidence: high, srt_source: reasoning_caption_srt}
+        related_video: "bto9FNWlahY"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 58, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+      retained_overlay_remaster:
+        video_id: "T8Gv8yX_NW8"
+        url: "https://www.youtube.com/watch?v=T8Gv8yX_NW8"
+        title: "AI Cannot Check Its Own Gravity #shorts"
+        visibility: public
+        format: short
+        duration: "PT51S"
+        duration_seconds: 51.0
+        published_at: "2026-05-02T07:30:25Z"
+        scheduled_publish_at: "2026-05-02T07:30:00Z"
+        data_api_statistics: {viewCount: "154", likeCount: "3", dislikeCount: "0", favoriteCount: "0", commentCount: "0"}
+        description_sha256: "b07975d47fc0357e1b50470d82af8bc72d788d42c42f83a8a9036df271ceff2a"
+        description: |-
+          AI Cannot Check Its Own Gravity
+
+          Short clip from a Rooted Layers research video.
+
+          Once a hallucination enters the same context window, the model bends the rest of the answer around it. Verification needs isolation.
+
+          Original essay: https://lambpetros.substack.com/p/operating-agents-iii-diagnose-the
+          Full cinematic video: https://www.youtube.com/watch?v=bto9FNWlahY
+          Full research breakdown: https://www.youtube.com/watch?v=LykGDaONozw
+
+          #autonomousagentsessaysreasoning #ai #research #shorts
+        caption: {presence: present, caption_sha256: "90447e3a0e797be6b03e3a34fc2eea628c5ce0671e2dab26e4e4f8b3c7ed6ebb", match_confidence: high, srt_source: reasoning_caption_srt}
+        related_video: "bto9FNWlahY"
+        playlist: {id: "PL8lPx5mgRhhbMQQ70d-C4dAKKKPzCd5Hd", position: 28, privacy_status: public}
+        analytics_window_metrics: {24h: null, 72h: null, 7d: null, 28d: null}
+        daily_metrics: []
+        traffic_sources: []
+        creator_content_type: []
+    historical_crosswalk:
+      source_file: historical_overlay_crosswalk
+      run_id: "remastered-overlays-2026-04-28"
+      publish_at: "2026-05-02T07:30:00Z"
+      source_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/shorts_manifest.json"
+      remaster_manifest: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_manifest.json"
+      source_video: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.mp4"
+      source_srt: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/operating_agents_reasoning_cinematic.srt"
+      old: {video_id: "QCK0hPc0dPM", url: "https://www.youtube.com/watch?v=QCK0hPc0dPM", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/portrait/02-ai-cannot-check-its-own-gravity_portrait.mp4", source_stated_role: old, old_status_target: unlisted, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      retained_overlay_remaster: {video_id: "T8Gv8yX_NW8", url: "https://www.youtube.com/watch?v=T8Gv8yX_NW8", video_path: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/portrait/02-ai-cannot-check-its-own-gravity_portrait.mp4", source_stated_role: new_video_retained_overlay_remaster, media_sha256: null, media_hash_status: not_available_in_workspace_at_capture}
+      studio_related_verified: true
+      ready_to_unlist_old: false
+      report_file: "/Users/petros/Projects/content/publications/autonomous-agents/essays/reasoning/artifacts/video/daily-cinematic-rollout/remastered-overlays-2026-04-28/shorts_upload_report.json"
+      report_item: {video_id: "T8Gv8yX_NW8", title: "AI Cannot Check Its Own Gravity #shorts", summary: "Once a hallucination enters the same context window, the model bends the rest of the answer around it. Verification needs isolation.", publish_at: "2026-05-02T07:30:00Z", related_video_ids: ["bto9FNWlahY"], playlist_item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS42RDgxQ0M2OUIwREZCNjZF", historical_playlist_position: 132, youtube_readback: {upload_status: uploaded, privacy_status: private, duration: P0D, definition: sd, title: "AI Cannot Check Its Own Gravity #shorts", published_at: "2026-04-28T10:30:13Z"}}
+      intended_related_video_target: {id: "bto9FNWlahY", url: "https://www.youtube.com/watch?v=bto9FNWlahY"}
+    mismatches:
+      - {check: old_current_visibility_vs_crosswalk_old_status_target, source_value: unlisted, observed_value: public, video_id: "QCK0hPc0dPM"}
+      - {check: retained_current_privacy_vs_historical_upload_readback, source_value: private, observed_value: public, video_id: "T8Gv8yX_NW8"}
+      - {check: retained_current_duration_vs_historical_upload_readback, source_value: P0D, observed_value: PT51S, video_id: "T8Gv8yX_NW8"}
+      - {check: retained_current_published_at_vs_historical_upload_readback, source_value: "2026-04-28T10:30:13Z", observed_value: "2026-05-02T07:30:25Z", video_id: "T8Gv8yX_NW8"}
+      - {check: retained_current_playlist_position_vs_historical_upload_readback, source_value: 132, observed_value: 28, video_id: "T8Gv8yX_NW8"}

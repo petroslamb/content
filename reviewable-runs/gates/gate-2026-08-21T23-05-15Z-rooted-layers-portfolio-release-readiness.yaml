@@ -1,0 +1,95 @@
+kind: review_gate
+schema_version: 1
+gate_id: release_readiness-2026-08-21T23-05-15Z-rooted-layers-portfolio
+status: resolved
+gate_type: external_mutation
+gate_contract: release_readiness
+workflow:
+  workflow_id: rooted_layers_portfolio_cleanup
+  workflow_version: 1
+  workflow_hash: sha256:eb4d0ba69405698246c502513e4da1fd1d4ce5670f30c416c373ecb5cb37b1f9
+  contract_path: workflows/rooted-layers-portfolio-cleanup/workflow.yaml
+  step_id: record_exact_approval
+run:
+  run_id: rooted-layers-portfolio-cleanup-2026-08-21T23-05-15Z
+  resolved_run_path: reviewable-runs/resolved-runs/rooted-layers-portfolio-cleanup-2026-08-21T23-05-15Z.yaml
+  run_record_path: reviewable-runs/logs/rooted-layers-portfolio-cleanup-2026-08-21T23-05-15Z.yaml
+stop:
+  reason: User approved the exact digest-bound Rooted Layers rollout, including the mirror, professional-site link, and eight named YouTube unlistings.
+  created_at: '2026-08-21T23:05:15Z'
+  created_by: Codex
+evidence:
+  preview_paths:
+    - publication_strategy_and_archive/portfolio/ROOTED_LAYERS_DECISIONS.md
+    - publication_strategy_and_archive/portfolio/portfolio_manifest.yaml
+    - publication_strategy_and_archive/portfolio/applications/20260821T224101Z_all_eba3110cd03b.json
+    - output/playwright/rooted-layers-mirror-desktop.png
+    - output/playwright/rooted-layers-mirror-mobile.png
+  evidence_paths:
+    - publication_strategy_and_archive/portfolio/corpus_snapshot.json
+    - publication_strategy_and_archive/portfolio/approval.yaml
+    - reviewable-runs/gates/gate-2026-08-21T23-05-15Z-rooted-layers-portfolio-release-readiness.yaml
+  validation_results:
+    - id: manifest_digest
+      status: passed
+      command: shasum -a 256 publication_strategy_and_archive/portfolio/portfolio_manifest.yaml
+    - id: mirror_build
+      status: passed
+      command: npm run build:mirror
+    - id: mirror_visual_preview
+      status: passed
+      command: Playwright desktop and mobile preview at /content/
+approval:
+  quality_required: true
+  external_mutation_required: true
+  lifecycle_movement_required: true
+  promotion_required: true
+  allowed_decisions:
+    - approve
+    - reject
+    - defer
+portfolio_authorization:
+  schema_version: 1
+  manifest_path: publication_strategy_and_archive/portfolio/portfolio_manifest.yaml
+  manifest_sha256: 7f51764af959eebe83cbce15cb203e075b223050fc02a8dda35df49926afc1b6
+  approval_path: publication_strategy_and_archive/portfolio/approval.yaml
+  approval_manifest_sha256: 7f51764af959eebe83cbce15cb203e075b223050fc02a8dda35df49926afc1b6
+  source_snapshot_path: publication_strategy_and_archive/portfolio/corpus_snapshot.json
+  source_snapshot_sha256: 85b97d181c6afaef21025bbea0b48b199b4bb958155aecbcf97cfb2b2662c856
+  expected_channel_id: UCzCa0hUNcpRt3LMZP9A8PPA
+  expected_channel_title: Rooted Layers | AI Systems Grounded in Research
+  expected_uploads_playlist_id: UUzCa0hUNcpRt3LMZP9A8PPA
+  snapshot_timestamp: '2026-08-21T21:43:21.683390+00:00'
+  source_ledger_sha256: 09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9
+decision:
+  decided_at: '2026-08-21T23:05:15Z'
+  decided_by: Petros (explicit exact-rollout authorization)
+  outcome: approve
+  quality_approved: true
+  external_mutation_approved: true
+  lifecycle_movement_approved: true
+  promotion_approved: true
+  reason: User explicitly approved the exact manifest digest and requested the complete rollout. Execution remains limited to the named mirror, professional-site, and eight YouTube visibility changes.
+  approval_dimensions:
+    quality:
+      required: true
+      approved: true
+    external_mutation:
+      required: true
+      approved: true
+    lifecycle_movement:
+      required: true
+      approved: true
+    promotion:
+      required: true
+      approved: true
+  external_mutation:
+    approved: true
+    required: true
+    distinct_from_quality_approval: true
+    effect: full_digest_bound_rollout
+  state_effects:
+    package_status: unchanged
+    external_mutation: mirror_deployment_only
+    lifecycle_movement: not_performed_for_sibling_or_youtube_surfaces
+    promotion: mirror_deployment_only

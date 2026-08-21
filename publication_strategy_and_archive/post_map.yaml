@@ -1,4 +1,14 @@
 posts:
+  harnesses-that-learn-under-audit-e06:
+    title: Harnesses That Learn Under Audit
+    research_folder: .
+    summary: A video-led argument that self-improving agent harnesses need an inspectable adoption chain proving that a governed change entered the next consequential run.
+    tags:
+      - agents
+      - governance
+      - evaluation
+    featured: false
+    status: published
   the-specification-surface-is-the:
     title: The Specification Surface Is the New Source of Truth
     research_folder: publications/literate-workflow-programming/specification-surface-source-of-truth

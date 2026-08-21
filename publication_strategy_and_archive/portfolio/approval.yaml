@@ -1,0 +1,5 @@
+schema_version: 1
+status: APPROVED
+manifest_sha256: 7f51764af959eebe83cbce15cb203e075b223050fc02a8dda35df49926afc1b6
+approved_at: '2026-08-21T23:05:15Z'
+approved_by: Petros (explicit exact-rollout authorization)

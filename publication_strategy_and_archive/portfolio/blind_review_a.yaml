@@ -1,0 +1,482 @@
+protocol_statement: >-
+  Independent blind portfolio review for senior AI engineers, technical hiring
+  managers, and serious collaborators. The review used only the public-post
+  metadata, all 25 referenced public essay Markdown files, and the
+  non-evaluative editorial rubric. It did not inspect ROOTED_LAYERS_CODEX_PLAN,
+  atlas_data.json, rubric assessment files, editorial_atlas/archive, prior
+  rankings, or candidate lists. No numeric aggregate scores were used.
+
+corpus_count: 25
+
+reviews:
+  - slug: "harnesses-that-learn-under-audit-e06"
+    tier: "FLAGSHIP"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      A sharp operational thesis backed by a concrete evidence chain: a harness
+      has not learned merely because it generated a repair; the next
+      consequential run must prove invocation, exposure, adherence, review, and
+      regression safety. The essay turns self-improvement from an attractive
+      trace into an auditable release discipline, making it unusually relevant
+      to senior engineers and technical decision-makers.
+    evidence_anchors:
+      - >-
+        The opening claim that a harness has not learned until the next real run
+        proves it used the change, together with Capability Is A Configuration.
+      - >-
+        The Run That Proves It and the migration example's failure, scoped
+        repair, independent review, integration decision, and later exercised
+        path.
+      - >-
+        The Adoption Audit: invocation, consumption, adherence, independent
+        review, and regression.
+    evidence_uncertainty: >-
+      The core adoption standard is the author's synthesis rather than a
+      validated industry protocol. Its supporting evidence is dominated by
+      very recent 2026 preprints plus vendor and protocol documentation, none of
+      which was independently checked under the blind protocol.
+
+  - slug: "the-specification-surface-is-the"
+    tier: "FLAGSHIP"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      A memorable, operational distinction between documentation and governed
+      authority. It demonstrates strong concept control, translates research
+      into review practice, and handles obvious overclaims before they weaken
+      the thesis.
+    evidence_anchors:
+      - >-
+        The Hidden Authority Problem: the code is visible while the authority
+        behind it is not.
+      - "What Makes A Surface Real."
+      - "The Context File Trap together with Limits."
+    evidence_uncertainty: >-
+      The central synthesis relies heavily on 2025-2026 preprints that were not
+      independently checked. Specification surface is the author's integrating
+      frame rather than a directly validated category.
+
+  - slug: "confidence-debt"
+    tier: "FLAGSHIP"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      The strongest end-to-end portfolio object. It begins with an inspectable
+      failure from the author's own work, names a portable systems concept,
+      converts it into a three-gate operating doctrine, and clearly
+      distinguishes evidence from invention.
+    evidence_anchors:
+      - >-
+        The Polished Version Wins and the conflicting eip-verify summary and
+        row-level artifacts.
+      - "What Confidence Debt Is."
+      - "The Doctrine and its claim, evaluation, and human gates."
+    evidence_uncertainty: >-
+      The linked repository and commit-pinned evidence were outside the blind
+      corpus. Much of the supporting literature is recent or preprint-based,
+      and the essay correctly acknowledges that the combined stack lacks
+      end-to-end validation.
+
+  - slug: "the-binding-gap"
+    tier: "SUPPORTING"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      A tightly bounded conceptual essay with an unusually good opening, a
+      serious mechanistic bridge, clear neighboring failure classes, and a
+      falsifiable engineering wager. It remains strong portfolio support, but
+      the newer harness-audit essay provides more direct operational evidence
+      and displaces it from the capped Flagship set.
+    evidence_anchors:
+      - >-
+        The Tom Smith and Mary Stone reversal and the definition of exact
+        binding.
+      - "When Binding Load Rises and meta-analysis tuple extraction."
+      - >-
+        Borders and the three marks required for a binding-gap diagnosis.
+    evidence_uncertainty: >-
+      The move from controlled entity-binding results to attribution and
+      numeric failures is a synthesis across adjacent evidence, not a unified
+      demonstrated mechanism. The essay marks some extensions as predictions.
+
+  - slug: "operating-agents-preface-a-field"
+    tier: "ARCHIVE"
+    content_type: "research synthesis"
+    confidence: "HIGH"
+    factual_risk: "LOW"
+    rationale: >-
+      A clear course map and reading contract, but primarily navigation rather
+      than a standalone demonstration of technical judgment.
+    evidence_anchors:
+      - "Who This Course Is For."
+      - "How To Use The Course Surfaces."
+      - "Two Orders Matter."
+    evidence_uncertainty: >-
+      The linked companions, blueprints, and source survey were not inspected.
+
+  - slug: "operating-agents-bonus-the-workflow"
+    tier: "SUPPORTING"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      The strongest representative of the Operating Agents course for a senior
+      audience. Its evaluation-first build order, preference for contract
+      repair over extra model calls, and separation of optimization from
+      governance demonstrate mature production instincts.
+    evidence_anchors:
+      - "Once The Agent Works, The Workflow Becomes The Object."
+      - "Measurement Before Improvement."
+      - "Bounded Self-Improvement."
+    evidence_uncertainty: >-
+      The research references were not independently validated, and the
+      recommended escalation order is a synthesized operating doctrine rather
+      than a tested universal sequence.
+
+  - slug: "operating-agents-v-the-attack-surface"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      Sensible security doctrine, but the core recommendations--trust
+      separation, least privilege, sandboxing, and approval gates--are familiar
+      and less differentiating than the selected portfolio pieces.
+    evidence_anchors:
+      - "Safety Begins Where The Workflow Touches The World."
+      - "Separate Instructions From Untrusted Data."
+      - "A Practical Safety Build Order."
+    evidence_uncertainty: >-
+      Attack-paper summaries were not verified, and some architecture
+      prescriptions are broader than the cited experimental settings.
+
+  - slug: "operating-agents-iv-the-second-agent"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      Strong handoff and single-agent-baseline guidance, but substantially
+      subsumed by the more distinctive the-illusion-of-the-swarm.
+    evidence_anchors:
+      - "Multi-Agent Starts With A Baseline."
+      - "When A Second Agent Actually Helps."
+      - "What Complexity Has To Prove."
+    evidence_uncertainty: >-
+      The build order is prescriptive synthesis, not supported by direct
+      comparative evidence inside the essay.
+
+  - slug: "operating-agents-iii-diagnose-the"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      Useful and readable, but mainly a survey of established reasoning
+      scaffolds rather than a differentiated portfolio object.
+    evidence_anchors:
+      - "Reasoning, Planning, And The Baseline Scaffold."
+      - "How To Correct A Weak First Pass."
+      - "When To Pay For Heavier Search."
+    evidence_uncertainty: >-
+      Method summaries and the recommended escalation ladder were not checked
+      against the cited studies.
+
+  - slug: "operating-agents-ii-memory-needs"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      The authority and lifecycle framing is good, but the four-memory taxonomy
+      is familiar and the chapter lacks unique evidence or implementation
+      proof.
+    evidence_anchors:
+      - "Four Kinds Of Memory, Four Different Jobs."
+      - "Memory Is A Lifecycle, Not A Database."
+      - "A Practical Build Order."
+    evidence_uncertainty: >-
+      Production claims about the referenced memory systems were not
+      independently assessed.
+
+  - slug: "operating-agents-i-when-language"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      A crisp foundational chapter, especially on action surfaces and
+      trace-level trust, but too introductory to occupy a scarce senior-facing
+      portfolio slot.
+    evidence_anchors:
+      - "When Language Starts Doing Work."
+      - "Where Tool Use Breaks."
+      - "Choosing the Surface."
+    evidence_uncertainty: >-
+      The API, code, browser, and GUI hierarchy is a useful heuristic, not a
+      universally established ordering.
+
+  - slug: "the-illusion-of-the-swarm"
+    tier: "SUPPORTING"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      Strong contrarian synthesis with practical architecture consequences.
+      Its best contribution is replacing agent-count discourse with bottleneck
+      diagnosis while preserving explicit cases where multi-agent structure is
+      load-bearing.
+    evidence_anchors:
+      - "Why Multi-Agent Often Exists."
+      - >-
+        The Disambiguation Threshold and the line that agent stops meaning
+        persona and starts meaning namespace.
+      - "What To Build Differently Starting Monday."
+    evidence_uncertainty: >-
+      Several key results come from very recent preprints and selected
+      benchmarks. The predictions and swarm-as-training-rig frame remain
+      informed hypotheses.
+
+  - slug: "the-moltbook-phenomenon"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "MEDIUM"
+    factual_risk: "HIGH"
+    rationale: >-
+      Compelling narrative journalism, but it moves from a reasonably sourced
+      security incident into confident claims about internal Meta politics,
+      acquisition motives, and social behavior without commensurate evidence.
+    evidence_anchors:
+      - "4.75 Million Records, Zero Security."
+      - "The Economics of Getting Hacked On Purpose."
+      - "The Real Reason Meta Bought It."
+    evidence_uncertainty: >-
+      Much of the political and acquisition story rests on secondary outlets,
+      alleged leaked material, or inference presented with near-confirmatory
+      force.
+
+  - slug: "the-autonomy-tax"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "MEDIUM"
+    factual_risk: "HIGH"
+    rationale: >-
+      The three-tax model, bounded autonomy levels, falsifiers, and operational
+      checklist show valuable enterprise judgment. In the capped portfolio,
+      however, its strongest quantitative and causal claims need a stricter
+      source audit and the prose contains visible copy defects, making it less
+      safe to promote than the selected Supporting pieces.
+    evidence_anchors:
+      - "The Three Taxes."
+      - "Level 2.5 vs Bounded Level 3."
+      - "The 2027 Prediction together with Known Unknowns."
+    evidence_uncertainty: >-
+      The opening incident comes from a vendor postmortem; several conclusions
+      combine corporate surveys, public pricing, and a locally coded casebook.
+      Claims such as compounding tax behavior and review-time multiples exceed
+      what the visible evidence directly establishes.
+
+  - slug: "the-transformer-attractor"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "HIGH"
+    rationale: >-
+      The two-gate attractor is memorable, but the essay exposes technical
+      credibility to challenge through unsupported utilization figures,
+      compute-tax estimates, market claims, and overly absolute descriptions of
+      scans and GPU behavior.
+    evidence_anchors:
+      - "The Two-Gate Trap."
+      - "Why Alternatives Fail: The Scan Bottleneck."
+      - "The Mamba-2, RetNet, and RWKV case studies."
+    evidence_uncertainty: >-
+      Many crucial quantitative claims lack inline sourcing, and several
+      conclusions rely on absence of public deployments rather than controlled
+      comparisons.
+
+  - slug: "when-the-llm-programs-its-own-thinking"
+    tier: "FLAGSHIP"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      The best concrete builder signal in the archive. It connects prior work
+      to an actual implementation, exposes interfaces and code, explains
+      observability and shared-state design, and states operational and security
+      limitations plainly.
+    evidence_anchors:
+      - "The Human in the Loop and the shared Jupyter heap."
+      - "Seeing What the Model Thinks and replayable trace artifacts."
+      - >-
+        Sharing State Across the Boundary alongside Where This Falls Short.
+    evidence_uncertainty: >-
+      The fork, demonstrations, and upstream PR were not inspected under the
+      blind protocol and may have changed. The article itself notes that
+      production scalability and user willingness to debug trajectories remain
+      open.
+
+  - slug: "the-orchestration-paradigm-issue-397"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "HIGH"
+    factual_risk: "HIGH"
+    rationale: >-
+      The production posture is useful, but precise breakeven, staffing,
+      latency, and infrastructure gates are asserted too confidently to
+      represent senior technical work safely.
+    evidence_anchors:
+      - "Why Composition Beats Scale."
+      - "Unsolved Frontiers."
+      - "The Breakeven Analysis and Should You Adopt Orchestration."
+    evidence_uncertainty: >-
+      The cost model, query threshold, team-size requirement, and claims about
+      hierarchical gradient variance are not visibly derived.
+
+  - slug: "the-orchestration-paradigm-issue-cf4"
+    tier: "ARCHIVE"
+    content_type: "research synthesis"
+    confidence: "HIGH"
+    factual_risk: "HIGH"
+    rationale: >-
+      Energetic explanatory writing, but speculative descriptions of emergent
+      strategies, attention-head behavior, embedding-only generalization, and
+      exponentially rising context cost weaken technical reliability.
+    evidence_anchors:
+      - "Implicit State Machines."
+      - "The Context Window Tax."
+      - "Attention Injection together with The Embeddings Trap."
+    evidence_uncertainty: >-
+      Several mechanistic explanations are interpretations presented as if
+      directly observed or established.
+
+  - slug: "the-orchestration-paradigm-issue"
+    tier: "ARCHIVE"
+    content_type: "research synthesis"
+    confidence: "HIGH"
+    factual_risk: "HIGH"
+    rationale: >-
+      The synthetic-data and verification discussion has value, but claims such
+      as an unavoidable teacher ceiling and 16 H100s being a mathematical
+      necessity are too strong.
+    evidence_anchors:
+      - "The Synthetic Pipeline."
+      - "The Verification Gap."
+      - "Training Infrastructure."
+    evidence_uncertainty: >-
+      Benchmark descriptions, infrastructure requirements, and several
+      numerical claims are not adequately traceable in the post.
+
+  - slug: "the-orchestration-paradigm-series"
+    tier: "ARCHIVE"
+    content_type: "research synthesis"
+    confidence: "HIGH"
+    factual_risk: "HIGH"
+    rationale: >-
+      An approachable ToolOrchestra and RL primer, but it overstates the
+      insufficiency of supervised learning, mischaracterizes parts of routing
+      and gradient optimization, and presents illustrative pseudocode as
+      stronger evidence than it is.
+    evidence_anchors:
+      - "The Router-Worker Architecture."
+      - "The Failure of Prompting Harder."
+      - "Why GRPO together with Reward Design."
+    evidence_uncertainty: >-
+      Training-resource claims, calibration mechanisms, and paper-specific
+      implementation details require primary-source rechecking.
+
+  - slug: "the-hardware-friction-map"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "MEDIUM"
+    factual_risk: "HIGH"
+    rationale: >-
+      The friction zones and scorecard are attractive packaging, but many
+      cutoffs, utilization estimates, adoption timelines, and the claimed SSM
+      scale cliff appear heuristic while being written as measured boundaries.
+    evidence_anchors:
+      - "The Four Friction Zones."
+      - "SSM Scale Dependence: The 7B Cliff."
+      - "The Hardware Friction Scorecard."
+    evidence_uncertainty: >-
+      Important score definitions, predictions, and supporting data live in
+      images or an external dataset; the Markdown alone does not make them
+      auditable.
+
+  - slug: "what-actually-works-the-hardware"
+    tier: "ARCHIVE"
+    content_type: "mixed"
+    confidence: "MEDIUM"
+    factual_risk: "HIGH"
+    rationale: >-
+      Ambitious and wide-ranging, but too sprawling and repetitive for
+      portfolio use. Its central hardware thesis is repeatedly supported by
+      image-only tables, loosely specified aggregated studies, and technical
+      claims that deserve closer qualification.
+    evidence_anchors:
+      - "Act I: The Compatibility Filter."
+      - "Act II: The Conditional Execution Revolution."
+      - "The Infrastructure Lag Pattern and the evidence appendix."
+    evidence_uncertainty: >-
+      Several bibliography entries are generic rather than precisely
+      identifiable, and the evidence tables cannot be audited from the text.
+
+  - slug: "the-agent-revolution"
+    tier: "ARCHIVE"
+    content_type: "research synthesis"
+    confidence: "HIGH"
+    factual_risk: "HIGH"
+    rationale: >-
+      Broad and readable, but internally inconsistent and insufficiently
+      sourced for a senior technical portfolio. Most notably, HLE is introduced
+      as Humanity's Last Exam and later described as a household-environment
+      benchmark.
+    evidence_anchors:
+      - "The ReAct and AutoGen sections."
+      - "Scaling Agents via Continual Pre-Training."
+      - >-
+        The LUMINE, Kosmos, Aristotle, and CoCoNuT sequence together with The
+        Agent Stack.
+    evidence_uncertainty: >-
+      Several paper identities, titles, claimed contributions, benchmark
+      interpretations, and the assertion of synthesizing hundreds of papers
+      are not backed by a usable reference section.
+
+  - slug: "neural-architecture-design-as-a-compositional-32e"
+    tier: "SUPPORTING"
+    content_type: "research synthesis"
+    confidence: "HIGH"
+    factual_risk: "MEDIUM"
+    rationale: >-
+      A cohesive intellectual-history essay with careful transitions from
+      bespoke design to repeated blocks, path discipline, portable scaffolds,
+      families, and recipes. It supplies valuable range beyond agent systems.
+    evidence_anchors:
+      - "Residual Path Discipline."
+      - "The Transformer as a Portable Block."
+      - "Families, Recipes, and Controlled Non-Uniformity."
+    evidence_uncertainty: >-
+      The historical arc necessarily compresses competing causes. The displayed
+      pre-normalization Transformer update is not clearly distinguished from
+      the original Transformer's normalization arrangement.
+
+  - slug: "coming-soon"
+    tier: "ARCHIVE"
+    content_type: "original argument"
+    confidence: "HIGH"
+    factual_risk: "LOW"
+    rationale: >-
+      Appropriate as a publication welcome page, but not an essay or evidence
+      of portfolio-level technical work.
+    evidence_anchors:
+      - "The stated purpose of creating a path through AI noise."
+      - "Here's how I usually write."
+      - "The list of representative posts."
+    evidence_uncertainty: >-
+      Minimal; the only drift-prone elements are the personal-services link and
+      current recommended-post list.

@@ -4,6 +4,9 @@ config:
   substack_url: https://lambpetros.substack.com
   markdown_path: publications/binding-gap/the-binding-gap.md
   substack_slug: the-binding-gap
+  published_url: https://lambpetros.substack.com/p/the-binding-gap
+  archive_markdown_path: publication_strategy_and_archive/substack_archive/2026-04-04_the-binding-gap.md
+  archive_html_path: publication_strategy_and_archive/substack_archive/2026-04-04_the-binding-gap.html
   notebooklm_notebook_title: The Binding Gap
 stages:
   paper_intake:

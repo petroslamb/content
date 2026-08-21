@@ -1,0 +1,544 @@
+schema_version: 1
+packet_type: youtube_editorial_decision
+created_at: "2026-08-22"
+scope:
+  channel_id: "UCzCa0hUNcpRt3LMZP9A8PPA"
+  channel_title: "Rooted Layers | AI Systems Grounded in Research"
+  candidate_video_ids:
+    - "hNVBrptmRVs"
+    - "slozjRp6CPg"
+    - "chr4R-fSZUY"
+    - "q3_gPM4E8yw"
+    - "bhoiLFJadAA"
+    - "0TpfmqhoB6s"
+  duplicate_pair_count: 8
+  external_mutations_performed: false
+  main_manifest_edited: false
+
+method:
+  standard: "Rooted Layers selected-work bar"
+  numeric_aggregate_score_used: false
+  uncertainty_default: KEEP_PUBLIC
+  minimum_selection_evidence: "captions, transcript, or equivalent source evidence"
+  selection_rule: >-
+    Select a video only when the video itself, not merely its source essay,
+    gives a technical evaluator a distinctive and defensible demonstration
+    with resolved lineage, legible contribution, bounded factual risk, and
+    sufficient standalone clarity. Strong source essays do not rescue a
+    cinematic script that removes their load-bearing caveats.
+  duplicate_rule: >-
+    Propose public-to-unlisted only when the exact old and retained IDs are
+    connected by pair-specific production lineage and matching current public
+    metadata. Same-title or shared-caption heuristics alone are insufficient.
+
+source_state:
+  corpus_snapshot:
+    path: "publication_strategy_and_archive/portfolio/corpus_snapshot.json"
+    created_at: "2026-08-21T21:43:40.959632+00:00"
+  youtube_ledger:
+    path: "experiments/youtube-analytics/metrics_ledger.json"
+    sha256: "09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9"
+    created_at: "2026-08-21T21:43:21.683390+00:00"
+    scope: all_channel
+    recorded_video_count: 265
+  youtube_triage:
+    path: "publication_strategy_and_archive/portfolio/youtube_triage.json"
+    sha256: "2ccd63e778d5d226f075b2bb1d1f06ddaa5c900a16e0f41313d3385bd2f82400"
+  candidate_evidence:
+    path: "publication_strategy_and_archive/portfolio/youtube_candidate_evidence.yaml"
+    status: consumed
+    note: >-
+      The packet resolves hNVBrptmRVs to the Confidence Debt SRT and preserves
+      the incorrect autonomy-tax heuristic match as an explicitly rejected
+      triage artifact.
+  duplicate_evidence:
+    path: "publication_strategy_and_archive/portfolio/youtube_duplicate_evidence.yaml"
+    status: consumed
+    generated_at: "2026-08-21T21:52:44Z"
+    historical_crosswalk_sha256: "87b184dc5b5da447f982425c6ce936bb2df7438d43b8f59eec457efb514d0961"
+    note: >-
+      The packet connects all eight exact pairs to the remastered-overlay run,
+      current live public states, matching description hashes, shared source
+      captions, intended related videos, and the retained upload reports.
+
+selected_work:
+  qualifying_candidate_ids_in_order:
+    - "hNVBrptmRVs"
+  exact_selected_ids_in_order:
+    - "hNVBrptmRVs"
+  qualifying_count: 1
+  playlist_minimum_count: 2
+  playlist_recommendation: HOLD_NO_PLAYLIST
+  playlist_membership_to_apply: []
+  rationale: >-
+    Confidence Debt is the only reviewed video whose distinctive contribution,
+    first-party anchor, transcript lineage, and central technical argument clear
+    the bar. One qualifier is below the workflow's two-video threshold, so no
+    selected playlist should be created or populated in this release.
+
+candidate_decisions:
+  - video_id: "hNVBrptmRVs"
+    title: "Why Polished AI Reports Can Outrun the Evidence | A Cinematic Research Brief"
+    current_visibility: public
+    playlist_decision: SELECTED_WORK_QUALIFIER
+    visibility_decision: KEEP_PUBLIC
+    selected_order: 1
+    confidence: MEDIUM
+    lineage_status: RESOLVED
+    contribution_status: MIXED_FIRST_PARTY_AND_SYNTHESIS
+    factual_risk: MEDIUM
+    rationale: >-
+      The video begins with the author's eip-verify failure, defines confidence
+      debt precisely, and turns it into claim-auditability, reliability-release,
+      and co-audit controls. That is a distinctive systems-governance argument,
+      not a generic paper recap. The exact 8:58.68 Confidence Debt caption fits
+      the 8:59 video and the package source; the autonomy-tax mapping in triage
+      is conclusively wrong. The script is more categorical than the essay
+      about the unvalidated combined control stack, so this does not earn high
+      confidence, but its core first-party case and benchmark anchor remain
+      inspectable and no unresolved high-risk central claim was found.
+    evidence_anchors:
+      - >-
+        youtube_candidate_evidence.yaml: resolved SRT
+        publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/confidence_debt_cinematic.srt,
+        sha256 b48814c7c1c147421ef358db8b9f2e7617b1a1321564976b0ac31f35e899d8d5,
+        229 cues, 538.68 seconds against a 539-second video.
+      - >-
+        SRT 00:00:34-00:01:49: the polished report conflicts with row-level
+        evidence and the script defines confidence debt as downstream trust
+        outrunning warranted proof.
+      - >-
+        SRT 00:02:57-00:04:01: claim auditability is made concrete and the
+        tau-bench 61-percent pass@1 versus below-25-percent pass^8 contrast is
+        preserved from the source essay.
+      - >-
+        publication_strategy_and_archive/substack_archive/2026-04-17_confidence-debt.md
+        L12-L24, L28-L38, L46-L90, and L92-L122: direct project evidence,
+        concept definition, two engineering gates, and the co-audit proposal.
+    concerns:
+      - >-
+        The narration calls the eip-verify builders "the researchers" instead
+        of clearly naming the author's role; contribution is recovered from the
+        linked source package rather than from the video alone.
+      - >-
+        The video presents the full three-gate repair more definitively than the
+        essay, which explicitly says the co-audit workspace is an invention
+        assembled from adjacent findings rather than a validated product stack.
+      - >-
+        The original cinematic upload/provenance record is weaker than the five
+        later publication_cinematic reports; the exact local SRT lineage is
+        resolved, but the public description does not disclose the generation
+        workflow.
+
+  - video_id: "slozjRp6CPg"
+    title: "Specs Need a Surface"
+    current_visibility: public
+    playlist_decision: DO_NOT_SELECT
+    visibility_decision: KEEP_PUBLIC
+    selected_order: null
+    confidence: HIGH
+    lineage_status: RESOLVED
+    contribution_status: HONEST_SYNTHESIS_IN_SOURCE_PACKAGE
+    factual_risk: MEDIUM_HIGH
+    rationale: >-
+      The underlying essay is flagship-quality, but the video drops the limits
+      that make it credible. It turns a scoped specification-authority spectrum
+      into universal claims that scaling requires a rigid central specification,
+      that code should be overwritten rather than edited, and that the future of
+      engineering is no longer implementation. The invented locked-database
+      opening is also presented as a concrete production incident. Keep the
+      public explainer, but do not feature it as selected technical evidence.
+    evidence_anchors:
+      - >-
+        Exact SRT publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt,
+        sha256 29157e3358e16f45379885e320305d6417edddaca9091b7150e7676ddc9570b7,
+        281.24 seconds against a 282-second video.
+      - >-
+        SRT 00:00:00-00:01:03: a hypothetical pull request is escalated into a
+        database-locking catastrophe and then generalized into the vibe-coding
+        diagnosis.
+      - >-
+        SRT 00:02:20-00:04:30: full-spec recovery, executable constraints, and
+        a far-end spec-as-program pattern are narrated as the general solution.
+      - >-
+        Source essay L34-L36 and L102-L106 explicitly restrict spec-as-source to
+        domains and tooling that can support it and reject universal adoption;
+        those scope limits are missing from the video.
+
+  - video_id: "chr4R-fSZUY"
+    title: "Models Need a REPL for Thought"
+    current_visibility: public
+    playlist_decision: DO_NOT_SELECT
+    visibility_decision: KEEP_PUBLIC
+    selected_order: null
+    confidence: HIGH
+    lineage_status: RESOLVED
+    contribution_status: VERIFIED_FIRST_PARTY_ENGINEERING_IN_SOURCE_PACKAGE
+    factual_risk: HIGH
+    rationale: >-
+      This has the strongest personal engineering contribution in the candidate
+      set, but the video is not a safe standalone representation of it. It urges
+      removing the model from isolation and sharing a Jupyter heap while omitting
+      the source essay's non-isolation, code-execution, token-cost, tail-cost,
+      and production-scalability limits. It also says a turn-based API requires
+      throwing away an entire run after one error, which is an unjustified
+      categorical claim. The implementation should remain public, but the
+      current cinematic should not be the selected-work representative.
+    evidence_anchors:
+      - >-
+        Exact SRT publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt,
+        sha256 ee10b2878430b0ecdc54fa962118135cab7a0e4769c8679b7fad98daf7738c25,
+        319.479 seconds against a 320-second video.
+      - >-
+        SRT 00:01:19-00:02:53 accurately explains external prompt storage,
+        model-written filtering code, and chunk-boundary failure.
+      - >-
+        SRT 00:03:50-00:04:39 moves to the shared Jupyter workspace and surgical
+        correction but provides no execution-isolation or production boundary.
+      - >-
+        Source essay L30-L83 documents the author's shared-namespace and trace
+        artifacts; L172-L202 explicitly records non-isolated execution, failure,
+        cost variance, and unresolved production/usability questions.
+
+  - video_id: "q3_gPM4E8yw"
+    title: "Boundary First, Then More Workers"
+    current_visibility: public
+    playlist_decision: DO_NOT_SELECT
+    visibility_decision: KEEP_PUBLIC
+    selected_order: null
+    confidence: HIGH
+    lineage_status: RESOLVED
+    contribution_status: SYNTHESIS
+    factual_risk: HIGH
+    rationale: >-
+      The useful boundary-first thesis is overwhelmed by unbounded narration.
+      A scoped compilation result becomes "same quality, twice as fast, half
+      the price"; a selected benchmark becomes a general negative trend with
+      agent count; a tool-routing hypothesis is narrated as a mathematical
+      disambiguation wall; and the essay's swarm-as-training-rig prediction is
+      asserted as the future of the industry. The video is distinctive but not
+      sufficiently defensible for selected work.
+    evidence_anchors:
+      - >-
+        Exact SRT publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt,
+        sha256 a336ad313a9c7fc8378011cd78eaa6e170acfdcfe83c544ed73808307999cab0,
+        326.6 seconds against a 327-second video.
+      - >-
+        SRT 00:00:30-00:00:52: the 53.7-percent token result and 180-configuration
+        benchmark are stated without the source-study scope.
+      - >-
+        SRT 00:01:55-00:04:00: tool confusability, agent namespaces, rare
+        multi-agent exceptions, and process-aware distillation are compressed
+        into a settled anti-swarm trajectory.
+      - >-
+        blind_review_b.yaml records MEDIUM_HIGH source-essay risk because the
+        precise results are recent preprints and the training-rig section partly
+        extends them by analogy; the video removes that hypothesis boundary.
+
+  - video_id: "bhoiLFJadAA"
+    title: "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief"
+    current_visibility: public
+    playlist_decision: DO_NOT_SELECT
+    visibility_decision: KEEP_PUBLIC
+    selected_order: null
+    confidence: HIGH
+    lineage_status: RESOLVED
+    contribution_status: SYNTHESIS
+    factual_risk: HIGH
+    rationale: >-
+      The binding-gap diagnosis is memorable, but the video turns a bounded
+      synthesis into a single demonstrated mechanism. It jumps from reversal
+      tests to citation drift, a fabricated clinical example, dense
+      meta-analysis extraction, and an ordering-subspace account while speaking
+      as though one established causal pathway explains all of them. The source
+      review explicitly says those extensions are plausible rather than broadly
+      demonstrated. The live description also identifies this as a prompt-packet
+      retest whose requested opening was not preserved. Keep public as an
+      experiment; do not feature.
+    evidence_anchors:
+      - >-
+        Exact SRT publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt,
+        sha256 2009339cac8342eb4fdc0196a7d9de55f66a6db3650eaa83437c5867cc63dcbc,
+        311.479 seconds against a 312-second video.
+      - >-
+        SRT 00:00:57-00:03:30: reversal curse, citation drift, clinical role
+        reversal, meta-analysis tuple extraction, and ordering subspace are
+        presented as one mechanical chain.
+      - >-
+        SRT 00:04:05-00:04:43: fluency is treated as a statistical reflex and
+        schema records are offered as the repair without the source predictions'
+        boundary.
+      - >-
+        blind_review_a.yaml and blind_review_b.yaml record that the move from
+        controlled entity binding to attribution, numeric, legal, clinical,
+        and code failures is adjacent-evidence synthesis, not a unified result.
+
+  - video_id: "0TpfmqhoB6s"
+    title: "Why AI Design Converged on the Same Scaffold | A Cinematic Research Brief"
+    current_visibility: public
+    playlist_decision: DO_NOT_SELECT
+    visibility_decision: KEEP_PUBLIC
+    selected_order: null
+    confidence: HIGH
+    lineage_status: RESOLVED
+    contribution_status: HONEST_RESEARCH_SYNTHESIS_IN_SOURCE_PACKAGE
+    factual_risk: HIGH
+    rationale: >-
+      The source essay is careful technical breadth; the video is not. It
+      misdescribes deep-network degradation as destructive representation
+      rewriting and an optimizer getting lost, calls Transformer blocks the
+      exact same residual scaffold pioneered by ResNet, says probing studies
+      prove a governable blank slate is infinitely more capable than designed
+      systems, and declares MoE specialization safe because a router contains
+      it. Those are central, categorical mechanistic claims, not harmless
+      compression. Keep the video public, but do not use it as portfolio proof.
+    evidence_anchors:
+      - >-
+        Exact SRT publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.srt,
+        sha256 1e39283b86edd777c421c4af478062373b1f8b9ced0db0c0fd640a66e8024c89,
+        349.16 seconds against a 349-second video.
+      - >-
+        SRT 00:01:25-00:02:24: the ResNet degradation and skip-connection story
+        is simplified into an asserted failure mechanism.
+      - >-
+        SRT 00:02:54-00:05:05: Transformer residuals, BERT layer probes,
+        Chinchilla scaling, and MoE routing are converted into inevitability and
+        safety claims.
+      - >-
+        blind_review_a.yaml notes that the historical arc compresses competing
+        causes; blind_review_b.yaml rates the source LOW_MEDIUM risk precisely
+        because it is interpretive and avoids inevitability claims that the
+        video reintroduces.
+
+duplicate_visibility_decisions:
+  policy: >-
+    Each proposed old-to-unlisted transition retains the explicitly named
+    remastered successor public. The proposal is based on production lineage,
+    not a title-only heuristic, and does not assert byte-identical media.
+  historical_readiness_interpretation:
+    recorded_value_for_all_pairs: false
+    decision: NOT_A_CURRENT_BLOCKER
+    rationale: >-
+      ready_to_unlist_old was recorded in the 2026-04-28 crosswalk while each
+      retained upload still read back as private with duration P0D, before its
+      scheduled publication. The 2026-08-21 authenticated ledger now shows all
+      eight retained representatives public with their real durations, exact
+      matching descriptions, intended related videos, and playlist membership.
+      It also shows every old ID still public, which is consistent with the
+      historical cleanup never having been applied. The stale prepublication
+      flag is preserved as evidence, not treated as a present editorial veto.
+  exact_proposed_unlist_ids:
+    - "Ue9gGySTVRI"
+    - "bsvMg8LUb1M"
+    - "QRD1FJiKTfU"
+    - "4UzuyKGNaKc"
+    - "PV-KfDYiLPo"
+    - "qTucAFn5g8Y"
+    - "T-XSEz2bQUk"
+    - "QCK0hPc0dPM"
+  exact_retained_public_ids:
+    - "1PB-UE6GpBM"
+    - "FaDtWYQ-8d8"
+    - "D3BZrjUzsPw"
+    - "PopV146TIe8"
+    - "gENRTpSnHsw"
+    - "_GOUwFLcERM"
+    - "zWgN04X3ugk"
+    - "T8Gv8yX_NW8"
+  pairs:
+    - old_video_id: "Ue9gGySTVRI"
+      old_title: "Writing the Script Isn't Agency #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "1PB-UE6GpBM"
+      retained_representative_title: "Writing the Script Isn't Agency #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 26-second
+          duration, action package/topic, and Shorts playlist; 13 versus 147 views.
+        - >-
+          action daily-cinematic-rollout original and remastered upload reports
+          map the exact IDs to the same 00:00:00.400-00:00:25.359 clip with
+          identical 25.041667-second video and 24.960998-second audio probes.
+        - >-
+          The remastered manifest uses the same source video and SRT and adds an
+          explicit top hook and CTA, establishing 1PB-UE6GpBM as the successor.
+
+    - old_video_id: "bsvMg8LUb1M"
+      old_title: "A Single CSS Tag Can Break an Agent #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "FaDtWYQ-8d8"
+      retained_representative_title: "A Single CSS Tag Can Break an Agent #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 26-second
+          duration, action package/topic, and Shorts playlist; 128 versus 144 views.
+        - >-
+          Original and remastered reports map both IDs to the same
+          00:01:07.680-00:01:32.720 source clip with identical 25.166667-second
+          video and 25.053991-second audio probes.
+        - >-
+          The remastered manifest preserves source video, source SRT, slug,
+          summary, and clip boundary while adding the explicit overlay hook/CTA.
+
+    - old_video_id: "QRD1FJiKTfU"
+      old_title: "Agents Don't Lose IQ. They Lose Attention. #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "D3BZrjUzsPw"
+      retained_representative_title: "Agents Don't Lose IQ. They Lose Attention. #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 26-second
+          duration, memory package/topic, and Shorts playlist; 828 versus 894 views.
+        - >-
+          Memory original and remastered reports map the IDs to the same
+          00:00:00.400-00:00:26.080 clip with identical 25.75-second video and
+          25.680998-second audio probes.
+        - >-
+          The remastered manifest keeps the same source video/SRT, hook, CTA,
+          pattern, summary, and clip boundary.
+
+    - old_video_id: "4UzuyKGNaKc"
+      old_title: "Flat Vector Memory Becomes a Security Hole #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "PopV146TIe8"
+      retained_representative_title: "Flat Vector Memory Becomes a Security Hole #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 36-second
+          duration, memory package/topic, and Shorts playlist; 38 versus 351 views.
+        - >-
+          Memory original and remastered reports map the IDs to the same
+          00:00:54.480-00:01:29.759 clip with identical 35.416667-second video
+          and 35.293991-second audio probes.
+        - >-
+          The successor manifest preserves the source video/SRT, slug, summary,
+          and clip window while adding an explicit hook and CTA.
+
+    - old_video_id: "PV-KfDYiLPo"
+      old_title: "Agent Theater Is Not Intelligence #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "gENRTpSnHsw"
+      retained_representative_title: "Agent Theater Is Not Intelligence #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 57-second
+          duration, multi-agent package/topic, and Shorts playlist; 507 versus 911 views.
+        - >-
+          Multi-agent original and remastered reports map the IDs to the same
+          00:00:00.480-00:00:56.879 clip with identical 56.5-second video and
+          56.400998-second audio probes.
+        - >-
+          Both manifests share the source video/SRT, hook, CTA, pattern, summary,
+          and clip boundary; the retained ID is explicitly the remastered output.
+
+    - old_video_id: "qTucAFn5g8Y"
+      old_title: "The Coordination Tax Kills Agent Handoffs #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "_GOUwFLcERM"
+      retained_representative_title: "The Coordination Tax Kills Agent Handoffs #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: MEDIUM_HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 48-second
+          duration, multi-agent package/topic, and Shorts playlist; 14 versus 12 views.
+        - >-
+          Multi-agent original and remastered reports map the IDs to the same
+          00:00:56.879-00:01:44.479 clip with identical 47.708333-second video
+          and 47.600998-second audio probes.
+        - >-
+          The retained ID is the explicit remastered-overlay successor. Its
+          two-view deficit is too small and sparse to outweigh that lineage and
+          is not being used as an aggregate quality score.
+
+    - old_video_id: "T-XSEz2bQUk"
+      old_title: "The AI Did Not Fail. The Scaffold Did. #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "zWgN04X3ugk"
+      retained_representative_title: "The AI Did Not Fail. The Scaffold Did. #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 36-second
+          duration, reasoning package/topic, and Shorts playlist; 61 versus 64 views.
+        - >-
+          Reasoning original and remastered reports map the IDs to the same
+          00:00:20.240-00:00:56.079 clip with identical 35.958333-second video
+          and 35.850998-second audio probes.
+        - >-
+          The remastered manifest preserves source video/SRT, slug, summary, and
+          clip boundary and adds the explicit overlay hook/CTA.
+
+    - old_video_id: "QCK0hPc0dPM"
+      old_title: "AI Cannot Check Its Own Gravity #shorts"
+      decision: PROPOSE_PUBLIC_TO_UNLISTED
+      retained_representative_id: "T8Gv8yX_NW8"
+      retained_representative_title: "AI Cannot Check Its Own Gravity #shorts"
+      retained_visibility: KEEP_PUBLIC
+      confidence: HIGH
+      evidence_anchors:
+        - >-
+          Current ledger: both public, identical title, description, 51-second
+          duration, reasoning package/topic, and Shorts playlist; 8 versus 154 views.
+        - >-
+          Reasoning original and remastered reports map the IDs to the same
+          00:02:33.519-00:03:23.920 clip with identical 50.5-second video and
+          50.41-second audio probes.
+        - >-
+          Both manifests preserve the same source video/SRT, slug, summary, and
+          clip boundary; T8Gv8yX_NW8 is the explicit remastered successor.
+
+unresolved_evidence:
+  - >-
+    The rendered local MP4s named in the Shorts upload reports are not present,
+    so byte identity and frame-by-frame comparison cannot be proven locally.
+    The proposals rely on stronger-than-title evidence: same source video/SRT,
+    exact clip windows, identical audio/video probe durations, upload lineage,
+    remastered-overlay manifests, and matching current public metadata.
+  - >-
+    youtube_triage.json maps each Short to a full-package SRT rather than a
+    short-specific caption track. Those shared-caption groups were not used to
+    authorize unlisting.
+  - >-
+    youtube_duplicate_evidence.yaml preserves ready_to_unlist_old false for
+    every pair. That was a prepublication operational state, not a later live
+    review, and its underlying private/P0D conditions are resolved in the
+    current ledger. A fresh readback is still mandatory before application.
+  - >-
+    Five later cinematic upload reports record a publication_cinematic workflow
+    and Notebook id. hNVBrptmRVs has exact caption and package lineage but lacks
+    a comparably complete original upload report. None of the current public
+    descriptions explicitly discloses the narration/generation workflow.
+  - >-
+    No full audiovisual playthrough was available in the local evidence packet.
+    Standalone clarity was judged from exact-duration captions and source
+    artifacts; this is why the sole qualifier is MEDIUM rather than HIGH confidence.
+  - >-
+    Every visibility decision is still a proposal. The authenticated live state
+    must be read back against the approved manifest immediately before any
+    mutation; drift defaults to KEEP_PUBLIC.
+
+genuine_questions:
+  - >-
+    Should the selected-video surface be held entirely until a second video is
+    repaired and independently clears the bar, as the two-entry workflow gate
+    requires, or should the playlist concept be omitted from this release?
+  - >-
+    Should chr4R-fSZUY be recut to include the shared-kernel security boundary,
+    tail-cost variance, and unresolved production-scaling caveat before it is
+    reconsidered as the direct engineering representative?
+  - >-
+    What explicit disclosure should selected YouTube descriptions carry for
+    publication_cinematic/Notebook-assisted generation so that provenance is
+    visible without relying on repository archaeology?

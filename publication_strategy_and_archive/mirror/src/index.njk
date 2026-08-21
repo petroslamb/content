@@ -1,79 +1,55 @@
 ---
 layout: layouts/base.njk
-title: Rooted Layers Mirror
-description: Public mirror of Rooted Layers essays, linked to their research folders and archive provenance.
+title: Rooted Layers | Selected AI Systems & Engineering Work
+description: A selective entrance to Rooted Layers research and engineering work, with source trails and documented contribution.
 ---
-<section class="hero">
+<section class="hero hero--portfolio">
   <div class="hero__copy">
-    <p class="eyebrow">Public research mirror</p>
-    <h1>Each essay stays attached to its working evidence.</h1>
-    <p class="lede">Substack is still the canonical publication surface. This mirror keeps the public essays close to the repo folders, raw markdown snapshots, and source archive that produced them. The point is not redundancy. The point is legibility.</p>
+    <p class="eyebrow">Selected technical work</p>
+    <h1>AI systems arguments, grounded in the work behind them.</h1>
+    <p class="lede">Rooted Layers is a working archive of research and engineering on agent systems, evaluation, and governable software. This entrance highlights the pieces that best stand alone for technical review; Substack remains the canonical publication surface.</p>
     <div class="hero__actions">
-      <a class="button" href="{{ '/archive/' | url }}">Browse the archive</a>
-      <a class="button button--ghost" href="{{ '/editorial-atlas/' | url }}">Open the editorial atlas</a>
+      <a class="button" href="{{ archive.portfolio.professionalProfileUrl }}">Professional profile</a>
+      <a class="button button--ghost" href="{{ '/archive/' | url }}">Complete archive</a>
       <a class="button button--ghost" href="{{ site.substackUrl }}">Read on Substack</a>
     </div>
   </div>
-  <aside class="hero__stats">
-    <div class="stat">
-      <span class="stat__label">Public essays</span>
-      <strong>{{ archive.stats.totalPosts }}</strong>
-    </div>
-    <div class="stat">
-      <span class="stat__label">Series tracked</span>
-      <strong>{{ archive.stats.totalSeries }}</strong>
-    </div>
-    <div class="stat">
-      <span class="stat__label">Research folders linked</span>
-      <strong>{{ archive.stats.totalFolders }}</strong>
-    </div>
-    <div class="stat">
-      <span class="stat__label">Last synced</span>
-      <strong>{{ archive.stats.lastFetchedAtDisplay }}</strong>
-    </div>
-  </aside>
 </section>
 
-<section class="section">
+{% if archive.portfolio.flagshipPosts | length %}
+<section class="section" aria-labelledby="flagship-heading">
   <div class="section__head">
-    <p class="eyebrow">Featured essays</p>
-    <h2>Current anchors</h2>
+    <p class="eyebrow">Flagship work</p>
+    <h2 id="flagship-heading">The strongest standalone technical arguments</h2>
+    <p class="lede">Selected for technical value, distinct contribution, resolved lineage, and an inspectable evidence trail.</p>
   </div>
-  <div class="card-grid">
-    {% for post in archive.featuredPosts %}
-      {% include "partials/post-card.njk" %}
+  <div class="portfolio-grid">
+    {% for post in archive.portfolio.flagshipPosts %}
+      {% include "partials/portfolio-card.njk" %}
     {% endfor %}
   </div>
 </section>
+{% endif %}
 
-<section class="section section--split">
-  <div>
-    <div class="section__head">
-      <p class="eyebrow">Series</p>
-      <h2>Grouped where the argument extends across multiple essays</h2>
-    </div>
-    <div class="series-list">
-      {% for series in archive.series %}
-      <article class="series-card">
-        <h3><a href="{{ series.permalink | url }}">{{ series.title }}</a></h3>
-        <p>{{ series.summary }}</p>
-      </article>
-      {% endfor %}
-    </div>
+{% if archive.portfolio.supportingPosts | length %}
+<section class="section" aria-labelledby="supporting-heading">
+  <div class="section__head">
+    <p class="eyebrow">Supporting work</p>
+    <h2 id="supporting-heading">Useful extensions and adjacent evidence</h2>
   </div>
-  <div>
-    <div class="section__head">
-      <p class="eyebrow">Recent additions</p>
-      <h2>Newest mirrored posts</h2>
-    </div>
-    <div class="stack">
-      {% for post in archive.recentPosts %}
-      <article class="stack-item">
-        <p class="stack-item__meta">{{ post.formattedDate }}</p>
-        <h3><a href="{{ post.permalink | url }}">{{ post.title }}</a></h3>
-        <p>{{ post.summary }}</p>
-      </article>
-      {% endfor %}
-    </div>
+  <div class="portfolio-grid">
+    {% for post in archive.portfolio.supportingPosts %}
+      {% include "partials/portfolio-card.njk" %}
+    {% endfor %}
   </div>
+</section>
+{% endif %}
+
+<section class="section archive-callout" aria-labelledby="archive-heading">
+  <div>
+    <p class="eyebrow">Historical record</p>
+    <h2 id="archive-heading">The complete public archive remains available.</h2>
+    <p>Browse every mirrored public essay and series, including work that is not part of this selective entrance. Individual essay pages keep their canonical Substack URL and repository provenance.</p>
+  </div>
+  <a class="button button--ghost" href="{{ '/archive/' | url }}">Browse the complete archive</a>
 </section>

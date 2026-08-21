@@ -14,6 +14,19 @@ const POST_MAP_PATH = path.join(
   "publication_strategy_and_archive",
   "post_map.yaml",
 );
+const PORTFOLIO_MANIFEST_PATH = process.env.PORTFOLIO_MANIFEST_PATH
+  ? path.resolve(process.env.PORTFOLIO_MANIFEST_PATH)
+  : path.join(
+      REPO_ROOT,
+      "publication_strategy_and_archive",
+      "portfolio",
+      "portfolio_manifest.yaml",
+    );
+
+const PORTFOLIO_SECTIONS = Object.freeze({
+  FLAGSHIP: "flagship_artifact_ids",
+  SUPPORTING: "supporting_artifact_ids",
+});
 
 function normalizePathPrefix(rawPrefix = "/") {
   if (!rawPrefix || rawPrefix === "/") {
@@ -59,6 +72,121 @@ function loadYaml(yamlPath) {
   return yaml.load(fs.readFileSync(yamlPath, "utf8")) || {};
 }
 
+function loadPortfolioManifest() {
+  if (!fs.existsSync(PORTFOLIO_MANIFEST_PATH)) {
+    throw new Error(
+      `Missing portfolio manifest: ${PORTFOLIO_MANIFEST_PATH}. ` +
+        "Generate the reviewed portfolio decision layer before building the mirror.",
+    );
+  }
+
+  const manifest = loadYaml(PORTFOLIO_MANIFEST_PATH);
+  if (!Array.isArray(manifest.artifacts)) {
+    throw new Error("Portfolio manifest artifacts must be a list.");
+  }
+  if (!manifest.homepage || typeof manifest.homepage !== "object") {
+    throw new Error("Portfolio manifest homepage must be an object.");
+  }
+  return manifest;
+}
+
+function portfolioEvidenceUrl(artifact, post, site) {
+  const configured = artifact.homepage?.evidence_url;
+  if (typeof configured === "string" && configured.trim()) {
+    return configured.trim();
+  }
+
+  for (const rawAnchor of artifact.evidence_anchors || []) {
+    if (typeof rawAnchor !== "string" || !rawAnchor.trim()) {
+      continue;
+    }
+    const anchor = rawAnchor.trim();
+    if (/^https?:\/\//.test(anchor)) {
+      return anchor;
+    }
+    if (/^[A-Za-z0-9_.\/-]+(?:#[A-Za-z0-9_.:-]+)?$/.test(anchor)) {
+      return `${site.repoUrl}/blob/main/${anchor}`;
+    }
+  }
+
+  return post.researchFolderUrl;
+}
+
+function buildPortfolioData(manifest, mirroredPosts, site) {
+  const artifactsById = new Map();
+  for (const artifact of manifest.artifacts) {
+    if (!artifact || typeof artifact !== "object" || !artifact.artifact_id) {
+      continue;
+    }
+    if (artifactsById.has(artifact.artifact_id)) {
+      throw new Error(`Duplicate portfolio artifact_id: ${artifact.artifact_id}`);
+    }
+    artifactsById.set(artifact.artifact_id, artifact);
+  }
+
+  const postsBySlug = new Map(mirroredPosts.map((post) => [post.slug, post]));
+  const selectSection = (section) => {
+    const key = PORTFOLIO_SECTIONS[section];
+    const artifactIds = manifest.homepage[key] || [];
+    if (!Array.isArray(artifactIds)) {
+      throw new Error(`Portfolio homepage.${key} must be a list.`);
+    }
+    if (artifactIds.length > 4) {
+      throw new Error(`Portfolio homepage exceeds four ${section.toLowerCase()} essays.`);
+    }
+
+    return artifactIds.map((artifactId, index) => {
+      const artifact = artifactsById.get(artifactId);
+      if (!artifact) {
+        throw new Error(`Portfolio homepage references unknown artifact: ${artifactId}`);
+      }
+      if (artifact.platform !== "SUBSTACK") {
+        throw new Error(`Portfolio homepage artifact must be SUBSTACK: ${artifactId}`);
+      }
+      if (artifact.selection_tier !== section) {
+        throw new Error(
+          `Portfolio homepage artifact ${artifactId} must have selection_tier ${section}.`,
+        );
+      }
+
+      const slug = artifact.platform_id;
+      const post = postsBySlug.get(slug);
+      if (!post) {
+        throw new Error(
+          `Portfolio homepage artifact ${artifactId} has no enabled mirror post for ${slug}.`,
+        );
+      }
+      if (artifact.current_url !== post.url) {
+        throw new Error(
+          `Portfolio URL drift for ${artifactId}: manifest ${artifact.current_url}, archive ${post.url}.`,
+        );
+      }
+
+      const annotation = artifact.homepage?.annotation || artifact.rationale;
+      if (typeof annotation !== "string" || !annotation.trim()) {
+        throw new Error(`Portfolio homepage artifact ${artifactId} is missing its annotation.`);
+      }
+
+      return {
+        ...post,
+        artifactId,
+        portfolioSection: section,
+        portfolioOrder: index + 1,
+        portfolioAnnotation: annotation.trim(),
+        portfolioEvidenceUrl: portfolioEvidenceUrl(artifact, post, site),
+      };
+    });
+  };
+
+  return {
+    version: manifest.portfolio_version,
+    disclosure: manifest.ai_disclosure,
+    professionalProfileUrl: manifest.professional_profile_url,
+    flagshipPosts: selectSection("FLAGSHIP"),
+    supportingPosts: selectSection("SUPPORTING"),
+  };
+}
+
 function stripArchiveHeader(markdown) {
   return markdown.replace(/^# .*?\n\nDate: .*?\nURL: .*?\n\n/s, "").trim();
 }
@@ -92,6 +220,7 @@ function buildArchiveData() {
   const site = buildSiteConfig();
   const manifest = loadJson(METADATA_PATH);
   const postMap = (loadYaml(POST_MAP_PATH).posts || {});
+  const portfolioManifest = loadPortfolioManifest();
 
   const posts = manifest
     .filter((post) => Boolean(post.md_path) && Boolean(post.html_path))
@@ -199,8 +328,7 @@ function buildArchiveData() {
   return {
     generatedAt: new Date().toISOString(),
     posts: mirroredPosts,
-    featuredPosts: mirroredPosts.filter((post) => post.featured).slice(0, 4),
-    recentPosts: mirroredPosts.slice(0, 6),
+    portfolio: buildPortfolioData(portfolioManifest, mirroredPosts, site),
     series,
     filters: {
       tags: uniqueTags,
@@ -219,8 +347,10 @@ function buildArchiveData() {
 
 module.exports = {
   buildArchiveData,
+  buildPortfolioData,
   buildSiteConfig,
   formatDisplayDate,
+  loadPortfolioManifest,
   normalizePathPrefix,
   normalizeSiteUrl,
   withPathPrefix,

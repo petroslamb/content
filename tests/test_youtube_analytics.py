@@ -51,6 +51,8 @@ class FakeChannels:
             {
                 "items": [
                     {
+                        "id": "CHANNEL123",
+                        "snippet": {"title": "Rooted Layers"},
                         "contentDetails": {
                             "relatedPlaylists": {"uploads": "UPLOADS"}
                         }
@@ -257,6 +259,14 @@ class YouTubeAnalyticsTests(unittest.TestCase):
 
     def test_all_channel_discovery_merges_uploads_playlists_and_repo_sources(self) -> None:
         youtube = FakeYouTubeDiscovery()
+        self.assertEqual(
+            fetch.fetch_authenticated_channel(youtube),
+            {
+                "channel_id": "CHANNEL123",
+                "title": "Rooted Layers",
+                "uploads_playlist_id": "UPLOADS",
+            },
+        )
         records = {
             "UPLOADED": {
                 "video_id": "UPLOADED",
@@ -280,6 +290,26 @@ class YouTubeAnalyticsTests(unittest.TestCase):
         self.assertEqual(records["COURSEONLY"]["discovery_sources"], ["channel_playlist"])
         self.assertEqual(len(playlists), 2)
         self.assertEqual(records["COURSEONLY"]["playlists"][0]["title"], "Rooted Layers Course")
+
+    def test_video_details_capture_description_and_visibility(self) -> None:
+        record = {"video_id": "VIDEO123", "title": "Old title"}
+
+        fetch.apply_video_details(
+            record,
+            {
+                "snippet": {
+                    "title": "Current title",
+                    "description": "Evidence-rich description",
+                    "publishedAt": "2026-04-20T00:00:00Z",
+                },
+                "status": {"privacyStatus": "public"},
+                "contentDetails": {"duration": "PT5M"},
+                "statistics": {"viewCount": "42"},
+            },
+        )
+
+        self.assertEqual(record["description"], "Evidence-rich description")
+        self.assertEqual(record["privacy_status"], "public")
 
     def test_release_timing_and_thumbnail_extraction(self) -> None:
         timing = fetch.release_timing_from_published_at("2026-04-29T06:00:02Z")

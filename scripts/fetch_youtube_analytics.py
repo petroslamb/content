@@ -575,21 +575,33 @@ def thumbnail_query_not_supported_error(error: str | None) -> bool:
     return "query not supported" in lowered or "query is not supported" in lowered
 
 
-def channel_uploads_playlist_id(youtube: Any) -> str | None:
+def fetch_authenticated_channel(youtube: Any) -> dict[str, Any]:
     channels_response = (
         youtube.channels()
-        .list(part="contentDetails", mine=True, maxResults=1)
+        .list(part="snippet,contentDetails", mine=True, maxResults=1)
         .execute()
     )
     channel_items = channels_response.get("items", [])
     if not channel_items:
-        return None
-    return (
-        channel_items[0]
-        .get("contentDetails", {})
-        .get("relatedPlaylists", {})
-        .get("uploads")
-    )
+        return {
+            "channel_id": None,
+            "title": None,
+            "uploads_playlist_id": None,
+        }
+    channel = channel_items[0]
+    return {
+        "channel_id": channel.get("id"),
+        "title": channel.get("snippet", {}).get("title"),
+        "uploads_playlist_id": (
+            channel.get("contentDetails", {})
+            .get("relatedPlaylists", {})
+            .get("uploads")
+        ),
+    }
+
+
+def channel_uploads_playlist_id(youtube: Any) -> str | None:
+    return fetch_authenticated_channel(youtube).get("uploads_playlist_id")
 
 
 def fetch_channel_uploads(
@@ -597,9 +609,10 @@ def fetch_channel_uploads(
     *,
     since_days: int | None = None,
     limit: int | None = None,
+    uploads_playlist_id: str | None = None,
 ) -> dict[str, dict[str, Any]]:
     cutoff = utc_now() - timedelta(days=since_days) if since_days is not None else None
-    uploads_playlist_id = channel_uploads_playlist_id(youtube)
+    uploads_playlist_id = uploads_playlist_id or channel_uploads_playlist_id(youtube)
     if not uploads_playlist_id:
         return {}
 
@@ -818,6 +831,9 @@ def apply_video_details(record: dict[str, Any], detail: dict[str, Any] | None) -
         {
             "data_api_found": True,
             "title": snippet.get("title") or record.get("title"),
+            "description": snippet.get("description")
+            if snippet.get("description") is not None
+            else record.get("description"),
             "published_at": published_at,
             "release_timing": release_timing_from_published_at(published_at)
             or record.get("release_timing"),
@@ -1088,6 +1104,7 @@ def build_ledger(
     repo_root: Path = REPO_ROOT,
 ) -> dict[str, Any]:
     records: dict[str, dict[str, Any]] = {}
+    authenticated_channel = fetch_authenticated_channel(youtube)
     if from_upload_reports:
         records.update(collect_upload_report_videos(repo_root))
     for video_id in video_ids:
@@ -1102,7 +1119,10 @@ def build_ledger(
             },
         )
     upload_records = (
-        fetch_channel_uploads(youtube)
+        fetch_channel_uploads(
+            youtube,
+            uploads_playlist_id=authenticated_channel.get("uploads_playlist_id"),
+        )
         if all_channel_videos
         else fetch_recent_channel_uploads(
             youtube,
@@ -1160,6 +1180,7 @@ def build_ledger(
         "created_at": utc_now().isoformat(),
         "workflow": "youtube_analytics_decision_loop",
         "read_only": True,
+        "channel": authenticated_channel,
         "source": {
             "since_days": since_days,
             "scope": "all_channel" if all_channel_videos else "recent_repo",

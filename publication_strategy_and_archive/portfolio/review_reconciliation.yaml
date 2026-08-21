@@ -1,0 +1,210 @@
+schema_version: 1
+created_at: "2026-08-22"
+method:
+  blind_reviews:
+    - blind_review_a.yaml
+    - blind_review_b.yaml
+  corpus_count: 25
+  numeric_aggregate_score_used: false
+  atlas_consulted_after_blind_reviews: true
+  decision_rule: >-
+    Select only work that clears the technical-evaluator bar and has defensible
+    lineage, contribution, factual-risk, and standalone-presentation evidence.
+    The homepage capacities are ceilings, not quotas.
+
+blind_agreement:
+  agreed_flagship:
+    - the-specification-surface-is-the
+    - confidence-debt
+    - when-the-llm-programs-its-own-thinking
+  agreed_supporting:
+    - the-binding-gap
+    - neural-architecture-design-as-a-compositional-32e
+  agreed_archive_count: 15
+  material_disagreements:
+    - slug: harnesses-that-learn-under-audit-e06
+      review_a: FLAGSHIP
+      review_b: SUPPORTING
+      resolution: SUPPORTING
+      reason: >-
+        The adoption-audit frame is strong, but the matching package remains a
+        pre-viability scaffold, the cited May-July evidence is not locally
+        captured, and the essay proposes rather than demonstrates the full
+        five-part control system. That unresolved lineage blocks flagship use.
+    - slug: the-illusion-of-the-swarm
+      review_a: SUPPORTING
+      review_b: FLAGSHIP
+      resolution: FLAGSHIP
+      reason: >-
+        The package has resolved public-to-source lineage, a substantial paper
+        and claim-ledger trail, a distinctive bottleneck-diagnosis contribution,
+        explicit load-bearing exceptions, and falsifiable predictions. Its
+        recent-preprint dependence is a bounded medium risk, not a blocking one.
+    - slug: operating-agents-bonus-the-workflow
+      review_a: SUPPORTING
+      review_b: ARCHIVE
+      resolution: ARCHIVE
+      reason: >-
+        The operating doctrine is credible but too course-dependent and generic
+        to consume the final supporting slot.
+    - slug: the-autonomy-tax
+      review_a: ARCHIVE
+      review_b: SUPPORTING
+      resolution: ARCHIVE
+      reason: >-
+        The framework is useful, but the casebook mixes unlike record types and
+        the quantitative language creates avoidable factual and pseudo-precision
+        risk. It remains a rewrite candidate rather than selected evidence.
+
+atlas_disagreement_detection:
+  atlas_scope: >-
+    The canonical atlas covered 22 of the now 25 public posts and was consulted
+    only after both blind judgments were fixed.
+  confirmations:
+    - >-
+      The atlas independently identifies Confidence Debt and The Binding Gap as
+      high-precision, evidence-forward publication objects, consistent with the
+      blind reviews.
+    - >-
+      It also recognizes The Illusion of the Swarm as a balanced builder-facing
+      synthesis and When the LLM Programs Its Own Thinking as a technical builder
+      essay.
+  disagreements:
+    - >-
+      The atlas promotes The Transformer Attractor as its strongest publication
+      object, while both blind passes place it in ARCHIVE because uncited
+      quantitative and mechanistic claims create high credibility risk.
+    - >-
+      The atlas treats the autonomy and hardware-friction essays as highly useful
+      operator objects, while the blind passes surface casebook heterogeneity,
+      false precision, and package correction files that materially weaken those
+      public claims.
+    - >-
+      The atlas predates both the specification-surface essay and the new
+      harness-audit essay, so it cannot supply evidence for their selection.
+  conclusion: >-
+    Atlas publication energy is retained as prior evidence, but factual-risk and
+    provenance findings override it where the surfaces disagree.
+
+final_homepage:
+  flagship:
+    - slug: the-specification-surface-is-the
+      why: >-
+        Defines a governed specification surface and turns it into a practical
+        architecture for authority, invariants, execution, and review.
+    - slug: confidence-debt
+      why: >-
+        Connects a first-party evidence failure to an operational doctrine for
+        claim auditability, reliability release, and human co-audit.
+    - slug: when-the-llm-programs-its-own-thinking
+      why: >-
+        Shows direct engineering contribution through shared Jupyter state,
+        replayable traces, executable examples, and explicit operational limits.
+    - slug: the-illusion-of-the-swarm
+      why: >-
+        Replaces decorative agent-count thinking with coordination economics,
+        typed boundaries, and concrete tests for when multi-agent structure earns
+        its cost.
+  supporting:
+    - slug: harnesses-that-learn-under-audit-e06
+      why: >-
+        Offers a sharp five-part adoption audit for proving that a learned
+        harness change actually shaped a later consequential run.
+    - slug: the-binding-gap
+      why: >-
+        Provides a compact diagnostic for systems that preserve the right facts
+        while attaching them to the wrong entities, roles, or variables.
+    - slug: neural-architecture-design-as-a-compositional-32e
+      why: >-
+        Adds technically careful breadth through a primary-source history of
+        reusable blocks, path discipline, design spaces, and controlled
+        heterogeneity.
+  unused_supporting_capacity_reason: >-
+    No fourth candidate adds enough distinct, low-risk evidence to justify
+    filling the slot. The cap is not a quota.
+
+lineage_reconciliation:
+  - slug: the-specification-surface-is-the
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-05-01_the-specification-surface-is-the.md
+    status_manifest: publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml
+    readme: publications/literate-workflow-programming/specification-surface-source-of-truth/README.md
+    working_source: publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md
+    notes: >-
+      Status, README, canonical working source, archive paths, and published URL
+      agree in authority; export-only metadata and asset differences are benign.
+  - slug: confidence-debt
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-04-17_confidence-debt.md
+    status_manifest: publications/confidence-debt/status.yaml
+    readme: publications/confidence-debt/README.md
+    working_source: publications/confidence-debt/confidence-debt.md
+    notes: >-
+      The published object and package thesis agree. Standard lifecycle flags
+      remain incomplete because this package used thesis-stress and evidence-
+      fusion stages; that metadata inconsistency is documented but does not
+      create a competing essay authority.
+  - slug: when-the-llm-programs-its-own-thinking
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-01-14_when-the-llm-programs-its-own-thinking.md
+    status_manifest: publications/programmable-thinking/status.yaml
+    readme: publications/programmable-thinking/README.md
+    working_source: publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md
+    notes: >-
+      The status manifest and README now name the byte-identical canonical source.
+      `rlm-jupyter-integration.md` is explicitly retained as an earlier working
+      variant. The public clone-command angle-bracket defect is a minor future
+      rewrite candidate, not an unresolved source conflict.
+  - slug: the-illusion-of-the-swarm
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-03-17_the-illusion-of-the-swarm.md
+    status_manifest: publications/illusion-of-swarm/status.yaml
+    readme: publications/illusion-of-swarm/README.md
+    working_source: publications/illusion-of-swarm/2026-03-17-phase-transition-multi-agent-v9-substack.md
+    notes: >-
+      Package status, README, working source, research logs, claim ledger, public
+      slug, and archive paths form one publication lineage.
+  - slug: harnesses-that-learn-under-audit-e06
+    status: PARTIAL
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-07-07_harnesses-that-learn-under-audit-e06.md
+    status_manifest: publications/agent-harnesses/status.yaml
+    readme: publications/agent-harnesses/README.md
+    working_source: null
+    notes: >-
+      The public snapshot is authoritative, but the only matching package is a
+      pre-viability scaffold and the newest cited papers are not locally captured.
+      This prevents flagship selection and is disclosed in the manifest.
+  - slug: the-binding-gap
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2026-04-04_the-binding-gap.md
+    status_manifest: publications/binding-gap/status.yaml
+    readme: publications/binding-gap/README.md
+    working_source: publications/binding-gap/the-binding-gap.md
+    notes: >-
+      The README and status manifest were reconciled to the byte-identical
+      lowercase canonical source and live Substack URL; uppercase files remain
+      prior variants.
+  - slug: neural-architecture-design-as-a-compositional-32e
+    status: RESOLVED
+    published_snapshot: publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.md
+    status_manifest: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml
+    readme: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/README.md
+    working_source: publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md
+    notes: >-
+      The package working source is a later polish pass, but the public snapshot
+      remains the selected artifact and no competing technical argument was found.
+
+editorial_follow_up:
+  rewrite_candidates:
+    - the-autonomy-tax
+    - the-transformer-attractor
+    - the-hardware-friction-map
+    - what-actually-works-the-hardware
+  merge_candidates:
+    - the-orchestration-paradigm-series
+    - the-orchestration-paradigm-issue
+    - the-orchestration-paradigm-issue-cf4
+    - the-orchestration-paradigm-issue-397
+  phase_boundary: >-
+    These are labels only. No article rewrite, merge draft, or Substack edit is
+    authorized in this implementation phase.

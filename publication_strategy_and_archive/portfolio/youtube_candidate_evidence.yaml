@@ -1,0 +1,897 @@
+schema_version: 1
+packet_type: youtube_candidate_evidence
+created_at: "2026-08-22"
+purpose: >-
+  Mechanical evidence packet for six already identified public YouTube
+  candidates. This packet records channel and video metadata, local caption
+  lineage, package relationships, transcript claim anchors, and uncertainty.
+  It does not select, rank, score, recommend, or authorize a visibility
+  change.
+decision_boundary:
+  selection: "not performed"
+  ranking: "not performed"
+  scoring: "not performed"
+  recommendation: "not performed"
+  visibility_decision: "not performed"
+source_snapshots:
+  metrics_ledger:
+    path: "/Users/petros/Projects/content/experiments/youtube-analytics/metrics_ledger.json"
+    sha256: "09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9"
+    created_at: "2026-08-21T21:43:21.683390+00:00"
+    analytics_end_date: "2026-08-20"
+  content_rubric:
+    path: "/Users/petros/Projects/content/experiments/youtube-analytics/content_rubric.json"
+    sha256: "9bc36054aba2ec306c837a18f1e76aa726dd822a707009b4592df8d17a5c5508"
+    generated_from: "local_srt"
+  youtube_triage:
+    path: "/Users/petros/Projects/content/publication_strategy_and_archive/portfolio/youtube_triage.json"
+    sha256: "2ccd63e778d5d226f075b2bb1d1f06ddaa5c900a16e0f41313d3385bd2f82400"
+    created_at: "2026-08-21T21:43:35.959383+00:00"
+channel:
+  id: "UCzCa0hUNcpRt3LMZP9A8PPA"
+  title: "Rooted Layers | AI Systems Grounded in Research"
+  url: "https://www.youtube.com/channel/UCzCa0hUNcpRt3LMZP9A8PPA"
+  uploads_playlist_id: "UUzCa0hUNcpRt3LMZP9A8PPA"
+  visibility: "not_recorded_in_local_snapshot"
+  visibility_note: >-
+    The local snapshots record the channel id and title plus per-video
+    privacy_status. They do not record a channel-level visibility field. All
+    six records below have current_visibility/privacy_status public.
+analytics_metric_fields_note: >-
+  An empty values map means every metric field below was null in the source
+  window; missing and missing_reason are copied from the refreshed ledger.
+analytics_metric_fields:
+  - views
+  - engagedViews
+  - estimatedMinutesWatched
+  - averageViewDuration
+  - averageViewPercentage
+  - likes
+  - comments
+  - shares
+  - subscribersGained
+  - videoThumbnailImpressions
+  - videoThumbnailImpressionsClickRate
+videos:
+  - video_id: "hNVBrptmRVs"
+    title: "Why Polished AI Reports Can Outrun the Evidence | A Cinematic Research Brief"
+    url: "https://www.youtube.com/watch?v=hNVBrptmRVs"
+    visibility: "public"
+    published_at: "2026-04-17T21:19:36Z"
+    duration_iso8601: "PT8M59S"
+    duration_seconds: 539.0
+    description: |-
+      A fluent AI report can look more trustworthy than the evidence it was built on.
+
+      This cinematic brief introduces confidence debt: the moment polished output gets trusted downstream faster than the underlying proof can support it. It shows why artifact quality, benchmark comfort, and human review can all fail in sequence when the workflow preserves legibility but drops auditability.
+
+      Original essay: https://lambpetros.substack.com/p/confidence-debt
+      Full research breakdown: https://www.youtube.com/watch?v=_FE96jVDsJM
+      Cinematic playlist: https://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe
+    thumbnail_url: "https://i.ytimg.com/vi/hNVBrptmRVs/maxresdefault.jpg"
+    playlists:
+      - id: "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe"
+        title: "Rooted Layers Cinematic Research Briefs"
+        item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4wMTcyMDhGQUE4NTIzM0Y5"
+        position: 23
+        playlist_item_published_at: "2026-04-22T16:02:57Z"
+        privacy_status: "unlisted"
+    related_video: null
+    metrics:
+      data_api_statistics:
+        viewCount: "35"
+        likeCount: "0"
+        dislikeCount: "0"
+        favoriteCount: "0"
+        commentCount: "1"
+      analytics_end_date: "2026-08-20"
+      windows:
+        "24h":
+          start_date: "2026-08-20"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "72h":
+          start_date: "2026-08-18"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "7d":
+          start_date: "2026-08-14"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "28d":
+          start_date: "2026-07-24"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+    package_relationship:
+      observed_ledger_package: null
+      resolved_package: "publications/confidence-debt"
+      package_readme_path: "/Users/petros/Projects/content/publications/confidence-debt/README.md"
+      package_status_path: "/Users/petros/Projects/content/publications/confidence-debt/status.yaml"
+      essay_title: "Confidence Debt"
+      essay_path: "/Users/petros/Projects/content/publications/confidence-debt/confidence-debt.md"
+      essay_url: "https://lambpetros.substack.com/p/confidence-debt"
+      relationship_status: >-
+        The title and description point to the Confidence Debt package and
+        essay, while the refreshed ledger leaves package null. The local
+        Confidence Debt cinematic caption resolves the package relationship.
+      description_full_research_url: "https://www.youtube.com/watch?v=_FE96jVDsJM"
+    caption_evidence:
+      status: "exact/resolved"
+      triage_evidence_state: "CAPTION_EVIDENCE_UNCERTAIN"
+      triage_match_confidence: "medium"
+      triage_flag: "CAPTION_MATCH_REQUIRES_REVIEW"
+      triage_mapped_srt:
+        path: "/Users/petros/Projects/content/publications/autonomy-tax/artifacts/video/autonomy_tax_cinematic.srt"
+        sha256: "f3536b03e73bf8d5449dd8e0013377e778991b3c32e229606d82aeb8566f26ac"
+        cue_count: 151
+        duration_seconds: 347.8
+        first_cue_start: "00:00:00,320"
+        last_cue_end: "00:05:47,800"
+      resolved_local_srt:
+        path: "/Users/petros/Projects/content/publications/confidence-debt/artifacts/video/cinematic-backfill-2026-04-27/confidence_debt_cinematic.srt"
+        sha256: "b48814c7c1c147421ef358db8b9f2e7617b1a1321564976b0ac31f35e899d8d5"
+        cue_count: 229
+        duration_seconds: 538.68
+        first_cue_start: "00:00:00,400"
+        last_cue_end: "00:08:58,680"
+        duration_delta_vs_video_seconds: -0.32
+      resolution_note: >-
+        The refreshed heuristic mapping points to the autonomy-tax SRT, whose
+        5:47.8 duration and procurement/autonomy-tax opening do not match this
+        8:59 candidate. The local Confidence Debt SRT is 8:58.68, begins with
+        EIP-verify/confidence-debt claims, and matches the title and description.
+      obvious_transcript_source_mismatch:
+        present: true
+        note: >-
+          The triage-mapped transcript is an obvious source mismatch. It is
+          retained above as the recorded heuristic, while the resolved local
+          caption is recorded separately.
+      rubric_first_spoken_line_recorded: "In early 2026, a midsize company set up"
+      rubric_first_spoken_line_note: >-
+        This line belongs to the incorrect autonomy-tax heuristic mapping, not
+        the resolved Confidence Debt SRT.
+    transcript_claim_anchors:
+      - timestamp: "00:00:00,400"
+        claim: >-
+          EIP-verify is framed as an attempt to trace high-level Ethereum
+          protocol requirements to the repository code that executes them.
+      - timestamp: "00:00:34,079"
+        claim: >-
+          One run produced a polished fluent summary and a row-level evidence
+          spreadsheet that were supposed to agree but told different stories.
+      - timestamp: "00:00:54,000"
+        claim: >-
+          The raw evidence exposed mappings to irrelevant fixtures and RPC glue
+          instead of the protocol logic the workflow was meant to verify.
+      - timestamp: "00:01:36,400"
+        claim: >-
+          Confidence debt is defined as output trusted downstream before
+          verifiable evidence warrants that trust.
+      - timestamp: "00:01:49,040"
+        claim: >-
+          The debt is presented as compounding across three layers: artifacts,
+          evaluations, and humans.
+      - timestamp: "00:02:57,680"
+        claim: >-
+          Gate one requires claim auditability: an evidence ledger,
+          contradiction register, and expiry condition travel with each claim.
+      - timestamp: "00:04:01,120"
+        claim: >-
+          A one-shot benchmark score is contrasted with repeated runs, where
+          pass at one is 61 percent but pass at eight falls below 25 percent.
+      - timestamp: "00:07:03,440"
+        claim: >-
+          Gate three is a hypothesis-driven co-audit interface that surfaces
+          unsupported claims and counter-evidence before acceptance.
+
+  - video_id: "slozjRp6CPg"
+    title: "Specs Need a Surface"
+    url: "https://www.youtube.com/watch?v=slozjRp6CPg"
+    visibility: "public"
+    published_at: "2026-05-04T07:52:16Z"
+    duration_iso8601: "PT4M42S"
+    duration_seconds: 282.0
+    description: |-
+      Fast code generation creates the wrong kind of speed if intent is only in chat. Reviewable work needs a surface that names decisions, tests, and the rule for changing them.
+
+      Claim: Generated code becomes reviewable when controlling intent lives in a maintained specification surface.
+
+      Evidence: Local captions connect generated code to maintained specs.; The paired research breakdown covers why specs become source authority.; Visual slide assets expose the specification surface as an inspectable object.
+
+      Technical dilemma: If intent lives only in chat, what exactly is a reviewer supposed to verify?
+
+      Author note: The key point is not documentation volume; it is where controlling intent is allowed to live.
+
+      Source: https://lambpetros.substack.com/p/the-specification-surface-is-the
+
+      Research breakdown: https://www.youtube.com/watch?v=I6gKAyYRfZU
+    thumbnail_url: "https://i.ytimg.com/vi/slozjRp6CPg/maxresdefault.jpg"
+    playlists:
+      - id: "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe"
+        title: "Rooted Layers Cinematic Research Briefs"
+        item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5GM0Q3M0MzMzY5NTJFNTdE"
+        position: 3
+        playlist_item_published_at: "2026-05-04T07:51:59Z"
+        privacy_status: "unlisted"
+    related_video:
+      id: "I6gKAyYRfZU"
+      url: "https://www.youtube.com/watch?v=I6gKAyYRfZU"
+      label: "Full research breakdown"
+    metrics:
+      data_api_statistics:
+        viewCount: "193"
+        likeCount: "2"
+        dislikeCount: "0"
+        favoriteCount: "0"
+        commentCount: "3"
+      analytics_end_date: "2026-08-20"
+      windows:
+        "24h":
+          start_date: "2026-08-20"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "72h":
+          start_date: "2026-08-18"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "7d":
+          start_date: "2026-08-14"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "28d":
+          start_date: "2026-07-24"
+          end_date: "2026-08-20"
+          missing: false
+          missing_reason: null
+          values:
+            views: 1
+            engagedViews: 1
+            estimatedMinutesWatched: 0
+            averageViewDuration: 17
+            averageViewPercentage: 6.25
+            likes: 0
+            comments: 0
+            shares: 0
+            subscribersGained: 0
+            videoThumbnailImpressions: null
+            videoThumbnailImpressionsClickRate: null
+    package_relationship:
+      observed_ledger_package: "literate-workflow-programming/specification-surface-source-of-truth"
+      resolved_package: "publications/literate-workflow-programming/specification-surface-source-of-truth"
+      package_readme_path: "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/README.md"
+      package_status_path: "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/status.yaml"
+      essay_title: "The Specification Surface Is the New Source of Truth"
+      essay_path: "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/specification-surface-source-of-truth.md"
+      essay_url: "https://lambpetros.substack.com/p/the-specification-surface-is-the"
+      relationship_status: "Video description and package metadata point to the same specification-surface essay."
+      description_source_url: "https://lambpetros.substack.com/p/the-specification-surface-is-the"
+      description_full_research_url: "https://www.youtube.com/watch?v=I6gKAyYRfZU"
+    caption_evidence:
+      status: "exact/resolved"
+      triage_evidence_state: "ELIGIBLE_FOR_DEEP_REVIEW"
+      triage_match_confidence: "high"
+      resolved_local_srt:
+        path: "/Users/petros/Projects/content/publications/literate-workflow-programming/specification-surface-source-of-truth/artifacts/video/specification_surface_cinematic.srt"
+        sha256: "29157e3358e16f45379885e320305d6417edddaca9091b7150e7676ddc9570b7"
+        cue_count: 117
+        duration_seconds: 281.24
+        first_cue_start: "00:00:00,480"
+        last_cue_end: "00:04:41,240"
+        duration_delta_vs_video_seconds: -0.76
+      obvious_transcript_source_mismatch:
+        present: false
+        note: "No obvious mismatch between the title, description, package essay, and local SRT; minor ASR artifacts are transcription noise."
+    transcript_claim_anchors:
+      - timestamp: "00:00:00,480"
+        claim: >-
+          A clean AI-generated pull request with passing tests can still delete
+          a critical retry branch and lock the production database.
+      - timestamp: "00:00:48,000"
+        claim: >-
+          Architectural intent left in an ephemeral developer-model chat is
+          invisible to the reviewer of the resulting code.
+      - timestamp: "00:01:03,600"
+        claim: >-
+          Vibe coding creates a velocity mismatch: generated implementation
+          outpaces the human team's ability to reverse-engineer its reasoning.
+      - timestamp: "00:01:57,520"
+        claim: >-
+          When a shared specification is reduced to bare function signatures,
+          independent agents make conflicting assumptions about integration.
+      - timestamp: "00:02:20,400"
+        claim: >-
+          Restoring the full specification restores the shared decisions needed
+          to align the agents' work.
+      - timestamp: "00:02:25,280"
+        claim: >-
+          The proposed solution is a specification surface: a durable written
+          artifact that captures intent in a way code cannot.
+      - timestamp: "00:02:48,400"
+        claim: >-
+          Natural-language constraints gain operational force when converted to
+          executable tests that can physically reject non-compliant code.
+      - timestamp: "00:04:09,439"
+        claim: >-
+          When a bug is found, the governed workflow updates the specification,
+          regenerates the agent, and overwrites the old implementation.
+      - timestamp: "00:04:30,240"
+        claim: >-
+          The engineering role shifts from writing implementation to governing
+          intent.
+
+  - video_id: "chr4R-fSZUY"
+    title: "Models Need a REPL for Thought"
+    url: "https://www.youtube.com/watch?v=chr4R-fSZUY"
+    visibility: "public"
+    published_at: "2026-04-29T08:52:30Z"
+    duration_iso8601: "PT5M20S"
+    duration_seconds: 320.0
+    description: |-
+      Long instructions stop looking like input once they become an environment the model can inspect, filter, and program against.
+
+      Claim: Long instructions become useful infrastructure when the model can inspect and program its own thinking surface.
+
+      Evidence: The latest dashboard shows 1606 thumbnail impressions, 0.37 percent CTR, and 15.72 percent average viewed.; The local upload report names programmable thinking as the core claim.; The cinematic rollout ledger records end-screen, info-card, and Shorts links back to this cinematic.
+
+      Technical dilemma: When does a instructions become an environment the model can inspect and change?
+
+      Author note: This needs a jargon cleanup, but low retention means the title alone may not be enough.
+
+      Source: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
+
+      Research breakdown: https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking
+    thumbnail_url: "https://i.ytimg.com/vi/chr4R-fSZUY/maxresdefault.jpg"
+    playlists:
+      - id: "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe"
+        title: "Rooted Layers Cinematic Research Briefs"
+        item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS45ODRDNTg0QjA4NkFBNkQy"
+        position: 12
+        playlist_item_published_at: "2026-04-29T08:52:12Z"
+        privacy_status: "unlisted"
+    related_video: null
+    metrics:
+      data_api_statistics:
+        viewCount: "12"
+        likeCount: "0"
+        dislikeCount: "0"
+        favoriteCount: "0"
+        commentCount: "1"
+      analytics_end_date: "2026-08-20"
+      windows:
+        "24h":
+          start_date: "2026-08-20"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "72h":
+          start_date: "2026-08-18"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "7d":
+          start_date: "2026-08-14"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "28d":
+          start_date: "2026-07-24"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+    package_relationship:
+      observed_ledger_package: "programmable-thinking"
+      resolved_package: "publications/programmable-thinking"
+      package_readme_path: "/Users/petros/Projects/content/publications/programmable-thinking/README.md"
+      package_status_path: "/Users/petros/Projects/content/publications/programmable-thinking/status.yaml"
+      essay_title: "When the LLM Programs Its Own Thinking"
+      essay_path: "/Users/petros/Projects/content/publications/programmable-thinking/when-the-llm-programs-its-own-thinking.md"
+      essay_url: "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking"
+      relationship_status: "Video description and package metadata point to the same programmable-thinking essay."
+      description_source_url: "https://lambpetros.substack.com/p/when-the-llm-programs-its-own-thinking"
+    caption_evidence:
+      status: "exact/resolved"
+      triage_evidence_state: "ELIGIBLE_FOR_DEEP_REVIEW"
+      triage_match_confidence: "high"
+      resolved_local_srt:
+        path: "/Users/petros/Projects/content/publications/programmable-thinking/artifacts/video/programmable_thinking_cinematic.srt"
+        sha256: "ee10b2878430b0ecdc54fa962118135cab7a0e4769c8679b7fad98daf7738c25"
+        cue_count: 133
+        duration_seconds: 319.479
+        first_cue_start: "00:00:00,000"
+        last_cue_end: "00:05:19,479"
+        duration_delta_vs_video_seconds: -0.521
+      obvious_transcript_source_mismatch:
+        present: false
+        note: "No obvious mismatch between the title, description, package essay, and local SRT; minor ASR artifacts are transcription noise."
+    transcript_claim_anchors:
+      - timestamp: "00:00:00,000"
+        claim: >-
+          Treating all data as a model's fixed active memory is compared with
+          forcing a vast library into a rigidly sized box.
+      - timestamp: "00:00:23,199"
+        claim: >-
+          A 100,000-token model context is contrasted with an 11-million-token
+          dataset that hardware cannot hold directly.
+      - timestamp: "00:00:51,120"
+        claim: >-
+          Feeding massive documents directly into context is presented as an
+          architectural dead end, motivating recursive language models.
+      - timestamp: "00:01:19,280"
+        claim: >-
+          The RLM stores text outside the model and has the model write Python
+          to search, filter, and retrieve only needed fragments.
+      - timestamp: "00:01:44,079"
+        claim: >-
+          External storage lets a 128,000-token model process millions of
+          tokens by selectively querying the required data.
+      - timestamp: "00:02:27,280"
+        claim: >-
+          RLM orchestration decisions can be invisible, beginning with flawed
+          filters or arbitrary chunk boundaries.
+      - timestamp: "00:02:53,760"
+        claim: >-
+          Splitting a semantic unit in half leaves a recursive verifier with
+          incomplete context and can produce a confidently wrong answer.
+      - timestamp: "00:03:50,799"
+        claim: >-
+          Operators need microscopic execution traces, including the code and
+          regex filters applied to external data.
+      - timestamp: "00:04:00,319"
+        claim: >-
+          A shared Jupyter workspace exposes the same computational state and
+          makes filtering decisions legible.
+      - timestamp: "00:04:39,280"
+        claim: >-
+          Shared execution permits pausing, correcting a flawed regex, and
+          resuming from the point of failure.
+
+  - video_id: "q3_gPM4E8yw"
+    title: "Boundary First, Then More Workers"
+    url: "https://www.youtube.com/watch?v=q3_gPM4E8yw"
+    visibility: "public"
+    published_at: "2026-04-24T08:10:24Z"
+    duration_iso8601: "PT5M27S"
+    duration_seconds: 327.0
+    description: |-
+      Extra workers feel like scale, but they create handoffs before they create intelligence. Add another worker only when it owns a different boundary in memory, tools, permissions, or evaluation.
+
+      Claim: Splitting work across extra workers is a workaround unless each worker owns a real boundary.
+
+      Evidence: Local cinematic captions show the single-worker versus swarm comparison.; The paired research breakdown covers the 53.7 percent token reduction and coordination tax.; The essay argues that decomposition quality beats coordination theater.
+
+      Technical dilemma: If one worker can hold the context and tools, what exact boundary justifies the second one?
+
+      Author note: I was skeptical of the anti-swarm framing until the cost and latency comparison made the boundary test unavoidable.
+
+      Source: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+
+      Research breakdown: https://www.youtube.com/watch?v=AigaLYfpFZc
+    thumbnail_url: "https://i.ytimg.com/vi/q3_gPM4E8yw/maxresdefault.jpg"
+    playlists:
+      - id: "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe"
+        title: "Rooted Layers Cinematic Research Briefs"
+        item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS4xMkVGQjNCMUM1N0RFNEUx"
+        position: 20
+        playlist_item_published_at: "2026-04-24T08:09:59Z"
+        privacy_status: "unlisted"
+    related_video:
+      id: "AigaLYfpFZc"
+      url: "https://www.youtube.com/watch?v=AigaLYfpFZc"
+      label: "Full research breakdown"
+    metrics:
+      data_api_statistics:
+        viewCount: "25"
+        likeCount: "0"
+        dislikeCount: "0"
+        favoriteCount: "0"
+        commentCount: "4"
+      analytics_end_date: "2026-08-20"
+      windows:
+        "24h":
+          start_date: "2026-08-20"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "72h":
+          start_date: "2026-08-18"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "7d":
+          start_date: "2026-08-14"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "28d":
+          start_date: "2026-07-24"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+    package_relationship:
+      observed_ledger_package: "illusion-of-swarm"
+      resolved_package: "publications/illusion-of-swarm"
+      package_readme_path: "/Users/petros/Projects/content/publications/illusion-of-swarm/README.md"
+      package_status_path: "/Users/petros/Projects/content/publications/illusion-of-swarm/status.yaml"
+      essay_title: "The Illusion of the Swarm"
+      essay_path: "/Users/petros/Projects/content/publications/illusion-of-swarm/2026-03-17-phase-transition-multi-agent-v9-substack.md"
+      essay_url: "https://lambpetros.substack.com/p/the-illusion-of-the-swarm"
+      relationship_status: "Video description and package metadata point to the same illusion-of-swarm essay."
+      description_source_url: "https://lambpetros.substack.com/p/the-illusion-of-the-swarm"
+      description_full_research_url: "https://www.youtube.com/watch?v=AigaLYfpFZc"
+    caption_evidence:
+      status: "exact/resolved"
+      triage_evidence_state: "ELIGIBLE_FOR_DEEP_REVIEW"
+      triage_match_confidence: "high"
+      resolved_local_srt:
+        path: "/Users/petros/Projects/content/publications/illusion-of-swarm/artifacts/video/illusion_of_swarm_cinematic.srt"
+        sha256: "a336ad313a9c7fc8378011cd78eaa6e170acfdcfe83c544ed73808307999cab0"
+        cue_count: 140
+        duration_seconds: 326.6
+        first_cue_start: "00:00:00,320"
+        last_cue_end: "00:05:26,600"
+        duration_delta_vs_video_seconds: -0.4
+      obvious_transcript_source_mismatch:
+        present: false
+        note: "No obvious mismatch between the title, description, package essay, and local SRT; minor ASR artifacts are transcription noise."
+    transcript_claim_anchors:
+      - timestamp: "00:00:00,320"
+        claim: >-
+          The CEO-agent to coder-agent to reviewer-agent hierarchy is presented
+          as the standard multi-agent pitch.
+      - timestamp: "00:00:30,880"
+        claim: >-
+          Removing distinct personas and consolidating tools into one model is
+          reported to use 53.7 percent fewer tokens and nearly halve latency.
+      - timestamp: "00:00:44,000"
+        claim: >-
+          A benchmark of 180 configurations is described as showing a negative
+          performance trend as agent count increases.
+      - timestamp: "00:00:52,960"
+        claim: >-
+          Each additional agent adds coordination overhead and another point of
+          failure.
+      - timestamp: "00:01:19,280"
+        claim: >-
+          English-language handoffs are described as a lossy channel from dense
+          internal representations to a narrow text string.
+      - timestamp: "00:01:55,520"
+        claim: >-
+          The disambiguation threshold appears when too many semantically
+          similar tools crowd the model's internal map.
+      - timestamp: "00:02:44,319"
+        claim: >-
+          Persona separation is framed as code fencing that places similar tools
+          in separate localized namespaces.
+      - timestamp: "00:03:06,879"
+        claim: >-
+          Multiple agents remain necessary for heterogeneous substrates, safety
+          isolation, or embodied robots sharing physical space.
+      - timestamp: "00:03:44,720"
+        claim: >-
+          Outside those boundaries, swarms are characterized as temporary
+          training rigs rather than a final product.
+      - timestamp: "00:04:00,319"
+        claim: >-
+          Multi-agent reasoning traces can be distilled back into a single model
+          so it internalizes the scaffolding.
+
+  - video_id: "bhoiLFJadAA"
+    title: "The Model Kept the Facts. It Dropped the Wiring | A Cinematic Research Brief"
+    url: "https://www.youtube.com/watch?v=bhoiLFJadAA"
+    visibility: "public"
+    published_at: "2026-05-05T15:12:18Z"
+    duration_iso8601: "PT5M12S"
+    duration_seconds: 312.0
+    description: |-
+      The binding gap is not forgetting. It is a wiring failure.
+
+      Retest note: this is the Binding Gap cinematic regenerated with the tighter prompt-packet workflow. The opening still did not preserve the exact requested first line, so treat this as a live comparison against the older weak cinematic: sharper description, cleaner claim blocks, and Short-ready mini-sequences around the same idea.
+
+      The brief shows why a model can keep the facts while dropping the role, source, and numeric attachments that make the answer usable.
+
+      Original essay:
+      https://lambpetros.substack.com/p/the-binding-gap
+
+      Full research breakdown:
+      https://www.youtube.com/watch?v=cBrtKPp4kqw
+
+      Cinematic playlist:
+      https://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe
+    thumbnail_url: "https://i.ytimg.com/vi/bhoiLFJadAA/maxresdefault.jpg"
+    playlists:
+      - id: "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe"
+        title: "Rooted Layers Cinematic Research Briefs"
+        item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS5DNzE1RjZEMUZCMjA0RDBB"
+        position: 0
+        playlist_item_published_at: "2026-05-05T15:11:46Z"
+        privacy_status: "unlisted"
+    related_video:
+      id: "cBrtKPp4kqw"
+      url: "https://www.youtube.com/watch?v=cBrtKPp4kqw"
+      label: "Full research breakdown"
+    metrics:
+      data_api_statistics:
+        viewCount: "31"
+        likeCount: "0"
+        dislikeCount: "0"
+        favoriteCount: "0"
+        commentCount: "0"
+      analytics_end_date: "2026-08-20"
+      windows:
+        "24h":
+          start_date: "2026-08-20"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "72h":
+          start_date: "2026-08-18"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "7d":
+          start_date: "2026-08-14"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "28d":
+          start_date: "2026-07-24"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+    package_relationship:
+      observed_ledger_package: "binding-gap"
+      resolved_package: "publications/binding-gap"
+      package_readme_path: "/Users/petros/Projects/content/publications/binding-gap/README.md"
+      package_status_path: "/Users/petros/Projects/content/publications/binding-gap/status.yaml"
+      essay_title: "The Binding Gap"
+      essay_path: "/Users/petros/Projects/content/publications/binding-gap/the-binding-gap.md"
+      essay_url: "https://lambpetros.substack.com/p/the-binding-gap"
+      relationship_status: "Video description and package metadata point to the same binding-gap essay."
+      description_source_url: "https://lambpetros.substack.com/p/the-binding-gap"
+      description_full_research_url: "https://www.youtube.com/watch?v=cBrtKPp4kqw"
+    caption_evidence:
+      status: "exact/resolved"
+      triage_evidence_state: "ELIGIBLE_FOR_DEEP_REVIEW"
+      triage_match_confidence: "high"
+      resolved_local_srt:
+        path: "/Users/petros/Projects/content/publications/binding-gap/artifacts/video/prompt-packet-retest-2026-05-05/binding_gap_prompt_packet_retest_cinematic.srt"
+        sha256: "2009339cac8342eb4fdc0196a7d9de55f66a6db3650eaa83437c5867cc63dcbc"
+        cue_count: 134
+        duration_seconds: 311.479
+        first_cue_start: "00:00:00,480"
+        last_cue_end: "00:05:11,479"
+        duration_delta_vs_video_seconds: -0.521
+      obvious_transcript_source_mismatch:
+        present: false
+        note: >-
+          No obvious claim-source mismatch. The description explicitly records
+          that this is a retest whose requested opening line was not preserved;
+          that is an acknowledged opening-variant note, not a package mismatch.
+    transcript_claim_anchors:
+      - timestamp: "00:00:00,480"
+        claim: >-
+          A model can preserve the semantic pieces of an answer while the
+          wiring that connects those facts snaps.
+      - timestamp: "00:00:33,120"
+        claim: >-
+          Calling every such error hallucination is described as imprecise
+          because the ingredients can be real but mismanaged.
+      - timestamp: "00:00:57,920"
+        claim: >-
+          The reversal-curse test shows that a model can learn Tom Smith's
+          relation to Mary Stone but fail on the inverse question.
+      - timestamp: "00:01:42,560"
+        claim: >-
+          Citation drift occurs when a system identifies real claims but binds
+          them to the wrong sources.
+      - timestamp: "00:02:00,560"
+        claim: >-
+          A clinical-trial example shows the fluent summary swapping the drug
+          and placebo roles while keeping the entities and numbers.
+      - timestamp: "00:02:38,000"
+        claim: >-
+          In dense meta-analysis extraction, the model can assign right numbers
+          to wrong variables as association density rises.
+      - timestamp: "00:03:30,000"
+        claim: >-
+          The ordering subspace is presented as a switchboard whose role-sensitive
+          signatures can be overwhelmed by mathematical noise.
+      - timestamp: "00:04:05,599"
+        claim: >-
+          Fluent language can be a statistical reflex rather than evidence of
+          stable retrieved memory.
+      - timestamp: "00:04:43,840"
+        claim: >-
+          Schema records are proposed to force explicit role and numeric
+          attachments before conversational text is generated.
+
+  - video_id: "0TpfmqhoB6s"
+    title: "Why AI Design Converged on the Same Scaffold | A Cinematic Research Brief"
+    url: "https://www.youtube.com/watch?v=0TpfmqhoB6s"
+    visibility: "public"
+    published_at: "2026-04-22T15:14:24Z"
+    duration_iso8601: "PT5M49S"
+    duration_seconds: 349.0
+    description: |-
+      Every breakthrough in AI looks different on the surface. Underneath, the field keeps converging on the same reusable scaffold.
+
+      This cinematic brief follows the transition from handcrafted architectures to residual scaffolds, portable transformer blocks, and the compute recipes that now dominate design.
+
+      The goal is not to recap the whole essay. It is to give new viewers one strong structural claim: modern AI progress kept accelerating because the field stopped redesigning the whole machine and started reusing a stable scaffold that could absorb scale, specialization, and new workloads.
+
+      Original essay:
+      https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e
+
+      Full research breakdown:
+      https://www.youtube.com/watch?v=-2CM4JYfQAs
+
+      Cinematic playlist:
+      https://www.youtube.com/playlist?list=PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe
+    thumbnail_url: "https://i.ytimg.com/vi/0TpfmqhoB6s/maxresdefault.jpg"
+    playlists:
+      - id: "PL8lPx5mgRhhZZYl9fPWLf8J5rJM8FRIHe"
+        title: "Rooted Layers Cinematic Research Briefs"
+        item_id: "UEw4bFB4NW1nUmhoWlpZbDlmUFdMZjhKNXJKTThGUklIZS41NkI0NEY2RDEwNTU3Q0M2"
+        position: 22
+        playlist_item_published_at: "2026-04-22T14:55:41Z"
+        privacy_status: "unlisted"
+    related_video: null
+    metrics:
+      data_api_statistics:
+        viewCount: "228"
+        likeCount: "1"
+        dislikeCount: "1"
+        favoriteCount: "0"
+        commentCount: "2"
+      analytics_end_date: "2026-08-20"
+      windows:
+        "24h":
+          start_date: "2026-08-20"
+          end_date: "2026-08-20"
+          missing: true
+          missing_reason: "analytics_lag_or_no_rows"
+          values: {}
+        "72h":
+          start_date: "2026-08-18"
+          end_date: "2026-08-20"
+          missing: false
+          missing_reason: null
+          values:
+            views: 1
+            engagedViews: 1
+            estimatedMinutesWatched: 0
+            averageViewDuration: 46
+            averageViewPercentage: 13.209999999999999
+            likes: 0
+            comments: 0
+            shares: 0
+            subscribersGained: 0
+            videoThumbnailImpressions: null
+            videoThumbnailImpressionsClickRate: null
+        "7d":
+          start_date: "2026-08-14"
+          end_date: "2026-08-20"
+          missing: false
+          missing_reason: null
+          values:
+            views: 1
+            engagedViews: 1
+            estimatedMinutesWatched: 0
+            averageViewDuration: 46
+            averageViewPercentage: 13.209999999999999
+            likes: 0
+            comments: 0
+            shares: 0
+            subscribersGained: 0
+            videoThumbnailImpressions: null
+            videoThumbnailImpressionsClickRate: null
+        "28d":
+          start_date: "2026-07-24"
+          end_date: "2026-08-20"
+          missing: false
+          missing_reason: null
+          values:
+            views: 1
+            engagedViews: 1
+            estimatedMinutesWatched: 0
+            averageViewDuration: 46
+            averageViewPercentage: 13.209999999999999
+            likes: 0
+            comments: 0
+            shares: 0
+            subscribersGained: 0
+            videoThumbnailImpressions: null
+            videoThumbnailImpressionsClickRate: null
+    package_relationship:
+      observed_ledger_package: "neural-architectures/neural-architecture-design-as-a-compositional-32e"
+      resolved_package: "publications/neural-architectures/neural-architecture-design-as-a-compositional-32e"
+      package_readme_path: "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/README.md"
+      package_status_path: "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/status.yaml"
+      essay_title: "Neural Architecture Design as a Reusable Scaffold"
+      essay_path: "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/neural-architecture-design-as-a-compositional-32e.md"
+      essay_url: "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e"
+      relationship_status: "Video description and package metadata point to the same neural-architecture essay."
+      description_source_url: "https://lambpetros.substack.com/p/neural-architecture-design-as-a-compositional-32e"
+      description_full_research_url: "https://www.youtube.com/watch?v=-2CM4JYfQAs"
+    caption_evidence:
+      status: "exact/resolved"
+      triage_evidence_state: "ELIGIBLE_FOR_DEEP_REVIEW"
+      triage_match_confidence: "high"
+      resolved_local_srt:
+        path: "/Users/petros/Projects/content/publications/neural-architectures/neural-architecture-design-as-a-compositional-32e/artifacts/video/neural_architecture_design_cinematic.srt"
+        sha256: "1e39283b86edd777c421c4af478062373b1f8b9ced0db0c0fd640a66e8024c89"
+        cue_count: 156
+        duration_seconds: 349.16
+        first_cue_start: "00:00:00,400"
+        last_cue_end: "00:05:49,160"
+        duration_delta_vs_video_seconds: 0.16
+      obvious_transcript_source_mismatch:
+        present: false
+        note: "No obvious mismatch between the title, description, package essay, and local SRT; minor ASR artifacts are transcription noise."
+    transcript_claim_anchors:
+      - timestamp: "00:00:00,400"
+        claim: >-
+          A deterministic suspension-bridge blueprint is contrasted with the
+          failure of top-down hand engineering in neural networks.
+      - timestamp: "00:00:25,359"
+        claim: >-
+          AlexNet is used as an example of hand-designed feature extraction,
+          including large 11-by-11 filters tailored to hardware limits.
+      - timestamp: "00:01:25,920"
+        claim: >-
+          A 56-layer network is described as learning worse than a 20-layer
+          version because repeated transformations degrade the representation.
+      - timestamp: "00:02:00,640"
+        claim: >-
+          The transcript frames hand micromanagement of architecture as a
+          mathematical wall at scale.
+      - timestamp: "00:02:06,640"
+        claim: >-
+          ResNet's residual path discipline replaces destructive total rewrites
+          with skip connections that preserve the main data highway.
+      - timestamp: "00:02:24,160"
+        claim: >-
+          The residual delta enables reliable training of networks hundreds of
+          layers deep.
+      - timestamp: "00:02:54,560"
+        claim: >-
+          Transformers are described as self-attention blocks wrapped in the
+          same residual scaffold pioneered by ResNet.
+      - timestamp: "00:03:39,440"
+        claim: >-
+          Probing studies are used to claim that uniform layers specialize
+          organically into syntax, parsing, and semantics.
+      - timestamp: "00:04:40,400"
+        claim: >-
+          The Chinchilla correction is used to explain why parameter growth
+          requires proportionate training data.
+      - timestamp: "00:05:05,759"
+        claim: >-
+          Mixture-of-experts specialization is presented as safe when an
+          algorithmic router contains it inside the external scaffold.

@@ -1,18 +1,18 @@
 # Binding And Recoverability
 
-Single-publication package for the active binding-gap essay and the earlier structural-recoverability line that fed into it. The package is still active, and the current standard is one stable live draft plus a local archive of prior directions.
+Single-publication package for the published binding-gap essay and the earlier structural-recoverability line that fed into it. The package remains available for future work, and the current standard is one stable published source plus a local archive of prior directions.
 
 ## Package Status
 
 - Archetype: Single-publication package
-- Status: Active
-- Publication map: not yet published in the tracked Substack archive
+- Status: Published
+- Publication map: [*The Binding Gap*](https://lambpetros.substack.com/p/the-binding-gap)
 - Canonical workflow docs: [`../workflows/paper-intake/README.md`](../../workflows/paper-intake/README.md), [`../workflows/essay-iteration/README.md`](../../workflows/essay-iteration/README.md), [`../workflows/notebooklm-artifacts/README.md`](../../workflows/notebooklm-artifacts/README.md)
 
 ## Orientation
 
-- Live draft: [`The_Binding_Gap.md`](The_Binding_Gap.md)
-- Recent draft ladder: [`The_Binding_Gap_v2.md`](The_Binding_Gap_v2.md), [`The_Binding_Gap_v3.md`](The_Binding_Gap_v3.md)
+- Canonical published source: [`the-binding-gap.md`](the-binding-gap.md), matching `status.yaml` and the tracked public snapshot
+- Prior draft ladder: [`The_Binding_Gap.md`](The_Binding_Gap.md), [`The_Binding_Gap_v2.md`](The_Binding_Gap_v2.md), [`The_Binding_Gap_v3.md`](The_Binding_Gap_v3.md)
 - Companion: [`Structural_Recoverability_Companion.md`](Structural_Recoverability_Companion.md)
 - Blueprint / plan: [`binding_gap_blueprint.md`](binding_gap_blueprint.md)
 - Distribution map (all platforms): [`distribution.md`](distribution.md)
@@ -29,7 +29,7 @@ Single-publication package for the active binding-gap essay and the earlier stru
 
 ## Working Guidance
 
-- Treat [`The_Binding_Gap.md`](The_Binding_Gap.md) as the canonical live draft unless the user explicitly chooses a later variant.
+- Treat [`the-binding-gap.md`](the-binding-gap.md) as the canonical published essay. The uppercase variants are provenance for earlier revisions, not competing live authorities.
 - Treat [`Structural_Recoverability_Companion.md`](Structural_Recoverability_Companion.md) as the background layer that widens the frame without replacing the flagship thesis.
 - Use the recoverability line as source material, not as the default narrative frame.
 - Keep core terms stable. If `binding`, `attachment`, `representation`, or `expression` changes meaning, define the shift explicitly.

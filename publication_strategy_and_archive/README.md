@@ -2,13 +2,14 @@
 
 This directory is the publication operations layer for Rooted Layers.
 
-It holds five different things:
+It holds six different things:
 
 - the raw downloaded Substack archive
 - the curated mapping between published essays and repo folders
 - the tracked migration manifest for repo-link rewrites
 - the 11ty GitHub Pages mirror
 - the editorial atlas for publication-object analysis
+- the governed curated-portfolio decision layer
 - longer-term publication strategy notes
 
 Substack remains the canonical publication surface. The mirror exists to keep public essays close to their research folders, raw snapshots, and provenance.
@@ -20,6 +21,7 @@ Substack remains the canonical publication surface. The mirror exists to keep pu
 - [`link_migration_manifest.yaml`](link_migration_manifest.yaml): tracked map of package moves plus repo-link and Substack-link rewrites for the `publications/` migration
 - [`mirror/`](mirror/): 11ty source for the public GitHub Pages mirror
 - [`editorial_atlas/`](editorial_atlas/): canonical atlas data, docs, and pull-sheet artifacts for the essay corpus
+- [`portfolio/`](portfolio/): source snapshots, independent reviews, the versioned portfolio manifest, decision report, and approval/application evidence
 - [`future_publication_strategy.md`](future_publication_strategy.md): longer-term planning notes
 - [`publication_analysis_results.md`](publication_analysis_results.md): qualitative review material
 

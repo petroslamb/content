@@ -1,0 +1,523 @@
+protocol:
+  review_id: blind_review_b
+  review_date: "2026-08-22"
+  corpus_source: publication_strategy_and_archive/substack_archive/metadata.json
+  corpus_filter: "audience == everyone"
+  corpus_count: 25
+  audience:
+    - senior AI engineers
+    - technical hiring managers
+    - serious collaborators
+  judgment_sequence:
+    - "Read every public essay Markdown and fix the initial content judgment."
+    - "Only after that judgment, inspect publication-package files when needed for provenance."
+    - "Ignore package marketing labels, self-ratings, and workflow stage claims when choosing tiers."
+  excluded_sources:
+    - ROOTED_LAYERS_CODEX_PLAN.md
+    - editorial_atlas/atlas_data.json
+    - "rubric_assessments_*.yaml"
+    - editorial_atlas/archive/
+    - prior rankings and portfolio candidate lists
+  edits_during_review: false
+  numeric_aggregate_score: not_used
+  tier_caps:
+    FLAGSHIP: 4
+    SUPPORTING: 4
+  tier_meaning:
+    FLAGSHIP: "Lead portfolio evidence: distinctive, credible, and useful to the target audience."
+    SUPPORTING: "Strong complementary evidence, but narrower, more derivative, or less proven than a flagship."
+    ARCHIVE: "Do not lead the public portfolio with this post; this does not necessarily mean the essay is poor."
+  confidence_meaning: "Confidence in this review recommendation, not confidence claimed by the essay."
+  provenance_legend:
+    VERIFIED_REPO: "The central contribution or described topology is directly traceable to repository artifacts."
+    MIXED: "Direct or local evidence exists, but substantial bridges depend on external synthesis or unsupported inference."
+    SYNTHESIS: "A traceable literature or engineering synthesis without first-party validation of the combined thesis."
+    UNVERIFIED: "The available package lineage does not adequately recover evidence for central claims."
+  remote_verification: "Not performed; provenance is limited to the public Markdown and local publication packages."
+
+summary:
+  FLAGSHIP: 4
+  SUPPORTING: 4
+  ARCHIVE: 17
+  flagship_slugs:
+    - the-specification-surface-is-the
+    - confidence-debt
+    - the-illusion-of-the-swarm
+    - when-the-llm-programs-its-own-thinking
+  supporting_slugs:
+    - harnesses-that-learn-under-audit-e06
+    - the-binding-gap
+    - the-autonomy-tax
+    - neural-architecture-design-as-a-compositional-32e
+
+posts:
+  - slug: harnesses-that-learn-under-audit-e06
+    source_file: publication_strategy_and_archive/substack_archive/2026-07-07_harnesses-that-learn-under-audit-e06.md
+    tier: SUPPORTING
+    rationale: >-
+      A strong operational synthesis that makes the right unit of evaluation the model-harness
+      configuration and introduces a reusable adoption audit for learned workflow changes. It is
+      not flagship evidence because the five-part audit is proposed rather than demonstrated,
+      the article substantially overlaps the governance flagships, and the video-first wrapper
+      leaves the Markdown without a concrete implementation or evaluation result.
+    evidence_anchors:
+      - "L12-L18: States the adoption-under-pressure thesis and defines capability as a model-harness configuration."
+      - "L22-L32: Separates harness evaluation from attractive traces and distinguishes availability, exposure, and adherence evidence."
+      - "L36-L44: Grounds repair in failed trajectories, environment-state verification, and explicit protocol authority questions."
+      - "L48-L62: Gives a concrete before-and-after recovery flow with bounded workers, independent review, integration, and release gates."
+      - "L64-L92: Specifies invocation, consumption, adherence, independent review, and regression as the adoption audit."
+    confidence: HIGH
+    factual_risk: MEDIUM
+    factual_risk_notes: >-
+      Most core claims are normative and carefully bounded, but all cited research is extremely
+      recent, the paper summaries were not locally verified, and no evidence validates the full
+      five-part audit as one production control system.
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "The matching agent-harnesses package says it is only a pre-viability topic-discovery placeholder and has no publication mapping or canonical essay."
+      - "The adjacent local harness-paper index was captured in April 2026 and omits the May-July 2026 papers carrying this essay; public citation links are the only visible lineage for them."
+
+  - slug: the-specification-surface-is-the
+    source_file: publication_strategy_and_archive/substack_archive/2026-05-01_the-specification-surface-is-the.md
+    tier: FLAGSHIP
+    rationale: >-
+      The strongest pure systems-architecture essay in the corpus. It defines a governed
+      specification surface, distinguishes levels of authority, connects specifications to
+      execution, invariants, and audit, and ends with usable review doctrine and explicit limits.
+    evidence_anchors:
+      - "L22-L36: Defines the specification surface and its authority spectrum."
+      - "L40-L48: Uses specification-gap evidence to explain coordination failure and recovery."
+      - "L58-L78: Builds the execution, invariant, and audit control stack."
+      - "L90-L112: Converts the thesis into review doctrine while preserving scope limits."
+    confidence: HIGH
+    factual_risk: MEDIUM
+    factual_risk_notes: "The argument relies heavily on recent 2025-2026 preprints, but it narrows their licensed claims explicitly."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "None material; the public and live-package text are content-equivalent apart from export metadata and asset paths."
+      - "The package boundary that this is not a claim that natural language is code is preserved publicly."
+
+  - slug: confidence-debt
+    source_file: publication_strategy_and_archive/substack_archive/2026-04-17_confidence-debt.md
+    tier: FLAGSHIP
+    rationale: >-
+      Combines an inspectable first-party failure with a reusable operational concept, then turns
+      it into claim-auditability, reliability-release, and co-audit controls. The public essay is
+      unusually explicit that the cross-layer cascade is convergent evidence rather than an
+      end-to-end causal result.
+    evidence_anchors:
+      - "L12-L18: Reports the 13-of-15 follow-up burden, 81 rows, 47 direct adjudications, eight contradictions, and three downgraded claims."
+      - "L28-L44: Defines confidence debt as downstream trust outrunning evidence."
+      - "L66-L90: Reframes benchmark interpretation as a reliability-release problem."
+      - "L124-L160: Marks the cascade as a structural inference and presents a rival frame and limits."
+      - "L194-L202: Identifies the project repository and commit-pinned evidence artifacts."
+    confidence: HIGH
+    factual_risk: MEDIUM_HIGH
+    factual_risk_notes: >-
+      The first-party case is narrow and the integrated three-gate stack has not been tested as
+      one system; several external support papers are also very recent.
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "No substantive essay-versus-ledger conflict; the authorization ledger supports the public caveats."
+      - "Workflow metadata is inconsistent: publishing and archive sync are complete while paper intake, research, and essay iteration remain marked incomplete."
+
+  - slug: the-binding-gap
+    source_file: publication_strategy_and_archive/substack_archive/2026-04-04_the-binding-gap.md
+    tier: SUPPORTING
+    rationale: >-
+      A compact and memorable mechanism-level frame for outputs that contain the right entities,
+      roles, and values but attach them incorrectly. It handles borders and predictions more
+      responsibly than most essays that bridge cognitive mechanisms to engineering failures.
+    evidence_anchors:
+      - "L10-L18: Defines binding and exact binding."
+      - "L22-L44: Connects entity and role mechanisms to structured evidence extraction."
+      - "L46-L52: Separates binding from representation and reasoning failures."
+      - "L54-L64: Offers engineering implications and a falsifiable wager."
+    confidence: HIGH
+    factual_risk: MEDIUM
+    factual_risk_notes: "The extension from controlled binding research to citation, legal, clinical, and code failures is plausible but not broadly demonstrated."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "The archived text exactly matches the manifest canonical file."
+      - "The README is stale: it says the post is unpublished and names an uppercase canonical filename that conflicts with the completed status and lowercase live file."
+
+  - slug: operating-agents-preface-a-field
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-preface-a-field.md
+    tier: ARCHIVE
+    rationale: "Useful course navigation and a clear learning contract, but not a standalone technical credibility artifact."
+    evidence_anchors:
+      - "L8-L18: States the builder-first course promise."
+      - "L36-L52: Maps the six course layers."
+      - "L96-L120: Gives public and architecture-review reading paths."
+    confidence: HIGH
+    factual_risk: LOW
+    factual_risk_notes: "It makes few external factual claims."
+    provenance_status: VERIFIED_REPO
+    source_lineage_conflicts:
+      - "The essays, companions, and blueprints it describes exist in the package."
+      - "Public-versus-local differences are formatting, public links, and removed Substack boilerplate."
+
+  - slug: operating-agents-bonus-the-workflow
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-bonus-the-workflow.md
+    tier: ARCHIVE
+    rationale: "Sound builder synthesis, but too generic and course-dependent for the capped showcase."
+    evidence_anchors:
+      - "L10-L24: Treats the workflow as the optimization object."
+      - "L44-L60: Prioritizes measurement and inexpensive fixes."
+      - "L62-L74: Separates bounded self-improvement from governance authority."
+    confidence: HIGH
+    factual_risk: LOW_MEDIUM
+    factual_risk_notes: "The recommendations are cautious, but no first-party optimization study validates the proposed ordering."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "None material; local and public differences are export formatting and links."
+
+  - slug: operating-agents-v-the-attack-surface
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-v-the-attack-surface.md
+    tier: ARCHIVE
+    rationale: >-
+      A credible and useful safety chapter, but the new harness-audit essay covers a broader
+      operational control surface while the strict supporting cap favors more distinctive work.
+    evidence_anchors:
+      - "L10-L20: Frames safety as a trust-boundary problem."
+      - "L36-L52: Covers tools, memory, and inter-agent contamination."
+      - "L54-L70: Specifies build order, approval, verification, and testing."
+    confidence: HIGH
+    factual_risk: MEDIUM
+    factual_risk_notes: "Some contamination language generalizes from adversarial demonstrations to broader production systems."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "No material claim conflict; public and local differences are formatting and link normalization."
+      - "No first-party safety evaluation is supplied."
+
+  - slug: operating-agents-iv-the-second-agent
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-iv-the-second-agent.md
+    tier: ARCHIVE
+    rationale: >-
+      A strong course chapter, excluded because The Illusion of the Swarm covers the same
+      portfolio territory with more originality, evidence depth, and falsifiable claims.
+    evidence_anchors:
+      - "L10-L22: Establishes the single-agent baseline."
+      - "L24-L38: Explains handoff loss and boundary economics."
+      - "L40-L56: Gives conservative topology escalation and preserves the human node."
+      - "L58-L70: Requires baseline, cost, and debug evaluation."
+    confidence: HIGH
+    factual_risk: LOW_MEDIUM
+    factual_risk_notes: "The advice is conservative, but no first-party topology comparison is presented."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "None material; recommendations remain author synthesis rather than direct experimental findings."
+
+  - slug: operating-agents-iii-diagnose-the
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-iii-diagnose-the.md
+    tier: ARCHIVE
+    rationale: "A competent taxonomy and escalation ladder, but familiar material with limited distinctive authorship signal."
+    evidence_anchors:
+      - "L10-L20: Starts with failure diagnosis and the lightest useful scaffold."
+      - "L22-L38: Separates reasoning, planning, decomposition, and ReAct."
+      - "L40-L54: Distinguishes refinement, reflection, and verification."
+      - "L56-L72: Escalates to search-heavy methods only when warranted."
+    confidence: HIGH
+    factual_risk: LOW_MEDIUM
+    factual_risk_notes: "The ladder is a useful author-designed heuristic, not a validated universal ordering."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "None material; the source index recovers the cited methods."
+
+  - slug: operating-agents-ii-memory-needs
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-ii-memory-needs.md
+    tier: ARCHIVE
+    rationale: "Good authority framing and lifecycle discipline, but not sufficiently differentiated for the capped portfolio."
+    evidence_anchors:
+      - "L10-L24: Frames durable memory as an authority decision."
+      - "L26-L42: Separates working, semantic, episodic, and procedural memory."
+      - "L44-L58: Adds admission, retention, correction, and forgetting controls."
+      - "L60-L70: Gives a bounded build and evaluation order."
+    confidence: HIGH
+    factual_risk: LOW_MEDIUM
+    factual_risk_notes: "The four-way taxonomy is design synthesis rather than a field standard."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "None material; the package source index supports the component concepts."
+
+  - slug: operating-agents-i-when-language
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-27_operating-agents-i-when-language.md
+    tier: ARCHIVE
+    rationale: >-
+      A useful introductory tool-use model, but its API, code, SQL, browser, and GUI hierarchy is
+      more heuristic than demonstrated and overlaps the programmable-thinking flagship.
+    evidence_anchors:
+      - "L10-L22: Defines the state-change boundary."
+      - "L24-L40: Identifies tool-use seams and contracts."
+      - "L44-L56: Orders action surfaces by structure and reliability."
+      - "L58-L66: Argues that machine-readable environments improve agent action."
+    confidence: HIGH
+    factual_risk: MEDIUM
+    factual_risk_notes: "Some interface rankings and paper-to-practice bridges are broader than their direct evidence."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "None material; the public text correctly identifies itself as a survey-derived distillation."
+
+  - slug: the-illusion-of-the-swarm
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-17_the-illusion-of-the-swarm.md
+    tier: FLAGSHIP
+    rationale: >-
+      A distinctive argument against decorative agent proliferation that still identifies when
+      multiple agents are load-bearing. It combines coordination economics, typed-state advice,
+      practical exceptions, and falsifiable predictions.
+    evidence_anchors:
+      - "L14-L22: States the compilation result and its scope."
+      - "L24-L40: Grounds the coordination-overhead claim."
+      - "L42-L62: Develops the agent-as-namespace and hierarchy interpretation."
+      - "L64-L100: Identifies genuine boundaries and typed communication requirements."
+      - "L137-L149: Makes falsifiable predictions."
+    confidence: HIGH
+    factual_risk: MEDIUM_HIGH
+    factual_risk_notes: "Several precise results come from recent preprints, and the swarm-as-training-rig section partly extends the sources by analogy."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "None material; the archive exactly matches the canonical package essay, with a research log, claim ledger, and captured papers."
+
+  - slug: the-moltbook-phenomenon
+    source_file: publication_strategy_and_archive/substack_archive/2026-03-12_the-moltbook-phenomenon.md
+    tier: ARCHIVE
+    rationale: >-
+      The corpus's largest credibility liability. A legitimate platform-security story expands
+      into acquisition intent, internal factions, economics, botnet implications, and sweeping
+      causal conclusions through weak secondary sources and unsourced precision.
+    evidence_anchors:
+      - "L10-L67: Establishes platform and security facts."
+      - "L71-L101: Adds speculative economics and coordination ratios."
+      - "L107-L141: Presents acquisition motive and internal politics as a causal narrative."
+      - "L147-L159: Draws categorical conclusions without a limits section."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: "Weak sources and unsupported claims about acquisition motive, research volume, returns, and genuine coordination make external factual failure likely."
+    provenance_status: UNVERIFIED
+    source_lineage_conflicts:
+      - "The manifest canonical file matches the archive, but the README names a different live draft."
+      - "The package paper index is effectively empty despite paper intake being marked complete."
+
+  - slug: the-autonomy-tax
+    source_file: publication_strategy_and_archive/substack_archive/2026-02-27_the-autonomy-tax.md
+    tier: SUPPORTING
+    rationale: >-
+      A useful enterprise decision frame with an open casebook, an explicit bounded-autonomy
+      alternative, antithesis, falsifiers, method notes, and known unknowns. It remains supporting
+      because its scoring and taxonomy are decision heuristics rather than validated models.
+    evidence_anchors:
+      - "L22-L34: Sets up the deployment-capability tension."
+      - "L42-L88: Defines three taxes and summarizes the 28-record casebook."
+      - "L100-L132: Defines Level 2.5 and Bounded Level 3."
+      - "L134-L168: Presents the antithesis, doctrine, and falsifiers."
+      - "L174-L206: States scope, method, and known unknowns."
+    confidence: MEDIUM_HIGH
+    factual_risk: MEDIUM_HIGH
+    factual_risk_notes: >-
+      The anonymous vendor opener, heterogeneous casebook, unsupported combinatorial wording,
+      author-defined level taxonomy, and uncalibrated score arithmetic create pseudo-precision.
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The archive exactly matches the manifest canonical file, and the linked casebook exists."
+      - "The 28 records include incidents, surveys, regulatory milestones, and tooling baselines, not 28 comparable enterprise failures."
+
+  - slug: the-transformer-attractor
+    source_file: publication_strategy_and_archive/substack_archive/2026-01-15_the-transformer-attractor.md
+    tier: ARCHIVE
+    rationale: "An original thesis undermined by too many uncited or technically unstable quantitative claims for senior technical readers."
+    evidence_anchors:
+      - "L10-L38: Introduces the two-gate attractor thesis."
+      - "L44-L54: Quantifies the GEMM moat."
+      - "L74-L86: Describes the scan bottleneck."
+      - "L92-L177: Uses Mamba, RetNet, and RWKV as case studies."
+      - "L200-L240: Gives falsifiers and practitioner rules."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: >-
+      The parallel-scan discussion conflates work with sequential depth, hardware counts and
+      utilization figures are uncited, the RetNet abandonment story is causal speculation, and
+      absence of frontier deployments repeatedly substitutes for mechanism evidence.
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The public essay materially diverges from the repository source essay."
+      - "There is no dedicated publication leaf; lineage is split between neural-architecture and hardware-friction packages."
+
+  - slug: when-the-llm-programs-its-own-thinking
+    source_file: publication_strategy_and_archive/substack_archive/2026-01-14_when-the-llm-programs-its-own-thinking.md
+    tier: FLAGSHIP
+    rationale: >-
+      The clearest proof of engineering contribution in the corpus: concrete Jupyter namespace
+      sharing and trace-artifact extensions, executable examples, public fork and PR lineage,
+      and candid persistence, security, cost, and human-intervention limits.
+    evidence_anchors:
+      - "L10-L26: Explains the RLM mechanism and 6-11M-token benchmark context."
+      - "L30-L83: Presents the shared REPL and trace-artifact contributions."
+      - "L85-L170: Gives concrete configurations and persistence behavior."
+      - "L172-L202: States security, cost, failure, and intervention limits."
+      - "L206-L216: Links the fork and upstream pull request."
+    confidence: HIGH
+    factual_risk: MEDIUM
+    factual_risk_notes: "Benchmark numbers are literature-derived, and shared-kernel execution has a serious security surface that the essay does acknowledge."
+    provenance_status: VERIFIED_REPO
+    source_lineage_conflicts:
+      - "The public archive exactly matches the status-manifest canonical file, but the README names a second live draft."
+      - "The newer live draft fixes the public article's invalid git clone command with angle brackets; remote PR status was not checked."
+
+  - slug: the-orchestration-paradigm-issue-397
+    source_file: publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue-397.md
+    tier: ARCHIVE
+    rationale: "Production framing is useful, but invented precision overwhelms credibility."
+    evidence_anchors:
+      - "L87: Claims gradient variance scales exponentially with hierarchy depth."
+      - "L125: Claims a 50,000-times attack ROI."
+      - "L139-L149: Gives fixed cost, per-query prices, and a 75,000-query breakeven."
+      - "L150-L164: Prescribes a three-engineer gate and four-week rollout."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: "The economics, staffing thresholds, rollout duration, attack ROI, and exponential-depth claim lack recoverable derivations."
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The captured ToolOrchestra paper supports the research system, not these operational numbers."
+      - "The public issue materially differs from the current package source draft."
+
+  - slug: the-orchestration-paradigm-issue-cf4
+    source_file: publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue-cf4.md
+    tier: ARCHIVE
+    rationale: "Engaging behavioral interpretation, but much of it is mechanistic storytelling rather than evidence."
+    evidence_anchors:
+      - "L41-L88: Describes emergent strategies and state accumulation."
+      - "L92-L134: Assigns behavioral roles to preference tokens and attention patterns."
+      - "L138-L176: Generalizes the mechanism to robustness and transfer."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: "A ten-turn history is called exponentially more expensive because attention is quadratic, and mechanistic roles are assigned without supporting analysis."
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The package captures the ToolOrchestra paper but not these mechanistic extensions."
+      - "The public and current package issue drafts differ materially."
+
+  - slug: the-orchestration-paradigm-issue
+    source_file: publication_strategy_and_archive/substack_archive/2025-12-29_the-orchestration-paradigm-issue.md
+    tier: ARCHIVE
+    rationale: "Useful synthetic-data and benchmark topics, but operational claims are presented as necessities without evidence."
+    evidence_anchors:
+      - "L37-L111: Explains the ToolScale pipeline."
+      - "L115-L183: Critiques agent benchmarks."
+      - "L187-L243: Presents the training-infrastructure argument."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: "The essay converts the paper's use of 16 H100s into a mathematical necessity and overstates several reproducibility and benchmark claims."
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The primary paper says 16 H100s were used; it does not establish that count as mathematically necessary."
+      - "The public issue materially differs from the package source draft."
+
+  - slug: the-orchestration-paradigm-series
+    source_file: publication_strategy_and_archive/substack_archive/2025-12-26_the-orchestration-paradigm-series.md
+    tier: ARCHIVE
+    rationale: >-
+      The 8B-orchestrator result is interesting, but the essay layers categorical claims about
+      SFT, GRPO, economics, and hardware on top of the captured paper.
+    evidence_anchors:
+      - "L36-L87: Presents the routing and economic thesis."
+      - "L103-L183: Describes calibration and reinforcement learning."
+      - "L187-L348: Explains GRPO and reward design."
+      - "L356-L396: Adds the infrastructure appendix and 16-H100 justification."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: "SFT-can-never-teach-strategy language, gradient-free wording, batch-size multipliers, and hardware necessity are not adequately established."
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The captured paper supports 37.1 percent versus 35.1 percent on HLE and reported efficiency, but not the larger prescriptions."
+      - "The public and current source drafts differ materially."
+
+  - slug: the-hardware-friction-map
+    source_file: publication_strategy_and_archive/substack_archive/2025-12-10_the-hardware-friction-map.md
+    tier: ARCHIVE
+    rationale: "A memorable heuristic with useful falsifiers, but too much false precision and several categorical startup rules."
+    evidence_anchors:
+      - "L47-L107: Defines the four friction zones."
+      - "L111-L159: Gives FlashAttention and MoE adoption timelines."
+      - "L162-L182: Makes the pure-SSM scale claim."
+      - "L186-L199: States the startup heuristic."
+      - "L202-L277: Applies the scorecard and makes predictions."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: "Adoption times, architectural cliffs, cost zones, and scorecard values are more precise than the visible evidence supports."
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The package correction says the original MoE long-context framing was unsupported, routing and KV-cache claims were misattributed, and the 20-month claim required qualification."
+      - "The public essay still says naive MoE at long context fights the hardware and describes 20 months as universal adoption."
+
+  - slug: what-actually-works-the-hardware
+    source_file: publication_strategy_and_archive/substack_archive/2025-12-06_what-actually-works-the-hardware.md
+    tier: ARCHIVE
+    rationale: >-
+      Substantial research effort, but the long audit is not reliably reproducible from the public
+      text and repeatedly converts selected examples into causal adoption laws.
+    evidence_anchors:
+      - "L6-L69: States the audit scope and hardware-compatibility thesis."
+      - "L71-L151: Reviews FlashAttention, GQA, MLA, KAN, SSM, and RAG."
+      - "L157-L341: Extends the argument to conditional execution, hybrids, infrastructure, and training."
+      - "L351-L407: Presents evidence mainly through rasterized tables."
+      - "L717-L837: Provides the bibliography."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: "The small selected audit is used to infer causality, universal adoption, timing laws, and broad architecture outcomes."
+    provenance_status: MIXED
+    source_lineage_conflicts:
+      - "The public long-context MoE speedup claim directly conflicts with the package correction, which says the extrapolation lacked a supporting benchmark and the KV-cache effect was not MoE-specific."
+      - "Rasterized evidence tables and vague bibliography entries prevent claim-level audit."
+
+  - slug: the-agent-revolution
+    source_file: publication_strategy_and_archive/substack_archive/2025-12-02_the-agent-revolution.md
+    tier: ARCHIVE
+    rationale: "An ambitious survey whose historical and paper-level interpretation is not reliable enough to serve as a credibility piece."
+    evidence_anchors:
+      - "L64-L173: Presents ReAct and AutoGen as the foundations."
+      - "L177-L592: Surveys recent training, latent collaboration, world-model, and self-improvement systems."
+      - "L604-L710: Synthesizes an agent stack."
+    confidence: HIGH
+    factual_risk: HIGH
+    factual_risk_notes: >-
+      L226 misidentifies HLE as a household-environment benchmark rather than Humanity's Last
+      Exam; other historical firsts, paper summaries, and causal field-reorganization claims are too broad.
+    provenance_status: UNVERIFIED
+    source_lineage_conflicts:
+      - "The archive exactly matches the package canonical essay."
+      - "The package evidence root substantially covers the older ReAct and AutoGen course corpus, not most newer systems carrying the essay's breakthrough narrative."
+
+  - slug: neural-architecture-design-as-a-compositional-32e
+    source_file: publication_strategy_and_archive/substack_archive/2025-11-27_neural-architecture-design-as-a-compositional-32e.md
+    tier: SUPPORTING
+    rationale: >-
+      The safest demonstration of technical breadth: a careful historical throughline from
+      bespoke networks through residual path discipline, portable Transformer blocks, design
+      spaces, scaling recipes, and controlled MoE heterogeneity.
+    evidence_anchors:
+      - "L10-L18: Defines the reusable scaffold."
+      - "L20-L66: Traces the VGG, Inception, and ResNet transition."
+      - "L68-L93: Explains Transformer portability and emergent role differentiation with caveats."
+      - "L95-L129: Covers design spaces, scaling, operator refinement, and MoE."
+      - "L131-L263: Supplies annotated primary references."
+    confidence: HIGH
+    factual_risk: LOW_MEDIUM
+    factual_risk_notes: "The throughline is interpretive, but it is mostly grounded in classic primary sources and avoids inevitability claims."
+    provenance_status: SYNTHESIS
+    source_lineage_conflicts:
+      - "The current package draft is a later 2026 polish pass; comparison shows mainly metadata, asset, and formatting changes rather than a competing argument."
+      - "The shared primary-source library aligns closely with the public essay."
+
+  - slug: coming-soon
+    source_file: publication_strategy_and_archive/substack_archive/2025-11-27_coming-soon.md
+    tier: ARCHIVE
+    rationale: "A welcome and brand announcement, not a technical credibility artifact."
+    evidence_anchors:
+      - "L6-L36: States the publication positioning and recommended reading path."
+    confidence: HIGH
+    factual_risk: LOW
+    factual_risk_notes: "It makes few substantive factual claims."
+    provenance_status: UNVERIFIED
+    source_lineage_conflicts:
+      - "There is no dedicated evidence package, which is acceptable for a welcome post."
+      - "It promotes The Transformer Attractor and the hardware essays as direction-setting work, which conflicts with this credibility curation."

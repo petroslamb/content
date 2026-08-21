@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-21T21:43:40.959632+00:00",
+  "read_only": true,
+  "sources": {
+    "substack_metadata": {
+      "path": "publication_strategy_and_archive/substack_archive/metadata.json",
+      "sha256": "2172fae0c3bfa9b3b7c4d9a81b5c2e37c1738032a19837fa2bc1d7a8c7de1d5d",
+      "modified_at": "2026-08-21T21:33:31.210109+00:00"
+    },
+    "substack_post_map": {
+      "path": "publication_strategy_and_archive/post_map.yaml",
+      "sha256": "5fe579e0243fc07387094172aaa6509c0210ee4a782238cd82dcd2e29fe19998",
+      "modified_at": "2026-08-21T21:34:09.898232+00:00"
+    },
+    "substack_completeness": {
+      "path": "publication_strategy_and_archive/substack_archive/completeness_report.json",
+      "sha256": "77159534f76cf124d8eeb85c1e3f0d203cbe91288053dc57245488d92c688631",
+      "modified_at": "2026-08-21T21:34:21.705351+00:00"
+    },
+    "youtube_ledger": {
+      "path": "experiments/youtube-analytics/metrics_ledger.json",
+      "sha256": "09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9",
+      "modified_at": "2026-08-21T21:43:21.717075+00:00"
+    },
+    "youtube_content_evidence": {
+      "path": "experiments/youtube-analytics/content_rubric.json",
+      "sha256": "9bc36054aba2ec306c837a18f1e76aa726dd822a707009b4592df8d17a5c5508",
+      "modified_at": "2026-08-21T21:43:32.396137+00:00"
+    }
+  },
+  "substack": {
+    "public_post_count": 25,
+    "published_post_map_count": 25,
+    "public_slugs": [
+      "coming-soon",
+      "confidence-debt",
+      "harnesses-that-learn-under-audit-e06",
+      "neural-architecture-design-as-a-compositional-32e",
+      "operating-agents-bonus-the-workflow",
+      "operating-agents-i-when-language",
+      "operating-agents-ii-memory-needs",
+      "operating-agents-iii-diagnose-the",
+      "operating-agents-iv-the-second-agent",
+      "operating-agents-preface-a-field",
+      "operating-agents-v-the-attack-surface",
+      "the-agent-revolution",
+      "the-autonomy-tax",
+      "the-binding-gap",
+      "the-hardware-friction-map",
+      "the-illusion-of-the-swarm",
+      "the-moltbook-phenomenon",
+      "the-orchestration-paradigm-issue",
+      "the-orchestration-paradigm-issue-397",
+      "the-orchestration-paradigm-issue-cf4",
+      "the-orchestration-paradigm-series",
+      "the-specification-surface-is-the",
+      "the-transformer-attractor",
+      "what-actually-works-the-hardware",
+      "when-the-llm-programs-its-own-thinking"
+    ],
+    "published_map_only_slugs": [],
+    "archive_only_slugs": [],
+    "completeness": {
+      "generated_at": "2026-08-21T21:34:21.705066+00:00",
+      "base_url": "https://lambpetros.substack.com",
+      "complete": true,
+      "inventory_scope": "public_substack_posts_only",
+      "discovered_count": 25,
+      "discovery": {
+        "complete": true,
+        "unique_post_count": 25,
+        "sources": {
+          "rss": {
+            "success": true,
+            "complete": true,
+            "item_count": 20,
+            "error": null
+          },
+          "archive_api": {
+            "success": true,
+            "complete": true,
+            "item_count": 18,
+            "pages_fetched": 1,
+            "termination": "short_page",
+            "error": null
+          },
+          "post_map": {
+            "success": true,
+            "complete": true,
+            "item_count": 25,
+            "error": null
+          }
+        },
+        "failures": []
+      },
+      "source_failures": [],
+      "post_fetch_failures": [],
+      "excluded_non_public": [],
+      "manifest_count": 25,
+      "updated_slugs": [],
+      "unchanged_slugs": [
+        "harnesses-that-learn-under-audit-e06",
+        "the-specification-surface-is-the",
+        "confidence-debt",
+        "the-binding-gap",
+        "operating-agents-preface-a-field",
+        "operating-agents-bonus-the-workflow",
+        "operating-agents-v-the-attack-surface",
+        "operating-agents-iv-the-second-agent",
+        "operating-agents-iii-diagnose-the",
+        "operating-agents-ii-memory-needs",
+        "operating-agents-i-when-language",
+        "the-illusion-of-the-swarm",
+        "the-moltbook-phenomenon",
+        "the-autonomy-tax",
+        "the-transformer-attractor",
+        "when-the-llm-programs-its-own-thinking",
+        "the-orchestration-paradigm-issue-397",
+        "the-orchestration-paradigm-issue-cf4",
+        "the-orchestration-paradigm-issue",
+        "the-orchestration-paradigm-series",
+        "the-hardware-friction-map",
+        "what-actually-works-the-hardware",
+        "the-agent-revolution",
+        "neural-architecture-design-as-a-compositional-32e",
+        "coming-soon"
+      ],
+      "removed_files": [],
+      "removed_assets": [],
+      "prune_allowed": true,
+      "cleanup": {
+        "performed": true,
+        "blockers": []
+      },
+      "existing_manifest_error": null,
+      "preserved_manifest_slugs": [],
+      "readme_publication_map_refreshed": true,
+      "missing_post_map": [],
+      "mirror_enabled_count": 25
+    }
+  },
+  "youtube": {
+    "snapshot_timestamp": "2026-08-21T21:43:21.683390+00:00",
+    "channel": {
+      "channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+      "title": "Rooted Layers | AI Systems Grounded in Research",
+      "uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+    },
+    "video_count": 265,
+    "visibility_counts": {
+      "public": 231,
+      "unlisted": 7,
+      "private": 27
+    },
+    "playlist_count": 9,
+    "content_evidence_count": 265,
+    "content_status_counts": {
+      "missing": 50,
+      "present": 215
+    }
+  }
+}

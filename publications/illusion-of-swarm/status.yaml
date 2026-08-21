@@ -31,5 +31,8 @@ config:
   markdown_path: publications/illusion-of-swarm/the-illusion-of-the-swarm.md
   substack_slug: the-illusion-of-the-swarm
   substack_url: https://lambpetros.substack.com
+  published_url: https://lambpetros.substack.com/p/the-illusion-of-the-swarm
+  archive_markdown_path: publication_strategy_and_archive/substack_archive/2026-03-17_the-illusion-of-the-swarm.md
+  archive_html_path: publication_strategy_and_archive/substack_archive/2026-03-17_the-illusion-of-the-swarm.html
   notebooklm_notebook_title: Most Multi-Agent Systems Are a Workaround, Not a Destination
     (v9)

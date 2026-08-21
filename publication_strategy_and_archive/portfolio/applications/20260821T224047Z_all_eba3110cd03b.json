@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-08-21T22:40:47.720793+00:00",
+  "completed_at": "2026-08-21T22:40:47.734523+00:00",
+  "operation": "all",
+  "mode": "dry_run",
+  "manifest": "/Users/petros/Projects/content/publication_strategy_and_archive/portfolio/portfolio_manifest.yaml",
+  "manifest_sha256": "eba3110cd03b807c6b0588c084298f762904fa36cf09fc26a642e467b9022a17",
+  "approval": null,
+  "approval_sha256": null,
+  "release_readiness": null,
+  "release_readiness_sha256": null,
+  "source_snapshot_sha256": "85b97d181c6afaef21025bbea0b48b199b4bb958155aecbcf97cfb2b2662c856",
+  "source_ledger_sha256": "09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9",
+  "status": "STOPPED",
+  "stage": "AUTHENTICATING",
+  "channel": null,
+  "visibility": null,
+  "playlist": null,
+  "error": "TransportError: external YouTube operation failed; details omitted"
+}
