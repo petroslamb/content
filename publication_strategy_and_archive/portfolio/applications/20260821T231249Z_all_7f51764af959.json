@@ -1,0 +1,501 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-08-21T23:12:49.209270+00:00",
+  "completed_at": "2026-08-21T23:12:59.796588+00:00",
+  "operation": "all",
+  "mode": "apply",
+  "manifest": "/Users/petros/Projects/content/publication_strategy_and_archive/portfolio/portfolio_manifest.yaml",
+  "manifest_sha256": "7f51764af959eebe83cbce15cb203e075b223050fc02a8dda35df49926afc1b6",
+  "approval": "/Users/petros/Projects/content/publication_strategy_and_archive/portfolio/approval.yaml",
+  "approval_sha256": "fa1783d7013f9f0b42a5028f45da2ef3c422bf4166e2d525ecba6f5c7a354ab5",
+  "release_readiness": "/Users/petros/Projects/content/reviewable-runs/gates/gate-2026-08-21T23-05-15Z-rooted-layers-portfolio-release-readiness.yaml",
+  "release_readiness_sha256": "7bb403e20b2756b634877984f08c888a1d422cda160c78a11ba80f9631049996",
+  "source_snapshot_sha256": "85b97d181c6afaef21025bbea0b48b199b4bb958155aecbcf97cfb2b2662c856",
+  "source_ledger_sha256": "09d240ac0f24bd245fc5648fe7e1441456488d1d53efe04e6c996d4e672c3cb9",
+  "in_progress_journal": "/Users/petros/Projects/content/publication_strategy_and_archive/portfolio/applications/20260821T231249Z_all_7f51764af959.json.in-progress.json",
+  "last_checkpoint": "stopped_before_immutable_report",
+  "status": "STOPPED",
+  "stage": "APPLYING_VISIBILITY",
+  "channel": {
+    "channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+    "title": "Rooted Layers | AI Systems Grounded in Research",
+    "uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+  },
+  "visibility": {
+    "planned_count": 8,
+    "plan": [
+      {
+        "video_id": "Ue9gGySTVRI",
+        "title": "Writing the Script Isn't Agency #shorts",
+        "url": "https://www.youtube.com/watch?v=Ue9gGySTVRI",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      },
+      {
+        "video_id": "bsvMg8LUb1M",
+        "title": "A Single CSS Tag Can Break an Agent #shorts",
+        "url": "https://www.youtube.com/watch?v=bsvMg8LUb1M",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      },
+      {
+        "video_id": "QRD1FJiKTfU",
+        "title": "Agents Don't Lose IQ. They Lose Attention. #shorts",
+        "url": "https://www.youtube.com/watch?v=QRD1FJiKTfU",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      },
+      {
+        "video_id": "4UzuyKGNaKc",
+        "title": "Flat Vector Memory Becomes a Security Hole #shorts",
+        "url": "https://www.youtube.com/watch?v=4UzuyKGNaKc",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      },
+      {
+        "video_id": "PV-KfDYiLPo",
+        "title": "Agent Theater Is Not Intelligence #shorts",
+        "url": "https://www.youtube.com/watch?v=PV-KfDYiLPo",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      },
+      {
+        "video_id": "qTucAFn5g8Y",
+        "title": "The Coordination Tax Kills Agent Handoffs #shorts",
+        "url": "https://www.youtube.com/watch?v=qTucAFn5g8Y",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      },
+      {
+        "video_id": "T-XSEz2bQUk",
+        "title": "The AI Did Not Fail. The Scaffold Did. #shorts",
+        "url": "https://www.youtube.com/watch?v=T-XSEz2bQUk",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      },
+      {
+        "video_id": "QCK0hPc0dPM",
+        "title": "AI Cannot Check Its Own Gravity #shorts",
+        "url": "https://www.youtube.com/watch?v=QCK0hPc0dPM",
+        "expected_before": "public",
+        "target_after": "unlisted",
+        "rationale": "Propose public to unlisted because this exact old upload is superseded by the named public remastered overlay representative. The proposal is based on pair-specific production lineage and matching current metadata, not a title-only heuristic; a fresh readback remains mandatory.",
+        "rollback_visibility": "public",
+        "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "expected_channel": {
+          "expected_channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "expected_channel_title": "Rooted Layers | AI Systems Grounded in Research",
+          "expected_uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+        }
+      }
+    ],
+    "batches": [
+      {
+        "batch_number": 1,
+        "canary": true,
+        "started_at": "2026-08-21T23:12:50.076962+00:00",
+        "completed_at": "2026-08-21T23:12:51.368795+00:00",
+        "status": "VERIFIED",
+        "video_ids": [
+          "Ue9gGySTVRI"
+        ],
+        "operation_indexes": [
+          0
+        ],
+        "readback": [
+          {
+            "video_id": "Ue9gGySTVRI",
+            "readback_visibility": "unlisted",
+            "matched": true
+          }
+        ],
+        "error": null
+      },
+      {
+        "batch_number": 2,
+        "canary": false,
+        "started_at": "2026-08-21T23:12:51.372920+00:00",
+        "completed_at": "2026-08-21T23:12:59.790978+00:00",
+        "status": "STOPPED",
+        "video_ids": [
+          "bsvMg8LUb1M",
+          "QRD1FJiKTfU",
+          "4UzuyKGNaKc",
+          "PV-KfDYiLPo",
+          "qTucAFn5g8Y",
+          "T-XSEz2bQUk",
+          "QCK0hPc0dPM"
+        ],
+        "operation_indexes": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "readback": [
+          {
+            "video_id": "bsvMg8LUb1M",
+            "readback_visibility": "unlisted",
+            "matched": true
+          },
+          {
+            "video_id": "QRD1FJiKTfU",
+            "readback_visibility": "unlisted",
+            "matched": true
+          },
+          {
+            "video_id": "4UzuyKGNaKc",
+            "readback_visibility": "unlisted",
+            "matched": true
+          },
+          {
+            "video_id": "PV-KfDYiLPo",
+            "readback_visibility": "unlisted",
+            "matched": true
+          },
+          {
+            "video_id": "qTucAFn5g8Y",
+            "readback_visibility": "unlisted",
+            "matched": true
+          },
+          {
+            "video_id": "T-XSEz2bQUk",
+            "readback_visibility": "unlisted",
+            "matched": true
+          },
+          {
+            "video_id": "QCK0hPc0dPM",
+            "readback_visibility": "public",
+            "matched": false
+          }
+        ],
+        "error": "PortfolioYouTubeError: readback mismatch for QCK0hPc0dPM: expected unlisted, found public"
+      }
+    ],
+    "operations": [
+      {
+        "operation_index": 0,
+        "action": "set_visibility_unlisted",
+        "video_id": "Ue9gGySTVRI",
+        "started_at": "2026-08-21T23:12:50.076975+00:00",
+        "completed_at": "2026-08-21T23:12:51.267369+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "unlisted",
+        "readback_matched": true,
+        "error": null
+      },
+      {
+        "operation_index": 1,
+        "action": "set_visibility_unlisted",
+        "video_id": "bsvMg8LUb1M",
+        "started_at": "2026-08-21T23:12:51.372940+00:00",
+        "completed_at": "2026-08-21T23:12:52.562436+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "unlisted",
+        "readback_matched": true,
+        "error": null
+      },
+      {
+        "operation_index": 2,
+        "action": "set_visibility_unlisted",
+        "video_id": "QRD1FJiKTfU",
+        "started_at": "2026-08-21T23:12:52.567892+00:00",
+        "completed_at": "2026-08-21T23:12:53.724862+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "unlisted",
+        "readback_matched": true,
+        "error": null
+      },
+      {
+        "operation_index": 3,
+        "action": "set_visibility_unlisted",
+        "video_id": "4UzuyKGNaKc",
+        "started_at": "2026-08-21T23:12:53.731485+00:00",
+        "completed_at": "2026-08-21T23:12:55.036567+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "unlisted",
+        "readback_matched": true,
+        "error": null
+      },
+      {
+        "operation_index": 4,
+        "action": "set_visibility_unlisted",
+        "video_id": "PV-KfDYiLPo",
+        "started_at": "2026-08-21T23:12:55.042882+00:00",
+        "completed_at": "2026-08-21T23:12:56.109108+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "unlisted",
+        "readback_matched": true,
+        "error": null
+      },
+      {
+        "operation_index": 5,
+        "action": "set_visibility_unlisted",
+        "video_id": "qTucAFn5g8Y",
+        "started_at": "2026-08-21T23:12:56.115349+00:00",
+        "completed_at": "2026-08-21T23:12:57.273547+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "unlisted",
+        "readback_matched": true,
+        "error": null
+      },
+      {
+        "operation_index": 6,
+        "action": "set_visibility_unlisted",
+        "video_id": "T-XSEz2bQUk",
+        "started_at": "2026-08-21T23:12:57.276896+00:00",
+        "completed_at": "2026-08-21T23:12:58.625930+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "unlisted",
+        "readback_matched": true,
+        "error": null
+      },
+      {
+        "operation_index": 7,
+        "action": "set_visibility_unlisted",
+        "video_id": "QCK0hPc0dPM",
+        "started_at": "2026-08-21T23:12:58.632343+00:00",
+        "completed_at": "2026-08-21T23:12:59.666335+00:00",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "mutation_outcome": "SUCCEEDED",
+        "before_visibility": "public",
+        "requested_visibility": "unlisted",
+        "readback_visibility": "public",
+        "readback_matched": false,
+        "error": null
+      }
+    ],
+    "rollback": [
+      {
+        "video_id": "Ue9gGySTVRI",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "unlisted",
+        "readback_matched": true
+      },
+      {
+        "video_id": "bsvMg8LUb1M",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "unlisted",
+        "readback_matched": true
+      },
+      {
+        "video_id": "QRD1FJiKTfU",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "unlisted",
+        "readback_matched": true
+      },
+      {
+        "video_id": "4UzuyKGNaKc",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "unlisted",
+        "readback_matched": true
+      },
+      {
+        "video_id": "PV-KfDYiLPo",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "unlisted",
+        "readback_matched": true
+      },
+      {
+        "video_id": "qTucAFn5g8Y",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "unlisted",
+        "readback_matched": true
+      },
+      {
+        "video_id": "T-XSEz2bQUk",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "unlisted",
+        "readback_matched": true
+      },
+      {
+        "video_id": "QCK0hPc0dPM",
+        "restore_visibility": "public",
+        "only_if_current_visibility": "unlisted",
+        "mutation_attempted": true,
+        "mutation_succeeded": true,
+        "readback_visibility": "public",
+        "readback_matched": false
+      }
+    ],
+    "remote_state_uncertain": false
+  },
+  "playlist": {
+    "plan": {
+      "enabled": false,
+      "title": "Selected Rooted Layers — AI Systems & Engineering",
+      "channel": {
+        "channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+        "title": "Rooted Layers | AI Systems Grounded in Research",
+        "uploads_playlist_id": "UUzCa0hUNcpRt3LMZP9A8PPA"
+      },
+      "verified_selected_videos": [
+        {
+          "video_id": "hNVBrptmRVs",
+          "channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+          "title": "Why Polished AI Reports Can Outrun the Evidence | A Cinematic Research Brief",
+          "visibility": "public",
+          "manifest_target": "UNCHANGED"
+        }
+      ],
+      "existing_playlist_id": null,
+      "desired_video_ids": [
+        "hNVBrptmRVs"
+      ],
+      "current_video_ids": [],
+      "create": false,
+      "remove_playlist_item_ids": [],
+      "add_video_ids": [
+        "hNVBrptmRVs"
+      ],
+      "reorder_required": false,
+      "surface_on_channel_homepage": false,
+      "studio_surface_automation": "DEFERRED_TO_AUTHENTICATED_STUDIO",
+      "before_state": {
+        "playlist_existed": false,
+        "playlist": null,
+        "items": []
+      }
+    },
+    "application": {
+      "status": "NOOP",
+      "started_at": "2026-08-21T23:12:50.076817+00:00",
+      "completed_at": "2026-08-21T23:12:50.076882+00:00",
+      "changed": false,
+      "created": false,
+      "playlist_id": null,
+      "operations": [],
+      "before_state": {
+        "playlist_existed": false,
+        "playlist": null,
+        "items": []
+      },
+      "rollback": {
+        "automatic": false,
+        "requires_separate_authorization": true,
+        "restore_before_state": {
+          "playlist_existed": false,
+          "playlist": null,
+          "items": []
+        },
+        "created_playlist_id": null,
+        "note": "Use this exact before-state for an explicitly authorized rollback; never auto-delete a created remote playlist."
+      },
+      "readback_video_ids": null,
+      "readback_matched": null,
+      "remote_state_uncertain": false,
+      "error": null,
+      "reason": "fewer_than_two_selected_videos"
+    }
+  },
+  "error": "PortfolioYouTubeError: readback mismatch for QCK0hPc0dPM: expected unlisted, found public"
+}

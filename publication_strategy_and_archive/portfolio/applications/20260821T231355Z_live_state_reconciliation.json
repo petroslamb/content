@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "reconciled_at": "2026-08-21T23:13:55Z",
+  "manifest_sha256": "7f51764af959eebe83cbce15cb203e075b223050fc02a8dda35df49926afc1b6",
+  "channel_id": "UCzCa0hUNcpRt3LMZP9A8PPA",
+  "channel_title": "Rooted Layers | AI Systems Grounded in Research",
+  "operation": "approved_public_to_unlisted_visibility_set",
+  "source_application_report": "20260821T231249Z_all_7f51764af959.json",
+  "initial_report_status": "STOPPED_AFTER_DELAYED_READBACK",
+  "initial_report_note": "The canary and six subsequent readbacks matched; the final item was first read back as public and stopped the batch.",
+  "read_only_reconciliation": {
+    "method": "YouTube videos.list(status,snippet)",
+    "mutation_count": 0,
+    "all_expected_states_match": true,
+    "videos": [
+      {"video_id": "Ue9gGySTVRI", "privacy_status": "unlisted"},
+      {"video_id": "bsvMg8LUb1M", "privacy_status": "unlisted"},
+      {"video_id": "QRD1FJiKTfU", "privacy_status": "unlisted"},
+      {"video_id": "4UzuyKGNaKc", "privacy_status": "unlisted"},
+      {"video_id": "PV-KfDYiLPo", "privacy_status": "unlisted"},
+      {"video_id": "qTucAFn5g8Y", "privacy_status": "unlisted"},
+      {"video_id": "T-XSEz2bQUk", "privacy_status": "unlisted"},
+      {"video_id": "QCK0hPc0dPM", "privacy_status": "unlisted"}
+    ]
+  }
+}
